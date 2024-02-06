@@ -17452,7 +17452,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
 "fdc" = (
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"

@@ -11,34 +11,37 @@
 	name = "boulder refinery"
 	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals. Can be upgraded with stock parts or through chemical inputs."
 	icon_state = "stacker"
-	holds_minerals = TRUE
-	processable_materials = list(
-		/datum/material/glass,
-		/datum/material/plasma,
-		/datum/material/diamond,
-		/datum/material/bluespace,
-		/datum/material/bananium,
-		/datum/material/plastic,
-	)
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
-	holds_mining_points = TRUE
+	action = "crushing"
+
+/obj/machinery/bouldertech/refinery/can_process_material(datum/material/possible_mat)
+	var/static/list/processable_materials
+	if(!length(processable_materials))
+		processable_materials = list(
+			/datum/material/glass,
+			/datum/material/plasma,
+			/datum/material/diamond,
+			/datum/material/bluespace,
+			/datum/material/bananium,
+			/datum/material/plastic,
+		)
+	return is_type_in_list(possible_mat, processable_materials)
 
 /// okay so var that holds mining points to claim
 /// add total of pts from minerals mined in parent proc
 /// then, little mini UI showing points to collect?
-
 /obj/machinery/bouldertech/refinery/RefreshParts()
 	. = ..()
-	var/manipulator_stack = 0
-	var/matter_bin_stack = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		manipulator_stack += servo.tier - 1
-	boulders_processing_max = clamp(manipulator_stack, 1, 6)
-	for(var/datum/stock_part/matter_bin/bin in component_parts)
-		matter_bin_stack += bin.tier
-	boulders_held_max = matter_bin_stack
 
+	boulders_processing_power = 0
+	for(var/datum/stock_part/servo/servo in component_parts)
+		boulders_processing_power += servo.tier
+	boulders_processing_power = ROUND_UP((boulders_processing_power / 8) * BOULDER_SIZE_MEDIUM)
+
+	boulders_held_max = 0
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		boulders_held_max += bin.tier
 
 /obj/machinery/bouldertech/refinery/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -48,7 +51,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
 	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder"
 	return CONTEXTUAL_SCREENTIP_SET
-
 
 /**
  * Your other new favorite industrial waste magnet!
@@ -62,16 +64,6 @@
 	name = "boulder smelter"
 	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
 	icon_state = "smelter"
-	processable_materials = list(
-		/datum/material/iron,
-		/datum/material/titanium,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/uranium,
-		/datum/material/mythril,
-		/datum/material/adamantine,
-		/datum/material/runite,
-	)
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 2
@@ -79,20 +71,20 @@
 	light_on = FALSE
 	circuit = /obj/item/circuitboard/machine/smelter
 	usage_sound = 'sound/machines/mining/smelter.ogg'
+	action = "smelting"
 
-/obj/machinery/bouldertech/refinery/smelter/RefreshParts()
-	. = ..()
-	light_power = boulders_processing_max
+/obj/machinery/bouldertech/refinery/smelter/can_process_material(datum/material/possible_mat)
+	var/static/list/processable_materials
+	if(!length(processable_materials))
+		processable_materials = list(
+			/datum/material/iron,
+			/datum/material/titanium,
+			/datum/material/silver,
+			/datum/material/gold,
+			/datum/material/uranium,
+		)
+	return is_type_in_list(possible_mat, processable_materials)
 
-/obj/machinery/bouldertech/refinery/smelter/accept_boulder(obj/item/boulder/new_boulder)
-	. = ..()
-	if(.)
-		set_light_on(TRUE)
-		return TRUE
-
-
-/obj/machinery/bouldertech/refinery/smelter/process()
-	. = ..()
-	if(. == PROCESS_KILL)
-		set_light_on(FALSE)
+/obj/machinery/bouldertech/refinery/smelter/on_set_is_operational(old_value)
+	set_light_on(is_operational)
 

@@ -1562,7 +1562,7 @@
 /obj/item/circuitboard/machine/brm
 	name = "Boulder Retrieval Matrix"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/bouldertech/brm
+	build_path = /obj/machinery/brm
 	req_components = list(
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/scanning_module = 1,

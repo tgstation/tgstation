@@ -1,123 +1,151 @@
+///Sound played when boulders are teleported manually by hand
 #define MANUAL_TELEPORT_SOUND 'sound/machines/mining/manual_teleport.ogg'
+///Sound played when boulders are teleported automatically in process()
 #define AUTO_TELEPORT_SOUND 'sound/machines/mining/auto_teleport.ogg'
+///Time taken to spawn a boulder, also the cooldown applied before the next manual teleportation
+#define TELEPORTATION_TIME (1.5 SECONDS)
 
-/obj/machinery/bouldertech/brm
+/obj/machinery/brm
 	name = "boulder retrieval matrix"
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
+	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "brm"
 	circuit = /obj/item/circuitboard/machine/brm
-	usage_sound = MANUAL_TELEPORT_SOUND
+	layer = BELOW_OBJ_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
-	boulders_held_max = 2
+	anchored = TRUE
+	density = TRUE
+
+	/// How many boulders can we process maximum per loop?
+	var/boulders_processing_max = 1
 	/// Are we trying to actively collect boulders automatically?
 	var/toggled_on = FALSE
-	/// How long does it take to collect a boulder?
-	var/teleportation_time = 1.5 SECONDS
+
 	/// Cooldown used for left click teleportation.
 	COOLDOWN_DECLARE(manual_teleport_cooldown)
+	/// Cooldown used for automatic teleportation.
+	COOLDOWN_DECLARE(auto_teleport_cooldown)
 
-/obj/machinery/bouldertech/brm/Initialize(mapload)
+/obj/machinery/brm/Initialize(mapload)
 	. = ..()
 	set_wires(new /datum/wires/brm(src))
+	register_context()
 
-/obj/machinery/bouldertech/brm/Destroy()
+/obj/machinery/brm/Destroy()
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = CONTEXTUAL_SCREENTIP_SET
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
+		context[SCREENTIP_CONTEXT_RMB] = "Toggle [toggled_on ? "Off" : "On"] automatic boulder retrieval"
+		return
+
+	if(!isnull(held_item))
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "" : "Un"] Anchor"
+			return
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+			return
+
+		if(panel_open)
+			if(held_item.tool_behaviour == TOOL_CROWBAR)
+				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			else if(is_wire_tool(held_item))
+				context[SCREENTIP_CONTEXT_LMB] = "Open Wires"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/brm/examine(mob/user)
 	. = ..()
-	if(!handle_teleport_conditions(user))
+	. += span_notice("The small screen reads there are [span_boldnotice("[SSore_generation.available_boulders.len] boulders")] available to teleport.")
+	. += span_notice("Can collect upto <b>[boulders_processing_max] boulders</b> at a time.")
+	. += span_notice("Automatic boulder retrival can be toggled [EXAMINE_HINT("[toggled_on ? "Off" : "On"]")] with [EXAMINE_HINT("Right Click")].")
+
+	if(anchored)
+		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+	else
+		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "Closed" : "Open"].")
+
+	if(panel_open)
+		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
+
+/obj/machinery/brm/update_icon_state()
+	icon_state = initial(icon_state)
+
+	if(!anchored || !is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
+		icon_state = "[icon_state]-off"
 		return
-	pre_collect_boulder()
 
-	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
-
-/obj/machinery/bouldertech/brm/attack_robot(mob/user)
-	if(!handle_teleport_conditions(user))
+	if(toggled_on)
+		icon_state = "[icon_state]-toggled"
 		return
-	pre_collect_boulder()
 
-	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
+	return ..()
 
-/obj/machinery/bouldertech/brm/attackby(obj/item/attacking_item, mob/user, params)
-	if(is_wire_tool(attacking_item) && panel_open)
-		wires.interact(user)
+/obj/machinery/brm/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
+		update_appearance(UPDATE_ICON_STATE)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/brm/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
+		update_appearance(UPDATE_ICON_STATE)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/brm/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+///To allow boulders on a conveyer belt to move unobstructed if multiple machines are made on a single line
+/obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)
+	if(!anchored)
+		return FALSE
+	if(istype(mover, /obj/item/boulder))
 		return TRUE
 	return ..()
 
-/obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/brm/RefreshParts()
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+
+	boulders_processing_max = 0
+	for(var/datum/stock_part/part in component_parts)
+		boulders_processing_max += part.tier
+
+	boulders_processing_max = ROUND_UP((boulders_processing_max / 12) * 7)
+
+/obj/machinery/brm/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(. || panel_open)
 		return
-	if(!anchored)
-		balloon_alert(user, "anchor first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	toggle_auto_on(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/bouldertech/brm/attack_robot_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(!handle_teleport_conditions(user))
 		return
-	if(!anchored)
-		balloon_alert(user, "anchor first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	toggle_auto_on(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bouldertech/brm/process()
-	if(SSore_generation.available_boulders.len < 1)
-		say("No boulders to collect. Entering idle mode.")
-		toggled_on = FALSE
-		update_appearance(UPDATE_ICON_STATE)
-		return PROCESS_KILL
-	for(var/i in 1 to boulders_processing_max)
-		if(pre_collect_boulder())
-			continue
-		toggled_on = FALSE
-		update_appearance(UPDATE_ICON_STATE)
-		return PROCESS_KILL
-	for(var/obj/item/boulder/ground_rocks in loc.contents)
-		boulders_contained += ground_rocks
-		if(boulders_contained.len < boulders_held_max)
-			continue
-		toggled_on = FALSE
-		boulders_contained.Cut()
-		update_appearance(UPDATE_ICON_STATE)
-		return PROCESS_KILL
+	if(pre_collect_boulder())
+		balloon_alert(user, "Teleporting")
+	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
-/obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
-	context[SCREENTIP_CONTEXT_RMB] = "Toggle automatic boulder retrieval"
-	return CONTEXTUAL_SCREENTIP_SET
-
-/obj/machinery/bouldertech/brm/examine(mob/user)
-	. = ..()
-	. += span_notice("The small screen reads there are [span_boldnotice("[SSore_generation.available_boulders.len] boulders")] available to teleport.")
-
-/obj/machinery/bouldertech/brm/RefreshParts()
-	. = ..()
-	var/scanner_stack = 0
-	var/laser_stack = 0
-	for(var/datum/stock_part/scanning_module/scanner in component_parts)
-		scanner_stack += scanner.tier
-	boulders_processing_max = scanner_stack
-	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		laser_stack += laser.tier
-	boulders_held_max = laser_stack + 1
-
-/obj/machinery/bouldertech/brm/update_icon_state()
-	if(toggled_on && !panel_open)
-		icon_state = "[initial(icon_state)]-toggled"
-		return
-	return ..()
+	return TRUE
 
 /**
  * Handles qualifiers for enabling teleportation of boulders.
  * Returns TRUE if the teleportation can proceed, FALSE otherwise.
+ * Arguments
+ *
+ * * mob/user - the mob to inform if conditions aren't met
  */
-/obj/machinery/bouldertech/brm/proc/handle_teleport_conditions(mob/user)
+/obj/machinery/brm/proc/handle_teleport_conditions(mob/user)
+	PRIVATE_PROC(TRUE)
+
 	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
 		return FALSE
 	if(panel_open)
@@ -126,25 +154,100 @@
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
+/obj/machinery/brm/attack_robot(mob/user)
+	. = ..()
+	if(. || panel_open)
+		return
+	if(!handle_teleport_conditions(user))
+		return
+
+	if(pre_collect_boulder())
+		balloon_alert(user, "Teleporting")
+	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
+
+	return TRUE
+
+/obj/machinery/brm/attackby(obj/item/attacking_item, mob/user, params)
+	if(is_wire_tool(attacking_item) && panel_open)
+		wires.interact(user)
+		return TRUE
+	return ..()
+
+/obj/machinery/brm/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
+		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_auto_on(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/**
+ * Toggles automatic boulder retrieval on.
+ * Adjusts the teleportation sound, icon state, and begins processing.
+ * @param mob/user The user who toggled the BRM.
+ */
+/obj/machinery/brm/proc/toggle_auto_on(mob/user)
+	if(panel_open)
+		if(user)
+			balloon_alert(user, "close panel first!")
+		return
+	toggled_on = ! toggled_on
+	if(toggled_on)
+		begin_processing()
+	else
+		end_processing()
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/brm/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
+		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_auto_on(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/brm/process()
+	if(!toggled_on || !is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
+		return
+
+	//check for atleast 1 boulder & also wait for all pre collected boulds to appear before we process the next batch
+	if(!SSore_generation.available_boulders.len || !COOLDOWN_FINISHED(src, auto_teleport_cooldown))
+		return
+
+	var/boulders_processed = 0
+	for(var/i in 1 to boulders_processing_max)
+		if(!pre_collect_boulder(FALSE))
+			break
+		boulders_processed += 1
+
+	COOLDOWN_START(src, auto_teleport_cooldown, boulders_processed * TELEPORTATION_TIME)
+
 /**
  * Begins to collect a boulder from the available boulders list in SSore_generation.
- * Boulders must not be processed by another BRM or machine, and must be in the available boulders list.
+ * Boulders must be in the available boulders list.
  * A selected boulder is picked randomly.
  * The actual movement is then handled by collect_boulder() after a timed callback.
+ * Arguments
+ *
+ * * feedback - should we play sound and display allert if now boulders are available
  */
-/obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
-	if(!SSore_generation.available_boulders.len)
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
-		balloon_alert_to_viewers("no boulders to collect!")
-		return FALSE //Nothing to collect
-	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
-	if(random_boulder.processed_by)
-		return FALSE
+/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE)
+	PRIVATE_PROC(TRUE)
 
-	random_boulder.processed_by = src
+	if(!SSore_generation.available_boulders.len)
+		if(feedback)
+			playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+			balloon_alert_to_viewers("no boulders to collect!")
+		return FALSE //Nothing to collect
+
+	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
 	random_boulder.Shake(duration = 1.5 SECONDS)
 	SSore_generation.available_boulders -= random_boulder
-	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder), TELEPORTATION_TIME)
 	return TRUE
 
 /**
@@ -152,36 +255,22 @@
  * Handles the movement of the boulder as well as visual effects on the BRM.
  * @param obj/item/boulder/random_boulder The boulder to collect.
  */
-/obj/machinery/bouldertech/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
-	flick("brm-flash", src)
+/obj/machinery/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
 	if(QDELETED(random_boulder))
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		balloon_alert_to_viewers("target lost!")
 		return FALSE
-	playsound(src, AUTO_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+	flick("brm-flash", src)
+	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	random_boulder.forceMove(drop_location())
-	random_boulder.processed_by = null
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
-	return TRUE
 
-/**
- * Toggles automatic boulder retrieval on.
- * Adjusts the teleportation sound, icon state, and begins processing.
- * @param mob/user The user who toggled the BRM.
- */
-/obj/machinery/bouldertech/brm/proc/toggle_auto_on(mob/user)
-	if(panel_open)
-		if(user)
-			balloon_alert(user, "close panel first!")
-		return
-	toggled_on = TRUE
-	START_PROCESSING(SSmachines, src)
-	update_appearance(UPDATE_ICON_STATE)
-	usage_sound = AUTO_TELEPORT_SOUND
+	return TRUE
 
 #undef MANUAL_TELEPORT_SOUND
 #undef AUTO_TELEPORT_SOUND
