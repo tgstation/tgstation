@@ -737,7 +737,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * freebies - number of free items to vend
  */
 /obj/machinery/vending/proc/freebie(freebies)
-	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!"))
+	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
 
 	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
