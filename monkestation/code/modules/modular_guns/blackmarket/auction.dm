@@ -1,4 +1,4 @@
-#define AUCTION_TIME 5 MINUTES
+#define AUCTION_TIME 3 MINUTES
 
 /datum/market/auction
 	name = "Black Market Auction"
@@ -36,14 +36,14 @@
 		var/datum/market_item/auction/first_item = pick_weight(available_items)
 		var/datum/market_item/auction/created_item = new first_item.type
 		queued_items += created_item
-		queued_items[created_item] = world.time + rand(3 MINUTES, 5.5 MINUTES) + AUCTION_TIME
+		queued_items[created_item] = world.time + rand(1.5 MINUTES, 3 MINUTES) + AUCTION_TIME
 
 	if(length(queued_items) < queue_length) // we are missing a new auction
 		var/datum/market_item/auction/listed_item = pick_weight(available_items)
 		var/datum/market_item/auction/new_item = new listed_item.type
 		var/initial_time = queued_items[queued_items[length(queued_items)]]
 		queued_items += new_item
-		queued_items[new_item] = initial_time + rand(3 MINUTES, 5.5 MINUTES) + AUCTION_TIME
+		queued_items[new_item] = initial_time + rand(1.5 MINUTES, 3 MINUTES) + AUCTION_TIME
 
 	if(COOLDOWN_FINISHED(src, current_auction_time) && current_auction)
 		grab_purchase_info(current_auction, current_auction.category, SHIPPING_METHOD_AT_FEET)
@@ -113,7 +113,7 @@
 	for(var/datum/market_item/I in available_items)
 		if(I.type != item)
 			continue
-		var/price = I.price + shipping[method]
+		var/price = I.price
 
 		if(!uplink.current_user)///There is no ID card on the user, or the ID card has no account
 			to_chat(user, span_warning("The uplink sparks, as it can't identify an ID card with a bank account on you."))
