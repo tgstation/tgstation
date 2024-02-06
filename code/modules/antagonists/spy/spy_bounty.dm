@@ -186,7 +186,7 @@
 /datum/spy_bounty/objective_item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
-		if(is_valid_objective_item(item))
+		if(!is_valid_objective_item(item))
 			continue
 		// Skip bounties we JUST did in the last loot pool
 		if(handler.claimed_bounties_from_last_pool[item.targetitem])
@@ -246,6 +246,12 @@
 	/// Can be pre-set for subtypes. If set, requires the machine to be in the location_type.
 	/// If not set, picks a random machine from all areas it can currently be found in.
 	var/area/location_type
+	/// List of weakrefs to all machines of the target type when the bounty was initialized.
+	var/list/original_options_weakrefs = list()
+
+/datum/spy_bounty/machine/Destroy()
+	original_options_weakrefs.Cut() // Just in case
+	return ..()
 
 /datum/spy_bounty/machine/send_to_black_market(obj/machinery/thing)
 	if(!istype(thing.circuit, /obj/item/circuitboard))
@@ -296,6 +302,9 @@
 	if(!length(all_possible))
 		return FALSE
 
+	for(var/obj/machinery/machine as anything in all_possible)
+		original_options_weakrefs += WEAKREF(machine)
+
 	var/obj/machinery/machine = pick(all_possible)
 	var/area/machine_area = get_area(machine)
 	location_type = machine_area.type
@@ -306,9 +315,11 @@
 /datum/spy_bounty/machine/is_stealable(atom/movable/stealing)
 	if(!istype(stealing, target_type))
 		return FALSE
-	if(!istype(get_area(stealing), location_type))
-		return FALSE
-	return TRUE
+	if(WEAKREF(stealing) in original_options_weakrefs)
+		return TRUE
+	if(istype(get_area(stealing), location_type))
+		return TRUE
+	return FALSE
 
 /datum/spy_bounty/machine/random
 	/// List of all machines we can randomly draw from

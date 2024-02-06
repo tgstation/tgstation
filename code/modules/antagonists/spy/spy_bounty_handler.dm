@@ -94,7 +94,7 @@
 
 		var/list/pool = bounty_types[difficulty]
 		var/amount_to_give = bounties_to_give[difficulty]
-		var/failed_attempts = 8
+		var/failed_attempts = amount_to_give * 4
 		while(amount_to_give > 0 && failed_attempts > 0)
 			var/picked_bounty = pick_weight(pool)
 			var/datum/spy_bounty/bounty = new picked_bounty(src)

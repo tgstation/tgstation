@@ -7,6 +7,7 @@
 	category = /datum/uplink_category/bundle
 	surplus = 0
 	cant_discount = TRUE
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/bundles_tc/random
 	name = "Random Item"
@@ -14,7 +15,6 @@
 	item = ABSTRACT_UPLINK_ITEM
 	cost = 0
 	cost_override_string = "Varies"
-	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/list/possible_items = list()
