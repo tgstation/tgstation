@@ -84,8 +84,9 @@
 /datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
 	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
-		Damage dealt is decreased with each transfer."
+		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to a nearby heathen. \
+		Damage dealt is decreased with each transfer. \
+		Triggering the mark will also greatly reduce the cooldown of your Mansus Grasp."
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
