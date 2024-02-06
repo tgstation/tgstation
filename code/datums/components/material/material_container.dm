@@ -67,7 +67,7 @@
 			parent.RegisterSignal(src, signal, container_signals[signal])
 
 	//drop sheets when the object is deconstructed but not deleted
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, TYPE_PROC_REF(/datum/component/material_container, drop_sheets))
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
 
 	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
 		return
