@@ -14,7 +14,6 @@
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
-	obj_flags = CAN_BE_HIT
 
 	///Boolean on whether the ORM can claim points without being connected to an ore silo.
 	var/requires_silo = TRUE
