@@ -477,7 +477,10 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 			var/confirmation = tgui_alert(usr, "Make everyone in to [chosen_antag] with objective: [objective]", "Are you sure about this?", list("Confirm", "Abort"))
 			if(confirmation != "Confirm")
 				return
-			GLOB.everyone_an_antag = new /datum/everyone_is_an_antag_controller(chosen_antag, objective)
+			var/keep_generic_objecives = tgui_alert(usr, "Generate normal objectives?", "Give default objectives?", list("Yes", "No"))
+			keep_generic_objecives = (keep_generic_objecives != "Yes") ? FALSE : TRUE
+
+			GLOB.everyone_an_antag = new /datum/everyone_is_an_antag_controller(chosen_antag, objective, keep_generic_objecives)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("[chosen_antag] All", "[objective]"))
 			for(var/mob/living/player in GLOB.player_list)
 				GLOB.everyone_an_antag.make_antag(null, player)
@@ -652,20 +655,26 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 /datum/everyone_is_an_antag_controller
 	var/chosen_antag = ""
 	var/objective = ""
+	var/keep_generic_objecives
 
-/datum/everyone_is_an_antag_controller/New(chosen_antag, objective)
+/datum/everyone_is_an_antag_controller/New(chosen_antag, objective, keep_generic_objecives)
+	. = ..()
 	src.chosen_antag = chosen_antag
 	src.objective = objective
+	src.keep_generic_objecives = keep_generic_objecives
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(make_antag))
 
 /datum/everyone_is_an_antag_controller/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	return ..()
 
-/datum/everyone_is_an_antag_controller/proc/assign_admin_objective(mob/living/player, datum/antagonist/antag_datum)
+/datum/everyone_is_an_antag_controller/proc/assign_admin_objective_and_antag(mob/living/player, datum/antagonist/antag_datum)
 	var/datum/objective/new_objective = new(objective)
 	new_objective.team = player
+	new_objective.team_explanation_text = objective
 	antag_datum.objectives += new_objective
+	player.mind.add_antag_datum(antag_datum)
+
 
 /datum/everyone_is_an_antag_controller/proc/make_antag(datum/source, mob/living/player)
 	SIGNAL_HANDLER
@@ -674,46 +683,44 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	if(ishuman(player))
 		switch(chosen_antag)
 			if(ROLE_TRAITOR)
-				var/datum/antagonist/traitor/antag_datum = new(give_objectives = FALSE)
-				assign_admin_objective(player, antag_datum)
-				player.mind.add_antag_datum(antag_datum)
+				var/datum/antagonist/traitor/antag_datum = new(give_objectives = keep_generic_objecives)
+				assign_admin_objective_and_antag(player, antag_datum)
 				var/datum/uplink_handler/uplink = antag_datum.uplink_handler
 				uplink.has_progression = FALSE
 				uplink.has_objectives = FALSE
 			if(ROLE_CHANGELING)
 				var/datum/antagonist/changeling/antag_datum = new
-				assign_admin_objective(player, antag_datum)
-				player.mind.add_antag_datum(antag_datum)
+				antag_datum.give_objectives = keep_generic_objecives
+				assign_admin_objective_and_antag(player, antag_datum)
 			if(ROLE_HERETIC)
 				var/datum/antagonist/heretic/antag_datum = new
-				assign_admin_objective(player, antag_datum)
-				player.mind.add_antag_datum(antag_datum)
+				antag_datum.give_objectives = keep_generic_objecives
+				assign_admin_objective_and_antag(player, antag_datum)
 			if(ROLE_CULTIST)
 				var/datum/antagonist/cult/antag_datum = new
-				assign_admin_objective(player, antag_datum)
-				player.mind.add_antag_datum(antag_datum)
+				assign_admin_objective_and_antag(player, antag_datum)
 			if(ROLE_NINJA)
 				var/datum/antagonist/ninja/antag_datum = new
-				assign_admin_objective(player, antag_datum)
+				antag_datum.give_objectives = keep_generic_objecives
 				for(var/obj/item/item_to_drop in player)
 					if(!istype(item_to_drop, /obj/item/implant)) //avoid removing implanted uplinks
 						player.dropItemToGround(item_to_drop, FALSE)
-				player.mind.add_antag_datum(antag_datum)
+				assign_admin_objective_and_antag(player, antag_datum)
 			if(ROLE_WIZARD)
 				var/datum/antagonist/wizard/antag_datum = new
+				antag_datum.give_objectives = keep_generic_objecives
 				antag_datum.move_to_lair = FALSE
-				assign_admin_objective(player, antag_datum)
 				for(var/obj/item/item_to_drop in player) //avoid deleting player's items
 					if(!istype(item_to_drop, /obj/item/implant))
 						player.dropItemToGround(item_to_drop, FALSE)
-				player.mind.add_antag_datum(antag_datum)
+				assign_admin_objective_and_antag(player, antag_datum)
 			if(ROLE_NIGHTMARE)
 				var/datum/antagonist/nightmare/antag_datum = new
-				assign_admin_objective(player, antag_datum)
-				player.mind.add_antag_datum(antag_datum)
+				assign_admin_objective_and_antag(player, antag_datum)
 				player.set_species(/datum/species/shadow/nightmare)
 
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/antag_datum = new
-		assign_admin_objective(player, antag_datum)
-		player.mind.add_antag_datum(antag_datum)
+		antag_datum.give_objectives = keep_generic_objecives
+		assign_admin_objective_and_antag(player, antag_datum)
+
