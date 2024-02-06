@@ -177,7 +177,7 @@
 /obj/item/storage/box/slugs
 	name = "box of shotgun shells (Lethal - Slugs)"
 	desc = "A box full of lethal shotgun slugs, designed for shotguns."
-	icon_state = "slug_box"
+	icon_state = "breacher_box"
 	illustration = null
 
 /obj/item/storage/box/slugs/PopulateContents()
