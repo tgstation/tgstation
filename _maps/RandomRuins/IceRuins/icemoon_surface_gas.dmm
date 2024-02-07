@@ -11,19 +11,13 @@
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "bn" = (
-/obj/structure/chair/plastic{
-	dir = 4
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered/lizard_gas)
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
 "bJ" = (
-/obj/machinery/duct,
-/obj/structure/sign/warning/explosives/alt/directional/north,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/powered/lizard_gas)
-"ch" = (
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "cv" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron,
@@ -36,48 +30,56 @@
 "cF" = (
 /obj/structure/rack,
 /obj/item/food/cornchips/blue{
-	pixel_x = 3;
-	pixel_y = -1
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /obj/item/food/cornchips/blue{
 	pixel_x = -5;
-	pixel_y = 8
+	pixel_y = 1
 	},
 /obj/item/food/cornchips/green{
 	pixel_x = 8;
 	pixel_y = 5
 	},
 /obj/item/food/cornchips/green{
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 1
 	},
 /obj/item/food/cornchips/red{
 	pixel_y = 5
 	},
 /obj/item/food/cornchips/red{
-	pixel_y = -1;
-	pixel_x = -5
+	pixel_y = 3
 	},
+/obj/item/food/cornchips/red{
+	pixel_y = 1
+	},
+/obj/item/food/cornchips/red{
+	pixel_y = -1
+	},
+/obj/item/food/cornchips/purple{
+	pixel_y = 4
+	},
+/obj/item/food/cornchips/purple,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "cI" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink/directional/west{
-	has_water_reclaimer = 0;
-	name = "sink"
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/powered/lizard_gas)
 "dd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "ed" = (
 /obj/effect/spawner/random/structure/closet_empty/crate,
-/obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "es" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
@@ -85,12 +87,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
 /obj/structure/sign/poster/fluff/lizards_gas_power/directional/west,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/cola,
+/obj/item/vending_refill/snack,
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "eM" = (
-/obj/structure/water_source/puddle,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
 "eZ" = (
 /obj/structure/rack,
 /obj/item/food/cornuto,
@@ -127,26 +134,23 @@
 	pixel_x = -7
 	},
 /obj/structure/window/spawner/directional/north,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "gv" = (
 /turf/template_noop,
 /area/template_noop)
 "gW" = (
-/obj/structure/sink/directional/east{
-	has_water_reclaimer = 0;
-	name = "sink"
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/powered/lizard_gas)
 "ih" = (
 /obj/structure/sign/poster/fluff/lizards_gas_payment/directional/east,
 /mob/living/basic/lizard/space,
-/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "iS" = (
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "jD" = (
@@ -162,8 +166,11 @@
 /obj/machinery/door/airlock/multi_tile/public/glass{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "ku" = (
@@ -172,7 +179,7 @@
 "kI" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "kS" = (
 /obj/machinery/duct,
 /turf/open/floor/iron,
@@ -188,33 +195,23 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "lK" = (
-/obj/structure/fence/door{
-	dir = 8
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
 "ma" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/machinery/duct,
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "mE" = (
 /obj/structure/bonfire/prelit,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"nt" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/plating/snowed/icemoon,
-/area/ruin/powered/lizard_gas)
+/area/icemoon/underground/unexplored)
 "oo" = (
 /turf/closed/wall,
 /area/ruin/powered/lizard_gas)
@@ -239,7 +236,7 @@
 "pO" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "qM" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/duct,
@@ -270,39 +267,31 @@
 "sQ" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "sU" = (
 /obj/structure/barricade/wooden/snowed,
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"tw" = (
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/plating/snowed/icemoon,
-/area/ruin/powered/lizard_gas)
+/area/icemoon/underground/unexplored)
 "tx" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "tW" = (
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "ul" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "ur" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "uv" = (
-/obj/structure/fence/corner{
-	dir = 6
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/structure/shipping_container/donk_co,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
 "vA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/jim_nortons/directional/south,
@@ -312,13 +301,13 @@
 /area/ruin/powered/lizard_gas)
 "wK" = (
 /obj/machinery/space_heater,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "wN" = (
 /obj/effect/spawner/random/structure/closet_empty/crate,
-/obj/effect/spawner/random/maintenance/five,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "wU" = (
 /obj/structure/table/reinforced,
 /obj/item/food/croissant{
@@ -342,12 +331,10 @@
 /area/ruin/powered/lizard_gas)
 "xK" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "xN" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "yG" = (
@@ -371,10 +358,10 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "zm" = (
-/obj/machinery/duct,
-/turf/closed/wall,
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/lizard_gas)
 "zJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -398,17 +385,16 @@
 /area/ruin/powered/lizard_gas)
 "CW" = (
 /obj/machinery/duct,
-/obj/structure/cable,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/lizard_gas)
 "El" = (
 /obj/structure/table,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Ez" = (
 /obj/structure/billboard/roadsign/twothousand,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Fp" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating/snowed/icemoon,
@@ -426,19 +412,14 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
-"GO" = (
-/obj/structure/cable,
-/obj/machinery/power/floodlight{
-	anchored = 1
-	},
-/obj/structure/railing{
-	dir = 9
-	},
-/obj/structure/railing{
-	dir = 10
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+"Gn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
+"GO" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
 "HE" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/lizard_gas)
@@ -450,40 +431,39 @@
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "IF" = (
+/obj/machinery/light/cold/directional/east,
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/lizard_gas)
 "Ji" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Jv" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/lizard_gas)
 "KG" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Lh" = (
 /obj/structure/barricade/wooden/snowed,
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "LG" = (
 /obj/structure/billboard/lizards_gas,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "LP" = (
-/obj/structure/fence/corner{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/structure/mop_bucket,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
 "Md" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Mz" = (
-/obj/structure/sign/warning/explosives/alt/directional/south,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/powered/lizard_gas)
 "MA" = (
@@ -498,10 +478,6 @@
 	},
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/spawner/random/entertainment/lighter,
-/turf/open/floor/iron,
-/area/ruin/powered/lizard_gas)
-"Nb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
@@ -517,6 +493,7 @@
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "QK" = (
+/obj/structure/cable,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/cans/sixbeer{
@@ -531,53 +508,39 @@
 "QQ" = (
 /obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /obj/structure/rack,
-/obj/item/food/chips/shrimp{
-	pixel_y = 7;
-	pixel_x = -3
+/obj/item/grenade/firecracker{
+	pixel_x = 5;
+	pixel_y = 7
 	},
-/obj/item/food/chips/shrimp{
-	pixel_y = 2;
+/obj/item/grenade/firecracker{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/obj/item/grenade/firecracker{
 	pixel_x = 5
 	},
-/obj/item/food/chips/shrimp{
-	pixel_y = 6
+/obj/item/grenade/firecracker{
+	pixel_x = -6;
+	pixel_y = 7
 	},
-/obj/item/food/chips/shrimp,
-/obj/item/food/chips/shrimp{
-	pixel_y = 8;
-	pixel_x = 7
+/obj/item/grenade/firecracker{
+	pixel_y = -7;
+	pixel_x = -6
 	},
-/obj/item/food/sosjerky{
-	pixel_y = 3;
-	pixel_x = 7
-	},
-/obj/item/food/sosjerky{
-	pixel_y = -4;
-	pixel_x = -5
-	},
-/obj/item/food/sosjerky{
-	pixel_y = 3
-	},
-/obj/item/food/sosjerky{
-	pixel_y = 8;
-	pixel_x = -7
-	},
-/obj/item/food/sosjerky{
-	pixel_x = 6;
-	pixel_y = -2
+/obj/item/grenade/firecracker{
+	pixel_x = -6
 	},
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "Rc" = (
 /obj/structure/shipping_container/nanotrasen,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Rs" = (
-/obj/structure/fence{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
 "RC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -592,18 +555,19 @@
 /turf/closed/wall,
 /area/ruin/powered/lizard_gas)
 "RE" = (
+/obj/machinery/light/cold/directional/east,
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/lizard_gas)
 "RW" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "SZ" = (
 /obj/structure/table,
 /obj/item/mop,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 "Tz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -620,44 +584,42 @@
 	pixel_x = 4
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/item/food/chocolatebar{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/food/chocolatebar{
+	pixel_y = -3;
+	pixel_x = -4
+	},
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "TA" = (
 /obj/structure/table/reinforced,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/item/stack/spacecash/c100,
-/obj/item/stack/spacecash/c10{
-	pixel_y = 1
-	},
-/obj/item/stack/spacecash/c1{
-	pixel_y = 2
-	},
+/obj/structure/closet/mini_fridge,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
-"TP" = (
-/obj/structure/shipping_container/donk_co,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Uj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/powered/lizard_gas)
-"UT" = (
-/obj/structure/reagent_dispensers/plumbed/fuel,
-/obj/item/fuel_pellet,
-/obj/item/fuel_pellet,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/west,
+"Vq" = (
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/powered/lizard_gas)
+/area/icemoon/underground/unexplored)
 "Ww" = (
 /obj/machinery/duct,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/powered/lizard_gas)
 "WG" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /obj/structure/rack,
 /obj/item/reagent_containers/condiment/yoghurt{
 	pixel_x = 10
@@ -683,11 +645,7 @@
 "YC" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Zg" = (
-/obj/structure/mop_bucket,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/unexplored)
 
 (1,1,1) = {"
 gv
@@ -757,7 +715,7 @@ Ji
 Ji
 tx
 tx
-eM
+GO
 Ji
 Ji
 gv
@@ -785,7 +743,7 @@ zh
 tx
 tx
 El
-ch
+Vq
 Ji
 gv
 gv
@@ -812,7 +770,7 @@ SZ
 tx
 tx
 kT
-Zg
+LP
 Ji
 gv
 gv
@@ -835,7 +793,7 @@ gv
 gv
 Jv
 Jv
-bn
+HE
 rh
 rh
 Jv
@@ -918,8 +876,8 @@ Jv
 Bc
 Mz
 oo
-UT
-zm
+Bc
+oo
 bJ
 Ww
 Jv
@@ -971,10 +929,10 @@ gv
 HE
 Bc
 Bc
-nt
-tw
-nt
-tw
+jD
+Ww
+jD
+Ww
 Ww
 Jv
 gv
@@ -995,10 +953,10 @@ Ji
 Ji
 gv
 gv
-Jv
+zm
 Jv
 HE
-GO
+Jv
 IF
 HE
 CW
@@ -1027,7 +985,7 @@ aR
 aR
 aR
 oo
-Ao
+eM
 kc
 oo
 oo
@@ -1054,7 +1012,7 @@ FP
 yG
 cF
 Tz
-Uj
+Gn
 ma
 sn
 oo
@@ -1078,11 +1036,11 @@ gv
 gv
 oo
 QQ
-Ao
+lK
 dd
 es
+lK
 es
-Nb
 eZ
 oo
 gv
@@ -1105,11 +1063,11 @@ gv
 gv
 oo
 MA
-Ao
+lK
 cv
 zJ
 jQ
-Nb
+es
 vA
 oo
 gv
@@ -1209,7 +1167,7 @@ gv
 sU
 Ji
 Ji
-Ji
+sU
 YC
 ed
 Ji
@@ -1234,7 +1192,7 @@ gv
 gv
 gv
 Lh
-Ji
+bn
 Ji
 Ji
 wN
@@ -1243,8 +1201,8 @@ ed
 oo
 xK
 iS
-iS
-iS
+Rs
+Rs
 RC
 RD
 gv
@@ -1262,8 +1220,8 @@ gv
 gv
 sU
 Ji
-ur
-TP
+uv
+sU
 Ji
 Ji
 Ji
@@ -1317,7 +1275,7 @@ gv
 sQ
 Ji
 Ji
-Ji
+ed
 wN
 RW
 mE
@@ -1342,7 +1300,7 @@ gv
 gv
 gv
 KG
-ed
+Ji
 Ji
 YC
 Md
@@ -1355,33 +1313,6 @@ ur
 Ji
 Ji
 kI
-gv
-gv
-gv
-gv
-gv
-gv
-gv
-gv
-"}
-(26,1,1) = {"
-gv
-gv
-gv
-LP
-Rs
-Rs
-Rs
-lK
-Rs
-Rs
-Rs
-Rs
-lK
-Rs
-Rs
-Rs
-uv
 gv
 gv
 gv
