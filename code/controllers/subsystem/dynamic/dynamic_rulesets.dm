@@ -45,6 +45,8 @@
 	var/cost = 0
 	/// Cost per level the rule scales up.
 	var/scaling_cost = 0
+	/// If this ruleset is left to scale up, we will only ever scale up to this percentage of players to antagonists
+	var/max_scale_up_to_percent = 0.25
 	/// How many times a rule has scaled up upon getting picked.
 	var/scaled_times = 0
 	/// Used for the roundend report
@@ -149,7 +151,7 @@
 		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.get_antag_cap(population)) / SSdynamic.roundstart_pop_ready
 
 	for(var/i in 1 to max_scale)
-		if(antag_fraction < 0.25)
+		if(antag_fraction < max_scale_up_to_percent)
 			scaled_times += 1
 			antag_fraction += get_antag_cap(population) / SSdynamic.roundstart_pop_ready // we added new antags, gotta update the %
 

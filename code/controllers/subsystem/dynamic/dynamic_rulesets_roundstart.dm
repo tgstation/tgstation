@@ -721,7 +721,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	weight = 5
 	cost = 8
 	scaling_cost = 8
-	antag_cap = list("denominator" = 15, "offset" = 1) // should be a GOOD CHUNK.
+	max_scale_up_to_percent = 0.15 // don't scale as radically as other rulesets
+	antag_cap = list("denominator" = 15, "offset" = 2) // should be a GOOD CHUNK.
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
 
 /datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
