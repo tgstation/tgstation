@@ -1,7 +1,7 @@
 /obj/machinery/computer/nanite_cloud_controller
 	name = "nanite cloud controller"
 	desc = "Stores and controls nanite cloud backups."
-	icon = 'icons/obj/machines/nanites.dmi'
+	icon = 'massmeta/icons/obj/machines/nanites.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
 	icon_keyboard = null

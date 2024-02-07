@@ -51,3 +51,16 @@
 #define NES_SCAN_TYPE "Scan Type"
 #define NES_BUTTON_NAME "Button Name"
 #define NES_ICON "Icon"
+
+//_Defines/atom_hud
+#define NANITE_HUD "24"
+#define DIAG_NANITE_FULL_HUD "25"
+
+//_Defines/logging
+#define INVESTIGATE_NANITES "nanites"
+
+//_Defines/machines
+#define NANITE_COMPILER (1<<7) //Prints nanite disks
+
+//_Defines/mobs
+#define VOMIT_NANITE (1<<6)

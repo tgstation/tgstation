@@ -114,7 +114,7 @@
 	departmental_flags = NONE
 	construction_time = 50
 	category = list()
-	research_icon = 'icons/obj/machines/nanites.dmi'
+	research_icon = 'massmeta/icons/obj/machines/nanites.dmi'
 	research_icon_state = "nanite_program"
 	var/program_type = /datum/nanite_program
 

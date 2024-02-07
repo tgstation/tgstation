@@ -48,9 +48,6 @@
 /// Steady Hacked APC effect, visible only to Malf AIs
 #define MALF_APC_HUD "23"
 
-#define NANITE_HUD "24"
-#define DIAG_NANITE_FULL_HUD "25"
-
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
 #define HUD_LIST_LIST 1

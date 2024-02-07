@@ -2,7 +2,7 @@
 	name = "nanite chamber"
 	desc = "A device that can scan, reprogram, and inject nanites."
 	circuit = /obj/item/circuitboard/machine/nanite_chamber
-	icon = 'icons/obj/machines/nanites.dmi'
+	icon = 'massmeta/icons/obj/machines/nanites.dmi'
 	icon_state = "nanite_chamber"
 	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER

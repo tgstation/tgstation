@@ -1,6 +1,6 @@
 /obj/item/nanite_scanner
 	name = "nanite scanner"
-	icon = 'icons/obj/machines/nanites.dmi'
+	icon = 'massmeta/icons/obj/machines/nanites.dmi'
 	icon_state = "nanite_scanner"
 	worn_icon_state = "electronic"
 	desc = "A hand-held body scanner able to detect nanites and their programming."

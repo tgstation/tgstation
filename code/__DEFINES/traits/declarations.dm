@@ -1064,9 +1064,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
-#define NANITES_TRAIT "nanites"
+#define NANITES_TRAIT "nanites" // Massmeta editchen
 
-/// The mob's nanites are sending a monitoring signal visible on diag HUD
+/// The mob's nanites are sending a monitoring signal visible on diag HUD // Massmeta editchen
 #define TRAIT_NANITE_MONITORING "nanite_monitoring"
 
 // END TRAIT DEFINES
