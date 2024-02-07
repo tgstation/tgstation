@@ -5642,6 +5642,7 @@
 #include "monkestation\code\datums\announcers\dagoth.dm"
 #include "monkestation\code\datums\announcers\duke.dm"
 #include "monkestation\code\datums\brain_damage\magic.dm"
+#include "monkestation\code\datums\brain_damage\phobia.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\components\multi_hit.dm"
 #include "monkestation\code\datums\components\throw_bounce.dm"
