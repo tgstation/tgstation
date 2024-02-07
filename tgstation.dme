@@ -528,6 +528,7 @@
 #include "code\_globalvars\lists\mobs.dm"
 #include "code\_globalvars\lists\names.dm"
 #include "code\_globalvars\lists\objects.dm"
+#include "code\_globalvars\lists\ores_spawned.dm"
 #include "code\_globalvars\lists\plumbing.dm"
 #include "code\_globalvars\lists\poll_ignore.dm"
 #include "code\_globalvars\lists\quirks.dm"
