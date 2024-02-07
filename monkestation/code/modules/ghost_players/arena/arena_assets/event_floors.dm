@@ -8,3 +8,9 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/misc/ashplanet/rocky/arena
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
+/turf/open/water/arena
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS

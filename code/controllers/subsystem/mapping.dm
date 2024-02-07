@@ -439,6 +439,7 @@ Used by the AI doomsday and the self-destruct nuke.
 			template.weight = (template.weight / 2)
 			if(template.stock <= 0)
 				template.spawned = TRUE
+			log_world("Loading random room template [template.name] ([template.type]) at [AREACOORD(R)]")
 			template.stationinitload(get_turf(R), centered = template.centerspawner)
 		SSmapping.random_room_spawners -= R
 		qdel(R)
@@ -459,6 +460,7 @@ Used by the AI doomsday and the self-destruct nuke.
 			possible_engine_templates[engine_candidate] = engine_candidate.weight
 		if(possible_engine_templates.len)
 			var/datum/map_template/random_room/random_engines/template = pick_weight(possible_engine_templates)
+			log_world("Loading random engine template [template.name] ([template.type]) at [AREACOORD(engine_spawner)]")
 			template.stationinitload(get_turf(engine_spawner), centered = template.centerspawner)
 		SSmapping.random_engine_spawners -= engine_spawner
 		qdel(engine_spawner)
@@ -480,6 +482,7 @@ Used by the AI doomsday and the self-destruct nuke.
 			possible_bar_templates[bar_candidate] = bar_candidate.weight
 		if(possible_bar_templates.len)
 			var/datum/map_template/random_room/random_bar/template = pick_weight(possible_bar_templates)
+			log_world("Loading random bar template [template.name] ([template.type]) at [AREACOORD(bar_spawner)]")
 			template.stationinitload(get_turf(bar_spawner), centered = template.centerspawner)
 		SSmapping.random_bar_spawners -= bar_spawner
 		qdel(bar_spawner)
@@ -500,6 +503,7 @@ Used by the AI doomsday and the self-destruct nuke.
 			possible_arena_templates[arena_candidate] = arena_candidate.weight
 		if(possible_arena_templates.len)
 			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arena_templates)
+			log_world("Loading random arena template [template.name] ([template.type]) at [AREACOORD(arena_spawner)]")
 			template.stationinitload(get_turf(arena_spawner), centered = template.centerspawner)
 		SSmapping.random_arena_spawners -= arena_spawner
 		qdel(arena_spawner)

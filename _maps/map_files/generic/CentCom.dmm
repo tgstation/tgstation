@@ -17238,6 +17238,9 @@
 	name = "CentCom Security"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "Zc" = (
