@@ -96,13 +96,6 @@
 			job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
 			enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
 
-		for(var/mob/enemy_mob in GLOB.alive_player_list)
-			if (enemy_mob.mind && (enemy_mob.mind.assigned_role.title in enemy_roles))
-				if (enemy_mob.stat == DEAD)
-					job_check += 0.5 //should probably revive the dead people yea
-				else
-					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
-
 	if(job_check >= required_enemies)
 		return return_players ? enemy_players : TRUE
 	return return_players ? enemy_players : FALSE

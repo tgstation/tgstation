@@ -177,6 +177,8 @@
 			var/datum/market/auction/market = SSblackmarket.markets[viewing_market]
 			if(!istype(market))
 				return
+			if(!market.current_auction)
+				return
 			selected_item = market.current_auction.type
 			if(isnull(selected_item))
 				return

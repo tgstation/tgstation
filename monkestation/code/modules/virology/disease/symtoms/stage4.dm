@@ -238,10 +238,17 @@
 	var/datum/dna/saved_dna
 	var/original_name
 	var/activated = 0
+	///old info
+	var/datum/dna/old_dna
+	var/old_name
 
 /datum/symptom/dnaspread/activate(mob/living/carbon/mob)
 	if(!activated)
 		to_chat(mob, span_warning("You don't feel like yourself.."))
+		old_dna = new
+		C.dna.copy_dna(old_dna)
+		old_name = C.real_name
+
 	if(!iscarbon(mob))
 		return
 	var/mob/living/carbon/C = mob
@@ -256,6 +263,10 @@
 
 /datum/symptom/dnaspread/deactivate(mob/living/carbon/mob)
 	activated = FALSE
+	if(!old_dna)
+		return
+	old_dna.copy_dna(C.dna)
+	C.real_name = old_name
 
 /datum/symptom/dnaspread/Copy(datum/disease/advanced/disease)
 	var/datum/symptom/dnaspread/new_e = ..(disease)
