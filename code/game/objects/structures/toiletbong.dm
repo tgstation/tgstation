@@ -97,7 +97,6 @@
 	playsound(src, 'sound/effects/fish_splash.ogg', 50)
 	balloon_alert(user, "toilet broke")
 	if (emag_card)
-		emag_card.forceMove(src)
 		to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
 	return TRUE
 
