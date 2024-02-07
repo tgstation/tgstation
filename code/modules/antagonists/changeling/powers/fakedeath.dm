@@ -40,6 +40,7 @@
 		return
 
 	changeling.fakedeath(CHANGELING_TRAIT)
+	ADD_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration * duration_modifier, TIMER_UNIQUE)
 	// Basically, these let the ling exit stasis without giving away their ling-y-ness if revived through other means
 	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
@@ -54,6 +55,7 @@
 		revive_ready = FALSE
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
+	REMOVE_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
 
