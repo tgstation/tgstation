@@ -26,9 +26,7 @@
 /area/centcom/tdome/arena/actual)
 "hA" = (
 /obj/structure/flora/bush/reed/style_3,
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "hL" = (
 /obj/effect/turf_decal/siding/wood{
@@ -76,9 +74,7 @@
 /area/centcom/tdome/arena/actual)
 "wZ" = (
 /obj/machinery/light/directional/north,
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "yW" = (
 /obj/machinery/light/small/blacklight/directional/west,
@@ -94,15 +90,11 @@
 /area/centcom/tdome/arena/actual)
 "BT" = (
 /obj/structure/flora/bush/reed/style_2,
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "Cb" = (
 /obj/machinery/light/directional/south,
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "Cu" = (
 /obj/effect/turf_decal/sand/plating,
@@ -159,9 +151,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/tdome/arena/actual)
 "VF" = (
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "Wh" = (
 /obj/effect/turf_decal/sand/plating,
@@ -185,9 +175,7 @@
 /area/centcom/tdome/arena/actual)
 "Zu" = (
 /obj/structure/flora/bush/reed,
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 
 (1,1,1) = {"

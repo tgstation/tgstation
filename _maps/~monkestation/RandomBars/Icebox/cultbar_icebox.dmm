@@ -192,7 +192,6 @@
 /area/station/service/theater)
 "iX" = (
 /obj/effect/spawner/random/structure/musician/piano/random_piano,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/cult,
 /area/station/service/theater)
@@ -400,7 +399,6 @@
 /area/station/service/theater)
 "uL" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/cult,
 /area/station/service/bar/backroom)
