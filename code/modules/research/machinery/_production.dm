@@ -1,7 +1,6 @@
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
-	layer = BELOW_OBJ_LAYER
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -42,7 +41,6 @@
 		TRUE, \
 	)
 
-	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
@@ -63,9 +61,10 @@
 	if(!stripe_color)
 		return
 
-	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolate_stripe[panel_open ? "_t" : ""]")
+	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
 	stripe.color = stripe_color
 	. += stripe
+
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
@@ -168,7 +167,7 @@
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 
-	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_[mat_name]", BELOW_OBJ_LAYER), 1 SECONDS)
+	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_[mat_name]"), 1 SECONDS)
 
 ///When materials are instered into local storage
 /obj/machinery/rnd/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
