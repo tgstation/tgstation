@@ -1,0 +1,4 @@
+author: "ViktorKoL"
+delete-after: True
+changes:
+  - bugfix: "ash mark now properly lowers the cooldown of mansus grasp when triggered"
