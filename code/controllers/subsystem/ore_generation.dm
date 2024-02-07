@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(ore_generation)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
-	available_boulders = list() // reset upon new fire.
+	available_boulders.Cut() // reset upon new fire.
 	for(var/obj/structure/ore_vent/current_vent as anything in processed_vents)
 
 		var/local_vent_count = 0
@@ -74,3 +74,13 @@ SUBSYSTEM_DEF(ore_generation)
 		var/obj/item/boulder/new_rock = current_vent.produce_boulder()
 		available_boulders += new_rock
 
+/proc/add_boulders(count)
+
+	for(var/obj/structure/ore_vent/current_vent as anything in SSore_generation.processed_vents)
+
+		while(count > 0)
+			var/obj/item/boulder/new_rock = current_vent.produce_boulder()
+			SSore_generation.available_boulders += new_rock
+			count --
+
+		break

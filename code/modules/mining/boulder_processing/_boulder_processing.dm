@@ -57,7 +57,6 @@
 	. = CONTEXTUAL_SCREENTIP_SET
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Remove Boulder"
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Boulder"
 		return
 
@@ -142,8 +141,8 @@
 	if(!istype(new_boulder) || QDELETED(new_boulder))
 		return FALSE
 
-	//we just processed this
-	if(new_boulder.processed_by == src)
+	//someone just processed this
+	if(new_boulder.processed_by)
 		return FALSE
 
 	//no space to hold boulders

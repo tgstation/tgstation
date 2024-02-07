@@ -380,7 +380,7 @@
 	new_rock.boulder_size = boulder_size
 	new_rock.durability = rand(2, boulder_size) //randomize durability a bit for some flavor.
 	new_rock.boulder_string = boulder_icon_state
-	new_rock.boulder.update_appearance(UPDATE_ICON_STATE)
+	new_rock.update_appearance(UPDATE_ICON_STATE)
 
 	//start the cooldown & return the boulder
 	if(apply_cooldown)

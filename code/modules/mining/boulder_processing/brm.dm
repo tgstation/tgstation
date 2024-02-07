@@ -4,6 +4,8 @@
 #define AUTO_TELEPORT_SOUND 'sound/machines/mining/auto_teleport.ogg'
 ///Time taken to spawn a boulder, also the cooldown applied before the next manual teleportation
 #define TELEPORTATION_TIME (1.5 SECONDS)
+///Cooldown for automatic teleportation after processing boulders_processing_max number of boulders
+#define BATCH_COOLDOWN (3 SECONDS)
 
 /obj/machinery/brm
 	name = "boulder retrieval matrix"
@@ -20,9 +22,13 @@
 	var/boulders_processing_max = 1
 	/// Are we trying to actively collect boulders automatically?
 	var/toggled_on = FALSE
+	///Have we finished processing a full batch of boulders
+	var/batch_processing = FALSE
 
 	/// Cooldown used for left click teleportation.
 	COOLDOWN_DECLARE(manual_teleport_cooldown)
+	/// Cooldown used for automatic teleportation after processing boulders_processing_max number of boulders.
+	COOLDOWN_DECLARE(batch_start_cooldown)
 
 /obj/machinery/brm/Initialize(mapload)
 	. = ..()
@@ -149,6 +155,9 @@
 	if(panel_open)
 		balloon_alert(user, "close panel first!")
 		return FALSE
+	if(batch_processing)
+		balloon_alert(user, "teleportation started!")
+		return FALSE
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
@@ -209,11 +218,11 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/brm/process()
-	if(!toggled_on || !is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
-		return
+	if(!toggled_on)
+		return PROCESS_KILL
 
-	//check for atleast 1 boulder before processing
-	if(!SSore_generation.available_boulders.len)
+	//have some cooldown after processing the previous batch of boulders
+	if(!COOLDOWN_FINISHED(src, batch_start_cooldown))
 		return
 
 	pre_collect_boulder(FALSE, boulders_processing_max)
@@ -227,19 +236,34 @@
  *
  * * feedback - should we play sound and display allert if now boulders are available
  * * boulders_remaining - how many boulders we want to try & collect spawning a boulder every TELEPORTATION_TIME seconds
+ * * new_batch - is this the very 1st boulder processed from boulders_remaining. Used to wait for all the boulders to be collected
  */
-/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1)
+/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1, new_batch = TRUE)
 	PRIVATE_PROC(TRUE)
 
+	if(!is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
+		return FALSE
+
+	//no more boulders
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
 			playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 			balloon_alert_to_viewers("no boulders to collect!")
-		return FALSE //Nothing to collect
+		batch_processing = FALSE
+		return FALSE
+
+	//we are trying to process a new batch of boulders
+	if(new_batch)
+		if(batch_processing) //the previous one hasen't completed yet, wait
+			return FALSE
+		batch_processing = TRUE
 
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
-	random_boulder.Shake(duration = 1.5 SECONDS)
+	if(random_boulder.processed_by)
+		return FALSE
 	SSore_generation.available_boulders -= random_boulder
+	random_boulder.processed_by = src
+	random_boulder.Shake(shake_interval = TELEPORTATION_TIME)
 	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder, feedback, boulders_remaining), TELEPORTATION_TIME)
 	return TRUE
 
@@ -264,15 +288,18 @@
 	random_boulder.forceMove(drop_location())
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
+	random_boulder.processed_by = null
 	balloon_alert_to_viewers("boulder appears!")
-	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
 
-	boulders_remaining --
+	boulders_remaining -= 1
 	if(boulders_remaining <= 0)
+		COOLDOWN_START(src, batch_start_cooldown, BATCH_COOLDOWN)
+		batch_processing = FALSE
 		return TRUE
 	else
-		return pre_collect_boulder(feedback, boulders_remaining)
+		return pre_collect_boulder(feedback, boulders_remaining, FALSE)
 
 #undef MANUAL_TELEPORT_SOUND
 #undef AUTO_TELEPORT_SOUND
+#undef BATCH_COOLDOWN
