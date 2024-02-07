@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes:
+  - bugfix: "blood brothers should now properly succeed in converting non-targets"

@@ -314,16 +314,6 @@ rough example of the "cone" made by the 3 dirs checked
 /proc/pass(...)
 	return
 
-///Returns a list of the parents of all storage components that contain the target item
-/proc/get_storage_locs(obj/item/target)
-	. = list()
-	if(!istype(target) || !(target.item_flags & IN_STORAGE))
-		return
-	var/datum/storage/storage_datum = target.loc.atom_storage
-	if(!storage_datum)
-		return
-	. += storage_datum.real_location?.resolve()
-
 /// Returns an x and y value require to reverse the transformations made to center an oversized icon
 /atom/proc/get_oversized_icon_offsets()
 	if (pixel_x == 0 && pixel_y == 0)
