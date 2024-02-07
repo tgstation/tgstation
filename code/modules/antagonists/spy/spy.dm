@@ -30,26 +30,6 @@
 	. = ..()
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
 
-
-/datum/antagonist/spy/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/spy = mob_override || owner.current
-	RegisterSignal(spy, COMSIG_MOB_TRIED_ACCESS, PROC_REF(allow_syndie_use))
-
-/datum/antagonist/spy/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/spy = mob_override || owner.current
-	UnregisterSignal(spy, COMSIG_MOB_TRIED_ACCESS)
-
-/// Special signal handler to allow Spies to access Syndie access items without necessitating a Syndie ID or the Syndie faction
-/datum/antagonist/spy/proc/allow_syndie_use(datum/source, obj/what)
-	SIGNAL_HANDLER
-
-	if(!isitem(what))
-		return NONE
-	if(ACCESS_SYNDICATE in what.req_access | what.req_one_access)
-		return ACCESS_ALLOWED
-
-	return NONE
-
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()
 	data["uplink_location"] = uplink_location
@@ -160,10 +140,9 @@
 /datum/antagonist/spy/roundend_report()
 	var/list/report = list()
 	report += printplayer(owner)
-	report += "They completed <b>[bounties_claimed]</b> bounties."
+	report += " - They completed <b>[bounties_claimed]</b> bounties."
 	if(bounties_claimed > 0)
-		report += "They received the following rewards: [english_list(all_loot)]"
-	report += "<br>"
+		report += " - They received the following rewards: [english_list(all_loot)]"
 	report += printobjectives(objectives)
 	return report.Join("<br>")
 

@@ -285,6 +285,13 @@
 	restricted_roles = list(JOB_CLOWN)
 	surplus = 10
 
+/datum/uplink_item/role_restricted/clowncar/spawn_item_for_generic_use(mob/user)
+	var/obj/vehicle/sealed/car/clowncar/car = ..()
+	car.enforce_clown_role = FALSE
+	var/obj/item/key = new car.key_type(user.loc)
+	car.visible_message(span_notice("[key] drops out of [car] onto the floor."))
+	return car
+
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \

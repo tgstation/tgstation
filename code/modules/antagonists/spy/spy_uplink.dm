@@ -149,15 +149,10 @@
 	bounty.clean_up_stolen_item(stealing, spy, handler)
 	bounty.claimed = TRUE
 
-	var/obj/item/reward = new bounty.reward_item.item(spy.loc)
-	// Ensures all rewarded guns have normal firing pins, rather than Syndie ones
-	if(isgun(reward))
-		replace_pin(reward)
-	else if(istype(reward, /obj/item/storage/toolbox/guncase))
-		for(var/gun in reward)
-			replace_pin(gun)
+	var/atom/movable/reward = bounty.reward_item.spawn_item_for_generic_use(spy)
+	if(isitem(reward))
+		spy.put_in_hands(reward)
 
-	spy.put_in_hands(reward)
 	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
 		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
 
@@ -175,13 +170,6 @@
 		spy_datum.all_loot += bounty.reward_item.name
 
 	return TRUE
-
-/datum/component/spy_uplink/proc/replace_pin(obj/item/gun/gun_reward)
-	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
-		return
-
-	QDEL_NULL(gun_reward.pin)
-	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
 
 /datum/component/spy_uplink/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

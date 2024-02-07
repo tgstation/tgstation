@@ -7,7 +7,7 @@
 	category = /datum/uplink_category/bundle
 	surplus = 0
 	cant_discount = TRUE
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/bundles_tc/random
 	name = "Random Item"
@@ -40,7 +40,6 @@
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
 	purchase_log_vis = FALSE
-	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/bundles_tc/telecrystal/five
 	name = "5 Raw Telecrystals"
