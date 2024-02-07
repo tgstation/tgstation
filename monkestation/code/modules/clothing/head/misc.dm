@@ -195,6 +195,7 @@
 	// I DUNNO LOL // armor = list("melee" = 15, "bullet" = 60, "laser" = 10, "energy" = 15, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50, "stamina" = 30)
 	can_flashlight = TRUE
 	dog_fashion = null
+	flags_inv = HIDEHAIR //why isn't this a hat.
 
 //for if we ever decide to try departmental sec
 /obj/item/clothing/head/helmet/hat/cowboy/medical
