@@ -205,7 +205,7 @@
 			if(!antag_mind.current)
 				continue
 			candidates += antag_mind.current
-//			SSgamemode.roundstart_antag_minds -= antag_mind //commented out for debugging in case something breaks
+			SSgamemode.roundstart_antag_minds -= antag_mind //commented out for debugging in case something breaks
 
 	while(length(possible_candidates) && length(candidates) < antag_count) //both of these pick_n_take from possible_candidates so this should be fine
 		if(prompted_picking)
