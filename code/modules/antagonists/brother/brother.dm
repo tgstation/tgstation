@@ -64,7 +64,8 @@
 		return
 
 	for(var/datum/objective/brother_objective in source.mind.get_all_objectives())
-		if(flashed == brother_objective.target.current)
+		// If the objective has a target, are we flashing them?
+		if(flashed == brother_objective.target?.current)
 			flashed.balloon_alert(source, "that's your target!")
 			return
 
