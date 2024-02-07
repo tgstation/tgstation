@@ -14,7 +14,7 @@
 	var/obj/item/surgery_tool = parent
 	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
 
-/datum/component/surgery_initiator/Destroy(force, silent)
+/datum/component/surgery_initiator/Destroy(force)
 	last_user_ref = null
 	surgery_target_ref = null
 

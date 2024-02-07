@@ -19,15 +19,24 @@ handles linking back and forth.
 	var/allow_standalone
 	///Local size of container when silo = null
 	var/local_size = INFINITY
-	///Flags used when converting inserted materials into their component materials.
+	///Flags used for the local material container(exceptions for item insert & intent flags)
 	var/mat_container_flags = NONE
+	///List of signals to hook onto the local container
+	var/list/mat_container_signals
 
-/datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
+/datum/component/remote_materials/Initialize(
+	mapload,
+	allow_standalone = TRUE,
+	force_connect = FALSE,
+	mat_container_flags = NONE,
+	list/mat_container_signals = null
+)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
+	src.mat_container_signals = mat_container_signals
 
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
@@ -51,6 +60,8 @@ handles linking back and forth.
  * only if allow_standalone = TRUE, else you a null mat_container
  */
 /datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
+	PRIVATE_PROC(TRUE)
+
 	if (connect_to_silo)
 		silo = GLOB.ore_silo_default
 		if (silo)
@@ -63,12 +74,14 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines -= src
 		silo.holds -= src
-		silo.updateUsrDialog()
 		silo = null
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	mat_container = null
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
+	PRIVATE_PROC(TRUE)
+
 	silo = null
 
 	var/static/list/allowed_mats = list(
@@ -90,6 +103,7 @@ handles linking back and forth.
 		allowed_mats, \
 		local_size, \
 		mat_container_flags, \
+		container_signals = mat_container_signals, \
 		allowed_items = /obj/item/stack \
 	)
 
@@ -121,6 +135,7 @@ handles linking back and forth.
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	if (allow_standalone)
 		_MakeLocal()
 
@@ -156,7 +171,6 @@ handles linking back and forth.
 		if (silo)
 			silo.ore_connected_machines -= src
 			silo.holds -= src
-			silo.updateUsrDialog()
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -169,12 +183,11 @@ handles linking back and forth.
 			qdel(mat_container)
 		silo = new_silo
 		silo.ore_connected_machines += src
-		silo.updateUsrDialog()
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc
@@ -268,7 +281,7 @@ handles linking back and forth.
  * * obj/item/weapon - the item you are trying to insert
  * * multiplier - the multiplier applied on the materials consumed
  */
-/datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier)
+/datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1)
 	if(!_can_use_resource(FALSE))
 		return MATERIAL_INSERT_ITEM_FAILURE
 

@@ -121,7 +121,7 @@
 /atom/proc/hulk_damage()
 	return 150 //the damage hulks do on punches to this atom, is affected by melee armor
 
-/atom/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
+/atom/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal
 	if(!uses_integrity)
 		CRASH("unimplemented /atom/proc/attack_generic()!")
 	user.do_attack_animation(src)

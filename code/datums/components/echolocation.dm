@@ -63,7 +63,7 @@
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/echolocation/Destroy(force, silent)
+/datum/component/echolocation/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	var/mob/living/echolocator = parent
 	QDEL_NULL(client_color)

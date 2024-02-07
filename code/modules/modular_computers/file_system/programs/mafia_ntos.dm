@@ -49,7 +49,8 @@
 	data += game.ui_assets(user)
 	return data
 
-/datum/computer_file/program/mafia/ui_act(mob/user, params, datum/tgui/ui, datum/ui_state/state)
+/datum/computer_file/program/mafia/ui_act(mob/user, params, datum/tgui/ui, datum/ui_state/state, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/datum/mafia_controller/game = GLOB.mafia_game
 	if(!game)
 		game = create_mafia_game()

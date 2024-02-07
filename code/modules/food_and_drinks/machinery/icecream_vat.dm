@@ -1,4 +1,10 @@
-#define PREFILL_AMOUNT 5
+///How many units of a reagent is needed to make a cone.
+#define CONE_REAGENET_NEEDED 1
+
+///The vat is set to dispense ice cream.
+#define VAT_MODE_ICECREAM "ice cream"
+///The vat is set to dispense cones.
+#define VAT_MODE_CONES "cones"
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
@@ -10,12 +16,20 @@
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
 	max_integrity = 300
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
-	var/list/product_types = list()
+
+	///Which mode the icecream vat is set to dispense, VAT_MODE_ICECREAM or VAT_MODE_CONES
+	var/vat_mode = VAT_MODE_ICECREAM
+	///Boolean on whether or not to add 'icecream_vat_reagents' into the icecream vat on Initialize.
+	var/preinstall_reagents = TRUE
+	///The selected flavor of ice cream that we'll dispense when hit with an ice cream cone.
 	var/selected_flavour = ICE_CREAM_VANILLA
-	var/obj/item/reagent_containers/beaker
+	///The beaker inside of the vat used to make custom ice cream.
+	var/obj/item/reagent_containers/custom_ice_cream_beaker
+	///List of ice creams as icons used for the radial menu.
+	var/static/list/ice_cream_icons
 	/// List of prototypes of dispensable ice cream cones. path as key, instance as assoc.
 	var/static/list/obj/item/food/icecream/cone_prototypes
+	///List of all reagenets the icecream vat will spawn with, if preinstall_reagents is TRUE.
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 6,
 		/datum/reagent/consumable/korta_milk = 6,
@@ -36,6 +50,9 @@
 		/datum/reagent/consumable/cherryjelly = 6,
 	)
 
+/obj/machinery/icecream_vat/no_preinstalled_reagents
+	preinstall_reagents = FALSE
+
 /obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()
 
@@ -45,169 +62,212 @@
 			var/obj/item/food/icecream/cone = new cone_path
 			if(cone.ingredients)
 				cone_prototypes[cone_path] = cone
-				cone.ingredients_text = "(Ingredients: [reagent_paths_list_to_text(cone.ingredients)])"
 			else
+				stack_trace("Ice cream cone [cone] (TYPE: [cone_path]) has been found without ingredients, please make a bug report about this.")
 				qdel(cone)
+	if(!ice_cream_icons)
+		ice_cream_icons = list()
+		for(var/flavor in GLOB.ice_cream_flavours)
+			var/datum/ice_cream_flavour/flavor_datum = GLOB.ice_cream_flavours[flavor]
+			if(flavor_datum.hidden)
+				continue
+			ice_cream_icons[flavor] = make_ice_cream_color(flavor_datum)
 
-	create_reagents(300, NO_REACT | OPENCONTAINER)
+	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(allow_reagent_scan))
+
+	create_reagents(300, NO_REACT|TRANSPARENT)
 	reagents.chem_temp = T0C //So ice doesn't melt
-	for(var/flavour in GLOB.ice_cream_flavours)
-		if(GLOB.ice_cream_flavours[flavour].hidden)
-			continue
-		product_types[flavour] = PREFILL_AMOUNT
-	for(var/cone in cone_prototypes)
-		product_types[cone] = PREFILL_AMOUNT
+	register_context()
 
-	for(var/reagent in icecream_vat_reagents)
-		reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
+	if(preinstall_reagents)
+		for(var/reagent in icecream_vat_reagents)
+			reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
 
-/obj/machinery/icecream_vat/ui_interact(mob/user)
+/obj/machinery/icecream_vat/Exited(atom/movable/gone, direction)
 	. = ..()
-	var/dat
-	dat += "<b>ICE CREAM</b><br><div class='statusDisplay'>"
-	dat += "<b>Dispensing: [selected_flavour] icecream </b> <br><br>"
-	for(var/flavour in GLOB.ice_cream_flavours)
-		if(GLOB.ice_cream_flavours[flavour].hidden)
-			continue
-		dat += "<b>[capitalize(flavour)] ice cream:</b> <a href='?src=[REF(src)];select=[flavour]'><b>Select</b></a> <a href='?src=[REF(src)];make=[flavour];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[flavour];amount=5'><b>x5</b></a> [product_types[flavour]] scoops left[GLOB.ice_cream_flavours[flavour].ingredients_text].<br>"
-	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
-	for(var/cone in cone_prototypes)
-		dat += "<b>[capitalize(cone_prototypes[cone].name)]s:</b> <a href='?src=[REF(src)];cone=[cone]'><b>Dispense</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=5'><b>x5</b></a> [product_types[cone]] cones left[cone_prototypes[cone].ingredients_text].<br>"
-	dat += "<br>"
-	if(beaker)
-		dat += "<b>BEAKER CONTENT</b><br><div class='statusDisplay'>"
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			dat += "[R.name]: [R.volume]u<br>"
-		dat += "<a href='?src=[REF(src)];refill=1'><b>Refill from beaker</b></a></div>"
-	dat += "<br>"
-	dat += "<b>VAT CONTENT</b><br>"
-	for(var/datum/reagent/R in reagents.reagent_list)
-		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=[REF(src)];disposeI=[R.type]'>Purge</A><BR>"
-	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
+	if(gone == custom_ice_cream_beaker)
+		custom_ice_cream_beaker = null
 
-	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 500, src)
-	popup.set_content(dat)
-	popup.open()
+/obj/machinery/icecream_vat/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item)
+		if(is_reagent_container(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
+			context[SCREENTIP_CONTEXT_RMB] = "Transfer beaker reagents"
+		else if(istype(held_item, /obj/item/food/icecream))
+			context[SCREENTIP_CONTEXT_LMB] = "Take scoop of [selected_flavour] ice cream"
+		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/icecream_vat/attackby(obj/item/O, mob/user, params)
-	if(is_reagent_container(O) && !(O.item_flags & ABSTRACT) && O.is_open_container())
-		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/B = O
-		if(!user.transferItemToLoc(B, src))
-			return
-		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
-		updateUsrDialog()
-		update_appearance()
+	switch(vat_mode)
+		if(VAT_MODE_ICECREAM)
+			context[SCREENTIP_CONTEXT_LMB] = "Select flavor"
+			context[SCREENTIP_CONTEXT_RMB] = "Change mode to cones"
+		if(VAT_MODE_CONES)
+			context[SCREENTIP_CONTEXT_LMB] = "Make cone"
+			context[SCREENTIP_CONTEXT_RMB] = "Change mode to flavors"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/icecream_vat/attackby(obj/item/reagent_containers/beaker, mob/user, params)
+	. = ..()
+	if(.)
 		return
-	else if(O.is_drainable())
+	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
 		return
-	else
-		return ..()
 
-/obj/machinery/icecream_vat/proc/RefillFromBeaker()
-	if(!beaker || !beaker.reagents)
-		return
-	for(var/datum/reagent/R in beaker.reagents.reagent_list)
-		if(R.type in icecream_vat_reagents)
-			beaker.reagents.trans_to(src, R.volume, target_id = R.type)
-			say("Internalizing reagent.")
-			playsound(src, 'sound/items/drink.ogg', 25, TRUE)
-	return
-
-/obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount, list/ingredients)
-	var/recipe_amount = amount * 3 //prevents reagent duping by requring roughly the amount of reagenst you gain back by grinding.
-	for(var/R in ingredients)
-		if(!reagents.has_reagent(R, recipe_amount))
-			amount = 0
-			break
-	if(amount)
-		for(var/R in ingredients)
-			reagents.remove_reagent(R, recipe_amount)
-		product_types[make_type] += amount
-		var/obj/item/food/icecream/cone = cone_prototypes[make_type]
-		if(cone)
-			visible_message(span_info("[user] cooks up some [cone.name]s."))
+	if(custom_ice_cream_beaker)
+		if(beaker.forceMove(src))
+			try_put_in_hand(custom_ice_cream_beaker, user)
+			balloon_alert(user, "beakers swapped")
+			custom_ice_cream_beaker = beaker
 		else
-			visible_message(span_info("[user] whips up some [make_type] icecream."))
-	else
-		to_chat(user, span_warning("You don't have the ingredients to make this!"))
-
-/obj/machinery/icecream_vat/Topic(href, href_list)
-	if(..())
+			balloon_alert(user, "beaker slot full!")
 		return
-	var/mob/user = usr
-	if(href_list["select"])
-		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["select"]]
-		if(!flavour || flavour.hidden) //Nice try, tex.
-			return
-		visible_message(span_notice("[user] sets [src] to dispense [href_list["select"]] flavoured ice cream."))
-		selected_flavour = flavour.name
+	if(beaker.forceMove(src))
+		balloon_alert(user, "beaker inserted")
+		custom_ice_cream_beaker = beaker
 
-	if(href_list["cone"])
-		var/obj/item/food/icecream/cone_path = text2path(href_list["cone"])
-		if(!cone_path)
-			return
-		if(product_types[cone_path] >= 1)
-			product_types[cone_path]--
-			var/obj/item/food/icecream/cone = new cone_path(get_turf(src))
-			if(!user.put_in_hands(cone))
-				cone.forceMove(drop_location())
-			visible_message(span_info("[user] dispenses a crunchy [cone.name] from [src]."))
-		else
-			to_chat(user, span_warning("There are no [initial(cone_path.name)]s left!"))
+/obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	var/added_reagents = FALSE
+	for(var/datum/reagent/beaker_reagents in beaker.reagents.reagent_list)
+		if(beaker_reagents.type in icecream_vat_reagents)
+			added_reagents = TRUE
+			beaker.reagents.trans_to(src, beaker_reagents.volume, target_id = beaker_reagents.type)
 
-	if(href_list["make"])
-		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["make"]]
-		if(!flavour || flavour.hidden) //Nice try, tex.
-			return
-		var/amount = (text2num(href_list["amount"]))
-		make(user, href_list["make"], amount, flavour.ingredients)
+	if(added_reagents)
+		balloon_alert(user, "refilling reagents")
+		playsound(src, 'sound/items/drink.ogg', 25, TRUE)
+	else
+		balloon_alert(user, "no reagents to transfer!")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(href_list["make_cone"])
-		var/path = text2path(href_list["make_cone"])
-		var/obj/item/food/icecream/cone = cone_prototypes[path]
-		if(!cone) //Nice try, tex.
-			return
-		var/amount = (text2num(href_list["amount"]))
-		make(user, path, amount, cone.ingredients)
+/obj/machinery/icecream_vat/attack_hand_secondary(mob/user, list/modifiers)
+	if(swap_modes(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
-	if(href_list["disposeI"])
-		reagents.del_reagent(text2path(href_list["disposeI"]))
+/obj/machinery/icecream_vat/attack_robot_secondary(mob/living/silicon/robot/user)
+	if(swap_modes(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
-	if(href_list["refill"])
-		RefillFromBeaker()
+/obj/machinery/icecream_vat/AltClick(mob/user)
+	if(!user.can_interact_with(src))
+		return FALSE
+	if(custom_ice_cream_beaker)
+		balloon_alert(user, "removed beaker")
+		try_put_in_hand(custom_ice_cream_beaker, user)
+	return ..()
 
-	updateDialog()
+/obj/machinery/icecream_vat/interact(mob/living/user)
+	. = ..()
+	if (.)
+		return
 
-	if(href_list["refresh"])
-		updateDialog()
+	var/list/choices = list()
 
-	if(href_list["close"])
-		user.unset_machine()
-		user << browse(null,"window=icecreamvat")
-	return
+	switch(vat_mode)
+		if(VAT_MODE_ICECREAM)
+			for(var/flavor_key in ice_cream_icons)
+				var/datum/ice_cream_flavour/flavor_datum = GLOB.ice_cream_flavours[flavor_key]
+				var/datum/radial_menu_choice/option = new
+				option.image = ice_cream_icons[flavor_key]
+				option.info = span_boldnotice("[flavor_datum.ingredients_text]")
+				choices[flavor_key] = option
+		if(VAT_MODE_CONES)
+			for(var/cone_key in cone_prototypes)
+				var/obj/item/food/icecream/cone_item = cone_prototypes[cone_key]
+				var/datum/radial_menu_choice/option = new
+				option.image = cone_prototypes[cone_key]
+				option.info = span_boldnotice("[cone_item.ingredients_text]")
+				choices[cone_key] = option
+
+	var/choice = show_radial_menu(
+		user,
+		src,
+		choices,
+		require_near = TRUE,
+		tooltips = TRUE,
+		autopick_single_option = FALSE,
+	)
+
+	if(!choice)
+		return
+	var/datum/ice_cream_flavour/flavor = GLOB.ice_cream_flavours[choice]
+	if(flavor)
+		selected_flavour = flavor.name
+		balloon_alert(user, "making [selected_flavour]")
+	var/obj/item/food/icecream/cone = cone_prototypes[choice]
+	if(cone)
+		make_cone(user, choice, cone.ingredients)
+
+/obj/machinery/icecream_vat/proc/make_ice_cream_color(datum/ice_cream_flavour/flavor)
+	if(!flavor.color)
+		return
+	var/image/ice_cream_icon = image('icons/obj/service/kitchen.dmi', "icecream_custom")
+	ice_cream_icon.color = flavor.color
+	return ice_cream_icon
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 4)
+	if(custom_ice_cream_beaker)
+		custom_ice_cream_beaker.forceMove(loc)
 	qdel(src)
 
-/obj/machinery/icecream_vat/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
+/obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)
+	for(var/reagents_needed in ingredients)
+		if(!reagents.has_reagent(reagents_needed, CONE_REAGENET_NEEDED))
+			balloon_alert(user, "not enough ingredients!")
+			return
+	var/cone_type = cone_prototypes[make_type].type
+	if(!cone_type)
 		return
-	replace_beaker(user)
+	var/obj/item/food/icecream/cone = new cone_type(src)
 
-/obj/machinery/icecream_vat/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
+	for(var/reagents_used in ingredients)
+		reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
+	balloon_alert_to_viewers("cooks up [cone.name]", "cooks up [cone.name]")
+	try_put_in_hand(cone, user)
+
+///Makes ice cream if it can, then puts it in the ice cream cone we're being attacked with.
+/obj/machinery/icecream_vat/proc/add_flavor_to_cone(datum/component/ice_cream_holder/source, mob/user, obj/item/food/icecream/cone)
+	var/datum/ice_cream_flavour/flavor = GLOB.ice_cream_flavours[selected_flavour]
+	if(!flavor)
+		CRASH("[user] was making ice cream of [selected_flavour] but had no flavor datum for it!")
+
+	for(var/reagents_needed in flavor.ingredients)
+		if(!reagents.has_reagent(reagents_needed, CONE_REAGENET_NEEDED))
+			balloon_alert(user, "not enough ingredients!")
+			return
+
+	var/should_use_custom_ingredients = (flavor.takes_custom_ingredients && custom_ice_cream_beaker && custom_ice_cream_beaker.reagents.total_volume)
+	if(flavor.add_flavour(source, should_use_custom_ingredients ? custom_ice_cream_beaker.reagents : null))
+		for(var/reagents_used in flavor.ingredients)
+			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
+		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
+
+///Swaps the mode to the next one meant to be selected, then tells the user who changed it.
+/obj/machinery/icecream_vat/proc/swap_modes(mob/user)
+	if(!user.can_perform_action(src))
 		return FALSE
-	if(beaker)
-		user.put_in_hands(beaker)
-		beaker = null
-	if(new_beaker)
-		beaker = new_beaker
+	switch(vat_mode)
+		if(VAT_MODE_ICECREAM)
+			vat_mode = VAT_MODE_CONES
+		if(VAT_MODE_CONES)
+			vat_mode = VAT_MODE_ICECREAM
+	balloon_alert(user, "dispensing [vat_mode]")
 	return TRUE
 
-#undef PREFILL_AMOUNT
+///Allows any user to see what reagents are in the ice cream vat regardless of special gear.
+/obj/machinery/icecream_vat/proc/allow_reagent_scan(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
+	SIGNAL_HANDLER
+	return ALLOW_GENERIC_REAGENT_EXAMINE
+
+#undef VAT_MODE_ICECREAM
+#undef VAT_MODE_CONES
+#undef CONE_REAGENET_NEEDED

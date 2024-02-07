@@ -106,7 +106,7 @@
 
 /obj/item/storage/fancy/donut_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/donut))
+	atom_storage.set_holdable(/obj/item/food/donut)
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -153,7 +153,17 @@
 
 /obj/item/storage/fancy/egg_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/egg))
+	atom_storage.set_holdable(/obj/item/food/egg)
+
+/*
+ * Fertile Egg Box
+ */
+
+/obj/item/storage/fancy/egg_box/fertile
+	name = "fertile egg box"
+	desc = "Only one thing here is fertile, and it's not the eggs."
+	spawn_type = /obj/item/food/egg/fertile
+	spawn_count = 6
 
 /*
  * Candle Box
@@ -176,7 +186,7 @@
 
 /obj/item/storage/fancy/candle_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/flashlight/flare/candle))
+	atom_storage.set_holdable(/obj/item/flashlight/flare/candle)
 
 ////////////
 //CIG PACK//
@@ -395,7 +405,7 @@
 
 /obj/item/storage/fancy/rollingpapers/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/rollingpaper))
+	atom_storage.set_holdable(/obj/item/rollingpaper)
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -421,7 +431,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
+	atom_storage.set_holdable(/obj/item/clothing/mask/cigarette/cigar)
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -476,7 +486,7 @@
 
 /obj/item/storage/fancy/heart_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/bonbon))
+	atom_storage.set_holdable(/obj/item/food/bonbon)
 
 
 /obj/item/storage/fancy/nugget_box
@@ -491,7 +501,7 @@
 
 /obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/nugget))
+	atom_storage.set_holdable(/obj/item/food/nugget)
 
 /*
  * Jar of pickles
@@ -506,14 +516,14 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable_result = null
+	foldable_result = /obj/item/reagent_containers/cup/beaker/large
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/pickle))
+	atom_storage.set_holdable(/obj/item/food/pickle)
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()

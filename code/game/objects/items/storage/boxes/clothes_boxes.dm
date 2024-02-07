@@ -104,11 +104,11 @@
 	new /obj/item/storage/box/papersack/meat(src)
 
 /obj/item/storage/box/hero/mothpioneer
-	name = "Mothic Fleet Pioneer - 2100's."
+	name = "Mothic Fleet Pioneer - 2429."
 	desc = "Some claim that the fleet engineers are directly responsible for most modern advancements in spacefaring designs. Although the exact details of their past contributions are somewhat fuzzy, their ingenuity remains unmatched and unquestioned to this day."
 
 /obj/item/storage/box/hero/mothpioneer/PopulateContents()
-	new /obj/item/clothing/head/mothcap(src)
+	new /obj/item/clothing/head/mothcap/original(src)
 	new /obj/item/clothing/suit/mothcoat/original(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/flashlight/lantern(src)

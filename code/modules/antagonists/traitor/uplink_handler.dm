@@ -59,7 +59,7 @@
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
 
-/datum/uplink_handler/Destroy(force, ...)
+/datum/uplink_handler/Destroy(force)
 	can_replace_objectives = null
 	replace_objectives = null
 	return ..()

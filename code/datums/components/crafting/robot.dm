@@ -131,7 +131,7 @@
 
 /datum/crafting_recipe/hygienebot
 	name = "Hygienebot"
-	result = /mob/living/simple_animal/bot/hygienebot
+	result = /mob/living/basic/bot/hygienebot
 	reqs = list(
 		/obj/item/bot_assembly/hygienebot = 1,
 		/obj/item/stack/ducts = 1,

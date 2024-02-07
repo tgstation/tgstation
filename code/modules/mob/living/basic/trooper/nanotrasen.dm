@@ -2,7 +2,6 @@
 /mob/living/basic/trooper/nanotrasen
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer of Nanotrasen's private security force. Seems rather unpleased to meet you."
-	speed = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	faction = list(ROLE_DEATHSQUAD)

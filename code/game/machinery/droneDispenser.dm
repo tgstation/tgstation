@@ -152,7 +152,6 @@
 		. += span_warning("[recharging_text]")
 
 /obj/machinery/drone_dispenser/process()
-	..()
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 

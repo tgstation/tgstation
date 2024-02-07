@@ -440,6 +440,16 @@
 	description = "I've been here too long! I want to go out and explore space!"
 	mood_change = -3
 
+/datum/mood_event/moon_insanity
+	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
+	mood_change = -3
+	timeout = 5 MINUTES
+
+/datum/mood_event/amulette_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
+	mood_change = -6
+	timeout = 5 MINUTES
+
 ///Wizard cheesy grand finale - what everyone but the wizard gets
 /datum/mood_event/madness_despair
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
