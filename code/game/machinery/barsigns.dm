@@ -484,7 +484,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "Drinks from the Red Planet."
 	neon_color = COLOR_RED
 
-/datum/barsign/therune
+/datum/barsign/the_rune
 	name = "The Rune"
 	icon_state = "therune"
 	desc = "Reality Shifting drinks."
