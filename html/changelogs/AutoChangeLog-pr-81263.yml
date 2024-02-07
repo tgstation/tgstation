@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "you may no longer altclick unanchored toiletbongs from any range in any condition to rotate them"

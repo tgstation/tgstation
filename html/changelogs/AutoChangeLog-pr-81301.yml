@@ -1,0 +1,5 @@
+author: "cnleth"
+delete-after: True
+changes:
+  - balance: "RD and QM coats can hold telebatons now"
+  - qol: "Quartermaster's coat can hold items that a normal jacket can hold, such as small oxygen tanks"

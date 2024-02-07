@@ -11853,7 +11853,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Isolation Cell C"
+	name = "Isolation Cell C";
+	id = "Isolation_C"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22002,7 +22003,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Isolation Cell B"
+	name = "Isolation Cell B";
+	id = "Isolation_B"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -26835,7 +26837,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Isolation Cell D"
+	name = "Isolation Cell D";
+	id = "Isolation_D"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58742,12 +58745,13 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Isolation Cell A"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/security/glass{
+	name = "Isolation Cell A";
+	id = "Isolation_A"
+	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "tJR" = (
@@ -69026,7 +69030,9 @@
 /area/station/commons/fitness/recreation)
 "xog" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Isolation Wing"
+	name = "Isolation Wing";
+	unres_sensor = 1;
+	unres_sides = 8
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/red/filled/line,

@@ -668,6 +668,9 @@
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	update_last_used(usr)
+	if(isAI(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
+		to_chat(usr, span_warning("You can no longer connect to this device!"))
+		return FALSE
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
