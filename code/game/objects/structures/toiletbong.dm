@@ -11,8 +11,12 @@
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
+	create_storage()
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 	create_storage(max_total_storage = 100, max_slots = 12, canhold = /obj/item/food)
 	atom_storage.attack_hand_interact = FALSE
+	atom_storage.rustle_sound = FALSE
+	atom_storage.animated = FALSE
 
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "toiletbong_overlay")
 	START_PROCESSING(SSobj, src)
@@ -72,6 +76,9 @@
 		anchored = TRUE
 	return TRUE
 
+/obj/structure/toiletbong/proc/AfterRotation(mob/user, degrees)
+	playsound(src, 'sound/items/deconstruct.ogg', 50)
+
 /obj/structure/toiletbong/crowbar_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		return FALSE
@@ -85,13 +92,6 @@
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
 	qdel(src)
 	return TRUE
-
-/obj/structure/toiletbong/AltClick(mob/living/user)
-	if(anchored)
-		return ..()
-	setDir(turn(dir,90))
-	playsound(src, 'sound/items/deconstruct.ogg', 50)
-	return
 
 /obj/structure/toiletbong/emag_act(mob/user, obj/item/card/emag/emag_card)
 	playsound(src, 'sound/effects/fish_splash.ogg', 50)
