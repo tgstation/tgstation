@@ -310,7 +310,7 @@
 	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handler catches a misflagged reaction
 		return FALSE
 
-	//average purity to be used to scale products formed
+	//average purity to be used in scale yield of the products formed
 	var/average_purity = get_average_purity()
 
 	//remove the required reagents
