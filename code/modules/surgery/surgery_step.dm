@@ -23,7 +23,7 @@
 		if(!tool)
 			success = TRUE
 		if(iscyborg(user))
-			success = TRUE	
+			success = TRUE
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
@@ -96,13 +96,15 @@
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time
+	else if(HAS_TRAIT(user, TRAIT_PERFECT_SURGEON))
+		modded_time = min(round(time * 0.75, 5), modded_time) // monke edit: perfect surgeon will always be at least 25% faster than normal
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
-	if(do_after(user, modded_time, target = target, interaction_key = user.has_status_effect(/datum/status_effect/hippocratic_oath) ? target : DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
+	if(do_after(user, modded_time, target = target, interaction_key = HAS_TRAIT(user, TRAIT_PERFECT_SURGEON) ? target : DOAFTER_SOURCE_SURGERY)) //If we have perfect surgery, we can perform one surgery on each target, otherwise we can only do one surgery in total.
 
 		var/chem_check_result = chem_check(target)
-		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
+		if((HAS_TRAIT(user, TRAIT_PERFECT_SURGEON) || prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail) // monke edit: TRAIT_PERFECT_SURGEON
 
 			if(success(user, target, target_zone, tool, surgery))
 				play_success_sound(user, target, target_zone, tool, surgery)

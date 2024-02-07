@@ -65,46 +65,74 @@
 
 /datum/action/changeling/sting/transformation
 	name = "Transformation Sting"
-	desc = "We silently sting a human, injecting a retrovirus that forces them to transform. Costs 50 chemicals."
-	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
+	desc = "We silently sting an organism, injecting a retrovirus that forces them to transform."
+	helptext = "The victim will transform much like a changeling would. \
+		For complex humanoids, the transformation is temporarily, but the duration is paused while the victim is dead or in stasis. \
+		For more simple humanoids, such as monkeys, the transformation is permanent. \
+		Does not provide a warning to others. Mutations will not be transferred."
 	button_icon_state = "sting_transform"
-	chemical_cost = 50
-	dna_cost = 3
-	var/datum/changeling_profile/selected_dna = null
+	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
+	dna_cost = 2
+	/// A reference to our active profile, which we grab DNA from
+	VAR_FINAL/datum/changeling_profile/selected_dna
+	/// Duration of the sting
+	var/sting_duration = 8 MINUTES
 
-/datum/action/changeling/sting/transformation/Trigger(trigger_flags)
-	var/mob/user = usr
+/datum/action/changeling/sting/transformation/Grant(mob/grant_to)
+	. = ..()
+	build_all_button_icons(UPDATE_BUTTON_NAME)
+
+/datum/action/changeling/sting/transformation/update_button_name(atom/movable/screen/movable/action_button/button, force)
+	. = ..()
+	button.desc += " Lasts [DisplayTimeText(sting_duration)] for humans, but duration is paused while dead or in stasis."
+	button.desc += " Costs [chemical_cost] chemicals."
+
+/datum/action/changeling/sting/transformation/Destroy()
+	selected_dna = null
+	return ..()
+
+/datum/action/changeling/sting/transformation/set_sting(mob/user)
+	selected_dna = null
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(changeling.chosen_sting)
-		unset_sting(user)
+	var/datum/changeling_profile/new_selected_dna = changeling.select_dna()
+	if(QDELETED(src) || QDELETED(changeling) || QDELETED(user))
 		return
-	selected_dna = changeling.select_dna()
-	if(!selected_dna)
+	if(!new_selected_dna || changeling.chosen_sting || selected_dna) // selected other sting or other DNA while sleeping
 		return
-	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		user.balloon_alert(user, "incompatible DNA!")
-		return
-	..()
+	selected_dna = new_selected_dna
+	return ..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	. = ..()
 	if(!.)
 		return
-	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+	// Similar checks here are ran to that of changeling can_absorb_dna -
+	// Logic being that if their DNA is incompatible with us, it's also bad for transforming
+	if(!iscarbon(target) \
+		|| !target.has_dna() \
+		|| HAS_TRAIT(target, TRAIT_HUSK) \
+		|| HAS_TRAIT(target, TRAIT_BADDNA) \
+		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkey(target))) // sure, go ahead, make a monk-clone
 		user.balloon_alert(user, "incompatible DNA!")
+		return FALSE
+	if(target.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting))
+		user.balloon_alert(user, "already transformed!")
 		return FALSE
 	return TRUE
 
-/datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
-	var/datum/dna/NewDNA = selected_dna.dna
+/datum/action/changeling/sting/transformation/sting_action(mob/living/user, mob/living/target)
+	var/final_duration = sting_duration
+	var/final_message = span_notice("We transform [target] into [selected_dna.dna.real_name].")
+	if(ismonkey(target))
+		final_duration = INFINITY
+		final_message = span_warning("Our genes cry out as we transform the lesser form of [target] into [selected_dna.dna.real_name] permanently!")
 
-	var/mob/living/carbon/C = target
-	. = TRUE
-	if(istype(C))
-		C.real_name = NewDNA.real_name
-		NewDNA.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	if(target.apply_status_effect(/datum/status_effect/temporary_transformation/trans_sting, final_duration, selected_dna.dna))
+		..()
+		log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
+		to_chat(user, final_message)
+		return TRUE
+	return FALSE
 
 
 /datum/action/changeling/sting/false_armblade

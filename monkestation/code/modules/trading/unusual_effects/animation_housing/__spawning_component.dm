@@ -24,7 +24,7 @@
 	///x offset for source_object
 	var/offset_x = 0
 	///y offset for source_object
-	var/offset_y = 0	
+	var/offset_y = 0
 	///the dmi location of the particle
 	var/icon_file = 'monkestation/code/modules/trading/icons/particles.dmi'
 	///the icon_state given to the objects
@@ -77,7 +77,7 @@
 		START_PROCESSING(SSactualfastprocess, src)
 	RegisterSignal(source_object, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_equip_offsets))
 	RegisterSignal(source_object, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(reset_offsets))
-	
+
 	if(lifetime)
 		addtimer(CALLBACK(src, PROC_REF(kill_it_with_fire)), lifetime)
 
@@ -113,8 +113,8 @@
 		var/obj/effect/abstract/particle/spawned = new(get_turf(source_object))
 		if(offsets)
 			spawned.pixel_x = offset_x
-			spawned.pixel_y = offset_y 
-		spawned.icon = icon_file  
+			spawned.pixel_y = offset_y
+		spawned.icon = icon_file
 		spawned.icon_state = particle_state
 		spawned.blend_mode = particle_blending
 

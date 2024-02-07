@@ -3,6 +3,7 @@
 	name = "item"
 	icon = 'icons/obj/objects.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	burning_particles = /particles/smoke/burning/small
 	pass_flags_self = PASSITEM
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!

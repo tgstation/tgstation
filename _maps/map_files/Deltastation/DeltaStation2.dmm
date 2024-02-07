@@ -44194,8 +44194,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
@@ -47979,8 +47978,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
@@ -52131,7 +52129,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
@@ -66221,8 +66219,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)

@@ -14,7 +14,7 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(IS_IN_STASIS(src))
+	if(HAS_TRAIT(src, TRAIT_STASIS))
 		. = ..()
 		reagents.handle_stasis_chems(src, seconds_per_tick, times_fired)
 	else
