@@ -484,8 +484,8 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("[chosen_antag] All", "[objective]"))
 			for(var/mob/living/player in GLOB.player_list)
 				GLOB.everyone_an_antag.make_antag(null, player)
-			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is antag secret. Antag is [chosen_antag]. Objective is [objective]"))
-			log_admin("[key_name(holder)] used everyone is antag secret: [chosen_antag] . Objective is [objective]")
+			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is antag secret. Antag is [chosen_antag]. Objective is [objective]. Generate default objectives: [keep_generic_objecives]"))
+			log_admin("[key_name(holder)] used everyone is antag secret: [chosen_antag] . Objective is [objective]. Generate default objectives: [keep_generic_objecives]. ")
 		if("massbraindamage")
 			if(!is_funmin)
 				return
@@ -662,7 +662,7 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	src.chosen_antag = chosen_antag
 	src.objective = objective
 	src.keep_generic_objecives = keep_generic_objecives
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(make_antag))
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(make_antag_delay))
 
 /datum/everyone_is_an_antag_controller/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
@@ -675,11 +675,15 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	antag_datum.objectives += new_objective
 	player.mind.add_antag_datum(antag_datum)
 
+/datum/everyone_is_an_antag_controller/proc/make_antag_delay(datum/source, mob/living/player)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(make_antag), source, player)
+
 
 /datum/everyone_is_an_antag_controller/proc/make_antag(datum/source, mob/living/player)
-	SIGNAL_HANDLER
 	if(player.stat == DEAD || !player.mind)
 		return
+	sleep(1)
 	if(ishuman(player))
 		switch(chosen_antag)
 			if(ROLE_TRAITOR)
