@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Wallmounts now respect cameranets, and cannot be accessed from a view of the adjacent wall."
