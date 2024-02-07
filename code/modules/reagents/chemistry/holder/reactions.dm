@@ -310,14 +310,16 @@
 	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handler catches a misflagged reaction
 		return FALSE
 
+	//average purity to be used in scaling the yield of products formed
+	var/average_purity = get_average_purity()
+
 	//remove the required reagents
 	for(var/datum/reagent/requirement as anything in cached_required_reagents)//this is not an object
 		remove_reagent(requirement, cached_required_reagents[requirement] * multiplier)
 
 	//add the result reagents whose yield depend on the average purity
 	var/yield
-	var/average_purity = get_average_purity()
-	for(var/datum/reagent/product as anything in selected_reaction.results)
+	for(var/datum/reagent/product as anything in cached_results)
 		yield = cached_results[product] * multiplier * average_purity
 		SSblackbox.record_feedback("tally", "chemical_reaction", yield, product)
 		add_reagent(product, yield, null, chem_temp, average_purity)
