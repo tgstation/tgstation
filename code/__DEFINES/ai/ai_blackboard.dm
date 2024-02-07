@@ -143,6 +143,3 @@
 
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
-
-///the source of sound we are interested in
-#define BB_SOUND_TARGET "sound_target"

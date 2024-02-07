@@ -134,6 +134,3 @@
 #define COMSIG_ATOM_PRE_CLEAN "atom_pre_clean"
 	///cancel clean
 	#define COMSIG_ATOM_CANCEL_CLEAN (1<<0)
-
-/// From /playsound()
-#define COMSIG_ATOM_LISTENING_TO_SOUND "listening_to_sound"
