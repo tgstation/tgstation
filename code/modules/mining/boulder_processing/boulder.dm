@@ -173,23 +173,3 @@
 		for(var/obj/item/content as anything in contents)
 			content.forceMove(get_turf(src))
 	qdel(src)
-
-/**
- * This is called when a boulder is spawned from a vent, and is used to set the boulder's icon as well as durability.
- * We also set our boulder_size variable, which is used for inheiriting the icon_state later on if processed.
- * @param obj/structure/ore_vent/parent_vent The vent that spawned this boulder to generate consistent boulder icons. If null, we use the default size.
- * @param size The size of the boulder to spawn. If parent_vent is defined, this is ignored.
- * @param is_artifact Whether or not this boulder is an artifact boulder. If true, we use the artifact boulder icon state regardless of size.
- */
-/obj/item/boulder/proc/flavor_boulder(obj/structure/ore_vent/parent_vent, size = BOULDER_SIZE_SMALL, is_artifact = FALSE)
-	var/durability_min = size
-	var/durability_max = size + BOULDER_SIZE_SMALL
-	if(parent_vent)
-		durability_min = parent_vent.boulder_size
-		durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
-	durability = rand(durability_min, durability_max) //randomize durability a bit for some flavor.
-	boulder_size = size
-	if(parent_vent)
-		boulder_size = parent_vent.boulder_size
-		boulder_string = parent_vent.boulder_icon_state
-	update_appearance(UPDATE_ICON_STATE)

@@ -23,8 +23,6 @@
 
 	/// Cooldown used for left click teleportation.
 	COOLDOWN_DECLARE(manual_teleport_cooldown)
-	/// Cooldown used for automatic teleportation.
-	COOLDOWN_DECLARE(auto_teleport_cooldown)
 
 /obj/machinery/brm/Initialize(mapload)
 	. = ..()
@@ -214,17 +212,11 @@
 	if(!toggled_on || !is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
 		return
 
-	//check for atleast 1 boulder & also wait for all pre collected boulds to appear before we process the next batch
-	if(!SSore_generation.available_boulders.len || !COOLDOWN_FINISHED(src, auto_teleport_cooldown))
+	//check for atleast 1 boulder before processing
+	if(!SSore_generation.available_boulders.len)
 		return
 
-	var/boulders_processed = 0
-	for(var/i in 1 to boulders_processing_max)
-		if(!pre_collect_boulder(FALSE))
-			break
-		boulders_processed += 1
-
-	COOLDOWN_START(src, auto_teleport_cooldown, boulders_processed * TELEPORTATION_TIME)
+	pre_collect_boulder(FALSE, boulders_processing_max)
 
 /**
  * Begins to collect a boulder from the available boulders list in SSore_generation.
@@ -234,8 +226,9 @@
  * Arguments
  *
  * * feedback - should we play sound and display allert if now boulders are available
+ * * boulders_remaining - how many boulders we want to try & collect spawning a boulder every TELEPORTATION_TIME seconds
  */
-/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE)
+/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1)
 	PRIVATE_PROC(TRUE)
 
 	if(!SSore_generation.available_boulders.len)
@@ -247,15 +240,20 @@
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
 	random_boulder.Shake(duration = 1.5 SECONDS)
 	SSore_generation.available_boulders -= random_boulder
-	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder), TELEPORTATION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder, feedback, boulders_remaining), TELEPORTATION_TIME)
 	return TRUE
 
 /**
- * Collects a boulder from the available boulders list in SSore_generation.
- * Handles the movement of the boulder as well as visual effects on the BRM.
- * @param obj/item/boulder/random_boulder The boulder to collect.
+ * Callback to spawn a boulder collected in pre_collect_boulder(). Can be used to collect
+ * multiple boulders by setting boulders_remaining but must only be called by pre_collect_boulder()
+ * and not directly
+ * Arguments
+ *
+ * * obj/item/boulder/random_boulder - the boulder we are trying to move out
+ * * feedback - see pre_collect_boulder()
+ * * boulders_remaining - passed back to pre_collect_boulder() if count > 0
  */
-/obj/machinery/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
+/obj/machinery/brm/proc/collect_boulder(obj/item/boulder/random_boulder, feedback, boulders_remaining)
 	if(QDELETED(random_boulder))
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		balloon_alert_to_viewers("target lost!")
@@ -270,7 +268,11 @@
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
 
-	return TRUE
+	boulders_remaining --
+	if(boulders_remaining <= 0)
+		return TRUE
+	else
+		return pre_collect_boulder(feedback, boulders_remaining)
 
 #undef MANUAL_TELEPORT_SOUND
 #undef AUTO_TELEPORT_SOUND
