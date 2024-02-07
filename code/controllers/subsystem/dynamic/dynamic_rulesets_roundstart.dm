@@ -717,7 +717,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	required_candidates = 1
+	required_candidates = 3 // lives or dies by there being a few spies
 	weight = 5
 	cost = 8
 	scaling_cost = 8
