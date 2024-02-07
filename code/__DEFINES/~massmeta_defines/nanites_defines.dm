@@ -64,3 +64,9 @@
 
 //_Defines/mobs
 #define VOMIT_NANITE (1<<6)
+
+//_Defines/traits/declarations
+#define NANITES_TRAIT "nanites"
+
+/// The mob's nanites are sending a monitoring signal visible on diag HUD // Massmeta editchen
+#define TRAIT_NANITE_MONITORING "nanite_monitoring"

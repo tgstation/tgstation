@@ -189,7 +189,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		return data_by_z["[z]"]
 
 	var/list/results = list()
-	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
+	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list) //massmeta edit
 		if(!tracked_mob)
 			stack_trace("Null entry in suit sensors list.")
 			continue
@@ -211,7 +211,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		var/sensor_mode
 
 		// Set sensor level based on whether we're in the nanites list or the suit sensor list.
-		if(tracked_living_mob in GLOB.nanite_sensors_list)
+		if(tracked_living_mob in GLOB.nanite_sensors_list) //massmeta edit
 			sensor_mode = SENSOR_COORDS
 		else
 			var/mob/living/carbon/human/tracked_human = tracked_living_mob
