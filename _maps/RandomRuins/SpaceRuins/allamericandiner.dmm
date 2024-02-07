@@ -150,7 +150,6 @@
 	},
 /obj/effect/turf_decal/siding/brown,
 /obj/machinery/jukebox{
-	active = 1;
 	req_access = null
 	},
 /turf/open/floor/iron,

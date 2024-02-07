@@ -770,18 +770,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	liver_damage = 0.1
 	metabolization_rate = 0.04 * REM
 	///The random span we start hearing in
-	var/randomSpan
+	var/random_span
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
+	random_span = pick("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia")
 	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
-	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off!"))
+	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off[affected_mob.can_hear() ? "!" : " - wait, that's normal."]"))
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_MOVABLE_HEAR)
-	to_chat(affected_mob, span_notice("You start hearing things normally again."))
+	to_chat(affected_mob, span_notice("You start hearing things normally again[affected_mob.can_hear() ? "" : " - no, wait, no you don't"]."))
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(mob/living/owner, list/hearing_args)
 	SIGNAL_HANDLER
@@ -789,8 +789,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	// don't skip messages that the owner says or can't understand (since they still make sounds)
 	if(!owner.can_hear())
 		return
+	// not technically hearing
+	var/atom/movable/speaker = hearing_args[HEARING_SPEAKER]
+	if(!isnull(speaker) && HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
+		return
 
-	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
+	hearing_args[HEARING_SPANS] |= random_span
 
 /datum/reagent/inverse/sal_acid
 	name = "Benzoic Acid"
