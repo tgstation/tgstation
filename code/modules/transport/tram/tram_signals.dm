@@ -14,6 +14,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.72
 	anchored = TRUE
 	density = FALSE
+	interaction_flags_machine = INTERACT_MACHINE_OPEN
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
@@ -171,6 +172,8 @@
 
 /obj/machinery/transport/crossing_signal/AltClick(mob/living/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 
 	var/obj/item/tool = user.get_active_held_item()
 	if(!panel_open || tool?.tool_behaviour != TOOL_WRENCH)

@@ -63,7 +63,7 @@
 		They also have the ability to create a ring of fire around themselves for a length of time."
 	gain_text = "I combined my principle of hunger with my desire for destruction. The Marshal knew my name, and the Nightwatcher gazed on."
 	next_knowledge = list(
-		/datum/heretic_knowledge/summon/stalker,
+		/datum/heretic_knowledge/spell/flame_birth,
 		/datum/heretic_knowledge/spell/moon_ringleader,
 	)
 	required_atoms = list(

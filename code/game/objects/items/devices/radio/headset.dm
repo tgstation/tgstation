@@ -320,6 +320,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cent/commander
 	keyslot2 = /obj/item/encryptionkey/heads/captain
+	command = TRUE
 
 /obj/item/radio/headset/headset_cent/alt
 	name = "\improper CentCom bowman headset"
