@@ -685,20 +685,13 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "carbonated oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/glass_style/drinking_glass/grey_bull
 	required_drink_type = /datum/reagent/consumable/grey_bull
 	name = "glass of Grey Bull"
 	desc = "Surprisingly it isn't grey."
 	icon_state = "grey_bull_glass"
-
-/datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/affected_mob)
-	..()
-	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-	..()
 
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_jitter_if_lower(40 SECONDS * REM * seconds_per_tick)

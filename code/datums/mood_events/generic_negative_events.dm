@@ -101,6 +101,12 @@
 	mood_change = -3
 	timeout = 3 MINUTES
 
+/datum/mood_event/table_limbsmash/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
+
 /datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
 	if(banged_limb)
 		description = "My fucking [banged_limb.plaintext_zone], man that hurts..."
@@ -169,6 +175,12 @@
 	mood_change = -5
 	timeout = 60 SECONDS
 
+/datum/mood_event/painful_medicine/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
+
 /datum/mood_event/spooked
 	description = "The rattling of those bones... It still haunts me."
 	mood_change = -4
@@ -205,6 +217,12 @@
 /datum/mood_event/back_pain
 	description = "Bags never sit right on my back, this hurts like hell!"
 	mood_change = -15
+
+/datum/mood_event/back_pain/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
 
 /datum/mood_event/sad_empath
 	description = "Someone seems upset..."
