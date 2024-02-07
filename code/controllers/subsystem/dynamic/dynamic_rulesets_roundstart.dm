@@ -720,9 +720,9 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	required_candidates = 3 // lives or dies by there being a few spies
 	weight = 5
 	cost = 8
-	scaling_cost = 8
-	max_scale_up_to_percent = 0.15 // don't scale as radically as other rulesets
-	antag_cap = list("denominator" = 15, "offset" = 2) // should be a GOOD CHUNK.
+	scaling_cost = 0 // since we have a pretty low denominator, scaling up would create way too many spies
+	minimum_players = 8
+	antag_cap = list("denominator" = 8, "offset" = 1) // should have quite a few spies to work against each other
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
 
 /datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
