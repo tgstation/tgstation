@@ -8,6 +8,7 @@
 /obj/machinery/computer/restock_tracker
 	name = "restock tracker"
 	desc = "A computer that tracks how well stocked the station's vending machines are."
+	circuit = /obj/item/circuitboard/machine/restock_tracker
 
 /obj/machinery/computer/restock_tracker/examine(mob/user)
 	. = ..()
