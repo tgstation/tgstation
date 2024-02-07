@@ -104,14 +104,14 @@
 	user.mob.log_manual_zone_selected_update("keybind", old_target = original)
 
 /datum/keybinding/mob/target/head_cycle
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("Numpad8")
 	name = "target_head_cycle"
 	full_name = "Target: Cycle Head"
 	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
 /datum/keybinding/mob/target/head
-	hotkey_keys = list("Numpad8")
+	hotkey_keys = list("Unbound")
 	name = "target_head"
 	full_name = "Target: Head"
 	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."

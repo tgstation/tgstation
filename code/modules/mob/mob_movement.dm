@@ -351,6 +351,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, force_drop)
 
 //bodypart selection verbs - Cyberboss
+//8: repeated presses toggles through head - eyes - mouth
 //7: mouth 8: head  9: eyes
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
@@ -365,7 +366,7 @@
  * Uses numpad keys 1-9
  */
 
-///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth.
+///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = TRUE
@@ -385,7 +386,7 @@
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
 
-///Hidden verb to target the head, bound to 8
+///Hidden verb to target the head, unbound by default.
 /client/verb/body_head()
 	set name = "body-head"
 	set hidden = TRUE
