@@ -8926,6 +8926,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "caH" = (
@@ -12277,6 +12278,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/abandoned_gambling_den)
 "cRT" = (
@@ -13439,6 +13441,13 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"dgZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/closed/wall,
+/area/station/service/library/printer)
 "dhk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -31614,9 +31623,8 @@
 /turf/open/floor/wood,
 /area/station/service/theater/abandoned)
 "hHF" = (
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/obj/structure/cable,
+/turf/open/floor/glass/reinforced,
 /area/station/maintenance/department/science/xenobiology)
 "hHG" = (
 /obj/machinery/telecomms/receiver/preset_left,
@@ -37960,10 +37968,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "jiX" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
 "jjc" = (
 /obj/structure/frame/computer{
@@ -46902,6 +46909,7 @@
 /area/station/maintenance/department/eva/abandoned)
 "lqa" = (
 /obj/machinery/light/small/red/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "lql" = (
@@ -51463,6 +51471,7 @@
 "mwA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "mwK" = (
@@ -52188,6 +52197,7 @@
 /area/station/security/warden)
 "mFq" = (
 /obj/structure/sign/warning/secure_area/directional/north,
+/obj/structure/cable,
 /turf/open/floor/glass/reinforced,
 /area/station/maintenance/department/science/xenobiology)
 "mFu" = (
@@ -56877,6 +56887,21 @@
 	pixel_y = 2;
 	pixel_x = 9
 	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "nMN" = (
@@ -59140,6 +59165,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/structure/steam_vent,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "opv" = (
@@ -75075,6 +75101,7 @@
 "smj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "smo" = (
@@ -76148,6 +76175,7 @@
 /obj/effect/decal/cleanable/xenoblood,
 /obj/structure/sign/warning/xeno_mining/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "sAm" = (
@@ -84964,6 +84992,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "uGn" = (
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "uGx" = (
@@ -88806,6 +88835,7 @@
 /area/station/maintenance/port)
 "vBO" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "foam_plating"
 	},
@@ -118459,7 +118489,7 @@ sfN
 sfN
 sfN
 nCi
-vPU
+hHF
 nCi
 nCi
 hCt
@@ -118973,7 +119003,7 @@ sfN
 sfN
 sfN
 nCi
-vPU
+hHF
 nCi
 bET
 hVB
@@ -119748,7 +119778,7 @@ jPZ
 oia
 nCi
 mwA
-hHF
+jDc
 guA
 nCi
 aaa
@@ -120776,7 +120806,7 @@ uhb
 uhb
 mAt
 qCs
-blc
+jiX
 hLM
 jBx
 pxb
@@ -121034,7 +121064,7 @@ fOp
 mAt
 ifk
 mMb
-jiX
+bNr
 blc
 rCc
 rCc
@@ -146974,7 +147004,7 @@ dLH
 dfZ
 dfZ
 fcx
-dfZ
+dgZ
 dfZ
 khZ
 nHY
