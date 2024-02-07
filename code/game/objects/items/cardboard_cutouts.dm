@@ -203,8 +203,8 @@
 /datum/cardboard_cutout/proc/apply(obj/item/cardboard_cutout/cutouts)
 	if(isnull(applied_appearance))
 		applied_appearance = image(fcopy_rsc(getFlatIcon(preview_appearance, no_anim = TRUE)))
-		applied_appearance.plane = /obj/item/cardboard_cutout::plane
-		applied_appearance.layer = /obj/item/cardboard_cutout::layer
+	applied_appearance.plane = cutouts.plane
+	applied_appearance.layer = cutouts.layer
 	cutouts.appearance = applied_appearance
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc
