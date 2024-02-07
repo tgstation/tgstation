@@ -57,11 +57,17 @@
  * Adds an instance of colour_type to the mob's client_colours list
  * colour_type - a typepath (subtyped from /datum/client_colour)
  */
-/mob/proc/add_client_colour(colour_type)
-	if(!ispath(colour_type, /datum/client_colour) || QDELING(src))
+/mob/proc/add_client_colour(colour_type_or_datum)
+	if(QDELING(src))
 		return
+	var/datum/client_colour/colour
+	if(istype(colour_type_or_datum, /datum/client_colour))
+		colour = colour_type_or_datum
+	else if(ispath(colour_type_or_datum, /datum/client_colour))
+		colour = new colour_type_or_datum(src)
+	else
+		CRASH("Invalid colour type or datum for add_client_color: [colour_type_or_datum || "null"]")
 
-	var/datum/client_colour/colour = new colour_type(src)
 	BINARY_INSERT(colour, client_colours, /datum/client_colour, colour, priority, COMPARE_KEY)
 	if(colour.fade_in)
 		animate_client_colour(colour.fade_in)
@@ -77,8 +83,7 @@
 	if(!ispath(colour_type, /datum/client_colour))
 		return
 
-	for(var/cc in client_colours)
-		var/datum/client_colour/colour = cc
+	for(var/datum/client_colour/colour as anything  in client_colours)
 		if(colour.type == colour_type)
 			qdel(colour)
 			break
@@ -129,22 +134,25 @@
  * on the client_colour datums it currently has.
  */
 /mob/proc/update_client_colour()
-	if(!client)
+	if(!client || !hud_used)
 		return
-	client.color = ""
-	if(!client_colours.len)
+	var/atom/movable/screen/plane_master/game_plane = hud_used.get_plane_master(MUTATE_PLANE(RENDER_PLANE_GAME, src))
+	game_plane.color = ""
+	if(!length(client_colours))
 		return
-	MIX_CLIENT_COLOUR(client.color)
+	MIX_CLIENT_COLOUR(var/new_color)
+	game_plane.color = new_color
 
 ///Works similarly to 'update_client_colour', but animated.
 /mob/proc/animate_client_colour(anim_time = 20, anim_easing = 0)
-	if(!client)
+	if(!client || !hud_used)
 		return
-	if(!client_colours.len)
-		animate(client, color = "", time = anim_time, easing = anim_easing)
+	var/atom/movable/screen/plane_master/game_plane = hud_used.get_plane_master(MUTATE_PLANE(RENDER_PLANE_GAME, src))
+	if(!length(client_colours))
+		animate(game_plane, color = "", time = anim_time, easing = anim_easing)
 		return
 	MIX_CLIENT_COLOUR(var/anim_colour)
-	animate(client, color = anim_colour, time = anim_time, easing = anim_easing)
+	animate(game_plane, color = anim_colour, time = anim_time, easing = anim_easing)
 
 #undef MIX_CLIENT_COLOUR
 
@@ -227,6 +235,9 @@
 /datum/client_colour/manual_heart_blood
 	priority = PRIORITY_ABSOLUTE
 	colour = COLOR_RED
+
+/datum/client_colour/temp
+	priority = PRIORITY_HIGH
 
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH
