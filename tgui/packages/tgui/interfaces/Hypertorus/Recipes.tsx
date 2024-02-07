@@ -18,7 +18,7 @@ type GasCellProps = {
 };
 
 type RecipeProps = {
-  baseMaxTemperature: number;
+  base_max_temperature: number;
   enableRecipeSelection: boolean;
   onRecipe: (recipe: string) => void;
 };
@@ -88,7 +88,7 @@ const recipe_effect_structure: Recipe[] = [
     override_base: 0.85,
     scale: 1.15,
     tooltip: (v, d) =>
-      'Maximum: ' + (d.baseMaximumTemperature * v).toExponential() + ' K',
+      'Maximum: ' + (d.base_max_temperature * v).toExponential() + ' K',
   },
 ];
 
