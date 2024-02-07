@@ -871,6 +871,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MOB_VOMIT_KNOCKDOWN (1<<4)
 /// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
 #define MOB_VOMIT_FORCE (1<<5)
+#define VOMIT_NANITE (1<<6)
 
 /// The default. Gives you might typically expect to happen when you vomit.
 #define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_STUN)

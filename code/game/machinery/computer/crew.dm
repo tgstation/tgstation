@@ -189,7 +189,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		return data_by_z["[z]"]
 
 	var/list/results = list()
-	for(var/tracked_mob in GLOB.suit_sensors_list)
+	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
 		if(!tracked_mob)
 			stack_trace("Null entry in suit sensors list.")
 			continue
@@ -208,25 +208,31 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)) && !HAS_TRAIT(tracked_living_mob, TRAIT_MULTIZ_SUIT_SENSORS))
 			continue
 
-		var/mob/living/carbon/human/tracked_human = tracked_living_mob
+		var/sensor_mode
 
-		// Check their humanity.
-		if(!ishuman(tracked_human))
-			stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
-			continue
+		// Set sensor level based on whether we're in the nanites list or the suit sensor list.
+		if(tracked_living_mob in GLOB.nanite_sensors_list)
+			sensor_mode = SENSOR_COORDS
+		else
+			var/mob/living/carbon/human/tracked_human = tracked_living_mob
 
-		// Check they have a uniform
-		var/obj/item/clothing/under/uniform = tracked_human.w_uniform
-		if (!istype(uniform))
-			stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
-			continue
+			// Check their humanity.
+			if(!ishuman(tracked_human))
+				stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
+				continue
 
-		// Check if their uniform is in a compatible mode.
-		if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
-			stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
-			continue
+			// Check they have a uniform
+			var/obj/item/clothing/under/uniform = tracked_human.w_uniform
+			if (!istype(uniform))
+				stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
+				continue
 
-		var/sensor_mode = uniform.sensor_mode
+			// Check if their uniform is in a compatible mode.
+			if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
+				stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
+				continue
+
+			sensor_mode = uniform.sensor_mode
 
 		// The entry for this human
 		var/list/entry = list(

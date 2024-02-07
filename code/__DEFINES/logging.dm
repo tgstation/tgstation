@@ -27,6 +27,7 @@
 #define INVESTIGATE_RESEARCH "research"
 #define INVESTIGATE_TRANSPORT "transport"
 #define INVESTIGATE_WIRES "wires"
+#define INVESTIGATE_NANITES "nanites"
 
 // Logging types for log_message()
 #define LOG_ATTACK (1 << 0)
