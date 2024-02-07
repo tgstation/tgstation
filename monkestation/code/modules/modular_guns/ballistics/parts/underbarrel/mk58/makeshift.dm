@@ -8,8 +8,8 @@
 
 	ease_of_use = 0.1 //lol
 	noise_multiplier = 1.4
-	stability = 0.3
-	misfire_multiplier = 4
+	stability = 0.01
+	misfire_multiplier = 9
 
 /obj/item/attachment/underbarrel/mk_58/makeshift/illegal_switch/unique_attachment_effects_per_reset(obj/item/gun/modular)
 	modular.burst_size = 9
