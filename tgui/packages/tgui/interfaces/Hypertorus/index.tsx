@@ -86,7 +86,7 @@ const HypertorusMainControls = (props) => {
       </Stack>
       <Collapsible title="Recipe selection">
         <HypertorusRecipes
-          base_max_temperature={base_max_temperature}
+          baseMaxTemperature={base_max_temperature}
           enableRecipeSelection={power_level === 0}
           onRecipe={(id) => act('fuel', { mode: id })}
         />
