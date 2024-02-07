@@ -112,8 +112,9 @@
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
 	desc = "Your Mansus Grasp now applies the Mark of Lock. \
-		Attack a marked person to bar them from all passages for the duration of the mark. \
-		This will make it so that they have no access whatsoever, even public access doors will reject them."
+		The victim will be barred from all passages for the duration of the mark, or until it is triggered. \
+		This will make it so that they have no access whatsoever, even public access doors will reject them. \
+		Attack a marked person with your sickly blade to trigger the mark, making them drop most of their items."
 	gain_text = "The Gatekeeper was a corrupt Steward. She hindered her fellows for her own twisted amusement."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/lock)
 	route = PATH_LOCK
