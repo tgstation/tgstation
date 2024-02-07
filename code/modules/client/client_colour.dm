@@ -38,20 +38,14 @@
 /datum/client_colour/Destroy()
 	if(!QDELETED(owner))
 		owner.client_colours -= src
-		if(fade_out)
-			owner.animate_client_colour(fade_out)
-		else
-			owner.update_client_colour()
+		owner.animate_client_colour(fade_out)
 	owner = null
 	return ..()
 
 ///Sets a new colour, then updates the owner's screen colour.
 /datum/client_colour/proc/update_colour(new_colour, anim_time, easing = 0)
 	colour = new_colour
-	if(anim_time)
-		owner.animate_client_colour(anim_time, easing)
-	else
-		owner.update_client_colour()
+	owner.animate_client_colour(anim_time, easing)
 
 /**
  * Adds an instance of colour_type to the mob's client_colours list
@@ -69,10 +63,7 @@
 		CRASH("Invalid colour type or datum for add_client_color: [colour_type_or_datum || "null"]")
 
 	BINARY_INSERT(colour, client_colours, /datum/client_colour, colour, priority, COMPARE_KEY)
-	if(colour.fade_in)
-		animate_client_colour(colour.fade_in)
-	else
-		update_client_colour()
+	animate_client_colour(colour.fade_in)
 	return colour
 
 /**
@@ -83,7 +74,7 @@
 	if(!ispath(colour_type, /datum/client_colour))
 		return
 
-	for(var/datum/client_colour/colour as anything  in client_colours)
+	for(var/datum/client_colour/colour as anything in client_colours)
 		if(colour.type == colour_type)
 			qdel(colour)
 			break
@@ -128,33 +119,48 @@
 	};\
 	target = _our_colour\
 
+#define CLIENT_COLOR_FILTER_KEY "fake_client_color"
 
 /**
  * Resets the mob's client.color to null, and then reapplies a new color based
  * on the client_colour datums it currently has.
  */
 /mob/proc/update_client_colour()
-	if(!client || !hud_used)
+	if(isnull(hud_used))
 		return
-	var/atom/movable/screen/plane_master/game_plane = hud_used.get_plane_master(MUTATE_PLANE(RENDER_PLANE_GAME, src))
-	game_plane.color = ""
-	if(!length(client_colours))
-		return
-	MIX_CLIENT_COLOUR(var/new_color)
-	game_plane.color = new_color
+
+	var/new_color = ""
+	if(length(client_colours))
+		MIX_CLIENT_COLOUR(new_color)
+
+	for(var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
+		if(new_color)
+			game_plane.add_filter(CLIENT_COLOR_FILTER_KEY, 2, color_matrix_filter(new_color))
+		else
+			game_plane.remove_filter(CLIENT_COLOR_FILTER_KEY)
 
 ///Works similarly to 'update_client_colour', but animated.
-/mob/proc/animate_client_colour(anim_time = 20, anim_easing = 0)
-	if(!client || !hud_used)
+/mob/proc/animate_client_colour(anim_time = 2 SECONDS, anim_easing = NONE)
+	if(anim_time <= 0)
+		return update_client_colour()
+	if(isnull(hud_used))
 		return
-	var/atom/movable/screen/plane_master/game_plane = hud_used.get_plane_master(MUTATE_PLANE(RENDER_PLANE_GAME, src))
-	if(!length(client_colours))
-		animate(game_plane, color = "", time = anim_time, easing = anim_easing)
-		return
-	MIX_CLIENT_COLOUR(var/anim_colour)
-	animate(game_plane, color = anim_colour, time = anim_time, easing = anim_easing)
+
+	var/anim_color = ""
+	if(length(client_colours))
+		MIX_CLIENT_COLOUR(anim_color)
+
+	for(var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
+		if(anim_color)
+			game_plane.add_filter(CLIENT_COLOR_FILTER_KEY, 2, color_matrix_filter())
+			game_plane.transition_filter(CLIENT_COLOR_FILTER_KEY, color_matrix_filter(anim_color), anim_time, anim_easing)
+		else
+			game_plane.transition_filter(CLIENT_COLOR_FILTER_KEY, color_matrix_filter(), anim_time, anim_easing)
+			// This leaves a blank color filter on the hud which is, fine I guess?
 
 #undef MIX_CLIENT_COLOUR
+
+#undef CLIENT_COLOR_FILTER_KEY
 
 /datum/client_colour/glass_colour
 	priority = PRIORITY_LOW

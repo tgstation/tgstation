@@ -63,7 +63,6 @@
 	. = ..()
 	if(!same_z_layer)
 		relayer_fullscreens()
-		update_client_colour()
 
 /mob/proc/relayer_fullscreens()
 	var/turf/our_lad = get_turf(src)
