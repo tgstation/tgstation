@@ -385,7 +385,7 @@
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 	atom_storage.max_total_storage = 15
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
+	atom_storage.set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	for(var/items in 1 to 4)

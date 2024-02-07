@@ -39,6 +39,13 @@
 	birth_limit = 5
 	death_limit = 4
 	smoothing_iterations = 10
+	weighted_feature_spawn_list = list(
+		/obj/structure/geyser/hollowwater = 10,
+		/obj/structure/geyser/plasma_oxide = 10,
+		/obj/structure/geyser/protozine = 10,
+		/obj/structure/geyser/random = 2,
+		/obj/structure/geyser/wittel = 10,
+	)
 
 /// Surface snow generator variant for forested station trait, WITH FORESTSSSS
 /datum/map_generator/cave_generator/icemoon/surface/forested

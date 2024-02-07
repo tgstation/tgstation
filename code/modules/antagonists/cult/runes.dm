@@ -612,10 +612,10 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	GLOB.narsie_effect_last_modified = started
 
 	var/starting_color = GLOB.starlight_color
-	var/list/target_color = ReadHSV(RGBtoHSV(starting_color))
+	var/list/target_color = rgb2hsv(starting_color)
 	target_color[2] = target_color[2] * 0.4
 	target_color[3] = target_color[3] * 0.5
-	var/mid_color = HSVtoRGB(hsv(target_color[1], target_color[2], target_color[3]))
+	var/mid_color = hsv2rgb(target_color)
 	var/end_color = "#c21d57"
 	for(var/i in 1 to 9)
 		if(GLOB.narsie_effect_last_modified > started)
@@ -639,7 +639,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	for(var/i in 1 to 4)
 		if(GLOB.narsie_effect_last_modified > started)
 			return
-		var/starlight_color = hsv_gradient(i, 1, starting_color, 4, end_color)
+		var/starlight_color = BlendHSV(i / 4, starting_color, end_color)
 		set_starlight(starlight_color)
 		sleep(8 SECONDS)
 

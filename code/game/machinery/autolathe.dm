@@ -221,40 +221,37 @@
 		return
 
 	//use power
-	var/power = 0
+	var/total_charge = 0
 	for(var/material in design.materials)
-		power += round(design.materials[material] * material_cost_coefficient * build_count)
-	power = min(active_power_usage, power)
-	if(!directly_use_power(power))
-		say("Not enough power in local network to begin production.")
-		return
+		total_charge += round(design.materials[material] * material_cost_coefficient * build_count)
+	var/charge_per_item = total_charge / build_count
 
 	var/total_time = (design.construction_time * design.lathe_time_factor * build_count) ** 0.8
 	var/time_per_item = total_time / build_count
-	start_making(design, build_count, time_per_item, material_cost_coefficient)
+	start_making(design, build_count, time_per_item, material_cost_coefficient, charge_per_item)
 	return TRUE
 
 /// Begins the act of making the given design the given number of items
 /// Does not check or use materials/power/etc
-/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, build_time_per_item, material_cost_coefficient)
+/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, build_time_per_item, material_cost_coefficient, charge_per_item)
 	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
 	icon_state = "autolathe_n"
 	update_static_data_for_all_viewers()
 
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, material_cost_coefficient, build_time_per_item, build_count), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, material_cost_coefficient, build_time_per_item, charge_per_item, build_count), build_time_per_item)
 
 /// Callback for start_making, actually makes the item
 /// Called using timers started by start_making
-/obj/machinery/autolathe/proc/do_make_item(datum/design/design, material_cost_coefficient, time_per_item, items_remaining)
+/obj/machinery/autolathe/proc/do_make_item(datum/design/design, material_cost_coefficient, time_per_item, charge_per_item, items_remaining)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
 		finalize_build()
 		return
 
-	if(!is_operational)
+	if(!directly_use_power(charge_per_item))
 		say("Unable to continue production, power failure.")
 		finalize_build()
 		return
@@ -392,6 +389,8 @@
 
 /obj/machinery/autolathe/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(drop_direction)
 		balloon_alert(user, "drop direction reset")
 		drop_direction = 0

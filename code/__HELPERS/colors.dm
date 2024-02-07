@@ -19,13 +19,8 @@
 
 /// Given a color in the format of "#RRGGBB" or "#RRGGBBAA", gives back a 4 entry list with the number values of each
 /proc/split_color(color)
-	var/list/output = list()
-	output += hex2num(copytext(color, 2, 4))
-	output += hex2num(copytext(color, 4, 6))
-	output += hex2num(copytext(color, 6, 8))
-	if(length(color) == 9)
-		output += hex2num(copytext(color, 8, 10))
-	else
+	var/list/output = rgb2num(color)
+	if(length(output) == 3)
 		output += 255
 	return output
 
@@ -49,10 +44,8 @@
 		CRASH("Given non-HTML argument!")
 	else if(length_char(HTMLstring) != 7)
 		CRASH("Given non-hex symbols in argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
+	var/list/color = rgb2num(HTMLstring)
+	return rgb(255 - color[1], 255 - color[2], 255 - color[3])
 
 ///Flash a color on the client
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)

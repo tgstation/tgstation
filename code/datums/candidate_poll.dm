@@ -20,8 +20,23 @@
 	var/finished = FALSE
 	/// Used to categorize in the alerts system and identify polls of same question+role so we can stack the alert buttons
 	var/poll_key
+	///Response messages sent in specific key areas for full customization of polling.
+	var/list/response_messages = list(
+		POLL_RESPONSE_SIGNUP = "You have signed up for %ROLE%! A candidate will be picked randomly soon.",
+		POLL_RESPONSE_ALREADY_SIGNED = "You have already signed up for this!",
+		POLL_RESPONSE_NOT_SIGNED = "You aren't signed up for this!",
+		POLL_RESPONSE_TOO_LATE_TO_UNREGISTER = "It's too late to unregister yourself, selection has already begun!",
+		POLL_RESPONSE_UNREGISTERED = "You have been unregistered as a candidate for %ROLE%. You can sign up again before the poll ends.",
+	)
 
-/datum/candidate_poll/New(polled_role, polled_question, poll_duration, poll_ignoring_category, poll_jumpable)
+/datum/candidate_poll/New(
+	polled_role,
+	polled_question,
+	poll_duration,
+	poll_ignoring_category,
+	poll_jumpable,
+	list/custom_response_messages = list(),
+)
 	role = polled_role
 	question = polled_question
 	duration = poll_duration
@@ -30,6 +45,10 @@
 	signed_up = list()
 	time_started = world.time
 	poll_key = "[question]_[role ? role : "0"]"
+	if(custom_response_messages.len)
+		response_messages = custom_response_messages
+	for(var/individual_message in response_messages)
+		response_messages[individual_message] = replacetext(response_messages[individual_message], "%ROLE%", role)
 	return ..()
 
 /datum/candidate_poll/Destroy()
@@ -49,7 +68,7 @@
 		return FALSE
 	if(candidate in signed_up)
 		if(!silent)
-			to_chat(candidate, span_warning("You have already signed up for this!"))
+			to_chat(candidate, span_warning(response_messages[POLL_RESPONSE_ALREADY_SIGNED]))
 		return FALSE
 	if(time_left() <= 0)
 		if(!silent)
@@ -59,7 +78,7 @@
 
 	signed_up += candidate
 	if(!silent)
-		to_chat(candidate, span_notice("You have signed up for [role]! A candidate will be picked randomly soon."))
+		to_chat(candidate, span_notice(response_messages[POLL_RESPONSE_SIGNUP]))
 		// Sign them up for any other polls with the same mob type
 		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
 			if(src != existing_poll && poll_key == existing_poll.poll_key && !(candidate in existing_poll.signed_up))
@@ -73,17 +92,17 @@
 		return FALSE
 	if(!(candidate in signed_up))
 		if(!silent)
-			to_chat(candidate, span_warning("You aren't signed up for this!"))
+			to_chat(candidate, span_warning(response_messages[POLL_RESPONSE_NOT_SIGNED]))
 		return FALSE
 
 	if(time_left() <= 0)
 		if(!silent)
-			to_chat(candidate, span_danger("It's too late to unregister yourself, selection has already begun!"))
+			to_chat(candidate, span_danger(response_messages[POLL_RESPONSE_TOO_LATE_TO_UNREGISTER]))
 		return FALSE
 
 	signed_up -= candidate
 	if(!silent)
-		to_chat(candidate, span_danger("You have been unregistered as a candidate for [role]. You can sign up again before the poll ends."))
+		to_chat(candidate, span_danger(response_messages[POLL_RESPONSE_UNREGISTERED]))
 
 		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
 			if(src != existing_poll && poll_key == existing_poll.poll_key && (candidate in existing_poll.signed_up))
