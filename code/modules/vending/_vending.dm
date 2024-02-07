@@ -686,6 +686,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				var/transferred = restock(canister)
 				if(transferred)
 					to_chat(user, span_notice("You loaded [transferred] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
+					var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+					cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
 					var/obj/item/holochip/payday = new /obj/item/holochip(src, credits_contained)
 					try_put_in_hand(payday, user)
 				else
