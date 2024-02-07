@@ -56,13 +56,17 @@
 	if(HAS_TRAIT(grabber, TRAIT_SIGN_LANG))
 		return
 
+	var/message = speech_args[SPEECH_MESSAGE]
+	var/list/spans = speech_args[SPEECH_SPANS]
+	var/language = speech_args[SPEECH_LANGUAGE]
+	var/saymode = speech_args[SPEECH_SAYMODE]
 	var/atom/movable/movable_parent = parent
 	movable_parent.say(
-		message = speech_args[SPEECH_MESSAGE],
-		spans = speech_args[SPEECH_SPANS],
-		language = speech_args[SPEECH_LANGUAGE],
+		message = message,
+		spans = spans.Copy(),
+		language = language,
 		forced = "[source]'s marionette",
-		saymode = speech_args[SPEECH_SAYMODE],
+		saymode = saymode,
 	)
 	speech_args[SPEECH_RANGE] = WHISPER_RANGE
 
