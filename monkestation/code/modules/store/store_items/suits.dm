@@ -121,6 +121,11 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	item_path = /obj/item/clothing/suit/jacket/fancy
 	item_cost = 3000
 
+/datum/store_item/suit/jacket/tailcoat
+	name = "Recolorable Tailcoat"
+	item_path = /obj/item/clothing/suit/jacket/tailcoat
+	item_cost = 3000
+
 /datum/store_item/suit/ethereal_raincoat
 	name = "Ethereal Raincoat"
 	item_path = /obj/item/clothing/suit/hooded/ethereal_raincoat
@@ -270,6 +275,12 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/coat_miner
 	name = "Mining Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/miner
+
+//JACKETS
+
+/datum/store_item/suit/jacket/tailcoat_bar
+	name = "Bartender's Tailcoat"
+	item_path = /obj/item/clothing/suit/jacket/tailcoat/bartender
 
 /*
 *	FAMILIES
