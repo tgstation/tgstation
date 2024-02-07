@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "fixes ghetto surgery by gently adjusting time sensitivity cap and making the cleaver not unintuitively bad at bone-sawing."

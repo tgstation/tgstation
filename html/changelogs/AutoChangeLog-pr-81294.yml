@@ -1,4 +1,0 @@
-author: "Momo8289"
-delete-after: True
-changes:
-  - bugfix: "Automated IV drips will now be on the layer set by the plumbing constructor when created."

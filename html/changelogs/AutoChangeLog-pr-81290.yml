@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "deleting objects with local material storage(autolathe, drone dispenser etc) no longer drops sheets, they only drop materials when deconstructed"

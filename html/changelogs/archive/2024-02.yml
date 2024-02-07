@@ -112,3 +112,16 @@
   - bugfix: you may no longer altclick ethereal disco balls while unconscious to anchor/unanchor
   vinylspiders:
   - bugfix: fixes a runtime in AI search_tactic
+2024-02-07:
+  Higgin:
+  - bugfix: fixes ghetto surgery by gently adjusting time sensitivity cap and making
+      the cleaver not unintuitively bad at bone-sawing.
+  Momo8289:
+  - bugfix: Automated IV drips will now be on the layer set by the plumbing constructor
+      when created.
+  Rhials:
+  - bugfix: You can no longer convert assassination targets to your blood brother
+      team.
+  SyncIt21:
+  - bugfix: deleting objects with local material storage(autolathe, drone dispenser
+      etc) no longer drops sheets, they only drop materials when deconstructed
