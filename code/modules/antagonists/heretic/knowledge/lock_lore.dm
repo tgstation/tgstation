@@ -151,7 +151,7 @@
 		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
-	cost = 2
+	cost = 1
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former

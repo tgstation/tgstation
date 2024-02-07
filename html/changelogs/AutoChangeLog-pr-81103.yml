@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Icebox should have it's ore distribution and it's ore vents fixed, so that vents should now produce ore."
+  - spellcheck: "Boulder processing machines now don't mention things they don't do."

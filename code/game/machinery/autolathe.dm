@@ -389,6 +389,8 @@
 
 /obj/machinery/autolathe/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(drop_direction)
 		balloon_alert(user, "drop direction reset")
 		drop_direction = 0

@@ -103,8 +103,6 @@
 
 	var/distance = 128 // Max distance for a get_dist is 127
 	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
-		if(vent.unique_vent)
-			continue
 		if(vent.z != src.z)
 			continue //Silly
 		var/temp_distance = get_dist(src, vent)

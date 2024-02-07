@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Paradox clones now have a bluespace stream instead of a syndicate poster as their ghost poll icon."
