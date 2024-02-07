@@ -46,6 +46,15 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
+/obj/item/cardboard_cutout/equipped(mob/living/user, slot)
+	. = ..()
+	//Because of the tactical element, the user won't tilt left and right, but it'll still hop.
+	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
+
+/obj/item/cardboard_cutout/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
+
 /obj/item/cardboard_cutout/proc/push_over()
 	appearance = initial(appearance)
 	desc = "[initial(desc)] It's been pushed over."
@@ -106,7 +115,7 @@
 	for (var/datum/cardboard_cutout/cutout_subtype as anything in subtypesof(/datum/cardboard_cutout))
 		var/datum/cardboard_cutout/cutout = get_cardboard_cutout_instance(cutout_subtype)
 		appearances_by_name[cutout.name] = cutout
-		possible_appearances[cutout.name] = image(icon = cutout.applied_appearance)
+		possible_appearances[cutout.name] = image(icon = cutout.preview_appearance)
 
 	var/new_appearance = show_radial_menu(user, src, possible_appearances, custom_check = CALLBACK(src, PROC_REF(check_menu), user, crayon), radius = 36, require_near = TRUE)
 	if(!new_appearance)
@@ -150,19 +159,16 @@
 		return FALSE
 	return TRUE
 
-// Cutouts always face forward
-/obj/item/cardboard_cutout/setDir(newdir)
-	SHOULD_CALL_PARENT(FALSE)
-	return
-
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE
 
 /datum/cardboard_cutout
 	/// Name of the cutout, used for radial selection and the global list.
 	var/name = "Boardjak"
-	/// The appearance we apply to the cardboard cutout.
-	var/mutable_appearance/applied_appearance = null
+	/// The appearance of the cardboard cutout that we show in the radial menu.
+	var/mutable_appearance/preview_appearance
+	/// A flat appearance, with only one direction, that we apply to the cardboard cutout.
+	var/image/applied_appearance
 	/// The base name we actually give to to the cardboard cutout. Can be overridden in get_name().
 	var/applied_name = "boardjak"
 	/// The desc we give to the cardboard cutout.
@@ -185,9 +191,9 @@
 /datum/cardboard_cutout/New()
 	. = ..()
 	if(direct_icon)
-		applied_appearance = mutable_appearance(direct_icon, direct_icon_state)
+		preview_appearance = mutable_appearance(direct_icon, direct_icon_state)
 	else
-		applied_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, animated = FALSE)
+		preview_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, animated = FALSE)
 
 /// This proc returns the name that the cardboard cutout item will use.
 /datum/cardboard_cutout/proc/get_name()
@@ -195,6 +201,10 @@
 
 /// This proc sets the cardboard cutout item's vars.
 /datum/cardboard_cutout/proc/apply(obj/item/cardboard_cutout/cutouts)
+	if(isnull(applied_appearance))
+		applied_appearance = image(fcopy_rsc(getFlatIcon(preview_appearance, no_anim = TRUE)))
+		applied_appearance.plane = /obj/item/cardboard_cutout::plane
+		applied_appearance.layer = /obj/item/cardboard_cutout::layer
 	cutouts.appearance = applied_appearance
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc

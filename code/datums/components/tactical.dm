@@ -36,29 +36,25 @@
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified), override = TRUE)
-		return
-
 	if(allowed_slot && !(slot & allowed_slot))
 		if(current_slot)
 			unmodify(source, user)
 		return
 
 	if(current_slot) //If the current slot is set, this means the icon was updated or the item changed z-levels.
-		user.remove_alt_appearance("sneaking_mission")
-
-	ADD_TRAIT(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(parent))
+		user.remove_alt_appearance("sneaking_mission[REF(src)]")
+	else
+		RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
 
 	current_slot = slot
 
 	var/obj/item/master = parent
-	var/image/I = image(icon = master.icon, icon_state = master.icon_state, loc = user)
-	I.copy_overlays(master)
-	I.override = TRUE
-	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
-	I.layer = ABOVE_MOB_LAYER
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+	var/image/image = image(master, loc = user)
+	image.copy_overlays(master)
+	image.override = TRUE
+	image.layer = ABOVE_MOB_LAYER
+	image.plane = FLOAT_PLANE
+	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
@@ -69,15 +65,9 @@
 			return
 		user = master.loc
 
-	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
-		return
-
-	user.remove_alt_appearance("sneaking_mission")
+	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	current_slot = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED)
-
-	REMOVE_TRAIT(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src))
 
 /datum/component/tactical/proc/tactical_update(datum/source)
 	SIGNAL_HANDLER
@@ -85,11 +75,3 @@
 	if(!ismob(master.loc))
 		return
 	modify(master, master.loc, current_slot)
-
-///Basically, when another item with the tactical component is removed, ours takes over.
-/datum/component/tactical/proc/on_rival_tactical_unmodified(datum/source, trait)
-	SIGNAL_HANDLER
-	var/obj/item/item = parent
-	var/mob/holder = item.loc
-	UnregisterSignal(holder, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
-	modify(item, holder, holder.get_slot_by_item(item))
