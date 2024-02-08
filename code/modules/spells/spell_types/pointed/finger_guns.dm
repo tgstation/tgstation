@@ -46,5 +46,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/finger_guns/before_cast(atom/cast_on)
 	. = ..()
-	if(!isnull(owner))
+	if(isnull(owner))
+		invocation = initial(invocation)
+	else
 		invocation = span_notice("<b>[owner]</b> fires [owner.p_their()] finger gun!")
