@@ -156,7 +156,7 @@
 		balloon_alert(user, "close panel first!")
 		return FALSE
 	if(batch_processing)
-		balloon_alert(user, "teleportation started!")
+		balloon_alert(user, "batch still processing!")
 		return FALSE
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE

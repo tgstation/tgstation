@@ -357,6 +357,8 @@
  * @params apply_cooldown Should we apply a cooldown to producing boulders? Default's false, used by manual boulder production (goldgrubs, golems, etc).
  */
 /obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
+	RETURN_TYPE(/obj/item/boulder)
+
 	//cooldown applies only for manual processing by hand
 	if(apply_cooldown && !COOLDOWN_FINISHED(src, manual_vent_cooldown))
 		return
@@ -413,16 +415,10 @@
 	switch(string_boulder_size)
 		if(LARGE_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_LARGE
-			if(mapload)
-				SSore_generation.ore_vent_sizes["large"] += 1
 		if(MEDIUM_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_MEDIUM
-			if(mapload)
-				SSore_generation.ore_vent_sizes["medium"] += 1
 		if(SMALL_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_SMALL
-			if(mapload)
-				SSore_generation.ore_vent_sizes["small"] += 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
 			name = initial(name)
