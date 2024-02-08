@@ -23,7 +23,7 @@ import {
 } from 'tgui/components';
 
 import { ChatPageSettings } from '../chat';
-import { rebuildChat, saveChatToDisk } from '../chat/actions';
+import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import {
   addHighlightSetting,
@@ -85,7 +85,6 @@ export const SettingsGeneral = (props) => {
       <LabeledList>
         <LabeledList.Item label="Theme">
           <Dropdown
-            width="15rem"
             selected={theme}
             options={THEMES}
             onSelected={(value) =>
@@ -102,7 +101,6 @@ export const SettingsGeneral = (props) => {
             <Stack.Item>
               {(!freeFont && (
                 <Dropdown
-                  width="15rem"
                   selected={fontFamily}
                   options={FONTS}
                   onSelected={(value) =>
@@ -115,7 +113,6 @@ export const SettingsGeneral = (props) => {
                 />
               )) || (
                 <Input
-                  width="15rem"
                   value={fontFamily}
                   onChange={(e, value) =>
                     dispatch(
@@ -178,9 +175,23 @@ export const SettingsGeneral = (props) => {
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
-        Save chat log
-      </Button>
+      <Stack fill>
+        <Stack.Item grow mt={0.15}>
+          <Button
+            content="Save chat log"
+            icon="save"
+            tooltip="Export current tab history into HTML file"
+            onClick={() => dispatch(saveChatToDisk())}
+          />
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.Confirm
+            content="Clear chat"
+            icon="trash"
+            onClick={() => dispatch(clearChat())}
+          />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
