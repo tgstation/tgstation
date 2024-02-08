@@ -59,12 +59,11 @@
 	inhand_icon_state = "disintegrate"
 
 /obj/item/melee/touch_attack/smite/suicide_act(mob/living/user)
-	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
-	user.log_message("suicided with [src].", LOG_ATTACK)
-	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
+	
 	user.visible_message(span_suicide("[user] spreads [user.p_their()] arms apart, lightning arcing between them! It looks like [user.p_theyre()] going out with a bang!"))
 	user.say("SHIA KAZING!!", forced = "smite suicide")
 	do_sparks(4, FALSE, get_turf(user))
 	explosion(user, heavy_impact_range = 2, explosion_cause = src) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(DROP_BODYPARTS)
 	qdel(src)
+	return MANUAL_SUICIDE
