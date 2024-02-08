@@ -25,13 +25,6 @@
 	artifact_inside = null
 	return ..()
 
-///Custom helper to set materials for gulag boulders
-#define SET_RANDOM_MATERIAL(materials) \
-var/datum/material/new_material = pick_weight(materials); \
-var/list/new_mats = list(); \
-new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1, 3); \
-set_custom_materials(new_mats);
-
 ///Boulders usually spawned in lavaland labour camp area
 /obj/item/boulder/gulag
 	name = "low-quality boulder"
@@ -51,7 +44,10 @@ set_custom_materials(new_mats);
 		/datum/material/uranium = 3,
 	)
 
-	SET_RANDOM_MATERIAL(gulag_minerals)
+	var/datum/material/new_material = pick_weight(gulag_minerals); \
+	var/list/new_mats = list(); \
+	new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1, 3); \
+	set_custom_materials(new_mats);
 
 
 ///Boulders usually spawned in lavaland labour camp area but with bluespace material
@@ -74,10 +70,10 @@ set_custom_materials(new_mats);
 		/datum/material/uranium = 3,
 	)
 
-	SET_RANDOM_MATERIAL(expanded_gulag_minerals)
-
-#undef SET_RANDOM_MATERIAL
-
+	var/datum/material/new_material = pick_weight(expanded_gulag_minerals); \
+	var/list/new_mats = list(); \
+	new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1, 3); \
+	set_custom_materials(new_mats);
 
 ///lowgrade boulder, most commonly spawned
 /obj/item/boulder/shabby

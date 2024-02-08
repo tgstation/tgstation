@@ -135,7 +135,7 @@
 		return
 
 	if(pre_collect_boulder())
-		balloon_alert(user, "Teleporting")
+		balloon_alert(user, "teleporting")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -169,7 +169,7 @@
 		return
 
 	if(pre_collect_boulder())
-		balloon_alert(user, "Teleporting")
+		balloon_alert(user, "teleporting")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -302,4 +302,5 @@
 
 #undef MANUAL_TELEPORT_SOUND
 #undef AUTO_TELEPORT_SOUND
+#undef TELEPORTATION_TIME
 #undef BATCH_COOLDOWN
