@@ -5,6 +5,7 @@
 	id = SPECIES_LIZARD
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
+		TRAIT_MUTANT_COLORS_SECONDARY, // Add secondary color MASSMETA EDIT
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
@@ -140,6 +141,7 @@ Lizard subspecies: ASHWALKERS
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
+		TRAIT_MUTANT_COLORS_SECONDARY, // Add secondary color MASSMETA EDIT
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 	)

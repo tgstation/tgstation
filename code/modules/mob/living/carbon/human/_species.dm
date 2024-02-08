@@ -771,6 +771,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = fixed_mut_color
 							else
 								accessory_overlay.color = source.dna.features["mcolor"]
+
+						// Add for secodary color
+						if(TRAIT_MUTANT_COLORS_SECONDARY)
+							if(fixed_mut_color)
+								accessory_overlay.color = fixed_mut_color
+							else
+								accessory_overlay.color = source.dna.features["mcolor_secondary"] // MASSMETA EDIT
+						// End Edit
+
 						if(HAIR_COLOR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = source.dna.features["mcolor"]
@@ -785,6 +794,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
+
+			// Add for secodary color
+			if(length(accessory.body_slots) || length(accessory.external_slots)) // MASSMETA EDIT
+				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
+			// End Edit
 
 			if(accessory.hasinner)
 				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)

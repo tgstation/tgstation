@@ -100,6 +100,14 @@ export const feature_mcolor: Feature<string> = {
   component: FeatureColorInput,
 };
 
+// MASSMETA EDIT
+// Add Secondary species color
+export const feature_mcolor_secondary: Feature<string> = {
+  name: 'Mutant Secondary color',
+  component: FeatureColorInput,
+};
+// End Edit
+
 export const underwear_color: Feature<string> = {
   name: 'Underwear color',
   component: FeatureColorInput,

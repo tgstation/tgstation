@@ -146,6 +146,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
+
+/// MASSMETA EDIT
+/// Species with this trait use second mutant colors for coloration
+#define TRAIT_MUTANT_COLORS_SECONDARY "mutcolors_secondary"
+
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
 /// Species with this trait have a haircolor that cannot be chosen by the player, nor altered ingame by external means
