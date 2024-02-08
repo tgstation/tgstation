@@ -360,7 +360,7 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "ri" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Trash Dumpster"
 	},
 /obj/structure/plasticflaps,
@@ -646,8 +646,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "DZ" = (
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Kitchen"
 	},
 /obj/effect/decal/cleanable/dirt,

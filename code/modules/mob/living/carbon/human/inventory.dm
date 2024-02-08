@@ -230,7 +230,7 @@
 
 /mob/living/carbon/human/equipped_speed_mods()
 	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
+	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store, back, wear_mask, wear_neck, head, handcuffed, legcuffed))
 		var/obj/item/thing = sloties
 		. += thing?.slowdown
 

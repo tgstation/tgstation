@@ -1,0 +1,12 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "adds screentips & examines for screwdriver & crowbar acts & alt click."
+  - qol: "techfabs can now use the mouse drop functionality to set drop target."
+  - qol: "lathe printing animation plays on loop while printing rather than flicking once for more visual feedback"
+  - bugfix: "lathe sheet insertion animations are now linked & work again for all material types inserted via remote silo/local storage"
+  - bugfix: "printing custom materials items from autolathe works again."
+  - bugfix: "printing multiple items from lathes will actually print that correct quantity of items requested."
+  - bugfix: "printing items the 2nd time around from lathes won't cause the UI to reload each time."
+  - code_imp: "autodoc for some vars & procs, merges procs."
+  - refactor: "Optimized code for autolathe & techfabs in general. Report bugs on github"

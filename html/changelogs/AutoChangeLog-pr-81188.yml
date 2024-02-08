@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Species that can eat mice don't get disgusted from seeing one in the toilet bong."
+  - rscadd: "Grabbing an unwrenched statue/mannequin/skeleton model will now move its direction as you move yours, and you can talk through it."

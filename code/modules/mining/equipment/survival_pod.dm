@@ -129,6 +129,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	icon_state = "windoor"
 	base_state = "windoor"
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
+
 //Table
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/mining_zones/survival_pod.dmi'
