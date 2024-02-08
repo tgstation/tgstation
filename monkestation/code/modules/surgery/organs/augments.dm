@@ -19,7 +19,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/linked_surgery/proc/on_step_completion(mob/living/user, datum/surgery_step/current_step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
-	if(CHECK_BITFIELD(organ_flags, ORGAN_FAILING))
+	if(organ_flags & ORGAN_FAILING)
 		return
 	var/possible_steps = list()
 	if(current_step.repeatable)
@@ -36,8 +36,8 @@
 
 /obj/item/organ/internal/cyberimp/brain/linked_surgery/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
 	SIGNAL_HANDLER
-	if(CHECK_BITFIELD(organ_flags, ORGAN_FAILING))
-		return
+	if(organ_flags & ORGAN_FAILING)
+		return FALSE
 	if(surgery.replaced_by in loaded_surgeries)
 		return COMPONENT_CANCEL_SURGERY
 	if(surgery.type in loaded_surgeries)
@@ -45,7 +45,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/linked_surgery/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	update_surgeries(download_from_held = FALSE, silent = TRUE)
+	update_surgeries(download_from_held = FALSE)
 	RegisterSignal(organ_owner, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
 	RegisterSignal(organ_owner, COMSIG_MOB_SURGERY_STEP_SUCCESS, PROC_REF(on_step_completion))
 
@@ -59,7 +59,7 @@
 		return
 	update_surgeries()
 
-/obj/item/organ/internal/cyberimp/brain/linked_surgery/proc/update_surgeries(download_from_held = TRUE, silent = FALSE)
+/obj/item/organ/internal/cyberimp/brain/linked_surgery/proc/update_surgeries(download_from_held = TRUE)
 	var/list/prev_amt = length(loaded_surgeries)
 	for(var/design in linked_techweb.researched_designs)
 		var/datum/design/surgery/surgery_design = SSresearch.techweb_design_by_id(design)
@@ -84,8 +84,7 @@
 					surgeries_to_add |= surgery_design.surgery
 			else if(istype(held_item, /obj/item/disk/nuclear))
 				// funny joke message
-				if(!silent)
-					to_chat(owner, span_warning("Do you <i>want</i> to explode? You can't get surgery data from \the [held_item]!"))
+				to_chat(owner, span_warning("Do you <i>want</i> to explode? You can't get surgery data from \the [held_item]!"))
 				continue
 			else
 				continue
@@ -97,8 +96,6 @@
 				owner.balloon_alert(owner, "surgery download interrupted!")
 				return
 			loaded_surgeries |= surgeries_to_add
-	if(silent)
-		return
 	var/new_amt = length(loaded_surgeries)
 	var/diff = new_amt - prev_amt
 	if(diff)
@@ -113,12 +110,24 @@
 	organ_traits = list(TRAIT_PERFECT_SURGEON)
 	actions_types = null
 	var/list/blocked_surgeries = list(
-		/datum/surgery/advanced/brainwashing_sleeper,
+		/datum/surgery/advanced/brainwashing_sleeper, // this one has special handling
 		/datum/surgery/advanced/necrotic_revival,
 		/datum/surgery/organ_extraction
 	)
 
-/obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/update_surgeries(download_from_held = TRUE, silent = FALSE)
+// Special behavior to allow for sleeper agent surgery to be done if the traitor has the objective
+/obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
+	. = ..()
+	if(istype(surgery, /datum/surgery/advanced/brainwashing_sleeper))
+		var/datum/antagonist/traitor/traitor_datum = user.mind?.has_antag_datum(/datum/antagonist/traitor)
+		var/list/active_objectives = traitor_datum?.uplink_handler?.active_objectives
+		if(!length(active_objectives))
+			return
+		if(locate(/datum/traitor_objective/sleeper_protocol) in active_objectives)
+			return COMPONENT_FORCE_SURGERY
+
+
+/obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/update_surgeries(download_from_held = TRUE)
 	loaded_surgeries.Cut()
 	for(var/datum/surgery/surgery as() in GLOB.surgeries_list)
 		if(surgery.type in blocked_surgeries)

@@ -14435,6 +14435,21 @@
 	pixel_y = 2;
 	pixel_x = 9
 	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
 /turf/open/floor/glass,
 /area/station/service/library)
 "ezJ" = (
