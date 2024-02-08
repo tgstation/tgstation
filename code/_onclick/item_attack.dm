@@ -390,8 +390,9 @@
 					glasses.add_mob_blood(src)
 					update_worn_glasses()
 
-			if(!attacking_item.get_sharpness() && armor_block < 50)
-				if(prob(damage_done))
+			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED))
+				var/head_hurties_probability = (damage_done * ((100 - armor_block) / 100))
+				if(prob(head_hurties_probability))
 					adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 					if(stat == CONSCIOUS)
 						visible_message(
@@ -420,8 +421,9 @@
 					w_uniform.add_mob_blood(src)
 					update_worn_undersuit()
 
-			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && armor_block < 50)
-				if(prob(damage_done))
+			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+				var/chest_smackies_probability = (damage_done * ((100 - armor_block) / 100))
+				if(prob(chest_smackies_probability))
 					visible_message(
 						span_danger("[src] is knocked down!"),
 						span_userdanger("You're knocked down!"),

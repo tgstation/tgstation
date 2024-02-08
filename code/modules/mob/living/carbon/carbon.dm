@@ -80,7 +80,7 @@
 		Paralyze(2 SECONDS)
 		oof_noise = TRUE
 
-		if(blocked)
+		if(blocked || !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
 			log_combat(src, victim, "crashed into and was blocked by")

@@ -282,7 +282,7 @@
 	armor_type = /datum/armor/armor_riot
 	strip_delay = 80
 	equip_delay_other = 60
-	clothing_traits = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -386,7 +386,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	clothing_traits = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
 
 //All of the armor below is mostly unused
@@ -486,6 +486,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
