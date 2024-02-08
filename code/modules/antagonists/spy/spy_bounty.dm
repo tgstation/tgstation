@@ -302,13 +302,14 @@
 	if(!length(all_possible))
 		return FALSE
 
-
-	var/obj/machinery/machine = pick(all_possible)
+	var/obj/machinery/machine = pick_n_take(all_possible)
 	var/area/machine_area = get_area(machine)
-	// So you can steal any machine found in that area, even if it's been moved out
-	for(var/obj/machinery/machine as anything in all_possible)
-		if(get_area(machine) == machine_area)
-			original_options_weakrefs += WEAKREF(machine)
+	// Tracks the picked machine, as well as any other machines in the same area
+	// (So they can be removed from the room but still count, for clever Spies)
+	original_options_weakrefs += WEAKREF(other_machine)
+	for(var/obj/machinery/other_machine as anything in all_possible)
+		if(get_area(other_machine) == machine_area)
+			original_options_weakrefs += WEAKREF(other_machine)
 
 	location_type = machine_area.type
 	name ||= "[machine.name] Burglary"
