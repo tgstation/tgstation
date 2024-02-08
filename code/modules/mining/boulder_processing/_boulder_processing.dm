@@ -286,11 +286,11 @@
 		points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
 		if(!silo_materials.mat_container.insert_amount_mat(quantity * refining_efficiency, possible_mat))
 			rejected_mats[possible_mat] = quantity
-	chosen_boulder.set_custom_materials(rejected_mats)
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
 
 	//Calls the relevant behavior for boosting the machine's efficiency, if able.
 	check_for_boosts()
+	chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)
 
 	//break the boulder down if we have processed all its materials
 	if(!length(chosen_boulder.custom_materials))
