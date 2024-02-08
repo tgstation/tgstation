@@ -1,8 +1,8 @@
 {
 	"version": 1,
-	"map_name": "Peddle Station",
-	"map_path": "map_files/PeddleStation",
-	"map_file": "PeddleStation.dmm",
+	"map_name": "Pebble Station",
+	"map_path": "map_files/PebbleStation",
+	"map_file": "PebbleStation.dmm",
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",

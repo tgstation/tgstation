@@ -42,8 +42,8 @@ map northstar
 	votable
 endmap
 
-map peddlestation
-	maxplayers 10
+map pebblestation
+	maxplayers 12
 	votable
 	default
 endmap
