@@ -380,7 +380,7 @@
 
 	// Blood Alcohol Content
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
-	if(blood_alcohol_content)
+	if(blood_alcohol_content > 0)
 		if(blood_alcohol_content >= 0.24)
 			render_list += "<span class='alert ml-1'>Blood alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span>\n"
 		else
