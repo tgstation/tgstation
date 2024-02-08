@@ -7,18 +7,18 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
 
-/datum/ai_behavior/basic_melee_attack/dog/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/dog/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	var/mob/living/living_pawn = controller.pawn
 	if(!(isturf(living_pawn.loc) || HAS_TRAIT(living_pawn, TRAIT_AI_BAGATTACK))) // Void puppies can attack from inside bags
-		finish_action(controller, FALSE, target_key, targetting_datum_key, hiding_location_key)
+		finish_action(controller, FALSE, target_key, targeting_strategy_key, hiding_location_key)
 		return
 
 	// Unfortunately going to repeat this check in parent call but what can you do
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
-	if (!targetting_datum.can_attack(living_pawn, target))
-		finish_action(controller, FALSE, target_key, targetting_datum_key, hiding_location_key)
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if (!targeting_strategy.can_attack(living_pawn, target))
+		finish_action(controller, FALSE, target_key, targeting_strategy_key, hiding_location_key)
 		return
 
 	if (!living_pawn.Adjacent(target))

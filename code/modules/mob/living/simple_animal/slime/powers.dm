@@ -16,9 +16,9 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/simple_animal/slime/S = owner
+	var/mob/living/simple_animal/slime/slime_owner = owner
 	if(needs_growth == GROWTH_NEEDED)
-		if(S.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(slime_owner.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			return TRUE
 		return FALSE
 	return TRUE
@@ -30,17 +30,25 @@
 	if(stat)
 		return FALSE
 
+	if(buckled)
+		stop_feeding()
+		return TRUE
+
 	var/list/choices = list()
 	for(var/mob/living/nearby_mob in view(1,src))
-		if(nearby_mob != src && Adjacent(nearby_mob))
+		if(nearby_mob != src && Adjacent(nearby_mob) && nearby_mob.appears_alive())
 			choices += nearby_mob
+
+	if(length(choices) == 1)
+		start_feeding(choices[1])
+		return TRUE
 
 	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
 	if(isnull(choice))
 		return FALSE
 	var/mob/living/victim = choice
-	if(CanFeedon(victim))
-		Feedon(victim)
+	if(can_feed_on(victim))
+		start_feeding(victim)
 		return TRUE
 	return FALSE
 
@@ -50,15 +58,16 @@
 
 
 /datum/action/innate/slime/feed/Activate()
-	var/mob/living/simple_animal/slime/S = owner
-	S.Feed()
+	var/mob/living/simple_animal/slime/slime_owner = owner
+	slime_owner.Feed()
 
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/meal, silent = FALSE)
+///Can the slime leech life energy from the target?
+/mob/living/simple_animal/slime/proc/can_feed_on(mob/living/meal, silent = FALSE)
 	if(!Adjacent(meal))
 		return FALSE
 
 	if(buckled)
-		Feedstop()
+		stop_feeding()
 		return FALSE
 
 	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC)
@@ -120,35 +129,39 @@
 		return FALSE
 	return TRUE
 
-/mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
-	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
-	if(M.buckle_mob(src, force=TRUE))
-		layer = M.layer+0.01 //appear above the target mob
-		M.visible_message(span_danger("[name] latches onto [M]!"), \
-						span_userdanger("[name] latches onto [M]!"))
+///The slime will start feeding on the target
+/mob/living/simple_animal/slime/proc/start_feeding(mob/living/target_mob)
+	target_mob.unbuckle_all_mobs(force=TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
+	if(target_mob.buckle_mob(src, force=TRUE))
+		layer = target_mob.layer+0.01 //appear above the target mob
+		target_mob.visible_message(span_danger("[name] latches onto [target_mob]!"), \
+						span_userdanger("[name] latches onto [target_mob]!"))
 	else
 		to_chat(src, span_warning("<i>I have failed to latch onto the subject!</i>"))
 
-/mob/living/simple_animal/slime/proc/Feedstop(silent = FALSE, living=1)
-	if(buckled)
-		if(!living)
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
-			"This subject does not have life energy", "This subject is empty", \
-			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
+///The slime will stop feeding
+/mob/living/simple_animal/slime/proc/stop_feeding(silent = FALSE, living=TRUE)
+	if(!buckled)
+		return
 
-		var/mob/living/victim = buckled
+	if(!living)
+		to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+		"This subject does not have life energy", "This subject is empty", \
+		"I am not satisified", "I can not feed from this subject", \
+		"I do not feel nourished", "This subject is not food")]!</span>")
 
-		if(istype(victim))
-			var/bio_protection = 100 - victim.getarmor(null, BIO)
-			if(prob(bio_protection))
-				victim.apply_status_effect(/datum/status_effect/slimed, slime_colours_to_rgb[colour], colour == SLIME_TYPE_RAINBOW)
+	var/mob/living/victim = buckled
 
-		if(!silent)
-			visible_message(span_warning("[src] lets go of [buckled]!"), \
-							span_notice("<i>I stopped feeding.</i>"))
-		layer = initial(layer)
-		buckled.unbuckle_mob(src,force=TRUE)
+	if(istype(victim))
+		var/bio_protection = 100 - victim.getarmor(null, BIO)
+		if(prob(bio_protection))
+			victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
+
+	if(!silent)
+		visible_message(span_warning("[src] lets go of [buckled]!"), \
+						span_notice("<i>I stopped feeding.</i>"))
+	layer = initial(layer)
+	buckled.unbuckle_mob(src,force=TRUE)
 
 /mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"
@@ -157,20 +170,18 @@
 	if(stat)
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
-	if(!is_adult)
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			is_adult = 1
-			maxHealth = 200
-			amount_grown = 0
-			for(var/datum/action/innate/slime/evolve/E in actions)
-				E.Remove(src)
-			GRANT_ACTION(/datum/action/innate/slime/reproduce)
-			regenerate_icons()
-			update_name()
-		else
-			to_chat(src, "<i>I am not ready to evolve yet...</i>")
-	else
+	if(life_stage == SLIME_LIFE_STAGE_ADULT)
 		to_chat(src, "<i>I have already evolved...</i>")
+		return
+	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
+		to_chat(src, "<i>I am not ready to evolve yet...</i>")
+		return
+
+	set_life_stage(SLIME_LIFE_STAGE_ADULT)
+	amount_grown = 0
+
+	regenerate_icons()
+	update_name()
 
 /datum/action/innate/slime/evolve
 	name = "Evolve"
@@ -178,59 +189,67 @@
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/evolve/Activate()
-	var/mob/living/simple_animal/slime/S = owner
-	S.Evolve()
+	var/mob/living/simple_animal/slime/slime_owner = owner
+	slime_owner.Evolve()
 
 /mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"
-	set desc = "This will make you split into four Slimes."
+	set desc = "This will make you split into four slimes."
 
-	if(stat)
-		to_chat(src, "<i>I must be conscious to do this...</i>")
+	if(stat != CONSCIOUS)
+		balloon_alert(src, "need to be conscious to split!")
 		return
 
-	if(is_adult)
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(stat)
-				to_chat(src, "<i>I must be conscious to do this...</i>")
-				return
+	if(!isopenturf(loc))
+		balloon_alert(src, "can't reproduce here!")
 
-			var/list/babies = list()
-			var/new_nutrition = round(nutrition * 0.9)
-			var/new_powerlevel = round(powerlevel / 4)
-			var/turf/drop_loc = drop_location()
+	if(life_stage != SLIME_LIFE_STAGE_ADULT)
+		balloon_alert(src, "not old enough to reproduce!")
+		return
 
-			for(var/i in 1 to 4)
-				var/child_colour
-				if(mutation_chance >= 100)
-					child_colour = SLIME_TYPE_RAINBOW
-				else if(prob(mutation_chance))
-					child_colour = slime_mutation[rand(1,4)]
-				else
-					child_colour = colour
-				var/mob/living/simple_animal/slime/M
-				M = new(drop_loc, child_colour)
-				if(ckey)
-					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
-				M.powerlevel = new_powerlevel
-				if(i != 1)
-					step_away(M,src)
-				M.set_friends(Friends)
-				babies += M
-				M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
-				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
+	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
+		to_chat(src, "<i>I need to grow myself more before I can reproduce...</i>")
+		return
 
-			var/mob/living/simple_animal/slime/new_slime = pick(babies)
-			new_slime.set_combat_mode(TRUE)
-			if(src.mind)
-				src.mind.transfer_to(new_slime)
-			else
-				new_slime.key = src.key
-			qdel(src)
+	var/list/babies = list()
+	var/new_nutrition = round(nutrition * 0.9)
+	var/new_powerlevel = round(powerlevel / 4)
+	var/turf/drop_loc = drop_location()
+
+	for(var/i in 1 to 4)
+		var/child_colour
+
+		if(mutation_chance >= 100)
+			child_colour = /datum/slime_type/rainbow
+		else if(prob(mutation_chance))
+			child_colour = pick_weight(slime_type.mutations)
 		else
-			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
+			child_colour = slime_type.type
+
+		var/mob/living/simple_animal/slime/baby
+		baby = new(drop_loc, child_colour)
+
+		if(ckey)
+			baby.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+
+		baby.powerlevel = new_powerlevel
+		if(i != 1)
+			step_away(baby, src)
+
+		baby.set_friends(Friends)
+		babies += baby
+		baby.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
+		SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.slime_type.colour)
+
+	var/mob/living/simple_animal/slime/new_slime = pick(babies) // slime that the OG slime will move into.
+	new_slime.set_combat_mode(TRUE)
+
+	if(isnull(src.mind))
+		new_slime.key = src.key
 	else
-		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")
+		src.mind.transfer_to(new_slime)
+
+	qdel(src)
 
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"
@@ -238,8 +257,8 @@
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/reproduce/Activate()
-	var/mob/living/simple_animal/slime/S = owner
-	S.Reproduce()
+	var/mob/living/simple_animal/slime/slime_owner = owner
+	slime_owner.Reproduce()
 
 #undef SIZE_DOESNT_MATTER
 #undef BABIES_ONLY

@@ -63,7 +63,7 @@
 	if(trail && trail.effect_type != effect_type)
 		setup_trail(trail.holder)
 
-/datum/component/jetpack/Destroy(force, silent)
+/datum/component/jetpack/Destroy(force)
 	if(trail)
 		QDEL_NULL(trail)
 	check_on_move = null

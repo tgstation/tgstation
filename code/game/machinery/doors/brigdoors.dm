@@ -43,6 +43,10 @@
 			if (M.id == id)
 				doors += WEAKREF(M)
 
+		for(var/obj/machinery/door/airlock/security/M in urange(20, src))
+			if (M.id == id)
+				doors += WEAKREF(M)
+
 		for(var/obj/machinery/flasher/F in urange(20, src))
 			if(F.id == id)
 				flashers += WEAKREF(F)

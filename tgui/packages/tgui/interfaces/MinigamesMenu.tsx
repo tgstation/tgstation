@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const MinigamesMenu = (props, context) => {
-  const { act } = useBackend(context);
+export const MinigamesMenu = (props) => {
+  const { act } = useBackend();
 
   return (
     <Window title="Minigames Menu" width={700} height={200}>
@@ -13,7 +13,7 @@ export const MinigamesMenu = (props, context) => {
             <Stack.Item grow>
               <Button
                 content="CTF"
-                fluid={1}
+                fluid
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
@@ -23,7 +23,7 @@ export const MinigamesMenu = (props, context) => {
             <Stack.Item grow>
               <Button
                 content="Mafia"
-                fluid={1}
+                fluid
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
@@ -33,7 +33,7 @@ export const MinigamesMenu = (props, context) => {
             <Stack.Item grow>
               <Button
                 content="Basketball"
-                fluid={1}
+                fluid
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"

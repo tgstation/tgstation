@@ -46,6 +46,8 @@
 	var/overlay_icon = 'icons/mob/actions/backgrounds.dmi'
 	/// This is the icon state for any FOREGROUND overlay icons on the button (such as borders)
 	var/overlay_icon_state
+	/// Toggles whether this action is usable or not
+	var/action_disabled = FALSE
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -161,6 +163,8 @@
  */
 /datum/action/proc/IsAvailable(feedback = FALSE)
 	if(!owner)
+		return FALSE
+	if(action_disabled)
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)

@@ -286,7 +286,7 @@
 		return /datum/reagent/blood
 
 /mob/living/carbon/human/get_blood_id()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK) || !dna)
 		return
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return /datum/reagent/colorful_reagent

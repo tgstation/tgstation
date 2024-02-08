@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Stack, Section, ByondUi } from '../components';
+import { ByondUi, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const ExaminePanel = (props, context) => {
@@ -31,7 +31,8 @@ export const ExaminePanel = (props, context) => {
                   scrollable
                   fill
                   title={character_name + "'s Flavor Text:"}
-                  preserveWhitespace>
+                  preserveWhitespace
+                >
                   {flavor_text}
                 </Section>
               </Stack.Item>

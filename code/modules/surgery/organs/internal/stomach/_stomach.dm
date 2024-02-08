@@ -55,7 +55,7 @@
 	var/mob/living/carbon/body = owner
 
 	// digest food, sent all reagents that can metabolize to the body
-	for(var/datum/reagent/bit as anything in reagents.reagent_list)
+	for(var/datum/reagent/bit as anything in reagents?.reagent_list)
 
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
@@ -82,7 +82,7 @@
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed and react
 		// the stomach manages how fast they are feed in a drip style
-		reagents.trans_id_to(body, bit.type, amount=amount)
+		reagents.trans_to(body, amount, target_id = bit.type)
 
 	//Handle disgust
 	if(body)
@@ -93,7 +93,7 @@
 		return
 
 	//We are checking if we have nutriment in a damaged stomach.
-	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents?.reagent_list
 	//No nutriment found lets exit out
 	if(!nutri)
 		return
@@ -262,7 +262,7 @@
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
+/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)

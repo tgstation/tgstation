@@ -29,9 +29,10 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/assume_form/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	determine_intent(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /// Rapid proc to test if we can assume the form of a given atom. Returns TRUE if we can, FALSE if we can't. Done like this so we can be nice and explicit.

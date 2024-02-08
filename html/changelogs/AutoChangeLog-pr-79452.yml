@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Added feedback for both extractor and extractee while using fulton extraction packs."
-  - qol: "Extraction packs now have better exam text."

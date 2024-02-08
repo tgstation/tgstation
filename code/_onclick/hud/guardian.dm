@@ -1,7 +1,7 @@
 /datum/hud/guardian
 	ui_style = 'icons/hud/guardian.dmi'
 
-/datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
+/datum/hud/guardian/New(mob/living/basic/guardian/owner)
 	..()
 	var/atom/movable/screen/using
 
@@ -34,10 +34,10 @@
 	using.screen_loc = ui_back
 	static_inventory += using
 
-/datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner) //for a dextrous guardian
+/datum/hud/dextrous/guardian/New(mob/living/basic/guardian/owner) //for a dextrous guardian
 	..()
 	var/atom/movable/screen/using
-	if(istype(owner, /mob/living/simple_animal/hostile/guardian/dextrous))
+	if(istype(owner, /mob/living/basic/guardian/dextrous))
 		var/atom/movable/screen/inventory/inv_box
 
 		inv_box = new /atom/movable/screen/inventory(null, src)
@@ -86,8 +86,8 @@
 /datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
 		return
-	if(istype(mymob, /mob/living/simple_animal/hostile/guardian/dextrous))
-		var/mob/living/simple_animal/hostile/guardian/dextrous/dex_guardian = mymob
+	if(istype(mymob, /mob/living/basic/guardian/dextrous))
+		var/mob/living/basic/guardian/dextrous/dex_guardian = mymob
 
 		if(hud_shown)
 			if(dex_guardian.internal_storage)
@@ -109,7 +109,7 @@
 
 /atom/movable/screen/guardian/manifest/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/user = usr
+		var/mob/living/basic/guardian/user = usr
 		user.manifest()
 
 
@@ -120,7 +120,7 @@
 
 /atom/movable/screen/guardian/recall/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/user = usr
+		var/mob/living/basic/guardian/user = usr
 		user.recall()
 
 /atom/movable/screen/guardian/toggle_mode
@@ -130,7 +130,7 @@
 
 /atom/movable/screen/guardian/toggle_mode/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/user = usr
+		var/mob/living/basic/guardian/user = usr
 		user.toggle_modes()
 
 /atom/movable/screen/guardian/toggle_mode/inactive
@@ -153,7 +153,7 @@
 
 /atom/movable/screen/guardian/communicate/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/user = usr
+		var/mob/living/basic/guardian/user = usr
 		user.communicate()
 
 
@@ -164,5 +164,5 @@
 
 /atom/movable/screen/guardian/toggle_light/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/user = usr
+		var/mob/living/basic/guardian/user = usr
 		user.toggle_light()

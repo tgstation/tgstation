@@ -1,9 +1,19 @@
-import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from 'tgui/components';
-import { HelpDummy, HoverHelp } from './helpers';
-
 import { BooleanLike } from 'common/react';
-import { HypertorusFilter } from '.';
 import { useBackend } from 'tgui/backend';
+import {
+  Box,
+  Button,
+  Icon,
+  Knob,
+  LabeledControls,
+  LabeledList,
+  NumberInput,
+  Section,
+  Tooltip,
+} from 'tgui/components';
+
+import { HypertorusFilter } from '.';
+import { HelpDummy, HoverHelp } from './helpers';
 
 type ComboProps = {
   color?: string | BooleanLike;
@@ -37,7 +47,7 @@ type WasteData = {
  * This module holds user interactable controls. Some may be good candidates
  * for generalizing and refactoring.
  */
-const ComboKnob = (props: ComboProps, context) => {
+const ComboKnob = (props: ComboProps) => {
   const {
     color = false,
     defaultValue,
@@ -52,7 +62,7 @@ const ComboKnob = (props: ComboProps, context) => {
     ...rest
   } = props;
 
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
   const iconProps = {
     rotation: 0,
@@ -118,8 +128,8 @@ const ComboKnob = (props: ComboProps, context) => {
   );
 };
 
-export const HypertorusSecondaryControls = (props, context) => {
-  const { data } = useBackend<ControlsData>(context);
+export const HypertorusSecondaryControls = (props) => {
+  const { data } = useBackend<ControlsData>();
   const {
     cooling_volume,
     current_damper,
@@ -188,8 +198,8 @@ export const HypertorusSecondaryControls = (props, context) => {
   );
 };
 
-export const HypertorusWasteRemove = (props, context) => {
-  const { act, data } = useBackend<WasteData>(context);
+export const HypertorusWasteRemove = (props) => {
+  const { act, data } = useBackend<WasteData>();
   const { filter_types = [], waste_remove, mod_filtering_rate } = data;
 
   return (
@@ -206,7 +216,8 @@ export const HypertorusWasteRemove = (props, context) => {
               />
               Waste remove:
             </>
-          }>
+          }
+        >
           <Button
             icon={waste_remove ? 'power-off' : 'times'}
             content={waste_remove ? 'On' : 'Off'}
@@ -220,7 +231,8 @@ export const HypertorusWasteRemove = (props, context) => {
               <HelpDummy />
               Moderator filtering rate:
             </>
-          }>
+          }
+        >
           <NumberInput
             animated
             value={mod_filtering_rate}
@@ -240,7 +252,8 @@ export const HypertorusWasteRemove = (props, context) => {
               <HelpDummy />
               Filter from moderator mix:
             </>
-          }>
+          }
+        >
           {filter_types.map(({ gas_id, gas_name, enabled }) => (
             <Button.Checkbox
               key={gas_id}
@@ -249,7 +262,8 @@ export const HypertorusWasteRemove = (props, context) => {
                 act('filter', {
                   mode: gas_id,
                 })
-              }>
+              }
+            >
               {gas_name}
             </Button.Checkbox>
           ))}

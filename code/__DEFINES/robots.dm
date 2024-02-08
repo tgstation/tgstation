@@ -104,6 +104,22 @@
 ///The Bot has been hacked by a Silicon, emagging them, but revertable.
 #define BOT_COVER_HACKED (1<<3)
 
+
+//basic bots defines
+
+///is our maintenancle panel currently open
+#define BOT_MAINTS_PANEL_OPEN (1<<0)
+///is our control panel currently open
+#define BOT_CONTROL_PANEL_OPEN (1<<1)
+
+///bitfield for our access flags
+DEFINE_BITFIELD(bot_access_flags, list(
+	"MAINTS_OPEN" = BOT_MAINTS_PANEL_OPEN,
+	"CONTROL_OPEN" = BOT_CONTROL_PANEL_OPEN,
+	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER_HACKED" = BOT_COVER_HACKED,
+))
+
 //Bot types
 /// Secutritrons (Beepsky)
 #define SEC_BOT "Securitron"
@@ -131,8 +147,6 @@
 #define BOT_IDLE "Idle"
 /// Found target, hunting
 #define BOT_HUNT "In Pursuit"
-/// Currently tipped over.
-#define BOT_TIPPED "Tipped"
 /// Start patrol
 #define BOT_START_PATROL "Beginning Patrol"
 /// Patrolling
@@ -176,6 +190,11 @@
 #define JUDGE_WEAPONCHECK (1<<2)
 #define JUDGE_RECORDCHECK (1<<3)
 
+/// Above this level of assessed threat, Beepsky will attack you
+#define THREAT_ASSESS_DANGEROUS 4
+/// Above this level of assessed threat, you are extremely threatening
+#define THREAT_ASSESS_MAXIMUM 10
+
 //SecBOT defines on arresting
 ///Whether arrests should be broadcasted over the Security radio
 #define SECBOT_DECLARE_ARRESTS (1<<0)
@@ -203,11 +222,17 @@ DEFINE_BITFIELD(security_mode_flags, list(
 #define MEDBOT_STATIONARY_MODE (1<<1)
 ///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
+/// is the bot currently tipped over?
+#define MEDBOT_TIPPED_MODE (1<<3)
+
+///can we heal all damage?
+#define HEAL_ALL_DAMAGE "all_damage"
 
 DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_DECLARE_CRIT" = MEDBOT_DECLARE_CRIT,
 	"MEDBOT_STATIONARY_MODE" = MEDBOT_STATIONARY_MODE,
 	"MEDBOT_SPEAK_MODE" = MEDBOT_SPEAK_MODE,
+	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
 ))
 
 //cleanBOT defines on what to clean
@@ -300,3 +325,4 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_THIS_HURTS "This hurts, my pain is real!"
 #define MEDIBOT_VOICED_THE_END "Is this the end?"
 #define MEDIBOT_VOICED_NOOO	"Nooo!"
+#define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! I am a chicken."

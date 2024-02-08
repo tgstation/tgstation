@@ -213,7 +213,7 @@
 
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/oven/range
 	name = "range"
@@ -237,6 +237,7 @@
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
 	max_items = 6
+	biggest_w_class = WEIGHT_CLASS_BULKY
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD

@@ -25,6 +25,8 @@
 	. = ..()
 	var/obj/structure/flora/target_tree = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
+	if(QDELETED(living_pawn)) // pawn can be null at this point
+		return
 	SEND_SIGNAL(living_pawn, COMSIG_LIVING_CLIMB_TREE, target_tree)
 	finish_action(controller, TRUE, target_key)
 

@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/clown
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = null,
 	)
 
@@ -14,7 +14,7 @@
 
 /datum/ai_controller/basic_controller/clown/murder
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = null,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)

@@ -12,8 +12,6 @@
 
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
-	///Reference to the limb we're inside of
-	var/obj/item/bodypart/ownerlimb
 	///If not null, overrides the appearance with this sprite accessory datum
 	var/sprite_accessory_override
 
@@ -25,7 +23,7 @@
 	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
 	///This will not work if it doesn't have a limb to generate it's icon with
 	var/use_mob_sprite_as_obj_sprite = FALSE
-	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	///Does this organ have any bodytypes to pass to it's bodypart_owner?
 	var/external_bodytypes = NONE
 	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
 	var/restyle_flags = NONE
@@ -55,22 +53,18 @@
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
-/obj/item/organ/external/Destroy()
-	if(owner)
-		Remove(owner, special=TRUE)
-	else if(ownerlimb)
-		remove_from_limb()
+/obj/item/organ/external/Insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+	receiver.update_body_parts()
 
-	return ..()
+/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	if(!special)
+		organ_owner.update_body_parts()
 
-/obj/item/organ/external/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	if(!should_external_organ_apply_to(type, receiver))
 		stack_trace("adding a [type] to a [receiver.type] when it shouldn't be!")
-
-	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
-
-	if(!limb)
-		return FALSE
 
 	. = ..()
 
@@ -84,54 +78,28 @@
 		bodypart_overlay.set_appearance_from_name(feature_name)
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 
-	ownerlimb = limb
-	add_to_limb(ownerlimb)
-
 	if(external_bodytypes)
 		receiver.synchronize_bodytypes()
 
 	receiver.update_body_parts()
 
-/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
-	. = ..()
-
-	if(ownerlimb)
-		remove_from_limb()
-		if(!moving && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
-			update_appearance(UPDATE_OVERLAYS)
-
-	if(organ_owner)
+/obj/item/organ/external/mob_remove(mob/living/carbon/organ_owner, special, moving)
+	if(!special)
+		organ_owner.synchronize_bodytypes()
 		organ_owner.update_body_parts()
-
-
-/obj/item/organ/external/on_remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
-
-///Transfers the organ to the limb, and to the limb's owner, if it has one.
-/obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
-	if(owner)
-		Remove(owner, moving = TRUE)
-	else if(ownerlimb)
-		remove_from_limb()
-
-	if(bodypart_owner)
-		Insert(bodypart_owner, TRUE)
-	else
-		add_to_limb(bodypart)
-
-/obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
-	bodypart.external_organs += src
-	ownerlimb = bodypart
-	ownerlimb.add_bodypart_overlay(bodypart_overlay)
 	return ..()
 
-/obj/item/organ/external/remove_from_limb()
-	ownerlimb.external_organs -= src
-	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
-	if(ownerlimb.owner && external_bodytypes)
-		ownerlimb.owner.synchronize_bodytypes()
-	ownerlimb = null
+/obj/item/organ/external/on_bodypart_insert(obj/item/bodypart/bodypart)
+	bodypart.add_bodypart_overlay(bodypart_overlay)
+	return ..()
+
+/obj/item/organ/external/on_bodypart_remove(obj/item/bodypart/bodypart)
+	bodypart.remove_bodypart_overlay(bodypart_overlay)
+
+	if(use_mob_sprite_as_obj_sprite)
+		update_appearance(UPDATE_OVERLAYS)
+
+	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
 	return ..()
 
 /proc/should_external_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)
@@ -165,8 +133,8 @@
 
 	if(owner) //are we in a person?
 		owner.update_body_parts()
-	else if(ownerlimb) //are we in a limb?
-		ownerlimb.update_icon_dropped()
+	else if(bodypart_owner) //are we in a limb?
+		bodypart_owner.update_icon_dropped()
 	//else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
 
 /obj/item/organ/external/on_life(seconds_per_tick, times_fired)
@@ -181,7 +149,7 @@
 	//Build the mob sprite and use it as our overlay
 	for(var/external_layer in bodypart_overlay.all_layers)
 		if(bodypart_overlay.layers & external_layer)
-			. += bodypart_overlay.get_overlay(external_layer, ownerlimb)
+			. += bodypart_overlay.get_overlay(external_layer, bodypart_owner)
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -287,16 +255,17 @@
 	///Store our old datum here for if our antennae are healed
 	var/original_sprite_datum
 
-/obj/item/organ/external/antennae/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/antennae/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
-/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
+	if(organ_owner)
+		UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)

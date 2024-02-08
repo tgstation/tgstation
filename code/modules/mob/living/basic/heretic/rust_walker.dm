@@ -20,7 +20,7 @@
 
 	var/static/list/grantable_spells = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion/small = BB_GENERIC_ACTION,
-		/datum/action/cooldown/spell/basic_projectile/rust_wave/short = BB_TARGETTED_ACTION,
+		/datum/action/cooldown/spell/basic_projectile/rust_wave/short = BB_TARGETED_ACTION,
 	)
 	grant_actions_by_list(grantable_spells)
 
@@ -50,7 +50,7 @@
 /// Converts unconverted terrain, sprays pocket sand around
 /datum/ai_controller/basic_controller/rust_walker
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

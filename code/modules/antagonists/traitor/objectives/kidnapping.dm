@@ -5,7 +5,7 @@
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
-	/// The jobs that this objective is targetting.
+	/// The jobs that this objective is targeting.
 	var/list/target_jobs
 	/// Area that the target needs to be delivered to
 	var/area/dropoff_area
@@ -227,7 +227,7 @@
 	if(sent_mob.mind)
 		ADD_TRAIT(sent_mob.mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
 
-	for(var/obj/item/belonging in gather_belongings(sent_mob))
+	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 
@@ -274,22 +274,13 @@
 	if(!sent_mob || QDELETED(sent_mob)) //suicided and qdeleted themselves
 		return
 
-	var/list/possible_turfs = list()
-	for(var/turf/open/open_turf in dropoff_area)
-		if(open_turf.is_blocked_turf() || isspaceturf(open_turf))
-			continue
-		possible_turfs += open_turf
-
-	if(!LAZYLEN(possible_turfs))
-		var/turf/new_turf = get_safe_random_station_turf()
-		if(!new_turf) //SOMEHOW
-			to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-				be able to handle our pod... You will die here instead.\"</i></span>")))
-			if (sent_mob.can_heartattack())
-				sent_mob.set_heartattack(TRUE)
-			return
-
-		possible_turfs += new_turf
+	var/turf/return_turf = get_safe_random_station_turf()
+	if(!return_turf) //SOMEHOW
+		to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
+			be able to handle our pod... You will die here instead.\"</i></span>")))
+		if (sent_mob.can_heartattack())
+			sent_mob.set_heartattack(TRUE)
+		return
 
 	var/obj/structure/closet/supplypod/return_pod = new()
 	return_pod.bluespace = TRUE
@@ -298,7 +289,7 @@
 
 	do_sparks(8, FALSE, sent_mob)
 	sent_mob.visible_message(span_notice("[sent_mob] vanishes!"))
-	for(var/obj/item/belonging in gather_belongings(sent_mob))
+	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 		sent_mob.dropItemToGround(belonging) // No souvenirs, except shoes and t-shirts
@@ -316,11 +307,4 @@
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
-	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
-
-/// Returns a list of things that the provided mob has which we would rather that they do not have
-/datum/traitor_objective/target_player/kidnapping/proc/gather_belongings(mob/living/carbon/human/kidnapee)
-	var/list/belongings = kidnapee.get_all_gear()
-	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
-		belongings += internal_bag.contents
-	return belongings
+	new /obj/effect/pod_landingzone(return_turf, return_pod)

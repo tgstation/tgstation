@@ -221,7 +221,9 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Uy" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "shuttle_space"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "UE" = (

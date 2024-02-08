@@ -120,5 +120,5 @@
 	devourer.visible_message(span_warning("[devourer] consumes [target]!"))
 	devourer.fully_heal()
 	playsound(devourer, 'sound/effects/splat.ogg', 50, TRUE)
-	//to be recieved on death
+	//to be received on death
 	target.forceMove(devourer)

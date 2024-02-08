@@ -53,3 +53,6 @@
 
 /datum/movespeed_modifier/status_effect/midas_blight/gold
 	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/status_effect/guardian_shield
+	multiplicative_slowdown = 1

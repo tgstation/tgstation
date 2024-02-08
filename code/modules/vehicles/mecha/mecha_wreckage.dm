@@ -105,7 +105,7 @@
 	if(AI.client) //AI player is still in the dead AI and is connected
 		to_chat(AI, span_notice("The remains of your file system have been recovered on a mobile storage device."))
 	else //Give the AI a heads-up that it is probably going to get fixed.
-		AI.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
+		AI.notify_revival("You have been recovered from the wreckage!", source = card)
 	to_chat(user, "[span_boldnotice("Backup files recovered")]: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
 	AI = null
 
@@ -164,6 +164,10 @@
 /obj/structure/mecha_wreckage/ripley/mk2
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"
+
+/obj/structure/mecha_wreckage/ripley/paddy
+	name = "\improper Paddy wreckage"
+	icon_state = "paddy-broken"
 
 /obj/structure/mecha_wreckage/clarke
 	name = "\improper Clarke wreckage"

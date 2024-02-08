@@ -397,3 +397,71 @@
 	)
 	result = /obj/item/food/burger/sloppy_moe
 	category = CAT_BURGER
+
+/datum/crafting_recipe/food/kortaburger
+	name = "Plain Rootburger"
+	reqs = list(
+			/obj/item/food/patty/plain = 1,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/plain/korta
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/ratkorta
+	name = "Rat Rootburger"
+	reqs = list(
+			/obj/item/food/deadmouse = 1,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rat/korta
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootguffin
+	name = "Root-Guffin"
+	reqs = list(
+			/obj/item/food/friedegg = 1,
+			/obj/item/food/meat/bacon = 2,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootguffin
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootrib
+	name = "RootRib"
+	reqs = list(
+			/obj/item/food/bbqribs = 1,     //The sauce is already included in the ribs
+			/obj/item/food/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootrib
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootchicken
+	name = "Chicken Rootwich"
+	reqs = list(
+			/obj/item/food/patty/chicken = 1,
+			/datum/reagent/consumable/mayonnaise = 5,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootchicken
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootfish
+	name = "Fish rootburger"
+	reqs = list(
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootfish
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/sloppyroot
+	name = "Sssloppy moe"
+	reqs = list(
+			/obj/item/food/rootroll = 1,
+			/obj/item/food/meat/cutlet = 2,
+			/obj/item/food/onion_slice = 1,
+			/datum/reagent/consumable/bbqsauce = 5,
+	)
+	result = /obj/item/food/burger/sloppyroot
+	category = CAT_BURGER

@@ -20,7 +20,7 @@
 	if(isnull(landing_turf))
 		return MAP_ERROR
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_FUGITIVE, role = ROLE_FUGITIVE, pic_source = /obj/item/card/id/advanced/prisoner)
 
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
@@ -105,7 +105,7 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters(backstory)
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a group of [backstory]?", ROLE_FUGITIVE_HUNTER)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a group of [backstory]?", check_jobban = ROLE_FUGITIVE_HUNTER, pic_source = /obj/machinery/sleeper, role_name_text = backstory)
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/shuttle/hunter/ship
@@ -134,9 +134,17 @@
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate
-				notify_ghosts("[spawner.prompt_name] has awoken: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Come look!")
+				notify_ghosts(
+					"[spawner.prompt_name] has awoken: [spawned_mob]!",
+					source = spawned_mob,
+					header = "Come look!",
+				)
 			else
-				notify_ghosts("[spawner.prompt_name] spawner has been created!", source = spawner, action = NOTIFY_ORBIT, header="Spawn Here!")
+				notify_ghosts(
+					"[spawner.prompt_name] spawner has been created!",
+					source = spawner,
+					header = "Spawn Here!",
+				)
 
 	priority_announce("Unidentified ship detected near the station.")
 

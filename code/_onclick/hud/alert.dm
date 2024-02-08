@@ -12,18 +12,22 @@
  *flicks are forwarded to master
  *override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, timeout_override, no_anim = FALSE)
 
 	if(!category || QDELETED(src))
 		return
 
+	var/datum/weakref/master_ref
+	if(isdatum(new_master))
+		master_ref = WEAKREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
 			return thealert
-		if(new_master && new_master != thealert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+		if(master_ref && thealert.master_ref && master_ref != thealert.master_ref)
+			var/datum/current_master = thealert.master_ref.resolve()
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [current_master]")
 
 			clear_alert(category)
 			return .()
@@ -35,7 +39,7 @@
 				// No need to update existing alert
 				return thealert
 			// Reset timeout of existing alert
-			var/timeout = initial(thealert.timeout)
+			var/timeout = timeout_override || initial(thealert.timeout)
 			addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
 			thealert.timeout = world.time + timeout - world.tick_lag
 			return thealert
@@ -55,7 +59,7 @@
 		new_master.layer = old_layer
 		new_master.plane = old_plane
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		thealert.master = new_master
+		thealert.master_ref = master_ref
 	else
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
@@ -63,9 +67,11 @@
 	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-	thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
-
+	if(!no_anim)
+		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
+		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+	if(timeout_override)
+		thealert.timeout = timeout_override
 	if(thealert.timeout)
 		addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
@@ -294,13 +300,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/fire/Click()
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
 	var/mob/living/living_owner = owner
+	if(!living_owner.can_resist())
+		return FALSE
 
 	living_owner.changeNext_move(CLICK_CD_RESIST)
-	if(living_owner.mobility_flags & MOBILITY_MOVE)
-		return living_owner.resist_fire()
+	if(!(living_owner.mobility_flags & MOBILITY_MOVE))
+		return FALSE
+
+	return living_owner.resist_fire()
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
@@ -607,19 +617,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //GUARDIANS
 
-/atom/movable/screen/alert/cancharge
-	name = "Charge Ready"
-	desc = "You are ready to charge at a location!"
-	icon_state = "guardian_charge"
-	alerttooltipstyle = "parasite"
-
 /atom/movable/screen/alert/canstealth
 	name = "Stealth Ready"
 	desc = "You are ready to enter stealth!"
 	icon_state = "guardian_canstealth"
 	alerttooltipstyle = "parasite"
 
-/atom/movable/screen/alert/instealth
+/atom/movable/screen/alert/status_effect/instealth
 	name = "In Stealth"
 	desc = "You are in stealth and your next attack will do bonus damage!"
 	icon_state = "guardian_instealth"
@@ -762,13 +766,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //GHOSTS
 //TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages
-/atom/movable/screen/alert/notify_cloning
+/atom/movable/screen/alert/revival
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
 	icon_state = "template"
 	timeout = 300
 
-/atom/movable/screen/alert/notify_cloning/Click()
+/atom/movable/screen/alert/revival/Click()
 	. = ..()
 	if(!.)
 		return
@@ -780,29 +784,174 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
 	timeout = 30 SECONDS
-	/// The target to use the action on
-	var/atom/target
-	/// Which on click action to use
-	var/action = NOTIFY_JUMP
+	/// Weakref to the target atom to use the action on
+	var/datum/weakref/target_ref
+	/// If we want to interact on click rather than jump/orbit
+	var/click_interact = FALSE
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
-	if(isnull(target))
+
+	var/atom/target = target_ref?.resolve()
+	if(isnull(target) || !isobserver(owner) || target == owner)
 		return
 
 	var/mob/dead/observer/ghost_owner = owner
-	if(!istype(ghost_owner))
+
+	if(click_interact)
+		ghost_owner.jump_to_interact(target)
 		return
 
-	switch(action)
-		if(NOTIFY_PLAY)
-			target.attack_ghost(ghost_owner)
-		if(NOTIFY_JUMP)
-			var/turf/target_turf = get_turf(target)
-			if(target_turf && isturf(target_turf))
-				ghost_owner.abstract_move(target_turf)
-		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(target)
+	ghost_owner.observer_view(target)
+
+/atom/movable/screen/alert/poll_alert
+	name = "Looking for candidates"
+	icon_state = "template"
+	timeout = 30 SECONDS
+	ghost_screentips = TRUE
+	/// If true you need to call START_PROCESSING manually
+	var/show_time_left = FALSE
+	/// MA for maptext showing time left for poll
+	var/mutable_appearance/time_left_overlay
+	/// MA for overlay showing that you're signed up to poll
+	var/mutable_appearance/signed_up_overlay
+	/// MA for maptext overlay showing how many polls are stacked together
+	var/mutable_appearance/stacks_overlay
+	/// MA for maptext overlay showing how many candidates are signed up to a poll
+	var/mutable_appearance/candidates_num_overlay
+	/// MA for maptext overlay of poll's role name or question
+	var/mutable_appearance/role_overlay
+	/// If set, on Click() it'll register the player as a candidate
+	var/datum/candidate_poll/poll
+
+/atom/movable/screen/alert/poll_alert/Initialize(mapload)
+	. = ..()
+	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
+	register_context()
+
+/atom/movable/screen/alert/poll_alert/proc/set_role_overlay()
+	var/role_or_only_question = poll.role || "?"
+	role_overlay = new
+	role_overlay.screen_loc = screen_loc
+	role_overlay.maptext = MAPTEXT("<span style='text-align: right; color: #B3E3FC'>[full_capitalize(role_or_only_question)]</span>")
+	role_overlay.maptext_width = 128
+	role_overlay.transform = role_overlay.transform.Translate(-128, 0)
+	add_overlay(role_overlay)
+
+/atom/movable/screen/alert/poll_alert/Destroy()
+	QDEL_NULL(role_overlay)
+	QDEL_NULL(time_left_overlay)
+	QDEL_NULL(stacks_overlay)
+	QDEL_NULL(candidates_num_overlay)
+	QDEL_NULL(signed_up_overlay)
+	if(poll)
+		poll.alert_buttons -= src
+	poll = null
+	return ..()
+
+/atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/left_click_text
+	if(poll)
+		if(owner in poll.signed_up)
+			left_click_text = "Leave"
+		else
+			left_click_text = "Enter"
+		context[SCREENTIP_CONTEXT_LMB] = "[left_click_text] Poll"
+		if(poll.ignoring_category)
+			var/selected_never = FALSE
+			if(owner.ckey in GLOB.poll_ignore[poll.ignoring_category])
+				selected_never = TRUE
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "[selected_never ? "Cancel " : ""]Never For This Round"
+		if(poll.jump_to_me && isobserver(owner))
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Jump To"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/atom/movable/screen/alert/poll_alert/process()
+	if(show_time_left)
+		var/timeleft = timeout - world.time
+		if(timeleft <= 0)
+			return PROCESS_KILL
+		cut_overlay(time_left_overlay)
+		time_left_overlay = new
+		time_left_overlay.maptext = MAPTEXT("<span style='color: [(timeleft <= 10 SECONDS) ? "red" : "white"]'><b>[CEILING(timeleft / (1 SECONDS), 1)]</b></span>")
+		time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)
+		add_overlay(time_left_overlay)
+
+/atom/movable/screen/alert/poll_alert/Click(location, control, params)
+	. = ..()
+	if(!. || isnull(poll))
+		return
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, ALT_CLICK) && poll.ignoring_category)
+		set_never_round()
+		return
+	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
+		jump_to_pic_source()
+		return
+	handle_sign_up()
+
+/atom/movable/screen/alert/poll_alert/proc/handle_sign_up()
+	if(owner in poll.signed_up)
+		poll.remove_candidate(owner)
+	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.sign_up(owner)
+	update_signed_up_overlay()
+
+/atom/movable/screen/alert/poll_alert/proc/set_never_round()
+	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.do_never_for_this_round(owner)
+		color = "red"
+		update_signed_up_overlay()
+		return
+	poll.undo_never_for_this_round(owner)
+	color = initial(color)
+
+/atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
+	if(!poll?.jump_to_me || !isobserver(owner))
+		return
+	var/turf/target_turf = get_turf(poll.jump_to_me)
+	if(target_turf && isturf(target_turf))
+		owner.abstract_move(target_turf)
+
+/atom/movable/screen/alert/poll_alert/Topic(href, href_list)
+	if(href_list["never"])
+		set_never_round()
+		return
+	if(href_list["signup"])
+		handle_sign_up()
+	if(href_list["jump"])
+		jump_to_pic_source()
+		return
+
+/atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
+	if(owner in poll.signed_up)
+		add_overlay(signed_up_overlay)
+	else
+		cut_overlay(signed_up_overlay)
+
+/atom/movable/screen/alert/poll_alert/proc/update_candidates_number_overlay()
+	cut_overlay(candidates_num_overlay)
+	if(!length(poll.signed_up))
+		return
+	candidates_num_overlay = new
+	candidates_num_overlay.maptext = MAPTEXT("<span style='text-align: right; color: aqua'>[length(poll.signed_up)]</span>")
+	candidates_num_overlay.transform = candidates_num_overlay.transform.Translate(-4, 2)
+	add_overlay(candidates_num_overlay)
+
+/atom/movable/screen/alert/poll_alert/proc/update_stacks_overlay()
+	cut_overlay(stacks_overlay)
+	var/stack_number = 1
+	for(var/datum/candidate_poll/other_poll as anything in SSpolling.currently_polling)
+		if(other_poll != poll && other_poll.poll_key == poll.poll_key && !other_poll.finished)
+			stack_number++
+	if(stack_number <= 1)
+		return
+	stacks_overlay = new
+	stacks_overlay.maptext = MAPTEXT("<span style='color: yellow'>[stack_number]x</span>")
+	stacks_overlay.transform = stacks_overlay.transform.Translate(3, 2)
+	stacks_overlay.layer = layer
+	add_overlay(stacks_overlay)
 
 //OBJECT-BASED
 
@@ -871,6 +1020,18 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	carbon_owner.changeNext_move(CLICK_CD_RESIST)
 	carbon_owner.shoes.handle_tying(carbon_owner)
 
+/atom/movable/screen/alert/unpossess_object
+	name = "Unpossess"
+	desc = "You are possessing an object. Click this alert to unpossess it."
+	icon_state = "buckled"
+
+/atom/movable/screen/alert/unpossess_object/Click()
+	. = ..()
+	if(!.)
+		return
+
+	qdel(owner.GetComponent(/datum/component/object_possession))
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
@@ -916,14 +1077,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
 		return FALSE
-	if(master && click_master)
-		return usr.client.Click(master, location, control, params)
+	var/datum/our_master = master_ref?.resolve()
+	if(our_master && click_master)
+		return usr.client.Click(our_master, location, control, params)
 
 	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
-	master = null
+	master_ref = null
 	owner = null
 	screen_loc = ""

@@ -51,8 +51,9 @@
 		if(istype(boxing_gloves))
 			stamina_exhaustion = 2
 
+	if(!iscarbon(user))
+		return
 	user.adjustStaminaLoss(stamina_exhaustion)
-	user.add_mood_event("exercise", /datum/mood_event/exercise)
 	user.mind?.adjust_experience(/datum/skill/fitness, 0.1)
 	user.apply_status_effect(/datum/status_effect/exercised)
 

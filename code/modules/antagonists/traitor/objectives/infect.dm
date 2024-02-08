@@ -101,10 +101,10 @@
 			continue
 		//removes heads of staff from being targets from non heads of staff assassinations, and vice versa
 		if(heads_of_staff)
-			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			if(!(possible_target.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 				continue
 		else
-			if((possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			if((possible_target.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 				continue
 		possible_targets += possible_target
 	for(var/datum/traitor_objective/target_player/objective as anything in possible_duplicates)

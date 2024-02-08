@@ -49,7 +49,7 @@
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
 	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	old_organ = human_holder.get_organ_slot(organ_slot)
-	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = TRUE))
+	if(prosthetic.Insert(human_holder, special = TRUE))
 		old_organ.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_organ)
 

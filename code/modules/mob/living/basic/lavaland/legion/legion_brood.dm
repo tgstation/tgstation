@@ -30,7 +30,7 @@
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
 	/// Reference to a guy who made us
-	var/mob/living/created_by
+	var/datum/weakref/created_by
 
 /mob/living/basic/legion_brood/Initialize(mapload)
 	. = ..()
@@ -49,7 +49,12 @@
 	if (ishuman(target) && target.stat > SOFT_CRIT)
 		infest(target)
 		return
-	if (isliving(target) && faction_check_atom(target) && !istype(target, created_by?.type))
+
+	var/mob/living/mob_creator = created_by?.resolve()
+	if(isnull(mob_creator))
+		created_by = null
+
+	if (isliving(target) && faction_check_atom(target) && !istype(target, mob_creator?.type))
 		visible_message(span_warning("[src] melds with [target]'s flesh!"))
 		target.apply_status_effect(/datum/status_effect/regenerative_core)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
@@ -57,7 +62,7 @@
 		return
 	return ..()
 
-/// Turn the targetted mob into one of us
+/// Turn the targeted mob into one of us
 /mob/living/basic/legion_brood/proc/infest(mob/living/target)
 	visible_message(span_warning("[name] burrows into the flesh of [target]!"))
 	var/spawn_type = get_legion_type(target)
@@ -78,7 +83,7 @@
 		faction = creator.faction.Copy()
 	else
 		faction |= REF(creator)
-	created_by = creator
+	created_by = WEAKREF(creator)
 	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
 
@@ -94,6 +99,10 @@
 	icon_state = "snowlegion_head"
 	icon_living = "snowlegion_head"
 	icon_dead = "snowlegion_head"
+
+/mob/living/basic/legion_brood/snow/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/legion_brood/snow/get_legion_type(mob/living/target)
 	return /mob/living/basic/mining/legion/snow

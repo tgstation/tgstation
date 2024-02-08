@@ -128,6 +128,12 @@
 
 	return not_handled
 
+/mob/living/carbon/equipped_speed_mods()
+	. = ..()
+	for(var/sloties in get_all_worn_items())
+		var/obj/item/thing = sloties
+		. += thing?.slowdown
+
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	return item.on_equipped(src, slot, initial)
@@ -455,3 +461,21 @@
 		covered_flags |= worn_item.body_parts_covered
 
 	return covered_flags
+
+/// Attempts to equip the given item in a conspicious place.
+/// This is used when, for instance, a character spawning with an item
+/// in their hands would be a dead giveaway that they are an antagonist.
+/// Returns the human readable name of where it placed the item, or null otherwise.
+/mob/living/carbon/proc/equip_conspicuous_item(obj/item/item, delete_item_if_failed = TRUE)
+	var/list/slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET
+	)
+
+	var/placed_in = equip_in_one_of_slots(item, slots, indirect_action = TRUE)
+
+	if (isnull(placed_in) && delete_item_if_failed)
+		qdel(item)
+
+	return placed_in

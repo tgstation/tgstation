@@ -28,7 +28,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/component/supermatter_crystal/Destroy(force, silent)
+/datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
 	consume_callback = null
 	return ..()
@@ -212,7 +212,7 @@
 	SIGNAL_HANDLER
 	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 	attackby_hit(source, tool, user)
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
@@ -300,9 +300,13 @@
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
-		if(istype(consumed_mob, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
+		if(istype(consumed_mob, /mob/living/basic/parrot/poly)) // Dusting Poly creates a power surge
 			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
-			notify_ghosts("[consumed_mob] has been dusted by [atom_source]!", source = atom_source, action = NOTIFY_JUMP, header = "Polytechnical Difficulties")
+			notify_ghosts(
+				"[consumed_mob] has been dusted by [atom_source]!",
+				source = atom_source,
+				header = "Polytechnical Difficulties",
+			)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
@@ -341,7 +345,7 @@
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
 	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
-	if(istype(parent))
+	if(istype(our_crystal))
 		our_crystal.log_activation(who = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)

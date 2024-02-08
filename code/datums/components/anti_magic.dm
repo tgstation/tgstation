@@ -56,7 +56,7 @@
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
 
-/datum/component/anti_magic/Destroy(force, silent)
+/datum/component/anti_magic/Destroy(force)
 	drain_antimagic = null
 	expiration = null
 	return ..()

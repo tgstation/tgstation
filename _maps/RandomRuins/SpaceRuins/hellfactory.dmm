@@ -285,7 +285,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "aT" = (
 /obj/effect/mine/gas/water_vapor,
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
 "aU" = (

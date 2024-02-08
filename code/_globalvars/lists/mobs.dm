@@ -9,7 +9,9 @@ GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for 
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/basic/blob_minion,
+	/mob/living/basic/bot,
 	/mob/living/basic/construct,
+	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
 	/mob/living/basic/mining,
 	/mob/living/basic/pet,
@@ -26,7 +28,6 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/simple_animal/bot,
 	/mob/living/simple_animal/hostile/asteroid/elite,
 	/mob/living/simple_animal/hostile/asteroid,
-	/mob/living/simple_animal/hostile/guardian,
 	/mob/living/simple_animal/hostile/megafauna,
 	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
 	/mob/living/simple_animal/hostile/retaliate,

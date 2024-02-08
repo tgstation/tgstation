@@ -27,8 +27,6 @@
 	light_range = 1.6
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
-	//Trick to get the glowing overlay visible from a distance
-	luminosity = 1
 	//We want to use area sensitivity, let us
 	always_area_sensitive = TRUE
 	///Buildstate for contruction steps
@@ -147,9 +145,9 @@
 /obj/machinery/firealarm/update_appearance(updates)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
-		set_light(l_power = 3)
+		set_light(l_range = 2.5, l_power = 1.5)
 	else
-		set_light(l_power = 1)
+		set_light(l_range = 1.6, l_power = 1)
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
@@ -443,7 +441,7 @@
 	return ..()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 1)
 		if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
 			var/obj/item/item = new /obj/item/electronics/firealarm(loc)

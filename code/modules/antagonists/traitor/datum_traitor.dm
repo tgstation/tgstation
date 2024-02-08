@@ -17,6 +17,10 @@
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
+
+	///The flag of uplink that this traitor is supposed to have.
+	var/uplink_flag_given = UPLINK_TRAITORS
+
 	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
 	var/give_secondary_objectives = TRUE
@@ -30,7 +34,7 @@
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
 
-	///the name of the antag flavor this traitor has.
+	///the name of the antag flavor this traitor has, set in Traitor's setup if not preset.
 	var/employer
 
 	///assoc list of strings set up after employer is given
@@ -53,6 +57,7 @@
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
+	uplink_flag_given = UPLINK_INFILTRATORS
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
@@ -75,6 +80,7 @@
 			uplink.uplink_handler = uplink_handler
 		else
 			uplink_handler = uplink.uplink_handler
+		uplink_handler.uplink_flag = uplink_flag_given
 		uplink_handler.primary_objectives = objectives
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
@@ -182,22 +188,23 @@
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
-	var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
-	var/list/possible_employers = list()
+	if(!employer)
+		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
+		var/list/possible_employers = list()
 
-	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
+		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
-	if(istype(ending_objective, /datum/objective/hijack))
-		possible_employers -= GLOB.normal_employers
-	else //escape or martyrdom
-		possible_employers -= GLOB.hijack_employers
+		if(istype(ending_objective, /datum/objective/hijack))
+			possible_employers -= GLOB.normal_employers
+		else //escape or martyrdom
+			possible_employers -= GLOB.hijack_employers
 
-	switch(faction)
-		if(FLAVOR_FACTION_SYNDICATE)
-			possible_employers -= GLOB.nanotrasen_employers
-		if(FLAVOR_FACTION_NANOTRASEN)
-			possible_employers -= GLOB.syndicate_employers
-	employer = pick(possible_employers)
+		switch(faction)
+			if(FLAVOR_FACTION_SYNDICATE)
+				possible_employers -= GLOB.nanotrasen_employers
+			if(FLAVOR_FACTION_NANOTRASEN)
+				possible_employers -= GLOB.syndicate_employers
+		employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
@@ -302,6 +309,7 @@
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]
 	data["has_uplink"] = uplink ? TRUE : FALSE
+	data["given_uplink"] = give_uplink
 	if(uplink)
 		data["uplink_intro"] = traitor_flavor["uplink"]
 		data["uplink_unlock_info"] = uplink.unlock_text
@@ -351,6 +359,8 @@
 	result += objectives_text
 
 	if(uplink_handler)
+		if (uplink_handler.contractor_hub)
+			result += contractor_round_end()
 		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
 	var/special_role_text = lowertext(name)
@@ -362,6 +372,23 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
+
+///Tells how many contracts have been completed.
+/datum/antagonist/traitor/proc/contractor_round_end()
+	var/completed_contracts = uplink_handler.contractor_hub.contracts_completed
+	var/tc_total = uplink_handler.contractor_hub.contract_TC_payed_out + uplink_handler.contractor_hub.contract_TC_to_redeem
+
+	var/datum/antagonist/traitor/contractor_support/contractor_support_unit = uplink_handler.contractor_hub.contractor_teammate
+
+	if(completed_contracts <= 0)
+		return
+	var/plural_check = "contract"
+	if (completed_contracts > 1)
+		plural_check = "contracts"
+	var/sent_data = "Completed [span_greentext("[completed_contracts]")] [plural_check] for a total of [span_greentext("[tc_total] TC")]!<br>"
+	if(contractor_support_unit)
+		sent_data += "<b>[contractor_support_unit.owner.key]</b> played <b>[contractor_support_unit.owner.current.name]</b>, their contractor support unit.<br>"
+	return sent_data
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")

@@ -40,7 +40,7 @@
 
 	var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 	if(result)
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Reboot World") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("Reboot World")
 		var/init_by = "Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]."
 		switch(result)
 			if("Regular Restart")
@@ -78,7 +78,7 @@
 		return
 	if(confirm == "Yes")
 		SSticker.force_ending = FORCE_END_ROUND
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("End Round")
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
@@ -116,7 +116,7 @@
 				msg = " (The server is still setting up, but the round will be \
 					started as soon as possible.)"
 			message_admins("<font color='blue'>[usr.key] has started the game.[msg]</font>")
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Now") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+			BLACKBOX_LOG_ADMIN_VERB("Start Now")
 			return TRUE
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(1800)
@@ -242,7 +242,7 @@
 		to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
 		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 		log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
 
 /datum/admins/proc/set_admin_notice()
 	set category = "Server"
@@ -263,7 +263,7 @@
 		message_admins("[key_name(usr)] set the admin notice.")
 		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, span_adminnotice("<b>Admin Notice:</b>\n \t [new_admin_notice]"), confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Admin Notice") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Set Admin Notice")
 	GLOB.admin_notice = new_admin_notice
 	return
 

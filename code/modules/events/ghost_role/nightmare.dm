@@ -15,7 +15,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/nightmare/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_NIGHTMARE)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ALIEN, role = ROLE_NIGHTMARE, role_name_text = role_name)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

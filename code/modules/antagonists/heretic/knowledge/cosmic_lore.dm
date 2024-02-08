@@ -70,11 +70,10 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
-	adds_sidepath_points = 1
 	next_knowledge = list(
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/summon/fire_shark,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
@@ -112,9 +111,8 @@
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
-		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
+		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
@@ -127,10 +125,10 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
+	desc = "Your blade now deals damage to people's organs through cosmic radiation. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
-		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
+		or if you attack someone already marked. If you combo more than four attacks you will receive, \
 		a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
@@ -154,6 +152,15 @@
 	var/combo_counter = 0
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	var/static/list/valid_organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_BRAIN
+	)
 	if(source == target)
 		return
 	if(combo_timer)
@@ -162,8 +169,8 @@
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
-	need_mob_update += target.adjustFireLoss(4, updating_health = FALSE)
-	need_mob_update += target.adjustCloneLoss(2, updating_health = FALSE)
+	need_mob_update += target.adjustFireLoss(5, updating_health = FALSE)
+	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8)
 	if(need_mob_update)
 		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
@@ -175,18 +182,18 @@
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
-		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
-		need_mob_update += second_target_resolved.adjustCloneLoss(6, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustFireLoss(14, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12)
 		if(need_mob_update)
-			target.updatehealth()
+			second_target_resolved.updatehealth()
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 			need_mob_update = FALSE
-			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
-			need_mob_update += third_target_resolved.adjustCloneLoss(12, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustFireLoss(28, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
 			if(need_mob_update)
-				target.updatehealth()
+				third_target_resolved.updatehealth()
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)
@@ -218,7 +225,6 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
@@ -248,7 +254,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/star_gazer
+		/datum/pet_command/point_targeting/attack/star_gazer
 	)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -260,7 +266,12 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY

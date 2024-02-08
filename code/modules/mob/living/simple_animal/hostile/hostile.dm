@@ -172,7 +172,7 @@
 		Goto(P.starting, move_to_delay, 3)
 	return ..()
 
-//////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
+//////////////HOSTILE MOB TARGETING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/proc/ListTargets() //Step 1, find out what we can see
 	var/atom/target_from = GET_TARGETS_FROM(src)
@@ -196,7 +196,7 @@
 		possible_targets = ListTargets()
 
 	for(var/atom/pos_targ as anything in possible_targets)
-		if(Found(pos_targ)) //Just in case people want to override targetting
+		if(Found(pos_targ)) //Just in case people want to override targeting
 			all_potential_targets = list(pos_targ)
 			break
 
@@ -421,7 +421,7 @@
 	SSmove_manager.stop_looping(src)
 	LoseAggro()
 
-//////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
+//////////////END HOSTILE MOB TARGETING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death(gibbed)
 	LoseTarget()
@@ -554,6 +554,8 @@
 		A.attack_animal(src)//Bang on it till we get out
 
 /mob/living/simple_animal/hostile/proc/FindHidden()
+	if(isnull(target))
+		return FALSE
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		var/atom/A = target.loc
 		var/atom/target_from = GET_TARGETS_FROM(src)

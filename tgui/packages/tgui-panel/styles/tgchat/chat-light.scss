@@ -992,6 +992,7 @@ $alert-stripe-colors: (
   'orange': #ffe2b3,
   'red': #ffb3b3,
   'purple': #fac2ff,
+  'grey': #e3e3e3,
 );
 
 $alert-stripe-alternate-colors: (
@@ -1003,6 +1004,7 @@ $alert-stripe-alternate-colors: (
   'orange': #ffe8c2,
   'red': #ffc2c2,
   'purple': #fbd1ff,
+  'grey': #ebebeb,
 );
 
 $alert-major-header-colors: (
@@ -1014,6 +1016,7 @@ $alert-major-header-colors: (
   'orange': #823208,
   'red': #800029,
   'purple': #450d8c,
+  'grey': #800033,
 );
 
 $alert-subheader-header-colors: (
@@ -1025,6 +1028,7 @@ $alert-subheader-header-colors: (
   'orange': #002c85,
   'red': #002c85,
   'purple': #002c85,
+  'grey': #002c85,
 );
 
 $border-width: 4;
@@ -1083,6 +1087,24 @@ $border-width-px: $border-width * 1px;
 
 .announcement_header {
   padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_alert {
+  background: #bdc8ff;
+  border: 1px solid #002eb8;
+  margin: 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.2em;
+  color: #00283a;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_announcement_text {
+  color: #002eb8;
+  padding: 0.5em 0 0 0.35em;
   display: flex;
   flex-direction: column;
 }

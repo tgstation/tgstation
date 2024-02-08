@@ -76,7 +76,7 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
-	cost = 13
+	cost = 17
 	surplus = 0
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -99,6 +99,7 @@
 	These shocks are capable of affecting the inner circuitry of most robots as well, applying a short stun. \
 	Has the added benefit of affecting the vocal cords of your victim, causing them to slur as if inebriated."
 	item = /obj/item/melee/baton/telescopic/contractor_baton
-	cost = 12
+	cost = 7
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	limited_stock = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_INFILTRATORS)

@@ -689,3 +689,13 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
+
+//garbage trucks
+/area/ruin/space/has_grav/garbagetruck
+	name = "Decommissioned Garbage Truck"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+/area/ruin/space/has_grav/garbagetruck/foodwaste
+/area/ruin/space/has_grav/garbagetruck/medicalwaste
+/area/ruin/space/has_grav/garbagetruck/squat
+/area/ruin/space/has_grav/garbagetruck/toystore

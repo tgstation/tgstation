@@ -1,0 +1,297 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/template_noop)
+"b" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"d" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"e" = (
+/obj/machinery/light/small/directional/west,
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/melee/baseball_bat/ablative{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"l" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"m" = (
+/obj/effect/decal/cleanable/wrapping/pinata,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"n" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"q" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/melee/baseball_bat{
+	pixel_x = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"r" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/effect/spawner/random/food_or_drink/dinner{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"v" = (
+/obj/structure/window/spawner/directional/east,
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"y" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/template_noop)
+"A" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"B" = (
+/obj/effect/spawner/random/food_or_drink,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"C" = (
+/obj/machinery/light/small/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"D" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"F" = (
+/obj/effect/spawner/random/food_or_drink,
+/obj/effect/decal/cleanable/wrapping/pinata,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"J" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"K" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/melee/baseball_bat/homerun,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"L" = (
+/turf/open/floor/iron/dark/herringbone,
+/area/template_noop)
+"M" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"N" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/spawner/random/food_or_drink,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"O" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/pinata{
+	pixel_y = 4
+	},
+/obj/item/pinata/syndie,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"S" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"T" = (
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/structure/pinata,
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"V" = (
+/obj/effect/decal/cleanable/wrapping/pinata,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"W" = (
+/obj/structure/window/spawner/directional/west,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"X" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"Y" = (
+/obj/structure/hedge,
+/obj/machinery/digital_clock/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+
+(1,1,1) = {"
+T
+T
+C
+T
+T
+T
+T
+T
+n
+"}
+(2,1,1) = {"
+T
+a
+a
+y
+l
+y
+a
+a
+T
+"}
+(3,1,1) = {"
+T
+a
+v
+K
+L
+d
+F
+a
+T
+"}
+(4,1,1) = {"
+T
+a
+S
+D
+o
+N
+q
+y
+T
+"}
+(5,1,1) = {"
+T
+a
+Y
+X
+r
+U
+V
+a
+T
+"}
+(6,1,1) = {"
+T
+a
+M
+b
+g
+m
+B
+y
+T
+"}
+(7,1,1) = {"
+T
+a
+W
+J
+L
+O
+A
+a
+T
+"}
+(8,1,1) = {"
+T
+a
+a
+y
+l
+y
+a
+a
+T
+"}
+(9,1,1) = {"
+T
+T
+T
+T
+T
+T
+e
+T
+T
+"}

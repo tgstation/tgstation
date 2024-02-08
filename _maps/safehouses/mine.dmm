@@ -16,6 +16,10 @@
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark,
 /area/virtual_domain/safehouse)
+"t" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
 "w" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -112,7 +116,7 @@ f
 f
 P
 P
-f
+t
 "}
 (2,1,1) = {"
 P

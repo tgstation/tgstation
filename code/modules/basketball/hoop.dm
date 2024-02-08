@@ -53,9 +53,6 @@
 /obj/structure/hoop/update_overlays()
 	. = ..()
 
-	if(dir & NORTH)
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
@@ -72,7 +69,6 @@
 	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
 	scoreboard.pixel_x = dir_offset_x
 	scoreboard.pixel_y = dir_offset_y
-	SET_PLANE_EXPLICIT(scoreboard, GAME_PLANE, src)
 	. += scoreboard
 
 	var/ones = total_score % 10
@@ -156,7 +152,7 @@
 	var/score_chance = throw_range_success[distance]
 	var/obj/structure/hoop/backboard = throwingdatum.initial_target?.resolve()
 	var/click_on_hoop = TRUE
-	var/mob/living/thrower = throwingdatum.thrower
+	var/mob/living/thrower = throwingdatum?.get_thrower()
 
 	// aim penalty for not clicking directly on the hoop when shooting
 	if(!istype(backboard) || backboard != src)
@@ -164,7 +160,7 @@
 		score_chance *= 0.5
 
 	// aim penalty for spinning while shooting
-	if(istype(thrower) && thrower.flags_1 & IS_SPINNING_1)
+	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_SPINNING))
 		score_chance *= 0.5
 
 	if(prob(score_chance))

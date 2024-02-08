@@ -42,7 +42,7 @@
 	icon_state = "gelmound"
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 	qdel(src)
 
@@ -338,7 +338,6 @@
 	integrity_failure = 0.05
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	/// Ref to the hugger within.
 	var/obj/item/clothing/mask/facehugger/child
 	///Proximity monitor associated with this atom, needed for proximity checks.
@@ -447,7 +446,7 @@
 
 /obj/structure/alien/egg/atom_break(damage_flag)
 	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(status != BURST)
 			Burst(kill=TRUE)
 

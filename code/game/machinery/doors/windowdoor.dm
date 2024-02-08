@@ -302,7 +302,7 @@
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
+	if(!(obj_flags & NO_DECONSTRUCTION) && !disassembled)
 		for(var/i in 1 to shards)
 			drop_debris(new /obj/item/shard(src))
 		if(rods)
@@ -346,7 +346,7 @@
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
@@ -359,7 +359,7 @@
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(!panel_open || density || operating)
 		return

@@ -55,7 +55,7 @@
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
-			new /obj/item/guardiancreator/miner(src)
+			new /obj/item/guardian_creator/miner(src)
 		if(14)
 			new /obj/item/warp_cube/red(src)
 		if(15)

@@ -26,7 +26,7 @@
 	tracking_holder = source
 	RegisterSignal(tracking_holder, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(cancel_target_tracking))
 
-/datum/trackable/Destroy(force, ...)
+/datum/trackable/Destroy(force)
 	tracking_holder = null
 	tracked_mob = null
 	STOP_PROCESSING(SSprocessing, src)

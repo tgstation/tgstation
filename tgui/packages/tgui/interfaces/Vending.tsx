@@ -1,7 +1,17 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type VendingData = {
@@ -51,18 +61,20 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
 
 type CustomInput = {
+  path: string;
   name: string;
   price: number;
   img: string;
 };
 
-export const Vending = (props, context) => {
-  const { data } = useBackend<VendingData>(context);
+export const Vending = (props) => {
+  const { data } = useBackend<VendingData>();
 
   const {
     onstation,
@@ -72,10 +84,8 @@ export const Vending = (props, context) => {
     stock,
   } = data;
 
-  const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    context,
-    'selectedCategory',
-    Object.keys(data.categories)[0]
+  const [selectedCategory, setSelectedCategory] = useState(
+    Object.keys(data.categories)[0],
   );
 
   let inventory: (ProductRecord | CustomInput)[];
@@ -103,7 +113,7 @@ export const Vending = (props, context) => {
           return false;
         }
       });
-    })
+    }),
   );
 
   return (
@@ -139,8 +149,8 @@ export const Vending = (props, context) => {
 };
 
 /** Displays user details if an ID is present and the user is on the station */
-export const UserDetails = (props, context) => {
-  const { data } = useBackend<VendingData>(context);
+export const UserDetails = (props) => {
+  const { data } = useBackend<VendingData>();
   const { user } = data;
 
   if (!user) {
@@ -169,15 +179,12 @@ export const UserDetails = (props, context) => {
 };
 
 /** Displays  products in a section, with user balance at top */
-const ProductDisplay = (
-  props: {
-    custom: boolean;
-    selectedCategory: string | null;
-    inventory: (ProductRecord | CustomInput)[];
-  },
-  context
-) => {
-  const { data } = useBackend<VendingData>(context);
+const ProductDisplay = (props: {
+  custom: boolean;
+  selectedCategory: string | null;
+  inventory: (ProductRecord | CustomInput)[];
+}) => {
+  const { data } = useBackend<VendingData>();
   const { custom, inventory, selectedCategory } = props;
   const {
     stock,
@@ -201,7 +208,8 @@ const ProductDisplay = (
             <Icon name={displayed_currency_icon} color="gold" />
           </Box>
         )
-      }>
+      }
+    >
       <Table>
         {inventory
           .filter((product) => {
@@ -213,10 +221,10 @@ const ProductDisplay = (
           })
           .map((product) => (
             <VendingRow
-              key={product.name}
+              key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[product.name]}
+              productStock={stock[product.path]}
             />
           ))}
       </Table>
@@ -228,8 +236,8 @@ const ProductDisplay = (
  * Uses a table layout. Labeledlist might be better,
  * but you cannot use item icons as labels currently.
  */
-const VendingRow = (props, context) => {
-  const { data } = useBackend<VendingData>(context);
+const VendingRow = (props) => {
+  const { data } = useBackend<VendingData>();
   const { custom, product, productStock } = props;
   const { access, department, jobDiscount, onstation, user } = data;
   const free = !onstation || product.price === 0;
@@ -279,16 +287,14 @@ const ProductImage = (props) => {
     <img
       src={`data:image/jpeg;base64,${product.img}`}
       style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   ) : (
     <span
       className={classes(['vending32x32', product.path])}
       style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   );
@@ -297,8 +303,8 @@ const ProductImage = (props) => {
 /** In the case of customizable items, ie: shoes,
  * this displays a color wheel button that opens another window.
  */
-const ProductColorSelect = (props, context) => {
-  const { act } = useBackend<VendingData>(context);
+const ProductColorSelect = (props) => {
+  const { act } = useBackend<VendingData>();
   const { disabled, product } = props;
 
   return (
@@ -321,15 +327,16 @@ const ProductStock = (props) => {
         (remaining <= 0 && 'bad') ||
         (!custom && remaining <= product.max_amount / 2 && 'average') ||
         'good'
-      }>
+      }
+    >
       {remaining} left
     </Box>
   );
 };
 
 /** The main button to purchase an item. */
-const ProductButton = (props, context) => {
-  const { act, data } = useBackend<VendingData>(context);
+const ProductButton = (props) => {
+  const { act, data } = useBackend<VendingData>();
   const { access, displayed_currency_name } = data;
   const { custom, discount, disabled, free, product, redPrice } = props;
   const customPrice = access ? 'FREE' : product.price;
@@ -345,11 +352,12 @@ const ProductButton = (props, context) => {
       disabled={disabled}
       onClick={() =>
         act('dispense', {
-          'item': product.name,
+          item: product.path,
         })
-      }>
+      }
+    >
       {customPrice}
-      {displayed_currency_name}
+      {!access && displayed_currency_name}
     </Button>
   ) : (
     <Button
@@ -357,18 +365,19 @@ const ProductButton = (props, context) => {
       disabled={disabled}
       onClick={() =>
         act('vend', {
-          'ref': product.ref,
+          ref: product.ref,
         })
-      }>
+      }
+    >
       {standardPrice}
-      {displayed_currency_name}
+      {!free && displayed_currency_name}
     </Button>
   );
 };
 
 const CATEGORY_COLORS = {
-  'Contraband': 'red',
-  'Premium': 'yellow',
+  Contraband: 'red',
+  Premium: 'yellow',
 };
 
 const CategorySelector = (props: {
@@ -380,20 +389,17 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      <Stack grow>
-        <Stack.Item>
-          {Object.entries(categories).map(([name, category]) => (
-            <Button
-              key={name}
-              selected={name === selectedCategory}
-              color={CATEGORY_COLORS[name]}
-              icon={category.icon}
-              onClick={() => onSelect(name)}>
-              {name}
-            </Button>
-          ))}
-        </Stack.Item>
-      </Stack>
+      {Object.entries(categories).map(([name, category]) => (
+        <Button
+          key={name}
+          selected={name === selectedCategory}
+          color={CATEGORY_COLORS[name]}
+          icon={category.icon}
+          onClick={() => onSelect(name)}
+        >
+          {name}
+        </Button>
+      ))}
     </Section>
   );
 };

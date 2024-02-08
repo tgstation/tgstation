@@ -43,6 +43,10 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
+"m" = (
+/obj/modular_map_connector,
+/turf/closed/wall/mineral/titanium,
+/area/virtual_domain/safehouse)
 "q" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/effect/decal/cleanable/dirt,
@@ -176,7 +180,7 @@ t
 e
 e
 t
-a
+m
 "}
 (2,1,1) = {"
 e
