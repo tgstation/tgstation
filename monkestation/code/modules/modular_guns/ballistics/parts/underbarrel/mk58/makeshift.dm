@@ -14,8 +14,10 @@
 /obj/item/attachment/underbarrel/mk_58/makeshift/illegal_switch/unique_attachment_effects_per_reset(obj/item/gun/modular)
 	modular.burst_size = 9
 	modular.fire_delay = 1
+	modular.w_class = WEIGHT_CLASS_BULKY
 
 
 /obj/item/attachment/underbarrel/mk_58/makeshift/illegal_switch/unique_attachment_effects_removal(obj/item/gun/modular)
 	modular.burst_size = initial(modular.burst_size)
 	modular.fire_delay = initial(modular.fire_delay)
+	modular.w_class = WEIGHT_CLASS_NORMAL

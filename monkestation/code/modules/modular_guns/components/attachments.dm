@@ -126,7 +126,6 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 		return
 	if(!do_after(user, 1.5 SECONDS, item))
 		return
-	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_DETACHED, choice)
 
 	for(var/datum/attachment_handler/listed as anything in (hand_slots + tool_slots))
 		if(!listed.stored)
@@ -137,7 +136,7 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	choice.forceMove(get_turf(user))
 	user.balloon_alert(user, "Successfully removed [choice.name].")
 
-
+	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_DETACHED, choice)
 
 ///this is literally all to handle tools around us for shit
 

@@ -136,6 +136,8 @@
 
 /datum/market/auction/proc/grab_purchase_info(datum/market_item/auction/item, category, method)
 	purchase(item.type, category, method, item.uplink, item.user)
+	if(item.user)
+		message_admins("[item.user] has won the auction for [item]")
 
 
 /datum/market/auction/guns
