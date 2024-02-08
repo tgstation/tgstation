@@ -7,7 +7,7 @@
 #include "ai_laws/_ai_laws.dme"
 #include "barsigns/_barsigns.dme"
 #include "communication/_communication.dme"
-//#include "crawl_speed/_crawl_speed.dme" // NO RP SPEED FOR MAIN SERVER
+#include "crawl_speed/_crawl_speed.dme"
 #include "cyrillic_fixes/_cyrillic_fixes.dme"
 #include "discord/_discord.dme"
 //#include "emote_panel/_emote_panel.dme" // Waiting for upstream merge
