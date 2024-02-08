@@ -14,6 +14,8 @@
 	var/deceptive = FALSE
 	/// What cutout datum we spawn at the start? Uses the name, not the path.
 	var/starting_cutout
+	/// Reference to the tactical component that should be deleted when the cutout is toppled.
+	var/datum/component/tactical/tacticool
 
 /obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
@@ -21,6 +23,10 @@
 		return INITIALIZE_HINT_LATELOAD
 	if(!pushed_over)
 		AddComponent(/datum/component/tactical)
+
+/obj/item/cardboard_cutout/Destroy()
+	tacticool = null
+	return ..()
 
 /obj/item/cardboard_cutout/LateInitialize()
 	ASSERT(!isnull(starting_cutout))
@@ -36,7 +42,7 @@
 
 	cutout.apply(src)
 	if(!pushed_over)
-		AddComponent(/datum/component/tactical)
+		tacticool = AddComponent(/datum/component/tactical)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
@@ -61,7 +67,7 @@
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	pushed_over = TRUE
-	qdel(GetComponent(/datum/component/tactical))
+	QDEL_NULL(tacticool)
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
@@ -71,7 +77,7 @@
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
 	pushed_over = FALSE
-	AddComponent(/datum/component/tactical)
+	tacticool = AddComponent(/datum/component/tactical)
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/crayon))
