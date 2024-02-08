@@ -26,6 +26,8 @@
 	var/print_tier = 1
 	/// Our max print tier
 	var/max_part_tier = 1
+	/// time needed to produce a flatpacked machine
+	var/flatpack_time = 4 SECONDS
 
 /obj/machinery/flatpacker/Initialize(mapload)
 	var/static/list/materials_list = list(
@@ -59,6 +61,7 @@
 
 	var/datum/stock_part/servo/servo = locate() in component_parts
 	max_part_tier = servo.tier
+	flatpack_time = initial(flatpack_time) - servo.tier/2 // T4 = 2 seconds off
 	var/efficiency = initial(creation_efficiency)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		efficiency -= laser.tier * 0.2
@@ -196,7 +199,7 @@
 	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 	busy = TRUE
 	
-	addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board), flatpack_time)
 	return TRUE
 	
 /obj/machinery/flatpacker/proc/finish_build(board)
@@ -243,7 +246,7 @@
 
 /obj/machinery/flatpacker/Destroy()
 	. = ..()
-	qdel(board)
+	inserted_board = null // this could be destroyed but the relevant refactor isnt in yet
 
 /obj/item/flatpack
 	name = "flatpack"

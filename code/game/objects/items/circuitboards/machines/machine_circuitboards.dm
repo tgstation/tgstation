@@ -1607,5 +1607,5 @@
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/micro_laser = 2,
 		/datum/stock_part/servo = 1,
-		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/sheet/plasteel = 5,
 	)
