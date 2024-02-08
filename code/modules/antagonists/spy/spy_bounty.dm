@@ -306,7 +306,7 @@
 	var/area/machine_area = get_area(machine)
 	// Tracks the picked machine, as well as any other machines in the same area
 	// (So they can be removed from the room but still count, for clever Spies)
-	original_options_weakrefs += WEAKREF(other_machine)
+	original_options_weakrefs += WEAKREF(machine)
 	for(var/obj/machinery/other_machine as anything in all_possible)
 		if(get_area(other_machine) == machine_area)
 			original_options_weakrefs += WEAKREF(other_machine)
