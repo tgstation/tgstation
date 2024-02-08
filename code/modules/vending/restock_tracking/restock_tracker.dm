@@ -8,21 +8,7 @@
 /obj/machinery/computer/restock_tracker
 	name = "restock tracker"
 	desc = "A computer that tracks how well stocked the station's vending machines are."
-	circuit = /obj/item/circuitboard/machine/restock_tracker
-
-/obj/machinery/computer/restock_tracker/examine(mob/user)
-	. = ..()
-
-	for(var/obj/machinery/vending/vm as anything in GLOB.vending_machines_to_restock)
-		var/stock = vm.total_loaded_stock()
-		var/max_stock = vm.total_max_stock()
-		if(max_stock == 0)
-			continue
-		var/percentage = (stock / max_stock) * 100
-		. += span_notice("\The [vm] in [get_area_name(vm)] has [percentage]% stock remaining.")
-		if(percentage < LOW_STOCK_THRESHOLD)
-			. += span_warning("Shit's low!")
-
+	circuit = /obj/item/circuitboard/computer/restock
 
 /obj/machinery/computer/restock_tracker/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -41,14 +27,16 @@
 		var/max_stock = vendor.total_max_stock()
 		if(max_stock == 0 || (stock == max_stock))
 			continue
-		vending_list += list(list("name" = vendor.name, "location" = get_area_name(vendor), "credits" = vendor.credits_contained, "percentage" = (stock / max_stock) * 100, "id" = id_increment))
+		vending_list += list(list(
+			"name" = vendor.name,
+			"location" = get_area_name(vendor),
+			"credits" = vendor.credits_contained,
+			"percentage" = (stock / max_stock) * 100,
+			"id" = id_increment
+		))
 		id_increment++
 	to_chat(world, "list length is [vending_list.len]")
 	data["vending_list"] = vending_list
 	return data
 
-/obj/machinery/computer/restock_tracker/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
-
+#undef LOW_STOCK_THRESHOLD
