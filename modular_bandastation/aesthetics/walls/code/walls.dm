@@ -28,12 +28,12 @@
 /obj/structure/falsewall
 	icon = 'modular_bandastation/aesthetics/walls/icons/false_walls.dmi'
 	base_icon_state = "wall"
-	icon_state = "wall-0"
+	icon_state = "wall-open"
 	fake_icon = 'modular_bandastation/aesthetics/walls/icons/wall.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 
 /obj/structure/falsewall/reinforced
-	icon_state = "reinforced_wall-0"
+	icon_state = "reinforced_wall-open"
 	base_icon_state = "reinforced_wall"
 	icon = 'modular_bandastation/aesthetics/walls/icons/false_walls.dmi'
 	fake_icon = 'modular_bandastation/aesthetics/walls/icons/reinforced_wall.dmi'
