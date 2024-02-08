@@ -188,6 +188,7 @@ export const SettingsGeneral = (props) => {
           <Button.Confirm
             content="Clear chat"
             icon="trash"
+            tooltip="Erase current tab history"
             onClick={() => dispatch(clearChat())}
           />
         </Stack.Item>
