@@ -23,6 +23,7 @@ export const createPage = (obj) => {
     name: 'New Tab',
     acceptedTypes: acceptedTypes,
     unreadCount: 0,
+    hideUnreadCount: false,
     createdAt: Date.now(),
     ...obj,
   };
