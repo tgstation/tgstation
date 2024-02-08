@@ -371,7 +371,7 @@
 	if(!drop_direction || !can_interact(user))
 		return
 	if(busy)
-		balloon_alert(user, "printing started!")
+		balloon_alert(user, "busy printing!")
 		return
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0

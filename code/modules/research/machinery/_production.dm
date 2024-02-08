@@ -416,7 +416,7 @@
 	if((!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
 		return
 	if(busy)
-		balloon_alert(usr, "printing started!")
+		balloon_alert(usr, "busy printing!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
@@ -429,7 +429,7 @@
 	if(!drop_direction || !can_interact(user))
 		return
 	if(busy)
-		balloon_alert(user, "printing started!")
+		balloon_alert(user, "busy printing!")
 		return
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
