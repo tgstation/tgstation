@@ -42,6 +42,7 @@
 		},
 
 		"Heretics": {
+			"weight": 0
 		},
 
 		"Wizard": {
@@ -80,9 +81,11 @@
 		},
 
 		"Nightmare": {
+			"weight": 0
 		},
 
 		"Space Dragon": {
+			"weight": 0
 		},
 
 		"Abductors": {
@@ -98,9 +101,11 @@
 		},
 
 		"Sentient Disease": {
+			"weight": 0
 		},
 
 		"Space Pirates": {
+			"weight": 0
 		},
 
 		"Obsessed": {
@@ -111,6 +116,7 @@
 		},
 
 		"Paradox Clone": {
+			"weight": 0
 		}
 	},
 
@@ -122,6 +128,7 @@
 		},
 
 		"Heretic Smuggler": {
+			"weight": 0
 		},
 
 		"Stowaway Changeling": {
