@@ -34,9 +34,9 @@
 		return
 
 	if(loaded_item)
-		. += span_notice("Use [EXAMINE_HINT("LMB")] to remove loaded item inside.")
+		. += span_notice("[EXAMINE_HINT("Left-Click")] to remove loaded item inside.")
 	else
-		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("LMB")].")
+		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("Left-Click")].")
 
 /obj/machinery/rnd/destructive_analyzer/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)
