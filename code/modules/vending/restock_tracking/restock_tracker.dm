@@ -35,7 +35,6 @@
 			"id" = id_increment
 		))
 		id_increment++
-	to_chat(world, "list length is [vending_list.len]")
 	data["vending_list"] = vending_list
 	return data
 
