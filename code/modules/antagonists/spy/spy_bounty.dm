@@ -302,11 +302,14 @@
 	if(!length(all_possible))
 		return FALSE
 
-	for(var/obj/machinery/machine as anything in all_possible)
-		original_options_weakrefs += WEAKREF(machine)
 
 	var/obj/machinery/machine = pick(all_possible)
 	var/area/machine_area = get_area(machine)
+	// So you can steal any machine found in that area, even if it's been moved out
+	for(var/obj/machinery/machine as anything in all_possible)
+		if(get_area(machine) == machine_area)
+			original_options_weakrefs += WEAKREF(machine)
+
 	location_type = machine_area.type
 	name ||= "[machine.name] Burglary"
 	help ||= "Steal \a [machine] found in [machine_area]."
