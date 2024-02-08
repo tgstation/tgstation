@@ -22,15 +22,6 @@
 	price_max = CARGO_CRATE_VALUE * 3
 	auction_weight = 3
 
-/datum/market_item/auction/gun_part/mk58_switch
-	name = "MK 58 Illegal Switch"
-	desc = "Super Illegal."
-	item = /obj/item/attachment/underbarrel/mk_58/makeshift/illegal_switch
-
-	price_min = CARGO_CRATE_VALUE * 3
-	price_max = CARGO_CRATE_VALUE * 6
-	auction_weight = 1
-
 /datum/market_item/auction/gun_part/mk58_suppressor
 	name = "MK 58 Suppressor"
 	desc = "Super Illegal."
