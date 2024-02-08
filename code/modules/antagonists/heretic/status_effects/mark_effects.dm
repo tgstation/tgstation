@@ -261,6 +261,19 @@
 	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
 	return ..()
 
+/datum/status_effect/eldritch/lock/on_effect()
+	// Drop every item the mob has with a 50% chance
+	for(var/obj/item/thing in owner.get_all_gear())
+		// Since dropping the suit will also drop several other slots, make the chance of dropping it lower further.
+		// This only checks whether the item is a suit, and so will affect not only the equipped suit, but also any other suits they happen to have in their inventory. Do we care? Not really.
+		var/drop_probability = 50
+		if(istype(thing,/obj/item/clothing/under))
+			drop_probability = 25
+		if(prob(drop_probability))
+			owner.dropItemToGround(thing)
+
+	return ..()
+
 // MARK OF MOON
 
 /datum/status_effect/eldritch/moon
