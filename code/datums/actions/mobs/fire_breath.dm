@@ -20,8 +20,10 @@
 	var/mech_damage = 45
 
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
+	disable_cooldown_actions()
 	attack_sequence(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /// Apply our specific fire breathing shape, in proc form so we can override it in subtypes
@@ -37,7 +39,7 @@
 	var/list/turfs = get_line(owner, target_turf) - get_turf(owner)
 	INVOKE_ASYNC(src, PROC_REF(progressive_fire_line), turfs)
 
-/// Creates fire with a delay on the list of targetted turfs
+/// Creates fire with a delay on the list of targeted turfs
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/progressive_fire_line(list/burn_turfs)
 	if (QDELETED(owner) || owner.stat == DEAD)
 		return
@@ -91,7 +93,7 @@
 	button_icon = 'icons/effects/fire.dmi'
 	button_icon_state = "1"
 	desc = "Breathe flames in all directions."
-	cooldown_time = 3 SECONDS
+	cooldown_time = 10.5 SECONDS
 	click_to_activate = FALSE
 	/// How many fire lines do we produce to turn a full circle?
 	var/sectors = 12

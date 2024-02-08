@@ -70,7 +70,7 @@
 	emag_act()
 
 /obj/machinery/digital_clock/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(disassembled)
 		new /obj/item/wallframe/digital_clock(drop_location())

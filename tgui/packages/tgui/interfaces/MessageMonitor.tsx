@@ -1,6 +1,15 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Input, Button, Table, NoticeBox, Box } from '../components';
+import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 enum Screen {
@@ -39,8 +48,8 @@ type Message = {
   recipient: string;
 };
 
-const RequestLogsScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const RequestLogsScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { requests = [] } = data;
   return (
     <Stack fill vertical>
@@ -55,7 +64,8 @@ const RequestLogsScreen = (props, context) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Delete</Table.Cell>
@@ -86,8 +96,8 @@ const RequestLogsScreen = (props, context) => {
   );
 };
 
-const MessageLogsScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MessageLogsScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { messages = [] } = data;
   return (
     <Stack fill vertical>
@@ -102,7 +112,8 @@ const MessageLogsScreen = (props, context) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Delete</Table.Cell>
@@ -131,7 +142,7 @@ const MessageLogsScreen = (props, context) => {
   );
 };
 
-const HackedScreen = (props, context) => {
+const HackedScreen = (props) => {
   return (
     <Stack.Item grow>
       <Stack fill vertical>
@@ -149,13 +160,12 @@ const HackedScreen = (props, context) => {
   );
 };
 
-const MainScreenAuth = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MainScreenAuth = (props) => {
+  const { act, data } = useBackend<Data>();
   const { status, is_malf, password } = data;
   const [auth_password, setPassword] = useLocalState(
-    context,
     'input_password',
-    password
+    password,
   );
   return (
     <>
@@ -163,7 +173,7 @@ const MainScreenAuth = (props, context) => {
         <Section>
           <Input
             value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            onChange={(e, value) => setPassword(value)}
             placeholder="Password"
           />
           <Button
@@ -250,13 +260,12 @@ const MainScreenAuth = (props, context) => {
   );
 };
 
-const MainScreenNotAuth = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MainScreenNotAuth = (props) => {
+  const { act, data } = useBackend<Data>();
   const { status, is_malf, password } = data;
   const [auth_password, setPassword] = useLocalState(
-    context,
     'input_password',
-    password
+    password,
   );
 
   return (
@@ -265,22 +274,24 @@ const MainScreenNotAuth = (props, context) => {
         <Section>
           <Input
             value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            onChange={(e, value) => setPassword(value)}
             placeholder="Password"
           />
-          <Button
-            content={'Auth'}
-            onClick={() => act('auth', { auth_password: auth_password })}
-          />
+          <Button onClick={() => act('auth', { auth_password: auth_password })}>
+            Auth
+          </Button>
           <Button
             icon={status ? 'power-off' : 'times'}
-            content={status ? 'ON' : 'OFF'}
             color={status ? 'green' : 'red'}
             disabled
             onClick={() => act('turn_server')}
-          />
+          >
+            {status ? 'ON' : 'OFF'}
+          </Button>
           {!!is_malf && (
-            <Button content="Hack" color="red" onClick={() => act('hack')} />
+            <Button color="red" onClick={() => act('hack')}>
+              Hack
+            </Button>
           )}
         </Section>
       </Stack.Item>
@@ -307,8 +318,8 @@ const MainScreenNotAuth = (props, context) => {
   );
 };
 
-const MainScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MainScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { auth } = data;
   return (
     <Stack fill vertical>
@@ -317,8 +328,8 @@ const MainScreen = (props, context) => {
   );
 };
 
-export const MessageMonitor = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const MessageMonitor = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     screen,
     error_message,

@@ -20,7 +20,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING //we gotta get out of here.
 
 /// Try to escape from your current target, without performing any other actions.
-/// Reads from some fleeing-specific targetting keys rather than the current mob target.
+/// Reads from some fleeing-specific targeting keys rather than the current mob target.
 /datum/ai_planning_subtree/flee_target/from_flee_key
 	target_key = BB_BASIC_MOB_FLEE_TARGET
 	hiding_place_key = BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION

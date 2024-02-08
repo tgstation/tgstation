@@ -19,6 +19,7 @@
 	melee_damage_upper = 25
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
+	bite_injection_flags = INJECT_CHECK_PENETRATE_THICK
 	/// Actions to grant on Initialize
 	var/list/innate_actions = null
 
@@ -225,7 +226,7 @@
 		heal_brute = 15,\
 		heal_burn = 15,\
 		heal_time = 3 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -253,7 +254,7 @@
 	icon_dead = "tank_dead"
 	maxHealth = 500
 	health = 500
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	obj_damage = 15
@@ -275,7 +276,7 @@
 		heal_brute = 50,\
 		heal_burn = 50,\
 		heal_time = 5 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tank, /mob/living/basic/spider/giant/tank)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -349,7 +350,7 @@
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 0, OXY = 1)
 	speed = 6
 	player_speed_modifier = -5.5 // Doesn't seem that slow but it gets a debuff off web
 	mob_size = MOB_SIZE_LARGE
@@ -561,7 +562,7 @@
 	web_speed = 0.4
 	maxHealth = 80
 	health = 80
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 1
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."

@@ -59,7 +59,7 @@
 		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, PROC_REF(implanting))
 		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, PROC_REF(old_implant))
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, PROC_REF(new_implant))
-	else if(istype(parent, /obj/item/modular_computer/pda))
+	else if(istype(parent, /obj/item/modular_computer))
 		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, PROC_REF(new_ringtone))
 		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(check_detonate))
 	else if(istype(parent, /obj/item/radio))
@@ -384,17 +384,18 @@
 
 // PDA signal responses
 
-/datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
+/datum/component/uplink/proc/new_ringtone(datum/source, atom/source, new_ring_text)
 	SIGNAL_HANDLER
 
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
-			failsafe(user)
+			failsafe(source)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
-	interact(null, user)
-	to_chat(user, span_hear("The computer softly beeps."))
+	if(ismob(source))
+		interact(null, source)
+		to_chat(source, span_hear("The computer softly beeps."))
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
@@ -455,7 +456,7 @@
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
 	var/obj/item/P = parent
-	if(istype(parent,/obj/item/modular_computer/pda))
+	if(istype(parent,/obj/item/modular_computer))
 		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Passcode:</B> [unlock_code] ([P.name], [RADIO_TOKEN_UPLINK] channel)."
@@ -465,7 +466,7 @@
 /datum/component/uplink/proc/generate_code()
 	var/returnable_code = ""
 
-	if(istype(parent, /obj/item/modular_computer/pda))
+	if(istype(parent, /obj/item/modular_computer))
 		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 	else if(istype(parent, /obj/item/radio))
@@ -500,14 +501,22 @@
 	locked = FALSE
 	replacement_uplink.balloon_alert_to_viewers("beep", vision_distance = COMBAT_MESSAGE_RANGE)
 
-/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
+/datum/component/uplink/proc/failsafe(atom/source)
 	if(!parent)
 		return
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
-	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
-	user.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	var/user_deets = "an uplink failsafe explosion has been triggered"
+	if(ismob(source))
+		user_deets = "[ADMIN_LOOKUPFLW(source)] has triggered an uplink failsafe explosion"
+		source.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	else if(istype(source, /obj/item/circuit_component))
+		var/obj/item/circuit_component/circuit = source
+		user_deets = "[circuit.parent.get_creator_admin()] has triggered an uplink failsafe explosion"
+	else
+		source?.log_message("somehow triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	message_admins("[user_deets] at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.

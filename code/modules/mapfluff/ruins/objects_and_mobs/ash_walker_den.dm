@@ -46,44 +46,45 @@
 	spawn_mob()
 
 /obj/structure/lavaland/ash_walker/proc/consume()
-	for(var/mob/living/H in view(src, 1)) //Only for corpse right next to/on same tile
-		if(H.stat)
-			for(var/obj/item/W in H)
-				if(!H.dropItemToGround(W))
-					qdel(W)
-			if(issilicon(H)) //no advantage to sacrificing borgs...
-				H.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-				visible_message(span_notice("Serrated tendrils eagerly pull [H] apart, but find nothing of interest."))
+	for(var/mob/living/offeredmob in view(src, 1)) //Only for corpse right next to/on same tile
+		if(offeredmob.loc == src)
+			continue //Ashwalker Revive in Progress...
+		if(offeredmob.stat)
+			offeredmob.unequip_everything()
+
+			if(issilicon(offeredmob)) //no advantage to sacrificing borgs...
+				offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
+				visible_message(span_notice("Serrated tendrils eagerly pull [offeredmob] apart, but find nothing of interest."))
+				offeredmob.gib()
 				return
 
-			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.ckey || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
-				visible_message(span_warning("Serrated tendrils carefully pull [H] to [src], absorbing the body and creating it anew."))
+			if(offeredmob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
+				visible_message(span_warning("Serrated tendrils carefully pull [offeredmob] to [src], absorbing the body and creating it anew."))
 				var/datum/mind/deadmind
-				if(H.ckey)
-					deadmind = H
+				if(offeredmob.ckey)
+					deadmind = offeredmob
 				else
-					deadmind = H.get_ghost(FALSE, TRUE)
+					deadmind = offeredmob.get_ghost(FALSE, TRUE)
 				to_chat(deadmind, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
 				SEND_SOUND(deadmind, sound('sound/magic/enter_blood.ogg',volume=100))
-				addtimer(CALLBACK(src, PROC_REF(remake_walker), H.mind, H.real_name), 20 SECONDS)
-				new /obj/effect/gibspawner/generic(get_turf(H))
-				qdel(H)
+				addtimer(CALLBACK(src, PROC_REF(remake_walker), offeredmob), 20 SECONDS)
+				offeredmob.forceMove(src)
 				return
 
-			if(ismegafauna(H))
+			if(ismegafauna(offeredmob))
 				meat_counter += 20
 			else
 				meat_counter++
-			visible_message(span_warning("Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs."))
+			visible_message(span_warning("Serrated tendrils eagerly pull [offeredmob] to [src], tearing the body apart as its blood seeps over the eggs."))
 			playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, TRUE)
-			var/deliverykey = H.fingerprintslast //ckey of whoever brought the body
+			var/deliverykey = offeredmob.fingerprintslast //ckey of whoever brought the body
 			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said ckey
 			//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
 			if(deliverymob && (deliverymob.mind?.has_antag_datum(/datum/antagonist/ashwalker)) && (deliverykey in ashies.players_spawned) && (prob(40)))
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
 				ashies.players_spawned -= deliverykey
-			H.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-			H.gib(DROP_ALL_REMAINS)
+			offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
+			offeredmob.gib(DROP_ALL_REMAINS)
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
@@ -92,17 +93,19 @@
 					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
 			ashies.sacrifices_made++
 
-/obj/structure/lavaland/ash_walker/proc/remake_walker(datum/mind/oldmind, oldname)
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))
-	M.set_species(/datum/species/lizard/ashwalker)
-	M.real_name = oldname
-	M.underwear = "Nude"
-	M.update_body()
-	M.remove_language(/datum/language/common)
-	oldmind.transfer_to(M)
-	M.mind.grab_ghost()
-	to_chat(M, "<b>You have been pulled back from beyond the grave, with a new body and renewed purpose. Glory to the Necropolis!</b>")
-	playsound(get_turf(M),'sound/magic/exit_blood.ogg', 100, TRUE)
+/obj/structure/lavaland/ash_walker/proc/remake_walker(mob/living/carbon/oldmob)
+	var/mob/living/carbon/human/newwalker = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))
+	newwalker.set_species(/datum/species/lizard/ashwalker)
+	newwalker.real_name = oldmob.real_name
+	newwalker.undershirt = "Nude"
+	newwalker.underwear = "Nude"
+	newwalker.update_body()
+	newwalker.remove_language(/datum/language/common)
+	oldmob.mind.transfer_to(newwalker)
+	newwalker.mind.grab_ghost()
+	to_chat(newwalker, "<b>You have been pulled back from beyond the grave, with a new body and renewed purpose. Glory to the Necropolis!</b>")
+	playsound(get_turf(newwalker),'sound/magic/exit_blood.ogg', 100, TRUE)
+	qdel(oldmob)
 
 /obj/structure/lavaland/ash_walker/proc/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)

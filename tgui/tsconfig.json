@@ -15,7 +15,7 @@
     "skipLibCheck": true,
     "strict": false,
     "strictNullChecks": true,
-    "target": "ES3"
+    "target": "ES5"
   },
   "include": ["./*.d.ts", "./packages"]
 }

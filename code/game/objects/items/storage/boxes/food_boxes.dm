@@ -14,7 +14,7 @@
 
 /obj/item/storage/box/donkpockets/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/donkpocket))
+	atom_storage.set_holdable(/obj/item/food/donkpocket)
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
@@ -337,7 +337,7 @@
 
 /obj/item/storage/box/gum/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/bubblegum))
+	atom_storage.set_holdable(/obj/item/food/bubblegum)
 	atom_storage.max_slots = 4
 
 /obj/item/storage/box/gum/PopulateContents()
@@ -508,7 +508,7 @@
 
 /obj/item/storage/box/coffeepack/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+	atom_storage.set_holdable(/obj/item/food/grown/coffee)
 
 /obj/item/storage/box/coffeepack/PopulateContents()
 	atom_storage.max_slots = 5

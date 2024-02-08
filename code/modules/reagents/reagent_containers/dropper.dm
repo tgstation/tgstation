@@ -46,7 +46,7 @@
 					target.visible_message(span_danger("[user] tries to squirt something into [target]'s eyes, but fails!"), \
 											span_userdanger("[user] tries to squirt something into your eyes, but fails!"))
 
-					to_chat(user, span_notice("You transfer [round(trans, 0.01)] unit\s of the solution."))
+					to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 					update_appearance()
 					return
 			else if(isalien(target)) //hiss-hiss has no eyes!
@@ -66,7 +66,7 @@
 			log_combat(user, M, "squirted", R)
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You transfer [round(trans, 0.01)] unit\s of the solution."))
+		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
 
@@ -82,7 +82,7 @@
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 
-		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the solution."))
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
 		update_appearance()
 		target.update_appearance()

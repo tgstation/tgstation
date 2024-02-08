@@ -1,0 +1,5 @@
+author: "EEASAS"
+delete-after: True
+changes:
+  - bugfix: "Fixed some things in Ice Box's gas station ruin"
+  - rscadd: "Adds some things in Ice Box's gas station ruin"

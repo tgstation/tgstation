@@ -10,17 +10,15 @@
 /obj/item/organ/internal/cyberimp/bci/Initialize(mapload)
 	. = ..()
 
+	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, PROC_REF(action_comp_registered))
+	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, PROC_REF(action_comp_unregistered))
+
 	var/obj/item/integrated_circuit/circuit = new(src)
-	circuit.add_component(new /obj/item/circuit_component/equipment_action/bci(null, "One"))
+	circuit.add_component(new /obj/item/circuit_component/equipment_action(null, "One"))
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
-
-/obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
-	. = ..()
-	// Organs are put in nullspace, but this breaks circuit interactions
-	forceMove(receiver)
 
 /obj/item/organ/internal/cyberimp/bci/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if (owner)
@@ -33,41 +31,17 @@
 	else
 		return ..()
 
-/obj/item/circuit_component/equipment_action/bci
-	display_name = "BCI Action"
-	desc = "Represents an action the user can take when implanted with the brain-computer interface."
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
+/obj/item/organ/internal/cyberimp/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	LAZYADD(actions, new/datum/action/innate/bci_action(src, action_comp))
 
-	/// A reference to the action button itself
-	var/datum/action/innate/bci_action/bci_action
-
-/obj/item/circuit_component/equipment_action/bci/Destroy()
-	QDEL_NULL(bci_action)
-	return ..()
-
-/obj/item/circuit_component/equipment_action/bci/register_shell(atom/movable/shell)
-	. = ..()
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
-	if(istype(bci))
-		bci_action = new(src)
-		update_action()
-
-		bci.actions += list(bci_action)
-
-/obj/item/circuit_component/equipment_action/bci/unregister_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
-	if(istype(bci))
-		bci.actions -= bci_action
-		QDEL_NULL(bci_action)
-	return ..()
-
-/obj/item/circuit_component/equipment_action/bci/input_received(datum/port/input/port)
-	if (!isnull(bci_action))
-		update_action()
-
-/obj/item/circuit_component/equipment_action/bci/update_action()
-	bci_action.name = button_name.value
-	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
+/obj/item/organ/internal/cyberimp/bci/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	var/datum/action/innate/bci_action/action = action_comp.granted_to[REF(src)]
+	if(!istype(action))
+		return
+	LAZYREMOVE(actions, action)
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /datum/action/innate/bci_action
 	name = "Action"
@@ -75,20 +49,23 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "bci_power"
 
-	var/obj/item/circuit_component/equipment_action/bci/circuit_component
+	var/obj/item/organ/internal/cyberimp/bci/bci
+	var/obj/item/circuit_component/equipment_action/circuit_component
 
-/datum/action/innate/bci_action/New(obj/item/circuit_component/equipment_action/bci/circuit_component)
+/datum/action/innate/bci_action/New(obj/item/organ/internal/cyberimp/bci/_bci, obj/item/circuit_component/equipment_action/circuit_component)
 	..()
-
+	bci = _bci
+	circuit_component.granted_to[REF(_bci)] = src
 	src.circuit_component = circuit_component
 
 /datum/action/innate/bci_action/Destroy()
-	circuit_component.bci_action = null
+	circuit_component.granted_to -= REF(bci)
 	circuit_component = null
 
 	return ..()
 
 /datum/action/innate/bci_action/Activate()
+	circuit_component.user.set_output(owner)
 	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core
@@ -114,7 +91,7 @@
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
 	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = PROC_REF(update_charge_action))
 
-	user_port = add_output_port("User", PORT_TYPE_ATOM)
+	user_port = add_output_port("User", PORT_TYPE_USER)
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)

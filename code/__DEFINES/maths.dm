@@ -43,6 +43,10 @@
 
 #define ROUND_UP(x) ( -round(-(x)))
 
+/// Returns the number of digits in a number. Only works on whole numbers.
+/// This is marginally faster than string interpolation -> length
+#define DIGITS(x) (ROUND_UP(log(10, x)))
+
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 

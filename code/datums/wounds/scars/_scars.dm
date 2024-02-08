@@ -30,7 +30,7 @@
 	/// If false, we will only check to see if a limb has ALL our biostates, instead of just any.
 	var/check_any_biostates
 
-/datum/scar/Destroy(force, ...)
+/datum/scar/Destroy(force)
 	if(limb)
 		LAZYREMOVE(limb.scars, src)
 	if(victim)

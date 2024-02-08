@@ -42,7 +42,6 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	/// The sound the guillotine makes when it successfully cuts off a head
 	var/drop_sound = 'sound/weapons/guillotine.ogg'
 	/// The current state of the blade
@@ -277,7 +276,7 @@
 	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
 		current_action = GUILLOTINE_ACTION_IDLE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	current_action = GUILLOTINE_ACTION_IDLE
 	return FALSE
 

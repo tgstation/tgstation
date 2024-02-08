@@ -42,7 +42,7 @@
 		if(M.client)
 			M.reset_perspective(src)
 		hasmob = TRUE
-		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep), M)
+		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep))
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -179,12 +179,12 @@
 
 /// Merge two holder objects, used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
-	for(var/A in other)
-		var/atom/movable/AM = A
-		AM.forceMove(src) // move everything in other holder to this one
-		if(ismob(AM))
-			var/mob/M = AM
-			M.reset_perspective(src) // if a client mob, update eye to follow this holder
+	for(var/atom/movable/movable as anything in other)
+		movable.forceMove(src) // move everything in other holder to this one
+		if(ismob(movable))
+			var/mob/mob = movable
+			mob.reset_perspective(src) // if a client mob, update eye to follow this holder
+			RegisterSignal(mob, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep))
 			hasmob = TRUE
 	if(destinationTag == 0 && other.destinationTag != 0)
 		destinationTag = other.destinationTag

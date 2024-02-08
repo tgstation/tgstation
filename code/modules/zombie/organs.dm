@@ -23,31 +23,31 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/internal/zombie_infection/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/M, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return .
+
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/zombie_infection/on_mob_remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	if(iszombie(M) && old_species && !special && !QDELETED(src))
+	if(iszombie(M) && old_species && !special)
 		M.set_species(old_species)
 	if(timer_id)
 		deltimer(timer_id)
 
-/obj/item/organ/internal/zombie_infection/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(organ_owner_died))
 
-/obj/item/organ/internal/zombie_infection/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/zombie_infection/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
 
 /obj/item/organ/internal/zombie_infection/proc/organ_owner_died(mob/living/carbon/source, gibbed)
 	SIGNAL_HANDLER
-	qdel(src) // Congrats you somehow died so hard you stopped being a zombie
+	if(iszombie(source))
+		qdel(src) // Congrats you somehow died so hard you stopped being a zombie
 
 /obj/item/organ/internal/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, span_warning("Inside the head is a disgusting black \

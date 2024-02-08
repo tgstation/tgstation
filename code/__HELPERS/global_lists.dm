@@ -26,6 +26,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tail_spines, GLOB.tail_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
@@ -219,7 +220,7 @@
 // Wall mounted machinery which are visually on the wall.
 GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
-	/obj/item/storage/secure/safe,
+	/obj/structure/secure_safe,
 	/obj/machinery/airalarm,
 	/obj/machinery/bluespace_vendor,
 	/obj/machinery/button,

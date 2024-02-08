@@ -46,4 +46,4 @@
 			SSexplosions.med_mov_atom += target
 
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
-	hit_target(source, target, charge_damage)
+	try_hit_target(source, target, charge_damage)

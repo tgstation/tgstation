@@ -10,6 +10,7 @@
 	stage_prob = 5
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 	disease_flags = CURABLE
+	bypasses_immunity = TRUE
 	var/list/stage1 = list("You feel unremarkable.")
 	var/list/stage2 = list("You feel boring.")
 	var/list/stage3 = list("You feel utterly plain.")
@@ -83,7 +84,7 @@
 /datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 5 SECONDS, affected_mob)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", check_jobban = bantype, role = bantype, poll_time = 5 SECONDS, target_mob = affected_mob, pic_source = affected_mob, role_name_text = "transformation victim")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))

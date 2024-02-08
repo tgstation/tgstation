@@ -2976,7 +2976,7 @@
 "La" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/item/storage/toolbox/fishing{
 	pixel_y = 2

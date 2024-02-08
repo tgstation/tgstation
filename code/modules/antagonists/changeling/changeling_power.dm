@@ -40,8 +40,6 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 */
 
 /datum/action/changeling/proc/on_purchase(mob/user, is_respec)
-	if(!is_respec)
-		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
 	Grant(user)//how powers are added rather than the checks in mob.dm
 
 /datum/action/changeling/Trigger(trigger_flags)

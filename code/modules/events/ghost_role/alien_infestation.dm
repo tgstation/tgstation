@@ -62,7 +62,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, pic_source = /mob/living/carbon/alien/larva, role_name_text = role_name)
 
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS

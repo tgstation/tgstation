@@ -145,7 +145,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(bulb)
 			bulb.forceMove(loc)
 		if(disassembled)

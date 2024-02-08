@@ -442,3 +442,31 @@
 		if(our_area == get_area(carbon))
 			return FALSE
 	return TRUE
+
+/**
+ * Behaves like the orange() proc, but only looks in the outer range of the function (The "peel" of the orange).
+ * This is useful for things like checking if a mob is in a certain range, but not within a smaller range.
+ *
+ * @params outer_range - The outer range of the cicle to pull from.
+ * @params inner_range - The inner range of the circle to NOT pull from.
+ * @params center - The center of the circle to pull from, can be an atom (we'll apply get_turf() to it within circle_x_turfs procs.)
+ * @params view_based - If TRUE, we'll use circle_view_turfs instead of circle_range_turfs procs.
+ */
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+	if(inner_range > outer_range) // If the inner range is larger than the outer range, you're using this wrong.
+		CRASH("Turf peel inner range is larger than outer range!")
+	var/list/peel = list()
+	var/list/outer
+	var/list/inner
+	if(view_based)
+		outer = circle_view_turfs(center, outer_range)
+		inner = circle_view_turfs(center, inner_range)
+	else
+		outer = circle_range_turfs(center, outer_range)
+		inner = circle_range_turfs(center, inner_range)
+	for(var/turf/possible_spawn as anything in outer)
+		if(possible_spawn in inner)
+			continue
+		peel += possible_spawn
+	return peel
+

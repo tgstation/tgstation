@@ -1,14 +1,28 @@
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { GenericUplink, Item } from './GenericUplink';
-import { Component, Fragment } from 'inferno';
-import { fetchRetry } from '../../http';
-import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip, Dimmer } from '../../components';
-import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
+import { Component, Fragment } from 'react';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
+} from '../../components';
+import { fetchRetry } from '../../http';
+import { Window } from '../../layouts';
+import {
+  calculateDangerLevel,
+  calculateProgression,
+  dangerDefault,
+  dangerLevelsTooltip,
+} from './calculateDangerLevel';
+import { GenericUplink, Item } from './GenericUplink';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import { calculateProgression, calculateDangerLevel, dangerDefault, dangerLevelsTooltip } from './calculateDangerLevel';
+import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
   id: string;
@@ -73,16 +87,18 @@ type ServerData = {
   categories: string[];
 };
 
-type ItemExtraData = {
-  ref?: string | undefined;
+type ItemExtraData = Item & {
+  extraData: {
+    ref?: string;
+  };
 };
 
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
 
 export class Uplink extends Component<{}, UplinkState> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       allItems: [],
       allCategories: [],
@@ -97,10 +113,10 @@ export class Uplink extends Component<{}, UplinkState> {
   async populateServerData() {
     if (!fetchServerData) {
       fetchServerData = fetchRetry(resolveAsset('uplink.json')).then(
-        (response) => response.json()
+        (response) => response.json(),
       );
     }
-    const { data } = useBackend<UplinkData>(this.context);
+    const { data } = useBackend<UplinkData>();
 
     const uplinkFlag = data.uplink_flag;
     const uplinkRole = data.assigned_role;
@@ -146,7 +162,7 @@ export class Uplink extends Component<{}, UplinkState> {
     });
 
     uplinkData.categories = uplinkData.categories.filter((value) =>
-      availableCategories.includes(value)
+      availableCategories.includes(value),
     );
 
     this.setState({
@@ -156,7 +172,7 @@ export class Uplink extends Component<{}, UplinkState> {
   }
 
   render() {
-    const { data, act } = useBackend<UplinkData>(this.context);
+    const { data, act } = useBackend<UplinkData>();
     const {
       telecrystals,
       progression_points,
@@ -182,7 +198,7 @@ export class Uplink extends Component<{}, UplinkState> {
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
 
     const itemsToAdd = [...allItems];
-    const items: Item<ItemExtraData>[] = [];
+    const items: ItemExtraData[] = [];
     itemsToAdd.push(...extra_purchasable);
     for (let i = 0; i < extra_purchasable.length; i++) {
       const item = extra_purchasable[i];
@@ -251,7 +267,7 @@ export class Uplink extends Component<{}, UplinkState> {
     // Clamp it down between 0 and 2
     progressionPercentage = Math.min(
       Math.max(progressionPercentage / progression_scaling_deviance, -1),
-      1
+      1,
     );
     // Round it and convert it into a percentage
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
@@ -291,7 +307,7 @@ export class Uplink extends Component<{}, UplinkState> {
                                   Threat passively increases by{' '}
                                   <Box color="green" as="span">
                                     {calculateProgression(
-                                      current_progression_scaling
+                                      current_progression_scaling,
                                     )}
                                   </Box>
                                   &nbsp;every minute
@@ -311,7 +327,8 @@ export class Uplink extends Component<{}, UplinkState> {
                                           : 'green'
                                       }
                                       ml={1}
-                                      mr={1}>
+                                      mr={1}
+                                    >
                                       {progressionPercentage}%
                                     </Box>
                                     {progressionPercentage < 0
@@ -325,7 +342,8 @@ export class Uplink extends Component<{}, UplinkState> {
                             </Box>
                           )) ||
                           "Your current threat level. You are a killing machine and don't need to improve your threat level."
-                        }>
+                        }
+                      >
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
@@ -346,22 +364,25 @@ export class Uplink extends Component<{}, UplinkState> {
                   <Stack.Item grow={1}>
                     <Tabs fluid textAlign="center">
                       {!!has_objectives && (
-                        <Fragment>
+                        <>
                           <Tabs.Tab
                             selected={currentTab === 0}
-                            onClick={() => this.setState({ currentTab: 0 })}>
+                            onClick={() => this.setState({ currentTab: 0 })}
+                          >
                             Primary Objectives
                           </Tabs.Tab>
                           <Tabs.Tab
                             selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}>
+                            onClick={() => this.setState({ currentTab: 1 })}
+                          >
                             Secondary Objectives
                           </Tabs.Tab>
-                        </Fragment>
+                        </>
                       )}
                       <Tabs.Tab
                         selected={currentTab === 2 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 2 })}>
+                        onClick={() => this.setState({ currentTab: 2 })}
+                      >
                         Market
                       </Tabs.Tab>
                     </Tabs>
@@ -426,12 +447,11 @@ export class Uplink extends Component<{}, UplinkState> {
                       currency=""
                       categories={allCategories}
                       items={items}
-                      handleBuy={(item) => {
-                        const extraDataItem = item as Item<ItemExtraData>;
-                        if (!extraDataItem.extraData?.ref) {
+                      handleBuy={(item: ItemExtraData) => {
+                        if (!item.extraData?.ref) {
                           act('buy', { path: item.id });
                         } else {
-                          act('buy', { ref: extraDataItem.extraData.ref });
+                          act('buy', { ref: item.extraData.ref });
                         }
                       }}
                     />
@@ -442,7 +462,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           fontFamily={'Bahnschrift'}
                           fontSize={3}
                           align={'top'}
-                          as="span">
+                          as="span"
+                        >
                           SHOP LOCKED
                         </Box>
                       </Dimmer>

@@ -441,13 +441,13 @@
 //Fish breeding stops if fish count exceeds this.
 #define AQUARIUM_MAX_BREEDING_POPULATION 20
 
-/obj/item/fish/proc/ready_to_reproduce(being_targetted = FALSE)
+/obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
 		return FALSE
-	if(being_targetted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
+	if(being_targeted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		return FALSE
-	if(!being_targetted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
+	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
 	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
 

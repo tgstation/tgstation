@@ -1941,7 +1941,7 @@
 "mJ" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/device.dmi';
+	icon = 'icons/obj/devices/tracker.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
@@ -3358,7 +3358,7 @@
 /area/awaymission/moonoutpost19/research)
 "vu" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/taperecorder{
 	pixel_x = -3
 	},
@@ -4025,8 +4025,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "AC" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Gateway Access";
 	req_access = "150"
 	},
@@ -5120,7 +5119,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "HP" = (
-/mob/living/simple_animal/pet/cat/space{
+/mob/living/basic/pet/cat/space{
 	desc = "With survival instincts like these, it's no wonder cats survived to the 26th century.";
 	name = "Jones"
 	},
@@ -6844,7 +6843,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "Tx" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/pen,
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note,

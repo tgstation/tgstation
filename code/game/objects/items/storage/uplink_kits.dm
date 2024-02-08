@@ -234,7 +234,6 @@
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src) // 2 tc
 			new /obj/item/gun/energy/wormhole_projector/core_inserted(src) // 5 tc easily
-			new /obj/item/gun/energy/decloner/unrestricted(src) // 5 tc at least also
 
 		if(KIT_BEES)
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
@@ -277,68 +276,19 @@
 	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
-/obj/item/storage/box/syndicate/contract_kit
-	name = "Contract Kit"
-	desc = "Supplied to Syndicate contractors."
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
-
-/obj/item/storage/box/syndicate/contractor_loadout
-	name = "Standard Loadout"
-	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
-
-/obj/item/paper/contractor_guide
-	name = "Contractor Guide"
-
-/obj/item/paper/contractor_guide/Initialize(mapload)
-	default_raw_text = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
-			this kit will provide you contracts to take on for TC payments.</p>
-
-			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
-			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
-			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
-
-			<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your
-			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
-
-			<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep,
-			with two Rep being provided each time you complete a contract.</p>
-
-			<h3>Using the tablet</h3>
-			<ol>
-				<li>Open the Syndicate Contract Uplink program.</li>
-				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
-				<li>The payment number shown in brackets is the bonus you'll receive when bringing your target <b>alive</b>. You receive the
-				other number regardless of if they were alive or dead.</li>
-				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
-				inside the pod.</li>
-			</ol>
-
-			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it
-			unavailable to take on again.</p>
-			<p>The tablet can also be recharged at any cell charger.</p>
-			<h3>Extracting</h3>
-			<ol>
-				<li>Make sure both yourself and your target are at the dropoff.</li>
-				<li>Call the extraction, and stand back from the drop point.</li>
-				<li>If it fails, make sure your target is inside, and there's a free space for the pod to land.</li>
-				<li>Grab your target, and drag them into the pod.</li>
-			</ol>
-			<h3>Ransoms</h3>
-			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back
-			from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever
-			ID card you have equipped, on top of the TC payment we give.</p>
-
-			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
-	return ..()
-
 /obj/item/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	name = "Boxed Rebar Crossbow"
+	desc = "Now features instruction manual for making ammo."
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
@@ -620,6 +570,7 @@
 	new /obj/item/card/emag/doorjack (src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
 	new /obj/item/grenade/c4 (src)
+	new /obj/item/mod/module/energy_shield(src)
 
 /// Surplus Ammo Box
 
@@ -731,12 +682,11 @@
 	implant_color = "r"
 
 /obj/item/implant/nuclear_operative/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Suspicious Implant<BR>
-				<b>Life:</b> UNKNOWN <BR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Suspicious Implant<BR> \
+		<b>Life:</b> UNKNOWN <BR> \
+		<b>Implant Details:</b> <BR> \
+		<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
@@ -756,13 +706,13 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake', disallow induction! No self-antagging.
+	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
 	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
 		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
 			faker = TRUE
 
-	if(faker) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
@@ -812,6 +762,61 @@
 		/obj/item/sbeacondrop/horse = 1,
 		/obj/item/food/grown/apple = 1,
 	), src)
+
+/obj/item/storage/box/syndicate/contract_kit
+	name = "Contract Kit"
+	desc = "Supplied to Syndicate contractors."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/contract_kit/PopulateContents()
+	new /obj/item/modular_computer/pda/syndicate_contract_uplink(src)
+	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
+
+	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
+	var/static/list/item_list = list(
+		/obj/item/storage/backpack/duffelbag/syndie/x4,
+		/obj/item/storage/box/syndie_kit/throwing_weapons,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/pen/edagger,
+		/obj/item/pen/sleepy,
+		/obj/item/flashlight/emp,
+		/obj/item/reagent_containers/syringe/mulligan,
+		/obj/item/clothing/shoes/chameleon/noslip,
+		/obj/item/storage/medkit/tactical,
+		/obj/item/encryptionkey/syndicate,
+		/obj/item/clothing/glasses/thermal/syndi,
+		/obj/item/slimepotion/slime/sentience/nuclear,
+		/obj/item/storage/box/syndie_kit/imp_radio,
+		/obj/item/storage/box/syndie_kit/imp_uplink,
+		/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+		/obj/item/reagent_containers/hypospray/medipen/stimulants,
+		/obj/item/storage/box/syndie_kit/imp_freedom,
+		/obj/item/toy/eightball/haunted,
+	)
+	for(var/i in 1 to 3)
+		var/selected_item = pick_n_take(item_list)
+		new selected_item(src)
+
+	// Paper guide is always last.
+	new /obj/item/paper/contractor_guide(src)
+
+/obj/item/storage/box/syndicate/contractor_loadout
+	name = "Standard Loadout"
+	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
+	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
+	new /obj/item/clothing/suit/space/syndicate/contract(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/lighter(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

@@ -479,7 +479,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/amaretto
 	name = "Luini Amaretto"
-	desc = "A gentle and syrup like drink, tastes of almonds and apricots"
+	desc = "A gentle, syrupy drink that tastes of almonds and apricots."
 	icon_state = "disaronno"
 	list_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 100)
 
@@ -601,9 +601,11 @@
 	if(!do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
 		return
 
-	///The bonus to success chance that the user gets for being a command role
-	var/command_bonus = user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND ? 20 : 0
-	///The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
+	//The bonus to success chance that the user gets for being a command role
+	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/command_bonus = (!isnull(liver) && HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM)) ? 20 : 0
+
+	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
 	var/skillchip_bonus = HAS_TRAIT(user, TRAIT_SABRAGE_PRO) ? 35 : 0
 	//calculate success chance. example: captain's sabre - 15 force = 75% chance
 	var/sabrage_chance = (attacking_item.force * sabrage_success_percentile) + command_bonus + skillchip_bonus
@@ -803,10 +805,10 @@
 			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
+	..()
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
-	..()
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.get_temperature() && !active)

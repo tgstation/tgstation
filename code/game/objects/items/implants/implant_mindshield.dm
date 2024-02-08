@@ -4,16 +4,15 @@
 	actions_types = null
 
 /obj/item/implant/mindshield/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-				<b>Life:</b> Ten years.<BR>
-				<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing.<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small pod of nanobots that protects the host's mental functions from manipulation.<BR>
-				<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Nanotrasen Employee Management Implant<BR> \
+		<b>Life:</b> Ten years.<BR> \
+		<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing.<BR> \
+		<HR> \
+		<b>Implant Details:</b><BR> \
+		<b>Function:</b> Contains a small pod of nanobots that protects the host's mental functions from manipulation.<BR> \
+		<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR> \
+		<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."
 
 
 /obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)

@@ -33,7 +33,7 @@
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
 	antag_hud_name = "brainwashed"
-	antagpanel_category = "Other"
+	antagpanel_category = ANTAG_GROUP_CREW
 	show_name_in_check_antagonists = TRUE
 	count_against_dynamic_roll_chance = FALSE
 	ui_name = "AntagInfoBrainwashed"

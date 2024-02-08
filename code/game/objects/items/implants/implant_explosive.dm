@@ -45,16 +45,14 @@
 	INVOKE_ASYNC(src, PROC_REF(activate), "death")
 
 /obj/item/implant/explosive/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-				<b>Life:</b> Activates upon death.<BR>
-				<b>Important Notes:</b> Explodes<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-				<b>Special Features:</b> Explodes<BR>
-				"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR> \
+		<b>Life:</b> Activates upon death.<BR> \
+		<b>Important Notes:</b> Explodes<BR> \
+		<HR> \
+		<b>Implant Details:</b><BR> \
+		<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR> \
+		<b>Special Features:</b> Explodes<BR>"
 
 /obj/item/implant/explosive/activate(cause)
 	. = ..()
@@ -124,11 +122,10 @@
 	notify_ghosts(
 		"[imp_in] is about to detonate their explosive implant!",
 		source = src,
-		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
-		ghost_sound = 'sound/machines/warning-buzzer.ogg',
 		header = "Tick Tick Tick...",
-		notify_volume = 75
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		ghost_sound = 'sound/machines/warning-buzzer.ogg',
+		notify_volume = 75,
 	)
 
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)

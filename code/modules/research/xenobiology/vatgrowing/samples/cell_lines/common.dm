@@ -108,7 +108,7 @@
 		/datum/reagent/consumable/milk/chocolate_milk = -1)
 
 	virus_suspectibility = 1.5
-	resulting_atoms = list(/mob/living/simple_animal/pet/cat = 1) //The basic cat mobs are all male, so you mightt need a gender swap potion if you want to fill the fortress with kittens.
+	resulting_atoms = list(/mob/living/basic/pet/cat = 1)
 
 /datum/micro_organism/cell_line/corgi
 	desc = "Canid cells"
@@ -652,7 +652,7 @@
 		/datum/reagent/drug/nicotine = -1)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/obj/item/queen_bee = 1)
+	resulting_atoms = list(/obj/item/queen_bee/bought = 1)
 
 /datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
@@ -683,30 +683,6 @@
 
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/basic/butterfly = 3)
-
-/datum/micro_organism/cell_line/leaper
-	desc = "atypical amphibian cells"
-	required_reagents = list(
-		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/ants,
-		/datum/reagent/consumable/eggyolk,
-		/datum/reagent/medicine/c2/synthflesh)
-
-	supplementary_reagents = list(
-		/datum/reagent/growthserum = 4,
-		/datum/reagent/drug/blastoff = 3,
-		/datum/reagent/drug/space_drugs = 2,
-		/datum/reagent/consumable/ethanol/eggnog = 2,
-		/datum/reagent/consumable/vanilla = 2,
-		/datum/reagent/consumable/banana = 1,
-		/datum/reagent/consumable/nutriment/vitamin = 1)
-
-	suppressive_reagents = list(
-		/datum/reagent/toxin/cyanide = -5,
-		/datum/reagent/consumable/mold = -2,
-		/datum/reagent/toxin/spore = -1)
-
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/leaper = 1)
 
 /datum/micro_organism/cell_line/mega_arachnid
 	desc = "pseudoarachnoid cells"

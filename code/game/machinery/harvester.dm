@@ -103,7 +103,6 @@
 			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,
 			header = "Gruesome!",
-			action = NOTIFY_ORBIT,
 		)
 
 	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
@@ -172,7 +171,7 @@
 		return TRUE
 
 /obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
+	. = !(state_open || panel_open || (obj_flags & NO_DECONSTRUCTION)) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
 		tool.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))

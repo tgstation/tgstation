@@ -90,7 +90,7 @@
 	return TRUE
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 2)
 		if((buildstage == AIR_ALARM_BUILD_NO_WIRES) || (buildstage == AIR_ALARM_BUILD_COMPLETE))
 			var/obj/item/electronics/airalarm/alarm = new(loc)

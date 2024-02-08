@@ -18,6 +18,10 @@
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
+/obj/machinery/stasis/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/elevation, pixel_shift = 6)
+
 /obj/machinery/stasis/Destroy()
 	. = ..()
 

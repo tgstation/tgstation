@@ -165,7 +165,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	update_appearance()
 
 /obj/machinery/incident_display/deconstruct()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
@@ -215,12 +215,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		var/mutable_appearance/delam_base_emissive = emissive_appearance(icon, "delam_base_emissive", src, alpha = src.alpha)
 		var/delam_display_color
 		. += delam_base_emissive
-		if(!last_delam)
+		if(last_delam <= 0)
 			delam_display_color = COLOR_DISPLAY_RED
 		else
 			delam_display_color = COLOR_DISPLAY_YELLOW
 
-		var/delam_pos1 = last_delam % 10
+		var/delam_pos1 = clamp(last_delam, 0, 199) % 10
 		var/mutable_appearance/delam_pos1_overlay = mutable_appearance(icon, "num_[delam_pos1]")
 		var/mutable_appearance/delam_pos1_emissive = emissive_appearance(icon, "num_[delam_pos1]_e", src, alpha = src.alpha)
 		delam_pos1_overlay.color = delam_display_color
@@ -231,7 +231,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		. += delam_pos1_overlay
 		. += delam_pos1_emissive
 
-		var/delam_pos2 = (last_delam / 10) % 10
+		var/delam_pos2 = (clamp(last_delam, 0, 199) / 10) % 10
 		var/mutable_appearance/delam_pos2_overlay = mutable_appearance(icon, "num_[delam_pos2]")
 		var/mutable_appearance/delam_pos2_emissive = emissive_appearance(icon, "num_[delam_pos2]_e", src, alpha = src.alpha)
 		delam_pos2_overlay.color = delam_display_color
@@ -327,24 +327,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	. = ..()
 
 	if(sign_features & DISPLAY_DELAM)
-		. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
-		switch (last_delam)
-			if(0)
-				. += span_info("In case you didn't notice.<br/>")
-			if(1)
-				. += span_info("Let's do better today.<br/>")
-			if(2 to 5)
-				. += span_info("There's room for improvement.<br/>")
-			if(6 to 10)
-				. += span_info("Good work!<br/>")
-			if(69)
-				. += span_info("Nice.<br/>")
-			else
-				. += span_info("Incredible!<br/>")
+		if(last_delam >= 0)
+			. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
+			switch(last_delam)
+				if(0)
+					. += span_info("Let's do better today.<br/>")
+				if(1 to 5)
+					. += span_info("There's room for improvement.<br/>")
+				if(6 to 10)
+					. += span_info("Good work!<br/>")
+				if(69)
+					. += span_info("Nice.<br/>")
+				else
+					. += span_info("Incredible!<br/>")
+		else
+			. += span_info("The supermatter crystal has delaminated, in case you didn't notice.")
 
 	if(sign_features & DISPLAY_TRAM)
 		. += span_info("The station has had [hit_count] tram incident\s this shift.")
-		switch (hit_count)
+		switch(hit_count)
 			if(0)
 				. += span_info("Fantastic! Champions of safety.<br/>")
 			if(1)

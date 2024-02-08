@@ -12,42 +12,42 @@
 
 /datum/barsign/evahumanspace
 	name = "SS220 EVA Human in Space"
-	icon = "evahumanspace"
+	icon_state = "evahumanspace"
 	desc = "Безопасность - это привелегия."
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'
 
 /datum/barsign/warpsurf
 	name = "SS220 Warp Surf"
-	icon = "warpsurf"
+	icon_state = "warpsurf"
 	desc = "Welcome to the club, buddy!"
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'
 
 /datum/barsign/papacafe
 	name = "SS220 Space Daddy's Cafe"
-	icon = "papacafe"
+	icon_state = "papacafe"
 	desc = "Уважай своего Космического Папу!"
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'
 
 /datum/barsign/wycctide
 	name = "SS220 Wycctide"
-	icon = "wycctide"
+	icon_state = "wycctide"
 	desc = "О нет, он близится!"
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'
 
 /datum/barsign/shitcur
 	name = "SS220 Shitcur"
-	icon = "shitcur"
+	icon_state = "shitcur"
 	desc = "Невиновность ничего не доказывает."
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'
 
 /datum/barsign/pourndot
 	name = "SS220 Pour and that's it"
-	icon = "pourndot"
+	icon_state = "pourndot"
 	desc = "Нальют и Точка. Тяжёлые времена приближаются."
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'
 
 /datum/barsign/moonipub
 	name = "SS220 Mooniverse pub"
-	icon = "mooni"
+	icon_state = "mooni"
 	desc = "Совершенно новый паб."
 	ss220_icon = 'modular_bandastation/barsigns/icons/barsigns.dmi'

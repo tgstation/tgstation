@@ -8,10 +8,11 @@
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	pressure_resistance = 100
 	speed = 0
 	unique_name = TRUE
+	can_buckle_to = FALSE
 	initial_language_holder = /datum/language_holder/construct
 	death_message = "collapses in a shattered heap."
 
@@ -68,7 +69,7 @@
 			heal_time = 0,\
 			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/basic/shade)),\
 			valid_biotypes = MOB_MINERAL | MOB_SPIRIT,\
-			self_targetting = can_repair_self ? HEALING_TOUCH_ANYONE : HEALING_TOUCH_NOT_SELF,\
+			self_targeting = can_repair_self ? HEALING_TOUCH_ANYONE : HEALING_TOUCH_NOT_SELF,\
 			action_text = "%SOURCE% begins repairing %TARGET%'s dents.",\
 			complete_text = "%TARGET%'s dents are repaired.",\
 			show_health = TRUE,\

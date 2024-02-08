@@ -36,9 +36,8 @@
 #define INTERACT_MACHINE_OPEN_SILICON (1<<4)
 /// must be silicon to interact
 #define INTERACT_MACHINE_REQUIRES_SILICON (1<<5)
-/// MACHINES HAVE THIS BY DEFAULT, SOMEONE SHOULD RUN THROUGH MACHINES AND REMOVE IT FROM THINGS LIKE LIGHT SWITCHES WHEN POSSIBLE!!--------------------------
 /// This flag determines if a machine set_machine's the user when the user uses it, making updateUsrDialog make the user re-call interact() on it.
-/// THIS FLAG IS ON ALL MACHINES BY DEFAULT, NEEDS TO BE RE-EVALUATED LATER!!
+/// This is exclusively used for non-TGUI UIs, and its instances should be removed when moved to TGUI.
 #define INTERACT_MACHINE_SET_MACHINE (1<<6)
 /// the user must have vision to interact (blind people need not apply)
 #define INTERACT_MACHINE_REQUIRES_SIGHT (1<<7)

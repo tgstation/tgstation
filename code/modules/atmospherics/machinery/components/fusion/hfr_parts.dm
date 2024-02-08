@@ -40,8 +40,6 @@
 			return
 	if(default_change_direction_wrench(user, I))
 		return
-	if(default_deconstruction_crowbar(I))
-		return
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
@@ -55,22 +53,8 @@
 		cracked = FALSE
 		update_appearance()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(.)
-		set_init_directions()
-		var/obj/machinery/atmospherics/node = nodes[1]
-		if(node)
-			node.disconnect(src)
-			nodes[1] = null
-			if(parents[1])
-				nullify_pipenet(parents[1])
-		atmos_init()
-		node = nodes[1]
-		if(node)
-			node.atmos_init()
-			node.add_member(src)
-		SSair.add_to_rebuild_queue(src)
+/obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
 	if(panel_open)
@@ -169,10 +153,13 @@
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface_off"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
-	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 	icon_state_off = "interface_off"
 	icon_state_open = "interface_open"
 	icon_state_active = "interface_active"
+	/// Have we been activated at least once?
+	var/activated = FALSE
+	/// Reference to the core of our machine
+	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 
 /obj/machinery/hypertorus/interface/Destroy()
 	if(connected_core)
@@ -187,10 +174,13 @@
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, span_notice("Check all parts and then try again."))
 		return TRUE
-	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
-	connected_core = centre
 
+	connected_core = centre
 	connected_core.activate(user)
+	if(!activated)
+		new /obj/item/paper/guides/jobs/atmos/hypertorus(loc)
+		activated = TRUE
+
 	return TRUE
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
@@ -201,6 +191,7 @@
 			ui.open()
 	else
 		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
+		ui.close()
 
 /obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)
 	var/list/gasid_list = list()

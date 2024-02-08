@@ -99,11 +99,11 @@
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
 		multi_tool.set_buffer(src)
 		sensor.multitool_act(user, multi_tool)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "vent saved in buffer")
 	multi_tool.set_buffer(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/screwdriver_act(mob/living/user, obj/item/tool)
 	var/time_to_repair = (10 SECONDS) * (1 - get_integrity_percentage())
@@ -117,7 +117,7 @@
 
 	else
 		balloon_alert(user, "interrupted!")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
 	set_is_operational(TRUE)
@@ -203,12 +203,14 @@
 			return
 
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
-			icon_state = "vent_out-off"
+			icon_state = "vent_off"
+			flick("vent_out-shutdown", src)
 		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
+			icon_state = "vent_off"
+			flick("vent_in-shutdown", src)
 		return
 
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+	if(icon_state == "vent_off")
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)
@@ -222,7 +224,7 @@
 	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(from_break = FALSE)
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(source, from_break = FALSE)
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
@@ -233,6 +235,8 @@
 		sound_loop.start()
 	else
 		sound_loop.stop()
+
+	investigate_log("had its overlock setting [fan_overclocked ? "enabled" : "disabled"] by [source]", INVESTIGATE_ATMOS)
 
 	update_appearance()
 
@@ -247,13 +251,10 @@
 	if(!istype(us))
 		return
 
-	var/current_integrity = get_integrity()
 	if(fan_overclocked)
 		take_damage(fan_damage_rate, sound_effect=FALSE)
-		if(current_integrity == 0)
-			on = FALSE
-			set_is_operational(FALSE)
-			toggle_overclock(from_break = TRUE)
+		if(get_integrity() == 0)
+			investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
 			return
 
 	var/percent_integrity = get_integrity_percentage()

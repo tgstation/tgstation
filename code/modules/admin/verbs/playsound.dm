@@ -41,7 +41,7 @@
 			SEND_SOUND(M, admin_sound)
 			admin_sound.volume = vol
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
 
 
 /client/proc/play_local_sound(S as sound)
@@ -53,7 +53,7 @@
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf(src.mob), S, 50, FALSE, FALSE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
 /client/proc/play_direct_mob_sound(S as sound, mob/M)
 	set category = "Admin.Fun"
@@ -68,7 +68,7 @@
 	log_admin("[key_name(src)] played a direct mob sound [S] to [M].")
 	message_admins("[key_name_admin(src)] played a direct mob sound [S] to [ADMIN_LOOKUPFLW(M)].")
 	SEND_SOUND(M, S)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Play Direct Mob Sound")
 
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
 /proc/web_sound(mob/user, input, credit)
@@ -167,7 +167,7 @@
 
 	S_TIMER_COOLDOWN_START(SStimer, COOLDOWN_INTERNET_SOUND, duration)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
+	BLACKBOX_LOG_ADMIN_VERB("Play Internet Sound")
 
 
 /client/proc/play_web_sound()
@@ -208,7 +208,7 @@
 
 	log_admin("[key_name(src)] set the round end sound to [S]")
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Round End Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Set Round End Sound")
 
 /client/proc/stop_sounds()
 	set category = "Debug"
@@ -224,7 +224,7 @@
 		C?.tgui_panel?.stop_music()
 
 	S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Stop All Playing Sounds")
 
 //world/proc/shelleo
 #undef SHELLEO_ERRORLEVEL

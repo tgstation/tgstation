@@ -48,7 +48,7 @@
 	product = /obj/item/food/grown/pumpkin/blumpkin
 	mutatelist = null
 	reagents_add = list(/datum/reagent/ammonia = 0.2, /datum/reagent/chlorine = 0.1, /datum/reagent/consumable/nutriment = 0.2)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/pumpkin/blumpkin
 	seed = /obj/item/seeds/pumpkin/blumpkin

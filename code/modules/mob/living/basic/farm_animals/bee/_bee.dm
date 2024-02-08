@@ -61,7 +61,7 @@
 		/datum/pet_command/beehive/enter,
 		/datum/pet_command/beehive/exit,
 		/datum/pet_command/follow/bee,
-		/datum/pet_command/point_targetting/attack/swirl,
+		/datum/pet_command/point_targeting/attack/swirl,
 		/datum/pet_command/scatter,
 	)
 
@@ -192,11 +192,11 @@
 	if(!injection_range)
 		injection_range = string_numbers_list(list(1, 5))
 	if(beegent) //clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
+		RemoveElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	beegent = toxin
 	name = "[initial(name)] ([toxin.name])"
 	real_name = name
-	AddElement(/datum/element/venomous, beegent.type, injection_range)
+	AddElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	generate_bee_visuals()
 
 /mob/living/basic/bee/queen

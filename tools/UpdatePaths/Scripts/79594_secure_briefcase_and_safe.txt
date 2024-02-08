@@ -1,0 +1,8 @@
+# turns the old secure briefcases into regular briefcase items
+
+/obj/item/storage/secure/briefcase : /obj/item/storage/briefcase/secure{@OLD}
+/obj/item/storage/secure/briefcase/@SUBTYPES : /obj/item/storage/briefcase/secure/@SUBTYPES{@OLD}
+
+# repaths secure safes to the new structure made for it.
+
+/obj/item/storage/secure/safe/@SUBTYPES : /obj/structure/secure_safe/@SUBTYPES{@OLD}

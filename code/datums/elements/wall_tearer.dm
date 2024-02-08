@@ -28,17 +28,15 @@
 	src.tear_time = tear_time
 	src.reinforced_multiplier = reinforced_multiplier
 	src.do_after_key = do_after_key
-	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attacked_wall))
+	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_wall))
 
 /datum/element/wall_tearer/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(source, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK))
 
 /// Try to tear up a wall
 /datum/element/wall_tearer/proc/on_attacked_wall(mob/living/tearer, atom/target, proximity_flag)
 	SIGNAL_HANDLER
-	if (!proximity_flag)
-		return NONE
 	if (DOING_INTERACTION_WITH_TARGET(tearer, target) || (!isnull(do_after_key) && DOING_INTERACTION(tearer, do_after_key)))
 		tearer.balloon_alert(tearer, "busy!")
 		return COMPONENT_HOSTILE_NO_ATTACK

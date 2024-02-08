@@ -25,7 +25,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_parent_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_unequipped))
 
-/datum/component/bullet_intercepting/Destroy(force, silent)
+/datum/component/bullet_intercepting/Destroy(force)
 	wearer = null
 	on_intercepted = null
 	return ..()

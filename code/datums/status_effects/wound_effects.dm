@@ -67,7 +67,7 @@
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
-	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & FLYING) || forced || owner.buckled)
+	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & (FLYING|FLOATING)) || forced || owner.buckled)
 		return
 
 	// less limping while we have determination still

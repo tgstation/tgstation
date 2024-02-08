@@ -64,7 +64,7 @@ Striking a noncultist, however, will tear their flesh."}
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
@@ -377,8 +377,15 @@ Striking a noncultist, however, will tear their flesh."}
 	fire = 50
 	acid = 60
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
-	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/shielded, \
+		recharge_start_delay = 0 SECONDS, \
+		shield_icon_file = 'icons/effects/cult/effects.dmi', \
+		shield_icon = "shield-cult", \
+		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
+	)
 
 /// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
@@ -451,6 +458,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
 	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	flags_cover = GLASSESCOVERSEYES
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
@@ -824,9 +832,9 @@ Striking a noncultist, however, will tear their flesh."}
 		var/mob/living/carbon/carbon_cultist = our_target
 		carbon_cultist.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 	if(isshade(our_target) || isconstruct(our_target))
-		var/mob/living/simple_animal/undead_abomination = our_target
-		if(undead_abomination.health+5 < undead_abomination.maxHealth)
-			undead_abomination.adjustHealth(-5)
+		var/mob/living/basic/construct/undead_abomination = our_target
+		if(undead_abomination.health + 5 < undead_abomination.maxHealth)
+			undead_abomination.adjust_health(-5)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/item/blood_beam
@@ -926,11 +934,11 @@ Striking a noncultist, however, will tear their flesh."}
 						if(H.stat != DEAD)
 							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
-						var/mob/living/simple_animal/M = target
-						if(M.health+15 < M.maxHealth)
-							M.adjustHealth(-15)
+						var/mob/living/basic/construct/healed_guy = target
+						if(healed_guy.health + 15 < healed_guy.maxHealth)
+							healed_guy.adjust_health(-15)
 						else
-							M.health = M.maxHealth
+							healed_guy.health = healed_guy.maxHealth
 				else
 					var/mob/living/L = target
 					if(L.density)
@@ -1015,8 +1023,7 @@ Striking a noncultist, however, will tear their flesh."}
 	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/turf/T = get_turf(hit_atom)
-	var/datum/thrownthing/D = throwingdatum
+	var/turf/impact_turf = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/target = hit_atom
 
@@ -1029,13 +1036,14 @@ Striking a noncultist, however, will tear their flesh."}
 			return
 		if(!..())
 			target.Paralyze(30)
-			if(D?.thrower)
-				for(var/mob/living/Next in orange(2, T))
+			var/mob/thrower = throwingdatum?.get_thrower()
+			if(thrower)
+				for(var/mob/living/Next in orange(2, impact_turf))
 					if(!Next.density || IS_CULTIST(Next))
 						continue
-					throw_at(Next, 3, 1, D.thrower)
+					throw_at(Next, 3, 1, thrower)
 					return
-				throw_at(D.thrower, 7, 1, null)
+				throw_at(thrower, 7, 1, null)
 	else
 		..()
 

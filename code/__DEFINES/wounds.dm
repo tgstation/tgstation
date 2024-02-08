@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
-// Exterior is soft shit, targetted by slashes and pierces (usually), protects exterior
+// Exterior is soft shit, targeted by slashes and pierces (usually), protects exterior
 // A limb needs both mangled interior and exterior to be dismembered, but slash/pierce must mangle exterior to attack the interior
 // Not having exterior/interior counts as mangled exterior/interior for the purposes of dismemberment
 /// The given biostate is on the "interior" of the limb - hard shit, protected by exterior
@@ -125,6 +125,8 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+/// Cranial fissure wound.
+#define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())

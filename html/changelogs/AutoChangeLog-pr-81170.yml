@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed text effects for runechat messages (the stuff enclosed in +, | and _ characters)."
+  - spellcheck: "Improved the tip for say/text effects."

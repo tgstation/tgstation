@@ -377,8 +377,9 @@ SUBSYSTEM_DEF(timer)
 	var/list/flags
 	/// Time at which the timer was invoked or destroyed
 	var/spent = 0
-	/// An informative name generated for the timer as its representation in strings, useful for debugging
-	var/name
+	/// Holds info about this timer, stored from the moment it was created
+	/// Used to create a visible "name" whenever the timer is stringified
+	var/list/timer_info
 	/// Next timed event in the bucket
 	var/datum/timedevent/next
 	/// Previous timed event in the bucket
@@ -494,6 +495,21 @@ SUBSYSTEM_DEF(timer)
 	bucket_pos = -1
 	bucket_joined = FALSE
 
+/datum/timedevent/proc/operator""()
+	if(!length(timer_info))
+		return "Event not filled"
+	var/static/list/bitfield_flags = list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")
+#if defined(TIMER_DEBUG)
+	var/list/callback_args = timer_info[10]
+	return "Timer: [timer_info[1]] ([text_ref(src)]), TTR: [timer_info[2]], wait:[timer_info[3]] Flags: [jointext(bitfield_to_list(timer_info[4], bitfield_flags), ", ")], \
+		callBack: [text_ref(timer_info[5])], callBack.object: [timer_info[6]][timer_info[7]]([timer_info[8]]), \
+		callBack.delegate:[timer_info[9]]([callback_args ? callback_args.Join(", ") : ""]), source: [timer_info[11]]"
+#else
+	return "Timer: [timer_info[1]] ([text_ref(src)]), TTR: [timer_info[2]], wait:[timer_info[3]] Flags: [jointext(bitfield_to_list(timer_info[4], bitfield_flags), ", ")], \
+		callBack: [text_ref(timer_info[5])], callBack.object: [timer_info[6]]([timer_info[7]]), \
+		callBack.delegate:[timer_info[8]], source: [timer_info[9]]"
+#endif
+
 /**
  * Attempts to add this timed event to a bucket, will enter the secondary queue
  * if there are no appropriate buckets at this time.
@@ -504,20 +520,37 @@ SUBSYSTEM_DEF(timer)
  */
 /datum/timedevent/proc/bucketJoin()
 #if defined(TIMER_DEBUG)
-	// Generate debug-friendly name for timer, more complex but also more expensive
-	var/static/list/bitfield_flags = list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")
-	name = "Timer: [id] ([text_ref(src)]), TTR: [timeToRun], wait:[wait] Flags: [jointext(bitfield_to_list(flags, bitfield_flags), ", ")], \
-		callBack: [text_ref(callBack)], callBack.object: [callBack.object][text_ref(callBack.object)]([getcallingtype()]), \
-		callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""]), source: [source]"
+	// Generate debug-friendly list for timer, more complex but also more expensive
+	timer_info = list(
+		1 = id,
+		2 = timeToRun,
+		3 = wait,
+		4 = flags,
+		5 = callBack, /* Safe to hold this directly becasue it's never del'd */
+		6 = "[callBack.object]",
+		7 = text_ref(callBack.object),
+		8 = getcallingtype(),
+		9 = callBack.delegate,
+		10 = callBack.arguments ? callBack.arguments.Copy() : null,
+		11 = "[source]"
+	)
 #else
-	// Generate a debuggable name for the timer, simpler but wayyyy cheaper, string generation is a bitch and this saves a LOT of time
-	name = "Timer: [id] ([text_ref(src)]), TTR: [timeToRun], wait:[wait] Flags: [flags], \
-		callBack: [text_ref(callBack)], callBack.object: [callBack.object]([getcallingtype()]), \
-		callBack.delegate:[callBack.delegate], source: [source]"
+	// Generate a debuggable list for the timer, simpler but wayyyy cheaper, string generation (and ref/copy memes) is a bitch and this saves a LOT of time
+	timer_info = list(
+		1 = id,
+		2 = timeToRun,
+		3 = wait,
+		4 = flags,
+		5 = callBack, /* Safe to hold this directly becasue it's never del'd */
+		6 = "[callBack.object]",
+		7 = getcallingtype(),
+		8 = callBack.delegate,
+		9 = "[source]"
+	)
 #endif
 
 	if (bucket_joined)
-		stack_trace("Bucket already joined! [name]")
+		stack_trace("Bucket already joined! [src]")
 
 	// Check if this timed event should be diverted to the client time bucket, or the secondary queue
 	var/list/L
@@ -537,7 +570,7 @@ SUBSYSTEM_DEF(timer)
 
 	if (bucket_pos < timer_subsystem.practical_offset && timeToRun < (timer_subsystem.head_offset + TICKS2DS(BUCKET_LEN)))
 		WARNING("Bucket pos in past: bucket_pos = [bucket_pos] < practical_offset = [timer_subsystem.practical_offset] \
-			&& timeToRun = [timeToRun] < [timer_subsystem.head_offset + TICKS2DS(BUCKET_LEN)], Timer: [name]")
+			&& timeToRun = [timeToRun] < [timer_subsystem.head_offset + TICKS2DS(BUCKET_LEN)], Timer: [src]")
 		bucket_pos = timer_subsystem.practical_offset // Recover bucket_pos to avoid timer blocking queue
 
 	var/datum/timedevent/bucket_head = bucket_list[bucket_pos]

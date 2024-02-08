@@ -28,8 +28,9 @@
 	if(client)
 		stack_trace("Mob with client has been deleted.")
 	else if(ckey)
-		stack_trace("Mob without client but with associated ckey has been deleted.")
+		stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
 
+	unset_machine()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -46,7 +47,7 @@
 
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
-	ghostize() //False, since we're deleting it currently
+	ghostize(can_reenter_corpse = FALSE) //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
 
@@ -577,6 +578,7 @@
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
 		else
 			result = examinify.examine(src)
+			SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
 			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
@@ -589,7 +591,6 @@
 
 	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
-
 
 /mob/proc/blind_examine_check(atom/examined_thing)
 	return TRUE //The non-living will always succeed at this check.
@@ -704,6 +705,8 @@
 /mob/proc/can_resist()
 	return FALSE //overridden in living.dm
 
+#define SPIN_PROC_TRAIT "trait_from_spin()"
+
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
@@ -711,7 +714,7 @@
 	if((spintime < 1) || (speed < 1) || !spintime || !speed)
 		return
 
-	flags_1 |= IS_SPINNING_1
+	ADD_TRAIT(src, TRAIT_SPINNING, SPIN_PROC_TRAIT)
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -725,7 +728,9 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
-	flags_1 &= ~IS_SPINNING_1
+	REMOVE_TRAIT(src, TRAIT_SPINNING, SPIN_PROC_TRAIT)
+
+#undef SPIN_PROC_TRAIT
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
@@ -856,18 +861,6 @@
 	set hidden = TRUE
 	set category = null
 	return
-/**
- * Topic call back for any mob
- *
- * * Unset machines if "mach_close" sent
- * * refresh the inventory of machines in range if "refresh" sent
- * * handles the strip panel equip and unequip as well if "item" sent
- */
-/mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = "window=[href_list["mach_close"]]"
-		unset_machine()
-		src << browse(null, t1)
 
 /**
  * Controls if a mouse drop succeeds (return null if it doesnt)
@@ -990,11 +983,11 @@
 	if(mind)
 		return mind.grab_ghost(force = force)
 
-///Notify a ghost that it's body is being cloned
-/mob/proc/notify_ghost_cloning(message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", sound = 'sound/effects/genetics.ogg', atom/source = null, flashwindow)
+///Notify a ghost that its body is being revived
+/mob/proc/notify_revival(message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", sound = 'sound/effects/genetics.ogg', atom/source = null, flashwindow = TRUE)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound, source, flashwindow)
+		ghost.send_revival_notification(message, sound, source, flashwindow)
 		return ghost
 
 /**
@@ -1194,14 +1187,24 @@
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
-	log_played_names(ckey, newname)
+	log_played_names(
+		ckey,
+		list(
+			"[newname]" = tag,
+		),
+	)
 
 	real_name = newname
 	name = newname
 	if(mind)
 		mind.name = newname
 		if(mind.key)
-			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment.
+			log_played_names(
+				ckey(mind.key),
+				list(
+					"[newname]" = tag,
+				),
+			) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
@@ -1323,10 +1326,6 @@
 			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
-	if(HAS_MIND_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
-		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
-		return FALSE
-
 	if(!is_literate())
 		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
 		return FALSE
@@ -1404,62 +1403,80 @@
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
+
+	if(!.)
+		return
+
 	if(href_list[VV_HK_REGEN_ICONS])
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
 		if(!check_rights(NONE))
 			return
 		usr.client.holder.show_player_panel(src)
+
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_mob_action(src)
+
 	if(href_list[VV_HK_REMOVE_MOB_ACTION])
 		if(!check_rights(NONE))
 			return
 		usr.client.remove_mob_action(src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_spell(src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
 		if(!check_rights(NONE))
 			return
 		usr.client.remove_spell(src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_disease(src)
+
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
 			return
 		usr.client.cmd_admin_gib(src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_admin_drop_everything(src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_assume_direct_control(src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_give_direct_control(src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
+
 	if(href_list[VV_HK_VIEW_PLANES])
 		if(!check_rights(R_DEBUG))
 			return
@@ -1522,10 +1539,6 @@
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, control_object))
-			var/obj/O = var_value
-			if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
-				return FALSE
 		if(NAMEOF(src, machine))
 			set_machine(var_value)
 			. = TRUE

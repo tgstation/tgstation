@@ -21,7 +21,7 @@
 	/// List of minds with the ability to see influences
 	var/list/datum/mind/tracked_heretics = list()
 
-/datum/reality_smash_tracker/Destroy(force, ...)
+/datum/reality_smash_tracker/Destroy(force)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")

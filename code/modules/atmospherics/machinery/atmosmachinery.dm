@@ -382,7 +382,7 @@
 
 /obj/machinery/atmospherics/wrench_act(mob/living/user, obj/item/I)
 	if(!can_unwrench(user))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
@@ -396,11 +396,14 @@
 		var/empty_mixes = 0
 		for(var/gas_mix_number in 1 to device_type)
 			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
-			if(!(gas_mix.total_moles() > 0))
+			if(!gas_mix.total_moles())
 				empty_mixes++
+			if(!nodes[gas_mix_number] || (istype(nodes[gas_mix_number], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(gas_mix_number)))
+				var/pressure_delta = all_gas_mixes[gas_mix_number].return_pressure() - env_air.return_pressure()
+				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
 		if(empty_mixes == device_type)
 			empty_pipe = TRUE
-	if(!(int_air.total_moles() > 0))
+	if(!int_air.total_moles())
 		empty_pipe = TRUE
 
 	if(!empty_pipe)
@@ -410,8 +413,7 @@
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
-	var/time_taken = empty_pipe ? 0 : 20
-	if(I.use_tool(src, user, time_taken, volume = 50))
+	if(I.use_tool(src, user, empty_pipe ? 0 : 2 SECONDS, volume = 50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			span_notice("You unfasten \the [src]."), \
@@ -421,9 +423,10 @@
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
-		return deconstruct(TRUE)
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Getter for can_unwrench
@@ -466,7 +469,7 @@
  * Called by wrench_act(), create a pipe fitting and remove the pipe
  */
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(can_unwrench)
 			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
 			stored.set_piping_layer(piping_layer)
@@ -613,17 +616,28 @@
 	return
 
 /**
- * Called by the RPD.dm pre_attack(), overriden by pipes.dm
+ * Called by the RPD.dm pre_attack()
  * Arguments:
  * * paint_color - color that the pipe will be painted in (colors in hex like #4f4f4f)
  */
 /obj/machinery/atmospherics/proc/paint(paint_color)
-	return FALSE
+	if(paintable)
+		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		set_pipe_color(paint_color)
+		update_node_icon()
+	return paintable
 
 /// Setter for pipe color, so we can ensure it's all uniform and save cpu time
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+/// Return TRUE if there is device connected to portables_connector
+/obj/machinery/atmospherics/proc/portable_device_connected(node)
+	var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = nodes[node]
+	if(portable_devices_connector.connected_device)
+		return TRUE
+	return FALSE
 
 #undef PIPE_VISIBLE_LEVEL
 #undef PIPE_HIDDEN_LEVEL

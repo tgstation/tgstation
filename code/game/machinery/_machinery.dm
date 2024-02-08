@@ -131,7 +131,7 @@
 	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
-	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
@@ -512,19 +512,24 @@
 	return TRUE
 
 ///Get a valid powered area to reference for power use, mainly for wall-mounted machinery that isn't always mapped directly in a powered location.
-/obj/machinery/proc/get_room_area(area/machine_room)
+/obj/machinery/proc/get_room_area()
 	var/area/machine_area = get_area(src)
-	if(!machine_area.always_unpowered) ///check our loc first to see if its a powered area
-		machine_room = machine_area
-		return machine_room
-	var/turf/mounted_wall = get_step(src,dir)
-	if (mounted_wall && istype(mounted_wall, /turf/closed))
+	if(isnull(machine_area))
+		return null // ??
+
+	// check our own loc first to see if its a powered area
+	if(!machine_area.always_unpowered)
+		return machine_area
+
+	// loc area wasn't good, checking adjacent wall for a good area to use
+	var/turf/mounted_wall = get_step(src, dir)
+	if(isclosedturf(mounted_wall))
 		var/area/wall_area = get_area(mounted_wall)
-		if(!wall_area.always_unpowered) //loc area wasn't good, checking adjacent wall for a good area to use
-			machine_room = wall_area
-			return machine_room
-	machine_room = machine_area ///couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
-	return machine_room
+		if(!wall_area.always_unpowered)
+			return wall_area
+
+	// couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
+	return machine_area
 
 ///makes this machine draw power from its area according to which use_power mode it is set to
 /obj/machinery/proc/update_current_power_usage()
@@ -663,6 +668,9 @@
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	update_last_used(usr)
+	if(isAI(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
+		to_chat(usr, span_warning("You can no longer connect to this device!"))
+		return FALSE
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
@@ -753,11 +761,11 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/machinery/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
-		return TOOL_ACT_MELEE_CHAIN_BLOCKING
+		return ITEM_INTERACT_ANY_BLOCKER
 	. = ..()
-	if(. & TOOL_ACT_SIGNAL_BLOCKING)
+	if(. & ITEM_INTERACT_BLOCKING)
 		return
 	update_last_used(user)
 
@@ -793,7 +801,7 @@
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
-	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || is_operational || (obj_flags & NO_DECONSTRUCTION)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
@@ -803,14 +811,14 @@
 		close_machine(density_to_set = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
-	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = (panel_open || ignore_panel) && !(obj_flags & NO_DECONSTRUCTION) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!. || custom_deconstruct)
 		return
 	crowbar.play_tool_sound(src, 50)
 	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return ..() //Just delete us, no need to call anything else.
 
 	on_deconstruction()
@@ -868,7 +876,7 @@
 
 /obj/machinery/atom_break(damage_flag)
 	. = ..()
-	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if(!(machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
 		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_appearance()
@@ -915,7 +923,7 @@
 		qdel(atom_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+	if((obj_flags & NO_DECONSTRUCTION) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
 		return FALSE
 
 	screwdriver.play_tool_sound(src, 50)
@@ -942,7 +950,7 @@
 	if(!istype(replacer_tool))
 		return FALSE
 
-	if((flags_1 & NODECONSTRUCT_1) && !replacer_tool.works_from_distance)
+	if((obj_flags & NO_DECONSTRUCTION) && !replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = FALSE

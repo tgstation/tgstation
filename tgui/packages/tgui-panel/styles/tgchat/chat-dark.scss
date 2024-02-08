@@ -505,6 +505,11 @@ em {
   font-size: 90%;
 }
 
+.bolditalic {
+  font-style: italic;
+  font-weight: bold;
+}
+
 .boldnotice {
   color: #6685f5;
   font-weight: bold;
@@ -960,6 +965,7 @@ $alert-stripe-colors: (
   'orange': #593400,
   'red': #420000,
   'purple': #2c0030,
+  'grey': #252525,
 );
 
 $alert-stripe-alternate-colors: (
@@ -971,28 +977,31 @@ $alert-stripe-alternate-colors: (
   'orange': #6b4200,
   'red': #520000,
   'purple': #38003d,
+  'grey': #292929,
 );
 
 $alert-major-header-colors: (
   'default': #33d5ff,
   'green': #00ff80,
   'blue': #33d5ff,
-  'pink': #ff80b3,
+  'pink': #ff5297,
   'yellow': #fff4e0,
   'orange': #feefe7,
-  'red': #ffa8c4,
+  'red': #ff5297,
   'purple': #c7a1f7,
+  'grey': #ff5297,
 );
 
 $alert-subheader-header-colors: (
-  'default': #ff9ebb,
-  'green': #ffb3c9,
-  'blue': #ff9ebb,
-  'pink': #75e3ff,
-  'yellow': #75e3ff,
-  'orange': #bdf1ff,
-  'red': #75e3ff,
-  'purple': #75e3ff,
+  'default': #ff5297,
+  'green': #ff85b5,
+  'blue': #ff5297,
+  'pink': #33d5ff,
+  'yellow': #33d5ff,
+  'orange': #33d5ff,
+  'red': #33d5ff,
+  'purple': #33d5ff,
+  'grey': #33d5ff,
 );
 
 $border-width: 4;
@@ -1051,6 +1060,24 @@ $border-width-px: $border-width * 1px;
 
 .announcement_header {
   padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_alert {
+  background: #4d4100;
+  border: 1px solid #cca300;
+  margin: 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.2em;
+  color: #ffffff;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_announcement_text {
+  color: #cca300;
+  padding: 0.5em 0 0 0.35em;
   display: flex;
   flex-direction: column;
 }

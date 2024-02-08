@@ -84,6 +84,9 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// Global signal sent before we decide what job everyone has
+#define COMSIG_GLOB_PRE_JOBS_ASSIGNED "!pre_roles_assigned"
+
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 
