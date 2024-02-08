@@ -66,8 +66,8 @@ const getCheckboxGroup = (
   });
 };
 
-export const VoicePage = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const VoicePage = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const {
     providers,
@@ -253,10 +253,7 @@ export const VoicePage = (props, context) => {
           <LabeledList.Item label="Поиск">{searchBar}</LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section
-        title={`Голоса (${availableSeeds.length}/${seeds.length})`}
-        flexGrow="1"
-      >
+      <Section title={`Голоса (${availableSeeds.length}/${seeds.length})`}>
         <Table>{seedsRow}</Table>
       </Section>
       <Section>
