@@ -233,8 +233,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	//Irregular objects
 	var/list/icon_dimensions = get_icon_dimensions(checked_atom.icon)
-	var/checked_atom_icon_height = icon_dimensions["width"]
-	var/checked_atom_icon_width = icon_dimensions["height"]
+	var/checked_atom_icon_height = icon_dimensions["height"]
+	var/checked_atom_icon_width = icon_dimensions["width"]
 	if(checked_atom_icon_height != world.icon_size || checked_atom_icon_width != world.icon_size)
 		pixel_x_offset += ((checked_atom_icon_width / world.icon_size) - 1) * (world.icon_size * 0.5)
 		pixel_y_offset += ((checked_atom_icon_height / world.icon_size) - 1) * (world.icon_size * 0.5)
