@@ -41,6 +41,7 @@
 	.["See All Bounties (For all spies)"] = CALLBACK(src, PROC_REF(see_bounties))
 	.["Refresh Bounties (For all spies)"] = CALLBACK(src, PROC_REF(refresh_bounties))
 	.["Give Spy Uplink"] = CALLBACK(src, PROC_REF(admin_create_spy_uplink))
+	.["Bounty Handler VV"] = CALLBACK(src, PROC_REF(bounty_handler_vv))
 
 /datum/antagonist/spy/proc/see_bounties()
 	if(!check_rights(R_ADMIN|R_DEBUG))
@@ -71,6 +72,17 @@
 
 	if(!auto_create_spy_uplink(owner.current, give_backup = FALSE))
 		tgui_alert(usr, "Failed to give [owner.current] a spy uplink - likely don't have a valid item to host it.", "Mission Failed")
+
+/datum/antagonist/spy/proc/bounty_handler_vv()
+	if(!check_rights(R_ADMIN|R_DEBUG))
+		return
+
+	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
+	if(isnull(uplink))
+		tgui_alert(usr, "No spy uplink!", "Mission Failed")
+		return
+
+	usr.client?.debug_variables(uplink.handler)
 
 /datum/antagonist/spy/proc/auto_create_spy_uplink(mob/living/carbon/spy, give_backup = TRUE)
 	if(!iscarbon(spy))
