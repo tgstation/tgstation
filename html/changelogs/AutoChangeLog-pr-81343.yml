@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "SM cascade delam messages no longer display to clients not in game"
