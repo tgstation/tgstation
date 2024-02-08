@@ -197,9 +197,14 @@
  */
 /obj/machinery/brm/proc/toggle_auto_on(mob/user)
 	if(panel_open)
-		if(user)
-			balloon_alert(user, "close panel first!")
+		balloon_alert(user, "close panel first!")
 		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return
+	if(!is_operational || machine_stat && (BROKEN | NOPOWER))
+		return
+
 	toggled_on = ! toggled_on
 	if(toggled_on)
 		begin_processing()
@@ -241,7 +246,7 @@
 /obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1, new_batch = TRUE)
 	PRIVATE_PROC(TRUE)
 
-	if(!is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
+	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		return FALSE
 
 	//no more boulders

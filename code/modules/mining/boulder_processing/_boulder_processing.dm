@@ -140,7 +140,7 @@
 	SHOULD_BE_PURE(TRUE)
 
 	//machine not operational
-	if(!is_operational || machine_stat & (BROKEN | NOPOWER))
+	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		return FALSE
 
 	//not a valid boulder
@@ -310,7 +310,7 @@
 	return remove_boulder(chosen_boulder)
 
 /obj/machinery/bouldertech/process()
-	if(!anchored || !is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
+	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		return
 
 	var/boulders_found = FALSE
