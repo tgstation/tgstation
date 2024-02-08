@@ -1,16 +1,16 @@
 //Guardians
 
-/mob/living/simple_animal/hostile/guardian
+/mob/living/basic/guardian
 	tts_seed = "Earth"
 
-/mob/living/simple_animal/hostile/guardian/assassin
+/mob/living/basic/guardian/assassin
 	tts_seed = "Spy"
 
-/mob/living/simple_animal/hostile/guardian/lightning
+/mob/living/basic/guardian/lightning
 	tts_seed = "Archmage"
 
-/mob/living/simple_animal/hostile/guardian/protector
+/mob/living/basic/guardian/protector
 	tts_seed = "Caime"
 
-/mob/living/simple_animal/hostile/guardian/standard
+/mob/living/basic/guardian/standard
 	tts_seed = "Heavy"
