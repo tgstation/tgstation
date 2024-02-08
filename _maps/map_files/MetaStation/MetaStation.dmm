@@ -328,8 +328,7 @@
 /area/station/science/cytology)
 "agQ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Cargo Desk";
 	req_access = list("shipping")
 	},
@@ -553,10 +552,7 @@
 	},
 /obj/structure/table/wood/fancy/blue,
 /obj/effect/spawner/random/aimodule/neutral,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Core Modules";
 	req_access = list("captain")
 	},
@@ -604,8 +600,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "alI" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Bridge Deliveries";
 	req_access = list("command")
 	},
@@ -5590,9 +5585,7 @@
 /area/station/security/office)
 "bWS" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/door/window{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/machinery/camera/directional/west{
@@ -6820,7 +6813,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "cwX" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Command Desk";
 	req_access = list("command")
 	},
@@ -7730,9 +7723,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cQV" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -9022,8 +9013,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/window/left/directional/west{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Robotics Desk";
 	req_access = list("robotics")
 	},
@@ -10913,8 +10903,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 6
 	},
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Robotics Desk";
 	req_access = list("robotics")
 	},
@@ -11620,7 +11609,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "ekP" = (
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
 	id = "Cell 2";
 	name = "Cell 2"
 	},
@@ -12739,8 +12728,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "eGd" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "MiniSat Walkway Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12963,7 +12951,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "eLr" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -13436,10 +13424,7 @@
 /area/station/medical/medbay/central)
 "eVa" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Reception Window"
 	},
 /obj/item/paper,
@@ -13450,8 +13435,7 @@
 	id = "briglockdown";
 	name = "Warden Desk Shutters"
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Brig Control Desk";
 	req_access = list("armory")
 	},
@@ -14680,10 +14664,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/storage)
 "fpd" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "MiniSat Airlock Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15156,8 +15137,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "fBo" = (
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Magboot Storage";
 	pixel_x = -1;
 	req_access = list("eva")
@@ -16588,7 +16568,7 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "gey" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19752,8 +19732,7 @@
 	},
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/structure/table/wood/fancy/red,
-/obj/machinery/door/window/brigdoor/left/directional/south{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "High-Risk Modules";
 	req_access = list("captain")
 	},
@@ -19881,8 +19860,7 @@
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
-/obj/machinery/door/window/right/directional/east{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Pharmacy Desk";
 	req_access = list("medical")
 	},
@@ -20253,8 +20231,7 @@
 /area/station/medical/morgue)
 "hwe" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},
@@ -20404,10 +20381,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "hxW" = (
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 1;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Gas Ports"
 	},
 /obj/machinery/atmospherics/components/binary/pump{
@@ -20490,6 +20464,11 @@
 	},
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Tertiary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "hza" = (
@@ -20564,9 +20543,7 @@
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
-/obj/machinery/door/window/right/directional/south{
-	dir = 4
-	},
+/obj/machinery/door/window/right/directional/east,
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
@@ -22012,12 +21989,11 @@
 	},
 /area/station/service/chapel)
 "icb" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Justice Chamber";
 	req_access = list("armory")
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Justice Chamber";
 	req_access = list("armory")
 	},
@@ -22731,14 +22707,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iom" = (
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Infirmary"
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Infirmary"
 	},
 /turf/open/floor/iron/white,
 /area/station/security/medical)
@@ -22996,10 +22969,7 @@
 	dir = 8;
 	id = "garbage"
 	},
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 1;
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/north{
 	name = "Danger: Conveyor Access";
 	req_access = list("maint_tunnels")
 	},
@@ -23010,8 +22980,7 @@
 /area/station/engineering/atmos)
 "isX" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Engineering Desk";
 	req_access = list("engineering")
 	},
@@ -24018,8 +23987,7 @@
 /area/station/hallway/primary/central)
 "iKV" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Atmospherics Desk";
 	req_access = list("atmospherics")
 	},
@@ -26615,8 +26583,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "jzC" = (
-/obj/machinery/door/window/right/directional/north{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Animal Pen A"
 	},
 /turf/open/floor/grass,
@@ -26858,6 +26825,11 @@
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Secondary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "jEI" = (
@@ -27847,8 +27819,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "jUH" = (
-/obj/machinery/door/window/right/directional/east{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Fitness Ring"
 	},
 /obj/structure/window/spawner/directional/north,
@@ -27933,13 +27904,10 @@
 /area/station/service/chapel/office)
 "jVZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Outer Window"
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Security Desk";
 	req_access = list("security")
 	},
@@ -28240,8 +28208,7 @@
 /area/station/service/janitor)
 "kbR" = (
 /obj/structure/sign/poster/official/cleanliness/directional/east,
-/obj/machinery/door/window/right/directional/east{
-	dir = 1;
+/obj/machinery/door/window/right/directional/north{
 	name = "Hydroponics Delivery";
 	req_access = list("hydroponics")
 	},
@@ -28528,8 +28495,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "kho" = (
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Mass Driver";
 	req_access = list("chapel_office")
 	},
@@ -29495,8 +29461,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "kAp" = (
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Disposals Chute"
 	},
 /obj/machinery/disposal/delivery_chute{
@@ -29800,8 +29765,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "kGJ" = (
-/obj/machinery/door/window/right/directional/north{
-	dir = 4;
+/obj/machinery/door/window/right/directional/east{
 	name = "Research Delivery";
 	req_access = list("science")
 	},
@@ -31836,8 +31800,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/paper,
-/obj/machinery/door/window/left/directional/east{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Hydroponics Window";
 	req_access = list("hydroponics")
 	},
@@ -31931,9 +31894,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Shooting Range"
 	},
 /turf/open/floor/iron,
@@ -31947,8 +31908,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lvu" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Infirmary"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -32163,8 +32123,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "lAH" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Research Director Observation";
 	req_access = list("rd")
 	},
@@ -32518,10 +32477,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lLw" = (
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 2;
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/south{
 	name = "Shower"
 	},
 /obj/machinery/shower/directional/south,
@@ -32785,8 +32741,7 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "lPt" = (
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Jetpack Storage";
 	pixel_x = -1;
 	req_access = list("eva")
@@ -33659,8 +33614,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/door/window/right/directional/west{
-	dir = 4;
+/obj/machinery/door/window/right/directional/east{
 	name = "Crate to Shuttle";
 	req_access = list("shipping")
 	},
@@ -35435,8 +35389,7 @@
 	id = "rndlab2";
 	name = "Secondary Research and Development Shutter"
 	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Research Lab Desk";
 	req_access = list("science")
 	},
@@ -35633,14 +35586,10 @@
 /area/station/science/xenobiology)
 "mMM" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Outer Window"
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Brig Control Desk";
 	req_access = list("armory")
 	},
@@ -35737,8 +35686,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "mPF" = (
-/obj/machinery/door/window/right/directional/south{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Surgical Supplies";
 	req_access = list("surgery")
 	},
@@ -35903,12 +35851,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "mRY" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Mass Driver";
 	req_access = list("maint_tunnels")
 	},
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Mass Driver";
 	req_access = list("maint_tunnels")
 	},
@@ -36633,7 +36580,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "neO" = (
-/obj/machinery/door/window/brigdoor/security/holding{
+/obj/machinery/door/window/brigdoor/security/holding/left/directional/south{
 	id = "Holding Cell";
 	name = "Holding Cell"
 	},
@@ -36880,7 +36827,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "njP" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Captain's Desk";
 	req_access = list("captain")
 	},
@@ -37631,8 +37578,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "nwl" = (
-/obj/machinery/door/window/right/directional/south{
-	dir = 1;
+/obj/machinery/door/window/right/directional/north{
 	name = "Medical Deliveries";
 	req_access = list("medical")
 	},
@@ -37662,13 +37608,10 @@
 /area/station/engineering/atmos/pumproom)
 "nwL" = (
 /obj/machinery/computer/upload/ai,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
-	layer = 3.1;
+/obj/machinery/door/window/right/directional/south{
 	name = "Upload Console Window";
-	req_access = list("ai_upload")
+	req_access = list("ai_upload");
+	layer = 3.1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -40465,8 +40408,7 @@
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "oxk" = (
-/obj/machinery/door/window/right/directional/south{
-	dir = 4;
+/obj/machinery/door/window/right/directional/east{
 	name = "Engineering Deliveries";
 	req_access = list("engineering")
 	},
@@ -40642,8 +40584,7 @@
 "oBM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/west{
-	dir = 4;
+/obj/machinery/door/window/right/directional/east{
 	name = "Hydroponics Desk";
 	req_access = list("hydroponics")
 	},
@@ -44109,8 +44050,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Crate Security Door";
 	req_access = list("shipping")
 	},
@@ -44248,9 +44188,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "pQu" = (
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/east{
 	name = "Danger: Conveyor Access";
 	req_access = list("maint_tunnels")
 	},
@@ -45002,17 +44940,13 @@
 	pixel_x = 3;
 	pixel_y = -23
 	},
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	name = "Primary AI Core Access";
-	req_access = list("ai_upload")
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Primary AI Core Access";
+	req_access = list("ai_upload")
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "qeZ" = (
@@ -45985,7 +45919,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "qyt" = (
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
 	id = "Cell 3";
 	name = "Cell 3"
 	},
@@ -46598,9 +46532,7 @@
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 4
-	},
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
@@ -46652,8 +46584,7 @@
 	location = "Disposals"
 	},
 /obj/structure/plasticflaps,
-/obj/machinery/door/window/right/directional/north{
-	dir = 2;
+/obj/machinery/door/window/right/directional/south{
 	name = "Delivery Door";
 	req_access = list("cargo")
 	},
@@ -49306,8 +49237,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "rEg" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Captain's Bedroom";
 	req_access = list("captain")
 	},
@@ -49995,8 +49925,7 @@
 	id = "rdgene2";
 	name = "Genetics Lab Shutters"
 	},
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Genetics Desk";
 	req_access = list("genetics")
 	},
@@ -50295,8 +50224,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "rVG" = (
-/obj/machinery/door/window/left/directional/east{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Service Deliveries";
 	req_access = list("service")
 	},
@@ -50342,7 +50270,7 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "rWH" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "HoP's Desk";
 	req_access = list("hop")
 	},
@@ -51038,8 +50966,7 @@
 /area/station/medical/storage)
 "sje" = (
 /obj/structure/plasticflaps/opaque,
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "MuleBot Access";
 	req_access = list("shipping")
 	},
@@ -51188,9 +51115,7 @@
 /area/station/medical/surgery/theatre)
 "snu" = (
 /obj/structure/table/wood,
-/obj/machinery/door/window{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Captain's Desk";
 	req_access = list("captain")
 	},
@@ -52088,7 +52013,7 @@
 /turf/open/floor/plating,
 /area/station/security/warden)
 "sDT" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Secure Art Exhibition";
 	req_access = list("library")
 	},
@@ -52501,16 +52426,6 @@
 	name = "Private Channel";
 	pixel_x = 8
 	},
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	pixel_x = -3;
-	req_access = list("ai_upload")
-	},
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
 "sLU" = (
@@ -52558,7 +52473,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "sMB" = (
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
 	id = "Cell 1";
 	name = "Cell 1"
 	},
@@ -54300,8 +54215,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "tqx" = (
-/obj/machinery/door/window/left/directional/south{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Mass Driver Control Door";
 	req_access = list("ordnance")
 	},
@@ -55159,16 +55073,12 @@
 /area/station/medical/virology)
 "tIv" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 1;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/north{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Reception Window"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -55914,11 +55824,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "tUF" = (
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
@@ -55976,12 +55882,6 @@
 /obj/machinery/disposal/delivery_chute{
 	dir = 4
 	},
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	layer = 3
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -55991,6 +55891,9 @@
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
+/obj/machinery/door/window/right/directional/east{
+	layer = 3
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "tVt" = (
@@ -56760,10 +56663,7 @@
 /area/station/command/heads_quarters/rd)
 "uhW" = (
 /obj/structure/cable,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Theater Stage"
 	},
 /turf/open/floor/carpet,
@@ -57988,8 +57888,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "uFq" = (
-/obj/machinery/door/window/left/directional/south{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Mass Driver Door";
 	req_access = list("ordnance")
 	},
@@ -58761,8 +58660,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "uRJ" = (
-/obj/machinery/door/window/right/directional/west{
-	dir = 1;
+/obj/machinery/door/window/right/directional/north{
 	name = "Atmospherics Access";
 	req_access = list("atmospherics")
 	},
@@ -59047,8 +58945,7 @@
 /area/station/engineering/atmospherics_engine)
 "uWA" = (
 /obj/structure/table/wood/fancy/royalblue,
-/obj/machinery/door/window{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Secure Art Exhibition";
 	req_access = list("library")
 	},
@@ -59173,8 +59070,7 @@
 /area/station/command/heads_quarters/captain/private)
 "uYm" = (
 /obj/machinery/meter,
-/obj/machinery/door/window/left/directional/west{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Gas Ports"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -59489,8 +59385,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/treatment_center)
 "vfh" = (
-/obj/machinery/door/window/right/directional/north{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Research Test Chamber";
 	req_access = list("science")
 	},
@@ -59561,8 +59456,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "vgW" = (
-/obj/machinery/door/window{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "MiniSat Airlock Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59674,8 +59568,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "viF" = (
 /obj/machinery/computer/upload/borg,
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	layer = 3.1;
 	name = "Cyborg Upload Console Window";
 	req_access = list("ai_upload")
@@ -60965,8 +60858,7 @@
 /area/station/maintenance/port/aft)
 "vEi" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/east{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Kitchen Window";
 	req_access = list("kitchen")
 	},
@@ -61167,7 +61059,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "vGx" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Arrivals Security Checkpoint";
 	pixel_y = -8;
 	req_access = list("security")
@@ -61688,10 +61580,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "vPX" = (
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Security Delivery";
 	req_access = list("security")
 	},
@@ -62489,13 +62378,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "wcL" = (
-/obj/machinery/door/window/right/directional/north{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Library Desk Door";
-	pixel_x = 3;
-	req_access = list("library")
+	req_access = list("library");
+	pixel_x = 3
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -63052,7 +62938,7 @@
 /area/station/engineering/atmos/storage/gas)
 "wnT" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/machinery/camera/directional/east{
@@ -63122,9 +63008,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "woV" = (
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "woY" = (
@@ -64714,8 +64598,7 @@
 "wSI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Hydroponics Desk";
 	req_access = list("hydroponics")
 	},
@@ -64739,8 +64622,7 @@
 /area/station/cargo/storage)
 "wTp" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Weapon Distribution";
 	req_access = list("armory")
 	},
@@ -65001,8 +64883,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "wYi" = (
-/obj/machinery/door/window/right/directional/south{
-	dir = 1;
+/obj/machinery/door/window/right/directional/north{
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},
@@ -65601,16 +65482,6 @@
 	listening = 0;
 	name = "Private Channel";
 	pixel_x = -8
-	},
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	pixel_x = 4;
-	req_access = list("ai_upload")
 	},
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
@@ -66308,8 +66179,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xwS" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Monkey Pen";
 	req_access = list("genetics")
 	},
@@ -66481,8 +66351,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "xyI" = (
-/obj/machinery/door/window/left/directional/south{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Animal Pen B"
 	},
 /turf/open/floor/grass,
@@ -66589,10 +66458,7 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "xAt" = (
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Fitness Ring"
 	},
 /obj/structure/window/spawner/directional/south,
@@ -68413,8 +68279,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Crate Security Door";
 	req_access = list("shipping")
 	},
@@ -68548,8 +68413,7 @@
 /area/station/maintenance/port/fore)
 "ykR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/window/right/directional/south{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Jim Norton's Quebecois Coffee";
 	req_one_access = list("service","maint_tunnels")
 	},
@@ -68572,8 +68436,7 @@
 /area/station/hallway/primary/central)
 "ylf" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},

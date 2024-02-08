@@ -125,3 +125,69 @@
   SyncIt21:
   - bugfix: deleting objects with local material storage(autolathe, drone dispenser
       etc) no longer drops sheets, they only drop materials when deconstructed
+2024-02-08:
+  ArcaneMusic:
+  - bugfix: Icebox should have it's ore distribution and it's ore vents fixed, so
+      that vents should now produce ore.
+  - spellcheck: Boulder processing machines now don't mention things they don't do.
+  Higgin:
+  - bugfix: removed ability to buckle megafauna, constructs, blob minions, dragons,
+      and slimes.
+  IndieanaJones:
+  - bugfix: Regenerative Materia blobs can no longer drug non-carbons.
+  - bugfix: Alien Hunter's pounce ability no longer has any weird offset issues once
+      the pounce is completed.
+  - bugfix: Xenomorphs now have legcuffs applied to them properly.
+  Jacquerel:
+  - bugfix: Being consumed by the flesh of the necropolis while inside a cryo tube
+      will no longer convert the tube into a legion spawn point until the tube is
+      destroyed
+  JohnFulpWillard:
+  - rscadd: Paradox clones now have a bluespace stream instead of a syndicate poster
+      as their ghost poll icon.
+  - qol: Service personnel now show up in green in the crew monitor console.
+  - spellcheck: Mechs that have been renamed now are proper names, so are not described
+      as 'the' mech.
+  - bugfix: Science Xenos no longer turn the entire roundend report into bold letters.
+  Justice12354:
+  - qol: You no longer need to manually set the CC Commander's Headset to high-volume.
+  LemonInTheDark:
+  - rscadd: Ghost hair looks better now. Insert nerd shit about RGB vs HSL color space
+      here, go watch a youtube video or whatever.
+  Melbert:
+  - bugfix: The object overlay circuit component will no longer take things with it.
+  OrionTheFox:
+  - image: fixed some minor icon inconsistencies on the White Suit and Tan Suit
+  PapaMichael:
+  - bugfix: tramstation isolation cells now properly open on their timer.
+  Rhials:
+  - balance: Wallmounts now respect cameranets, and cannot be accessed from a view
+      of the adjacent wall.
+  SyncIt21:
+  - bugfix: reactions now compute purity of reagents based on their volume, meaning
+      larger amounts of reagents created will have more significant effects on the
+      final purity of the solution
+  - bugfix: Instant reactions yield reagent results again
+  ViktorKoL:
+  - bugfix: smoothed out a few asymmetries in the heretic research tree
+  - bugfix: ash mark now properly lowers the cooldown of mansus grasp when triggered
+  Zargoar:
+  - rscadd: 'Adds in the Red Mons, The Wizard, The Rune and MOTHS-MOTHS-MOTHS bar
+      signs from the bar sign contest.
+
+      Congratulations to the winners!'
+  - image: Adds in the Red Mons, The Wizard, The Rune and MOTHS-MOTHS-MOTHS bar signs
+      from the bar sign contest.
+  cnleth:
+  - balance: RD and QM coats can hold telebatons now
+  - qol: Quartermaster's coat can hold items that a normal jacket can hold, such as
+      small oxygen tanks
+  dragomagol:
+  - bugfix: blood brothers should now properly succeed in converting non-targets
+  mc-oofert:
+  - bugfix: you may no longer reset autolathe drop direction at times when you shouldnt
+      be able to
+  - bugfix: you may no longer altclick unanchored toiletbongs from any range in any
+      condition to rotate them
+  optimumtact, whomst didn't write this CL entry.:
+  - bugfix: Fixed the colorful lights of the ethereal disco ball.

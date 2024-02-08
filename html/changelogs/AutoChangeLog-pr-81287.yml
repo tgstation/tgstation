@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "removed ability to buckle megafauna, constructs, blob minions, dragons, and slimes."
