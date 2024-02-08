@@ -14,7 +14,7 @@
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
 	melee_attack_cooldown = CLICK_CD_MELEE
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	unsuitable_cold_damage = 4
@@ -36,6 +36,8 @@
 	var/poison_type = /datum/reagent/toxin/hunterspider
 	/// How much of a reagent the mob injects on attack
 	var/poison_per_bite = 0
+	/// How tough is our bite?
+	var/bite_injection_flags = NONE
 	/// Multiplier to apply to web laying speed. Fractional numbers make it faster, because it's a multiplier.
 	var/web_speed = 1
 	/// Type of webbing ability to learn.
@@ -57,7 +59,7 @@
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 1.5)
 
 	if(poison_per_bite)
-		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
+		AddElement(/datum/element/venomous, poison_type, poison_per_bite, injection_flags = bite_injection_flags)
 
 	var/datum/action/cooldown/mob_cooldown/lay_web/webbing = new web_type(src)
 	webbing.webbing_time *= web_speed

@@ -22,7 +22,7 @@
 		LAZYSET(cached_eaten_lights, morsel, TRUE)
 		RegisterSignal(morsel, COMSIG_QDELETING, PROC_REF(deref_eaten_light))
 
-/datum/component/light_eater/Destroy(force, silent)
+/datum/component/light_eater/Destroy(force)
 	for(var/light in eaten_lights)
 		var/atom/eaten_light = light
 		eaten_light.RemoveElement(/datum/element/light_eaten)

@@ -59,7 +59,8 @@
 	C.RemoveElement(/datum/element/human_biter)
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(check_holidays(MONKEYDAY))
+	// STOP ADDING MONKEY SUBTYPES YOU HEATHEN
+	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
 
@@ -166,11 +167,11 @@
 	build_all_button_icons()
 
 
-/obj/item/organ/internal/brain/primate/on_insert(mob/living/carbon/primate)
+/obj/item/organ/internal/brain/primate/on_mob_insert(mob/living/carbon/primate)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
-/obj/item/organ/internal/brain/primate/on_remove(mob/living/carbon/primate)
+/obj/item/organ/internal/brain/primate/on_mob_remove(mob/living/carbon/primate)
 	. = ..()
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
 
@@ -207,14 +208,6 @@
 		TRAIT_NOBLOOD,
 		TRAIT_NOHUNGER,
 		TRAIT_VENTCRAWLER_NUDE,
-	)
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

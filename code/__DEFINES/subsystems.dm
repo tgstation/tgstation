@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 25
+#define DB_MINOR_VERSION 26
 
 
 //! ## Timing subsystem
@@ -224,6 +224,7 @@
 #define FIRE_PRIORITY_MOBS 100
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
+#define FIRE_PRIORITY_SINGULO 350
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
@@ -240,10 +241,10 @@
 
 // SS runlevels
 
-#define RUNLEVEL_LOBBY 1
-#define RUNLEVEL_SETUP 2
-#define RUNLEVEL_GAME 4
-#define RUNLEVEL_POSTGAME 8
+#define RUNLEVEL_LOBBY (1<<0)
+#define RUNLEVEL_SETUP (1<<1)
+#define RUNLEVEL_GAME (1<<2)
+#define RUNLEVEL_POSTGAME (1<<3)
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
@@ -333,3 +334,10 @@
 #define VOTE_COUNT_METHOD_SINGLE 1
 /// Approval voting. Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_MULTI 2
+
+/// The choice with the most votes wins. Ties are broken by the first choice to reach that number of votes.
+#define VOTE_WINNER_METHOD_SIMPLE "Simple"
+/// The winning choice is selected randomly based on the number of votes each choice has.
+#define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
+/// There is no winner for this vote.
+#define VOTE_WINNER_METHOD_NONE "None"

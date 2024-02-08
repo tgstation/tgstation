@@ -33,7 +33,6 @@
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
@@ -44,7 +43,7 @@
 	)
 	charge = new(src)
 	charge.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, charge)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
@@ -69,7 +68,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
 	. = ..()
-	if(!isliving(target) || !isbasicmob(source))
+	if(!isbasicmob(source) || !isliving(target))
 		return
 	var/mob/living/basic/basic_source = source
 	var/mob/living/living_target = target

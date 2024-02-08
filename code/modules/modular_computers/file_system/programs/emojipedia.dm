@@ -2,8 +2,8 @@
 /datum/computer_file/program/emojipedia
 	filename = "emojipedia"
 	filedesc = "EmojiPedia"
-	category = PROGRAM_CATEGORY_CREW // we want everyone to be able to access this application, since everyone can send emoji via PDA messages
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_DEVICE // we want everyone to be able to access this application, since everyone can send emoji via PDA messages
+	program_open_overlay = "generic"
 	extended_desc = "This program allows you to view all the emojis you can send via PDA messages."
 	size = 3
 	tgui_id = "NtosEmojipedia"

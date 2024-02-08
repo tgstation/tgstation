@@ -54,6 +54,7 @@
 	name = "Bountiful bounties"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "It seems collectors in this system are extra keen to on bounties, and will pay more to see their completion."
 
@@ -68,47 +69,14 @@
 	report_message = "Prices are low in this system, BUY BUY BUY!"
 	blacklist = list(/datum/station_trait/distant_supply_lines)
 
-
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8
-
-/datum/station_trait/scarves
-	name = "Scarves"
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 5
-	show_in_report = TRUE
-	var/list/scarves
-
-/datum/station_trait/scarves/New()
-	. = ..()
-	report_message = pick(
-		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
-		"After Space Fashion Week, scarves are the hot new accessory.",
-		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
-		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
-		"You all get free scarves. Don't ask why.",
-		"A shipment of scarves was delivered to the station.",
-	)
-	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
-		/obj/item/clothing/neck/large_scarf/red,
-		/obj/item/clothing/neck/large_scarf/green,
-		/obj/item/clothing/neck/large_scarf/blue,
-	)
-
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
-
-
-/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
-	SIGNAL_HANDLER
-	var/scarf_type = pick(scarves)
-
-	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
-
 
 /datum/station_trait/filled_maint
 	name = "Filled up maintenance"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenace areas."
 	blacklist = list(/datum/station_trait/empty_maint)
@@ -133,7 +101,7 @@
 	name = "deathrattled department"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/deathrattle_department
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
 	var/department_to_apply_to
@@ -161,49 +129,42 @@
 
 /datum/station_trait/deathrattle_department/service
 	name = "Deathrattled Service"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
 	name = "Deathrattled Cargo"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
 	name = "Deathrattled Engineering"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
 	name = "Deathrattled Command"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
 	name = "Deathrattled Science"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
 	name = "Deathrattled Security"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
 	name = "Deathrattled Medical"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
@@ -216,13 +177,11 @@
 	report_message = "All members of the station have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	var/datum/deathrattle_group/deathrattle_group
 
-
 /datum/station_trait/deathrattle_all/New()
 	. = ..()
 	deathrattle_group = new("station group")
 	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
-
 
 /datum/station_trait/deathrattle_all/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
@@ -230,46 +189,6 @@
 	var/obj/item/implant/deathrattle/implant_to_give = new()
 	deathrattle_group.register(implant_to_give)
 	implant_to_give.implant(spawned, spawned, TRUE, TRUE)
-
-
-/datum/station_trait/wallets
-	name = "Wallets!"
-	trait_type = STATION_TRAIT_POSITIVE
-	show_in_report = TRUE
-	weight = 10
-	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
-
-/datum/station_trait/wallets/New()
-	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
-
-/datum/station_trait/wallets/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
-	SIGNAL_HANDLER
-
-	var/obj/item/card/id/advanced/id_card = living_mob.get_item_by_slot(ITEM_SLOT_ID)
-	if(!istype(id_card))
-		return
-
-	living_mob.temporarilyRemoveItemFromInventory(id_card, force=TRUE)
-
-	// "Doc, what's wrong with me?"
-	var/obj/item/storage/wallet/wallet = new(src)
-	// "You've got a wallet embedded in your chest."
-	wallet.add_fingerprint(living_mob, ignoregloves = TRUE)
-
-	living_mob.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial=TRUE)
-
-	id_card.forceMove(wallet)
-
-	var/holochip_amount = id_card.registered_account.account_balance
-	new /obj/item/holochip(wallet, holochip_amount)
-	id_card.registered_account.adjust_money(-holochip_amount, "System: Withdrawal")
-
-	new /obj/effect/spawner/random/entertainment/wallet_storage(wallet)
-
-	// Put our filthy fingerprints all over the contents
-	for(var/obj/item/item in wallet)
-		item.add_fingerprint(living_mob, ignoregloves = TRUE)
 
 /datum/station_trait/cybernetic_revolution
 	name = "Cybernetic Revolution"
@@ -334,7 +253,7 @@
 			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
-	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+	cybernetic.Insert(spawned, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/station_trait/luxury_escape_pods
 	name = "Luxury Escape Pods"
@@ -349,13 +268,14 @@
 	name = "Advanced Medbots"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Your station's medibots have recieved a hardware upgrade, enabling expanded healing capabilities."
+	report_message = "Your station's medibots have received a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
 
 /datum/station_trait/random_event_weight_modifier/shuttle_loans
 	name = "Loaner Shuttle"
-	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to recieve more shuttle loan opportunities, with slightly higher payouts."
+	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to receive more shuttle loan opportunities, with slightly higher payouts."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	event_control_path = /datum/round_event_control/shuttle_loan
@@ -385,6 +305,7 @@
 	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet/on_round_start()
@@ -418,6 +339,16 @@
 	assignment = "Repair Technician"
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_ASSISTANT_GRAY
+
+/// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
+/datum/station_trait/assistant_gimmicks
+	name = "Geared Assistants Pilot"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipments help improve productivity!"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 3
+	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
+	show_in_report = TRUE
+	blacklist = list(/datum/station_trait/colored_assistants)
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX

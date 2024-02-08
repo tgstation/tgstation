@@ -23,9 +23,11 @@
 #define COMSIG_MOVABLE_DRIFT_BLOCK_INPUT "movable_drift_block_input"
 	#define DRIFT_ALLOW_INPUT (1<<0)
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
-#define COMSIG_MOVABLE_IMPACT "movable_impact"
+#define COMSIG_MOVABLE_PRE_IMPACT "movable_pre_impact"
 	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits
 	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1) //return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
+///from base of atom/movable/throw_impact() after confirming a hit: (/atom/hit_atom, /datum/thrownthing/throwingdatum)
+#define COMSIG_MOVABLE_IMPACT "movable_impact"
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
 ///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
@@ -47,13 +49,17 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
+///called before hearing a message from atom/movable/Hear():
+#define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
+	///cancel hearing the message because we're doing something else presumably
+	#define COMSIG_MOVABLE_CANCEL_HEARING (1<<0)
 ///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
-	//#define HEARING_MESSAGE 1 - (I'm pretty sure this is never really used and can be gutted)
+	#define HEARING_MESSAGE 1
 	#define HEARING_SPEAKER 2
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
-	//#define HEARING_RADIO_FREQ 5
+	#define HEARING_RADIO_FREQ 5
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
 	#define HEARING_RANGE 8

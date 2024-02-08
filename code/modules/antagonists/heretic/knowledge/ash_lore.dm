@@ -72,7 +72,6 @@
 	name = "Ashen Passage"
 	desc = "Grants you Ashen Passage, a silent but short range jaunt."
 	gain_text = "He knew how to walk between the planes."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
 		/datum/heretic_knowledge/summon/fire_shark,
@@ -85,8 +84,9 @@
 /datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
 	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
-		Damage dealt is decreased with each transfer."
+		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to a nearby heathen. \
+		Damage dealt is decreased with each transfer. \
+		Triggering the mark will also greatly reduce the cooldown of your Mansus Grasp."
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
@@ -102,7 +102,7 @@
 	// Also refunds 75% of charge!
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
 	if(grasp)
-		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
+		grasp.next_use_time -= round(grasp.cooldown_time*0.75)
 		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
@@ -127,7 +127,6 @@
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
@@ -166,7 +165,6 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
@@ -212,7 +210,12 @@
 
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
 	circle_spell.Grant(user)

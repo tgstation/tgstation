@@ -32,7 +32,7 @@
 		html = msg,
 		confidential = TRUE)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Asay") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Asay")
 
 /client/proc/get_admin_say()
 	var/msg = input(src, null, "asay \"text\"") as text|null

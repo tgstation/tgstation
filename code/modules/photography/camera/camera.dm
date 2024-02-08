@@ -16,7 +16,7 @@
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_NECK
 	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 2
@@ -120,6 +120,9 @@
 		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
+			return FALSE
+	else if(isliving(loc))
+		if(!(get_turf(target) in view(world.view, loc)))
 			return FALSE
 	else //user is an atom or null
 		if(!(get_turf(target) in view(world.view, user || src)))
@@ -241,27 +244,30 @@
 		printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	if(!user)
-		return
 	pictures_left--
 	var/obj/item/photo/new_photo = new(get_turf(src), picture)
-	if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
-		to_chat(user, span_notice("[pictures_left] photos left."))
+	if(user)
+		if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
+			to_chat(user, span_notice("[pictures_left] photos left."))
 
-	if(can_customise)
-		var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
-		if(customise == "Yes")
-			var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-			var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-			var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
-			if(name1)
-				picture.picture_name = name1
-			if(desc1)
-				picture.picture_desc = "[desc1] - [picture.picture_desc]"
-			if(caption)
-				picture.caption = caption
-		else if(default_picture_name)
-			picture.picture_name = default_picture_name
+		if(can_customise)
+			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			if(customise == "Yes")
+				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				if(name1)
+					picture.picture_name = name1
+				if(desc1)
+					picture.picture_desc = "[desc1] - [picture.picture_desc]"
+				if(caption)
+					picture.caption = caption
+			else if(default_picture_name)
+				picture.picture_name = default_picture_name
+	else if(isliving(loc))
+		var/mob/living/holder = loc
+		if(holder.put_in_hands(new_photo))
+			to_chat(holder, span_notice("[pictures_left] photos left."))
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
@@ -327,6 +333,6 @@
 			return
 	if(!camera.can_target(target))
 		return
-	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_y  - 1, camera.picture_size_y - 1)
+	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_x  - 1, camera.picture_size_y - 1)
 
 #undef CAMERA_PICTURE_SIZE_HARD_LIMIT

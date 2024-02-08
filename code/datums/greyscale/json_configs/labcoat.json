@@ -17,6 +17,12 @@
 			"icon_state": "shoulder",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "back",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
 		}
 	],
 	"labcoat_job_t": [
@@ -37,6 +43,12 @@
 			"icon_state": "shoulder",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "back_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
 		}
 	]
 }

@@ -68,7 +68,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "p" = (
-/obj/structure/material_stand,
+/obj/structure/ore_container/material_stand,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "q" = (

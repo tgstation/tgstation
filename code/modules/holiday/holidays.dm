@@ -27,6 +27,8 @@
 	var/poster_icon = "holiday_unfinished"
 	/// Color scheme for this holiday
 	var/list/holiday_colors
+	/// The default pattern of the holiday, if the requested pattern is null.
+	var/holiday_pattern = PATTERN_DEFAULT
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -78,7 +80,7 @@
 	return FALSE
 
 /// Procs to return holiday themed colors for recoloring atoms
-/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = holiday_pattern)
 	if(!holiday_colors)
 		return
 	switch(pattern)
@@ -87,7 +89,7 @@
 		if(PATTERN_VERTICAL_STRIPE)
 			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
 
-/proc/request_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+/proc/request_holiday_colors(atom/thing_to_color, pattern)
 	switch(pattern)
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
@@ -98,7 +100,9 @@
 		return
 	for(var/holiday_key in GLOB.holidays)
 		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
-		return holiday_real.get_holiday_colors(thing_to_color, pattern)
+		if(!holiday_real.holiday_colors)
+			continue
+		return holiday_real.get_holiday_colors(thing_to_color, pattern || holiday_real.holiday_pattern)
 
 // The actual holidays
 
@@ -132,6 +136,12 @@
 	timezones = list(TIMEZONE_NZDT, TIMEZONE_CHADT)
 	begin_day = 6
 	begin_month = FEBRUARY
+	holiday_colors = list(
+		COLOR_UNION_JACK_BLUE,
+		COLOR_WHITE,
+		COLOR_UNION_JACK_RED,
+		COLOR_WHITE,
+	)
 
 /datum/holiday/nz/getStationPrefix()
 	return pick("Aotearoa","Kiwi","Fish 'n' Chips","Kākāpō","Southern Cross")
@@ -222,6 +232,12 @@
 	begin_day = 17
 	begin_month = MARCH
 	holiday_hat = /obj/item/clothing/head/soft/green
+	holiday_colors = list(
+		COLOR_IRISH_GREEN,
+		COLOR_WHITE,
+		COLOR_IRISH_ORANGE,
+	)
+	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
@@ -264,6 +280,11 @@
 	begin_day = 20
 	begin_month = APRIL
 	holiday_hat = /obj/item/clothing/head/rasta
+	holiday_colors = list(
+		COLOR_ETHIOPIA_GREEN,
+		COLOR_ETHIOPIA_YELLOW,
+		COLOR_ETHIOPIA_RED,
+	)
 
 /datum/holiday/fourtwenty/getStationPrefix()
 	return pick("Snoop","Blunt","Toke","Dank","Cheech","Chong")
@@ -366,12 +387,12 @@
 	begin_day = 23
 	end_day = 29
 	holiday_colors = list(
-	COLOR_PRIDE_PURPLE,
-	COLOR_PRIDE_BLUE,
-	COLOR_PRIDE_GREEN,
-	COLOR_PRIDE_YELLOW,
-	COLOR_PRIDE_ORANGE,
-	COLOR_PRIDE_RED,
+		COLOR_PRIDE_PURPLE,
+		COLOR_PRIDE_BLUE,
+		COLOR_PRIDE_GREEN,
+		COLOR_PRIDE_YELLOW,
+		COLOR_PRIDE_ORANGE,
+		COLOR_PRIDE_RED,
 	)
 
 // JULY
@@ -398,6 +419,14 @@
 	begin_month = JULY
 	mail_holiday = TRUE
 	holiday_hat = /obj/item/clothing/head/cowboy/brown
+	holiday_colors = list(
+		COLOR_OLD_GLORY_BLUE,
+		COLOR_OLD_GLORY_RED,
+		COLOR_WHITE,
+		COLOR_OLD_GLORY_RED,
+		COLOR_WHITE,
+	)
+
 
 /datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
@@ -414,9 +443,15 @@
 	begin_month = JULY
 	holiday_hat = /obj/item/clothing/head/beret
 	mail_holiday = TRUE
+	holiday_colors = list(
+		COLOR_FRENCH_BLUE,
+		COLOR_WHITE,
+		COLOR_FRENCH_RED
+	)
+	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
 /datum/holiday/france/getStationPrefix()
-	return pick("Francais","Fromage", "Zut", "Merde")
+	return pick("Francais", "Fromage", "Zut", "Merde", "Sacrebleu")
 
 /datum/holiday/france/greet()
 	return "Do you hear the people sing?"
@@ -463,6 +498,7 @@
 	name = "Independence Day of Ukraine"
 	begin_month = AUGUST
 	begin_day = 24
+	holiday_colors = list(COLOR_TRUE_BLUE, COLOR_TANGERINE_YELLOW)
 
 /datum/holiday/ukraine/getStationPrefix()
 	return pick("Kyiv", "Ukraine")
@@ -483,7 +519,7 @@
 	return pick("Tizira", "Lizard", "Imperial")
 
 /datum/holiday/ianbirthday
-	name = "Ian's Birthday" //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
+	name = IAN_HOLIDAY //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
 	begin_month = SEPTEMBER
 	begin_day = 9
 	end_day = 10
@@ -576,6 +612,11 @@
 	begin_day = 6
 	begin_month = NOVEMBER
 	end_day = 7
+	holiday_colors = list(
+		COLOR_MEDIUM_DARK_RED,
+		COLOR_GOLD,
+		COLOR_MEDIUM_DARK_RED,
+	)
 
 /datum/holiday/october_revolution/getStationPrefix()
 	return pick("Communist", "Soviet", "Bolshevik", "Socialist", "Red", "Workers'")
@@ -585,6 +626,9 @@
 	begin_month = NOVEMBER
 	begin_day = 11
 	holiday_hat = /obj/item/food/grown/poppy
+
+/datum/holiday/remembrance_day/greet()
+	return "Lest we forget."
 
 /datum/holiday/remembrance_day/getStationPrefix()
 	return pick("Peace", "Armistice", "Poppy")
@@ -662,6 +706,10 @@
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
+	holiday_colors = list(
+		COLOR_CHRISTMAS_GREEN,
+		COLOR_CHRISTMAS_RED,
+	)
 
 /datum/holiday/xmas/getStationPrefix()
 	return pick(
@@ -794,9 +842,9 @@
 	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/toy/xmas_cracker = 3,
 			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/a_gift/anything = 1
+			/obj/item/gift/anything = 1,
+			/obj/item/toy/xmas_cracker = 3,
 		) = maint_holiday_weight,
 	)
 

@@ -16,7 +16,6 @@
 	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "bud0"
 	layer = SPACEVINE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	opacity = FALSE
 	canSmoothWith = null
 	smoothing_flags = NONE
@@ -135,7 +134,6 @@
 	health_doll_icon = "venus_human_trap"
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	health = 100
 	maxHealth = 100
 	obj_damage = 60
@@ -165,7 +163,7 @@
 	melee_attack_cooldown = 1.2 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/human_trap
 	///how much damage we take out of weeds
-	var/no_weed_damage = 20
+	var/no_weed_damage = 12.5
 	///how much do we heal in weeds
 	var/weed_heal = 10
 	///if the balloon alert was shown atleast once, reset after healing in weeds
@@ -175,14 +173,14 @@
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
 	var/static/list/innate_actions = list(
-		/datum/action/cooldown/vine_tangle = BB_TARGETTED_ACTION,
+		/datum/action/cooldown/vine_tangle = BB_TARGETED_ACTION,
 	)
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)
 		return
-	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETED_ACTION]
 	if(!istype(tangle_ability))
 		return
 	tangle_ability.Trigger(target = victim)
@@ -255,7 +253,7 @@
 
 /datum/ai_controller/basic_controller/human_trap
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

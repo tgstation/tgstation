@@ -40,7 +40,7 @@
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/minebot,
+		/datum/pet_command/point_targeting/attack/minebot,
 	)
 
 /mob/living/basic/mining_drone/Initialize(mapload)
@@ -118,10 +118,8 @@
 	return ..()
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-
-	if(. || user.combat_mode)
-		return
+	if(user.combat_mode)
+		return ..()
 	set_combat_mode(!combat_mode)
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 

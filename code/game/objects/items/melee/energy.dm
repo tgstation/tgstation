@@ -150,7 +150,7 @@
 	armour_penetration = 100
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 
 	active_force = 150
@@ -194,6 +194,10 @@
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return FALSE
+
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance -= 25 //OH GOD GET IT OFF ME
+
 	return ..()
 
 /obj/item/melee/energy/sword/cyborg

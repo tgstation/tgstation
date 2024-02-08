@@ -101,9 +101,6 @@
 
 /obj/machinery/telecomms/message_server/Initialize(mapload)
 	. = ..()
-	if (!decryptkey)
-		decryptkey = generate_key()
-
 	if (calibrating)
 		calibrating += world.time
 		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
@@ -121,17 +118,6 @@
 	. = ..()
 	if(calibrating)
 		. += span_warning("It's still calibrating.")
-
-/**
- * Handles generating a key for the message server, returning it. Doesn't assign
- * it in this proc, you have to do so yourself.
- */
-/obj/machinery/telecomms/message_server/proc/generate_key()
-	var/generated_key
-	generated_key += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
-	generated_key += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
-	generated_key += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-	return generated_key
 
 /obj/machinery/telecomms/message_server/process()
 	. = ..()
@@ -172,9 +158,24 @@
 	id = "Messaging Server"
 	network = "tcommsat"
 	autolinkers = list("messaging")
-	decryptkey = null //random
 	calibrating = 0
 
+GLOBAL_VAR(preset_station_message_server_key)
+
+/obj/machinery/telecomms/message_server/preset/Initialize(mapload)
+	. = ..()
+	// Just in case there are multiple preset messageservers somehow once the CE arrives,
+	// we want those on the station to share the same preset default decrypt key shown in his memories.
+	var/is_on_station = is_station_level(z)
+	if(is_on_station && GLOB.preset_station_message_server_key)
+		decryptkey = GLOB.preset_station_message_server_key
+		return
+	//Generate a random password for the message server
+	decryptkey = pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
+	decryptkey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
+	decryptkey += "[rand(0, 9)]"
+	if(is_on_station)
+		GLOB.preset_station_message_server_key = decryptkey
 
 // Root messaging signal datum
 /datum/signal/subspace/messaging

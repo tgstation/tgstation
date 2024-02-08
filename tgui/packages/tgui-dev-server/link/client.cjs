@@ -31,11 +31,9 @@ const ensureConnection = () => {
       };
     }
   }
-};
 
-if (process.env.NODE_ENV !== 'production') {
   window.onunload = () => socket && socket.close();
-}
+};
 
 const subscribe = (fn) => subscribers.push(fn);
 
@@ -136,38 +134,38 @@ const sendLogEntry = (level, ns, ...args) => {
 
 const setupHotReloading = () => {
   if (
-    // prettier-ignore
-    process.env.NODE_ENV !== 'production'
-      && process.env.WEBPACK_HMR_ENABLED
-      && window.WebSocket
+    process.env.NODE_ENV === 'production' ||
+    !process.env.WEBPACK_HMR_ENABLED ||
+    !window.WebSocket
   ) {
-    if (module.hot) {
-      ensureConnection();
-      sendLogEntry(0, null, 'setting up hot reloading');
-      subscribe((msg) => {
-        const { type } = msg;
-        sendLogEntry(0, null, 'received', type);
-        if (type === 'hotUpdate') {
-          const status = module.hot.status();
-          if (status !== 'idle') {
-            sendLogEntry(0, null, 'hot reload status:', status);
-            return;
-          }
-          module.hot
-            .check({
-              ignoreUnaccepted: true,
-              ignoreDeclined: true,
-              ignoreErrored: true,
-            })
-            .then((modules) => {
-              sendLogEntry(0, null, 'outdated modules', modules);
-            })
-            .catch((err) => {
-              sendLogEntry(0, null, 'reload error', err);
-            });
+    return;
+  }
+  if (module.hot) {
+    ensureConnection();
+    sendLogEntry(0, null, 'setting up hot reloading');
+    subscribe((msg) => {
+      const { type } = msg;
+      sendLogEntry(0, null, 'received', type);
+      if (type === 'hotUpdate') {
+        const status = module.hot.status();
+        if (status !== 'idle') {
+          sendLogEntry(0, null, 'hot reload status:', status);
+          return;
         }
-      });
-    }
+        module.hot
+          .check({
+            ignoreUnaccepted: true,
+            ignoreDeclined: true,
+            ignoreErrored: true,
+          })
+          .then((modules) => {
+            sendLogEntry(0, null, 'outdated modules', modules);
+          })
+          .catch((err) => {
+            sendLogEntry(0, null, 'reload error', err);
+          });
+      }
+    });
   }
 };
 

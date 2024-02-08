@@ -1,3 +1,7 @@
+#define NO_ANSWER 0
+#define POSITIVE_ANSWER 1
+#define NEGATIVE_ANSWER 2
+
 /datum/round_event_control/pirates
 	name = "Space Pirates"
 	typepath = /datum/round_event/pirates
@@ -11,7 +15,7 @@
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()
-	if (!SSmapping.is_planetary())
+	if (SSmapping.is_planetary())
 		return EVENT_CANT_RUN
 	return ..()
 
@@ -46,6 +50,9 @@
 		return
 	if(!threat?.answered)
 		return
+	if(threat.answered == NEGATIVE_ANSWER)
+		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		return
 
 	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(plundered_account)
@@ -59,7 +66,7 @@
 	if(chosen_gang.paid_off)
 		return
 
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", ROLE_TRAITOR)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", check_jobban = ROLE_TRAITOR, pic_source = /obj/item/claymore/cutlass, role_name_text = "pirate crew")
 	shuffle_inplace(candidates)
 
 	var/template_key = "pirate_[chosen_gang.ship_template_id]"
@@ -74,15 +81,23 @@
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 
-	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in A)
+	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate
-				notify_ghosts("The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Pirates!")
+				notify_ghosts(
+					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
+					source = spawned_mob,
+					header = "Pirates!",
+				)
 			else
-				notify_ghosts("The [chosen_gang.ship_name] has an object of interest: [spawner]!", source = spawner, action = NOTIFY_ORBIT, header="Pirate Spawn Here!")
+				notify_ghosts(
+					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
+					source = spawner,
+					header = "Pirate Spawn Here!",
+				)
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
@@ -98,3 +113,7 @@
 		event.gang_list = GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs
 	else
 		event.gang_list = list(new chosen)
+
+#undef NO_ANSWER
+#undef POSITIVE_ANSWER
+#undef NEGATIVE_ANSWER

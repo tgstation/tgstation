@@ -155,3 +155,25 @@
 
 /datum/preference/name/bible/create_default_value()
 	return DEFAULT_BIBLE
+
+/// The first name given to nuclear operative antagonists. The last name will be chosen by the team leader.
+/datum/preference/name/operative_alias
+	savefile_key = "operative_alias"
+	allow_numbers = TRUE //You can get a little wacky with your alias nobody will judge you
+	explanation = "Operative Alias"
+	group = "antagonists"
+
+/datum/preference/name/operative_alias/create_default_value()
+	return pick(GLOB.operative_aliases)
+
+/datum/preference/name/operative_alias/is_accessible(datum/preferences/preferences)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	// If one of the roles is ticked in the antag prefs menu, this option will show.
+	var/static/list/ops_roles = list(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE, ROLE_OPERATIVE_MIDROUND, ROLE_CLOWN_OPERATIVE)
+	if(length(ops_roles & preferences.be_special))
+		return TRUE
+
+	return FALSE

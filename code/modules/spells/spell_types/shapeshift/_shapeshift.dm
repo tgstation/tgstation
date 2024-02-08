@@ -128,7 +128,7 @@
 			new gib_type(get_turf(possible_vent))
 			playsound(possible_vent, 'sound/effects/reee.ogg', 75, TRUE)
 
-	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "Central Command")
+	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "[command_name()]")
 	// Gib our caster, and make sure to leave nothing behind
 	// (If we leave something behind, it'll drop on the turf of the pipe, which is kinda wrong.)
 	cast_on.investigate_log("has been gibbed by shapeshifting while ventcrawling.", INVESTIGATE_DEATHS)

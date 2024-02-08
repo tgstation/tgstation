@@ -34,7 +34,7 @@
 	var/datum/port/output/entity
 
 /obj/item/circuit_component/controller/populate_ports()
-	entity = add_output_port("User", PORT_TYPE_ATOM)
+	entity = add_output_port("User", PORT_TYPE_USER)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 	alt = add_output_port("Alternate Signal", PORT_TYPE_SIGNAL)
 	right = add_output_port("Extra Signal", PORT_TYPE_SIGNAL)
@@ -51,6 +51,12 @@
 		COMSIG_CLICK_ALT,
 	))
 
+/obj/item/circuit_component/controller/proc/handle_trigger(atom/source, user, port_name, datum/port/output/port_signal)
+	source.balloon_alert(user, "clicked [port_name] button")
+	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	entity.set_output(user)
+	port_signal.set_output(COMPONENT_SIGNAL)
+
 /**
  * Called when the shell item is used in hand
  */
@@ -58,10 +64,7 @@
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
 		return
-	source.balloon_alert(user, "clicked primary button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
-	entity.set_output(user)
-	signal.set_output(COMPONENT_SIGNAL)
+	handle_trigger(source, user, "primary", signal)
 
 /**
  * Called when the shell item is alt-clicked
@@ -70,10 +73,8 @@
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
 		return
-	source.balloon_alert(user, "clicked alternate button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
-	entity.set_output(user)
-	alt.set_output(COMPONENT_SIGNAL)
+	handle_trigger(source, user, "alternate", alt)
+
 
 /**
  * Called when the shell item is right-clicked in active hand
@@ -82,7 +83,4 @@
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
 		return
-	source.balloon_alert(user, "clicked extra button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
-	entity.set_output(user)
-	right.set_output(COMPONENT_SIGNAL)
+	handle_trigger(source, user, "extra", right)

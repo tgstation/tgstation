@@ -45,7 +45,7 @@
 		kv[key] = value
 	qdel(Query)
 
-	for(var/award_type in sortTim(subtypesof(/datum/award), GLOBAL_PROC_REF(cmp_award_priority)))
+	for(var/award_type in subtypesof(/datum/award))
 		var/datum/award/award = SSachievements.awards[award_type]
 		if(!award || !award.name) //Skip abstract achievements types
 			continue
@@ -116,7 +116,7 @@
 			"icon_class" = assets.icon_class_name(award.icon),
 			"value" = data[achievement_type],
 			)
-		award_data += award.get_ui_data()
+		award_data += award.get_ui_data(user.ckey)
 		.["achievements"] += list(award_data)
 
 	for(var/score in SSachievements.scores)

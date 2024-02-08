@@ -1,8 +1,10 @@
-import { Window } from '../layouts';
 import { BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
@@ -27,8 +29,8 @@ type Design = {
   icon: string;
 };
 
-export const MatterItem = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const MatterItem = (props) => {
+  const { data } = useBackend<Data>();
   const { matterLeft } = data;
   return (
     <LabeledList.Item label="Units Left">
@@ -37,8 +39,8 @@ export const MatterItem = (props, context) => {
   );
 };
 
-export const SiloItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SiloItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { silo_enabled } = data;
   return (
     <LabeledList.Item label="Silo Link">
@@ -52,8 +54,8 @@ export const SiloItem = (props, context) => {
   );
 };
 
-const CategoryItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CategoryItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { root_categories = [], selected_root } = data;
   return (
     <LabeledList.Item label="Category">
@@ -70,8 +72,8 @@ const CategoryItem = (props, context) => {
   );
 };
 
-export const InfoSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const InfoSection = (props) => {
+  const { data } = useBackend<Data>();
   const { silo_upgraded } = data;
 
   return (
@@ -85,26 +87,23 @@ export const InfoSection = (props, context) => {
   );
 };
 
-const DesignSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const DesignSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_design } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    context,
-    'categoryName',
-    selected_category
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -113,7 +112,6 @@ const DesignSection = (props, context) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           height="31px"
           color="transparent"
           selected={
@@ -125,7 +123,8 @@ const DesignSection = (props, context) => {
               category: shownCategory.cat_name,
               index: i + 1,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"
@@ -147,8 +146,8 @@ const DesignSection = (props, context) => {
   );
 };
 
-const ConfigureSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const ConfigureSection = (props) => {
+  const { data } = useBackend<Data>();
   const { selected_root } = data;
 
   return (
@@ -162,7 +161,7 @@ const ConfigureSection = (props, context) => {
   );
 };
 
-export const RapidConstructionDevice = (props, context) => {
+export const RapidConstructionDevice = (props) => {
   return (
     <Window width={450} height={590}>
       <Window.Content>

@@ -146,6 +146,13 @@
 	cost = 11
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
+/datum/uplink_item/role_restricted/rebarxbowsyndie
+	name = "Syndicate Rebar Crossbow"
+	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
+	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	cost = 10
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
@@ -355,10 +362,21 @@
 /datum/uplink_item/role_restricted/monkey_supplies
 	name = "Simian Agent Supplies"
 	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
-		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+		Monkeys can unpack this kit to receive a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
 	item = /obj/item/storage/toolbox/guncase/monkeycase
 	cost = 4
 	limited_stock = 3
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted = TRUE
+	refundable = FALSE
+
+
+/datum/uplink_item/role_restricted/reticence
+	name = "Reticence Cloaked Assasination exosuit"
+	desc = "A silent, fast, and nigh-invisible but exceptionally fragile miming exosuit! \
+	fully equipped with a near-silenced pistol, and a RCD for your best assasination needs, Does not include tools, No refunds."
+	item = /obj/vehicle/sealed/mecha/reticence/loaded
+	cost = 20
+	restricted_roles = list(JOB_MIME)
 	restricted = TRUE
 	refundable = FALSE

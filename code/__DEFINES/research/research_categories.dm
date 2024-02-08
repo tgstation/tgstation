@@ -126,6 +126,7 @@
 #define RND_SUBCATEGORY_EXOSUIT_BOARDS_SAVANNAH_IVANOV "/Savannah-Ivanov"
 
 #define RND_CATEGORY_MECHFAB_RIPLEY "/Ripley"
+#define RND_CATEGORY_MECHFAB_PADDY "/Paddy"
 #define RND_CATEGORY_MECHFAB_ODYSSEUS "/Odysseus"
 #define RND_CATEGORY_MECHFAB_GYGAX "/Gygax"
 #define RND_CATEGORY_MECHFAB_DURAND "/Durand"
@@ -186,6 +187,7 @@
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS "/Cybernetic Implanting Tools"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY "/Cybernetic Utility Implants"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC "/Cybernetic Miscellaneous Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS "/Cybernetic Advanced Limbs"
 
 // Limb Categories
 #define RND_CATEGORY_LIMBS_DIGITIGRADE "digitigrade"

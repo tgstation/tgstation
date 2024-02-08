@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - refactor: "Shades now use the basic mob framework. Please report any bugs."

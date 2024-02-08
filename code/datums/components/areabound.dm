@@ -26,6 +26,6 @@
 		AM.forceMove(reset_turf)
 		moving = FALSE
 
-/datum/component/areabound/Destroy(force, silent)
+/datum/component/areabound/Destroy(force)
 	QDEL_NULL(move_tracker)
 	. = ..()

@@ -19,6 +19,11 @@
 		//we can reach it and it's in front of us? grab it!
 		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc))
 			ore.forceMove(ore_box)
+	for(var/obj/item/boulder/boulder in range(1, src))
+		//As above, but for boulders
+		if(boulder.Adjacent(src) && ((get_dir(src, boulder) & dir) || boulder.loc == loc))
+			boulder.forceMove(ore_box)
+
 
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
@@ -48,6 +53,11 @@
 		step_silent = TRUE
 		return TRUE
 	return FALSE
+
+///Called when the driver turns with the movement lock key
+/obj/vehicle/sealed/mecha/proc/on_turn(mob/living/driver, direction)
+	SIGNAL_HANDLER
+	return COMSIG_IGNORE_MOVEMENT_LOCK
 
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
 	. = TRUE
@@ -121,11 +131,11 @@
 				break
 
 	//if we're not facing the way we're going rotate us
-	if(dir != direction && !strafe || forcerotate || keyheld)
+	if(dir != direction && (!strafe || forcerotate || keyheld))
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
-		if(!pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
+		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
 			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))

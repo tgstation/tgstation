@@ -59,7 +59,7 @@
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
 	COOLDOWN_DECLARE(light_step_cooldown)
-	/// Has the jaunter recently recieved a warning about light?
+	/// Has the jaunter recently received a warning about light?
 	var/light_alert_given = FALSE
 
 /obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
@@ -125,7 +125,7 @@
 	return light_turf.get_lumcount() > light_max // jaunt ends on TRUE
 
 /**
- * Checks if the user should recieve a warning that they're moving into light.
+ * Checks if the user should receive a warning that they're moving into light.
  *
  * Checks the cooldown for the warning message on moving into the light.
  * If the message has been displayed, and the cooldown (delay period) is complete, returns TRUE.

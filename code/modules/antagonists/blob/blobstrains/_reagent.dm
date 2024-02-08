@@ -11,9 +11,13 @@
 	reagent.expose_mob(L, VAPOR, BLOB_REAGENTATK_VOL, TRUE, mob_protection, overmind)
 	send_message(L)
 
-/datum/blobstrain/reagent/blobbernaut_attack(mob/living/L)
-	var/mob_protection = L.getarmor(null, BIO) * 0.01
-	reagent.expose_mob(L, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+/datum/blobstrain/reagent/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
+	if(!isliving(attacking))
+		return
+
+	var/mob/living/living_attacking = attacking
+	var/mob_protection = living_attacking.getarmor(null, BIO) * 0.01
+	reagent.expose_mob(living_attacking, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /datum/blobstrain/reagent/on_sporedeath(mob/living/basic/spore)
 	var/burst_range = (spore.type == /mob/living/basic/blob_minion/spore) ? 1 : 0

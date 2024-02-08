@@ -18,7 +18,6 @@
 	harm_intent_damage = 0 //Punching elites gets you nowhere
 	stat_attack = HARD_CRIT
 	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	sentience_type = SENTIENCE_BOSS
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
@@ -188,7 +187,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
-			var/list/candidates = poll_candidates_for_mob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, src, POLL_IGNORE_LAVALAND_ELITE)
+			var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a lavaland elite?", check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, target_mob = src, ignore_category = POLL_IGNORE_LAVALAND_ELITE, pic_source = src, role_name_text = "lavaland elite")
 			if(candidates.len)
 				audible_message(span_boldwarning("The stirring sounds increase in volume!"))
 				elitemind = pick(candidates)
@@ -212,7 +211,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
-		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
+		notify_ghosts(
+			"\A [mychild] has been awakened in \the [get_area(src)]!",
+			source = mychild,
+			header = "Lavaland Elite awakened",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
 	RegisterSignal(mychild, COMSIG_QDELETING, PROC_REF(onEliteLoss))
@@ -226,7 +230,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
-		notify_ghosts("\A [mychild] has been challenged in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite challenged")
+		notify_ghosts(
+			"\A [mychild] has been challenged in \the [get_area(src)]!",
+			source = mychild,
+			header = "Lavaland Elite challenged",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 	mychild.log_message("has been challenged by [key_name(activator)]!", LOG_GAME, color="#960000")
 
 /obj/structure/elite_tumor/Initialize(mapload)

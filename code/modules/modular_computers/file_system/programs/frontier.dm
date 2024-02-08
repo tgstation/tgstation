@@ -1,14 +1,14 @@
 /datum/computer_file/program/scipaper_program
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
-	category = PROGRAM_CATEGORY_SCI
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "Scientific paper publication and navigation software."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 12
-	program_icon_state = "research"
+	program_open_overlay = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
-	transfer_access = list(ACCESS_ORDNANCE)
+	download_access = list(ACCESS_ORDNANCE)
 
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.
@@ -65,9 +65,9 @@
 		singular_partner["path"] = partner.type
 		singular_partner["boostedNodes"] = list()
 		singular_partner["acceptedExperiments"] = list()
-		for (var/node_id in partner.boosted_nodes)
+		for (var/node_id in partner.boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
-			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boosted_nodes[node_id], "id"=node_id))
+			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boostable_nodes[node_id], "id" = node_id))
 		for (var/datum/experiment/ordnance/ordnance_experiment as anything in partner.accepted_experiments)
 			singular_partner["acceptedExperiments"] += initial(ordnance_experiment.name)
 		parsed_partners += list(singular_partner)
@@ -154,7 +154,7 @@
 				data["purchaseableBoosts"][partner.type] = list()
 				for(var/node_id in linked_techweb.get_available_nodes())
 					// Not from our partner
-					if(!(node_id in partner.boosted_nodes))
+					if(!(node_id in partner.boostable_nodes))
 						continue
 					if(!partner.allowed_to_boost(linked_techweb, node_id))
 						continue
@@ -162,6 +162,7 @@
 	return data
 
 /datum/computer_file/program/scipaper_program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("et_alia")
 			paper_to_be.et_alia = !paper_to_be.et_alia

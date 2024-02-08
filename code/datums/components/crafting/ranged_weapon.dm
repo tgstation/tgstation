@@ -19,8 +19,8 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/reciever
-	name = "Modular Rifle Reciever"
+/datum/crafting_recipe/receiver
+	name = "Modular Rifle Receiver"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(
@@ -140,22 +140,6 @@
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
-/datum/crafting_recipe/decloner
-	name = "Biological Demolecularisor"
-	result = /obj/item/gun/energy/decloner
-	reqs = list(
-		/obj/item/gun/energy/laser = 1,
-		/obj/item/weaponcrafting/gunkit/decloner = 1,
-		/datum/reagent/baldium = 30,
-		/datum/reagent/toxin/mutagen = 4,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/decloner/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/laser)
-
 /datum/crafting_recipe/teslacannon
 	name = "Tesla Cannon"
 	result = /obj/item/gun/energy/tesla_cannon
@@ -204,6 +188,36 @@
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/rebarxbow
+	name = "Heated Rebar Crossbow"
+	result = /obj/item/gun/ballistic/rifle/rebarxbow
+	reqs = list(
+		/obj/item/stack/rods = 6,
+		/obj/item/stack/cable_coil = 12,
+		/obj/item/inducer =  1,
+	)
+	blacklist = list(
+		/obj/item/inducer/sci,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/rebarxbowforced
+	name = "Forced Rebar Crossbow"
+	desc = "Get an extra shot in your crossbow... for a chance of shooting yourself when you fire it."
+	result = /obj/item/gun/ballistic/rifle/rebarxbow/forced
+	reqs = list(
+		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
+	)
+	blacklist = list(
+	/obj/item/gun/ballistic/rifle/rebarxbow/forced,
+	/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+	)
+	tool_behaviors = list(TOOL_CROWBAR)
+	time = 1 SECONDS
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/pipegun_prime

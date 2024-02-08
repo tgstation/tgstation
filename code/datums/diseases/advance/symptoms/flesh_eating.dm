@@ -94,7 +94,6 @@ Bonus
 	symptom_delay_min = 3
 	symptom_delay_max = 6
 	var/chems = FALSE
-	var/zombie = FALSE
 	threshold_descs = list(
 		"Stage Speed 7" = "Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.",
 		"Stealth 5" = "The symptom remains hidden until active.",
@@ -128,6 +127,4 @@ Bonus
 	M.take_overall_damage(brute = get_damage, required_bodytype = BODYTYPE_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
-	if(zombie)
-		M.reagents.add_reagent(/datum/reagent/romerol, 1)
 	return 1

@@ -10,6 +10,9 @@
 #define NUKE_RESULT_HIJACK_DISK 9
 #define NUKE_RESULT_HIJACK_NO_DISK 10
 
+/// Min players requireed for nukes to declare war
+#define CHALLENGE_MIN_PLAYERS 50
+
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
 #define FUGITIVE_RESULT_POSTMORTEM_HUNTER 1
@@ -80,7 +83,8 @@
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
 #define PATH_COSMIC "Cosmic Path"
-#define PATH_KNOCK "Knock Path"
+#define PATH_LOCK "Lock Path"
+#define PATH_MOON "Moon Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -219,8 +223,10 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 /// Check if the given mob is a heretic monster.
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-/// Checks if the given mob is either a heretic or a heretic monster.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob))
+/// Check if the given mob is a  lunatic
+#define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
@@ -317,8 +323,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_ASHWALKERS "Ash Walkers"
 #define ANTAG_GROUP_BIOHAZARDS "Biohazards"
 #define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
-#define ANTAG_GROUP_CYBERAUTH "Cyber Authority"
 #define ANTAG_GROUP_ERT "Emergency Response Team"
+#define ANTAG_GROUP_GLITCH "Digital Anomalies"
 #define ANTAG_GROUP_HORRORS "Eldritch Horrors"
 #define ANTAG_GROUP_LEVIATHANS "Spaceborne Leviathans"
 #define ANTAG_GROUP_NINJAS "Ninja Clan"
@@ -330,6 +336,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
 #define ANTAG_GROUP_HUNTERS "Bounty Hunters"
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
+#define ANTAG_GROUP_CREW "Deviant Crew"
 
 
 // This flag disables certain checks that presume antagonist datums mean 'baddie'.

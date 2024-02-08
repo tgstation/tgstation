@@ -9,7 +9,7 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "skillchip"
 	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
@@ -106,7 +106,7 @@
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(QDELETED(holding_brain))
+	if(!holding_brain)
 		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 
@@ -497,5 +497,14 @@
 	skill_icon = "fish"
 	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
+
+/obj/item/skillchip/intj
+	name = "Integrated Intuitive Thinking and Judging skillchip"
+	auto_traits = list(TRAIT_REMOTE_TASTING)
+	skill_name = "Mental Flavour Calculus"
+	skill_description = "When examining food, you can experience the flavours just as well as if you were eating it."
+	skill_icon = FA_ICON_DRUMSTICK_BITE
+	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
+	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
 
 #undef SKILLCHIP_CATEGORY_GENERAL

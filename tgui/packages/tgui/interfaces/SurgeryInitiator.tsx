@@ -1,7 +1,8 @@
 import { sortBy } from 'common/collections';
 import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'common/keycodes';
 import { BooleanLike } from 'common/react';
-import { Component } from 'inferno';
+import { Component } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, KeyListener, Stack } from '../components';
 import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
@@ -50,7 +51,7 @@ class SurgeryInitiatorInner extends Component<
 
   findSelectedSurgeryAfter(after: number): number | undefined {
     const foundIndex = this.props.surgeries.findIndex(
-      (surgery, index) => index > after && !surgery.blocked
+      (surgery, index) => index > after && !surgery.blocked,
     );
 
     return foundIndex === -1 ? undefined : foundIndex;
@@ -68,7 +69,7 @@ class SurgeryInitiatorInner extends Component<
   }
 
   render() {
-    const { act } = useBackend<SurgeryInitiatorData>(this.context);
+    const { act } = useBackend<SurgeryInitiatorData>();
     const { selected_zone, surgeries, target_name } = this.props;
 
     return (
@@ -97,7 +98,8 @@ class SurgeryInitiatorInner extends Component<
                       surgery.blocked ? 'Their body is covered!' : undefined
                     }
                     key={surgery.name}
-                    fluid>
+                    fluid
+                  >
                     {surgery.name}
                   </Button>
                 ))}
@@ -116,7 +118,7 @@ class SurgeryInitiatorInner extends Component<
                     return {
                       selectedSurgeryIndex:
                         this.findSelectedSurgeryAfter(
-                          state.selectedSurgeryIndex
+                          state.selectedSurgeryIndex,
                         ) ||
                         this.findSelectedSurgeryAfter(-1) ||
                         0,
@@ -129,10 +131,10 @@ class SurgeryInitiatorInner extends Component<
                     return {
                       selectedSurgeryIndex:
                         this.findSelectedSurgeryBefore(
-                          state.selectedSurgeryIndex - 1
+                          state.selectedSurgeryIndex - 1,
                         ) ??
                         this.findSelectedSurgeryBefore(
-                          this.props.surgeries.length - 1
+                          this.props.surgeries.length - 1,
                         ) ??
                         0,
                     };
@@ -156,8 +158,8 @@ class SurgeryInitiatorInner extends Component<
   }
 }
 
-export const SurgeryInitiator = (props, context) => {
-  const { data } = useBackend<SurgeryInitiatorData>(context);
+export const SurgeryInitiator = (props) => {
+  const { data } = useBackend<SurgeryInitiatorData>();
 
   return (
     <SurgeryInitiatorInner

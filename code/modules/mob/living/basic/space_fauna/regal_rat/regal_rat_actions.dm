@@ -6,6 +6,7 @@
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+	click_to_activate = FALSE
 	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -41,6 +42,7 @@
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+	click_to_activate = FALSE
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
@@ -56,7 +58,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/mouse
+		/datum/pet_command/point_targeting/attack/mouse
 	)
 	/// Commands you can give to glockroaches
 	var/static/list/glockroach_commands = list(
@@ -64,7 +66,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner/glockroach,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/glockroach
+		/datum/pet_command/point_targeting/attack/glockroach
 	)
 
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
@@ -193,7 +195,7 @@
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/mouse
+/datum/pet_command/point_targeting/attack/mouse
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
 	pointed_reaction = "and squeaks aggressively"
@@ -201,7 +203,7 @@
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/glockroach
+/datum/pet_command/point_targeting/attack/glockroach
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!"
 	pointed_reaction = "and cocks its gun"

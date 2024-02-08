@@ -60,6 +60,8 @@
 	return can_change_cable_layer
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+
 	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
 		return
 
@@ -69,7 +71,7 @@
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
 	balloon_alert(user, "now operating on the [choice]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return multitool_act(user, tool)
@@ -141,17 +143,17 @@
  * - Amount: How much power the APC's cell is to be costed.
  */
 /obj/machinery/proc/directly_use_power(amount)
-	var/area/A = get_area(src)
-	var/obj/machinery/power/apc/local_apc
-	if(!A)
+	var/area/my_area = get_area(src)
+	if(isnull(my_area))
+		stack_trace("machinery is somehow not in an area, nullspace?")
 		return FALSE
-	local_apc = A.apc
-	if(!local_apc)
+	if(!my_area.requires_power)
+		return TRUE
+
+	var/obj/machinery/power/apc/my_apc = my_area.apc
+	if(isnull(my_apc))
 		return FALSE
-	if(!local_apc.cell)
-		return FALSE
-	local_apc.cell.use(amount)
-	return TRUE
+	return my_apc.cell.use(amount)
 
 /**
  * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger

@@ -56,3 +56,4 @@
 		/datum/action/cooldown/mob_cooldown/devour = BB_BILEWORM_DEVOUR,
 		/datum/action/cooldown/mob_cooldown/resurface = BB_BILEWORM_RESURFACE,
 	)
+	grant_actions_by_list(other_innate_actions)

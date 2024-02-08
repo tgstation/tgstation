@@ -34,7 +34,6 @@
 		if(locate(/obj/machinery/power/apc) in get_turf(user))
 			var/obj/machinery/power/apc/mounted_apc = locate(/obj/machinery/power/apc) in get_turf(user)
 			mounted_apc.attackby(src, user)
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		T.attackby(src, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
+	return ITEM_INTERACT_SUCCESS

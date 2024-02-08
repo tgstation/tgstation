@@ -2,7 +2,6 @@
 /mob/living/basic/trooper/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
-	speed = 1.1
 	faction = list(ROLE_SYNDICATE)
 	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatesoldier
@@ -121,6 +120,8 @@
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
 	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /mob/living/basic/trooper/syndicate/ranged/infiltrator //shuttle loan event
 	projectilesound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
@@ -190,7 +191,6 @@
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
-	speed = 1
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/trooper/syndicate/ranged/shotgun/space/Initialize(mapload)

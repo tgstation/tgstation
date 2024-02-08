@@ -216,7 +216,7 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
-/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	var/turf/approx = get_turf(fisherman) //todo pass the parent
 	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
@@ -277,7 +277,7 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
 
-/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	if(!istype(get_area(fisherman), /area/station/holodeck))
 		return "You need to be inside the Holodeck to catch holographic fish."
@@ -310,3 +310,63 @@
 		/obj/item/fish/mastodon = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+
+#define RANDOM_SEED "Random seed"
+
+/datum/fish_source/hydro_tray
+	catalog_description = "Hydroponics trays"
+	fish_table = list(
+		FISHING_DUD = 25,
+		/obj/item/food/grown/grass = 25,
+		RANDOM_SEED = 16,
+		/obj/item/seeds/grass = 6,
+		/obj/item/seeds/random = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
+	)
+	fish_counts = list(
+		/obj/item/food/grown/grass = 10,
+		/obj/item/seeds/grass = 4,
+		RANDOM_SEED = 4,
+		/obj/item/seeds/random = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 10
+
+/datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	if(!istype(parent, /obj/machinery/hydroponics/constructable))
+		return ..()
+
+	var/obj/machinery/hydroponics/constructable/basin = parent
+	if(basin.waterlevel <= 0)
+		return "There's no water in [parent] to fish in."
+	if(basin.myseed)
+		return "There's a plant growing in [parent]."
+
+	return ..()
+
+/datum/fish_source/hydro_tray/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+	if(reward_path != RANDOM_SEED)
+		var/mob/living/created_reward = ..()
+		if(istype(created_reward))
+			created_reward.name = "small [created_reward.name]"
+			created_reward.update_transform(0.75)
+		return created_reward
+
+	var/static/list/seeds_to_draw_from
+	if(isnull(seeds_to_draw_from))
+		seeds_to_draw_from = subtypesof(/obj/item/seeds)
+		// These two are already covered innately
+		seeds_to_draw_from -= /obj/item/seeds/random
+		seeds_to_draw_from -= /obj/item/seeds/grass
+		// -1 yield are unharvestable plants so we don't care
+		// 20 rarirty is where most of the wacky plants are so let's ignore them
+		for(var/obj/item/seeds/seed_path as anything in seeds_to_draw_from)
+			if(initial(seed_path.yield) == -1 || initial(seed_path.rarity) >= PLANT_MODERATELY_RARE)
+				seeds_to_draw_from -= seed_path
+
+	var/picked_path = pick(seeds_to_draw_from)
+	return new picked_path(get_turf(fishing_spot))
+
+#undef RANDOM_SEED

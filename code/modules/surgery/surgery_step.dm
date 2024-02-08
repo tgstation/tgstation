@@ -23,7 +23,9 @@
 		if(!tool)
 			success = TRUE
 		if(iscyborg(user))
-			success = TRUE
+			var/mob/living/silicon/robot/borg = user
+			if(istype(borg.module_active, /obj/item/borg/cyborghug))
+				success = TRUE
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
@@ -63,7 +65,7 @@
 
 	return FALSE
 
-#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
+#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2.5 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 ///Modifier given to surgery speed for dissected bodies.
 #define SURGERY_SPEED_DISSECTION_MODIFIER 0.8
 ///Modifier given to users with TRAIT_MORBID on certain surgeries

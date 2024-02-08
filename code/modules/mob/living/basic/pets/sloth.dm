@@ -44,11 +44,12 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber)
 
-	if(!mapload || isnull(GLOB.cargo_sloth) || !is_station_level(z))
+	if(!mapload || !isnull(GLOB.cargo_sloth) || !is_station_level(z))
 		return
 
 	// If someone adds non-cargo sloths to maps we'll have a problem but we're fine for now
 	GLOB.cargo_sloth = src
+	GLOB.gorilla_start += get_turf(src)
 
 /mob/living/basic/sloth/Destroy()
 	if(GLOB.cargo_sloth == src)
@@ -75,8 +76,8 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 /// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

@@ -7,9 +7,9 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	name = "control wand"
-	desc = "Remotely controls airlocks."
+	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
@@ -73,8 +73,10 @@
 
 			if (airlock.locked)
 				airlock.unbolt()
+				log_combat(user, airlock, "unbolted", src)
 			else
 				airlock.bolt()
+				log_combat(user, airlock, "bolted", src)
 		if (WAND_EMERGENCY)
 			if (!istype(airlock))
 				target.balloon_alert(user, "only airlocks!")

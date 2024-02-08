@@ -23,7 +23,8 @@
  * Returns TRUE if the seed can take the gene, and FALSE otherwise.
  */
 /datum/plant_gene/proc/can_add(obj/item/seeds/our_seed)
-	return !istype(our_seed, /obj/item/seeds/sample) // Samples can't accept new genes.
+	SHOULD_CALL_PARENT(TRUE)
+	return TRUE
 
 /// Copies over vars and information about our current gene to a new gene and returns the new instance of gene.
 /datum/plant_gene/proc/Copy()
@@ -151,9 +152,8 @@
 	if(!.)
 		return FALSE
 
-	for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
-		if(istype(source_seed, found_seed))
-			return FALSE
+	if(is_type_in_list(source_seed, seed_blacklist))
+		return FALSE
 
 	for(var/datum/plant_gene/trait/trait in source_seed.genes)
 		if(trait_ids & trait.trait_ids)

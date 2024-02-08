@@ -33,7 +33,7 @@
 
 	food.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
-/datum/component/food_storage/Destroy(force, silent)
+/datum/component/food_storage/Destroy(force)
 	if(stored_item)
 		stored_item.forceMove(stored_item.drop_location())
 		stored_item.dropped()

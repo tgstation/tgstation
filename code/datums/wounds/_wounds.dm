@@ -16,11 +16,6 @@
 
 #define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
 
-// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
-#define TRAIT_WOUND_SCANNED "wound_scanned"
-// I dunno lol
-#define ANALYZER_TRAIT "analyzer_trait"
-
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
