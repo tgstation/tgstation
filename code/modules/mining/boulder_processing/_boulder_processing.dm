@@ -249,13 +249,13 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
-
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(panel_open)
 		balloon_alert(user, "close panel!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	var/obj/item/boulder/boulder = locate(/obj/item/boulder) in contents
 	if(!boulder)
 		balloon_alert_to_viewers("No boulders to remove!")

@@ -202,7 +202,7 @@
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
 		return
-	if(!is_operational || machine_stat && (BROKEN | NOPOWER))
+	if(!is_operational || machine_stat & (BROKEN | NOPOWER))
 		return
 
 	toggled_on = ! toggled_on
