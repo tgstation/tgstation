@@ -27,7 +27,7 @@
 	/// Our max print tier
 	var/max_part_tier = 1
 	/// time needed to produce a flatpacked machine
-	var/flatpack_time = 4 SECONDS
+	var/flatpack_time = 4.5 SECONDS
 
 /obj/machinery/flatpacker/Initialize(mapload)
 	var/static/list/materials_list = list(
