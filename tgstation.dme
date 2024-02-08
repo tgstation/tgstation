@@ -1113,6 +1113,7 @@
 #include "code\datums\components\manual_blinking.dm"
 #include "code\datums\components\manual_breathing.dm"
 #include "code\datums\components\manual_heart.dm"
+#include "code\datums\components\marionette.dm"
 #include "code\datums\components\mind_linker.dm"
 #include "code\datums\components\mirv.dm"
 #include "code\datums\components\mob_chain.dm"
