@@ -1,8 +1,8 @@
 import { Box, TextArea } from '../../../../components';
-import { FeatureValueProps, FeatureShortTextData } from './base';
+import { FeatureShortTextData, FeatureValueProps } from './base';
 
 export const FeatureTextInput = (
-  props: FeatureValueProps<string, string, FeatureShortTextData>
+  props: FeatureValueProps<string, string, FeatureShortTextData>,
 ) => {
   if (!props.serverData) {
     return <Box>Loading...</Box>;
