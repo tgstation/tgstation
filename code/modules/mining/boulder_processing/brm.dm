@@ -219,6 +219,7 @@
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	toggle_auto_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
