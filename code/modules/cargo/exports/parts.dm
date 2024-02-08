@@ -37,4 +37,5 @@
 /datum/export/refill_canister
 	cost = CARGO_CRATE_VALUE * 0.5 //If someone want to make this worth more as it empties, go ahead
 	unit_name = "vending refill canister"
+	message = "Thank you for restocking the station!"
 	export_types = list(/obj/item/vending_refill)

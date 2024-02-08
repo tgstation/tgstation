@@ -70,6 +70,7 @@
 #define PAYMENT_CLINICAL "clinical"
 #define PAYMENT_FRIENDLY "friendly"
 #define PAYMENT_ANGRY "angry"
+#define PAYMENT_VENDING "vending"
 
 #define MARKET_TREND_UPWARD 1
 #define MARKET_TREND_DOWNWARD -1

@@ -273,6 +273,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 	if(onstation && !onstation_override)
+		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
 
 /obj/machinery/vending/Destroy()
@@ -1226,13 +1227,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
 	var/obj/item/card/id/card_used
+	var/held_cash = 0
 	if(isliving(user))
 		var/mob/living/living_user = user
 		card_used = living_user.get_idcard(TRUE)
+		held_cash = living_user.tally_physical_credits()
 	if(card_used?.registered_account)
 		.["user"] = list()
 		.["user"]["name"] = card_used.registered_account.account_holder
-		.["user"]["cash"] = fetch_balance_to_use(card_used)
+		.["user"]["cash"] = fetch_balance_to_use(card_used) + held_cash
 		if(card_used.registered_account.account_job)
 			.["user"]["job"] = card_used.registered_account.account_job.title
 			.["user"]["department"] = card_used.registered_account.account_job.paycheck_department
@@ -1353,25 +1356,12 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vend_ready = TRUE
 		return
 	if(onstation)
+		// Here we do additional handing ahead of the payment component's logic, such as age restrictions and additional logging
 		var/obj/item/card/id/card_used
+		var/mob/living/living_user
 		if(isliving(usr))
-			var/mob/living/living_user = usr
+			living_user = usr
 			card_used = living_user.get_idcard(TRUE)
-		if(!card_used)
-			speak("No card found.")
-			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		else if (!card_used.registered_account)
-			speak("No account found.")
-			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		else if(!card_used.registered_account.account_job)
-			speak("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
-			flick(icon_deny, src)
-			vend_ready = TRUE
-			return
 		else if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(usr in GLOB.narcd_underages))
@@ -1385,7 +1375,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			vend_ready = TRUE
 			return
 
-		if(!proceed_payment(card_used, item_record, price_to_use))
+		if(!proceed_payment(card_used, item_record, price_to_use, living_user))
 			return
 
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
@@ -1431,7 +1421,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * product_to_vend - the product record of the item we're trying to vend
  * price_to_use - price of the item we're trying to vend
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use, mob/living/alive_user)
 	var/datum/bank_account/account = paying_id_card.registered_account
 	if(account.account_job && account.account_job.paycheck_department == payment_department)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
@@ -1439,7 +1429,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
-	if(price_to_use && !account.adjust_money(-price_to_use, "Vending: [product_to_vend.name]"))
+	if(price_to_use && attempt_charge(src, alive_user, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		vend_ready = TRUE
@@ -1447,7 +1437,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	//actual payment here
 	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
 	if(paying_id_account)
-		paying_id_account.adjust_money(price_to_use)
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
