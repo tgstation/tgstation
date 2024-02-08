@@ -1,9 +1,18 @@
+import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { ByondUi, Section, Stack } from '../components';
+import { Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { CharacterPreview } from './common/CharacterPreview';
 
-export const ExaminePanel = (props, context) => {
-  const { act, data } = useBackend(context);
+type Data = {
+  character_name: string;
+  obscured: BooleanLike;
+  assigned_map: string;
+  flavor_text: string;
+};
+
+export const ExaminePanel = (props) => {
+  const { act, data } = useBackend<Data>();
   const { character_name, obscured, assigned_map, flavor_text } = data;
   return (
     <Window title="Examine Panel" width={900} height={670} theme="admin">
@@ -12,15 +21,7 @@ export const ExaminePanel = (props, context) => {
           <Stack.Item width="30%">
             <Section fill title="Character Preview">
               {!obscured && (
-                <ByondUi
-                  height="100%"
-                  width="100%"
-                  className="ExaminePanel__map"
-                  params={{
-                    id: assigned_map,
-                    type: 'map',
-                  }}
-                />
+                <CharacterPreview id={assigned_map} height="100%" />
               )}
             </Section>
           </Stack.Item>
