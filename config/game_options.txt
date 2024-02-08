@@ -33,8 +33,8 @@ COMMENDATION_PERCENT_POLL 0.05
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1.5
-WALK_DELAY 4
+RUN_DELAY 2.5
+WALK_DELAY 5
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
@@ -44,8 +44,8 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
-MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
-MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
 
 ## NAMES ###
@@ -487,7 +487,7 @@ MICE_ROUNDSTART 10
 ROUNDSTART_TRAITS
 
 ## Uncomment to disable human moods.
-#DISABLE_HUMAN_MOOD
+DISABLE_HUMAN_MOOD
 
 ## Enable night shifts
 #ENABLE_NIGHT_SHIFTS
