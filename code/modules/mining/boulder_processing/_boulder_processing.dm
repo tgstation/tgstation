@@ -35,6 +35,7 @@
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT \
 	)
+
 	register_context()
 
 /obj/machinery/bouldertech/LateInitialize()
@@ -60,7 +61,11 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Boulder"
 		return
 
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(istype(held_item, /obj/item/boulder))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder"
+	else if(istype(held_item, /obj/item/card/id) && points_held > 0)
+		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
+	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "" : "Un"] Anchor"
@@ -71,11 +76,12 @@
 	. = ..()
 	. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
 	. += span_notice("Click to remove a stored boulder.")
+
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
 	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Processing power utp <b>[boulders_processing_power] steps</b> at a time.")
+	. += span_notice("Processing power upto <b>[boulders_processing_power] steps</b> at a time.")
 
 	if(anchored)
 		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")

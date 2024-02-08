@@ -36,15 +36,6 @@
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		boulders_held_max += bin.tier
 
-/obj/machinery/bouldertech/refinery/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(istype(held_item, /obj/item/boulder))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder"
-	if(istype(held_item, /obj/item/card/id) && points_held > 0)
-		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
-	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder"
-	return CONTEXTUAL_SCREENTIP_SET
-
 /**
  * Your other new favorite industrial waste magnet!
  * Accepts boulders and produces sheets of metalic materials.
