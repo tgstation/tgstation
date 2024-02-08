@@ -562,15 +562,26 @@ class ChatRenderer {
     });
   }
 
+  /**
+   * @clearChat
+   * @copyright 2023
+   * @author Cheffie
+   * @link https://github.com/CheffieGithub
+   * @license MIT
+   */
   clearChat() {
-    this.visibleMessages.forEach((message) => {
+    const messages = this.visibleMessages;
+    this.visibleMessages = [];
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
       this.rootNode.removeChild(message.node);
+      // Mark this message as pruned
       message.node = 'pruned';
-    });
+    }
+    // Remove pruned messages from the message array
     this.messages = this.messages.filter(
       (message) => message.node !== 'pruned',
     );
-    this.visibleMessages = [];
     logger.log(`Cleared chat`);
   }
 
