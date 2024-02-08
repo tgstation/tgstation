@@ -551,9 +551,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "Iu" = (
 /obj/structure/table,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Weapon Storage"
 	},
 /obj/item/gun/energy/laser,

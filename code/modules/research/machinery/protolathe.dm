@@ -23,4 +23,3 @@
 	desc = "Converts raw materials into useful objects. Its ancient construction may limit its ability to print all known technology."
 	circuit = /obj/item/circuitboard/machine/protolathe/offstation
 	allowed_buildtypes = AWAY_LATHE
-	charges_tax = FALSE

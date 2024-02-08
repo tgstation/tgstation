@@ -1928,8 +1928,7 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	layer = 3.2
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{

@@ -67,7 +67,7 @@
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -358,7 +358,7 @@
 		dropped_debris += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
 	return dropped_debris
 
-/obj/structure/window/proc/AfterRotation(mob/user, degrees)
+/obj/structure/window/proc/post_rotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)

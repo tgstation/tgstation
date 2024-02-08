@@ -71,8 +71,9 @@
  * @param potentialRuins A list of ruins to choose from.
  * @param clear_below Whether to clear the area below the ruin. Used for multiz ruins.
  * @param mineral_budget The budget to spend on ruins that spawn ore vents. Map templates with vents have that defined by mineral_cost.
+ * @param mineral_budget_update What type of ore distribution should spawn from ruins picked by this cave generator? This list is copied from ores_spawned.dm into SSore_generation.ore_vent_minerals.
  */
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -91,6 +92,12 @@
 
 	if(PERFORM_ALL_TESTS(log_mapping))
 		log_mapping("All ruins being loaded for map testing.")
+
+	switch(mineral_budget_update) //If we use more map configurations, add another case
+		if(OREGEN_PRESET_LAVALAND)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
+		if(OREGEN_PRESET_TRIPLE_Z)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_triple_z)
 
 	//Set up the starting ruin list
 	for(var/key in ruins)
