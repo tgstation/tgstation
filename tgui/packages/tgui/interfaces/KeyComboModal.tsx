@@ -91,7 +91,6 @@ export const KeyComboModal = (props) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
-
           if (!binding) {
             if (event.key === KEY.Enter) {
               act('submit', { entry: input });
@@ -121,18 +120,20 @@ export const KeyComboModal = (props) => {
             <Stack.Item grow>
               <Box color="label">{message}</Box>
             </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    disabled={binding}
-					content={binding && binding !== null ? "Awaiting input..." : ""+input}
-					width="100%"
-					textAlign="center"
-                    onClick={() => {
-                      setValue(init_value);
-                      setBinding(true);
-                    }}
-                  />
-                </Stack.Item>
+            <Stack.Item>
+              <Button
+                disabled={binding}
+                content={
+                  binding && binding !== null ? 'Awaiting input...' : '' + input
+                }
+                width="100%"
+                textAlign="center"
+                onClick={() => {
+                  setValue(init_value);
+                  setBinding(true);
+                }}
+              />
+            </Stack.Item>
             <Stack.Item>
               <InputButtons input={input} />
             </Stack.Item>
