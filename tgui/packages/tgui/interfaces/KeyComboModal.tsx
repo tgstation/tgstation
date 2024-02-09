@@ -1,6 +1,5 @@
 import { KEY } from 'common/keys';
 import { useState } from 'react';
-import { classes } from 'common/react';
 
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Autofocus, Section, Stack } from '../components';
@@ -109,7 +108,7 @@ export const KeyComboModal = (props) => {
             setBinding(false);
             return;
           } else if (event.key === KEY.Escape) {
-            setValue(null);
+            setValue(init_value);
             setBinding(false);
             return;
           }
