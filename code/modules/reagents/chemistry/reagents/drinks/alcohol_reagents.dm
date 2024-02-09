@@ -594,7 +594,6 @@
 	// We want to turn only base drinking glasses with screwdriver(cocktail) into screwdrivers(tool),
 	// but we can't check style so we have to check type, and we don't want it match subtypes like istype does
 	if(holder?.my_atom && holder.my_atom.type == /obj/item/reagent_containers/cup/glass/drinkingglass/)
-		message_admins("on_new - atom: [holder?.my_atom] name: [name]")
 		var/list/reagent_change_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
