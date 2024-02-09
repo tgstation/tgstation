@@ -18,6 +18,11 @@
 	. = ..()
 
 /datum/market/restock/proc/restock_market()
+	for(var/category in categories)
+		for(var/datum/market_item/item as anything in available_items[category])
+			available_items[category] -= item
+			qdel(item)
+
 	available_items = list()
 	categories = list()
 	for(var/item in viable_items)
@@ -27,7 +32,7 @@
 		for(var/M in I.markets)
 			if(M != type)
 				continue
-			add_item(I)
+			add_item(item)
 		qdel(I)
 
 /datum/market/restock/guns_galore
