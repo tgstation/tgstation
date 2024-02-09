@@ -1,9 +1,8 @@
 import { KEY } from 'common/keys';
-import { KeyEvent } from '../events';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Autofocus, Section, Stack, KeyListener } from '../components';
+import { Box, Button, Autofocus, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -91,8 +90,7 @@ export const KeyComboModal = (props) => {
     <Window title={title} width={240} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
-	  onKeyDown={(keyevent) => {
-		  const event = new KeyEvent(keyevent, 'keydown', false);
+        onKeyDown={(event) => {
           if (!binding) {
             if (event.key === KEY.Enter) {
               act('submit', { entry: input });
