@@ -14,6 +14,7 @@
 		/obj/item/analyzer = 5,
 		/obj/item/t_scanner = 5,
 		/obj/item/screwdriver = 5,
+		/obj/item/clothing/head/utility/welding = 2,
 		/obj/item/flashlight/glowstick = 3,
 		/obj/item/flashlight/glowstick/red = 3,
 		/obj/item/flashlight = 5,
@@ -26,7 +27,6 @@
 		/obj/item/storage/belt/utility = 2,
 		/obj/item/multitool = 2,
 		/obj/item/weldingtool/hugetank = 2,
-		/obj/item/clothing/head/utility/welding = 2,
 		/obj/item/clothing/glasses/welding = 2,
 		/obj/item/clothing/gloves/color/yellow = 1,
 	)

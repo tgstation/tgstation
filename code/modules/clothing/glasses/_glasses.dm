@@ -448,7 +448,8 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = GLASSESCOVERSEYES
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
+	custom_premium_price = PAYCHECK_CREW * 3
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	glass_colour_type = /datum/client_colour/glass_colour/gray
