@@ -23,6 +23,7 @@
 	. = ..()
 
 	cached_designs = list()
+
 	materials = AddComponent(
 		/datum/component/remote_materials, \
 		mapload, \
@@ -64,7 +65,6 @@
 	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
 	stripe.color = stripe_color
 	. += stripe
-
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
@@ -207,6 +207,7 @@
  */
 /obj/machinery/rnd/production/proc/build_efficiency(path)
 	PRIVATE_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
 
 	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
 		return 1
