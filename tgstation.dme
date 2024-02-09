@@ -1443,6 +1443,7 @@
 #include "code\datums\elements\openspace_item_click_handler.dm"
 #include "code\datums\elements\ore_collecting.dm"
 #include "code\datums\elements\organ_set_bonus.dm"
+#include "code\datums\elements\permanent_fire_overlay.dm"
 #include "code\datums\elements\pet_bonus.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
