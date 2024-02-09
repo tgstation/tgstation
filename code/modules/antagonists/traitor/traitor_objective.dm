@@ -227,7 +227,7 @@
 /// Called when rewards should be given to the user.
 /datum/traitor_objective/proc/completion_payout()
 	handler.progression_points += progression_reward
-	handler.telecrystals += telecrystal_reward
+	handler.add_telecrystals(telecrystal_reward)
 
 /// Used for sending data to the uplink UI
 /datum/traitor_objective/proc/uplink_ui_data(mob/user)

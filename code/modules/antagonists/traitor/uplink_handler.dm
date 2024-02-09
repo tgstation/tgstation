@@ -254,3 +254,8 @@
 		return
 
 	to_act_on.ui_perform_action(user, action)
+
+///Adds telecrystals to the uplink handler and updates the UI for any players watching.
+/datum/uplink_handler/proc/add_telecrystals(amount)
+	telecrystals += amount
+	update_static_data_for_all_viewers()

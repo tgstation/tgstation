@@ -135,7 +135,7 @@
 	if(!silent)
 		to_chat(user, span_notice("You slot [telecrystals] into [parent] and charge its internal uplink."))
 	var/amt = telecrystals.amount
-	uplink_handler.telecrystals += amt
+	uplink_handler.add_telecrystals(amt)
 	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
