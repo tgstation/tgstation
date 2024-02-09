@@ -79,12 +79,13 @@
 
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
-	var/static/mulebot_count = 0
-	mulebot_count += 1
-	set_id(suffix || id || "#[mulebot_count]")
-	suffix = null
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
+
+	set_id(suffix || assign_random_name())
+	suffix = null
+	name = "\improper MULEbot [id]"
+	set_home(loc)
 
 /mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -137,6 +138,18 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
+
+/mob/living/simple_animal/bot/mulebot/proc/set_home(turf/home_loc)
+	if(isnull(home_loc))
+		CRASH("MULEbot [id] was requested to set a home location but no turf was provided")
+
+	var/obj/machinery/navbeacon/home_beacon = locate() in home_loc
+	if(!isnull(home_beacon))
+		home_destination = home_beacon.location
+		log_transport("[id]: MULEbot successfuly set home location to ID [home_destination] at [home_beacon.x], [home_beacon.y], [home_beacon.z]")
+		return
+
+	log_transport("[id]: MULEbot failed to set home at [home_loc.x], [home_loc.y], [home_loc.z]")
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
