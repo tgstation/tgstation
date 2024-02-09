@@ -18,7 +18,7 @@
 				/obj/item/clothing/mask/bandana = 3,
 				/obj/item/clothing/mask/bandana/striped = 3,
 				/obj/item/clothing/mask/bandana/skull = 3,
-				/obj/item/clothing/mask/facescarf = 3,
+				/obj/item/clothing/mask/bandana/facescarf = 3,
 				/obj/item/clothing/neck/scarf = 6,
 				/obj/item/clothing/neck/large_scarf = 6,
 				/obj/item/clothing/neck/large_scarf/red = 6,
