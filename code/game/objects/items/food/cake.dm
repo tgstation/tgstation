@@ -296,9 +296,10 @@
 	UnregisterSignal(src, COMSIG_FOOD_EATEN)
 	. = ..()
 
-/obj/item/food/cakeslice/birthday/energy/proc/bite_taken(mob/living/eater, mob/living/feeder)
+/obj/item/food/cakeslice/birthday/energy/proc/bite_taken(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(feeder, TRAIT_PACIFISM) && eater != feeder) //Prevents pacifists from attacking others directly
+		balloon_alert(feeder, "that's dangerous!")
 		return
 	to_chat(eater, "<font color='red' size='5'>As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!</font>")
 	if(eater != feeder)
