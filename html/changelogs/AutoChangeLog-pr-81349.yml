@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed some situations in which you couldn't interact with heretic runes"
