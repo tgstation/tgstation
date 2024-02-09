@@ -277,7 +277,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/bunnyears
 	name = "Colorable Bunny Ears"
 	item_path = /obj/item/clothing/head/playbunnyears
-	item_cost = 5000
 
 /*
 *	JOB-LOCKED
