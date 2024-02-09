@@ -1,4 +1,0 @@
-author: "Swiftfeather"
-delete-after: True
-changes:
-  - qol: "Added a new head-only target hotkey, unbound by default."

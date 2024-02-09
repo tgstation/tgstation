@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed Puncture Repair surgery not having surgical sounds"
-  - bugfix: "Fixed Surgery Initiator potentially showing invalid surgeries"

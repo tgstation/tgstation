@@ -1,4 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes:
-  - bugfix: "icebox ore generation underground is normal again"

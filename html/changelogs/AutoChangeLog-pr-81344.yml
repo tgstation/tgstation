@@ -1,4 +1,0 @@
-author: "ViktorKoL"
-delete-after: True
-changes:
-  - bugfix: "fix heretic's rust mark failing to damage any items if the victim has any container on them with another item inside, and maybe other bugs of similar nature"

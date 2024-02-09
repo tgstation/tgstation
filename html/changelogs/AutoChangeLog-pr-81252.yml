@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes:
-  - rscadd: "Adds a new suicide_act() to the smite spell"

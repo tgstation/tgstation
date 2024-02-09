@@ -191,3 +191,48 @@
       condition to rotate them
   optimumtact, whomst didn't write this CL entry.:
   - bugfix: Fixed the colorful lights of the ethereal disco ball.
+2024-02-09:
+  EEASAS:
+  - bugfix: Fixed some things in Ice Box's gas station ruin
+  - rscadd: Adds some things in Ice Box's gas station ruin
+  Ghommie:
+  - bugfix: Fixed text effects for runechat messages (the stuff enclosed in +, | and
+      _ characters).
+  - spellcheck: Improved the tip for say/text effects.
+  JohnFulpWillard:
+  - qol: The barcode scanner is now part of computer tech and can be printed at the
+      service techfab.
+  - bugfix: Species that can eat mice don't get disgusted from seeing one in the toilet
+      bong.
+  - rscadd: Grabbing an unwrenched statue/mannequin/skeleton model will now move its
+      direction as you move yours, and you can talk through it.
+  LT3:
+  - bugfix: SM cascade delam messages no longer display to clients not in game
+  Melbert:
+  - bugfix: Fixed Puncture Repair surgery not having surgical sounds
+  - bugfix: Fixed Surgery Initiator potentially showing invalid surgeries
+  - bugfix: Krav Maga users can shove again
+  Swiftfeather:
+  - qol: Added a new head-only target hotkey, unbound by default.
+  SyncIt21:
+  - qol: adds screentips & examines for screwdriver & crowbar acts & alt click.
+  - qol: techfabs can now use the mouse drop functionality to set drop target.
+  - qol: lathe printing animation plays on loop while printing rather than flicking
+      once for more visual feedback
+  - bugfix: lathe sheet insertion animations are now linked & work again for all material
+      types inserted via remote silo/local storage
+  - bugfix: printing custom materials items from autolathe works again.
+  - bugfix: printing multiple items from lathes will actually print that correct quantity
+      of items requested.
+  - bugfix: printing items the 2nd time around from lathes won't cause the UI to reload
+      each time.
+  - code_imp: autodoc for some vars & procs, merges procs.
+  - refactor: Optimized code for autolathe & techfabs in general. Report bugs on github
+  ViktorKoL:
+  - bugfix: fix heretic's rust mark failing to damage any items if the victim has
+      any container on them with another item inside, and maybe other bugs of similar
+      nature
+  Wallem:
+  - rscadd: Adds a new suicide_act() to the smite spell
+  Zergspower:
+  - bugfix: icebox ore generation underground is normal again
