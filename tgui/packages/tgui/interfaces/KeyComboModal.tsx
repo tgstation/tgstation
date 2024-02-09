@@ -1,8 +1,9 @@
 import { KEY } from 'common/keys';
+import { KeyEvent } from '../events';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Autofocus, Section, Stack } from '../components';
+import { Box, Button, Autofocus, Section, Stack, KeyListener } from '../components';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -40,7 +41,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-const formatKeyboardEvent = (event: KeyboardEvent<HTMLDivElement>): string => {
+const formatKeyboardEvent = (event: KeyboardEvent): string => {
   let text = '';
 
   if (event.altKey) {
@@ -89,7 +90,8 @@ export const KeyComboModal = (props) => {
   return (
     <Window title={title} width={240} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content
+      <Window.Content>
+	  <KeyListener
         onKeyDown={(event) => {
           if (!binding) {
             if (event.key === KEY.Enter) {
@@ -113,7 +115,7 @@ export const KeyComboModal = (props) => {
             return;
           }
         }}
-      >
+      />
         <Section fill>
           <Autofocus />
           <Stack fill vertical>
