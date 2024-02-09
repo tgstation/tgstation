@@ -337,7 +337,7 @@
 			var/charge_per_item = 0
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
-			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * 0.1 * active_power_usage)
+			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * 0.05 * active_power_usage)
 			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
 			//start production
