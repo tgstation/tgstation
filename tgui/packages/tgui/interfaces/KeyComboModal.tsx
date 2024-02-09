@@ -1,5 +1,5 @@
 import { KEY } from 'common/keys';
-import { KeyEvent } from '../../events';
+import { KeyEvent } from '../events';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
@@ -74,7 +74,7 @@ export const KeyComboModal = (props) => {
   const [input, setInput] = useState(init_value);
   const [binding, setBinding] = useLocalState('binding', true);
 
-  const setValue = (value: number) => {
+  const setValue = (value: string) => {
     if (value === input) {
       return;
     }
