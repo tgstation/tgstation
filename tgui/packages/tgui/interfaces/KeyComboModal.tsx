@@ -92,7 +92,7 @@ export const KeyComboModal = (props) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content>
 	  <KeyListener
-        onKeyDown={(event) => {
+        onKeyDown={(event: KeyEvent) => {
           if (!binding) {
             if (event.key === KEY.Enter) {
               act('submit', { entry: input });
