@@ -116,7 +116,7 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 
-	var/datum/antagonist/changeling/ling = user.mind?.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling = IS_CHANGELING(user)
 	if(QDELETED(ling) || !(src in ling.innate_powers + ling.purchased_powers)) // checking both innate and purchased for full coverage
 		return
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
