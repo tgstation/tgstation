@@ -14,12 +14,14 @@
 		return FALSE
 	return ..()
 
+/* monke edit: replaced for toxin healing support
 /datum/surgery_step/filter_blood/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())
 		return
 	while(has_filterable_chems(target, tool))
 		if(!..())
 			break
+monke end */
 
 /**
  * Checks if the mob contains chems we can filter
@@ -61,6 +63,7 @@
 	)
 	display_pain(target, "You feel a throbbing pain in your chest!")
 
+/* monke edit: replaced for toxin healing support
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/obj/item/blood_filter/bloodfilter = tool
 	if(target.reagents?.total_volume)
@@ -79,6 +82,7 @@
 		chemscan(user, target)
 
 	return ..()
+monke end */
 
 /datum/surgery_step/filter_blood/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
