@@ -84,7 +84,8 @@
 
 	set_id(suffix || assign_random_name())
 	suffix = null
-	name = "\improper MULEbot [id]"
+	if(name == "\improper MULEbot")
+		name = "\improper MULEbot [id]"
 	set_home(loc)
 
 /mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
@@ -335,13 +336,10 @@
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id
-			if(pda)
-				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
-			else
-				new_id = params["value"]
+			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
 			if(new_id)
 				set_id(new_id)
+				name = "\improper MULEbot [new_id]"
 		if("sethome")
 			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			if(new_home)

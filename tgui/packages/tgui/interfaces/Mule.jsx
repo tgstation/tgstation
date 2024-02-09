@@ -3,7 +3,6 @@ import {
   Button,
   Dropdown,
   Flex,
-  Input,
   LabeledList,
   ProgressBar,
   Section,
@@ -105,10 +104,7 @@ export const Mule = (props) => {
           >
             <LabeledList>
               <LabeledList.Item label="ID">
-                <Input
-                  value={id}
-                  onChange={(e, value) => act('setid', { value })}
-                />
+                <Button content={id} onClick={() => act('setid')} />
               </LabeledList.Item>
               <LabeledList.Item label="Home">
                 <Button content={home} onClick={() => act('sethome')} />
