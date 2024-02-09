@@ -100,8 +100,6 @@
 #define NOHUSK 24
 #define NOMOUTH 25
 
-#define NO_PANT 26 //MONKESTATION ADDITION: simillar to NO_UNDERWEAR but you can wear shirts
-
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"

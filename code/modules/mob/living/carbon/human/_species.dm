@@ -759,23 +759,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-//MONKESTATION EDIT START: added NO_PANT to underwear
-
-		if(!(NO_PANT in species_traits))
-			if(species_human.underwear)
-				var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
-				var/mutable_appearance/underwear_overlay
-				if(underwear)
-					if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-						underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
-					else
-						underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-					if(!underwear.use_static)
-						underwear_overlay.color = species_human.underwear_color
-					underwear_overlay.pixel_y += height_offset
-					standing += underwear_overlay
-
-//MONKESTATION EDIT END
+		if(species_human.underwear && !(src.bodytype & BODYTYPE_DIGITIGRADE)) //MONKESTATION EDIT
+			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
+			var/mutable_appearance/underwear_overlay
+			if(underwear)
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
+					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+				else
+					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+				if(!underwear.use_static)
+					underwear_overlay.color = species_human.underwear_color
+				underwear_overlay.pixel_y += height_offset
+				standing += underwear_overlay
 
 		if(species_human.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
