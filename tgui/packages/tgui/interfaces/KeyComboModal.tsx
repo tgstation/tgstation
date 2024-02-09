@@ -2,7 +2,7 @@ import { KEY } from 'common/keys';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Autofocus, Section, Stack } from '../components';
+import { Autofocus, Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
