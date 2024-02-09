@@ -35810,10 +35810,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/delivery,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mKD" = (
