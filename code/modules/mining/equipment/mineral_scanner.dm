@@ -71,7 +71,6 @@
 	var/vents_nearby = FALSE
 	var/undiscovered = FALSE
 	var/radar_volume = 30
-	scanner.transform = matrix()
 	for(var/turf/closed/mineral/mineral in  RANGE_TURFS(range, T))
 		if(mineral.scan_state)
 			minerals += mineral

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "You know that one bug that makes the cryo cells on Deltastation unusuable? Well it's not fixed but at least those cryo cells are usuable again, maybe at the cost of another station's cryo cells. Who knows!"

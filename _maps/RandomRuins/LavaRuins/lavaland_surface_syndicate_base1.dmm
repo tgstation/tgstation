@@ -62,9 +62,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
-"aL" = (
-/turf/closed/wall/mineral/plastitanium/explosive,
-/area/ruin/syndicate_lava_base/testlab)
 "aM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -650,8 +647,7 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Chemistry"
 	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Chemistry";
 	req_access = list("syndicate")
 	},
@@ -2636,7 +2632,7 @@
 "zC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end,
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Turbine Access"
 	},
 /obj/machinery/light/small/directional/west,
@@ -3128,10 +3124,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/arrivals)
 "FX" = (
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 1;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Bar"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5700,7 +5693,7 @@ pa
 pa
 ae
 ae
-aL
+ae
 ae
 ae
 ae
@@ -5999,7 +5992,7 @@ ab
 ab
 as
 as
-as
+PW
 dI
 NE
 ew

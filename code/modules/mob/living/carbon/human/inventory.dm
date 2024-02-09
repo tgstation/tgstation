@@ -230,7 +230,7 @@
 
 /mob/living/carbon/human/equipped_speed_mods()
 	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
+	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store, back, wear_mask, wear_neck, head, handcuffed, legcuffed))
 		var/obj/item/thing = sloties
 		. += thing?.slowdown
 
@@ -438,11 +438,10 @@
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	var/atom/real_location = storage.real_location?.resolve()
-	if(!real_location.contents.len) // nothing to take out
+	if(!storage.real_location.contents.len) // nothing to take out
 		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return
-	var/obj/item/stored = real_location.contents[real_location.contents.len]
+	var/obj/item/stored = storage.real_location.contents[storage.real_location.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot

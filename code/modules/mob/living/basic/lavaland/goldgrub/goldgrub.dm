@@ -83,7 +83,7 @@
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-	for(var/obj/item/ore as anything in src)
+	for(var/obj/item/stack/ore/ore in src)
 		ore.forceMove(loc)
 	if(!gibbed)
 		visible_message(span_danger("[src] spits out its consumed ores!"))
