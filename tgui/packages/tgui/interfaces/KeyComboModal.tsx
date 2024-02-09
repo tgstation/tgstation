@@ -1,5 +1,5 @@
 import { KEY } from 'common/keys';
-import { useState } from 'react';
+import { useState, React } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Autofocus, Section, Stack } from '../components';
@@ -15,7 +15,7 @@ type KeyInputData = {
   title: string;
 };
 
-const isStandardKey = (event: KeyboardEvent<HTMLDivElement>): boolean => {
+const isStandardKey = (event: React.KeyboardEvent<HTMLDivElement>): boolean => {
   return (
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
@@ -40,7 +40,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-const formatKeyboardEvent = (event: KeyboardEvent<HTMLDivElement>): string => {
+const formatKeyboardEvent = (event: React.KeyboardEvent<HTMLDivElement>): string => {
   let text = '';
 
   if (event.altKey) {
