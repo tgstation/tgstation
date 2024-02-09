@@ -343,11 +343,7 @@
 			if(new_id)
 				set_id(new_id)
 		if("sethome")
-			var/new_home
-			if(pda)
-				new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
-			else
-				new_home = params["value"]
+			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			if(new_home)
 				home_destination = new_home
 		if("unload")
