@@ -40,7 +40,9 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-const formatKeyboardEvent = (event: React.KeyboardEvent<HTMLDivElement>): string => {
+const formatKeyboardEvent = (
+  event: React.KeyboardEvent<HTMLDivElement>,
+): string => {
   let text = '';
 
   if (event.altKey) {
