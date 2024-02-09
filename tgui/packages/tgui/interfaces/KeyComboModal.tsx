@@ -90,9 +90,8 @@ export const KeyComboModal = (props) => {
   return (
     <Window title={title} width={240} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content>
-	  <KeyListener
-        onKeyDown={(keyevent) => {
+      <Window.Content
+	  onKeyDown={(keyevent) => {
 		  const event = new KeyEvent(keyevent, 'keydown', false);
           if (!binding) {
             if (event.key === KEY.Enter) {
