@@ -297,10 +297,10 @@
 	. = ..()
 
 /obj/item/food/cakeslice/birthday/energy/attack(mob/living/target_mob, mob/living/user)
-	. = ..()
-	if(HAS_TRAIT(feeder, TRAIT_PACIFISM) && eater != feeder) //Prevents pacifists from attacking others directly
-		balloon_alert(feeder, "that's dangerous!")
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && target_mob != user) //Prevents pacifists from attacking others directly
+		balloon_alert(user, "that's dangerous!")
 		return FALSE
+	..()
 
 /obj/item/food/cakeslice/birthday/energy/proc/bite_taken(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
