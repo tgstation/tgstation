@@ -141,8 +141,8 @@
 	id = new_id
 
 /mob/living/simple_animal/bot/mulebot/proc/set_home(turf/home_loc)
-	if(isnull(home_loc))
-		CRASH("MULEbot [id] was requested to set a home location but no turf was provided")
+	if(!istype(home_loc))
+		CRASH("MULEbot [id] was requested to set a home location to [home_loc ? "an invalid home loc ([home_loc.type])" : "null"]")
 
 	var/obj/machinery/navbeacon/home_beacon = locate() in home_loc
 	if(!isnull(home_beacon))
