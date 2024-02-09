@@ -118,7 +118,7 @@
 	playsound(to_heal, 'sound/magic/staff_healing.ogg', 30)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore [to_heal] to good condition!"),
+		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] [to_heal] to good condition!"),
 		span_notice("Your hand glows a brilliant red as you restore [to_heal] to good condition!"),
 	)
 	return TRUE
@@ -167,14 +167,14 @@
 
 		time_it_takes = 6 SECONDS
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach directly into [caster.p_their()] own [parsed_zone]!"),
+			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into [caster.p_their()] own [parsed_zone]!"),
 			span_userdanger("Your hand glows a brilliant red as you reach directly into your own [parsed_zone]!"),
 		)
 
 	else
 		carbon_victim.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach directly into [carbon_victim]'s [parsed_zone]!"),
-			span_userdanger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach directly into your [parsed_zone]!"),
+			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into [carbon_victim]'s [parsed_zone]!"),
+			span_userdanger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into your [parsed_zone]!"),
 		)
 
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
