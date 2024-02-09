@@ -35,4 +35,4 @@
 	master_category = /datum/log_category/economy
 	config_flag = /datum/config_entry/flag/blackmarket
 
-/datum/config_entry/flag/mechcomp
+/datum/config_entry/flag/blackmarket
