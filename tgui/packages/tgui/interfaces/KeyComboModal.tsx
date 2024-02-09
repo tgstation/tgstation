@@ -16,7 +16,7 @@ type KeyInputData = {
   title: string;
 };
 
-const isStandardKey = (event: KeyboardEvent): boolean => {
+const isStandardKey = (event: KeyEvent): boolean => {
   return (
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
@@ -41,7 +41,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-const formatKeyboardEvent = (event: KeyboardEvent): string => {
+const formatKeyboardEvent = (event: KeyEvent): string => {
   let text = '';
 
   if (event.altKey) {
