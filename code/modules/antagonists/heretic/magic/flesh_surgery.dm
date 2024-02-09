@@ -91,17 +91,15 @@
 		return FALSE
 
 	var/organ_hp_to_heal = to_heal.maxHealth * organ_percent_healing
-	if(to_heal.damage > 0)
-		to_heal.set_organ_damage(max(0 , to_heal.damage - organ_hp_to_heal))
-		to_heal.balloon_alert(caster, "organ healed")
-		playsound(to_heal, 'sound/magic/staff_healing.ogg', 30)
-		new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
-		caster.visible_message(
-			span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore \the [to_heal] to good condition!"),
-			span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to good condition!"),
-		)
-	else
-		to_heal.balloon_alert(caster, "already in good condition!")
+	to_heal.set_organ_damage(max(0 , to_heal.damage - organ_hp_to_heal))
+	to_heal.balloon_alert(caster, "organ healed")
+	playsound(to_heal, 'sound/magic/staff_healing.ogg', 30)
+	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
+	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
+	caster.visible_message(
+		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore \the [to_heal] to [condition] condition!"),
+		span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to [condition] condition!"),
+	)
 
 	return TRUE
 
