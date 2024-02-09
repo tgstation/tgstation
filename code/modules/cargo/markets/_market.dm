@@ -57,6 +57,7 @@
 
 		if(I.buy(uplink, user, method))
 			uplink.current_user.adjust_money(-price, "Other: Third Party Transaction")
+			logger.Log(LOG_CATEGORY_BLACKMARKET, "[user] has just bought the [current_auction.item] for [bid_amount] in the [name]")
 			if(ismob(user))
 				var/mob/m_user = user
 				m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)

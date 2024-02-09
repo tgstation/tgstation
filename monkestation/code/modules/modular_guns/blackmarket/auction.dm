@@ -63,6 +63,7 @@
 		return FALSE
 	uplink.current_user.adjust_money(-350, "Other: Third Party Transaction")
 	queued_items = list()
+	logger.Log(LOG_CATEGORY_BLACKMARKET, "[user] has rerolled the [name]")
 
 /datum/market/auction/pre_purchase(item, category, method, obj/item/market_uplink/uplink, user, bid_amount)
 	if(item != current_auction.type)
@@ -89,11 +90,16 @@
 		return FALSE
 
 	if(current_auction.user)
+		var/old_bidder = "Anonymous Creature"
+		if(ishuman(current_auction.user))
+			var/mob/living/carbon/human/human = current_auction.user
+			old_bidder = "Anonymous [human.dna.species.name]"
 		current_auction.bidders += list(list(
-			"name" = "Test Name",
+			"name" = old_bidder,
 			"amount" = current_auction.current_price,
 		))
 
+	logger.Log(LOG_CATEGORY_BLACKMARKET, "[user] has just bid [bid_amount] on [current_auction.item] in the [name]")
 	current_auction.uplink = uplink
 	current_auction.user = user
 	if(ishuman(user))
@@ -127,6 +133,7 @@
 
 		if(I.buy(uplink, user, method))
 			uplink.current_user.adjust_money(-price, "Other: Third Party Transaction")
+			logger.Log(LOG_CATEGORY_BLACKMARKET, "[user] has just bought the [current_auction.item] for [bid_amount] in the [name]")
 			if(ismob(user))
 				var/mob/m_user = user
 				m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)
