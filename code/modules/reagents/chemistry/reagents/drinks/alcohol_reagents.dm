@@ -589,6 +589,58 @@
 	taste_description = "oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_new(data)
+	. = ..()
+	// We want to turn only base drinking glasses with screwdriver(cocktail) into screwdrivers(tool),
+	// but we can't check style so we have to check type, and we don't want it match subtypes like istype does
+	if(holder?.my_atom && holder.my_atom.type == /obj/item/reagent_containers/cup/glass/drinkingglass/)
+		message_admins("on_new - atom: [holder?.my_atom] name: [name]")
+		var/list/reagent_change_signals = list(
+			COMSIG_REAGENTS_ADD_REAGENT,
+			COMSIG_REAGENTS_NEW_REAGENT,
+			COMSIG_REAGENTS_REM_REAGENT,
+		)
+		RegisterSignals(holder, reagent_change_signals, PROC_REF(on_reagent_change))
+		RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
+		RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+		if(src == holder.get_master_reagent())
+			var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
+			drink.tool_behaviour = TOOL_SCREWDRIVER
+			drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	if(reagents.get_master_reagent() == src)
+		drink.tool_behaviour = TOOL_SCREWDRIVER
+		drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	else
+		drink.tool_behaviour = initial(drink.tool_behaviour)
+		drink.usesound = initial(drink.usesound)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagents_clear(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	unregister_screwdriver(reagents)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
+	SIGNAL_HANDLER
+	if(deleted_reagent != src)
+		return
+	unregister_screwdriver(reagents)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/unregister_screwdriver(datum/reagents/reagents)
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	if(drink.tool_behaviour == TOOL_SCREWDRIVER)
+		drink.tool_behaviour = initial(drink.tool_behaviour)
+		drink.usesound = initial(drink.usesound)
+	UnregisterSignal(reagents, list(
+			COMSIG_REAGENTS_ADD_REAGENT,
+			COMSIG_REAGENTS_NEW_REAGENT,
+			COMSIG_REAGENTS_REM_REAGENT,
+			COMSIG_REAGENTS_DEL_REAGENT,
+			COMSIG_REAGENTS_CLEAR_REAGENTS,
+		))
+
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
