@@ -1,5 +1,4 @@
 import { KEY } from 'common/keys';
-import { KeyEvent } from '../events';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
