@@ -93,7 +93,7 @@
 	name = "Welding Goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
 	id = "welding_goggles"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/clothing/glasses/welding
 	category = list(
