@@ -128,11 +128,8 @@
 
 	return not_handled
 
-/mob/living/carbon/equipped_speed_mods()
-	. = ..()
-	for(var/sloties in get_all_worn_items())
-		var/obj/item/thing = sloties
-		. += thing?.slowdown
+/mob/living/carbon/get_equipped_speed_mod_items()
+	return ..() + get_all_worn_items()
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
