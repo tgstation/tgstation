@@ -1136,9 +1136,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "Yh" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -1171,9 +1169,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "YU" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},

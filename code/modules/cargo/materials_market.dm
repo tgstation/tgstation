@@ -131,6 +131,7 @@
 	var/color_string
 	var/sheet_to_buy
 	var/requested_amount
+	var/minimum_value_threshold = 0
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
@@ -162,10 +163,16 @@
 		if(!isnull(current_order))
 			requested_amount = current_order.pack.contains[sheet_to_buy]
 
+		var/min_value_override = initial(traded_mat.minimum_value_override)
+		if(min_value_override)
+			minimum_value_threshold = min_value_override
+
+
 		//send data
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
+			"threshold" = minimum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,

@@ -65,8 +65,9 @@
 		return FALSE
 
 	if(!forced)
-		if(!check_teleport_valid(teleatom, destination, channel))
-			teleatom.balloon_alert(teleatom, "something holds you back!")
+		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
+			if(ismob(teleatom))
+				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
 	if(isobserver(teleatom))
@@ -184,7 +185,7 @@
 		return pick(turfs)
 
 /// Validates that the teleport being attempted is valid or not
-/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel)
+/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
 	var/area/origin_area = get_area(teleported_atom)
 	var/turf/origin_turf = get_turf(teleported_atom)
 
@@ -192,6 +193,11 @@
 	var/turf/destination_turf = get_turf(destination)
 
 	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+		return FALSE
+
+	// prevent unprecise teleports from landing you outside of the destination's reserved area
+	if(is_reserved_level(destination_turf.z) && istype(original_destination) \
+		&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
 		return FALSE
 
 	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))

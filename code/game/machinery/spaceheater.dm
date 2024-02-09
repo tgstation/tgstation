@@ -69,6 +69,8 @@
 		),
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
 
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)

@@ -18,7 +18,7 @@
 	var/tapped = FALSE
 	/// Has this vent been scanned by a mining scanner? Cannot be scanned again. Adds ores to the vent's description.
 	var/discovered = FALSE
-	/// Is this type of vent exempt from the 15 vent limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
+	/// Is this type of vent exempt from the map's vent budget/limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
 	var/unique_vent = FALSE
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"
@@ -74,7 +74,8 @@
 	if(mapload)
 		generate_description()
 	register_context()
-	SSore_generation.possible_vents += src
+	if(!unique_vent)
+		SSore_generation.possible_vents += src
 	boulder_icon_state = pick(list(
 		"boulder",
 		"rock",
@@ -84,7 +85,7 @@
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
-		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, ABOVE_MOB_LAYER))
+		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
 	return ..()
 
 /obj/structure/ore_vent/Destroy()
@@ -168,33 +169,37 @@
 /**
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
  * The materials available are determined by SSore_generation.ore_vent_minerals, which is a list of all minerals that can be contained in ore vents for a given cave generation.
- * As a result, minerals use a weighted list as seen by ore_vent_minerals_default, which is then copied to ore_vent_minerals.
+ * As a result, minerals use a weighted list as seen by ore_vent_minerals_lavaland, which is then copied to ore_vent_minerals.
  * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided it's own internal weight used when assigning minerals to boulders spawned by this vent.
  * May also be called after the fact, as seen in SSore_generation's initialize, to add more minerals to an existing vent.
  *
- * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_default.
+ * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_lavaland.
  *
- * @params max_minerals How many minerals should be added to this vent? Defaults to MINERAL_TYPE_OPTIONS_RANDOM, which is 4.
- * @params map_loading Is this vent being spawned in at mapload? If so, we use the ore_generation subsystem's ore_vent_minerals list to pick minerals. Otherwise, we pick randomly from ore_vent_minerals_default.
+ * @params new_minerals How many minerals should be added to this vent? Defaults to MINERAL_TYPE_OPTIONS_RANDOM, which is 4.
+ * @params map_loading Is this vent being spawned in at mapload? If so, we use the ore_generation subsystem's ore_vent_minerals list to pick minerals. Otherwise, we pick randomly from ore_vent_minerals_lavaland.
  */
-/obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
-	if(max_minerals < 1)
-		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
-	for(var/iterator in 1 to max_minerals)
-		if(!SSore_generation.ore_vent_minerals.len && map_loading)
-			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
-		var/datum/material/material
+/obj/structure/ore_vent/proc/generate_mineral_breakdown(new_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
+	if(new_minerals < 1)
+		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
+	var/list/available_mats = difflist(first = SSore_generation.ore_vent_minerals, second = mineral_breakdown, skiprep = 1)
+	for(var/i in 1 to new_minerals)
+		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
+			// We should prevent this from happening in SSore_generation, but if not then we crash here
+			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
+		var/datum/material/new_material
 		if(map_loading)
-			material = pick_weight(SSore_generation.ore_vent_minerals)
-		if(is_type_in_list(mineral_breakdown, material))
-			continue
-		if(map_loading)
-			SSore_generation.ore_vent_minerals[material] -= 1 //We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
-			if(SSore_generation.ore_vent_minerals[material] <= 0)
-				SSore_generation.ore_vent_minerals -= material
+			if(length(available_mats))
+				new_material = pick(GLOB.ore_vent_minerals_lavaland)
+				var/datum/material/surrogate_mat = pick(SSore_generation.ore_vent_minerals)
+				available_mats -= surrogate_mat
+				SSore_generation.ore_vent_minerals -= surrogate_mat
+			else
+				new_material = pick(available_mats)
+				available_mats -= new_material
+				SSore_generation.ore_vent_minerals -= new_material
 		else
-			material = pick_weight(SSore_generation.ore_vent_minerals_default)
-		mineral_breakdown[material] = rand(1, 4)
+			new_material = pick(GLOB.ore_vent_minerals_lavaland)
+		mineral_breakdown[new_material] = rand(1, 4)
 
 
 /**
@@ -269,7 +274,7 @@
 		user_id_card.registered_account.mining_points += point_reward_val
 		user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.pre_escape() //Visually show the drone is done and flies away.
-	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
+	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
 
 /**
  * Called when the ore vent is tapped by a scanning device.
@@ -283,19 +288,26 @@
 		balloon_alert_to_viewers("vent tapped!")
 		return
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
-		balloon_alert_to_viewers("protect the node drone!")
-		return
-	if(scan_only)
-		discovered = TRUE
-		generate_description(user)
-		balloon_alert_to_viewers("vent scanned!")
+		if(!scan_only)
+			balloon_alert_to_viewers("protect the node drone!")
 		return
 	if(!discovered)
+		if(scan_only)
+			discovered = TRUE
+			generate_description(user)
+			balloon_alert_to_viewers("vent scanned!")
+			return
+
+		if(DOING_INTERACTION_WITH_TARGET(user, src))
+			balloon_alert(user, "already scanning!")
+			return
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
-		if(do_after(user, 4 SECONDS))
-			discovered = TRUE
-			balloon_alert(user, "vent scanned!")
+		if(!do_after(user, 4 SECONDS, src))
+			return
+
+		discovered = TRUE
+		balloon_alert(user, "vent scanned!")
 		generate_description(user)
 		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
 		if(isnull(user_id_card))
@@ -303,7 +315,8 @@
 		user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
 		user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
 		return
-
+	if(scan_only)
+		return
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
@@ -332,12 +345,12 @@
  * Ore_string is passed to examine().
  */
 /obj/structure/ore_vent/proc/generate_description(mob/user)
-	for(var/mineral_count in 1 to length(mineral_breakdown))
-		var/datum/material/resource = mineral_breakdown[mineral_count]
-		if(mineral_count == length(mineral_breakdown))
-			ore_string += "and " + span_bold(initial(resource.name)) + "."
-		else
-			ore_string += span_bold(initial(resource.name)) + ", "
+	ore_string = ""
+	var/list/mineral_names = list()
+	for(var/datum/material/resource as anything in mineral_breakdown)
+		mineral_names += initial(resource.name)
+
+	ore_string = "[english_list(mineral_names)]."
 	if(user)
 		ore_string += "\nThis vent was first discovered by [user]."
 /**
@@ -408,15 +421,15 @@
 		if(LARGE_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_LARGE
 			if(mapload)
-				SSore_generation.ore_vent_sizes["large"] -= 1
+				SSore_generation.ore_vent_sizes["large"] += 1
 		if(MEDIUM_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_MEDIUM
 			if(mapload)
-				SSore_generation.ore_vent_sizes["medium"] -= 1
+				SSore_generation.ore_vent_sizes["medium"] += 1
 		if(SMALL_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_SMALL
 			if(mapload)
-				SSore_generation.ore_vent_sizes["small"] -= 1
+				SSore_generation.ore_vent_sizes["small"] += 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
 			name = initial(name)

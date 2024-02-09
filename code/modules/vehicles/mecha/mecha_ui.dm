@@ -190,7 +190,7 @@
 			if(userinput == format_text(name)) //default mecha names may have improper span artefacts in their name, so we format the name
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
-			name = userinput
+			name = "\proper [userinput]"
 			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)

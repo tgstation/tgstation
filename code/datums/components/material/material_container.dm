@@ -66,6 +66,9 @@
 		for(var/signal in container_signals)
 			parent.RegisterSignal(src, signal, container_signals[signal])
 
+	//drop sheets when the object is deconstructed but not deleted
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
+
 	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
 		return
 
@@ -75,7 +78,6 @@
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/component/material_container/Destroy(force)
-	retrieve_all()
 	materials = null
 	allowed_materials = null
 	return ..()
@@ -87,6 +89,11 @@
 		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/material_container/proc/drop_sheets()
+	SIGNAL_HANDLER
+
+	retrieve_all()
 
 /datum/component/material_container/proc/on_examine(datum/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
@@ -459,15 +466,15 @@
 					if(MATERIAL_INSERT_ITEM_SUCCESS) //no problems full item was consumed
 						if(chat_data["stack"])
 							var/sheets = min(count, amount) //minimum between sheets inserted vs sheets consumed(values differ for alloys)
-							to_chat(user, span_notice("[sheets > 1 ? sheets : ""] [item_name][sheets > 1 ? "'s" : ""] was consumed by [parent]"))
+							to_chat(user, span_notice("[sheets > 1 ? sheets : ""] [item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
 						else
-							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] worth [amount] sheets of material was consumed by [parent]"))
+							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
 					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
-						to_chat(user, span_warning("[parent] has no space to accept [item_name]"))
+						to_chat(user, span_warning("[parent] has no space to accept [item_name]!"))
 					if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
-						to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] has no materials to be accepted by [parent]"))
+						to_chat(user, span_warning("[item_name][count > 1 ? "s have" : " has"] no materials that can be accepted by [parent]!"))
 					if(MATERIAL_INSERT_ITEM_FAILURE) //could be because the material type was not accepted or other stuff
-						to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] was rejected by [parent]"))
+						to_chat(user, span_warning("[item_name][count > 1 ? "s were" : " was"] rejected by [parent]!"))
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
