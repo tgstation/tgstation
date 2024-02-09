@@ -144,7 +144,8 @@
 /obj/machinery/rnd/proc/process_item(obj/item/item_inserted, list/mats_consumed, amount_inserted)
 	PRIVATE_PROC(TRUE)
 
-	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * active_power_usage)))
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * initial(active_power_usage))))
 		var/mat_name = "iron"
 
 		var/highest_mat = 0
@@ -285,7 +286,8 @@
 			if(isnull(amount))
 				return
 
-			if(!directly_use_power(ROUND_UP((amount / MAX_STACK_SIZE) * 0.01 * active_power_usage)))
+			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+			if(!directly_use_power(ROUND_UP((amount / MAX_STACK_SIZE) * 0.01 * initial(active_power_usage))))
 				say("No power to dispense sheets")
 				return
 

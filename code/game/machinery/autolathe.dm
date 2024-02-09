@@ -97,7 +97,8 @@
 
 	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-	directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * active_power_usage))
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * initial(active_power_usage)))
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
