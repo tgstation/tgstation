@@ -499,15 +499,10 @@
 	var/danger_zone = (speed - 1) * 13 // for every extra speed we have over 1, take away 13 of the safest chance
 	danger_zone = max(min(danger_zone, 100), 1)
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/S = user
-		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(istype(head_slot,/obj/item/clothing/head/utility/hardhat))
-			oopsie_mod -= 6
-		if(HAS_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
-			oopsie_mod -= 6
-		if(HAS_TRAIT(user, TRAIT_HEAD_INJURY_BLOCKED))
-			oopsie_mod -= 6
+	if(HAS_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+		oopsie_mod -= 6
+	if(HAS_TRAIT(user, TRAIT_HEAD_INJURY_BLOCKED))
+		oopsie_mod -= 6
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
