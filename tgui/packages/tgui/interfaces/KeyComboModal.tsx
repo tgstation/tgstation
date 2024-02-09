@@ -115,7 +115,7 @@ export const KeyComboModal = (props) => {
             return;
           }
         }}
-      />
+      >
         <Section fill>
           <Autofocus />
           <Stack fill vertical>
