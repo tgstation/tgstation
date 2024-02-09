@@ -191,7 +191,7 @@
 	handle_cleanup()
 	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "failed"] [to_debug_string()]")
 	if(penalty_cost)
-		handler.telecrystals -= penalty_cost
+		handler.add_telecrystals(-penalty_cost)
 		objective_state = OBJECTIVE_STATE_FAILED
 	else
 		objective_state = OBJECTIVE_STATE_INVALID
