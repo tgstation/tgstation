@@ -478,6 +478,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "First stop out of hell, last stop before heaven."
 	neon_color = COLOR_RED
 
+/datum/barsign/the_red_mons
+	name = "The Red Mons"
+	icon_state = "the-red-mons"
+	desc = "Drinks from the Red Planet."
+	neon_color = COLOR_RED
+
+/datum/barsign/the_rune
+	name = "The Rune"
+	icon_state = "therune"
+	desc = "Reality Shifting drinks."
+	neon_color = COLOR_RED
+
+/datum/barsign/the_wizard
+	name = "The Wizard"
+	icon_state = "the-wizard"
+	desc = "Magical mixes."
+	neon_color = COLOR_RED
+
+/datum/barsign/months_moths_moths
+	name = "Moths Moths Moths"
+	icon_state = "moths-moths-moths"
+	desc = "LIVE MOTHS!"
+	neon_color = COLOR_RED
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns

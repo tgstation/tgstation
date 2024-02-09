@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(polling)
 		if(running_poll.time_left() <= 0)
 			polling_finished(running_poll)
 
-/datum/controller/subsystem/polling/proc/poll_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text)
+/datum/controller/subsystem/polling/proc/poll_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text, list/custom_response_messages)
 	if(group.len == 0)
 		return list()
 	if(role && !role_name_text)
@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(polling)
 
 	var/jumpable = isatom(pic_source) ? pic_source : null
 
-	var/datum/candidate_poll/new_poll = new(role_name_text, question, poll_time, ignore_category, jumpable)
+	var/datum/candidate_poll/new_poll = new(role_name_text, question, poll_time, ignore_category, jumpable, custom_response_messages)
 	LAZYADD(currently_polling, new_poll)
 
 	var/category = "[new_poll.poll_key]_poll_alert"
@@ -40,13 +40,13 @@ SUBSYSTEM_DEF(polling)
 	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.client)
 			continue
-		// Universal opt-out for all players.
-		if((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
+		// Universal opt-out for all players if it's for a role.
+		if(role && (!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
 			continue
 		// Opt-out for admins whom are currently adminned.
-		if((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
+		if(role && (!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
 			continue
-		if(!is_eligible(candidate_mob, role, check_jobban, ignore_category))
+		if(role && !is_eligible(candidate_mob, role, check_jobban, ignore_category))
 			continue
 
 		SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')

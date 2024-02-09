@@ -795,6 +795,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wideplating/dark,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/security)
 "apB" = (
@@ -1660,9 +1661,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "aJq" = (
@@ -3438,8 +3437,7 @@
 /area/station/engineering/supermatter/room)
 "bsF" = (
 /obj/structure/cable,
-/obj/machinery/door/window/brigdoor/security/cell/left{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{
 	id = "engicell";
 	name = "Cell Door";
 	req_access = list("security")
@@ -4087,6 +4085,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/circuits)
 "bDN" = (
@@ -5146,16 +5145,6 @@
 	name = "Custom Channel";
 	pixel_x = -10
 	},
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	pixel_x = 4;
-	req_access = list("ai_upload")
-	},
 /obj/item/radio/intercom/directional/south{
 	freerange = 1;
 	frequency = 1447;
@@ -5179,6 +5168,11 @@
 	},
 /obj/structure/cable/multilayer/connected,
 /obj/effect/turf_decal/box/red,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Tertiary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "caI" = (
@@ -5192,16 +5186,6 @@
 /turf/open/floor/iron/chapel,
 /area/station/maintenance/starboard/greater)
 "cbi" = (
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	pixel_x = -3;
-	req_access = list("ai_upload")
-	},
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
@@ -6628,14 +6612,10 @@
 "cDH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Outer Window"
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Brig Control Desk";
 	req_access = list("armory")
 	},
@@ -7076,6 +7056,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "cLH" = (
@@ -8617,6 +8598,11 @@
 	pixel_y = 26
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Secondary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "dov" = (
@@ -10445,6 +10431,7 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white/small,
 /area/station/security/warden)
 "dXE" = (
@@ -11881,8 +11868,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Engineering Desk";
 	req_access = list("engineering")
 	},
@@ -14021,9 +14007,7 @@
 "fjN" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/fore/greater)
 "fjR" = (
@@ -16015,9 +15999,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	atom_integrity = 300;
-	dir = 8
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	atom_integrity = 300
 	},
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -8;
@@ -19963,6 +19946,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/transport/power_rectifier{
+	configured_transport_id = "bird_2"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "hic" = (
@@ -21120,15 +21106,11 @@
 	name = "Privacy Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
 	},
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Reception Window"
 	},
 /turf/open/floor/iron/textured_large,
@@ -21821,6 +21803,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
 	dir = 10
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "hQs" = (
@@ -25768,7 +25751,6 @@
 /turf/open/floor/wood/tile,
 /area/station/command/corporate_showroom)
 "jns" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
@@ -25779,6 +25761,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/security/evidence)
 "jnS" = (
@@ -26094,6 +26077,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/hop,
 /obj/effect/landmark/start/head_of_personnel,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
 "jvB" = (
@@ -28430,13 +28414,11 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "kkd" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
@@ -29749,6 +29731,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "kIe" = (
@@ -31495,7 +31478,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -32336,6 +32318,7 @@
 /obj/item/stack/sheet/titaniumglass,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "lAO" = (
@@ -32808,8 +32791,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Maximum Security Test Chamber";
 	req_access = list("xenobiology")
 	},
@@ -33266,6 +33248,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "lQh" = (
@@ -36997,12 +36980,11 @@
 /area/station/maintenance/starboard/greater)
 "nhC" = (
 /obj/structure/cable,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
@@ -38166,6 +38148,13 @@
 "nCH" = (
 /turf/closed/wall/r_wall,
 /area/station/security)
+"nCL" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/transport/power_rectifier{
+	configured_transport_id = "bird_2"
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "nCR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -39041,6 +39030,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "nTi" = (
@@ -39085,6 +39075,12 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
+"nTy" = (
+/obj/machinery/transport/power_rectifier{
+	configured_transport_id = "bird_1"
+	},
+/turf/open/floor/plating,
+/area/station/security/tram)
 "nTz" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/machinery/chem_dispenser{
@@ -41202,6 +41198,7 @@
 /obj/machinery/camera/autoname/directional/east,
 /obj/item/wrench,
 /obj/item/paper/fluff/jobs/engineering/frequencies,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "oJz" = (
@@ -43050,8 +43047,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Secure Creature Pen";
 	req_access = list("research")
 	},
@@ -44668,6 +44664,7 @@
 	},
 /obj/machinery/mechpad,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "pQE" = (
@@ -45203,8 +45200,7 @@
 "pXL" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/door/window/right/directional/south{
-	dir = 1;
+/obj/machinery/door/window/right/directional/north{
 	name = "Medical Deliveries";
 	req_access = list("medical")
 	},
@@ -47240,7 +47236,6 @@
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "qDP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/chair/stool/directional/north,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
@@ -49803,6 +49798,7 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/science/lower)
 "ruC" = (
@@ -49880,8 +49876,7 @@
 /area/station/engineering/storage/tech)
 "rvX" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Genetics Desk";
 	req_access = list("genetics")
 	},
@@ -50518,8 +50513,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/window/right/directional/north{
-	dir = 4;
+/obj/machinery/door/window/right/directional/east{
 	name = "Research Delivery";
 	req_access = list("science")
 	},
@@ -52336,6 +52330,7 @@
 /obj/item/clothing/mask/bandana/skull,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/toy/basketball,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "sih" = (
@@ -54416,8 +54411,7 @@
 /area/space/nearstation)
 "sRv" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Hydroponics Desk";
 	req_access = list("hydroponics")
 	},
@@ -54512,7 +54506,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "sSA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table,
 /obj/item/folder/yellow,
 /turf/open/floor/iron,
@@ -55049,8 +55042,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Research Lab Desk";
 	req_access = list("science")
 	},
@@ -55344,8 +55336,7 @@
 /obj/item/folder{
 	pixel_x = -6
 	},
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Robotics Desk";
 	req_access = list("robotics")
 	},
@@ -57576,6 +57567,7 @@
 	dir = 4
 	},
 /obj/structure/flora/bush/flowers_pp/style_random,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/monastery)
 "tTR" = (
@@ -59293,9 +59285,7 @@
 "uwH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window/survival_pod{
-	dir = 8
-	},
+/obj/machinery/door/window/survival_pod/left/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
@@ -60877,12 +60867,11 @@
 /area/station/maintenance/aft)
 "uXV" = (
 /obj/structure/cable,
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
@@ -61333,7 +61322,7 @@
 	dir = 8
 	},
 /obj/machinery/button/flasher{
-	id = "IsolationFlash";
+	id = "IsolationFlash2";
 	pixel_x = 28
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -63103,8 +63092,7 @@
 /area/station/security/office)
 "vHk" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Mass Driver Door";
 	req_access = list("ordnance")
 	},
@@ -63951,10 +63939,7 @@
 	name = "justice gas pump"
 	},
 /obj/item/wrench,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Gas Ports"
 	},
 /turf/open/floor/plating,
@@ -64122,13 +64107,11 @@
 /turf/open/space/basic,
 /area/space)
 "vWI" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Creature Pen";
 	req_access = list("research")
 	},
@@ -64507,7 +64490,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "wcP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/modular_computer/preset/cargochat/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -66074,7 +66056,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "wCt" = (
-/obj/machinery/flasher/directional/east,
+/obj/machinery/flasher/directional/east{
+	id = "hopflash"
+	},
 /turf/open/floor/iron/half,
 /area/station/hallway/primary/central/fore)
 "wCx" = (
@@ -68057,6 +68041,7 @@
 /area/station/service/library)
 "xeP" = (
 /obj/structure/table/wood,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
 "xeT" = (
@@ -68086,8 +68071,7 @@
 "xeX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Genetics Desk";
 	req_access = list("genetics")
 	},
@@ -69029,10 +69013,7 @@
 "xrX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	layer = 3.1;
 	name = "Upload Console Window";
 	req_access = list("ai_upload")
@@ -72165,10 +72146,7 @@
 "yha" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 1;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Core Modules";
 	req_access = list("captain")
 	},
@@ -86821,7 +86799,7 @@ dwa
 dBr
 eWB
 lzM
-aFR
+nTy
 mnb
 cDt
 xpV
@@ -91457,7 +91435,7 @@ trp
 trp
 trp
 trp
-nFu
+nCL
 xqd
 xul
 trp

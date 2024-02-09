@@ -329,16 +329,16 @@ SUBSYSTEM_DEF(dynamic)
 		if(ruleset.weight <= 0 || ruleset.cost <= 0)
 			continue
 		min_threat = min(ruleset.cost, min_threat)
+
 	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
-	generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
-
-	if (GLOB.station_goals.len > 0)
-		var/list/texts = list("<hr><b>Special Orders for [station_name()]:</b><BR>")
-		for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
+	var/list/datum/station_goal/goals = SSstation.get_station_goals()
+	if(length(goals))
+		var/list/texts = list("<hr><b>Special Orders for [station_name()]:</b><br>")
+		for(var/datum/station_goal/station_goal as anything in goals)
 			station_goal.on_report()
 			texts += station_goal.get_report()
-
 		. += texts.Join("<hr>")
 
 	var/list/trait_list_strings = list()

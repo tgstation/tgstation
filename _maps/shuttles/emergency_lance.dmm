@@ -1464,8 +1464,7 @@
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/machinery/door/window/survival_pod{
-	dir = 4;
+/obj/machinery/door/window/survival_pod/left/directional/east{
 	name = "Emergency Weapons";
 	req_access = list("command")
 	},
@@ -1532,8 +1531,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "WN" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 1;
+/obj/machinery/door/window/survival_pod/left/directional/north{
 	name = "Holding Cell B";
 	req_access = list("security")
 	},
@@ -1591,7 +1589,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Yk" = (
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/survival_pod/left/directional/south{
 	name = "Holding Cell A";
 	req_access = list("security")
 	},

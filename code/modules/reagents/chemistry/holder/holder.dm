@@ -532,9 +532,14 @@
 		remove_reagent(reagent.type, transfer_amount)
 		transfer_log[reagent.type] = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 
+	//combat log
 	if(transferred_by && target_atom)
-		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
-		log_combat(transferred_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
+		var/atom/log_target = target_atom
+		if(isorgan(target_atom))
+			var/obj/item/organ/organ_item = target_atom
+			log_target = organ_item.owner ? organ_item.owner : organ_item
+		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
 	update_total()
 	target_holder.update_total()
@@ -642,7 +647,7 @@
 		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if(!reagent_volume || (reagent_volume <= 0.05 && !is_reacting))
+		if(reagent_volume <= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)

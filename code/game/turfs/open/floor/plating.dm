@@ -314,7 +314,6 @@
 	icon = 'icons/hud/radial.dmi'
 	icon_state = "wallfloor"
 
-
 #undef PLATE_INTACT
 #undef PLATE_BOLTS_LOOSENED
 #undef PLATE_CUT
