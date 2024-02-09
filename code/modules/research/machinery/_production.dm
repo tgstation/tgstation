@@ -144,7 +144,7 @@
 /obj/machinery/rnd/proc/process_item(obj/item/item_inserted, list/mats_consumed, amount_inserted)
 	PRIVATE_PROC(TRUE)
 
-	if(directly_use_power(round((amount_inserted / SHEET_MATERIAL_AMOUNT) * active_power_usage * 0.00025)))
+	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * active_power_usage)))
 		var/mat_name = "iron"
 
 		var/highest_mat = 0
@@ -285,6 +285,10 @@
 			if(isnull(amount))
 				return
 
+			if(!directly_use_power(ROUND_UP((amount / MAX_STACK_SIZE) * 0.01 * active_power_usage)))
+				say("No power to dispense sheets")
+				return
+
 			materials.eject_sheets(material, amount)
 			return TRUE
 
@@ -330,7 +334,7 @@
 			var/charge_per_item = 0
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
-			charge_per_item = min(active_power_usage, round(charge_per_item * coefficient))
+			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * 0.1 * active_power_usage)
 			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
 			//start production

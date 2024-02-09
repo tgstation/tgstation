@@ -97,7 +97,7 @@
 
 	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-	directly_use_power(round((amount_inserted / SHEET_MATERIAL_AMOUNT) * active_power_usage * 0.0025))
+	directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * active_power_usage))
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -273,7 +273,7 @@
 	var/charge_per_item = 0
 	for(var/material in design.materials)
 		charge_per_item += design.materials[material]
-	charge_per_item = min(active_power_usage, round(charge_per_item * material_cost_coefficient))
+	charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * material_cost_coefficient * 0.1 * active_power_usage)
 	var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
 	//do the printing sequentially
