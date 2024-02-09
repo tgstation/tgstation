@@ -16,7 +16,7 @@ type KeyInputData = {
   title: string;
 };
 
-const isStandardKey = (event: KeyEvent): boolean => {
+const isStandardKey = (event: KeyboardEvent): boolean => {
   return (
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
@@ -41,7 +41,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-const formatKeyboardEvent = (event: KeyEvent): string => {
+const formatKeyboardEvent = (event: KeyboardEvent): string => {
   let text = '';
 
   if (event.altKey) {
@@ -92,7 +92,8 @@ export const KeyComboModal = (props) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content>
 	  <KeyListener
-        onKeyDown={(event: KeyEvent) => {
+        onKeyDown={(keyevent) => {
+		  const event = new KeyEvent(keyevent, 'keydown', false);
           if (!binding) {
             if (event.key === KEY.Enter) {
               act('submit', { entry: input });
