@@ -63,6 +63,28 @@
 	playsound(loc, 'sound/effects/cartoon_pop.ogg', 75, vary = TRUE)
 	..()
 
+/obj/structure/fluff/fake_camera
+	name = /obj/machinery/camera::name
+	desc = /obj/machinery/camera::desc
+	icon = /obj/machinery/camera::icon
+	icon_state = /obj/machinery/camera::icon_state
+
+/obj/structure/fluff/fake_scrubber
+	name = /obj/machinery/atmospherics/components/unary/vent_scrubber::name
+	desc = /obj/machinery/atmospherics/components/unary/vent_scrubber::desc
+	icon = /obj/machinery/atmospherics/components/unary/vent_scrubber::icon
+	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
+	plane = FLOOR_PLANE
+	icon_state = "scrub_on"
+
+/obj/structure/fluff/fake_vent
+	name = /obj/machinery/atmospherics/components/unary/vent_pump::name
+	desc = /obj/machinery/atmospherics/components/unary/vent_pump::desc
+	icon = /obj/machinery/atmospherics/components/unary/vent_pump::icon
+	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
+	plane = FLOOR_PLANE
+	icon_state = "vent_out"
+
 /turf/open/mirage
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "mirage"
@@ -85,7 +107,7 @@
 	AddElement(/datum/element/mirage_border, target, dir, range)
 
 /obj/effect/mapping_helpers/ztrait_injector/museum
-	traits_to_add = list("No Parallax" = TRUE,"No X-Ray" = TRUE, "No Phase" = TRUE, "Baseturf" = /turf/open/indestructible/plating, "Secret" = TRUE)
+	traits_to_add = list(ZTRAIT_NOPARALLAX = TRUE,ZTRAIT_NOXRAY = TRUE, ZTRAIT_NOPHASE = TRUE, ZTRAIT_BASETURF = /turf/open/indestructible/plating, ZTRAIT_SECRET = TRUE)
 
 /obj/effect/smooths_with_walls
 	name = "effect that smooths with walls"

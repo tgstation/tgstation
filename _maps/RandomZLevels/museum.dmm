@@ -42,7 +42,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "at" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing/corner{
 	dir = 1
 	},
@@ -121,6 +121,14 @@
 /obj/structure/thermoplastic,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
+"bn" = (
+/obj/structure/hedge/opaque,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "br" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -128,7 +136,7 @@
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "bs" = (
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/awaymission/museum/mothroachvoid)
 "bt" = (
 /obj/effect/step_trigger/teleporter/offset{
@@ -209,7 +217,7 @@
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "ce" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 6
 	},
@@ -303,6 +311,11 @@
 "cN" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/toy/balloon/corgi,
+/obj/machinery/status_display/random_message{
+	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS");
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "cR" = (
@@ -354,7 +367,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/museum)
 "do" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
@@ -373,8 +386,9 @@
 /obj/structure/table,
 /obj/effect/spawner/random/bureaucracy/paper{
 	spawn_loot_count = 7;
-	spawn_random_offset = 10
+	spawn_random_offset = 6
 	},
+/obj/machinery/light/small/dim/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "dH" = (
@@ -426,7 +440,7 @@
 /turf/open/floor/holofloor/hyperspace/ns,
 /area/awaymission/museum)
 "dZ" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "ea" = (
@@ -486,6 +500,9 @@
 /area/awaymission/museum)
 "en" = (
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "es" = (
@@ -522,6 +539,7 @@
 	dir = 1
 	},
 /obj/structure/showcase/machinery/implanter,
+/obj/machinery/light/small/dim/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
 "eF" = (
@@ -544,7 +562,7 @@
 /obj/structure/statue/gold/qm{
 	anchored = 1
 	},
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/awaymission/museum/mothroachvoid)
 "eN" = (
 /obj/machinery/door/poddoor/shutters/window/indestructible{
@@ -557,6 +575,9 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/spawner/random/entertainment/dice,
+/obj/structure/fluff/fake_camera{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "eP" = (
@@ -566,6 +587,9 @@
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/siding/green,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "eR" = (
@@ -644,7 +668,12 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "fJ" = (
-/turf/open/misc/beach/coast,
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
 /area/awaymission/museum)
 "fK" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -740,7 +769,7 @@
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "gN" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/item/stack/rods/ten,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -779,7 +808,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "hj" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /turf/open/misc/grass,
 /area/awaymission/museum/mothroachvoid)
 "hk" = (
@@ -809,6 +838,12 @@
 /obj/effect/spawner/random/vending/colavend,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/large,
+/area/awaymission/museum)
+"hw" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "hA" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -974,7 +1009,7 @@
 /turf/open/floor/bluespace,
 /area/awaymission/museum)
 "iV" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 10
 	},
@@ -1008,7 +1043,7 @@
 /area/awaymission/museum)
 "jm" = (
 /mob/living/basic/mothroach,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/awaymission/museum/mothroachvoid)
 "jn" = (
 /obj/effect/turf_decal/siding/dark_blue{
@@ -1047,6 +1082,14 @@
 /obj/effect/spawner/structure/window,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"jF" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/box,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/awaymission/museum)
 "jG" = (
 /turf/open/floor/carpet/cyan,
 /area/awaymission/museum/mothroachvoid)
@@ -1073,6 +1116,9 @@
 	dir = 8
 	},
 /obj/structure/table,
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "jU" = (
@@ -1120,7 +1166,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "kh" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing/corner{
 	dir = 8
 	},
@@ -1159,6 +1205,12 @@
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/holofloor/white,
+/area/awaymission/museum)
+"kP" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "kQ" = (
 /obj/structure/fluff/meteor,
@@ -1326,7 +1378,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "mn" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing/corner{
 	dir = 8
 	},
@@ -1404,6 +1456,13 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"nl" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/floor/engine,
 /area/awaymission/museum)
 "nq" = (
 /obj/structure/table/wood,
@@ -1533,6 +1592,10 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"od" = (
+/obj/structure/fluff/fake_vent,
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "oe" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -1764,6 +1827,16 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"qL" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "qM" = (
 /obj/machinery/conveyor{
 	dir = 1
@@ -1800,6 +1873,14 @@
 /obj/effect/turf_decal/delivery/red,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"qX" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/structure/fluff/fake_camera,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "qY" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -1853,7 +1934,7 @@
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "rB" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/machinery/light/floor,
 /turf/open/chasm,
 /area/awaymission/museum)
@@ -1865,7 +1946,7 @@
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "rL" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -1972,6 +2053,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_camera,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "sz" = (
@@ -1997,7 +2079,7 @@
 /turf/open/floor/holofloor/beach/coast,
 /area/awaymission/museum)
 "sD" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -2034,7 +2116,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "tc" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 6
 	},
@@ -2169,7 +2251,7 @@
 /turf/open/floor/tram/plate,
 /area/awaymission/museum)
 "tS" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/closet/crate/bin,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -2192,6 +2274,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/dim/directional/north,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "uf" = (
@@ -2234,6 +2319,12 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"uM" = (
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/awaymission/museum)
 "uN" = (
 /turf/open/floor/grass,
 /area/awaymission/museum)
@@ -2265,7 +2356,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "ve" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/holosign/barrier/engineering,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -2318,7 +2409,7 @@
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "vC" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/chair/plastic,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -2335,6 +2426,9 @@
 /mob/living/basic/statue/mannequin{
 	dir = 1;
 	hat = /obj/item/clothing/suit/costume/bronze
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 4
 	},
 /turf/open/floor/bronze,
 /area/awaymission/museum)
@@ -2609,7 +2703,7 @@
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "yf" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/machinery/light/small/directional/north,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -2650,7 +2744,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/museum)
 "yw" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 10
 	},
@@ -2680,7 +2774,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "yG" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/machinery/button/door/directional/east{
 	id = "gateway_waste"
 	},
@@ -2716,6 +2810,14 @@
 "yS" = (
 /turf/closed/wall/space,
 /area/awaymission/museum)
+"zc" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes,
+/obj/structure/fluff/fake_camera{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/museum)
 "zd" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/grass,
@@ -2734,7 +2836,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "zr" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -2840,6 +2942,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/structure/fluff/fake_vent,
 /turf/open/floor/iron/white,
 /area/awaymission/museum)
 "Ag" = (
@@ -2987,6 +3090,12 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Be" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "Bj" = (
 /obj/structure/closet/lawcloset,
 /turf/open/floor/wood/large,
@@ -3063,8 +3172,8 @@
 	},
 /obj/structure/table,
 /obj/effect/spawner/random/bureaucracy/crayon{
-	spawn_loot_count = 10;
-	spawn_random_offset = 8
+	spawn_loot_count = 5;
+	spawn_random_offset = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -3119,6 +3228,12 @@
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
+"CB" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "CC" = (
 /obj/effect/turf_decal/siding/wideplating,
 /turf/open/misc/beach/sand,
@@ -3172,6 +3287,16 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/museum)
+"CW" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "De" = (
 /obj/effect/oneway{
 	dir = 8
@@ -3189,6 +3314,11 @@
 	dir = 4
 	},
 /area/awaymission/museum/mothroachvoid)
+"Dr" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_scrubber,
+/turf/open/floor/iron/white,
+/area/awaymission/museum)
 "Du" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/insectguts,
@@ -3206,6 +3336,16 @@
 /area/awaymission/museum)
 "DD" = (
 /turf/open/floor/bluespace,
+/area/awaymission/museum)
+"DE" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "DI" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -3438,7 +3578,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "Fr" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing/corner/end{
 	dir = 4
 	},
@@ -3487,6 +3627,11 @@
 "FH" = (
 /obj/structure/plaque/static_plaque/golden/commission/box,
 /turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
+"FJ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "FK" = (
 /turf/closed/indestructible/reinforced,
@@ -3580,11 +3725,23 @@
 /obj/structure/plaque/static_plaque/golden/commission/disc,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
+"GY" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Hf" = (
 /obj/structure/table/wood,
 /obj/item/language_manual/roundstart_species,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"Hi" = (
+/obj/structure/fluff/fake_scrubber,
+/turf/open/floor/mineral/titanium/white,
 /area/awaymission/museum)
 "Hj" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -3636,6 +3793,12 @@
 /obj/effect/turf_decal/siding/dark_blue,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"HA" = (
+/obj/machinery/status_display/random_message{
+	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS")
+	},
+/turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
 "HD" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue,
@@ -3651,6 +3814,14 @@
 	},
 /obj/structure/showcase/perfect_employee,
 /turf/open/floor/mineral/titanium/blue,
+/area/awaymission/museum)
+"HJ" = (
+/obj/structure/hedge/opaque,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "HL" = (
 /obj/structure/table/reinforced,
@@ -3691,7 +3862,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Im" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -3878,7 +4049,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/museum)
 "Ko" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/marker_beacon/burgundy,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -3921,6 +4092,10 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"Le" = (
+/obj/structure/fluff/fake_vent,
+/turf/open/floor/mineral/titanium/white,
+/area/awaymission/museum)
 "Lg" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/freezer,
@@ -3932,6 +4107,12 @@
 /area/awaymission/museum)
 "Lm" = (
 /turf/open/floor/black,
+/area/awaymission/museum)
+"Lp" = (
+/obj/machinery/status_display/random_message{
+	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS")
+	},
+/turf/closed/indestructible/reinforced/titanium/nodiagonal,
 /area/awaymission/museum)
 "Lq" = (
 /obj/structure/hedge,
@@ -4083,6 +4264,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Nc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/awaymission/museum)
 "Nd" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/green/opposingcorners,
@@ -4130,7 +4318,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/museum/mothroachvoid)
 "ND" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
 /obj/structure/table,
 /obj/item/clothing/mask/cigarette/cigar{
@@ -4183,6 +4371,9 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "Ok" = (
@@ -4247,7 +4438,7 @@
 /area/awaymission/museum)
 "OT" = (
 /obj/structure/marker_beacon/burgundy,
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "OZ" = (
@@ -4322,7 +4513,7 @@
 /turf/closed/indestructible/fakedoor/engineering,
 /area/awaymission/museum)
 "PC" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -4389,6 +4580,17 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Qa" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Qb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
@@ -4422,7 +4624,7 @@
 /turf/open/floor/grass,
 /area/awaymission/museum)
 "Qk" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -4553,6 +4755,12 @@
 	dir = 4
 	},
 /area/awaymission/museum)
+"Rq" = (
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "Rs" = (
 /mob/living/basic/mothroach,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
@@ -4630,6 +4838,12 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Sv" = (
+/obj/machinery/status_display/random_message{
+	firstline_to_secondline = list("SOUVENIR" = "SHOP")
+	},
+/turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
 "SA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
@@ -4660,6 +4874,11 @@
 	id = "nothing"
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"SU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/spacecash/c1000,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Tr" = (
 /obj/structure/plaque/static_plaque/golden/commission/kilo,
@@ -4787,6 +5006,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Uo" = (
+/obj/structure/fluff/fake_scrubber,
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "Uq" = (
 /obj/effect/smooths_with_walls,
 /turf/cordon/secret,
@@ -4857,6 +5080,9 @@
 /area/awaymission/museum)
 "UR" = (
 /obj/structure/railing,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
 /turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "US" = (
@@ -4868,6 +5094,13 @@
 	dir = 6
 	},
 /turf/open/floor/circuit/green,
+/area/awaymission/museum)
+"UT" = (
+/obj/machinery/status_display/random_message{
+	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS");
+	pixel_x = 32
+	},
+/turf/open/floor/carpet,
 /area/awaymission/museum)
 "UU" = (
 /obj/effect/turf_decal/siding{
@@ -4896,13 +5129,16 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "Vh" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing/corner,
 /obj/machinery/light/small/directional/east,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Vk" = (
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "Vq" = (
@@ -4933,7 +5169,7 @@
 	},
 /area/awaymission/museum)
 "VE" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -4944,6 +5180,17 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/server,
 /turf/open/floor/holofloor/beach,
+/area/awaymission/museum)
+"VK" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_camera{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "VL" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -5052,6 +5299,9 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "WB" = (
@@ -5069,6 +5319,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
+/obj/structure/fluff/fake_scrubber,
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "WH" = (
@@ -5125,6 +5376,9 @@
 	dir = 2
 	},
 /obj/structure/lattice,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Xc" = (
@@ -5140,12 +5394,19 @@
 /turf/closed/indestructible/fakedoor/maintenance,
 /area/awaymission/museum)
 "Xo" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
 /obj/structure/table,
 /obj/item/pen/red,
 /obj/item/paper/fluff/museum/noend,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"Xs" = (
+/obj/structure/fluff/broken_canister_frame,
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Xt" = (
 /obj/structure/table,
@@ -5171,9 +5432,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"XF" = (
+/obj/structure/fluff/fake_vent,
+/turf/open/floor/iron/white,
+/area/awaymission/museum)
 "XK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"XM" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "XP" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -5190,6 +5462,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/corner/always_floorplane,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"XW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "Yb" = (
 /obj/structure/table/wood,
@@ -5335,7 +5614,7 @@
 	},
 /area/awaymission/museum/mothroachvoid)
 "ZH" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -27649,7 +27928,7 @@ lb
 uY
 tD
 FK
-FK
+HA
 FK
 FK
 FK
@@ -27888,7 +28167,7 @@ HL
 Iu
 Uu
 Iu
-Iu
+uM
 iz
 VL
 hV
@@ -27909,7 +28188,7 @@ hV
 hV
 hV
 hV
-VL
+VK
 im
 hV
 hV
@@ -28140,10 +28419,10 @@ re
 fe
 FA
 Ef
-IV
+zc
 Iu
 Uu
-Uu
+Hi
 Uu
 Iu
 EA
@@ -28157,7 +28436,7 @@ uY
 uY
 uY
 qj
-uY
+od
 qj
 uY
 HY
@@ -28664,7 +28943,7 @@ Ye
 FK
 FK
 FK
-lb
+GY
 uY
 tD
 am
@@ -28911,7 +29190,7 @@ re
 fe
 jo
 jo
-fe
+Lp
 vZ
 Ag
 VT
@@ -29472,7 +29751,7 @@ XK
 XK
 XK
 uR
-XK
+SU
 Xh
 re
 re
@@ -29942,7 +30221,7 @@ tj
 UR
 Iu
 Uu
-Uu
+Le
 Uu
 Iu
 EA
@@ -29950,7 +30229,7 @@ uY
 TM
 uY
 qj
-uY
+Uo
 uY
 uY
 uY
@@ -29966,7 +30245,7 @@ uY
 qj
 qj
 qj
-uY
+Uo
 xf
 FK
 XK
@@ -30982,14 +31261,14 @@ hY
 FK
 lb
 TM
-tD
+qL
 FK
 oo
 bJ
 CK
 FK
 QD
-QD
+Xs
 fo
 MV
 dS
@@ -32261,7 +32540,7 @@ FK
 vc
 lb
 uY
-uY
+od
 qj
 uY
 uY
@@ -32271,10 +32550,10 @@ uY
 uY
 uY
 uY
-uY
+Uo
 uY
 aR
-Cc
+HJ
 FK
 re
 re
@@ -33286,7 +33565,7 @@ hV
 hV
 hV
 sE
-VL
+VK
 zg
 uY
 uY
@@ -33546,7 +33825,7 @@ Yk
 qj
 uY
 uY
-uY
+Rq
 FK
 nE
 JF
@@ -34331,7 +34610,7 @@ qj
 uY
 fy
 Cc
-FK
+Sv
 Nd
 Cj
 cA
@@ -34831,6 +35110,7 @@ FK
 hi
 lb
 uY
+Uo
 uY
 uY
 uY
@@ -34840,8 +35120,7 @@ uY
 uY
 uY
 uY
-uY
-uY
+od
 uY
 fy
 el
@@ -34852,7 +35131,7 @@ YZ
 FK
 en
 Vk
-uY
+CB
 FK
 tS
 dZ
@@ -34888,7 +35167,7 @@ Ma
 FK
 Hf
 Ab
-qQ
+XW
 FK
 xt
 wy
@@ -35109,7 +35388,7 @@ Qf
 FK
 ue
 rq
-Vk
+FJ
 FK
 yf
 vC
@@ -35144,11 +35423,11 @@ Ma
 Ma
 ud
 qQ
-Qb
+Dr
 qQ
 kq
 qQ
-Qb
+Dr
 sz
 Qb
 tG
@@ -35364,9 +35643,9 @@ vE
 NY
 pg
 FK
-uY
-uY
-en
+hw
+Be
+XM
 FK
 dZ
 dZ
@@ -35608,11 +35887,11 @@ Cc
 FK
 lb
 uY
-tD
+qX
 FK
 Cc
 Cc
-Cc
+bn
 Cc
 Cc
 FK
@@ -36430,7 +36709,7 @@ dZ
 FK
 RR
 pI
-RR
+jF
 FK
 qp
 xI
@@ -36690,7 +36969,7 @@ FK
 FK
 FK
 LN
-Qb
+Nc
 FK
 FK
 FK
@@ -36886,7 +37165,7 @@ ZY
 VS
 hV
 hV
-hV
+DE
 hV
 pv
 hV
@@ -36898,7 +37177,7 @@ hV
 hV
 bi
 hV
-hV
+CW
 hV
 hV
 LC
@@ -36910,7 +37189,7 @@ vb
 PP
 CI
 Aq
-jI
+nl
 dZ
 Vh
 ce
@@ -37149,7 +37428,7 @@ uY
 uY
 uY
 uY
-uY
+od
 uY
 uY
 uY
@@ -37204,7 +37483,7 @@ Ma
 fT
 bE
 qQ
-xI
+XF
 xI
 Qb
 tG
@@ -37416,7 +37695,7 @@ Vc
 RC
 uY
 tD
-FK
+HA
 re
 re
 re
@@ -37912,7 +38191,7 @@ Sr
 Sr
 Sr
 lb
-uY
+Uo
 tD
 sq
 Lw
@@ -37928,7 +38207,7 @@ tk
 Lw
 FH
 lb
-uY
+Uo
 tD
 Sr
 Sr
@@ -37940,7 +38219,7 @@ re
 re
 re
 re
-FK
+Uq
 re
 re
 re
@@ -38197,7 +38476,7 @@ re
 re
 re
 re
-FK
+re
 re
 re
 re
@@ -38424,7 +38703,7 @@ re
 re
 re
 re
-FK
+HA
 lb
 uY
 tD
@@ -38454,7 +38733,7 @@ re
 re
 re
 re
-FK
+re
 re
 re
 re
@@ -38684,7 +38963,7 @@ re
 FK
 gJ
 Vc
-Ay
+Qa
 FK
 Zp
 nD
@@ -38692,7 +38971,7 @@ lH
 FK
 lb
 uY
-tD
+qL
 FK
 Lt
 lZ
@@ -38711,7 +38990,7 @@ re
 re
 re
 re
-FK
+re
 re
 re
 re
@@ -39200,12 +39479,12 @@ re
 re
 re
 FK
-lb
+kP
 uY
 uY
 uY
 uY
-uY
+Uo
 uY
 uY
 uY
@@ -40230,7 +40509,7 @@ re
 re
 FK
 dn
-dn
+UT
 nC
 lb
 uY
@@ -42290,7 +42569,7 @@ FK
 FK
 lb
 uY
-tD
+qX
 FK
 FK
 FK
@@ -42801,11 +43080,11 @@ re
 re
 re
 re
+Uq
 re
 re
 re
-re
-re
+Uq
 re
 re
 re
