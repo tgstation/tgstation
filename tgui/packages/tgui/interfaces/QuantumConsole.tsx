@@ -161,7 +161,7 @@ const AccessView = (props) => {
         >
           <Tabs fluid>
             <Tabs.Tab
-              backgroundColor="green"
+              backgroundColor={getColor(Difficulty.None)}
               textColor="white"
               selected={tab === 0}
               onClick={() => setTab(0)}
@@ -170,7 +170,7 @@ const AccessView = (props) => {
               Peaceful
             </Tabs.Tab>
             <Tabs.Tab
-              backgroundColor="yellow"
+              backgroundColor={getColor(Difficulty.Low)}
               textColor="black"
               selected={tab === 1}
               onClick={() => setTab(1)}
@@ -179,7 +179,7 @@ const AccessView = (props) => {
               Easy
             </Tabs.Tab>
             <Tabs.Tab
-              backgroundColor="average"
+              backgroundColor={getColor(Difficulty.Medium)}
               textColor="white"
               selected={tab === 2}
               onClick={() => setTab(2)}
@@ -188,7 +188,7 @@ const AccessView = (props) => {
               Medium
             </Tabs.Tab>
             <Tabs.Tab
-              backgroundColor="bad"
+              backgroundColor={getColor(Difficulty.High)}
               textColor="white"
               selected={tab === 3}
               onClick={() => setTab(3)}
