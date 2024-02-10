@@ -216,7 +216,7 @@
 		return FALSE
 	if(!can_hold_items(item))
 		return FALSE
-	item.attempt_pickup(src, skip_grav = TRUE)
+	INVOKE_ASYNC(item, TYPE_PROC_REF(/obj/item, attempt_pickup), src, TRUE)
 	if(get_active_held_item() == item) //if our attack_hand() picks up the item...
 		visible_message(span_warning("[src] catches [item]!"), \
 						span_userdanger("You catch [item] in mid-air!"))

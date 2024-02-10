@@ -238,7 +238,7 @@
 	cast_projectile.impacted = list(user = TRUE)
 	cast_projectile.preparePixelProjectile(target, user)
 	cast_projectile.fire()
-	COOLDOWN_START(src, casting_cd, 1.5 SECONDS)
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
