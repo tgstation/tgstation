@@ -2872,10 +2872,10 @@
 	taste_description = "tiny legs scuttling down the back of your throat"
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	ph = 4.6 // Ants contain Formic Acid
-	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
-	var/ant_damage = 0
-	/// Multiplied by ant_damage to find the damage dealt
-	var/ant_damage_coeff = 0.025
+	/// Number of ticks the ants have been in the person's body
+	var/ant_ticks = 0
+	/// Amount of damage done per tick the ants have been in the person's system
+	var/ant_damage = 0.025
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
 	/// Decal to spawn when spilled
@@ -2898,9 +2898,9 @@
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, seconds_per_tick)
 	. = ..()
-	victim.adjustBruteLoss(max(0.1, round((ant_damage * ant_damage_coeff),0.1))) //Scales with time. Roughly 32 brute with 100u.
-	ant_damage++
-	if(ant_damage < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
+	victim.adjustBruteLoss(max(0.1, round((ant_ticks * ant_damage),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	ant_ticks++
+	if(ant_ticks < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
 		return
 	if(SPT_PROB(5, seconds_per_tick))
 		if(SPT_PROB(5, seconds_per_tick)) //Super rare statement
@@ -2914,7 +2914,7 @@
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	. = ..()
-	ant_damage = 0
+	ant_ticks = 0
 	to_chat(living_anthill, span_notice("You feel like the last of the [name] are out of your system."))
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -2955,7 +2955,7 @@
 	description = "A rare mutation of space ants, born from the heat of a plasma fire. Their bites land a 3.7 on the Schmidt Pain Scale."
 	color = "#b51f1f"
 	taste_description = "tiny flaming legs scuttling down the back of your throat"
-	ant_damage_coeff = 0.05 // Roughly 64 brute with 100u
+	ant_damage = 0.05 // Roughly 64 brute with 100u
 	ants_decal = /obj/effect/decal/cleanable/ants/fire
 	status_effect = /datum/status_effect/ants/fire
 

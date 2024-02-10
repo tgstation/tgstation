@@ -792,8 +792,8 @@
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
-	/// Multiplied by the number of ants whil calculating damage
-	var/ant_damage_coeff = 0.0016
+	/// Amount of damage done per ant on the victim
+	var/damage_per_ant = 0.0016
 	/// Common phrases people covered in ants scream
 	var/static/list/ant_debuff_speech = list(
 		"GET THEM OFF ME!!",
@@ -840,7 +840,7 @@
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
 	var/need_mob_update
-	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * ant_damage_coeff) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * damage_per_ant) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -891,7 +891,7 @@
 /datum/status_effect/ants/fire
 	id = "fire_ants"
 	alert_type = /atom/movable/screen/alert/status_effect/ants/fire
-	ant_damage_coeff = 0.0032
+	damage_per_ant = 0.0032
 
 /atom/movable/screen/alert/status_effect/ants/fire
 	name = "Fire Ants!"
