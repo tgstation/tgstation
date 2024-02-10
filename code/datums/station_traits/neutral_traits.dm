@@ -489,7 +489,7 @@
 
 /obj/item/storage/box/stickers/anti_skub
 	name = "anti-skub stickers box"
-	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! It can also hold your anti-skub shirt."
+	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! And It can also hold a anti-skub shirt!"
 
 /obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
 	. = ..()
