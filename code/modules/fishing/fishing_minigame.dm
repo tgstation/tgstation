@@ -20,7 +20,7 @@
 /// The minimum velocity required for the bait to bounce
 #define BAIT_MIN_VELOCITY_BOUNCE 150
 /// The extra deceleration of velocity that happens when the bait switches direction
-#define BAIT_DECELERATION_MULT 1.75
+#define BAIT_DECELERATION_MULT 1.5
 
 /// Reduce initial completion rate depending on difficulty
 #define MAX_FISH_COMPLETION_MALUS 15
