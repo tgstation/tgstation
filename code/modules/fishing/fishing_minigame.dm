@@ -359,7 +359,7 @@
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
-		start_minigame_phase(autoreel = TRUE)
+		start_minigame_phase(auto_reel = TRUE)
 		return
 	// Setup next phase
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), BITING_TIME_WINDOW, TIMER_STOPPABLE)
