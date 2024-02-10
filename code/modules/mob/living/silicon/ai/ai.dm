@@ -211,8 +211,7 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
-				if(ai_tracking_tool.tracking)
-					ai_tracking_tool.set_tracking(FALSE)
+				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -223,8 +222,7 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
-				if(ai_tracking_tool.tracking)
-					ai_tracking_tool.set_tracking(FALSE)
+				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -401,7 +399,7 @@
 	set name = "track"
 	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
-	ai_tracking_tool.set_tracked_mob(src)
+	ai_tracking_tool.track_input(src)
 
 ///Called when an AI finds their tracking target.
 /mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, mob/living/target)
@@ -524,7 +522,7 @@
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
-		ai_tracking_tool.set_tracked_mob(src, href_list["track"])
+		ai_tracking_tool.track_name(src, href_list["track"])
 		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
@@ -567,8 +565,7 @@
 		view_core()
 		return
 
-	if(ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
 
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
@@ -642,8 +639,7 @@
 	set category = "AI Commands"
 	set name = "Jump To Network"
 	unset_machine()
-	if(ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
 	if(incapacitated())

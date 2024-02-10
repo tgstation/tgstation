@@ -154,8 +154,7 @@
 		return
 	var/mob/living/silicon/ai/AI = usr
 	if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
-		if(AI.ai_tracking_tool.tracking)
-			AI.ai_tracking_tool.set_tracking(FALSE)
+		AI.ai_tracking_tool.reset_tracking()
 		if (isturf(loc) || isturf(src))
 			AI.eyeobj.setLoc(src)
 
@@ -181,8 +180,7 @@
 	else
 		user.sprint = initial
 
-	if(user.ai_tracking_tool.tracking)
-		user.ai_tracking_tool.set_tracking(FALSE)
+	user.ai_tracking_tool.reset_tracking()
 
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
@@ -191,8 +189,8 @@
 		H.clear_holo(src)
 	else
 		current = null
-	if(ai_tracking_tool && ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	if(ai_tracking_tool)
+		ai_tracking_tool.reset_tracking()
 	unset_machine()
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
