@@ -334,6 +334,30 @@
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
+ * Like remove_all but removes a percentage of the reagents directly
+ * rather than by volume
+ *
+ * Arguments
+ * * percentage - the percentage of each reagent to remove
+ */
+/datum/reagents/proc/remove_all_direct(percentage = 0.33)
+	if(!total_volume)
+		return FALSE
+
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to remove all reagents [amount]")
+		return FALSE
+
+	var/list/cached_reagents = reagent_list
+	var/total_removed_amount = 0
+
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		total_removed_amount += remove_reagent(reagent.type, reagent.volume * percentage)
+
+	handle_reactions()
+	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
+
+/**
  * Removes an specific reagent from this holder
  * Arguments
  *
