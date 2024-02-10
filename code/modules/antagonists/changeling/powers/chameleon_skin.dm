@@ -33,8 +33,8 @@
 
 /datum/action/changeling/chameleon_skin/proc/enable_ability(mob/living/carbon/human/cling) //Enable the adaptation
 	animate(cling, alpha = 65,time = 3 SECONDS)
-	cling.visible_message("<span class='warning'>[cling.name] skin is suddenly slowly becoming translucent!</span>", \
-					"<span class='notice'>You are now far more stealthy and better at looking in the dark.</span>")
+	cling.visible_message(span_warning("[cling]'s skin suddenly starts becoming translucent!"), \
+					span_notice("We are now far more stealthy and better at seeing in the dark."))
 	animate(cling, color = COLOR_DARK, time = 3 SECONDS) // Darkens their overall appearance
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown -= recharge_slowdown //Slows down chem regeneration
@@ -47,8 +47,10 @@
 
 /datum/action/changeling/chameleon_skin/proc/disable_ability(mob/living/carbon/human/cling) //Restore the adaptation
 	animate(cling, alpha = 255, time = 3 SECONDS)
-	cling.visible_message("<span class='warning'>[cling.name] appears from thin air!</span>", \
-					"<span class='notice'>You are now appearing normal and lost the ability at looking in the dark.</span>")
+	cling.visible_message(
+		span_warning("[cling] appears from thin air!"),
+		span_notice("We are now appearing normal and lost the ability to see in the dark."),
+	)
 	animate(cling, color = null, time = 3 SECONDS)
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown += recharge_slowdown
