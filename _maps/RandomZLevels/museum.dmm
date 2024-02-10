@@ -1119,6 +1119,7 @@
 /obj/structure/fluff/fake_camera{
 	dir = 9
 	},
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "jU" = (
@@ -4492,6 +4493,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue,
 /obj/machinery/light/small/dim/directional/north,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "Pq" = (
@@ -4798,6 +4800,12 @@
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/white/textured_large,
+/area/awaymission/museum)
+"RT" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue/corner,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "RU" = (
 /obj/structure/transport/linear/tram/slow,
@@ -39226,7 +39234,7 @@ FK
 FK
 FK
 FK
-VS
+RT
 hV
 hV
 hV

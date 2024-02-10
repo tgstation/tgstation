@@ -940,3 +940,4 @@
 
 /obj/structure/transport/linear/tram/slow
 	transport_controller_type = /datum/transport_controller/linear/tram/slow
+	speed_limiter = /datum/transport_controller/linear/tram/slow::speed_limiter
