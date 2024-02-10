@@ -185,7 +185,6 @@
 	. = ..()
 	update_particles()
 
-/// Permanent version of Teleport Flux, applied to non-magically gifted people, goes away on gaining the trait
 /datum/status_effect/teleport_flux/perma
 	id = "perma_teleport_flux"
 	status_type = STATUS_EFFECT_REPLACE
@@ -220,7 +219,6 @@
 	desc = "Your body exists in a state of flux, making further teleportation dangerous."
 	icon_state = "flux"
 
-/// Alert for the Permanent Teleport Flux status effect
 /atom/movable/screen/alert/status_effect/teleport_flux/perma
 	name = "Permanent " + parent_type::name
 	desc = "Your lack of magical talent has left you in a state of flux, making further teleportation dangerous."
