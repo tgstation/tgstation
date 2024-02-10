@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscdel: "Removed \"VALID\", \"AHELP\", \"ICKY\", and \"OCKY\" from the possible Tourettes phrases."
+  - rscadd: "Added \"MROW\" to the possible possible Tourettes phrases."
