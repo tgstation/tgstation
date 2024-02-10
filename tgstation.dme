@@ -5631,6 +5631,7 @@
 #include "monkestation\code\__HELPERS\reagents.dm"
 #include "monkestation\code\__HELPERS\turfs.dm"
 #include "monkestation\code\_onclick\hud\alert.dm"
+#include "monkestation\code\area\areas\direction_names.dm"
 #include "monkestation\code\area\areas\station.dm"
 #include "monkestation\code\controllers\subsystem\job.dm"
 #include "monkestation\code\datums\action.dm"
