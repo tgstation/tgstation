@@ -30,6 +30,10 @@
 		if(flower_bud.trait_flags & SPACEVINE_COLD_RESISTANT)
 			spawned_human_trap.unsuitable_cold_damage = 0
 
+/obj/effect/mob_spawn/ghost_role/venus_human_trap/special(mob/living/spawned_mob, mob/mob_possessor)
+	. = ..()
+	spawned_mob.mind.add_antag_datum(/datum/antagonist/venus_human_trap)
+
 /// Called when the attached flower bud has borne fruit (ie. is ready)
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/proc/bear_fruit()
 	ready = TRUE
