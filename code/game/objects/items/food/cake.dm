@@ -292,15 +292,11 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(bite_taken))
 
-/obj/item/food/cakeslice/birthday/energy/Destroy(force)
-	UnregisterSignal(src, COMSIG_FOOD_EATEN)
-	. = ..()
-
 /obj/item/food/cakeslice/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && target_mob != user) //Prevents pacifists from attacking others directly
 		balloon_alert(user, "that's dangerous!")
 		return FALSE
-	..()
+	return ..()
 
 /obj/item/food/cakeslice/birthday/energy/proc/bite_taken(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
