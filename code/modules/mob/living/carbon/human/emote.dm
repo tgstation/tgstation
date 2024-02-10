@@ -133,8 +133,8 @@
 	if(!.)
 		return
 	var/obj/item/organ/external/tail/oranges_accessory = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-	// I am so sorry my son
-	// We bypass helpers here cause we already have the tail
+	//I am so sorry my son
+	//We bypass helpers here cause we already have the tail
 	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
 		oranges_accessory.stop_wag(src)
 	else

@@ -97,10 +97,10 @@
 	if(tail_spines_overlay) //if there are spines, they should wag with the tail
 		tail_spines_overlay.wagging = TRUE
 	organ_owner.update_body_parts()
-	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(owned_died))
+	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
 	return TRUE
 
-/obj/item/organ/external/tail/proc/owned_died(mob/living/carbon/organ_owner) // Resisting the urge to replace owner with daddy
+/obj/item/organ/external/tail/proc/owner_died(mob/living/carbon/organ_owner) // Resisting the urge to replace owner with daddy
 	SIGNAL_HANDLER
 	stop_wag(organ_owner)
 
