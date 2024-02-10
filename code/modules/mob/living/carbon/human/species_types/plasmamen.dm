@@ -115,7 +115,7 @@
 	else
 		internal_fire = FALSE
 
-	H.update_fire()
+	H.update_appearance(UPDATE_OVERLAYS)
 
 /datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
 	if(internal_fire)
