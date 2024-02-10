@@ -129,3 +129,11 @@
 /obj/item/sticker/syndicate/trap
 	name = "bear trap sticker"
 	icon_state = "trap"
+
+/obj/item/sticker/skub
+	name = "skub sticker"
+	icon_state = "skub"
+
+/obj/item/sticker/anti_skub
+	name = "anti-skub sticker"
+	icon_state = "anti_skub"
