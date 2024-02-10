@@ -189,6 +189,7 @@
 /datum/trackable/proc/track_mob(mob/living/tracker, mob/living/tracked)
 	if(!tracker || tracker.stat == DEAD)
 		return
+	// Need to make sure the tracked mob is in our list
 	track_name(tracked.name)
 
 #undef CAMERA_TICK_LIMIT
