@@ -266,7 +266,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/awaymission/museum)
 "cy" = (
-/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/plating,
@@ -1206,12 +1206,6 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/holofloor/white,
 /area/awaymission/museum)
-"kP" = (
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/siding/dark_blue,
-/obj/machinery/light/small/dim/directional/north,
-/turf/open/floor/iron/dark,
-/area/awaymission/museum)
 "kQ" = (
 /obj/structure/fluff/meteor,
 /turf/open/floor/holofloor/hyperspace/ns,
@@ -1805,7 +1799,7 @@
 /area/awaymission/museum)
 "qx" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -1869,7 +1863,7 @@
 /area/awaymission/museum)
 "qU" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
 /obj/effect/turf_decal/delivery/red,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
@@ -2342,7 +2336,7 @@
 /area/awaymission/museum)
 "vb" = (
 /obj/structure/grille/indestructible,
-/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -4494,6 +4488,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
+"Pp" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Pq" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -4540,7 +4540,7 @@
 /turf/open/floor/bronze/flat,
 /area/awaymission/museum)
 "PP" = (
-/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -5571,6 +5571,10 @@
 "Zg" = (
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/holofloor/beach/water,
+/area/awaymission/museum)
+"Zk" = (
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Zn" = (
 /obj/structure/lattice,
@@ -36411,7 +36415,7 @@ tl
 Jk
 CL
 rm
-PP
+Zk
 EG
 XK
 bF
@@ -39479,7 +39483,7 @@ re
 re
 re
 FK
-kP
+Pp
 uY
 uY
 uY

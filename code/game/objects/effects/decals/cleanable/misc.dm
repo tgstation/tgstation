@@ -485,6 +485,9 @@
 		ignite()
 	return ..()
 
+/obj/effect/decal/cleanable/fuel_pool/hivis
+	icon_state = "fuel_pool_hivis"
+
 /obj/effect/decal/cleanable/rubble
 	name = "rubble"
 	desc = "A pile of rubble."
