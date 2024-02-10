@@ -202,9 +202,9 @@
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
-	var/static/list/exception_cache = typecacheof(
+	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/fishing_rod,
-	)
+	))
 	atom_storage.exception_hold = exception_cache
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
@@ -256,7 +256,7 @@
 ///Used to give the average player info about fishing stuff that'd often go fly the radar.
 /obj/item/paper/paperslip/fishing_tip
 	name = "fishing tip"
-	desc = "A slip of paper with a pearl of wisdom about fishing inside it, though you wish it were an actual pearl."
+	desc = "A slip of paper with a pearl of wisdom about fishing in it, though you wish it were an actual pearl."
 
 /obj/item/paper/paperslip/fortune/Initialize(mapload)
 	default_raw_text = pick(GLOB.fishing_tips)

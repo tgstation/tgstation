@@ -17,6 +17,8 @@
 	)
 
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target)
+	if(!..())
+		return FALSE
 	if(!iscarbon(target))
 		return FALSE
 	var/mob/living/carbon/carbon_target = target

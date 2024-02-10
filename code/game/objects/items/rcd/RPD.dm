@@ -587,7 +587,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						if(queued_pipe_flipped)
 							tube.setDir(turn(queued_pipe_dir, 45 + ROTATION_FLIP))
-							tube.AfterRotation(user, ROTATION_FLIP)
+							tube.post_rotation(user, ROTATION_FLIP)
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)

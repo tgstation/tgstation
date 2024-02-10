@@ -1803,6 +1803,7 @@
 /obj/machinery/door/airlock/security
 	name = "security airlock"
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
+	var/id = null
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
 

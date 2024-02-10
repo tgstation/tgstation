@@ -419,6 +419,7 @@
 		they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is, like most artificially-flavoured moth food, mixed-herb flavoured."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "sustenance_bar"
+	trash_type = /obj/item/trash/fleet_ration
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
 	tastes = list("herbs" = 1)
 	foodtypes = VEGETABLES | GRAIN

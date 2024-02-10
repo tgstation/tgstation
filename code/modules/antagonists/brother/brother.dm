@@ -63,6 +63,12 @@
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
 
+	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
+		// If the objective has a target, are we flashing them?
+		if(flashed == brother_objective.target?.current)
+			flashed.balloon_alert(source, "that's your target!")
+			return
+
 	if (flashed.mind.has_antag_datum(/datum/antagonist/brother))
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return

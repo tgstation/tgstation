@@ -239,6 +239,7 @@
 	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 	var/blood_type = patient.dna.blood_type
 	var/blood_warning = " "
+	var/blood_alcohol = patient.get_blood_alcohol_content()
 
 	for(var/thing in patient.diseases) //Disease Information
 		var/datum/disease/D = thing
@@ -354,6 +355,7 @@
 	data["bleed_status"] = bleed_status
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
+	data["blood_alcohol"] = blood_alcohol
 	data["chemical_list"] = chemical_list
 	data["overdose_list"] = overdose_list
 	data["addict_list"] = addict_list

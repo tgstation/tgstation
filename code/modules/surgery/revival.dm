@@ -5,7 +5,7 @@
 	requires_bodypart_type = NONE
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living)
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_MORBID_CURIOSITY
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -123,6 +123,7 @@
 /datum/surgery/revival/carbon
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon)
+	surgery_flags = parent_type::surgery_flags | SURGERY_REQUIRE_LIMB
 
 /datum/surgery/revival/carbon/is_valid_target(mob/living/carbon/patient)
 	var/obj/item/organ/internal/brain/target_brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
