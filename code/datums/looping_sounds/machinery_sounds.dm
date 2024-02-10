@@ -151,3 +151,9 @@
 		'sound/machines/terminal_button08.ogg' = 1,
 	)
 	mid_length = 0.3 SECONDS
+
+/datum/looping_sound/soup
+	mid_sounds = list('sound/effects/soup_boil.ogg' = 1)
+	mid_length = 18 SECONDS
+	volume = 15
+	falloff_exponent = 4

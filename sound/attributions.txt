@@ -136,4 +136,7 @@ https://freesound.org/people/steaq/sounds/560124/
 
 refinery.ogg, smelter.ogg, and wooping_teleport.ogg are all original works by ArcaneMusic,
 with smelter.ogg using samples from rock_break alongside original sound effects from a warrior electric drill,
-where refinery and wooping_teleport are modifications of that same electric drill recording.
+where refinery and wooping_teleport are modifications of that same electric drill recordi
+
+soup_boil.ogg is taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG (but is otherwise unchanged):
+https://freesound.org/people/jorickhoofd/sounds/632783/
