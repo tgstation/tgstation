@@ -579,7 +579,6 @@ Moving interrupts
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
 			content_ma.overlays -= real
-			real.plane = FLOAT_PLANE
 			overlays_to_keep += real
 		else
 			content_ma.overlays -= real
@@ -591,7 +590,6 @@ Moving interrupts
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
 			content_ma.underlays -= real
-			real.plane = FLOAT_PLANE
 			underlays_to_keep += real
 		else
 			content_ma.underlays -= real
@@ -599,14 +597,23 @@ Moving interrupts
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
-	content_ma.plane = FLOAT_PLANE
-	content_ma.layer = FLOAT_LAYER
+	update_content_planes()
 	update_appearance()
 
 /obj/structure/statue/custom/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
 		return ..()
+	update_content_planes()
 	update_appearance()
+
+/obj/structure/statue/custom/proc/update_content_planes()
+	if(!content_ma)
+		return
+	var/turf/our_turf = get_turf(src)
+	// MA's stored in the overlays list are not actually mutable, they've been flattened
+	// This proc unflattens them, updates them, and then reapplies
+	var/list/created = update_appearance_planes(list(content_ma), GET_TURF_PLANE_OFFSET(our_turf))
+	content_ma = created[1]
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()
