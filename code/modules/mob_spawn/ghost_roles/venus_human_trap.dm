@@ -11,6 +11,7 @@
 	flavour_text = "You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"
 	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
 	spawner_job_path = /datum/job/venus_human_trap
+	invisibility = INVISIBILITY_ABSTRACT //The flower bud structure is our visible component, we just handle logic.
 	/// Physical structure housing the spawner
 	var/obj/structure/alien/resin/flower_bud/flower_bud
 	/// Used to determine when to notify ghosts
