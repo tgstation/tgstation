@@ -388,7 +388,7 @@
 
 /// A trait that lets players choose whether they want a skub and pro-skub shirt, an anti-skub shirt, or neither.
 /datum/station_trait/skub
-	name = "The Great Skub Debacle"
+	name = "The Great Skub Contention"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = FALSE
 	weight = 2
