@@ -81,7 +81,7 @@
 	var/tp_result = do_teleport(
 		teleatom = user,
 		destination = target_turf,
-		precision = HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) ? 0 : 2,
+		precision = (HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || !apply_debuffs) ? 0 : 2,
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
@@ -108,7 +108,7 @@
 	// but also serves as a counter-counter to stuff like mute toxin.)
 	var/obj/item/organ/user_stomach = user.get_organ_slot(ORGAN_SLOT_STOMACH)
 	user.reagents?.remove_all_direct(0.33)
-	user_stomach?.remove_all_direct(0.33)
+	user_stomach?.reagents?.remove_all_direct(0.33)
 	if(user.has_status_effect(/datum/status_effect/teleport_flux/perma))
 		return
 
