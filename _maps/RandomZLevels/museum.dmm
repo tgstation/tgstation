@@ -2197,6 +2197,7 @@
 	name = "fake stungloves";
 	desc = "A crude replica of stungloves. Essentially gloves wrapped with wire. Extremely unsafe."
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "tB" = (
@@ -3530,6 +3531,12 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"EY" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue/corner,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Fa" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -4800,12 +4807,6 @@
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/white/textured_large,
-/area/awaymission/museum)
-"RT" = (
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/siding/dark_blue/corner,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "RU" = (
 /obj/structure/transport/linear/tram/slow,
@@ -39234,7 +39235,7 @@ FK
 FK
 FK
 FK
-RT
+EY
 hV
 hV
 hV
