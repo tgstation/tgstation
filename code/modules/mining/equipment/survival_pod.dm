@@ -52,6 +52,7 @@
 	addtimer(CALLBACK(src, PROC_REF(expand), user), 5 SECONDS)
 	return TRUE
 
+/// Expands the capsule into a full shelter, placing the template at the item's location (NOT triggerer's location)
 /obj/item/survivalcapsule/proc/expand(mob/triggerer)
 	if(QDELETED(src))
 		return
@@ -75,6 +76,8 @@
 	new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
 	qdel(src)
 
+/// Throws any mobs near the deployed location away from the item / shelter
+/// Does some math to make closer mobs get thrown further
 /obj/item/survivalcapsule/proc/yote_nearby(turf/deploy_location)
 	var/width = template.width
 	var/height = template.height
@@ -103,6 +106,7 @@
 			force = MOVE_FORCE_VERY_STRONG,
 		)
 
+/// Logs if the capsule was triggered, by default only if it happened on non-lavaland
 /obj/item/survivalcapsule/proc/trigger_admin_alert(mob/triggerer, turf/trigger_loc)
 	//only report capsules away from the mining/lavaland level
 	if(is_mining_level(trigger_loc.z))
