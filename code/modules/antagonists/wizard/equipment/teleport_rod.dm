@@ -93,12 +93,12 @@
 	var/sound/teleport_sound = sound('sound/magic/summonitems_generic.ogg')
 	teleport_sound.pitch = 0.5
 	// Handle our own pizzaz rather than doing it in do_teleport
-	new /obj/effect/temp_visual/teleport_flux(start_turf)
-	new /obj/effect/temp_visual/teleport_flux(target_turf)
+	new /obj/effect/temp_visual/teleport_flux(start_turf, user.dir)
+	new /obj/effect/temp_visual/teleport_flux(target_turf, user.dir)
 	playsound(start_turf, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	playsound(target_turf, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	// Some extra delay to prevent accidental double clicks
-	user.changeNext_move(CLICK_CD_SLOW)
+	user.changeNext_move(CLICK_CD_SLOW * 1.2)
 
 	if(!apply_debuffs)
 		return
@@ -128,9 +128,11 @@
 	light_power = 2
 	light_range = 1
 	light_on = TRUE
+	randomdir = FALSE
 
-/obj/effect/temp_visual/teleport_flux/Initialize(mapload)
+/obj/effect/temp_visual/teleport_flux/Initialize(mapload, copy_dir = SOUTH)
 	. = ..()
+	setDir(copy_dir)
 	particles = new /particles/teleport_flux()
 	apply_wibbly_filters(src)
 	animate(src, alpha = 0, time = duration, flags = ANIMATION_PARALLEL)
