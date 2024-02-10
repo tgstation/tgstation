@@ -870,7 +870,7 @@
 	if(need_mob_update)
 		victim.updatehealth()
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
-		victim.remove_status_effect(src.type) //If this person has no more ants on them or are dead, they are no longer affected.
+		victim.remove_status_effect(type) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"
