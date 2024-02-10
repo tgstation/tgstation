@@ -228,11 +228,8 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/equipped_speed_mods()
-	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store, back, wear_mask, wear_neck, head, handcuffed, legcuffed))
-		var/obj/item/thing = sloties
-		. += thing?.slowdown
+/mob/living/carbon/human/get_equipped_speed_mod_items()
+	return ..() - list(l_store, r_store, s_store)
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.

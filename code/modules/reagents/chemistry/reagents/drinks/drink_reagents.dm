@@ -1170,6 +1170,7 @@
 	quality = DRINK_GOOD
 	taste_description = "citrus soda with cucumber"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, seconds_per_tick, times_fired)
 	. = ..()
