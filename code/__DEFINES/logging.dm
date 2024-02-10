@@ -49,7 +49,8 @@
 #define LOG_RADIO_EMOTE (1 << 20)
 #define LOG_SPEECH_INDICATORS (1 << 21)
 #define LOG_CLONING (1 << 22)
-#define LOG_MECHCOMP (1 <<23)
+#define LOG_MECHCOMP (1 << 23)
+#define LOG_BLACKMARKET (1 << 24)
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
@@ -86,8 +87,9 @@
 #define LOG_ENTRY_KEY_ID "id"
 #define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
 
-// Category for invalid/missing categories
-#define LOG_CATEGORY_NOT_FOUND "invalid-category"
+// Internal categories
+#define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"
+#define LOG_CATEGORY_INTERNAL_ERROR "internal-error"
 
 // Misc categories
 #define LOG_CATEGORY_ATTACK "attack"
@@ -114,6 +116,7 @@
 #define LOG_CATEGORY_MUSIC "music"
 #define LOG_CATEGORY_META "currency"
 #define LOG_CATEGORY_ARTIFACT "artifact"
+#define LOG_CATEGORY_BLACKMARKET "blackmarket"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"

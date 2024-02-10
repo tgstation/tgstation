@@ -215,7 +215,7 @@
 		if("outputTW")
 			power_format_multi_output = 1 TW
 		if("outputPW")
-			power_format_multi = 1 PW
+			power_format_multi_output = 1 PW
 
 
 /obj/machinery/power/transmission_laser/process()
@@ -229,7 +229,7 @@
 	var/last_fire = firing
 
 	if(terminal && input_attempt)
-		input_pulling = min(terminal.surplus() , input_number * power_format_multi)
+		input_pulling = min(input_available , input_number * power_format_multi)
 
 		if(inputting)
 			if(input_pulling > 0)
@@ -278,6 +278,8 @@
 	var/generated_cash = (2 * mw_power * PROCESS_CAP) / (2 * mw_power + PROCESS_CAP * A1_CURVE)
 	generated_cash += (4 * mw_power * MINIMUM_BAR) / (4 * mw_power + MINIMUM_BAR)
 	generated_cash = round(generated_cash)
+	if(generated_cash < 0)
+		return
 
 	total_earnings += generated_cash
 	generated_cash += unsent_earnings
@@ -343,6 +345,7 @@
 	name = ""
 	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "ptl_beam"
+	anchored = TRUE
 
 	///used to deal with atoms stepping on us while firing
 	var/obj/machinery/power/transmission_laser/host

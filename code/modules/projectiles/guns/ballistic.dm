@@ -289,6 +289,7 @@
 		playsound(src, lock_back_sound, lock_back_sound_volume, lock_back_sound_vary)
 	else
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+	SEND_SIGNAL(src, COMSIG_GUN_RACKED, user)
 	update_appearance()
 
 ///Drops the bolt from a locked position

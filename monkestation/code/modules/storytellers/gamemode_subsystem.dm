@@ -438,7 +438,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/high_pop_bound = pop_scale_thresholds[track]
 		var/scale_penalty = pop_scale_penalties[track]
 
-		var/perceived_pop = max(low_pop_bound, active_players) // after max pop we start generating even more threat
+		var/perceived_pop = min(max(low_pop_bound, active_players), high_pop_bound)
 
 		var/divisor = high_pop_bound - low_pop_bound
 		/// If the bounds are equal, we'd be dividing by zero or worse, if upper is smaller than lower, we'd be increasing the factor, just make it 1 and continue.

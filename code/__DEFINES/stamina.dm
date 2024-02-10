@@ -42,7 +42,7 @@
 ///The amount of stamina at which point swinging is free.
 #define STAMINA_MAXIMUM_TO_SWING 100
 ///The time a mob is stunned when stamina stunned
-#define STAMINA_STUN_TIME 5 SECONDS
+#define STAMINA_STUN_TIME 9 SECONDS
 ///The base value of a stamina stun chance
 #define STAMINA_SCALING_STUN_BASE 20
 ///The maximum additional stun chance based on missing stamina

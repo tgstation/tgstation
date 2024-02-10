@@ -227,7 +227,14 @@ monkestation edit end */
 //Butt-Based Farts
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
 	if(issilicon(user))
-		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!")
+		var/list/ignored_mobs = list()
+		for(var/mob/anything in GLOB.player_list)
+			if(!anything.client)
+				continue
+			if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
+				continue
+			ignored_mobs |= anything
+		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!", ignored_mobs = ignored_mobs)
 		playsound(user, pick(
 			'monkestation/sound/effects/robot_farts/rbf1.ogg',
 			'monkestation/sound/effects/robot_farts/rbf2.ogg',
@@ -247,7 +254,7 @@ monkestation edit end */
 			'monkestation/sound/effects/robot_farts/rbf16.ogg',
 			'monkestation/sound/effects/robot_farts/rbf17.ogg',
 			'monkestation/sound/effects/robot_farts/rbf18.ogg',
-		), 50, TRUE)
+		), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
 		return
 	. = ..()
 	if(user.stat == CONSCIOUS)

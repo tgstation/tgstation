@@ -50,6 +50,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	var/static/datum/space_level/reservation
 
+	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
+	var/static/list/uncreatables = null
+
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
 	return initial(a.priority) - initial(b.priority)
 
@@ -57,6 +60,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if (isnull(reservation))
 		var/datum/map_template/unit_tests/template = new
 		reservation = template.load_new_z()
+
+	if (isnull(uncreatables))
+		uncreatables = build_list_of_uncreatables()
 
 	allocated = new
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
@@ -195,6 +201,126 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 
 	qdel(test)
+
+/// Builds (and returns) a list of atoms that we shouldn't initialize in generic testing, like Create and Destroy.
+/// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
+/datum/unit_test/proc/build_list_of_uncreatables()
+	RETURN_TYPE(/list)
+	var/list/ignore = list(
+		//Never meant to be created, errors out the ass for mobcode reasons
+		/mob/living/carbon,
+		//Nother template type, doesn't like being created with no seed
+		/obj/item/food/grown,
+		//And another
+		/obj/item/slimecross/recurring,
+		//This should be obvious
+		/obj/machinery/doomsday_device,
+		//Yet more templates
+		/obj/machinery/restaurant_portal,
+		//Template type
+		/obj/effect/mob_spawn,
+		//Template type
+		/obj/structure/holosign/robot_seat,
+		//Singleton
+		/mob/dview,
+		//Template type
+		/obj/item/bodypart,
+		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
+		/obj/merge_conflict_marker,
+		//briefcase launchpads erroring
+		/obj/machinery/launchpad/briefcase,
+		//Both are abstract types meant to scream bloody murder if spawned in raw
+		/obj/item/organ/external,
+		/obj/item/organ/external/wings,
+		/obj/effect/spawner/random_engines,
+		/obj/effect/spawner/random_bar,
+		///this instant starts a timer, and if its being instantly deleted it can cause issues
+		/obj/machinery/atm,
+		/datum/hotspot,
+		/obj/machinery/ocean_elevator,
+		/atom/movable/outdoor_effect,
+		/turf/closed/mineral/random/regrowth,
+	)
+	//Say it with me now, type template
+	ignore += typesof(/obj/effect/mapping_helpers)
+	//This turf existing is an error in and of itself
+	ignore += typesof(/turf/baseturf_skipover)
+	ignore += typesof(/turf/baseturf_bottom)
+	//This demands a borg, so we'll let if off easy
+	ignore += typesof(/obj/item/modular_computer/pda/silicon)
+	//This one demands a computer, ditto
+	ignore += typesof(/obj/item/modular_computer/processor)
+	//Very finiky, blacklisting to make things easier
+	ignore += typesof(/obj/item/poster/wanted)
+	//This expects a seed, we can't pass it
+	ignore += typesof(/obj/item/food/grown)
+	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
+	ignore += typesof(/obj/effect/client_image_holder)
+	//Same to above. Needs a client / mob / hallucination to observe it to exist.
+	ignore += typesof(/obj/projectile/hallucination)
+	ignore += typesof(/obj/item/hallucinated)
+	//Can't pass in a thing to glow
+	ignore += typesof(/obj/effect/abstract/eye_lighting)
+	//We don't have a pod
+	ignore += typesof(/obj/effect/pod_landingzone_effect)
+	ignore += typesof(/obj/effect/pod_landingzone)
+	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
+	ignore += typesof(/obj/effect/baseturf_helper)
+	//No tauma to pass in
+	ignore += typesof(/mob/camera/imaginary_friend)
+	//No pod to gondola
+	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
+	//No heart to give
+	ignore += typesof(/obj/structure/ethereal_crystal)
+	//No linked console
+	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
+	//See above
+	ignore += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
+	ignore += typesof(/obj/effect/anomaly/grav/high)
+	//See above
+	ignore += typesof(/obj/effect/timestop)
+	//Invoke async in init, skippppp
+	ignore += typesof(/mob/living/silicon/robot/model)
+	//This lad also sleeps
+	ignore += typesof(/obj/item/hilbertshotel)
+	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
+	ignore += typesof(/obj/effect/sliding_puzzle)
+	//Stacks baseturfs, can't be tested here
+	ignore += typesof(/obj/effect/temp_visual/lava_warning)
+	//Stacks baseturfs, can't be tested here
+	ignore += typesof(/obj/effect/landmark/ctf)
+	//Our system doesn't support it without warning spam from unregister calls on things that never registered
+	ignore += typesof(/obj/docking_port)
+	//Asks for a shuttle that may not exist, let's leave it alone
+	ignore += typesof(/obj/item/pinpointer/shuttle)
+	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
+	ignore += typesof(/obj/structure/alien/resin/flower_bud)
+	//Needs a linked mecha
+	ignore += typesof(/obj/effect/skyfall_landingzone)
+	//Expects a mob to holderize, we have nothing to give
+	ignore += typesof(/obj/item/clothing/head/mob_holder)
+	//Needs cards passed into the initilazation args
+	ignore += typesof(/obj/item/toy/cards/cardhand)
+	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
+	ignore += typesof(/obj/machinery/computer/holodeck)
+	//runtimes if not paired with a landmark
+	ignore += typesof(/obj/structure/industrial_lift)
+	// Runtimes if the associated machinery does not exist, but not the base type
+	ignore += subtypesof(/obj/machinery/airlock_controller)
+	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
+	ignore += subtypesof(/atom/movable/screen/escape_menu)
+	///we generate mobs in these and create destroy does this in null space
+	ignore += typesof(/obj/item/loot_table_maker)
+	///we need to use json_decode to run randoms properly
+	ignore += typesof(/obj/item/device/cassette_tape)
+	ignore += typesof(/datum/cassette/cassette_tape)
+	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
+	ignore += typesof(/datum/weather_event)
+	ignore += typesof(/datum/particle_weather)
+	ignore += typesof(/mob/living/basic/aquatic)
+
+	return ignore
 
 /proc/RunUnitTests()
 	CHECK_TICK

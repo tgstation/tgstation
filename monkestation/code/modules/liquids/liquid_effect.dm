@@ -268,6 +268,8 @@
 
 			for(var/datum/reagent/reagent_type as anything in liquid_group.reagents.reagent_list)
 				var/reagent_name = initial(reagent_type.name)
+				if(istype(reagent_type, /datum/reagent/ammonia/urine) && examiner.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+					reagent_name = "Ammonia"
 				var/volume = round(reagent_type.volume / length(liquid_group.members), 0.01)
 				examine_list += "&bull; [volume] units of [reagent_name]"
 
