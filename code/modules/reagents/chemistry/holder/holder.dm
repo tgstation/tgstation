@@ -334,20 +334,17 @@
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
- * Like remove_all but removes a percentage of the reagents directly
- * rather than by volume
+ * Like remove_all but removes a percentage of every reagent directly rather than by volume
  *
  * Arguments
  * * percentage - the percentage of each reagent to remove
  */
-/datum/reagents/proc/remove_all_direct(percentage = 0.33)
+/datum/reagents/proc/remove_all_direct(percentage = 0.5)
 	if(!total_volume)
-		return FALSE
-
-	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to remove all reagents [amount]")
-		return FALSE
-
+		return 0
+	if(percentage <= 0)
+		stack_trace("non positive percentage passed to remove all reagents direct [percentage]")
+		return 0
 	var/list/cached_reagents = reagent_list
 	var/total_removed_amount = 0
 

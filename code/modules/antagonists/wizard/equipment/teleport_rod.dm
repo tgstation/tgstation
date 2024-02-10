@@ -5,11 +5,11 @@
 	desc = "A magical rod that teleports you to the location you point it. \
 		Using it puts you in a state of flux, removing some of your reagents and \
 		causing you to take damage from further uses until you stabilize once more."
-	icon_state = "telewand"
-	inhand_icon_state = "wand"
+	icon_state = "tele_wand_er"
+	inhand_icon_state = "tele_wand_er"
 	icon = 'icons/obj/weapons/guns/magic.dmi'
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF | UNACIDABLE
 	item_flags = NOBLUDGEON
 	light_system = MOVABLE_LIGHT
@@ -20,7 +20,11 @@
 	/// Whether we apply the teleport flux debuff, damaging people who teleport
 	var/apply_debuffs = TRUE
 	/// Max range at which we can teleport, because it operates in view TECHNICALLY can click very very far
-	var/max_tp_range = 7
+	var/max_tp_range = 8
+
+/obj/item/teleport_rod/Initialize(mapload)
+	. = ..()
+	particles = new /particles/teleport_flux/small()
 
 // Admin only version which just teleports you, so spam it all you want
 /obj/item/teleport_rod/admin
@@ -91,8 +95,8 @@
 	// Handle our own pizzaz rather than doing it in do_teleport
 	new /obj/effect/temp_visual/teleport_flux(start_turf)
 	new /obj/effect/temp_visual/teleport_flux(target_turf)
-	playsound(start_turf, teleport_sound, 75, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
-	playsound(target_turf, teleport_sound, 75, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+	playsound(start_turf, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+	playsound(target_turf, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	// Some extra delay to prevent accidental double clicks
 	user.changeNext_move(CLICK_CD_SLOW)
 
@@ -102,7 +106,9 @@
 	// Teleporting leaves some of your reagents behind!
 	// (Primarily a way to prevent cheese with damage healing chem mixes,
 	// but also serves as a counter-counter to stuff like mute toxin.)
+	var/obj/item/organ/user_stomach = user.get_organ_slot(ORGAN_SLOT_STOMACH)
 	user.reagents?.remove_all_direct(0.33)
+	user_stomach?.remove_all_direct(0.33)
 	if(user.has_status_effect(/datum/status_effect/teleport_flux/perma))
 		return
 
@@ -114,7 +120,7 @@
 
 /// Temp visual displayed on both sides of a teleport rod teleport
 /obj/effect/temp_visual/teleport_flux
-	icon_state = "blank_white" // melbert todo : not all dirs are white, cringe
+	icon_state = "blank_white"
 	color = COLOR_MAGENTA
 	alpha = 255
 	duration = 2 SECONDS
@@ -210,7 +216,7 @@
 /atom/movable/screen/alert/status_effect/teleport_flux
 	name = "Teleport Flux"
 	desc = "Your body exists in a state of flux, making further teleportation dangerous."
-	icon_state = "negative"
+	icon_state = "flux"
 
 /// Alert for the Permanent Teleport Flux status effect
 /atom/movable/screen/alert/status_effect/teleport_flux/perma
@@ -231,3 +237,10 @@
 	position = generator(GEN_SPHERE, 12, 12, NORMAL_RAND)
 	drift = generator(GEN_VECTOR, list(-1, 1), list(1, 1), NORMAL_RAND)
 	color = COLOR_MAGENTA
+
+/particles/teleport_flux/small
+	spawning = 1.5
+	scale = 0.75
+	lifespan = 0.5 SECONDS
+	position = generator(GEN_SPHERE, 4, 12, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(-1, 1), list(1, 2), NORMAL_RAND)
