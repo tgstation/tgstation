@@ -36,7 +36,6 @@
 	remove_from_alive_mob_list()
 	remove_from_mob_suicide_list()
 	focus = null
-	key_to_action_weakref = null
 	if(length(progressbars))
 		stack_trace("[src] destroyed with elements in its progressbars list")
 		progressbars = null
