@@ -14,6 +14,7 @@
 /datum/quirk/touchy/remove()
 	UnregisterSignal(quirk_holder, COMSIG_CLICK_SHIFT)
 
+///Checks if the mob is besides the  thing being examined, if they aren't then we cancel their examinate.
 /datum/quirk/touchy/proc/examinate_check(mob/examiner, atom/examined)
 	SIGNAL_HANDLER
 
