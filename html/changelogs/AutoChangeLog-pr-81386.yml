@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fix succumb last words being double-encoded (i.e `i'm` becoming `i&#39;lm`)"
