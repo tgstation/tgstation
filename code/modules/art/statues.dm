@@ -578,10 +578,7 @@ Moving interrupts
 		var/mutable_appearance/real = new()
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			content_ma.overlays -= real
 			overlays_to_keep += real
-		else
-			content_ma.overlays -= real
 	content_ma.overlays = overlays_to_keep
 
 	var/list/underlays_to_keep = list()
