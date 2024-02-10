@@ -236,3 +236,36 @@
   - rscadd: Adds a new suicide_act() to the smite spell
   Zergspower:
   - bugfix: icebox ore generation underground is normal again
+2024-02-10:
+  00-Steven:
+  - bugfix: As they should've for a while, screwdrivers (cocktail) actually work as
+      screwdrivers (tool).
+  - sound: The screwdriver cocktail also actually plays the screwdriver sound when
+      used.
+  1393F:
+  - bugfix: The HFR now provides the max temperature for recipes
+  - bugfix: the crystallizer now provides the dangerous object created instead of
+      itself in admin logging
+  Ben10Omintrix:
+  - rscadd: settlers can rename their pets
+  FernandoJ8:
+  - code_imp: added an IS_CHANGELING() helper and used it where applicable
+  Holoo-1:
+  - admin: remade everyone is traitor into everyone is antag in secrets panel
+  IndieanaJones:
+  - bugfix: Bolas in your pockets no longer slow you down.
+  JohnFulpWillard:
+  - rscadd: Changeling's reviving stasis ability now puts you in stasis.
+  LT3:
+  - qol: Health analyzer will now display blood alcohol content
+  LemonInTheDark:
+  - rscdel: Removes halloween screen tint, we're taking him to retire by the seaside
+      (he was alone and unloved)
+  Melbert:
+  - bugfix: Fixed some situations in which you couldn't interact with heretic runes
+  - bugfix: Fixed Finger Guns giving a misleading chat message
+  - bugfix: You know that one bug that makes the cryo cells on Deltastation unusuable?
+      Well it's not fixed but at least those cryo cells are usuable again, maybe at
+      the cost of another station's cryo cells. Who knows!
+  larentoun:
+  - bugfix: Now falsewalls visually don't close when they shouldn't.

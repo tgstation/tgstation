@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "As they should've for a while, screwdrivers (cocktail) actually work as screwdrivers (tool)."
-  - sound: "The screwdriver cocktail also actually plays the screwdriver sound when used."
