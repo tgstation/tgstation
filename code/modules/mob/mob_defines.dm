@@ -200,6 +200,3 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
-	
-	/// key pressed to weakref of an action
-	var/key_to_action_weakref = list()

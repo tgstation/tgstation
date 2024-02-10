@@ -1646,11 +1646,12 @@
 
 	mind?.print_levels(src)
 
-/mob/proc/handleActionBinds(key, client)
-	for(var/datum/action/act in actions)
-		if(act.full_key != key)
-			continue
+/mob/key_down(key, client/client, full_key)
+	SHOULD_CALL_PARENT(true)
+	for(var/datum/action/act as anything in actions)
 		if(next_click > world.time)
+			break
+		if(act.full_key != full_key)
 			continue
 		next_click = world.time + CLICK_CD_RANGE
 		act.Trigger()
