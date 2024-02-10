@@ -143,13 +143,13 @@
 	if(distance < VENT_PROX_VERY_HIGH)
 		return 5
 	if(distance < VENT_PROX_HIGH)
-		return 4
+		return rand(4,5)
 	if(distance < VENT_PROX_MEDIUM)
-		return 3
+		return rand(3,4)
 	if(distance < VENT_PROX_LOW)
-		return 2
+		return rand(1,4)
 	if(distance < VENT_PROX_FAR)
-		return 1
+		return rand(1,3)
 	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
