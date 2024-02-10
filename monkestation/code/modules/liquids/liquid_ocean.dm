@@ -505,12 +505,8 @@ GLOBAL_LIST_INIT(the_lever, list())
 
 /turf/open/floor/plating/ocean/dark/rock/warm/fissure/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(gone))
-		var/mob/living/leaving_mob = gone
-		if(!islava(leaving_mob.loc))
-			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!leaving_mob.on_fire)
-			leaving_mob.update_fire()
+	if(isliving(gone) && !islava(gone.loc))
+		gone.RemoveElement(/datum/element/perma_fire_overlay)
 
 /turf/open/floor/plating/ocean/dark/rock/warm/fissure/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -603,8 +599,10 @@ GLOBAL_LIST_INIT(the_lever, list())
 		return
 
 	var/mob/living/burn_living = burn_target
-	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	burn_living.update_fire()
+	burn_living.AddElement(/datum/element/perma_fire_overlay)
+	burn_living.ignite_mob()
+	burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
+	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
 
 	burn_living.adjustFireLoss(20 * seconds_per_tick)
 	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.

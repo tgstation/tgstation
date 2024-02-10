@@ -33,6 +33,11 @@
 /// If the incapacited status effect will ignore a mob in cirt
 #define IGNORE_CRIT (1<<3)
 
+/// Maxamounts of fire stacks a mob can get
+#define MAX_FIRE_STACKS 20
+/// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
+#define MOB_BIG_FIRE_STACK_THRESHOLD 3
+
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
