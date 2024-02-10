@@ -10,9 +10,7 @@
  * * title - The title of the number input modal, shown on the top of the TGUI window.
  * * default - The default (or current) key, shown as a placeholder. 
  */
-/proc/tgui_input_keycombo(mob/user, message, title = "Key Input", default = 0, timeout = 0, ui_state = GLOB.always_state)
-	if (!user)
-		user = usr
+/proc/tgui_input_keycombo(mob/user = usr, message, title = "Key Input", default = 0, timeout = 0, ui_state = GLOB.always_state)
 	if (!istype(user))
 		if (istype(user, /client))
 			var/client/client = user
