@@ -94,9 +94,9 @@
 	teleport_sound.pitch = 0.5
 	// Handle our own pizzaz rather than doing it in do_teleport
 	new /obj/effect/temp_visual/teleport_flux(start_turf, user.dir)
-	new /obj/effect/temp_visual/teleport_flux(target_turf, user.dir)
+	new /obj/effect/temp_visual/teleport_flux(get_turf(user), user.dir)
 	playsound(start_turf, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
-	playsound(target_turf, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+	playsound(user, teleport_sound, 90, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	// Some extra delay to prevent accidental double clicks
 	user.changeNext_move(CLICK_CD_SLOW * 1.2)
 
