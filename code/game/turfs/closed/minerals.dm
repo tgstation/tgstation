@@ -145,7 +145,7 @@
 	if(distance < VENT_PROX_HIGH)
 		return rand(4,5)
 	if(distance < VENT_PROX_MEDIUM)
-		return rand(3,4)
+		return rand(2,4)
 	if(distance < VENT_PROX_LOW)
 		return rand(1,4)
 	if(distance < VENT_PROX_FAR)
