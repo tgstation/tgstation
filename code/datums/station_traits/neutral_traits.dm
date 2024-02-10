@@ -103,7 +103,7 @@
 /datum/station_trait/glitched_pdas
 	name = "PDA glitch"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 5
 	show_in_report = TRUE
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
@@ -282,7 +282,7 @@
 /datum/station_trait/scarves
 	name = "Scarves"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	show_in_report = TRUE
 	var/list/scarves
@@ -316,7 +316,7 @@
 	name = "Wallets!"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
-	weight = 10
+	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
 
@@ -385,3 +385,100 @@
 	if(!pure)
 		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 			secondary_ai_spawn.latejoin_active = TRUE
+
+/// A trait that lets players choose whether they want a skub and pro-skub shirt, an anti-skub shirt, or neither.
+/datum/station_trait/skub
+	name = "The Great Skub Debacle"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = FALSE
+	weight = 2
+	sign_up_button = TRUE
+	/// List of people signed up to be either pro_skub or anti_skub
+	var/list/skubbers = list()
+
+/datum/station_trait/skub/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/skub/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub or neutral."
+	return ..()
+
+/// Let late-joiners jump on this gimmick too.
+/datum/station_trait/skub/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/// We don't destroy buttons on round start for those who are still in the lobby.
+/datum/station_trait/skub/on_round_start()
+	return
+
+/datum/station_trait/skub/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(TRUE)
+			lobby_button.base_icon_state = "signup_on"
+		if(FALSE)
+			lobby_button.base_icon_state = "signup"
+		if(null)
+			lobby_button.base_icon_state = "signup_neutral"
+
+/datum/station_trait/skub/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(TRUE)
+			skubbers[player.ckey] = FALSE
+		if(FALSE)
+			skubbers -= player.ckey
+		if(null)
+			skubbers[player.ckey] = TRUE
+
+/datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	SIGNAL_HANDLER
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(TRUE)
+			overlays += "pro_skub"
+		if(FALSE)
+			overlays += "anti_skub"
+		if(null)
+			overlays += "neutral_skub"
+
+/datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+	if(!ishuman(spawned))
+		return
+
+	var/skub_stance = skubbers[player_client.ckey]
+	if(isnull(skub_stance))
+		return
+
+	if(skub_stance)
+		var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
+		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
+		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
+			shirt.forceMove(boxie)
+		return
+
+	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)
+	if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
+		spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+
+/// A box containing a skub, for easier carry because skub is a bulky item.
+/obj/item/storage/box/skub
+	name = "skub box"
+	desc = "A box to store your skub in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "hugbox"
+	illustration = "skub"
+
+/obj/item/storage/box/skub/Initialize(mapload)
+	. = ..()
+	atom_storage.exception_hold = typecacheof(list(/obj/item/skub))
+	atom_storage.max_slots = 2
+
+/obj/item/storage/box/skub/PopulateContents()
+	new /obj/item/skub(src)
