@@ -357,6 +357,7 @@
 #include "code\__DEFINES\dcs\signals\signals_wash.dm"
 #include "code\__DEFINES\dcs\signals\signals_wizard.dm"
 #include "code\__DEFINES\dcs\signals\signals_xeno_control.dm"
+#include "code\__DEFINES\dcs\signals\uplink.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_attack.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_explosion.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_lighting.dm"
