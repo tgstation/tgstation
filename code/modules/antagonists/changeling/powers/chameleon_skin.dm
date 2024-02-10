@@ -1,6 +1,6 @@
 /datum/action/changeling/chameleon_skin
 	name = "Darkness Adaptation"
-	desc = "Our skin pigmentation and eyes rapidly changes to suit the darkness. Needs 10 chemicals in-storage to toggle. Slows down our chemical regeneration by 25%"
+	desc = "Our skin pigmentation and eyes rapidly changes to suit the darkness. Needs 10 chemicals in-storage to toggle. Slows down our chemical regeneration by 15%"
 	helptext = "Allows us to darken and change the translucency of our pigmentation, and adapt our eyes to see in dark conditions, \
 	The translucent effect works best in dark enviroments and garments. Can be toggled on and off."
 	button_icon_state = "chameleon_skin"
@@ -11,7 +11,7 @@
 	//// is ability active (we are invisible)?
 	var/is_active = FALSE
 	/// How much we slow chemical regeneration while active, in chems per second
-	var/recharge_slowdown = 0.25
+	var/recharge_slowdown = 0.15
 
 /datum/action/changeling/chameleon_skin/on_purchase(mob/user, is_respec)
 	. = ..()
