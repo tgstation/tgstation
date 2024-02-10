@@ -66,7 +66,7 @@
 /datum/trackable/proc/set_tracked_mob(mob/living/track)
 	set_rechecking(FALSE)
 	if(tracked_mob)
-		UnregisterSignal(tracked_mob, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+		UnregisterSignal(tracked_mob, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 	if(track && !isliving(track))
 		tracked_mob = null
 		return
@@ -74,6 +74,7 @@
 	if(tracked_mob)
 		RegisterSignal(tracked_mob, COMSIG_QDELETING, PROC_REF(target_deleted))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
+		RegisterSignal(tracked_mob, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(glide_size_changed))
 		attempt_track()
 
 /datum/trackable/proc/target_deleted(datum/source)
@@ -127,8 +128,12 @@
 		return FALSE
 	// In case we've been checking
 	set_rechecking(FALSE)
-	SEND_SIGNAL(tracking_holder, COMSIG_TRACKABLE_TRACKING_TARGET, tracked_mob)
+	SEND_SIGNAL(src, COMSIG_TRACKABLE_TRACKING_TARGET, tracked_mob)
 	return TRUE
+
+/datum/trackable/proc/glide_size_changed(datum/source, new_glide_size)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COMSIG_TRACKABLE_GLIDE_CHANGED, tracked_mob, new_glide_size)
 
 /**
  * reset_tracking

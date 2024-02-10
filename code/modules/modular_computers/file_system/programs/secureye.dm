@@ -61,7 +61,6 @@
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
-	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
@@ -147,6 +146,7 @@
 		if("start_tracking")
 			if(!internal_tracker)
 				internal_tracker = new(src)
+				RegisterSignal(internal_tracker, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 			internal_tracker.track_input(usr)
 			return TRUE
 

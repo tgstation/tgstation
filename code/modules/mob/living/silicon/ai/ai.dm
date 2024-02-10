@@ -191,7 +191,8 @@
 	builtInCamera.network = list("ss13")
 
 	ai_tracking_tool = new(src)
-	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
 	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
 
@@ -248,7 +249,6 @@
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
 		ai_voicechanger = null
-	UnregisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET)
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
@@ -408,6 +408,12 @@
 		eyeobj.setLoc(get_turf(target))
 	else
 		view_core()
+
+/// Keeps our rate of gliding in step with the mob we're following
+/mob/living/silicon/ai/proc/tracked_glidesize_changed(datum/trackable/source, mob/living/target, new_glide_size)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		eyeobj.glide_size = new_glide_size
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
