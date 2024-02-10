@@ -2,7 +2,6 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 
 ///A singleton used to teleport people to a linked web of itterative entries. If one entry is deleted, the 2 around it will forge a link instead.
 /datum/eigenstate_manager
-	name = "Eigenstates"
 	///The list of objects that something is linked to indexed by UID
 	var/list/eigen_targets = list()
 	///UID to object reference
