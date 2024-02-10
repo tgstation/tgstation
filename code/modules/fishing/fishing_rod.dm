@@ -224,7 +224,6 @@
 		balloon_alert(user, "cannot reach there!")
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
-		balloon_alert(user, "on cooldown!")
 		return
 	/// Annoyingly pre attack is only called in melee
 	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
@@ -368,9 +367,7 @@
 		if("slot_action")
 			// Simple click with empty hand to remove, click with item to insert/switch
 			var/obj/item/held_item = user.get_active_held_item()
-			if(held_item == src)
-				return
-			use_slot(params["slot"], user, held_item)
+			use_slot(params["slot"], user, held_item == src ? null : held_item)
 			return TRUE
 
 /// Ideally this will be replaced with generic slotted storage datum + display

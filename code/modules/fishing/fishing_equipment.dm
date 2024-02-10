@@ -87,7 +87,7 @@
 		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), movable_target)
 		RegisterSignal(movable_target, COMSIG_ATOM_PREHITBY, PROC_REF(catch_it_chucklenut))
 
-	if(!movable_target.safe_throw_at(destination, source.cast_range, 1, callback = throw_callback, gentle = please_be_gentle))
+	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
 		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
 	else
 		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
