@@ -891,7 +891,7 @@
 /datum/status_effect/ants/fire
 	id = "fire_ants"
 	alert_type = /atom/movable/screen/alert/status_effect/ants/fire
-	damage_per_ant = 0.0032
+	damage_per_ant = 0.0064
 
 /atom/movable/screen/alert/status_effect/ants/fire
 	name = "Fire Ants!"
