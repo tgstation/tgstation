@@ -213,3 +213,21 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "zed_officercap"
 	inhand_icon_state = null
+
+/obj/item/clothing/mask/igor
+	name = "\improper Igor Mask"
+	desc = "A mask that resembles a peculiar man named Igor."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "igor_mask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/suit/costume/violet_jacket
+	name = "\improper Violet's Jacket"
+	desc = "A jacket resembling the outfit worn by the Phantom Thief known as Violet."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "violet_jacket"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS

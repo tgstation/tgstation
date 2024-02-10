@@ -110,7 +110,7 @@
 		adjust_nanites(null, amount) //just add to the nanite volume
 
 /datum/component/nanites/process(seconds_per_tick)
-	if(!IS_IN_STASIS(host_mob))
+	if(!HAS_TRAIT(host_mob, TRAIT_STASIS))
 		adjust_nanites(null, (regen_rate + (SSresearch.science_tech.researched_nodes["nanite_harmonic"] ? HARMONIC_REGEN_BOOST : 0)) * seconds_per_tick)
 		add_research()
 		for(var/X in programs)

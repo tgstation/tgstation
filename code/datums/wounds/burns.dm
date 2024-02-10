@@ -37,7 +37,7 @@
 
 /datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
 
-	if (!victim || IS_IN_STASIS(victim))
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	. = ..()
@@ -47,14 +47,9 @@
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
-	if(victim.reagents)
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin))
-			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
-			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
-			sanitization += 0.3
-			flesh_healing += 0.5
+	for(var/datum/reagent/reagent as anything in victim.reagents.reagent_list)
+		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
+			reagent.on_burn_wound_processing()
 
 	if(limb.current_gauze)
 		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * seconds_per_tick)
@@ -262,8 +257,8 @@
 	if(sanitization > 0)
 		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * seconds_per_tick), 0)
 
-/datum/wound/burn/flesh/on_synthflesh(amount)
-	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
+/datum/wound/burn/flesh/on_synthflesh(reac_volume)
+	flesh_healing += reac_volume * 0.5 // 20u patch will heal 10 flesh standard
 
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
@@ -284,10 +279,15 @@
 	examine_desc = "is badly burned and breaking out in blisters"
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
+	damage_multiplier_penalty = 1.1
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/flesh/moderate
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
+
+	simple_desc = "Patient's skin is burned, weakening the limb and multiplying percieved damage!"
+	simple_treat_text = "Ointment will speed up recovery, as will regenerative mesh. Risk of infection is negligible."
+	homemade_treat_text = "Healthy tea will speed up recovery. Salt, or preferably a salt-water mixture, will sanitize the wound, but the former will cause skin irritation, increasing the risk of infection."
 
 /datum/wound_pregen_data/flesh_burn/second_degree
 	abstract = FALSE
@@ -303,12 +303,17 @@
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
+	damage_multiplier_penalty = 1.2
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/flesh/severe
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
+
+	simple_desc = "Patient's skin is badly burned, significantly weakening the limb and compounding further damage!!"
+	simple_treat_text = "<b>Bandages will speed up recovery</b>, as will <b>ointment or regenerative mesh</b>. <b>Spaceacilin, sterilizine, and 'Miner's Salve'</b> will help with infection."
+	homemade_treat_text = "<b>Healthy tea</b> will speed up recovery. <b>Salt</b>, or preferably a <b>salt-water</b> mixture, will sanitize the wound, but the former especially will cause skin irritation and dehydration, speeding up infection. <b>Space Cleaner</b> can be used as disinfectant in a pinch."
 
 /datum/wound_pregen_data/flesh_burn/third_degree
 	abstract = FALSE
@@ -324,6 +329,7 @@
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL
+	damage_multiplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/flesh/critical
@@ -331,6 +337,10 @@
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"
+
+	simple_desc = "Patient's skin is destroyed and tissue charred, leaving the limb with almost <b>no integrity<b> and a drastic chance of <b>infection<b>!!!"
+	simple_treat_text = "Immediately <b>bandage</b> the wound and treat it with <b>ointment or regenerative mesh</b>. <b>Spaceacilin, sterilizine, or 'Miner's Salve'</b> will stave off infection. Seek professional care <b>immediately</b>, before sepsis sets in and the wound becomes untreatable."
+	homemade_treat_text = "<b>Healthy tea</b> will help with recovery. A <b>salt-water mixture</b>, topically applied, might help stave off infection in the short term, but pure table salt is NOT recommended. <b>Space Cleaner</b> can be used as disinfectant in a pinch."
 
 /datum/wound_pregen_data/flesh_burn/fourth_degree
 	abstract = FALSE
@@ -345,6 +355,8 @@
 	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
 	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
 	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
+
+	simple_desc = "Patient's skin has had strange markings burned onto it, significantly weakening the limb and compounding further damage!!"
 
 /datum/wound_pregen_data/flesh_burn/third_degree/holy
 	abstract = FALSE

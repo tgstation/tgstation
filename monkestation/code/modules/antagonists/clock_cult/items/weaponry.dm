@@ -21,17 +21,17 @@
 	/// Typecache of valid turfs to have the weapon's special effect on
 	var/static/list/effect_turf_typecache = typecacheof(list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 
-
 /obj/item/clockwork/weapon/afterattack(mob/living/target, mob/living/user)
 	. = ..()
-	var/turf/gotten_turf = get_turf(user)
+	if(!.)
+		return
 
+	var/turf/gotten_turf = get_turf(user)
 	if(!is_type_in_typecache(gotten_turf, effect_turf_typecache))
 		return
 
 	if((!QDELETED(target) && (!ismob(target) || (ismob(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY)))))
 		hit_effect(target, user)
-
 
 /obj/item/clockwork/weapon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -46,11 +46,9 @@
 	if(!target.can_block_magic(MAGIC_RESISTANCE_HOLY) && !IS_CLOCK(target))
 		hit_effect(target, throwingdatum.thrower, TRUE)
 
-
 /// What occurs to non-holy people when attacked from brass tiles
 /obj/item/clockwork/weapon/proc/hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
 	return
-
 
 /obj/item/clockwork/weapon/brass_spear
 	name = "brass spear"
@@ -155,7 +153,6 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	block_chance = 10
 
-
 /obj/item/clockwork/weapon/brass_battlehammer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
@@ -163,7 +160,6 @@
 		icon_wielded = "[base_icon_state]1", \
 		force_wielded = 30, \
 	)
-
 
 /obj/item/clockwork/weapon/brass_battlehammer/hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
 	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target))
@@ -175,7 +171,6 @@
 /obj/item/clockwork/weapon/brass_battlehammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
-
 /obj/item/clockwork/weapon/brass_sword
 	name = "brass longsword"
 	desc = "A large sword made of brass."
@@ -189,7 +184,6 @@
 	block_chance = 35
 	COOLDOWN_DECLARE(emp_cooldown)
 
-
 /obj/item/clockwork/weapon/brass_sword/hit_effect(mob/living/target, mob/living/user, thrown)
 	if(!COOLDOWN_FINISHED(src, emp_cooldown))
 		return
@@ -201,7 +195,6 @@
 	addtimer(CALLBACK(src, PROC_REF(send_message), user), 30 SECONDS)
 	to_chat(user, span_brass("You strike [target] with an electromagnetic pulse!"))
 	playsound(user, 'sound/magic/lightningshock.ogg', 40)
-
 
 /obj/item/clockwork/weapon/brass_sword/attack_atom(obj/attacked_obj, mob/living/user, params)
 	. = ..()
@@ -222,10 +215,8 @@
 	to_chat(user, span_brass("You strike [target] with an electromagnetic pulse!"))
 	playsound(user, 'sound/magic/lightningshock.ogg', 40)
 
-
 /obj/item/clockwork/weapon/brass_sword/proc/send_message(mob/living/target)
 	to_chat(target, span_brass("[src] glows, indicating the next attack will disrupt electronics of the target."))
-
 
 /obj/item/gun/ballistic/bow/clockwork
 	name = "brass bow"
@@ -282,7 +273,6 @@
 	playsound(src, 'sound/weapons/draw_bow.ogg', 75, 0) //gets way too high pitched if the freq varies
 	update_icon()
 
-
 /// Recharges a bolt, done after the delay in shoot_live_shot
 /obj/item/gun/ballistic/bow/clockwork/proc/recharge_bolt()
 	var/obj/item/ammo_casing/caseless/arrow/clockbolt/bolt = new
@@ -290,20 +280,16 @@
 	chambered = bolt
 	update_icon()
 
-
 /obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/I, mob/user, params)
 	return
-
 
 /obj/item/gun/ballistic/bow/clockwork/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]_[chambered ? "chambered" : "unchambered"]_[drawn ? "drawn" : "undrawn"]"
 
-
 /obj/item/ammo_box/magazine/internal/bow/clockwork
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/clockbolt
 	start_empty = FALSE
-
 
 /obj/item/ammo_casing/caseless/arrow/clockbolt
 	name = "energy bolt"
@@ -311,7 +297,6 @@
 	icon = 'monkestation/icons/obj/clock_cult/ammo.dmi'
 	icon_state = "arrow_redlight"
 	projectile_type = /obj/projectile/energy/clockbolt
-
 
 /obj/projectile/energy/clockbolt
 	name = "energy bolt"

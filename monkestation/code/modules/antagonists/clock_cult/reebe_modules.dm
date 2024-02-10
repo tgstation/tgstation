@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		reebe_loaded = FALSE
 		CRASH("Failed to reserve a block for Reebe.")
 
-	var/datum/map_template/reebe_template = new(path = "monkestation/_maps/templates/reebe.dmm", cache = TRUE)
+	var/datum/map_template/reebe_template = new(path = "_maps/~monkestation/templates/reebe.dmm", cache = TRUE)
 	if(!reebe_template.cached_map) //might not be needed, im just copying lazy template code and I cant figure out what cached maps are for in this case
 		reebe_loaded = FALSE
 		CRASH("Failed to cache template for loading Reebe.")

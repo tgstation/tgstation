@@ -74,7 +74,7 @@
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
+	if(HAS_TRAIT(user, TRAIT_ALL_SURGERIES) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_ALL_SURGERIES))) // monke edit: TRAIT_ALL_SURGERIES
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else

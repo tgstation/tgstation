@@ -548,7 +548,7 @@
 	return base_xadone_progress_to_qdel * severity
 
 /// When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future
-/datum/wound/proc/on_synthflesh(power)
+/datum/wound/proc/on_synthflesh(reac_volume)
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
@@ -642,18 +642,21 @@
 	return "[desc]."
 
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
-/datum/wound/proc/severity_text()
+/datum/wound/proc/get_simple_scanner_description(mob/user)
+	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+
+/datum/wound/proc/severity_text(simple = FALSE)
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate"
+			return "Moderate" + (simple ? "!" : "")
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe"
+			return "Severe" + (simple ? "!!" : "")
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical"
+			return "Critical" + (simple ? "!!!" : "")
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".

@@ -422,8 +422,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/cup/beaker/large = 1,
 		/obj/item/food/grown/cucumber = 10,
-		/datum/reagent/water = 10,
-		/datum/reagent/consumable/salt = 10,
+		/datum/reagent/water/salt = 20,
 	)
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD

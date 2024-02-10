@@ -20,6 +20,8 @@
 	var/chaplain_spawnable = TRUE
 	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
+	/// Lazylist, tracks refs()s to all cultists which have been crit or killed by this nullrod.
+	var/list/cultists_slain
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
@@ -59,6 +61,27 @@
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
 
+/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, params)
+	if(!user.mind?.holy_role)
+		return ..()
+	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
+		return ..()
+
+	var/old_stat = target_mob.stat
+	. = ..()
+	if(old_stat < target_mob.stat)
+		LAZYOR(cultists_slain, REF(target_mob))
+	return .
+
+/obj/item/nullrod/examine(mob/user)
+	. = ..()
+	if(!IS_CULTIST(user) || !GET_ATOM_BLOOD_DNA_LENGTH(src))
+		return
+
+	var/num_slain = LAZYLEN(cultists_slain)
+	. += span_cultitalic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
+		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
+
 /obj/item/nullrod/godhand
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
@@ -92,6 +115,7 @@
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
+	block_sound = 'sound/weapons/genhit.ogg'
 	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
@@ -120,6 +144,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
@@ -200,6 +225,7 @@
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/blade1.ogg'
+	block_sound = 'sound/weapons/block_blade.ogg'
 	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks. Can be worn on the belt."
 
 /obj/item/nullrod/claymore/saber/red
@@ -507,6 +533,7 @@
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	force = 15
 	block_chance = 40
+	block_sound = 'sound/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = NONE

@@ -15,8 +15,7 @@ endmap
 
 map metastation
 	#default
-	minplayers 25
-	#voteweight 0.5
+	minplayers 5
 	votable
 endmap
 

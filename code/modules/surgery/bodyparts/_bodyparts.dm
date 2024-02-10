@@ -336,9 +336,9 @@
 			if(WOUND_SEVERITY_MODERATE)
 				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
 			if(WOUND_SEVERITY_SEVERE)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
-			if(WOUND_SEVERITY_CRITICAL)
 				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!")]"
+			if(WOUND_SEVERITY_CRITICAL)
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
@@ -1154,12 +1154,12 @@
 		if(BLEED_OVERLAY_LOW to BLEED_OVERLAY_MED)
 			new_bleed_icon = "[body_zone]_1"
 		if(BLEED_OVERLAY_MED to BLEED_OVERLAY_GUSH)
-			if(owner.body_position == LYING_DOWN || IS_IN_STASIS(owner) || owner.stat == DEAD)
+			if(owner.body_position == LYING_DOWN || HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 				new_bleed_icon = "[body_zone]_2s"
 			else
 				new_bleed_icon = "[body_zone]_2"
 		if(BLEED_OVERLAY_GUSH to INFINITY)
-			if(IS_IN_STASIS(owner) || owner.stat == DEAD)
+			if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 				new_bleed_icon = "[body_zone]_2s"
 			else
 				new_bleed_icon = "[body_zone]_3"

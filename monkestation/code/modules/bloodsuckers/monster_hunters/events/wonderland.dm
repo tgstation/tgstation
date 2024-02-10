@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 
 /datum/map_template/wonderland
 	name = "Wonderland"
-	mappath = "monkestation/_maps/hunter_events/wonderland.dmm"
+	mappath = "_maps/~monkestation/hunter_events/wonderland.dmm"
 
 /obj/effect/mob_spawn/corpse/rabbit
 	mob_type = /mob/living/basic/rabbit

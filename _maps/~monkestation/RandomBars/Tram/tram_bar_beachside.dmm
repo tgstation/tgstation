@@ -1,0 +1,2593 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/machinery/vending/wardrobe/chef_wardrobe,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"am" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/holosign_creator/robot_seat/restaurant,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"aO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"bk" = (
+/obj/structure/closet/crate{
+	name = "aquarium supplies"
+	},
+/obj/item/storage/box/aquarium_props,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"bq" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"br" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"bF" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"bR" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"bX" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/camera/directional/south,
+/obj/machinery/newscaster/directional/south,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"cb" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"cZ" = (
+/obj/machinery/requests_console/directional/north{
+	name = "Kitchen Requests Console"
+	},
+/obj/machinery/deepfryer,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"dd" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"di" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"du" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"dG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"dP" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"ee" = (
+/obj/effect/landmark/start/hangover,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"ef" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/mineral_door/sandstone,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"ek" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/plate,
+/obj/item/food/fishmeat,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"ey" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"fi" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/plate,
+/obj/item/food/fishmeat,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"fr" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"fs" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"fw" = (
+/obj/structure/railing,
+/turf/open/misc/beach/coastline_b{
+	dir = 6
+	},
+/area/station/commons/lounge)
+"fy" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"ga" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"hh" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 1
+	},
+/area/station/commons/lounge)
+"hi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"hn" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"hD" = (
+/turf/closed/wall/mineral/sandstone,
+/area/station/service/theater)
+"hG" = (
+/obj/structure/flora/rock/style_random{
+	desc = "A volcanic rock.";
+	name = "coastal rock"
+	},
+/obj/structure/flora/bush/stalky/style_random{
+	desc = "It can't be smoked.";
+	name = "sea weed"
+	},
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"hO" = (
+/obj/machinery/fishing_portal_generator,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"hZ" = (
+/obj/machinery/door/airlock/sandstone{
+	id_tag = "toilet1";
+	name = "Restroom Stall"
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/white,
+/area/station/commons/lounge)
+"ia" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"iK" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"iS" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"iX" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"iY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/cigar,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"jg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"jm" = (
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"js" = (
+/mob/living/basic/parrot,
+/obj/structure/fluff/beach_umbrella/security,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"jv" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"jy" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"jA" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"jR" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"jY" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 5
+	},
+/area/station/commons/lounge)
+"kB" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 10
+	},
+/area/station/commons/lounge)
+"lb" = (
+/turf/open/openspace,
+/area/station/service/kitchen)
+"lm" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"lq" = (
+/obj/structure/aquarium,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"ls" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"lt" = (
+/obj/structure/flora/bush/reed/style_random,
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"lE" = (
+/obj/structure/railing,
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 4
+	},
+/area/station/commons/lounge)
+"lL" = (
+/turf/template_noop,
+/area/template_noop)
+"lQ" = (
+/obj/machinery/stove,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"me" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"mp" = (
+/mob/living/basic/crab{
+	name = "la creatura";
+	desc = "ay dios mios..."
+	},
+/turf/open/misc/beach/coastline_t{
+	dir = 4
+	},
+/area/station/commons/lounge)
+"my" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"mG" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen/east_offset,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"mH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"mO" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"mS" = (
+/obj/effect/overlay/palmtree_r{
+	desc = "How did you get here?";
+	icon_state = "palm2";
+	name = "\proper island palm tree"
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"mV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"nx" = (
+/obj/effect/area_lighting_helper/max_alpha,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"nB" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/chef_recipes,
+/obj/item/reagent_containers/condiment/enzyme,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"nN" = (
+/obj/structure/ladder,
+/obj/machinery/door/window/left/directional/north{
+	name = "Bar Backroom Access";
+	req_one_access = list("bar")
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/sand,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"nU" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/paper/fluff/beachside_bar,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"oc" = (
+/mob/living/basic/crab,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"ot" = (
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 1
+	},
+/area/station/commons/lounge)
+"oy" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"oE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/area_lighting_helper/max_alpha,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"oL" = (
+/turf/open/misc/beach/coastline_b,
+/area/station/commons/lounge)
+"oN" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/sand,
+/obj/item/radio/intercom/directional/south{
+	name = "Common Channel"
+	},
+/obj/machinery/camera/directional/south,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"oV" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"oW" = (
+/obj/machinery/restaurant_portal/bar,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"pa" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"pi" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 5
+	},
+/area/station/commons/lounge)
+"pj" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 8
+	},
+/area/station/commons/lounge)
+"pm" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"pL" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"pN" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/glasses/eyepatch,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"pR" = (
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"pW" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"qc" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"qg" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/landmark/start/hangover,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"ql" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"qq" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet/athletic_mixed,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"qT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"rn" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/beach/coastline_b{
+	dir = 5
+	},
+/area/station/commons/lounge)
+"rw" = (
+/obj/effect/landmark/start/assistant,
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"rT" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"sa" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Kitchen";
+	req_one_access = list("kitchen")
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"sb" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/effect/turf_decal/sand,
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Theatre Backstage"
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"sd" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/navigate_destination/kitchen,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"sI" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/elevator_control_panel/directional/north{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
+	linked_elevator_id = "dumbwaiter_lift";
+	name = "Dumbwaiter Control Panel";
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
+	},
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"sL" = (
+/mob/living/basic/crab,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"sM" = (
+/obj/effect/landmark/start/hangover,
+/turf/open/misc/beach/coastline_b,
+/area/station/commons/lounge)
+"tk" = (
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"tD" = (
+/obj/machinery/camera/directional/south,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"tF" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"uz" = (
+/obj/effect/landmark/start/clown,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"uA" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"uN" = (
+/obj/machinery/camera/directional/east,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"vb" = (
+/obj/item/toy/seashell,
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"vc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"vR" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/mob/living/basic/crab/evil/kreb,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/white,
+/area/station/commons/lounge)
+"vY" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"wm" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Theatre Backstage"
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"wn" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/food/moonfish_caviar,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"wq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"ww" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"wA" = (
+/obj/machinery/oven,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"wC" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"wI" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 4
+	},
+/area/station/commons/lounge)
+"wR" = (
+/obj/structure/flora/bush/reed/style_random,
+/turf/open/misc/beach/coastline_b,
+/area/station/commons/lounge)
+"xw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"xE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"xG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"xH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre/east_offset,
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"xI" = (
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 4
+	},
+/area/station/commons/lounge)
+"xU" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 9
+	},
+/area/station/commons/lounge)
+"yg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"zb" = (
+/obj/machinery/grill,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"zh" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 6
+	},
+/area/station/commons/lounge)
+"zo" = (
+/obj/machinery/door/window/left/directional/south{
+	req_one_access = list("kitchen");
+	name = "Kitchen"
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"zt" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"zC" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand,
+/obj/structure/mineral_door/sandstone,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"zQ" = (
+/turf/open/misc/beach/coastline_t,
+/area/station/commons/lounge)
+"Ad" = (
+/obj/machinery/button/door/directional/east{
+	id = "toilet1";
+	name = "restroom lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/sink/directional/south,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/white,
+/area/station/commons/lounge)
+"Af" = (
+/obj/structure/closet/crate{
+	name = "fishing supplies"
+	},
+/obj/item/storage/toolbox/fishing,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"AA" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"AC" = (
+/obj/machinery/door/window/left/directional/east{
+	name = "Bar";
+	req_one_access = list("bar")
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"AR" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/fish_poke,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"AS" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"AZ" = (
+/mob/living/basic/crab,
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"Bb" = (
+/obj/structure/mirror/directional/west,
+/obj/structure/sink/directional/east,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/white,
+/area/station/commons/lounge)
+"Bt" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"BN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"BO" = (
+/obj/effect/landmark/start/hangover,
+/turf/open/misc/beach/coastline_t{
+	dir = 1
+	},
+/area/station/commons/lounge)
+"BW" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Ci" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Cw" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/white,
+/area/station/commons/lounge)
+"CD" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet/crate{
+	name = "fishing supplies"
+	},
+/obj/effect/spawner/random/fishing_rods,
+/obj/effect/spawner/random/fishing_rods,
+/obj/effect/spawner/random/fishing_rods,
+/obj/item/storage/box/fishing_lines,
+/obj/item/storage/box/fishing_hooks,
+/obj/item/fishing_hook/jaws,
+/obj/item/fishing_hook/stabilized,
+/obj/item/storage/toolbox/fishing,
+/obj/item/bait_can/worm/premium,
+/obj/item/bait_can/worm,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"CQ" = (
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"CT" = (
+/obj/structure/table/wood,
+/obj/item/lipstick/random,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"Df" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"DL" = (
+/obj/machinery/vending/cigarette,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"DP" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/coastline_t{
+	dir = 1
+	},
+/area/station/commons/lounge)
+"DT" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/area_lighting_helper/max_alpha,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"Eg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Ei" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Em" = (
+/obj/structure/fluff/beach_umbrella/engine,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Eu" = (
+/obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"Ex" = (
+/obj/structure/fluff/beach_umbrella/science,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"EN" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 4
+	},
+/area/station/commons/lounge)
+"EQ" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/soup_pot,
+/obj/item/kitchen/spoon/soup_ladle,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Fc" = (
+/obj/structure/fluff/beach_umbrella/syndi,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Fj" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/clothing/glasses/sunglasses/big,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Fn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/bar/west_offset,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Ge" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Gg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Gu" = (
+/obj/effect/overlay/coconut{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Gz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/money,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"GB" = (
+/obj/effect/landmark/start/bartender,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"GF" = (
+/obj/machinery/airalarm/directional/south,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"GK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"GU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"Hk" = (
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Hz" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"HB" = (
+/obj/structure/railing,
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"HN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"HU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"HW" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Iq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"Iy" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"IS" = (
+/obj/effect/landmark/navigate_destination/bar,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"IY" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/mineral_door/sandstone,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Js" = (
+/obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan/lubecan,
+/obj/effect/turf_decal/sand,
+/obj/structure/mirror/directional/north,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"JF" = (
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"JT" = (
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Ku" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"KJ" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 1
+	},
+/area/station/commons/lounge)
+"KP" = (
+/turf/open/water/beach/biodome/sinking/deep,
+/area/station/commons/lounge)
+"La" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Le" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"LD" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 8
+	},
+/area/station/commons/lounge)
+"LE" = (
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"LJ" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"LK" = (
+/turf/closed/wall/mineral/sandstone,
+/area/station/commons/lounge)
+"LT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Mz" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"ME" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"MX" = (
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Na" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 6
+	},
+/area/station/commons/lounge)
+"Nm" = (
+/obj/item/melee/skateboard/hoverboard,
+/mob/living/carbon/human/species/monkey/punpun,
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"Nt" = (
+/obj/structure/ladder,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/siding/wood/end,
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"Nz" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"NG" = (
+/obj/effect/area_lighting_helper/max_alpha,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"NK" = (
+/obj/effect/overlay/coconut{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"NL" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"NZ" = (
+/obj/effect/landmark/start/cook,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Ob" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Oi" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/sand,
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	spawn_loot_count = 2;
+	spawn_loot_double = 0;
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	spawn_loot_count = 2;
+	spawn_loot_double = 0;
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	spawn_loot_count = 2;
+	spawn_loot_double = 0;
+	spawn_random_offset = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Oo" = (
+/obj/structure/disposalpipe/segment,
+/obj/item/radio/intercom/directional/east{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Or" = (
+/obj/effect/landmark/start/cook,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"OL" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Dumbwaiter Pier Safety Door"
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"OO" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/coastline_t{
+	dir = 8
+	},
+/area/station/commons/lounge)
+"OU" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 8
+	},
+/area/station/commons/lounge)
+"Ps" = (
+/obj/machinery/vending/dinnerware,
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Pt" = (
+/obj/structure/railing,
+/turf/open/misc/beach/coastline_t{
+	dir = 9
+	},
+/area/station/commons/lounge)
+"Px" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 10
+	},
+/area/station/commons/lounge)
+"PF" = (
+/obj/structure/dresser,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"PH" = (
+/obj/machinery/door/airlock/sandstone{
+	name = "Supply Shed"
+	},
+/obj/effect/turf_decal/sand,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"PR" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Qd" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/barman_recipes,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Qm" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Qz" = (
+/obj/effect/overlay/coconut,
+/obj/item/food/baguette,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"QE" = (
+/obj/machinery/vending/autodrobe,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"QK" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"QW" = (
+/obj/item/toy/beach_ball,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Rv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"RH" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"RK" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/misc/beach/coastline_t{
+	dir = 1
+	},
+/area/station/commons/lounge)
+"RL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"RY" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Sx" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/salad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/knife/kitchen,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Tk" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/toy_figure,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"To" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door/directional/south{
+	id = "playerscantreadthis";
+	name = "Kitchen Shutters Control";
+	pixel_y = null
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"TC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/overlay/palmtree_r{
+	desc = "How did you get here?";
+	icon_state = "palm2";
+	name = "\proper island palm tree"
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"TG" = (
+/obj/machinery/door/window/left/directional/south{
+	req_one_access = list("kitchen");
+	name = "Kitchen Coldroom Access"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
+"Ua" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Um" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Ux" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"UY" = (
+/obj/structure/closet/crate/wooden/toy,
+/obj/effect/turf_decal/sand,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"UZ" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"Va" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/drugs,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Vb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Vg" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Vm" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Vt" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/misc/beach/coastline_t{
+	dir = 8
+	},
+/area/station/commons/lounge)
+"VC" = (
+/obj/item/radio/intercom/directional/west{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel";
+	pixel_y = -8
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"VI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"VS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+"Wq" = (
+/obj/machinery/atm,
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"WJ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"WZ" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"Xc" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"XT" = (
+/obj/structure/table/reinforced,
+/obj/item/knife/kitchen,
+/obj/item/kitchen/rollingpin,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"XX" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Yb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Yn" = (
+/obj/machinery/processor,
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"YA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/wood,
+/area/station/service/kitchen)
+"YC" = (
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/east_offset,
+/turf/open/misc/beach/coastline_t,
+/area/station/commons/lounge)
+"YE" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Zc" = (
+/obj/effect/landmark/start/mime,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/station/commons/lounge)
+"ZG" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/water/beach/biodome/sinking,
+/area/station/commons/lounge)
+"ZH" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/beach/coastline_t{
+	dir = 10
+	},
+/area/station/commons/lounge)
+"ZN" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
+/turf/open/floor/fakesand,
+/area/station/commons/lounge)
+
+(1,1,1) = {"
+KP
+LD
+LD
+LD
+jm
+jm
+hh
+KJ
+Gz
+yg
+Fn
+ia
+vc
+Vg
+pR
+pR
+pR
+LK
+LK
+LK
+LK
+lL
+lL
+lL
+lL
+"}
+(2,1,1) = {"
+hh
+xU
+OO
+Px
+oL
+jm
+hh
+KJ
+mV
+MX
+Le
+dG
+Tk
+bR
+pR
+pR
+pR
+LK
+vR
+Bb
+LK
+lL
+lL
+lL
+lL
+"}
+(3,1,1) = {"
+hh
+KJ
+mS
+zQ
+oL
+jm
+hh
+BO
+VI
+MX
+XX
+dG
+ga
+Ua
+pR
+pR
+tD
+LK
+Ad
+Cw
+LK
+lL
+lL
+lL
+lL
+"}
+(4,1,1) = {"
+hh
+KJ
+Qz
+zQ
+oL
+jm
+hh
+KJ
+Yb
+MX
+LJ
+dG
+Mz
+bR
+pR
+pR
+pR
+LK
+LK
+hZ
+LK
+lL
+lL
+lL
+lL
+"}
+(5,1,1) = {"
+hh
+KJ
+js
+zQ
+oL
+jm
+hh
+KJ
+Va
+nx
+Qd
+IS
+ga
+jy
+pR
+pR
+pR
+VC
+pR
+CQ
+LK
+lL
+lL
+lL
+lL
+"}
+(6,1,1) = {"
+hh
+KJ
+Zc
+zQ
+oL
+jm
+hh
+RK
+mV
+MX
+ls
+dG
+Iy
+Ku
+pR
+sL
+pR
+pR
+pR
+CQ
+LK
+lL
+lL
+lL
+lL
+"}
+(7,1,1) = {"
+hh
+jY
+mp
+Na
+oL
+jm
+hh
+BO
+GK
+MX
+bq
+dG
+HW
+jy
+CQ
+CQ
+CQ
+CQ
+CQ
+CQ
+LK
+lL
+lL
+lL
+lL
+"}
+(8,1,1) = {"
+jm
+wI
+wI
+wI
+jm
+Nm
+hh
+KJ
+xG
+MX
+YE
+dG
+pW
+bR
+pR
+pR
+pR
+CQ
+pR
+pR
+LK
+LK
+lL
+lL
+lL
+"}
+(9,1,1) = {"
+jm
+jm
+jm
+jm
+jm
+jm
+hh
+KJ
+Va
+qc
+GB
+dG
+nU
+pm
+pR
+pR
+pR
+CQ
+pR
+mS
+GF
+LK
+lL
+lL
+lL
+"}
+(10,1,1) = {"
+jm
+jm
+jm
+jm
+hG
+jm
+hh
+DP
+qT
+iY
+BN
+AC
+fs
+oW
+pR
+pR
+pR
+CQ
+pR
+pR
+pR
+LK
+LK
+LK
+LK
+"}
+(11,1,1) = {"
+jm
+jm
+jm
+jm
+jm
+jm
+hh
+KJ
+oV
+br
+ee
+Um
+pR
+pR
+pR
+pR
+pR
+CQ
+pR
+pR
+pR
+pR
+pR
+pR
+LK
+"}
+(12,1,1) = {"
+hG
+jm
+jm
+jm
+jm
+jm
+hh
+jY
+EN
+ot
+pR
+Um
+pR
+pR
+pR
+pR
+pL
+zt
+zt
+Ei
+CQ
+CQ
+vb
+CQ
+ef
+"}
+(13,1,1) = {"
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+wI
+kB
+KJ
+Qm
+Um
+pR
+LK
+LK
+LK
+LK
+LK
+pR
+tk
+du
+du
+du
+zt
+zC
+"}
+(14,1,1) = {"
+jm
+jm
+dP
+dP
+dP
+dP
+dP
+jm
+hh
+KJ
+Hk
+TC
+pR
+LK
+qq
+rw
+CD
+LK
+pR
+wq
+Ux
+cb
+pR
+CQ
+ef
+"}
+(15,1,1) = {"
+jm
+HB
+lb
+OL
+Iq
+TG
+Nt
+me
+hh
+BO
+pR
+Um
+AS
+PH
+La
+La
+nN
+LK
+NG
+LT
+Ux
+mS
+pR
+oN
+LK
+"}
+(16,1,1) = {"
+jm
+HB
+sI
+HN
+ZG
+Xc
+Xc
+jm
+hh
+KJ
+WJ
+Um
+iK
+LK
+pN
+Bt
+Oi
+LK
+pR
+LT
+Ux
+NK
+pR
+CQ
+ef
+"}
+(17,1,1) = {"
+jm
+HB
+RL
+ZG
+jm
+jm
+jm
+jm
+hh
+KJ
+Em
+QW
+bX
+LK
+LK
+LK
+LK
+LK
+Wq
+LT
+my
+uA
+bF
+Vm
+IY
+"}
+(18,1,1) = {"
+jm
+HB
+RL
+me
+jm
+jm
+jm
+jm
+hh
+KJ
+ME
+Ge
+CQ
+fy
+fy
+DL
+UZ
+UZ
+CQ
+mH
+AA
+CQ
+CQ
+CQ
+ef
+"}
+(19,1,1) = {"
+jm
+fw
+RL
+rn
+jm
+AZ
+jm
+jm
+hh
+KJ
+Fj
+Ge
+oc
+Rv
+Rv
+ey
+Vm
+hn
+hn
+Gg
+Eg
+wC
+pR
+pR
+LK
+"}
+(20,1,1) = {"
+zh
+Pt
+RL
+ZH
+pi
+LD
+LD
+LD
+zh
+KJ
+Ex
+Ge
+cb
+pR
+pR
+LT
+Ge
+pR
+pR
+pR
+LT
+LK
+lL
+lL
+lL
+"}
+(21,1,1) = {"
+pj
+lE
+RL
+OU
+Vt
+pj
+Vt
+pj
+pj
+xI
+pR
+hi
+du
+du
+du
+ZN
+Ge
+pR
+pR
+pR
+LT
+LK
+lL
+lL
+lL
+"}
+(22,1,1) = {"
+xw
+ek
+sa
+Vb
+xw
+YA
+xw
+ek
+xw
+am
+LE
+jg
+pR
+Gu
+pR
+LT
+Ge
+rT
+pR
+pR
+LT
+LK
+lL
+lL
+lL
+"}
+(23,1,1) = {"
+JT
+WZ
+WZ
+WZ
+WZ
+WZ
+WZ
+WZ
+ql
+QK
+qg
+jg
+pR
+mS
+pR
+LT
+Ge
+pR
+pR
+pR
+LT
+LK
+lL
+lL
+lL
+"}
+(24,1,1) = {"
+JT
+WZ
+Af
+vY
+Nz
+XT
+Df
+lm
+Ci
+AR
+oy
+VS
+pR
+pR
+pR
+xE
+iS
+du
+du
+du
+aO
+LK
+lL
+lL
+lL
+"}
+(25,1,1) = {"
+cZ
+WZ
+JF
+lq
+JF
+RH
+JF
+zb
+Ci
+jv
+PR
+VS
+pR
+pR
+pR
+pR
+pa
+pR
+sL
+pR
+pR
+zQ
+oL
+jm
+jm
+"}
+(26,1,1) = {"
+BW
+WZ
+hO
+HU
+Or
+oE
+NZ
+Sx
+Ci
+RY
+oy
+VS
+ee
+hD
+hD
+hD
+Eu
+hD
+hD
+wm
+pR
+zQ
+oL
+jm
+lt
+"}
+(27,1,1) = {"
+fr
+JF
+JF
+wn
+JF
+ww
+JF
+zb
+JF
+fi
+PR
+VS
+pR
+hD
+NL
+dd
+GU
+Hz
+hD
+pR
+mO
+zQ
+sM
+jm
+jm
+"}
+(28,1,1) = {"
+jR
+JF
+bk
+Yn
+JF
+nB
+Df
+To
+JF
+Ob
+di
+VS
+pR
+hD
+sb
+DT
+jA
+UY
+hD
+pR
+Fc
+zQ
+oL
+jm
+jm
+"}
+(29,1,1) = {"
+EQ
+JF
+JF
+JF
+JF
+JF
+JF
+JF
+JF
+RY
+PR
+VS
+pR
+hD
+PF
+jA
+uz
+QE
+hD
+pR
+ee
+zQ
+wR
+jm
+jm
+"}
+(30,1,1) = {"
+lQ
+uN
+wA
+wA
+ag
+Ps
+iX
+Oo
+mG
+zo
+sd
+aO
+pR
+hD
+Js
+xH
+tF
+CT
+hD
+pR
+pR
+YC
+oL
+jm
+jm
+"}

@@ -78,6 +78,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
@@ -284,6 +285,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana
@@ -855,9 +857,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 12
 	throwforce = 15
 	mob_thrower = TRUE
+	block_sound = 'sound/weapons/effects/batreflect.ogg'
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
-	playsound(src, pick('sound/weapons/effects/batreflect1.ogg', 'sound/weapons/effects/batreflect2.ogg'), 50, TRUE)
 	return TRUE
 
 /obj/item/melee/flyswatter
@@ -973,6 +975,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	force = 14
 	throwforce = 12
@@ -999,6 +1002,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_speed = CLICK_CD_HYPER_RAPID
 	embedding = list("embed_chance" = 100)
 	block_chance = 25
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK

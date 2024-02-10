@@ -28139,6 +28139,13 @@
 /obj/structure/stairs/west,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
+"hAV" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/table/glass,
+/obj/item/bonesetter,
+/obj/item/stack/medical/bone_gel,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/treatment_center)
 "hBe" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
@@ -71649,7 +71656,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
 /obj/item/bonesetter,
-/obj/item/stack/medical/bone_gel/four,
+/obj/item/stack/medical/bone_gel,
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)

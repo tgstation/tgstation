@@ -27,6 +27,7 @@
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
 		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
+		playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50) // close enough
 		gene_scan(target, user)
 	else
 		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
