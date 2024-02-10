@@ -77,7 +77,7 @@
 
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
-	var/cooldown = 0
+	var/last_moved = 0
 	var/acceleration = TRUE
 
 	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
