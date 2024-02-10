@@ -386,6 +386,8 @@
 		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 			secondary_ai_spawn.latejoin_active = TRUE
 
+#define SKUB_IDFC "i don't frikkin' care"
+
 /// A trait that lets players choose whether they want a skub and pro-skub shirt, an anti-skub shirt, or neither.
 /datum/station_trait/skub
 	name = "The Great Skub Contention"
@@ -402,7 +404,7 @@
 
 /datum/station_trait/skub/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
-	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub or neutral."
+	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
 	return ..()
 
 /// Let late-joiners jump on this gimmick too.
@@ -421,7 +423,7 @@
 			lobby_button.base_icon_state = "signup_on"
 		if(FALSE)
 			lobby_button.base_icon_state = "signup"
-		if(null)
+		else
 			lobby_button.base_icon_state = "signup_neutral"
 
 /datum/station_trait/skub/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
@@ -431,6 +433,8 @@
 		if(TRUE)
 			skubbers[player.ckey] = FALSE
 		if(FALSE)
+			skubbers[player.ckey] = SKUB_IDFC
+		if(SKUB_IDFC)
 			skubbers -= player.ckey
 		if(null)
 			skubbers[player.ckey] = TRUE
@@ -444,17 +448,19 @@
 			overlays += "pro_skub"
 		if(FALSE)
 			overlays += "anti_skub"
-		if(null)
+		if(SKUB_IDFC)
 			overlays += "neutral_skub"
+		if(null)
+			overlays += "random_skub"
 
 /datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
 	var/skub_stance = skubbers[player_client.ckey]
-	if(isnull(skub_stance))
+	if(skub_stance == SKUB_IDFC)
 		return
 
-	if(skub_stance)
+	if((isnull(skub_stance) && prob(50)) || skub_stance)
 		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
 		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 		if(ishuman(spawned))
@@ -489,7 +495,7 @@
 
 /obj/item/storage/box/stickers/anti_skub
 	name = "anti-skub stickers box"
-	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! And It can also hold a anti-skub shirt!"
+	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
 
 /obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
 	. = ..()
@@ -498,3 +504,5 @@
 /obj/item/storage/box/stickers/anti_skub/PopulateContents()
 	for(var/i in 1 to 4)
 		new /obj/item/sticker/anti_skub(src)
+
+#undef SKUB_IDFC
