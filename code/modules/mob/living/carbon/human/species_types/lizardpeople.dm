@@ -129,13 +129,14 @@ Lizard subspecies: ASHWALKERS
 		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
+		NO_UNDERWEAR, //MONKESTATION ADDITION: no more flesh clothes lol
 	)
 	inherent_traits = list(
 		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
-	digitigrade_customization = DIGITIGRADE_FORCED
+	/*digitigrade_customization = DIGITIGRADE_FORCED*/ //MONKESTATION REMOVAL: not needed
 	examine_limb_id = SPECIES_LIZARD
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
