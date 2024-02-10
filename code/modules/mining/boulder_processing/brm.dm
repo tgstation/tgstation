@@ -12,8 +12,8 @@
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "brm"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/brm
-	layer = BELOW_OBJ_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
 	anchored = TRUE
 	density = TRUE
@@ -296,7 +296,7 @@
 	random_boulder.pixel_y = rand(-2, 2)
 	random_boulder.processed_by = null
 	balloon_alert_to_viewers("boulder appears!")
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
+	use_power(active_power_usage)
 
 	boulders_remaining -= 1
 	if(boulders_remaining <= 0)

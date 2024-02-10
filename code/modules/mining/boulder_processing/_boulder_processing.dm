@@ -3,7 +3,7 @@
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
-	layer = BELOW_OBJ_LAYER
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	anchored = TRUE
 	density = TRUE
 
@@ -292,7 +292,7 @@
 		points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
 		if(!silo_materials.mat_container.insert_amount_mat(quantity * refining_efficiency, possible_mat))
 			rejected_mats[possible_mat] = quantity
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
+	use_power(active_power_usage)
 
 	//Calls the relevant behavior for boosting the machine's efficiency, if able.
 	check_for_boosts()
