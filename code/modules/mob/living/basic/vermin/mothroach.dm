@@ -76,7 +76,7 @@
 
 /mob/living/basic/mothroach/bar
 	name = "mothroach bartender"
-	desc = "Mothroach serving drinks look at him go"
+	desc = "A mothroach serving drinks. Look at him go."
 	icon_state = "barroach"
 	icon_living = "barroach"
 	icon_dead = "barroach_dead"

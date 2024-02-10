@@ -8,7 +8,7 @@
 
 /obj/effect/replica_spawner //description and name are intact, better to make a new fluff object for stuff that is not actually ingame as an object
 	name = "replica creator"
-	desc = "This creates a fluff object that looks exactly like the input, but like obviously a replica. Do not for the love of god use with stuff that has Initialize sideeffects."
+	desc = "This creates a fluff object that looks exactly like the input, but like obviously a replica. Do not for the love of god use with stuff that has Initialize side effects."
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	invisibility = INVISIBILITY_ABSTRACT //nope, can't see this
@@ -107,7 +107,7 @@
 	AddElement(/datum/element/mirage_border, target, dir, range)
 
 /obj/effect/mapping_helpers/ztrait_injector/museum
-	traits_to_add = list(ZTRAIT_NOPARALLAX = TRUE,ZTRAIT_NOXRAY = TRUE, ZTRAIT_NOPHASE = TRUE, ZTRAIT_BASETURF = /turf/open/indestructible/plating, ZTRAIT_SECRET = TRUE)
+	traits_to_add = list(ZTRAIT_NOPARALLAX = TRUE, ZTRAIT_NOXRAY = TRUE, ZTRAIT_NOPHASE = TRUE, ZTRAIT_BASETURF = /turf/open/indestructible/plating, ZTRAIT_SECRET = TRUE)
 
 /obj/effect/smooths_with_walls
 	name = "effect that smooths with walls"
