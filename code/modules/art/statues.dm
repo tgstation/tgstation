@@ -586,10 +586,7 @@ Moving interrupts
 		var/mutable_appearance/real = new()
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			content_ma.underlays -= real
 			underlays_to_keep += real
-		else
-			content_ma.underlays -= real
 	content_ma.underlays = underlays_to_keep
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
