@@ -112,8 +112,8 @@
 
 /datum/mood_event/table/add_effects()
 	if(isfelinid(owner)) //Holy snowflake batman!
-		var/mob/living/carbon/human/H = owner
-		SEND_SIGNAL(H, COMSIG_ORGAN_WAG_TAIL, TRUE, 3 SECONDS)
+		var/mob/living/carbon/human/feline = owner
+		feline.wag_tail(3 SECONDS)
 		description = "They want to play on the table!"
 		mood_change = 2
 
