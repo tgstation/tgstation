@@ -250,11 +250,11 @@
 	probability *= weight/average_weight
 	amount = round(amount * weight/average_weight)
 	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE))
-		probability *= 0.3
+		probability *= 0.35
 		amount = max(amount - 1, 1)
 	if(status == DEAD || !COOLDOWN_FINISHED(src, breeding_wait))
 		probability *= 0.5
-		amount = max(round(amount * 0.5), 1)
+		amount = max(amount - 1, 1)
 	if(prob(probability))
 		new /obj/item/food/roe_pouch(loc, amount)
 
