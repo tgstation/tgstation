@@ -1672,6 +1672,7 @@
 #include "code\datums\quirks\negative_quirks\softspoken.dm"
 #include "code\datums\quirks\negative_quirks\tin_man.dm"
 #include "code\datums\quirks\negative_quirks\unstable.dm"
+#include "code\datums\quirks\negative_quirks\unusual.dm"
 #include "code\datums\quirks\neutral_quirks\bald.dm"
 #include "code\datums\quirks\neutral_quirks\colorist.dm"
 #include "code\datums\quirks\neutral_quirks\deviant_tastes.dm"
