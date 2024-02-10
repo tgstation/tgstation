@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Space Dragon's carp allies no longer turn the entire roundend report into bold."
