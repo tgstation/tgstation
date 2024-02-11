@@ -65,4 +65,3 @@
 /area/station/cargo/mining_breakroom
 	name = "\improper Mining Break Room"
 	icon_state = "mining_breakroom"
-

@@ -35,7 +35,7 @@
 			if(reagents.flags & TRANSPARENT)
 				if(reagents.total_volume)
 					. += "It contains <b>[reagents.total_volume]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
-					if(user_sees_reagents) //Show each individual reagent for detailed examination
+					if(user_sees_reagents || (reagent_sigreturn & ALLOW_GENERIC_REAGENT_EXAMINE)) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 							. += "&bull; [round(current_reagent.volume, CHEMICAL_VOLUME_ROUNDING)] units of [current_reagent.name]"
 						if(reagents.is_reacting)

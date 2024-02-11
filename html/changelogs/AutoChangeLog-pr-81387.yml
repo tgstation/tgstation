@@ -1,0 +1,4 @@
+author: "Atlasle, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Adds the Touchy quirk, you need to be next to something to examine it, for 2 extra quirk points."

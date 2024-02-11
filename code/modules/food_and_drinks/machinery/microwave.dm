@@ -105,7 +105,7 @@
 				itemized_ingredient.pixel_y = itemized_ingredient.base_pixel_y + rand(-5, 6)
 	return ..()
 
-/obj/machinery/microwave/on_deconstruction()
+/obj/machinery/microwave/on_deconstruction(disassembled)
 	eject()
 	return ..()
 

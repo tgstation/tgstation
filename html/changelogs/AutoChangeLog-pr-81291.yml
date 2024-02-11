@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "machines that should not drop contents when deleted no longer do."
+  - refactor: "refactors how machines are deconstructed. report bugs on github."

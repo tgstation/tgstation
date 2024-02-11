@@ -1,0 +1,6 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "MULEbot will correctly display its loaded cargo on BotKeeper"
+  - bugfix: "MULEbot home beacon can be set from control panel"
+  - code_imp: "MULEbot home location is automatically set on init"

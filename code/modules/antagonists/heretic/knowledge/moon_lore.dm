@@ -95,17 +95,6 @@
 	route = PATH_MOON
 	mark_type = /datum/status_effect/eldritch/moon
 
-/datum/heretic_knowledge/mark/moon_mark/trigger_mark(mob/living/source, mob/living/target)
-	. = ..()
-	if(!.)
-		return
-
-	// Also refunds 75% of charge!
-	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
-	if(grasp)
-		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
-		grasp.build_all_button_icons()
-
 /datum/heretic_knowledge/knowledge_ritual/moon
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_parade)
 	route = PATH_MOON
@@ -115,13 +104,7 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	next_knowledge = list(
-		/datum/heretic_knowledge/moon_amulette,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/unfathomable_curio,
-		/datum/heretic_knowledge/curse/paralysis,
-		/datum/heretic_knowledge/painting,
-		)
+	next_knowledge = list(/datum/heretic_knowledge/moon_amulette)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
@@ -133,7 +116,13 @@
 			if the item is used on someone with low sanity they go berserk attacking everyone \
 			, if their sanity isnt low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
-	next_knowledge = list(/datum/heretic_knowledge/blade_upgrade/moon)
+	next_knowledge = list(
+		/datum/heretic_knowledge/blade_upgrade/moon,
+		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/unfathomable_curio,
+		/datum/heretic_knowledge/curse/paralysis,
+		/datum/heretic_knowledge/painting,
+	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/item/organ/internal/heart = 1,
@@ -149,7 +138,6 @@
 	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
-	cost = 1
 	route = PATH_MOON
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
@@ -236,8 +224,15 @@
 			continue
 		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
 		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
-		crewmate.put_in_active_hand(moon_amulette)
+		var/obj/item/clothing/neck/heretic_focus/moon_amulette/amulet = new(crewmate_turf)
+		var/static/list/slots = list(
+			"neck" = ITEM_SLOT_NECK,
+			"hands" = ITEM_SLOT_HANDS,
+			"backpack" = ITEM_SLOT_BACKPACK,
+			"right pocket" = ITEM_SLOT_RPOCKET,
+			"left pocket" = ITEM_SLOT_RPOCKET,
+		)
+		crewmate.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
 		crewmate.emote("laugh")
 		amount_of_lunatics += 1
 
