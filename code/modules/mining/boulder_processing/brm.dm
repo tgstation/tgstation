@@ -6,6 +6,8 @@
 #define TELEPORTATION_TIME (1.5 SECONDS)
 ///Cooldown for automatic teleportation after processing boulders_processing_max number of boulders
 #define BATCH_COOLDOWN (3 SECONDS)
+///Special case when we are trying to teleport a boulder but there is already another boulder in our loc
+#define TURF_BLOCKED_BY_BOULDER -1
 
 /obj/machinery/brm
 	name = "boulder retrieval matrix"
@@ -134,7 +136,10 @@
 	if(!handle_teleport_conditions(user))
 		return
 
-	if(pre_collect_boulder())
+	var/result = pre_collect_boulder()
+	if(result == TURF_BLOCKED_BY_BOULDER)
+		balloon_alert(user, "no space")
+	else if(result)
 		balloon_alert(user, "teleporting")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
@@ -168,8 +173,12 @@
 	if(!handle_teleport_conditions(user))
 		return
 
-	if(pre_collect_boulder())
+	var/result = pre_collect_boulder()
+	if(result == TURF_BLOCKED_BY_BOULDER)
+		balloon_alert(user, "no space")
+	else if(result)
 		balloon_alert(user, "teleporting")
+
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -250,6 +259,11 @@
 	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		return FALSE
 
+	//There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
+	if(locate(/obj/item/boulder) in loc)
+		batch_processing = FALSE
+		return TURF_BLOCKED_BY_BOULDER
+
 	//no more boulders
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
@@ -289,6 +303,10 @@
 		balloon_alert_to_viewers("target lost!")
 		return FALSE
 
+	if(locate(/obj/item/boulder) in loc)
+		batch_processing = FALSE
+		return
+
 	flick("brm-flash", src)
 	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	random_boulder.forceMove(drop_location())
@@ -310,3 +328,4 @@
 #undef AUTO_TELEPORT_SOUND
 #undef TELEPORTATION_TIME
 #undef BATCH_COOLDOWN
+#undef TURF_BLOCKED_BY_BOULDER

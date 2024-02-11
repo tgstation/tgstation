@@ -27,14 +27,14 @@
 /obj/machinery/bouldertech/refinery/RefreshParts()
 	. = ..()
 
-	boulders_processing_power = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		boulders_processing_power += servo.tier
-	boulders_processing_power = ROUND_UP((boulders_processing_power / 8) * BOULDER_SIZE_MEDIUM)
-
 	boulders_held_max = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		boulders_held_max += bin.tier
+
+	boulders_processing_count = 0
+	for(var/datum/stock_part/servo/servo in component_parts)
+		boulders_processing_count += servo.tier
+	boulders_processing_count = ROUND_UP((boulders_processing_count / 8) * boulders_held_max)
 
 /**
  * Your other new favorite industrial waste magnet!

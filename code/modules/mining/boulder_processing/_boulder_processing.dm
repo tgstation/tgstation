@@ -1,3 +1,6 @@
+///Special case when we are trying to eject a boulder but there is already another boulder in our loc
+#define TURF_BLOCKED_BY_BOULDER -1
+
 /obj/machinery/bouldertech
 	name = "bouldertech brand refining machine"
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
@@ -10,7 +13,7 @@
 	/// What is the efficiency of minerals produced by the machine?
 	var/refining_efficiency = 1
 	/// How much durability of an boulder can we reduce
-	var/boulders_processing_power = BOULDER_SIZE_SMALL
+	var/boulders_processing_count = 2
 	/// How many boulders can we hold maximum?
 	var/boulders_held_max = 1
 	/// What sound plays when a thing operates?
@@ -81,7 +84,7 @@
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
 	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Processing power upto <b>[boulders_processing_power] steps</b> at a time.")
+	. += span_notice("Can process upto <b>[boulders_processing_count] boulders</b> at a time.")
 
 	if(anchored)
 		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
@@ -155,7 +158,7 @@
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
-	if(boulder_count > boulders_held_max)
+	if(boulder_count >= boulders_held_max)
 		return FALSE
 
 	//did we cooldown enough to accept a boulder
@@ -315,29 +318,21 @@
 
 	var/boulders_found = FALSE
 	var/boulder_removed = FALSE
-	var/boulders_step_power = boulders_processing_power
-	while(boulders_step_power > 0)
-		boulders_found = FALSE
-		for(var/obj/item/boulder/potential_boulder in contents)
-			boulders_found = TRUE
-			if(boulders_step_power <= 0)
-				break //Try again next time
-			boulders_step_power--
+	var/boulders_processed = boulders_processing_count
+	for(var/obj/item/boulder/potential_boulder in contents)
+		boulders_found = TRUE
+		if(boulders_processed <= 0)
+			break //Try again next time
+		boulders_processed--
 
-			var/step_power = min(boulders_step_power, potential_boulder.durability)
+		if(potential_boulder.durability > 0)
+			potential_boulder.durability -= 1
 			if(potential_boulder.durability > 0)
-				potential_boulder.durability -= step_power //boulder processed by set power.
-				boulders_step_power -= step_power
-				if(potential_boulder.durability > 0) //check again if we have to go another round
-					continue
+				continue
 
-			boulder_removed = breakdown_boulder(potential_boulder) //Crack that boulder open!
-			if(boulders_step_power <= 0)
-				break
-
-		//no boulders are present
-		if(!boulders_found)
-			break
+		boulder_removed = breakdown_boulder(potential_boulder)
+		if(boulder_removed == TURF_BLOCKED_BY_BOULDER) //no space in our turf to eject boulders. hault all operations till space opens up
+			return
 
 	//when the boulder is removed it plays sound and  displays a balloon alert. don't overlap when that happens
 	if(boulders_found && !boulder_removed)
@@ -360,6 +355,10 @@
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 
+	//There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
+	if(locate(/obj/item/boulder) in loc)
+		return TURF_BLOCKED_BY_BOULDER
+
 	//Reset durability to little random lower value cause we have crushed it so many times
 	var/size = specific_boulder.boulder_size
 	if(size == BOULDER_SIZE_SMALL)
@@ -373,3 +372,5 @@
 	balloon_alert_to_viewers("clear!")
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 	return TRUE
+
+#undef TURF_BLOCKED_BY_BOULDER
