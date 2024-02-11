@@ -542,6 +542,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 	connected_display.receive_signal(status_signal)
 
+/obj/machinery/status_display/random_message
+	current_mode = SD_MESSAGE
+	/// list to pick the first line from
+	var/list/firstline_to_secondline = list()
+
+/obj/machinery/status_display/random_message/Initialize(mapload, ndir, building)
+	if(firstline_to_secondline?.len)
+		message1 = pick(firstline_to_secondline)
+		message2 = firstline_to_secondline[message1]
+	return ..() // status displays call update appearance on init so i suppose we should set the messages before calling parent as to not call it twice
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
+
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE
 #undef SCROLL_RATE

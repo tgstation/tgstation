@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Rats are now 5x less likely to decide to eat a cable when idling. (1%, down from 5%)"

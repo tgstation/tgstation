@@ -269,3 +269,44 @@
       the cost of another station's cryo cells. Who knows!
   larentoun:
   - bugfix: Now falsewalls visually don't close when they shouldn't.
+2024-02-11:
+  Absolucy:
+  - bugfix: Fix succumb last words being double-encoded (i.e `i'm` becoming `i&#39;lm`)
+  Higgin:
+  - bugfix: deathtrap recycler can now be moved.
+  - refactor: moved check for NO_DECONSTRUCTION flag to be inside can_be_unfasten_wrench,
+      allowing us to set specific machines to be movable but not deconstructable.
+  JohnFulpWillard:
+  - bugfix: Space Dragon's carp allies no longer turn the entire roundend report into
+      bold.
+  - bugfix: Uplinks now update their UI when you add telecrystals in them, so you
+      don't need to close and reopen it.
+  - bugfix: Bar bots asking for Cucumber Lemonade now gives you money for completing
+      it.
+  Melbert:
+  - balance: Rats are now 5x less likely to decide to eat a cable when idling. (1%,
+      down from 5%)
+  - refactor: Fire effects get added to mobs in a different way now. Maybe it will
+      get stuck less. Report any oddities.
+  - rscadd: Freedom Implants and Biodegrade can you free you of the shackles of knotted
+      shoes.
+  - rscadd: Shaft Miner's Bluespace Survival Capsules will now throw people away from
+      it when it deploys. Be sure to heed the warning to "Stand back".
+  Momo8289:
+  - rscadd: Fire ants can now be scooped up and used as a chem like normal space ants
+  Rhials:
+  - bugfix: You can now refine ectoplasmic raw cores at the implosion machine thing.
+  - balance: Beacon and Teleport Blocker implants have been moved from cargo to the
+      security lathe.
+  - balance: A new research node has been created, requiring Subdermal Implants and
+      Miniature Bluespace, to unlock Beacon/Teleport Blocker implants.
+  - balance: Exile implants can now be printed from the security lathe after researching
+      basic cybernetic implants.
+  - bugfix: The Energy Cake slice now does its on-eat effect AFTER being eaten, instead
+      of before.
+  - bugfix: The beach bar virtual domain's bar closets no longer have default locker
+      doors.
+  SyncIt21:
+  - bugfix: lathes now use moderate power for printing operations
+  necromanceranne:
+  - bugfix: The shove blocker module parent type now has the correct typepath.

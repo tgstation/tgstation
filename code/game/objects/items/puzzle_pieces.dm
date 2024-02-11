@@ -403,3 +403,61 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	qdel(src)
+
+/obj/structure/puzzle_blockade/oneway
+	name = "one-way gate"
+	desc = "A wall of solid light, likely defending something important. Virtually indestructible."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "oneway"
+	base_icon_state = "oneway"
+	light_color = COLOR_BIOLUMINESCENCE_BLUE
+	light_range = 1
+	density = FALSE
+
+/obj/structure/puzzle_blockade/oneway/update_icon_state()
+	icon_state = "[base_icon_state][density ? "" : "-off"]"
+	return ..()
+
+/obj/structure/puzzle_blockade/oneway/CanAllowThrough(atom/movable/mover, border_dir)
+	return ..() && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
+
+/obj/structure/puzzle_blockade/oneway/CanAStarPass(border_dir, datum/can_pass_info/pass_info)
+	return REVERSE_DIR(border_dir) == dir
+
+/obj/structure/puzzle_blockade/oneway/try_signal(datum/source)
+	density = FALSE
+	update_appearance(UPDATE_ICON)
+
+/obj/effect/puzzle_poddoor_open
+	name = "puzzle-poddoor relay"
+	desc = "activates poddoors if activated with a puzzle signal."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = ""
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	/// if we receive a puzzle signal with this we do our thing
+	var/queue_id
+	/// door id
+	var/id
+
+/obj/effect/puzzle_poddoor_open/Initialize(mapload)
+	. = ..()
+	if(isnull(id) || isnull(queue_id))
+		log_mapping("[src] id:[id] has no id or door id and has been deleted")
+		return INITIALIZE_HINT_QDEL
+	
+	SSqueuelinks.add_to_queue(src, queue_id)
+
+/obj/effect/puzzle_poddoor_open/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/effect/puzzle_poddoor_open/proc/try_signal(datum/source)
+	SIGNAL_HANDLER
+	var/openclose
+	for(var/obj/machinery/door/poddoor/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(door.id != id)
+			continue
+		if(isnull(openclose))
+			openclose = door.density
+		INVOKE_ASYNC(door, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
