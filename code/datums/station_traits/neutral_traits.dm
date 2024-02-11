@@ -379,13 +379,13 @@
 	/**
 	 * The number of links to perform.
 	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
-	 * on-station, non-secure closet being linked are as high as 1 in 8 and as low as 1 in 16-17,
-	 * nearing an a mean of 1 in 10 to 13 the more repetitions are done.
+	 * on-station, non-secure closet being linked are as high as 1 in 7/8 and as low as 1 in 16-17,
+	 * nearing an a mean of 1 in 9 to 11/12 the more repetitions are done.
 	 *
-	 * There are more than 200~ roundstart closets on meta, 150~ of which aren't secure,
-	 * so, about 11 to 15 closets will be affected by this most of the times.
+	 * There are more than 220 roundstart closets on meta, around 150 of which aren't secure,
+	 * so, about 13 to 17 closets will be affected by this most of the times.
 	 */
-	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(300, 400)*0.0001), 1)
+	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(350, 450)*0.0001), 1)
 	for(var/repetition in 1 to number_of_links)
 		var/closets_left = length(roundstart_non_secure_closets)
 		if(closets_left < 2)
