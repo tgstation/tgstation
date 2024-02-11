@@ -170,9 +170,9 @@ There are several things that need to be remembered:
 	cut_overlay(bloody_lefthand_overlay)
 	cut_overlay(bloody_righthand_overlay)
 	if(!gloves && blood_in_hands && (num_hands > 0))
-		if(has_left_hand(FALSE))
+		if(has_left_hand(check_disabled = FALSE))
 			add_overlay(bloody_lefthand_overlay)
-		if(has_right_hand(FALSE))
+		if(has_right_hand(check_disabled = FALSE))
 			add_overlay(bloody_righthand_overlay)
 	// Bloody hands end
 
