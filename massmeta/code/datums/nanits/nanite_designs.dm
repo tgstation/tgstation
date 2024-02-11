@@ -120,12 +120,6 @@
 
 ////////////////////UTILITY NANITES//////////////////////////////////////
 
-/datum/design/nanites/
-	name = "Civilian Bounty Pad Board"
-	desc = "The circuit board for a Civilian Bounty Pad."
-	id = "nanite_constractions"
-	build_path = /obj/item/circuitboard/machine/nanite_chamber
-
 /datum/design/nanites/metabolic_synthesis
 	name = "Metabolic Synthesis"
 	desc = "The nanites use the metabolic cycle of the host to speed up their replication rate, using their extra nutrition as fuel."
