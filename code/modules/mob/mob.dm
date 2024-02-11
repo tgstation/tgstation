@@ -1647,11 +1647,4 @@
 
 /mob/key_down(key, client/client, full_key)
 	SHOULD_CALL_PARENT(true)
-	for(var/datum/action/act as anything in actions)
-		if(next_click > world.time)
-			break
-		if(act.full_key != full_key)
-			continue
-		next_click = world.time + CLICK_CD_RANGE
-		act.Trigger()
-		break
+	SEND_SIGNAL(src, COMSIG_MOB_KEYDOWN, key, client, full_key)

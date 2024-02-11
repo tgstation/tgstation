@@ -97,6 +97,7 @@
 	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, owner)
 	SEND_SIGNAL(owner, COMSIG_MOB_GRANTED_ACTION, src)
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_ref), override = TRUE)
+	RegisterSignal(owner, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 
 	// Register some signals based on our check_flags
 	// so that our button icon updates when relevant
@@ -132,6 +133,7 @@
 	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
 	SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
 	UnregisterSignal(owner, COMSIG_QDELETING)
+	UnregisterSignal(owner, COMSIG_MOB_KEYDOWN)
 
 	// Clean up our check_flag signals
 	UnregisterSignal(owner, list(
@@ -416,3 +418,14 @@
 /// Checks if our action is actively selected. Used for selecting icons primarily.
 /datum/action/proc/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return FALSE
+
+/datum/action/proc/keydown(mob/source, key, client/client, full_key)
+	SIGNAL_HANDLER
+	if(full_key != src.full_key)
+		return
+	if(istype(source))
+		if(source.next_click > world.time)
+			return
+		else
+			source.next_click = world.time + CLICK_CD_RANGE
+	Trigger()
