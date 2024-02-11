@@ -72,6 +72,7 @@ GLOBAL_VAR(restart_counter)
 
 	// Write everything to this log file until we get to SetupLogs() later
 	_initialize_log_files("data/logs/config_error.[GUID()].log")
+	GLOB.demo_log = "[GLOB.log_directory]/demo.txt" //Guh //Monkestation Edit: REPLAYS
 
 	// Init the debugger first so we can debug Master
 	init_debugger()

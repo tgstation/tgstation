@@ -7,6 +7,8 @@
 
 #define isatom(A) (isloc(A))
 
+#define ismovableatom(A) (istype(A, /atom/movable))
+
 #define isdatum(thing) (istype(thing, /datum))
 
 #define isweakref(D) (istype(D, /datum/weakref))

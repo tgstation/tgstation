@@ -6576,6 +6576,8 @@
 #include "monkestation\code\modules\reagents\reagent_containers\blood_pack.dm"
 #include "monkestation\code\modules\reagents\recipes\fun.dm"
 #include "monkestation\code\modules\reagents\recipes\medical.dm"
+#include "monkestation\code\modules\replays\hooks\generic_hooks.dm"
+#include "monkestation\code\modules\replays\subsystem\replay.dm"
 #include "monkestation\code\modules\research\designs\computer_designs.dm"
 #include "monkestation\code\modules\research\designs\electronic_designs.dm"
 #include "monkestation\code\modules\research\designs\machine_designs.dm"

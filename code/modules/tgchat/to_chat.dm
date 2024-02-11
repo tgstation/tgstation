@@ -21,7 +21,6 @@
 	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
 	html = "[html]"
 	text = "[text]"
-
 	if(!target)
 		return
 	if(!html && !text)
@@ -35,6 +34,11 @@
 	if(text) message["text"] = text
 	if(html) message["html"] = html
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
+
+	//Monkestation Edit: REPLAYS
+	if(!confidential)
+		SSdemo.write_chat(target, message)
+	//Monkestation Edit: REPLAYS
 
 	// send it immediately
 	SSchat.send_immediate(target, message)
@@ -81,4 +85,4 @@
 	if(text) message["text"] = text
 	if(html) message["html"] = html
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
-	SSchat.queue(target, message)
+	SSchat.queue(target, message, confidential) //Monkestation Edit: REPLAYS
