@@ -672,6 +672,11 @@
 	dispatch_transport(destination_platform = push_destination)
 	return push_destination
 
+
+/datum/transport_controller/linear/tram/slow //for some reason speed is set to initial() in the code but if i touched it it would probably break so
+	speed_limiter = 3
+	base_speed_limiter = 3
+
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
  */
