@@ -7,6 +7,7 @@
 #define TECHWEB_POINT_TYPE_NANITES "Nanite Research" //Massmeta Edithen here
 
 #define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
+#define TECHWEB_POINT_TYPE_NANITE TECHWEB_POINT_TYPE_NANITES
 
 //! Associative names for techweb point values, see: [all_nodes][code/modules/research/techweb/all_nodes.dm]
 #define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
