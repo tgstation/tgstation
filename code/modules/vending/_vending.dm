@@ -298,12 +298,10 @@
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
 
-/obj/machinery/vending/deconstruct(disassembled = TRUE)
+/obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
 		return ..()
-	if(!(obj_flags & NO_DECONSTRUCTION)) //the non constructable vendors drop metal instead of a machine frame.
-		new /obj/item/stack/sheet/iron(loc, 3)
-	qdel(src)
+	new /obj/item/stack/sheet/iron(loc, 3)
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
@@ -1085,7 +1083,7 @@
 		replacer.play_rped_sound()
 	return TRUE
 
-/obj/machinery/vending/on_deconstruction()
+/obj/machinery/vending/on_deconstruction(disassembled)
 	update_canister()
 	. = ..()
 
@@ -1656,14 +1654,13 @@
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE
 
-/obj/machinery/vending/custom/deconstruct(disassembled)
+/obj/machinery/vending/custom/on_deconstruction(disassembled)
 	unbuckle_all_mobs(TRUE)
 	var/turf/current_turf = get_turf(src)
 	if(current_turf)
 		for(var/obj/item/stored_item in contents)
 			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
-	return ..()
 
 /**
  * Vends an item to the user. Handles all the logic:

@@ -52,7 +52,7 @@
 	silo_materials = null
 	return ..()
 
-/obj/machinery/bouldertech/on_deconstruction()
+/obj/machinery/bouldertech/on_deconstruction(disassembled)
 	if(length(contents))
 		for(var/obj/item/boulder/boulder in contents)
 			remove_boulder(boulder)

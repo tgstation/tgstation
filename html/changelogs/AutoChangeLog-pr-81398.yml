@@ -1,0 +1,4 @@
+author: "Ed640"
+delete-after: True
+changes:
+  - bugfix: "Sculpted statues stop including light layers."
