@@ -1,5 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "deathtrap recycler can now be moved."
-  - refactor: "moved check for NO_DECONSTRUCTION flag to be inside can_be_unfasten_wrench, allowing us to set specific machines to be movable but not deconstructable."

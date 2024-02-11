@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The beach bar virtual domain's bar closets no longer have default locker doors."

@@ -1,6 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - balance: "Beacon and Teleport Blocker implants have been moved from cargo to the security lathe."
-  - balance: "A new research node has been created, requiring Subdermal Implants and Miniature Bluespace, to unlock Beacon/Teleport Blocker implants."
-  - balance: "Exile implants can now be printed from the security lathe after researching basic cybernetic implants."
