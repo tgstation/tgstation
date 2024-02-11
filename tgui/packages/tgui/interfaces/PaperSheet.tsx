@@ -674,8 +674,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     bold: boolean = false,
   ): string => {
     return `<span style="color:${color};font-family:${font};${
-        bold ? 'font-weight: bold;' : ''
-      }">${text}</span>`;
+      bold ? 'font-weight: bold;' : ''
+    }">${text}</span>`;
   };
 
   // Parses the given raw text through marked for applying markdown.
