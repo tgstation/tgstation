@@ -386,9 +386,12 @@
 		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 			secondary_ai_spawn.latejoin_active = TRUE
 
+#define PRO_SKUB "pro-skub"
+#define ANTI_SKUB "anti-skub"
 #define SKUB_IDFC "i don't frikkin' care"
+#define RANDOM_SKUB null //This means that if you forgot to opt in/against/out, there's a 50/50 chance to be pro or anti
 
-/// A trait that lets players choose whether they want a skub and pro-skub shirt, an anti-skub shirt, or neither.
+/// A trait that lets players choose whether they want pro-skub or anti-skub (or neither), and receive the appropriate equipment.
 /datum/station_trait/skub
 	name = "The Great Skub Contention"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -419,9 +422,9 @@
 	var/mob/player = lobby_button.get_mob()
 	var/skub_stance = skubbers[player.ckey]
 	switch(skub_stance)
-		if(TRUE)
+		if(PRO_SKUB)
 			lobby_button.base_icon_state = "signup_on"
-		if(FALSE)
+		if(ANTI_SKUB)
 			lobby_button.base_icon_state = "signup"
 		else
 			lobby_button.base_icon_state = "signup_neutral"
@@ -430,27 +433,27 @@
 	var/mob/player = lobby_button.get_mob()
 	var/skub_stance = skubbers[player.ckey]
 	switch(skub_stance)
-		if(TRUE)
-			skubbers[player.ckey] = FALSE
-		if(FALSE)
+		if(PRO_SKUB)
+			skubbers[player.ckey] = ANTI_SKUB
+		if(ANTI_SKUB)
 			skubbers[player.ckey] = SKUB_IDFC
 		if(SKUB_IDFC)
-			skubbers -= player.ckey
-		if(null)
-			skubbers[player.ckey] = TRUE
+			skubbers[player.ckey = RANDOM_SKUB
+		if(RANDOM_SKUB)
+			skubbers[player.ckey] = PRO_SKUB
 
 /datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
 	var/mob/player = lobby_button.get_mob()
 	var/skub_stance = skubbers[player.ckey]
 	switch(skub_stance)
-		if(TRUE)
+		if(PRO_SKUB)
 			overlays += "pro_skub"
-		if(FALSE)
+		if(ANTI_SKUB)
 			overlays += "anti_skub"
 		if(SKUB_IDFC)
 			overlays += "neutral_skub"
-		if(null)
+		if(RANDOM_SKUB)
 			overlays += "random_skub"
 
 /datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -460,7 +463,7 @@
 	if(skub_stance == SKUB_IDFC)
 		return
 
-	if((isnull(skub_stance) && prob(50)) || skub_stance)
+	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
 		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
 		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 		if(ishuman(spawned))
@@ -505,4 +508,8 @@
 	for(var/i in 1 to 4)
 		new /obj/item/sticker/anti_skub(src)
 
+#undef PRO_SKUB
+#undef ANTI_SKUB
 #undef SKUB_IDFC
+#undef RANDOM_SKUB
+
