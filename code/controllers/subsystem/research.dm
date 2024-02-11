@@ -8,6 +8,9 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
 
+	///The default Science Techweb.
+	var/datum/techweb/science/science_tech
+
 	///List of all techwebs, generating points or not.
 	///Autolathes, Mechfabs, and others all have shared techwebs, for example.
 	var/list/datum/techweb/techwebs = list()
@@ -73,7 +76,7 @@ SUBSYSTEM_DEF(research)
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
-	new /datum/techweb/science
+	science_tech = new /datum/techweb/science
 	new /datum/techweb/admin
 	new /datum/techweb/oldstation
 	autosort_categories()

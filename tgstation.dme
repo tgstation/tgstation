@@ -383,6 +383,8 @@
 #include "code\__DEFINES\traits\macros.dm"
 #include "code\__DEFINES\traits\sources.dm"
 #include "code\__DEFINES\~massmeta_defines\_defines_include.dm"
+#include "code\__DEFINES\~massmeta_defines\nanites_defines.dm"
+#include "code\__DEFINES\~massmeta_defines\nanites_signals.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
