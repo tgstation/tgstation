@@ -19,6 +19,29 @@ SUBSYSTEM_DEF(ore_generation)
 	 */
 	var/list/ore_vent_minerals = list()
 
+	/// A tracker of how many of each ore vent size we have in the game. Useful for tracking purposes.
+	var/list/ore_vent_sizes = list(
+		LARGE_VENT_TYPE = 0,
+		MEDIUM_VENT_TYPE = 0,
+		SMALL_VENT_TYPE = 0,
+	)
+	/// Ores spawned by proximity to an ore vent. Useful for logging purposes.
+	var/list/post_ore_random = list(
+		"1" = 0,
+		"2" = 0,
+		"3" = 0,
+		"4" = 0,
+		"5" = 0,
+	)
+	/// Ores spawned randomly on the map without proximity to an ore vent. Useful for logging purposes.
+	var/list/post_ore_manual = list(
+		"1" = 0,
+		"2" = 0,
+		"3" = 0,
+		"4" = 0,
+		"5" = 0,
+	)
+
 /datum/controller/subsystem/ore_generation/Initialize()
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	while(length(ore_vent_minerals) > 0) //Keep looping if there's more to assign
