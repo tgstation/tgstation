@@ -201,7 +201,7 @@
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	flags_1 = NONE
 
-/obj/item/clothing/mask/bandana/facescarf
+/obj/item/clothing/mask/facescarf
 	name = "facescarf"
 	desc = "Cover your face like in the cowboy movies. It also has breathtube so you can wear it everywhere!"
 	actions_types = /datum/action/item_action/adjust
@@ -224,7 +224,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/facescarf/inhands_right
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/mask/bandana/facescarf/AltClick(mob/user)
+/obj/item/clothing/mask/facescarf/AltClick(mob/user)
 	..()
 	if(user.can_perform_action(src, NEED_DEXTERITY))
 		adjustmask(user)
