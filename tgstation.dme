@@ -1830,7 +1830,6 @@
 #include "code\datums\wires\airlock.dm"
 #include "code\datums\wires\apc.dm"
 #include "code\datums\wires\autolathe.dm"
-#include "code\datums\wires\brm.dm"
 #include "code\datums\wires\conveyor.dm"
 #include "code\datums\wires\ecto_sniffer.dm"
 #include "code\datums\wires\emitter.dm"

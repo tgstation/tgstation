@@ -34,12 +34,7 @@
 
 /obj/machinery/brm/Initialize(mapload)
 	. = ..()
-	set_wires(new /datum/wires/brm(src))
 	register_context()
-
-/obj/machinery/brm/Destroy()
-	QDEL_NULL(wires)
-	return ..()
 
 /obj/machinery/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = CONTEXTUAL_SCREENTIP_SET
@@ -60,8 +55,6 @@
 		if(panel_open)
 			if(held_item.tool_behaviour == TOOL_CROWBAR)
 				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-			else if(is_wire_tool(held_item))
-				context[SCREENTIP_CONTEXT_LMB] = "Open Wires"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -80,7 +73,6 @@
 
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
-		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
 
 /obj/machinery/brm/update_icon_state()
 	icon_state = initial(icon_state)
@@ -182,12 +174,6 @@
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
-
-/obj/machinery/brm/attackby(obj/item/attacking_item, mob/user, params)
-	if(is_wire_tool(attacking_item) && panel_open)
-		wires.interact(user)
-		return TRUE
-	return ..()
 
 /obj/machinery/brm/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
