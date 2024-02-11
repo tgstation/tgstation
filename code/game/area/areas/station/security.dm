@@ -39,6 +39,10 @@
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
 
+/area/station/security/brig/lower
+	name = "\improper Lower Brig"
+	icon_state = "lower_brig"
+
 /area/station/security/brig/entrance
 	name = "\improper Brig Entrance"
 	icon_state = "brigentry"

@@ -22,6 +22,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/transport)
 "h" = (
@@ -68,40 +69,17 @@
 /area/shuttle/transport)
 "t" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
 /obj/machinery/computer/shuttle/ferry/request{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
 "u" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/hedge,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 4
+/obj/structure/railing{
+	dir = 5
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
+/obj/structure/sign/flag/nanotrasen/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
 "x" = (
@@ -123,6 +101,9 @@
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/effect/turf_decal/trimline/neutral,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
 "y" = (
@@ -134,13 +115,24 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table/reinforced,
-/obj/machinery/recharger,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/structure/sign/calendar/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
 "z" = (
@@ -179,12 +171,29 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
+"J" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/flora/bush/large/style_2{
+	pixel_y = 0
+	},
+/turf/open/floor/grass,
+/area/shuttle/transport)
 "K" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/transport)
 "L" = (
@@ -194,9 +203,27 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
+"N" = (
+/obj/structure/hedge,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
 "S" = (
 /turf/template_noop,
 /area/template_noop)
+"U" = (
+/obj/effect/turf_decal/trimline/neutral,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
 "V" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Ferry Shuttle Airlock"
@@ -212,9 +239,35 @@
 	dir = 8;
 	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	port_direction = 2
+	preferred_direction = 4
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/transport)
+"W" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
 "Z" = (
 /obj/effect/turf_decal/stripes/line{
@@ -249,7 +302,7 @@ s
 "}
 (3,1,1) = {"
 L
-u
+N
 t
 u
 L
@@ -257,7 +310,7 @@ L
 (4,1,1) = {"
 j
 h
-z
+U
 b
 j
 "}
@@ -291,22 +344,22 @@ j
 "}
 (9,1,1) = {"
 i
-y
+W
 E
 y
 i
 "}
 (10,1,1) = {"
 i
-i
+J
 z
-i
+J
 i
 "}
 (11,1,1) = {"
-S
 i
+j
 V
+j
 i
-S
 "}

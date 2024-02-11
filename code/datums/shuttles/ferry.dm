@@ -38,3 +38,8 @@
 	suffix = "northstar"
 	name = "north star transport ferry"
 	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
+
+/datum/map_template/shuttle/ferry/nebula
+	suffix = "nebula"
+	name = "nebula transport ferry"
+	description = "A good ferry for a graceful trip with a breeze. Comes with rechargers."

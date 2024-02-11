@@ -7,6 +7,9 @@
 /obj/structure/closet/firecloset,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/light/warm/directional/north,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "c" = (
@@ -19,9 +22,18 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/arrival)
+"e" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/arrival)
 "f" = (
-/obj/item/kirbyplants/organic/plant22,
 /obj/machinery/digital_clock/directional/north,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/chair/comfy/black,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "g" = (
@@ -53,8 +65,9 @@
 "m" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/kirbyplants/organic/plant22,
-/obj/item/radio/intercom/chapel/directional/north,
-/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "n" = (
@@ -62,7 +75,13 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "p" = (
-/obj/item/kirbyplants/organic/plant22,
+/obj/machinery/requests_console/directional/south,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "q" = (
@@ -79,11 +98,15 @@
 	pixel_y = 3
 	},
 /obj/machinery/digital_clock/directional/north,
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "r" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/light/warm/directional/south,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "t" = (
@@ -93,6 +116,10 @@
 	},
 /obj/item/toy/plush/moth{
 	pixel_y = 4
+	},
+/obj/item/radio/intercom/chapel/directional/south,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
 	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
@@ -106,10 +133,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "x" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
 /obj/machinery/computer/arcade/orion_trail{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -121,10 +148,10 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "z" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
 /obj/machinery/computer/arcade/battle{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -133,16 +160,14 @@
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
-/obj/docking_port/mobile/arrivals{
-	name = "nebula arrivals shuttle"
-	},
+/obj/docking_port/mobile/arrivals,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "B" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/siding/wood{
-	dir = 1
+	dir = 9
 	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
@@ -172,18 +197,16 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/siding/wood{
-	dir = 1
+	dir = 5
 	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "I" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/kirbyplants/organic/plant22,
-/obj/machinery/requests_console/directional/north{
-	department = "Arrival shuttle";
-	name = "Arrival Shuttle Requests Console"
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
 	},
-/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "J" = (
@@ -208,6 +231,8 @@
 /obj/structure/closet/emcloset,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/light/warm/directional/north,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "S" = (
@@ -220,9 +245,6 @@
 	pixel_y = 2;
 	pixel_x = 9
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
 /obj/item/storage/box/donkpockets{
 	pixel_x = -5;
 	pixel_y = 5
@@ -231,11 +253,17 @@
 /area/shuttle/arrival)
 "T" = (
 /obj/machinery/door/airlock/shuttle/glass,
-/turf/open/floor/carpet/black,
+/turf/open/floor/wood/parquet,
+/area/shuttle/arrival)
+"U" = (
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/arrival)
 "V" = (
-/obj/structure/closet/firecloset,
 /obj/machinery/light/warm/directional/south,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "W" = (
@@ -247,17 +275,11 @@
 "Y" = (
 /obj/structure/table/wood,
 /obj/machinery/coffeemaker/impressa,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "Z" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 
@@ -281,27 +303,27 @@ Q
 "}
 (3,1,1) = {"
 Q
-v
+a
 y
 J
 g
-v
+a
 Q
 "}
 (4,1,1) = {"
-v
+U
 v
 v
 T
 v
 v
-v
+U
 "}
 (5,1,1) = {"
 v
 q
 z
-J
+e
 x
 t
 v
@@ -325,13 +347,13 @@ V
 v
 "}
 (8,1,1) = {"
-v
+U
 v
 m
 J
 H
 v
-v
+U
 "}
 (9,1,1) = {"
 Q
@@ -361,13 +383,13 @@ a
 Q
 "}
 (12,1,1) = {"
-v
+U
 v
 I
 J
 B
 v
-v
+U
 "}
 (13,1,1) = {"
 v
@@ -397,13 +419,13 @@ p
 v
 "}
 (16,1,1) = {"
-v
+U
 v
 Y
 Z
 S
 v
-v
+U
 "}
 (17,1,1) = {"
 Q
@@ -416,10 +438,10 @@ Q
 "}
 (18,1,1) = {"
 Q
-v
+U
 D
 A
 D
-v
+U
 Q
 "}

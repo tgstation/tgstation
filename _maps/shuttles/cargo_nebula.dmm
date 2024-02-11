@@ -67,7 +67,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "garbage"
+	id = "QMLoad"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
@@ -82,10 +82,17 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
+"v" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad2"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
 "y" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "garbage"
+	id = "QMLoad"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
@@ -97,7 +104,7 @@
 "B" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "garbage"
+	id = "QMLoad"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
@@ -199,8 +206,8 @@ J
 Q
 Q
 m
-B
-B
+v
+v
 X
 B
 B
