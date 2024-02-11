@@ -80,7 +80,7 @@ export const Section = forwardRef(
       addScrollableNode(forwardedRef.current);
 
       return () => {
-		if (!forwardedRef?.current) return;
+        if (!forwardedRef?.current) return;
         removeScrollableNode(forwardedRef.current!);
       };
     }, []);
@@ -108,8 +108,8 @@ export const Section = forwardRef(
           <div
             className="Section__content"
             onScroll={onScroll}
-			// For posterity: the forwarded ref needs to be here specifically
-			// to actually let things interact with the scrolling.
+            // For posterity: the forwarded ref needs to be here specifically
+            // to actually let things interact with the scrolling.
             ref={forwardedRef}
           >
             {children}
