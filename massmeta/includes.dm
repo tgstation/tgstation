@@ -78,6 +78,9 @@
 #include "features\hardsuits\code\hardsuit.dm"
 #include "features\hardsuits\code\helmet.dm"
 #include "features\hardsuits\code\space_suit_beacon.dm"
+//buts
+#include "code\modules\surgery\organs\internal\butts\butts.dm"
+#include "code\modules\surgery\organs\internal\butts\butts_init.dm"
 //nanits
 #include "code\datums\nanits\nanite_designs.dm"
 #include "code\datums\nanits\nanite_mood.dm"
