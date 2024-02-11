@@ -5,6 +5,7 @@ have ways of interacting with a specific mob and control it.
 ///OOK OOK OOK
 
 /datum/ai_controller/monkey
+	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/generic_resist,
@@ -146,11 +147,15 @@ have ways of interacting with a specific mob and control it.
 	return TRUE
 
 ///Reactive events to being hit
-/datum/ai_controller/monkey/proc/retaliate(mob/living/L)
-	if(HAS_TRAIT(L, TRAIT_MONKEYFRIEND))
-		REMOVE_TRAIT(L, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/monkeyfriend_check, L), 60 SECONDS)
-	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, L, MONKEY_HATRED_AMOUNT)
+/datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
+	// just to be safe
+	if(QDELETED(living_mob))
+		return
+
+	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
+	if(HAS_TRAIT(living_mob, TRAIT_MONKEYFRIEND))
+		REMOVE_TRAIT(living_mob, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(monkeyfriend_check), living_mob), 60 SECONDS)
 
 /proc/monkeyfriend_check(mob/living/user)
 	var/obj/item/clothing/suit/costume/monkeysuit/S

@@ -16,7 +16,7 @@
 		finish_action(controller, FALSE, ability_key, target_key)
 		return
 	var/mob/pawn = controller.pawn
-	if (ability.InterceptClickOn(pawn, null, target))
+	if(QDELETED(pawn) || ability.InterceptClickOn(pawn, null, target))
 		finish_action(controller, TRUE, ability_key, target_key)
 
 /datum/ai_behavior/pet_use_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)

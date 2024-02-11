@@ -29,3 +29,10 @@
 	config_flag = /datum/config_entry/flag/artifact
 
 /datum/config_entry/flag/artifact
+
+/datum/log_category/blackmarket
+	category = LOG_CATEGORY_BLACKMARKET
+	master_category = /datum/log_category/economy
+	config_flag = /datum/config_entry/flag/blackmarket
+
+/datum/config_entry/flag/blackmarket

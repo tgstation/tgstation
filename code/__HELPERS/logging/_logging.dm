@@ -142,6 +142,8 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 			log_shuttle(log_text)
 		if(LOG_MECHCOMP)
 			log_mechcomp(log_text)
+		if(LOG_BLACKMARKET)
+			log_blackmarket(log_text)
 		if(LOG_SPEECH_INDICATORS)
 			log_speech_indicators(log_text)
 		else
@@ -263,3 +265,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_mechcomp(text, list/data)
 	logger.Log(LOG_CATEGORY_MECHCOMP, text, data)
+
+/proc/log_blackmarket(text, list/data)
+	logger.Log(LOG_CATEGORY_BLACKMARKET, text, data)

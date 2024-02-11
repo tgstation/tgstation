@@ -111,3 +111,5 @@
 			return "Robot Instruments" //you caused this DONGLE
 		if(CHANNEL_MOB_SOUNDS)
 			return "Mob Sounds"
+		if(CHANNEL_PRUDE)
+			return "Prude Sounds"
