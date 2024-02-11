@@ -1,4 +1,3 @@
-/// Whether demos are written, if not set demo SS never initializes
 /datum/config_entry/flag/demos_enabled
 
 SUBSYSTEM_DEF(demo)
@@ -74,7 +73,7 @@ SUBSYSTEM_DEF(demo)
 
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
 	if(GLOB.revdata)
-		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "commit [GLOB.revdata.commit || GLOB.revdata.originmastercommit]\n")
+		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "commit [GLOB.revdata.originmastercommit || GLOB.revdata.commit]\n")
 
 	// write a "snapshot" of the world at this point.
 	// start with turfs
@@ -180,22 +179,19 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty.len--
 		if(M.gc_destroyed || !M)
 			continue
-		if(M.loc == M.demo_last_loc)
+		if(M.loc == M.demo_last_loc && M.appearance == M.demo_last_appearance)
 			continue
 		var/loc_string = "="
 		if(M.loc != M.demo_last_loc)
 			loc_string = "null"
 			if(isturf(M.loc))
 				loc_string = "[M.x],[M.y],[M.z]"
-			else if((M.loc))
+			else if(ismovable(M.loc))
 				loc_string = "\ref[M.loc]"
 			M.demo_last_loc = M.loc
 		var/appearance_string = "="
-		if(ismob(M))
-			appearance_string = encode_appearance(M.appearance, target = M)
-			M.demo_last_appearance = M.appearance
-		else if(M.appearance != M.demo_last_appearance)
-			appearance_string = encode_appearance(M.appearance, M.demo_last_appearance, target = M)
+		if(M.appearance != M.demo_last_appearance)
+			appearance_string = encode_appearance(M.appearance, M.demo_last_appearance)
 			M.demo_last_appearance = M.appearance
 		dirty_updates += "\ref[M] [loc_string] [appearance_string]"
 		if(MC_TICK_CHECK)
@@ -222,7 +218,7 @@ SUBSYSTEM_DEF(demo)
 		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
-		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, target = M)]"
+		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance)]"
 		if(MC_TICK_CHECK)
 			canceled = TRUE
 			break
@@ -254,7 +250,7 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
 	M.demo_last_appearance = M.appearance
-	var/encoded_appearance = encode_appearance(M.appearance, target = M)
+	var/encoded_appearance = encode_appearance(M.appearance)
 	var/list/encoded_contents = list()
 	for(var/C in M.contents)
 		if(isobj(C) || ismob(C))
@@ -262,7 +258,7 @@ SUBSYSTEM_DEF(demo)
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
-/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/movable/target)
+/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE)
 	if(appearance == null)
 		return "n"
 	if(appearance == diff_appearance)
@@ -294,21 +290,19 @@ SUBSYSTEM_DEF(demo)
 			inted[i] += round(old_list[i] * 255)
 		color_string = jointext(inted, ",")
 	var/overlays_string = "\[]"
-	var/list/appearance_overlays = appearance.overlays
-	if(appearance_overlays.len)
+	if(appearance.overlays.len)
 		var/list/overlays_list = list()
-		for(var/i in 1 to appearance_overlays.len)
-			var/image/overlay = appearance_overlays[i]
-			overlays_list += encode_appearance(overlay, appearance, TRUE, target = target)
+		for(var/i in 1 to appearance.overlays.len)
+			var/image/overlay = appearance.overlays[i]
+			overlays_list += encode_appearance(overlay, appearance, TRUE)
 		overlays_string = "\[[jointext(overlays_list, ",")]]"
 
 	var/underlays_string = "\[]"
-	var/list/appearance_underlays = appearance.underlays
-	if(appearance_underlays.len)
+	if(appearance.underlays.len)
 		var/list/underlays_list = list()
-		for(var/i in 1 to appearance_underlays.len)
-			var/image/underlay = appearance_underlays[i]
-			underlays_list += encode_appearance(underlay, appearance, TRUE, target = target)
+		for(var/i in 1 to appearance.underlays.len)
+			var/image/underlay = appearance.underlays[i]
+			underlays_list += encode_appearance(underlay, appearance, TRUE)
 		underlays_string = "\[[jointext(underlays_list, ",")]]"
 
 	var/appearance_transform_string = "i"
@@ -317,13 +311,6 @@ SUBSYSTEM_DEF(demo)
 		appearance_transform_string = "[M.a],[M.b],[M.c],[M.d],[M.e],[M.f]"
 		if(appearance_transform_string == "1,0,0,0,1,0")
 			appearance_transform_string = "i"
-
-	var/tmp_dir = appearance.dir
-
-	if(target)
-		//message_admins("demo target is [target] \nappearance dir: [appearance.dir] and target dir: [target.dir]")
-		tmp_dir = target.dir
-
 	var/list/appearance_list = list(
 		json_encode(cached_icon),
 		json_encode(cached_icon_state),
@@ -331,7 +318,7 @@ SUBSYSTEM_DEF(demo)
 		appearance.appearance_flags,
 		appearance.layer,
 		appearance.plane == -32767 ? "" : appearance.plane,
-		tmp_dir == 2 ? "" : tmp_dir,
+		appearance.dir == 2 ? "" : appearance.dir,
 		appearance.color ? color_string : "",
 		appearance.alpha == 255 ? "" : appearance.alpha,
 		appearance.pixel_x == 0 ? "" : appearance.pixel_x,
