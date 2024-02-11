@@ -162,6 +162,9 @@
 /datum/config_entry/flag/log_as_human_readable
 	default = TRUE
 
+/// Log number of ores spawned based on the ore generation system and cave generation
+/datum/config_entry/flag/log_cave_generation
+
 /// allows admins with relevant permissions to have their own ooc colour
 /datum/config_entry/flag/allow_admin_ooccolor
 

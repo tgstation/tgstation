@@ -115,6 +115,7 @@
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_TRANSPORT "transport"
 #define LOG_CATEGORY_VIRUS "virus"
+#define LOG_CATEGORY_CAVE_GENERATION "cave-generation"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
