@@ -428,4 +428,4 @@
 			return
 		else
 			source.next_click = world.time + CLICK_CD_RANGE
-	Trigger()
+	INVOKE_ASYNC(src, PROC_REF(Trigger))
