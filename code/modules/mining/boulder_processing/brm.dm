@@ -191,6 +191,8 @@
  * @param mob/user The user who toggled the BRM.
  */
 /obj/machinery/brm/proc/toggle_auto_on(mob/user)
+	PRIVATE_PROC(TRUE)
+
 	if(panel_open)
 		balloon_alert(user, "close panel first!")
 		return
