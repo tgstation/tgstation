@@ -1,4 +1,4 @@
-/datum/map_template/deathmatch
+/datum/map_template/deathmatch //largest map is 32x32, consider that when spacing map spawners
 	/// Map Description
 	var/desc = ""
 	var/min_players = 2
@@ -20,6 +20,7 @@
 	name = "Ragecage"
 	desc = "Fun for the whole family, the classic ragecage."
 	max_players = 4
+	automatic_gameend_time = 4 MINUTES // its a 10x10 cage what are you guys doing in there
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant)
 	suffix = "ragecage.dmm"
 

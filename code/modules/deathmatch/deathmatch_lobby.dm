@@ -149,7 +149,7 @@
 	var/mob/winner
 	if(players.len)
 		var/list/winner_info = players[pick(players)]
-		if(!winner_info["mob"])
+		if(!isnull(winner_info["mob"]))
 			winner = winner_info["mob"] //only one should remain anyway but incase of a draw 
 	
 	announce(span_reallybig("THE GAME HAS ENDED.<BR>THE WINNER IS: [winner ? winner.real_name : "no one"]."))
