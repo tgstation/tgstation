@@ -64,7 +64,7 @@
 
 /obj/item/clothing/neck/heretic_focus/moon_amulette/attack(mob/living/target, mob/living/user, params)
 	var/mob/living/carbon/human/hit = target
-	if(!IS_HERETIC(user))
+	if(!IS_HERETIC_OR_MONSTER(user))
 		user.balloon_alert(user, "you feel a presence watching you")
 		user.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
 		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
