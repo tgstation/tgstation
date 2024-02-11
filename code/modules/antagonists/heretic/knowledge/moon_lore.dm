@@ -249,7 +249,7 @@
 		amount_of_lunatics += 1
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader/no_transform
+	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	SIGNAL_HANDLER
 
 	visible_hallucination_pulse(
@@ -280,9 +280,3 @@
 				hallucination_duration = 50 SECONDS
 			)
 			carbon_view.adjust_temp_blindness(5 SECONDS)
-
-/obj/effect/temp_visual/moon_ringleader/no_transform
-	icon = 'icons/effects/eldritch.dmi'
-	icon_state = "ring_leader_effect"
-	alpha = 180
-	duration = 6

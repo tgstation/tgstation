@@ -6,6 +6,7 @@
 	show_in_antagpanel = FALSE
 	suicide_cry = "PRAISE THE RINGLEADER!!"
 	antag_moodlet = /datum/mood_event/heretics/lunatic
+	antag_hud_name = "lunatic"
 	can_assign_self_objectives = FALSE
 	hardcore_random_bonus = FALSE
 	// The mind of the ascended heretic who created us
@@ -35,6 +36,7 @@
 	our_mob.faction |= FACTION_HERETIC
 	add_team_hud(owner.current)
 	add_team_hud(owner.current, /datum/antagonist/heretic)
+	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
 	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
