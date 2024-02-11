@@ -415,7 +415,7 @@
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
 	if(randomize_fuel)
-		fuel = rand(25 MINUTES, 35 MINUTES)
+		fuel = rand(5 MINUTES, 10 MINUTES)
 	if(light_on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
@@ -524,7 +524,7 @@
 	heat = 1000
 	light_color = LIGHT_COLOR_FIRE
 	light_range = 2
-	fuel = 35 MINUTES
+	fuel = 20 MINUTES
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
 	can_be_extinguished = TRUE
