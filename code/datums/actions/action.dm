@@ -97,7 +97,6 @@
 	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, owner)
 	SEND_SIGNAL(owner, COMSIG_MOB_GRANTED_ACTION, src)
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_ref), override = TRUE)
-	RegisterSignal(owner, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 
 	// Register some signals based on our check_flags
 	// so that our button icon updates when relevant
@@ -115,6 +114,7 @@
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
 
 	if(owner_has_control)
+		RegisterSignal(grant_to, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 		GiveAction(grant_to)
 
 /// Remove the passed mob from being owner of our action
@@ -127,13 +127,13 @@
 		HideFrom(hud.mymob)
 	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
 	viewers = list()
+	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
 	if(isnull(owner))
 		return
 	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
 	SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
 	UnregisterSignal(owner, COMSIG_QDELETING)
-	UnregisterSignal(owner, COMSIG_MOB_KEYDOWN)
 
 	// Clean up our check_flag signals
 	UnregisterSignal(owner, list(
@@ -421,7 +421,7 @@
 
 /datum/action/proc/keydown(mob/source, key, client/client, full_key)
 	SIGNAL_HANDLER
-	if(full_key != src.full_key)
+	if(isnull(full_key) || full_key != src.full_key)
 		return
 	if(istype(source))
 		if(source.next_click > world.time)
