@@ -85,6 +85,9 @@
 
 /// If cast on an organ, we'll restore it's health and even un-fail it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_heal, mob/living/carbon/caster)
+	if(to_heal.damage == 0)
+		to_heal.balloon_alert(caster, "already in good condition!")
+		return FALSE
 	to_heal.balloon_alert(caster, "healing organ...")
 	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, PROC_REF(heal_checks), hand, to_heal, caster)))
 		to_heal.balloon_alert(caster, "interrupted!")
