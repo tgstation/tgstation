@@ -28,7 +28,7 @@
 /datum/export/slime/hypercharged
 	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "hypercharged slime core"
-	export_types = list(/obj/item/stock_parts/cell/high/slime_hypercharged)
+	export_types = list(/obj/item/stock_parts/cell/emproof/slime/hypercharged) // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof
 
 /datum/export/slime/epic //EPIIIIIIC
 	cost = CARGO_CRATE_VALUE * 0.44
