@@ -189,6 +189,10 @@
 
 	ai_tracking_tool.reset_tracking()
 
+#undef SPRINT_PER_STEP
+#undef MAX_SPRINT
+#undef SPRINT_PER_TICK
+
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
 	if(istype(current,/obj/machinery/holopad))
