@@ -1646,5 +1646,4 @@
 	mind?.print_levels(src)
 
 /mob/key_down(key, client/client, full_key)
-	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_KEYDOWN, key, client, full_key)
