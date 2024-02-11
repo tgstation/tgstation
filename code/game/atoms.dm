@@ -848,6 +848,7 @@
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
+	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
 
 /// Updates the icon state of the atom
@@ -859,6 +860,14 @@
 /atom/proc/update_overlays()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
+
+	//Monkestation Edit: REPLAYS
+	if(isturf(src))
+		SSdemo.mark_turf(src)
+	else if(isobj(src) || ismob(src))
+		SSdemo.mark_dirty(src)
+	//Monkestation Edit: REPLAYS
+
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
 /**
@@ -1168,6 +1177,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
+	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
 
 /**
  * Called when the atom log's in or out
