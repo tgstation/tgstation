@@ -489,7 +489,7 @@
 		using_custom_drinks = FALSE
 		return
 
-	if(!in_range(src, user) || user.stat != CONSCIOUS)
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return
 
 	using_custom_drinks = TRUE
