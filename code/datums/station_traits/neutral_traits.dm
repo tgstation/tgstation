@@ -438,7 +438,7 @@
 		if(ANTI_SKUB)
 			skubbers[player.ckey] = SKUB_IDFC
 		if(SKUB_IDFC)
-			skubbers[player.ckey = RANDOM_SKUB
+			skubbers[player.ckey] = RANDOM_SKUB
 		if(RANDOM_SKUB)
 			skubbers[player.ckey] = PRO_SKUB
 
