@@ -727,7 +727,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	custom_price = PAYCHECK_CREW * 1.1
 	light_system = MOVABLE_LIGHT
 	light_range = 2
-	light_power = 0.6
+	light_power = 1.3
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
 	/// Whether the lighter is lit.

@@ -16,6 +16,9 @@
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = MOVABLE_LIGHT
+	light_color = LIGHT_COLOR_FLARE
+	light_range = 2
+	light_power = 2
 	light_on = FALSE
 	var/status = FALSE
 	var/lit = FALSE //on or off

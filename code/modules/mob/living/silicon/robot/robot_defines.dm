@@ -4,7 +4,7 @@
  * Definitions for /mob/living/silicon/robot and its children, including AI shells.
  *
  */
-
+#warn handle cyborgs
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"

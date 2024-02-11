@@ -23,6 +23,8 @@
 	obj_flags = UNIQUE_RENAME
 	light_system = MOVABLE_LIGHT
 	light_range = 5
+	light_power = 1.2
+	light_color = "#ffff66"
 	light_on = FALSE
 	var/list/trophies = list()
 	var/charged = TRUE

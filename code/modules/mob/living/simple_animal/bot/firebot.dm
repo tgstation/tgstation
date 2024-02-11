@@ -9,6 +9,8 @@
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "firebot1"
+	light_color = "#8cffc9"
+	light_power = 0.8
 	density = FALSE
 	anchored = FALSE
 	health = 25

@@ -10,6 +10,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
+	light_color = "#99ccff"
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
