@@ -49,6 +49,7 @@
 			var/mob/living/simple_animal/bot/mulebot/simple_mulebot = simple_bot
 			mulelist += list(list(
 				"name" = simple_mulebot.name,
+				"id" = simple_mulebot.id,
 				"dest" = simple_mulebot.destination,
 				"power" = simple_mulebot.cell ? simple_mulebot.cell.percent() : 0,
 				"home" = simple_mulebot.home_destination,
@@ -56,9 +57,8 @@
 				"autoPickup" = simple_mulebot.auto_pickup,
 				"reportDelivery" = simple_mulebot.report_delivery,
 				"mule_ref" = REF(simple_mulebot),
+				"load" = simple_mulebot.get_load_name(),
 			))
-			if(simple_mulebot.load)
-				data["load"] = simple_mulebot.load.name
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
 
