@@ -380,7 +380,7 @@
 	 * The number of links to perform.
 	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
 	 * on-station, non-secure closet being linked are as high as 1 in 8 and as low as 1 in 16-17,
-	 * nearing 1 in 10 to 13 the more repetitions are done, for a median of 1 in 16/17.
+	 * nearing an a mean of 1 in 10 to 13 the more repetitions are done.
 	 *
 	 * There are more than 200~ roundstart closets on meta, 150~ of which aren't secure,
 	 * so, about 11 to 15 closets will be affected by this most of the times.
