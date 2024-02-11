@@ -186,10 +186,10 @@
 		LAZYREMOVE(corner.affecting, src)
 
 		//Monkestation Edit: REPLAYS
-		//SSdemo.mark_turf(corner.master_NE)
-		//SSdemo.mark_turf(corner.master_SE)
-		//SSdemo.mark_turf(corner.master_SW)
-		//SSdemo.mark_turf(corner.master_NW)
+		SSdemo.mark_turf(corner.master_NE)
+		SSdemo.mark_turf(corner.master_SE)
+		SSdemo.mark_turf(corner.master_SW)
+		SSdemo.mark_turf(corner.master_NW)
 		//Monkestation Edit: REPLAYS
 
 	effect_str = null
@@ -304,7 +304,7 @@
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
 				turfs += T
-				//SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
+				SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
 		else
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
 				if(IS_OPAQUE_TURF(T))
@@ -352,7 +352,7 @@
 					corners[above.lighting_corner_NW] = 0
 					turfs += above
 					above = GET_TURF_ABOVE(above)
-				//SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
+				SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
 
 		source_turf.luminosity = oldlum
 
