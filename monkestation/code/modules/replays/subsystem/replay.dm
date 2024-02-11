@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(demo)
 		var/loc_string = "null"
 		if(isturf(M.loc))
 			loc_string = "[M.x],[M.y],[M.z]"
-		else if(ismovableatom(M.loc))
+		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
 		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, target = M)]"
