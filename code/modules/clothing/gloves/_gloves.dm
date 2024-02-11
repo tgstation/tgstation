@@ -41,7 +41,7 @@
 
 /obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(!isinhands)
+	if(isinhands)
 		return
 
 	if(damaged_clothes)
