@@ -1468,6 +1468,7 @@
 #include "code\datums\elements\soft_landing.dm"
 #include "code\datums\elements\spooky.dm"
 #include "code\datums\elements\squish.dm"
+#include "code\datums\elements\squish_sound.dm"
 #include "code\datums\elements\sticker.dm"
 #include "code\datums\elements\strippable.dm"
 #include "code\datums\elements\structure_repair.dm"
