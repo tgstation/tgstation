@@ -43,14 +43,13 @@
 		/obj/item/bedsheet/nanotrasen/double = 1,
 	)
 
-/obj/effect/spawner/random/bedsheets/any
+/obj/effect/spawner/random/bedsheet/any
 	name = "random single bedsheet"
-	icon_state = "random_bedsheet"
 	loot = null
 	var/static/list/bedsheet_list = list()
 	var/spawn_type = BEDSHEET_SINGLE
 
-/obj/effect/spawner/random/bedsheets/any/Initialize(mapload)
+/obj/effect/spawner/random/bedsheet/any/Initialize(mapload)
 	if(isnull(bedsheet_list[spawn_type]))
 		var/list/spawn_list = list()
 		for(var/obj/item/bedsheet/sheet as anything in typesof(/obj/item/bedsheet))
@@ -60,6 +59,6 @@
 	loot = bedsheet_list[spawn_type]
 	return ..()
 
-/obj/effect/spawner/random/bedsheets/any/double
+/obj/effect/spawner/random/bedsheet/any/double
 	icon_state = "random_doublesheet"
 	spawn_type = BEDSHEET_DOUBLE

@@ -63553,7 +63553,7 @@
 /area/station/commons/fitness)
 "qCn" = (
 /obj/structure/bed,
-/obj/effect/spawner/random/bedsheets/any,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "qCo" = (

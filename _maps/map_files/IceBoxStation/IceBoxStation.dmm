@@ -10057,7 +10057,7 @@
 /area/station/cargo/office)
 "cXp" = (
 /obj/structure/bed/pod,
-/obj/effect/spawner/random/bedsheets/any,
+/obj/effect/spawner/random/bedsheet/any,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
@@ -34264,7 +34264,7 @@
 /area/station/hallway/secondary/service)
 "kzv" = (
 /obj/structure/bed,
-/obj/effect/spawner/random/bedsheets/any,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "kzw" = (

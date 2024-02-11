@@ -76,7 +76,7 @@
 /area/misc/hilbertshotel)
 "q" = (
 /obj/structure/bed,
-/obj/effect/spawner/random/bedsheets/any,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "r" = (
