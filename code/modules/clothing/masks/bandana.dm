@@ -216,7 +216,6 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	custom_price = PAYCHECK_CREW
-	tint = 0
 	greyscale_colors = "#eeeeee"
 	greyscale_config = /datum/greyscale_config/facescarf
 	greyscale_config_worn = /datum/greyscale_config/facescarf/worn
