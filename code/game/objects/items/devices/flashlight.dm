@@ -762,7 +762,7 @@
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize(mapload)
-	fuel = rand(50 MINUTES, 60 MINUTES)
+	fuel = rand(10 MINUTES, 15 MINUTES)
 	set_light_color(color)
 	return ..()
 
