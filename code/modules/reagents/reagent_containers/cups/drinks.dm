@@ -480,7 +480,7 @@
 		using_custom_drinks = FALSE
 		return
 
-	if(!in_range(src, user) || user.stat != CONSCIOUS)
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return
 
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
