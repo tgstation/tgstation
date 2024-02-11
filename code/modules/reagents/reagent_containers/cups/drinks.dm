@@ -465,7 +465,7 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
 	. = ..()
-	if(!in_range(src, user) || user.stat != CONSCIOUS)
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return
 
 	if(using_custom_drinks)
