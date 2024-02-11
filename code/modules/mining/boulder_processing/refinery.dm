@@ -65,7 +65,7 @@
 		/datum/material/adamantine,
 		/datum/material/runite,
 	)
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 2
 	light_color = "#ffaf55"
