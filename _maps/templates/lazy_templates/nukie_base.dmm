@@ -1034,8 +1034,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "lA" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 8;
+/obj/machinery/door/window/survival_pod/left/directional/west{
 	name = "Toilet Door"
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north{
@@ -1789,7 +1788,7 @@
 	},
 /area/centcom/syndicate_mothership/control)
 "uN" = (
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/survival_pod/left/directional/south{
 	name = "Frosted Door"
 	},
 /turf/open/floor/iron/freezer,
@@ -2787,7 +2786,7 @@
 /area/centcom/syndicate_mothership/control)
 "GS" = (
 /obj/effect/turf_decal/siding/thinplating,
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/survival_pod/left/directional/south{
 	name = "Surgery"
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,

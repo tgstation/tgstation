@@ -270,15 +270,11 @@
 /area/icemoon/underground/explored)
 "DY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window{
-	dir = 1
-	},
-/obj/machinery/door/window{
-	dir = 2
-	},
+/obj/machinery/door/window/left/directional/north,
 /obj/structure/window/spawner/directional/east,
 /obj/item/toy/figure/cargotech,
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/noslip,
 /area/ruin/powered/mailroom)
 "FC" = (

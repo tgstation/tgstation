@@ -485,9 +485,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "ck" = (
-/obj/machinery/door/window/right/directional/east{
-	dir = 2
-	},
+/obj/machinery/door/window/right/directional/south,
 /obj/effect/landmark/awaystart,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,

@@ -7,9 +7,9 @@
 	density = TRUE
 	use_internal_storage = TRUE
 
-/obj/machinery/iv_drip/plumbing/Initialize(mapload)
+/obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/iv_drip, anchored)
+	AddComponent(/datum/component/plumbing/iv_drip, bolt, layer)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

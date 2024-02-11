@@ -70,18 +70,28 @@
 	return living_parent.faction.Find(REF(potential_friend))
 
 ///Ran once taming succeeds
-/datum/component/tameable/proc/on_tame(datum/source, mob/living/tamer, atom/food, inform_tamer = FALSE)
+/datum/component/tameable/proc/on_tame(atom/source, mob/living/tamer, atom/food, inform_tamer = FALSE)
 	SIGNAL_HANDLER
 	after_tame?.Invoke(tamer, food)//Run custom behavior if needed
 
 	if(isliving(parent) && isliving(tamer))
-		var/mob/living/tamed = parent
-		INVOKE_ASYNC(tamed, TYPE_PROC_REF(/mob/living, befriend), tamer)
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
 		if(inform_tamer)
-			var/atom/atom_parent = source
-			atom_parent.balloon_alert(tamer, "tamed")
+			source.balloon_alert(tamer, "tamed")
 
+	if(HAS_TRAIT(tamer, TRAIT_SETTLER))
+		INVOKE_ASYNC(src, PROC_REF(rename_pet), source, tamer)
 	if(unique)
 		qdel(src)
 	else
 		current_tame_chance = tame_chance
+
+/datum/component/tameable/proc/rename_pet(mob/living/animal, mob/living/tamer)
+	var/chosen_name = sanitize_name(tgui_input_text(tamer, "Choose your pet's name!", "Name pet", animal.name, MAX_NAME_LEN), allow_numbers = TRUE)
+	if(QDELETED(animal) || chosen_name == animal.name)
+		return
+	if(!chosen_name)
+		to_chat(tamer, span_warning("Please enter a valid name."))
+		rename_pet(animal, tamer)
+		return
+	animal.fully_replace_character_name(animal.name, chosen_name)

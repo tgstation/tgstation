@@ -352,7 +352,7 @@
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
-//9: eyes 8: head 7: mouth
+//7: mouth 8: head  9: eyes
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
@@ -361,12 +361,12 @@
 	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
 
 /**
- * Hidden verb to set the target zone of a mob to the head
+ * Hidden verbs to set desired body target zone
  *
- * (bound to 8) - repeated presses toggles through head - eyes - mouth
+ * Uses numpad keys 1-9
  */
 
-///Hidden verb to target the head, bound to 8
+///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = TRUE
@@ -385,6 +385,17 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
+
+///Hidden verb to target the head, unbound by default.
+/client/verb/body_head()
+	set name = "body-head"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
 ///Hidden verb to target the eyes, bound to 7
 /client/verb/body_eyes()

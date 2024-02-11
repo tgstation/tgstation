@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed AIs who shunt to APCs causing their laws to be deleted."

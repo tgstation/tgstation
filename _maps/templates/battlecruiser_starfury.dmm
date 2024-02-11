@@ -4737,8 +4737,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "FO" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 1;
+/obj/machinery/door/window/survival_pod/left/directional/north{
 	req_access = list("syndicate_leader");
 	name = "Command Desk"
 	},

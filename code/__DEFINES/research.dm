@@ -13,7 +13,7 @@
 	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
 	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
 	)
-
+  
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3
 
