@@ -12,7 +12,7 @@
 
 /datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
 	. = ..()
-	if(istype(user, /mob/living/carbon/human/dummy))
+	if(isdummy(user))
 		return
 
 	if(!isnull(species_override))
