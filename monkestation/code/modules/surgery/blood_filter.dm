@@ -1,5 +1,6 @@
 /datum/surgery/blood_filter
 	replaced_by = /datum/surgery/blood_filter/upgraded
+	/// Path to the filtering step to replace the usual `/datum/surgery_step/filter_blood` with.
 	var/filtering_step_type
 
 /datum/surgery/blood_filter/New(atom/surgery_target, surgery_location, surgery_bodypart)
@@ -14,7 +15,9 @@
 		)
 
 /datum/surgery_step/filter_blood
+	/// The factor by which to purge the volume of reagents in the patient's blood.
 	var/chem_purge_factor = 0.2
+	/// The factor by which to heal the patient's toxin damage.
 	var/tox_heal_factor = 0
 
 /datum/surgery_step/filter_blood/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
@@ -47,9 +50,9 @@
 	display_results(
 		user,
 		target,
-		span_notice("\The [tool] pings as it finishes filtering [target]'s blood.[umsg]"),
-		span_notice("\The [tool] pings as it stops pumping [target]'s blood."),
-		span_notice("\The [tool] pings as it stops pumping."),
+		span_notice("[tool] pings as it finishes filtering [target]'s blood.[umsg]"),
+		span_notice("[tool] pings as it stops pumping [target]'s blood."),
+		span_notice("[tool] pings as it stops pumping."),
 	)
 
 	return ..()
