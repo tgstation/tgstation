@@ -27,6 +27,7 @@ type Data = {
   admin: BooleanLike;
   global_chat: BooleanLike;
   loadouts: string[];
+  maps: string[];
   map: {
     name: string;
     desc: string;
@@ -97,15 +98,15 @@ export const DeathmatchLobby = (props) => {
                     </Table.Cell>
                   </Table.Row>
                 ))(data.players)}
-                {map((odata, observer) => (
+                {Object.keys(data.observers).map((observer) => (
                   <Table.Row>
                     <Table.Cell collapsing>
-                      {(!!odata.host && <Icon name="star" />) || (
+                      {(!!data.observers[observer].host && <Icon name="star" />) || (
                         <Icon name="eye" />
                       )}
                     </Table.Cell>
                     <Table.Cell collapsing>
-                      {(!((data.host && !odata.host) || data.admin) && (
+                      {(!((data.host && !data.observers[observer].host) || data.admin) && (
                         <b>{observer}</b>
                       )) || (
                         <Dropdown
