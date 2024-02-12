@@ -1349,10 +1349,30 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
+	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
+
+// MONKESTATION ADDITION START
+/obj/item/card/id/advanced/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour != TOOL_MULTITOOL)
+		return ..()
+
+	if(chameleon_card_action.hidden)
+		chameleon_card_action.hidden = FALSE
+		actions += chameleon_card_action
+		chameleon_card_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+	else
+		chameleon_card_action.hidden = TRUE
+		actions -= chameleon_card_action
+		chameleon_card_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
+// MONKESTATION ADDITION END
+
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
 
-	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src)
+//	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src) MONKESTATION EDIT CHANGE OLD
+	chameleon_card_action = new(src) // MONKESTATION EDIT CHANGE NEW -- MOVED THE DATUM TO THE ITEM ITSELF
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
@@ -1535,6 +1555,10 @@
 			return TRUE
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
+	// MONKESTATION ADDITION START
+	if(chameleon_card_action.hidden)
+		return ..()
+	// MONKESTATION ADDITION END
 	if(isliving(user) && user.mind)
 		var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())
