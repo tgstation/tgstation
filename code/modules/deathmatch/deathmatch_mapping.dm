@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(deathmatch_points)
 /obj/effect/landmark/deathmatch_player_spawn
 	name = "Deathmatch Player Spawner"
 
-/obj/effect/landmark/deathmatch_player_spawn/Initialize()
+/obj/effect/landmark/deathmatch_player_spawn/Initialize(mapload)
 	. = ..()
 	if (!GLOB.deathmatch_game)
 		return INITIALIZE_HINT_QDEL

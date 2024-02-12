@@ -20,8 +20,7 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "d" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/indestructible/plating,
 /area/deathmatch)
@@ -31,16 +30,9 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "g" = (
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/indestructible/plating,
-/area/deathmatch)
-"h" = (
-/obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "i" = (
@@ -87,12 +79,6 @@
 "q" = (
 /turf/closed/indestructible/fakedoor/engineering,
 /area/deathmatch)
-"s" = (
-/obj/structure/grille,
-/obj/structure/cable,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/indestructible/plating,
-/area/deathmatch)
 "t" = (
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -109,21 +95,18 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "x" = (
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "z" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "A" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/indestructible/plating,
 /area/deathmatch)
@@ -160,15 +143,13 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "K" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "L" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/indestructible/plating,
@@ -187,8 +168,7 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "P" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/indestructible/plating,
 /area/deathmatch)
@@ -200,8 +180,7 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "R" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/indestructible/plating,
 /area/deathmatch)
@@ -465,7 +444,7 @@ Z
 Z
 G
 U
-s
+d
 U
 U
 U
@@ -484,7 +463,7 @@ Z
 Z
 G
 U
-s
+d
 U
 U
 w
@@ -505,14 +484,14 @@ G
 U
 z
 P
-h
-h
-h
-h
-h
-h
-h
-h
+P
+P
+P
+P
+P
+P
+P
+P
 K
 U
 G

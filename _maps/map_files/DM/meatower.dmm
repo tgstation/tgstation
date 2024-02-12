@@ -7,12 +7,6 @@
 	},
 /turf/open/indestructible/kitchen,
 /area/deathmatch)
-"bb" = (
-/obj/structure/table,
-/obj/structure/table,
-/obj/item/pizzabox/bomb/armed,
-/turf/open/indestructible/kitchen,
-/area/deathmatch)
 "db" = (
 /obj/machinery/griddle,
 /turf/open/indestructible/kitchen,
@@ -310,15 +304,6 @@
 "Ch" = (
 /obj/structure/table,
 /obj/item/pizzabox,
-/turf/open/indestructible/kitchen,
-/area/deathmatch)
-"Ck" = (
-/obj/structure/table,
-/obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /turf/open/indestructible/kitchen,
 /area/deathmatch)
 "DJ" = (
@@ -634,8 +619,8 @@ tB
 tB
 GS
 tB
-bb
-Ck
+zR
+Up
 db
 tB
 uW

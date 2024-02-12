@@ -78,7 +78,7 @@ GLOBAL_VAR(deathmatch_game)
 		var/datum/deathmatch_lobby/lobby = lobbies[ckey]
 		if (user.ckey == ckey)
 			.["hosting"] = TRUE
-		if (user.ckey in lobby.observers || user.ckey in lobby.players)
+		if (user.ckey in lobby.observers+lobby.players)
 			.["playing"] = ckey
 		.["lobbies"] += list(list(
 			name = ckey,
