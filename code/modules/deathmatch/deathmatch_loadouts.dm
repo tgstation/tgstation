@@ -1,18 +1,25 @@
-/datum/outfit/deathmatch_loadout
+/datum/outfit/deathmatch_loadout //remember that fun > balance
 	name = ""
-	var/display_name = "" // maybe just make the UI not display the DM: part
-	var/desc = ":KILL:"
 	shoes = /obj/item/clothing/shoes/sneakers/black // im not doing this on all of them
-	//var/list/equipment
-	// Just in case, make sure this doesn't have an ID.
-	//var/datum/outfit/outfit
+	/// Name shown in the UI
+	var/display_name = ""
+	/// Description shown in the UI
+	var/desc = ":KILL:"
+	/// If defined, using this outfit sets the targets species to it
 	var/datum/species/species_override
+	/// This outfit will grant these spells if applied
 	var/list/granted_spells = list()
 
 /datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
-	if(!isnull(species_override) && !istype(user, /mob/living/carbon/human/dummy)) //no select equipment dummies
+	. = ..()
+	if(istype(user, /mob/living/carbon/human/dummy))
+		return
+
+	if(!isnull(species_override))
 		user.set_species(species_override)
-	return ..()
+	if(islist(granted_spells) && granted_spells.len)
+		for(var/datum/action/act as anything in granted_spells)
+			GRANT_ACTION(act)
 
 /datum/outfit/deathmatch_loadout/naked
 	name = "DM: Naked"
@@ -29,7 +36,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	back = /obj/item/storage/backpack
 	box = /obj/item/storage/box/survival
-	id = /obj/item/modular_computer/pda // For the lamp. REPLACE WITH SOMETHING ELSE GODDAMN
+	belt = /obj/item/flashlight
 
 /datum/outfit/deathmatch_loadout/assistant/weaponless
 	name = "DM: Assistant loadout (Weaponless)"
@@ -78,7 +85,7 @@
 	suit = /datum/outfit/job/security::suit
 	suit_store = /datum/outfit/job/security::suit_store
 	belt = /datum/outfit/job/security::belt
-	ears = /datum/outfit/job/security::ears //please test if the headsets cant communicate with station
+	ears = /datum/outfit/job/security::ears //cant communicate with station i think?
 	gloves = /datum/outfit/job/security::gloves
 	head = /datum/outfit/job/security::head
 	shoes = /datum/outfit/job/security::shoes
@@ -350,7 +357,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	mask = /obj/item/clothing/mask/gas/cyborg
 	shoes = /obj/item/clothing/shoes/sandal
-	back = /obj/item/soulscythe //REPLACE THIS WITH SOMETHING THAT CAN GO ON THE BACKPACK SLOT OR DISTINGUISHED FROM STATION SCYTHE
+	belt = /obj/item/melee/cleric_mace
 
 /datum/outfit/deathmatch_loadout/battler/cowboy
 	name = "DM: Cowboy"
