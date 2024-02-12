@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section, Stack, Divider } from '../components';
+import { Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const MinigamesMenu = (props) => {
