@@ -133,7 +133,7 @@
 
 	return ..()
 
-/obj/machinery/cryo_cell/on_deconstruction()
+/obj/machinery/cryo_cell/on_deconstruction(disassembled)
 	if(occupant)
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
@@ -239,8 +239,10 @@
 		return
 	. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-[on && is_operational ? "on" : "off"]", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
-/obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list(occupant))
-	//only drop the mob and nothing else by default when opening the machine
+/obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list())
+	//only drop mobs when opening the machine
+	for (var/mob/living/living_guy in contents)
+		subset += living_guy
 	return ..(subset)
 
 /obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)

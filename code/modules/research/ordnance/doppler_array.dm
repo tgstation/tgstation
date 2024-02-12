@@ -237,7 +237,7 @@
 	else if (machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[base_icon_state]_screen-off")
 
-/obj/machinery/doppler_array/on_deconstruction()
+/obj/machinery/doppler_array/on_deconstruction(disassembled)
 	eject_disk()
 	. = ..()
 

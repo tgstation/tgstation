@@ -225,6 +225,10 @@
 		ammo_resupply(weapon, user)
 		return
 
+	if(istype(weapon, /obj/item/rcd_upgrade))
+		upgrade_rcd(weapon, user)
+		return
+
 	if(weapon.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
@@ -344,21 +348,9 @@
 	..()
 	. = TRUE
 
-	if(!(mecha_flags & PANEL_OPEN) && LAZYLEN(occupants))
-		for(var/mob/occupant as anything in occupants)
-			occupant.show_message(
-				span_userdanger("[user] is trying to open the maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone trying to open the maintenance panel of [src]!"), MSG_AUDIBLE,
-			)
-		visible_message(span_danger("[user] is trying to open the maintenance panel of [src]!"))
-		if(!do_after(user, 5 SECONDS, src))
-			return
-		for(var/mob/occupant as anything in occupants)
-			occupant.show_message(
-				span_userdanger("[user] has opened the maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone opening the maintenance panel of [src]!"), MSG_AUDIBLE,
-			)
-		visible_message(span_danger("[user] has opened the maintenance panel of [src]!"))
+	if(LAZYLEN(occupants))
+		balloon_alert(user, "panel blocked")
+		return
 
 	mecha_flags ^= PANEL_OPEN
 	balloon_alert(user, (mecha_flags & PANEL_OPEN) ? "panel open" : "panel closed")
@@ -522,3 +514,9 @@
 		else
 			balloon_alert(user, "can't use this ammo!")
 	return FALSE
+
+///Upgrades any attached RCD equipment.
+/obj/vehicle/sealed/mecha/proc/upgrade_rcd(obj/item/rcd_upgrade/rcd_upgrade, mob/user)
+	for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd_equip in flat_equipment)
+		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
+			return

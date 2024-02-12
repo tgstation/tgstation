@@ -184,6 +184,7 @@
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
+
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
@@ -548,7 +549,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	taste_sensitivity = 25 // not as good as an organic tongue
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
-/obj/item/organ/internal/tongue/robot/can_speak_language(language)
+/obj/item/organ/internal/tongue/robot/could_speak_language(datum/language/language_path)
 	return TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/internal/tongue/robot/modify_speech(datum/source, list/speech_args)

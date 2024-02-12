@@ -12,8 +12,6 @@
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -249,5 +247,9 @@
 
 /// Sent from a mob to their loc when starting to remove cuffs on itself
 #define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
-/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
-#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab

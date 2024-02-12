@@ -233,7 +233,7 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	req_access = list("syndicate");
 	name = "Self Destruct Option"
 	},

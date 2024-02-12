@@ -229,6 +229,9 @@
 /mob/living/carbon/alien/larva/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_larva_secondary(src, modifiers)
 
+/mob/living/carbon/alien/larva/can_unarmed_attack() //We bite stuff, and our head is always free.
+	return TRUE
+
 /atom/proc/attack_larva(mob/user, list/modifiers)
 	return
 
