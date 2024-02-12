@@ -102,19 +102,19 @@
 	desc = "Choose your battler!"
 	max_players = 10
 	allowed_loadouts = list(
-		/datum/outfit/deathmatch_loadout/battler/soldier,
-		/datum/outfit/deathmatch_loadout/battler/tgcoder,
-		/datum/outfit/deathmatch_loadout/battler/cowboy,
-		/datum/outfit/deathmatch_loadout/battler/northstar,
-		/datum/outfit/deathmatch_loadout/battler/druid,
-		/datum/outfit/deathmatch_loadout/battler/raider,
-		/datum/outfit/deathmatch_loadout/battler/ripper,
 		/datum/outfit/deathmatch_loadout/battler/bloodminer,
-		/datum/outfit/deathmatch_loadout/battler/surgeon,
+		/datum/outfit/deathmatch_loadout/battler/clown,
+		/datum/outfit/deathmatch_loadout/battler/cowboy,
+		/datum/outfit/deathmatch_loadout/battler/druid,
 		/datum/outfit/deathmatch_loadout/battler/enginer,
 		/datum/outfit/deathmatch_loadout/battler/janitor,
+		/datum/outfit/deathmatch_loadout/battler/northstar,
+		/datum/outfit/deathmatch_loadout/battler/raider,
+		/datum/outfit/deathmatch_loadout/battler/ripper,
 		/datum/outfit/deathmatch_loadout/battler/scientist,
-		/datum/outfit/deathmatch_loadout/battler/clown,
+		/datum/outfit/deathmatch_loadout/battler/soldier,
+		/datum/outfit/deathmatch_loadout/battler/surgeon,
+		/datum/outfit/deathmatch_loadout/battler/tgcoder,
 		/datum/outfit/deathmatch_loadout/naked,
 	)
 	suffix = "starwars.dmm"

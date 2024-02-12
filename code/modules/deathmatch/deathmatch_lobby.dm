@@ -200,9 +200,9 @@
 	observers[mob.ckey] = list("mob" = mob, "host" = host)
 
 /datum/deathmatch_lobby/proc/add_player(mob/mob, loadout, host = FALSE)
-	if (observers[_mob.ckey])
-		CRASH("Tried to add [_mob.ckey] as a player while being an observer.")
-	players[_mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout)
+	if (observers[mob.ckey])
+		CRASH("Tried to add [mob.ckey] as a player while being an observer.")
+	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout)
 
 /datum/deathmatch_lobby/proc/remove_ckey_from_play(ckey)
 	var/is_likely_player = (ckey in players)
