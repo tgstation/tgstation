@@ -333,7 +333,16 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	var/datum/martial_art/the_sleeping_carp/style = new
+	var/datum/martial_art/the_sleeping_carp/style
+
+/obj/item/clothing/gloves/the_sleeping_carp/Initialize(mapload)
+	. = ..()
+	style = new()
+	style.allow_temp_override = FALSE
+
+/obj/item/clothing/gloves/the_sleeping_carp/Destroy()
+	QDEL_NULL(style)
+	return ..()
 
 /obj/item/clothing/gloves/the_sleeping_carp/equipped(mob/user, slot)
 	. = ..()
@@ -342,8 +351,7 @@
 
 /obj/item/clothing/gloves/the_sleeping_carp/dropped(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		style.remove(user)
+	style.fully_remove(user)
 
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO
