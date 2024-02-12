@@ -6,6 +6,8 @@ GLOBAL_PROTECT(round_id)
 /// The directory in which ALL log files should be stored
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
+GLOBAL_VAR(demo_directory)
+GLOBAL_PROTECT(demo_directory)
 
 #define DECLARE_LOG_NAMED(log_var_name, log_file_name, start)\
 GLOBAL_VAR(##log_var_name);\
