@@ -46,10 +46,12 @@
 /// Mech camera HUD
 #define DIAG_CAMERA_HUD "22"
 
+//monkestation edit start
 #define NANITE_HUD "23"
 #define DIAG_NANITE_FULL_HUD "24"
 // for gun permit
 #define PERMIT_HUD "25"
+//monkestation edit end
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -67,7 +69,7 @@
 #define DATA_HUD_SENTIENT_DISEASE 8
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
-#define DATA_HUD_PERMIT 11
+#define DATA_HUD_PERMIT 11 //monkestation edit
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

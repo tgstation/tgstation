@@ -7,7 +7,7 @@
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
-	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/circuit_multitool
@@ -19,7 +19,7 @@
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
-	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/usb_cable
@@ -39,7 +39,7 @@
 	name = "Component ( NULL ENTRY )"
 	desc = "A component that goes into an integrated circuit."
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 1000)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_COMPONENTS
@@ -451,7 +451,7 @@
 	desc = "A handheld shell with one big button."
 	id = "compact_remote_shell"
 	build_path = /obj/item/compact_remote
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
@@ -463,7 +463,7 @@
 	id = "controller_shell"
 	build_path = /obj/item/controller
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = 7000)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
@@ -474,7 +474,7 @@
 	id = "scanner_shell"
 	build_path = /obj/item/wiremod_scanner
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = 7000)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
@@ -484,7 +484,7 @@
 	desc = "A handheld shell that allows the user to input a string"
 	id = "keyboard_shell"
 	build_path = /obj/item/keyboard_shell
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = 10000)
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
@@ -496,7 +496,7 @@
 	id = "gun_shell"
 	build_path = /obj/item/gun/energy/wiremod_gun
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/plasma = 100)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = 10000, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
@@ -507,7 +507,7 @@
 	id = "bot_shell"
 	build_path = /obj/item/shell/bot
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = 10000)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
@@ -518,7 +518,7 @@
 	id = "money_bot_shell"
 	build_path = /obj/item/shell/money_bot
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/gold = 50)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = 10000, /datum/material/gold =SMALL_MATERIAL_AMOUNT*0.5)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
@@ -530,9 +530,9 @@
 	build_path = /obj/item/shell/drone
 	build_type = COMPONENT_PRINTER
 	materials = list(
-		/datum/material/glass = 2000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
 		/datum/material/iron = 11000,
-		/datum/material/gold = 500,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
 	)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
@@ -543,9 +543,9 @@
 	desc = "A very large shell that cannot be moved around. Stores the most components."
 	id = "server_shell"
 	materials = list(
-		/datum/material/glass = 5000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/iron = 15000,
-		/datum/material/gold = 1500,
+		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/shell/server
 	build_type = COMPONENT_PRINTER
@@ -558,7 +558,7 @@
 	desc = "A door shell that cannot be moved around when assembled."
 	id = "door_shell"
 	materials = list(
-		/datum/material/glass = 5000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/iron = 15000,
 	)
 	build_path = /obj/item/shell/airlock
@@ -572,7 +572,7 @@
 	desc = "A dispenser shell that can dispense items."
 	id = "dispenser_shell"
 	materials = list(
-		/datum/material/glass = 5000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/iron = 15000,
 	)
 	build_path = /obj/item/shell/dispenser
@@ -586,7 +586,7 @@
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	id = "bci_shell"
 	materials = list(
-		/datum/material/glass = 2000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
 		/datum/material/iron = 8000,
 	)
 	build_path = /obj/item/shell/bci
@@ -623,7 +623,7 @@
 	name = "Assembly Shell"
 	desc = "An assembly shell that can be attached to wires and other assemblies."
 	id = "assembly_shell"
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/assembly/wiremod
 	build_type = COMPONENT_PRINTER
 	category = list(
@@ -634,7 +634,7 @@
 	name = "MOD Module Shell"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	id = "module_shell"
-	materials = list(/datum/material/glass = 2000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/circuit
 	build_type = COMPONENT_PRINTER
 	category = list(

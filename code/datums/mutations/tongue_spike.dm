@@ -56,7 +56,7 @@
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	custom_materials = list(/datum/material/biomass = 500)
+	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
 	/// What mob "fired" our tongue
 	var/datum/weakref/fired_by_ref
 	/// if we missed our target

@@ -236,7 +236,7 @@
 	var/datum/material/mat = selected_material
 	if(!mat)
 		return
-	var/sheets_to_remove = (materials.materials[mat] >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT * seconds_per_tick) ) ? SMELT_AMOUNT * seconds_per_tick : round(materials.materials[mat] /  MINERAL_MATERIAL_AMOUNT)
+	var/sheets_to_remove = (materials.materials[mat] >= (SHEET_MATERIAL_AMOUNT * SMELT_AMOUNT * seconds_per_tick) ) ? SMELT_AMOUNT * seconds_per_tick : round(materials.materials[mat] /  SHEET_MATERIAL_AMOUNT)
 	if(!sheets_to_remove)
 		on = FALSE
 	else

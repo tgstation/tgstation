@@ -31,6 +31,7 @@
 		/obj/item/shield/energy,
 		/obj/item/gun/ballistic,
 		/obj/item/gun/energy,
+		/obj/item/gun/microfusion,
 	)
 	skins = list(
 		"contractor" = list(

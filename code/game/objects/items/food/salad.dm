@@ -166,7 +166,7 @@
 	icon_state = "bowl"
 	base_icon_state = "bowl"
 	reagent_flags = OPENCONTAINER | DUNKABLE
-	custom_materials = list(/datum/material/glass = 500)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
 	fill_icon_thresholds = list(0)

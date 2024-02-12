@@ -42,7 +42,7 @@
 			continue
 		if(!isobserver(seen))
 			continue
-		set_custom_materials(list(/datum/material/hauntium = 2000))
+		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		grind_results = list(/datum/reagent/hauntium = 20)
 		break
 

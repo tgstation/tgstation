@@ -2,7 +2,7 @@
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
 
 	Variables:
-		amount - raw amount of the mineral this container is holding, calculated by the defined value MINERAL_MATERIAL_AMOUNT=2000.
+		amount - raw amount of the mineral this container is holding, calculated by the defined value SHEET_MATERIAL_AMOUNT=SHEET_MATERIAL_AMOUNT.
 		max_amount - max raw amount of mineral this container can hold.
 		sheet_type - type of the mineral sheet the container handles, used for output.
 		parent - object that this container is being used by, used for output.
@@ -295,7 +295,7 @@
 		return (max_amount - total_amount)
 
 
-/// For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=200)
+/// For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 /datum/component/material_container/proc/use_materials(list/mats, multiplier=1)
 	if(!mats || !length(mats))
 		return FALSE
@@ -333,18 +333,18 @@
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[M] < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[M] / MINERAL_MATERIAL_AMOUNT)
+	if(materials[M] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
+		sheet_amt = round(materials[M] / SHEET_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		new M.sheet_type(target, MAX_STACK_SIZE, null, list((M) = MINERAL_MATERIAL_AMOUNT))
+		new M.sheet_type(target, MAX_STACK_SIZE, null, list((M) = SHEET_MATERIAL_AMOUNT))
 		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
-		new M.sheet_type(target, sheet_amt, null, list((M) = MINERAL_MATERIAL_AMOUNT))
+		new M.sheet_type(target, sheet_amt, null, list((M) = SHEET_MATERIAL_AMOUNT))
 		count += sheet_amt
-		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
 	return count
 
 
@@ -410,14 +410,14 @@
 
 /// Turns a material amount into the amount of sheets it should output
 /datum/component/material_container/proc/amount2sheet(amt)
-	if(amt >= MINERAL_MATERIAL_AMOUNT)
-		return round(amt / MINERAL_MATERIAL_AMOUNT)
+	if(amt >= SHEET_MATERIAL_AMOUNT)
+		return round(amt / SHEET_MATERIAL_AMOUNT)
 	return FALSE
 
 /// Turns an amount of sheets into the amount of material amount it should output
 /datum/component/material_container/proc/sheet2amount(sheet_amt)
 	if(sheet_amt > 0)
-		return sheet_amt * MINERAL_MATERIAL_AMOUNT
+		return sheet_amt * SHEET_MATERIAL_AMOUNT
 	return FALSE
 
 
@@ -450,8 +450,8 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
-			"sheets" = round(amount / MINERAL_MATERIAL_AMOUNT),
-			"removable" = amount >= MINERAL_MATERIAL_AMOUNT,
+			"sheets" = round(amount / SHEET_MATERIAL_AMOUNT),
+			"removable" = amount >= SHEET_MATERIAL_AMOUNT,
 			"color" = material.greyscale_colors
 		))
 
