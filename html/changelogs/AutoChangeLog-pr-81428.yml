@@ -1,0 +1,7 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - balance: "Smile of the moon's effects now last for longer and have a longer minimum active time"
+  - balance: "Mark of moon detonations now do sanity damage"
+  - qol: "Ascended moon heretics and lunatics are now able to see who is and isn't a lunatic."
+  - qol: "People inside the ascended moon heretics sanity draining aura now gain an effect under their tile."
