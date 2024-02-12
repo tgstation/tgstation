@@ -97,7 +97,7 @@ export const DeathmatchLobby = (props) => {
                       />
                     </Table.Cell>
                   </Table.Row>
-                ))(data.players)}
+                ))}
                 {Object.keys(data.observers).map((observer) => (
                   <Table.Row key={observer}>
                     <Table.Cell collapsing>
@@ -123,7 +123,7 @@ export const DeathmatchLobby = (props) => {
                     </Table.Cell>
                     <Table.Cell grow>Observing</Table.Cell>
                   </Table.Row>
-                ))(data.observers)}
+                ))}
               </Table>
             </Section>
           </Flex.Item>
