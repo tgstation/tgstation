@@ -172,10 +172,10 @@
 
 	var/ckey = player.ckey
 	if(!islist(players[ckey])) // potentially the player info could hold a reference to this mob so we can figure the ckey out without worrying about ghosting and suicides n such
-		for(var/key in players)
-			var/list/player_info = players[key]
+		for(var/potential_ckey in players)
+			var/list/player_info = players[potential_ckey]
 			if(player_info["mob"] && player_info["mob"] == player)
-				ckey = key
+				ckey = potential_ckey
 				break
 	
 	if(!islist(players[ckey])) // if we STILL didnt find a good ckey
