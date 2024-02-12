@@ -368,7 +368,7 @@ LINEN BINS
 	desc = "A precious bedsheet made from the hide of a endangered and peculiar critter."
 	icon_state = "sheetgondola"
 	inhand_icon_state = "sheetgondola"
-	inhand_icon_state = list("peace", "comfiness", "a rare critter", "a harmless creature")
+	dream_messages = list("peace", "comfiness", "a rare critter", "a harmless creature")
 	stack_type = /obj/item/stack/sheet/animalhide/gondola
 	stack_amount = 1
 	///one of four icon states that represent its mouth
