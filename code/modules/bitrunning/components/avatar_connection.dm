@@ -83,16 +83,20 @@
 	 * - Click / Stand on the ladder
 	 */
 	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER), PROC_REF(on_safe_disconnect))
+	RegisterSignal(parent, COMSIG_LIVING_PILL_CONSUMED, PROC_REF(disconnect_if_red_pill))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
 /datum/component/avatar_connection/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
-	UnregisterSignal(parent, COMSIG_BITRUNNER_ALERT_SEVER)
-	UnregisterSignal(parent, COMSIG_BITRUNNER_CACHE_SEVER)
-	UnregisterSignal(parent, COMSIG_BITRUNNER_LADDER_SEVER)
-	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
-	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(parent, list(
+		COMSIG_BITRUNNER_ALERT_SEVER,
+		COMSIG_BITRUNNER_CACHE_SEVER,
+		COMSIG_BITRUNNER_LADDER_SEVER,
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_PILL_CONSUMED,
+		COMSIG_MOB_APPLY_DAMAGE,
+	))
 
 /// Disconnects the avatar and returns the mind to the old_body.
 /datum/component/avatar_connection/proc/full_avatar_disconnect(cause_damage = FALSE, datum/source)
@@ -179,6 +183,12 @@
 	)
 	alert.name = "Integrity Compromised"
 	alert.desc = "The netpod is damaged. Find an exit."
+
+//if your bitrunning avatar somehow manages to acquire and consume a red pill, they will be ejected from the Matrix
+/datum/component/avatar_connection/proc/disconnect_if_red_pill(datum/source, obj/item/reagent_containers/pill/pill, mob/feeder)
+	SIGNAL_HANDLER
+	if(pill.icon_state == "pill4")
+		full_avatar_disconnect()
 
 /// Triggers when a safe disconnect is called
 /datum/component/avatar_connection/proc/on_safe_disconnect(datum/source)

@@ -1,7 +1,16 @@
-import { useBackend } from '../backend';
-import { Box, Stack, Section, ByondUi, Slider, Flex, Button } from '../components';
-import { Window } from '../layouts';
 import { capitalize } from 'common/string';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Flex,
+  Section,
+  Slider,
+  Stack,
+} from '../components';
+import { Window } from '../layouts';
 
 const colorToMatrix = (param) => {
   switch (param) {
@@ -46,8 +55,8 @@ const displayText = (param) => {
   }
 };
 
-export const MODpaint = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MODpaint = (props) => {
+  const { act, data } = useBackend();
   const { mapRef, currentColor } = data;
   const [
     [rr, rg, rb, ra],
@@ -66,7 +75,8 @@ export const MODpaint = (props, context) => {
             {[0, 1, 2].map((row) => (
               <Section
                 key={row}
-                title={`${displayText(prefixes[row])} turns to:`}>
+                title={`${displayText(prefixes[row])} turns to:`}
+              >
                 {[0, 1, 2].map((col) => (
                   <Flex key={col}>
                     <Flex.Item align="left" width="30%">

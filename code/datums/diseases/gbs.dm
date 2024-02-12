@@ -11,6 +11,7 @@
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
+	bypasses_immunity = TRUE
 
 /datum/disease/gbs/stage_act(seconds_per_tick, times_fired)
 	. = ..()

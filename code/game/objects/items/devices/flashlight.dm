@@ -15,7 +15,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
@@ -292,7 +292,7 @@
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	light_range = 2
 	COOLDOWN_DECLARE(holosign_cooldown)
 
@@ -366,7 +366,7 @@
 	light_system = STATIC_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = null
 	start_on = TRUE
 
@@ -906,17 +906,9 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 15
 	light_power = 1
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
-
-/obj/item/flashlight/eyelight/adapted
-	name = "adaptedlight"
-	desc = "There is no possible way for a player to see this, so I can safely talk at length about why this exists. Adapted eyes come \
-	with icons that go above the lighting layer so to make sure the red eyes that pierce the darkness are always visible we make the \
-	human emit the smallest amount of light possible. Thanks for reading :)"
-	light_range = 1
-	light_power = 0.07
 
 /obj/item/flashlight/eyelight/glow
 	light_system = MOVABLE_LIGHT_BEAM

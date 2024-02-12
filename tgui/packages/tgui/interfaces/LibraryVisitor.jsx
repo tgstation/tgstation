@@ -1,11 +1,21 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Input, NoticeBox, Section, Stack, Table } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 import { PageSelect } from './LibraryConsole';
 
-export const LibraryVisitor = (props, context) => {
+export const LibraryVisitor = (props) => {
   return (
     <Window title="Library Lookup Console" width={702} height={421}>
       <BookListing />
@@ -13,8 +23,8 @@ export const LibraryVisitor = (props, context) => {
   );
 };
 
-const BookListing = (props, context) => {
-  const { act, data } = useBackend(context);
+const BookListing = (props) => {
+  const { act, data } = useBackend();
   const { can_connect, can_db_request, our_page, page_count } = data;
   if (!can_connect) {
     return (
@@ -50,8 +60,8 @@ const BookListing = (props, context) => {
   );
 };
 
-const SearchAndDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+const SearchAndDisplay = (props) => {
+  const { act, data } = useBackend();
   const {
     can_db_request,
     search_categories = [],
@@ -130,7 +140,8 @@ const SearchAndDisplay = (props, context) => {
             textAlign="right"
             onClick={() => act('search')}
             color={params_changed ? 'good' : ''}
-            icon="book">
+            icon="book"
+          >
             Search
           </Button>
           <Button
@@ -138,7 +149,8 @@ const SearchAndDisplay = (props, context) => {
             textAlign="right"
             onClick={() => act('clear_data')}
             color="bad"
-            icon="fire">
+            icon="fire"
+          >
             Reset Search
           </Button>
         </Stack.Item>

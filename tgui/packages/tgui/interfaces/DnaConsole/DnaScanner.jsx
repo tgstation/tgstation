@@ -1,9 +1,22 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, LabeledList, ProgressBar, Section } from '../../components';
-import { SUBJECT_CONCIOUS, SUBJECT_DEAD, SUBJECT_SOFT_CRIT, SUBJECT_TRANSFORMING, SUBJECT_UNCONSCIOUS } from './constants';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../../components';
+import {
+  SUBJECT_CONCIOUS,
+  SUBJECT_DEAD,
+  SUBJECT_SOFT_CRIT,
+  SUBJECT_TRANSFORMING,
+  SUBJECT_UNCONSCIOUS,
+} from './constants';
 
-const DnaScannerButtons = (props, context) => {
-  const { data, act } = useBackend(context);
+const DnaScannerButtons = (props) => {
+  const { data, act } = useBackend();
   const {
     hasDelayedAction,
     isPulsing,
@@ -33,7 +46,8 @@ const DnaScannerButtons = (props, context) => {
       {!!isViableSubject && (
         <Button
           disabled={!isScrambleReady || isPulsing}
-          onClick={() => act('scramble_dna')}>
+          onClick={() => act('scramble_dna')}
+        >
           Scramble DNA
           {!isScrambleReady && ` (${scrambleSeconds}s)`}
         </Button>
@@ -58,7 +72,7 @@ const DnaScannerButtons = (props, context) => {
 /**
  * Displays subject status based on the value of the status prop.
  */
-const SubjectStatus = (props, context) => {
+const SubjectStatus = (props) => {
   const { status } = props;
   if (status === SUBJECT_CONCIOUS) {
     return (
@@ -98,8 +112,8 @@ const SubjectStatus = (props, context) => {
   return <Box inline>Unknown</Box>;
 };
 
-const DnaScannerContent = (props, context) => {
-  const { data, act } = useBackend(context);
+const DnaScannerContent = (props) => {
+  const { data, act } = useBackend();
   const {
     subjectName,
     isScannerConnected,
@@ -131,7 +145,8 @@ const DnaScannerContent = (props, context) => {
             good: [70, 101],
             average: [30, 70],
             bad: [-Infinity, 30],
-          }}>
+          }}
+        >
           {subjectHealth}%
         </ProgressBar>
       </LabeledList.Item>
@@ -145,7 +160,8 @@ const DnaScannerContent = (props, context) => {
             average: [30, 71],
             good: [0, 30],
             olive: [-Infinity, 0],
-          }}>
+          }}
+        >
           {subjectDamage}%
         </ProgressBar>
       </LabeledList.Item>
@@ -153,7 +169,7 @@ const DnaScannerContent = (props, context) => {
   );
 };
 
-export const DnaScanner = (props, context) => {
+export const DnaScanner = (props) => {
   return (
     <Section title="DNA Scanner" buttons={<DnaScannerButtons />}>
       <DnaScannerContent />

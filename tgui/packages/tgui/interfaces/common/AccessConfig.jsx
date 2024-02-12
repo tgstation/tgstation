@@ -1,8 +1,9 @@
 import { sortBy } from 'common/collections';
-import { Section, Button, Flex, Tabs, Grid } from '../../components';
-import { useLocalState } from '../../backend';
+import { useState } from 'react';
 
-export const AccessConfig = (props, context) => {
+import { Button, Flex, Grid, Section, Tabs } from '../../components';
+
+export const AccessConfig = (props) => {
   const {
     accesses = [],
     selectedList = [],
@@ -12,16 +13,14 @@ export const AccessConfig = (props, context) => {
     grantDep,
     denyDep,
   } = props;
-  const [selectedAccessName, setSelectedAccessName] = useLocalState(
-    context,
-    'accessName',
-    accesses[0]?.name
+  const [selectedAccessName, setSelectedAccessName] = useState(
+    accesses[0]?.name,
   );
   const selectedAccess = accesses.find(
-    (access) => access.name === selectedAccessName
+    (access) => access.name === selectedAccessName,
   );
   const selectedAccessEntries = sortBy((entry) => entry.desc)(
-    selectedAccess?.accesses || []
+    selectedAccess?.accesses || [],
   );
 
   const checkAccessIcon = (accesses) => {
@@ -61,7 +60,8 @@ export const AccessConfig = (props, context) => {
             onClick={() => denyAll()}
           />
         </>
-      }>
+      }
+    >
       <Flex>
         <Flex.Item>
           <Tabs vertical>
@@ -76,7 +76,8 @@ export const AccessConfig = (props, context) => {
                   color={color}
                   icon={icon}
                   selected={access.name === selectedAccessName}
-                  onClick={() => setSelectedAccessName(access.name)}>
+                  onClick={() => setSelectedAccessName(access.name)}
+                >
                   {access.name}
                 </Tabs.Tab>
               );

@@ -47,7 +47,7 @@
 	hud_icons = list(ID_HUD)
 
 /datum/atom_hud/data/human/security/advanced
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/human/fan_hud
 	hud_icons = list(FAN_HUD)
@@ -80,6 +80,9 @@
 		return
 	for(var/mob/camera/ai_eye/eye as anything in GLOB.aiEyes)
 		eye.update_ai_detect_hud()
+
+/datum/atom_hud/data/malf_apc
+	hud_icons = list(MALF_APC_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -204,7 +207,7 @@ Medical HUD! Basic mode needs suit sensors on.
 	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
+		if(can_defib_client())
 			holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"
@@ -279,25 +282,30 @@ Security HUDs! Basic mode shows only the job.
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
-	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
+	for(var/i in list(IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
 		set_hud_image_inactive(i)
 
-	for(var/obj/item/implant/I in implants)
-		if(istype(I, /obj/item/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_tracking"
-			set_hud_image_active(IMPTRACK_HUD)
+	var/security_slot = 1 //Which of the two security hud slots are we putting found security implants in?
+	for(var/obj/item/implant/current_implant in implants)
+		if(current_implant.implant_flags & IMPLANT_TYPE_SECURITY)
+			switch(security_slot)
+				if(1)
+					holder = hud_list[IMPSEC_FIRST_HUD]
+					var/icon/IC = icon(icon, icon_state, dir)
+					holder.pixel_y = IC.Height() - world.icon_size
+					holder.icon_state = current_implant.hud_icon_state
+					set_hud_image_active(IMPSEC_FIRST_HUD)
+					security_slot++
 
-		else if(istype(I, /obj/item/implant/chem))
-			holder = hud_list[IMPCHEM_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_chem"
-			set_hud_image_active(IMPCHEM_HUD)
+				if(2) //Theoretically if we somehow get multiple sec implants, whatever the most recently implanted implant is will take over the 2nd position
+					holder = hud_list[IMPSEC_SECOND_HUD]
+					var/icon/IC = icon(icon, icon_state, dir)
+					holder.pixel_y = IC.Height() - world.icon_size
+					holder.pixel_x = initial(holder.pixel_x) + 7 //Adds an offset that mirrors the hud blip to the other side of the mob.
+					holder.icon_state = current_implant.hud_icon_state
+					set_hud_image_active(IMPSEC_SECOND_HUD)
 
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		holder = hud_list[IMPLOYAL_HUD]
@@ -310,6 +318,12 @@ Security HUDs! Basic mode shows only the job.
 	var/image/holder = hud_list[WANTED_HUD]
 	var/icon/sec_icon = icon(icon, icon_state, dir)
 	holder.pixel_y = sec_icon.Height() - world.icon_size
+
+	if (HAS_TRAIT(src, TRAIT_ALWAYS_WANTED))
+		holder.icon_state = "hudwanted"
+		set_hud_image_active(WANTED_HUD)
+		return
+
 	var/perp_name = get_face_name(get_id_name(""))
 
 	if(!perp_name || !GLOB.manifest)
@@ -542,7 +556,6 @@ Diagnostic HUDs!
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
-
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/
@@ -554,3 +567,10 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
 	holder.icon_state = "electrified"
 	set_hud_image_active(DIAG_AIRLOCK_HUD)
+
+/// Applies hacked overlay for malf AIs
+/obj/machinery/power/apc/proc/set_hacked_hud()
+	var/image/holder = hud_list[MALF_APC_HUD]
+	holder.loc = get_turf(src)
+	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
+	set_hud_image_active(MALF_APC_HUD)

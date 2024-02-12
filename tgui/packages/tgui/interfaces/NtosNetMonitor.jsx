@@ -1,10 +1,19 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Icon, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosNetMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
+export const NtosNetMonitor = (props) => {
+  const { act, data } = useBackend();
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const {
     ntnetrelays,
     idsalarm,
@@ -12,6 +21,7 @@ export const NtosNetMonitor = (props, context) => {
     ntnetlogs = [],
     tablets = [],
   } = data;
+
   return (
     <NtosWindow>
       <NtosWindow.Content scrollable>
@@ -21,14 +31,16 @@ export const NtosNetMonitor = (props, context) => {
               icon="network-wired"
               lineHeight="23px"
               selected={tab_main === 1}
-              onClick={() => setTab_main(1)}>
+              onClick={() => setTab_main(1)}
+            >
               NtNet
             </Tabs.Tab>
             <Tabs.Tab
               icon="tablet"
               lineHeight="23px"
               selected={tab_main === 2}
-              onClick={() => setTab_main(2)}>
+              onClick={() => setTab_main(2)}
+            >
               Tablets ({tablets.length})
             </Tabs.Tab>
           </Tabs>
@@ -53,9 +65,10 @@ export const NtosNetMonitor = (props, context) => {
   );
 };
 
-const MainPage = (props, context) => {
+const MainPage = (props) => {
   const { ntnetrelays, idsalarm, idsstatus, ntnetlogs = [] } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
+
   return (
     <Section>
       <NoticeBox>
@@ -120,7 +133,8 @@ const MainPage = (props, context) => {
               content="Clear Logs"
               onClick={() => act('purgelogs')}
             />
-          }>
+          }
+        >
           {ntnetlogs.map((log) => (
             <Box key={log.entry} className="candystripe">
               {log.entry}
@@ -132,9 +146,9 @@ const MainPage = (props, context) => {
   );
 };
 
-const TabletPage = (props, context) => {
+const TabletPage = (props) => {
   const { tablets } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   if (!tablets.length) {
     return <NoticeBox>No tablets detected.</NoticeBox>;
   }

@@ -32,12 +32,18 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	materials = AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	materials = AddComponent(
+		/datum/component/material_container, \
+		allowed_materials, \
+		INFINITY, \
+		MATCONTAINER_NO_INSERT \
+	)
 	AddComponent(/datum/component/simple_rotation)
-	AddComponent(/datum/component/butchering/recycler, \
-	speed = 0.1 SECONDS, \
-	effectiveness = amount_produced, \
-	bonus_modifier = amount_produced/5, \
+	AddComponent(
+		/datum/component/butchering/recycler, \
+		speed = 0.1 SECONDS, \
+		effectiveness = amount_produced, \
+		bonus_modifier = amount_produced / 5, \
 	)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
@@ -75,7 +81,13 @@
 /obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
+	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
+		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
@@ -149,8 +161,12 @@
 				continue
 			var/obj/item/bodypart/head/as_head = thing
 			var/obj/item/mmi/as_mmi = thing
-			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && locate(/obj/item/organ/internal/brain) in as_head) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
+			if(isitem(as_object))
+				var/obj/item/as_item = as_object
+				if(as_item.item_flags & ABSTRACT) //also catches organs and bodyparts *stares*
+					continue
 			nom += thing
 		else if(isliving(thing))
 			living_detected = TRUE
@@ -193,7 +209,7 @@
 		new wood.plank_type(loc, 1 + seed_modifier)
 		. = TRUE
 	else
-		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100))
 		if(retrieved > 0) //item was salvaged i.e. deleted
 			materials.retrieve_all()
 			return TRUE
@@ -231,14 +247,13 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 
-/obj/machinery/recycler/on_deconstruction()
+/obj/machinery/recycler/on_deconstruction(disassembled)
 	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
-	obj_flags = CAN_BE_HIT | EMAGGED
+	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
 	crush_damage = 120
-	flags_1 = NODECONSTRUCT_1
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

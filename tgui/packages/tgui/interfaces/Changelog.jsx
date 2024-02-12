@@ -1,11 +1,20 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Component, Fragment } from 'inferno';
-import { Box, Button, Dropdown, Icon, Section, Stack, Table } from '../components';
-import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
+import { Component, Fragment } from 'react';
+
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  Section,
+  Stack,
+  Table,
+} from '../components';
+import { Window } from '../layouts';
 
 const icons = {
   add: { icon: 'check-circle', color: 'green' },
@@ -35,8 +44,8 @@ const icons = {
 };
 
 export class Changelog extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: 'Loading changelog data...',
       selectedDate: '',
@@ -58,13 +67,13 @@ export class Changelog extends Component {
   }
 
   getData = (date, attemptNumber = 1) => {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const self = this;
     const maxAttempts = 6;
 
     if (attemptNumber > maxAttempts) {
       return this.setData(
-        'Failed to load data after ' + maxAttempts + ' attempts'
+        'Failed to load data after ' + maxAttempts + ' attempts',
       );
     }
 
@@ -90,11 +99,11 @@ export class Changelog extends Component {
   componentDidMount() {
     const {
       data: { dates = [] },
-    } = useBackend(this.context);
+    } = useBackend();
 
     if (dates) {
       dates.forEach((date) =>
-        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true))
+        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true)),
       );
       this.setSelectedDate(this.dateChoices[0]);
       this.getData(dates[0]);
@@ -105,7 +114,7 @@ export class Changelog extends Component {
     const { data, selectedDate, selectedIndex } = this.state;
     const {
       data: { dates },
-    } = useBackend(this.context);
+    } = useBackend();
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (
@@ -124,7 +133,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -143,7 +152,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -165,7 +174,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -237,7 +246,8 @@ export class Changelog extends Component {
             href={
               'https://github.com/tgstation/tgstation/commit/' +
               '333c566b88108de218d882840e61928a9b759d8f'
-            }>
+            }
+          >
             commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at
             4:38 PM PST
           </a>
@@ -262,7 +272,8 @@ export class Changelog extends Component {
             href={
               'https://github.com/tgstation/tgstation/blob/master' +
               '/code/__DEFINES/tgs.dm'
-            }>
+            }
+          >
             code/__DEFINES/tgs.dm
           </a>
           {' and '}
@@ -270,7 +281,8 @@ export class Changelog extends Component {
             href={
               'https://github.com/tgstation/tgstation/blob/master' +
               '/code/modules/tgs/LICENSE'
-            }>
+            }
+          >
             code/modules/tgs/LICENSE
           </a>
           {' for the MIT license.'}
@@ -306,7 +318,8 @@ export class Changelog extends Component {
                               className={classes([
                                 'Changelog__Cell',
                                 'Changelog__Cell--Icon',
-                              ])}>
+                              ])}
+                            >
                               <Icon
                                 color={
                                   icons[changeType]

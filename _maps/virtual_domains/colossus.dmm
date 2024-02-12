@@ -73,7 +73,9 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "N" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "lavaland_boss"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "T" = (

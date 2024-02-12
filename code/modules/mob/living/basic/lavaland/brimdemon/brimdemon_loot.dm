@@ -53,4 +53,4 @@
 	if(!COOLDOWN_FINISHED(src, ore_sensing_cooldown))
 		return
 	COOLDOWN_START(src, ore_sensing_cooldown, cooldown)
-	mineral_scan_pulse(get_turf(src), range)
+	mineral_scan_pulse(get_turf(src), range, src)

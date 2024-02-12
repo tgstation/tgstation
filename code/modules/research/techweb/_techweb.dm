@@ -47,11 +47,6 @@
 	/// Completing these experiments will have a refund.
 	var/list/datum/experiment/skipped_experiment_types = list()
 
-	/// If science researches something without completing its discount experiments,
-	/// they have the option to complete them later for a refund
-	/// This ratio determines how much of the original discount is refunded
-	var/skipped_experiment_refund_ratio = 0.66
-
 	///All RD consoles connected to this individual techweb.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	///All research servers connected to this individual techweb.
@@ -112,7 +107,7 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
 			research_points[i] += pointlist[i]
 
 /datum/techweb/proc/add_points_all(amount)
@@ -123,7 +118,7 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
 			research_points[i] = max(0, research_points[i] - pointlist[i])
 
 /datum/techweb/proc/remove_points_all(amount)
@@ -134,7 +129,7 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
+		if((i in SSresearch.point_types) && pointlist[i] != 0)
 			research_points[i] = max(0, research_points[i] + pointlist[i])
 
 /datum/techweb/proc/modify_points_all(amount)
@@ -175,19 +170,19 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
 
 /datum/techweb/proc/modify_point_type(type, amount)
-	if(!SSresearch.point_types[type])
+	if(!(type in SSresearch.point_types))
 		return FALSE
 	research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
@@ -353,7 +348,7 @@
 	for(var/missed_experiment in node.discount_experiments)
 		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
 			continue
-		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment] * skipped_experiment_refund_ratio
+		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment]
 
 	// Gain the experiments from the new node
 	for(var/id in node.unlock_ids)

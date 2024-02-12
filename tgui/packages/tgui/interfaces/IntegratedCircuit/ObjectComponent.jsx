@@ -1,12 +1,13 @@
-import { Box, Stack, Button } from '../../components';
-import { Component } from 'inferno';
+import { Component } from 'react';
+
 import { shallowDiffers } from '../../../common/react';
+import { Box, Button, Stack } from '../../components';
 import { ABSOLUTE_Y_OFFSET, noop } from './constants';
 import { Port } from './Port';
 
 export class ObjectComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isDragging: false,
       dragPos: null,
@@ -125,12 +126,14 @@ export class ObjectComponent extends Component {
         onMouseDown={this.handleStartDrag}
         onMouseUp={this.handleStopDrag}
         onComponentWillUnmount={this.handleDrag}
-        {...rest}>
+        {...rest}
+      >
         <Box
           backgroundColor={color}
           py={1}
           px={1}
-          className="ObjectComponent__Titlebar">
+          className="ObjectComponent__Titlebar"
+        >
           <Stack>
             <Stack.Item grow={1} unselectable="on">
               {name}
@@ -183,7 +186,8 @@ export class ObjectComponent extends Component {
           className="ObjectComponent__Content"
           unselectable="on"
           py={1}
-          px={1}>
+          px={1}
+        >
           <Stack>
             <Stack.Item>
               <Stack vertical fill>

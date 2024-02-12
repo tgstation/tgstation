@@ -64,6 +64,7 @@
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	AddComponent(/datum/component/marionette)
 	update_appearance()
 
 /obj/structure/mannequin/Destroy()
@@ -87,7 +88,7 @@
 /obj/structure/mannequin/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mannequin/update_overlays()
 	. = ..()
@@ -190,7 +191,6 @@
 	name = "skeleton model"
 	desc = "Not to knock over."
 	material = MANNEQUIN_SKELETON
-	anchored = TRUE
 	obj_flags = UNIQUE_RENAME
 	starting_items = list(
 		/obj/item/clothing/glasses/eyepatch,

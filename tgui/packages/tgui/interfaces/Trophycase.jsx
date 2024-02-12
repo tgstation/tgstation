@@ -1,10 +1,19 @@
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../backend';
-import { Icon, Box, Button, Dimmer, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Image,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
-export const Trophycase = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Trophycase = (props) => {
+  const { act, data } = useBackend();
   return (
     <Window width={300} height={380}>
       <Window.Content>
@@ -28,8 +37,8 @@ export const Trophycase = (props, context) => {
   );
 };
 
-const HistorianPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+const HistorianPanel = (props) => {
+  const { act, data } = useBackend();
   const {
     has_showpiece,
     historian_mode,
@@ -89,8 +98,8 @@ const HistorianPanel = (props, context) => {
   );
 };
 
-const ShowpieceDescription = (props, context) => {
-  const { act, data } = useBackend(context);
+const ShowpieceDescription = (props) => {
+  const { act, data } = useBackend();
   const {
     has_showpiece,
     holographic_showpiece,
@@ -117,20 +126,16 @@ const ShowpieceDescription = (props, context) => {
   );
 };
 
-const ShowpieceImage = (props, context) => {
-  const { data } = useBackend(context);
+const ShowpieceImage = (props) => {
+  const { data } = useBackend();
   const { showpiece_icon } = data;
   return showpiece_icon ? (
     <Section align="center">
-      <Box
-        as="img"
+      <Image
         m={1}
         src={`data:image/jpeg;base64,${showpiece_icon}`}
         height="96px"
         width="96px"
-        style={{
-          '-ms-interpolation-mode': 'nearest-neighbor',
-        }}
       />
     </Section>
   ) : (
@@ -144,8 +149,8 @@ const ShowpieceImage = (props, context) => {
   );
 };
 
-const ShowpieceName = (props, context) => {
-  const { data } = useBackend(context);
+const ShowpieceName = (props) => {
+  const { data } = useBackend();
   const { showpiece_name } = data;
   return (
     <Section align="center">

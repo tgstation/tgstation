@@ -1,10 +1,10 @@
-import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
 import { NoticeBox } from '../components';
+import { NtosWindow } from '../layouts';
 import { MODsuitContent } from './MODsuit';
 
-export const NtosMODsuit = (props, context) => {
-  const { data } = useBackend(context);
+export const NtosMODsuit = (props) => {
+  const { data } = useBackend();
   const { ui_theme } = data;
   return (
     <NtosWindow theme={ui_theme}>
@@ -15,8 +15,8 @@ export const NtosMODsuit = (props, context) => {
   );
 };
 
-const NtosMODsuitContent = (props, context) => {
-  const { data } = useBackend(context);
+const NtosMODsuitContent = (props) => {
+  const { data } = useBackend();
   const { has_suit } = data;
   if (!has_suit) {
     return (

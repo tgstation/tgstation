@@ -18,20 +18,20 @@ $dark-gray: #858585;
 $scrollbar-color-multiplier: 0.5;
 
 @use '../colors.scss' with (
-   $primary: black,
-   $label: rgb(255, 132, 153),
-   $good: pink,
+  $primary: black,
+  $label: rgb(255, 132, 153),
+  $good: pink,
 
-   $bad: red,
-   // $fg-map-keys: (),
-   // $bg-map-keys: (),
- );
+  $bad: red,
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
 
 @use '../base.scss' with (
-   $color-bg: orange,
-   $color-bg-grad-spread: 12%,
-   //$border-radius: 0,
- );
+    $color-bg: orange,
+    $color-bg-grad-spread: 12%,
+    //$border-radius: 0,
+  );
 
 .theme-ntos_cat {
   // Atomic classes

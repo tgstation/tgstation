@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const LanguageMenu = (props, context) => {
-  const { act, data } = useBackend(context);
+export const LanguageMenu = (props) => {
+  const { act, data } = useBackend();
   const {
     admin_mode,
     is_living,
@@ -59,7 +59,8 @@ export const LanguageMenu = (props, context) => {
                       </>
                     )}
                   </>
-                }>
+                }
+              >
                 {language.desc} Key: ,{language.key}{' '}
                 {language.can_understand
                   ? 'Can understand.'
@@ -78,7 +79,8 @@ export const LanguageMenu = (props, context) => {
                 selected={omnitongue}
                 onClick={() => act('toggle_omnitongue')}
               />
-            }>
+            }
+          >
             <LabeledList>
               {unknown_languages.map((language) => (
                 <LabeledList.Item
@@ -93,7 +95,8 @@ export const LanguageMenu = (props, context) => {
                         })
                       }
                     />
-                  }>
+                  }
+                >
                   {language.desc} Key: ,{language.key}{' '}
                   {!!language.shadow && '(gained from mob)'}{' '}
                   {language.can_speak ? 'Can speak.' : 'Cannot speak.'}

@@ -1,8 +1,21 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Box, Dropdown, Button, Input, TextArea, Divider, NumberInput, Tooltip, Knob } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Input,
+  Knob,
+  NumberInput,
+  Section,
+  TextArea,
+  Tooltip,
+} from '../components';
 import { Window } from '../layouts';
 
-export const AdminFax = (props, context) => {
+export const AdminFax = (props) => {
   return (
     <Window title="Admin Fax Panel" width={400} height={675} theme="admin">
       <Window.Content>
@@ -12,31 +25,23 @@ export const AdminFax = (props, context) => {
   );
 };
 
-export const FaxMainPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const FaxMainPanel = (props) => {
+  const { act, data } = useBackend();
 
-  const [fax, setFax] = useLocalState(context, 'fax', '');
-  const [saved, setSaved] = useLocalState(context, 'saved', false);
-  const [paperName, setPaperName] = useLocalState(context, 'paperName', '');
-  const [fromWho, setFromWho] = useLocalState(context, 'fromWho', '');
-  const [rawText, setRawText] = useLocalState(context, 'rawText', '');
-  const [stamp, setStamp] = useLocalState(context, 'stampType', '');
-  const [stampCoordX, setStampCoordX] = useLocalState(
-    context,
-    'stampCoordX',
-    0
-  );
-  const [stampCoordY, setStampCoordY] = useLocalState(
-    context,
-    'stampCoordY',
-    0
-  );
-  const [stampAngle, setStampAngle] = useLocalState(context, 'stampAngle', 0);
+  const [fax, setFax] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [paperName, setPaperName] = useState('');
+  const [fromWho, setFromWho] = useState('');
+  const [rawText, setRawText] = useState('');
+  const [stamp, setStamp] = useState('');
+  const [stampCoordX, setStampCoordX] = useState(0);
+  const [stampCoordY, setStampCoordY] = useState(0);
+  const [stampAngle, setStampAngle] = useState(0);
   if (stamp && data.stamps[0] !== 'None') {
     data.stamps.unshift('None');
   }
   return (
-    <div class="faxmenu">
+    <div className="faxmenu">
       <Section
         title="Fax Menu"
         buttons={
@@ -48,17 +53,19 @@ export const FaxMainPanel = (props, context) => {
                 act('follow', {
                   faxName: fax,
                 })
-              }>
+              }
+            >
               Follow
             </Button>
           </Box>
-        }>
+        }
+      >
         <Box fontSize="13px">
           <Dropdown
             textAlign="center"
             selected="Choose fax machine..."
             width="100%"
-            nochevron
+            noChevron
             nowrap
             options={data.faxes}
             onSelected={(value) => setFax(value)}
@@ -75,10 +82,12 @@ export const FaxMainPanel = (props, context) => {
               act('preview', {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Preview
           </Button>
-        }>
+        }
+      >
         <Box fontSize="14px">
           <Input
             mb="5px"
@@ -91,13 +100,15 @@ export const FaxMainPanel = (props, context) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setPaperName('Nanotrasen Official Report')}>
+            onClick={() => setPaperName('Nanotrasen Official Report')}
+          >
             Nanotrasen
           </Button>
           <Button
             icon="s"
             width="49%"
-            onClick={() => setPaperName('Syndicate Report')}>
+            onClick={() => setPaperName('Syndicate Report')}
+          >
             Syndicate
           </Button>
         </Box>
@@ -117,7 +128,8 @@ export const FaxMainPanel = (props, context) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setFromWho('Nanotrasen')}>
+            onClick={() => setFromWho('Nanotrasen')}
+          >
             Nanotrasen
           </Button>
           <Button icon="s" width="49%" onClick={() => setFromWho('Syndicate')}>
@@ -130,7 +142,7 @@ export const FaxMainPanel = (props, context) => {
             placeholder="Your message here..."
             height="200px"
             value={rawText}
-            onInput={(e, value) => {
+            onChange={(e, value) => {
               setRawText(value);
             }}
           />
@@ -198,7 +210,8 @@ export const FaxMainPanel = (props, context) => {
               act('send', {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Send
           </Button>
           <Button
@@ -217,7 +230,8 @@ export const FaxMainPanel = (props, context) => {
                 stampAngle: stampAngle,
                 fromWho: fromWho,
               });
-            }}>
+            }}
+          >
             Save
           </Button>
           <Button
@@ -227,7 +241,8 @@ export const FaxMainPanel = (props, context) => {
               act('createPaper', {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Create paper
           </Button>
         </Box>

@@ -19,7 +19,7 @@
 	health = 50
 	maxHealth = 50
 	speed = 3
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = TRUE //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
@@ -79,12 +79,14 @@
 
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
-	var/static/mulebot_count = 0
-	mulebot_count += 1
-	set_id(suffix || id || "#[mulebot_count]")
-	suffix = null
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
+
+	set_id(suffix || assign_random_name())
+	suffix = null
+	if(name == "\improper MULEbot")
+		name = "\improper MULEbot [id]"
+	set_home(loc)
 
 /mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -138,6 +140,18 @@
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
 
+/mob/living/simple_animal/bot/mulebot/proc/set_home(turf/home_loc)
+	if(!istype(home_loc))
+		CRASH("MULEbot [id] was requested to set a home location to [home_loc ? "an invalid home loc ([home_loc.type])" : "null"]")
+
+	var/obj/machinery/navbeacon/home_beacon = locate() in home_loc
+	if(!isnull(home_beacon))
+		home_destination = home_beacon.location
+		log_transport("[id]: MULEbot successfuly set home location to ID [home_destination] at [home_beacon.x], [home_beacon.y], [home_beacon.z]")
+		return
+
+	log_transport("[id]: MULEbot failed to set home at [home_loc.x], [home_loc.y], [home_loc.z]")
+
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
 	reached_target = FALSE
@@ -151,7 +165,7 @@
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	cell.add_fingerprint(user)
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(cell)
@@ -163,7 +177,7 @@
 	)
 	cell = null
 	diag_hud_set_mulebotcell()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
@@ -322,19 +336,12 @@
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id
-			if(pda)
-				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
-			else
-				new_id = params["value"]
+			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
 			if(new_id)
 				set_id(new_id)
+				name = "\improper MULEbot [new_id]"
 		if("sethome")
-			var/new_home
-			if(pda)
-				new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
-			else
-				new_home = params["value"]
+			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			if(new_home)
 				home_destination = new_home
 		if("unload")
@@ -769,7 +776,7 @@
 		unload()
 
 /mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
 		unload(get_dir(loc, A))
@@ -815,39 +822,37 @@
 
 	load(AM)
 
-/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/AM)
-	if(load || AM.anchored)
+/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/movable_atom)
+	if(load || movable_atom.anchored)
 		return
 
-	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+	if(!isturf(movable_atom.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	if(isobserver(AM))
+	if(isobserver(movable_atom))
 		visible_message(span_warning("A ghostly figure appears on [src]!"))
-		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
-		AM.forceMove(src)
+		movable_atom.forceMove(src)
+		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
 		buzz(SIGH)
 		return // if not hacked, only allow ghosts to be loaded
 
-	else if(isobj(AM))
-		var/obj/O = AM
-		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+	else if(isobj(movable_atom))
+		if(movable_atom.has_buckled_mobs() || (locate(/mob) in movable_atom)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
-		if(istype(O, /obj/structure/closet/crate))
-			var/obj/structure/closet/crate/crate = O
+		if(istype(movable_atom, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = movable_atom
 			crate.close() //make sure it's closed
 
-		O.forceMove(src)
+		movable_atom.forceMove(src)
 
-	else if(isliving(AM))
-		if(!load_mob(AM)) //buckling is handled in forceMove()
-			return
+	else if(isliving(movable_atom) && !load_mob(movable_atom))
+		return
 
-	load = AM
+	load = movable_atom
 	mode = BOT_IDLE
 	update_appearance()
 

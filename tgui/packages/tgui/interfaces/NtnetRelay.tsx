@@ -1,6 +1,13 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, ProgressBar, Section, AnimatedNumber } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -17,8 +24,8 @@ error may indicate insufficient hardware capacity of your
 network. Please contact your network planning department for
 instructions on how to resolve this issue.`;
 
-export const NtnetRelay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NtnetRelay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { enabled, dos_capacity, dos_overload, dos_crashed } = data;
 
   return (
@@ -33,12 +40,14 @@ export const NtnetRelay = (props, context) => {
               content={enabled ? 'ENABLED' : 'DISABLED'}
               onClick={() => act('toggle')}
             />
-          }>
+          }
+        >
           {!dos_crashed ? (
             <ProgressBar
               value={dos_overload}
               minValue={0}
-              maxValue={dos_capacity}>
+              maxValue={dos_capacity}
+            >
               <AnimatedNumber value={dos_overload} /> GQ
               {' / '}
               {dos_capacity} GQ

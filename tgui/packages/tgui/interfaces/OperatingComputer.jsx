@@ -1,5 +1,13 @@
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import {
+  AnimatedNumber,
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 const damageTypes = [
@@ -21,9 +29,9 @@ const damageTypes = [
   },
 ];
 
-export const OperatingComputer = (props, context) => {
-  const { act } = useBackend(context);
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+export const OperatingComputer = (props) => {
+  const { act } = useBackend();
+  const [tab, setTab] = useSharedState('tab', 1);
 
   return (
     <Window width={350} height={470}>
@@ -46,12 +54,13 @@ export const OperatingComputer = (props, context) => {
   );
 };
 
-const PatientStateView = (props, context) => {
-  const { act, data } = useBackend(context);
+const PatientStateView = (props) => {
+  const { act, data } = useBackend();
   const { table, procedures = [], patient = {} } = data;
   if (!table) {
     return <NoticeBox>No Table Detected</NoticeBox>;
   }
+
   return (
     <>
       <Section title="Patient State">
@@ -68,7 +77,8 @@ const PatientStateView = (props, context) => {
                 value={patient.health}
                 minValue={patient.minHealth}
                 maxValue={patient.maxHealth}
-                color={patient.health >= 0 ? 'good' : 'average'}>
+                color={patient.health >= 0 ? 'good' : 'average'}
+              >
                 <AnimatedNumber value={patient.health} />
               </ProgressBar>
             </LabeledList.Item>
@@ -76,7 +86,8 @@ const PatientStateView = (props, context) => {
               <LabeledList.Item key={type.type} label={type.label}>
                 <ProgressBar
                   value={patient[type.type] / patient.maxHealth}
-                  color="bad">
+                  color="bad"
+                >
                   <AnimatedNumber value={patient[type.type]} />
                 </ProgressBar>
               </LabeledList.Item>
@@ -123,8 +134,8 @@ const PatientStateView = (props, context) => {
   );
 };
 
-const SurgeryProceduresView = (props, context) => {
-  const { act, data } = useBackend(context);
+const SurgeryProceduresView = (props) => {
+  const { act, data } = useBackend();
   const { surgeries = [] } = data;
   return (
     <Section title="Advanced Surgery Procedures">

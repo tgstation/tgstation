@@ -78,6 +78,16 @@
 			var/obj/effect/mob_spawn/corpse/spawner = thing
 
 			mutation_candidate_refs.Add(spawner.spawned_mob_ref)
+			continue
+
+		if(istype(thing, /obj/machinery/suit_storage_unit))
+			var/obj/machinery/suit_storage_unit/storage = thing
+			storage.disable_modlink()
+			continue
+
+		if(istype(thing, /obj/item/mod/control))
+			var/obj/item/mod/control/modsuit = thing
+			modsuit.disable_modlink()
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 

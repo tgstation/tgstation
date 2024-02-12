@@ -14,16 +14,29 @@
 	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 
-/obj/machinery/rnd/destructive_analyzer/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	var/screentip_set = FALSE
 	if(loaded_item)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove Item"
+		screentip_set = TRUE
 	else if(!isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Item"
-	return CONTEXTUAL_SCREENTIP_SET
+		screentip_set = TRUE
+
+	if(screentip_set)
+		. = CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/rnd/destructive_analyzer/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
+	if(loaded_item)
+		. += span_notice("[EXAMINE_HINT("Left-Click")] to remove loaded item inside.")
+	else
+		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("Left-Click")].")
 
 /obj/machinery/rnd/destructive_analyzer/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)
@@ -171,6 +184,7 @@
 	if(isnull(id))
 		return FALSE
 
+	var/item_type = loaded_item.type
 	if(id == DESTRUCTIVE_ANALYZER_DESTROY_POINTS)
 		if(!destroy_item(gain_research_points = TRUE))
 			return FALSE
@@ -181,7 +195,7 @@
 		return FALSE
 	if(!destroy_item())
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[loaded_item.type]"))
+	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[item_type]"))
 	stored_research.unhide_node(node_to_discover)
 	return TRUE
 

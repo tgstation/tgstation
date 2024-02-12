@@ -84,7 +84,7 @@
 /obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(processing)
@@ -236,9 +236,9 @@
 		return
 	var/core_count = processed_slime.cores
 	for(var/i in 1 to (core_count+rating_amount-1))
-		var/atom/movable/item = new processed_slime.coretype(drop_location())
+		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
-		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.colour)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)
 	return ..()
 
 #undef PROCESSOR_SELECT_RECIPE

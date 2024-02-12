@@ -6,7 +6,7 @@
 	base_icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
 		"meth" = /datum/reagent/drug/methamphetamine
@@ -45,16 +45,28 @@
 			return TRUE
 
 		if("amount")
-			var/input = text2num(params["amount"])
-			if(input)
-				amount = input
-			return FALSE
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			amount = input
+			return TRUE
 
 		if("purity")
-			var/input = text2num(params["amount"])
-			if(input)
-				purity = input
-			return FALSE
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			purity = input
+			return TRUE
 
 	update_appearance()
 

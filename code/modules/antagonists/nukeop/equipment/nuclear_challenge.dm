@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 /obj/item/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	inhand_icon_state = "nukietalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
-		uplink.add_telecrystals(tc_per_nukie)
+		uplink.uplink_handler.add_telecrystals(tc_per_nukie)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)

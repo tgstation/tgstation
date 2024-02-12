@@ -21,8 +21,8 @@ const damageTypes = [
   },
 ];
 
-export const Sleeper = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Sleeper = (props) => {
+  const { act, data } = useBackend();
   const { open, occupant = {}, occupied } = data;
   const preSortChems = data.chems || [];
   const chems = preSortChems.sort((a, b) => {
@@ -48,7 +48,8 @@ export const Sleeper = (props, context) => {
                 {occupant.stat}
               </Box>
             )
-          }>
+          }
+        >
           {!!occupied && (
             <>
               <ProgressBar
@@ -74,13 +75,9 @@ export const Sleeper = (props, context) => {
                   </LabeledList.Item>
                 ))}
                 <LabeledList.Item
-                  label="Cells"
-                  color={occupant.cloneLoss ? 'bad' : 'good'}>
-                  {occupant.cloneLoss ? 'Damaged' : 'Healthy'}
-                </LabeledList.Item>
-                <LabeledList.Item
                   label="Brain"
-                  color={occupant.brainLoss ? 'bad' : 'good'}>
+                  color={occupant.brainLoss ? 'bad' : 'good'}
+                >
                   {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
                 </LabeledList.Item>
               </LabeledList>
@@ -96,7 +93,8 @@ export const Sleeper = (props, context) => {
               content={open ? 'Open' : 'Closed'}
               onClick={() => act('door')}
             />
-          }>
+          }
+        >
           {chems.map((chem) => (
             <Button
               key={chem.name}

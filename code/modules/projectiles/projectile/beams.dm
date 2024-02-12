@@ -179,7 +179,7 @@
 	if(pierce_hits <= 0)
 		projectile_piercing = NONE
 	pierce_hits -= 1
-	..()
+	return ..()
 
 /obj/projectile/beam/emitter
 	name = "emitter beam"

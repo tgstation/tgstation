@@ -5,8 +5,8 @@
 	suit = /obj/item/clothing/suit/space/santa
 	back = /obj/item/storage/backpack/santabag
 	backpack_contents = list(
-		/obj/item/a_gift/anything = 5,
-)
+		/obj/item/gift/anything = 5,
+	)
 	gloves = /obj/item/clothing/gloves/color/red
 	head = /obj/item/clothing/head/helmet/space/santahat/beardless
 	shoes = /obj/item/clothing/shoes/sneakers/red

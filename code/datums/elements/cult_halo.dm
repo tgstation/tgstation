@@ -22,6 +22,10 @@
 /datum/element/cult_halo/proc/set_halo(mob/living/target)
 	SIGNAL_HANDLER
 
+	if(!IS_CULTIST(target))
+		target.RemoveElement(/datum/element/cult_halo)
+		return
+
 	ADD_TRAIT(target, TRAIT_CULT_HALO, CULT_TRAIT)
 	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/cult/halo.dmi', "halo[rand(1, 6)]", -HALO_LAYER)
 	if (ishuman(target))

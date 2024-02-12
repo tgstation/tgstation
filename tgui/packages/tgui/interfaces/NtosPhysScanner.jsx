@@ -1,10 +1,10 @@
 import { useBackend } from '../backend';
+import { Box, Section } from '../components';
 import { NtosWindow } from '../layouts';
-import { Section, Box } from '../components';
 import { sanitizeText } from '../sanitize';
 
-export const NtosPhysScanner = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosPhysScanner = (props) => {
+  const { act, data } = useBackend();
   const { last_record } = data;
   const textHtml = {
     __html: sanitizeText(last_record),
@@ -23,7 +23,7 @@ export const NtosPhysScanner = (props, context) => {
             <br />
           </Box>
           <Box
-            style={{ 'white-space': 'pre-line' }}
+            style={{ whiteSpace: 'pre-line' }}
             dangerouslySetInnerHTML={textHtml}
           />
         </Section>

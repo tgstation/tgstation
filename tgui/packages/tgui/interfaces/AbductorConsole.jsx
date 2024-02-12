@@ -3,8 +3,9 @@ import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 import { GenericUplink } from './Uplink/GenericUplink';
 
-export const AbductorConsole = (props, context) => {
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+export const AbductorConsole = (props) => {
+  const [tab, setTab] = useSharedState('tab', 1);
+
   return (
     <Window theme="abductor" width={600} height={532}>
       <Window.Content scrollable>
@@ -13,14 +14,16 @@ export const AbductorConsole = (props, context) => {
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Abductsoft 3000
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Mission Settings
           </Tabs.Tab>
         </Tabs>
@@ -36,8 +39,8 @@ export const AbductorConsole = (props, context) => {
   );
 };
 
-const Abductsoft = (props, context) => {
-  const { act, data } = useBackend(context);
+const Abductsoft = (props) => {
+  const { act, data } = useBackend();
   const { experiment, points, credits, categories } = data;
 
   if (!experiment) {
@@ -81,8 +84,8 @@ const Abductsoft = (props, context) => {
   );
 };
 
-const EmergencyTeleporter = (props, context) => {
-  const { act, data } = useBackend(context);
+const EmergencyTeleporter = (props) => {
+  const { act, data } = useBackend();
   const { pad, gizmo } = data;
 
   if (!pad) {
@@ -99,7 +102,8 @@ const EmergencyTeleporter = (props, context) => {
           color="bad"
           onClick={() => act('teleporter_send')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mark Retrieval">
           <Button
@@ -114,8 +118,8 @@ const EmergencyTeleporter = (props, context) => {
   );
 };
 
-const VestSettings = (props, context) => {
-  const { act, data } = useBackend(context);
+const VestSettings = (props) => {
+  const { act, data } = useBackend();
   const { vest, vest_mode, vest_lock } = data;
 
   if (!vest) {
@@ -131,7 +135,8 @@ const VestSettings = (props, context) => {
           content={vest_lock ? 'Locked' : 'Unlocked'}
           onClick={() => act('toggle_vest')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button

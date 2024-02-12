@@ -1,24 +1,20 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack } from '../components';
+import { Box, Button, Icon, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const OutfitEditor = (props, context) => {
-  const { act, data } = useBackend(context);
+export const OutfitEditor = (props) => {
+  const { act, data } = useBackend();
   const { outfit, saveable, dummy64 } = data;
   return (
     <Window width={380} height={600} theme="admin">
       <Window.Content>
-        <Box
-          as="img"
+        <Image
           fillPositionedParent
           width="100%"
           height="100%"
           opacity={0.5}
           py={3}
           src={`data:image/jpeg;base64,${dummy64}`}
-          style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-          }}
         />
         <Section
           fill
@@ -27,10 +23,11 @@ export const OutfitEditor = (props, context) => {
               <Stack.Item
                 grow={1}
                 style={{
-                  'overflow': 'hidden',
-                  'white-space': 'nowrap',
-                  'text-overflow': 'ellipsis',
-                }}>
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                }}
+              >
                 <Button
                   ml={0.5}
                   color="transparent"
@@ -66,7 +63,8 @@ export const OutfitEditor = (props, context) => {
                 />
               </Stack.Item>
             </Stack>
-          }>
+          }
+        >
           <Box textAlign="center">
             <Stack mb={2}>
               <OutfitSlot name="Headgear" icon="hard-hat" slot="head" />
@@ -118,8 +116,8 @@ export const OutfitEditor = (props, context) => {
   );
 };
 
-const OutfitSlot = (props, context) => {
-  const { act, data } = useBackend(context);
+const OutfitSlot = (props) => {
+  const { act, data } = useBackend();
   const { name, icon, iconRot, slot } = props;
   const { outfit } = data;
   const currItem = outfit[slot];
@@ -130,20 +128,17 @@ const OutfitSlot = (props, context) => {
         height={2}
         bold
         // todo: intuitive way to clear items
-        onClick={(e) => act(e.ctrlKey ? 'ctrlClick' : 'click', { slot })}>
+        onClick={(e) => act(e.ctrlKey ? 'ctrlClick' : 'click', { slot })}
+      >
         <Icon name={icon} rotation={iconRot} />
         {name}
       </Button>
       <Box height="32px">
         {currItem?.sprite && (
           <>
-            <Box
-              as="img"
+            <Image
               src={`data:image/jpeg;base64,${currItem?.sprite}`}
               title={currItem?.desc}
-              style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
-              }}
             />
             <Icon
               position="absolute"
@@ -158,11 +153,12 @@ const OutfitSlot = (props, context) => {
       <Box
         color="label"
         style={{
-          'overflow': 'hidden',
-          'white-space': 'nowrap',
-          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
         }}
-        title={currItem?.path}>
+        title={currItem?.path}
+      >
         {currItem?.name || 'Empty'}
       </Box>
     </Stack.Item>

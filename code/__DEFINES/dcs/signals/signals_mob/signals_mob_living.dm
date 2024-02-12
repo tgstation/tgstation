@@ -12,8 +12,6 @@
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -69,8 +67,6 @@
 #define COMSIG_LIVING_ADJUST_OXY_DAMAGE "living_adjust_oxy_damage"
 /// Send when toxloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_TOX_DAMAGE "living_adjust_tox_damage"
-/// Send when cloneloss is modified (type, amount, forced)
-#define COMSIG_LIVING_ADJUST_CLONE_DAMAGE "living_adjust_clone_damage"
 /// Send when staminaloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
 
@@ -78,7 +74,6 @@
 #define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
 	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
-	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
 	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
 )
@@ -150,7 +145,12 @@
 #define COMSIG_LIVING_WALL_EXITED "living_wall_exited"
 ///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
-	#define NO_Z_IMPACT_DAMAGE (1<<0)
+	/// Just for the signal return, does not run normal living handing of z fall damage for mobs
+	#define ZIMPACT_CANCEL_DAMAGE (1<<0)
+	/// Do not show default z-impact message
+	#define ZIMPACT_NO_MESSAGE (1<<1)
+	/// Do not do the spin animation when landing
+	#define ZIMPACT_NO_SPIN (1<<2)
 
 /// From mob/living/try_speak(): (message, ignore_spam, forced)
 #define COMSIG_LIVING_TRY_SPEECH "living_vocal_speech"
@@ -226,6 +226,15 @@
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
 	#define SUCCESSFUL_BLOCK (1<<0)
 
+///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
+#define COMSIG_LIVING_DISARM_HIT "living_disarm_hit"
+///Before a living mob is shoved, sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target)
+#define COMSIG_LIVING_DISARM_PRESHOVE "living_disarm_preshove"
+	#define COMSIG_LIVING_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
+///When a living mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target, shove_blocked)
+#define COMSIG_LIVING_DISARM_COLLIDE "living_disarm_collision"
+	#define COMSIG_LIVING_SHOVE_HANDLED (1<<0)
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
@@ -233,7 +242,14 @@
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
 
+/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
+#define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
+
 /// Sent from a mob to their loc when starting to remove cuffs on itself
 #define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
-/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
-#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab

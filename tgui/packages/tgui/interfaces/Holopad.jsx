@@ -1,9 +1,18 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
-export const Holopad = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Holopad = (props) => {
+  const { act, data } = useBackend();
   const { calling } = data;
   return (
     <Window width={440} height={245}>
@@ -33,8 +42,8 @@ export const Holopad = (props, context) => {
   );
 };
 
-const HolopadContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const HolopadContent = (props) => {
+  const { act, data } = useBackend();
   const {
     on_network,
     on_cooldown,
@@ -59,7 +68,8 @@ const HolopadContent = (props, context) => {
             disabled={!on_network || on_cooldown}
             onClick={() => act('AIrequest')}
           />
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Communicator">
             <Button
@@ -73,7 +83,8 @@ const HolopadContent = (props, context) => {
             return (
               <LabeledList.Item
                 label={call.connected ? 'Current Call' : 'Incoming Call'}
-                key={call.ref}>
+                key={call.ref}
+              >
                 <Button
                   icon={call.connected ? 'phone-slash' : 'phone-alt'}
                   content={
@@ -113,7 +124,8 @@ const HolopadContent = (props, context) => {
             disabled={!disk || replay_mode || record_mode}
             onClick={() => act('disk_eject')}
           />
-        }>
+        }
+      >
         {(!disk && <NoticeBox>No holodisk</NoticeBox>) || (
           <LabeledList>
             <LabeledList.Item label="Disk Player">

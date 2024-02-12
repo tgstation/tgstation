@@ -185,10 +185,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/update_icon_state()
 	. = ..()
-	if(HAS_TRAIT(src, TRAIT_PARROT_PERCHED))
-		icon_state = icon_sit
-	else
-		icon_state = icon_living
+	if(stat == DEAD)
+		return
+	icon_state = HAS_TRAIT(src, TRAIT_PARROT_PERCHED) ? icon_sit : icon_living
 
 /// Proc that we just use to see if we're rightclicking something for perch behavior or dropping the item we currently ahve
 /mob/living/basic/parrot/proc/on_click(mob/living/basic/source, atom/target, params)

@@ -1,22 +1,20 @@
 import { useBackend, useSharedState } from '../backend';
-import { Window } from '../layouts';
 import { Button, Dropdown, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
-export const PaintingMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+export const PaintingMachine = (props) => {
+  const { act, data } = useBackend();
 
   const { pdaTypes, cardTrims, hasPDA, pdaName, hasID, idName } = data;
 
   const [selectedPDA] = useSharedState(
-    context,
     'pdaSelection',
-    pdaTypes[Object.keys(pdaTypes)[0]]
+    pdaTypes[Object.keys(pdaTypes)[0]],
   );
 
   const [selectedTrim] = useSharedState(
-    context,
     'trimSelection',
-    cardTrims[Object.keys(cardTrims)[0]]
+    cardTrims[Object.keys(cardTrims)[0]],
   );
 
   return (
@@ -45,7 +43,8 @@ export const PaintingMachine = (props, context) => {
                 }}
               />
             </>
-          }>
+          }
+        >
           <Stack vertical>
             <Stack.Item height="100%">
               <EjectButton
@@ -87,7 +86,8 @@ export const PaintingMachine = (props, context) => {
                 tooltipPosition="left"
               />
             </>
-          }>
+          }
+        >
           <Stack vertical>
             <Stack.Item height="100%">
               <EjectButton
@@ -105,7 +105,7 @@ export const PaintingMachine = (props, context) => {
   );
 };
 
-export const EjectButton = (props, context) => {
+export const EjectButton = (props) => {
   const { name, onClickEject } = props;
 
   return (
@@ -119,13 +119,12 @@ export const EjectButton = (props, context) => {
   );
 };
 
-export const PainterDropdown = (props, context) => {
+export const PainterDropdown = (props) => {
   const { stateKey, options } = props;
 
   const [selectedOption, setSelectedOption] = useSharedState(
-    context,
     stateKey,
-    options[Object.keys(options)[0]]
+    options[Object.keys(options)[0]],
   );
 
   return (

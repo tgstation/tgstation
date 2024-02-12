@@ -211,7 +211,7 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", null, null, 7.5 SECONDS, stranger_backseat)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", poll_time = 7.5 SECONDS, target_mob = stranger_backseat, pic_source = owner, role_name_text = "brainwashed mind")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -293,8 +293,8 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
-	else if(duration_in_seconds <= 50)
-		to_chat(owner, span_warning("You have 50 seconds left before sobering up!"))
+	else if(duration_in_seconds <= 60 && !(duration_in_seconds % 20))
+		to_chat(owner, span_warning("You have [duration_in_seconds] seconds left before sobering up!"))
 	if(prob(10) && !HAS_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER))
 		ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
 		owner.balloon_alert(owner, "dexterity reduced temporarily!")

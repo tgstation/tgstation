@@ -1,11 +1,12 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section } from '../components';
+import { Box, Button, Icon, Image, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Safe = (properties, context) => {
-  const { act, data } = useBackend(context);
+export const Safe = (properties) => {
+  const { act, data } = useBackend();
   const { dial, open } = data;
   return (
     <Window width={625} height={800} theme="ntos">
@@ -25,12 +26,11 @@ export const Safe = (properties, context) => {
           {open ? (
             <Contents />
           ) : (
-            <Box
-              as="img"
+            <Image
               className="Safe__dial"
               src={resolveAsset('safe_dial.png')}
               style={{
-                'transform': 'rotate(-' + 3.6 * dial + 'deg)',
+                transform: 'rotate(-' + 3.6 * dial + 'deg)',
               }}
             />
           )}
@@ -41,8 +41,8 @@ export const Safe = (properties, context) => {
   );
 };
 
-const Dialer = (properties, context) => {
-  const { act, data } = useBackend(context);
+const Dialer = (properties) => {
+  const { act, data } = useBackend();
   const { dial, open, locked, broken } = data;
   const dialButton = (amount, right) => {
     return (
@@ -80,8 +80,8 @@ const Dialer = (properties, context) => {
   );
 };
 
-const Contents = (properties, context) => {
-  const { act, data } = useBackend(context);
+const Contents = (properties) => {
+  const { act, data } = useBackend();
   const { contents } = data;
   return (
     <Box className="Safe__contents" overflow="auto">
@@ -93,9 +93,9 @@ const Contents = (properties, context) => {
               act('retrieve', {
                 index: index + 1,
               })
-            }>
-            <Box
-              as="img"
+            }
+          >
+            <Image
               src={item.sprite + '.png'}
               verticalAlign="middle"
               ml="-6px"
@@ -110,11 +110,12 @@ const Contents = (properties, context) => {
   );
 };
 
-const Help = (properties, context) => {
+const Help = (properties) => {
   return (
     <Section
       className="Safe__help"
-      title="Safe opening instructions (because you all keep forgetting)">
+      title="Safe opening instructions (because you all keep forgetting)"
+    >
       <Box>
         1. Turn the dial left to the first number.
         <br />

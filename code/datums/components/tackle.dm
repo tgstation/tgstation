@@ -54,18 +54,18 @@
 
 /datum/component/tackler/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, PROC_REF(checkTackle))
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(sack))
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(sack))
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, PROC_REF(registerTackle))
 
 /datum/component/tackler/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_PRE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
 
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/tackle)
 	SIGNAL_HANDLER
 
 	tackle_ref = WEAKREF(tackle)
-	tackle.thrower = user
+	tackle.thrower = WEAKREF(user)
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
@@ -154,15 +154,17 @@
 	var/mob/living/carbon/target = hit
 	var/tackle_word = isfelinid(user) ? "pounce" : "tackle" //If cat, "pounce" instead of "tackle".
 
+	var/roll = rollTackle(target)
+	tackling = FALSE
+	tackle.gentle = TRUE
+
 	if(target.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
 		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
 		to_chat(target, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
 		neutral_outcome(user, target, tackle_word) //Forces a neutral outcome so you're not screwed too much from being blocked while tackling
-		return
+		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
-	var/roll = rollTackle(target)
-	tackling = FALSE
-	tackle.gentle = TRUE
+
 
 	switch(roll)
 		if(-INFINITY to -1)
@@ -232,7 +234,7 @@
 			target.Knockdown(3 SECONDS)
 			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
+				INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
 				human_sacker.setGrabState(GRAB_PASSIVE)
 
 		if(50 to INFINITY) // absolutely BODIED
@@ -258,7 +260,7 @@
 				target.Knockdown(3 SECONDS)
 				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 				if(ishuman(target) && ishuman(user))
-					INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
+					INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
 					human_sacker.setGrabState(GRAB_AGGRESSIVE)
 
 /**
@@ -398,7 +400,7 @@
 			defense_mod += 2
 		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
-		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
+		if(HAS_TRAIT(tackle_target, TRAIT_SHOVE_KNOCKDOWN_BLOCKED)) // riot armor and such
 			defense_mod += 5
 
 		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -449,7 +451,7 @@
 			attack_mod += 15
 			human_sacker.adjustStaminaLoss(100) //AHAHAHAHAHAHAHAHA
 
-		if(human_sacker.is_shove_knockdown_blocked()) // tackling with riot specialized armor, like riot armor, is effective but tiring
+		if(HAS_TRAIT(human_sacker, TRAIT_SHOVE_KNOCKDOWN_BLOCKED)) // tackling with riot specialized armor, like riot armor, is effective but tiring
 			attack_mod += 2
 			human_sacker.adjustStaminaLoss(20)
 

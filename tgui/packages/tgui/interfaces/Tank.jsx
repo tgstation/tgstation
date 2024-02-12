@@ -1,6 +1,13 @@
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
-import { Button, LabeledControls, NumberInput, RoundGauge, Section } from '../components';
+import {
+  Button,
+  LabeledControls,
+  NumberInput,
+  RoundGauge,
+  Section,
+} from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -11,8 +18,8 @@ const formatPressure = (value) => {
   return formatSiUnit(value * 1000, 1, 'Pa');
 };
 
-export const Tank = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Tank = (props) => {
+  const { act, data } = useBackend();
   const {
     defaultReleasePressure,
     minReleasePressure,
@@ -35,9 +42,9 @@ export const Tank = (props, context) => {
                 maxValue={fragmentPressure * 1.15}
                 alertAfter={leakPressure}
                 ranges={{
-                  'good': [0, leakPressure],
-                  'average': [leakPressure, fragmentPressure],
-                  'bad': [fragmentPressure, fragmentPressure * 1.15],
+                  good: [0, leakPressure],
+                  average: [leakPressure, fragmentPressure],
+                  bad: [fragmentPressure, fragmentPressure * 1.15],
                 }}
                 format={formatPressure}
                 size={2}

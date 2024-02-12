@@ -695,4 +695,4 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"
 	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	prize_override = list(/obj/item/a_gift/anything = 1)
+	prize_override = list(/obj/item/gift/anything = 1)

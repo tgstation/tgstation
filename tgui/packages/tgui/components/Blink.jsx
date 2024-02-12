@@ -1,11 +1,11 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
 
 const DEFAULT_BLINKING_INTERVAL = 1000;
 const DEFAULT_BLINKING_TIME = 1000;
 
 export class Blink extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       hidden: false,
     };
@@ -55,13 +55,14 @@ export class Blink extends Component {
     clearTimeout(this.timer);
   }
 
-  render(props) {
+  render() {
     return (
       <span
         style={{
           visibility: this.state.hidden ? 'hidden' : 'visible',
-        }}>
-        {props.children}
+        }}
+      >
+        {this.props.children}
       </span>
     );
   }

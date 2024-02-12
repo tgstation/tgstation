@@ -44,11 +44,11 @@
 	if(isliving(user))
 		var/mob/living/living_user = user
 		if(!(machine_stat & NOPOWER) && !istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
-			speak("No valid labor points account found. Vending is not permitted.")
+			speak("No valid prisoner account found. Vending is not permitted.")
 			return
 	return ..()
 
-/obj/machinery/vending/sustenance/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
+/obj/machinery/vending/sustenance/labor_camp/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
 	if(!istype(paying_id_card, /obj/item/card/id/advanced/prisoner))
 		speak("I don't take bribes! Pay with labor points!")
 		return FALSE
@@ -66,7 +66,7 @@
 	paying_scum_id.points -= price_to_use
 	return TRUE
 
-/obj/machinery/vending/sustenance/fetch_balance_to_use(obj/item/card/id/passed_id)
+/obj/machinery/vending/sustenance/labor_camp/fetch_balance_to_use(obj/item/card/id/passed_id)
 	if(!istype(passed_id, /obj/item/card/id/advanced/prisoner))
 		return null //no points balance - no balance at all
 	var/obj/item/card/id/advanced/prisoner/paying_scum_id = passed_id

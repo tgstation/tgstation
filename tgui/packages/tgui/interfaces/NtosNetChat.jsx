@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Input, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Input,
+  Section,
+  Stack,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 // byond defines for the program state
@@ -7,7 +15,7 @@ const CLIENT_ONLINE = 2;
 const CLIENT_AWAY = 1;
 const CLIENT_OFFLINE = 0;
 
-const NoChannelDimmer = (props, context) => {
+const NoChannelDimmer = (props) => {
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
@@ -36,8 +44,8 @@ const NoChannelDimmer = (props, context) => {
   );
 };
 
-export const NtosNetChat = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosNetChat = (props) => {
+  const { act, data } = useBackend();
   const {
     title,
     can_admin,
@@ -195,7 +203,8 @@ export const NtosNetChat = (props, context) => {
                             <Stack.Item
                               basis={0}
                               grow
-                              color={client_color(client)}>
+                              color={client_color(client)}
+                            >
                               {client.name}
                             </Stack.Item>
                             {client !== this_client && (

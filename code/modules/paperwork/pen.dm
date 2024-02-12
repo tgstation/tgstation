@@ -236,7 +236,7 @@
 					label.remove_label()
 					label.apply_label()
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
-				O.renamedByPlayer = TRUE
+				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Description")
@@ -249,7 +249,7 @@
 			else
 				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, span_notice("You have successfully changed [O]'s description."))
-				O.renamedByPlayer = TRUE
+				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Reset")
@@ -265,7 +265,7 @@
 				label.apply_label()
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
-			O.renamedByPlayer = FALSE
+			REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 			O.update_appearance(UPDATE_ICON)
 
 /obj/item/pen/get_writing_implement_details()

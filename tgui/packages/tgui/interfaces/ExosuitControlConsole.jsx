@@ -1,10 +1,18 @@
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
-export const ExosuitControlConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ExosuitControlConsole = (props) => {
+  const { act, data } = useBackend();
   const { mechs = [] } = data;
   return (
     <Window width={500} height={500}>
@@ -38,7 +46,8 @@ export const ExosuitControlConsole = (props, context) => {
                   }
                 />
               </>
-            }>
+            }
+          >
             <LabeledList>
               <LabeledList.Item label="Integrity">
                 <Box
@@ -46,7 +55,8 @@ export const ExosuitControlConsole = (props, context) => {
                     (mech.integrity <= 30 && 'bad') ||
                     (mech.integrity <= 70 && 'average') ||
                     'good'
-                  }>
+                  }
+                >
                   {mech.integrity}%
                 </Box>
               </LabeledList.Item>
@@ -56,7 +66,8 @@ export const ExosuitControlConsole = (props, context) => {
                     (mech.charge <= 30 && 'bad') ||
                     (mech.charge <= 70 && 'average') ||
                     'good'
-                  }>
+                  }
+                >
                   {(typeof mech.charge === 'number' && mech.charge + '%') ||
                     'Not Found'}
                 </Box>
@@ -90,7 +101,8 @@ export const ExosuitControlConsole = (props, context) => {
                       (mech.cargo_space <= 30 && 'good') ||
                       (mech.cargo_space <= 70 && 'average') ||
                       'bad'
-                    }>
+                    }
+                  >
                     {mech.cargo_space}%
                   </Box>
                 </LabeledList.Item>

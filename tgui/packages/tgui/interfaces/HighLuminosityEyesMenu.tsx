@@ -1,6 +1,13 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Button, ColorBox, Input, LabeledList, NumberInput, Section } from '../components';
+import {
+  Button,
+  ColorBox,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type EyeColorData = {
@@ -22,8 +29,8 @@ enum ToUpdate {
   RightEye,
 }
 
-const LightColorDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const LightColorDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { lightColor } = data;
   return (
     <LabeledList.Item label="Color">
@@ -53,8 +60,8 @@ const LightColorDisplay = (props, context) => {
   );
 };
 
-const RangeDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const RangeDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { range } = data;
   return (
     <LabeledList.Item label="Range">
@@ -86,8 +93,8 @@ const RangeDisplay = (props, context) => {
   );
 };
 
-const EyeColorDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const EyeColorDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { eyeColor } = data;
   return (
     <>
@@ -160,14 +167,15 @@ const EyeColorDisplay = (props, context) => {
   );
 };
 
-export const HighLuminosityEyesMenu = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const HighLuminosityEyesMenu = (props) => {
+  const { act, data } = useBackend<Data>();
   const { eyeColor } = data;
   return (
     <Window
       title="High Luminosity Eyes"
       width={eyeColor.hasOwner ? 262 : 225}
-      height={eyeColor.hasOwner ? (eyeColor.mode ? 170 : 220) : 135}>
+      height={eyeColor.hasOwner ? (eyeColor.mode ? 170 : 220) : 135}
+    >
       <Window.Content>
         <Section fill title="Settings">
           <LabeledList>

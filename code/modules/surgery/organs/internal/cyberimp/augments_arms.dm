@@ -76,21 +76,34 @@
 	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
 	update_appearance()
 
-/obj/item/organ/internal/cyberimp/arm/on_insert(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
-	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
-	hand = arm_owner.hand_bodyparts[side]
-	if(hand)
-		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self)) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
-		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+	RegisterSignal(arm_owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_limb_attached))
+	RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+	on_limb_attached(arm_owner, arm_owner.hand_bodyparts[zone == BODY_ZONE_R_ARM ? RIGHT_HANDS : LEFT_HANDS])
 
-/obj/item/organ/internal/cyberimp/arm/on_remove(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	Retract()
+	UnregisterSignal(arm_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_KB_MOB_DROPITEM_DOWN))
+	on_limb_detached(hand)
+
+/obj/item/organ/internal/cyberimp/arm/proc/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	if(!limb || QDELETED(limb) || limb.body_zone != zone)
+		return
 	if(hand)
-		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
-		UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
-		hand = null
+		on_limb_detached(hand)
+	RegisterSignal(limb, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
+	RegisterSignal(limb, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_detached))
+	hand = limb
+
+/obj/item/organ/internal/cyberimp/arm/proc/on_limb_detached(obj/item/bodypart/source)
+	SIGNAL_HANDLER
+	if(source != hand || QDELETED(hand))
+		return
+	UnregisterSignal(hand, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_BODYPART_REMOVED))
+	hand = null
 
 /obj/item/organ/internal/cyberimp/arm/proc/on_item_attack_self()
 	SIGNAL_HANDLER
@@ -136,6 +149,7 @@
 		active_item.forceMove(src)
 
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
 	return TRUE
@@ -291,7 +305,7 @@
 		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
+		flash.arm = WEAKREF(src)
 
 /obj/item/organ/internal/cyberimp/arm/flash/Extend()
 	. = ..()
@@ -325,7 +339,7 @@
 		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
+		flash.arm = WEAKREF(src)
 
 /obj/item/organ/internal/cyberimp/arm/surgery
 	name = "surgical toolset implant"
@@ -378,14 +392,14 @@
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
-	if(ishuman(reciever)) //Sorry, only humans
-		RegisterSignal(reciever, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
+	if(ishuman(arm_owner)) //Sorry, only humans
+		RegisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
-	UnregisterSignal(implant_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
 	. = ..()

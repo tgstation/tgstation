@@ -27,12 +27,17 @@
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
-	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_ADD_REAGENT])
+		if(!check_rights(R_VAREDIT))
+			return
 		if(!reagents)
 			var/amount = input(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50) as num|null
 			if(amount)
 				create_reagents(amount)
-
 		if(reagents)
 			var/chosen_id
 			switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
@@ -61,27 +66,32 @@
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
-	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
+	if(href_list[VV_HK_TRIGGER_EXPLOSION])
+		if(!check_rights(R_FUN))
+			return
 		usr.client.cmd_admin_explosion(src)
 
-	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
+	if(href_list[VV_HK_TRIGGER_EMP])
+		if(!check_rights(R_FUN))
+			return
 		usr.client.cmd_admin_emp(src)
 
-	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
+	if(href_list[VV_HK_SHOW_HIDDENPRINTS])
+		if(!check_rights(R_ADMIN))
+			return
 		usr.client.cmd_show_hiddenprints(src)
 
 	if(href_list[VV_HK_ARMOR_MOD])
+		if(!check_rights(NONE))
+			return
 		var/list/pickerlist = list()
 		var/list/armorlist = get_armor().get_rating_list()
-
 		for (var/i in armorlist)
 			pickerlist += list(list("value" = armorlist[i], "name" = i))
-
 		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
 		var/list/armor_all = ARMOR_LIST_ALL()
-
-		if (islist(result))
-			if (result["button"] != 2) // If the user pressed the cancel button
+		if(islist(result))
+			if(result["button"] != 2) // If the user pressed the cancel button
 				// text2num conveniently returns a null on invalid values
 				var/list/converted = list()
 				for(var/armor_key in armor_all)
@@ -102,7 +112,9 @@
 			return
 		ai_controller = new result(src)
 
-	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_MODIFY_TRANSFORM])
+		if(!check_rights(R_VAREDIT))
+			return
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate","Shear")
 		var/matrix/M = transform
 		if(!result)
@@ -131,10 +143,11 @@
 				if(isnull(angle))
 					return
 				transform = M.Turn(angle)
-
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
 
-	if(href_list[VV_HK_SPIN_ANIMATION] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_SPIN_ANIMATION])
+		if(!check_rights(R_VAREDIT))
+			return
 		var/num_spins = input(usr, "Do you want infinite spins?", "Spin Animation") in list("Yes", "No")
 		if(num_spins == "No")
 			num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
@@ -155,25 +168,35 @@
 				return
 		SpinAnimation(spin_speed, num_spins, direction)
 
-	if(href_list[VV_HK_STOP_ALL_ANIMATIONS] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
+		if(!check_rights(R_VAREDIT))
+			return
 		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
 		if(result == "Yes")
 			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
 		return
 
-	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_AUTO_RENAME])
+		if(!check_rights(R_VAREDIT))
+			return
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
 		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
-	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_EDIT_FILTERS])
+		if(!check_rights(R_VAREDIT))
+			return
 		usr.client?.open_filter_editor(src)
 
-	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_EDIT_COLOR_MATRIX])
+		if(!check_rights(R_VAREDIT))
+			return
 		usr.client?.open_color_matrix_editor(src)
 
-	if(href_list[VV_HK_TEST_MATRIXES] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_TEST_MATRIXES])
+		if(!check_rights(R_VAREDIT))
+			return
 		usr.client?.open_matrix_tester(src)
 
 /atom/vv_get_header()

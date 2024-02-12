@@ -11,7 +11,9 @@
 /turf/open/floor,
 /area/virtual_domain)
 "U" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "test_only"
+	},
 /turf/open/floor,
 /area/virtual_domain/safehouse)
 

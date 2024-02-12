@@ -74,7 +74,7 @@
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
+
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing
  */
@@ -305,3 +305,12 @@
 	anchored = FALSE
 	density = TRUE
 	deconstructible = TRUE
+
+/obj/structure/fluff/wallsign
+	name = "direction sign"
+	desc = "Now, where to go?"
+	density = FALSE
+	icon = 'icons/obj/fluff/general.dmi'
+	icon_state = "wallsign"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/wallsign, 32)

@@ -29,7 +29,7 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/lua_editor/Destroy(force, ...)
+/datum/lua_editor/Destroy(force)
 	. = ..()
 	if(current_state)
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)

@@ -8,8 +8,9 @@
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
-/turf/open/floor/holofloor/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	return
+/turf/open/floor/holofloor/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE // Fuck you
 
 /turf/open/floor/holofloor/burn_tile()
 	return //you can't burn a hologram!

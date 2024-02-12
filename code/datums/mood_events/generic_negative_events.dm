@@ -4,7 +4,8 @@
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
 	description = "I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow..."
-	mood_change = -8
+	mood_change = -4
+	timeout = 3 MINUTES
 
 /datum/mood_event/on_fire
 	description = "I'M ON FIRE!!!"
@@ -111,8 +112,8 @@
 
 /datum/mood_event/table/add_effects()
 	if(isfelinid(owner)) //Holy snowflake batman!
-		var/mob/living/carbon/human/H = owner
-		SEND_SIGNAL(H, COMSIG_ORGAN_WAG_TAIL, TRUE, 3 SECONDS)
+		var/mob/living/carbon/human/feline = owner
+		feline.wag_tail(3 SECONDS)
 		description = "They want to play on the table!"
 		mood_change = 2
 
@@ -439,8 +440,22 @@
 	description = "I've been here too long! I want to go out and explore space!"
 	mood_change = -3
 
+/datum/mood_event/moon_insanity
+	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
+	mood_change = -3
+	timeout = 5 MINUTES
+
+/datum/mood_event/amulette_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
+	mood_change = -6
+	timeout = 5 MINUTES
+
 ///Wizard cheesy grand finale - what everyone but the wizard gets
 /datum/mood_event/madness_despair
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
 	mood_change = -200
 	special_screen_obj = "mood_despair"
+
+/datum/mood_event/all_nighter
+	description = "I didn't sleep at all last night. I'm exhausted."
+	mood_change = -5

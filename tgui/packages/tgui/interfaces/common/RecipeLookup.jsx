@@ -1,9 +1,17 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Chart, Flex, Icon, LabeledList, Tooltip } from '../../components';
+import {
+  Box,
+  Button,
+  Chart,
+  Flex,
+  Icon,
+  LabeledList,
+  Tooltip,
+} from '../../components';
 
-export const RecipeLookup = (props, context) => {
+export const RecipeLookup = (props) => {
   const { recipe, bookmarkedReactions } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   if (!recipe) {
     return <Box>No reaction selected!</Box>;
   }
@@ -176,8 +184,9 @@ export const RecipeLookup = (props, context) => {
           height="50px"
           position="relative"
           style={{
-            'background-color': 'black',
-          }}>
+            backgroundColor: 'black',
+          }}
+        >
           <Chart.Line
             fillPositionedParent
             data={recipe.thermodynamics}
@@ -204,10 +213,12 @@ export const RecipeLookup = (props, context) => {
               recipe.isColdRecipe
                 ? 'The temperature at which it is underheated, causing negative effects on the reaction.'
                 : 'The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate.'
-            }>
+            }
+          >
             <Flex.Item
               position="relative"
-              textColor={recipe.isColdRecipe && 'red'}>
+              textColor={recipe.isColdRecipe && 'red'}
+            >
               {recipe.isColdRecipe
                 ? recipe.explodeTemp + 'K'
                 : recipe.tempMin + 'K'}
@@ -220,10 +231,12 @@ export const RecipeLookup = (props, context) => {
                 recipe.isColdRecipe
                   ? 'The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate.'
                   : 'The temperature at which it is overheated, causing negative effects on the reaction.'
-              }>
+              }
+            >
               <Flex.Item
                 position="relative"
-                textColor={!recipe.isColdRecipe && 'red'}>
+                textColor={!recipe.isColdRecipe && 'red'}
+              >
                 {recipe.isColdRecipe
                   ? recipe.tempMin + 'K'
                   : recipe.explodeTemp + 'K'}

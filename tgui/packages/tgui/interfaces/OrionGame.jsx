@@ -28,8 +28,8 @@ const variousButtonIcons = {
   'Restore Hull': 'wrench',
   'Fix Engine': 'rocket',
   'Repair Electronics': 'server',
-  'Wait': 'clock',
-  'Continue': 'arrow-right',
+  Wait: 'clock',
+  Continue: 'arrow-right',
   'Explore Ship': 'door-open',
   'Leave the Derelict': 'arrow-right',
   'Welcome aboard.': 'user-plus',
@@ -41,7 +41,7 @@ const variousButtonIcons = {
   'Speed Past': 'tachometer-alt',
   'Go Around': 'redo',
   'Oh...': 'circle',
-  'Dock': 'dollar-sign',
+  Dock: 'dollar-sign',
 };
 
 const STATUS2COMPONENT = [
@@ -100,8 +100,8 @@ const locationInfo = [
   },
 ];
 
-const AdventureStatus = (props, context) => {
-  const { data, act } = useBackend(context);
+const AdventureStatus = (props) => {
+  const { data, act } = useBackend();
   const {
     lings_suspected,
     eventname,
@@ -129,7 +129,8 @@ const AdventureStatus = (props, context) => {
             onClick={() => act('random_kill')}
           />
         )
-      }>
+      }
+    >
       <Stack mb={-1} fill>
         <Stack.Item grow mb={-0.5}>
           {settlers?.map((settler) => (
@@ -210,8 +211,8 @@ const AdventureStatus = (props, context) => {
   );
 };
 
-const ORION_STATUS_START = (props, context) => {
-  const { data, act } = useBackend(context);
+const ORION_STATUS_START = (props) => {
+  const { data, act } = useBackend();
   const { gamename } = data;
   return (
     <Section fill>
@@ -245,8 +246,8 @@ const ORION_STATUS_START = (props, context) => {
   );
 };
 
-const ORION_STATUS_INSTRUCTIONS = (props, context) => {
-  const { act } = useBackend(context);
+const ORION_STATUS_INSTRUCTIONS = (props) => {
+  const { act } = useBackend();
   const fake_settlers = ['John', 'William', 'Alice', 'Tom'];
   return (
     <>
@@ -258,7 +259,8 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
             content="Back to Main Menu"
             onClick={() => act('back_to_menu')}
           />
-        }>
+        }
+      >
         <Box fontSize="11px">
           In the 2200&apos;s, the Orion trail was established as a dangerous yet
           opportunistic trail through space for those willing to risk it. Many
@@ -368,8 +370,8 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
   );
 };
 
-const ORION_STATUS_NORMAL = (props, context) => {
-  const { data, act } = useBackend(context);
+const ORION_STATUS_NORMAL = (props) => {
+  const { data, act } = useBackend();
   const {
     settlers,
     settlermoods,
@@ -431,8 +433,8 @@ const ORION_STATUS_NORMAL = (props, context) => {
   );
 };
 
-const ORION_STATUS_GAMEOVER = (props, context) => {
-  const { data, act } = useBackend(context);
+const ORION_STATUS_GAMEOVER = (props) => {
+  const { data, act } = useBackend();
   const { reason } = data;
   return (
     <Section fill>
@@ -461,8 +463,8 @@ const ORION_STATUS_GAMEOVER = (props, context) => {
 
 const marketButtonSpacing = 0.8;
 
-const ORION_STATUS_MARKET = (props, context) => {
-  const { data, act } = useBackend(context);
+const ORION_STATUS_MARKET = (props) => {
+  const { data, act } = useBackend();
   const { turns, spaceport_raided } = data;
   return (
     <Stack vertical fill>
@@ -485,7 +487,8 @@ const ORION_STATUS_MARKET = (props, context) => {
                 onClick={() => act('leave_spaceport')}
               />
             </>
-          }>
+          }
+        >
           <Stack fill textAlign="center" vertical>
             <Stack.Item grow>
               <Box mb={-2} bold fontSize="15px">
@@ -638,8 +641,8 @@ const ORION_STATUS_MARKET = (props, context) => {
   );
 };
 
-export const OrionGame = (props, context) => {
-  const { act, data } = useBackend(context);
+export const OrionGame = (props) => {
+  const { act, data } = useBackend();
   const { gamestatus, gamename, eventname } = data;
   const GameStatusComponent = STATUS2COMPONENT[gamestatus].component();
   const MarketRaid = STATUS2COMPONENT[2].component();

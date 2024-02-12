@@ -74,11 +74,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 		output += "[uppertext(category)]: [message]"
 
 	if(flags & ENTRY_USE_DATA_W_READABLE)
-#if DM_VERSION >= 515
 		output += json_encode(data, JSON_PRETTY_PRINT)
-#else
-		output += json_encode(data)
-#endif
 	return output
 
 #define MANUAL_JSON_ENTRY(list, key, value) list.Add("\"[key]\":[(!isnull(value)) ? json_encode(value) : "null"]")
@@ -99,19 +95,33 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 #undef MANUAL_JSON_ENTRY
 
+#define CHECK_AND_TRY_FILE_ERROR_RECOVERY(file) \
+	var/static/in_error_recovery = FALSE; \
+	if(!fexists(##file)) { \
+		if(in_error_recovery) { \
+			in_error_recovery = FALSE; \
+			CRASH("Failed to error recover log file: [file]"); \
+		}; \
+		in_error_recovery = TRUE; \
+		logger.Log(LOG_CATEGORY_INTERNAL_ERROR, "attempting to perform file error recovery: [file]"); \
+		logger.init_category_file(logger.log_categories[category]); \
+		call(src, __PROC__)(arglist(args)); \
+		return; \
+	}; \
+	in_error_recovery = FALSE;
+
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)
-	if(!fexists(file))
-		CRASH("Attempted to log to an uninitialized file: [file]")
+	CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
 	WRITE_LOG_NO_FORMAT(file, "[to_json_text()]\n")
 
 /// Writes the log entry to a file as a human-readable string.
 /datum/log_entry/proc/write_readable_entry_to_file(file, format_internally = TRUE)
-	if(!fexists(file))
-		CRASH("Attempted to log to an uninitialized file: [file]")
-
+	CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
 	// If it's being formatted internally we need to manually add a newline
 	if(format_internally)
 		WRITE_LOG_NO_FORMAT(file, "[to_readable_text(format = TRUE)]\n")
 	else
 		WRITE_LOG(file, "[to_readable_text(format = FALSE)]")
+
+#undef CHECK_AND_TRY_FILE_ERROR_RECOVERY

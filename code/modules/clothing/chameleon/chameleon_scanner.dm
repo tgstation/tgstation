@@ -1,7 +1,7 @@
 /// Small handheld chameleon item that allows a user to mimic the outfit of another person quickly.
 /obj/item/chameleon_scanner
 	// No name or desc by default, set up by the cham action
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_TINY

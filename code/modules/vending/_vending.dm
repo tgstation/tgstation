@@ -307,12 +307,10 @@ var/list/vendor_nocrush = list(
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
 
-/obj/machinery/vending/deconstruct(disassembled = TRUE)
+/obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
 		return ..()
-	if(!(flags_1 & NODECONSTRUCT_1)) //the non constructable vendors drop metal instead of a machine frame.
-		new /obj/item/stack/sheet/iron(loc, 3)
-	qdel(src)
+	new /obj/item/stack/sheet/iron(loc, 3)
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
@@ -629,7 +627,7 @@ var/list/vendor_nocrush = list(
 		return FALSE
 	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
@@ -755,7 +753,6 @@ var/list/vendor_nocrush = list(
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
@@ -1025,7 +1022,6 @@ var/list/vendor_nocrush = list(
 
 	tilted = FALSE
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
@@ -1050,10 +1046,10 @@ var/list/vendor_nocrush = list(
 			LAZYADD(product_datum.returned_products, inserted_item)
 			return
 
-	if(vending_machine_input[format_text(inserted_item.name)])
-		vending_machine_input[format_text(inserted_item.name)]++
+	if(vending_machine_input[inserted_item.type])
+		vending_machine_input[inserted_item.type]++
 	else
-		vending_machine_input[format_text(inserted_item.name)] = 1
+		vending_machine_input[inserted_item.type] = 1
 	loaded_items++
 
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
@@ -1077,7 +1073,7 @@ var/list/vendor_nocrush = list(
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
 	if(!istype(replacer))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) && !replacer.works_from_distance)
+	if((obj_flags & NO_DECONSTRUCTION) && !replacer.works_from_distance)
 		return FALSE
 	if(!component_parts || !refill_canister)
 		return FALSE
@@ -1096,7 +1092,7 @@ var/list/vendor_nocrush = list(
 		replacer.play_rped_sound()
 	return TRUE
 
-/obj/machinery/vending/on_deconstruction()
+/obj/machinery/vending/on_deconstruction(disassembled)
 	update_canister()
 	. = ..()
 
@@ -1217,11 +1213,12 @@ var/list/vendor_nocrush = list(
 	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		var/list/product_data = list(
 			name = product_record.name,
+			path = replacetext(replacetext("[product_record.product_path]", "/obj/item/", ""), "/", "-"),
 			amount = product_record.amount,
 			colorable = product_record.colorable,
 		)
 
-		.["stock"][product_record.name] = product_data
+		.["stock"][product_data["path"]] = product_data
 
 	.["extended_inventory"] = extended_inventory
 
@@ -1600,7 +1597,7 @@ var/list/vendor_nocrush = list(
 	if(loaded_item.custom_price)
 		return TRUE
 
-/obj/machinery/vending/custom/ui_interact(mob/user)
+/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
 	if(!linked_account)
 		balloon_alert(user, "no registered owner!")
 		return FALSE
@@ -1610,12 +1607,12 @@ var/list/vendor_nocrush = list(
 	. = ..()
 	.["access"] = compartmentLoadAccessCheck(user)
 	.["vending_machine_input"] = list()
-	for (var/stocked_item in vending_machine_input)
+	for (var/obj/item/stocked_item as anything in vending_machine_input)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
 			for(var/obj/item/stored_item in contents)
-				if(format_text(stored_item.name) == stocked_item)
+				if(stored_item.type == stocked_item)
 					price = stored_item.custom_price
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
@@ -1625,7 +1622,8 @@ var/list/vendor_nocrush = list(
 							base64_cache[stored_item.type] = base64
 					break
 			var/list/data = list(
-				name = stocked_item,
+				path = stocked_item,
+				name = initial(stocked_item.name),
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
@@ -1640,8 +1638,8 @@ var/list/vendor_nocrush = list(
 	switch(action)
 		if("dispense")
 			if(isliving(usr))
-				vend_act(usr, params["item"])
-			vend_ready = TRUE
+				vend_act(usr, params)
+				vend_ready = TRUE
 			return TRUE
 
 /obj/machinery/vending/custom/attackby(obj/item/attack_item, mob/user, params)
@@ -1665,23 +1663,23 @@ var/list/vendor_nocrush = list(
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE
 
-/obj/machinery/vending/custom/deconstruct(disassembled)
+/obj/machinery/vending/custom/on_deconstruction(disassembled)
 	unbuckle_all_mobs(TRUE)
 	var/turf/current_turf = get_turf(src)
 	if(current_turf)
 		for(var/obj/item/stored_item in contents)
 			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
-	return ..()
 
 /**
  * Vends an item to the user. Handles all the logic:
  * Updating stock, account transactions, alerting users.
  * @return -- TRUE if a valid condition was met, FALSE otherwise.
  */
-/obj/machinery/vending/custom/proc/vend_act(mob/living/user, choice)
+/obj/machinery/vending/custom/proc/vend_act(mob/living/user, list/params)
 	if(!vend_ready)
 		return
+	var/obj/item/choice = text2path(params["item"]) // typepath is a string coming from javascript, we need to convert it back
 	var/obj/item/dispensed_item
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	vend_ready = FALSE
@@ -1690,8 +1688,8 @@ var/list/vendor_nocrush = list(
 		flick(icon_deny, src)
 		return TRUE
 	var/datum/bank_account/payee = id_card.registered_account
-	for(var/obj/stock in contents)
-		if(format_text(stock.name) == choice)
+	for(var/obj/item/stock in contents)
+		if(istype(stock, choice))
 			dispensed_item = stock
 			break
 	if(!dispensed_item)

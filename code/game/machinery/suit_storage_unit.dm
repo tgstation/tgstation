@@ -307,13 +307,9 @@
 	storage = null
 	set_occupant(null)
 
-/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		open_machine()
-		dump_inventory_contents()
-		if(card_reader_installed)
-			new /obj/item/stock_parts/card_reader(loc)
-	return ..()
+/obj/machinery/suit_storage_unit/on_deconstruction(disassembled)
+	if(card_reader_installed)
+		new /obj/item/stock_parts/card_reader(loc)
 
 /obj/machinery/suit_storage_unit/proc/access_check(mob/living/user)
 	if(!isnull(id_card))
@@ -794,20 +790,27 @@
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */
 /obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if(!(flags_1 & NODECONSTRUCT_1) && screwdriver.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
+	if(!(obj_flags & NO_DECONSTRUCTION) && screwdriver.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
 		to_chat(user, span_warning("You cant open the panel while its [locked ? "locked" : "decontaminating"]"))
 		return TRUE
 	return ..()
 
 
 /obj/machinery/suit_storage_unit/default_pry_open(obj/item/crowbar)//needs to check if the storage is locked.
-	. = !(state_open || panel_open || is_operational || locked || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || is_operational || locked || (obj_flags & NO_DECONSTRUCTION)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		crowbar.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
 		open_machine()
 
 /obj/machinery/suit_storage_unit/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	. = (!locked && panel_open && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR)
+	. = (!locked && panel_open && !(obj_flags & NO_DECONSTRUCTION) && crowbar.tool_behaviour == TOOL_CROWBAR)
 	if(.)
 		return ..()
+
+/// If the SSU needs to have any communications wires cut.
+/obj/machinery/suit_storage_unit/proc/disable_modlink()
+	if(isnull(mod))
+		return
+
+	mod.disable_modlink()

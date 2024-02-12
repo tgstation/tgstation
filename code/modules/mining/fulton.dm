@@ -128,15 +128,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	holder_obj.add_overlay(balloon)
 	playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
 
-	animate(holder_obj, pixel_z = 10, time = 2 SECONDS)
-	animate(pixel_z = 15, time = 1 SECONDS)
-	animate(pixel_z = 10, time = 1 SECONDS)
-	animate(pixel_z = 15, time = 1 SECONDS)
-	animate(pixel_z = 10, time = 1 SECONDS)
+	animate(holder_obj, pixel_z = 10, time = 2 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	sleep(6 SECONDS)
 
 	playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', vol = 50, vary = TRUE, extrarange = -3)
-	animate(holder_obj, pixel_z = 1000, time = 3 SECONDS)
+	animate(holder_obj, pixel_z = 1000, time = 3 SECONDS, flags = ANIMATION_RELATIVE)
 
 	if(ishuman(thing))
 		var/mob/living/carbon/human/creature = thing
@@ -157,9 +157,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	holder_obj.forceMove(pick(flooring_near_beacon))
 
-	animate(holder_obj, pixel_z = 10, time = 5 SECONDS)
-	animate(pixel_z = 15, time = 1 SECONDS)
-	animate(pixel_z = 10, time = 1 SECONDS)
+	animate(holder_obj, pixel_z = -990, time = 5 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	sleep(7 SECONDS)
 
 	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	holder_obj.cut_overlay(balloon3)
 	thing.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
 	thing.set_density(initial(thing.density))
-	animate(holder_obj, pixel_z = 0, time = 0.5 SECONDS)
+	animate(holder_obj, pixel_z = -10, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 	sleep(0.5 SECONDS)
 
 	thing.forceMove(holder_obj.loc)

@@ -117,8 +117,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	if(ismob(triggerer))
-		mineEffect(triggerer)
+	mineEffect(triggerer)
 	triggered = TRUE
 	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED, triggerer)
 	qdel(src)
@@ -244,7 +243,7 @@
 /obj/item/minespawner
 	name = "landmine deployment device"
 	desc = "When activated, will deploy an Asset Protection landmine after 3 seconds passes, perfect for high ranking NT officers looking to cover their assets from afar."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 
 	var/mine_type = /obj/effect/mine/shrapnel/capspawn

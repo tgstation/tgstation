@@ -42,11 +42,10 @@
 	QDEL_NULL(beaker)
 	update_appearance()
 
-/obj/machinery/reagentgrinder/deconstruct()
+/obj/machinery/reagentgrinder/on_deconstruction(disassmbled)
 	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
-	return ..()
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
@@ -142,10 +141,10 @@
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 	if(!beaker && !length(holdingitems))
 		return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
 

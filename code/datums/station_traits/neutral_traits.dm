@@ -1,16 +1,19 @@
+///This station traits gives 5 bananium sheets to the clown (and every dead clown out there in deep space or lavaland).
 /datum/station_trait/bananium_shipment
 	name = "Bananium Shipment"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
-	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system"
+	cost = STATION_TRAIT_COST_LOW
+	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system."
 	trait_to_give = STATION_TRAIT_BANANIUM_SHIPMENTS
 
 /datum/station_trait/unnatural_atmosphere
 	name = "Unnatural atmospherical properties"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "System's local planet has irregular atmospherical properties"
+	report_message = "System's local planet has irregular atmospherical properties."
 	trait_to_give = STATION_TRAIT_UNNATURAL_ATMOSPHERE
 
 	// This station trait modifies the atmosphere, which is too far past the time admins are able to revert it
@@ -42,6 +45,7 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = FALSE
+	cost = STATION_TRAIT_COST_LOW
 	report_message = "Ian has gone exploring somewhere in the station."
 
 /datum/station_trait/ian_adventure/on_round_start()
@@ -99,8 +103,9 @@
 /datum/station_trait/glitched_pdas
 	name = "PDA glitch"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 15
+	weight = 10
 	show_in_report = TRUE
+	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
 	trait_to_give = STATION_TRAIT_PDA_GLITCHED
 
@@ -133,67 +138,15 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 10
 	show_in_report = TRUE
+	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Due to a shortage in standard issue jumpsuits, we have provided your assistants with one of our backup supplies."
+	blacklist = list(/datum/station_trait/assistant_gimmicks)
 
 /datum/station_trait/colored_assistants/New()
 	. = ..()
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
-
-/datum/station_trait/cargorilla
-	name = "Cargo Gorilla"
-	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 1
-	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-
-	/// The gorilla we created, we only hold this ref until the round starts.
-	var/mob/living/basic/gorilla/cargorilla/cargorilla
-
-/datum/station_trait/cargorilla/New()
-	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
-
-/// Replace some cargo equipment and 'personnel' with a gorilla.
-/datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
-	SIGNAL_HANDLER
-
-	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
-	if(isnull(cargo_sloth))
-		return
-
-	cargorilla = new(cargo_sloth.loc)
-	cargorilla.name = cargo_sloth.name
-	// We do a poll on roundstart, don't let ghosts in early
-	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-	// hm our sloth looks funny today
-	qdel(cargo_sloth)
-
-	// monkey carries the crates, the age of robot is over
-	if(GLOB.cargo_ripley)
-		qdel(GLOB.cargo_ripley)
-
-/// Makes an ID card for the gorilla
-/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
-	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
-	gorilla_id.registered_name = cargorilla.name
-	gorilla_id.update_label()
-
-	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
-
-/datum/station_trait/cargorilla/on_round_start()
-	if(!cargorilla)
-		return
-
-	addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
-	cargorilla = null
-
-/// Get us a ghost for the gorilla.
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
-	if(QDELETED(gorilla))
-		return
-
-	gorilla.poll_for_gorilla()
 
 /datum/station_trait/birthday
 	name = "Employee Birthday"
@@ -251,7 +204,7 @@
 
 
 /datum/station_trait/birthday/proc/announce_birthday()
-	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person_name : "Employee Name"] a very happy birthday"
+	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person_name : "Employee Name"] a very happy birthday."
 	priority_announce("Happy birthday to [birthday_person ? birthday_person_name : "Employee Name"]! Nanotrasen wishes you a very happy [birthday_person ? thtotext(birthday_person.age + 1) : "255th"] birthday.")
 	if(birthday_person)
 		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
@@ -326,6 +279,79 @@
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat/worn
 
+/datum/station_trait/scarves
+	name = "Scarves"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 10
+	cost = STATION_TRAIT_COST_MINIMAL
+	show_in_report = TRUE
+	var/list/scarves
+
+/datum/station_trait/scarves/New()
+	. = ..()
+	report_message = pick(
+		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
+		"After Space Fashion Week, scarves are the hot new accessory.",
+		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
+		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
+		"You all get free scarves. Don't ask why.",
+		"A shipment of scarves was delivered to the station.",
+	)
+	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
+		/obj/item/clothing/neck/large_scarf/red,
+		/obj/item/clothing/neck/large_scarf/green,
+		/obj/item/clothing/neck/large_scarf/blue,
+	)
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+
+/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+	var/scarf_type = pick(scarves)
+
+	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
+
+/datum/station_trait/wallets
+	name = "Wallets!"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	weight = 10
+	cost = STATION_TRAIT_COST_MINIMAL
+	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
+
+/datum/station_trait/wallets/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/wallets/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+	SIGNAL_HANDLER
+
+	var/obj/item/card/id/advanced/id_card = living_mob.get_item_by_slot(ITEM_SLOT_ID)
+	if(!istype(id_card))
+		return
+
+	living_mob.temporarilyRemoveItemFromInventory(id_card, force=TRUE)
+
+	// "Doc, what's wrong with me?"
+	var/obj/item/storage/wallet/wallet = new(src)
+	// "You've got a wallet embedded in your chest."
+	wallet.add_fingerprint(living_mob, ignoregloves = TRUE)
+
+	living_mob.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial=TRUE)
+
+	id_card.forceMove(wallet)
+
+	var/holochip_amount = id_card.registered_account.account_balance
+	new /obj/item/holochip(wallet, holochip_amount)
+	id_card.registered_account.adjust_money(-holochip_amount, "System: Withdrawal")
+
+	new /obj/effect/spawner/random/entertainment/wallet_storage(wallet)
+
+	// Put our filthy fingerprints all over the contents
+	for(var/obj/item/item in wallet)
+		item.add_fingerprint(living_mob, ignoregloves = TRUE)
+
 /// Tells the area map generator to ADD MORE TREEEES
 /datum/station_trait/forested
 	name = "Forested"
@@ -336,3 +362,26 @@
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
 
+/datum/station_trait/triple_ai
+	name = "AI Triumvirate"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	weight = 1
+	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
+
+/datum/station_trait/triple_ai/New()
+	. = ..()
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
+
+/datum/station_trait/triple_ai/revert()
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	return ..()
+
+/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
+	SIGNAL_HANDLER
+
+	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
+		ai_datum.spawn_positions = 3
+	if(!pure)
+		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+			secondary_ai_spawn.latejoin_active = TRUE

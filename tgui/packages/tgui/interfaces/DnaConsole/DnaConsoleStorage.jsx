@@ -1,12 +1,29 @@
 import { uniqBy } from 'common/collections';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Collapsible, Stack, LabeledList, Section, Tabs } from '../../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+} from '../../components';
+import {
+  STORAGE_CONS_SUBMODE_CHROMOSOMES,
+  STORAGE_CONS_SUBMODE_MUTATIONS,
+  STORAGE_DISK_SUBMODE_ENZYMES,
+  STORAGE_DISK_SUBMODE_MUTATIONS,
+  STORAGE_MODE_ADVINJ,
+  STORAGE_MODE_CONSOLE,
+  STORAGE_MODE_DISK,
+} from './constants';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 import { MutationInfo } from './MutationInfo';
-import { STORAGE_CONS_SUBMODE_CHROMOSOMES, STORAGE_CONS_SUBMODE_MUTATIONS, STORAGE_DISK_SUBMODE_ENZYMES, STORAGE_DISK_SUBMODE_MUTATIONS, STORAGE_MODE_ADVINJ, STORAGE_MODE_CONSOLE, STORAGE_MODE_DISK } from './constants';
 
-export const DnaConsoleStorage = (props, context) => {
-  const { data, act } = useBackend(context);
+export const DnaConsoleStorage = (props) => {
+  const { data, act } = useBackend();
   const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
   const { diskMakeupBuffer, diskHasMakeup } = data;
   const mutations = data.storage[storageMode];
@@ -43,8 +60,8 @@ export const DnaConsoleStorage = (props, context) => {
   );
 };
 
-const DnaConsoleAdvancedInjectors = (props, context) => {
-  const { act, data } = useBackend(context);
+const DnaConsoleAdvancedInjectors = (props) => {
+  const { act, data } = useBackend();
   const { maxAdvInjectors, isInjectorReady } = data;
   const advInjectors = data.storage.injector ?? [];
 
@@ -77,11 +94,12 @@ const DnaConsoleAdvancedInjectors = (props, context) => {
                 }
               />
             </>
-          }>
+          }
+        >
           <StorageMutations
             mutations={injector.mutations}
             customMode={`advinj${advInjectors.findIndex(
-              (e) => injector.name === e.name
+              (e) => injector.name === e.name,
             )}`}
           />
         </Collapsible>
@@ -102,8 +120,8 @@ const DnaConsoleAdvancedInjectors = (props, context) => {
   );
 };
 
-const StorageButtons = (props, context) => {
-  const { data, act } = useBackend(context);
+const StorageButtons = (props) => {
+  const { data, act } = useBackend();
   const { hasDisk } = data;
   const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
 
@@ -190,8 +208,8 @@ const StorageButtons = (props, context) => {
   );
 };
 
-const StorageChromosomes = (props, context) => {
-  const { data, act } = useBackend(context);
+const StorageChromosomes = (props) => {
+  const { data, act } = useBackend();
   const chromos = data.chromoStorage ?? [];
   const uniqueChromos = uniqBy((chromo) => chromo.Name)(chromos);
   const chromoName = data.view.storageChromoName;
@@ -211,7 +229,8 @@ const StorageChromosomes = (props, context) => {
                   act('set_view', {
                     storageChromoName: chromo.Name,
                   })
-                }>
+                }
+              >
                 {chromo.Name}
               </Tabs.Tab>
             ))}
@@ -252,14 +271,14 @@ const StorageChromosomes = (props, context) => {
   );
 };
 
-const StorageMutations = (props, context) => {
+const StorageMutations = (props) => {
   const { customMode = '' } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend();
   const mutations = props.mutations || [];
   const mode = data.view.storageMode + customMode;
   let mutationRef = data.view[`storage${mode}MutationRef`];
   let mutation = mutations.find(
-    (mutation) => mutation.ByondRef === mutationRef
+    (mutation) => mutation.ByondRef === mutationRef,
   );
   // If no mutation is selected but there are stored mutations, pick the first
   // mutation and set that as the currently showed one.
@@ -282,7 +301,8 @@ const StorageMutations = (props, context) => {
                   act('set_view', {
                     [`storage${mode}MutationRef`]: mutation.ByondRef,
                   })
-                }>
+                }
+              >
                 {mutation.Name}
               </Tabs.Tab>
             ))}

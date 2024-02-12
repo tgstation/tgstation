@@ -1,37 +1,65 @@
 #define SHUTTER_MOVEMENT_DURATION 0.4 SECONDS
 #define SHUTTER_WAIT_DURATION 0.2 SECONDS
+/// Maximum number of station trait buttons we will display, please think hard before creating scenarios where there are more than this
+#define MAX_STATION_TRAIT_BUTTONS_VERTICAL 3
 
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
 	var/menu_hud_status = TRUE
 
 /datum/hud/new_player/New(mob/owner)
-	..()
+	. = ..()
 
-	if(!owner || !owner.client)
+	if (!owner || !owner.client)
 		return
 
-	if(owner.client.interviewee)
+	if (owner.client.interviewee)
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
-	for(var/button_type in buttons)
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
+	for (var/atom/movable/screen/lobby/lobbyscreen as anything in buttons)
+		if (!initial(lobbyscreen.always_available))
+			continue
+		lobbyscreen = new lobbyscreen(our_hud = src)
 		lobbyscreen.SlowInit()
 		static_inventory += lobbyscreen
-		if(!lobbyscreen.always_shown)
+		if (!lobbyscreen.always_shown)
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
-		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
+		if (istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
+	add_station_trait_buttons()
+
+/// Display buttons for relevant station traits
+/datum/hud/new_player/proc/add_station_trait_buttons()
+	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
+		return
+	var/buttons_created = 0
+	var/y_offset = 397
+	var/y_button_offset = 27
+	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
+		if (!trait.can_display_lobby_button(mymob.client))
+			continue
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
+		sign_up_button.SlowInit()
+		sign_up_button.owner = REF(mymob)
+		sign_up_button.screen_loc = offset_to_screen_loc(233, y_offset, mymob.client.view)
+		y_offset += y_button_offset
+		static_inventory += sign_up_button
+		trait.setup_lobby_button(sign_up_button)
+		buttons_created++
+		if (buttons_created >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
+			return
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_MENU_LAYER
 	screen_loc = "TOP,CENTER"
-	///Whether this HUD element can be hidden from the client's "screen" (moved off-screen) or not
+	/// Whether this HUD element can be hidden from the client's "screen" (moved off-screen) or not
 	var/always_shown = FALSE
+	/// If true we will create this button every time the HUD is generated
+	var/always_available = TRUE
 
 ///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -399,6 +427,23 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
 
+/// A generic "sign up" button used by station traits
+/atom/movable/screen/lobby/button/sign_up
+	icon = 'icons/hud/lobby/signup_button.dmi'
+	icon_state = "signup"
+	base_icon_state = "signup"
+	always_available = FALSE
+
+/atom/movable/screen/lobby/button/sign_up/MouseEntered(location, control, params)
+	. = ..()
+	if(QDELETED(src) || !desc)
+		return
+	openToolTip(usr, tip_src = src, params = params, title = name, content = desc,)
+
+/atom/movable/screen/lobby/button/sign_up/MouseExited()
+	. = ..()
+	closeToolTip(usr)
+
 /atom/movable/screen/lobby/button/collapse
 	name = "Collapse Lobby Menu"
 	icon = 'icons/hud/lobby/collapse_expand.dmi'
@@ -526,3 +571,4 @@
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
+#undef MAX_STATION_TRAIT_BUTTONS_VERTICAL

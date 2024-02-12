@@ -1,6 +1,7 @@
+import { multiline } from 'common/string';
+
 import { useBackend } from '../backend';
 import { Button, Dimmer, Section, Stack } from '../components';
-import { multiline } from 'common/string';
 import { Window } from '../layouts';
 
 const STORY_VALUE_KEY = -1;
@@ -11,8 +12,8 @@ const STORY_VALUE_OKAY = 3;
 const STORY_VALUE_AMAZING = 4;
 const STORY_VALUE_LEGENDARY = 5;
 
-const MemoryQuality = (props, context) => {
-  const { act } = useBackend(context);
+const MemoryQuality = (props) => {
+  const { act } = useBackend();
   const { quality } = props;
 
   if (quality === STORY_VALUE_KEY) {
@@ -59,7 +60,7 @@ const MemoryQuality = (props, context) => {
       <Button
         icon="star"
         style={{
-          'background':
+          background:
             'linear-gradient(to right, #964B30, #D68B60, #B66B30, #D68B60, #964B30);',
         }}
         tooltipPosition="right"
@@ -75,7 +76,7 @@ const MemoryQuality = (props, context) => {
       <Button
         icon="star"
         style={{
-          'background':
+          background:
             'linear-gradient(to right, #636363, #a3a3a3, #6e6e6e, #a3a3a3, #636363);',
         }}
         tooltipPosition="right"
@@ -91,7 +92,7 @@ const MemoryQuality = (props, context) => {
       <Button
         icon="star"
         style={{
-          'background':
+          background:
             'linear-gradient(to right, #AA771C, #BCB68A, #B38728, #BCB68A, #AA771C);',
         }}
         tooltipPosition="right"
@@ -107,7 +108,7 @@ const MemoryQuality = (props, context) => {
       <Button
         icon="crown"
         style={{
-          'background':
+          background:
             'linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)',
         }}
         tooltipPosition="right"
@@ -131,8 +132,8 @@ const MemoryQuality = (props, context) => {
   );
 };
 
-export const MemoryPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MemoryPanel = (props) => {
+  const { act, data } = useBackend();
   const memories = data.memories || [];
   return (
     <Window title="Memory Panel" width={400} height={500}>

@@ -31,7 +31,7 @@
 			hud.show_to(eye_owner)
 		toggled_on = TRUE
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -42,7 +42,7 @@
 		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	toggled_on = TRUE
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]

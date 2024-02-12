@@ -1,8 +1,9 @@
-import { classes } from 'common/react';
+import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
 import { clamp } from 'common/math';
-import { Component, createRef } from 'inferno';
+import { classes } from 'common/react';
+import { Component, createRef } from 'react';
+
 import { Box } from './Box';
-import { KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
 
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 10000;
@@ -29,8 +30,8 @@ const getClampedNumber = (value, minValue, maxValue, allowFloats) => {
 };
 
 export class RestrictedInput extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.inputRef = createRef();
     this.state = {
       editing: false,
@@ -47,7 +48,7 @@ export class RestrictedInput extends Component {
         e.target.value,
         minValue,
         maxValue,
-        allowFloats
+        allowFloats,
       );
       if (onChange) {
         onChange(e, +e.target.value);
@@ -76,7 +77,7 @@ export class RestrictedInput extends Component {
           e.target.value,
           minValue,
           maxValue,
-          allowFloats
+          allowFloats,
         );
         this.setEditing(false);
         if (onChange) {
@@ -110,7 +111,7 @@ export class RestrictedInput extends Component {
         nextValue,
         minValue,
         maxValue,
-        allowFloats
+        allowFloats,
       );
     }
     if (this.props.autoFocus || this.props.autoSelect) {
@@ -136,7 +137,7 @@ export class RestrictedInput extends Component {
           nextValue,
           minValue,
           maxValue,
-          allowFloats
+          allowFloats,
         );
       }
     }
@@ -158,7 +159,8 @@ export class RestrictedInput extends Component {
           monospace && 'Input--monospace',
           className,
         ])}
-        {...rest}>
+        {...rest}
+      >
         <div className="Input__baseline">.</div>
         <input
           className="Input__input"

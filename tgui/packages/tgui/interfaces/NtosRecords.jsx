@@ -1,11 +1,13 @@
 import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Icon, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosRecords = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [searchTerm, setSearchTerm] = useLocalState(context, 'search', '');
+export const NtosRecords = (props) => {
+  const { act, data } = useBackend();
+  const [searchTerm, setSearchTerm] = useState('');
   const { mode, records } = data;
 
   const isMatchingSearchTerms = createSearch(searchTerm);
@@ -22,7 +24,7 @@ export const NtosRecords = (props, context) => {
             value={searchTerm}
             fluid
             textAlign="center"
-            onInput={(e, value) => setSearchTerm(value)}
+            onChange={(e, value) => setSearchTerm(value)}
           />
         </Section>
         {mode === 'security' &&
@@ -43,10 +45,11 @@ export const NtosRecords = (props, context) => {
                       ' ' +
                       record.age +
                       ' ' +
-                      record.fingerprint
+                      record.fingerprint,
                   )
                 )
-              }>
+              }
+            >
               <Box bold>
                 <Icon name="user" mr={1} />
                 {record.name}
@@ -80,10 +83,11 @@ export const NtosRecords = (props, context) => {
                       ' ' +
                       record.mental_status +
                       ' ' +
-                      record.physical_status
+                      record.physical_status,
                   )
                 )
-              }>
+              }
+            >
               <Box bold>
                 <Icon name="user" mr={1} />
                 {record.name}

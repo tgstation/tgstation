@@ -53,13 +53,11 @@
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/igniter/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 5)
-		new /obj/item/assembly/igniter(loc)
-	return ..()
+/obj/machinery/igniter/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(loc, 5)
+	new /obj/item/assembly/igniter(loc)
 
 /obj/machinery/igniter/multitool_act(mob/living/user, obj/item/tool)
 	var/change_id = tgui_input_number(user, "Set the igniter controller's ID", "Igniter ID", id, 100)
@@ -68,7 +66,7 @@
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/incinerator_ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
@@ -198,12 +196,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/sparker/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/wallframe/sparker(loc)
-	return ..()
+/obj/machinery/sparker/on_deconstruction(disassembled)
+	new /obj/item/wallframe/sparker(loc)
 
 /obj/machinery/sparker/multitool_act(mob/living/user, obj/item/tool)
 	var/change_id = tgui_input_number(user, "Set the sparker controller's ID", "Sparker ID", id, 100)
@@ -212,7 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/update_icon_state()
 	if(disable)

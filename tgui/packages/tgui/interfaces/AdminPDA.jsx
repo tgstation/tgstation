@@ -1,9 +1,9 @@
-import { Section, Dropdown, Input, Box, TextArea } from '../components';
 import { useBackend, useLocalState } from '../backend';
+import { Box, Dropdown, Input, Section, TextArea } from '../components';
 import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
-export const AdminPDA = (props, context) => {
+export const AdminPDA = (props) => {
   return (
     <Window title="Send PDA Message" width={300} height={575} theme="admin">
       <Window.Content>
@@ -15,17 +15,16 @@ export const AdminPDA = (props, context) => {
   );
 };
 
-const ReceiverChoice = (props, context) => {
-  const { data } = useBackend(context);
+const ReceiverChoice = (props) => {
+  const { data } = useBackend();
   const { users } = data;
   const receivers = Array.from(Object.values(users));
 
-  const [user, setUser] = useLocalState(context, 'user', '');
-  const [spam, setSpam] = useLocalState(context, 'spam', false);
+  const [user, setUser] = useLocalState('user', '');
+  const [spam, setSpam] = useLocalState('spam', false);
   const [showInvisible, setShowInvisible] = useLocalState(
-    context,
     'showInvisible',
-    false
+    false,
   );
 
   return (
@@ -66,9 +65,9 @@ const ReceiverChoice = (props, context) => {
   );
 };
 
-const SenderInfo = (props, context) => {
-  const [name, setName] = useLocalState(context, 'name', '');
-  const [job, setJob] = useLocalState(context, 'job', '');
+const SenderInfo = (props) => {
+  const [name, setName] = useLocalState('name', '');
+  const [job, setJob] = useLocalState('job', '');
 
   return (
     <Section title="From Who?" textAlign="center">
@@ -76,7 +75,7 @@ const SenderInfo = (props, context) => {
         <Input
           placeholder="Sender name..."
           fluid
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setName(value);
           }}
         />
@@ -85,7 +84,7 @@ const SenderInfo = (props, context) => {
         <Input
           placeholder="Sender's job..."
           fluid
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setJob(value);
           }}
         />
@@ -94,19 +93,18 @@ const SenderInfo = (props, context) => {
   );
 };
 
-const MessageInput = (props, context) => {
-  const { act } = useBackend(context);
+const MessageInput = (props) => {
+  const { act } = useBackend();
 
-  const [user, setUser] = useLocalState(context, 'user', '');
-  const [name, setName] = useLocalState(context, 'name', '');
-  const [job, setJob] = useLocalState(context, 'job', '');
-  const [messageText, setMessageText] = useLocalState(context, 'message', '');
-  const [spam, setSpam] = useLocalState(context, 'spam', false);
-  const [force, setForce] = useLocalState(context, 'force', false);
+  const [user, setUser] = useLocalState('user', '');
+  const [name, setName] = useLocalState('name', '');
+  const [job, setJob] = useLocalState('job', '');
+  const [messageText, setMessageText] = useLocalState('message', '');
+  const [spam, setSpam] = useLocalState('spam', false);
+  const [force, setForce] = useLocalState('force', false);
   const [showInvisible, setShowInvisible] = useLocalState(
-    context,
     'showInvisible',
-    false
+    false,
   );
 
   const tooltipText = function (name, job, message, target) {
@@ -127,7 +125,7 @@ const MessageInput = (props, context) => {
           placeholder="Type the message you want to send..."
           height="200px"
           mb={1}
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setMessageText(value);
           }}
         />
@@ -146,7 +144,7 @@ const MessageInput = (props, context) => {
           tooltip={
             blocked
               ? 'Fill in the following lines: ' +
-              tooltipText(name, job, messageText, spam || !!user)
+                tooltipText(name, job, messageText, spam || !!user)
               : 'Send message to user(s)'
           }
           fluid
@@ -162,7 +160,8 @@ const MessageInput = (props, context) => {
               include_invisible: showInvisible,
               force: force,
             })
-          }>
+          }
+        >
           Send Message
         </Button>
       </Box>

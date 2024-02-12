@@ -56,7 +56,7 @@
 	var/obj/structure/sign/picture_frame/PF = O
 	PF.copy_overlays(src)
 	if(displayed)
-		PF.framed = displayed
+		PF.set_and_save_framed(displayed)
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		I.forceMove(PF)
@@ -70,27 +70,19 @@
 	resistance_flags = FLAMMABLE
 	var/obj/item/photo/framed
 	var/persistence_id
-	var/del_id_on_destroy = FALSE
 	var/art_value = OK_ART
 	var/can_decon = TRUE
-
-#define FRAME_DEFINE(id) /obj/structure/sign/picture_frame/##id/persistence_id = #id
-
-//Put default persistent frame defines here!
-
-#undef FRAME_DEFINE
 
 /obj/structure/sign/picture_frame/Initialize(mapload, dir, building)
 	. = ..()
 	AddElement(/datum/element/art, art_value)
-	LAZYADD(SSpersistence.photo_frames, src)
+	if (!SSpersistence.initialized)
+		LAZYADD(SSpersistence.queued_photo_frames, src)
 	if(dir)
 		setDir(dir)
 
 /obj/structure/sign/picture_frame/Destroy()
-	LAZYREMOVE(SSpersistence.photo_frames, src)
-	if(persistence_id && del_id_on_destroy)
-		SSpersistence.remove_photo_frames(persistence_id)
+	LAZYREMOVE(SSpersistence.queued_photo_frames, src)
 	return ..()
 
 /obj/structure/sign/picture_frame/proc/get_photo_id()
@@ -99,9 +91,9 @@
 
 //Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
 /obj/structure/sign/picture_frame/proc/persistence_load()
-	var/list/data = SSpersistence.get_photo_frames()
-	if(data[persistence_id])
-		load_from_id(data[persistence_id])
+	var/list/data = SSpersistence.photo_frames_database.get_key(persistence_id)
+	if(!isnull(data))
+		load_from_id(data)
 
 /obj/structure/sign/picture_frame/proc/load_from_id(id)
 	var/obj/item/photo/old/P = load_photo_from_disk(id)
@@ -112,6 +104,15 @@
 			qdel(framed)
 		framed = P
 		update_appearance()
+
+/// Given a photo (or null), will change the contained picture, and queue a persistent save.
+/obj/structure/sign/picture_frame/proc/set_and_save_framed(obj/item/photo/photo)
+	framed = photo
+
+	if (isnull(persistence_id))
+		return
+
+	SSpersistence.photo_frames_database.set_key(persistence_id, photo?.picture?.id)
 
 /obj/structure/sign/picture_frame/examine(mob/user)
 	. = ..()
@@ -141,9 +142,9 @@
 	tool.play_tool_sound(src)
 	framed.forceMove(drop_location())
 	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
-	framed = null
+	set_and_save_framed(null)
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
@@ -155,7 +156,7 @@
 		var/obj/item/photo/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
-		framed = P
+		set_and_save_framed(P)
 		update_appearance()
 		return TRUE
 	..()
@@ -173,11 +174,11 @@
 		. += framed
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
 		if(framed)
 			F.displayed = framed
-			framed = null
+			set_and_save_framed(null)
 		if(contents.len)
 			var/obj/item/I = pick(contents)
 			I.forceMove(F)
@@ -277,7 +278,6 @@
 
 /obj/structure/sign/picture_frame/portrait/bar
 	persistence_id = "frame_bar"
-	del_id_on_destroy = TRUE
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
 /obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)

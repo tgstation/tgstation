@@ -5,7 +5,6 @@
  */
 
 import { Table } from './Table';
-import { pureComponentHooks } from 'common/react';
 
 /** @deprecated */
 export const Grid = (props) => {
@@ -16,8 +15,6 @@ export const Grid = (props) => {
     </Table>
   );
 };
-
-Grid.defaultHooks = pureComponentHooks;
 
 /** @deprecated */
 export const GridColumn = (props) => {
@@ -32,7 +29,5 @@ export const GridColumn = (props) => {
     />
   );
 };
-
-Grid.defaultHooks = pureComponentHooks;
 
 Grid.Column = GridColumn;

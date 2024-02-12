@@ -2,14 +2,15 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vecLength, vecSubtract } from 'common/vector';
+
 import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 
-export const Gps = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Gps = (props) => {
+  const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
   const signals = flow([
     map((signal, index) => {
@@ -19,8 +20,8 @@ export const Gps = (props, context) => {
         signal.dist &&
         Math.round(
           vecLength(
-            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords))
-          )
+            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords)),
+          ),
         );
       return { ...signal, dist, index };
     }),
@@ -28,7 +29,7 @@ export const Gps = (props, context) => {
       // Signals with distance metric go first
       (signal) => signal.dist === undefined,
       // Sort alphabetically
-      (signal) => signal.entrytag
+      (signal) => signal.entrytag,
     ),
   ])(data.signals || []);
   return (
@@ -43,7 +44,8 @@ export const Gps = (props, context) => {
               selected={power}
               onClick={() => act('power')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Tag">
               <Button
@@ -87,7 +89,8 @@ export const Gps = (props, context) => {
                 {signals.map((signal) => (
                   <Table.Row
                     key={signal.entrytag + signal.coords + signal.index}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell bold color="label">
                       {signal.entrytag}
                     </Table.Cell>
@@ -96,7 +99,8 @@ export const Gps = (props, context) => {
                       opacity={
                         signal.dist !== undefined &&
                         clamp(1.2 / Math.log(Math.E + signal.dist / 20), 0.4, 1)
-                      }>
+                      }
+                    >
                       {signal.degrees !== undefined && (
                         <Icon
                           mr={1}

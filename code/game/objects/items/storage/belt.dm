@@ -190,6 +190,26 @@
 	to_preload += /obj/item/extinguisher/mini
 	return to_preload
 
+/obj/item/storage/belt/utility/full/inducer/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/screwdriver, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool, src)
+	SSwardrobe.provide_type(/obj/item/crowbar/red, src)
+	SSwardrobe.provide_type(/obj/item/wirecutters, src)
+	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/inducer, src)
+
+/obj/item/storage/belt/utility/full/inducer/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/screwdriver
+	to_preload += /obj/item/wrench
+	to_preload += /obj/item/weldingtool
+	to_preload += /obj/item/crowbar
+	to_preload += /obj/item/wirecutters
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/inducer
+	return to_preload
+
 /obj/item/storage/belt/utility/syndicate
 	preload = FALSE
 
@@ -467,9 +487,7 @@
 /obj/item/storage/belt/soulstone/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
-	atom_storage.set_holdable(list(
-		/obj/item/soulstone,
-	))
+	atom_storage.set_holdable(/obj/item/soulstone)
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -490,9 +508,7 @@
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/mask/luchador,
-	))
+	atom_storage.set_holdable(/obj/item/clothing/mask/luchador)
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -643,9 +659,7 @@
 /obj/item/storage/belt/wands/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
-	atom_storage.set_holdable(list(
-		/obj/item/gun/magic/wand,
-	))
+	atom_storage.set_holdable(/obj/item/gun/magic/wand)
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -804,11 +818,7 @@
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(
-		list(
-			/obj/item/melee/sabre,
-		)
-	)
+	atom_storage.set_holdable(/obj/item/melee/sabre)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()

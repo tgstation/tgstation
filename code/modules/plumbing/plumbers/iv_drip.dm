@@ -7,9 +7,9 @@
 	density = TRUE
 	use_internal_storage = TRUE
 
-/obj/machinery/iv_drip/plumbing/Initialize(mapload)
+/obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/iv_drip, anchored)
+	AddComponent(/datum/component/plumbing/iv_drip, bolt, layer)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -33,9 +33,8 @@
 	return FALSE //Alt click is used for rotation
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/iv_drip/plumbing/deconstruct(disassembled = TRUE)
+/obj/machinery/iv_drip/plumbing/on_deconstruction(disassembled)
 	qdel(src)

@@ -1,9 +1,9 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section, LabeledList, NumberInput } from '../components';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
-export const MassDriverControl = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MassDriverControl = (props) => {
+  const { act, data } = useBackend();
   const { connected, minutes, seconds, timing, power, poddoor } = data;
   return (
     <Window width={300} height={connected ? 215 : 107}>
@@ -18,7 +18,8 @@ export const MassDriverControl = (props, context) => {
                 selected={timing}
                 onClick={() => act('time')}
               />
-            }>
+            }
+          >
             <Button
               icon="fast-backward"
               disabled={timing}
@@ -52,7 +53,8 @@ export const MassDriverControl = (props, context) => {
               disabled={timing || !poddoor}
               onClick={() => act('door')}
             />
-          }>
+          }
+        >
           {(!!connected && (
             <>
               <LabeledList>
@@ -65,7 +67,8 @@ export const MassDriverControl = (props, context) => {
                       disabled={timing}
                       onClick={() => act('driver_test')}
                     />
-                  }>
+                  }
+                >
                   <NumberInput
                     value={power}
                     width="40px"

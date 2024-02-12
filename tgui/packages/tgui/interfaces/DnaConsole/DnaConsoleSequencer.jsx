@@ -1,24 +1,32 @@
 import { classes } from 'common/react';
+
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
+import { Box, Button, Image, Section, Stack } from '../../components';
+import {
+  CLEAR_GENE,
+  GENE_COLORS,
+  MUT_NORMAL,
+  NEXT_GENE,
+  PREV_GENE,
+  SUBJECT_DEAD,
+  SUBJECT_TRANSFORMING,
+} from './constants';
 import { MutationInfo } from './MutationInfo';
-import { CLEAR_GENE, GENE_COLORS, MUT_NORMAL, NEXT_GENE, PREV_GENE, SUBJECT_DEAD, SUBJECT_TRANSFORMING } from './constants';
 
-const GenomeImage = (props, context) => {
+const GenomeImage = (props) => {
   const { url, selected, onClick } = props;
   let outline;
   if (selected) {
     outline = '2px solid #22aa00';
   }
   return (
-    <Box
-      as="img"
+    <Image
       src={url}
       style={{
         width: '64px',
         margin: '2px',
-        'margin-left': '4px',
+        marginLeft: '4px',
         outline,
       }}
       onClick={onClick}
@@ -26,8 +34,8 @@ const GenomeImage = (props, context) => {
   );
 };
 
-const GeneCycler = (props, context) => {
-  const { act } = useBackend(context);
+const GeneCycler = (props) => {
+  const { act } = useBackend();
   const { alias, gene, index, disabled, ...rest } = props;
   const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
   return (
@@ -53,7 +61,7 @@ const GeneCycler = (props, context) => {
 
         return;
       }}
-      oncontextmenu={(e) => {
+      onContextMenu={(e) => {
         e.preventDefault();
 
         act('pulse_gene', {
@@ -61,13 +69,14 @@ const GeneCycler = (props, context) => {
           pulseAction: PREV_GENE,
           alias: alias,
         });
-      }}>
+      }}
+    >
       {gene}
     </Button>
   );
 };
 
-const GenomeSequencer = (props, context) => {
+const GenomeSequencer = (props) => {
   const { mutation } = props;
   if (!mutation) {
     return <Box color="average">No genome selected for sequencing.</Box>;
@@ -130,7 +139,7 @@ const GenomeSequencer = (props, context) => {
           width="8px"
           height="2px"
           backgroundColor="label"
-        />
+        />,
       );
     }
 
@@ -147,13 +156,13 @@ const GenomeSequencer = (props, context) => {
   );
 };
 
-export const DnaConsoleSequencer = (props, context) => {
-  const { data, act } = useBackend(context);
+export const DnaConsoleSequencer = (props) => {
+  const { data, act } = useBackend();
   const mutations = data.storage?.occupant ?? [];
   const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;
   const mutation = mutations.find(
-    (mutation) => mutation.Alias === sequencerMutation
+    (mutation) => mutation.Alias === sequencerMutation,
   );
   return (
     <>
@@ -162,7 +171,8 @@ export const DnaConsoleSequencer = (props, context) => {
           <Section
             title="Sequences"
             height="214px"
-            overflowY={mutations.length > 8 && 'scroll'}>
+            overflowY={mutations.length > 8 && 'scroll'}
+          >
             {mutations.map((mutation) => (
               <GenomeImage
                 key={mutation.Alias}
@@ -235,7 +245,8 @@ export const DnaConsoleSequencer = (props, context) => {
                   }
                 />
               )
-            }>
+            }
+          >
             <GenomeSequencer mutation={mutation} />
           </Section>
         )}

@@ -49,6 +49,13 @@
 	if(!smoothing_flags)
 		update_appearance()
 
+
+/turf/open/lava/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
+	return ..()
+
 /turf/open/lava/update_overlays()
 	. = ..()
 	. += emissive_appearance(mask_icon, mask_state, src)
@@ -62,7 +69,7 @@
 	// But that's rare, and I'm ok with that, quartering our light source count is useful
 	var/mutable_appearance/light_mask = mutable_appearance(mask_icon, mask_state, LIGHTING_MASK_LAYER, src, LIGHTING_PLANE)
 	light_mask.blend_mode = BLEND_MULTIPLY
-	light_mask.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
+	light_mask.color = COLOR_MATRIX_INVERT
 	. += light_mask
 
 /// Refreshes this lava turf's lighting
@@ -138,12 +145,8 @@
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone) && !islava(gone.loc))
-		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-
-/turf/open/lava/Destroy()
-	for(var/mob/living/leaving_mob in contents)
-		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	return ..()
+		gone.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(gone, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -151,7 +154,7 @@
 
 /turf/open/lava/process(seconds_per_tick)
 	if(!burn_stuff(null, seconds_per_tick))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
@@ -217,9 +220,7 @@
 		return TRUE
 
 /turf/open/lava/proc/is_safe()
-	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED)
 
 ///Generic return value of the can_burn_stuff() proc. Does nothing.
 #define LAVA_BE_IGNORING 0
@@ -246,6 +247,8 @@
 		. = TRUE
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
+	if(QDELETED(burn_target))
+		return LAVA_BE_IGNORING
 	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //you're flying over it.
 		return LAVA_BE_IGNORING
 
@@ -288,11 +291,13 @@
 #undef LAVA_BE_BURNING
 
 /turf/open/lava/proc/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
-	. = TRUE
+	if(QDELETED(burn_target))
+		return FALSE
+
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
 		if(burn_obj.resistance_flags & ON_FIRE) // already on fire; skip it.
-			return
+			return TRUE
 		if(!(burn_obj.resistance_flags & FLAMMABLE))
 			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 		if(burn_obj.resistance_flags & FIRE_PROOF)
@@ -301,19 +306,21 @@
 			burn_obj.set_armor_rating(FIRE, 50)
 		burn_obj.fire_act(temperature_damage, 1000 * seconds_per_tick)
 		if(istype(burn_obj, /obj/structure/closet))
-			var/obj/structure/closet/burn_closet = burn_obj
-			for(var/burn_content in burn_closet.contents)
+			for(var/burn_content in burn_target)
 				burn_stuff(burn_content)
-		return
+		return TRUE
 
-	var/mob/living/burn_living = burn_target
-	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	burn_living.update_fire()
-
-	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
-	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
+	if(isliving(burn_target))
+		var/mob/living/burn_living = burn_target
+		if(!HAS_TRAIT_FROM(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT))
+			burn_living.AddElement(/datum/element/perma_fire_overlay)
+			ADD_TRAIT(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
+		burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+		return TRUE
+
+	return FALSE
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
@@ -418,7 +425,7 @@
 			if(BODY_ZONE_HEAD)
 				plasmalimb = new /obj/item/bodypart/head/plasmaman
 
-		burn_human.del_and_replace_bodypart(plasmalimb)
+		burn_human.del_and_replace_bodypart(plasmalimb, special = TRUE)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \

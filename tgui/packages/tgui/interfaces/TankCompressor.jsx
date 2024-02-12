@@ -1,10 +1,22 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Flex, Icon, Modal, RoundGauge, Section, Slider, Stack, NoticeBox, Tabs, LabeledList } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  RoundGauge,
+  Section,
+  Slider,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
 
-export const TankCompressor = (props, context) => {
-  const { act, data } = useBackend(context);
+export const TankCompressor = (props) => {
   return (
     <Window title="Tank Compressor" width={650} height={550}>
       <Window.Content>
@@ -14,26 +26,27 @@ export const TankCompressor = (props, context) => {
   );
 };
 
-const TankCompressorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const TankCompressorContent = (props) => {
+  const { act, data } = useBackend();
   const { disk, storage } = data;
-  const [currentTab, changeTab] = useSharedState(context, 'compressorTab', 1);
+  const [currentTab, changeTab] = useSharedState('compressorTab', 1);
+
   return (
     <Stack vertical fill>
       {currentTab === 1 && <TankCompressorControls />}
       {currentTab === 2 && <TankCompressorRecords />}
       <Stack.Item>
         <Section
-          title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}>
+          title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}
+        >
           <Stack>
             <Stack.Item grow>
               <Button
                 textAlign="center"
                 fluid
                 icon={currentTab === 1 ? 'clipboard-list' : 'times'}
-                onClick={() =>
-                  currentTab === 1 ? changeTab(2) : changeTab(1)
-                }>
+                onClick={() => (currentTab === 1 ? changeTab(2) : changeTab(1))}
+              >
                 {currentTab === 1 ? 'Open Records' : 'Close Records'}
               </Button>
             </Stack.Item>
@@ -54,15 +67,16 @@ const TankCompressorContent = (props, context) => {
   );
 };
 
-const AlertBoxes = (props, context) => {
+const AlertBoxes = (props) => {
   const { text_content, icon_name, icon_break, color, active } = props;
-  const { act, data } = useBackend(context);
+
   return (
     <Box
       bold
       height="100%"
       fontSize={1.25}
-      backgroundColor={active ? color : '#999999'}>
+      backgroundColor={active ? color : '#999999'}
+    >
       <Flex height="100%" width="100%" justify="center" direction="column">
         <Flex.Item>
           <Icon name={icon_name} width={2} />
@@ -74,8 +88,8 @@ const AlertBoxes = (props, context) => {
   );
 };
 
-const TankCompressorControls = (props, context) => {
-  const { act, data } = useBackend(context);
+const TankCompressorControls = (props) => {
+  const { act, data } = useBackend();
   const {
     tankPresent,
     leaking,
@@ -93,6 +107,7 @@ const TankCompressorControls = (props, context) => {
   } = data;
   const pressure = tankPresent ? tankPressure : lastPressure;
   const usingLastData = !!(lastPressure && !tankPresent);
+
   return (
     <>
       <Stack.Item>
@@ -102,10 +117,12 @@ const TankCompressorControls = (props, context) => {
             <Button
               icon="eject"
               disabled={!tankPresent || tankPressure > ejectPressure}
-              onClick={() => act('eject_tank')}>
+              onClick={() => act('eject_tank')}
+            >
               {'Eject Tank'}
             </Button>
-          }>
+          }
+        >
           {!pressure && <Modal>{'No Pressure Detected'}</Modal>}
           {usingLastData && (
             <NoticeBox warning>
@@ -120,9 +137,9 @@ const TankCompressorControls = (props, context) => {
                 maxValue={fragmentPressure * 1.15}
                 alertAfter={leakPressure}
                 ranges={{
-                  'good': [0, leakPressure],
-                  'average': [leakPressure, fragmentPressure],
-                  'bad': [fragmentPressure, fragmentPressure * 1.15],
+                  good: [0, leakPressure],
+                  average: [leakPressure, fragmentPressure],
+                  bad: [fragmentPressure, fragmentPressure * 1.15],
                 }}
                 size={5}
                 textAlign="center"
@@ -197,7 +214,8 @@ const TankCompressorControls = (props, context) => {
                 }
                 selected={active}
                 icon={active ? 'power-off' : 'times'}
-                onClick={() => act('toggle_injection')}>
+                onClick={() => act('toggle_injection')}
+              >
                 {active ? 'On' : 'Off'}
               </Button>
             </Stack.Item>
@@ -228,7 +246,8 @@ const TankCompressorControls = (props, context) => {
                   icon="exclamation"
                   tooltip="The buffer gas mixture will be recorded when a tank is destroyed or ejected. The printed records will refer to this port for it's experimental data."
                 />
-              }>
+              }
+            >
               {!bufferData.total_moles && <Modal>{'No Gas Present'}</Modal>}
               <GasmixParser gasmix={bufferData} />
             </Section>
@@ -239,13 +258,12 @@ const TankCompressorControls = (props, context) => {
   );
 };
 
-const TankCompressorRecords = (props, context) => {
-  const { act, data } = useBackend(context);
+const TankCompressorRecords = (props) => {
+  const { act, data } = useBackend();
   const { records = [], disk } = data;
   const [activeRecordRef, setActiveRecordRef] = useSharedState(
-    context,
     'recordRef',
-    records[0]?.ref
+    records[0]?.ref,
   );
   const activeRecord =
     !!activeRecordRef &&
@@ -256,81 +274,83 @@ const TankCompressorRecords = (props, context) => {
         <NoticeBox>No Records</NoticeBox>
       </Stack.Item>
     );
-  } else {
-    return (
-      <Stack.Item grow>
-        <Stack fill>
-          <Stack.Item mr={2}>
-            <Tabs vertical>
-              {records.map((record) => (
-                <Tabs.Tab
-                  icon="file"
-                  key={record.name}
-                  selected={record.ref === activeRecordRef}
-                  onClick={() => setActiveRecordRef(record.ref)}>
-                  {record.name}
-                </Tabs.Tab>
-              ))}
-            </Tabs>
-          </Stack.Item>
-          {activeRecord ? (
-            <Stack.Item grow>
-              <Section
-                title={activeRecord.name}
-                buttons={[
-                  <Button.Confirm
-                    key="delete"
-                    icon="trash"
-                    content="Delete"
-                    color="bad"
-                    onClick={() => {
-                      act('delete_record', {
-                        'ref': activeRecord.ref,
-                      });
-                    }}
-                  />,
-                  <Button
-                    key="save"
-                    icon="floppy-disk"
-                    content="Save"
-                    disabled={!disk}
-                    tooltip="Save the record selected to an inserted data disk."
-                    tooltipPosition="bottom"
-                    onClick={() => {
-                      act('save_record', {
-                        'ref': activeRecord.ref,
-                      });
-                    }}
-                  />,
-                ]}>
-                <LabeledList>
-                  <LabeledList.Item label="Timestamp">
-                    {activeRecord.timestamp}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Source">
-                    {activeRecord.source}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Detected Gas">
-                    <LabeledList>
-                      {Object.keys(activeRecord.gases).map((gas_name) => (
-                        <LabeledList.Item label={gas_name} key={gas_name}>
-                          {(activeRecord.gases[gas_name]
-                            ? activeRecord.gases[gas_name].toFixed(2)
-                            : '-') + ' moles'}
-                        </LabeledList.Item>
-                      ))}
-                    </LabeledList>
-                  </LabeledList.Item>
-                </LabeledList>
-              </Section>
-            </Stack.Item>
-          ) : (
-            <Stack.Item grow={1} basis={0}>
-              <NoticeBox>No Record Selected</NoticeBox>
-            </Stack.Item>
-          )}
-        </Stack>
-      </Stack.Item>
-    );
   }
+
+  return (
+    <Stack.Item grow>
+      <Stack fill>
+        <Stack.Item mr={2}>
+          <Tabs vertical>
+            {records.map((record) => (
+              <Tabs.Tab
+                icon="file"
+                key={record.name}
+                selected={record.ref === activeRecordRef}
+                onClick={() => setActiveRecordRef(record.ref)}
+              >
+                {record.name}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Stack.Item>
+        {activeRecord ? (
+          <Stack.Item grow>
+            <Section
+              title={activeRecord.name}
+              buttons={[
+                <Button.Confirm
+                  key="delete"
+                  icon="trash"
+                  content="Delete"
+                  color="bad"
+                  onClick={() => {
+                    act('delete_record', {
+                      ref: activeRecord.ref,
+                    });
+                  }}
+                />,
+                <Button
+                  key="save"
+                  icon="floppy-disk"
+                  content="Save"
+                  disabled={!disk}
+                  tooltip="Save the record selected to an inserted data disk."
+                  tooltipPosition="bottom"
+                  onClick={() => {
+                    act('save_record', {
+                      ref: activeRecord.ref,
+                    });
+                  }}
+                />,
+              ]}
+            >
+              <LabeledList>
+                <LabeledList.Item label="Timestamp">
+                  {activeRecord.timestamp}
+                </LabeledList.Item>
+                <LabeledList.Item label="Source">
+                  {activeRecord.source}
+                </LabeledList.Item>
+                <LabeledList.Item label="Detected Gas">
+                  <LabeledList>
+                    {Object.keys(activeRecord.gases).map((gas_name) => (
+                      <LabeledList.Item label={gas_name} key={gas_name}>
+                        {(activeRecord.gases[gas_name]
+                          ? activeRecord.gases[gas_name].toFixed(2)
+                          : '-') + ' moles'}
+                      </LabeledList.Item>
+                    ))}
+                  </LabeledList>
+                </LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+        ) : (
+          <Stack.Item grow={1} basis={0}>
+            <NoticeBox>No Record Selected</NoticeBox>
+          </Stack.Item>
+        )}
+      </Stack>
+    </Stack.Item>
+  );
 };

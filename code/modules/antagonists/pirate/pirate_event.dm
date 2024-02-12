@@ -15,7 +15,7 @@
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()
-	if (!SSmapping.is_planetary())
+	if (SSmapping.is_planetary())
 		return EVENT_CANT_RUN
 	return ..()
 
@@ -66,7 +66,7 @@
 	if(chosen_gang.paid_off)
 		return
 
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", ROLE_TRAITOR)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", check_jobban = ROLE_TRAITOR, pic_source = /obj/item/claymore/cutlass, role_name_text = "pirate crew")
 	shuffle_inplace(candidates)
 
 	var/template_key = "pirate_[chosen_gang.ship_template_id]"
@@ -81,8 +81,8 @@
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 
-	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in A)
+	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)

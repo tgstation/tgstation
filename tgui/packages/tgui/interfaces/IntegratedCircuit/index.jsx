@@ -1,19 +1,26 @@
-import { useBackend } from '../../backend';
-import { Input, InfinitePlane, Stack, Box, Button } from '../../components';
-import { Component } from 'inferno';
-import { Window } from '../../layouts';
+import { Component } from 'react';
+
 import { resolveAsset } from '../../assets';
-import { CircuitInfo } from './CircuitInfo';
-import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS, VARIABLE_ASSOC_LIST, VARIABLE_LIST } from './constants';
+import { useBackend } from '../../backend';
+import { Box, Button, InfinitePlane, Input, Stack } from '../../components';
+import { Window } from '../../layouts';
 import { Connections } from '../common/Connections';
-import { ObjectComponent } from './ObjectComponent';
-import { DisplayComponent } from './DisplayComponent';
-import { VariableMenu } from './VariableMenu';
+import { CircuitInfo } from './CircuitInfo';
 import { ComponentMenu } from './ComponentMenu';
+import {
+  ABSOLUTE_Y_OFFSET,
+  MOUSE_BUTTON_LEFT,
+  TIME_UNTIL_PORT_RELEASE_WORKS,
+  VARIABLE_ASSOC_LIST,
+  VARIABLE_LIST,
+} from './constants';
+import { DisplayComponent } from './DisplayComponent';
+import { ObjectComponent } from './ObjectComponent';
+import { VariableMenu } from './VariableMenu';
 
 export class IntegratedCircuit extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       locations: {},
       selectedPort: null,
@@ -131,7 +138,7 @@ export class IntegratedCircuit extends Component {
   // mouse up called whilst over a port. This means we can check if selectedPort
   // exists and do perform some actions if it does.
   handlePortUp(portIndex, componentId, port, isOutput, event) {
-    const { act, data: uiData } = useBackend(this.context);
+    const { act, data: uiData } = useBackend();
     const { selectedPort } = this.state;
     if (!selectedPort) {
       return;
@@ -182,7 +189,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleDragging(event) {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend();
     const { screen_x, screen_y } = data;
     this.setState((state) => ({
       mouseX: event.clientX - (state.backgroundX || screen_x),
@@ -208,7 +215,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortRightClick(portIndex, componentId, port, isOutput, event) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
 
     event.preventDefault();
     act('remove_connection', {
@@ -242,7 +249,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleMouseDown(event) {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend();
     const { examined_name } = data;
     if (examined_name) {
       act('remove_examined_component');
@@ -254,7 +261,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleMouseUp(event) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const { backgroundX, backgroundY } = this.state;
     if (backgroundX && backgroundY) {
       act('move_screen', {
@@ -312,7 +319,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleVarDropped(event) {
-    const { data, act } = useBackend(this.context);
+    const { data, act } = useBackend();
     const {
       draggingVariable,
       variableIsSetter,
@@ -358,7 +365,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleComponentDropped(event) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const { draggingComponent, zoom, draggingComponentPos, mouseX, mouseY } =
       this.state;
 
@@ -383,7 +390,7 @@ export class IntegratedCircuit extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend();
     const {
       components,
       display_name,
@@ -502,11 +509,13 @@ export class IntegratedCircuit extends Component {
               )}
             </Stack>
           </Box>
-        }>
+        }
+      >
         <Window.Content
           style={{
-            'background-image': 'none',
-          }}>
+            backgroundImage: 'none',
+          }}
+        >
           <InfinitePlane
             width="100%"
             height="100%"
@@ -515,7 +524,8 @@ export class IntegratedCircuit extends Component {
             onZoomChange={this.handleZoomChange}
             onBackgroundMoved={this.handleBackgroundMoved}
             initialLeft={screen_x}
-            initialTop={screen_y}>
+            initialTop={screen_y}
+          >
             {components.map(
               (comp, index) =>
                 comp && (
@@ -530,7 +540,7 @@ export class IntegratedCircuit extends Component {
                     onPortMouseUp={this.handlePortUp}
                     act={act}
                   />
-                )
+                ),
             )}
             {!!draggingComponent && (
               <DisplayComponent
@@ -565,11 +575,12 @@ export class IntegratedCircuit extends Component {
               minWidth="600px"
               width="50%"
               style={{
-                'border-radius': '0px 32px 0px 0px',
-                'background-color': 'rgba(0, 0, 0, 0.3)',
+                borderRadius: '0px 32px 0px 0px',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
                 '-ms-user-select': 'none',
               }}
-              unselectable="on">
+              unselectable="on"
+            >
               <VariableMenu
                 variables={variables}
                 types={global_basic_types}
@@ -590,7 +601,7 @@ export class IntegratedCircuit extends Component {
                 handleMouseDownSetter={this.onVarClickedSetter}
                 handleMouseDownGetter={this.onVarClickedGetter}
                 style={{
-                  'border-radius': '0px 32px 0px 0px',
+                  borderRadius: '0px 32px 0px 0px',
                 }}
               />
             </Box>
@@ -603,10 +614,11 @@ export class IntegratedCircuit extends Component {
               height="100%"
               width="300px"
               style={{
-                'background-color': 'rgba(0, 0, 0, 0.3)',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
                 '-ms-user-select': 'none',
               }}
-              unselectable="on">
+              unselectable="on"
+            >
               <ComponentMenu
                 components={
                   (stored_designs && Object.keys(stored_designs)) || []

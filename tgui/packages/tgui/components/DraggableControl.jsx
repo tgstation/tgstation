@@ -5,8 +5,8 @@
  */
 
 import { clamp } from 'common/math';
-import { pureComponentHooks } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
+
 import { AnimatedNumber } from './AnimatedNumber';
 
 const DEFAULT_UPDATE_RATE = 400;
@@ -97,13 +97,13 @@ export class DraggableControl extends Component {
           state.internalValue = clamp(
             state.internalValue + (offset * step) / stepPixelSize,
             minValue - step,
-            maxValue + step
+            maxValue + step,
           );
           // Clamp the final value
           state.value = clamp(
             state.internalValue - (state.internalValue % step) + stepOffset,
             minValue,
-            maxValue
+            maxValue,
           );
           state.origin = getScalarScreenOffset(e, dragMatrix);
         } else if (Math.abs(offset) > 4) {
@@ -196,8 +196,8 @@ export class DraggableControl extends Component {
         style={{
           display: !editing ? 'none' : undefined,
           height: height,
-          'line-height': lineHeight,
-          'font-size': fontSize,
+          lineHeight: lineHeight,
+          fontsize: fontSize,
         }}
         onBlur={(e) => {
           if (!editing) {
@@ -276,7 +276,6 @@ export class DraggableControl extends Component {
   }
 }
 
-DraggableControl.defaultHooks = pureComponentHooks;
 DraggableControl.defaultProps = {
   minValue: -Infinity,
   maxValue: +Infinity,

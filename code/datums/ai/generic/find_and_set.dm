@@ -11,12 +11,15 @@
 	if (controller.blackboard_key_exists(set_key))
 		finish_action(controller, TRUE)
 		return
-	var/find_this_thing = search_tactic(controller, locate_path, search_range)
-	if(find_this_thing)
-		controller.set_blackboard_key(set_key, find_this_thing)
-		finish_action(controller, TRUE)
-	else
+	if(QDELETED(controller.pawn))
 		finish_action(controller, FALSE)
+		return
+	var/find_this_thing = search_tactic(controller, locate_path, search_range)
+	if(isnull(find_this_thing))
+		finish_action(controller, FALSE)
+		return
+	controller.set_blackboard_key(set_key, find_this_thing)
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	return locate(locate_path) in oview(search_range, controller.pawn)
@@ -61,6 +64,13 @@
 /datum/ai_behavior/find_and_set/in_hands/search_tactic(datum/ai_controller/controller, locate_path)
 	var/mob/living/living_pawn = controller.pawn
 	return locate(locate_path) in living_pawn.held_items
+
+/datum/ai_behavior/find_and_set/in_hands/given_list
+
+/datum/ai_behavior/find_and_set/in_hands/given_list/search_tactic(datum/ai_controller/controller, locate_paths)
+	var/list/found = typecache_filter_list(controller.pawn, locate_paths)
+	if(length(found))
+		return pick(found)
 
 /**
  * Variant of find and set that takes a list of things to find.

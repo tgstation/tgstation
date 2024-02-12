@@ -1,9 +1,9 @@
+import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
 
-export const InterviewManager = (props, context) => {
-  const { act, data } = useBackend(context);
+export const InterviewManager = (props) => {
+  const { act, data } = useBackend();
   const { open_interviews, closed_interviews } = data;
 
   const colorMap = (status) => {
@@ -26,7 +26,7 @@ export const InterviewManager = (props, context) => {
               key={id}
               content={ckey + (disconnected ? ' (DC)' : '')}
               color={queued ? 'default' : colorMap(status)}
-              onClick={() => act('open', { 'id': id })}
+              onClick={() => act('open', { id: id })}
             />
           ))}
         </Section>
@@ -36,7 +36,7 @@ export const InterviewManager = (props, context) => {
               key={id}
               content={ckey + (disconnected ? ' (DC)' : '')}
               color={colorMap(status)}
-              onClick={() => act('open', { 'id': id })}
+              onClick={() => act('open', { id: id })}
             />
           ))}
         </Section>

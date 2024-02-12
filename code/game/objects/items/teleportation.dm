@@ -13,10 +13,10 @@
 /obj/item/locator
 	name = "bluespace locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -24,7 +24,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
-	var/tracking_range = 20
+	var/tracking_range = 35
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -72,22 +72,22 @@
 
 		var/list/track_implants = list()
 
-		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-			if (!W.imp_in || !isliving(W.loc))
+		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
+			if (!tracking_beacon.imp_in || !isliving(tracking_beacon.loc))
 				continue
 			else
-				var/mob/living/M = W.loc
-				if (M.stat == DEAD)
-					if (M.timeofdeath + W.lifespan_postmortem < world.time)
+				var/mob/living/living_mob = tracking_beacon.loc
+				if (living_mob.stat == DEAD)
+					if (living_mob.timeofdeath + tracking_beacon.lifespan_postmortem < world.time)
 						continue
-			var/turf/tr = get_turf(W)
+			var/turf/tr = get_turf(tracking_beacon)
 			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 
 			if(distance > tracking_range)
 				continue
 
 			var/D = dir2text(get_dir(sr, tr))
-			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
+			track_implants += list(list(name = tracking_beacon.imp_in.name, direction = D, distance = distance))
 		data["trackimplants"] = track_implants
 	return data
 
@@ -100,7 +100,7 @@
 /obj/item/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology. One of the buttons opens a portal, the other re-opens your last destination."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "hand_tele"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -317,13 +317,13 @@
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
 	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -494,11 +494,14 @@
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
 ///Bleed and make blood splatters at tele start and end points
-/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	user.add_splatter_floor(old_location)
+	user.add_splatter_floor(new_location)
+	if(!iscarbon(user))
+		return
 	var/mob/living/carbon/carbon_user = user
-	carbon_user.add_splatter_floor(old_location)
-	carbon_user.add_splatter_floor(new_location)
 	carbon_user.bleed(10)
+
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"

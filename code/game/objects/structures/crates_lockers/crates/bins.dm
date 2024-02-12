@@ -10,6 +10,8 @@
 	delivery_icon = null
 	can_install_electronics = FALSE
 	paint_jobs = null
+	elevation = 17
+	elevation_open = 17
 
 /obj/structure/closet/crate/bin/LateInitialize()
 	. = ..()

@@ -5,9 +5,7 @@
 	program_open_overlay = "hostile"
 	extended_desc = "This advanced script can perform denial of service attacks against NTNet quantum relays. The system administrator will probably notice this. Multiple devices can run this program together against same relay for increased effect"
 	size = 20
-	requires_ntnet = TRUE
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
+	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetDos"
 	program_icon = "satellite-dish"
 
@@ -40,6 +38,7 @@
 	return ..()
 
 /datum/computer_file/program/ntnet_dos/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_target_relay")
 			for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))

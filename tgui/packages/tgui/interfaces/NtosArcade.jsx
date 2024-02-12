@@ -1,10 +1,18 @@
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Grid,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosArcade = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosArcade = (props) => {
+  const { act, data } = useBackend();
   return (
     <NtosWindow width={450} height={350}>
       <NtosWindow.Content>
@@ -24,7 +32,8 @@ export const NtosArcade = (props, context) => {
                         good: [20, 31],
                         average: [10, 20],
                         bad: [-Infinity, 10],
-                      }}>
+                      }}
+                    >
                       {data.PlayerHitpoints}HP
                     </ProgressBar>
                   </LabeledList.Item>
@@ -37,7 +46,8 @@ export const NtosArcade = (props, context) => {
                         purple: [11, Infinity],
                         violet: [3, 11],
                         bad: [-Infinity, 3],
-                      }}>
+                      }}
+                    >
                       {data.PlayerMP}MP
                     </ProgressBar>
                   </LabeledList.Item>
@@ -46,7 +56,8 @@ export const NtosArcade = (props, context) => {
                 <Section
                   backgroundColor={
                     data.PauseState === 1 ? '#1b3622' : '#471915'
-                  }>
+                  }
+                >
                   {data.Status}
                 </Section>
               </Grid.Column>
@@ -59,7 +70,8 @@ export const NtosArcade = (props, context) => {
                     good: [30, Infinity],
                     average: [5, 30],
                     bad: [-Infinity, 5],
-                  }}>
+                  }}
+                >
                   <AnimatedNumber value={data.Hitpoints} />
                   HP
                 </ProgressBar>

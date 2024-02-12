@@ -1,9 +1,16 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
-export const GravityGenerator = (props, context) => {
-  const { data } = useBackend(context);
+export const GravityGenerator = (props) => {
+  const { data } = useBackend();
   const { operational } = data;
   return (
     <Window width={400} height={155}>
@@ -15,8 +22,8 @@ export const GravityGenerator = (props, context) => {
   );
 };
 
-const GravityGeneratorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const GravityGeneratorContent = (props) => {
+  const { act, data } = useBackend();
   const { breaker, charge_count, charging_state, on, operational } = data;
   return (
     <Section>

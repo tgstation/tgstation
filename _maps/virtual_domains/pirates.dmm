@@ -910,7 +910,9 @@
 /turf/template_noop,
 /area/virtual_domain/fullbright)
 "Xn" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "wood"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "XP" = (

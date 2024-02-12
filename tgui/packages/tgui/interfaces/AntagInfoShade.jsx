@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const AntagInfoShade = (props, context) => {
-  const { act, data } = useBackend(context);
+export const AntagInfoShade = (props) => {
+  const { act, data } = useBackend();
   const { master_name } = data;
   return (
     <Window width={400} height={400} theme="abductor">

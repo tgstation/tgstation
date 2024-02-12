@@ -61,11 +61,10 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	QDEL_NULL(frying)
 	return ..()
 
-/obj/machinery/deepfryer/deconstruct(disassembled)
+/obj/machinery/deepfryer/on_deconstruction(disassembled)
 	// This handles nulling out frying via exited
 	if(frying)
 		frying.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
 	. = ..()
@@ -85,7 +84,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
 	// Dissolving pills into the frier

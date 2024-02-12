@@ -1,10 +1,11 @@
 import { map } from 'common/collections';
+
 import { useBackend } from '../backend';
 import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosCrewManifest = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosCrewManifest = (props) => {
+  const { act, data } = useBackend();
   const { manifest = {} } = data;
   return (
     <NtosWindow width={400} height={480}>
@@ -17,7 +18,8 @@ export const NtosCrewManifest = (props, context) => {
               content="Print"
               onClick={() => act('PRG_print')}
             />
-          }>
+          }
+        >
           {map((entries, department) => (
             <Section key={department} level={2} title={department}>
               <Table>

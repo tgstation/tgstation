@@ -38,7 +38,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 		robot.make_scottish()
 	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)
 
-/datum/highlander_controller/Destroy(force, ...)
+/datum/highlander_controller/Destroy(force)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 

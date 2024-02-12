@@ -116,7 +116,7 @@
 	return TRUE
 
 /**
- * Parses specific items into a more reaadble form.
+ * Parses specific items into a more readble form.
  * Can be overriden by knoweldge subtypes.
  */
 /datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
@@ -126,7 +126,6 @@
 	if(ispath(item_path, /mob/living))
 		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
 	return "[initial(item_path.name)]\s"
-
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
@@ -144,6 +143,7 @@
 /datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	if(!length(result_atoms))
 		return FALSE
+
 	for(var/result in result_atoms)
 		new result(loc)
 	return TRUE
@@ -181,7 +181,6 @@
 					continue
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
-
 			sac_stack.use(how_much_to_use)
 			continue
 
@@ -226,7 +225,7 @@
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
 
-/datum/heretic_knowledge/limited_amount/Destroy(force, ...)
+/datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
 	return ..()
 
@@ -537,7 +536,7 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a [summoned.name]?", check_jobban = ROLE_HERETIC, poll_time = 10 SECONDS, target_mob = summoned, ignore_category = poll_ignore_define, pic_source = summoned, role_name_text = summoned.name)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)

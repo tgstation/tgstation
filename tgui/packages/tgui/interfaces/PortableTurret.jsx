@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const PortableTurret = (props, context) => {
-  const { act, data } = useBackend(context);
+export const PortableTurret = (props) => {
+  const { act, data } = useBackend();
   const {
     silicon_user,
     locked,
@@ -46,7 +46,8 @@ export const PortableTurret = (props, context) => {
                       onClick={() => act('manual')}
                     />
                   )
-                }>
+                }
+              >
                 <Button
                   icon={on ? 'power-off' : 'times'}
                   content={on ? 'On' : 'Off'}
@@ -67,7 +68,8 @@ export const PortableTurret = (props, context) => {
                   disabled={locked}
                   onClick={() => act('shootheads')}
                 />
-              }>
+              }
+            >
               <Button.Checkbox
                 fluid
                 checked={neutralize_all}

@@ -2,7 +2,7 @@
 /obj/item/anomaly_releaser
 	name = "anomaly releaser"
 	desc = "Single-use injector that releases and stabilizes anomalies by injecting an unknown substance."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "anomaly_releaser"
 	inhand_icon_state = "stimpen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

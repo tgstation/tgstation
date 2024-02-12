@@ -1,20 +1,35 @@
 import { createSearch, toTitleCase } from 'common/string';
-import { useBackend, useLocalState, useSharedState } from '../backend';
-import { BlockQuote, Box, Button, Table, Tabs, Input, Stack, Icon, Section, LabeledList } from '../components';
-import { Window } from '../layouts';
-import { formatSiUnit } from '../format';
+import { useState } from 'react';
 
-export const OreRedemptionMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+import { useBackend, useSharedState } from '../backend';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Icon,
+  Image,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+} from '../components';
+import { formatSiUnit } from '../format';
+import { Window } from '../layouts';
+
+export const OreRedemptionMachine = (props) => {
+  const { act, data } = useBackend();
   const { disconnected, unclaimedPoints, materials, user } = data;
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
-  const [compact, setCompact] = useSharedState(context, 'compact', false);
+  const [tab, setTab] = useSharedState('tab', 1);
+  const [searchItem, setSearchItem] = useState('');
+  const [compact, setCompact] = useState(false);
   const search = createSearch(searchItem, (materials) => materials.name);
   const material_filtered =
     searchItem.length > 0
       ? data.materials.filter(search)
       : materials.filter((material) => material && material.category === tab);
+
   return (
     <Window title="Ore Redemption Machine" width={435} height={500}>
       <Window.Content>
@@ -90,7 +105,8 @@ export const OreRedemptionMachine = (props, context) => {
                 if (searchItem.length > 0) {
                   setSearchItem('');
                 }
-              }}>
+              }}
+            >
               Materials
             </Tabs.Tab>
             <Tabs.Tab
@@ -103,7 +119,8 @@ export const OreRedemptionMachine = (props, context) => {
                 if (searchItem.length > 0) {
                   setSearchItem('');
                 }
-              }}>
+              }}
+            >
               Alloys
             </Tabs.Tab>
             <Input
@@ -130,6 +147,7 @@ export const OreRedemptionMachine = (props, context) => {
               <Table>
                 {material_filtered.map((material) => (
                   <MaterialRow
+                    compact={compact}
                     key={material.id}
                     material={material}
                     onRelease={(amount) => {
@@ -156,14 +174,14 @@ export const OreRedemptionMachine = (props, context) => {
   );
 };
 
-const MaterialRow = (props, context) => {
-  const { data } = useBackend(context);
+const MaterialRow = (props) => {
+  const { data } = useBackend();
+  const { compact } = props;
   const { material_icons } = data;
   const { material, onRelease } = props;
-  const [compact, setCompact] = useLocalState(context, 'compact', false);
 
   const display = material_icons.find(
-    (mat_icon) => mat_icon.id === material.id
+    (mat_icon) => mat_icon.id === material.id,
   );
 
   const sheet_amounts = Math.floor(material.amount);
@@ -174,15 +192,13 @@ const MaterialRow = (props, context) => {
     <Table.Row className="candystripe" collapsing>
       {!compact && (
         <Table.Cell collapsing>
-          <Box
-            as="img"
+          <Image
             m={1}
             src={`data:image/jpeg;base64,${display.product_icon}`}
             height="18px"
             width="18px"
             style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'vertical-align': 'middle',
+              verticalAlign: 'middle',
             }}
           />
         </Table.Cell>

@@ -80,6 +80,15 @@
 	name = "Party Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
+/datum/greyscale_config/santa_hat
+	name = "Santa Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/santa_hat.json'
+
+/datum/greyscale_config/santa_hat/worn
+	name = "Santa Hat (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
 //
 // MASKS
 //
@@ -140,6 +149,43 @@
 	name = "Skull Bandana (Held, Right)"
 	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandanaskull_inhands.json'
+
+/datum/greyscale_config/facescarf
+	name = "Facescarf"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/facescarf.json'
+
+/datum/greyscale_config/facescarf/worn
+	name = "Facescarf (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/facescarf/inhands_left
+	name = "Facescarf (Held, Left)"
+	icon_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/facescarf_inhands.json'
+
+/datum/greyscale_config/facescarf/inhands_right
+	name = "Facescarf (Held, Right)"
+	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/facescarf_inhands.json'
+
+/datum/greyscale_config/kitsune
+	name = "Kitsune mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/kitsune.json'
+
+/datum/greyscale_config/kitsune/worn
+	name = "Kitsune mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/rebellion_mask
+	name = "Rebellion mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/rebellion_mask.json'
+
+/datum/greyscale_config/rebellion_mask/worn
+	name = "Rebellion mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
 
 //
 // NECK

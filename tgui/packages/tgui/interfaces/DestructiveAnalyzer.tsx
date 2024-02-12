@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox } from '../components';
+import { Box, Button, Image, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -20,8 +21,8 @@ type NodeData = {
   node_hidden: BooleanLike;
 };
 
-export const DestructiveAnalyzer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const DestructiveAnalyzer = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     server_connected,
     indestructible,
@@ -56,12 +57,7 @@ export const DestructiveAnalyzer = (props, context) => {
     );
   }
   return (
-    <Window
-      width={400}
-      height={260}
-      scrollable
-      fill
-      title="Destructive Analyzer">
+    <Window width={400} height={260} title="Destructive Analyzer">
       <Window.Content scrollable>
         <Section
           title={loaded_item}
@@ -71,16 +67,13 @@ export const DestructiveAnalyzer = (props, context) => {
               tooltip="Ejects the item currently inside the machine."
               onClick={() => act('eject_item')}
             />
-          }>
-          <Box
-            as="img"
+          }
+        >
+          <Image
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'vertical-align': 'middle',
-            }}
+            verticalAlign="middle"
           />
         </Section>
         <Section title="Deconstruction Methods">

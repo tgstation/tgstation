@@ -1,13 +1,27 @@
 /* eslint-disable react/jsx-no-undef */
 import { useBackend, useLocalState } from '../../backend';
-import { Button, LabeledList, NumberInput, ColorBox, Input, Stack } from '../../components';
-import { EntryGeneratorNumbersListProps, FloatGeneratorColorProps, FloatGeneratorProps, ParticleUIData, P_DATA_GENERATOR, RandToNumber } from './data';
-import { isStringArray } from './helpers';
+import {
+  Button,
+  ColorBox,
+  Input,
+  LabeledList,
+  NumberInput,
+  Stack,
+} from '../../components';
+import {
+  EntryGeneratorNumbersListProps,
+  FloatGeneratorColorProps,
+  FloatGeneratorProps,
+  P_DATA_GENERATOR,
+  ParticleUIData,
+  RandToNumber,
+} from './data';
 import { GeneratorListEntry } from './Generators';
+import { isStringArray } from './helpers';
 
-export const FloatGenerator = (props: FloatGeneratorProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const FloatGenerator = (props: FloatGeneratorProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, float } = props;
   return (
     <LabeledList.Item label={name}>
@@ -55,12 +69,9 @@ export const FloatGenerator = (props: FloatGeneratorProps, context) => {
   );
 };
 
-export const FloatGeneratorColor = (
-  props: FloatGeneratorColorProps,
-  context
-) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, float } = props;
   return (
     <LabeledList.Item label={name}>
@@ -95,7 +106,6 @@ export const FloatGeneratorColor = (
         {!Array.isArray(float) ? (
           <Stack.Item>
             <Input
-              animated
               value={float}
               onChange={(e, value) =>
                 act('edit', {
@@ -115,10 +125,9 @@ export const FloatGeneratorColor = (
 
 export const EntryGeneratorNumbersList = (
   props: EntryGeneratorNumbersListProps,
-  context
 ) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, allow_z, input } = props;
   return (
     <LabeledList.Item label={name}>
@@ -140,11 +149,11 @@ export const EntryGeneratorNumbersList = (
                 var_mod: !isStringArray(input) ? P_DATA_GENERATOR : null,
                 new_value: !isStringArray(input)
                   ? [
-                    'sphere',
-                    [0, 0, 0],
-                    [1, 1, 1],
-                    RandToNumber['UNIFORM_RAND'],
-                  ]
+                      'sphere',
+                      [0, 0, 0],
+                      [1, 1, 1],
+                      RandToNumber['UNIFORM_RAND'],
+                    ]
                   : [1, 1, 1],
               })
             }

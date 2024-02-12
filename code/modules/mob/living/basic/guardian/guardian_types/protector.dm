@@ -4,7 +4,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	range = 5 // You want this to be low so you can drag them around
-	damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
+	damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, STAMINA = 0, OXY = 0.4)
 	playstyle_string = span_holoparasite("As a <b>protector</b> type you cause your summoner to leash to you instead of you leashing to them and have two modes; Combat Mode, where you do and take medium damage, and Protection Mode, where you do and take almost no damage, but move slightly slower.")
 	creator_name = "Protector"
 	creator_desc = "Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower."
@@ -71,7 +71,7 @@
 	/// Overlay for our protection shield.
 	var/mutable_appearance/shield_overlay
 	/// Damage coefficients when shielded
-	var/list/shielded_damage = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, CLONE = 0.05, STAMINA = 0, OXY = 0.05)
+	var/list/shielded_damage = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, STAMINA = 0, OXY = 0.05)
 
 /datum/status_effect/protector_shield/on_apply()
 	if (isguardian(owner))

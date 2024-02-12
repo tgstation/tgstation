@@ -1,10 +1,17 @@
 import { useBackend } from '../backend';
-import { Button, Dropdown, Flex, Input, LabeledList, ProgressBar, Section } from '../components';
+import {
+  Button,
+  Dropdown,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const Mule = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Mule = (props) => {
+  const { act, data } = useBackend();
   const {
     on,
     cell,
@@ -47,7 +54,8 @@ export const Mule = (props, context) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <ProgressBar
             value={cell ? cellPercent / 100 : 0}
             color={cell ? 'good' : 'bad'}
@@ -64,7 +72,8 @@ export const Mule = (props, context) => {
               <LabeledList>
                 <LabeledList.Item
                   label="Load"
-                  color={load ? 'good' : 'average'}>
+                  color={load ? 'good' : 'average'}
+                >
                   {load || 'None'}
                 </LabeledList.Item>
               </LabeledList>
@@ -91,36 +100,36 @@ export const Mule = (props, context) => {
                   />
                 )}
               </>
-            }>
+            }
+          >
             <LabeledList>
               <LabeledList.Item label="ID">
-                <Input
-                  value={id}
-                  onChange={(e, value) => act('setid', { value })}
-                />
+                <Button content={id} onClick={() => act('setid')} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Home">
+                <Button content={home} onClick={() => act('sethome')} />
               </LabeledList.Item>
               <LabeledList.Item label="Destination">
                 <Dropdown
                   over
                   selected={destination || 'None'}
                   options={destinations}
-                  width="150px"
+                  width="188px"
                   onSelected={(value) => act('destination', { value })}
                 />
+              </LabeledList.Item>
+              <LabeledList.Item label="Actions">
                 <Button
                   icon="stop"
+                  color="bad"
                   content="Stop"
                   onClick={() => act('stop')}
                 />
-                <Button icon="play" content="Go" onClick={() => act('go')} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Home">
-                <Dropdown
-                  over
-                  selected={home}
-                  options={destinations}
-                  width="150px"
-                  onSelected={(value) => act('destination', { value })}
+                <Button
+                  icon="play"
+                  color="average"
+                  content="Go"
+                  onClick={() => act('go')}
                 />
                 <Button
                   icon="home"
