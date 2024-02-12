@@ -351,7 +351,8 @@
 
 /obj/item/clothing/gloves/the_sleeping_carp/dropped(mob/user)
 	. = ..()
-	style.fully_remove(user)
+	if(!isnull(style))
+		style.fully_remove(user)
 
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO
