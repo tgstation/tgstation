@@ -76,7 +76,7 @@
 /datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 
-	if (!victim || IS_IN_STASIS(victim))
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
@@ -194,6 +194,10 @@
 	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "dislocate"
+
+	simple_desc = "Patient's bone has been dislocated, causing limping or reduced dexterity."
+	simple_treat_text = "<b>Bandaging</b> the wound will reduce its impact until treated with a bonesetter. Most commonly, it is treated by aggressively grabbing someone and helpfully wrenching the limb in place, though there's room for malfeasance when doing this."
+	homemade_treat_text = "Besides bandaging and wrenching, <b>bone setters</b> can be printed in lathes and utilized on oneself at the cost of great pain. As a last resort, <b>crushing</b> the patient with a <b>firelock</b> has sometimes been noted to fix their dislocated limb."
 
 /datum/wound_pregen_data/bone/dislocate
 	abstract = FALSE
@@ -330,6 +334,11 @@
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
+	simple_desc = "Patient's bone has cracked in the middle, drastically reducing limb functionality."
+	simple_treat_text = "<b>Bandaging</b> the wound will reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
+	homemade_treat_text = "<b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is quite difficult for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
+
+
 /datum/wound_pregen_data/bone/hairline
 	abstract = FALSE
 
@@ -360,6 +369,10 @@
 	internal_bleeding_chance = 60
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
+
+	simple_desc = "Patient's bones have effectively shattered completely, causing total immobilization of the limb."
+	simple_treat_text = "<b>Bandaging</b> the wound will slightly reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
+	homemade_treat_text = "Although this is extremely difficult and slow to function, <b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is nigh-impossible for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
 
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE
@@ -396,22 +409,11 @@
 		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] finishes applying [I] to your [limb.plaintext_zone], and you can feel the bones exploding with pain as they begin melting and reforming!"))
 	else
-		var/painkiller_bonus = 0
-		if(victim.get_drunk_amount() > 10)
-			painkiller_bonus += 10
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
-			painkiller_bonus += 20
-		if(victim.reagents.has_reagent(/datum/reagent/determination))
-			painkiller_bonus += 10
-		if(victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/painkiller))
-			painkiller_bonus += 15
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
-			painkiller_bonus += 20
-
-		if(prob(25 + (20 * (severity - 2)) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers
-			victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
-			victim.AdjustUnconscious(5 SECONDS)
-			return TRUE
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunk_amount(), 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
+				victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
+				victim.AdjustUnconscious(5 SECONDS)
+				return TRUE
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
 
 	limb.receive_damage(25, wound_bonus=CANT_WOUND)

@@ -168,11 +168,7 @@
 		file_data["longestdeathstreak"] = longest_deathstreak
 
 	var/formatted_data
-#if DM_VERSION >= 515
 	formatted_data = json_encode(file_data, JSON_PRETTY_PRINT)
-#else
-	formatted_data = json_encode(file_data)
-#endif
 
 	rustg_file_write(formatted_data, file_path)
 	memory_saved = TRUE

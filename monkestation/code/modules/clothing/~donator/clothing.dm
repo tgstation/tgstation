@@ -269,15 +269,16 @@
 /obj/item/clothing/gloves/ring/hypno/coffeepot
 	name = "hypnodemon's ring"
 	desc = "A pallid, softly desaturated-looking gold ring that doesn't look like it belongs. It's hard to put one's finger on why it feels at odds with the world around it - the shine coming off it looks like it could be a mismatch with the lighting in the room, or it could be that it seems to glint and twinkle occasionally when there's no obvious reason for it to - though only when you're not really looking."
-	spans = list("velvet")
+	spans = list("hypnophrase")
 
 /datum/action/item_action/hypno_whisper
 	name = "Hypnotic Whisper"
 
 /obj/item/clothing/gloves/ring/hypno/ui_action_click(mob/living/user, action)
+	set waitfor = FALSE
 	if(!isliving(user) || !can_use(user))
 		return
-	var/message = input(user, "Speak with a hypnotic whisper", "Whisper")
+	var/message = tgui_input_text(user, "Speak with a hypnotic whisper", "Whisper", encode = FALSE)
 	if(QDELETED(src) || QDELETED(user) || !message || !user.can_speak())
 		return
 	user.whisper(message, spans = spans)
@@ -1115,14 +1116,15 @@
 	worn_icon_state = "pocketwatch"
 	icon_state = "pocketwatch"
 	inhand_icon_state = "pocketwatch"
-	var/list/spans = list("velvet")
+	var/list/spans = list("hypnophrase")
 	actions_types = list(/datum/action/item_action/hypno_whisper)
 
 //TODO: make a component for all that various hypno stuff instead of adding it to items individually
 /obj/item/clothing/accessory/hypno_watch/ui_action_click(mob/living/user, action)
+	set waitfor = FALSE
 	if(!isliving(user) || !can_use(user))
 		return
-	var/message = input(user, "Speak with a hypnotic whisper", "Whisper")
+	var/message = tgui_input_text(user, "Speak with a hypnotic whisper", "Whisper", encode = FALSE)
 	if(QDELETED(src) || QDELETED(user) || !message || !user.can_speak())
 		return
 	user.whisper(message, spans = spans)

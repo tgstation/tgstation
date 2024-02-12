@@ -73,8 +73,14 @@
 //windows affected by Nar'Sie turn this color.
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-#define MINERAL_MATERIAL_AMOUNT 2000
+// Defines related to the custom materials used on objects.
+///The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 100 Units.
+#define SHEET_MATERIAL_AMOUNT 2000
+///The amount of materials you get from half a sheet. Used in standard object quantities. 50 units.
+#define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT/2)
+///The amount of materials used in the smallest of objects, like pens and screwdrivers. 10 units.
+#define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT/5)
+
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
 //maximum amount of cable in a coil
@@ -146,6 +152,7 @@ GLOBAL_LIST_INIT(crafting_category_food, list(
 #define CAT_ENTERTAINMENT "Entertainment"
 #define CAT_TOOLS "Tools"
 #define CAT_CULT "Blood Cult"
+#define CAT_GUNPARTS "Gun Parts"
 
 GLOBAL_LIST_INIT(crafting_category, list(
 	CAT_WEAPON_RANGED,
@@ -166,6 +173,7 @@ GLOBAL_LIST_INIT(crafting_category, list(
 	CAT_ENTERTAINMENT,
 	CAT_TOOLS,
 	CAT_CULT,
+	CAT_GUNPARTS,
 ))
 
 //rcd modes

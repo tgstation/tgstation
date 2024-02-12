@@ -68,6 +68,8 @@
 	/// Shipping method used to buy this item.
 	var/method
 
+
+//needs to be here
 /datum/market_purchase/New(_entry, _uplink, _method)
 	entry = _entry
 	if(!ispath(entry.item))

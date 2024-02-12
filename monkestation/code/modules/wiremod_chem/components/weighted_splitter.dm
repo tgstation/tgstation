@@ -36,6 +36,9 @@
 	var/filter_amount = number.value
 	if(filter_amount <= 0)
 		return
+	if(!length(chemicals))
+		return
+
 	var/filter_type = weight_type.value
 
 	var/total_value = 0

@@ -31,3 +31,5 @@ Gboster - making the holographic handcuffs
 KittyNoodle - making the lawbringer
 MilkForever - porting the PACO pistol from CEV eris
 Salted-Zen - renaming the PACO pistol to TACO (very important)
+MonstieHuntie - renaming the TACO pistol to PACO + seclite fuctionality + removable stripe
+T87-Sulfurhead - making sounds for the PACO pistol (Drop, Lock, Rack and Shot)

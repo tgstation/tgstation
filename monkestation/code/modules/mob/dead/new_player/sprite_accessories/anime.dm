@@ -63,6 +63,11 @@
 	icon_state = "mouse"
 	hasinner = TRUE
 
+/datum/sprite_accessory/anime_head/playbunny
+	name = "Bunny Ears"
+	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
+	icon_state = "playbunny"
+
 /datum/sprite_accessory/anime_middle
 	icon = 'monkestation/icons/mob/anime/anime_middle.dmi'
 	color_src = ANIME
@@ -152,3 +157,11 @@
 /datum/sprite_accessory/anime_bottom/cat
 	name = "Cat Tail"
 	icon_state = "cat"
+
+/datum/sprite_accessory/anime_bottom/rabbit
+	name = "Rabbit Tail"
+	icon_state = "rabbit"
+
+/datum/sprite_accessory/anime_bottom/bunny
+	name = "Bunny Puff"
+	icon_state = "playbunny"

@@ -189,6 +189,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	return
 
 /mob/proc/set_machine(obj/O)
+	if(QDELETED(src) || QDELETED(O))
+		return
 	if(machine)
 		unset_machine()
 	machine = O
@@ -338,11 +340,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
 		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
-
-/obj/update_overlays()
-	. = ..()
-	if(resistance_flags & ON_FIRE)
-		. += custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)

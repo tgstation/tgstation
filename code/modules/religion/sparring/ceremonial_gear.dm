@@ -13,7 +13,7 @@
 	greyscale_colors = "#FFFFFF"
 
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron blade.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron blade.
 	force = 2 //20
 	throwforce = 1 //10
 	wound_bonus = CANT_WOUND // bad for sparring
@@ -21,6 +21,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 3 //30
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon

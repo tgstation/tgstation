@@ -29,7 +29,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
-		list("Gigantism", "Dwarfism")
+		list("Gigantism", "Dwarfism"),
+		list("Social Anxiety", "Mute"),
+		list("Mute", "Soft-Spoken"),
+		list("Stormtrooper Aim", "Big Hands"),
+		list("Bilingual", "Foreigner"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

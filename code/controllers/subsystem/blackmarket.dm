@@ -7,7 +7,8 @@ SUBSYSTEM_DEF(blackmarket)
 	var/shipping_method_descriptions = list(
 		SHIPPING_METHOD_LAUNCH="Launches the item at the station from space, cheap but you might not receive your item at all.",
 		SHIPPING_METHOD_LTSRBT="Long-To-Short-Range-Bluespace-Transceiver, a machine that receives items outside the station and then teleports them to the location of the uplink.",
-		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though."
+		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though.",
+		SHIPPING_METHOD_AT_FEET="Teleports the item to your feet."
 	)
 
 	/// List of all existing markets.
@@ -18,7 +19,7 @@ SUBSYSTEM_DEF(blackmarket)
 	var/list/queued_purchases = list()
 
 /datum/controller/subsystem/blackmarket/Initialize()
-	for(var/market in subtypesof(/datum/market))
+	for(var/market in subtypesof(/datum/market) - /datum/market/auction - /datum/market/restock) //monkestation edit - MODULAR_GUNS
 		markets[market] += new market
 
 	for(var/item in subtypesof(/datum/market_item))
@@ -35,6 +36,12 @@ SUBSYSTEM_DEF(blackmarket)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
+	for(var/market in markets) //monkestation edit - MODULAR_GUNS
+		var/datum/market/listed_market = markets[market]
+		if(!(listed_market.market_flags & MARKET_PROCESS))
+			continue
+		listed_market.try_process()
+
 	while(length(queued_purchases))
 		var/datum/market_purchase/purchase = queued_purchases[1]
 		queued_purchases.Cut(1,2)
@@ -93,6 +100,14 @@ SUBSYSTEM_DEF(blackmarket)
 
 				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)]."))
 
+				queued_purchases -= purchase
+				qdel(purchase)
+			if(SHIPPING_METHOD_AT_FEET)
+				var/turf/targetturf = get_turf(purchase.uplink)
+				if (!targetturf)
+					continue
+
+				fake_teleport(purchase.entry.spawn_item(), targetturf)
 				queued_purchases -= purchase
 				qdel(purchase)
 

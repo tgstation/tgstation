@@ -170,6 +170,7 @@
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	drinker.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/kahlua
@@ -904,6 +905,7 @@
 	taste_description = "alcoholic bravery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 	var/tough_text
 
 /datum/glass_style/drinking_glass/brave_bull
@@ -914,17 +916,17 @@
 	icon_state = "bravebullglass"
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/drinker)
+	. = ..()
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
 	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	drinker.health += 10
-	ADD_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
 	drinker.maxHealth -= 10
 	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
-	REMOVE_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -945,6 +947,7 @@
 	icon_state = "tequilasunriseglass"
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/drinker)
+	. = ..()
 	to_chat(drinker, span_notice("You feel gentle warmth spread through your body!"))
 	light_holder = new(drinker)
 	light_holder.set_light(l_outer_range = 3, l_power = 0.7, l_color = "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
@@ -956,6 +959,7 @@
 	return ..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	to_chat(drinker, span_notice("The warmth in your body fades."))
 	QDEL_NULL(light_holder)
 
@@ -1073,6 +1077,7 @@
 	icon_state = "manlydorfglass"
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/drinker)
+	. = ..()
 	if(ishuman(drinker))
 		var/mob/living/carbon/human/potential_dwarf = drinker
 		if(HAS_TRAIT(potential_dwarf, TRAIT_DWARF))
@@ -1139,6 +1144,7 @@
 	icon_state = "b52glass"
 
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/drinker)
+	. = ..()
 	playsound(drinker, 'sound/effects/explosion_distant.ogg', 100, FALSE)
 
 /datum/reagent/consumable/ethanol/irishcoffee
@@ -1454,13 +1460,11 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_MADNESS_IMMUNE)
 	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
 
-/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
-	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
-
 /datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
-	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+	. = ..()
 	drinker.remove_filter("singulo_rays")
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -2301,6 +2305,7 @@
 	icon_state = "bastion_bourbon"
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/drinker)
+	. = ..()
 	var/heal_points = 10
 	if(drinker.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
@@ -2405,6 +2410,7 @@
 	icon_state = "crevice_spike"
 
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_metabolize(mob/living/drinker) //damage only applies when drink first enters system and won't again until drink metabolizes out
+	. = ..()
 	drinker.adjustBruteLoss(3 * min(5,volume), required_bodytype = affected_bodytype) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
 
 /datum/reagent/consumable/ethanol/sake
@@ -2462,6 +2468,7 @@
 	icon_state = "alexander"
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_metabolize(mob/living/drinker)
+	. = ..()
 	if(ishuman(drinker))
 		var/mob/living/carbon/human/the_human = drinker
 		for(var/obj/item/shield/the_shield in the_human.contents)
@@ -2476,10 +2483,10 @@
 		holder.remove_reagent(type)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	if(mighty_shield)
 		mighty_shield.block_chance -= 10
 		to_chat(drinker,span_notice("You notice [mighty_shield] looks worn again. Weird."))
-	..()
 
 /datum/reagent/consumable/ethanol/amaretto_alexander
 	name = "Amaretto Alexander"
@@ -3003,6 +3010,7 @@
 	quality = DRINK_GOOD
 	taste_description = "artifical fruityness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/glass_style/drinking_glass/rubberneck
 	required_drink_type = /datum/reagent/consumable/ethanol/rubberneck
@@ -3010,14 +3018,6 @@
 	desc = "A popular drink amongst those adhering to an all synthetic diet."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "rubberneck"
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/drinker)
-	REMOVE_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-	return ..()
 
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"
@@ -3133,6 +3133,7 @@
 	quality = DRINK_NICE
 	taste_description = "sugary tartness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/glass_style/drinking_glass/painkiller
 	required_drink_type = /datum/reagent/consumable/ethanol/painkiller

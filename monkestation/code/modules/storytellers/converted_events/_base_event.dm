@@ -96,13 +96,6 @@
 			job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
 			enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
 
-	for(var/mob/enemy_mob in GLOB.alive_player_list)
-		if(enemy_mob.stat == DEAD)
-			continue // Dead players cannot count as opponents
-		if(enemy_mob.mind && (enemy_mob.mind.assigned_role.title in enemy_roles))
-			job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
-			enemy_players += enemy_mob
-
 	if(job_check >= required_enemies)
 		return return_players ? enemy_players : TRUE
 	return return_players ? enemy_players : FALSE
@@ -212,7 +205,7 @@
 			if(!antag_mind.current)
 				continue
 			candidates += antag_mind.current
-//			SSgamemode.roundstart_antag_minds -= antag_mind //commented out for debugging in case something breaks
+			SSgamemode.roundstart_antag_minds -= antag_mind //commented out for debugging in case something breaks
 
 	while(length(possible_candidates) && length(candidates) < antag_count) //both of these pick_n_take from possible_candidates so this should be fine
 		if(prompted_picking)
@@ -226,12 +219,14 @@
 			break
 
 		var/mob/candidate = pick_n_take(candidates)
+
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		setup_minds += candidate.mind
 		candidate.mind.special_role = antag_flag
 		candidate.mind.restricted_roles = restricted_roles
+
 	setup = TRUE
 
 

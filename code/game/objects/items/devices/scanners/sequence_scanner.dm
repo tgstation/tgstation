@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2)
 
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
@@ -27,6 +27,7 @@
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
 		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
+		playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50) // close enough
 		gene_scan(target, user)
 	else
 		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))

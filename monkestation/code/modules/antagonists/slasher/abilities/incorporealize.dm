@@ -40,7 +40,11 @@
 		return
 
 	for(var/mob/living/watcher in viewers(9, target))
+		if(watcher == target)
+			continue
 		if(!watcher.mind) //only mobs with minds stop you from jaunting
+			continue
+		if(isdead(watcher))
 			continue
 
 		target.balloon_alert(owner, "you can only vanish unseen.")

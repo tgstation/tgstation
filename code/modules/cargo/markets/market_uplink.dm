@@ -16,7 +16,9 @@
 	///Reference to the currently logged in user's bank account.
 	var/datum/bank_account/current_user
 	/// List of typepaths for "/datum/market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/market/blackmarket)
+	var/list/accessible_markets = list(/datum/market/blackmarket, /datum/market/auction/guns, /datum/market/restock/guns_galore)
+	///our current_bid
+	var/current_bid = 0
 
 /obj/item/market_uplink/Initialize(mapload)
 	. = ..()
@@ -66,16 +68,41 @@
 	data["items"] = list()
 	data["viewing_category"] = viewing_category
 	data["viewing_market"] = viewing_market
+	data["current_bid"] = current_bid
 	if(viewing_category && market)
-		if(market.available_items[viewing_category])
-			for(var/datum/market_item/I in market.available_items[viewing_category])
-				data["items"] += list(list(
-					"id" = I.type,
-					"name" = I.name,
-					"cost" = I.price,
-					"amount" = I.stock,
-					"desc" = I.desc || I.name
+		if(market.market_flags & MARKET_AUCTION)
+			var/datum/market/auction/market_auction = market
+			data["auction"] = TRUE
+			for(var/datum/market_item/auction/item in market_auction.queued_items)
+				data["queued_items"] += list(list(
+					"time_until_auction" = market_auction.queued_items[item] - world.time,
+					"name" = item.name,
+					"id" = item.type,
+					"starting_cost" = item.price,
 				))
+			data["bidders"] = list()
+			if(market_auction.current_auction)
+				data["current_item"] = list(
+					"name" = market_auction.current_auction?.name,
+					"id" = market_auction.current_auction?.type,
+					"desc" = market_auction.current_auction?.desc || market_auction?.current_auction.name,
+					"cost" = market_auction.current_auction?.price,
+					"top_bidder" = market_auction.current_auction?.top_bidder
+				)
+				data["bidders"] = market_auction.current_auction?.bidders
+
+			data["time_left"] = COOLDOWN_TIMELEFT(market_auction, current_auction_time)
+		else
+			if(market.available_items[viewing_category])
+				for(var/datum/market_item/I in market.available_items[viewing_category])
+					data["auction"] = FALSE
+					data["items"] += list(list(
+						"id" = I.type,
+						"name" = I.name,
+						"cost" = I.price,
+						"amount" = I.stock,
+						"desc" = I.desc || I.name,
+					))
 	return data
 
 /obj/item/market_uplink/ui_static_data(mob/user)
@@ -138,10 +165,29 @@
 				buying = FALSE
 				return
 			var/datum/market/market = SSblackmarket.markets[viewing_market]
-			market.purchase(selected_item, viewing_category, params["method"], src, usr)
+			market.pre_purchase(selected_item, viewing_category, params["method"], src, usr, current_bid) // monkestation edit - MODULAR_GUNS
 
 			buying = FALSE
 			selected_item = null
+		if("set_bid")
+			if(isnull(params["bid"]))
+				return
+			current_bid = params["bid"]
+		if("bid")
+			var/datum/market/auction/market = SSblackmarket.markets[viewing_market]
+			if(!istype(market))
+				return
+			if(!market.current_auction)
+				return
+			selected_item = market.current_auction.type
+			if(isnull(selected_item))
+				return
+			market.pre_purchase(selected_item, viewing_category, params["method"], src, usr, current_bid)
+		if("reroll")
+			var/datum/market/auction/market = SSblackmarket.markets[viewing_market]
+			if(!istype(market))
+				return
+			market.reroll(src, usr)
 
 /obj/item/market_uplink/blackmarket
 	name = "\improper Black Market Uplink"
@@ -149,7 +195,7 @@
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	//The original black market uplink
-	accessible_markets = list(/datum/market/blackmarket)
+	accessible_markets = list(/datum/market/blackmarket, /datum/market/auction/guns, /datum/market/restock/guns_galore)
 
 
 /datum/crafting_recipe/blackmarket_uplink

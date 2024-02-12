@@ -6,6 +6,11 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	blacklisted_items = list(
+		/obj/item/ammo_box/c38/trac,
+		/obj/item/ammo_box/magazine/m556/phasic,
+		/obj/item/ammo_box/magazine/sniper_rounds/penetrator,
+		/obj/item/ammo_box/magazine,
+		/obj/item/ammo_box/magazine/toy,
 		/obj/item/gun/ballistic,
 		/obj/item/gun/ballistic/automatic,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death,
@@ -34,11 +39,7 @@
 		/obj/item/gun/magic/wand/door,
 		/obj/item/gun/magic/wand/polymorph,
 		/obj/item/gun/magic/wand/teleport,
-		/obj/item/ammo_box/c38/trac,
-		/obj/item/ammo_box/magazine/m556/phasic,
-		/obj/item/ammo_box/magazine/sniper_rounds/penetrator,
-		/obj/item/ammo_box/magazine,
-		/obj/item/ammo_box/magazine/toy,
+		/obj/item/microfusion_gun_attachment/barrel/xray,
 	)
 	blacklisted_types = list(
 		/obj/item/ammo_box/magazine/internal,
@@ -62,6 +63,8 @@
 	items_to_spawn["Ballistic"] = subtypesof(/obj/item/gun/ballistic)
 	items_to_spawn["Energy"] = subtypesof(/obj/item/gun/energy)
 	items_to_spawn["Magic"] = subtypesof(/obj/item/gun/magic)
+	items_to_spawn["Microfusion"] = subtypesof(/obj/item/gun/microfusion) + subtypesof(/obj/item/microfusion_cell_attachment) \
+									+ subtypesof(/obj/item/microfusion_gun_attachment) + typesof(/obj/item/stock_parts/cell/microfusion) + typesof(/obj/item/microfusion_phase_emitter)
 	items_to_spawn["Ammo"] = subtypesof(/obj/item/ammo_box)
 	items_to_spawn["Other"] = list(
 		/obj/item/gun/chem,

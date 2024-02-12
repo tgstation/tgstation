@@ -3,7 +3,7 @@
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	var/datum/techweb/stored_research
 
 /obj/item/disk/tech_disk/Initialize(mapload)

@@ -66,7 +66,10 @@
 	if(beaker)
 		dat += "<b>BEAKER CONTENT</b><br><div class='statusDisplay'>"
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			dat += "[R.name]: [R.volume]u<br>"
+			var/chem_name = R.name
+			if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+				chem_name = "Ammonia?"
+			dat += "[chem_name]: [R.volume]u<br>"
 		dat += "<a href='?src=[REF(src)];refill=1'><b>Refill from beaker</b></a></div>"
 	dat += "<br>"
 	dat += "<b>VAT CONTENT</b><br>"

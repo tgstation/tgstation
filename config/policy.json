@@ -1,5 +1,7 @@
 {
 	"How do I set policy?": "Policy is set in this file. It's simply setting the key to the text to show up.",
 	"Where is policy shown?": "Most, but not all policy text, is displayed when releveant, such as on gaining a role.",
-	"What can I all set policy of?": "Antagonist typepaths, mob typepaths, species typepaths, special roles, and some extra special policy keys are all valid. Consult the code."
+	"What can I all set policy of?": "Antagonist typepaths, mob typepaths, species typepaths, special roles, and some extra special policy keys are all valid. Consult the code.",
+	"Death": "<span class='death_message'><span class='big bold'>You have died!</span><br/>Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.<br/><span class='bold red'>You do not remember the details of circumstances leading up to your death, including who killed you!</span></span>",
+	"Revival": "<span class='death_message'><span class='big bold'>You have been revived!</span><br/>Welcome back to the living! Remember, your recollection of events leading up to your death should still be foggy. If you were revived through conventional means, you do not remember the circumstances of your death or who was responsible.<br/>However, if you were brought back through supernatural or antagonist methods (such as wands of healing, changeling stasis, blood cult revive rune, etc), <span class='bold purple'>you might retain memories from before your death.</span> Use this knowledge wisely and remember to adhere to the server's policies.<br/>It's good to have a second chance - make the most out of it!</span>"
 }

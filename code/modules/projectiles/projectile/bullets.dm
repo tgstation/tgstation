@@ -13,6 +13,8 @@
 	wound_falloff_tile = -5
 	embed_falloff_tile = -3
 
+	speed = 0.4 //twice as fast
+
 /obj/projectile/bullet/smite
 	name = "divine retribution"
 	damage = 10

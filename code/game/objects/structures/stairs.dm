@@ -242,7 +242,7 @@
 			return
 		var/list/material_list = list()
 		if(material.material_type)
-			material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
+			material_list[material.material_type] = SHEET_MATERIAL_AMOUNT * 10
 		make_new_stairs(/obj/structure/stairs/material, material_list)
 	return TRUE
 

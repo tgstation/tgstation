@@ -230,6 +230,9 @@ h1.alert, h2.alert		{color: #000000;}
 	90% { color: #0d0d0d; }
 	100% { color: #6E001A; }
 }
+.brown					{color: #3d2009;}
+.orange 				{color: #b8761a;}
+.yellow					{color: #c7b72c;}
+.cyan					{color: #0ea1e6;}
 // MONKESTATION ADDITION END
-
 </style>"}

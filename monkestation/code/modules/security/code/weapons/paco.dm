@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco from CEV Eris.
 	name = "\improper FS HG .35 Auto \"Paco\""
-	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 and high capacity magazines."
+	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines."
 	icon = 'monkestation/code/modules/security/icons/paco.dmi'
 	icon_state = "paco"
 	inhand_icon_state = "paco"
@@ -9,10 +9,14 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m35
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	fire_sound = 'monkestation/code/modules/security/sound/paco/paco_shot.ogg'
+	rack_sound = 'monkestation/code/modules/security/sound/paco/paco_rack.ogg'
+	lock_back_sound = 'monkestation/code/modules/security/sound/paco/paco_lock.ogg'
+	bolt_drop_sound = 'monkestation/code/modules/security/sound/paco/paco_drop.ogg'
+	load_sound = 'monkestation/code/modules/security/sound/paco/paco_magin.ogg'
+	load_empty_sound = 'monkestation/code/modules/security/sound/paco/paco_magin.ogg'
+	eject_sound = 'monkestation/code/modules/security/sound/paco/paco_magout.ogg'
+	eject_empty_sound = 'monkestation/code/modules/security/sound/paco/paco_magout.ogg'
 	var/has_stripe = TRUE
 	var/COOLDOWN_STRIPE
 
@@ -56,14 +60,16 @@
 
 //Lethal ammo for Paco.
 /obj/item/ammo_casing/c35
-	name = ".35 bullet casing"
-	desc = "A .35 bullet casing."
+	name = ".35 Auto bullet casing"
+	desc = "A .35 Auto bullet casing."
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
+	icon_state = "35_casing"
 	caliber = CALIBER_35
 	projectile_type = /obj/projectile/bullet/c35
 
 /obj/item/ammo_box/magazine/m35
-	name = "\improper \"Paco\" pistol magazine (.35)"
-	desc = "A .35 pistol magazine for the Paco handgun. Consult your head of security before use."
+	name = "\improper \"Paco\" pistol magazine (.35 Auto)"
+	desc = "A .35 Auto pistol magazine for the Paco handgun. Consult your head of security before use."
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "35"
 	base_icon_state = "35"
@@ -79,41 +85,45 @@
 	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
 
 /obj/projectile/bullet/c35
-	name = ".35 bullet"
+	name = ".35 Auto bullet"
 	damage = 20
 
 /obj/item/ammo_box/c35
-	name = "ammo box (.35)"
-	desc = "An ammo box with .35 ammo for the \"Paco\" handgun. This one has a heart on it, d'awww."
+	name = "ammunition packet (.35 Auto)"
+	desc = "A shiny box containing .35 Auto ammo for the \"Paco\" handgun."
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "35_ammobox"
 	ammo_type = /obj/item/ammo_casing/c35
 	max_ammo = 40
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	w_class = WEIGHT_CLASS_NORMAL
 
 //Rubber ammo for Paco.
 /obj/item/ammo_box/magazine/m35/rubber
-	name = "\improper \"Paco\" pistol magazine (.35 Rubber)"
-	desc = "A .35 rubber pistol magazine for the \"Paco\" handgun. Loaded with rubber ammo for assisting in arrests."
+	name = "\improper \"Paco\" pistol magazine (.35 Auto Rubber)"
+	desc = "A .35 Auto rubber pistol magazine for the \"Paco\" handgun. Loaded with rubber ammo for assisting in arrests."
 	icon_state = "35r"
 	base_icon_state = "35r"
 	ammo_type = /obj/item/ammo_casing/c35/rubber
 
 /obj/item/ammo_casing/c35/rubber
-	name = ".35 rubber bullet casing"
-	desc = "A .35 rubber bullet casing."
+	name = ".35 Auto rubber bullet casing"
+	desc = "A .35 Auto rubber bullet casing."
+	icon_state = "35r_casing"
 	projectile_type = /obj/projectile/bullet/c35/rubber
 
 /obj/projectile/bullet/c35/rubber
-	name = ".35 rubber bullet"
+	name = ".35 Auto rubber bullet"
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
+	icon_state = "rubber_bullet"
 	damage = 4
-	stamina = 35 //10 less than disabler
+	stamina = 45 // Turns out 35 stamina damage is not good enough.
 	sharpness = NONE
 	embedding = null
 
 /obj/item/ammo_box/c35/rubber
-	name = "ammo box (.35 Rubber)"
-	desc = "An ammo box with .35 rubber ammo for the \"Paco\" handgun."
+	name = "ammunition packet (.35 Auto Rubber)"
+	desc = "A shiny box containing .35 Auto rubber ammo for the \"Paco\" handgun."
 	icon_state = "35r_ammobox"
 	ammo_type = /obj/item/ammo_casing/c35/rubber
 	max_ammo = 40

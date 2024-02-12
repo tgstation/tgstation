@@ -52,6 +52,12 @@
 		if(charging)
 			to_chat(user, span_warning("There is already a cell in the charger!"))
 			return
+		//MONKESTATION EDIT ADDITION
+		var/obj/item/stock_parts/cell/inserting_cell = W
+		if(inserting_cell.chargerate <= 0)
+			to_chat(user, span_warning("[inserting_cell] cannot be recharged!"))
+			return
+		//MONKESTATION EDIT END
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))

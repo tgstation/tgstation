@@ -18,6 +18,7 @@
 #define CHANNEL_Z 1008
 #define CHANNEL_WALKMAN 1007 //monkestation edit
 #define CHANNEL_MASTER_VOLUME 1006
+#define CHANNEL_PRUDE 1007
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -34,7 +35,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1006 //monkestation edit
+#define CHANNEL_HIGHEST_AVAILABLE 1007 //monkestation edit
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
@@ -45,6 +46,7 @@
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
+#define BLOCK_SOUND_VOLUME 70
 
 #define AMBIENCE_GENERIC "generic"
 #define AMBIENCE_HOLY "holy"

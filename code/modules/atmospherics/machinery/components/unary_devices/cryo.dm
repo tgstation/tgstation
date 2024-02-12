@@ -470,7 +470,7 @@
 		ui = new(user, src, "Cryo", name)
 		ui.open()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_data(mob/user)
 	var/list/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? TRUE : FALSE
@@ -512,7 +512,10 @@
 	var/beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents += list(list("name" = R.name, "volume" = R.volume))
+			var/chem_name = R.name
+			if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+				chem_name = "Ammonia?"
+			beakerContents += list(list("name" = chem_name, "volume" = R.volume))
 	data["beakerContents"] = beakerContents
 	return data
 

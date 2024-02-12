@@ -291,6 +291,53 @@
 		//You don't belong in this world, monster!
 		chems.remove_reagent(type, chems.get_reagent_amount(src.type))
 
+/datum/reagent/water/salt
+	name = "Saltwater"
+	description = "Water, but salty. Smells like... the station infirmary?"
+	color = "#aaaaaa9d" // rgb: 170, 170, 170, 77 (alpha)
+	taste_description = "the sea"
+	cooling_temperature = 3
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
+
+/datum/glass_style/shot_glass/water/salt
+	required_drink_type = /datum/reagent/water/salt
+	icon_state = "shotglassclear"
+
+/datum/glass_style/drinking_glass/water/salt
+	required_drink_type = /datum/reagent/water/salt
+	name = "glass of saltwater"
+	desc = "If you have a sore throat, gargle some saltwater and watch the pain go away. Can be used as a very improvised topical medicine against wounds."
+	icon_state = "glass_clear"
+
+/datum/reagent/water/salt/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.on_saltwater(reac_volume, carbies)
+
+// Mixed salt with water! All the help of salt with none of the irritation. Plus increased volume.
+/datum/wound/proc/on_saltwater(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_saltwater(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume, initial_flow * 0.6)
+	to_chat(carbies, span_notice("The salt water splashes over [lowertext(src)], soaking up the blood."))
+
+/datum/wound/slash/flesh/on_saltwater(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.1 * reac_volume, initial_flow * 0.5)
+	to_chat(carbies, span_notice("The salt water splashes over [lowertext(src)], soaking up the blood."))
+
+/datum/wound/burn/flesh/on_saltwater(reac_volume)
+	// Similar but better stats from normal salt.
+	sanitization += VALUE_PER(0.6, 30) * reac_volume
+	infestation -= max(VALUE_PER(0.5, 30) * reac_volume, 0)
+	infestation_rate += VALUE_PER(0.07, 30) * reac_volume
+	to_chat(victim, span_notice("The salt water splashes over [lowertext(src)], soaking up the... miscellaneous fluids. It feels somewhat better afterwards."))
+	return
+
 /datum/reagent/water/holywater
 	name = "Holy Water"
 	description = "Water blessed by some deity."
@@ -300,6 +347,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	turf_exposure = TRUE
+	metabolized_traits = list(TRAIT_HOLY)
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
@@ -313,18 +361,10 @@
 		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
 		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
-/datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
-	..()
-	ADD_TRAIT(affected_mob, TRAIT_HOLY, type)
-
 /datum/reagent/water/holywater/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	if(data)
 		data["misc"] = 0
-
-/datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_HOLY, type)
-	..()
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1084,7 +1124,7 @@
 	color = "#D0EFEE" // space cleaner but lighter
 	taste_description = "bitterness"
 	ph = 10.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
 /datum/reagent/space_cleaner/sterilizine/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1093,6 +1133,9 @@
 
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.2, surgery.speed_modifier)
+
+/datum/reagent/space_cleaner/sterilizine/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	burn_wound.sanitization += 0.9
 
 /datum/reagent/iron
 	name = "Iron"
@@ -1301,14 +1344,14 @@
 
 /datum/reagent/space_cleaner
 	name = "Space Cleaner"
-	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
+	description = "A compound used to clean things. Now with 50% more sodium hypochlorite! Can be used to clean wounds, but it's not really meant for that."
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
 	reagent_weight = 0.6 //so it sprays further
-	penetrates_skin = NONE
+	penetrates_skin = VAPOR
 	var/clean_types = CLEAN_WASH
 	ph = 5.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_AFFECTS_WOUNDS
 	turf_exposure = TRUE
 
 /datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume)
@@ -1334,6 +1377,13 @@
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.wash(clean_types)
+
+/datum/reagent/space_cleaner/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	burn_wound.sanitization += 0.3
+	if(prob(5))
+		to_chat(burn_wound.victim, span_notice("Your [burn_wound] stings and burns from the [src] covering it! It does look pretty clean though."))
+		burn_wound.victim.adjustToxLoss(0.5)
+		burn_wound.limb.receive_damage(burn = 0.5, wound_bonus = CANT_WOUND)
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
@@ -2552,14 +2602,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/pax/on_mob_metabolize(mob/living/affected_mob)
-	..()
-	ADD_TRAIT(affected_mob, TRAIT_PACIFISM, type)
-
-/datum/reagent/pax/on_mob_end_metabolize(mob/living/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_PACIFISM, type)
-	..()
+	metabolized_traits = list(TRAIT_PACIFISM)
 
 /datum/reagent/bz_metabolites
 	name = "BZ Metabolites"
@@ -2568,14 +2611,7 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
-	..()
-	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
-
-/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
-	..()
-	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+	metabolized_traits = list(CHANGELING_HIVEMIND_MUTE)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	if(target.mind)
@@ -2786,6 +2822,7 @@
 	return ..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.RemoveElement(/datum/element/forced_gravity, 0)
 
 /datum/reagent/cellulose
@@ -2805,6 +2842,7 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~34 seconds
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE
+	metabolized_traits = list(TRAIT_ANALGESIA)
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
 
@@ -3075,6 +3113,7 @@
 	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * 20 SECONDS)
 
 /datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	to_chat(affected_mob, span_userdanger("You feel an evil presence inside you!"))
 	if(affected_mob.mob_biotypes & MOB_UNDEAD) //monkestation temp removal: || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID))
 		affected_mob.add_mood_event("morbid_hauntium", /datum/mood_event/morbid_hauntium, name) //8 minutes of slight mood buff if undead or morbid

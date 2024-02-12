@@ -1,0 +1,5 @@
+#define COMSIG_ATTACHMENT_ATTACHED "comsig_attachment_attached"
+#define COMSIG_ATTACHMENT_DETACHED "comsig_attachment_detached"
+#define COMSIG_ATTACHMENT_ATTACH_ATTEMPT "comsig_attachment_attach_attempt"
+#define COMSIG_GUN_RACKED "gun_racked"
+#define COMSIG_ATTACHMENT_STAT_RESET "gun_stat_reset"

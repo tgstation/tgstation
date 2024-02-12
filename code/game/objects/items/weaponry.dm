@@ -78,6 +78,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
@@ -284,6 +285,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana
@@ -310,7 +312,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT + SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
@@ -379,7 +381,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/throwing_star/stamina
@@ -410,7 +412,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6)
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
@@ -485,7 +487,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
@@ -498,7 +500,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron = 600)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6)
 
 /obj/item/cane/white/Initialize(mapload)
 	. = ..()
@@ -702,7 +704,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	demolition_mod = 1.25
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3.5)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_HUGE
 	/// Are we able to do a homerun?
@@ -850,14 +852,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "This bat is made of highly reflective, highly armored material."
 	icon_state = "baseball_bat_metal"
 	inhand_icon_state = "baseball_bat_metal"
-	custom_materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT * 3.5)
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3.5)
 	resistance_flags = NONE
 	force = 12
 	throwforce = 15
 	mob_thrower = TRUE
+	block_sound = 'sound/weapons/effects/batreflect.ogg'
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
-	playsound(src, pick('sound/weapons/effects/batreflect1.ogg', 'sound/weapons/effects/batreflect2.ogg'), 50, TRUE)
 	return TRUE
 
 /obj/item/melee/flyswatter
@@ -973,6 +975,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	force = 14
 	throwforce = 12
@@ -999,6 +1002,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_speed = CLICK_CD_HYPER_RAPID
 	embedding = list("embed_chance" = 100)
 	block_chance = 25
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK

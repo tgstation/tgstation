@@ -125,6 +125,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/restricted = FALSE
 	/// do we have a turf exposure (used to prevent liquids doing un-needed processes)
 	var/turf_exposure = FALSE
+	/// A list of traits to apply while the reagent is being metabolized.
+	var/list/metabolized_traits
+	/// A list of traits to apply while the reagent is in a mob.
+	var/list/added_traits
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -185,6 +189,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
+/// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
+/datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	return
+
 /*
 Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
 Primarily used in reagents/reaction_agents
@@ -198,21 +206,27 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
+	SHOULD_CALL_PARENT(TRUE)
 	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
-	return
+	if(added_traits)
+		L.add_traits(added_traits, "added:[type]")
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
+	SHOULD_CALL_PARENT(TRUE)
+	REMOVE_TRAITS_IN(L, "added:[type]")
 	L.clear_mood_event("[type]_overdose")
-	return
 
 /// Called when this reagent first starts being metabolized by a liver
 /datum/reagent/proc/on_mob_metabolize(mob/living/L)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(metabolized_traits)
+		L.add_traits(metabolized_traits, "metabolized:[type]")
 
 /// Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	REMOVE_TRAITS_IN(L, "metabolized:[type]")
 
 /// Called when a reagent is inside of a mob when they are dead
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
