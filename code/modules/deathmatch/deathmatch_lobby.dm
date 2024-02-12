@@ -194,15 +194,15 @@
 	if (players.len <= 1)
 		end_game()
 
-/datum/deathmatch_lobby/proc/add_observer(mob/_mob, _host = FALSE)
-	if (players[_mob.ckey])
-		CRASH("Tried to add [_mob.ckey] as an observer while being a player.")
-	observers[_mob.ckey] = list(mob = _mob, host = _host)
+/datum/deathmatch_lobby/proc/add_observer(mob/mob, host = FALSE)
+	if (players[mob.ckey])
+		CRASH("Tried to add [mob.ckey] as an observer while being a player.")
+	observers[mob.ckey] = list("mob" = mob, "host" = host)
 
-/datum/deathmatch_lobby/proc/add_player(mob/_mob, _loadout, _host = FALSE)
+/datum/deathmatch_lobby/proc/add_player(mob/mob, loadout, host = FALSE)
 	if (observers[_mob.ckey])
 		CRASH("Tried to add [_mob.ckey] as a player while being an observer.")
-	players[_mob.ckey] = list(mob = _mob, host = _host, ready = FALSE, loadout = _loadout)
+	players[_mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout)
 
 /datum/deathmatch_lobby/proc/remove_ckey_from_play(ckey)
 	var/is_likely_player = (ckey in players)
