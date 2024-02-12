@@ -1177,6 +1177,28 @@
 *	SUITS
 */
 
+// JACKETS
+
+/datum/greyscale_config/tailcoat
+	name = "Tailcoat"
+	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat.json'
+
+/datum/greyscale_config/tailcoat_worn
+	name = "Worn Tailcoat"
+	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat_worn.json'
+
+/datum/greyscale_config/tailcoat_bar
+	name = "Tailcoat"
+	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar.json'
+
+/datum/greyscale_config/tailcoat_bar_worn
+	name = "Worn Tailcoat"
+	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar_worn.json'
+
 // JUMPSUITS
 
 /datum/greyscale_config/jumpsuit_worn/digitigrade
@@ -1200,3 +1222,43 @@
 /datum/greyscale_config/sneakers_orange_worn/digitigrade
 	name = "Worn Orange Sneakers - Digitigrade"
 	icon_file = DIGITIGRADE_SHOES_FILE
+
+/datum/greyscale_config/bowtie_collar
+	name = "Bowtie Collar"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bowtie_collar.json'
+
+/datum/greyscale_config/bowtie_collar_worn
+	name = "Worn Bowtie Collar"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bowtie_collar_worn.json'
+
+/datum/greyscale_config/heels
+	name = "Heels"
+	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heels.json'
+
+/datum/greyscale_config/heels_worn
+	name = "Worn Heels"
+	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heels_worn.json'
+
+/datum/greyscale_config/bunnysuit
+	name = "Worn Bunny Suit"
+	icon_file = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bunnysuit.json'
+
+/datum/greyscale_config/bunnysuit_worn
+	name = "Worn Bunny Suit"
+	icon_file = 'monkestation/icons/mob/clothing/uniform.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bunnysuit_worn.json'
+
+/datum/greyscale_config/playbunnyears
+	name = "Playbunny Ears"
+	icon_file = 'monkestation/icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/playbunny_ears.json'
+
+/datum/greyscale_config/playbunnyears_worn
+	name = "Worn Playbunny Ears"
+	icon_file = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	json_config = 'code/datums/greyscale/json_configs/playbunny_ears_worn.json'

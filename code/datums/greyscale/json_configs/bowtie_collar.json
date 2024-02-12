@@ -1,0 +1,30 @@
+{
+	"bowtie_collar_tied": [
+		{
+			"type": "icon_state",
+			"icon_state": "bowtie_collar_base_tied",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bowtie_collar_bowtie_tied",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"bowtie_collar_untied": [
+		{
+			"type": "icon_state",
+			"icon_state": "bowtie_collar_base_untied",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bowtie_collar_bowtie_untied",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

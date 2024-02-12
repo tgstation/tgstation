@@ -147,6 +147,7 @@
 				/obj/item/clothing/suit/costume/cheongsam_red = 1,
 				/obj/item/clothing/suit/costume/cheongsam_blue = 1,
 				/obj/item/clothing/under/wonka = 1,
+				/obj/item/clothing/shoes/heels = 4, // MONKESTATION EDIT ADDITION
 			),
 		),
 		list(
@@ -191,6 +192,10 @@
 				/obj/item/clothing/neck/maid = 1,
 				/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
 				/obj/item/clothing/accessory/maidapron = 1,
+				/obj/item/clothing/under/costume/playbunny = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/neck/tie/bunnytie = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/head/playbunnyears = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/suit/jacket/tailcoat = 2, // MONKESTATION EDIT ADDITION
 			),
 		),
 		list(
