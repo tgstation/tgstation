@@ -14,7 +14,27 @@ import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
 
 type Data = {
-  global_chat: boolean;
+  self: string;
+  host: BooleanLike;
+  admin: BooleanLike;
+  global_chat: BooleanLike;
+  loadouts: string[];
+  map: {
+    name: string;
+    desc: string;
+	time: number;
+	min_players: number;
+	max_players: number;
+  };
+  loadoutdesc: string;
+  players: {
+    host: number;
+    ready: BooleanLike;
+  }[];
+  observers: {
+    host: number;
+    ready: BooleanLike;
+  }[];
 };
 
 export const DeathmatchLobby = (props) => {
