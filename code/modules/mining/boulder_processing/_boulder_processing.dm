@@ -1,6 +1,3 @@
-///Special case when we are trying to eject a boulder but there is already another boulder in our loc
-#define TURF_BLOCKED_BY_BOULDER -1
-
 /obj/machinery/bouldertech
 	name = "bouldertech brand refining machine"
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
@@ -174,10 +171,6 @@
 	if(!can_process_boulder(new_boulder))
 		return FALSE
 
-	if(!length(new_boulder.custom_materials)) //Shouldn't happen, but just in case.
-		qdel(new_boulder)
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		return FALSE
 	new_boulder.forceMove(src)
 
 	COOLDOWN_START(src, accept_cooldown, 1.5 SECONDS)
@@ -259,13 +252,15 @@
 		balloon_alert(user, "close panel!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/obj/item/boulder/boulder = locate(/obj/item/boulder) in contents
+	var/obj/item/boulder/boulder = locate(/obj/item/boulder) in src
 	if(!boulder)
-		balloon_alert_to_viewers("No boulders to remove!")
+		balloon_alert_to_viewers("no boulders to remove!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	remove_boulder(boulder)
+	if(!remove_boulder(boulder))
+		balloon_alert_to_viewers("no space to remove!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Accepts a boulder into the machinery, then converts it into minerals.
@@ -280,44 +275,44 @@
 		return FALSE
 	if(chosen_boulder.loc != src)
 		return FALSE
-	if(!length(chosen_boulder.custom_materials))
-		qdel(chosen_boulder)
-		playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		return FALSE
 
-	//here we loop through the boulder's ores
-	var/list/rejected_mats = list()
-	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-		var/quantity = chosen_boulder.custom_materials[possible_mat]
-		if(!can_process_material(possible_mat))
-			rejected_mats[possible_mat] = quantity
-			continue
-		points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
-		if(!silo_materials.mat_container.insert_amount_mat(quantity * refining_efficiency, possible_mat))
-			rejected_mats[possible_mat] = quantity
-	use_power(active_power_usage)
+	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
+	if(!chosen_boulder.processed_by)
+		check_for_boosts()
 
-	//Calls the relevant behavior for boosting the machine's efficiency, if able.
-	check_for_boosts()
-	chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)
+		//here we loop through the boulder's ores
+		var/list/rejected_mats = list()
+		for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
+			var/quantity = chosen_boulder.custom_materials[possible_mat] * refining_efficiency
+			if(!can_process_material(possible_mat))
+				rejected_mats[possible_mat] = quantity
+				continue
+			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
+			if(!silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
+				rejected_mats[possible_mat] = quantity
+		use_power(active_power_usage)
 
-	//break the boulder down if we have processed all its materials
-	if(!length(chosen_boulder.custom_materials))
-		playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		if(istype(chosen_boulder, /obj/item/boulder/artifact))
-			points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
-		chosen_boulder.break_apart()
-		return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+		//puts back materials that couldn't be processed
+		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)
+
+		//break the boulder down if we have processed all its materials
+		if(!length(chosen_boulder.custom_materials))
+			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			if(istype(chosen_boulder, /obj/item/boulder/artifact))
+				points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
+			chosen_boulder.break_apart()
+			return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+
+		chosen_boulder.processed_by = src
 
 	//eject the boulder since we are done with it
-	return remove_boulder(chosen_boulder)
+	remove_boulder(chosen_boulder)
 
 /obj/machinery/bouldertech/process()
 	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		return
 
 	var/boulders_found = FALSE
-	var/boulder_removed = FALSE
 	var/boulders_processed = boulders_processing_count
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulders_found = TRUE
@@ -330,12 +325,11 @@
 			if(potential_boulder.durability > 0)
 				continue
 
-		boulder_removed = breakdown_boulder(potential_boulder)
-		if(boulder_removed == TURF_BLOCKED_BY_BOULDER) //no space in our turf to eject boulders. hault all operations till space opens up
-			return
+		breakdown_boulder(potential_boulder)
+		boulders_found = FALSE
 
 	//when the boulder is removed it plays sound and  displays a balloon alert. don't overlap when that happens
-	if(boulders_found && !boulder_removed)
+	if(boulders_found)
 		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert_to_viewers(action)
 
@@ -349,15 +343,9 @@
 	PRIVATE_PROC(TRUE)
 
 	if(QDELETED(specific_boulder))
+		return TRUE
+	if(locate(/obj/item/boulder) in loc) //There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
 		return FALSE
-	if(!length(specific_boulder.custom_materials))
-		qdel(specific_boulder)
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		return FALSE
-
-	//There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
-	if(locate(/obj/item/boulder) in loc)
-		return TURF_BLOCKED_BY_BOULDER
 
 	//Reset durability to little random lower value cause we have crushed it so many times
 	var/size = specific_boulder.boulder_size
@@ -372,5 +360,3 @@
 	balloon_alert_to_viewers("clear!")
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 	return TRUE
-
-#undef TURF_BLOCKED_BY_BOULDER
