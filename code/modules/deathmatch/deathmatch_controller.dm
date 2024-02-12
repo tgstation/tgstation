@@ -55,7 +55,7 @@ GLOBAL_VAR(deathmatch_game)
 		stack_trace("Deathmatch clear_location was called on a clear map spawner!")
 		return FALSE
 	var/turf/spawn_loc = get_turf(location)
-	if(spawn_loc == null) //emergency
+	if(isnull(spawn_loc)) //flarped up
 		stack_trace("DM Map Spawner is nullspaced: [spawn_loc] x[location.x] y[location.y]!!")
 	qdel(location)
 	new /obj/effect/landmark/deathmatch_map_spawner(spawn_loc)

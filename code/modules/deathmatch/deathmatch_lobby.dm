@@ -189,7 +189,7 @@
 	
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
-	if(!gibbed && !QDELING(player) && !istype(player.loc, /obj/effect/abstract)) // for some reason dusting or deleting in chasm storage messes up tgui bad
+	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
 		player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
 		end_game()
@@ -297,13 +297,13 @@
 		ui.open()
 
 /datum/deathmatch_lobby/ui_static_data(mob/user)
-	. = ..()
+	. = list()
 	.["maps"] = list()
 	for (var/map_key in game.maps)
 		.["maps"] += map_key
 
 /datum/deathmatch_lobby/ui_data(mob/user)
-	. = ..()
+	. = list()
 	.["self"] = user.ckey
 	.["host"] = (user.ckey == host)
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
