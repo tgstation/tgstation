@@ -310,3 +310,34 @@
   - bugfix: lathes now use moderate power for printing operations
   necromanceranne:
   - bugfix: The shove blocker module parent type now has the correct typepath.
+2024-02-12:
+  Atlasle, JohnFulpWillard:
+  - rscadd: Adds the Touchy quirk, you need to be next to something to examine it,
+      for 2 extra quirk points.
+  Ed640:
+  - bugfix: Sculpted statues stop including light layers.
+  LT3:
+  - bugfix: MULEbot will correctly display its loaded cargo on BotKeeper
+  - bugfix: MULEbot home beacon can be set from control panel
+  - code_imp: MULEbot home location is automatically set on init
+  Melbert:
+  - qol: Glasses colors should be a lot less harsh, and being blind no longer also
+      blinds your hud.
+  - bugfix: Lavaland Beech Bartender's clothing storage is named the right thing now
+  - bugfix: Lipoplasty is An Option again
+  Momo8289:
+  - rscadd: Shakers can now pour drinks with custom names and descriptions! Alt-click
+      the shaker to enable this.
+  NeonNik2245:
+  - rscadd: 3 new masks for your characters (thanks to Kovac for the scarf sprites)
+  Rhials:
+  - bugfix: You can now click things as an alien larva again.
+  SyncIt21:
+  - bugfix: machines that should not drop contents when deleted no longer do.
+  - refactor: refactors how machines are deconstructed. report bugs on github.
+  Thunder12345:
+  - bugfix: The wizard's pets Jimmy and Jommy no longer fight to the death.
+  Xander3359:
+  - balance: Contractor kit no longer gets RNG items, it's a specific pool now
+  mc-oofert:
+  - rscadd: nanotrasen museum gateway map
