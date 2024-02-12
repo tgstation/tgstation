@@ -511,7 +511,6 @@
 /area/deathmatch)
 "cL" = (
 /obj/structure/table,
-/obj/structure/table,
 /obj/item/grenade/smokebomb,
 /turf/open/floor/engine,
 /area/deathmatch)

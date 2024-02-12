@@ -1,14 +1,14 @@
 import { useBackend } from '../backend';
 import { map } from 'common/collections';
 import {
-  Table,
-  Icon,
-  Button,
-  Section,
-  Flex,
   Box,
-  Dropdown,
+  Button,
   Divider,
+  Dropdown,
+  Flex,
+  Icon,
+  Section,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
