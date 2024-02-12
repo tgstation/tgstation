@@ -110,7 +110,6 @@ export const DeathmatchLobby = (props) => {
                         <b>{observer}</b>
                       )) || (
                         <Dropdown
-                          sameline
                           displayText={observer}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
                           onSelected={(value) =>
