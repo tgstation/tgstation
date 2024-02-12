@@ -17,9 +17,8 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	if(islist(granted_spells) && granted_spells.len)
-		for(var/datum/action/act as anything in granted_spells)
-			GRANT_ACTION(act)
+	for(var/datum/action/act as anything in granted_spells)
+		GRANT_ACTION(act)
 
 /datum/outfit/deathmatch_loadout/naked
 	name = "DM: Naked"
