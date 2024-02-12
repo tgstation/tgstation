@@ -524,7 +524,7 @@
 	heat = 1000
 	light_color = LIGHT_COLOR_FIRE
 	light_range = 2
-	fuel = 20 MINUTES
+	fuel = 35 MINUTES
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
 	can_be_extinguished = TRUE
