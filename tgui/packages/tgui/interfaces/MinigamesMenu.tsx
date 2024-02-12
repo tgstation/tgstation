@@ -30,9 +30,9 @@ export const MinigamesMenu = (props) => {
                 onClick={() => act('mafia')}
               />
             </Stack.Item>
-			</Stack>
-			<Divider/>
-			<Stack>
+          </Stack>
+          <Divider />
+          <Stack>
             <Stack.Item grow>
               <Button
                 content="Basketball"

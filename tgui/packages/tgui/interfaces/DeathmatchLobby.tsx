@@ -41,7 +41,7 @@ export const DeathmatchLobby = (props) => {
                       {(!((data.host && !pdata.host) || data.admin) && (
                         <b>{player}</b>
                       )) || (
-                        <Dropdown                    
+                        <Dropdown
                           nochevron
                           displayText={player}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
@@ -89,7 +89,6 @@ export const DeathmatchLobby = (props) => {
                         <b>{observer}</b>
                       )) || (
                         <Dropdown
-                          
                           nochevron
                           sameline
                           displayText={observer}
@@ -114,7 +113,7 @@ export const DeathmatchLobby = (props) => {
               <Box textAlign="center">
                 {(!!data.host && (
                   <Dropdown
-					fluid
+                    fluid
                     nochevron
                     displayText={data.map.name}
                     options={data.maps}
@@ -130,8 +129,8 @@ export const DeathmatchLobby = (props) => {
               <Divider />
               {data.map.desc}
               <Box textAlign="center">
-				Maximum Play Time: <b>{`${data.map.time / 600}min`}</b>
-				<br />
+                Maximum Play Time: <b>{`${data.map.time / 600}min`}</b>
+                <br />
                 Min players: <b>{data.map.min_players}</b>
                 <br />
                 Max players: <b>{data.map.max_players}</b>
@@ -141,8 +140,8 @@ export const DeathmatchLobby = (props) => {
               <Button.Checkbox
                 checked={data.global_chat}
                 disabled={!(data.host || data.admin)}
-                content="Global Chat"
-                tooltip="Allow players and observers to talk with each other."
+                content="Heightened Hearing"
+                tooltip="Players can hear ghosts and hear through walls."
                 onClick={() =>
                   act('host', {
                     func: 'global_chat',
