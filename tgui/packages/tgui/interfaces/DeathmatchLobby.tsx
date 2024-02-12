@@ -54,13 +54,13 @@ export const DeathmatchLobby = (props) => {
                   <Table.Cell grow>Loadout</Table.Cell>
                   <Table.Cell collapsing>Ready</Table.Cell>
                 </Table.Row>
-                {Object.keys(players).map((player) => (
+                {Object.keys(data.players).map((player) => (
                   <Table.Row className="candystripe">
                     <Table.Cell collapsing>
-                      {!!players[player].host && <Icon name="star" />}
+                      {!!data.players[player].host && <Icon name="star" />}
                     </Table.Cell>
                     <Table.Cell>
-                      {(!((data.host && !players[player].host) || data.admin) && (
+                      {(!((data.host && !data.players[player].host) || data.admin) && (
                         <b>{player}</b>
                       )) || (
                         <Dropdown
@@ -77,7 +77,7 @@ export const DeathmatchLobby = (props) => {
                     </Table.Cell>
                     <Table.Cell grow>
                       <Dropdown
-                        displayText={pdata.loadout}
+                        displayText={data.players[player].loadout}
                         disabled={!(data.host || player === data.self)}
                         options={data.loadouts}
                         onSelected={(value) =>
@@ -91,7 +91,7 @@ export const DeathmatchLobby = (props) => {
                     <Table.Cell collapsing>
                       <ButtonCheckbox
                         disabled={player !== data.self}
-                        checked={pdata.ready}
+                        checked={data.players[player].ready}
                         onClick={() => act('ready')}
                       />
                     </Table.Cell>
