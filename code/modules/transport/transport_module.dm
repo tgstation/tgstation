@@ -86,6 +86,7 @@
 	if(radial_travel)
 		AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Transport")
 
+	ADD_TRAIT(src, TRAIT_CHASM_STOPPER, INNATE_TRAIT)
 	set_movement_registrations()
 
 	//since transport_controller datums find all connected platforms when a transport structure first creates it and then
@@ -937,3 +938,7 @@
 			passenger.start_window_flight(1.5 SECONDS)
 		var/throw_target = get_edge_target_turf(src, throw_direction)
 		passenger.throw_at(throw_target, 30, 7, force = MOVE_FORCE_OVERPOWERING)
+
+/obj/structure/transport/linear/tram/slow
+	transport_controller_type = /datum/transport_controller/linear/tram/slow
+	speed_limiter = /datum/transport_controller/linear/tram/slow::speed_limiter

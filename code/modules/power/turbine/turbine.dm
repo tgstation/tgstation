@@ -179,7 +179,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/turbine/on_deconstruction()
+/obj/machinery/power/turbine/on_deconstruction(disassembled)
 	installed_part?.forceMove(loc)
 	return ..()
 
@@ -547,7 +547,7 @@
 	disconnect_from_network()
 	SSair.stop_processing_machine(src)
 
-/obj/machinery/power/turbine/core_rotor/on_deconstruction()
+/obj/machinery/power/turbine/core_rotor/on_deconstruction(disassembled)
 	deactivate_parts()
 	return ..()
 

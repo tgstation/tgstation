@@ -44,4 +44,6 @@
 /// The multiplier that gets applied for automatically generated mining points.
 #define MINING_POINT_MACHINE_MULTIPLIER 0.8
 
-
+//String defines to use with CaveGenerator presets for what ore breakdown to use.
+#define OREGEN_PRESET_LAVALAND "lavaland"
+#define OREGEN_PRESET_TRIPLE_Z "triple_z"

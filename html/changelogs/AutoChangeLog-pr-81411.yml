@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Venus Human Traps are now visible in the orbit menu. Cool!"
+  - bugfix: "Spawning as a Venus Human Trap now properly gives you an antag datum/objective."
+  - bugfix: "Venus human trap flowers no longer have a second, identical flower under themselves."

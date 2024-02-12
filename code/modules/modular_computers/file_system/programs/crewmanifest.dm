@@ -16,7 +16,7 @@
 	data["manifest"] = GLOB.manifest.get_manifest()
 	return data
 
-/datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui, datum/tgui/ui, datum/ui_state/state)
+/datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
 		if("PRG_print")

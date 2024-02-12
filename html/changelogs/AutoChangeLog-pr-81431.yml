@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Map hazard anomalies are no longer treated as points-of-interest in the orbit menu."

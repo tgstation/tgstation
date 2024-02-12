@@ -402,9 +402,7 @@
 	},
 /area/template_noop)
 "GN" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 2
-	},
+/obj/machinery/door/window/left/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/holofloor{
 	icon_state = "white"

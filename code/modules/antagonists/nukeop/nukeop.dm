@@ -63,7 +63,7 @@
 		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
 		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 		if (uplink)
-			uplink.add_telecrystals(extra_tc)
+			uplink.uplink_handler.add_telecrystals(extra_tc)
 
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	if(uplink)
@@ -617,7 +617,7 @@
 	nukie.mind.add_antag_datum(antag_datum, src)
 
 	var/datum/component/uplink/uplink = nukie.mind.find_syndicate_uplink()
-	uplink?.set_telecrystals(tc_to_spawn)
+	uplink?.uplink_handler.set_telecrystals(tc_to_spawn)
 
 	// add some pizzazz
 	do_sparks(4, FALSE, spawn_loc)
