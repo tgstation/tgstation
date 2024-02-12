@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Paperwork should actually use the writing utensil's font, colour, and boldness outside of input fields again."
