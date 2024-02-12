@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "visitation";
+	id = "dm16";
 	name = "Visitation Shutters"
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -643,7 +643,6 @@
 /area/deathmatch)
 "lf" = (
 /turf/closed/indestructible/fakedoor/glass_airlock,
-/turf/open/indestructible/dark,
 /area/deathmatch)
 "li" = (
 /obj/structure/table,
@@ -1006,7 +1005,7 @@
 /area/deathmatch)
 "pg" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "visitation";
+	id = "dm16";
 	name = "Visitation Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -1024,7 +1023,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "dm6";
-	name = "privacy shutters"
+	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/deathmatch)
@@ -1668,8 +1667,7 @@
 /area/deathmatch)
 "yS" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Brig Control Desk"
 	},
 /obj/item/folder/red,
@@ -1996,7 +1994,7 @@
 /area/deathmatch)
 "Dz" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "visitation";
+	id = "dm16";
 	name = "Visitation Shutters"
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -2422,7 +2420,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "dm4";
-	name = "armory shutters"
+	name = "Armory Shutters"
 	},
 /turf/open/indestructible/dark,
 /area/deathmatch)
@@ -2459,8 +2457,7 @@
 /area/deathmatch)
 "JF" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Brig Control Desk"
 	},
 /obj/item/paper,
@@ -2981,9 +2978,7 @@
 /turf/open/floor/plating,
 /area/deathmatch)
 "QG" = (
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/grimy,
 /area/deathmatch)
 "Rd" = (
@@ -3650,7 +3645,7 @@
 /area/deathmatch)
 "ZI" = (
 /obj/machinery/door/poddoor{
-	name = "Lockdown door"
+	name = "Lockdown Door"
 	},
 /turf/open/floor/plating,
 /area/deathmatch)
