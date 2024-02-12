@@ -31,9 +31,9 @@ type Data = {
   map: {
     name: string;
     desc: string;
-	time: number;
-	min_players: number;
-	max_players: number;
+    time: number;
+    min_players: number;
+    max_players: number;
   };
   loadoutdesc: string;
   players: PlayerLike[];
@@ -61,9 +61,10 @@ export const DeathmatchLobby = (props) => {
                       {!!data.players[player].host && <Icon name="star" />}
                     </Table.Cell>
                     <Table.Cell>
-                      {(!((data.host && !data.players[player].host) || data.admin) && (
-                        <b>{player}</b>
-                      )) || (
+                      {(!(
+                        (data.host && !data.players[player].host) ||
+                        data.admin
+                      ) && <b>{player}</b>) || (
                         <Dropdown
                           displayText={player}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
@@ -101,14 +102,15 @@ export const DeathmatchLobby = (props) => {
                 {Object.keys(data.observers).map((observer) => (
                   <Table.Row key={observer}>
                     <Table.Cell collapsing>
-                      {(!!data.observers[observer].host && <Icon name="star" />) || (
-                        <Icon name="eye" />
-                      )}
+                      {(!!data.observers[observer].host && (
+                        <Icon name="star" />
+                      )) || <Icon name="eye" />}
                     </Table.Cell>
                     <Table.Cell collapsing>
-                      {(!((data.host && !data.observers[observer].host) || data.admin) && (
-                        <b>{observer}</b>
-                      )) || (
+                      {(!(
+                        (data.host && !data.observers[observer].host) ||
+                        data.admin
+                      ) && <b>{observer}</b>) || (
                         <Dropdown
                           displayText={observer}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
