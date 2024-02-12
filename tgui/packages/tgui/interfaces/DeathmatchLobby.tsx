@@ -1,5 +1,4 @@
 import { useBackend } from '../backend';
-import { BooleanLike } from 'common/react';
 import {
   Box,
   Button,
@@ -12,6 +11,8 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
+
+import { BooleanLike } from 'common/react';
 
 type PlayerLike = {
   [key: string]: {
