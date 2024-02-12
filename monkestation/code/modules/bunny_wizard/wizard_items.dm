@@ -55,30 +55,39 @@
 /mob/living/carbon/human/proc/bunnify(mob/target)
 	var/obj/effect/particle_effect/fluid/smoke/exit_poof = new(get_turf(src))
 	exit_poof.lifetime = 2 SECONDS
-	unequip_everything() //It's more an inconvenience than anything
-	if(IS_WIZARD(src))
-		equip_outfit(/datum/outfit/wizard/cursed_magician)
+	var/list/curse_check = list()
+	curse_check += src.get_item_by_slot(ITEM_SLOT_FEET)
+	curse_check += src.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	curse_check += src.get_item_by_slot(ITEM_SLOT_HEAD)
+	for(var/obj/item/trait_needed as anything in curse_check)
+		REMOVE_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
+	unequip_everything() //Get rid fo their cursed gear for different cursed gear
+	src.physique = FEMALE
+	update_body(is_creating = TRUE) //actually update your body
+//	if(IS_WIZARD(src))
+//		equipOutfit(/datum/outfit/wizard/cursed_magician)
 	if(isplasmaman(src))
 		equipOutfit(/datum/outfit/plasmaman/cursed_bunny)
 		return
 	var/bunny_theme = pick_weight(list(
-	"Color" = 60,
-	"Syndicate" = 3,
-	"Centcomm" = 6,
-	pick(list(
+	"Color" = 40,
+	/* pick(list(
 		"British",
 		"Communist",
 		"USA",
 	)) = 20,
+	"Centcomm" = 6, */
+	"Syndicate" = 3,
 	))
 
 	switch(bunny_theme)
 		if("Color")
-			equipOutfit(/datum/outfit/cursed_bunny/colored)
+			equipOutfit(/datum/outfit/cursed_bunny/color, FALSE)
 			return
 		if("Syndicate")
 			equipOutfit(/datum/outfit/cursed_bunny/syndicate)
 			return
+			/*
 		if("Centcomm")
 			return /datum/outfit/cursed_bunny/centcomm
 		if("British")
@@ -87,4 +96,4 @@
 			return /datum/outfit/cursed_bunny/communist
 		if("USA")
 			return /datum/outfit/cursed_bunny/usa
-
+*/
