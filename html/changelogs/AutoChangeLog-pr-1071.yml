@@ -1,0 +1,9 @@
+author: "Maximo and DimWhat"
+delete-after: True
+changes:
+  - rscadd: "Added a bunny suit, bunny ears, tail coat, heels, and necktie collar to the autodrobe, bardrobe, and monkeshop."
+  - rscadd: "Added a a specialized syndicate bunny costume set to the Badassery section of the buylist. I regret nothing."
+  - rscadd: "Added a bunny magician set to the magivend."
+  - rscadd: "A bunch of misc bunny suit sets as well."
+  - balance: "Added syndicate heels to the maid kit for parity."
+  - code_imp: "Added code support for tieing/untieing more ties."
