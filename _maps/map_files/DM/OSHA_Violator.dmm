@@ -41,9 +41,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "dy" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -77,7 +75,6 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "gG" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/indestructible,
@@ -117,20 +114,9 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/indestructible,
 /area/deathmatch)
-"ih" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/indestructible,
-/area/deathmatch)
 "iE" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/loading_area,
-/turf/open/indestructible,
-/area/deathmatch)
-"iP" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "je" = (
@@ -143,9 +129,7 @@
 /area/deathmatch)
 "jC" = (
 /obj/structure/cable,
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -702,12 +686,6 @@
 /obj/machinery/light/no_nightlight/directional/west,
 /turf/open/indestructible,
 /area/deathmatch)
-"Gs" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/indestructible,
-/area/deathmatch)
 "Gx" = (
 /obj/machinery/conveyor/auto,
 /obj/structure/cable,
@@ -823,9 +801,7 @@
 /area/deathmatch)
 "Mu" = (
 /obj/structure/cable,
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/random/directional/west,
 /turf/open/indestructible,
 /area/deathmatch)
 "My" = (
@@ -1092,9 +1068,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Zi" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -1612,7 +1586,7 @@ gN
 wK
 wK
 gN
-Gs
+sZ
 gN
 gN
 gN
@@ -1847,7 +1821,7 @@ sa
 je
 ai
 do
-ih
+gN
 mj
 pO
 ta
@@ -2009,7 +1983,7 @@ sa
 je
 ai
 do
-iP
+YU
 gN
 qo
 qo

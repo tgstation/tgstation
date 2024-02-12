@@ -91,7 +91,7 @@ GLOBAL_VAR(deathmatch_game)
 /datum/deathmatch_controller/proc/find_lobby_by_user(ckey)
 	for(var/lobbykey in lobbies)
 		var/datum/deathmatch_lobby/lobby = lobbies[lobbykey]
-		if(ckey in lobby.players || ckey in lobby.observers)
+		if(ckey in lobby.players+lobby.observers)
 			return lobby
 
 /datum/deathmatch_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

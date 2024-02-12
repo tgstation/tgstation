@@ -132,9 +132,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "pZ" = (
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/random/directional/west,
 /turf/open/indestructible,
 /area/deathmatch)
 "qK" = (
@@ -143,9 +141,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "sk" = (
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "sl" = (
@@ -299,9 +295,7 @@
 /area/deathmatch)
 "Hp" = (
 /obj/item/reagent_containers/pill/maintenance,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/structure/table/reinforced,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -329,9 +323,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "La" = (
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/random/directional/south,
 /obj/item/flashlight/flare,
 /obj/structure/table/reinforced,
 /turf/open/indestructible,
@@ -378,9 +370,7 @@
 /area/deathmatch)
 "Om" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/indestructible,
 /area/deathmatch)
 "OA" = (
@@ -390,9 +380,7 @@
 "OO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "OR" = (

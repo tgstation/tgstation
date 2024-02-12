@@ -226,10 +226,8 @@
 "oR" = (
 /obj/structure/table/bronze,
 /obj/item/nullrod/claymore/bostaff,
-/obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -422,12 +420,8 @@
 /obj/item/throwing_star{
 	pixel_x = 2
 	},
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/north,
 /obj/item/throwing_star{
 	pixel_x = -9;
 	pixel_y = 3
@@ -486,15 +480,9 @@
 /area/deathmatch)
 "Cr" = (
 /obj/item/sharpener,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
 /turf/open/water,
 /area/deathmatch)
 "DD" = (
@@ -516,13 +504,9 @@
 /turf/open/misc/grass,
 /area/deathmatch)
 "Fl" = (
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
 /turf/open/water,
 /area/deathmatch)
 "Fu" = (
@@ -555,15 +539,9 @@
 "GQ" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/toy/plush/lizard_plushie/green,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/carpet,
 /area/deathmatch)
 "GX" = (
@@ -572,12 +550,8 @@
 "JP" = (
 /obj/structure/table/bronze,
 /obj/item/restraints/legcuffs/bola/tactical,
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/stone,
 /area/deathmatch)
 "Kd" = (
@@ -630,10 +604,8 @@
 /obj/structure/table/bronze,
 /obj/item/clothing/suit/armor/riot/knight,
 /obj/item/clothing/head/helmet/knight,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/stone,
 /area/deathmatch)
 "Op" = (
@@ -750,13 +722,9 @@
 "Uk" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/organ/internal/cyberimp/arm/shard/katana,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/deathmatch)
 "UO" = (
@@ -822,12 +790,8 @@
 /area/deathmatch)
 "Zm" = (
 /obj/item/toy/plush/carpplushie/dehy_carp,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
 /turf/open/water,
 /area/deathmatch)
 "Zu" = (
