@@ -115,7 +115,6 @@
 	desc = "He love pizza."
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
-	back = /obj/item/storage/backpack
 	l_pocket = /obj/item/sharpener
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
