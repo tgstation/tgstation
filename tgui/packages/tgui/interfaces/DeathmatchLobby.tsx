@@ -54,13 +54,13 @@ export const DeathmatchLobby = (props) => {
                   <Table.Cell grow>Loadout</Table.Cell>
                   <Table.Cell collapsing>Ready</Table.Cell>
                 </Table.Row>
-                {players.map((player) => (
+                {Object.keys(players).map((player) => (
                   <Table.Row className="candystripe">
                     <Table.Cell collapsing>
-                      {!!pdata.host && <Icon name="star" />}
+                      {!!players[player].host && <Icon name="star" />}
                     </Table.Cell>
                     <Table.Cell>
-                      {(!((data.host && !pdata.host) || data.admin) && (
+                      {(!((data.host && !players[player].host) || data.admin) && (
                         <b>{player}</b>
                       )) || (
                         <Dropdown

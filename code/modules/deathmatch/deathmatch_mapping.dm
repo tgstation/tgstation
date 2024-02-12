@@ -10,21 +10,6 @@ GLOBAL_LIST_EMPTY(deathmatch_points)
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-/turf/open/indestructible/deathmatch
-	name = "Deathmatch border"
-	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
-	blocks_air = TRUE
-
-// This just deletes everything that enters it.
-/turf/open/indestructible/deathmatch/Enter(atom/movable/mover)
-	if (!QDELETED(mover))
-		if (isliving(mover))
-			var/mob/living/L = mover
-			L.dust(TRUE, FALSE, TRUE)
-		else
-			qdel(mover)
-
 /obj/effect/landmark/deathmatch_map_spawner
 	name = "Deathmatch Map Spawner"
 	var/list/map_bounds

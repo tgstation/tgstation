@@ -115,9 +115,8 @@
 	desc = "He love pizza."
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
-	backpack_contents = list(
-		/obj/item/sharpener = 1,
-	)
+	back = /obj/item/storage/backpack
+	l_pocket = /obj/item/sharpener
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 	gloves = /obj/item/clothing/gloves/the_sleeping_carp
@@ -183,7 +182,6 @@
 		/obj/item/food/grown/nettle/death = 2,
 		/obj/item/food/grown/banana = 2,
 		/obj/item/food/grown/cherry_bomb = 2,
-		/obj/item/food/grown/tomato/blood = 2,
 		/obj/item/food/grown/mushroom/walkingmushroom = 2,
 		/obj/item/seeds/kudzu = 1,
 	)
