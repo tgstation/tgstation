@@ -59,13 +59,8 @@ SUBSYSTEM_DEF(chat)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/chat/proc/queue(queue_target, list/message_data, confidential = FALSE)
+/datum/controller/subsystem/chat/proc/queue(queue_target, list/message_data)
 	var/list/targets = islist(queue_target) ? queue_target : list(queue_target)
-
-	//Monkestation Edit:Replays
-	if(!confidential)
-		SSdemo.write_chat(queue_target, message_to_html(message_data))
-	//Monkestation Edit:Replays
 
 	for(var/target in targets)
 		var/client/client = CLIENT_FROM_VAR(target)

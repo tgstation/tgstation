@@ -16,7 +16,7 @@ function condense(dir = condense_dir) {
 				if(err) {console.error(err); return;}
 				if(stat.isDirectory()) {
 					condense(full);
-				} else {
+				} else if(file.slice((file.lastIndexOf(".") - 1 >>> 0) + 2) != "gz"){
 					condense_file(full);
 				}
 			});
