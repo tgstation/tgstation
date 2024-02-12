@@ -29,10 +29,6 @@
 	},
 /turf/open/indestructible/large,
 /area/deathmatch)
-"bZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/indestructible/plating,
-/area/deathmatch)
 "ch" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/tank_holder/extinguisher,
@@ -56,7 +52,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/gibs/down,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "cL" = (
@@ -113,8 +108,7 @@
 /area/deathmatch)
 "ew" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/fluff/fake_scrubber,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "eH" = (
@@ -127,12 +121,6 @@
 	id = "Starwars"
 	},
 /turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
-"eP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "eV" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -186,7 +174,6 @@
 "gJ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash/grille_or_waste,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "gN" = (
@@ -194,9 +181,7 @@
 	id = "Starwars"
 	},
 /obj/structure/table/reinforced,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "gR" = (
@@ -218,7 +203,7 @@
 /obj/machinery/button/door{
 	id = "Starwars"
 	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "hV" = (
@@ -242,7 +227,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/effect/spawner/random/maintenance/two,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "ir" = (
@@ -270,11 +254,6 @@
 /obj/effect/turf_decal/tile/blue/full,
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"jA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "jK" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner,
@@ -336,12 +315,6 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/indestructible/white,
 /area/deathmatch)
-"mM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/indestructible/plating,
-/area/deathmatch)
 "nl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/insectguts,
@@ -353,7 +326,7 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "nT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/fluff/fake_scrubber,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "nV" = (
@@ -366,8 +339,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "oq" = (
@@ -388,12 +359,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/spawner/random/medical/surgery_tool,
 /turf/open/indestructible/white,
-/area/deathmatch)
-"pg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "pU" = (
 /obj/effect/turf_decal/tile/blue{
@@ -423,16 +388,10 @@
 /turf/open/indestructible/large,
 /area/deathmatch)
 "qm" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/machinery/light/floor,
@@ -441,22 +400,16 @@
 /area/deathmatch)
 "qs" = (
 /obj/machinery/computer,
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "qR" = (
 /obj/machinery/computer{
 	dir = 1
 	},
-/obj/structure/window,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/east,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "qT" = (
@@ -532,8 +485,6 @@
 "sk" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "sl" = (
@@ -616,17 +567,8 @@
 /obj/machinery/computer{
 	dir = 8
 	},
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
-"uJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "vl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -637,12 +579,8 @@
 /obj/machinery/computer{
 	dir = 4
 	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "vz" = (
@@ -671,12 +609,6 @@
 /area/deathmatch)
 "yA" = (
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/indestructible/plating,
-/area/deathmatch)
-"yD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "yH" = (
@@ -718,12 +650,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible/white,
 /area/deathmatch)
-"Ac" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/indestructible/plating,
-/area/deathmatch)
 "Ax" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/can/food,
@@ -745,8 +671,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Bm" = (
@@ -756,7 +680,6 @@
 "Bp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/assembly/igniter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Bt" = (
@@ -784,12 +707,6 @@
 	dir = 1
 	},
 /turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"Cu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "Cv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -852,7 +769,6 @@
 "ES" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "EZ" = (
@@ -865,13 +781,6 @@
 /obj/structure/table/glass,
 /obj/item/circular_saw,
 /turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"Fr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/tracks,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "Gv" = (
 /obj/effect/turf_decal/tile/brown/half{
@@ -888,13 +797,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/closet/crate/trashcart/filled,
 /obj/item/reagent_containers/cup/glass/drinkingglass,
-/turf/open/indestructible/plating,
-/area/deathmatch)
-"Ht" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/insectguts,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "HE" = (
@@ -941,10 +843,8 @@
 /obj/machinery/computer{
 	dir = 8
 	},
-/obj/structure/window,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/east,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "JE" = (
@@ -964,9 +864,7 @@
 /obj/machinery/computer{
 	dir = 4
 	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "Ku" = (
@@ -1041,20 +939,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Me" = (
 /obj/structure/rack,
 /obj/item/throwing_star,
 /turf/open/indestructible/vault,
-/area/deathmatch)
-"Mk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "Mx" = (
 /obj/structure/table/glass,
@@ -1082,14 +972,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
 /obj/item/extinguisher,
-/turf/open/indestructible/plating,
-/area/deathmatch)
-"Nm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Nv" = (
@@ -1125,7 +1007,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Ot" = (
@@ -1180,7 +1061,6 @@
 "Qh" = (
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "QE" = (
@@ -1220,13 +1100,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/landmark/deathmatch_player_spawn,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/cable_coil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "RJ" = (
@@ -1359,6 +1237,7 @@
 "Yz" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/fluff/fake_scrubber,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "YO" = (
@@ -1825,8 +1704,8 @@ KX
 "}
 (16,1,1) = {"
 KX
-pg
-Ac
+ul
+mu
 Ra
 yA
 gJ
@@ -1858,7 +1737,7 @@ Cv
 hV
 rc
 vl
-Cu
+Ey
 ES
 US
 yH
@@ -1884,10 +1763,10 @@ KX
 (18,1,1) = {"
 KX
 XV
-mM
+ul
 cs
 iq
-Nm
+Ey
 nT
 AT
 QS
@@ -1945,10 +1824,10 @@ KX
 MT
 Ax
 tm
-Fr
+Jv
 Jv
 Ey
-Mk
+mu
 AT
 US
 US
@@ -1975,7 +1854,7 @@ Kz
 US
 qT
 oo
-Cu
+Ey
 Bp
 Bg
 QG
@@ -2003,10 +1882,10 @@ KX
 KX
 KS
 US
-yD
-yD
-bZ
-eP
+qT
+qT
+AT
+ew
 sQ
 VG
 kA
@@ -2038,7 +1917,7 @@ mu
 Mc
 ul
 qU
-Ac
+mu
 Nc
 US
 Df
@@ -2064,11 +1943,11 @@ KX
 WG
 AT
 Xn
-Ht
-yD
+nl
+qT
 Og
-uJ
-mM
+ul
+ul
 AT
 Df
 BC
@@ -2093,9 +1972,9 @@ KX
 KX
 HL
 Bm
-jA
+qT
 Rt
-Cu
+Ey
 ew
 rc
 AT

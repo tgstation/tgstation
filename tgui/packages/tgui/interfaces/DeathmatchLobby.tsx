@@ -42,7 +42,6 @@ export const DeathmatchLobby = (props) => {
                         <b>{player}</b>
                       )) || (
                         <Dropdown
-                          nochevron
                           displayText={player}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
                           onSelected={(value) =>
@@ -56,7 +55,6 @@ export const DeathmatchLobby = (props) => {
                     </Table.Cell>
                     <Table.Cell grow>
                       <Dropdown
-                        nochevron
                         displayText={pdata.loadout}
                         disabled={!(data.host || player === data.self)}
                         options={data.loadouts}
@@ -89,7 +87,6 @@ export const DeathmatchLobby = (props) => {
                         <b>{observer}</b>
                       )) || (
                         <Dropdown
-                          nochevron
                           sameline
                           displayText={observer}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
@@ -114,7 +111,6 @@ export const DeathmatchLobby = (props) => {
                 {(!!data.host && (
                   <Dropdown
                     fluid
-                    nochevron
                     displayText={data.map.name}
                     options={data.maps}
                     onSelected={(value) =>
