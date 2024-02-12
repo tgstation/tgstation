@@ -724,6 +724,11 @@
 /datum/emote/living/swear
 	key = "swear"
 	key_third_person = "swears"
-	message = "says a swear word!"
+	message = ""
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/swear/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+
+	user.say("[pick(GLOB.profanities)]!!")

@@ -307,3 +307,25 @@ GLOBAL_LIST_INIT(status_display_state_pictures, list(
 	"blank",
 	"shuttle",
 ))
+
+GLOBAL_LIST_INIT(profanities, list(
+	"ASSHOLE",
+	"BLOODY HELL",
+	"BULLSHIT",
+	"BALLS",
+	"CRAP",
+	"CUNT",
+	"COCKSUCKER",
+	"DAMN",
+	"DARN",
+	"FUCK",
+	"FUCKING",
+	"FUCKER",
+	"HECK",
+	"HELL",
+	"MOTHERFUCKER",
+	"SHIT",
+	"TITS",
+	"TWAT",
+	"PISS",
+))
