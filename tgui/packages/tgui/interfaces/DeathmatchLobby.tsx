@@ -56,7 +56,7 @@ export const DeathmatchLobby = (props) => {
                   <Table.Cell collapsing>Ready</Table.Cell>
                 </Table.Row>
                 {Object.keys(data.players).map((player) => (
-                  <Table.Row className="candystripe">
+                  <Table.Row className="candystripe" key={player}>
                     <Table.Cell collapsing>
                       {!!data.players[player].host && <Icon name="star" />}
                     </Table.Cell>
@@ -99,7 +99,7 @@ export const DeathmatchLobby = (props) => {
                   </Table.Row>
                 ))(data.players)}
                 {Object.keys(data.observers).map((observer) => (
-                  <Table.Row>
+                  <Table.Row key={observer}>
                     <Table.Cell collapsing>
                       {(!!data.observers[observer].host && <Icon name="star" />) || (
                         <Icon name="eye" />
@@ -133,7 +133,6 @@ export const DeathmatchLobby = (props) => {
               <Box textAlign="center">
                 {(!!data.host && (
                   <Dropdown
-                    fluid
                     displayText={data.map.name}
                     options={data.maps}
                     onSelected={(value) =>
