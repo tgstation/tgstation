@@ -14,6 +14,13 @@ import {
 import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
 
+type PlayerLike = {
+  [key: string]: {
+    host: number;
+    ready: BooleanLike;
+  }[];
+};
+
 type Data = {
   self: string;
   host: BooleanLike;
@@ -28,14 +35,8 @@ type Data = {
 	max_players: number;
   };
   loadoutdesc: string;
-  players: {
-    host: number;
-    ready: BooleanLike;
-  }[];
-  observers: {
-    host: number;
-    ready: BooleanLike;
-  }[];
+  players: PlayerLike;
+  observers: PlayerLike;
 };
 
 export const DeathmatchLobby = (props) => {
@@ -53,7 +54,7 @@ export const DeathmatchLobby = (props) => {
                   <Table.Cell grow>Loadout</Table.Cell>
                   <Table.Cell collapsing>Ready</Table.Cell>
                 </Table.Row>
-                {map((pdata, player) => (
+                {players.map((player) => (
                   <Table.Row className="candystripe">
                     <Table.Cell collapsing>
                       {!!pdata.host && <Icon name="star" />}
