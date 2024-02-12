@@ -429,13 +429,13 @@
 /// Adds pass flags and signal to smash through windows as you fly through the air
 /mob/living/proc/start_window_flight(duration = 1.5 SECONDS)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(flying_window_smash))
-	passwindow_on(src, TRAM_PASSENGER)
+	passwindow_on(src, TRAM_PASSENGER_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(end_window_flight)), duration)
 
 /// Removes pass flags and signal to smash through windows as you fly through the air
 /mob/living/proc/end_window_flight()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	passwindow_off(src, TRAM_PASSENGER)
+	passwindow_off(src, TRAM_PASSENGER_TRAIT)
 
 /// Fly through window panes, smashing them on the way
 /mob/living/proc/flying_window_smash(mob/living/flying_mob, atom/oldloc, direction)
