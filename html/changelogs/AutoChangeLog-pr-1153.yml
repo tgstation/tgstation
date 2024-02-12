@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "You can now hide a chameleon gear's action buttons by using a multitool on them"
