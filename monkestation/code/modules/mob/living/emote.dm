@@ -94,6 +94,11 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = FALSE
 
+/datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
+
 /datum/emote/living/scream/get_sound(mob/living/user)
 	if(issilicon(user))
 		return pick(
@@ -145,9 +150,9 @@
 /datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_ANIME))
-	 return TRUE
+		return TRUE
 	else
-	 return FALSE
+		return FALSE
 /datum/emote/living/bark
 	key = "bark"
 	key_third_person = "barks"
