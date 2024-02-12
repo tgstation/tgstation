@@ -18,7 +18,7 @@ type PlayerLike = {
   [key: string]: {
     host: number;
     ready: BooleanLike;
-  }[];
+  };
 };
 
 type Data = {
@@ -35,8 +35,8 @@ type Data = {
 	max_players: number;
   };
   loadoutdesc: string;
-  players: PlayerLike;
-  observers: PlayerLike;
+  players: PlayerLike[];
+  observers: PlayerLike[];
 };
 
 export const DeathmatchLobby = (props) => {
