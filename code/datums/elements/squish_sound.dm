@@ -19,7 +19,7 @@
 
 	if(!source.has_gravity())
 		return
-	if(!isliving(crossed) || HAS_TRAIT(crossed, TRAIT_MOVE_FLYING))
+	if(!isliving(crossed) || || (crossed.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || crossed.throwing)
 		return
 	playsound(
 		source = source,
