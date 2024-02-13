@@ -52,12 +52,13 @@
 		victim.log_message("was driven insane by [caster]")
 	victim.mob_mood.set_sanity(victim_sanity * 0.5)
 
+
 /obj/effect/temp_visual/moon_ringleader
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "ring_leader_effect"
 	alpha = 180
 	duration = 6
 
-/obj/effect/temp_visual/moon_ringleader/Initialize(mapload)
+/obj/effect/temp_visual/moon_ringleader/ringleader/Initialize(mapload)
 	. = ..()
 	transform = transform.Scale(10)

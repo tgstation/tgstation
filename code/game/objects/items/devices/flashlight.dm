@@ -910,14 +910,6 @@
 	item_flags = DROPDEL
 	actions_types = list()
 
-/obj/item/flashlight/eyelight/adapted
-	name = "adaptedlight"
-	desc = "There is no possible way for a player to see this, so I can safely talk at length about why this exists. Adapted eyes come \
-	with icons that go above the lighting layer so to make sure the red eyes that pierce the darkness are always visible we make the \
-	human emit the smallest amount of light possible. Thanks for reading :)"
-	light_range = 1
-	light_power = 0.07
-
 /obj/item/flashlight/eyelight/glow
 	light_system = MOVABLE_LIGHT_BEAM
 	light_range = 4

@@ -152,7 +152,7 @@
 		return "ERROR: Launchpad busy."
 
 	var/area/surrounding = get_area(src)
-	if(is_centcom_level(z) || istype(surrounding, /area/shuttle))
+	if(is_centcom_level(z) || istype(surrounding, /area/shuttle/supply) ||istype(surrounding, /area/shuttle/transport))
 		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
 
 	return null
