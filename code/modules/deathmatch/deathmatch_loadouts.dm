@@ -289,7 +289,7 @@
 	uniform = /obj/item/clothing/under/costume/schoolgirl
 	suit = /obj/item/clothing/suit/costume/joker
 	shoes = /obj/item/clothing/shoes/clown_shoes/meown_shoes
-	head = /obj/item/organ/internal/ears/cat
+	head = /obj/item/clothing/head/costume/kitty
 	backpack_contents = list(
 		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 10,
 	)
