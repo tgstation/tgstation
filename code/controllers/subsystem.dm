@@ -38,6 +38,12 @@
 	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
 	var/runlevels = RUNLEVELS_DEFAULT //points of the game at which the SS can fire
 
+	/**
+	 * boolean set by admins. if TRUE then this subsystem will stop the world profiler after ignite() returns and start it again when called.
+	 * used so that you can audit a specific subsystem or group of subsystems' synchronous call chain.
+	 */
+	var/profiler_focused = FALSE
+
 	/*
 	 * The following variables are managed by the MC and should not be modified directly.
 	 */
@@ -65,7 +71,7 @@
 
 	/// Tracks the current execution state of the subsystem. Used to handle subsystems that sleep in fire so the mc doesn't run them again while they are sleeping
 	var/state = SS_IDLE
-	
+
 	/// Tracks how many times a subsystem has ever slept in fire().
 	var/slept_count = 0
 
@@ -120,6 +126,9 @@
 	tick_allocation_last = Master.current_ticklimit-(TICK_USAGE)
 	tick_allocation_avg = MC_AVERAGE(tick_allocation_avg, tick_allocation_last)
 
+	if(profiler_focused)
+		world.Profile(PROFILE_START)
+
 	. = SS_SLEEPING
 	fire(resumed)
 	. = state
@@ -132,6 +141,9 @@
 		enqueue()
 		state = SS_PAUSED
 		queued_time = QT
+
+	if(profiler_focused)
+		world.Profile(PROFILE_STOP)
 
 ///previously, this would have been named 'process()' but that name is used everywhere for different things!
 ///fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
