@@ -22,9 +22,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "n" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 2
-	},
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "p" = (
@@ -40,10 +38,7 @@
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "x" = (
@@ -94,9 +89,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "R" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 2
-	},
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "T" = (

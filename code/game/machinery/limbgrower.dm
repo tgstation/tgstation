@@ -116,7 +116,7 @@
 
 	return data
 
-/obj/machinery/limbgrower/on_deconstruction()
+/obj/machinery/limbgrower/on_deconstruction(disassembled)
 	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
 	return ..()

@@ -88,7 +88,7 @@ const recipe_effect_structure: Recipe[] = [
     override_base: 0.85,
     scale: 1.15,
     tooltip: (v, d) =>
-      'Maximum: ' + (d.baseMaximumTemperature * v).toExponential() + ' K',
+      'Maximum: ' + (d.baseMaxTemperature * v).toExponential() + ' K',
   },
 ];
 

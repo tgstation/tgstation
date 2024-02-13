@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "reactions now compute purity of reagents based on their volume, meaning larger amounts of reagents created will have more significant effects on the final purity of the solution"

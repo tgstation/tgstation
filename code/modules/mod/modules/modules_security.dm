@@ -579,7 +579,7 @@
 #undef STORMTROOPER_MODE
 #undef SHARPSHOOTER_MODE
 
-/obj/item/mod/module/anti_stagger
+/obj/item/mod/module/shove_blocker
 	name = "MOD bulwark module"
 	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob."
 	icon_state = "bulwark"

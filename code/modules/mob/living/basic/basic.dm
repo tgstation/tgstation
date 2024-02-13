@@ -270,17 +270,17 @@
 /mob/living/basic/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
-/mob/living/basic/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
-	if(on_fire && isnull(last_icon_state))
-		add_overlay(fire_overlay)
-		return fire_overlay
-	else if(!on_fire && !isnull(last_icon_state))
-		cut_overlay(fire_overlay)
-		return null
-	else if(on_fire && !isnull(last_icon_state))
-		return last_icon_state
-	return null
+/mob/living/basic/get_fire_overlay(stacks, on_fire)
+	var/fire_icon = "generic_fire"
+	if(!GLOB.fire_appearances[fire_icon])
+		GLOB.fire_appearances[fire_icon] = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			fire_icon,
+			-HIGHEST_LAYER,
+			appearance_flags = RESET_COLOR,
+		)
+
+	return GLOB.fire_appearances[fire_icon]
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()

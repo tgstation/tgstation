@@ -105,7 +105,7 @@
 	. = ..()
 	update_parents()
 
-/obj/machinery/atmospherics/components/on_deconstruction()
+/obj/machinery/atmospherics/components/on_deconstruction(disassembled)
 	relocate_airs()
 	return ..()
 
@@ -231,7 +231,7 @@
 	if(!panel_open)
 		balloon_alert(user, "open panel!")
 		return ITEM_INTERACT_SUCCESS
-	
+
 	var/unsafe_wrenching = FALSE
 	var/filled_pipe = FALSE
 	var/datum/gas_mixture/environment_air = loc.return_air()
@@ -246,7 +246,7 @@
 	if(!filled_pipe)
 		default_deconstruction_crowbar(tool)
 		return ITEM_INTERACT_SUCCESS
-	
+
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
 	internal_pressure -= environment_air.return_pressure()

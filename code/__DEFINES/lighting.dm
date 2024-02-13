@@ -1,17 +1,17 @@
 /// Object doesn't use any of the light systems. Should be changed to add a light source to the object.
 #define NO_LIGHT_SUPPORT 0
 /// Light made with the lighting datums, applying a matrix.
-#define STATIC_LIGHT 1
+#define COMPLEX_LIGHT 1
 /// Light made by masking the lighting darkness plane.
-#define MOVABLE_LIGHT 2
+#define OVERLAY_LIGHT 2
 /// Light made by masking the lighting darkness plane, and is directional.
-#define MOVABLE_LIGHT_DIRECTIONAL 3
+#define OVERLAY_LIGHT_DIRECTIONAL 3
 ///Light made by masking the lighting darkness plane, and is a directionally focused beam.
-#define MOVABLE_LIGHT_BEAM 4
+#define OVERLAY_LIGHT_BEAM 4
 /// Nonesensical value for light color, used for null checks.
 #define NONSENSICAL_VALUE -99999
 
-/// Is a movable light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
+/// Is our overlay light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
 /// Freezes a light in its current state, blocking any attempts at modification
 #define LIGHT_FROZEN (1<<1)

@@ -211,12 +211,10 @@
 	ice_cream_icon.color = flavor.color
 	return ice_cream_icon
 
-/obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 4)
+/obj/machinery/icecream_vat/on_deconstruction(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 4)
 	if(custom_ice_cream_beaker)
 		custom_ice_cream_beaker.forceMove(loc)
-	qdel(src)
 
 ///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)

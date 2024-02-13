@@ -605,12 +605,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  */
 /datum/storage/proc/return_inv(recursive = TRUE)
 	var/list/ret = list()
-	ret |= real_location.contents
 
 	for(var/atom/found_thing as anything in real_location)
 		ret |= found_thing
-		if(recursive)
-			ret |= found_thing.atom_storage?.return_inv(ret, recursive = TRUE)
+		if(recursive && found_thing.atom_storage)
+			ret |= found_thing.atom_storage.return_inv(recursive = TRUE)
 
 	return ret
 
