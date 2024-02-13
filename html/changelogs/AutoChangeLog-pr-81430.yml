@@ -1,6 +1,0 @@
-author: "siliconOpossum"
-delete-after: True
-changes:
-  - bugfix: "Getting blood on your hand when you only have one no longer makes your hands visually permanently bloody"
-  - bugfix: "Holding bloodied gloves no longer makes your hands look bloody, bloodied gloves now look bloody when worn, and damaged gloves now look damaged when worn"
-  - bugfix: "Gaining or losing an arm now correctly updates your hand overlays"

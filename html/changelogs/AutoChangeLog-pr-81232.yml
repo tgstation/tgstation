@@ -1,4 +1,0 @@
-author: "intercepti0n"
-delete-after: True
-changes:
-  - bugfix: "Separated logs list into pages in ore silo UI, thus fixing lag when logs list grows too long."
