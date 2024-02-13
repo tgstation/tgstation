@@ -439,7 +439,6 @@
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
-	var/datum/effect_system/spark_spread/spark_system //sparks baton when turned on and off
 
 /datum/armor/baton_security
 	bomb = 50
