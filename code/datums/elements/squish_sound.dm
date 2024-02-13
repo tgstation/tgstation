@@ -17,7 +17,7 @@
 /datum/element/squish_sound/proc/on_cross(atom/movable/source, atom/movable/crossed)
 	SIGNAL_HANDLER
 
-	if(!isliving(crossed) || || (crossed.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || crossed.throwing)
+	if(!isliving(crossed) || (crossed.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || crossed.throwing)
 		return
 	playsound(
 		source = source,
