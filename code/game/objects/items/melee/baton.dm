@@ -427,6 +427,11 @@
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
+	light_range = 2
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
+	light_color = LIGHT_COLOR_ORANGE
+
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
@@ -434,6 +439,7 @@
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+	var/datum/effect_system/spark_spread/spark_system //sparks baton when turned on and off
 
 /datum/armor/baton_security
 	bomb = 50
@@ -541,6 +547,8 @@
 		active = !active
 		balloon_alert(user, "turned [active ? "on" : "off"]")
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		toggle_light(user)
+		do_sparks(1, TRUE, src)
 	else
 		active = FALSE
 		if(!cell)
@@ -549,6 +557,11 @@
 			balloon_alert(user, "out of charge!")
 	update_appearance()
 	add_fingerprint(user)
+
+/obj/item/melee/baton/security/proc/toggle_light(mob/user)
+	var/old_light_on = light_on
+	set_light_on(!light_on)
+	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
