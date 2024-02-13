@@ -370,8 +370,8 @@
 	r_hand  = /obj/item/clothing/mask/cigarette/cigar
 	l_hand = /obj/item/melee/curator_whip
 	l_pocket = /obj/item/lighter
-	suit = /obj/item/clothing/accessory/vest_sheriff
-	accessory = /obj/item/clothing/under/rank/security/detective
+	accessory = /obj/item/clothing/accessory/vest_sheriff
+	uniform = /obj/item/clothing/under/rank/security/detective
 	shoes = /obj/item/clothing/shoes/cowboy
 	belt = /obj/item/storage/belt/holster/detective/full
 	head = /obj/item/clothing/head/cowboy/brown
