@@ -136,9 +136,9 @@
 	//I am so sorry my son
 	//We bypass helpers here cause we already have the tail
 	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
-		oranges_accessory.stop_wag(src)
+		oranges_accessory.stop_wag(user)
 	else
-		oranges_accessory.start_wag(src)
+		oranges_accessory.start_wag(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()
