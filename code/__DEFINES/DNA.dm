@@ -56,10 +56,10 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
-#define DNA_MUTANT_COLOR_SECONDARY 16 //Add secondary color for species
+#define DNA_MUTANT_COLOR_SECONDARY_BLOCK 16 //Add secondary color for species MASSMETA EDIT
 
 //#define DNA_FEATURE_BLOCKS 15
-#define DNA_FEATURE_BLOCKS 16
+#define DNA_FEATURE_BLOCKS 16 // add +1 new DNA BLOCK
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8

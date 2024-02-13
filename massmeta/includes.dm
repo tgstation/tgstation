@@ -72,7 +72,7 @@
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
 //species secondary color
-#include "code\modules\client\preferences\species_features\secondary_mut_color.dm"
+#include "code\modules\client\preferences\species_features\mutants_color_secondary.dm"
 #include "code\modules\mob\dead\new_player\sprite_accessories\multi_part.dm"
 #include "code\modules\mob\living\carbon\human\accessory_helpers.dm"
 //features

@@ -4,23 +4,26 @@
 	var/g = (host.physique == FEMALE) ? "f" : "m"
 
 	// add overlay on "external_slots" like tail, head and other parts
-	// one by one...
 	for(var/list_item in added_accessory.external_slots)
+	/*
 		var/can_hidden_render = return_exernal_render_state(list_item, host)
 		if(!can_hidden_render)
 			continue // we failed the render check just dont bother (we just don't need to render it)
+	*/
 		if(!host.get_organ_slot(list_item))
 			continue
 
 		var/obj/item/organ/external/external_organ = host.get_organ_slot(list_item)
+
+		if(!external_organ)
+			continue
+
 		var/external_sprite = external_organ.bodypart_overlay.sprite_datum.icon_state
 
-
-		if(external_organ) // i made this proc to dejank this shit than I add this... the codebase has fallen - Borbop P.S Ignore whatever the hell is going on above this.
-			if(istype(external_organ.bodypart_overlay, /datum/bodypart_overlay/mutant/tail))
-				var/datum/bodypart_overlay/mutant/tail/tail = external_organ.bodypart_overlay
-				if(tail.wagging)
-					list_item = "[list_item]_wagging"
+		if(istype(external_organ.bodypart_overlay, /datum/bodypart_overlay/mutant/tail))
+			var/datum/bodypart_overlay/mutant/tail/tail = external_organ.bodypart_overlay
+			if(tail.wagging)
+				list_item = "[list_item]_wagging"
 
 		var/mutable_appearance/new_overlay = mutable_appearance(added_accessory.icon, layer = -layer)
 		if(added_accessory.gender_specific)
@@ -29,8 +32,6 @@
 			new_overlay.icon_state = "m_[list_item]_[added_accessory.icon_state]_[external_sprite]_[layertext]"
 		new_overlay.color = passed_color
 		return_list += new_overlay
-		//if(added_accessory.is_emissive)
-			//return_list += emissive_appearance_copy(new_overlay, host)
 
 	// add overlay on body only
 	for(var/list_item in added_accessory.body_slots)
@@ -43,8 +44,6 @@
 			new_overlay.icon_state = "m_[list_item]_[added_accessory.icon_state]_[layertext]"
 		new_overlay.color = passed_color
 		return_list += new_overlay
-		//if(added_accessory.is_emissive)
-			//return_list += emissive_appearance_copy(new_overlay, host)
 
 	return return_list
 

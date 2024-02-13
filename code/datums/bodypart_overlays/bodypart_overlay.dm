@@ -15,6 +15,9 @@
 	. = get_image(layer, limb)
 	color_image(., layer, limb)
 
+/datum/bodypart_overlay/proc/get_extended_overlay(layer, obj/item/bodypart/limb) // MASSMETA EDIT
+	return
+
 ///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")
