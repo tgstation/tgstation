@@ -113,3 +113,40 @@
   - rscadd: upgraded *weh
   wraith-54321:
   - bugfix: you can no longer hit people with clockwork weapons from range
+2024-02-13:
+  Absolucy:
+  - rscadd: Painkillers (i.e morphine, miner's salve) now actually induce analgesic
+      effects, preventing various pain-related effects, such as screaming due to pain,
+      and also provides a speed bonus during surgery.
+  - rscadd: The tenacity trauma (traumatic neuropathy) also applies analgesic effects.
+  - refactor: Simplified code related to reagents adding traits.
+  - qol: Prevent certain antagonists from being fucked over by associated phobias.
+      Heretics (+minions) will ignore fear of heresy, magical antags will ignore fear
+      of the supernatural,, bloodsuckers (+vassals) and blood cultists will ignore
+      fear of blood.
+  Gboster-0:
+  - rscadd: You can now hide a chameleon gear's action buttons by using a multitool
+      on them
+  KnigTheThrasher:
+  - rscdel: :)
+  Maximo and DimWhat:
+  - rscadd: Added a bunny suit, bunny ears, tail coat, heels, and necktie collar to
+      the autodrobe, bardrobe, and monkeshop.
+  - rscadd: Added a a specialized syndicate bunny costume set to the Badassery section
+      of the buylist. I regret nothing.
+  - rscadd: Added a bunny magician set to the magivend.
+  - rscadd: A bunch of misc bunny suit sets as well.
+  - balance: Added syndicate heels to the maid kit for parity.
+  - code_imp: Added code support for tieing/untieing more ties.
+  NicoDeLuna:
+  - rscadd: Adds new Culinary Artisan clothes to chefdrobe
+  ? '[Gandalf2k15](https://github.com/Gandalf2k15), [Nerev4r](https://github.com/Nerev4r),
+    [tf-4](https://github.com/tf-4), [ArcaneMusic](https://github.com/ArcaneMusic),
+    [Zenitheevee](https://github.com/Zenitheevee), [Gandalf2k15](https://github.com/Gandalf2k15),
+    [YakumoChen](https://github.com/YakumoChen), [OrionTheFox](https://github.com/OrionTheFox),
+    [RatFromTheJungle](https://github.com/RatFromTheJungle), [ErdinyoBarboza](https://github.com/ErdinyoBarboza),
+    [Zonespace27](https://github.com/Zonespace27), [Useroth](https://github.com/Useroth),
+    [Paxilmaniac](https://github.com/Paxilmaniac), [Zergspower](https://github.com/Zergspower),
+    [vinylspiders](https://github.com/vinylspiders), [out-of-phaze](https://github.com/out-of-phaze),
+    [Hatterhat](https://github.com/Hatterhat), [burgerenergy](https://github.com/burgerenergy)'
+  : - rscadd: Ports microfusion energy guns
