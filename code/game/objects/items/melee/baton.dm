@@ -427,7 +427,7 @@
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
-	light_range = 2
+	light_range = 1.5
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
@@ -557,10 +557,11 @@
 	update_appearance()
 	add_fingerprint(user)
 
+/// Toggles the light of the stun baton.
 /obj/item/melee/baton/security/proc/toggle_light(mob/user)
 	var/old_light_on = light_on
 	set_light_on(!light_on)
-	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
+	return
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
@@ -614,6 +615,7 @@
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
+	do_sparks(3, TRUE, src)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
