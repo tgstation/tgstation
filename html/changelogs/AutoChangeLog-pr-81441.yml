@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Ghost role polls should spam you less when multiple of the same roll occur in succession."
