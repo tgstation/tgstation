@@ -121,10 +121,13 @@
 	desc = "He love pizza."
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
-	l_pocket = /obj/item/sharpener
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 	gloves = /obj/item/clothing/gloves/the_sleeping_carp
+	back = /obj/item/storage/backpack
+	backpack_contents = list(
+		/obj/item/sharpener,
+	)
 
 /datum/outfit/deathmatch_loadout/samurai
 	name = "DM: Samurai"

@@ -4,7 +4,7 @@ GLOBAL_VAR(deathmatch_game)
 	/// Assoc list of all lobbies (ckey = lobby)
 	var/list/datum/deathmatch_lobby/lobbies = list()
 	/// All deathmatch map templates
-	var/list/datum/map_template/deathmatch/maps = list()
+	var/list/datum/lazy_template/deathmatch/maps = list()
 	/// All loadouts
 	var/list/datum/outfit/loadouts
 
@@ -18,10 +18,8 @@ GLOBAL_VAR(deathmatch_game)
 		CRASH("A deathmatch controller already exists.")
 	GLOB.deathmatch_game = src
 
-	for (var/datum/map_template/template as anything in subtypesof(/datum/map_template/deathmatch))
+	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch))
 		var/map_name = initial(template.name)
-		if (maps[map_name])
-			stack_trace("Deathmatch maps MUST have different names: map_name] already defined.")
 		maps[map_name] = new template
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
 
@@ -40,25 +38,12 @@ GLOBAL_VAR(deathmatch_game)
 	lobbies[host] = null
 	lobbies.Remove(host)
 
-/datum/deathmatch_controller/proc/get_unused_point()
-	for(var/obj/effect/landmark/deathmatch_map_spawner/point as anything in GLOB.deathmatch_points)
-		if(point.map_bounds)
-			continue
-		if(point.loc == null) // just incase this bug reappears somehow
-			stack_trace("[point] is in nullspace!!")
-			continue
-		return point
+/datum/deathmatch_controller/proc/load_lazyarena(map_key)
+	if(!isnull(map_key) && !isnull(maps[map_key]))
+		var/datum/lazy_template/deathmatch/temp = maps[map_key]
+		return temp.lazy_load() //returns rezervation
 
-/datum/deathmatch_controller/proc/clear_location(obj/effect/landmark/deathmatch_map_spawner/location)
-	. = TRUE
-	if(!location?.map_bounds) // no map boundaries, pointless
-		stack_trace("Deathmatch clear_location was called on a clear map spawner!")
-		return FALSE
-	var/turf/spawn_loc = get_turf(location)
-	if(isnull(spawn_loc)) //flarped up
-		stack_trace("DM Map Spawner is nullspaced: [spawn_loc] x[location.x] y[location.y]!!")
-	qdel(location)
-	new /obj/effect/landmark/deathmatch_map_spawner(spawn_loc)
+	return FALSE
 
 /datum/deathmatch_controller/ui_state(mob/user)
 	return GLOB.observer_state

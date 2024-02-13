@@ -9,9 +9,9 @@
 	/// Assoc list of ckey to list()
 	var/list/observers = list()
 	/// The current chosen map
-	var/datum/map_template/deathmatch/map
-	/// Where the map will be spawned
-	var/obj/effect/landmark/deathmatch_map_spawner/location
+	var/datum/lazy_template/deathmatch/map
+	/// Our turf reservation AKA where the arena is
+	var/datum/turf_reservation/location
 	/// Whether players hear deadchat and people through walls
 	var/global_chat = FALSE
 	/// Whether the lobby is currently playing
@@ -43,8 +43,8 @@
 		var/datum/tgui/ui = SStgui.get_open_ui(get_mob_by_ckey(key), src)
 		if (ui) ui.close()
 		remove_ckey_from_play(key)
-	if(playing && !isnull(location) && !isnull(location.map_bounds))
-		game.clear_location(location)
+	if(playing && !isnull(location))
+		clear_reservation()
 	players = null
 	observers = null
 	map = null
@@ -56,20 +56,14 @@
 		return
 	playing = TRUE
 
-	location = game.get_unused_point()
+	location = map.lazy_load()
 	if (!location)
-		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve a map location (all locations used?), try again later."))
+		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
 		playing = FALSE
 		return FALSE
 
-	if(!location.load_map(host,map))
-		to_chat(get_mob_by_ckey(host), span_warning("Map failed to load. Contact coder."))
-		playing = FALSE
-		. = FALSE
-		CRASH("Deathmatch map loading returned false!")
-	
 	if (!game.spawnpoint_processing.len)
-		game.clear_location(location)
+		clear_reservation()
 		playing = FALSE
 		return FALSE
 
@@ -77,8 +71,7 @@
 	game.spawnpoint_processing.Cut()
 	if (!length(spawns) || length(spawns) < length(players))
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
-		game.clear_location(location)
-		location = null
+		clear_reservation()
 		playing = FALSE
 		return FALSE
 
@@ -100,7 +93,7 @@
 
 	for (var/observer_key in observers)
 		var/mob/observer = observers[observer_key]["mob"]
-		observer.forceMove(location.loc)
+		observer.forceMove(pick(location.reserved_turfs))
 
 	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), initial(map.automatic_gameend_time))
 	log_game("Deathmatch game [host] started.")
@@ -145,7 +138,7 @@
 
 /datum/deathmatch_lobby/proc/end_game()
 	if (!location)
-		CRASH("Location of deathmatch game [host] deleted during game.")
+		CRASH("Reservation of deathmatch game [host] deleted during game.")
 	var/mob/winner
 	if(players.len)
 		var/list/winner_info = players[pick(players)]
@@ -161,7 +154,7 @@
 		loser.ghostize()
 		qdel(loser)
 
-	game.clear_location(location)
+	clear_reservation()
 	game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")
 
@@ -260,7 +253,7 @@
 		return
 	if (!observers[player.ckey])
 		add_observer(player)
-	player.forceMove(location.loc)
+	player.forceMove(pick(location.reserved_turfs))
 
 /datum/deathmatch_lobby/proc/change_map(new_map)
 	if (!new_map || !game.maps[new_map])
@@ -279,6 +272,12 @@
 		if (players[player_key]["loadout"] in loadouts)
 			continue
 		players[player_key]["loadout"] = loadouts[1]
+
+/datum/deathmatch_lobby/proc/clear_reservation()
+	if(isnull(location) || isnull(map))
+		return
+	map.reservations -= location
+	qdel(location)
 
 /datum/deathmatch_lobby/Topic(href, href_list) //This handles the chat Join button href, supposedly
 	var/mob/dead/observer/ghost = usr
