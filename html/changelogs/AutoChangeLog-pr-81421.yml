@@ -1,4 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "You can now use bluespace launchpads from shuttles (except cargo and ferry shuttles)"
