@@ -41,8 +41,8 @@
 	acid = 30
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
-	id_tag = assign_random_name()
 	. = ..()
+	id_tag = assign_random_name()
 	if(building)
 		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)

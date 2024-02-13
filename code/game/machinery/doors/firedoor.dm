@@ -73,13 +73,13 @@
 	acid = 70
 
 /obj/machinery/door/firedoor/Initialize(mapload)
-	id_tag = assign_random_name()
 	. = ..()
+	id_tag = assign_random_name()
 	soundloop = new(src, FALSE)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
 	if(name == initial(name))
-		name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
+		update_name()
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 
@@ -182,6 +182,10 @@
 				return CONTEXTUAL_SCREENTIP_SET
 
 	return .
+
+/obj/machinery/door/firedoor/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
 
 /**
  * Calculates what areas we should worry about.
