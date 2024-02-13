@@ -248,12 +248,11 @@
 		humanc.put_in_hands(new /obj/item/crowbar/large/emergency(get_turf(humanc))) //if hands full then just drops on the floor
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
+///Tells all the employment cabinets to add the employee file if they have been touched in-round only, to ensure they all have parity.
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
-	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
-	for(var/C in GLOB.employmentCabinets)
-		var/obj/structure/filingcabinet/employment/employmentCabinet = C
-		if(!employmentCabinet.virgin)
-			employmentCabinet.addFile(employee)
+	for(var/obj/structure/filingcabinet/employment/cabinets as anything in GLOB.employment_cabinets)
+		if(cabinets.paperwork_populated)
+			cabinets.add_employee_file(employee)
 
 /// Creates, assigns and returns the new_character to spawn as. Assumes a valid mind.assigned_role exists.
 /mob/dead/new_player/proc/create_character(atom/destination)
