@@ -136,8 +136,8 @@
 				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
 				"name" = parent.name,
 				"onHold" = !!holds[remote],
-				"location" = get_area_name(parent, TRUE)
-				)
+				"location" = get_area_name(parent, TRUE),
+			)
 		)
 
 	data["logs"] = list()
@@ -150,7 +150,7 @@
 				"action" = entry.action,
 				"amount" = entry.amount,
 				"time" = entry.timestamp,
-				"noun" = entry.noun
+				"noun" = entry.noun,
 			)
 		)
 

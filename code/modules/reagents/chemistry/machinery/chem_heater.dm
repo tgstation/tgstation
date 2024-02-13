@@ -25,7 +25,7 @@
 	create_reagents(200, NO_REACT)
 	register_context()
 
-/obj/machinery/chem_heater/on_deconstruction()
+/obj/machinery/chem_heater/on_deconstruction(disassembled)
 	beaker?.forceMove(drop_location())
 
 /obj/machinery/chem_heater/Destroy()

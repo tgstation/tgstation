@@ -133,7 +133,7 @@
 
 	return ..()
 
-/obj/machinery/cryo_cell/on_deconstruction()
+/obj/machinery/cryo_cell/on_deconstruction(disassembled)
 	if(occupant)
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)

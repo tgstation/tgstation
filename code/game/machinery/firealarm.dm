@@ -443,16 +443,14 @@
 		return
 	return ..()
 
-/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 1)
-		if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
-			var/obj/item/item = new /obj/item/electronics/firealarm(loc)
-			if(!disassembled)
-				item.update_integrity(item.max_integrity * 0.5)
-		if(buildstage > FIRE_ALARM_BUILD_NO_WIRES)
-			new /obj/item/stack/cable_coil(loc, 3)
-	qdel(src)
+/obj/machinery/firealarm/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(loc, 1)
+	if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
+		var/obj/item/item = new /obj/item/electronics/firealarm(loc)
+		if(!disassembled)
+			item.update_integrity(item.max_integrity * 0.5)
+	if(buildstage > FIRE_ALARM_BUILD_NO_WIRES)
+		new /obj/item/stack/cable_coil(loc, 3)
 
 // Allows users to examine the state of the thermal sensor
 /obj/machinery/firealarm/examine(mob/user)

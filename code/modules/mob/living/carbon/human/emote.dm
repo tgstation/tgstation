@@ -133,10 +133,12 @@
 	if(!.)
 		return
 	var/obj/item/organ/external/tail/oranges_accessory = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	//I am so sorry my son
+	//We bypass helpers here cause we already have the tail
 	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
-		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
+		oranges_accessory.stop_wag(user)
 	else
-		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
+		oranges_accessory.start_wag(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()

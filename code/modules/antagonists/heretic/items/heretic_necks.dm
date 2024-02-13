@@ -55,7 +55,7 @@
 // The amulette conversion tool used by moon heretics
 /obj/item/clothing/neck/heretic_focus/moon_amulette
 	name = "Moonlight Amulette"
-	desc = "A piece of the mind, the sight and the moon. Gazing into it makes your head spin and hear whispers of laughter and joy."
+	desc = "A piece of the mind, the soul and the moon. Gazing into it makes your head spin and hear whispers of laughter and joy."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
@@ -64,7 +64,7 @@
 
 /obj/item/clothing/neck/heretic_focus/moon_amulette/attack(mob/living/target, mob/living/user, params)
 	var/mob/living/carbon/human/hit = target
-	if(!IS_HERETIC(user))
+	if(!IS_HERETIC_OR_MONSTER(user))
 		user.balloon_alert(user, "you feel a presence watching you")
 		user.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
 		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
@@ -73,7 +73,7 @@
 		return
 	if(!hit.mob_mood)
 		return
-	if(hit.mob_mood.sanity_level < SANITY_LEVEL_CRAZY)
+	if(hit.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
 		user.balloon_alert(user, "their mind is too strong!")
 		hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
 		hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)

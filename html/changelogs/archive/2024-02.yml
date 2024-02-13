@@ -310,3 +310,80 @@
   - bugfix: lathes now use moderate power for printing operations
   necromanceranne:
   - bugfix: The shove blocker module parent type now has the correct typepath.
+2024-02-12:
+  Atlasle, JohnFulpWillard:
+  - rscadd: Adds the Touchy quirk, you need to be next to something to examine it,
+      for 2 extra quirk points.
+  Ed640:
+  - bugfix: Sculpted statues stop including light layers.
+  LT3:
+  - bugfix: MULEbot will correctly display its loaded cargo on BotKeeper
+  - bugfix: MULEbot home beacon can be set from control panel
+  - code_imp: MULEbot home location is automatically set on init
+  Melbert:
+  - qol: Glasses colors should be a lot less harsh, and being blind no longer also
+      blinds your hud.
+  - bugfix: Lavaland Beech Bartender's clothing storage is named the right thing now
+  - bugfix: Lipoplasty is An Option again
+  Momo8289:
+  - rscadd: Shakers can now pour drinks with custom names and descriptions! Alt-click
+      the shaker to enable this.
+  NeonNik2245:
+  - rscadd: 3 new masks for your characters (thanks to Kovac for the scarf sprites)
+  Rhials:
+  - bugfix: You can now click things as an alien larva again.
+  SyncIt21:
+  - bugfix: machines that should not drop contents when deleted no longer do.
+  - refactor: refactors how machines are deconstructed. report bugs on github.
+  Thunder12345:
+  - bugfix: The wizard's pets Jimmy and Jommy no longer fight to the death.
+  Xander3359:
+  - balance: Contractor kit no longer gets RNG items, it's a specific pool now
+  mc-oofert:
+  - rscadd: nanotrasen museum gateway map
+2024-02-13:
+  00-Steven:
+  - bugfix: Fixed stamps not accounting for scroll offset. You can actually stamp
+      paperwork properly without using accursed knowledge again.
+  - bugfix: Fixed PDA messenger not scrolling to the bottom when a new message gets
+      sent.
+  - bugfix: Paperwork should actually use the writing utensil's font, colour, and
+      boldness outside of input fields again.
+  LemonInTheDark:
+  - bugfix: Fixes fancy lights not updating their source location when picked up and
+      moved
+  Melbert:
+  - bugfix: You can once again see love on Valentines Day
+  MelokGleb and KREKS, McRamon, Ghommie:
+  - image: New sprites for changeling powers and items. Woooh.
+  Rex9001:
+  - balance: Smile of the moon's effects now last for longer and have a longer minimum
+      active time
+  - balance: Mark of moon detonations now do sanity damage
+  - qol: Ascended moon heretics and lunatics are now able to see who is and isn't
+      a lunatic.
+  - qol: People inside the ascended moon heretics sanity draining aura now gain an
+      effect under their tile.
+  Rhials:
+  - qol: Venus Human Traps are now visible in the orbit menu. Cool!
+  - bugfix: Spawning as a Venus Human Trap now properly gives you an antag datum/objective.
+  - bugfix: Venus human trap flowers no longer have a second, identical flower under
+      themselves.
+  - qol: Map hazard anomalies are no longer treated as points-of-interest in the orbit
+      menu.
+  Singul0:
+  - balance: Brainwashed individuals can no longer be debrainwashed through a mindshield
+      implant, they still protect you from brainwashing though! You just need to get
+      medical to fix them up.
+  - bugfix: You can now use bluespace launchpads from shuttles (except cargo and ferry
+      shuttles)
+  - bugfix: Fixes backwards engines in a few of centcom's ferries!
+  intercepti0n:
+  - bugfix: Separated logs list into pages in ore silo UI, thus fixing lag when logs
+      list grows too long.
+  siliconOpossum:
+  - bugfix: Getting blood on your hand when you only have one no longer makes your
+      hands visually permanently bloody
+  - bugfix: Holding bloodied gloves no longer makes your hands look bloody, bloodied
+      gloves now look bloody when worn, and damaged gloves now look damaged when worn
+  - bugfix: Gaining or losing an arm now correctly updates your hand overlays

@@ -165,18 +165,16 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	//Bloody hands begin
-	var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
-	cut_overlay(bloody_overlay)
+	var/mutable_appearance/bloody_lefthand_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left", -GLOVES_LAYER)
+	var/mutable_appearance/bloody_righthand_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right", -GLOVES_LAYER)
+	cut_overlay(bloody_lefthand_overlay)
+	cut_overlay(bloody_righthand_overlay)
 	if(!gloves && blood_in_hands && (num_hands > 0))
-		bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
-		if(num_hands < 2)
-			if(has_left_hand(FALSE))
-				bloody_overlay.icon_state = "bloodyhands_left"
-			else if(has_right_hand(FALSE))
-				bloody_overlay.icon_state = "bloodyhands_right"
-
-		add_overlay(bloody_overlay)
-	//Bloody hands end
+		if(has_left_hand(check_disabled = FALSE))
+			add_overlay(bloody_lefthand_overlay)
+		if(has_right_hand(check_disabled = FALSE))
+			add_overlay(bloody_righthand_overlay)
+	// Bloody hands end
 
 	if(gloves)
 		var/obj/item/worn_item = gloves

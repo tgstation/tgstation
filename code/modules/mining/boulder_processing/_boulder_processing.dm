@@ -126,8 +126,7 @@
 	remove_boulder(pick(boulders_contained))
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/machinery/bouldertech/deconstruct(disassembled)
-	. = ..()
+/obj/machinery/bouldertech/on_deconstruction(disassembled)
 	if(length(contents))
 		for(var/obj/item/boulder/boulder in contents)
 			remove_boulder(boulder)
