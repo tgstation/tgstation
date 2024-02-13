@@ -161,7 +161,7 @@
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
-	set_tracked_mob(mob_ref?.resolve())
+	set_tracked_mob(mob_ref.resolve())
 
 /**
  * track_name
@@ -181,7 +181,7 @@
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
 	to_chat(tracker, span_notice("Now tracking [tracked_mob_name] on camera."))
-	set_tracked_mob(mob_ref?.resolve())
+	set_tracked_mob(mob_ref.resolve())
 
 /**
  * track_mob
