@@ -732,6 +732,9 @@
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
 		show_player_panel(target_mob)
 
+	else if(href_list["adminopendemo"])
+		usr.client << link("http://viewer.monkestation.com/?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]")
+
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return

@@ -1,5 +1,8 @@
 /datum/config_entry/flag/demos_enabled
 
+/datum/config_entry/string/replay_password
+	default = "mrhouse101"
+
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	wait = 1
@@ -70,6 +73,10 @@ SUBSYSTEM_DEF(demo)
 		marked_new.Cut()
 		marked_turfs.Cut()
 		return SS_INIT_SUCCESS
+
+	var/rounder = file("[GLOB.demo_directory]/round_number.txt")
+	fdel(rounder)
+	WRITE_FILE(rounder, "[GLOB.round_id]")
 
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
 	if(GLOB.revdata)
