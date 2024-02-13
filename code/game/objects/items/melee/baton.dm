@@ -664,6 +664,8 @@
 	if (!cell || cell.charge < cell_hit_cost)
 		return
 	active = !active
+	set_light_on(!light_on)
+	do_sparks(1, TRUE, src)
 	playsound(src, SFX_SPARKS, 75, TRUE, -1)
 	update_appearance()
 
