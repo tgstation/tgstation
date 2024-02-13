@@ -557,9 +557,8 @@
 	update_appearance()
 	add_fingerprint(user)
 
-/// Toggles the light of the stun baton.
+/// Toggles the stun baton's light
 /obj/item/melee/baton/security/proc/toggle_light(mob/user)
-	var/old_light_on = light_on
 	set_light_on(!light_on)
 	return
 
@@ -572,6 +571,7 @@
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
 		active = FALSE
+		set_light_on(FALSE)
 		update_appearance()
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 
@@ -687,13 +687,8 @@
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
-	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
-
-/obj/item/melee/baton/security/cattleprod/Initialize(mapload)
-	. = ..()
-	sparkler = new (src)
 
 /obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make an improved cattleprod
 	if(!istype(item, /obj/item/stack))
@@ -726,16 +721,6 @@
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
-
-/obj/item/melee/baton/security/cattleprod/baton_effect()
-	if(!sparkler.activate())
-		return BATON_ATTACK_DONE
-	return ..()
-
-/obj/item/melee/baton/security/cattleprod/Destroy()
-	if(sparkler)
-		QDEL_NULL(sparkler)
-	return ..()
 
 /obj/item/melee/baton/security/boomerang
 	name = "\improper OZtek Boomerang"
