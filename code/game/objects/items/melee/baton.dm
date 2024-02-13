@@ -431,6 +431,7 @@
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
+	light_power = 1
 
 
 	var/throw_stun_chance = 35
