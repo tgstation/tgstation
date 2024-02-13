@@ -18,12 +18,12 @@
 			TEST_FAIL("No rewards generated for spy bounty difficulty [difficulty]")
 
 	for(var/difficulty in UNLINT(handler.bounty_types))
-		var/list/bounty_type_pool = handler.bounty_types[difficulty]
+		var/list/bounty_type_pool = UNLINT(handler.bounty_types[difficulty])
 		if(!length(bounty_type_pool))
 			TEST_FAIL("No bounty types for spy bounty difficulty [difficulty] found")
 
 	for(var/difficulty in UNLINT(handler.bounties))
-		var/list/generated_bounties = handler.bounties[difficulty]
+		var/list/generated_bounties = UNLINT(handler.bounties[difficulty])
 		if(difficulty == SPY_DIFFICULTY_HARD)
 			if(length(generated_bounties))
 				TEST_FAIL("No [difficulty] bounties should not be generated on initial refresh!")
@@ -35,6 +35,6 @@
 	handler.force_refresh()
 
 	for(var/difficulty in UNLINT(handler.bounties))
-		var/list/generated_bounties = handler.bounties[difficulty]
+		var/list/generated_bounties = UNLINT(handler.bounties[difficulty])
 		if(!length(generated_bounties))
 			TEST_FAIL("No bounties were generated on first refresh for difficulty [difficulty]")
