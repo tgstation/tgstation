@@ -69,11 +69,11 @@
 	var/atom/location = drop_location()
 	// Need to keep a reference to the internal paper
 	// when we move it out of the plane, our ref gets set to null
-	var/obj/item/paper/internal_paper = internal_paper
-	internal_paper.forceMove(location)
+	var/obj/item/paper/released_paper = internal_paper
+	released_paper.forceMove(location)
 	// This will as a side effect, qdel the paper plane, making the user's hands empty
 
-	user.put_in_hands(internal_paper)
+	user.put_in_hands(released_paper)
 
 /obj/item/paperplane/attackby(obj/item/attacking_item, mob/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))
