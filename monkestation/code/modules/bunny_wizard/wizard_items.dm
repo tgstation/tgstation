@@ -1,12 +1,12 @@
 /obj/item/gun/magic/staff/bunny
 	name = "staff of bunnies"
 	desc = "An artefact that spits bolts of lagomorphic energy which cause the target's appearence and clothing to change."
-/*	icon = 'monkestation/icons/obj/guns/magic.dmi'
+	icon = 'monkestation/icons/obj/guns/magic.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/staves_lefthand.dmi'
 	icon_state = "bunnystaff"
-	inhand_icon_state = "bunnystaff" */
+	inhand_icon_state = "bunnystaff"
 	ammo_type = /obj/item/ammo_casing/magic/bunny
 	school = SCHOOL_TRANSMUTATION
 
@@ -15,8 +15,8 @@
 
 /obj/projectile/magic/bunny
 	name = "bolt of bunny"
-/*	icon_state = "bun_bolt"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi' */
+	icon_state = "bun_bolt"
+	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 
 /obj/projectile/magic/bunny/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -31,13 +31,13 @@
 /obj/item/gun/magic/wand/bunny //*sigh
 	name = "wand of bunnies"
 	desc = "Never doubt what a wizard will make on a bet."
-/*	icon = 'monkestation/icons/obj/guns/magic.dmi'
+	icon = 'monkestation/icons/obj/guns/magic.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/belt.dmi'
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "bunnywand"
 	base_icon_state = "bunnywand"
-	inhand_icon_state = "bunnywand" */
+	inhand_icon_state = "bunnywand"
 	ammo_type = /obj/item/ammo_casing/magic/bunny
 
 /obj/item/gun/magic/wand/bunny/zap_self(mob/living/carbon/human/user)
