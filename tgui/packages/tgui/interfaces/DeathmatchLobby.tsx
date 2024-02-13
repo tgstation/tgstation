@@ -11,8 +11,8 @@ import {
   Section,
   Table,
 } from '../components';
-import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
+import { Window } from '../layouts';
 
 type PlayerLike = {
   [key: string]: {
