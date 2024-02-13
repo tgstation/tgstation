@@ -319,7 +319,7 @@
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
 				M.mineralAmt = scale_ore_to_vent()
-				SSore_generation.post_ore_random["[M.mineralAmt]"] += 1
+				GLOB.post_ore_random["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
 			else
@@ -330,7 +330,7 @@
 			Change_Ore(path, FALSE)
 			Spread_Vein(path)
 			mineralAmt = scale_ore_to_vent()
-			SSore_generation.post_ore_manual["[mineralAmt]"] += 1
+			GLOB.post_ore_manual["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"

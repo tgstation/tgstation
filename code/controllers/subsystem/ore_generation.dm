@@ -19,27 +19,6 @@ SUBSYSTEM_DEF(ore_generation)
 	 */
 	var/list/ore_vent_minerals = list()
 	/// A tracker of how many of each ore vent size we have in the game. Useful for tracking purposes.
-	var/list/ore_vent_sizes = list(
-		LARGE_VENT_TYPE = 0,
-		MEDIUM_VENT_TYPE = 0,
-		SMALL_VENT_TYPE = 0,
-	)
-	/// Ores spawned by proximity to an ore vent. Useful for logging purposes.
-	var/list/post_ore_random = list(
-		"1" = 0,
-		"2" = 0,
-		"3" = 0,
-		"4" = 0,
-		"5" = 0,
-	)
-	/// Ores spawned randomly on the map without proximity to an ore vent. Useful for logging purposes.
-	var/list/post_ore_manual = list(
-		"1" = 0,
-		"2" = 0,
-		"3" = 0,
-		"4" = 0,
-		"5" = 0,
-	)
 
 /datum/controller/subsystem/ore_generation/Initialize()
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
@@ -61,7 +40,14 @@ SUBSYSTEM_DEF(ore_generation)
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
 		"Ore Generation spawned the following ores based on vent proximity: 1:[GLOB.post_ore_random["1"]], 2:[GLOB.post_ore_random["2"]], 3:[GLOB.post_ore_random["3"]], 4:[GLOB.post_ore_random["4"]], 5:[GLOB.post_ore_random["5"]]",
-		data,
+	)
+	logger.Log(
+		LOG_CATEGORY_CAVE_GENERATION,
+		"Ore Generation spawned the following ores randomly: 1:[GLOB.post_ore_manual["1"]], 2:[GLOB.post_ore_manual["2"]], 3:[GLOB.post_ore_manual["3"]], 4:[GLOB.post_ore_manual["4"]], 5:[GLOB.post_ore_manual["5"]]",
+	)
+	logger.Log(
+		LOG_CATEGORY_CAVE_GENERATION,
+		"Ore Generation spawned the following vent sizes: large:[GLOB.ore_vent_sizes[LARGE_VENT_TYPE]], medium:[GLOB.ore_vent_sizes[MEDIUM_VENT_TYPE]], small:[GLOB.post_ore_manual[SMALL_VENT_TYPE]]",
 	)
 	return SS_INIT_SUCCESS
 
