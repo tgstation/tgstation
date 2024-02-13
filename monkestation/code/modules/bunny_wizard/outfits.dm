@@ -1,5 +1,5 @@
-/datum/outfit/cursed_bunny //for bunny wizards, try not to use this one
-	name = "Cursed Bunny (Base)"
+/datum/outfit/cursed_bunny //for bunny wizards, don't use these for normal outfits
+	name = "Cursed Bunny"
 	uniform = /obj/item/clothing/under/costume/playbunny
 	suit = /obj/item/clothing/suit/jacket/tailcoat
 	shoes = /obj/item/clothing/shoes/heels
@@ -17,7 +17,6 @@
 	equipped_on.underwear = "Nude"
 	equipped_on.undershirt = "Nude"
 	equipped_on.socks = "Nude"
-	equipped_on.facial_hairstyle = "Shaved"
 	var/list/no_drops = list()
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_FEET)
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_ICLOTHING)
@@ -29,7 +28,7 @@
 		trait_needed.name = "cursed " + trait_needed.name
 
 /datum/outfit/cursed_bunny/color
-	name = "Cursed Bunny"
+	name = "Cursed Bunny (Random Color)"
 
 /datum/outfit/cursed_bunny/color/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -37,8 +36,6 @@
 	equipped_on.underwear = "Nude"
 	equipped_on.undershirt = "Nude"
 	equipped_on.socks = "Nude"
-	equipped_on.facial_hairstyle = "Shaved"
-
 	var/bunny_color = random_color()
 	equipped_on.w_uniform?.greyscale_colors = "#[bunny_color]#[bunny_color]#ffffff#87502e"
 	equipped_on.wear_suit?.greyscale_colors = "#[bunny_color]"
@@ -88,7 +85,7 @@
 	suit = /obj/item/clothing/suit/jacket/tailcoat/communist
 	shoes = /obj/item/clothing/shoes/heels/red
 	head = /obj/item/clothing/head/playbunnyears/communist
-	neck = /obj/item/clothing/neck/tie/bunnytie/communist
+	neck = /obj/item/clothing/neck/tie/bunnytie/communist/tied
 
 /datum/outfit/cursed_bunny/usa
 	name = "Cursed Bunny (USA)"
@@ -96,7 +93,7 @@
 	suit = /obj/item/clothing/suit/jacket/tailcoat/usa
 	shoes = /obj/item/clothing/shoes/heels/red
 	head = /obj/item/clothing/head/playbunnyears/usa
-	neck = /obj/item/clothing/neck/tie/bunnytie/blue
+	neck = /obj/item/clothing/neck/tie/bunnytie/blue/tied
 
 /datum/outfit/cursed_bunny/centcom
 	name = "Cursed Bunny (Centcom)"
@@ -120,9 +117,11 @@
 
 /datum/outfit/plasmaman/cursed_bunny
 	name = "Cursed Bunny (Plasmaman)"
-	uniform = /obj/item/clothing/under/plasmaman/bunny
-	head = /obj/item/clothing/head/helmet/space/plasmaman/bunny
-	neck = /obj/item/clothing/neck/tie/bunnytie
+	uniform = /obj/item/clothing/under/plasmaman/plasma_bun
+	suit = /obj/item/clothing/suit/jacket/tailcoat/plasmaman
+	head = /obj/item/clothing/head/helmet/space/plasmaman/bunny_ears
+	shoes = /obj/item/clothing/shoes/heels/enviroheels
+	neck = /obj/item/clothing/neck/tie/bunnytie/tied
 	belt = /obj/item/tank/internals/plasmaman/belt/full
 	r_pocket = /obj/item/toy/cards/deck
 	l_pocket = 	/obj/item/reagent_containers/cup/rag

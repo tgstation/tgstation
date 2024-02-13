@@ -166,6 +166,7 @@ BUNNY SUITS
 
 /obj/item/clothing/under/costume/playbunny/british
 	name = "british bunny suit"
+	desc = "The staple of any bunny themed monarchists. It has a little cottonball tail too."
 	icon_state = "playbunny_brit"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -173,6 +174,7 @@ BUNNY SUITS
 
 /obj/item/clothing/under/costume/playbunny/communist
 	name = "really red bunny suit"
+	desc = "The staple of any bunny themed communists. It has a little cottonball tail too."
 	icon_state = "playbunny_communist"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -180,6 +182,7 @@ BUNNY SUITS
 
 /obj/item/clothing/under/costume/playbunny/usa
 	name = "striped bunny suit"
+	desc = "A bunny outfit stitched together from several American flags. It has a little cottonball tail too."
 	icon_state = "playbunny_usa"
 	greyscale_config = null
 	greyscale_config_worn = null
