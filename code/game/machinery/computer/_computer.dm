@@ -102,20 +102,21 @@
 	if(QDELETED(circuit)) //no circuit, no computer frame
 		return
 
-	var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-	A.setDir(dir)
-	A.set_anchored(TRUE)
-	A.circuit = circuit
+	var/obj/structure/frame/computer/new_frame = new(loc)
+	new_frame.setDir(dir)
+	new_frame.set_anchored(TRUE)
+	new_frame.circuit = circuit
 	// Circuit removal code is handled in /obj/machinery/Exited()
-	circuit.forceMove(A)
-	if((machine_stat & BROKEN) || !dissassembled)
+	circuit.forceMove(new_frame)
+	if((machine_stat & BROKEN) || !disassembled)
+		var/atom/drop_loc = drop_location()
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
-		new /obj/item/shard(drop_location())
-		new /obj/item/shard(drop_location())
-		A.state = FRAME_COMPUTER_STATE_WIRED
+		new /obj/item/shard(drop_loc)
+		new /obj/item/shard(drop_loc)
+		new_frame.state = FRAME_COMPUTER_STATE_WIRED
 	else
-		A.state = FRAME_COMPUTER_STATE_GLASSED
-	A.update_appearance(UPDATE_ICON_STATE)
+		new_frame.state = FRAME_COMPUTER_STATE_GLASSED
+	new_frame.update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()
