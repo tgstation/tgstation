@@ -92,12 +92,14 @@
 			return ITEM_INTERACT_SUCCESS
 
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			balloon_alert(user, "unsecure the circuit!")
-			return ITEM_INTERACT_BLOCKING
+			if(!user.combat_mode)
+				balloon_alert(user, "unsecure the circuit!")
+				return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_WIRED)
-			balloon_alert(user, "remove the wiring!")
-			return ITEM_INTERACT_BLOCKING
+			if(!user.combat_mode)
+				balloon_alert(user, "remove the wiring!")
+				return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			tool.play_tool_sound(src)
@@ -141,11 +143,10 @@
 	if(!cable.tool_start_check(user, amount = 5))
 		return FALSE
 	if(time > 0)
-		to_chat(user, span_notice("You start adding cables to the frame..."))
+		balloon_alert(user, "adding cables...")
 	if(!cable.use_tool(src, user, time, volume = 50, amount = 5) || state != FRAME_COMPUTER_STATE_BOARD_SECURED)
 		return FALSE
 
-	to_chat(user, span_notice("You add cables to the frame."))
 	state = FRAME_COMPUTER_STATE_WIRED
 	update_appearance(UPDATE_ICON_STATE)
 	return TRUE
@@ -157,11 +158,10 @@
 		return FALSE
 	if(time > 0)
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		to_chat(user, span_notice("You start to put in the glass panel..."))
+		balloon_alert(user, "adding glass...")
 	if(!glass.use_tool(src, user, time, amount = 2) || state != FRAME_COMPUTER_STATE_WIRED)
 		return FALSE
 
-	to_chat(user, span_notice("You put in the glass panel."))
 	state = FRAME_COMPUTER_STATE_GLASSED
 	update_appearance(UPDATE_ICON_STATE)
 	return TRUE
