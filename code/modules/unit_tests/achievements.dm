@@ -7,8 +7,8 @@
 			continue
 		var/init_icon = initial(award.icon)
 		var/init_icon_state = initial(award.icon_state)
-		if(!init_icon_state || !(init_icon_state in init_icon))
-			TEST_FAIL("Award [initial(award.name)] has an unexistent icon in [init_icon]: \"[init_icon_state || "null"]\"")
+		if(!init_icon_state || !icon_exists(init_icon, init_icon_state))
+			TEST_FAIL("Award [initial(award.name)] has a non-existent icon in [init_icon]: \"[init_icon_state || "null"]\"")
 		if(length(initial(award.database_id)) > 32) //sql schema limit
 			TEST_FAIL("Award [initial(award.name)] database id is too long")
 		var/init_category = initial(award.category)
