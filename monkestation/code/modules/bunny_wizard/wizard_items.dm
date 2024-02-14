@@ -53,7 +53,7 @@
 /datum/spellbook_entry/item/wandbunny
 	name = "Wand of Bunnies"
 	desc = "An artefact that spits bolts of lagomorphic energy which cause the target's appearence and clothing to change. Unlike most wands, it is able to recharge its own power. This magic doesn't effect machines or animals."
-	item_path = /obj/item/gun/magic/staff/bunny
+	item_path = /obj/item/gun/magic/wand/bunny
 	category = "Offensive"
 
 /mob/living/carbon/human/proc/bunnify(mob/target)
