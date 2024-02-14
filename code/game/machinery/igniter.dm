@@ -55,11 +55,9 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/igniter/deconstruct(disassembled)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 5)
-		new /obj/item/assembly/igniter(loc)
-	return ..()
+/obj/machinery/igniter/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(loc, 5)
+	new /obj/item/assembly/igniter(loc)
 
 /obj/machinery/igniter/multitool_act(mob/living/user, obj/item/tool)
 	var/change_id = tgui_input_number(user, "Set the igniter controller's ID", "Igniter ID", id, 100)
@@ -200,10 +198,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/sparker/deconstruct(disassembled)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/wallframe/sparker(loc)
-	return ..()
+/obj/machinery/sparker/on_deconstruction(disassembled)
+	new /obj/item/wallframe/sparker(loc)
 
 /obj/machinery/sparker/multitool_act(mob/living/user, obj/item/tool)
 	var/change_id = tgui_input_number(user, "Set the sparker controller's ID", "Sparker ID", id, 100)

@@ -12,8 +12,6 @@
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"

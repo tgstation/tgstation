@@ -491,7 +491,7 @@
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 	return
 
-/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+/obj/machinery/smartfridge/drying_rack/on_deconstruction(disassembled)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)

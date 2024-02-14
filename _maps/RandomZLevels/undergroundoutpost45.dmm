@@ -1655,8 +1655,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/folder/red,
-/obj/machinery/door/window/left/directional/south{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Security Checkpoint";
 	req_access = list("away_maintenance")
 	},
@@ -1897,10 +1896,7 @@
 "hZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Hydroponics Desk";
 	req_access = list("away_maintenance")
 	},
@@ -2006,7 +2002,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/gateway)
 "iu" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Gateway Chamber";
 	req_access = list("away_maintenance")
 	},
@@ -6855,8 +6851,7 @@
 "Ed" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Hydroponics Desk";
 	req_access = list("away_maintenance")
 	},
@@ -7365,10 +7360,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Security Checkpoint";
 	req_access = list("away_maintenance")
 	},
@@ -7490,8 +7482,7 @@
 	id = "UO45_EngineeringOffice";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Engineering Reception";
 	req_access = list("away_maintenance")
 	},
@@ -7858,8 +7849,7 @@
 "Wo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/east{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Hydroponics Desk";
 	req_access = list("away_maintenance")
 	},
@@ -7953,10 +7943,7 @@
 	id = "UO45_EngineeringOffice";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Engineering Reception";
 	req_access = list("away_maintenance")
 	},

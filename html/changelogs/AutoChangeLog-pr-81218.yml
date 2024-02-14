@@ -1,4 +1,0 @@
-author: "SapphicOverload"
-delete-after: True
-changes:
-  - code_imp: "Removes /obj/item/onetankbomb, assembly bombs are now handled by the tank itself."
