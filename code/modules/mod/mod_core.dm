@@ -367,7 +367,7 @@
 	icon_state = "mod-core-plasma-flower"
 	desc = "A strange flower from the desolate wastes of lavaland. It pulses with a strange purple glow.  \
 		The wires coming out of it could be hooked into a MODsuit."
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_color = "#cc00cc"
 	light_range = 2
 	// Slightly better than the normal plasma core.

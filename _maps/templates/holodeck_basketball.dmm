@@ -162,15 +162,13 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "P" = (
-/obj/machinery/door/window{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Basketball Court"
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "Q" = (
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Basketball Court"
 	},
 /turf/open/floor/holofloor,

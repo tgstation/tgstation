@@ -66,6 +66,9 @@
 		for(var/signal in container_signals)
 			parent.RegisterSignal(src, signal, container_signals[signal])
 
+	//drop sheets when the object is deconstructed but not deleted
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
+
 	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
 		return
 
@@ -75,7 +78,6 @@
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/component/material_container/Destroy(force)
-	retrieve_all()
 	materials = null
 	allowed_materials = null
 	return ..()
@@ -87,6 +89,11 @@
 		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/material_container/proc/drop_sheets()
+	SIGNAL_HANDLER
+
+	retrieve_all()
 
 /datum/component/material_container/proc/on_examine(datum/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER

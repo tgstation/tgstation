@@ -18,7 +18,7 @@
 	anchored = TRUE
 	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
-	light_system = STATIC_LIGHT
+	light_system = COMPLEX_LIGHT
 	light_range = 3
 	light_power = 1
 	light_on = TRUE
