@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/remove_pet(datum/source)
 	SIGNAL_HANDLER
 	pet = null
-	if(QDLETED(src))
+	if(QDELETED(src))
 		return
 	computer.remove_file(src) //all is lost we no longer have a reason to exist
 
