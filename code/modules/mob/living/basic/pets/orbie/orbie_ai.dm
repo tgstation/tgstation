@@ -1,5 +1,5 @@
-#define PET_PLAYTIME_COOLDOWN 2 MINUTES
-#define MESSAGE_EXPIRY_TIME 30 SECONDS
+#define PET_PLAYTIME_COOLDOWN (2 MINUTES)
+#define MESSAGE_EXPIRY_TIME (30 SECONDS)
 
 /datum/ai_controller/basic_controller/orbie
 	blackboard = list(
@@ -167,3 +167,4 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 #undef PET_PLAYTIME_COOLDOWN
+#undef MESSAGE_EXPIRY_TIME

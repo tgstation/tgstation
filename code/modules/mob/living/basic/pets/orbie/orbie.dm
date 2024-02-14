@@ -9,7 +9,7 @@
 	speed = 1
 	maxHealth = 50
 	light_on = FALSE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 6
 	light_color = "#64bee1"
 	health = 50
@@ -107,3 +107,5 @@
 
 /mob/living/basic/orbie/gib()
 	death(TRUE)
+
+#undef ORBIE_MINIMUM_SPEED
