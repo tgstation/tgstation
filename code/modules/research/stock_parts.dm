@@ -48,8 +48,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		var/obj/structure/frame/machine/machine_frame = attacked_frame
 		if(attacked_frame.state == 1 || (!machine_frame.components && !(locate(/obj/item/circuitboard/machine) in contents)))
 			return FALSE
-	else
-		if(attacked_frame.state == 0 || (attacked_frame.state == 1 && !(locate(/obj/item/circuitboard/computer) in contents)))
+	else if(attacked_frame.state == COMPUTER_FRAME_DEFAULT)
+		if(!attacked_frame.anchored)
+			return FALSE
+		else if(!(locate(/obj/item/circuitboard/computer) in contents))
 			return FALSE
 
 	attacked_frame.attackby(src, user)

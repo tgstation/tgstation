@@ -2,7 +2,7 @@
 	name = "computer frame"
 	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
 	icon_state = "0"
-	state = COMPUTER_FRAME_UNANCHORED
+	state = COMPUTER_FRAME_DEFAULT
 
 /obj/structure/frame/computer/Initialize(mapload)
 	. = ..()
@@ -26,16 +26,21 @@
 		return
 
 	switch(state)
-		if(COMPUTER_FRAME_UNANCHORED, COMPUTER_FRAME_ANCHORED)
-			if(held_item.tool_behaviour == TOOL_WRENCH)
-				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Wrench"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(held_item.tool_behaviour == TOOL_WELDER && state == COMPUTER_FRAME_UNANCHORED)
-				context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(state == COMPUTER_FRAME_ANCHORED && istype(held_item, /obj/item/circuitboard/computer))
-				context[SCREENTIP_CONTEXT_LMB] = "Install board"
-				return CONTEXTUAL_SCREENTIP_SET
+		if(COMPUTER_FRAME_DEFAULT)
+			if(anchored)
+				if(held_item.tool_behaviour == TOOL_WRENCH)
+					context[SCREENTIP_CONTEXT_LMB] = "Unwrench"
+					return CONTEXTUAL_SCREENTIP_SET
+				else if(istype(held_item, /obj/item/circuitboard/computer))
+					context[SCREENTIP_CONTEXT_LMB] = "Install board"
+					return CONTEXTUAL_SCREENTIP_SET
+			else
+				if(held_item.tool_behaviour == TOOL_WRENCH)
+					context[SCREENTIP_CONTEXT_LMB] = "wrench"
+					return CONTEXTUAL_SCREENTIP_SET
+				else if(held_item.tool_behaviour == TOOL_WELDER)
+					context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"
+					return CONTEXTUAL_SCREENTIP_SET
 		if(COMPUTER_FRAME_BOARD_INSTALLED)
 			if(held_item.tool_behaviour == TOOL_CROWBAR)
 				context[SCREENTIP_CONTEXT_LMB] = "Pry out board"
@@ -70,12 +75,13 @@
 	. = ..()
 
 	switch(state)
-		if(COMPUTER_FRAME_UNANCHORED)
-			. += span_notice("It can be [EXAMINE_HINT("wrenched")] in place.")
-			. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
-		if(COMPUTER_FRAME_ANCHORED)
-			. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
-			. += span_warning("It's missing a circuit board.")
+		if(COMPUTER_FRAME_DEFAULT)
+			if(anchored)
+				. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
+				. += span_warning("It's missing a circuit board.")
+			else
+				. += span_notice("It can be [EXAMINE_HINT("wrenched")] in place.")
+				. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
 		if(COMPUTER_FRAME_BOARD_INSTALLED)
 			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
@@ -91,19 +97,8 @@
 
 
 /obj/structure/frame/computer/update_icon_state()
-	. = ..()
-
-	switch(state)
-		if(COMPUTER_FRAME_UNANCHORED, COMPUTER_FRAME_ANCHORED)
-			icon_state = "0"
-		if(COMPUTER_FRAME_BOARD_INSTALLED)
-			icon_state = "1"
-		if(COMPUTER_FRAME_BOARD_SECURED)
-			icon_state = "2"
-		if(COMPUTER_FRAME_WIRED)
-			icon_state = "3"
-		if(COMPUTER_FRAME_SCREEN_INSTALLED)
-			icon_state = "4"
+	icon_state = "[state]"
+	return ..()
 
 /**
  * Installs the board in the computer
@@ -130,22 +125,15 @@
 
 /obj/structure/frame/computer/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
-
-	switch(state)
-		if(COMPUTER_FRAME_UNANCHORED)
-			if(default_unfasten_wrench(user, tool, 2 SECONDS) == SUCCESSFUL_UNFASTEN)
-				state = COMPUTER_FRAME_ANCHORED
-				return ITEM_INTERACT_SUCCESS
-
-		if(COMPUTER_FRAME_ANCHORED)
-			if(default_unfasten_wrench(user, tool, 20) == SUCCESSFUL_UNFASTEN)
-				state = COMPUTER_FRAME_UNANCHORED
-				return ITEM_INTERACT_SUCCESS
+	if(state != COMPUTER_FRAME_DEFAULT)
+		return
+	if(default_unfasten_wrench(user, tool, 2 SECONDS) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/computer/welder_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 
-	if(state == COMPUTER_FRAME_UNANCHORED)
+	if(state == COMPUTER_FRAME_DEFAULT && !anchored)
 		if(!tool.tool_start_check(user, amount=1))
 			return
 		if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
@@ -209,7 +197,7 @@
 			circuit.forceMove(drop_location())
 			circuit.add_fingerprint(user)
 			circuit = null
-			state = COMPUTER_FRAME_ANCHORED
+			state = COMPUTER_FRAME_DEFAULT
 			update_appearance(UPDATE_ICON_STATE)
 			return ITEM_INTERACT_SUCCESS
 
@@ -240,7 +228,9 @@
 	add_fingerprint(user)
 
 	switch(state)
-		if(COMPUTER_FRAME_ANCHORED)
+		if(COMPUTER_FRAME_DEFAULT)
+			if(!anchored)
+				return ..()
 			. = TRUE
 
 			//attempt to install circuitboard from rped
@@ -345,7 +335,6 @@
 /obj/structure/frame/computer/rcd
 	icon = 'icons/hud/radial.dmi'
 	icon_state = "cnorth"
-	state = COMPUTER_FRAME_ANCHORED
 
 /obj/structure/frame/computer/rcd/Initialize(mapload)
 	name = "computer frame"
