@@ -922,7 +922,7 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 	return ..()
 
@@ -1420,3 +1420,20 @@
 	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?
 		return FALSE
 	return ..()
+
+/// Helper to cleanly trigger tail wagging
+/// Accepts an optional timeout after which we remove the tail wagging
+/// Returns true if successful, false otherwise
+/mob/living/carbon/proc/wag_tail(timeout = INFINITY)
+	var/obj/item/organ/external/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(!wagged)
+		return FALSE
+	return wagged.start_wag(src, timeout)
+
+/// Helper to cleanly stop all tail wagging
+/// Returns true if successful, false otherwise
+/mob/living/carbon/proc/unwag_tail() // can't unwag a tail
+	var/obj/item/organ/external/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(!unwagged)
+		return FALSE
+	return unwagged.stop_wag(src)

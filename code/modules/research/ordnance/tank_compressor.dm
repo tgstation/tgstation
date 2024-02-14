@@ -238,7 +238,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/tank_compressor/on_deconstruction()
+/obj/machinery/atmospherics/components/binary/tank_compressor/on_deconstruction(disassembled)
 	eject_tank()
 	eject_disk()
 	return ..()

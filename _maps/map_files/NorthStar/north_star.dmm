@@ -2881,8 +2881,7 @@
 	},
 /area/station/hallway/floor3/aft)
 "aMo" = (
-/obj/machinery/door/window/right/directional/west{
-	dir = 2;
+/obj/machinery/door/window/right/directional/south{
 	name = "Gateway Access";
 	req_access = list("gateway")
 	},
@@ -6740,9 +6739,7 @@
 	},
 /area/station/ai_monitored/command/storage/eva)
 "bGV" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 1
-	},
+/obj/machinery/door/window/brigdoor/left/directional/north,
 /mob/living/basic/pet/fox,
 /turf/open/floor/noslip,
 /area/station/maintenance/floor1/port)
@@ -10620,13 +10617,10 @@
 /area/station/service/hydroponics/garden)
 "cIo" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Outer Window"
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Security Desk";
 	req_access = list("security")
 	},
@@ -16707,9 +16701,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "enB" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 1
-	},
+/obj/machinery/door/window/brigdoor/left/directional/north,
 /mob/living/basic/mothroach,
 /turf/open/floor/noslip,
 /area/station/maintenance/floor1/port)
@@ -33377,20 +33369,17 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
-	layer = 3.1;
-	name = "Upload Console Window";
-	req_access = list("ai_upload")
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /obj/machinery/camera/directional/north{
 	c_tag = "AI Upload Chamber - Fore";
 	network = list("aiupload")
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Upload Console Window";
+	req_access = list("ai_upload");
+	layer = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -33964,7 +33953,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "iWQ" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Mass Driver";
 	req_access = list("chapel_office")
 	},
@@ -45485,8 +45474,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	layer = 3.1;
 	name = "Cyborg Upload Console Window";
 	req_access = list("ai_upload")
@@ -78777,8 +78765,7 @@
 /area/station/hallway/secondary/exit/escape_pod)
 "uGO" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/west{
-	dir = 2;
+/obj/machinery/door/window/right/directional/south{
 	name = "Access Queue"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -84888,7 +84875,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "whj" = (
-/obj/machinery/door/window/brigdoor,
+/obj/machinery/door/window/brigdoor/left/directional/south,
 /turf/open/misc/sandy_dirt,
 /area/station/maintenance/floor1/starboard)
 "whw" = (

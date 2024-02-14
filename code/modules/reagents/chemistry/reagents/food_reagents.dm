@@ -525,14 +525,7 @@
 	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/garlic/on_mob_add(mob/living/affected_mob, amount)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_GARLIC_BREATH, type)
-
-/datum/reagent/consumable/garlic/on_mob_delete(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_GARLIC_BREATH, type)
+	added_traits = list(TRAIT_GARLIC_BREATH)
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

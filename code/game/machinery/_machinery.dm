@@ -198,9 +198,8 @@
 	end_processing()
 
 	clear_components()
-	dump_contents()
-
 	unset_static_power()
+
 	return ..()
 
 /**
@@ -668,6 +667,9 @@
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	update_last_used(usr)
+	if(isAI(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
+		to_chat(usr, span_warning("You can no longer connect to this device!"))
+		return FALSE
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
@@ -815,11 +817,15 @@
 	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(obj_flags & NO_DECONSTRUCTION)
+		dump_contents() //drop everything inside us
 		return ..() //Just delete us, no need to call anything else.
 
-	on_deconstruction()
+	on_deconstruction(disassembled)
 	if(!LAZYLEN(component_parts))
+		dump_contents() //drop everything inside us
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
@@ -838,8 +844,12 @@
 						continue
 					var/obj/item/stack/stack_path = component
 					new stack_path(loc, board.req_components[component])
-
 	LAZYCLEARLIST(component_parts)
+
+	//drop everything inside us. we do this last to give machines a chance
+	//to handle their contents before we dump them
+	dump_contents()
+
 	return ..()
 
 /**
@@ -1125,8 +1135,14 @@
 /obj/machinery/proc/on_construction(mob/user)
 	return
 
-//called on deconstruction before the final deletion
-/obj/machinery/proc/on_deconstruction()
+/**
+ * called on deconstruction before the final deletion
+ * Arguments
+ *
+ * * disassembled - if TRUE means we used tools to deconstruct it, FALSE means it got destroyed by other means
+ */
+/obj/machinery/proc/on_deconstruction(disassembled)
+	PROTECTED_PROC(TRUE)
 	return
 
 /obj/machinery/proc/can_be_overridden()

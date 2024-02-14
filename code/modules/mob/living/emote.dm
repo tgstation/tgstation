@@ -342,6 +342,11 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
 
+/datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
+
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
 	if(!intentional && isanimal_or_basicmob(user))

@@ -228,11 +228,8 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/equipped_speed_mods()
-	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
-		var/obj/item/thing = sloties
-		. += thing?.slowdown
+/mob/living/carbon/human/get_equipped_speed_mod_items()
+	return ..() - list(l_store, r_store, s_store)
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
@@ -438,11 +435,10 @@
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	var/atom/real_location = storage.real_location?.resolve()
-	if(!real_location.contents.len) // nothing to take out
+	if(!storage.real_location.contents.len) // nothing to take out
 		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return
-	var/obj/item/stored = real_location.contents[real_location.contents.len]
+	var/obj/item/stored = storage.real_location.contents[storage.real_location.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot

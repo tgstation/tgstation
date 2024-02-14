@@ -98,28 +98,24 @@
 				if(prob(10))
 					atom_break(ENERGY)
 
-/obj/machinery/computer/deconstruct(disassembled = TRUE)
-	on_deconstruction()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/atom/drop_loc = drop_location()
-		if(circuit) //no circuit, no computer frame
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.setDir(dir)
-			A.set_anchored(anchored)
-			A.circuit = circuit
-			// Circuit removal code is handled in /obj/machinery/Exited()
-			circuit.forceMove(A)
-			if((machine_stat & BROKEN) || !disassembled)
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
-				new /obj/item/shard(drop_loc)
-				new /obj/item/shard(drop_loc)
-				A.state = FRAME_COMPUTER_STATE_WIRED
-			else
-				A.state = FRAME_COMPUTER_STATE_GLASSED
-			A.update_appearance(UPDATE_ICON_STATE)
-		for(var/obj/C in src)
-			C.forceMove(drop_loc)
-	qdel(src)
+/obj/machinery/computer/spawn_frame(disassembled)
+	if(QDELETED(circuit)) //no circuit, no computer frame
+		return
+
+	var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+	A.setDir(dir)
+	A.set_anchored(TRUE)
+	A.circuit = circuit
+	// Circuit removal code is handled in /obj/machinery/Exited()
+	circuit.forceMove(A)
+	if((machine_stat & BROKEN) || !dissassembled)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+		new /obj/item/shard(drop_location())
+		new /obj/item/shard(drop_location())
+		A.state = FRAME_COMPUTER_STATE_WIRED
+	else
+		A.state = FRAME_COMPUTER_STATE_GLASSED
+	A.update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()

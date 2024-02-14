@@ -138,6 +138,6 @@
 		QDEL_NULL(occupier)
 	return ..()
 
-/obj/machinery/computer/aifixer/on_deconstruction()
+/obj/machinery/computer/aifixer/on_deconstruction(disassembled)
 	if(occupier)
 		QDEL_NULL(occupier)

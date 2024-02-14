@@ -35,6 +35,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 25
 	wound_bonus = -45
+	can_buckle_to = FALSE
 
 	verb_say = "blorbles"
 	verb_ask = "inquisitively blorbles"

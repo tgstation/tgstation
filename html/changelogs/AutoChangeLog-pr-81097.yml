@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Big martial arts refactor, they should now overall act a ton more consistent. Also technically any mob can do martial arts. Let me know if something is funky."
