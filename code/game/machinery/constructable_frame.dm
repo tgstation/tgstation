@@ -284,14 +284,14 @@
 		return FALSE
 	return ..()
 
-/obj/structure/frame/machine/install_board(mob/living/user, obj/item/circuitboard/board, by_hand = TRUE)
+/obj/structure/frame/machine/install_board(mob/living/user, obj/item/circuitboard/machine/board, by_hand = TRUE)
 	if(state == FRAME_STATE_EMPTY)
 		balloon_alert(user, "needs wiring!")
 		return FALSE
 	if(state == FRAME_STATE_BOARD_INSTALLED)
 		balloon_alert(user, "circuit already installed!")
 		return FALSE
-	if(!anchored && board.needs_anchored)
+	if(!anchored && istype(board) && board.needs_anchored)
 		balloon_alert(user, "frame must be anchored!")
 		return FALSE
 

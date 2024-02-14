@@ -18,8 +18,8 @@
 	state = FRAME_COMPUTER_STATE_EMPTY
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/frame/computer/install_board(mob/living/user, obj/item/circuitboard/board, by_hand)
-	if(stat != FRAME_COMPUTER_STATE_EMPTY)
+/obj/structure/frame/computer/install_board(mob/living/user, obj/item/circuitboard/computer/board, by_hand)
+	if(state != FRAME_COMPUTER_STATE_EMPTY)
 		balloon_alert(user, "circuit already installed!")
 		return FALSE
 	return ..()
