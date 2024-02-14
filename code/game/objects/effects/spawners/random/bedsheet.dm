@@ -1,7 +1,7 @@
 /obj/effect/spawner/random/bedsheet
 	name = "random dorm bedsheet"
 	icon_state = "random_bedsheet"
-	loot = list(/obj/item/bedsheet,
+	loot = list(/obj/item/bedsheet = 8,
 		/obj/item/bedsheet/blue = 8,
 		/obj/item/bedsheet/green = 8,
 		/obj/item/bedsheet/grey = 8,

@@ -346,21 +346,22 @@ LINEN BINS
 	desc = "It has a Jolly Roger emblem on it and has a faint scent of grog."
 	icon_state = "sheetpirate"
 	inhand_icon_state = "sheetpirate"
-	dream_messages = list("do whatever you wants",
-		"cause a pirate is free",
-		"being a pirate",
-		"stealing",
-		"landlubbers",
-		"gold",
+	dream_messages = list(
 		"a buried treasure",
-		"yarr",
-		"avast",
-		"a swashbuckler",
-		"sailing the Seven Seas",
-		"a parrot",
-		"a monkey",
 		"an island",
-		"a talking skull"
+		"a monkey",
+		"a parrot",
+		"a swashbuckler",
+		"a talking skull",
+		"avast",
+		"being a pirate",
+		"'cause a pirate is free",
+		"doing whatever you want",
+		"gold",
+		"landlubbers",
+		"stealing",
+		"sailing the Seven Seas",
+		"yarr",
 	)
 
 /obj/item/bedsheet/gondola
