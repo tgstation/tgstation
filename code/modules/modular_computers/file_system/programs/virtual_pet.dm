@@ -317,7 +317,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	computer.remove_file(src) //all is lost we no longer have a reason to exist
 
 /datum/computer_file/program/virtual_pet/kill_program(mob/user)
-	if(pet.loc != computer)
+	if(pet && pet.loc != computer)
 		pet.forceMove(computer) //recall the hologram back to the pda
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
