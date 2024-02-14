@@ -2,6 +2,7 @@ import { BooleanLike } from 'common/react';
 import { capitalize } from 'common/string';
 import { useState } from 'react';
 import { useBackend } from '../backend';
+
 import {
   Button,
   Dropdown,
@@ -15,6 +16,7 @@ import {
   Box,
   LabeledList,
 } from '../components';
+
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -83,7 +85,7 @@ enum PetGender {
   neutral = 'neutral',
 }
 
-export const NtosVirtualPet = (props) => {
+export const NtosVirtualPet = (props: any) => {
   const [tab, setTab] = useState(Tab.Stats);
 
   return (
@@ -124,7 +126,7 @@ export const NtosVirtualPet = (props) => {
   );
 };
 
-const Stats = (props) => {
+const Stats = (props: any) => {
   const { act, data } = useBackend<Data>();
   const {
     currently_summoned,
@@ -238,7 +240,7 @@ const Stats = (props) => {
   );
 };
 
-const PetTricks = (props) => {
+const PetTricks = (props: any) => {
   const { act, data } = useBackend<Data>();
   const { possible_emotes } = data;
   const [sequences, setSequences] = useState(['none', 'none', 'none', 'none']);
@@ -293,7 +295,7 @@ const PetTricks = (props) => {
   );
 };
 
-const Customization = (props) => {
+const Customization = (props: any) => {
   const { act, data } = useBackend<Data>();
   const {
     preview_icon,
@@ -427,7 +429,7 @@ const Customization = (props) => {
   );
 };
 
-const AllPetUpdates = (props) => {
+const AllPetUpdates = (props: any) => {
   const { act, data } = useBackend<Data>();
   const { pet_updates } = data;
 
@@ -492,7 +494,7 @@ const AllPetUpdates = (props) => {
   );
 };
 
-const PetIcon = (props) => {
+const PetIcon = (props: any) => {
   const { data } = useBackend<Data>();
   const { pet_state_icons = [] } = data;
   const { our_pet_state } = props;
