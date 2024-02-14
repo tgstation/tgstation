@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	GLOB.virtual_pets_list += src
 	pet = new pet_type(computer)
 	pet.forceMove(computer)
-	RegisterSignal(pet, COMSIG_PREQDELETED, PROC_REF(remove_pet))
+	RegisterSignal(pet, COMSIG_QDELETING, PROC_REF(remove_pet))
 	RegisterSignal(pet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated)) //hologramic hat management
 	RegisterSignal(pet, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_dir))
 	RegisterSignal(pet, COMSIG_MOVABLE_MOVED, PROC_REF(after_pet_move))
