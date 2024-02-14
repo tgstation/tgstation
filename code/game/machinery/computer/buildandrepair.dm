@@ -23,7 +23,6 @@
 /obj/structure/frame/computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
 		return
 
 	switch(state)
@@ -134,7 +133,7 @@
 
 	switch(state)
 		if(COMPUTER_FRAME_UNANCHORED)
-			if(default_unfasten_wrench(user, tool, 20) == SUCCESSFUL_UNFASTEN)
+			if(default_unfasten_wrench(user, tool, 2 SECONDS) == SUCCESSFUL_UNFASTEN)
 				state = COMPUTER_FRAME_ANCHORED
 				return ITEM_INTERACT_SUCCESS
 
@@ -149,7 +148,7 @@
 	if(state == COMPUTER_FRAME_UNANCHORED)
 		if(!tool.tool_start_check(user, amount=1))
 			return
-		if(!tool.use_tool(src, user, 20, volume = 50))
+		if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
 			return
 		var/obj/item/stack/sheet/iron/M = new (drop_location(), 5)
 		if (!QDELETED(M))
