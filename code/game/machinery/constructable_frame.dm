@@ -422,6 +422,7 @@
 /obj/structure/frame/machine/finalize_construction(mob/living/user, obj/item/tool)
 	for(var/component in req_components)
 		if(req_components[component] > 0)
+			user.balloon_alert(user, "missing components!")
 			return FALSE
 
 	tool.play_tool_sound(src)
@@ -503,7 +504,6 @@
 	if(finalize_construction(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "missing components!")
 	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/frame/machine/can_be_unfasten_wrench(mob/user, silent)

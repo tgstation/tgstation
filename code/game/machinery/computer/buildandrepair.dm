@@ -34,7 +34,7 @@
 			if(istype(tool, /obj/item/storage/part_replacer))
 				return install_circuit_from_part_replacer(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
+		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
 			if(istype(tool, /obj/item/stack/cable_coil))
 				return add_cabling(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
@@ -69,6 +69,11 @@
 			state = FRAME_COMPUTER_STATE_BOARD_INSTALLED
 			update_appearance(UPDATE_ICON_STATE)
 			return ITEM_INTERACT_SUCCESS
+
+		if(FRAME_COMPUTER_STATE_WIRED)
+			if(!user.combat_mode)
+				balloon_alert(user, "no glass!")
+				return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			if(finalize_construction(user, tool))
@@ -179,9 +184,8 @@
 
 /obj/structure/frame/computer/finalize_construction(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You connect the monitor."))
-
 	var/obj/machinery/new_machine = new circuit.build_path(loc)
+	new_machine.balloon_alert(user, "monitor connected")
 	new_machine.setDir(dir)
 	transfer_fingerprints_to(new_machine)
 
@@ -193,11 +197,10 @@
 		// Set anchor state and move the frame's parts over to the new machine.
 		// Then refresh parts and call on_construction().
 		new_computer.set_anchored(anchored)
-		new_computer.component_parts = list()
+		new_computer.component_parts = list(circuit)
+		new_computer.circuit = circuit
 
 		circuit.forceMove(new_computer)
-		new_computer.component_parts += circuit
-		new_computer.circuit = circuit
 
 		for(var/atom/movable/movable_part in src)
 			movable_part.forceMove(new_computer)
