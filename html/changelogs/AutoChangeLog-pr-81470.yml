@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Valentines no longer see themselves covered in hearts. They only see their Valentine covered in hearts."
