@@ -48,7 +48,7 @@
 	name = "My Watchlist Status is Not Important"
 	desc = "You may be under the impression that violent video games are a harmless pastime, but the security and medical personnel swarming your location with batons and knockout gas look like they disagree."
 	database_id = MEDAL_GAMER
-	icon = "live_sec_reaction"
+	icon_state = "live_sec_reaction"
 
 /datum/award/achievement/misc/vendor_squish
 	name = "I Was a Teenage Anarchist"
@@ -69,7 +69,7 @@
 	name = "One Lean, Mean, Cleaning Machine"
 	desc = "How does it feel to know that your workplace values a mop bucket on wheels more than you?" // i can do better than this give me time
 	database_id = MEDAL_CLEANBOSS
-	icon = "cleanboss"
+	icon_state = "cleanboss"
 
 /datum/award/achievement/misc/rule8
 	name = "Rule 8"
