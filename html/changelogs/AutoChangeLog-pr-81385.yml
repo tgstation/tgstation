@@ -1,5 +1,0 @@
-author: "ViktorKoL"
-delete-after: True
-changes:
-  - bugfix: "knit flesh now heals organs as intended, and does not cause its victims to be red forever if interrupted"
-  - spellcheck: "knit flesh chat messages are no longer gramatically incorrect"

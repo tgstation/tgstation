@@ -387,3 +387,30 @@
   - bugfix: Holding bloodied gloves no longer makes your hands look bloody, bloodied
       gloves now look bloody when worn, and damaged gloves now look damaged when worn
   - bugfix: Gaining or losing an arm now correctly updates your hand overlays
+2024-02-14:
+  Absolucy:
+  - rscadd: Painkillers (i.e morphine, miner's salve) now actually induce analgesic
+      effects, preventing various pain-related effects, such as screaming due to pain,
+      and also provides a speed bonus during surgery.
+  - rscadd: The tenacity trauma (traumatic neuropathy) also applies analgesic effects.
+  - refactor: Simplified code related to reagents adding traits.
+  Aylong:
+  - rscadd: Added `Mute` button into `Chat Tabs` settings, it disables tab unread
+      counter
+  - rscadd: Added `Clear chat` button into `General` settings, you can clear your
+      dirty chat like you did it before TGchat
+  - bugfix: Case-sensitive highlighting now works properly
+  JohnFulpWillard:
+  - bugfix: Revenants (and other flying mobs) will not make noise when walking into
+      pools of gibs,
+  Rhials:
+  - spellcheck: Some space ruin area names have been made more distinct.
+  - bugfix: Ghost role polls should spam you less when multiple of the same roll occur
+      in succession.
+  ViktorKoL:
+  - bugfix: heretics no longer lose their spells when returning from a shapeshift
+  - bugfix: knit flesh now heals organs as intended, and does not cause its victims
+      to be red forever if interrupted
+  - spellcheck: knit flesh chat messages are no longer gramatically incorrect
+  vinylspiders:
+  - bugfix: '*wag emote is now functional again'
