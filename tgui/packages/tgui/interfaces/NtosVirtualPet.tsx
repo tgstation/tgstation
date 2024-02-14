@@ -81,14 +81,14 @@ enum Tab {
 enum PetGender {
   male = 'male',
   female = 'female',
-  neutral = 'neutral',
+  neuter = 'neuter',
 }
 
 export const NtosVirtualPet = (props) => {
   const [tab, setTab] = useState(Tab.Stats);
 
   return (
-    <NtosWindow width={375} height={570}>
+    <NtosWindow width={390} height={570}>
       <NtosWindow.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -398,9 +398,9 @@ const Customization = (props) => {
               </Stack.Item>
               <Stack.Item grow>
                 <Button
-                  selected={selectedGender === PetGender.neutral}
+                  selected={selectedGender === PetGender.neuter}
                   icon="neuter"
-                  onClick={() => setSelectedGender(PetGender.neutral)}
+                  onClick={() => setSelectedGender(PetGender.neuter)}
                 />
               </Stack.Item>
             </Stack>

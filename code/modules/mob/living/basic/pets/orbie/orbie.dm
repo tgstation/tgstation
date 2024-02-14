@@ -1,4 +1,4 @@
-#define ORBIE_MINIMUM_SPEED -2
+#define ORBIE_MAXIMUM_HEALTH 300
 
 /mob/living/basic/orbie
 	name = "Orbie"
@@ -6,13 +6,13 @@
 	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "orbie"
 	icon_living = "orbie"
-	speed = 1
-	maxHealth = 50
+	speed = 0
+	maxHealth = 100
 	light_on = FALSE
 	light_system = OVERLAY_LIGHT
 	light_range = 6
 	light_color = "#64bee1"
-	health = 50
+	health = 100
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	can_buckle_to = FALSE
@@ -86,11 +86,12 @@
 /mob/living/basic/orbie/proc/on_level_up(datum/source, new_level)
 	SIGNAL_HANDLER
 
-	if(speed < ORBIE_MINIMUM_SPEED)
+	if(maxHealth >= ORBIE_MAXIMUM_HEALTH)
 		UnregisterSignal(src, COMSIG_VIRTUAL_PET_LEVEL_UP)
 		return
 
-	speed--
+	maxHealth += 100
+	heal_overall_damage(maxHealth - health)
 
 
 /mob/living/basic/orbie/update_overlays()
@@ -108,4 +109,4 @@
 /mob/living/basic/orbie/gib()
 	death(TRUE)
 
-#undef ORBIE_MINIMUM_SPEED
+#undef ORBIE_MAXIMUM_HEALTH

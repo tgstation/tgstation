@@ -4,9 +4,9 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 #define MAX_UPDATE_LENGTH 50
 #define PET_MAX_LEVEL 3
 #define PET_MAX_STEPS_RECORD 50000
-#define PET_EAT_BONUS 1000
-#define PET_CLEAN_BONUS 500
-#define PET_PLAYMATE_BONUS 1000
+#define PET_EAT_BONUS 500
+#define PET_CLEAN_BONUS 250
+#define PET_PLAYMATE_BONUS 500
 #define PET_STATE_HUNGRY "hungry"
 #define PET_STATE_ASLEEP "asleep"
 #define PET_STATE_HAPPY "happy"
@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	///our current happiness
 	var/happiness = 0
 	///our max happiness
-	var/max_happiness = 2500
+	var/max_happiness = 1750
 	///our current level
 	var/level = 1
 	///required exp to get to next level
@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	///our current hunger
 	var/hunger = 0
 	///maximum hunger threshold
-	var/max_hunger = 1000
+	var/max_hunger = 500
 	///pet icon for each state
 	var/static/list/pet_state_icons = list(
 		PET_STATE_HUNGRY = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_hungry"),
@@ -82,6 +82,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		/area/station/command,
 		/area/station/ai_monitored,
 		/area/station/maintenance,
+		/area/station/solars,
 	))
 	///our profile picture
 	var/icon/profile_picture
@@ -100,6 +101,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	GLOB.virtual_pets_list += src
 	pet = new pet_type(computer)
 	pet.forceMove(computer)
+	pet.AddComponent(/datum/component/leash, computer, 9, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	RegisterSignal(pet, COMSIG_QDELETING, PROC_REF(remove_pet))
 	RegisterSignal(pet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated)) //hologramic hat management
 	RegisterSignal(pet, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_dir))
@@ -368,14 +370,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			data["pet_color"] = index
 			break
 
-	data["pet_gender"] = ""
-	switch(pet.gender)
-		if(MALE)
-			data["pet_gender"] = "male"
-		if(FEMALE)
-			data["pet_gender"] = "female"
-		if(NEUTER)
-			data["pet_gender"] = "neutral"
+	data["pet_gender"] = pet.gender
 
 	data["pet_updates"] = list()
 
@@ -488,7 +483,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 					pet.gender = MALE
 				if("female")
 					pet.gender = FEMALE
-				if("neutral")
+				if("neuter")
 					pet.gender = NEUTER
 
 			pet.update_appearance()
