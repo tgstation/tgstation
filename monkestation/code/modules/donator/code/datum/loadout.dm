@@ -242,12 +242,12 @@
 
 /datum/loadout_item/under/miscellaneous/aotuniform
 	name = "Survey Corps Uniform"
-	item_path = /obj/item/clothing/under/costume/aot
+	item_path = /obj/item/clothing/under/costume/aotuniform
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/pocket_items/donator/plantcrab
-	name = "Pet Delivery Beacon - Void Butterfly"
+	name = "Pet Delivery Beacon - Plant Crab"
 	item_path = /obj/item/choice_beacon/pet/donator/plantcrab
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -255,8 +255,8 @@
 
 /datum/loadout_item/effects/plantcrab
 	ckeywhitelist = list("rickdude")
-	name = "Void Butterfly Transformation"
-	item_path = /obj/item/effect_granter/donator/plantcrab/
+	name = "Plant Crab Transformation"
+	item_path = /obj/item/effect_granter/donator/plant_crab
 	requires_purchase = FALSE
 
 
