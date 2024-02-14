@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, options, mob/living/seer)
+/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, options = NONE, mob/living/seer)
 	src.seer = seer
 	return ..()
 
