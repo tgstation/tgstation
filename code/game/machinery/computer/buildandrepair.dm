@@ -4,6 +4,7 @@
 	icon_state = "0"
 	base_icon_state = ""
 	state = FRAME_COMPUTER_STATE_EMPTY
+	board_type = /obj/item/circuitboard/computer
 
 /obj/structure/frame/computer/Initialize(mapload)
 	. = ..()
@@ -17,6 +18,12 @@
 	state = FRAME_COMPUTER_STATE_EMPTY
 	update_appearance(UPDATE_ICON_STATE)
 
+/obj/structure/frame/computer/install_board(mob/living/user, obj/item/circuitboard/board, by_hand)
+	if(stat != FRAME_COMPUTER_STATE_EMPTY)
+		balloon_alert(user, "circuit already installed!")
+		return FALSE
+	return ..()
+
 /obj/structure/frame/computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
@@ -24,13 +31,6 @@
 
 	switch(state)
 		if(FRAME_COMPUTER_STATE_EMPTY)
-			if(istype(tool, /obj/item/circuitboard/computer))
-				return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-			if(istype(tool, /obj/item/circuitboard))
-				balloon_alert(user, "incompatible board!")
-				return ITEM_INTERACT_BLOCKING
-
 			if(istype(tool, /obj/item/storage/part_replacer))
 				return install_circuit_from_part_replacer(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 

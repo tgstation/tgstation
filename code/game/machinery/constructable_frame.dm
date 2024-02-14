@@ -6,6 +6,8 @@
 	base_icon_state = "box_"
 	density = TRUE
 	max_integrity = 250
+	/// What board do we accept
+	var/board_type = /obj/item/circuitboard
 	/// Reference to the circuit inside the frame
 	VAR_FINAL/obj/item/circuitboard/machine/circuit
 	/// The current (de/con)struction state of the frame
@@ -103,6 +105,16 @@
 
 	return NONE
 
+/obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+
+	if(istype(tool, /obj/item/circuitboard)) // Install board will fail if passed an invalid circuitboard and give feedback
+		return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	return .
+
 /**
  * Installs the passed circuit board into the frame
  *
@@ -115,6 +127,9 @@
  * Used to decide how to transfer the board into the frame
  */
 /obj/structure/frame/proc/install_board(mob/living/user, obj/item/circuitboard/board, by_hand = FALSE)
+	if(!istype(board, board_type) || !board.build_path)
+		balloon_alert(user, "invalid board!")
+		return FALSE
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
 	else if(!board.forceMove(src))
@@ -141,14 +156,15 @@
 		return FALSE
 
 	var/list/circuit_boards = list()
-	for(var/obj/item/circuitboard/machine/board in replacer)
-		circuit_boards[board.name] = board
+	for(var/obj/item/circuitboard/board as anything in replacer)
+		if(istype(board, board_type))
+			circuit_boards[board.name] = board
 
 	if(!length(circuit_boards))
 		return FALSE
 
 	//if there is only one board directly install it else pick from list
-	var/obj/item/circuitboard/machine/target_board
+	var/obj/item/circuitboard/target_board
 	if(length(circuit_boards) == 1)
 		for(var/board_name in circuit_boards)
 			target_board = circuit_boards[board_name]
@@ -182,6 +198,7 @@
 /obj/structure/frame/machine
 	name = "machine frame"
 	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board."
+	board_type = /obj/item/circuitboard/machine
 	/// List of all compnents inside the frame contributing to its construction
 	var/list/components
 	/// List of all components required to construct the frame
@@ -267,12 +284,15 @@
 		return FALSE
 	return ..()
 
-/obj/structure/frame/machine/install_board(mob/living/user, obj/item/circuitboard/machine/board, by_hand = TRUE)
-	if(!board.build_path)
-		balloon_alert("invalid board!")
+/obj/structure/frame/machine/install_board(mob/living/user, obj/item/circuitboard/board, by_hand = TRUE)
+	if(state == FRAME_STATE_EMPTY)
+		balloon_alert(user, "needs wiring!")
+		return FALSE
+	if(state == FRAME_STATE_BOARD_INSTALLED)
+		balloon_alert(user, "circuit already installed!")
 		return FALSE
 	if(!anchored && board.needs_anchored)
-		balloon_alert("frame must be anchored!")
+		balloon_alert(user, "frame must be anchored!")
 		return FALSE
 
 	return ..()
@@ -452,21 +472,6 @@
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
 
-	if(istype(tool, /obj/item/circuitboard/machine))
-		if(state == FRAME_STATE_EMPTY)
-			balloon_alert(user, "needs wiring!")
-			return ITEM_INTERACT_BLOCKING
-
-		if(state == FRAME_STATE_BOARD_INSTALLED)
-			balloon_alert(user, "circuit already installed!")
-			return ITEM_INTERACT_BLOCKING
-
-		return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-	if(istype(tool, /obj/item/circuitboard) && isnull(circuit))
-		balloon_alert(user, "incompatible board!")
-		return ITEM_INTERACT_BLOCKING
-
 	switch(state)
 		if(FRAME_STATE_EMPTY)
 			if(istype(tool, /obj/item/stack/cable_coil))
@@ -512,7 +517,7 @@
 		return .
 
 	if(circuit?.needs_anchored)
-		balloon_alert("circuit must be anchored!")
+		balloon_alert(user, "circuit must be anchored!")
 		return FAILED_UNFASTEN
 
 	return .
