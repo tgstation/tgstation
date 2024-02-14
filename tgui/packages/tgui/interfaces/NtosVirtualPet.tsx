@@ -1,7 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { capitalize } from 'common/string';
 import { useState } from 'react';
-
 import { useBackend } from '../backend';
 import {
   Button,
