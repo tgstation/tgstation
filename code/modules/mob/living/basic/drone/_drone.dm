@@ -165,7 +165,7 @@
 		/obj/item/rcd_ammo,
 		/obj/item/rcd_upgrade,
 		/obj/item/storage/part_replacer,
-		/obj/item/reagent_containers/spray,
+		/obj/item/soap,
 		/obj/item/holosign_creator,
 	)
 	/// machines whitelisted from being shy with
