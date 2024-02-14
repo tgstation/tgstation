@@ -145,16 +145,17 @@
 	var/datum/mind/target_mind = pick(possible_targets)
 	target = target_mind.current
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
-	var/list/possible_areas = GLOB.the_station_areas.Copy()
-	for(var/area/possible_area as anything in possible_areas)
-		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security) || initial(possible_area.outdoors) \
-			|| ispath(possible_area, /area/station/science/ordnance))
-			possible_areas -= possible_area
+	var/static/list/forbidden_areas = typecacheof(list(/area/station/hallway, /area/station/security, /area/station/science/ordnance))
+	var/list/possible_areas = list()
+	for(var/area/possible_area as anything in GLOB.the_station_areas)
+		if(is_type_in_typecache(possible_area, forbidden_areas) || initial(possible_area.outdoors) || !GLOB.areas_by_type[possible_area])
+			continue
+		possible_areas |= GLOB.areas_by_type[possible_area]
 
 	dropoff_area = pick(possible_areas)
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
-	replace_in_name("%AREA%", initial(dropoff_area.name))
+	replace_in_name("%AREA%", dropoff_area.get_original_area_name())
 	replace_in_name("%TC%", alive_bonus)
 	var/base = pick_list(WANTED_FILE, "basemessage")
 	var/verb_string = pick_list(WANTED_FILE, "verb")
@@ -191,12 +192,12 @@
 			var/area/user_area = get_area(user)
 			var/area/target_area = get_area(target)
 
-			if(user_area.type != dropoff_area)
-				to_chat(user, span_warning("You must be in [initial(dropoff_area.name)] to call the extraction pod."))
+			if(user_area != dropoff_area)
+				to_chat(user, span_warning("You must be in [dropoff_area.get_original_area_name()] to call the extraction pod."))
 				return
 
-			if(target_area.type != dropoff_area)
-				to_chat(user, span_warning("[target.real_name] must be in [initial(dropoff_area.name)] for you to call the extraction pod."))
+			if(target_area != dropoff_area)
+				to_chat(user, span_warning("[target.real_name] must be in [dropoff_area.get_original_area_name()] for you to call the extraction pod."))
 				return
 
 			call_pod(user)
