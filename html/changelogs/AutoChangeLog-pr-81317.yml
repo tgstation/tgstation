@@ -1,0 +1,4 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - balance: "Nightmare's Light Eater takes less time in jaunt to gain a critical strike, being reduced to 7 seconds from 15 seconds."
