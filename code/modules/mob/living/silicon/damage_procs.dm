@@ -25,7 +25,7 @@
 
 	return FALSE
 
-/mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, forced = FALSE, required_biotype)
+/mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(isAI(src)) //ditto
 		return ..()
 

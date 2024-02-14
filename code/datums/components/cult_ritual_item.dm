@@ -39,7 +39,7 @@
 		var/datum/action/added_action = item_parent.add_item_action(action)
 		linked_action_ref = WEAKREF(added_action)
 
-/datum/component/cult_ritual_item/Destroy(force, silent)
+/datum/component/cult_ritual_item/Destroy(force)
 	cleanup_shields()
 	QDEL_NULL(linked_action_ref)
 	return ..()

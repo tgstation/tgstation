@@ -709,34 +709,23 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/get_last_resort_spawn_points()
-	//bad mojo
 	var/area/shuttle/arrival/arrivals_area = GLOB.areas_by_type[/area/shuttle/arrival]
-	if(arrivals_area)
-		//first check if we can find a chair
-		var/obj/structure/chair/shuttle_chair = locate() in arrivals_area
-		if(shuttle_chair)
-			return shuttle_chair
-
-		//last hurrah
+	if(!isnull(arrivals_area))
 		var/list/turf/available_turfs = list()
-		for(var/turf/arrivals_turf in arrivals_area)
-			if(!arrivals_turf.is_blocked_turf(TRUE))
+		for (var/list/zlevel_turfs as anything in arrivals_area.get_zlevel_turf_lists())
+			for (var/turf/arrivals_turf as anything in zlevel_turfs)
+				var/obj/structure/chair/shuttle_chair = locate() in arrivals_turf
+				if(!isnull(shuttle_chair))
+					return shuttle_chair
+				if(arrivals_turf.is_blocked_turf(TRUE))
+					continue
 				available_turfs += arrivals_turf
+
 		if(length(available_turfs))
 			return pick(available_turfs)
 
-	//pick an open spot on arrivals and dump em
-	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
-	if(length(arrivals_turfs))
-		for(var/turf/arrivals_turf in arrivals_turfs)
-			if(!arrivals_turf.is_blocked_turf(TRUE))
-				return arrivals_turf
-		//last chance, pick ANY spot on arrivals and dump em
-		return pick(arrivals_turfs)
-
 	stack_trace("Unable to find last resort spawn point.")
 	return GET_ERROR_ROOM
-
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)

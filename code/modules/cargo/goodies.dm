@@ -3,6 +3,7 @@
 	access = NONE
 	group = "Goodies"
 	goody = TRUE
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/goody/clear_pda
 	name = "Mint Condition Nanotrasen Clear PDA"

@@ -74,7 +74,7 @@ LINEN BINS
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/bedsheet/attack_self(mob/living/user)
-	if(!user.CanReach(src)) //No telekenetic grabbing.
+	if(!user.CanReach(src)) //No telekinetic grabbing.
 		return
 	if(user.body_position != LYING_DOWN)
 		return

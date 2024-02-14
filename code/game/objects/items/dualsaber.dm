@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = SFX_SWING_HIT
 	armour_penetration = 35
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 	light_on = FALSE
@@ -172,7 +172,7 @@
 			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 		open_flame()
 	else
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/dualsaber/IsReflect()
 	if(HAS_TRAIT(src, TRAIT_WIELDED) && prob(block_chance))

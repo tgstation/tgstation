@@ -1,5 +1,6 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
@@ -25,7 +26,7 @@ export const MedicalRecordTabs = (props) => {
     ? 'No records found.'
     : 'No match. Refine your search.';
 
-  const [search, setSearch] = useLocalState('search', '');
+  const [search, setSearch] = useState('');
 
   const sorted: MedicalRecord[] = flow([
     filter((record: MedicalRecord) => isRecordMatch(record, search)),

@@ -225,33 +225,42 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 
 	var/list/myriad_targets = list()
-	var/turf/our_turf = get_turf(src)
+	for(var/mob/living/non_cultist in loc)
+		if(!IS_CULTIST(non_cultist))
+			myriad_targets += non_cultist
 
-	for(var/mob/living/victim in our_turf)
-		if(!IS_CULTIST_OR_CULTIST_MOB(victim))
-			myriad_targets += victim
-
-	if(!length(myriad_targets))
+	if(!length(myriad_targets) && !try_spawn_sword())
 		fail_invoke()
-		log_game("Offer rune failed - no eligible targets.")
 		return
 
 	rune_in_use = TRUE
 	visible_message(span_warning("[src] pulses blood red!"))
 	color = RUNE_COLOR_DARKRED
-	var/mob/living/selected_victim = pick(myriad_targets)
-	var/datum/team/cult/cult_team =  locate(/datum/team/cult) in GLOB.antagonist_teams
-	if(isnull(cult_team))
-		return
-	if(selected_victim.stat != DEAD && is_convertable_to_cult(selected_victim, cult_team))
-		invocation = initial(invocation)
-		do_convert(selected_victim, invokers, cult_team)
+
+	if(length(myriad_targets))
+		var/mob/living/new_convertee = pick(myriad_targets)
+		var/mob/living/first_invoker = invokers[1]
+		var/datum/antagonist/cult/first_invoker_datum = first_invoker.mind.has_antag_datum(/datum/antagonist/cult)
+		var/datum/team/cult/cult_team = first_invoker_datum.get_team()
+
+		var/is_convertable = is_convertable_to_cult(new_convertee, cult_team)
+		if(new_convertee.stat != DEAD && is_convertable)
+			invocation = "Mah'weyh pleggh at e'ntrath!"
+			..()
+			do_convert(new_convertee, invokers, cult_team)
+
+		else
+			invocation = "Barhah hra zar'garis!"
+			..()
+			do_sacrifice(new_convertee, invokers, cult_team)
+
+		cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
+
 	else
-		invocation = "Barhah hra zar'garis!"
-		do_sacrifice(selected_victim, invokers, cult_team)
-	animate(src, color = initial(color), time = 5 SECONDS)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 5)
-	cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
+		do_invoke_glow()
+
+	animate(src, color = oldcolor, time = 0.5 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.5 SECONDS)
 	rune_in_use = FALSE
 	return ..()
 
@@ -259,15 +268,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	ASSERT(convertee.mind)
 
 	if(length(invokers) < 2)
-		for(var/M in invokers)
-			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
-		log_game("Offer rune with [convertee] on it failed - tried conversion with one invoker.")
+		for(var/invoker in invokers)
+			to_chat(invoker, span_warning("You need at least two invokers to convert [convertee]!"))
 		return FALSE
 
 	if(convertee.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //No charge_cost because it can be spammed
-		for(var/M in invokers)
-			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
-		log_game("Offer rune with [convertee] on it failed - convertee had anti-magic.")
+		for(var/invoker in invokers)
+			to_chat(invoker, span_warning("Something is shielding [convertee]'s mind!"))
 		return FALSE
 
 	var/brutedamage = convertee.getBruteLoss()
@@ -315,14 +322,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, datum/team/cult/cult_team)
-	var/mob/living/first_invoker = invokers[1]
-	if(!first_invoker)
-		return FALSE
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
-		for(var/atom/cultist in invokers)
-			to_chat(cultist, span_cult_italic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
-		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
+		for(var/invoker in invokers)
+			to_chat(invoker, span_cult_italic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		return FALSE
 
 	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers, cult_team)
@@ -340,7 +343,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	else
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
-	new /obj/effect/temp_visual/cult/sac(get_turf(src))
+	new /obj/effect/temp_visual/cult/sac(loc)
 
 	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE))
 		for(var/invoker in invokers)
@@ -353,25 +356,69 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(invoker, span_cult_large("\"I accept this meager sacrifice.\""))
 
 	if(iscyborg(sacrificial))
-		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
+		var/construct_class = show_radial_menu(invokers[1], sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
 		if(QDELETED(sacrificial) || !construct_class)
 			return FALSE
 		sacrificial.grab_ghost()
-		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
+		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, invokers[1], TRUE, get_turf(src))
 		var/mob/living/silicon/robot/sacriborg = sacrificial
 		sacrificial.log_message("was sacrificed as a cyborg.", LOG_GAME)
 		sacriborg.mmi = null
 		qdel(sacrificial)
 		return TRUE
-	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
+
+	var/obj/item/soulstone/stone = new(loc)
 	if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
-		stone.capture_soul(sacrificial, first_invoker, TRUE)
+		stone.capture_soul(sacrificial,  invokers[1], forced = TRUE)
 
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib(DROP_ALL_REMAINS)
+
+	try_spawn_sword() // after sharding and gibbing, which potentially dropped a null rod
 	return TRUE
+
+/// Tries to convert a null rod over the rune to a cult sword
+/obj/effect/rune/convert/proc/try_spawn_sword()
+	for(var/obj/item/nullrod/rod in loc)
+		if(rod.anchored || (rod.resistance_flags & INDESTRUCTIBLE))
+			continue
+
+		var/num_slain = LAZYLEN(rod.cultists_slain)
+		var/displayed_message = "[rod] glows an unholy red and begins to transform..."
+		if(GET_ATOM_BLOOD_DNA_LENGTH(rod))
+			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [rod]!"
+
+		rod.visible_message(span_cult_italic(displayed_message))
+		switch(num_slain)
+			if(0, 1)
+				animate_spawn_sword(rod, /obj/item/melee/cultblade/dagger)
+			if(2)
+				animate_spawn_sword(rod, /obj/item/melee/cultblade)
+			else
+				animate_spawn_sword(rod, /obj/item/cult_bastard)
+		return TRUE
+
+	return FALSE
+
+/// Does an animation of a null rod transforming into a cult sword
+/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/nullrod/former_rod, new_blade_typepath)
+	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
+	former_rod.anchored = TRUE
+	former_rod.Shake()
+	animate(former_rod, alpha = 0, transform = matrix(former_rod.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	QDEL_IN(former_rod, 2 SECONDS)
+
+	var/obj/item/new_blade = new new_blade_typepath(loc)
+	var/matrix/blade_matrix_on_spawn = matrix(new_blade.transform)
+	new_blade.name = "converted [new_blade.name]"
+	new_blade.anchored = TRUE
+	new_blade.alpha = 0
+	new_blade.transform = matrix(new_blade.transform).Scale(0.01)
+	new_blade.Shake()
+	animate(new_blade, alpha = 255, transform = blade_matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	addtimer(VARSET_CALLBACK(new_blade, anchored, FALSE), 2 SECONDS)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"
@@ -528,7 +575,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	pixel_y = 16
+	pixel_z = -48
 	scribe_delay = 50 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
@@ -565,10 +613,10 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	GLOB.narsie_effect_last_modified = started
 
 	var/starting_color = GLOB.starlight_color
-	var/list/target_color = ReadHSV(RGBtoHSV(starting_color))
+	var/list/target_color = rgb2hsv(starting_color)
 	target_color[2] = target_color[2] * 0.4
 	target_color[3] = target_color[3] * 0.5
-	var/mid_color = HSVtoRGB(hsv(target_color[1], target_color[2], target_color[3]))
+	var/mid_color = hsv2rgb(target_color)
 	var/end_color = "#c21d57"
 	for(var/i in 1 to 9)
 		if(GLOB.narsie_effect_last_modified > started)
@@ -592,7 +640,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	for(var/i in 1 to 4)
 		if(GLOB.narsie_effect_last_modified > started)
 			return
-		var/starlight_color = hsv_gradient(i, 1, starting_color, 4, end_color)
+		var/starlight_color = BlendHSV(i / 4, starting_color, end_color)
 		set_starlight(starlight_color)
 		sleep(8 SECONDS)
 
@@ -1029,7 +1077,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
 	pixel_x = -32
-	pixel_y = -32
+	pixel_y = 16
+	pixel_z = -48
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100

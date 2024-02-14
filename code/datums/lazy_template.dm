@@ -18,7 +18,7 @@
 	reservations = list()
 	..()
 
-/datum/lazy_template/Destroy(force, ...)
+/datum/lazy_template/Destroy(force)
 	if(!force)
 		stack_trace("Something is trying to delete [type]")
 		return QDEL_HINT_LETMELIVE

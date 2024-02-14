@@ -1064,6 +1064,24 @@ $border-width-px: $border-width * 1px;
   flex-direction: column;
 }
 
+.ooc_alert {
+  background: #4d4100;
+  border: 1px solid #cca300;
+  margin: 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.2em;
+  color: #ffffff;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_announcement_text {
+  color: #cca300;
+  padding: 0.5em 0 0 0.35em;
+  display: flex;
+  flex-direction: column;
+}
+
 @each $color-name, $color-value in $alert-stripe-colors {
   .chat_alert_#{$color-name} {
     color: #ffffff;

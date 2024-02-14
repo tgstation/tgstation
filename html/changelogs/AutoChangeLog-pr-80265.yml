@@ -1,6 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - rscadd: "Canisters now have wires! You can pulse wires to do various canister functions like opening/closing the valve. Make sure it has a cell though."
-  - rscadd: "You can rig assembly combos (igniter-timer, prox-signaler, etc.) onto canisters"
-  - qol: "Canisters now have screentips"

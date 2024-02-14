@@ -65,7 +65,9 @@
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
 		PATH_LOCK = "yellow",
+		PATH_MOON = "blue",
 	)
+
 	var/static/list/path_to_rune_color = list(
 		PATH_START = COLOR_LIME,
 		PATH_RUST = COLOR_CARGO_BROWN,
@@ -75,6 +77,7 @@
 		PATH_BLADE = COLOR_SILVER,
 		PATH_COSMIC = COLOR_PURPLE,
 		PATH_LOCK = COLOR_YELLOW,
+		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
 
 /datum/antagonist/heretic/Destroy()
@@ -228,7 +231,6 @@
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(on_item_afterattack))
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
-	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
@@ -244,7 +246,6 @@
 		COMSIG_MOB_ITEM_AFTERATTACK,
 		COMSIG_MOB_LOGIN,
 		COMSIG_LIVING_POST_FULLY_HEAL,
-		COMSIG_LIVING_CULT_SACRIFICED
 	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)

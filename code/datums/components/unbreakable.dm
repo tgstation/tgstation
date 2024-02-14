@@ -6,7 +6,7 @@
 		return COMPONENT_INCOMPATIBLE
 	ADD_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
 
-/datum/component/unbreakable/Destroy(force, silent)
+/datum/component/unbreakable/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
 	return ..()
 

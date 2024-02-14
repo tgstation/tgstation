@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Regal rats (and others), won't be punished by the automute system for repeating the same command several times."

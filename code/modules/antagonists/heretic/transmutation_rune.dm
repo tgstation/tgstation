@@ -120,7 +120,6 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-
 			// This item is a valid type. Add it to our selected atoms list.
 			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
@@ -182,6 +181,7 @@
 	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
 	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
+
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)
 
@@ -204,8 +204,9 @@
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -33 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	pixel_x = -30
+	pixel_y = 18
+	pixel_z = -48
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
 /obj/effect/heretic_rune/big/Initialize(mapload, path_colour)
@@ -217,8 +218,9 @@
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -33
-	pixel_y = -32
+	pixel_x = -30
+	pixel_y = 18
+	pixel_z = -48
 	plane = GAME_PLANE
 	layer = SIGIL_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune

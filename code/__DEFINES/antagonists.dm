@@ -84,6 +84,7 @@
 #define PATH_BLADE "Blade Path"
 #define PATH_COSMIC "Cosmic Path"
 #define PATH_LOCK "Lock Path"
+#define PATH_MOON "Moon Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -214,6 +215,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the mob is a sentient or non-sentient cultist
 #define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
+/// Checks if the given mob is a changeling
+#define IS_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling))
 
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
@@ -225,8 +228,10 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 /// Check if the given mob is a heretic monster.
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-/// Checks if the given mob is either a heretic or a heretic monster.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob))
+/// Check if the given mob is a  lunatic
+#define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))

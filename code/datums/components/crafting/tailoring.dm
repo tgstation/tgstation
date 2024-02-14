@@ -378,3 +378,23 @@
 		/obj/item/paper = 1,
 	)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/biohood_sec
+	name = "security biohood"
+	result = /obj/item/clothing/head/bio_hood/security
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/clothing/head/bio_hood/general = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/biosuit_sec
+	name = "security biosuit"
+	result = /obj/item/clothing/suit/bio_suit/security
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/clothing/suit/bio_suit/general = 1,
+		/obj/item/clothing/suit/armor/vest = 1,
+	)
+	category = CAT_CLOTHING

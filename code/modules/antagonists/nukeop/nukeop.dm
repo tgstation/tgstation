@@ -63,7 +63,7 @@
 		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
 		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 		if (uplink)
-			uplink.add_telecrystals(extra_tc)
+			uplink.uplink_handler.add_telecrystals(extra_tc)
 
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	if(uplink)
@@ -87,20 +87,21 @@
 	add_team_hud(mob_override || owner.current, /datum/antagonist/nukeop)
 
 /datum/antagonist/nukeop/proc/assign_nuke()
-	if(nuke_team && !nuke_team.tracked_nuke)
-		nuke_team.memorized_code = random_nukecode()
-		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/syndicate)
-		if(nuke)
-			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == NUKE_CODE_UNSET)
-				nuke.r_code = nuke_team.memorized_code
-			else //Already set by admins/something else?
-				nuke_team.memorized_code = nuke.r_code
-			for(var/obj/machinery/nuclearbomb/beer/beernuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/beer))
-				beernuke.r_code = nuke_team.memorized_code
-		else
-			stack_trace("Syndicate nuke not found during nuke team creation.")
-			nuke_team.memorized_code = null
+	if(!nuke_team || nuke_team.tracked_nuke)
+		return
+	nuke_team.memorized_code = random_nukecode()
+	var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/syndicate)
+	if(!nuke)
+		stack_trace("Syndicate nuke not found during nuke team creation.")
+		nuke_team.memorized_code = null
+		return
+	nuke_team.tracked_nuke = nuke
+	if(nuke.r_code == NUKE_CODE_UNSET)
+		nuke.r_code = nuke_team.memorized_code
+	else //Already set by admins/something else?
+		nuke_team.memorized_code = nuke.r_code
+	for(var/obj/machinery/nuclearbomb/beer/beernuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/beer))
+		beernuke.r_code = nuke_team.memorized_code
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team?.syndicate_name)
@@ -591,7 +592,7 @@
 				break
 
 		var/list/turf/options = list()
-		for(var/turf/open/open_turf in spawn_in?.get_contained_turfs())
+		for(var/turf/open/open_turf in spawn_in?.get_turfs_from_all_zlevels())
 			if(open_turf.is_blocked_turf())
 				continue
 			options += open_turf
@@ -616,7 +617,7 @@
 	nukie.mind.add_antag_datum(antag_datum, src)
 
 	var/datum/component/uplink/uplink = nukie.mind.find_syndicate_uplink()
-	uplink?.set_telecrystals(tc_to_spawn)
+	uplink?.uplink_handler.set_telecrystals(tc_to_spawn)
 
 	// add some pizzazz
 	do_sparks(4, FALSE, spawn_loc)

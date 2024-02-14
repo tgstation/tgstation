@@ -66,14 +66,18 @@
 			return .
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return .
-	target_holosign = new holosign_type(get_turf(target), src)
-	target_holosign.add_hiddenprint(user)
-	if(color)
-		target_holosign.color = color
+	target_holosign = create_holosign(target, user)
 	return .
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
+
+/obj/item/holosign_creator/proc/create_holosign(atom/target, mob/user)
+	var/atom/new_holosign = new holosign_type(get_turf(target), src)
+	new_holosign.add_hiddenprint(user)
+	if(color)
+		new_holosign.color = color
+	return new_holosign
 
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
@@ -126,6 +130,49 @@
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
 	max_signs = 6
+	/// Clearview holograms don't catch clicks and are more transparent
+	var/clearview = FALSE
+	/// Timer for auto-turning off clearview
+	var/clearview_timer
+
+/obj/item/holosign_creator/atmos/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(LAZYLEN(signs))
+		context[SCREENTIP_CONTEXT_RMB] = "[clearview ? "Turn off" : "Temporarily activate"] clearview"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/holosign_creator/atmos/create_holosign(atom/target, mob/user)
+	var/obj/structure/holosign/barrier/atmos/new_holosign = new holosign_type(get_turf(target), src)
+	new_holosign.add_hiddenprint(user)
+	if(color)
+		new_holosign.color = color
+	if(clearview)
+		new_holosign.clearview_transparency()
+	return new_holosign
+
+/obj/item/holosign_creator/atmos/attack_self_secondary(mob/user, modifiers)
+	if(clearview)
+		reset_hologram_transparency()
+		balloon_alert(user, "turned off clearview")
+		return
+	if(LAZYLEN(signs))
+		for(var/obj/structure/holosign/barrier/atmos/hologram as anything in signs)
+			hologram.clearview_transparency()
+		clearview = TRUE
+		balloon_alert(user, "turned on clearview")
+		clearview_timer = addtimer(CALLBACK(src, PROC_REF(reset_hologram_transparency)), 40 SECONDS, TIMER_STOPPABLE)
+	return ..()
+
+/obj/item/holosign_creator/atmos/proc/reset_hologram_transparency()
+	if(LAZYLEN(signs))
+		for(var/obj/structure/holosign/barrier/atmos/hologram as anything in signs)
+			hologram.reset_transparency()
+		clearview = FALSE
+		deltimer(clearview_timer)
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"

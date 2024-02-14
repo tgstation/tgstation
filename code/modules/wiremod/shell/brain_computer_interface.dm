@@ -283,7 +283,7 @@
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 
-/obj/machinery/bci_implanter/on_deconstruction()
+/obj/machinery/bci_implanter/on_deconstruction(disassembled)
 	drop_stored_bci()
 
 /obj/machinery/bci_implanter/Destroy()

@@ -56,7 +56,7 @@
 	if (length(additional_triggers))
 		RegisterSignals(parent, additional_triggers, PROC_REF(trigger_explosive))
 
-/datum/component/interaction_booby_trap/Destroy(force, silent)
+/datum/component/interaction_booby_trap/Destroy(force)
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_TOOL_ACT(defuse_tool), COMSIG_ATOM_EXAMINE_MORE) + additional_triggers)
 	QDEL_NULL(active_sound_loop)
 	on_triggered_callback = null

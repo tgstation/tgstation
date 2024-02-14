@@ -6,14 +6,20 @@
 	if (!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_OPENED, PROC_REF(on_opened))
+	RegisterSignals(
+		pod,
+		list(COMSIG_MACHINERY_BROKEN, COMSIG_QDELETING, COMSIG_BITRUNNER_NETPOD_OPENED),
+		PROC_REF(on_remove),
+	)
+
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_remove))
 
 	var/mob/living/carbon/player = parent
 	player.apply_status_effect(/datum/status_effect/embryonic, STASIS_NETPOD_EFFECT)
 
 	START_PROCESSING(SSmachines, src)
 
-/datum/component/netpod_healing/Destroy(force, silent)
+/datum/component/netpod_healing/Destroy(force)
 	STOP_PROCESSING(SSmachines, src)
 
 	var/mob/living/carbon/player = parent
@@ -39,7 +45,7 @@
 		owner.updatehealth()
 
 /// Deletes itself when the machine was opened
-/datum/component/netpod_healing/proc/on_opened()
+/datum/component/netpod_healing/proc/on_remove()
 	SIGNAL_HANDLER
 
 	qdel(src)

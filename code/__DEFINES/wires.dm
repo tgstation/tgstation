@@ -64,12 +64,6 @@
 #define WIRE_ZAP1 "High Voltage Circuit 1"
 #define WIRE_ZAP2 "High Voltage Circuit 2"
 #define WIRE_OVERCLOCK "Overclock"
-#define WIRE_VALVE "Valve"
-#define WIRE_SHIELDING "Shielding"
-#define WIRE_REGULATOR_MIN "Minimize Regulator Pressure"
-#define WIRE_REGULATOR_MAX "Maximize Regulator Pressure"
-#define WIRE_TANK_EJECT "Eject Tank"
-#define WIRE_REACTION_SUPPRESSION "Reaction Suppression"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0

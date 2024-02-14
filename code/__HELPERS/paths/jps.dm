@@ -38,7 +38,7 @@
 		f_value = number_tiles + heuristic
 	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
 
-/datum/jps_node/Destroy(force, ...)
+/datum/jps_node/Destroy(force)
 	previous_node = null
 	return ..()
 

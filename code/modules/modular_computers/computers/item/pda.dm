@@ -26,6 +26,8 @@
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
 
+	shell_capacity = SHELL_CAPACITY_SMALL
+
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 
@@ -283,6 +285,7 @@
 
 	starting_programs = list(
 		/datum/computer_file/program/contract_uplink,
+		/datum/computer_file/program/secureye/syndicate,
 	)
 
 /**
@@ -330,6 +333,10 @@
 /obj/item/modular_computer/pda/silicon/Destroy()
 	silicon_owner = null
 	return ..()
+
+///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.
+/obj/item/modular_computer/pda/silicon/add_shell_component(capacity)
+	return
 
 /obj/item/modular_computer/pda/silicon/turn_on(mob/user, open_ui = FALSE)
 	if(silicon_owner?.stat != DEAD)

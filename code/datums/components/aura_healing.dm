@@ -78,7 +78,7 @@
 	src.limit_to_trait = limit_to_trait
 	src.healing_color = healing_color
 
-/datum/component/aura_healing/Destroy(force, silent)
+/datum/component/aura_healing/Destroy(force)
 	STOP_PROCESSING(SSaura_healing, src)
 	var/alert_category = "aura_healing_[REF(src)]"
 

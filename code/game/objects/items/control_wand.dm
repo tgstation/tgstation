@@ -73,8 +73,10 @@
 
 			if (airlock.locked)
 				airlock.unbolt()
+				log_combat(user, airlock, "unbolted", src)
 			else
 				airlock.bolt()
+				log_combat(user, airlock, "bolted", src)
 		if (WAND_EMERGENCY)
 			if (!istype(airlock))
 				target.balloon_alert(user, "only airlocks!")

@@ -22,7 +22,7 @@
 		var/datum/pet_command/new_command = new command_path(parent)
 		available_commands[new_command.command_name] = new_command
 
-/datum/component/obeys_commands/Destroy(force, silent)
+/datum/component/obeys_commands/Destroy(force)
 	. = ..()
 	QDEL_NULL(available_commands)
 

@@ -8,7 +8,7 @@
 /datum/unit_test/transformation_sting/Run()
 	var/mob/living/carbon/human/ling = setup_ling()
 	var/mob/living/carbon/human/victim = setup_victim()
-	var/datum/antagonist/changeling/ling_datum = ling.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling_datum = IS_CHANGELING(ling)
 
 	// Get the ability we're testing
 	ling_datum.purchase_power(/datum/action/changeling/sting/transformation)
