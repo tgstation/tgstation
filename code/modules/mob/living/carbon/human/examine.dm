@@ -307,19 +307,19 @@
 				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
 					msg += "[t_He] [t_is] shivering.\n"
 				if (HAS_TRAIT(src, TRAIT_PACIFISM))
-					msg += "[t_He] doesn't look like [t_He] would hurt a fly.\n"
+					msg += "[t_He] do[p_es()]n't look like [p_they()] would hurt a fly.\n"
 				if (HAS_TRAIT(src, TRAIT_CLUMSY))
-					msg += "[t_He] looks like a clutz.\n"
+					msg += "[t_He] look[p_s()] like a clutz.\n"
 				if (HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
-					msg += "[t_He] seems like a pushover.\n"
+					msg += "[t_He] seem[p_s()] like a pushover.\n"
 				if (HAS_TRAIT(src, TRAIT_SKITTISH))
-					msg += "[t_He] is a bit skittish.\n"
+					msg += "[t_He] are a bit skittish.\n"
 				if (HAS_TRAIT(src, TRAIT_ANXIOUS))
-					msg += "[t_He] looks awkward.\n"
+					msg += "[t_He] [t_has] nervous look.\n"
 				if (HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
-					msg += "[t_He] seems shy.\n"
+					msg += "[t_He] seem[p_s()] shy.\n"
 				if (HAS_TRAIT(src, TRAIT_FRIENDLY))
-					msg += "[t_He] has a friendly look.\n"
+					msg += "[t_He] have a friendly look.\n"
 
 			msg += "</span>"
 
