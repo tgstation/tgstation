@@ -313,7 +313,7 @@
 				if (HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 					msg += "[t_He] seem[p_s()] like a pushover.\n"
 				if (HAS_TRAIT(src, TRAIT_SKITTISH))
-					msg += "[t_He] are a bit skittish.\n"
+					msg += "[t_He] [t_is] a bit skittish.\n"
 				if (HAS_TRAIT(src, TRAIT_ANXIOUS))
 					msg += "[t_He] [t_has] nervous look.\n"
 				if (HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
