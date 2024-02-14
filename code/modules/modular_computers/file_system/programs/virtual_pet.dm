@@ -114,7 +114,8 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/Destroy()
 	GLOB.virtual_pets_list -= src
-	QDEL_NULL(pet)
+	if(!QDELETED(pet))
+		QDEL_NULL(pet)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
