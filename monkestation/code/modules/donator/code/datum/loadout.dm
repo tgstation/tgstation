@@ -240,6 +240,27 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/aotuniform
+	name = "Survey Corps Uniform"
+	item_path = /obj/item/clothing/under/costume/aot
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/plantcrab
+	name = "Pet Delivery Beacon - Void Butterfly"
+	item_path = /obj/item/choice_beacon/pet/donator/plantcrab
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("rickdude")
+
+/datum/loadout_item/effects/plantcrab
+	ckeywhitelist = list("rickdude")
+	name = "Void Butterfly Transformation"
+	item_path = /obj/item/effect_granter/donator/plantcrab/
+	requires_purchase = FALSE
+
+
+
 //kon chieko
 /datum/loadout_item/head/bells
 	name = "Hair ribbons with bells"
@@ -268,7 +289,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/toys/puppycat
+/datum/loadout_item/toys/jackfrost
 	name = "Jack Frost Plush"
 	item_path = /obj/item/toy/plush/jackfrost
 	donator_only = TRUE
