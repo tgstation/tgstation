@@ -259,7 +259,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	else
 		do_invoke_glow()
 
-	animate(src, color = oldcolor, time = 0.5 SECONDS)
+	animate(src, color = initial(color), time = 0.5 SECONDS)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.5 SECONDS)
 	rune_in_use = FALSE
 	return ..()
