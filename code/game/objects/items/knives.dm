@@ -134,6 +134,10 @@
 	bayonet = TRUE
 	slot_flags = ITEM_SLOT_MASK
 
+/obj/item/knife/combat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
+
 /obj/item/knife/combat/survival
 	name = "survival knife"
 	icon = 'icons/obj/weapons/stabby.dmi'
