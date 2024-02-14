@@ -2,248 +2,355 @@
 	name = "computer frame"
 	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
 	icon_state = "0"
-	state = 0
+	state = COMPUTER_FRAME_UNANCHORED
 
 /obj/structure/frame/computer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
+	register_context()
+	update_appearance(UPDATE_ICON_STATE)
 
-/// Installs the board in the computer
+/obj/structure/frame/computer/deconstruct(disassembled = TRUE)
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		var/location = drop_location()
+		if(state >= COMPUTER_FRAME_WIRED)
+			new /obj/item/stack/cable_coil(location, 5)
+		if(state == COMPUTER_FRAME_SCREEN_INSTALLED)
+			new /obj/item/shard(location)
+			new /obj/item/shard(location)
+	..()
+
+/obj/structure/frame/computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
+		return
+
+	switch(state)
+		if(COMPUTER_FRAME_UNANCHORED, COMPUTER_FRAME_ANCHORED)
+			if(held_item.tool_behaviour == TOOL_WRENCH)
+				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Wrench"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(held_item.tool_behaviour == TOOL_WELDER && state == COMPUTER_FRAME_UNANCHORED)
+				context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(state == COMPUTER_FRAME_ANCHORED && istype(held_item, /obj/item/circuitboard/computer))
+				context[SCREENTIP_CONTEXT_LMB] = "Install board"
+				return CONTEXTUAL_SCREENTIP_SET
+		if(COMPUTER_FRAME_BOARD_INSTALLED)
+			if(held_item.tool_behaviour == TOOL_CROWBAR)
+				context[SCREENTIP_CONTEXT_LMB] = "Pry out board"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+				context[SCREENTIP_CONTEXT_LMB] = "Secure board"
+				return CONTEXTUAL_SCREENTIP_SET
+		if(COMPUTER_FRAME_BOARD_SECURED)
+			if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+				context[SCREENTIP_CONTEXT_LMB] = "Unsecure board"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(istype(held_item, /obj/item/stack/cable_coil))
+				context[SCREENTIP_CONTEXT_LMB] = "Install cable"
+				return CONTEXTUAL_SCREENTIP_SET
+		if(COMPUTER_FRAME_WIRED)
+			if(held_item.tool_behaviour == TOOL_WIRECUTTER)
+				context[SCREENTIP_CONTEXT_LMB] = "Cut out cable"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(istype(held_item, /obj/item/stack/sheet/glass))
+				context[SCREENTIP_CONTEXT_LMB] = "Install panel"
+				return CONTEXTUAL_SCREENTIP_SET
+		if(COMPUTER_FRAME_SCREEN_INSTALLED)
+			if(held_item.tool_behaviour == TOOL_CROWBAR)
+				context[SCREENTIP_CONTEXT_LMB] = "Pry out glass"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+				context[SCREENTIP_CONTEXT_LMB] = "Complete frame"
+				return CONTEXTUAL_SCREENTIP_SET
+
+
+/obj/structure/frame/computer/examine(user)
+	. = ..()
+
+	switch(state)
+		if(COMPUTER_FRAME_UNANCHORED)
+			. += span_notice("It can be [EXAMINE_HINT("wrenched")] in place.")
+			. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
+		if(COMPUTER_FRAME_ANCHORED)
+			. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
+			. += span_warning("It's missing a circuit board.")
+		if(COMPUTER_FRAME_BOARD_INSTALLED)
+			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
+			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
+		if(COMPUTER_FRAME_BOARD_SECURED)
+			. += span_warning("Its requires [EXAMINE_HINT("5 cable")] pieces to wire it.")
+			. += span_notice("The circuit board can be [EXAMINE_HINT("screwed")] loose.")
+		if(COMPUTER_FRAME_WIRED)
+			. += span_notice("The wires can be cut out with [EXAMINE_HINT("wire cutters")].")
+			. += span_warning("Its requires [EXAMINE_HINT("2 glass")] sheets to complete the screen.")
+		if(COMPUTER_FRAME_SCREEN_INSTALLED)
+			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
+			. += span_notice("The moniter can be [EXAMINE_HINT("screwed")] to complete it")
+
+
+/obj/structure/frame/computer/update_icon_state()
+	. = ..()
+
+	switch(state)
+		if(COMPUTER_FRAME_UNANCHORED, COMPUTER_FRAME_ANCHORED)
+			icon_state = "0"
+		if(COMPUTER_FRAME_BOARD_INSTALLED)
+			icon_state = "1"
+		if(COMPUTER_FRAME_BOARD_SECURED)
+			icon_state = "2"
+		if(COMPUTER_FRAME_WIRED)
+			icon_state = "3"
+		if(COMPUTER_FRAME_SCREEN_INSTALLED)
+			icon_state = "4"
+
+/**
+ * Installs the board in the computer
+ * Arguments
+ *
+ * * obj/item/circuitboard/computer/board - the board to install
+ * * by_hand - are we installing it by hand or rped
+ */
 /obj/structure/frame/computer/proc/install_board(obj/item/circuitboard/computer/board, mob/user, by_hand)
+	PRIVATE_PROC(TRUE)
+
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
 	else if(!board.forceMove(src))
 		return FALSE
 
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	to_chat(user, span_notice("You place [board] inside the frame."))
-	icon_state = "1"
 	circuit = board
 	circuit.add_fingerprint(user)
+	state = COMPUTER_FRAME_BOARD_INSTALLED
+	update_appearance(UPDATE_ICON_STATE)
 
 	return TRUE
 
-/obj/structure/frame/computer/attackby(obj/item/P, mob/living/user, params)
-	add_fingerprint(user)
+/obj/structure/frame/computer/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+
 	switch(state)
-		if(0)
-			if(P.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, span_notice("You start wrenching the frame into place..."))
-				if(P.use_tool(src, user, 20, volume=50))
-					to_chat(user, span_notice("You wrench the frame into place."))
-					set_anchored(TRUE)
-					state = 1
-				return
-			if(P.tool_behaviour == TOOL_WELDER)
-				if(!P.tool_start_check(user, amount=1))
-					return
+		if(COMPUTER_FRAME_UNANCHORED)
+			if(default_unfasten_wrench(user, tool, 20) == SUCCESSFUL_UNFASTEN)
+				state = COMPUTER_FRAME_ANCHORED
+				return ITEM_INTERACT_SUCCESS
 
-				to_chat(user, span_notice("You start deconstructing the frame..."))
-				if(P.use_tool(src, user, 20, volume=50))
-					to_chat(user, span_notice("You deconstruct the frame."))
-					var/obj/item/stack/sheet/iron/M = new (drop_location(), 5)
-					if (!QDELETED(M))
-						M.add_fingerprint(user)
-					qdel(src)
-				return
-		if(1)
-			if(P.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, span_notice("You start to unfasten the frame..."))
-				if(P.use_tool(src, user, 20, volume=50))
-					to_chat(user, span_notice("You unfasten the frame."))
-					set_anchored(FALSE)
-					state = 0
-				return
+		if(COMPUTER_FRAME_ANCHORED)
+			if(default_unfasten_wrench(user, tool, 20) == SUCCESSFUL_UNFASTEN)
+				state = COMPUTER_FRAME_UNANCHORED
+				return ITEM_INTERACT_SUCCESS
 
-			if(!circuit)
-				//attempt to install circuitboard from part replacer
-				if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
-					var/obj/item/storage/part_replacer/replacer = P
-					// map of circuitboard names to the board
-					var/list/circuit_boards = list()
-					for(var/obj/item/circuitboard/computer/board in replacer.contents)
-						circuit_boards[board.name] = board
-					if(!length(circuit_boards))
-						return
-					//if there is only one board directly install it else pick from list
-					var/obj/item/circuitboard/computer/target_board
-					if(circuit_boards.len == 1)
-						for(var/board_name in circuit_boards)
-							target_board = circuit_boards[board_name]
-					else
-						var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
-						target_board = circuit_boards[option]
-						if(!target_board)
-							return
+/obj/structure/frame/computer/welder_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
 
-					if(install_board(target_board, user, by_hand = FALSE))
-						replacer.play_rped_sound()
-						//automatically screw the board in as well, a perk of using the rped
-						to_chat(user, span_notice("You screw [circuit] into place."))
-						state = 2
-						icon_state = "2"
-						//attack again so we can install the cable & glass
-						attackby(replacer, user, params)
-						return
+	if(state == COMPUTER_FRAME_UNANCHORED)
+		if(!tool.tool_start_check(user, amount=1))
+			return
+		if(!tool.use_tool(src, user, 20, volume = 50))
+			return
+		var/obj/item/stack/sheet/iron/M = new (drop_location(), 5)
+		if (!QDELETED(M))
+			M.add_fingerprint(user)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
-				//attempt to install circuitboard by hand
-				if(istype(P, /obj/item/circuitboard/computer))
-					install_board(P, user, by_hand = TRUE)
-					return
-				else if(istype(P, /obj/item/circuitboard))
-					to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
-					return
-			else
-				if(P.tool_behaviour == TOOL_SCREWDRIVER)
-					P.play_tool_sound(src)
-					to_chat(user, span_notice("You screw [circuit] into place."))
-					state = 2
-					icon_state = "2"
-					return
-				if(P.tool_behaviour == TOOL_CROWBAR)
-					P.play_tool_sound(src)
-					to_chat(user, span_notice("You remove [circuit]."))
-					state = 1
-					icon_state = "0"
-					circuit.forceMove(drop_location())
-					circuit.add_fingerprint(user)
-					circuit = null
-					return
-		if(2)
-			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You unfasten the circuit board."))
-				state = 1
-				icon_state = "1"
-			else
-				//serach for cable which can either be the attacking item or inside an rped
-				var/obj/item/stack/cable_coil/cable = null
-				if(istype(P, /obj/item/stack/cable_coil))
-					cable = P
-				else if(istype(P, /obj/item/storage/part_replacer))
-					cable = locate(/obj/item/stack/cable_coil) in P.contents
-				if(!cable)
-					return
+/obj/structure/frame/computer/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
 
-				//install cable
-				if(!cable.tool_start_check(user, amount = 5))
-					return
-				to_chat(user, span_notice("You start adding cables to the frame..."))
-				if(cable.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, volume = 50, amount = 5))
-					if(state != 2)
-						return
-					to_chat(user, span_notice("You add cables to the frame."))
-					state = 3
-					icon_state = "3"
+	switch(state)
+		if(COMPUTER_FRAME_BOARD_INSTALLED)
+			tool.play_tool_sound(src)
+			state = COMPUTER_FRAME_BOARD_SECURED
+			update_appearance(UPDATE_ICON_STATE)
+			return ITEM_INTERACT_SUCCESS
 
-				//if the item was an rped then it could have glass sheets for the next stage so let it continue
-				if(istype(P, /obj/item/storage/part_replacer))
-					var/obj/item/storage/part_replacer/replacer = P
-					replacer.play_rped_sound()
-					//reattack to install the glass sheets as well
-					attackby(replacer, user, params)
-				return
-		if(3)
-			if(P.tool_behaviour == TOOL_WIRECUTTER)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You remove the cables."))
-				state = 2
-				icon_state = "2"
-				var/obj/item/stack/cable_coil/A = new (drop_location(), 5)
-				if (!QDELETED(A))
-					A.add_fingerprint(user)
-			else
-				//search for glass sheets which can either be the attacking item or inside an rped
-				var/obj/item/stack/sheet/glass/glass_sheets = null
-				if(istype(P, /obj/item/stack/sheet/glass))
-					glass_sheets = P
-				else if(istype(P, /obj/item/storage/part_replacer))
-					glass_sheets = locate(/obj/item/stack/sheet/glass) in P.contents
-				if(!glass_sheets)
-					return
+		if(COMPUTER_FRAME_BOARD_SECURED)
+			tool.play_tool_sound(src)
+			state = COMPUTER_FRAME_BOARD_INSTALLED
+			update_appearance(UPDATE_ICON_STATE)
+			return ITEM_INTERACT_SUCCESS
 
-				//install glass sheets
-				if(!glass_sheets.tool_start_check(user, amount = 2))
-					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				to_chat(user, span_notice("You start to put in the glass panel..."))
-				if(glass_sheets.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, amount = 2))
-					if(state != 3)
-						return
-					to_chat(user, span_notice("You put in the glass panel."))
-					state = 4
-					icon_state = "4"
+		if(COMPUTER_FRAME_SCREEN_INSTALLED)
+			tool.play_tool_sound(src)
 
-				if(istype(P, /obj/item/storage/part_replacer))
-					var/obj/item/storage/part_replacer/replacer = P
-					replacer.play_rped_sound()
-				return
-		if(4)
-			if(P.tool_behaviour == TOOL_CROWBAR)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You remove the glass panel."))
-				state = 3
-				icon_state = "3"
-				var/obj/item/stack/sheet/glass/G = new(drop_location(), 2)
-				if (!QDELETED(G))
-					G.add_fingerprint(user)
-				return
-			if(P.tool_behaviour == TOOL_SCREWDRIVER)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You connect the monitor."))
+			var/obj/machinery/computer/new_computer = new circuit.build_path(loc)
+			new_computer.setDir(dir)
+			transfer_fingerprints_to(new_computer)
+			new_computer.clear_components()
 
-				var/obj/machinery/new_machine = new circuit.build_path(loc)
-				new_machine.setDir(dir)
-				transfer_fingerprints_to(new_machine)
+			// Set anchor state and move the frame's parts over to the new machine.
+			// Then refresh parts and call on_construction().
+			new_computer.set_anchored(anchored)
+			new_computer.component_parts = list()
 
-				if(istype(new_machine, /obj/machinery/computer))
-					var/obj/machinery/computer/new_computer = new_machine
+			circuit.forceMove(new_computer)
+			new_computer.component_parts += circuit
+			new_computer.circuit = circuit
 
-					new_machine.clear_components()
+			for(var/new_part in src)
+				var/atom/movable/movable_part = new_part
+				movable_part.forceMove(new_computer)
+				new_computer.component_parts += movable_part
 
-					// Set anchor state and move the frame's parts over to the new machine.
-					// Then refresh parts and call on_construction().
-					new_computer.set_anchored(anchored)
-					new_computer.component_parts = list()
+			new_computer.RefreshParts()
+			new_computer.on_construction(user)
 
-					circuit.forceMove(new_computer)
-					new_computer.component_parts += circuit
-					new_computer.circuit = circuit
+			qdel(src)
+			return ITEM_INTERACT_SUCCESS
 
-					for(var/new_part in src)
-						var/atom/movable/movable_part = new_part
-						movable_part.forceMove(new_computer)
-						new_computer.component_parts += movable_part
+/obj/structure/frame/computer/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
 
-					new_computer.RefreshParts()
-					new_computer.on_construction(user)
+	switch(state)
+		if(COMPUTER_FRAME_BOARD_INSTALLED)
+			tool.play_tool_sound(src)
+			circuit.forceMove(drop_location())
+			circuit.add_fingerprint(user)
+			circuit = null
+			state = COMPUTER_FRAME_ANCHORED
+			update_appearance(UPDATE_ICON_STATE)
+			return ITEM_INTERACT_SUCCESS
 
-				qdel(src)
-				return
+		if(COMPUTER_FRAME_SCREEN_INSTALLED)
+			tool.play_tool_sound(src)
+			var/obj/item/stack/sheet/glass/G = new(drop_location(), 2)
+			if (!QDELETED(G))
+				G.add_fingerprint(user)
+			state = COMPUTER_FRAME_WIRED
+			update_appearance(UPDATE_ICON_STATE)
+			return ITEM_INTERACT_SUCCESS
+
+/obj/structure/frame/computer/wirecutter_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+
+	if(state == COMPUTER_FRAME_WIRED)
+		tool.play_tool_sound(src)
+		state = COMPUTER_FRAME_BOARD_SECURED
+		var/obj/item/stack/cable_coil/A = new (drop_location(), 5)
+		if(!QDELETED(A))
+			A.add_fingerprint(user)
+		update_appearance(UPDATE_ICON_STATE)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/structure/frame/computer/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
+	add_fingerprint(user)
+
+	switch(state)
+		if(COMPUTER_FRAME_ANCHORED)
+			. = TRUE
+
+			//attempt to install circuitboard from rped
+			if(istype(weapon, /obj/item/storage/part_replacer) && weapon.contents.len)
+				var/obj/item/storage/part_replacer/replacer = weapon
+				// map of circuitboard names to the board
+				var/list/circuit_boards = list()
+				for(var/obj/item/circuitboard/computer/board in replacer.contents)
+					circuit_boards[board.name] = board
+				if(!length(circuit_boards))
+					return
+				//if there is only one board directly install it else pick from list
+				var/obj/item/circuitboard/computer/target_board
+				if(circuit_boards.len == 1)
+					for(var/board_name in circuit_boards)
+						target_board = circuit_boards[board_name]
+				else
+					var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
+					target_board = circuit_boards[option]
+					if(!target_board)
+						return
+
+				if(install_board(target_board, user, by_hand = FALSE))
+					replacer.play_rped_sound()
+					//automatically screw the board in as well, a perk of using the rped
+					to_chat(user, span_notice("You screw [circuit] into place."))
+					state = COMPUTER_FRAME_BOARD_SECURED
+					update_appearance(UPDATE_ICON_STATE)
+					//attack again so we can install the cable & glass
+					attackby(replacer, user, params)
+					return
+
+			//attempt to install circuitboard by hand
+			if(istype(weapon, /obj/item/circuitboard/computer))
+				install_board(weapon, user, by_hand = TRUE)
+				return
+
+			//regular attack chain
+			else
+				return ..()
+
+		if(COMPUTER_FRAME_BOARD_SECURED)
+			. = TRUE
+
+			//serach for cable which can either be the attacking item or inside an rped
+			var/obj/item/stack/cable_coil/cable = null
+			if(istype(weapon, /obj/item/stack/cable_coil))
+				cable = weapon
+			else if(istype(weapon, /obj/item/storage/part_replacer))
+				cable = locate(/obj/item/stack/cable_coil) in weapon.contents
+			if(!cable)
+				return
+
+			//install cable
+			if(!cable.tool_start_check(user, amount = 5))
+				return
+			if(cable.use_tool(src, user, istype(weapon, /obj/item/storage/part_replacer) ? 0 : 20, volume = 50, amount = 5))
+				if(state != COMPUTER_FRAME_BOARD_SECURED)
+					return
+				state = COMPUTER_FRAME_WIRED
+				update_appearance(UPDATE_ICON_STATE)
+
+			//if the item was an rped then it could have glass sheets for the next stage so let it continue
+			if(istype(weapon, /obj/item/storage/part_replacer))
+				var/obj/item/storage/part_replacer/replacer = weapon
+				replacer.play_rped_sound()
+				//reattack to install the glass sheets as well
+				attackby(replacer, user, params)
+			return
+
+		if(COMPUTER_FRAME_WIRED)
+			. = TRUE
+
+			//search for glass sheets which can either be the attacking item or inside an rped
+			var/obj/item/stack/sheet/glass/glass_sheets = null
+			if(istype(weapon, /obj/item/stack/sheet/glass))
+				glass_sheets = weapon
+			else if(istype(weapon, /obj/item/storage/part_replacer))
+				glass_sheets = locate(/obj/item/stack/sheet/glass) in weapon.contents
+			if(!glass_sheets)
+				return
+
+			//install glass sheets
+			if(!glass_sheets.tool_start_check(user, amount = 2))
+				return
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+			if(glass_sheets.use_tool(src, user, istype(weapon, /obj/item/storage/part_replacer) ? 0 : 20, amount = 2))
+				if(state != COMPUTER_FRAME_WIRED)
+					return
+				state = COMPUTER_FRAME_SCREEN_INSTALLED
+				update_appearance(UPDATE_ICON_STATE)
+
+			if(istype(weapon, /obj/item/storage/part_replacer))
+				var/obj/item/storage/part_replacer/replacer = weapon
+				replacer.play_rped_sound()
+			return
 
 /obj/structure/frame/computer/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
-/obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(state == 4)
-			new /obj/item/shard(drop_location())
-			new /obj/item/shard(drop_location())
-		if(state >= 3)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
-	..()
 
 /// Helpers for rcd
 /obj/structure/frame/computer/rcd
 	icon = 'icons/hud/radial.dmi'
 	icon_state = "cnorth"
+	state = COMPUTER_FRAME_ANCHORED
 
 /obj/structure/frame/computer/rcd/Initialize(mapload)
 	name = "computer frame"
 	icon = 'icons/obj/devices/stock_parts.dmi'
-	icon_state = "0"
 
 	. = ..()
 

@@ -112,11 +112,10 @@
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
-		A.state = 3
-		A.icon_state = "3"
+		A.state = COMPUTER_FRAME_WIRED
 	else
-		A.state = 4
-		A.icon_state = "4"
+		A.state = COMPUTER_FRAME_SCREEN_INSTALLED
+	A.update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()

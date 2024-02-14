@@ -62,7 +62,14 @@
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2
 
-// Stationary gas tanks
+//Stationary gas tanks
 #define TANK_FRAME 0
 #define TANK_PLATING_UNSECURED 1
 
+//Computer frames construction states
+#define COMPUTER_FRAME_UNANCHORED 0
+#define COMPUTER_FRAME_ANCHORED 1
+#define COMPUTER_FRAME_BOARD_INSTALLED 2
+#define COMPUTER_FRAME_BOARD_SECURED 3
+#define COMPUTER_FRAME_WIRED 4
+#define COMPUTER_FRAME_SCREEN_INSTALLED 5
