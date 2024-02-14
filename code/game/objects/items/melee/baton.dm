@@ -616,7 +616,6 @@
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
-	do_sparks(3, TRUE, src)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
@@ -690,8 +689,13 @@
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
+	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
+
+/obj/item/melee/baton/security/cattleprod/Initialize(mapload)
+	. = ..()
+	sparkler = new (src)
 
 /obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make an improved cattleprod
 	if(!istype(item, /obj/item/stack))
@@ -724,6 +728,16 @@
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
+
+/obj/item/melee/baton/security/cattleprod/baton_effect()
+	if(!sparkler.activate())
+		return BATON_ATTACK_DONE
+	return ..()
+
+/obj/item/melee/baton/security/cattleprod/Destroy()
+	if(sparkler)
+		QDEL_NULL(sparkler)
+	return ..()
 
 /obj/item/melee/baton/security/boomerang
 	name = "\improper OZtek Boomerang"
