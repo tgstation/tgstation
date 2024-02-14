@@ -276,6 +276,8 @@
 /datum/deathmatch_lobby/proc/clear_reservation()
 	if(isnull(location) || isnull(map))
 		return
+	for(var/turf/victimized_turf as anything in location.reserved_turfs) //remove this once clearing turf reservations is actually reliable
+		victimized_turf.empty()
 	map.reservations -= location
 	qdel(location)
 

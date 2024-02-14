@@ -106,7 +106,7 @@ export const DeathmatchLobby = (props) => {
                         <Icon name="star" />
                       )) || <Icon name="eye" />}
                     </Table.Cell>
-                    <Table.Cell collapsing>
+                    <Table.Cell>
                       {(!(
                         (data.host && !data.observers[observer].host) ||
                         data.admin
