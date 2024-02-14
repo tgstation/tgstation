@@ -319,6 +319,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
+	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 	if(!in_range(user, src) && !isobserver(user))
 		. += span_warning("You're too far away to read it!")
 		return
@@ -331,7 +332,6 @@
 		ui_interact(user)
 		return
 	. += span_warning("You cannot read it!")
-	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	// Are we on fire?  Hard to read if so
