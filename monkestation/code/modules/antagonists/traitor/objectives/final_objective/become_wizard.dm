@@ -113,12 +113,24 @@
 
 /obj/effect/grand_rune/traitor/on_invocation_complete(mob/living/user)
 	is_in_use = FALSE
+	if(!user.mind) // oh wait, thats a monkey invoking us. Ew
+		user.balloon_alert(user, "You are not real, silly!")
+		return
+	if(user.mind.has_antag_datum(/datum/antagonist/wizard)) // why are you like this?
+		user.balloon_alert(user, "Can't be more powerfull!")
+		return
+
 	playsound(src,'sound/magic/staff_change.ogg', 75, TRUE)
-	user.mind?.make_wizard()
-	trigger_side_effects()
-	tear_reality()
 	icon = 'icons/effects/96x96.dmi'
 	flick("activate", src)
+
+	user.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
+	user.mind.special_role = ROLE_WIZARD
+	user.mind.add_antag_datum(/datum/antagonist/wizard/traitor)
+
+	trigger_side_effects()
+	tear_reality()
+
 	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
 
 #undef TRAITOR_RUNE_INVOKE_TIME
