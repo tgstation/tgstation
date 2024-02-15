@@ -9,6 +9,7 @@
 		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
+		HAIR // monke edit: lizards can have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
