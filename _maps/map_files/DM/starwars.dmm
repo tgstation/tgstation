@@ -1144,7 +1144,6 @@
 /area/deathmatch)
 "US" = (
 /turf/closed/indestructible/reinforced,
-/turf/closed/indestructible/reinforced,
 /area/deathmatch)
 "Ve" = (
 /obj/effect/turf_decal/tile/red/full,
