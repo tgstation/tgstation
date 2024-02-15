@@ -18,16 +18,8 @@
 // Edit START (secondary color)
 
 ///Wrapper for getting the proper secondary image, colored and everything
-///datum/bodypart_overlay/proc/get_secondary_overlay(layer, obj/item/bodypart/limb) // MASSMETA EDIT
-	//layer = bitflag_to_layer(layer)
-	//. = get_image_inner(layer, limb)
-
-/datum/bodypart_overlay/proc/get_extended_overlay(layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/proc/get_extended_overlay(layer, obj/item/bodypart/limb) // MASSMETA EDIT
 	return
-
-///support proc for get_secondary_overlay()
-///datum/bodypart_overlay/proc/get_image_inner(layer, obj/item/bodypart/limb)
-	//return FALSE
 
 //Edit END
 
