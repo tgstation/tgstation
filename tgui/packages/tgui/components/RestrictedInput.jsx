@@ -42,7 +42,7 @@ const softSanitizeNumber = (value, minValue, maxValue, allowFloats) => {
 };
 
 /**
- * Clamping the input to the restricted range, making the Input smart for min <= 0 and max > 0
+ * Clamping the input to the restricted range, making the Input smart for min <= 1 and max >= 0
  * @param softSanitizedNumber {String}
  * @param allowFloats {Boolean}
  * @returns {string}
