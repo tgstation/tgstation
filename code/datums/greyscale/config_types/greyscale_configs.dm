@@ -1189,8 +1189,8 @@
 	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_worn.json'
 
-/datum/greyscale_config/tailcoat_worn
-	name = "Worn Tailcoat"
+/datum/greyscale_config/tailcoat_worn/digitigrade
+	name = "Worn Tailcoat - Digitigrade"
 	icon_file = DIGITIGRADE_SUIT_FILE
 
 /datum/greyscale_config/tailcoat_bar
@@ -1203,8 +1203,8 @@
 	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar_worn.json'
 
-/datum/greyscale_config/tailcoat_bar_worn
-	name = "Worn Tailcoat - Digitigrade"
+/datum/greyscale_config/tailcoat_bar_worn/digitigrade
+	name = "Worn Bartender's Tailcoat - Digitigrade"
 	icon_file = DIGITIGRADE_SUIT_FILE
 
 // JUMPSUITS
