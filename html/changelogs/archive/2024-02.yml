@@ -414,3 +414,22 @@
   - spellcheck: knit flesh chat messages are no longer gramatically incorrect
   vinylspiders:
   - bugfix: '*wag emote is now functional again'
+2024-02-15:
+  CandleJaxx and Iamgoofball:
+  - bugfix: Fixes Krav Maga allowing pacifism bypasses.
+  IndieanaJones:
+  - balance: Nightmare's Light Eater takes less time in jaunt to gain a critical strike,
+      being reduced to 7 seconds from 15 seconds.
+  K4rlox:
+  - balance: Maintenance drones now can use RPED, RCD, Holosign, and Spray bottles
+  LemonInTheDark:
+  - rscadd: AI's acceleration now smoothly decays, instead of just falling back down
+      to 0 after 0.5 seconds
+  - bugfix: AI's standard movement (non accelerated) is smooth now, instead of constantly
+      jumping around
+  - bugfix: AIs will now follow their targets more closely, shouldn't have any issues
+      with them lagging behind anymore
+  Melbert:
+  - bugfix: Valentines no longer see themselves covered in hearts. They only see their
+      Valentine covered in hearts.
+  - balance: Scientists have discovered Nuka Cola is not good for short term health.
