@@ -37,6 +37,7 @@ SUBSYSTEM_DEF(ore_generation)
 					return SS_INIT_SUCCESS //We've done all we can here.
 				continue
 
+	/// Handles roundstart logging
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
 		"Ore Generation spawned the following ores based on vent proximity: 1:[GLOB.post_ore_random["1"]], 2:[GLOB.post_ore_random["2"]], 3:[GLOB.post_ore_random["3"]], 4:[GLOB.post_ore_random["4"]], 5:[GLOB.post_ore_random["5"]]",
