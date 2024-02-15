@@ -32,16 +32,16 @@
 	c_tag = "Service - Bar Lounge South West"
 	},
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "aL" = (
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "aW" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
 /obj/item/kitchen/rollingpin,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "bh" = (
 /obj/structure/chair/wood,
@@ -75,27 +75,27 @@
 	pixel_x = -2;
 	pixel_y = 7
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "bP" = (
 /obj/structure/table/wood,
 /obj/item/instrument/violin,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "bX" = (
 /obj/structure/chair/sofa/corp/left,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "ca" = (
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "cc" = (
 /obj/machinery/deepfryer,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "cl" = (
 /obj/structure/flora/tree/dead/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "cn" = (
 /obj/structure/table/wood,
@@ -107,7 +107,7 @@
 /obj/structure/chair/sofa/corp/corner{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "cu" = (
 /turf/closed/wall/mineral/wood,
@@ -117,7 +117,7 @@
 /obj/machinery/processor{
 	pixel_y = 12
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "cT" = (
 /obj/machinery/disposal/bin,
@@ -130,21 +130,21 @@
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/airalarm/directional/north,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "dA" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "dB" = (
 /obj/structure/rack,
 /obj/item/book/manual/chef_recipes,
 /obj/item/holosign_creator/robot_seat/restaurant,
 /obj/item/reagent_containers/condiment/enzyme,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "dC" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -174,7 +174,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "eu" = (
 /obj/machinery/camera/directional/west{
@@ -185,11 +185,11 @@
 	pixel_x = -31;
 	pixel_y = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "ev" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "eT" = (
 /obj/machinery/computer/slot_machine{
@@ -203,7 +203,7 @@
 /obj/structure/displaycase/freezeray{
 	pixel_y = 20
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "eY" = (
 /obj/item/radio/intercom/directional/west,
@@ -214,7 +214,7 @@
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "fG" = (
 /obj/effect/turf_decal/siding/wood{
@@ -239,11 +239,11 @@
 "go" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/clothing/neck/scarf/christmas,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "gH" = (
 /obj/machinery/grill,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "gK" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -258,38 +258,38 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "he" = (
 /obj/effect/landmark/start/bartender,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "hj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "hm" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "hr" = (
 /obj/structure/flora/rock/pile/icy/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "hA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "hC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "hI" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -299,12 +299,12 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "if" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "iq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -315,14 +315,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/pod/light,
 /area/station/commons/lounge)
-"iY" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
-/area/station/service/bar)
 "ji" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "js" = (
 /obj/machinery/duct,
@@ -332,13 +328,13 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "jA" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "jG" = (
 /obj/structure/disposalpipe/segment{
@@ -353,7 +349,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "jW" = (
 /obj/effect/landmark/generic_maintenance_landmark,
@@ -380,7 +376,7 @@
 	pixel_y = 16;
 	pixel_x = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "kn" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -388,7 +384,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "kz" = (
 /obj/structure/flora/tree/pine/style_random,
@@ -399,44 +395,44 @@
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "kI" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "lb" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "lg" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/clothing/neck/scarf/black,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "ls" = (
 /obj/structure/chair/sofa/corp/corner{
 	dir = 4
 	},
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "lz" = (
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "lH" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/light/dim/directional/south,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/spawner/random/entertainment/lighter,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "lU" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
@@ -462,7 +458,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "mQ" = (
 /obj/machinery/vending/autodrobe,
@@ -471,7 +467,7 @@
 "mV" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/structure/flora/tree/pine/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "mW" = (
 /obj/effect/turf_decal/siding/thinplating/corner,
@@ -481,8 +477,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "nk" = (
 /obj/machinery/light/dim/directional/north,
@@ -503,10 +498,10 @@
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
 /obj/item/knife/kitchen,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "nx" = (
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "nL" = (
 /obj/machinery/door/firedoor,
@@ -523,11 +518,11 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "nY" = (
 /obj/machinery/holopad,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "nZ" = (
 /obj/machinery/door/firedoor,
@@ -551,7 +546,7 @@
 /obj/structure/table/wood,
 /obj/machinery/light/warm/directional/east,
 /obj/effect/spawner/random/entertainment/musical_instrument,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "on" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -563,20 +558,20 @@
 "oq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/musician/piano,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "ow" = (
 /obj/machinery/stove,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "ox" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/cake_ingredients,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "oA" = (
 /obj/machinery/restaurant_portal/bar,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "oI" = (
 /obj/structure/table/wood,
@@ -609,7 +604,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "oT" = (
 /obj/structure/chair/stool/directional/south,
@@ -623,13 +618,13 @@
 "oW" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "oY" = (
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/rack,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "pa" = (
 /obj/structure/disposalpipe/segment,
@@ -646,25 +641,25 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "pe" = (
 /obj/structure/table/wood,
 /obj/item/clothing/glasses/monocle,
 /obj/item/food/pie/cream,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "pu" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "pH" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "pJ" = (
 /obj/structure/table/wood,
@@ -674,7 +669,7 @@
 /obj/machinery/light/dim/directional/east{
 	pixel_y = 11
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "pL" = (
 /obj/machinery/camera/directional/north{
@@ -684,7 +679,7 @@
 /area/station/service/theater)
 "qm" = (
 /obj/machinery/holopad,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "qs" = (
 /obj/effect/turf_decal/siding/wood{
@@ -696,17 +691,17 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/soup_pot,
 /obj/item/kitchen/spoon/soup_ladle,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "qC" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "qE" = (
 /obj/structure/table/wood,
 /obj/item/staff/broom,
 /obj/item/clothing/head/costume/sombrero/green,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "qF" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -727,25 +722,25 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/maintenance/department/cargo)
 "qR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "rs" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "ru" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "rL" = (
 /obj/machinery/navbeacon{
@@ -776,12 +771,12 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "sf" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/light/dim/directional/south,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "sk" = (
 /turf/closed/wall/mineral/wood,
@@ -791,16 +786,16 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "sx" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/structure/window/reinforced/tinted/frosted,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "sK" = (
 /obj/structure/table/wood,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "sR" = (
 /obj/structure/table/wood,
@@ -812,7 +807,7 @@
 /turf/open/floor/pod/light,
 /area/station/service/theater)
 "tc" = (
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "td" = (
 /obj/structure/cable,
@@ -820,11 +815,11 @@
 	dir = 4
 	},
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "tH" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "tK" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -837,7 +832,7 @@
 /obj/effect/mapping_helpers/mail_sorting/service/theater,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "uj" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -848,7 +843,7 @@
 "up" = (
 /obj/effect/decal/cleanable/food/flour,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "us" = (
 /obj/structure/closet/crate/wooden/toy,
@@ -857,7 +852,7 @@
 /area/station/service/theater)
 "uV" = (
 /obj/effect/spawner/structure/window,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "vf" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -883,18 +878,18 @@
 /area/station/commons/lounge)
 "vP" = (
 /obj/structure/sign/clock/directional/north,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "wb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "wu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atm,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "wx" = (
 /turf/closed/wall/r_wall,
@@ -911,7 +906,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "wO" = (
 /obj/structure/chair/stool/directional/north,
@@ -925,7 +920,7 @@
 /obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = 5
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "xs" = (
 /obj/structure/chair{
@@ -941,7 +936,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "ye" = (
 /obj/structure/rack,
@@ -950,7 +945,7 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /obj/item/clothing/mask/balaclava,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "yh" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -965,7 +960,7 @@
 "yE" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "yL" = (
 /obj/structure/table/wood,
@@ -976,7 +971,7 @@
 /obj/machinery/light/dim/directional/west{
 	pixel_y = 11
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "yM" = (
 /obj/structure/table/wood,
@@ -994,17 +989,17 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "yQ" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "yV" = (
 /obj/structure/flora/tree/pine/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "yY" = (
 /obj/machinery/camera/directional/south{
@@ -1015,7 +1010,7 @@
 	dir = 4
 	},
 /obj/machinery/barsign/directional/south,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "zq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1028,17 +1023,17 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/food/egg_smudge,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "zM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "zN" = (
 /obj/effect/landmark/start/cook,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "zP" = (
 /obj/structure/chair{
@@ -1055,7 +1050,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Ap" = (
 /obj/structure/closet/secure_closet/freezer/cream_pie,
@@ -1076,7 +1071,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "AE" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
@@ -1088,14 +1083,14 @@
 /obj/effect/mapping_helpers/mail_sorting/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "AF" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Bi" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1103,7 +1098,7 @@
 /obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = -4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Bj" = (
 /obj/machinery/camera/directional/north{
@@ -1111,19 +1106,19 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/structure/flora/tree/pine/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Bk" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Bq" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/navigate_destination/kitchen,
 /obj/structure/table/wood,
 /obj/item/food/pie/frostypie,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Bs" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -1139,22 +1134,21 @@
 "BD" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/clothing/neck/scarf/darkblue,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "BE" = (
 /obj/structure/table/wood,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "BK" = (
 /obj/structure/ladder,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "BN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Cf" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -1173,19 +1167,18 @@
 	dir = 1
 	},
 /obj/structure/flora/grass/both/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Cp" = (
 /obj/structure/sink/kitchen/directional/south,
 /obj/item/radio/intercom/directional/west,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "CC" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "CF" = (
 /obj/structure/chair/stool/directional/south,
@@ -1203,7 +1196,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "CL" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1218,7 +1211,7 @@
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "CR" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1230,13 +1223,13 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Dd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Dj" = (
 /obj/machinery/door/firedoor,
@@ -1249,13 +1242,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
-"Dy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
-/area/station/service/bar)
 "DA" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -1290,7 +1278,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "EG" = (
 /obj/effect/turf_decal/trimline/dark_green/line{
@@ -1308,7 +1296,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "ET" = (
 /obj/structure/flora/grass/both/style_random,
@@ -1324,7 +1312,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Fc" = (
 /obj/machinery/deepfryer,
@@ -1332,7 +1320,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Service - Kitchen East"
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Fi" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -1345,13 +1333,13 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Fz" = (
 /obj/structure/chair/stool/directional/west,
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "FI" = (
 /turf/closed/wall/mineral/wood,
@@ -1361,7 +1349,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "FW" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
@@ -1381,7 +1369,7 @@
 /obj/structure/chair/sofa/corp{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Gl" = (
 /obj/machinery/light/directional/south,
@@ -1389,9 +1377,8 @@
 	pixel_x = -8
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Gs" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
@@ -1407,7 +1394,7 @@
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/light/dim/directional/east,
 /obj/item/clothing/neck/scarf/green,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Gy" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1416,7 +1403,7 @@
 	id = "playerscantreadthis";
 	name = "Kitchen Counter Shutters"
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "GB" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -1429,7 +1416,7 @@
 /area/station/commons/lounge)
 "GN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "GP" = (
 /obj/structure/chair/stool/directional/north,
@@ -1459,7 +1446,7 @@
 /area/station/service/theater)
 "Ht" = (
 /obj/structure/cable,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "IA" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -1470,7 +1457,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Jb" = (
 /obj/machinery/duct,
@@ -1478,16 +1465,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/flora/grass/both/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Jg" = (
 /obj/structure/flora/grass/both/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Jl" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/light/dim/directional/west,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "JB" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1505,7 +1492,7 @@
 	spawn_loot_double = 0;
 	spawn_random_offset = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "JI" = (
 /obj/structure/chair/stool/directional/north,
@@ -1523,7 +1510,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "JT" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -1542,12 +1529,11 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Kl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "KN" = (
 /obj/structure/table/wood/poker,
@@ -1562,14 +1548,14 @@
 	name = "Kitchen Counter Shutters"
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "KW" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Civilian - Theatre Stage"
 	},
 /obj/item/radio/intercom/directional/east,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Lh" = (
 /obj/structure/dresser,
@@ -1580,13 +1566,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Lk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Ln" = (
 /obj/structure/table/wood,
@@ -1596,7 +1582,7 @@
 	},
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/cup/soda_cans/cola,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Lw" = (
 /obj/structure/table/wood,
@@ -1618,7 +1604,7 @@
 /area/station/commons/lounge)
 "LQ" = (
 /obj/structure/flora/grass/both/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Mh" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1647,11 +1633,11 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "MH" = (
 /obj/structure/flora/grass/both/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "MJ" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -1680,7 +1666,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Na" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1691,18 +1677,18 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "NP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/chem_pile,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Oc" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Ol" = (
 /obj/structure/chair/stool/bar/directional/west,
@@ -1714,12 +1700,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Ov" = (
 /obj/structure/ladder,
 /obj/effect/landmark/event_spawn,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Ow" = (
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -1727,12 +1713,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Oz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "OT" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -1740,7 +1726,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "OZ" = (
 /obj/structure/table/wood,
@@ -1787,7 +1773,7 @@
 /obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_y = 6
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "PW" = (
 /obj/machinery/door/airlock/public/glass{
@@ -1797,7 +1783,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Qm" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -1809,7 +1795,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Qu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1823,7 +1809,7 @@
 /obj/machinery/light/warm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "QF" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1831,11 +1817,11 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "QJ" = (
 /obj/structure/table/wood/fancy/orange,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "QX" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1845,7 +1831,7 @@
 /area/station/commons/lounge)
 "Rl" = (
 /obj/machinery/oven,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "RJ" = (
 /obj/structure/table/wood/poker,
@@ -1854,12 +1840,11 @@
 /area/station/commons/lounge)
 "RN" = (
 /obj/structure/sink/kitchen/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "RO" = (
 /obj/machinery/griddle,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Sa" = (
 /obj/structure/rack,
@@ -1867,7 +1852,7 @@
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Sg" = (
 /obj/machinery/duct,
@@ -1877,18 +1862,18 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "So" = (
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "St" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "SI" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -1903,14 +1888,14 @@
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/bot_white,
 /obj/item/reagent_containers/condiment/rice,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "SU" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "SV" = (
 /obj/structure/chair/stool/bar/directional/west,
@@ -1921,14 +1906,14 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Tv" = (
 /obj/structure/flora/bush/snow/style_random,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "TE" = (
 /obj/structure/disposalpipe/segment{
@@ -1940,7 +1925,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Ud" = (
 /turf/open/misc/asteroid,
@@ -1949,7 +1934,7 @@
 /obj/structure/chair/sofa/corp/corner{
 	dir = 1
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "UF" = (
 /turf/closed/wall/r_wall,
@@ -1958,7 +1943,7 @@
 /obj/structure/cable,
 /mob/living/carbon/human/species/monkey/punpun,
 /obj/machinery/holopad,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "UX" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -1980,7 +1965,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Vd" = (
 /turf/open/floor/pod/light,
@@ -1995,7 +1980,7 @@
 /obj/structure/table/wood,
 /obj/machinery/light/warm/directional/east,
 /obj/item/clothing/glasses/eyepatch,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "VL" = (
 /obj/machinery/light/dim/directional/south,
@@ -2013,28 +1998,27 @@
 /area/station/service/bar)
 "VY" = (
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/food/flour,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "VZ" = (
 /obj/structure/flora/grass/both/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Wj" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
 /obj/machinery/light/directional/north,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "Wn" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/clothing/neck/scarf/cyan,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Wq" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/bar)
 "Wz" = (
 /obj/machinery/door/firedoor,
@@ -2052,8 +2036,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/kitchen)
 "WP" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -2085,7 +2068,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "WX" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
@@ -2097,7 +2079,7 @@
 	location = "Bar";
 	name = "navigation beacon (Bar Delivery)"
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/maintenance/department/cargo)
 "Xa" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -2107,7 +2089,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Xq" = (
 /obj/machinery/holopad{
@@ -2125,7 +2107,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "Xv" = (
 /obj/structure/disposalpipe/segment,
@@ -2141,15 +2123,11 @@
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
-"XA" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/misc/snow/actually_safe,
-/area/station/service/kitchen)
 "XG" = (
 /obj/structure/cable,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "XI" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -2171,7 +2149,7 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/structure/flora/tree/dead/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "XR" = (
 /obj/machinery/duct,
@@ -2179,14 +2157,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "XS" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "Ys" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -2202,12 +2180,12 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "YQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/service/theater)
 "YX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2218,7 +2196,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/misc/snow/actually_safe,
+/turf/open/floor/fake_snow,
 /area/station/commons/lounge)
 "ZD" = (
 /turf/open/floor/pod/light,
@@ -2564,8 +2542,8 @@ dC
 FW
 lH
 VU
-iY
-iY
+ca
+ca
 LQ
 tH
 VU
@@ -2591,7 +2569,7 @@ Mh
 oO
 QJ
 Kl
-Dy
+hj
 JW
 pJ
 Ht
@@ -2636,7 +2614,7 @@ JN
 Co
 aL
 Rl
-XA
+aL
 qu
 jA
 KT
