@@ -536,7 +536,7 @@
 
 /// Pick a random element from the list and remove it from the list.
 /proc/pick_n_take_weighted(list/list_to_pick)
-	if(list_to_pick.len)
+	if(length(list_to_pick))
 		var/picked = pick_weight(list_to_pick)
 		list_to_pick[picked] = null
 		list_to_pick.Remove(picked)

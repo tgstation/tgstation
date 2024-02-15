@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 		returning_list += client_source
 		var/return_value = 10
 		if(client_source.prefs?.antag_rep)
-			return_value = client_source.prefs?.antag_rep
+			return_value = client_source.prefs.antag_rep
 		returning_list[client_source] = return_value
 
 	return returning_list

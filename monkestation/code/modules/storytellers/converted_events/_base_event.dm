@@ -216,7 +216,7 @@
 
 	while(length(possible_candidates) && length(candidates) < antag_count) //both of these pick_n_take from possible_candidates so this should be fine
 		if(prompted_picking)
-			candidates |= poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, list(pick_n_take_weighted(possible_candidates)))
+			candidates |= poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, list(pick_n_take(possible_candidates)))
 		else
 			candidates |= pick_n_take_weighted(candidates)
 
@@ -227,11 +227,10 @@
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
-		var/client/mob_client = pick_n_take(weighted_candidates)
+		var/client/mob_client = pick_n_take_weighted(weighted_candidates)
 		var/mob/candidate = mob_client.mob
 
-		if(candidate.client) //I hate this
-			candidate.client.prefs.reset_antag_rep()
+		candidate.client?.prefs.reset_antag_rep()
 
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
