@@ -1180,10 +1180,11 @@
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
 	design_ids = list(
+		"bankmachine",
+		"barcode_scanner",
 		"cargo",
 		"cargorequest",
 		"comconsole",
-		"bankmachine",
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
@@ -1339,9 +1340,21 @@
 		"c38_trac",
 		"implant_chem",
 		"implant_tracking",
+		"implant_exile",
 		"implantcase",
 		"implanter",
 		"locator",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/advanced_implants
+	id = "adv_subdermal_implants"
+	display_name = "Advanced Subdermal Implants"
+	description = "Subdermal implants that leverage bluespace research to control their bluespace signature."
+	prereq_ids = list("subdermal_implants", "micro_bluespace")
+	design_ids = list(
+		"implant_beacon",
+		"implant_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

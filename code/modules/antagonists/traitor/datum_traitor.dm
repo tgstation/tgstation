@@ -57,7 +57,7 @@
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
-	uplink_flag_given = UPLINK_TRAITORS | UPLINK_INFILTRATORS
+	uplink_flag_given = UPLINK_INFILTRATORS
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
@@ -209,7 +209,6 @@
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
-	objectives.Cut()
 	var/objective_count = 0
 
 	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))

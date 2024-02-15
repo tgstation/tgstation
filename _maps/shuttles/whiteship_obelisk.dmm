@@ -590,7 +590,7 @@
 /area/shuttle/abandoned)
 "Hd" = (
 /obj/structure/cable,
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -625,9 +625,7 @@
 /area/shuttle/abandoned/crew)
 "JN" = (
 /obj/structure/cable,
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -741,7 +739,7 @@
 /area/shuttle/abandoned/engine)
 "Qo" = (
 /obj/structure/table,
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire{

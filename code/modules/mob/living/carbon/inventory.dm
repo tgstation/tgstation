@@ -128,6 +128,9 @@
 
 	return not_handled
 
+/mob/living/carbon/get_equipped_speed_mod_items()
+	return ..() + get_all_worn_items()
+
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	return item.on_equipped(src, slot, initial)
