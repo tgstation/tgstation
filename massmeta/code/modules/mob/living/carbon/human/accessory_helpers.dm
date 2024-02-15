@@ -5,11 +5,11 @@
 
 	// add overlay on "external_slots" like tail, head and other parts
 	for(var/list_item in added_accessory.external_slots)
-	/*
+
 		var/can_hidden_render = return_exernal_render_state(list_item, host)
 		if(!can_hidden_render)
 			continue // we failed the render check just dont bother (we just don't need to render it)
-	*/
+
 		if(!host.get_organ_slot(list_item))
 			continue
 
@@ -26,10 +26,8 @@
 				list_item = "[list_item]_wagging"
 
 		var/mutable_appearance/new_overlay = mutable_appearance(added_accessory.icon, layer = -layer)
-		if(added_accessory.gender_specific)
-			new_overlay.icon_state = "[g]_[list_item]_[added_accessory.icon_state]_[external_sprite]_[layertext]"
-		else
-			new_overlay.icon_state = "m_[list_item]_[added_accessory.icon_state]_[external_sprite]_[layertext]"
+		// we only use here m-gender icons because they are same as f-icons
+		new_overlay.icon_state = "m_[list_item]_[added_accessory.icon_state]_[external_sprite]_[layertext]"
 		new_overlay.color = passed_color
 		return_list += new_overlay
 

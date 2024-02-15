@@ -92,6 +92,15 @@
 	else
 		stop_wag(organ_owner)
 
+	// Edit START
+
+	owner.update_body_parts() // MASSMETA EDIT
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.update_mutant_bodyparts()
+
+	// Edit END
+
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag(mob/living/carbon/organ_owner)
 	if(wag_flags & WAG_WAGGING) // we are already wagging
