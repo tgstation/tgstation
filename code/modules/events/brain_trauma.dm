@@ -17,8 +17,6 @@
 			continue
 		if(H.stat == DEAD) // What are you doing in this list
 			continue
-		if(HAS_TRAIT(H, TRAIT_SPECIAL_SPAWNED))
-			continue
 		if(!H.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
 			continue
 		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //please stop giving my centcom admin gimmicks full body paralysis

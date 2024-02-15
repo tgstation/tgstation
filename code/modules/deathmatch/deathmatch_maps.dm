@@ -1,4 +1,4 @@
-/datum/lazy_template/deathmatch //largest map is 32x32, consider that when spacing map spawners
+/datum/lazy_template/deathmatch //deathmatch maps that have any possibility of the walls being destroyed should use indestructible walls, because baseturf moment
 	var/name
 	map_dir = "_maps/map_files/DM"
 	/// Map Description
@@ -9,11 +9,6 @@
 	var/automatic_gameend_time = 8 MINUTES
 	/// List of allowed loadouts for this map, otherwise defaults to all loadouts
 	var/list/allowed_loadouts = list()
-
-/*
-/datum/lazy_template/deathmatch/New()
-	map_name = prefix + map_name
-	..(path = map_name)*/
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
@@ -140,3 +135,14 @@
 	)
 	map_name = "arena"
 	key = "arena"
+
+/datum/lazy_template/deathmatch/raidthebase
+	name = "Backalley"
+	desc = "You are not built for these streets."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/assistant,
+		/datum/outfit/deathmatch_loadout/naked,
+	)
+	map_name = "raidthebase"
+	key = "raidthebase"

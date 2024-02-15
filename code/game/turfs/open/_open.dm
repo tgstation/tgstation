@@ -125,8 +125,14 @@
 /turf/open/indestructible/white/smooth_large
 	icon_state = "white_large"
 
+/turf/open/indestructible/white/textured
+	icon_state = "textured_white"
+
 /turf/open/indestructible/dark
 	icon_state = "darkfull"
+
+/turf/open/indestructible/dark/textured
+	icon_state = "textured_dark"
 
 /turf/open/indestructible/dark/smooth_large
 	icon_state = "dark_large"
@@ -257,7 +263,16 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/indestructible/kitchen
-	icon_state = "kitchen"
+	icon_state = /turf/open/floor/iron/kitchen::icon_state
+
+/turf/open/indestructible/rockyground
+	icon_state = /turf/open/misc/ashplanet/rocky::icon_state
+	icon = /turf/open/misc/ashplanet/rocky::icon
+	name = /turf/open/misc/ashplanet/rocky::name
+
+/turf/open/indestructible/stone
+	icon_state = /turf/open/floor/stone::icon_state
+	name = /turf/open/floor/stone::name
 
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE

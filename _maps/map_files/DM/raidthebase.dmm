@@ -1,0 +1,1206 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bc" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 1
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"bw" = (
+/obj/machinery/griddle,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"bR" = (
+/obj/effect/turf_decal/caution,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"cF" = (
+/obj/structure/sign/poster/contraband/donk_co/directional/south,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"cH" = (
+/obj/structure/table,
+/obj/item/food/meatball{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/food/meatball{
+	pixel_y = 1;
+	pixel_x = 4
+	},
+/obj/item/food/meatball{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/item/food/meatball{
+	pixel_y = -4;
+	pixel_x = -6
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"cP" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/clothing/gloves/tackler/offbrand,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"df" = (
+/obj/structure/mystery_box/tdome{
+	pixel_y = 0
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"fu" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/claymore,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"fv" = (
+/obj/structure/rack,
+/obj/item/grenade/chem_grenade/clf3{
+	pixel_y = 6;
+	pixel_x = -1
+	},
+/obj/item/grenade/chem_grenade/clf3{
+	pixel_x = 7
+	},
+/obj/item/grenade/frag,
+/obj/item/grenade/frag{
+	pixel_y = 6;
+	pixel_x = 9
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"fx" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"fE" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"fI" = (
+/obj/structure/table,
+/obj/item/food/bbqribs{
+	pixel_y = 8;
+	pixel_x = -1
+	},
+/obj/item/food/bbqribs{
+	pixel_y = 5
+	},
+/obj/item/food/bbqribs{
+	pixel_y = 2;
+	pixel_x = -2
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"fT" = (
+/obj/structure/shipping_container/nakamura,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"fU" = (
+/obj/structure/table,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"gg" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/emergency/turret,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"gG" = (
+/obj/structure/barricade/sandbags,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"hN" = (
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"im" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/advanced,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"in" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/departments/med/directional/west,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"iQ" = (
+/obj/structure/barricade/sandbags,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"iS" = (
+/obj/structure/rack,
+/obj/item/storage/medkit/advanced,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"jy" = (
+/obj/structure/sign/poster/contraband/donk_co/directional/north,
+/obj/structure/mystery_box/tdome{
+	pixel_y = 0
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"jH" = (
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"kc" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"kU" = (
+/obj/machinery/light/cold/directional/west,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"mg" = (
+/obj/machinery/oven,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ms" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/obj/item/clothing/suit/armor/vest/alt,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"mB" = (
+/obj/structure/fence/door/opened{
+	dir = 4
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"nS" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/guncase/doublesword,
+/obj/structure/window/reinforced/unanchored/spawner/directional/south,
+/obj/structure/window/reinforced/unanchored/spawner/directional/east,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"oU" = (
+/turf/closed/indestructible/fakedoor/maintenance,
+/area/deathmatch)
+"re" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"sR" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/storage/toolbox/ammobox/strilka310,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"tQ" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 5;
+	pixel_x = -1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ub" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"uW" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"uY" = (
+/obj/structure/fence/door{
+	dir = 4
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"vV" = (
+/obj/machinery/light/floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"wt" = (
+/obj/structure/fence,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"wR" = (
+/obj/structure/table,
+/obj/item/food/bun{
+	pixel_y = 8;
+	pixel_x = -2
+	},
+/obj/item/food/bun{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/obj/item/food/bun{
+	pixel_y = -1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"xi" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"xp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/window{
+	dir = 8;
+	id = "outskirtshutter"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"xy" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"zl" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"zr" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"zP" = (
+/obj/structure/table,
+/obj/item/food/cheese/wheel{
+	pixel_y = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"zQ" = (
+/obj/effect/mine/stun,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"AZ" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Bf" = (
+/obj/item/clothing/suit/armor/vest/alt,
+/obj/item/gun/ballistic/revolver/nagant,
+/obj/item/suppressor,
+/obj/structure/closet/crate/cardboard,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"BC" = (
+/obj/structure/table,
+/obj/item/stack/medical/suture,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Cd" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 9;
+	pixel_x = -5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ce" = (
+/obj/structure/table,
+/obj/item/food/dough{
+	pixel_y = 7;
+	pixel_x = -2
+	},
+/obj/item/food/dough{
+	pixel_x = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"CJ" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/replica_spawner{
+	obvious_replica = 0;
+	target_path = /obj/machinery/exoscanner
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"CP" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/reagent_containers/hypospray/medipen/stimulants,
+/obj/item/spear,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Dq" = (
+/obj/effect/turf_decal/caution{
+	dir = 1
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"DJ" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/indestructible/white/textured,
+/area/deathmatch)
+"Ea" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/turf/open/indestructible/white/textured,
+/area/deathmatch)
+"Eb" = (
+/obj/structure/mystery_box/tdome{
+	pixel_y = 0
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"EL" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/storage/box/lethalshot,
+/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/storage/box/lethalshot,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"EZ" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"FF" = (
+/obj/item/wirecutters/caravan,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Ip" = (
+/obj/item/shard{
+	pixel_y = -5;
+	pixel_x = 7
+	},
+/obj/item/shard{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/effect/mine/shrapnel,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"IR" = (
+/obj/structure/mystery_box/tdome{
+	pixel_y = 0
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"JD" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"JR" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Kp" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/white/textured,
+/area/deathmatch)
+"KL" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/siding/thinplating/light{
+	dir = 8
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch)
+"Mh" = (
+/obj/structure/shipping_container/gorlex,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"MF" = (
+/mob/living/basic/bot/medbot,
+/obj/structure/closet/crate/medical,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"MJ" = (
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Nn" = (
+/turf/open/indestructible/white/textured,
+/area/deathmatch)
+"NT" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"NZ" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Ol" = (
+/obj/machinery/light/floor,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Oz" = (
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Pi" = (
+/obj/structure/closet/crate/wooden,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"PB" = (
+/obj/structure/fermenting_barrel/gunpowder,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"PN" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"PP" = (
+/obj/machinery/light/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Qa" = (
+/turf/closed/indestructible/riveted,
+/area/deathmatch)
+"Qb" = (
+/obj/structure/sign/departments/exam_room/directional/south,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/indestructible/white/textured,
+/area/deathmatch)
+"RE" = (
+/obj/machinery/griddle,
+/obj/item/storage/box/syndie_kit/throwing_weapons{
+	pixel_y = 7
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"RX" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Sv" = (
+/obj/structure/table,
+/obj/item/stack/medical/mesh,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"SG" = (
+/obj/machinery/button/door/directional/west{
+	id = "outskirtshutter"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Tr" = (
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"TE" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/thinplating/light{
+	dir = 8
+	},
+/turf/open/indestructible/rockyground,
+/area/deathmatch)
+"TK" = (
+/obj/structure/sign/departments/med/directional/west,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Vh" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/melee/baseball_bat,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"Wa" = (
+/obj/structure/showcase/machinery/tv,
+/turf/open/indestructible/rockyground,
+/area/deathmatch/fullbright)
+"WB" = (
+/turf/template_noop,
+/area/template_noop)
+"XD" = (
+/obj/structure/rack,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Yf" = (
+/turf/closed/indestructible/riveted,
+/area/deathmatch/fullbright)
+"Yg" = (
+/obj/structure/sign/poster/contraband/donk_co/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"YU" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"YV" = (
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/item/reagent_containers/condiment/bbqsauce,
+/obj/item/reagent_containers/condiment/bbqsauce,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ze" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+
+(1,1,1) = {"
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+"}
+(2,1,1) = {"
+Qa
+jH
+jH
+jH
+jH
+kU
+jH
+im
+MF
+Qa
+fu
+Oz
+Oz
+xi
+Oz
+iQ
+Oz
+Oz
+Oz
+Oz
+iQ
+Oz
+Vh
+Yf
+"}
+(3,1,1) = {"
+Qa
+jH
+jH
+iS
+XD
+jH
+jH
+jH
+jH
+Qa
+xi
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+IR
+Oz
+Oz
+Oz
+EZ
+Oz
+Yf
+"}
+(4,1,1) = {"
+Qa
+jH
+jH
+Qa
+Qa
+BC
+Sv
+fU
+Qa
+Qa
+fx
+xi
+Oz
+Oz
+xi
+fx
+xi
+Oz
+Oz
+Oz
+Wa
+Oz
+Oz
+Yf
+"}
+(5,1,1) = {"
+Qa
+jH
+jH
+Qa
+Nn
+Nn
+Nn
+Nn
+Ea
+Qa
+IR
+Oz
+MJ
+Oz
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+"}
+(6,1,1) = {"
+Qa
+jH
+jH
+oU
+Nn
+DJ
+Kp
+DJ
+Qb
+Qa
+EZ
+Dq
+CJ
+bR
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(7,1,1) = {"
+Qa
+df
+jH
+Qa
+Nn
+Nn
+Nn
+Nn
+DJ
+Qa
+re
+Oz
+Tr
+Oz
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(8,1,1) = {"
+Qa
+Qa
+Qa
+Qa
+Qa
+KL
+TE
+KL
+Qa
+Qa
+Yf
+wt
+wt
+mB
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(9,1,1) = {"
+Yf
+Oz
+ms
+xi
+in
+Oz
+Oz
+Oz
+TK
+xi
+Oz
+Oz
+zl
+Oz
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(10,1,1) = {"
+Yf
+Oz
+Oz
+EZ
+NZ
+Oz
+Oz
+Oz
+Oz
+Oz
+zl
+Oz
+Oz
+Oz
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(11,1,1) = {"
+Yf
+Oz
+Oz
+FF
+NZ
+Oz
+xi
+cP
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(12,1,1) = {"
+Yf
+Oz
+Oz
+Qa
+Qa
+Qa
+Qa
+Qa
+Yf
+Yf
+Yf
+kc
+Oz
+Oz
+Yf
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+"}
+(13,1,1) = {"
+Yf
+Oz
+xi
+Qa
+nS
+Eb
+hN
+Qa
+EZ
+Oz
+Oz
+Oz
+Oz
+Oz
+Yf
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+"}
+(14,1,1) = {"
+Yf
+Oz
+fx
+Qa
+hN
+Ol
+hN
+xy
+Oz
+PN
+uY
+Oz
+Mh
+Oz
+Yf
+hN
+zr
+hN
+hN
+hN
+hN
+hN
+hN
+Qa
+"}
+(15,1,1) = {"
+Yf
+Oz
+xi
+Qa
+hN
+hN
+hN
+xy
+Oz
+NZ
+Pi
+Oz
+Oz
+Oz
+Yf
+hN
+hN
+hN
+fI
+wR
+hN
+YV
+PP
+Qa
+"}
+(16,1,1) = {"
+Yf
+Oz
+Oz
+Qa
+oU
+Ip
+Qa
+Qa
+Oz
+NZ
+Bf
+Oz
+Oz
+cF
+Yf
+jy
+hN
+RX
+hN
+hN
+hN
+hN
+hN
+Qa
+"}
+(17,1,1) = {"
+Yf
+Oz
+Oz
+iQ
+Oz
+Oz
+kc
+iQ
+Oz
+Oz
+fT
+Oz
+sR
+Oz
+bc
+gG
+hN
+ub
+RE
+bw
+hN
+ub
+hN
+Qa
+"}
+(18,1,1) = {"
+Yf
+Oz
+Oz
+zQ
+Oz
+Oz
+Oz
+zQ
+Oz
+Oz
+Oz
+gg
+Oz
+iQ
+AZ
+hN
+hN
+hN
+hN
+hN
+hN
+hN
+hN
+Qa
+"}
+(19,1,1) = {"
+Yf
+Oz
+Oz
+Qa
+Qa
+YU
+Qa
+Qa
+Oz
+Oz
+Oz
+NT
+Oz
+Oz
+AZ
+hN
+ub
+hN
+hN
+hN
+ub
+hN
+hN
+Qa
+"}
+(20,1,1) = {"
+Yf
+Oz
+Oz
+Qa
+JD
+vV
+JD
+Qa
+Oz
+Oz
+Oz
+Oz
+zl
+Oz
+fE
+hN
+hN
+hN
+mg
+mg
+hN
+Eb
+hN
+Qa
+"}
+(21,1,1) = {"
+Yf
+Oz
+Oz
+Qa
+Qa
+Qa
+Qa
+Qa
+xp
+xp
+Qa
+Oz
+Oz
+cF
+Yf
+Yg
+uW
+hN
+hN
+hN
+hN
+cH
+hN
+Qa
+"}
+(22,1,1) = {"
+Yf
+Oz
+Oz
+Qa
+hN
+Eb
+hN
+SG
+Ze
+hN
+Qa
+Oz
+Oz
+zl
+Yf
+hN
+zP
+hN
+hN
+RX
+hN
+Ce
+PP
+Qa
+"}
+(23,1,1) = {"
+Yf
+xi
+Oz
+JR
+hN
+hN
+hN
+hN
+hN
+hN
+Qa
+CP
+EZ
+Oz
+Yf
+hN
+hN
+hN
+tQ
+uW
+hN
+PB
+hN
+Qa
+"}
+(24,1,1) = {"
+Yf
+fx
+xi
+Qa
+hN
+hN
+Cd
+hN
+EL
+fv
+Qa
+Oz
+Oz
+Oz
+Yf
+hN
+hN
+hN
+hN
+hN
+hN
+hN
+hN
+Qa
+"}
+(25,1,1) = {"
+Yf
+Yf
+Yf
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Yf
+Yf
+Yf
+Yf
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+"}

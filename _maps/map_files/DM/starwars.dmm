@@ -64,9 +64,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"cU" = (
-/turf/closed/indestructible/reinforced,
-/area/template_noop)
 "dc" = (
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 1
@@ -547,7 +544,7 @@
 /area/deathmatch)
 "tU" = (
 /obj/effect/turf_decal/tile/red/full,
-/turf/closed/wall,
+/turf/closed/indestructible/reinforced,
 /area/deathmatch)
 "tV" = (
 /turf/template_noop,
@@ -903,6 +900,7 @@
 "KS" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/spear/explosive,
+/obj/effect/spawner/random/trash/box,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "KX" = (
@@ -1042,10 +1040,6 @@
 /obj/structure/holosign/barrier,
 /turf/open/indestructible/vault,
 /area/deathmatch)
-"PL" = (
-/obj/effect/spawner/structure/window/reinforced/indestructible,
-/turf/open/indestructible/plating,
-/area/template_noop)
 "PV" = (
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 4
@@ -1149,7 +1143,8 @@
 /turf/open/indestructible/large,
 /area/deathmatch)
 "US" = (
-/turf/closed/wall,
+/turf/closed/indestructible/reinforced,
+/turf/closed/indestructible/reinforced,
 /area/deathmatch)
 "Ve" = (
 /obj/effect/turf_decal/tile/red/full,
@@ -1304,7 +1299,7 @@ iH
 mK
 vz
 mz
-US
+KX
 Ve
 Ve
 kF
@@ -1324,7 +1319,7 @@ bE
 bE
 tV
 tV
-PL
+IC
 IC
 US
 Vz
@@ -1355,7 +1350,7 @@ tV
 IC
 IC
 rU
-US
+KX
 ub
 sZ
 Jc
@@ -1369,7 +1364,7 @@ zH
 cp
 tb
 Ve
-US
+KX
 kC
 KX
 KX
@@ -1391,13 +1386,13 @@ sZ
 sZ
 Tj
 Et
-US
+KX
 kF
 cj
 tb
 rA
 Ku
-US
+KX
 LY
 Yk
 Is
@@ -1420,13 +1415,13 @@ Nv
 sZ
 Xq
 eV
-US
+KX
 kF
 rA
 oC
 cj
 tb
-US
+KX
 Yk
 Yk
 Yk
@@ -1438,8 +1433,8 @@ tV
 (7,1,1) = {"
 bE
 KX
-US
-US
+KX
+KX
 aY
 Co
 sZ
@@ -1449,9 +1444,9 @@ Za
 CX
 XG
 XG
-US
-US
-US
+KX
+KX
+KX
 Ve
 rA
 Ku
@@ -1459,7 +1454,7 @@ kF
 PK
 Yk
 Me
-US
+KX
 tU
 KX
 tV
@@ -1480,14 +1475,14 @@ XG
 eH
 Xf
 Cf
-US
-US
+KX
+KX
 kF
 sM
 tb
 kF
-US
-US
+KX
+KX
 kF
 kF
 KX
@@ -1571,7 +1566,7 @@ ep
 UQ
 cM
 PH
-US
+KX
 kF
 sM
 tb
@@ -1600,8 +1595,8 @@ BC
 TB
 cM
 PH
-US
-US
+KX
+KX
 rA
 Ku
 cj
@@ -1630,7 +1625,7 @@ BC
 Cj
 Qd
 ch
-US
+KX
 kF
 Ve
 rA
@@ -1640,12 +1635,12 @@ KX
 "}
 (14,1,1) = {"
 KX
-US
+KX
 ME
 cL
-US
-US
-US
+KX
+KX
+KX
 NF
 aM
 fD
@@ -1659,12 +1654,12 @@ BC
 Sh
 aM
 NP
-US
-US
-US
+KX
+KX
+KX
 eJ
 eJ
-US
+KX
 KX
 "}
 (15,1,1) = {"
@@ -1674,7 +1669,7 @@ Jv
 Yz
 Bm
 RJ
-US
+KX
 ch
 Qd
 dc
@@ -1703,8 +1698,8 @@ mu
 Ra
 yA
 gJ
-US
-US
+KX
+KX
 Qd
 zF
 EG
@@ -1733,7 +1728,7 @@ rc
 vl
 Ey
 ES
-US
+KX
 yH
 zF
 pX
@@ -1823,8 +1818,8 @@ Jv
 Ey
 mu
 AT
-US
-US
+KX
+KX
 Pj
 tS
 JE
@@ -1845,7 +1840,7 @@ KX
 tV
 KX
 Kz
-US
+AT
 qT
 oo
 Ey
@@ -1853,9 +1848,9 @@ Bp
 Bg
 QG
 Bm
-US
-US
-US
+KX
+KX
+KX
 XG
 XG
 rR
@@ -1875,7 +1870,7 @@ tV
 KX
 KX
 KS
-US
+AT
 qT
 qT
 AT
@@ -1884,7 +1879,7 @@ sQ
 VG
 kA
 AT
-US
+KX
 Df
 fs
 fs
@@ -1913,7 +1908,7 @@ ul
 qU
 mu
 Nc
-US
+KX
 Df
 Gv
 Gv
@@ -2000,7 +1995,7 @@ Ym
 ty
 nG
 Hq
-US
+KX
 dF
 MN
 MN
@@ -2023,7 +2018,6 @@ tV
 tV
 tV
 tV
-cU
 KX
 KX
 KX
@@ -2035,7 +2029,8 @@ KX
 KX
 KX
 KX
-cU
+KX
+KX
 tV
 bE
 bE
