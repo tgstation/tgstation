@@ -534,6 +534,14 @@
 		. = list_to_pick[picked]
 		list_to_pick.Cut(picked,picked+1) //Cut is far more efficient that Remove()
 
+/// Pick a random element from the list and remove it from the list.
+/proc/pick_n_take_weighted(list/list_to_pick)
+	if(list_to_pick.len)
+		var/picked = pick_weight(list_to_pick)
+		list_to_pick[picked] = null
+		list_to_pick.Remove(picked)
+		return picked
+
 ///Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
 	if(L.len)

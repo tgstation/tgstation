@@ -268,3 +268,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_blackmarket(text, list/data)
 	logger.Log(LOG_CATEGORY_BLACKMARKET, text, data)
+
+/proc/log_antag_rep(text, list/data)
+	logger.Log(LOG_CATEGORY_ANTAG_REP, text, data)

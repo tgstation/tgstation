@@ -45,3 +45,6 @@
 		)
 	///amount of lootboxes owned
 	var/lootboxes_owned = 0
+
+	///our current antag rep (base is 10)
+	var/antag_rep = 10

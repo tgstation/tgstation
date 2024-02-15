@@ -36,3 +36,10 @@
 	config_flag = /datum/config_entry/flag/blackmarket
 
 /datum/config_entry/flag/blackmarket
+
+
+/datum/log_category/antag_rep
+	category = LOG_CATEGORY_ANTAG_REP
+	config_flag = /datum/config_entry/flag/antag_rep
+
+/datum/config_entry/flag/antag_rep

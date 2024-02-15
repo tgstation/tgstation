@@ -58,6 +58,7 @@
 	if(token_month)
 		savefile.set_entry("token_month", token_month)
 	savefile.set_entry("lootboxes_owned", lootboxes_owned)
+	savefile.set_entry("antag_rep", antag_rep)
 
 /datum/preferences/proc/load_preferences_monkestation()
 	load_jobxp_preferences()
@@ -72,4 +73,5 @@
 
 	token_month = savefile.get_entry("token_month", token_month)
 	lootboxes_owned = savefile.get_entry("lootboxes_owned", lootboxes_owned)
+	antag_rep = savefile.get_entry("antag_rep", antag_rep)
 
