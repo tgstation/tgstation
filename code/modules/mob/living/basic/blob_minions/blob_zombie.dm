@@ -53,7 +53,7 @@
 
 /mob/living/basic/blob_minion/zombie/update_overlays()
 	. = ..()
-	copy_overlays(corpse, TRUE)
+	copy_overlays(corpse, FALSE)
 	var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 	blob_head_overlay.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_WHITE
 	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
