@@ -1255,7 +1255,7 @@
 	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heels_worn.json'
 
-/datum/greyscale_config/heels_worn
+/datum/greyscale_config/heels_worn/digitigrade
 	name = "Worn Heels - Digitigrade"
 	icon_file = DIGITIGRADE_SHOES_FILE
 
