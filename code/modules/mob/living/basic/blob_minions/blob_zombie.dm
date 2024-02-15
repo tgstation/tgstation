@@ -51,12 +51,9 @@
 	. = ..()
 	death()
 
-/mob/living/basic/blob_minion/zombie/update_overlays()
-	. = ..()
+//Sets up our appearance
+/mob/living/basic/blob_minion/zombie/proc/set_up_zombie_appearance()
 	copy_overlays(corpse, TRUE)
-
-/mob/living/basic/blob_minion/zombie/copy_overlays(atom/other, cut_old)
-	. = ..()
 	var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 	blob_head_overlay.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_WHITE
 	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
@@ -76,6 +73,7 @@
 	new_corpse.forceMove(src)
 	corpse = new_corpse
 	update_appearance(UPDATE_ICON)
+	set_up_zombie_appearance()
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 
 /// Dynamic changeling reentry
