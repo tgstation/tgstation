@@ -315,11 +315,11 @@
 				if (HAS_TRAIT(src, TRAIT_SKITTISH))
 					msg += "[t_He] [t_is] a bit skittish.\n"
 				if (HAS_TRAIT(src, TRAIT_ANXIOUS))
-					msg += "[t_He] [t_has] nervous look.\n"
+					msg += "[t_He] [t_has] a nervous look.\n"
 				if (HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
 					msg += "[t_He] seem[p_s()] shy.\n"
 				if (HAS_TRAIT(src, TRAIT_FRIENDLY))
-					msg += "[t_He] have a friendly look.\n"
+					msg += "[t_He] [t_has] a friendly look.\n"
 
 			msg += "</span>"
 
