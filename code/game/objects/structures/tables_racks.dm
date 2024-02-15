@@ -825,15 +825,15 @@
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 
-/obj/structure/rack/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/climbable)
-	AddElement(/datum/element/elevation, pixel_shift = 12)
-
 /obj/structure/rack/skeletal
 	name = "skeletal minibar"
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
+
+/obj/structure/rack/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
