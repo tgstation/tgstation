@@ -10,7 +10,7 @@
 	var/payload_id = ++chunked_requests
 
 	var/raw_data = CreateBridgeData(command, data, FALSE)
-
+	TGS_INFO_LOG("RAW DATA: [raw_data]")
 	var/list/chunk_requests = GenerateChunks(raw_data, TRUE)
 
 	var/list/response
