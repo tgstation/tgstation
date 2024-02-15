@@ -830,6 +830,11 @@
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
+/obj/structure/rack/skeletal
+	name = "skeletal minibar"
+	icon = 'icons/obj/fluff/general.dmi'
+	icon_state = "minibar"
+
 /obj/structure/rack/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
