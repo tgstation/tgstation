@@ -23,10 +23,10 @@
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/spell/moon_parade,
+		/datum/heretic_knowledge/moon_amulette,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/lungs = 1,
 		/obj/item/stack/rods = 3,
 		/obj/item/storage/belt = 1,
 	)
@@ -48,7 +48,7 @@
 				They yearn for mortal eyes again, and I shall grant that wish."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/spell/moon_parade,
+		/datum/heretic_knowledge/moon_amulette,
 	)
 	required_atoms = list(/obj/item/canvas = 1)
 	result_atoms = list(/obj/item/canvas)

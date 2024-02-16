@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Guardian host's ability buttons now works while the host is sleeping/unconscious."

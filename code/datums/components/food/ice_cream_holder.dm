@@ -138,19 +138,12 @@
 /datum/component/ice_cream_holder/proc/on_item_attack_obj(obj/item/source, obj/target, mob/user)
 	SIGNAL_HANDLER
 	if(!istype(target, /obj/machinery/icecream_vat))
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(length(scoops) >= max_scoops)
+		target.balloon_alert(user, "too many scoops!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	var/obj/machinery/icecream_vat/dispenser = target
-	if(length(scoops) < max_scoops)
-		if(dispenser.product_types[dispenser.selected_flavour] > 0)
-			var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[dispenser.selected_flavour]
-			if(flavour.add_flavour(src, dispenser.beaker?.reagents.total_volume ? dispenser.beaker.reagents : null))
-				dispenser.visible_message("[icon2html(dispenser, viewers(source))] [span_info("[user] scoops delicious [dispenser.selected_flavour] ice cream into [source].")]")
-				dispenser.product_types[dispenser.selected_flavour]--
-				INVOKE_ASYNC(dispenser, TYPE_PROC_REF(/obj/machinery/icecream_vat, updateDialog))
-		else
-			to_chat(user, span_warning("There is not enough ice cream left!"))
-	else
-		to_chat(user, span_warning("[source] can't hold anymore ice cream!"))
+	dispenser.add_flavor_to_cone(src, user, source)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/ice_cream_holder/proc/check_food_order(obj/item/source, datum/custom_order/our_order)
@@ -221,21 +214,21 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	var/reagent_amount = 3
 	/// Is this flavour shown in the ice cream vat menu or not?
 	var/hidden = FALSE
+	///Whether this type of ice cream will take custom ingredients from a beaker in the ice cream vat.
+	var/takes_custom_ingredients = FALSE
 
 /datum/ice_cream_flavour/New()
 	if(ingredients)
-		ingredients_text = "(Ingredients: [reagent_paths_list_to_text(ingredients, ingredients_text)])"
+		ingredients_text = "Requires: [reagent_paths_list_to_text(ingredients, ingredients_text)]"
 
 /// Adds a new flavour to the ice cream cone.
-/datum/ice_cream_flavour/proc/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
+/datum/ice_cream_flavour/proc/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/custom_ingredients)
 	var/atom/owner = target.parent
-	LAZYADD(target.scoops, custom_name || name)
-	if(color)
+	LAZYADD(target.scoops, name)
+	if(!takes_custom_ingredients && color)
 		var/image/flavoring = image('icons/obj/service/kitchen.dmi', "icecream_custom")
 		flavoring.color = color
 		LAZYADD(target.scoop_overlays, flavoring)
-	if(custom_name)
-		LAZYSET(target.special_scoops, custom_name, name)
 
 	owner.reagents.maximum_volume += EXTRA_MAX_VOLUME_PER_SCOOP
 	if(reagent_type)
@@ -336,10 +329,11 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 
 /datum/ice_cream_flavour/custom
 	name = ICE_CREAM_CUSTOM
-	color = "" //has its own mutable appearance overlay
+	color = COLOR_STARLIGHT //has its own mutable appearance overlay it will be overwritten with anyways.
 	desc = "filled with artisanal icecream. Made with real $CUSTOM_NAME. Ain't that something."
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
+	takes_custom_ingredients = TRUE
 
 /datum/ice_cream_flavour/custom/korta
 	name = ICE_CREAM_KORTA_CUSTOM
@@ -347,16 +341,15 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	ingredients = list(/datum/reagent/consumable/korta_milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
 
-/datum/ice_cream_flavour/custom/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
-	if(!R || R.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
+/datum/ice_cream_flavour/custom/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/custom_ingredients)
+	if(!custom_ingredients || custom_ingredients.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
 		return GLOB.ice_cream_flavours[ICE_CREAM_BLAND].add_flavour(target) //Bland, sugary ice and milk.
 	var/image/flavoring = image('icons/obj/service/kitchen.dmi', "icecream_custom")
-	var/datum/reagent/master = R.get_master_reagent()
-	custom_name = lowertext(master.name) // reagent names are capitalized, while items' aren't.
+	var/datum/reagent/master = custom_ingredients.get_master_reagent()
 	flavoring.color = master.color
 	LAZYADD(target.scoop_overlays, flavoring)
 	. = ..() // Make some space for reagents before attempting to transfer some to the target.
-	R.trans_to(target.parent, 4)
+	custom_ingredients.trans_to(target.parent, 4)
 
 /datum/ice_cream_flavour/bland
 	name = ICE_CREAM_BLAND

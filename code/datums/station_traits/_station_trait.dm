@@ -11,6 +11,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/trait_processes = FALSE
 	///Chance relative to other traits of its type to be picked
 	var/weight = 10
+	///The cost of the trait, which is removed from the budget.
+	var/cost = STATION_TRAIT_COST_FULL
 	///Whether this trait is always enabled; generally used for debugging
 	var/force = FALSE
 	///Does this trait show in the centcom report?

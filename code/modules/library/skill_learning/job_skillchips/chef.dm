@@ -19,5 +19,5 @@
 	style.teach(user, make_temporary = TRUE)
 
 /obj/item/skillchip/job/chef/on_deactivate(mob/living/carbon/user, silent = FALSE)
-	style.remove(user)
+	style.fully_remove(user)
 	return ..()

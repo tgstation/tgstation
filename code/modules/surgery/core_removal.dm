@@ -16,9 +16,7 @@
 	)
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
-	if(target.stat == DEAD)
-		return TRUE
-	return FALSE
+	return target.stat == DEAD && ..()
 
 //extract brain
 /datum/surgery_step/extract_core

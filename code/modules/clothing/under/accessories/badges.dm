@@ -8,7 +8,7 @@
 	. = ..()
 	if(prob(1))
 		user.say("The testimony contradicts the evidence!", forced = "[src]")
-	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
+	user.point_at(src)
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))

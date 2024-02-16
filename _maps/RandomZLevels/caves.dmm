@@ -484,11 +484,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cS" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cV" = (
@@ -1343,11 +1339,7 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "pL" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "qD" = (

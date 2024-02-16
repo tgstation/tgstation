@@ -162,7 +162,7 @@
 	icon_state = "mecha_kineticgun"
 	energy_drain = 30
 	projectile = /obj/projectile/kinetic/mech
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/kinetic_accel.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 

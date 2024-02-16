@@ -9,15 +9,14 @@
 	var/lifespan_postmortem = 10 MINUTES
 
 /obj/item/implant/beacon/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp JMP-21 Fugitive Retrieval Implant<BR>
-				<b>Life:</b> Deactivates upon death after ten minutes, but remains within the body.<BR>
-				<b>Important Notes: N/A</B><BR>
-				<HR>
-				<b>Implant Details: </b><BR>
-				<b>Function:</b> Acts as a teleportation beacon that can be tracked by any standard bluespace transponder.
-				Using this, you can teleport directly to whoever has this implant inside of them."}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Robust Corp JMP-21 Fugitive Retrieval Implant<BR> \
+		<b>Life:</b> Deactivates upon death after ten minutes, but remains within the body.<BR> \
+		<b>Important Notes: N/A</B><BR> \
+		<HR> \
+		<b>Implant Details: </b><BR> \
+		<b>Function:</b> Acts as a teleportation beacon that can be tracked by any standard bluespace transponder. \
+		Using this, you can teleport directly to whoever has this implant inside of them."
 
 /obj/item/implant/beacon/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
 	return TRUE

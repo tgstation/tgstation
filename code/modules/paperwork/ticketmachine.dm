@@ -39,10 +39,8 @@
 	tickets.Cut()
 	return ..()
 
-/obj/machinery/ticket_machine/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/wallframe/ticket_machine(loc)
-	qdel(src)
+/obj/machinery/ticket_machine/on_deconstruction(disassembled = TRUE)
+	new /obj/item/wallframe/ticket_machine(loc)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 

@@ -11,39 +11,81 @@ import { KeyboardEvent, SyntheticEvent, useEffect, useRef } from 'react';
 
 import { Box, BoxProps } from './Box';
 
-type Props = Partial<{
+type ConditionalProps =
+  | {
+      /**
+       * Mark this if you want to debounce onInput.
+       *
+       * This is useful for expensive filters, large lists etc.
+       *
+       * Requires `onInput` to be set.
+       */
+      expensive?: boolean;
+      /**
+       * Fires on each key press / value change. Used for searching.
+       *
+       * If it's a large list, consider using `expensive` prop.
+       */
+      onInput: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
+    }
+  | {
+      /** This prop requires onInput to be set */
+      expensive?: never;
+      onInput?: never;
+    };
+
+type OptionalProps = Partial<{
+  /** Automatically focuses the input on mount */
   autoFocus: boolean;
+  /** Automatically selects the input value on focus */
   autoSelect: boolean;
+  /** The class name of the input */
   className: string;
+  /** Disables the input */
   disabled: boolean;
+  /** Mark this if you want the input to be as wide as possible */
   fluid: boolean;
+  /** The maximum length of the input value */
   maxLength: number;
+  /** Mark this if you want to use a monospace font */
   monospace: boolean;
   /** Fires when user is 'done typing': Clicked out, blur, enter key */
   onChange: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
   /** Fires once the enter key is pressed */
-  onEnter: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
+  onEnter?: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
   /** Fires once the escape key is pressed */
   onEscape: (event: SyntheticEvent<HTMLInputElement>) => void;
-  /** Fires on each key press / value change. Used for searching */
-  onInput: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
+  /** The placeholder text when everything is cleared */
   placeholder: string;
+  /** Clears the input value on enter */
   selfClear: boolean;
+  /** The state variable of the input. */
   value: string | number;
-}> &
-  BoxProps;
+}>;
 
-export const toInputValue = (value: string | number | undefined) =>
-  typeof value !== 'number' && typeof value !== 'string' ? '' : String(value);
+type Props = OptionalProps & ConditionalProps & BoxProps;
 
-const inputDebounce = debounce((onInput: () => void) => onInput(), 200);
+export function toInputValue(value: string | number | undefined) {
+  return typeof value !== 'number' && typeof value !== 'string'
+    ? ''
+    : String(value);
+}
 
-export const Input = (props: Props) => {
+const inputDebounce = debounce((onInput: () => void) => onInput(), 250);
+
+/**
+ * ### Input
+ * A basic text input which allow users to enter text into a UI.
+ * > Input does not support custom font size and height due to the way
+ * > it's implemented in CSS. Eventually, this needs to be fixed.
+ */
+export function Input(props: Props) {
   const {
     autoFocus,
     autoSelect,
     className,
     disabled,
+    expensive,
     fluid,
     maxLength,
     monospace,
@@ -59,7 +101,19 @@ export const Input = (props: Props) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  function handleInput(event: SyntheticEvent<HTMLInputElement>) {
+    if (!onInput) return;
+
+    const value = event.currentTarget?.value;
+
+    if (expensive) {
+      inputDebounce(() => onInput(event, value));
+    } else {
+      onInput(event, value);
+    }
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === KEY.Enter) {
       onEnter?.(event, event.currentTarget.value);
       if (selfClear) {
@@ -78,7 +132,7 @@ export const Input = (props: Props) => {
       event.currentTarget.value = toInputValue(value);
       event.currentTarget.blur();
     }
-  };
+  }
 
   /** Focuses the input on mount */
   useEffect(() => {
@@ -123,13 +177,11 @@ export const Input = (props: Props) => {
         disabled={disabled}
         maxLength={maxLength}
         onBlur={(event) => onChange?.(event, event.target.value)}
-        onChange={(event) =>
-          onInput && inputDebounce(() => onInput(event, event.target.value))
-        }
+        onChange={handleInput}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         ref={inputRef}
       />
     </Box>
   );
-};
+}

@@ -26,7 +26,7 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	var/recentlyExperimented = 0
 	/// Weakref to the first ian we can find at init
 	var/datum/weakref/tracked_ian_ref
@@ -98,7 +98,6 @@
 		/obj/item/aicard,
 		/obj/item/storage/backpack/holding,
 		/obj/item/slime_extract,
-		/obj/item/onetankbomb,
 		/obj/item/transfer_valve))
 
 /obj/machinery/rnd/experimentor/RefreshParts()
@@ -117,14 +116,6 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Malfunction probability reduced by <b>[malfunction_probability_coeff]%</b>.<br>Cooldown interval between experiments at <b>[resetTime*0.1]</b> seconds.")
 
-/obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
-	//snowflake check to only take "made" bombs
-	if(istype(O, /obj/item/transfer_valve))
-		var/obj/item/transfer_valve/T = O
-		if(!T.tank_one || !T.tank_two || !T.attached_device)
-			return FALSE
-	return TRUE
-
 /obj/machinery/rnd/experimentor/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
@@ -142,116 +133,114 @@
 	ejectItem()
 	return ..(O)
 
-/obj/machinery/rnd/experimentor/ui_interact(mob/user)
-	var/list/dat = list("<center>")
-	if(loaded_item)
-		dat += "<b>Loaded Item:</b> [loaded_item]"
+/obj/machinery/rnd/experimentor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new (user, src, "Experimentator")
+		ui.open()
 
-		dat += "<div>Available tests:"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_POKE]'>Poke</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_GAS]'>Gas</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_HEAT]'>Burn</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_COLD]'>Freeze</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b></div>"
-		if(istype(loaded_item,/obj/item/relic))
-			dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
-		var/list/listin = techweb_item_unlock_check(src)
-		if(listin)
-			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
-			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
-			for(var/node_id in listin)
-				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
-				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
-				if(science_web.researched_nodes[N.id])
-					res += str
-				if(science_web.visible_nodes[N.id]) //JOY OF DISCOVERY!
-					output += str
-			output += res
-			dat += output
-	else
-		dat += "<b>Nothing loaded.</b>"
-	dat += "<a href='byond://?src=[REF(src)];function=refresh'>Refresh</A>"
-	dat += "<a href='byond://?src=[REF(src)];close=1'>Close</A></center>"
-	var/datum/browser/popup = new(user, "experimentor","Experimentor", 700, 400, src)
-	popup.set_content(dat.Join("<br>"))
-	popup.open()
-	onclose(user, "experimentor")
+/obj/machinery/rnd/experimentor/ui_data(mob/user)
+	var/list/data = list()
 
-/obj/machinery/rnd/experimentor/Topic(href, href_list)
-	if(..())
+	data["hasItem"] = !!loaded_item
+	data["isOnCooldown"] = recentlyExperimented
+	data["isServerConnected"] = !!stored_research
+
+	if(!isnull(loaded_item))
+		var/list/item_data = list()
+
+		item_data["name"] = loaded_item.name
+		item_data["icon"] = icon2base64(getFlatIcon(loaded_item, no_anim = TRUE))
+		item_data["isRelic"] = istype(loaded_item, /obj/item/relic)
+
+		item_data["associatedNodes"] = list()
+		var/list/unlockable_nodes = techweb_item_unlock_check(loaded_item)
+		for(var/node_id in unlockable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+
+			item_data["associatedNodes"] += list(list(
+				"name" = node.display_name,
+				"isUnlocked" = !(node_id in stored_research.hidden_nodes),
+			))
+
+		data["loadedItem"] = item_data
+
+	return data
+
+/obj/machinery/rnd/experimentor/ui_act(action, list/params)
+	. = ..()
+	if(.)
 		return
-	usr.set_machine(src)
 
-	var/scantype = href_list["function"]
-	var/obj/item/process = locate(href_list["item"]) in src
+	switch(action)
+		if("eject")
+			ejectItem()
+			return TRUE
 
-	if(href_list["close"])
-		usr << browse(null, "window=experimentor")
+		if("experiment")
+			var/reaction = text2num(params["id"])
+			if(isnull(reaction))
+				return
+
+			try_perform_experiment(reaction)
+			return TRUE
+
+/obj/machinery/rnd/experimentor/proc/ejectItem(delete = FALSE)
+	if(isnull(loaded_item))
 		return
-	else if(scantype == "eject")
-		ejectItem()
-	else if(scantype == "refresh")
-		updateUsrDialog()
-	else
-		if(recentlyExperimented)
-			to_chat(usr, span_warning("[src] has been used too recently!"))
-		else if(!loaded_item)
-			to_chat(usr, span_warning("[src] is not currently loaded!"))
-		else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
-			to_chat(usr, span_danger("Interface failure detected in [src]. Please try again."))
-		else
-			var/dotype
-			if(text2num(scantype) == SCANTYPE_DISCOVER)
-				dotype = SCANTYPE_DISCOVER
-			else
-				dotype = matchReaction(process,scantype)
-			experiment(dotype,process)
-			use_power(750)
-			if(dotype != FAIL)
-				var/list/nodes = techweb_item_unlock_check(process)
-				var/picked = pick_weight(nodes) //This should work.
-				stored_research.unhide_node(SSresearch.techweb_node_by_id(picked))
-	updateUsrDialog()
 
-/obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
-	var/obj/item/D = matching
-	if(D)
-		var/list/item_reactions = item_reactions()
-		if(item_reactions.Find("[D.type]"))
-			var/tor = item_reactions["[D.type]"]
-			if(tor == text2num(reaction))
-				return tor
-			else
-				return FAIL
-		else
-			return FAIL
-	else
+	if(delete)
+		QDEL_NULL(loaded_item)
+		return
+
+	var/atom/drop_atom = get_step(src, EAST) || drop_location()
+	if(cloneMode)
+		visible_message(span_notice("A duplicate of \the [loaded_item] pops out!"))
+		new loaded_item.type(drop_atom)
+		cloneMode = FALSE
+		return
+
+	loaded_item.forceMove(drop_atom)
+	loaded_item = null
+
+/obj/machinery/rnd/experimentor/proc/match_reaction(obj/item/matching, target_reaction)
+	PRIVATE_PROC(TRUE)
+	if(isnull(matching) || isnull(target_reaction))
 		return FAIL
 
-/obj/machinery/rnd/experimentor/proc/ejectItem(delete=FALSE)
-	if(loaded_item)
-		if(cloneMode)
-			visible_message(span_notice("A duplicate [loaded_item] pops out!"))
-			var/type_to_make = loaded_item.type
-			new type_to_make(get_turf(pick(oview(1,src))))
-			cloneMode = FALSE
-			return
-		var/turf/dropturf = get_turf(pick(view(1,src)))
-		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
-			dropturf = drop_location()
-		loaded_item.forceMove(dropturf)
-		if(delete)
-			qdel(loaded_item)
-		loaded_item = null
+	var/list/item_reactions = item_reactions()
+	if("[matching.type]" in item_reactions)
+		var/associated_reaction = item_reactions["[matching.type]"]
+		if(associated_reaction == target_reaction)
+			return associated_reaction
+
+	return FAIL
+
+/obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction)
+	PRIVATE_PROC(TRUE)
+	if(isnull(stored_research))
+		return
+
+	if(recentlyExperimented)
+		return
+
+	if(isnull(loaded_item))
+		return
+
+	if(reaction != SCANTYPE_DISCOVER)
+		reaction = match_reaction(loaded_item, reaction)
+
+	if(reaction != FAIL)
+		var/picked_node_id = pick(techweb_item_unlock_check(loaded_item))
+		stored_research.unhide_node(SSresearch.techweb_node_by_id(picked_node_id))
+
+	experiment(reaction, loaded_item)
+	use_power(750)
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = where)
 	smoke.start()
-
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1

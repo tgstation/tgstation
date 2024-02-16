@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/storage/card_binder/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/tcgcard))
+	atom_storage.set_holdable(/obj/item/tcgcard)
 	atom_storage.max_total_storage = 120
 	atom_storage.max_slots = 60
 

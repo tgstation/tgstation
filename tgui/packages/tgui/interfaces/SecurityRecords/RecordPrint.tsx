@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Box, Button, Input, Section, Stack } from 'tgui/components';
 
@@ -17,15 +18,12 @@ export const RecordPrint = (props) => {
   const innocent = !crimes?.length;
   const { act } = useBackend<SecurityRecordsData>();
 
-  const [open, setOpen] = useLocalState<boolean>('printOpen', true);
-  const [alias, setAlias] = useLocalState<string>('printAlias', name);
+  const [open, setOpen] = useLocalState('printOpen', true);
+  const [alias, setAlias] = useState(name);
 
-  const [printType, setPrintType] = useLocalState<PRINTOUT>(
-    'printType',
-    PRINTOUT.Missing,
-  );
-  const [header, setHeader] = useLocalState<string>('printHeader', '');
-  const [description, setDescription] = useLocalState<string>('printDesc', '');
+  const [printType, setPrintType] = useState(PRINTOUT.Missing);
+  const [header, setHeader] = useState('');
+  const [description, setDescription] = useState('');
 
   /** Prints the record and resets. */
   const printSheet = () => {

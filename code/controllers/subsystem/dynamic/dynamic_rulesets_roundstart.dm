@@ -416,6 +416,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
+	///The job type to dress up our nuclear operative as.
+	var/datum/job/job_type = /datum/job/nuclear_operative
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
@@ -430,8 +432,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
-		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
-		M.mind.special_role = ROLE_NUCLEAR_OPERATIVE
+		M.mind.set_assigned_role(SSjob.GetJobType(job_type))
+		M.mind.special_role = required_role
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
@@ -624,6 +626,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE
+	job_type = /datum/job/clown_operative
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
@@ -634,10 +637,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	for(var/obj/machinery/nuclearbomb/syndicate/nuke as anything in nukes)
 		new /obj/machinery/nuclearbomb/syndicate/bananium(nuke.loc)
 		qdel(nuke)
-
-	for(var/datum/mind/clowns in assigned)
-		clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-		clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 //////////////////////////////////////////////
 //                                          //

@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - code_imp: "progressbars no longer qdel their /image"

@@ -11,6 +11,7 @@ type Material = {
   quantity: number;
   trend: string;
   price: number;
+  threshold: number;
   color: string;
   requested: number;
 };
@@ -44,7 +45,7 @@ export const MatMarket = (props) => {
   const multiplier = orderingPrive ? 1.1 : 1;
 
   return (
-    <Window width={980} height={630}>
+    <Window width={880} height={690}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
@@ -87,10 +88,11 @@ export const MatMarket = (props) => {
                 <Button
                   icon="times"
                   color="transparent"
-                  content="Clear"
                   ml={66}
                   onClick={() => act('clear')}
-                />
+                >
+                  Clear
+                </Button>
               </Stack.Item>
             </Stack>
           </Section>
@@ -112,12 +114,19 @@ export const MatMarket = (props) => {
                   <Stack.Item width="15%" pr="2%">
                     Trading at <b>{formatMoney(material.price)}</b> cr.
                   </Stack.Item>
+                  {material.price < material.threshold ? (
+                    <Stack.Item width="33%" ml={2} textColor="grey">
+                      Material price critical!
+                      <br /> <b>Trading temporarily suspended.</b>
+                    </Stack.Item>
+                  ) : (
+                    <Stack.Item width="33%" ml={2}>
+                      <b>{material.quantity || 'Zero'}</b> sheets of{' '}
+                      <b>{material.name}</b> trading.{' '}
+                      {material.requested || 'Zero'} sheets ordered.
+                    </Stack.Item>
+                  )}
 
-                  <Stack.Item width="33%" ml={2}>
-                    <b>{material.quantity || 'zero'}</b> sheets of{' '}
-                    <b>{material.name}</b> trading.{' '}
-                    {material.requested || 'zero'} sheets ordered.
-                  </Stack.Item>
                   <Stack.Item
                     width="40%"
                     color={
@@ -137,88 +146,93 @@ export const MatMarket = (props) => {
                 <Button
                   disabled={
                     catastrophe === 1 ||
-                    material.price <= 0 ||
+                    material.price <= material.threshold ||
                     creditBalance - total_order_cost <
                       material.price * multiplier ||
                     material.requested + 1 > material.quantity
                   }
                   tooltip={material.price * 1}
-                  content="Buy 1"
                   onClick={() =>
                     act('buy', {
                       quantity: 1,
                       material: material.name,
                     })
                   }
-                />
+                >
+                  Buy 1
+                </Button>
                 <Button
                   disabled={
                     catastrophe === 1 ||
-                    material.price <= 0 ||
+                    material.price <= material.threshold ||
                     creditBalance - total_order_cost <
                       material.price * 5 * multiplier ||
                     material.requested + 5 > material.quantity
                   }
                   tooltip={material.price * 5}
-                  content="5"
                   onClick={() =>
                     act('buy', {
                       quantity: 5,
                       material: material.name,
                     })
                   }
-                />
+                >
+                  5
+                </Button>
                 <Button
                   disabled={
                     catastrophe === 1 ||
-                    material.price <= 0 ||
+                    material.price <= material.threshold ||
                     creditBalance - total_order_cost <
                       material.price * 10 * multiplier ||
                     material.requested + 10 > material.quantity
                   }
                   tooltip={material.price * 10}
-                  content="10"
                   onClick={() =>
                     act('buy', {
                       quantity: 10,
                       material: material.name,
                     })
                   }
-                />
+                >
+                  10
+                </Button>
                 <Button
                   disabled={
                     catastrophe === 1 ||
-                    material.price <= 0 ||
+                    material.price <= material.threshold ||
                     creditBalance - total_order_cost <
                       material.price * 25 * multiplier ||
                     material.requested + 25 > material.quantity
                   }
                   tooltip={material.price * 25}
-                  content="25"
                   onClick={() =>
                     act('buy', {
                       quantity: 25,
                       material: material.name,
                     })
                   }
-                />
+                >
+                  25
+                </Button>
                 <Button
                   disabled={
                     catastrophe === 1 ||
-                    material.price <= 0 ||
+                    material.price <= material.threshold ||
                     creditBalance - total_order_cost <
                       material.price * 50 * multiplier ||
                     material.requested + 50 > material.quantity
                   }
                   tooltip={material.price * 50}
-                  content="50"
                   onClick={() =>
                     act('buy', {
                       quantity: 50,
                       material: material.name,
                     })
                   }
-                />
+                >
+                  50
+                </Button>
               </Stack.Item>
               {material.requested > 0 && (
                 <Stack.Item ml={2}>x {material.requested}</Stack.Item>
