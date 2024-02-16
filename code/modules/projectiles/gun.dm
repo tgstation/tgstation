@@ -26,6 +26,7 @@
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
 	light_power = 0.5
+
 	var/can_muzzle_flash = TRUE
 	var/light_time = 1
 	var/gun_flags = NONE
