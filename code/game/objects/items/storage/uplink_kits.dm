@@ -172,14 +172,14 @@
 		if(KIT_REVOLUTIONARY)
 			new /obj/item/healthanalyzer/rad_laser(src) // 3 TC
 			new /obj/item/assembly/flash/hypnotic(src) // 7 TC
-			new /obj/item/storage/pill_bottle/lsd // ~1 TC
-			new /obj/item/pen/sleepy // 4 TC
+			new /obj/item/storage/pill_bottle/lsd(src) // ~1 TC
+			new /obj/item/pen/sleepy(src) // 4 TC
 			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357. revolvers
 			new /obj/item/megaphone(src)
 			new /obj/item/bedsheet/rev(src)
 			new /obj/item/clothing/suit/armor/vest/russian_coat(src)
 			new /obj/item/clothing/head/helmet/rus_ushanka(src)
-			new /obj/item/poster/poster_box(src)
+			new /obj/item/storage/box/syndie_kit/poster_box(src)
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pick_weight(list(
