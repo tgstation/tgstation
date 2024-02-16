@@ -218,7 +218,7 @@
 		if(prompted_picking)
 			candidates |= poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, list(pick_n_take(possible_candidates)))
 		else
-			candidates |= pick_n_take_weighted(candidates)
+			candidates |= pick_n_take(candidates)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
