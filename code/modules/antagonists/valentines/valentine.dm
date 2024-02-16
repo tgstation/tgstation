@@ -11,13 +11,6 @@
 	/// Reference to our date's mind
 	VAR_FINAL/datum/mind/date
 
-	// We don't use teams but we will still do a roundend report in tandem with our co-valentine
-	/// Tracks whether we, or our date, have already reported in roundend
-	var/roundend_reported = FALSE
-	/// The cached report text for this Valentine
-	/// This is just done so in the off change roundend_report is called twice, we don't lose report text
-	var/cached_report_text = ""
-
 /datum/antagonist/valentine/forge_objectives()
 	var/datum/objective/protect/valentine/objective = new()
 	objective.owner = owner
@@ -58,31 +51,23 @@
 
 //Squashed up a bit
 /datum/antagonist/valentine/roundend_report()
-	if(roundend_reported)
-		return cached_report_text
-
-	roundend_reported = TRUE
 	var/datum/antagonist/valentine/dates_valentine = date?.has_antag_datum(type)
 	if(isnull(dates_valentine))
-		cached_report_text = span_redtext("[owner.name] had no date!")
-		return cached_report_text
+		return span_redtext("[owner.name] had no date!")
 
-	dates_valentine.roundend_reported = TRUE
+	dates_valentine.show_in_roundend = FALSE // We show up for them instead
 	var/datum/objective/protect/valentine/our_objective = locate() in objectives
 	var/datum/objective/protect/valentine/dates_objective = locate() in dates_valentine.objectives
 	var/we_survived = dates_objective?.check_completion()
 	var/dates_survived = our_objective?.check_completion()
 
 	if(we_survived && dates_survived)
-		cached_report_text = span_greentext("[owner.name] and [date.name] had a successful date!")
+		return span_greentext("[owner.name] and [date.name] had a successful date!")
 	else if(we_survived)
-		cached_report_text = span_redtext("[owner.name] failed to protect [date.name], [owner.p_their()] date!")
+		return span_redtext("[owner.name] failed to protect [date.name], [owner.p_their()] date!")
 	else if(dates_survived)
-		cached_report_text = span_redtext("[date.name] failed to protect [owner.name], [date.p_their()] date!")
-	else
-		cached_report_text = span_redtext("[owner.name] and [date.name] both failed to protect each other on their date!")
-
-	return cached_report_text
+		return span_redtext("[date.name] failed to protect [owner.name], [date.p_their()] date!")
+	return span_redtext("[owner.name] and [date.name] both failed to protect each other on their date!")
 
 /datum/antagonist/valentine/third_wheel
 	name = "\improper Third Wheel"
