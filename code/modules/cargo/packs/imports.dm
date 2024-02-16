@@ -329,8 +329,10 @@
 		risky espionage hallway operations. Enjoy our product!"
 	hidden = TRUE;
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 6,
-			/obj/item/clothing/mask/floortilebalaclava = 6
+	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 4,
+			/obj/item/clothing/mask/floortilebalaclava = 4,
+			/obj/item/clothing/gloves/combat/floortile = 4,
+			/obj/item/clothing/shoes/jackboots/floortile = 4
 			)
 	crate_name = "floortile camouflauge crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon
