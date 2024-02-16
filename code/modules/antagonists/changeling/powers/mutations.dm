@@ -605,7 +605,7 @@
 	name = "hive head"
 	desc = "A strange, waxy outer coating covering your head. Gives you tinnitus."
 	icon_state = "hivehead"
-	inhand_icon_state = "hivehead"
+	inhand_icon_state = null
 	flash_protect = FLASH_PROTECTION_FLASH
 	item_flags = DROPDEL
 	armor_type = /datum/armor/changeling_hivehead
