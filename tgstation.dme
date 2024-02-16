@@ -6108,6 +6108,7 @@
 #include "monkestation\code\modules\clothing\under\costume.dm"
 #include "monkestation\code\modules\clothing\under\undersuit.dm"
 #include "monkestation\code\modules\clothing\under\civilian\clown_mime.dm"
+#include "monkestation\code\modules\clothing\under\civilian\rank.dm"
 #include "monkestation\code\modules\clothing\~donator\clothing.dm"
 #include "monkestation\code\modules\clownin_around\now_you_see_me.dm"
 #include "monkestation\code\modules\code_redemption\admin_proc.dm"
