@@ -333,6 +333,6 @@
 			/obj/item/clothing/mask/floortilebalaclava = 4,
 			/obj/item/clothing/gloves/combat/floortile = 4,
 			/obj/item/clothing/shoes/jackboots/floortile = 4
-			)
+	)
 	crate_name = "floortile camouflauge crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon

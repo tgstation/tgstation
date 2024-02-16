@@ -15,7 +15,7 @@
 /obj/item/clothing/mask/floortilebalaclava
 	name = "floortile balaclava"
 	desc = "The newest floortile camouflage balaclava used for hallway warfare. \
-        The best breathability, flexibility and comfort. Designed by Camo-J's."
+		The best breathability, flexibility and comfort. Designed by Camo-J's."
 	icon_state = "floortile_balaclava"
 	inhand_icon_state = "balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
