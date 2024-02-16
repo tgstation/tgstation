@@ -150,3 +150,23 @@
     [vinylspiders](https://github.com/vinylspiders), [out-of-phaze](https://github.com/out-of-phaze),
     [Hatterhat](https://github.com/Hatterhat), [burgerenergy](https://github.com/burgerenergy)'
   : - rscadd: Ports microfusion energy guns
+2024-02-16:
+  Absolucy:
+  - bugfix: Fix kidnap objectives having incorrect area names (i.e Port instead of
+      West)
+  - rscadd: Added upgraded blood filtering surgeries! These are obtained through the
+      same research as its wound-tending counterparts, and work faster while also
+      removing toxin damage.
+  - balance: Very slightly reduced the amount of reagents that blood filtering purges
+      (by around 2%), to compensate for the increased speed offered by the upgraded
+      surgeries.
+  CannibalHunter:
+  - rscadd: Added an Arcade to Centcom!
+  DimWhat:
+  - bugfix: fixed bunny suits, tailcoats, heels, and artisan chef not looking right
+      with lizards
+  Gboster-0:
+  - balance: traitors ascending into wizardhood no longer have their items deleted,
+      instead they are stripped in the wizard den
+  TTNT789:
+  - rscadd: beast claw
