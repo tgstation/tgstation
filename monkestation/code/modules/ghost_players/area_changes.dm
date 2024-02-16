@@ -78,6 +78,12 @@
 /area/centcom/central_command_areas/firing_range_checkpoint_control
 	area_flags = UNIQUE_AREA | NOTELEPORT | NO_EXPLOSIONS_DURING
 
+/area/centcom/central_command_areas/arcade
+	name = "Centcom Arcade"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_arcade"
+	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING
+
 // Override that handles teleporting ghost player's mobs back to Centcom ghostspawn, if they try to
 // move out of it during the round.
 /area/Entered(atom/movable/thing)

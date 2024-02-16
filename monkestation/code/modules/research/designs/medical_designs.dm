@@ -22,3 +22,15 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+
+/datum/design/surgery/healing/filter_upgrade
+	name = "Filter Blood Upgrade"
+	desc = "Newfound knowledge allows us to remove the effect of toxins on the body whenever filtering someone's blood."
+	surgery = /datum/surgery/blood_filter/upgraded
+	id = "surgery_filter_upgrade"
+
+/datum/design/surgery/healing/filter_upgrade_2
+	name = "Filter Blood Upgrade"
+	surgery = /datum/surgery/blood_filter/femto
+	id = "surgery_filter_upgrade_femto"

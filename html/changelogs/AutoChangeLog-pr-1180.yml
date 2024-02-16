@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added upgraded blood filtering surgeries! These are obtained through the same research as its wound-tending counterparts, and work faster while also removing toxin damage."
+  - balance: "Very slightly reduced the amount of reagents that blood filtering purges (by around 2%), to compensate for the increased speed offered by the upgraded surgeries."
