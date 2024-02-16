@@ -442,7 +442,7 @@
 		return
 	
 	if(isitem(loc)) // we are in a storage item
-		balloon_alert(user, "cant reach!")
+		balloon_alert(user, "can't reach!")
 		return
 
 	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
