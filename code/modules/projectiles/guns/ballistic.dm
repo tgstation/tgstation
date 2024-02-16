@@ -446,6 +446,7 @@
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	suppressed = S
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	can_muzzle_flash = FALSE //removes muzzle flash from suppressed weapons
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -454,6 +455,7 @@
 	if(isitem(suppressed))
 		var/obj/item/I = suppressed
 		w_class -= I.w_class
+		can_muzzle_flash = TRUE //adds muzzle flash when suppressor is removed
 	return ..()
 
 /obj/item/gun/ballistic/AltClick(mob/user)
