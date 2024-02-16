@@ -108,11 +108,6 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/station/commons/fitness/recreation)
-"abb" = (
-/obj/machinery/light/floor,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/smooth,
-/area/station/hallway/floor2/fore)
 "abk" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Genetics Desk"
@@ -189622,7 +189617,7 @@ shk
 wbS
 dpL
 wXo
-abb
+dMR
 hPD
 fNT
 lZS
