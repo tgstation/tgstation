@@ -49,7 +49,7 @@
 	. = ..()
 
 	if(isnull(mind) && (FACTION_CULT in faction))
-		var/image/cult_indicator = image(icon = icon, icon_state = "pet_cult_indicator", layer = ABOVE_GAME_PLANE)
+		var/image/cult_indicator = image(icon = 'icons/mob/simple/pets.dmi', icon_state = "pet_cult_indicator", layer = ABOVE_GAME_PLANE)
 		. += cult_indicator
 
 	if(!collar || !collar_icon_state)

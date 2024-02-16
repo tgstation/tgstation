@@ -33,9 +33,7 @@
 		/obj/item/soulstone,
 	)
 
-	if(!HAS_TRAIT(src, TRAIT_MOB_EATER))
-		AddElement(/datum/element/basic_eating, heal_amt = 15, food_types = cult_appetite)
-
+	AddElement(/datum/element/basic_eating, heal_amt = 15, food_types = cult_appetite)
 	AddElement(/datum/element/death_drops, death_loot)
 
 	basic_mob_flags &= DEL_ON_DEATH
@@ -49,6 +47,7 @@
 	var/static/list/new_pet_commands = list(
 		/datum/pet_command/point_targeting/attack,
 		/datum/pet_command/follow,
+		/datum/pet_command/free,
 		/datum/pet_command/idle,
 		/datum/pet_command/untargeted_ability/draw_rune,
 	)

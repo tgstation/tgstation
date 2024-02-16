@@ -8,13 +8,13 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/befriend_cultists,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_occupied_rune,
 		/datum/ai_planning_subtree/find_dead_cultist,
 		/datum/ai_planning_subtree/drag_target_to_rune,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
@@ -49,8 +49,9 @@
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/human/possible_cultist in oview(search_range, controller.pawn))
-		if(IS_CULTIST(possible_cultist))
+		if(IS_CULTIST(possible_cultist) && !(living_pawn.faction.Find(REF(possible_cultist))))
 			return possible_cultist
 
 	return null

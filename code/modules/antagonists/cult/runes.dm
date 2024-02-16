@@ -146,7 +146,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		invokers += user
 	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
 		for(var/mob/living/cultist in range(1, src))
-			if(!IS_CULTIST_OR_CULTIST_MOB(cultist))
+			if(!IS_CULTIST(cultist))
 				continue
 			if(cultist == user)
 				continue
