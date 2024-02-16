@@ -150,6 +150,8 @@
 	suppressed = TRUE
 	recharge_time = 1.2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/fisher)
+	can_muzzle_flash = FALSE
+
 
 /obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
 	. = ..()
