@@ -109,6 +109,8 @@
 /turf/open/floor/iron/white/small,
 /area/station/commons/fitness/recreation)
 "abb" = (
+/obj/machinery/light/floor,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor2/fore)
 "abk" = (
@@ -8923,6 +8925,7 @@
 /obj/structure/sign/directions/dorms/directional/north{
 	dir = 2
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor4/aft)
 "cix" = (
@@ -12353,6 +12356,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/maintenance/floor3/starboard/aft)
+"dcM" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/floor4/aft)
 "dcN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -16623,7 +16630,7 @@
 "ehV" = (
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{
 	id = "cell-3";
-	name = "3rd Floor Cell"
+	name = "3rd Floor Prisoner Tube"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -17805,6 +17812,9 @@
 	},
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
+	},
+/obj/machinery/flasher/directional/east{
+	name = "drunktank"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
@@ -19885,8 +19895,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "ffz" = (
-/obj/structure/ladder/unbreakable,
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor3/fore)
 "ffA" = (
@@ -23607,8 +23616,7 @@
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "gdb" = (
-/obj/structure/ladder/unbreakable,
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor4/aft)
 "gdg" = (
@@ -25386,7 +25394,8 @@
 /obj/structure/sign/directions/upload/directional/north{
 	pixel_y = 40
 	},
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
+/obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor1/fore)
 "gBz" = (
@@ -26741,9 +26750,11 @@
 /turf/open/floor/engine/cult,
 /area/station/service/library/private)
 "gUf" = (
-/obj/effect/spawner/random/trash/grille_or_waste,
-/turf/open/floor/plating,
-/area/station/maintenance/floor2/starboard/aft)
+/obj/structure/sign/poster/official/terragov/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/hallway/floor3/aft)
 "gUp" = (
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
@@ -30257,7 +30268,6 @@
 /area/station/hallway/floor1/fore)
 "hPD" = (
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor2/fore)
 "hPK" = (
@@ -30551,7 +30561,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
 "hSY" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor2/fore)
 "hTd" = (
@@ -34803,7 +34813,7 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/north{
 	id = "cell-1";
-	name = "1st Floor Cell"
+	name = "1st Floor Prisoner Tube"
 	},
 /obj/machinery/disposal/delivery_chute{
 	dir = 1;
@@ -37187,6 +37197,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/landmark/blobstart,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/fore)
 "jFJ" = (
@@ -38173,6 +38184,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/floor2/starboard/aft)
 "jSj" = (
@@ -47610,7 +47622,7 @@
 	dir = 2;
 	pixel_y = 40
 	},
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor3/fore)
 "mjr" = (
@@ -52815,6 +52827,9 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/item/pillow,
 /obj/effect/turf_decal/box,
+/obj/machinery/flasher/directional/west{
+	id = "drunktank"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "nxy" = (
@@ -53987,6 +54002,9 @@
 	name = "Prisoner Dispenser"
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/flasher/directional/west{
+	id = "drunktank"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "nMO" = (
@@ -55998,6 +56016,10 @@
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/item/key/security,
+/obj/machinery/button/flasher{
+	id = "drunktank";
+	name = "Drunk Tank Flasher"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "ooY" = (
@@ -62044,6 +62066,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/station/hallway/floor3/fore)
 "pVr" = (
@@ -72047,7 +72070,7 @@
 "sEs" = (
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
 	id = "cell-2";
-	name = "2nd Floor Cell"
+	name = "2nd Floor Prisoner Tube"
 	},
 /obj/machinery/disposal/delivery_chute{
 	name = "prisoner transport"
@@ -77898,6 +77921,9 @@
 /obj/structure/table,
 /obj/item/storage/dice,
 /obj/effect/turf_decal/tile/red/anticorner,
+/obj/machinery/flasher/directional/east{
+	name = "drunktank"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "ucY" = (
@@ -82464,7 +82490,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "vni" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor1/fore)
 "vnp" = (
@@ -89468,7 +89494,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor2/fore)
 "wXq" = (
@@ -124060,7 +124086,7 @@ pEv
 iKb
 dpH
 gBw
-mnQ
+lxA
 kVg
 kyR
 vOK
@@ -205259,7 +205285,7 @@ oyh
 dEt
 dEt
 tQM
-gUf
+kJU
 aeb
 dEt
 gFS
@@ -263361,7 +263387,7 @@ ryx
 qwc
 tqi
 kDB
-cdF
+gUf
 ftv
 kbR
 iCQ
@@ -320668,7 +320694,7 @@ moL
 hMp
 gDy
 ciw
-erp
+dcM
 oTn
 nWW
 tEh
