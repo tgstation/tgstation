@@ -158,6 +158,7 @@
 		drinker.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	drinker.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/beer/green/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -684,6 +685,7 @@
 	taste_description = "alcoholic bravery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 	var/tough_text
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/drinker)
@@ -692,14 +694,12 @@
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
 	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	drinker.health += 10
-	ADD_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
 	drinker.maxHealth -= 10
 	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
-	REMOVE_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -1073,15 +1073,11 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_MADNESS_IMMUNE)
 	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
-
-/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 	drinker.remove_filter("singulo_rays")
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -2173,14 +2169,7 @@
 	quality = DRINK_GOOD
 	taste_description = "artifical fruityness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/drinker)
-	REMOVE_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-	return ..()
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"
@@ -2260,6 +2249,7 @@
 	quality = DRINK_NICE
 	taste_description = "sugary tartness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/consumable/ethanol/pina_colada
 	name = "Pina Colada"
@@ -2642,20 +2632,13 @@
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	description = "A grounding rod in the form of a drink.  Recharges ethereals, and gives temporary shock resistance."
+	description = "A grounding rod in the form of a drink. Recharges ethereals, and gives temporary shock resistance."
 	boozepwr = 50
 	color = "#b300ff"
 	quality = DRINK_NICE
 	taste_description = "the howling storm"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/telepole/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/telepole/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/ethanol/telepole/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
