@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "AI's acceleration now smoothly decays, instead of just falling back down to 0 after 0.5 seconds"
-  - bugfix: "AI's standard movement (non accelerated) is smooth now, instead of constantly jumping around"
-  - bugfix: "AIs will now follow their targets more closely, shouldn't have any issues with them lagging behind anymore"

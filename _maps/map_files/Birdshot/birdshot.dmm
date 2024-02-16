@@ -9299,7 +9299,7 @@
 /area/station/maintenance/department/medical/central)
 "dBA" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/station/commons/dorms)
@@ -11067,7 +11067,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
@@ -39807,7 +39807,7 @@
 /area/station/security/checkpoint/customs)
 "ohO" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/red,
 /area/station/commons/dorms)
@@ -70063,7 +70063,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,

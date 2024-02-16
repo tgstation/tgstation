@@ -388,7 +388,7 @@
 /area/shuttle/abandoned/cargo)
 "oB" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
