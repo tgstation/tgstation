@@ -11,7 +11,9 @@
 		/obj/item/stack/sheet/mineral/uranium/half, //half a stack of a material that has a half life
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
 	)
-	var/trauma_type = null
+
+/datum/quirk/hemiplegic/New()
+	trauma_type = null
 
 /datum/quirk_constant_data/hemiplegic
 	associated_typepath = /datum/quirk/hemiplegic

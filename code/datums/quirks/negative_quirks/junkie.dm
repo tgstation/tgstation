@@ -22,14 +22,9 @@
 	associated_typepath = /datum/quirk/item_quirk/junkie
 	customization_options = list(/datum/preference/choiced/junkie)
 
-/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	reagent_type = GLOB.junkie_drug[client_source?.prefs?.read_preference(/datum/preference/choiced/junkie)]
-	if(isnull(reagent_type))
-		reagent_type = GLOB.junkie_drug[pick(GLOB.junkie_drug)]
-
+/datum/quirk/item_quirk/junkie/proc/give_drug()
 	reagent_instance = new reagent_type()
+	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	for(var/addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
@@ -68,6 +63,14 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS,
 		)
 	)
+
+/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
+	reagent_type = GLOB.junkie_drug[client_source?.prefs?.read_preference(/datum/preference/choiced/junkie)]
+	if(isnull(reagent_type))
+		reagent_type = GLOB.junkie_drug[pick(GLOB.junkie_drug)]
+
+	give_drug()
+
 /datum/quirk/item_quirk/junkie/remove()
 	if(quirk_holder && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
@@ -120,37 +123,7 @@
 	if(isnull(drug_container_type))
 		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	reagent_instance = new reagent_type()
-
-	for(var/addiction in reagent_instance.addiction_types)
-		human_holder.last_mind?.add_addiction_points(addiction, 1000)
-
-	var/current_turf = get_turf(quirk_holder)
-	var/obj/item/drug_instance = new drug_container_type(current_turf)
-
-	give_item_to_holder(
-		drug_instance,
-		list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
-		),
-		flavour_text = drug_flavour_text,
-	)
-
-	if(accessory_type)
-		give_item_to_holder(
-		accessory_type,
-		list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
-		)
-	)
+	give_drug()
 
 
 /datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)

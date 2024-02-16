@@ -13,6 +13,10 @@
 	var/obj/item/organ/old_organ
 
 /datum/quirk/prosthetic_organ/add_unique(client/client_source)
+	drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
+	if(isnull(drug_container_type))
+		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/static/list/organ_slots = list(
 		ORGAN_SLOT_HEART,
@@ -47,7 +51,7 @@
 			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
 			slot_string = "stomach"
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
-	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
+	Removal of these organs is known to be dangerous to the patient as well as the practitioner."
 	old_organ = human_holder.get_organ_slot(organ_slot)
 	if(prosthetic.Insert(human_holder, special = TRUE))
 		old_organ.moveToNullspace()

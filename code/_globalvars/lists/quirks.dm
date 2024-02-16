@@ -41,8 +41,20 @@ GLOBAL_LIST_INIT(favorite_brand, list(
 	"Havanian Cigars" = /obj/item/storage/fancy/cigarettes/cigars/havana,
 ))
 
+///The third and final junkie subtype: ALCOHOL
+GLOBAL_LIST_INIT(favorite_alcohol, list(
+	"Whiskey" = /obj/item/reagent_containers/cup/glass/bottle/whiskey,
+	"Vodka" = /obj/item/reagent_containers/cup/glass/bottle/vodka,
+	"Ale" = /obj/item/reagent_containers/cup/glass/bottle/ale,
+	"Beer" = /obj/item/reagent_containers/cup/glass/bottle/beer,
+	"Hard Cider" = /obj/item/reagent_containers/cup/glass/bottle/hcider,
+	"Wine" = /obj/item/reagent_containers/cup/glass/bottle/wine,
+	"Sake" = /obj/item/reagent_containers/cup/glass/bottle/sake,
+
+))
 ///Options for hemiplegic quirk
 GLOBAL_LIST_INIT(hemiplegic_side, list(
 	"Left side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
 	"Right side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right
 ))
+
