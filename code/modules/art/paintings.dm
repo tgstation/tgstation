@@ -71,7 +71,7 @@
 	 * How big the grid cells that compose the painting are in the UI (multiplied by zoom).
 	 * This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa
 	 */
-	var/pixels_per_unit = 8
+	var/pixels_per_unit = 9
 
 	///A list that keeps track of the current zoom value for each current viewer.
 	var/list/zoom_by_observer
@@ -429,6 +429,7 @@
 	SET_BASE_PIXEL(5, 7)
 	framed_offset_x = 5
 	framed_offset_y = 7
+	pixels_per_unit = 8
 
 /obj/item/canvas/twentythree_twentythree
 	name = "canvas (23x23)"
@@ -438,6 +439,7 @@
 	SET_BASE_PIXEL(5, 5)
 	framed_offset_x = 5
 	framed_offset_y = 5
+	pixels_per_unit = 8
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (24x24) (AI Universal Standard)"
@@ -448,6 +450,7 @@
 	SET_BASE_PIXEL(4, 4)
 	framed_offset_x = 4
 	framed_offset_y = 4
+	pixels_per_unit = 8
 
 /obj/item/canvas/thirtysix_twentyfour
 	name = "canvas (36x24)"
@@ -458,7 +461,7 @@
 	SET_BASE_PIXEL(-4, 4)
 	framed_offset_x = 14
 	framed_offset_y = 4
-	pixels_per_unit = 20
+	pixels_per_unit = 7
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.25
@@ -478,7 +481,7 @@
 	SET_BASE_PIXEL(-8, 2)
 	framed_offset_x = 9
 	framed_offset_y = 4
-	pixels_per_unit = 18
+	pixels_per_unit = 6
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.75
