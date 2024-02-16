@@ -30,10 +30,23 @@ SUBSYSTEM_DEF(polling)
  * * pic_source: Optional, An /atom or an /image to display on the poll alert.
  * * role_name_text: Optional, A string to display in logging / the (default) question. If null, the role name will be used.
  * * list/custom_response_messages: Optional, A list of strings to use as responses to the poll. If null, the default responses will be used. see __DEFINES/polls.dm for valid keys to use.
+ * * start_signed_up: If TRUE, all candidates will start signed up for the poll, making it opt-out rather than opt-in.
  *
  * Returns a list of all mobs who signed up for the poll.
  */
-/datum/controller/subsystem/polling/proc/poll_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text, list/custom_response_messages)
+/datum/controller/subsystem/polling/proc/poll_candidates(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	ignore_category = null,
+	flash_window = TRUE,
+	list/group = null,
+	pic_source,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+)
 	RETURN_TYPE(/list/mob)
 	if(group.len == 0)
 		return list()
@@ -67,6 +80,8 @@ SUBSYSTEM_DEF(polling)
 		if(role && !is_eligible(candidate_mob, role, check_jobban, ignore_category))
 			continue
 
+		if(start_signed_up)
+			new_poll.sign_up(candidate_mob, TRUE)
 		if(flash_window)
 			window_flash(candidate_mob.client)
 
@@ -93,6 +108,8 @@ SUBSYSTEM_DEF(polling)
 		poll_alert_button.poll = alert_poll
 		poll_alert_button.set_role_overlay()
 		poll_alert_button.update_stacks_overlay()
+		poll_alert_button.update_candidates_number_overlay()
+		poll_alert_button.update_signed_up_overlay()
 
 
 		// Sign up inheritance and stacking
@@ -128,11 +145,11 @@ SUBSYSTEM_DEF(polling)
 		// Chat message
 		var/act_jump = ""
 		if(isatom(pic_source) && isobserver(candidate_mob))
-			act_jump = "<a href='?src=[REF(poll_alert_button)];jump=1'>\[Teleport]</a>"
-		var/act_signup = "<a href='?src=[REF(poll_alert_button)];signup=1'>\[Sign Up]</a>"
+			act_jump = "<a href='?src=[REF(poll_alert_button)];jump=1'>\[Teleport\]</a>"
+		var/act_signup = "<a href='?src=[REF(poll_alert_button)];signup=1'>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
 		var/act_never = ""
 		if(ignore_category)
-			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round]</a>"
+			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round\]</a>"
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
 			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')

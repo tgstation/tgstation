@@ -76,8 +76,9 @@
 	var/list/mob/living/candidates_pruned = SSpolling.poll_candidates(
 		question = "Do you want a Valentine?",
 		group = candidates,
-		poll_time = 20 SECONDS,
+		poll_time = 30 SECONDS,
 		flash_window = FALSE,
+		start_signed_up = TRUE,
 		pic_source = /obj/item/storage/fancy/heart_box,
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have signed up for a date!",
