@@ -9201,6 +9201,21 @@
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
+"dzW" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/east{
+	id = "qm_warehouse_aft";
+	name = "Warehouse Door Control";
+	pixel_x = -24;
+	pixel_y = -23;
+	req_access = list("cargo")
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "dAh" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
@@ -18462,10 +18477,10 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "gKL" = (
@@ -88519,7 +88534,7 @@ pJQ
 wZF
 pqv
 wZF
-sxA
+dzW
 slY
 ueX
 rVQ
