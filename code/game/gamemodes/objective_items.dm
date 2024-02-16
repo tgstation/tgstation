@@ -38,7 +38,7 @@
 	var/steal_hint = "The clown might have one."
 
 /// For objectives with special checks (does that intellicard have an ai in it? etcetc)
-/datum/objective_item/proc/check_special_completion()
+/datum/objective_item/proc/check_special_completion(obj/item/thing)
 	return TRUE
 
 /// Takes a list of minds and returns true if this is a valid objective to give to a team of these minds
@@ -648,3 +648,238 @@
 
 /obj/item/storage/fancy/donut_box/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/storage/fancy/donut_box)
+
+/datum/objective_item/steal/spy
+	objective_type = OBJECTIVE_ITEM_TYPE_SPY
+
+/datum/objective_item/steal/spy/lamarr
+	name = "The Research Director's pet headcrab"
+	targetitem = /obj/item/clothing/mask/facehugger/lamarr
+	excludefromjob = list(JOB_RESEARCH_DIRECTOR)
+	exists_on_map = TRUE
+	difficulty = 3
+	steal_hint = "The Research Director's pet headcrab, Lamarr, found in a secure cage in their office."
+
+/obj/item/clothing/mask/facehugger/lamarr/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/mask/facehugger/lamarr)
+
+/datum/objective_item/steal/spy/disabler
+	name = "a disabler"
+	targetitem = /obj/item/gun/energy/disabler
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	difficulty = 2
+	steal_hint = "A hand-held disabler, often found in the possession of Security Officers."
+
+/datum/objective_item/steal/spy/energy_gun
+	name = "an energy gun"
+	targetitem = /obj/item/gun/energy/e_gun
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_QUARTERMASTER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "A two-mode energy gun, found in the station's Armory, as well as in the hands of some heads of staff for personal defense."
+
+/datum/objective_item/steal/spy/energy_gun/check_special_completion(obj/item/thing)
+	return thing.type == /obj/item/gun/energy/e_gun
+
+/obj/item/gun/energy/e_gun/add_stealing_item_objective()
+	if(type == /obj/item/gun/energy/e_gun)
+		return add_item_to_steal(src, /obj/item/gun/energy/e_gun)
+
+/datum/objective_item/steal/spy/laser_gun
+	name = "a laser gun"
+	targetitem = /obj/item/gun/energy/laser
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_QUARTERMASTER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	exists_on_map = TRUE
+	difficulty = 3
+	steal_hint = "A simple laser gun, found in the station's Armory."
+
+/datum/objective_item/steal/spy/laser_gun/check_special_completion(obj/item/thing)
+	return thing.type == /obj/item/gun/energy/laser
+
+/obj/item/gun/energy/laser/add_stealing_item_objective()
+	if(type == /obj/item/gun/energy/laser)
+		return add_item_to_steal(src, /obj/item/gun/energy/laser)
+
+/datum/objective_item/steal/spy/shotgun
+	name = "a riot shotgun"
+	targetitem = /obj/item/gun/ballistic/shotgun/riot
+	excludefromjob = list(
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	exists_on_map = TRUE
+	difficulty = 3
+	steal_hint = "A shotgun found in the station's Armory for riot suppression. Doesn't miss."
+
+/obj/item/gun/ballistic/shotgun/riot/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/riot)
+
+/datum/objective_item/steal/spy/temp_gun
+	name = "security's temperature gun"
+	targetitem = /obj/item/gun/energy/temperature/security
+	excludefromjob = list(
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	exists_on_map = TRUE
+	difficulty = 2 // lowered for the meme
+	steal_hint = "Security's TRUSTY temperature gun, found in the station's Armory."
+
+/obj/item/gun/energy/temperature/security/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/energy/temperature/security)
+
+/datum/objective_item/steal/spy/stamp
+	name = "a head of staff's stamp"
+	targetitem = /obj/item/stamp/head
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_QUARTERMASTER,
+		JOB_RESEARCH_DIRECTOR,
+	)
+	exists_on_map = TRUE
+	difficulty = 1
+	steal_hint = "A stamp owned by a head of staff, from their offices."
+
+/obj/item/stamp/head/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/stamp/head)
+
+/datum/objective_item/steal/spy/sunglasses
+	name = "sunglasses"
+	targetitem = /obj/item/clothing/glasses/sunglasses
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_LAWYER,
+		JOB_QUARTERMASTER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	difficulty = 1
+	steal_hint = "A pair of sunglasses. Lawyers often have a few pairs, as do some heads of staff. \
+		You can also obtain a pair from dissassembling hudglasses."
+
+/datum/objective_item/steal/spy/ce_modsuit
+	name = "the cheif engineer's advanced MOD control unit"
+	targetitem = /obj/item/mod/control/pre_equipped/advanced
+	excludefromjob = list(JOB_CHIEF_ENGINEER)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "An advanced version of the standard Engineering MODsuit commonly worn by the Chief Engineer."
+
+/obj/item/mod/control/pre_equipped/advanced/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/advanced)
+
+/datum/objective_item/steal/spy/rd_modsuit
+	name = "the research director's research MOD control unit"
+	targetitem = /obj/item/mod/control/pre_equipped/research
+	excludefromjob = list(JOB_RESEARCH_DIRECTOR)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "A bulky MODsuit commonly worn by the Research Director to protect themselves from the hazards of their work."
+
+/obj/item/mod/control/pre_equipped/research/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/research)
+
+/datum/objective_item/steal/spy/cmo_modsuit
+	name = "the chief medical officer's rescure MOD control unit"
+	targetitem = /obj/item/mod/control/pre_equipped/rescue
+	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "A MODsuit sometimes equipped by the Chief Medical Officer to perform rescue opperations in hazardous environments."
+
+/obj/item/mod/control/pre_equipped/rescue/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/rescue)
+
+/datum/objective_item/steal/spy/hos_modsuit
+	name = "the head of security's safeguard MOD control unit"
+	targetitem = /obj/item/mod/control/pre_equipped/safeguard
+	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "An advanced MODsuit sometimes worn by the Head of Security when needing to detain hostiles invading the station."
+
+/obj/item/mod/control/pre_equipped/safeguard/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/safeguard)
+
+/datum/objective_item/steal/spy/stun_baton
+	name = "a stun baton"
+	targetitem = /obj/item/melee/baton/security
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	difficulty = 2
+	steal_hint = "Steal any stun baton from Security."
+
+/datum/objective_item/steal/spy/stun_baton/check_special_completion(obj/item/thing)
+	return !istype(thing, /obj/item/melee/baton/security/cattleprod)
+
+/datum/objective_item/steal/spy/det_baton
+	name = "the detective's baton"
+	targetitem = /obj/item/melee/baton
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "The detective's old wooden truncheon, commonly found on their person for self defense."
+
+/datum/objective_item/steal/spy/det_baton/check_special_completion(obj/item/thing)
+	return thing.type == /obj/item/melee/baton
+
+/obj/item/melee/baton/add_stealing_item_objective()
+	if(type == /obj/item/melee/baton)
+		return add_item_to_steal(src, /obj/item/melee/baton)

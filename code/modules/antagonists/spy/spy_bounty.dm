@@ -192,7 +192,7 @@
 		if(handler.claimed_bounties_from_last_pool[item.targetitem])
 			continue
 		// Also % chance to skip stuff we've done in the past
-		if(prob(20 * handler.all_claimed_bounty_types[item.targetitem]))
+		if(prob(33 * handler.all_claimed_bounty_types[item.targetitem]))
 			continue
 		// Determine difficulty. Has some overlap between the categories, which is OK
 		switch(difficulty)
@@ -262,6 +262,7 @@
 	var/turf/machine_turf = get_turf(thing)
 
 	// Sell the circuitboard, take the rest apart
+	// This (should) handle any mobs inside as well
 	thing.deconstruct(FALSE)
 	if(!..(selling))
 		return FALSE
@@ -288,7 +289,7 @@
 
 	var/list/obj/machinery/all_possible = list()
 	for(var/obj/machinery/found_machine as anything in SSmachines.get_machines_by_type_and_subtypes(target_type))
-		if(!is_station_level(found_machine.z))
+		if(!is_station_level(found_machine.z) && !is_mining_level(found_machine.z))
 			continue
 		var/area/found_machine_area = get_area(found_machine)
 		if(is_type_in_typecache(found_machine_area, blacklisted_areas))
@@ -335,10 +336,8 @@
 		options -= existing_bounty.target_type
 
 	for(var/remaining_option in options)
-		if(prob(20 * handler.all_claimed_bounty_types[remaining_option]))
-			continue
-		if(handler.claimed_bounties_from_last_pool[remaining_option])
-			continue
+		if(handler.claimed_bounties_from_last_pool[remaining_option] || prob(33 * handler.all_claimed_bounty_types[remaining_option]))
+			options -= remaining_option
 
 	if(!length(options))
 		return FALSE
@@ -348,13 +347,22 @@
 
 /datum/spy_bounty/machine/random/easy
 	difficulty = SPY_DIFFICULTY_EASY
-	weight = 2 // Increased due to there being many easy options
+	weight = 4 // Increased due to there being many easy options
 	random_options = list(
 		/obj/machinery/computer/operating,
+		/obj/machinery/computer/order_console/mining,
+		/obj/machinery/computer/records/medical,
+		/obj/machinery/cryo_cell,
 		/obj/machinery/fax, // Completely random, wild card
 		/obj/machinery/hydroponics/constructable,
+		/obj/machinery/medical_kiosk,
 		/obj/machinery/microwave,
+		/obj/machinery/oven,
 		/obj/machinery/recharge_station,
+		/obj/machinery/vending/boozeomat,
+		/obj/machinery/vending/medical,
+		/obj/machinery/vending/wardrobe,
+		/obj/structure/bodycontainer/morgue,
 	)
 
 /datum/spy_bounty/machine/random/medium
@@ -363,14 +371,25 @@
 	random_options = list(
 		/obj/machinery/chem_dispenser,
 		/obj/machinery/computer/bank_machine,
+		/obj/machinery/computer/camera_advanced/xenobio,
+		/obj/machinery/computer/cargo, // This includes request-only ones in the public lobby
 		/obj/machinery/computer/crew,
 		/obj/machinery/computer/prisoner/management,
 		/obj/machinery/computer/rdconsole,
+		/obj/machinery/computer/records/security,
 		/obj/machinery/computer/scan_consolenew,
 		/obj/machinery/computer/security, // Requires breaking into a sec checkpoint, but not too hard, many are never visited
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/mecha_part_fabricator,
 	)
+
+/datum/spy_bounty/machine/engineering_emitter
+	difficulty = SPY_DIFFICULTY_MEDIUM
+	target_type = /obj/machinery/power/emitter
+	location_type = /area/station/engineering/supermatter/
+
+/datum/spy_bounty/machine/engineering_emitter/can_claim(mob/user)
+	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_ENGINEERING)
 
 /datum/spy_bounty/machine/random/hard
 	difficulty = SPY_DIFFICULTY_HARD
@@ -383,6 +402,13 @@
 
 /datum/spy_bounty/machine/random/hard/can_claim(mob/user) // These would all be too easy with command level access
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+
+/datum/spy_bounty/machine/random/hard/ai_sat_teleporter
+	random_options = list(
+		/obj/machinery/teleport,
+		/obj/machinery/computer/teleporter.
+	)
+	location_type = /area/station/ai_monitored/aisat
 
 /// Subtype for a bounty that targets a specific crew member
 /datum/spy_bounty/targets_person
