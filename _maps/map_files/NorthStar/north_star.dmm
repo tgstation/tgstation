@@ -23961,9 +23961,6 @@
 	name = "Emergency Ladder Access"
 	},
 /obj/structure/cable,
-/obj/machinery/door/airlock/hatch{
-	name = "Emergency Ladder Access"
-	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/floor1/fore)
 "gid" = (
@@ -75832,7 +75829,7 @@
 	},
 /obj/machinery/prisongate,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "tAc" = (
 /obj/machinery/door/poddoor/shutters{
@@ -93469,6 +93466,9 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "armblast";
 	name = "Armory Blast Door"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -323023,7 +323023,7 @@ wmr
 hHq
 ntR
 nyZ
-vBa
+lfC
 sHY
 xIP
 cbw
