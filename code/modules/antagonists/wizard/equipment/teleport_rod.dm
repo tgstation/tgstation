@@ -12,7 +12,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF | UNACIDABLE
 	item_flags = NOBLUDGEON
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_color = COLOR_FADED_PINK
 	light_power = 1
 	light_range = 2
