@@ -207,15 +207,15 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if (shot.select_name == "kill")
- 	set_light_color(COLOR_SOFT_RED)
+	set_light_color(COLOR_SOFT_RED)
 	if (shot.select_name == "disable")
- 	set_light_color(LIGHT_COLOR_CYAN)
+	set_light_color(LIGHT_COLOR_CYAN)
 	if (shot.select_name == "DESTROY")
- 	set_light_color(LIGHT_COLOR_BLUE)
+	set_light_color(LIGHT_COLOR_BLUE)
 	if (shot.select_name == "stun")
- 	set_light_color(LIGHT_COLOR_DIM_YELLOW)
+	set_light_color(LIGHT_COLOR_DIM_YELLOW)
 	if (shot.select_name == "ion")
- 	set_light_color(LIGHT_COLOR_BLUE)
+	set_light_color(LIGHT_COLOR_BLUE)
 	if (shot.select_name && user)
 		balloon_alert(user, "set to [shot.select_name]")
 	chambered = null
