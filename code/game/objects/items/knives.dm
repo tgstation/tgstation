@@ -139,7 +139,6 @@
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 
 /obj/item/knife/combat/dropped(mob/living/user, slot)
-	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src && !user.has_status_effect(/datum/status_effect/choke) && prob(20))
 		user.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
 		playsound(user, 'sound/weapons/slice.ogg', 50, TRUE)
