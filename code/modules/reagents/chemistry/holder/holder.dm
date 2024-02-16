@@ -345,10 +345,8 @@
 	if(percentage <= 0)
 		stack_trace("non positive percentage passed to remove all reagents direct [percentage]")
 		return 0
-	var/list/cached_reagents = reagent_list
 	var/total_removed_amount = 0
-
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent as anything in reagent_list)
 		total_removed_amount += remove_reagent(reagent.type, reagent.volume * percentage)
 
 	handle_reactions()
