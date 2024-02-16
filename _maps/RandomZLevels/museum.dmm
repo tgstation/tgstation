@@ -1073,9 +1073,6 @@
 	},
 /obj/structure/curtain,
 /obj/structure/broken_flooring/plating,
-/obj/effect/decal/cleanable/crayon/puzzle/pin{
-	pixel_y = -32
-	},
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "iK" = (
@@ -2952,14 +2949,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
-"xN" = (
-/obj/structure/lattice/catwalk/mining,
-/obj/effect/decal/cleanable/crayon/puzzle/pin{
-	pixel_y = 32;
-	puzzle_id = "museum_r_wing_puzzle"
-	},
-/turf/open/chasm/true/no_smooth,
-/area/awaymission/museum)
 "xO" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/soda_cans/canned_laughter,
@@ -4293,9 +4282,6 @@
 "IG" = (
 /obj/structure/fluff/fake_camera{
 	dir = 9
-	},
-/obj/effect/decal/cleanable/crayon/puzzle/pin{
-	pixel_z = 32
 	},
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
@@ -28005,7 +27991,7 @@ re
 re
 FK
 FK
-FK
+FO
 IG
 Gn
 ax
@@ -36234,7 +36220,7 @@ hw
 Be
 XM
 FK
-xN
+dZ
 dZ
 PC
 Ma
@@ -36490,7 +36476,7 @@ FK
 FK
 FK
 Yd
-FK
+FO
 NO
 dZ
 mn
@@ -36791,7 +36777,7 @@ Qb
 Ga
 gg
 iJ
-FK
+FO
 re
 re
 re
