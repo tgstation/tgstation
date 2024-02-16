@@ -433,3 +433,16 @@
   - bugfix: Valentines no longer see themselves covered in hearts. They only see their
       Valentine covered in hearts.
   - balance: Scientists have discovered Nuka Cola is not good for short term health.
+2024-02-16:
+  00-Steven:
+  - bugfix: Fixed the lizardperson spine preference dropdown not showing up in the
+      character menu.
+  Kylerace:
+  - admin: admins/maintainers can now make the profiler focus on specific subsystems
+      by setting the subsystem var profile_focused to TRUE
+  LemonInTheDark:
+  - refactor: Fucks with how movement keys are handled. Please report any bugs
+  WinterDarkraven:
+  - rscadd: In an attempt to stop the greytide, NanoTrasen has increased security's
+      baton energy output. This has, through testing, done nothing but make the device
+      spark more than it used to.
