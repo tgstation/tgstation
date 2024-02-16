@@ -75,17 +75,18 @@
 /// If so, starts the stealing process.
 /datum/component/spy_uplink/proc/try_steal(atom/movable/stealing, mob/living/spy)
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
-		if(bounty.claimed)
-			continue
 		if(!bounty.can_claim(spy))
 			continue
 		if(!bounty.is_stealable(stealing))
 			continue
+		if(bounty.claimed)
+			stealing.balloon_alert(spy, "bounty already claimed!")
+			return TRUE
 		if(DOING_INTERACTION(spy, REF(src)))
 			spy.balloon_alert(spy, "already scanning!") // Only shown if they're trying to scan two valid targets
-		else
-			SEND_SIGNAL(stealing, COMSIG_MOVABLE_SPY_STEALING, spy, bounty)
-			INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
+			return TRUE
+		SEND_SIGNAL(stealing, COMSIG_MOVABLE_SPY_STEALING, spy, bounty)
+		INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
 		return TRUE
 
 	return FALSE
