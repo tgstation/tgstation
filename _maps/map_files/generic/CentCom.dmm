@@ -1248,10 +1248,10 @@
 /obj/effect/turf_decal/siding/dark/end{
 	dir = 8
 	},
-/obj/machinery/computer{
+/obj/structure/fluff{
+	desc = "The framework for an artificial intelligence core.";
+	name = "\improper AI core";
 	icon = 'icons/mob/silicon/ai.dmi';
-	icon_screen = null;
-	icon_keyboard = null;
 	icon_state = "ai-empty"
 	},
 /turf/open/floor/iron/dark/herringbone,
