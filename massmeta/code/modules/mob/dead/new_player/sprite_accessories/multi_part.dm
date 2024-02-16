@@ -4,13 +4,11 @@
 	/// the list of external organs covered
 	var/list/external_slots = list()
 
-/datum/sprite_accessory/body_markings
-	color_src = MUTANT_COLOR_SECONDARY
-
 /datum/sprite_accessory/body_markings/cbelly
+	icon = 'massmeta/icons/mob/species/lizard/multipart.dmi'
 	name = "Color Belly"
 	body_slots = list(BODY_ZONE_HEAD)
 	external_slots = list(ORGAN_SLOT_EXTERNAL_TAIL)
-	icon = 'massmeta/icons/mob/species/lizard/multipart.dmi'
 	icon_state = "cbelly"
 	gender_specific = 1
+	color_src = MUTANT_COLOR_SECONDARY
