@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixed the lizardperson spine preference dropdown not showing up in the character menu."

@@ -86,6 +86,7 @@
 	if(radial_travel)
 		AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Transport")
 
+	ADD_TRAIT(src, TRAIT_CHASM_STOPPER, INNATE_TRAIT)
 	set_movement_registrations()
 
 	//since transport_controller datums find all connected platforms when a transport structure first creates it and then
@@ -931,10 +932,12 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
-	if(prob(50))
-		do_sparks(2, FALSE, src)
 	for(var/mob/living/passenger in transport_contents)
 		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
 		var/throw_target = get_edge_target_turf(src, throw_direction)
 		var/datum/callback/land_slam = new(passenger, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 		passenger.throw_at(throw_target, 400, 4, force = MOVE_FORCE_OVERPOWERING, callback = land_slam)
+
+/obj/structure/transport/linear/tram/slow
+	transport_controller_type = /datum/transport_controller/linear/tram/slow
+	speed_limiter = /datum/transport_controller/linear/tram/slow::speed_limiter

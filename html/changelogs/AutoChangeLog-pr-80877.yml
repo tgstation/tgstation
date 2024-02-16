@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - bugfix: "The deployable component will now actually stop rotating things when the variable to not do that is set"

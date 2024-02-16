@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Specialty drinks crafted in the crafting menu will now create the intended reagents, instead of containing the reagents used to craft it."

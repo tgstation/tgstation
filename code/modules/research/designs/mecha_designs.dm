@@ -226,7 +226,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -244,7 +244,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/scattershot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
-	construction_time = 20
+	construction_time = 2 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -262,7 +262,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -280,7 +280,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/incendiary
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
-	construction_time = 20
+	construction_time = 2 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -298,7 +298,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/silver=SHEET_MATERIAL_AMOUNT*3,/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -316,7 +316,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/silver=SHEET_MATERIAL_AMOUNT*4)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -334,7 +334,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -352,7 +352,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -370,7 +370,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -388,7 +388,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*11,/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,/datum/material/silver=SHEET_MATERIAL_AMOUNT*4)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -406,7 +406,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 20
+	construction_time = 2 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -424,7 +424,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*11,/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,/datum/material/silver=SHEET_MATERIAL_AMOUNT*4)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -442,7 +442,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles_pep
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 20
+	construction_time = 2 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -460,7 +460,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT*5,/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -478,7 +478,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/clusterbang
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT * 1.5,/datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5)
-	construction_time = 20
+	construction_time = 2 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -496,7 +496,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -517,7 +517,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/diamond=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -538,7 +538,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*15,/datum/material/gold=SHEET_MATERIAL_AMOUNT*10,/datum/material/plasma=SHEET_MATERIAL_AMOUNT*12.5,/datum/material/silver=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 1200
+	construction_time = 2 MINUTES
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -559,7 +559,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/thrusters/gas
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*12.5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT * 2.5,/datum/material/silver=SHEET_MATERIAL_AMOUNT*1.5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -579,7 +579,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/gravcatapult
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -600,7 +600,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,/datum/material/silver=SHEET_MATERIAL_AMOUNT)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -621,7 +621,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/silver=SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -642,7 +642,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -663,7 +663,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/diamond=SHEET_MATERIAL_AMOUNT*3.25)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
@@ -678,7 +678,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -698,7 +698,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -718,7 +718,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -735,7 +735,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/lmg
 	materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT *2)
-	construction_time = 20
+	construction_time = 2 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -752,7 +752,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL,
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -766,7 +766,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL,
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -779,7 +779,7 @@
 	id = "mech_medi_beam"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/plasma =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*4, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
-	construction_time = 250
+	construction_time = 25 SECONDS
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL,

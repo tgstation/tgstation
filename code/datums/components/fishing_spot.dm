@@ -33,7 +33,7 @@
 	var/obj/item/fishing_rod/rod = possibly_rod
 	if(!istype(rod))
 		return
-	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
+	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.fishing_line)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
 	var/denial_reason = fish_source.reason_we_cant_fish(rod, user, parent)

@@ -40,7 +40,7 @@
 	internal = new
 	register_context()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction()	
+/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(loc)
 	if(internal.total_moles())
 		local_turf.assume_air(internal)
@@ -67,7 +67,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
-	return crowbar_deconstruction_act(user, tool, internal.return_pressure())	
+	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
@@ -228,8 +228,8 @@
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] [creation.name]"
 			if(selected_recipe.dangerous)
-				investigate_log("has been created in the crystallizer.", INVESTIGATE_ENGINE)
-				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
+				investigate_log("[creation.name] has been created in the crystallizer.", INVESTIGATE_ENGINE)
+				message_admins("[creation.name] has been created in the crystallizer [ADMIN_JMP(src)].")
 
 
 	quality_loss = 0

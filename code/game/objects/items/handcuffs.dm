@@ -46,7 +46,9 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
-	var/handcuff_time = 3 SECONDS
+	var/handcuff_time = 4 SECONDS
+	///Multiplier for handcuff time
+	var/handcuff_time_mod = 1
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
@@ -80,6 +82,11 @@
 		apply_cuffs(user,user)
 		return
 
+	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
+		handcuff_time_mod = 0.75
+	else
+		handcuff_time_mod = 1
+
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())
 			C.visible_message(span_danger("[user] is trying to put [src] on [C]!"), \
@@ -88,7 +95,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
-			if(do_after(user, handcuff_time, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
+			if(do_after(user, handcuff_time * handcuff_time_mod, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else

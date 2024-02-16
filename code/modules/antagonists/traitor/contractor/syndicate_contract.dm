@@ -100,16 +100,15 @@
 		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
 			traitor_data.uplink_handler.contractor_hub.current_contract = null
 
-	if(iscarbon(person_sent))
-		for(var/obj/item/person_contents in person_sent.gather_belongings())
-			if(ishuman(person_sent))
-				var/mob/living/carbon/human/human_sent = person_sent
-				if(person_contents == human_sent.w_uniform)
-					continue //So all they're left with are shoes and uniform.
-				if(person_contents == human_sent.shoes)
-					continue
-			person_sent.transferItemToLoc(person_contents)
-			victim_belongings.Add(WEAKREF(person_contents))
+	for(var/obj/item/person_contents as anything in person_sent.gather_belongings())
+		if(ishuman(person_sent))
+			var/mob/living/carbon/human/human_sent = person_sent
+			if(person_contents == human_sent.w_uniform)
+				continue //So all they're left with are shoes and uniform.
+			if(person_contents == human_sent.shoes)
+				continue
+		person_sent.transferItemToLoc(person_contents)
+		victim_belongings.Add(WEAKREF(person_contents))
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
 	// Handle the pod returning
@@ -229,12 +228,13 @@
 
 	if(!possible_drop_loc.len)
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent here from won't \
-			be able to handle our pod... You will die here instead.\""))
+			be able to handle our pod... if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
+		for(var/turf/possible_drop in contract.dropoff.contents)
+			possible_drop_loc.Add(possible_drop)
 		if(iscarbon(victim))
 			var/mob/living/carbon/carbon_victim = victim
 			if(carbon_victim.can_heartattack())
 				carbon_victim.set_heartattack(TRUE)
-		return
 
 	var/pod_rand_loc = rand(1, possible_drop_loc.len)
 	var/obj/structure/closet/supplypod/return_pod = new()

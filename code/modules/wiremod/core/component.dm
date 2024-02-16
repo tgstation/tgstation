@@ -174,6 +174,7 @@
 	qdel(input_port)
 	if(parent)
 		SStgui.update_uis(parent)
+	return null //explicitly set the port to null if used like this: `port = remove_input_port(port)`
 
 /**
  * Adds an output port and returns it
@@ -203,6 +204,7 @@
 	qdel(output_port)
 	if(parent)
 		SStgui.update_uis(parent)
+	return null //explicitly set the port to null if used like this: `port = remove_output_port(port)`
 
 
 /**
@@ -339,6 +341,7 @@
 
 	if(length(input_ports))
 		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
+
 
 /**
  * Called when a special button is pressed on this component in the UI.

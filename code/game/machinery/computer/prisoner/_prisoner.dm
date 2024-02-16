@@ -1,11 +1,10 @@
 /obj/machinery/computer/prisoner
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// ID card currently inserted into the computer.
 	VAR_FINAL/obj/item/card/id/advanced/prisoner/contained_id
 
-/obj/machinery/computer/prisoner/deconstruct(disassembled, mob/user)
+/obj/machinery/computer/prisoner/on_deconstruction(disassembled)
 	contained_id?.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/computer/prisoner/Destroy()
 	QDEL_NULL(contained_id)

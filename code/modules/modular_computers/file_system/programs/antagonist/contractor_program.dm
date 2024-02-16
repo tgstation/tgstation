@@ -29,7 +29,7 @@
 	traitor_data = null
 	return ..()
 
-/datum/computer_file/program/contract_uplink/ui_act(action, params)
+/datum/computer_file/program/contract_uplink/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -21,10 +21,8 @@
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
 
-/obj/machinery/computer/security/telescreen/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new frame_type(loc)
-	qdel(src)
+/obj/machinery/computer/security/telescreen/on_deconstruction(disassembled)
+	new frame_type(loc)
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)

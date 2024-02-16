@@ -230,7 +230,7 @@
 		to_chat(user, span_notice("You delicately cut the wire. [hdd_wires] wire\s left..."))
 	return TRUE
 
-/obj/machinery/rnd/server/master/on_deconstruction()
+/obj/machinery/rnd/server/master/on_deconstruction(disassembled)
 	// If the machine contains a source code HDD, destroying it will negatively impact research speed. Safest to log this.
 	if(source_code_hdd)
 		// Destroyed with a hard drive inside = harm income

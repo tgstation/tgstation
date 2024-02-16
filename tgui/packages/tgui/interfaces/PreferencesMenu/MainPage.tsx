@@ -1,7 +1,6 @@
 import { filterMap, sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { useState } from 'react';
-import { Popover } from 'react-tiny-popover';
 
 import { sendAct, useBackend } from '../../backend';
 import {
@@ -10,6 +9,7 @@ import {
   Button,
   Flex,
   LabeledList,
+  Popper,
   Stack,
 } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
@@ -193,10 +193,10 @@ const GenderButton = (props: {
   const [genderMenuOpen, setGenderMenuOpen] = useState(false);
 
   return (
-    <Popover
+    <Popper
       isOpen={genderMenuOpen}
       onClickOutside={() => setGenderMenuOpen(false)}
-      positions="right"
+      placement="right-end"
       content={
         <Stack backgroundColor="white" ml={0.5} p={0.3}>
           {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
@@ -230,7 +230,7 @@ const GenderButton = (props: {
         tooltip="Gender"
         tooltipPosition="top"
       />
-    </Popover>
+    </Popper>
   );
 };
 
@@ -263,10 +263,10 @@ const MainFeature = (props: {
   const supplementalFeature = catalog.supplemental_feature;
 
   return (
-    <Popover
-      positions="bottom"
-      onClickOutside={() => handleClose()}
+    <Popper
+      placement="bottom-start"
       isOpen={isOpen}
+      onClickOutside={handleClose}
       content={
         <ChoicedSelection
           name={catalog.name}
@@ -335,7 +335,7 @@ const MainFeature = (props: {
           />
         )}
       </Button>
-    </Popover>
+    </Popper>
   );
 };
 
