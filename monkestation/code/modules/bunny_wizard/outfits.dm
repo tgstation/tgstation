@@ -77,7 +77,7 @@
 	suit = /obj/item/clothing/suit/jacket/tailcoat/british
 	shoes = /obj/item/clothing/shoes/heels/blue
 	head = /obj/item/clothing/head/playbunnyears/british
-	neck = /obj/item/clothing/neck/tie/bunnytie/blue
+	neck = /obj/item/clothing/neck/tie/bunnytie/blue/tied
 
 /datum/outfit/cursed_bunny/communist
 	name = "Cursed Bunny (Communist)"
