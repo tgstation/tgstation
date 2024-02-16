@@ -138,6 +138,22 @@
 	. = ..()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 
+/obj/item/knife/combat/dropped(mob/living/user, slot)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src && prob(20))
+		user.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+		playsound(user, 'sound/weapons/slice.ogg', 50, TRUE)
+		user.visible_message(span_danger("[user] accidentally cuts [user.p_them()]self while pulling [src] out of [user.p_them()] teeth! What a doofus!"), span_userdanger("You accidentally cut your mouth with [src]!"))
+		. = ..()
+
+/obj/item/knife/combat/on_equipped(mob/living/user, slot)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(20))
+		if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+			user.apply_status_effect(/datum/status_effect/choke, src)
+			user.visible_message(span_danger("[user] accidentally swallows [src]!"))
+			playsound(user, 'sound/items/eatfood.ogg', 100, TRUE)
+
 /obj/item/knife/combat/survival
 	name = "survival knife"
 	icon = 'icons/obj/weapons/stabby.dmi'
