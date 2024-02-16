@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - code_imp: "removed redundant check for plasmamen in survival box code"

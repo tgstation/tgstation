@@ -1176,7 +1176,7 @@
 /obj/structure/bed/pod{
 	dir = 1
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,

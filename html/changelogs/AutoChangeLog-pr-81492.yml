@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - code_imp: "Removed unused global lists and sprite accessories related to tail spines"

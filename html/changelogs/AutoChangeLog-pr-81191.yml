@@ -1,0 +1,5 @@
+author: "MLGTASTICa"
+delete-after: True
+changes:
+  - balance: "Oxandrolone now scales with purity. Its default purity is 100%"
+  - balance: "Salicylic acid now scales with purity. Its default purity is 100%"
