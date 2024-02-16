@@ -59,4 +59,5 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 			return_value = client_source.prefs.antag_rep
 		returning_list[client_source] = return_value
 
+	log_antag_rep("Returned Weighted List of [length(returning_list)]", list("before_weight" = candidates, "after_weight" = returning_list))
 	return returning_list

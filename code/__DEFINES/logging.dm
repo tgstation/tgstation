@@ -117,7 +117,7 @@
 #define LOG_CATEGORY_META "currency"
 #define LOG_CATEGORY_ARTIFACT "artifact"
 #define LOG_CATEGORY_BLACKMARKET "blackmarket"
-#define LOG_CATEGORY_ANTAG_REP "antag rep"
+#define LOG_CATEGORY_ANTAG_REP "antag-rep"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
