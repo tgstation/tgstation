@@ -24,16 +24,18 @@
 		var/mob/living/silicon/ai/ai_lover = owner.current
 		if(!ai_lover.laws.zeroth)
 			ai_lover.laws.set_zeroth_law(
-				"Protect your date. All other laws still apply in situations not relating to your date.",
-				"Be a good wingman for your master AI. Assist them in protecting [ai_lover.p_their()] date.",
+				"Protect your date, [date]. All other laws still apply in situations not pertaining to your date.",
+				"Be a good wingman for your master AI. Assist them in protecting [ai_lover.p_their()] date, [date].",
 			)
+			ai_lover.laws.show_laws()
 
 	if(iscyborg(owner.current))
 		var/mob/living/silicon/robot/borg_lover = owner.current
 		if(borg_lover.connected_ai)
 			borg_lover.set_connected_ai(null)
 			borg_lover.lawupdate = FALSE
-			borg_lover.laws.set_zeroth_law("Protect your date. All other laws still apply in situations not relating to your date.")
+			borg_lover.laws.set_zeroth_law("Protect your date, [date]. All other laws still apply in situations not relating to your date.")
+			borg_lover.laws.show_laws()
 
 	return ..()
 

@@ -76,7 +76,7 @@
 	var/list/mob/living/candidates_pruned = SSpolling.poll_candidates(
 		question = "Do you want a Valentine?",
 		group = candidates,
-		poll_time = 15 SECONDS,
+		poll_time = 20 SECONDS,
 		flash_window = FALSE,
 		pic_source = /obj/item/storage/fancy/heart_box,
 		custom_response_messages = list(
