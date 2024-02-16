@@ -116,6 +116,7 @@
 	can_bayonet = TRUE
 	knife_x_offset = 20
 	knife_y_offset = 12
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/energy/recharge/ebow/halloween
 	name = "candy corn crossbow"

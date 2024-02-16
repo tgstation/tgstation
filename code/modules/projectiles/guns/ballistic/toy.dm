@@ -14,6 +14,7 @@
 	item_flags = NONE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
 	casing_ejector = FALSE
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/firing_pin
@@ -24,6 +25,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/items/syringeproj.ogg'
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	spawn_magazine_type = /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -46,6 +48,7 @@
 	weapon_weight = WEAPON_LIGHT
 	pb_knockback = 0
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/shotgun/toy/handle_chamber()
 	. = ..()
@@ -72,6 +75,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	gun_flags = NONE
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft SMG"
@@ -83,6 +87,7 @@
 	casing_ejector = FALSE
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
@@ -102,6 +107,7 @@
 	casing_ejector = FALSE
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
