@@ -36569,10 +36569,7 @@
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #2";
-	suffix = "#2"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "lQH" = (
@@ -41744,10 +41741,7 @@
 	location = "QM #6"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #6";
-	suffix = "#6"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "nIQ" = (
@@ -47921,10 +47915,7 @@
 	location = "QM #3"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #3";
-	suffix = "#3"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "pXC" = (
@@ -52540,10 +52531,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "rCL" = (
