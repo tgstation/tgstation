@@ -243,7 +243,7 @@
 	SStgui.update_uis(src)
 
 #define CURATOR_PERCENTILE_CUT 0.225
-#define CURATOR_PERCENTILE_CUT 0.125
+#define SERVICE_PERCENTILE_CUT 0.125
 
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
@@ -274,7 +274,7 @@
 		return
 
 	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
-	service_account.adjust_money(offer_amount * CURATOR_PERCENTILE_CUT)
+	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
 	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
 	var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
 	var/curators_length = length(curator_accounts)
@@ -301,7 +301,7 @@
 	select_new_frame(user, possible_frames)
 
 #undef CURATOR_PERCENTILE_CUT
-#undef CURATOR_PERCENTILE_CUT
+#undef SERVICE_PERCENTILE_CUT
 
 /obj/item/canvas/proc/select_new_frame(mob/user, list/candidates)
 	var/possible_frames = candidates || SSpersistent_paintings.get_available_frames(painting_metadata.credit_value)
