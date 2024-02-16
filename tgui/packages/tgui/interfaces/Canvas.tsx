@@ -327,11 +327,7 @@ export const Canvas = (props) => {
           </Flex.Item>
         </Flex>
         <Box textAlign="center">
-          <Flex
-            align="center"
-            justify="center"
-            direction="column"
-          >
+          <Flex align="center" justify="center" direction="column">
             <Flex.Item>
               <PaintCanvas
                 value={data.grid}
