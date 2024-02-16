@@ -94,8 +94,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const height = this.props.height || canvas.height || 360;
     const x_resolution = this.props.imageWidth || 36;
     const y_resolution = this.props.imageHeight || 36;
-    const x_scale = Math.round((width / x_resolution) * this.zoom);
-    const y_scale = Math.round((height / y_resolution) * this.zoom);
+    const x_scale = Math.round((width / x_resolution));
+    const y_scale = Math.round((height / y_resolution));
     ctx?.setTransform(1, 0, 0, 1, 0, 0);
     ctx?.scale(x_scale, y_scale); // This clears the canvas.
   }
@@ -131,8 +131,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const height = this.props.height || canvas.height || 360;
     const x_resolution = this.props.imageWidth || 36;
     const y_resolution = this.props.imageHeight || 36;
-    const x_scale = Math.round((width / x_resolution) * this.zoom);
-    const y_scale = Math.round((height / y_resolution) * this.zoom);
+    const x_scale = Math.round((width / x_resolution));
+    const y_scale = Math.round((height / y_resolution));
 
     const rect = canvas.getBoundingClientRect();
     const x = Math.floor((event.clientX - rect.left) / x_scale);
@@ -265,7 +265,7 @@ export const Canvas = (props) => {
   const griddy = !!data.show_grid && !!data.editable && !!data.paint_tool_color;
   return (
     <Window
-      width={Math.min(scaled_width + 72, 232)}
+      width={Math.max(scaled_width + 72, 262)}
       height={
         scaled_height +
         88 +
