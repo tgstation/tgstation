@@ -1248,7 +1248,12 @@
 /obj/effect/turf_decal/siding/dark/end{
 	dir = 8
 	},
-/obj/structure/ai_core/deactivated,
+/obj/machinery/computer{
+	icon = 'icons/mob/silicon/ai.dmi';
+	icon_screen = null;
+	icon_keyboard = null;
+	icon_state = "ai-empty"
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "dt" = (
