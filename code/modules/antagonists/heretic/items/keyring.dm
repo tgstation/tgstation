@@ -3,7 +3,7 @@
 	desc = "A crack in space, impossibly deep and painful to the eyes. Definitely not safe."
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "realitycrack"
-	light_system = STATIC_LIGHT
+	light_system = COMPLEX_LIGHT
 	light_power = 1
 	light_on = TRUE
 	light_color = COLOR_GREEN

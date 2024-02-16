@@ -9,7 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	armor_type = /datum/armor/none
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 2 //luminosity when on
 	light_power = 1.3
 	light_color = "#FF964E"

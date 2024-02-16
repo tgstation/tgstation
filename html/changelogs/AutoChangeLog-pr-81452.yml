@@ -1,0 +1,5 @@
+author: "mogeoko"
+delete-after: True
+changes:
+  - bugfix: "Thermomachines now reconnect to pipes on multitool's act."
+  - bugfix: "Multi-deck connectors won't connect pipes not located in front/top/bottom of it."

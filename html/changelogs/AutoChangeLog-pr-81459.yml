@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "adds examines & screentips for ore box"
+  - code_imp: "cleans up some procs for ore box"
+  - spellcheck: "corrected description & ui notice of ore box to specify it can hold boulders too"

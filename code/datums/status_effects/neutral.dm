@@ -61,6 +61,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		null,
 		new_owner,
 	))
 

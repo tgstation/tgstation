@@ -150,7 +150,7 @@
 	return TRUE
 
 //we eject the loaded item when deconstructing the machine
-/obj/machinery/rnd/on_deconstruction()
+/obj/machinery/rnd/on_deconstruction(disassembled)
 	if(loaded_item)
 		loaded_item.forceMove(drop_location())
 	..()
