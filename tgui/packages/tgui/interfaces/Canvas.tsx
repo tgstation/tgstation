@@ -94,8 +94,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const height = this.props.height || canvas.height || 360;
     const x_resolution = this.props.imageWidth || 36;
     const y_resolution = this.props.imageHeight || 36;
-    const x_scale = Math.round((width / x_resolution));
-    const y_scale = Math.round((height / y_resolution));
+    const x_scale = Math.round(width / x_resolution);
+    const y_scale = Math.round(height / y_resolution);
     ctx?.setTransform(1, 0, 0, 1, 0, 0);
     ctx?.scale(x_scale, y_scale); // This clears the canvas.
   }
@@ -131,8 +131,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const height = this.props.height || canvas.height || 360;
     const x_resolution = this.props.imageWidth || 36;
     const y_resolution = this.props.imageHeight || 36;
-    const x_scale = Math.round((width / x_resolution));
-    const y_scale = Math.round((height / y_resolution));
+    const x_scale = Math.round(width / x_resolution);
+    const y_scale = Math.round(height / y_resolution);
 
     const rect = canvas.getBoundingClientRect();
     const x = Math.floor((event.clientX - rect.left) / x_scale);
@@ -261,14 +261,14 @@ export const Canvas = (props) => {
   const scaled_width = width * data.px_per_unit * data.zoom;
   const scaled_height = height * data.px_per_unit * data.zoom;
   const average_plaque_height = 90;
-  const palette_height = 44;
+  const palette_height = 38;
   const griddy = !!data.show_grid && !!data.editable && !!data.paint_tool_color;
   return (
     <Window
       width={Math.max(scaled_width + 72, 262)}
       height={
         scaled_height +
-        88 +
+        80 +
         (data.show_plaque ? average_plaque_height : 0) +
         (data.editable && data.paint_tool_palette ? palette_height : 0)
       }
