@@ -146,7 +146,7 @@
 		user.visible_message(span_danger("[user] accidentally cuts [user.p_them()]self while pulling [src] out of [user.p_them()] teeth! What a doofus!"), span_userdanger("You accidentally cut your mouth with [src]!"))
 		. = ..()
 
-/obj/item/knife/combat/on_equipped(mob/living/user, slot)
+/obj/item/knife/combat/equipped(mob/living/user, slot, initial = FALSE)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(20))
 		if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
