@@ -34,6 +34,8 @@
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
 
+#define VENDING_MACHINE_TRAIT "vending_machine"
+
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 /// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
