@@ -96,7 +96,6 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	item_path = /obj/item/clothing/shoes/discoshoes
 	item_cost = 6000
 
-
 /datum/store_item/shoes/griffin
 	name = "Griffon Boots"
 	item_path = /obj/item/clothing/shoes/griffin
@@ -105,6 +104,9 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Sandals"
 	item_path = /obj/item/clothing/shoes/sandal
 
+/datum/store_item/shoes/heels
+	name = "Colorable Heels"
+	item_path = /obj/item/clothing/shoes/heels
 
 /*
 *	JOB-RESTRICTED

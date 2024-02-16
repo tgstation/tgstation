@@ -28,8 +28,8 @@
 	make_edible(T, amount, material_flags)
 
 /datum/material/meat/proc/make_edible(atom/source, amount, material_flags)
-	var/nutriment_count = 3 * (amount / MINERAL_MATERIAL_AMOUNT)
-	var/oil_count = 2 * (amount / MINERAL_MATERIAL_AMOUNT)
+	var/nutriment_count = 3 * (amount / SHEET_MATERIAL_AMOUNT)
+	var/oil_count = 2 * (amount / SHEET_MATERIAL_AMOUNT)
 	source.AddComponent(/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), \
 		foodtypes = RAW | MEAT | GROSS, \

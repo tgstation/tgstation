@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/time_per_syringe = 250

@@ -171,3 +171,7 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Maid Neck Cover"
 	item_path = /obj/item/clothing/neck/maid
 	item_cost = 7500 //work for it
+
+/datum/store_item/neck/bowtie_collar
+	name = "Colorable Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/tied

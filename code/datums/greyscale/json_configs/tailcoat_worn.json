@@ -1,0 +1,10 @@
+{
+	"tailcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "tailcoat",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

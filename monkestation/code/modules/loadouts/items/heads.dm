@@ -274,6 +274,10 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Natural Wig"
 	item_path = /obj/item/clothing/head/wig/natural
 
+/datum/loadout_item/head/bunnyears
+	name = "Colorable Bunny Ears"
+	item_path = /obj/item/clothing/head/playbunnyears
+
 /*
 *	JOB-LOCKED
 */

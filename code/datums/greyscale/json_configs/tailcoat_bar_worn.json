@@ -1,0 +1,16 @@
+{
+	"tailcoat_bar": [
+		{
+			"type": "icon_state",
+			"icon_state": "tailcoat_bar_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tailcoat_bar_tail",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

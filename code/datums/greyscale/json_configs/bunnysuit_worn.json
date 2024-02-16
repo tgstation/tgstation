@@ -1,0 +1,59 @@
+{
+	"playbunny": [
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_buttons",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_cuffs",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_stockings",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_tail",
+			"blend_mode": "overlay"
+		}
+	],
+	"playbunny_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_base_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_buttons",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_cuffs",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_stockings",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

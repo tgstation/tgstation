@@ -23,7 +23,22 @@
 		/obj/item/clothing/head/maidheadband/syndicate = 1,
 		/obj/item/clothing/under/syndicate/skirt/maid = 1,
 		/obj/item/clothing/gloves/combat/maid = 1,
-		/obj/item/clothing/accessory/maidapron/syndicate = 1,)
+		/obj/item/clothing/accessory/maidapron/syndicate = 1,
+		/obj/item/clothing/shoes/heels/syndicate = 1,)
+	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/syndibunny
+	name = "Syndicate bunny assassin outfit"
+	desc = "A box containing a high tech specialized syndicate... bunny suit?"
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/syndibunny/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/clothing/head/playbunnyears/syndicate = 1,
+		/obj/item/clothing/under/syndicate/syndibunny = 1,
+		/obj/item/clothing/suit/jacket/tailcoat/syndicate = 1,
+		/obj/item/clothing/neck/tie/bunnytie/syndicate = 1,
+		/obj/item/clothing/shoes/heels/syndicate = 1,)
 	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/syndie_kit/contractor_loadout

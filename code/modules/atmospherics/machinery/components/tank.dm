@@ -12,7 +12,7 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-	custom_materials = list(/datum/material/iron = TANK_PLATING_SHEETS * MINERAL_MATERIAL_AMOUNT) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
+	custom_materials = list(/datum/material/iron = TANK_PLATING_SHEETS * SHEET_MATERIAL_AMOUNT) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
 	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -436,7 +436,7 @@
 	icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
-	custom_materials = list(/datum/material/alloy/plasteel = 4 * MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasteel = 4 * SHEET_MATERIAL_AMOUNT)
 	var/construction_state = TANK_FRAME
 	var/datum/material/material_end_product
 
@@ -462,7 +462,7 @@
 /obj/structure/tank_frame/deconstruct(disassembled)
 	if(disassembled)
 		for(var/datum/material/mat as anything in custom_materials)
-			new mat.sheet_type(drop_location(), custom_materials[mat] / MINERAL_MATERIAL_AMOUNT)
+			new mat.sheet_type(drop_location(), custom_materials[mat] / SHEET_MATERIAL_AMOUNT)
 	return ..()
 
 /obj/structure/tank_frame/update_icon(updates)
@@ -561,7 +561,7 @@
 	if(!isturf(build_location))
 		return
 	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
-	var/list/new_custom_materials = list((material_end_product) = TANK_PLATING_SHEETS * MINERAL_MATERIAL_AMOUNT)
+	var/list/new_custom_materials = list((material_end_product) = TANK_PLATING_SHEETS * SHEET_MATERIAL_AMOUNT)
 	new_tank.set_custom_materials(new_custom_materials)
 	new_tank.on_construction(user, new_tank.pipe_color, new_tank.piping_layer)
 	to_chat(user, span_notice("[new_tank] has been sealed and is ready to accept gases."))

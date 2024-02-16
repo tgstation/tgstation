@@ -126,3 +126,8 @@
 	name = "Darkmoon greatsword"
 	desc = "a heavy sword hilt that would knock anyone out cold, can transform into the darkmoonlight greatsword. "
 	item = /obj/item/melee/trick_weapon/darkmoon
+
+/datum/hunter_weapons/beast_claw
+	name = "Beast Claw"
+	desc = "A claw made from the bones of monster. It can be transformed into a heavier, more wound-inducing version."
+	item = /obj/item/melee/trick_weapon/beast_claw
