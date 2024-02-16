@@ -3197,6 +3197,7 @@
 #include "code\modules\antagonists\wizard\equipment\chuunibyou_spell.dm"
 #include "code\modules\antagonists\wizard\equipment\enchanted_clown_suit.dm"
 #include "code\modules\antagonists\wizard\equipment\soulstone.dm"
+#include "code\modules\antagonists\wizard\equipment\teleport_rod.dm"
 #include "code\modules\antagonists\wizard\equipment\wizard_spellbook.dm"
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\_entry.dm"
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\assistance.dm"
