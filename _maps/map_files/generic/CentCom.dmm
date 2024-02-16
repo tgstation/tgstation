@@ -434,7 +434,7 @@
 /area/centcom/central_command_areas/armory)
 "bk" = (
 /obj/structure/stone_tile,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "bl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3884,7 +3884,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/syndicate_mothership/control)
 "lc" = (
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "ld" = (
 /obj/effect/turf_decal/siding/wood{
@@ -4650,7 +4650,7 @@
 /area/centcom/central_command_areas/ghost_spawn)
 "nq" = (
 /obj/structure/stone_tile/slab,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "ns" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
@@ -4815,7 +4815,7 @@
 /area/centcom/central_command_areas/admin)
 "nV" = (
 /obj/structure/stone_tile/cracked,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "nX" = (
 /obj/structure/hedge,
@@ -7141,7 +7141,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "ug" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "uh" = (
 /turf/open/floor/carpet/purple,
@@ -8511,7 +8511,7 @@
 /area/centcom/central_command_areas/arcade)
 "ya" = (
 /obj/structure/flora/grass/both/style_random,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "yb" = (
 /obj/effect/turf_decal/siding/wood{
@@ -8689,7 +8689,7 @@
 "yu" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/hedge,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "yv" = (
 /turf/closed/indestructible/fakedoor{
@@ -10003,7 +10003,7 @@
 /area/centcom/central_command_areas/borbop)
 "Cb" = (
 /obj/structure/stone_tile/block,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "Cc" = (
 /obj/structure/chair/comfy/shuttle,
@@ -13866,7 +13866,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "MV" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -13966,7 +13966,7 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "Nl" = (
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "Nm" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -14839,7 +14839,7 @@
 /area/centcom/syndicate_mothership/control)
 "PR" = (
 /obj/structure/stone_tile/surrounding_tile,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "PS" = (
 /obj/machinery/computer/camera_advanced{
@@ -16165,7 +16165,7 @@
 "TA" = (
 /obj/structure/hedge,
 /obj/structure/stone_tile/slab,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "TB" = (
 /obj/structure/table/wood,
@@ -16228,7 +16228,7 @@
 /area/centcom/central_command_areas/ferry)
 "TL" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "TM" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -16956,7 +16956,7 @@
 /area/centcom/central_command_areas/supplypod/loading/four)
 "VQ" = (
 /obj/structure/flora/tree/pine/style_random,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "VR" = (
 /obj/machinery/light/directional/west,
