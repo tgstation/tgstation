@@ -16,7 +16,25 @@ SUBSYSTEM_DEF(polling)
 		if(running_poll.time_left() <= 0)
 			polling_finished(running_poll)
 
+/**
+ * Starts a poll.
+ *
+ * Arguments
+ * * question: Optional, The question to ask the candidates. If null, a default question will be used. ("Do you want to play as role?")
+ * * role: Optional, An antag role (IE, ROLE_TRAITOR) to pass, it won't show to any candidates who don't have it in their preferences.
+ * * check_jobban: Optional, What jobban role / flag to check, it won't show to any candidates who have this jobban.
+ * * poll_time: How long the poll will last.
+ * * ignore_category: Optional, A poll category. If a candidate has this category in their ignore list, they won't be polled.
+ * * flash_window: If TRUE, the candidate's window will flash when they're polled.
+ * * list/group: A list of candidates to poll.
+ * * pic_source: Optional, An /atom or an /image to display on the poll alert.
+ * * role_name_text: Optional, A string to display in logging / the (default) question. If null, the role name will be used.
+ * * list/custom_response_messages: Optional, A list of strings to use as responses to the poll. If null, the default responses will be used. see __DEFINES/polls.dm for valid keys to use.
+ *
+ * Returns a list of all mobs who signed up for the poll.
+ */
 /datum/controller/subsystem/polling/proc/poll_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text, list/custom_response_messages)
+	RETURN_TYPE(/list/mob)
 	if(group.len == 0)
 		return list()
 	if(role && !role_name_text)
