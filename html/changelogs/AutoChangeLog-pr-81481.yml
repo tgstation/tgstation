@@ -1,0 +1,4 @@
+author: "Sylphet"
+delete-after: True
+changes:
+  - bugfix: "cargo lockboxes update iconstates correctly now"

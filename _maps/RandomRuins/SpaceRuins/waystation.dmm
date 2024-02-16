@@ -1143,7 +1143,7 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "rQ" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
 "rV" = (
@@ -1889,7 +1889,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "IS" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)

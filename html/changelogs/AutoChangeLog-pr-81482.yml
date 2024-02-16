@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Space cats CAN into space. (They're back to surviving being in unsuitable atmos.)"
