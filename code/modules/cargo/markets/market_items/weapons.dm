@@ -73,3 +73,4 @@
 	price_max = CARGO_CRATE_VALUE * 4
 	stock_max = 1
 	availability_prob = 75
+	can_muzzle_flash = FALSE
