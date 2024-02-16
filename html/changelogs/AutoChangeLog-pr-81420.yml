@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Revenants (and other flying mobs) will not make noise when walking into pools of gibs,"
