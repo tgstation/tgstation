@@ -344,8 +344,7 @@
 
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
-	// wallening todo mountain walls
-	icon = MAP_SWITCH(/*'icons/turf/walls/mountain_wall.dmi'*/'icons/turf/mining.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -363,6 +362,7 @@
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
 		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+		QUEUE_SMOOTH(src)
 
 /turf/closed/mineral/random/snow/mineral_chances()
 	return list(
@@ -452,8 +452,7 @@
 // Subtypes for mappers placing ores manually.
 /turf/closed/mineral/random/labormineral/ice
 	name = "snowy mountainside"
-	// wallening todo mountain walls
-	icon = MAP_SWITCH(/*'icons/turf/walls/mountain_wall.dmi'*/'icons/turf/mining.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -484,7 +483,8 @@
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
 		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-
+		QUEUE_SMOOTH(src)
+		
 /turf/closed/mineral/iron
 	mineralType = /obj/item/stack/ore/iron
 	scan_state = "rock_Iron"
@@ -594,8 +594,7 @@
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"
-	// wallening todo mountain walls
-	icon = MAP_SWITCH(/*'icons/turf/walls/mountain_wall.dmi'*/'icons/turf/mining.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -640,8 +639,7 @@
 
 /turf/closed/mineral/asteroid
 	name = "iron rock"
-	// wallening todo red walls
-	icon = MAP_SWITCH(/*'icons/turf/walls/red_wall.dmi'*/'icons/turf/mining.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('icons/turf/walls/red_rock_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "redrock"
 	base_icon_state = "red_wall"
 

@@ -725,6 +725,10 @@
 	nightshift_brightness = 3
 	fire_brightness = 4.5
 
+// No hanging for us brother
+/obj/machinery/light/floor/find_and_hang_on_wall(directional, custom_drop_callback)
+	return
+
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
 

@@ -30,12 +30,11 @@
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
 /turf/closed/wall/ice
-// wallening todo	icon = 'icons/turf/walls/icedmetal_wall.dmi'
-	icon_state = "icedmetal_wall-0"
-	base_icon_state = "icedmetal_wall"
+	icon = 'icons/turf/walls/iced_metal_wall.dmi'
+	icon_state = "iced_metal_wall-0"
+	base_icon_state = "iced_metal_wall"
 	desc = "A wall covered in a thick sheet of ice."
 	turf_flags = IS_SOLID
-	canSmoothWith = null
 	rcd_memory = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal

@@ -368,6 +368,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank
 	paper_cups--
 
 /obj/structure/reagent_dispensers/beerkeg
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "beer keg"
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"

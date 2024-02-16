@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(diagonal_junctions, generate_splitvis_lookup())
 
 GLOBAL_LIST_EMPTY(split_visibility_objects)
 
+// Thinking on it, we really only need to generate a copy for each direction accounting for frill, and then just set the overlay based off that
+// Except that doesn't work with frills, but frills don't vary by direction, and frills could inherit icon/state from the parent with appearance flags
 /proc/get_splitvis_object(z_offset, icon_path, junction, dir, frill = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
 	var/key = "[icon_path]-[junction]-[dir]-[frill]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.split_visibility_objects[key]
