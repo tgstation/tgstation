@@ -149,7 +149,7 @@
 	var/throwtarget = get_edge_target_turf(src, move_dir)
 	for(var/mob/living/trample_target in T.contents - hit_things - src)
 		hit_things += trample_target
-		if(faction_check_mob(trample_target))
+		if(faction_check_atom(trample_target))
 			continue
 		visible_message(span_boldwarning("[src] tramples and kicks [trample_target]!"))
 		to_chat(trample_target, span_userdanger("[src] tramples you and kicks you away!"))
@@ -328,10 +328,9 @@
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
-	A.GiveTarget(target)
-	A.friends += user
-	A.faction = user.faction.Copy()
+	var/mob/living/basic/legion_brood/minion = new (user.loc)
+	minion.assign_creator(user)
+	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
@@ -342,9 +341,9 @@
 		to_chat(LivingUser, "<b>You need to wait longer to use this again.</b>")
 		return
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/LegionSkull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(LivingUser.loc)
-	LegionSkull.friends += LivingUser
-	LegionSkull.faction = LivingUser.faction.Copy()
+
+	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
+	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
 
 #undef LEGIONNAIRE_CHARGE

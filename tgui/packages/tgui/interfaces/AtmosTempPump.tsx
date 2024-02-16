@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -9,8 +10,8 @@ type Data = {
   max_heat_transfer_rate: number;
 };
 
-export const AtmosTempPump = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosTempPump = (props) => {
+  const { act, data } = useBackend<Data>();
   const { on, rate, max_heat_transfer_rate } = data;
 
   return (

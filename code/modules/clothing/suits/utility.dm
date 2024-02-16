@@ -104,6 +104,7 @@
 	laser = 20
 	energy = 30
 	bomb = 100
+	bio = 50
 	fire = 80
 	acid = 50
 

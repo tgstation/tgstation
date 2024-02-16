@@ -129,7 +129,6 @@
 	desc = "Somebody should remove that."
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
@@ -212,6 +211,10 @@
 	icon_state += "-old"
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
+/obj/effect/decal/cleanable/vomit/old/black_bile
+	name = "black bile"
+	desc = "There's something wiggling in there..."
+	color = COLOR_DARK
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
@@ -400,6 +403,7 @@
 /obj/effect/decal/cleanable/ants/fire
 	name = "space fire ants"
 	desc = "A small colony no longer. We are the fire nation."
+	decal_reagent = /datum/reagent/ants/fire
 	icon_state = "fire_ants"
 	mergeable_decal = FALSE
 
@@ -481,3 +485,20 @@
 	if(item.ignition_effect(src, user))
 		ignite()
 	return ..()
+
+/obj/effect/decal/cleanable/fuel_pool/hivis
+	icon_state = "fuel_pool_hivis"
+
+/obj/effect/decal/cleanable/rubble
+	name = "rubble"
+	desc = "A pile of rubble."
+	icon = 'icons/obj/debris.dmi'
+	icon_state = "rubble"
+	mergeable_decal = FALSE
+	beauty = -10
+
+/obj/effect/decal/cleanable/rubble/Initialize(mapload)
+	. = ..()
+	flick("rubble_bounce", src)
+	icon_state = "rubble"
+	update_appearance(UPDATE_ICON_STATE)

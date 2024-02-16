@@ -452,7 +452,7 @@ SUBSYSTEM_DEF(air)
 			border += item
 
 			net.air.volume += item.volume
-			item.parent = net
+			item.replace_pipenet(item.parent, net)
 
 			if(item.air_temporary)
 				net.air.merge(item.air_temporary)

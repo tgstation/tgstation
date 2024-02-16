@@ -37,6 +37,7 @@
 #define WIRE_LIMIT "Limiter"
 #define WIRE_LOADCHECK "Load Check"
 #define WIRE_LOCKDOWN "Lockdown"
+#define WIRE_MODE_SELECT "Mode Select"
 #define WIRE_MOTOR1 "Motor 1"
 #define WIRE_MOTOR2 "Motor 2"
 #define WIRE_OPEN "Open"

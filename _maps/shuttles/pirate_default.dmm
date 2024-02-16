@@ -900,7 +900,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/window/spawner/directional/east,
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Decontamination"
 	},
 /turf/open/floor/plating,

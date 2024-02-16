@@ -82,7 +82,7 @@
 /obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/dish_drive/attackby(obj/item/dish, mob/living/user, params)
 	if(is_type_in_list(dish, collectable_items) && !user.combat_mode)

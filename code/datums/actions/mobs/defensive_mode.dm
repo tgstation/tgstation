@@ -19,9 +19,10 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	activate_defence(owner)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/proc/activate_defence(mob/living/basic/owner_mob)
@@ -33,7 +34,7 @@
 	defence(owner_mob)
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/proc/offence(mob/living/basic/owner_mob)
-	owner_mob.damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	owner_mob.damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
 	owner_mob.icon_state = initial(owner_mob.icon_state)
 	owner_mob.icon_living = initial(owner_mob.icon_living)
 	owner_mob.icon_dead = initial(owner_mob.icon_dead)
@@ -41,7 +42,7 @@
 	defense_active = FALSE
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/proc/defence(mob/living/basic/owner_mob)
-	owner_mob.damage_coeff = list(BRUTE = 0.4, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	owner_mob.damage_coeff = list(BRUTE = 0.4, BURN = 0.5, TOX = 1, STAMINA = 1, OXY = 1)
 	owner_mob.icon_dead = "[owner_mob.icon_state]_d_dead"
 	owner_mob.icon_state = "[owner_mob.icon_state]_d"
 	owner_mob.icon_living = "[owner_mob.icon_living]_d"

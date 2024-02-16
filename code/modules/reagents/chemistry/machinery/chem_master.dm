@@ -2,48 +2,6 @@
 #define TRANSFER_MODE_MOVE 1
 #define TARGET_BEAKER "beaker"
 #define TARGET_BUFFER "buffer"
-#define CAT_CONDIMENTS "condiments"
-#define CAT_TUBES "tubes"
-#define CAT_PILLS "pills"
-#define CAT_PATCHES "patches"
-
-/// List of containers the Chem Master machine can print
-GLOBAL_LIST_INIT(chem_master_containers, list(
-	CAT_CONDIMENTS = list(
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/condiment/flour,
-		/obj/item/reagent_containers/condiment/sugar,
-		/obj/item/reagent_containers/condiment/rice,
-		/obj/item/reagent_containers/condiment/cornmeal,
-		/obj/item/reagent_containers/condiment/milk,
-		/obj/item/reagent_containers/condiment/soymilk,
-		/obj/item/reagent_containers/condiment/yoghurt,
-		/obj/item/reagent_containers/condiment/saltshaker,
-		/obj/item/reagent_containers/condiment/peppermill,
-		/obj/item/reagent_containers/condiment/soysauce,
-		/obj/item/reagent_containers/condiment/bbqsauce,
-		/obj/item/reagent_containers/condiment/enzyme,
-		/obj/item/reagent_containers/condiment/hotsauce,
-		/obj/item/reagent_containers/condiment/coldsauce,
-		/obj/item/reagent_containers/condiment/mayonnaise,
-		/obj/item/reagent_containers/condiment/ketchup,
-		/obj/item/reagent_containers/condiment/olive_oil,
-		/obj/item/reagent_containers/condiment/vegetable_oil,
-		/obj/item/reagent_containers/condiment/peanut_butter,
-		/obj/item/reagent_containers/condiment/cherryjelly,
-		/obj/item/reagent_containers/condiment/honey,
-		/obj/item/reagent_containers/condiment/pack,
-	),
-	CAT_TUBES = list(
-		/obj/item/reagent_containers/cup/tube
-	),
-	CAT_PILLS = typecacheof(list(
-		/obj/item/reagent_containers/pill/style
-	)),
-	CAT_PATCHES = typecacheof(list(
-		/obj/item/reagent_containers/pill/patch/style
-	))
-))
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
@@ -59,7 +17,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	/// Icons for different percentages of buffer reagents
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	var/fill_icon_state = "chemmaster"
-	var/list/fill_icon_thresholds = list(10,20,30,40,50,60,70,80,90,100)
+	var/static/list/fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	/// Inserted reagent container
 	var/obj/item/reagent_containers/beaker
 	/// Whether separated reagents should be moved back to container or destroyed.
@@ -101,7 +59,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_master/on_deconstruction()
+/obj/machinery/chem_master/on_deconstruction(disassembled)
 	replace_beaker()
 	return ..()
 
@@ -166,30 +124,36 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			. += filling
 
 /obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/chem_master/attackby(obj/item/item, mob/user, params)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
+/obj/machinery/chem_master/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance(UPDATE_ICON)
-		return
-	if(default_deconstruction_crowbar(item))
-		return
-	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
-		. = TRUE // No afterattack
-		var/obj/item/reagent_containers/beaker = item
-		replace_beaker(user, beaker)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/chem_master/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
+		replace_beaker(user, tool)
 		if(!panel_open)
 			ui_interact(user)
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
 
 /obj/machinery/chem_master/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+		return .
 	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
-		return
+		return .
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -213,9 +177,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /obj/machinery/chem_master/proc/load_printable_containers()
 	printable_containers = list(
-		CAT_TUBES = GLOB.chem_master_containers[CAT_TUBES],
-		CAT_PILLS = GLOB.chem_master_containers[CAT_PILLS],
-		CAT_PATCHES = GLOB.chem_master_containers[CAT_PATCHES],
+		CAT_TUBES = GLOB.reagent_containers[CAT_TUBES],
+		CAT_PILLS = GLOB.reagent_containers[CAT_PILLS],
+		CAT_PATCHES = GLOB.reagent_containers[CAT_PATCHES],
 	)
 
 /obj/machinery/chem_master/ui_assets(mob/user)
@@ -379,10 +343,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
+	var/datum/reagent/master_reagent = reagents.get_master_reagent()
 	if(selected_container == default_container) // Tubes and bottles gain reagent name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default]"
+		item_name_default = "[master_reagent.name] [item_name_default]"
 	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([volume_in_each]u)"
+		item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
 	var/item_name = tgui_input_text(usr,
 		"Container name",
 		"Name",
@@ -434,7 +399,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	if (target == TARGET_BUFFER)
 		if(!check_reactions(reagent, beaker.reagents))
 			return FALSE
-		beaker.reagents.trans_id_to(src, reagent.type, amount)
+		beaker.reagents.trans_to(src, amount, target_id = reagent.type)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -445,7 +410,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
 		if(!check_reactions(reagent, reagents))
 			return FALSE
-		reagents.trans_id_to(beaker, reagent.type, amount)
+		reagents.trans_to(beaker, amount, target_id = reagent.type)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -489,14 +454,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /obj/machinery/chem_master/condimaster/load_printable_containers()
 	printable_containers = list(
-		CAT_CONDIMENTS = GLOB.chem_master_containers[CAT_CONDIMENTS],
+		CAT_CONDIMENTS = GLOB.reagent_containers[CAT_CONDIMENTS],
 	)
 
 #undef TRANSFER_MODE_DESTROY
 #undef TRANSFER_MODE_MOVE
 #undef TARGET_BEAKER
 #undef TARGET_BUFFER
-#undef CAT_CONDIMENTS
-#undef CAT_TUBES
-#undef CAT_PILLS
-#undef CAT_PATCHES

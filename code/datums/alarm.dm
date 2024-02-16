@@ -201,4 +201,5 @@
 		for(var/area_name as anything in alarms_of_type)
 			var/list/alarm_packet = alarms_of_type[area_name]
 			var/list/cameras = alarm_packet[2]
-			cameras -= source // REF FOUND AND CLEARED BOYSSSS
+			if(cameras)
+				cameras -= source // REF FOUND AND CLEARED BOYSSSS

@@ -1,6 +1,7 @@
+import { multiline } from 'common/string';
+
 import { Antagonist, Category } from '../base';
 import { TRAITOR_MECHANICAL_DESCRIPTION } from './traitor';
-import { multiline } from 'common/string';
 
 const SyndicateSleeperAgent: Antagonist = {
   key: 'syndicatesleeperagent',

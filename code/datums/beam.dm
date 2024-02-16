@@ -41,7 +41,21 @@
 	/// If set will be used instead of targets's pixel_y in offset calculations
 	var/override_target_pixel_y = null
 
-/datum/beam/New(origin, target,	icon = 'icons/effects/beam.dmi', icon_state = "b_beam",	time = INFINITY, max_distance = INFINITY, beam_type = /obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null,	override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null)
+/datum/beam/New(
+	origin,
+	target,
+	icon = 'icons/effects/beam.dmi',
+	icon_state = "b_beam",
+	time = INFINITY,
+	max_distance = INFINITY,
+	beam_type = /obj/effect/ebeam,
+	beam_color = null,
+	emissive = TRUE,
+	override_origin_pixel_x = null,
+	override_origin_pixel_y = null,
+	override_target_pixel_x = null,
+	override_target_pixel_y = null,
+)
 	src.origin = origin
 	src.target = target
 	src.icon = icon
@@ -65,8 +79,7 @@
 	visuals.icon = icon
 	visuals.icon_state = icon_state
 	visuals.color = beam_color
-	visuals.layer = ABOVE_ALL_MOB_LAYER
-	visuals.vis_flags = VIS_INHERIT_PLANE
+	visuals.vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
 	visuals.emissive = emissive
 	visuals.update_appearance()
 	Draw()
@@ -166,6 +179,7 @@
 
 /obj/effect/ebeam
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 	var/emissive = TRUE
 	var/datum/beam/owner

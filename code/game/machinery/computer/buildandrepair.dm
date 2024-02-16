@@ -227,10 +227,44 @@
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(state == 4)
 			new /obj/item/shard(drop_location())
 			new /obj/item/shard(drop_location())
 		if(state >= 3)
 			new /obj/item/stack/cable_coil(drop_location(), 5)
 	..()
+
+/// Helpers for rcd
+/obj/structure/frame/computer/rcd
+	icon = 'icons/hud/radial.dmi'
+	icon_state = "cnorth"
+
+/obj/structure/frame/computer/rcd/Initialize(mapload)
+	name = "computer frame"
+	icon = 'icons/obj/devices/stock_parts.dmi'
+	icon_state = "0"
+
+	. = ..()
+
+	set_anchored(TRUE)
+
+/obj/structure/frame/computer/rcd/north
+	dir = NORTH
+	name = "Computer North"
+	icon_state = "cnorth"
+
+/obj/structure/frame/computer/rcd/south
+	dir = SOUTH
+	name = "Computer South"
+	icon_state = "csouth"
+
+/obj/structure/frame/computer/rcd/east
+	dir = EAST
+	name = "Computer East"
+	icon_state = "ceast"
+
+/obj/structure/frame/computer/rcd/west
+	dir = WEST
+	name = "Computer West"
+	icon_state = "cwest"

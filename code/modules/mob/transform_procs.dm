@@ -20,9 +20,11 @@
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
-	invisibility = INVISIBILITY_MAXIMUM
 
-	new /obj/effect/temp_visual/monkeyify(loc)
+	var/obj/effect = new /obj/effect/temp_visual/monkeyify(loc)
+	effect.SetInvisibility(invisibility)
+	SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
+
 	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_monkeyize)), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
 /mob/living/carbon/proc/finish_monkeyize()
@@ -30,7 +32,7 @@
 	to_chat(src, span_boldnotice("You are now a monkey."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
-	invisibility = 0
+	RemoveInvisibility(type)
 	set_species(/datum/species/monkey)
 	name = "monkey"
 	set_name()
@@ -57,9 +59,11 @@
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
-	invisibility = INVISIBILITY_MAXIMUM
 
-	new /obj/effect/temp_visual/monkeyify/humanify(loc)
+	var/obj/effect = new /obj/effect/temp_visual/monkeyify/humanify(loc)
+	effect.SetInvisibility(invisibility)
+	SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
+
 	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_humanize), species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
@@ -67,7 +71,7 @@
 	to_chat(src, span_boldnotice("You are now a human."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
-	invisibility = 0
+	RemoveInvisibility(type)
 	set_species(species)
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
@@ -117,14 +121,12 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
+	SetInvisibility(INVISIBILITY_MAXIMUM)
 	return ..()
 
 /mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	for(var/t in bodyparts)
-		qdel(t)
 
 	return ..()
 
@@ -135,7 +137,7 @@
 	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
 	new_borg.gender = gender
-	new_borg.invisibility = 0
+	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 	if(client)
 		new_borg.updatename(client)
@@ -169,14 +171,11 @@
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	Paralyze(1, ignore_canstun = TRUE)
 
-	for(var/obj/item/W in src)
-		if(delete_items)
-			qdel(W)
-		else
-			dropItemToGround(W)
+	drop_everything(delete_items)
+
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
+	SetInvisibility(INVISIBILITY_MAXIMUM)
 
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	return ..()
@@ -185,7 +184,7 @@
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
 	ghostize(FALSE)
 
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [src]?", "Cyborg", null, 5 SECONDS, src)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [src]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, target_mob = src, pic_source = src, role_name_text = "cyborg")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
 		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
@@ -201,7 +200,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
+	SetInvisibility(INVISIBILITY_MAXIMUM)
 	for(var/t in bodyparts)
 		qdel(t)
 
@@ -231,7 +230,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
+	SetInvisibility(INVISIBILITY_MAXIMUM)
 	for(var/t in bodyparts)
 		qdel(t)
 
@@ -270,7 +269,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
+	SetInvisibility(INVISIBILITY_MAXIMUM)
 	for(var/t in bodyparts) //this really should not be necessary
 		qdel(t)
 
@@ -297,8 +296,8 @@
 
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
+	SetInvisibility(INVISIBILITY_MAXIMUM)
+	var/mob/living/basic/gorilla/new_gorilla = new (get_turf(src))
 	new_gorilla.set_combat_mode(TRUE)
 	if(mind)
 		mind.transfer_to(new_gorilla)
@@ -328,7 +327,7 @@
 
 	regenerate_icons()
 	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
+	SetInvisibility(INVISIBILITY_MAXIMUM)
 
 	for(var/t in bodyparts)
 		qdel(t)
@@ -372,11 +371,11 @@
 	if(!MP)
 		return FALSE //Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
+	if(ispath(MP, /mob/living/basic/construct))
 		return FALSE //Verbs do not appear for players.
 
 //Good mobs!
-	if(ispath(MP, /mob/living/simple_animal/pet/cat))
+	if(ispath(MP, /mob/living/basic/pet/cat))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
@@ -386,7 +385,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/mushroom))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/shade))
+	if(ispath(MP, /mob/living/basic/shade))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/killer_tomato))
 		return TRUE
@@ -394,7 +393,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/bear))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/parrot))
+	if(ispath(MP, /mob/living/basic/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!

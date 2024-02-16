@@ -50,18 +50,23 @@
 		to_chat(user, span_warning("Not enough left!"))
 		return
 
-	spray(target, user)
+	if(proximity_flag && (target.density || ismob(target)))
+		// If we're spraying an adjacent mob or a dense object, we start the spray on ITS tile rather than OURs
+		// This is so we can use a spray bottle to clean stuff like windows without getting blocked by passflags
+		spray(target, user, get_turf(target))
+	else
+		spray(target, user)
 
-	playsound(src.loc, spray_sound, 50, TRUE, -6)
+	playsound(src, spray_sound, 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(target, user))
 	return
 
 /// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.
-/obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user)
+/obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user, turf/start_turf = get_turf(src))
 	var/range = max(min(current_range, get_dist(src, target)), 1)
 
-	var/obj/effect/decal/chempuff/reagent_puff = new /obj/effect/decal/chempuff(get_turf(src))
+	var/obj/effect/decal/chempuff/reagent_puff = new(start_turf)
 
 	reagent_puff.create_reagents(amount_per_transfer_from_this)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
@@ -74,9 +79,7 @@
 	var/wait_step = max(round(2+3/range), 2)
 
 	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
-	var/turf/src_turf = get_turf(src)
-
-	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
+	log_combat(user, start_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
 	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
 
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
@@ -84,11 +87,20 @@
 
 /// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
-	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src
 	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
+
+	var/turf/target_turf = get_turf(target)
+	var/turf/start_turf = get_turf(reagent_puff)
+	if(target_turf == start_turf) // Don't need to bother movelooping if we don't move
+		reagent_puff.setDir(user.dir)
+		reagent_puff.spray_down_turf(target_turf)
+		reagent_puff.end_life()
+		return
+
+	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	reagent_puff.RegisterSignal(our_loop, COMSIG_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
 	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
@@ -181,7 +193,7 @@
 	if(do_after(user, 3 SECONDS, user))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message(span_suicide("[user] pulls the trigger!"))
-			spray(user)
+			spray(user, user)
 			return BRUTELOSS
 		else
 			user.visible_message(span_suicide("[user] pulls the trigger...but \the [src] is empty!"))

@@ -8,25 +8,6 @@
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
-
-/**
- * force move the control_object of your client mob
- *
- * Used in admin possession and called from the client Move proc
- * ensures the possessed object moves and not the admin mob
- *
- * Has no sanity other than checking density
- */
-/client/proc/Move_object(direct)
-	if(mob?.control_object)
-		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)
-				return
-			mob.control_object.setDir(direct)
-		else
-			mob.control_object.forceMove(get_step(mob.control_object,direct))
-
 /**
  * Move a client in a direction
  *
@@ -76,9 +57,9 @@
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
 		return FALSE //This is sorta the goto stop mobs from moving trait
-	if(mob.control_object)
-		return Move_object(direct)
 	if(!isliving(mob))
+		if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE)
+			return FALSE
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
@@ -95,7 +76,8 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(new_loc,direct,mob)
+		var/mob/living/silicon/ai/smoovin_ai = mob
+		return smoovin_ai.AIMove(direct)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
@@ -132,7 +114,7 @@
 	//Basically an optional override for our glide size
 	//Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
-	var/old_dir = dir
+	var/old_dir = mob.dir
 
 	. = ..()
 
@@ -253,9 +235,9 @@
 				if(salt)
 					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
-						var/mob/living/simple_animal/revenant/R = L
-						R.reveal(20)
-						R.stun(20)
+						var/mob/living/basic/revenant/ghostie = L
+						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
+						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))
@@ -367,9 +349,11 @@
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
 
+	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, force_drop)
+
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
-//9: eyes 8: head 7: mouth
+//7: mouth 8: head  9: eyes
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
@@ -378,12 +362,12 @@
 	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
 
 /**
- * Hidden verb to set the target zone of a mob to the head
+ * Hidden verbs to set desired body target zone
  *
- * (bound to 8) - repeated presses toggles through head - eyes - mouth
+ * Uses numpad keys 1-9
  */
 
-///Hidden verb to target the head, bound to 8
+///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = TRUE
@@ -402,6 +386,17 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
+
+///Hidden verb to target the head, unbound by default.
+/client/verb/body_head()
+	set name = "body-head"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
 ///Hidden verb to target the eyes, bound to 7
 /client/verb/body_eyes()
@@ -520,10 +515,12 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
+	if(remote_control)
+		return remote_control.relaymove(src, UP)
+
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(!above_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -531,6 +528,8 @@
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
+
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 
 	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
 		if(buckled)
@@ -547,8 +546,12 @@
 	set name = "Move Down"
 	set category = "IC"
 
+	if(remote_control)
+		return remote_control.relaymove(src, DOWN)
+
 	var/turf/current_turf = get_turf(src)
 	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
 	if(!below_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -558,6 +561,7 @@
 		return loc_atom.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
 	return FALSE

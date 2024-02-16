@@ -3,6 +3,7 @@
 	desc = "An energy shield used to contain hull breaches."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
+	integrity_failure = 0.5
 	density = TRUE
 	move_resist = INFINITY
 	opacity = FALSE
@@ -97,7 +98,6 @@
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 
 /obj/structure/emergency_shield/cult/barrier
 	density = FALSE //toggled on right away by the parent rune
@@ -130,9 +130,10 @@
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	set_density(!density)
 	air_update_turf(TRUE, !density)
-	invisibility = initial(invisibility)
 	if(!density)
-		invisibility = INVISIBILITY_OBSERVER
+		SetInvisibility(INVISIBILITY_OBSERVER, id=type)
+	else
+		RemoveInvisibility(type)
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -181,11 +182,6 @@
 	if((machine_stat & BROKEN) && active)
 		if(deployed_shields.len && SPT_PROB(2.5, seconds_per_tick))
 			qdel(pick(deployed_shields))
-
-
-/obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	atom_break()
-	locked = pick(0,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
@@ -289,16 +285,23 @@
 	desc = "A shield generator."
 	icon = 'icons/obj/machines/shield_generator.dmi'
 	icon_state = "shield_wall_gen"
+	base_icon_state = "shield_wall_gen"
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	use_power = NO_POWER_USE
+	active_power_usage = 150
+	circuit = /obj/item/circuitboard/machine/shieldwallgen
 	max_integrity = 300
+	/// whether the shield generator is active, ACTIVE_SETUPFIELDS will make it search for generators on process, and if that is successful, is set to ACTIVE_HASFIELDS
 	var/active = FALSE
+	/// are we locked?
 	var/locked = TRUE
+	/// how far do we seek another generator in our cardinal directions
 	var/shield_range = 8
-	var/obj/structure/cable/attached // the attached cable
+	/// the attached cable under us
+	var/obj/structure/cable/attached
 
 /obj/machinery/power/shieldwallgen/xenobiologyaccess //use in xenobiology containment
 	name = "xenobiology shield wall generator"
@@ -320,6 +323,17 @@
 	if(anchored)
 		connect_to_network()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
+	set_wires(new /datum/wires/shieldwallgen(src))
+
+/obj/machinery/power/shieldwallgen/update_icon_state()
+	icon_state = "[base_icon_state][active ? "_on" : ""]"
+	return ..()
+
+/obj/machinery/power/shieldwallgen/update_overlays()
+	. = ..()
+	if(!panel_open)
+		return
+	. += "shieldgen_wires"
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -336,7 +350,6 @@
 
 /obj/machinery/power/shieldwallgen/process()
 	if(active)
-		icon_state = "shield_wall_gen_on"
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
 			for(var/d in GLOB.cardinals)
@@ -344,19 +357,20 @@
 					fields++
 			if(fields)
 				active = ACTIVE_HASFIELDS
+			update_appearance()
 		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 		else
-			visible_message(span_danger("The [src.name] shuts down due to lack of power!"), \
+			visible_message(span_danger("[src] shuts down due to lack of power!"), \
 				"If this message is ever seen, something is wrong.",
 				span_hear("You hear heavy droning fade out."))
-			icon_state = "shield_wall_gen"
 			active = FALSE
 			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
+			update_appearance()
 	else
-		icon_state = "shield_wall_gen"
+		update_appearance()
 		for(var/d in GLOB.cardinals)
 			cleanup_field(d)
 
@@ -421,40 +435,58 @@
 
 
 /obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	. |= default_unfasten_wrench(user, tool, time = 0)
-	var/turf/T = get_turf(src)
-	update_cable_icons_on_turf(T)
-	if(. == SUCCESSFUL_UNFASTEN && anchored)
+	var/unfasten_result = default_unfasten_wrench(user, tool, time = 0)
+	update_cable_icons_on_turf(get_turf(src))
+	if(unfasten_result == SUCCESSFUL_UNFASTEN && anchored)
 		connect_to_network()
+	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/power/shieldwallgen/screwdriver_act(mob/user, obj/item/tool)
+	if(!panel_open && locked)
+		balloon_alert(user, "unlock first!")
+		return
+	update_appearance(UPDATE_OVERLAYS)
+	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+
+/obj/machinery/power/shieldwallgen/crowbar_act(mob/user, obj/item/tool)
+	if(active)
+		return
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
+	. = ..()
 	if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
-			to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+			balloon_alert(user, "[locked ? "locked!" : "unlocked"]")
 		else if(obj_flags & EMAGGED)
-			to_chat(user, span_danger("Error, access controller damaged!"))
+			balloon_alert(user, "malfunctioning!")
 		else
-			to_chat(user, span_danger("Access denied."))
+			balloon_alert(user, "no access!")
 
-	else
-		add_fingerprint(user)
-		return ..()
+		return
+
+	add_fingerprint(user)
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
+		return
+
 
 /obj/machinery/power/shieldwallgen/interact(mob/user)
 	. = ..()
 	if(.)
 		return
 	if(!anchored)
-		to_chat(user, span_warning("\The [src] needs to be firmly secured to the floor first!"))
+		balloon_alert(user, "not secured!")
 		return
 	if(locked && !issilicon(user))
-		to_chat(user, span_warning("The controls are locked!"))
+		balloon_alert(user, "locked!")
 		return
 	if(!powernet)
-		to_chat(user, span_warning("\The [src] needs to be powered by a wire!"))
+		balloon_alert(user, "needs to be powered by wire!")
+		return
+	if(panel_open)
+		balloon_alert(user, "panel open!")
 		return
 
 	if(active)
@@ -504,7 +536,7 @@
 	for(var/mob/living/L in get_turf(src))
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-		L.gib()
+		L.gib(DROP_ALL_REMAINS)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 
 /obj/machinery/shieldwall/Destroy()

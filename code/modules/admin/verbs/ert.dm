@@ -121,7 +121,7 @@
 		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		var/index = 0
 
-		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", check_jobban = "deathsquad", pic_source = /obj/item/card/id/advanced/centcom/ert, role_name_text = "emergency response team")
 		var/teamSpawned = FALSE
 
 		// This list will take priority over spawnpoints if not empty

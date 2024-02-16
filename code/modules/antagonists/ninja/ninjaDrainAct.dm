@@ -354,7 +354,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 0, 1, 2, 3), 2.5 SECONDS)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/mob/living/simple_animal/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/mob/living/basic/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/static/list/death_cry = list(
 		MEDIBOT_VOICED_NO_SAD,
 		MEDIBOT_VOICED_OH_FUCK,
@@ -432,7 +432,7 @@
 		balloon_alert(ninja, "tram is already malfunctioning!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(specific_lift_id != MAIN_STATION_TRAM)
+	if(specific_transport_id != TRAMSTATION_LINE_1)
 		balloon_alert(ninja, "cannot hack this tram!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -443,7 +443,11 @@
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
 	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	malfunction_event.end_when *= 3
+	malfunction_event.end_when *= 2
+	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
+		// Since faults are now used instead of straight event end_when var, we make a few of them malfunction
+		if(prob(rand(15, 30)))
+			sensor.local_fault()
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

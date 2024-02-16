@@ -4,7 +4,7 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 0
-	spawn_positions = 1
+	spawn_positions = 3
 	supervisors = "your laws and the AI" //Nodrak
 	spawn_type = /mob/living/silicon/robot
 	minimal_player_age = 21
@@ -32,5 +32,5 @@
 	if(!robot_spawn.connected_ai) // Only log if there's no Master AI
 		robot_spawn.log_current_laws()
 
-/datum/job/cyborg/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>")
+/datum/job/cyborg/get_radio_information()
+	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"

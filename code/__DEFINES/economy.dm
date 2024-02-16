@@ -15,10 +15,7 @@
 ///Paygrade for Heads of Staff.
 #define PAYCHECK_COMMAND 100
 
-//How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
-#define LATHE_TAX 10
-//How much POWER a borg's cell is taxed if they print something from a departmental lathe.
-#define SILICON_LATHE_TAX 2000
+
 
 #define STATION_TARGET_BUFFER 25
 
@@ -73,3 +70,30 @@
 #define PAYMENT_CLINICAL "clinical"
 #define PAYMENT_FRIENDLY "friendly"
 #define PAYMENT_ANGRY "angry"
+
+#define MARKET_TREND_UPWARD 1
+#define MARKET_TREND_DOWNWARD -1
+#define MARKET_TREND_STABLE 0
+
+#define MARKET_EVENT_PROBABILITY 1 //Probability of a market event firing, in percent. Fires once per material, every 20 seconds.
+
+#define MARKET_PROFIT_MODIFIER 0.8 //We don't make every sale a 1-1 of the actual buy price value, like with real life taxes and to encourage more smart trades
+
+/// Create quantity subtypes for stock market datums.
+#define MARKET_QUANTITY_HELPERS(path) ##path/one {\
+	amount = 1; \
+} \
+##path/five {\
+	amount = 5; \
+} \
+##path/ten {\
+	amount = 10; \
+} \
+##path/twenty_five {\
+	amount = 25; \
+} \
+##path/fifty {\
+	amount = 50; \
+}
+
+

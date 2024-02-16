@@ -16,12 +16,14 @@
 	on_drop = on_drop_callback
 
 /datum/component/wall_mounted/RegisterWithParent()
+	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(hanging_wall_turf, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(drop_wallmount))
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(drop_wallmount))
+	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_linked_destroyed))
 
 /datum/component/wall_mounted/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	UnregisterSignal(hanging_wall_turf, list(COMSIG_ATOM_EXAMINE, COMSIG_TURF_CHANGE))
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	hanging_wall_turf = null
@@ -42,6 +44,26 @@
 	examine_list += span_notice("\The [hanging_wall_turf] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /**
+ * When the type of turf changes, if it is changing into a floor we should drop our contents
+ */
+/datum/component/wall_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+	SIGNAL_HANDLER
+	if (ispath(path, /turf/open))
+		drop_wallmount()
+
+
+/**
+ * If we get dragged from our wall (by a singulo for instance) we should deconstruct
+ */
+/datum/component/wall_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+	// If we're having our lighting messed with we're likely to get dragged about
+	// That shouldn't lead to a decon
+	if(HAS_TRAIT(parent, TRAIT_LIGHTING_DEBUGGED))
+		return
+	drop_wallmount()
+
+/**
  * Handles the dropping of the linked object. This is done via deconstruction, as that should be the most sane way to handle it for most objects.
  * Except for intercoms, which are handled by creating a new wallframe intercom, as they're apparently items.
  */
@@ -58,6 +80,7 @@
 
 	if(!QDELING(src))
 		qdel(src) //Well, we fell off the wall, so we're done here.
+
 /**
  *	Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_mounted component to the object.
  *

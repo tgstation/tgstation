@@ -18,18 +18,17 @@
 	update_appearance()
 
 /obj/machinery/shuttle_scrambler/process()
-	if(active)
-		if(is_station_level(z))
-			var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(account)
-				var/siphoned = min(account.account_balance,siphon_per_tick)
-				account.adjust_money(-siphoned)
-				credits_stored += siphoned
-			interrupt_research()
-		else
-			return
-	else
-		STOP_PROCESSING(SSobj,src)
+	if(!active)
+		return PROCESS_KILL
+
+	if(!is_station_level(z))
+		return
+
+	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/siphoned = min(account.account_balance,siphon_per_tick)
+	account.adjust_money(-siphoned)
+	credits_stored += siphoned
+	interrupt_research()
 
 ///Turns on the siphoning, and its various side effects
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
@@ -217,9 +216,13 @@
 	var/cargo_hold_id
 	///Interface name for the ui_interact call for different subtypes.
 	var/interface_type = "CargoHoldTerminal"
+	///Typecache of things that shouldn't be sold and shouldn't have their contents sold.
+	var/static/list/nosell_typecache
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
+	if(isnull(nosell_typecache))
+		nosell_typecache = typecacheof(/mob/living/silicon/robot)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -285,7 +288,7 @@
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = report)
+		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = report, ignore_typecache = nosell_typecache)
 
 	for(var/datum/export/exported_datum in report.total_amount)
 		status_report += exported_datum.total_printout(report,notes = FALSE)
@@ -306,7 +309,7 @@
 	for(var/atom/movable/item_on_pad in get_turf(pad))
 		if(item_on_pad == pad)
 			continue
-		export_item_and_contents(item_on_pad, apply_elastic = FALSE, delete_unsold = FALSE, external_report = report)
+		export_item_and_contents(item_on_pad, apply_elastic = FALSE, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache)
 
 	status_report = "Sold: "
 	var/value = 0
@@ -392,7 +395,7 @@
 		return 0
 	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
-	else if(ransomee.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	else if(HAS_TRAIT(ransomee, TRAIT_HIGH_VALUE_RANSOM))
 		return 3000
 	else
 		return 1000
@@ -400,10 +403,10 @@
 /datum/export/pirate/parrot
 	cost = 2000
 	unit_name = "alive parrot"
-	export_types = list(/mob/living/simple_animal/parrot)
+	export_types = list(/mob/living/basic/parrot)
 
 /datum/export/pirate/parrot/find_loot()
-	for(var/mob/living/simple_animal/parrot/current_parrot in GLOB.alive_mob_list)
+	for(var/mob/living/basic/parrot/current_parrot in GLOB.alive_mob_list)
 		var/turf/parrot_turf = get_turf(current_parrot)
 		if(parrot_turf && is_station_level(parrot_turf.z))
 			return current_parrot

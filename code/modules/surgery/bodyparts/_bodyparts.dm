@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/human/bodyparts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 //actually mindblowing
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
@@ -16,10 +17,12 @@
 	VAR_PROTECTED/icon_invisible = 'icons/mob/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
+	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
+	var/husk_color = "#A6A6A6"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	/// The mob that "owns" this limb
-	/// DO NOT MODIFY DIRECTLY. Use set_owner()
+	/// DO NOT MODIFY DIRECTLY. Use update_owner()
 	var/mob/living/carbon/owner
 
 	/// If this limb can be scarred.
@@ -76,7 +79,7 @@
 
 	// Damage variables
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
-	var/body_damage_coeff = 1
+	var/body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_TOTAL
 	///The current amount of brute damage the limb has
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
@@ -126,7 +129,6 @@
 	var/list/damage_examines = list(
 		BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT,
 		BURN = DEFAULT_BURN_EXAMINE_TEXT,
-		CLONE = DEFAULT_CLONE_EXAMINE_TEXT,
 	)
 
 	// Wounds related variables
@@ -152,13 +154,10 @@
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
-	var/obj/item/stack/current_gauze
+	var/obj/item/stack/medical/gauze/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
-	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
-	///If someone ever comes around to making all organs exist in the bodyparts, you can just remove this and use a typed loop
-	var/list/obj/item/organ/external/external_organs = list()
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
 
@@ -166,6 +165,8 @@
 	var/attack_type = BRUTE
 	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
 	var/unarmed_attack_verb = "bump"
+	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
+	var/grappled_attack_verb
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack
@@ -175,8 +176,8 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Damage at which attacks from this bodypart will stun
-	var/unarmed_stun_threshold = 2
+	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	var/unarmed_effectiveness = 10
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 
@@ -215,7 +216,6 @@
 	wound_resistance = reset_fantasy_variable("wound_resistance", wound_resistance)
 	return ..()
 
-
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
 	if(can_be_disabled)
@@ -232,31 +232,40 @@
 	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
-	if(owner)
-		owner.remove_bodypart(src)
-		set_owner(null)
+	if(owner && !QDELETED(owner))
+		forced_removal(special = FALSE, dismembered = TRUE, move_to_floor = FALSE)
+		update_owner(null)
 	for(var/wound in wounds)
 		qdel(wound) // wounds is a lazylist, and each wound removes itself from it on deletion.
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
 
-	if(length(external_organs))
-		for(var/obj/item/organ/external/external_organ as anything in external_organs)
-			external_organs -= external_organ
-			qdel(external_organ) // It handles removing its references to this limb on its own.
+	owner = null
 
-		external_organs = list()
+	for(var/atom/movable/movable in contents)
+		qdel(movable)
+
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
 
-/obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
-	SHOULD_CALL_PARENT(TRUE)
+/obj/item/bodypart/ex_act(severity, target)
+	if(owner) //trust me bro you dont want this
+		return FALSE
+	return  ..()
 
-	. = ..()
-	if(isturf(destination))
-		update_icon_dropped()
+
+/obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	forced_removal(special = FALSE, dismembered = TRUE, move_to_floor = FALSE)
+
+/// In-case someone, somehow only teleports someones limb
+/obj/item/bodypart/proc/forced_removal(special, dismembered, move_to_floor)
+	drop_limb(special, dismembered, move_to_floor)
+
+	update_icon_dropped()
 
 /obj/item/bodypart/examine(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
@@ -345,7 +354,6 @@
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
 		check_list += "\t <a href='?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
-
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
 
@@ -404,31 +412,24 @@
 	var/atom/drop_loc = drop_location()
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
-	seep_gauze(9999) // destroy any existing gauze if any exists
-	for(var/obj/item/organ/bodypart_organ in get_organs())
-		bodypart_organ.transfer_to_limb(src, owner)
-	for(var/obj/item/organ/external/external in external_organs)
-		external.remove_from_limb()
-		external.forceMove(drop_loc)
-	for(var/obj/item/item_in_bodypart in src)
-		item_in_bodypart.forceMove(drop_loc)
+
+	QDEL_NULL(current_gauze)
+
+	for(var/obj/item/organ/bodypart_organ in contents)
+		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		if(owner)
+			bodypart_organ.Remove(bodypart_organ.owner)
+		else
+			if(bodypart_organ.bodypart_remove(src))
+				if(drop_loc) //can be null if being deleted
+					bodypart_organ.forceMove(get_turf(drop_loc))
+
+	if(drop_loc) //can be null during deletion
+		for(var/atom/movable/movable as anything in src)
+			movable.forceMove(drop_loc)
 
 	update_icon_dropped()
-
-///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
-/obj/item/bodypart/proc/get_organs()
-	SHOULD_CALL_PARENT(TRUE)
-	RETURN_TYPE(/list)
-
-	if(!owner)
-		return FALSE
-
-	var/list/bodypart_organs
-	for(var/obj/item/organ/organ_check as anything in owner.organs) //internal organs inside the dismembered limb are dropped.
-		if(check_zone(organ_check.zone) == body_zone)
-			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
-
-	return bodypart_organs
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
@@ -452,16 +453,20 @@
  * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
  * damage_source - The source of damage, typically a weapon.
  */
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/hit_percent = (100-blocked)/100
+	var/hit_percent = forced ? 1 : (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)
 		return FALSE
-	if(owner && (owner.status_flags & GODMODE))
-		return FALSE	//godmode
-	if(required_bodytype && !(bodytype & required_bodytype))
-		return FALSE
+	if (!forced)
+		if(!isnull(owner))
+			if (owner.status_flags & GODMODE)
+				return FALSE
+			if (SEND_SIGNAL(owner, COMSIG_CARBON_LIMB_DAMAGED, src, brute, burn) & COMPONENT_PREVENT_LIMB_DAMAGE)
+				return FALSE
+		if(required_bodytype && !(bodytype & required_bodytype))
+			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
@@ -632,10 +637,10 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, required_bodytype, updating_health = TRUE)
+/obj/item/bodypart/proc/heal_damage(brute, burn, updating_health = TRUE, forced = FALSE, required_bodytype)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(!forced && required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	if(brute)
@@ -651,7 +656,6 @@
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
-
 ///Sets the damage of a bodypart when it is created.
 /obj/item/bodypart/proc/set_initial_damage(brute_damage, burn_damage)
 	set_brute_dam(brute_damage)
@@ -666,7 +670,6 @@
 	. = brute_dam
 	brute_dam = new_value
 
-
 ///Proc to hook behavior associated to the change of the burn_dam variable's value.
 /obj/item/bodypart/proc/set_burn_dam(new_value)
 	PROTECTED_PROC(TRUE)
@@ -678,8 +681,7 @@
 
 //Returns total damage.
 /obj/item/bodypart/proc/get_damage()
-	var/total = brute_dam + burn_dam
-	return total
+	return brute_dam + burn_dam
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()
@@ -722,7 +724,6 @@
 		last_maxed = FALSE
 		set_disabled(FALSE)
 
-
 ///Proc to change the value of the `disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_disabled(new_disabled)
 	SHOULD_CALL_PARENT(TRUE)
@@ -738,71 +739,91 @@
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 
+/// Proc to change the value of the `owner` variable and react to the event of its change.
+/obj/item/bodypart/proc/update_owner(new_owner)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-///Proc to change the value of the `owner` variable and react to the event of its change.
-/obj/item/bodypart/proc/set_owner(new_owner)
-	SHOULD_CALL_PARENT(TRUE)
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
-	var/mob/living/carbon/old_owner = owner
-	owner = new_owner
-	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, old_owner)
-	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
-	if(old_owner)
-		if(held_index)
-			old_owner.on_lost_hand(src)
-			if(old_owner.hud_used)
-				var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots["[held_index]"]
-				if(hand)
-					hand.update_appearance()
-			old_owner.update_worn_gloves()
-		if(speed_modifier)
-			old_owner.update_bodypart_speed_modifier()
-		if(length(bodypart_traits))
-			old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
-		if(initial(can_be_disabled))
-			if(HAS_TRAIT(old_owner, TRAIT_NOLIMBDISABLE))
-				if(!owner || !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
-					set_can_be_disabled(initial(can_be_disabled))
-					needs_update_disabled = TRUE
-			UnregisterSignal(old_owner, list(
-				SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
-				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
-				SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
-				SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
-				))
-		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, owner)
+
 	if(owner)
-		if(held_index)
-			owner.on_added_hand(src, held_index)
-			if(owner.hud_used)
-				var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
-				if(hand)
-					hand.update_appearance()
-			owner.update_worn_gloves()
-		if(speed_modifier)
-			owner.update_bodypart_speed_modifier()
-		if(length(bodypart_traits))
-			owner.add_traits(bodypart_traits, bodypart_trait_source)
-		if(initial(can_be_disabled))
-			if(HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
-				set_can_be_disabled(FALSE)
-				needs_update_disabled = FALSE
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE), PROC_REF(on_owner_nolimbdisable_trait_loss))
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), PROC_REF(on_owner_nolimbdisable_trait_gain))
-			// Bleeding stuff
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_loss))
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_gain))
-
-		if(needs_update_disabled)
-			update_disabled()
-
-		RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
+		. = owner //return value is old owner
+		clear_ownership(owner)
+	if(new_owner)
+		apply_ownership(new_owner)
 
 	refresh_bleed_rate()
-	return old_owner
+	return .
 
-/obj/item/bodypart/proc/on_removal()
+/// Run all necessary procs to remove a limbs ownership and remove the appropriate signals and traits
+/obj/item/bodypart/proc/clear_ownership(mob/living/carbon/old_owner)
+	SHOULD_CALL_PARENT(TRUE)
+
+	owner = null
+
+	if(speed_modifier)
+		old_owner.update_bodypart_speed_modifier()
+	if(length(bodypart_traits))
+		old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
+
+	UnregisterSignal(old_owner, list(
+		SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
+	SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
+		SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
+		SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
+		))
+
+	UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
+
+/// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
+/obj/item/bodypart/proc/apply_ownership(mob/living/carbon/new_owner)
+	SHOULD_CALL_PARENT(TRUE)
+
+	owner = new_owner
+
+	if(speed_modifier)
+		owner.update_bodypart_speed_modifier()
+	if(length(bodypart_traits))
+		owner.add_traits(bodypart_traits, bodypart_trait_source)
+
+	if(initial(can_be_disabled))
+		if(HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
+			set_can_be_disabled(FALSE)
+
+		// Listen to disable traits being added
+		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE), PROC_REF(on_owner_nolimbdisable_trait_loss))
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), PROC_REF(on_owner_nolimbdisable_trait_gain))
+
+		// Listen to no blood traits being added
+		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_loss))
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_gain))
+
+	if(can_be_disabled)
+		update_disabled()
+
+	RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
+
+	forceMove(owner)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal)) //this must be set after we moved, or we insta gib
+
+/// Called on addition of a bodypart
+/obj/item/bodypart/proc/on_adding(mob/living/carbon/new_owner)
+	SHOULD_CALL_PARENT(TRUE)
+
+	item_flags |= ABSTRACT
+	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
+
+/// Called on removal of a bodypart.
+/obj/item/bodypart/proc/on_removal(mob/living/carbon/old_owner)
+	SHOULD_CALL_PARENT(TRUE)
+
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+	item_flags &= ~ABSTRACT
+	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
+
 	if(!length(bodypart_traits))
 		return
 
@@ -832,7 +853,6 @@
 				))
 		set_disabled(FALSE)
 
-
 ///Called when TRAIT_PARALYSIS is added to the limb.
 /obj/item/bodypart/proc/on_paralysis_trait_gain(obj/item/bodypart/source)
 	PROTECTED_PROC(TRUE)
@@ -840,7 +860,6 @@
 
 	if(can_be_disabled)
 		set_disabled(TRUE)
-
 
 ///Called when TRAIT_PARALYSIS is removed from the limb.
 /obj/item/bodypart/proc/on_paralysis_trait_loss(obj/item/bodypart/source)
@@ -850,14 +869,12 @@
 	if(can_be_disabled)
 		update_disabled()
 
-
 ///Called when TRAIT_NOLIMBDISABLE is added to the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_gain(mob/living/carbon/source)
 	PROTECTED_PROC(TRUE)
 	SIGNAL_HANDLER
 
 	set_can_be_disabled(FALSE)
-
 
 ///Called when TRAIT_NOLIMBDISABLE is removed from the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_loss(mob/living/carbon/source)
@@ -885,7 +902,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
-		if(owner && HAS_TRAIT(owner, TRAIT_HUSK))
+		if(!(bodypart_flags & BODYPART_UNHUSKABLE) && owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
 		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
@@ -941,8 +958,8 @@
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/img as anything in standing)
-		img.pixel_x = px_x
-		img.pixel_y = px_y
+		img.pixel_x += px_x
+		img.pixel_y += px_y
 	add_overlay(standing)
 
 ///Generates an /image for the limb to be used as an overlay
@@ -966,16 +983,6 @@
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 
-	// Handles making bodyparts look husked
-	if(is_husked)
-		limb.icon = icon_husk
-		limb.icon_state = "[husk_type]_husk_[body_zone]"
-		icon_exists(limb.icon, limb.icon_state, scream = TRUE) //Prints a stack trace on the first failure of a given iconstate.
-		. += limb
-		if(aux_zone) //Hand shit
-			aux = image(limb.icon, "[husk_type]_husk_[aux_zone]", -aux_layer, image_dir)
-			. += aux
-
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
 		limb.icon = icon_invisible
@@ -984,38 +991,42 @@
 		return .
 
 	// Normal non-husk handling
-	if(!is_husked)
 		// This is the MEAT of limb icon code
-		limb.icon = icon_greyscale
-		if(!should_draw_greyscale || !icon_greyscale)
-			limb.icon = icon_static
+	limb.icon = icon_greyscale
+	if(!should_draw_greyscale || !icon_greyscale)
+		limb.icon = icon_static
 
-		if(is_dimorphic) //Does this type of limb have sexual dimorphism?
-			limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
-		else
-			limb.icon_state = "[limb_id]_[body_zone]"
+	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
+		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
+	else
+		limb.icon_state = "[limb_id]_[body_zone]"
 
-		icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
+	icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
 
-		. += limb
+	. += limb
 
-		if(aux_zone) //Hand shit
-			aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
-			. += aux
+	if(aux_zone) //Hand shit
+		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
+		. += aux
+	draw_color = variable_color
+	if(should_draw_greyscale) //Should the limb be colored outside of a forced color?
+		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
 
-		draw_color = variable_color
-		if(should_draw_greyscale) //Should the limb be colored outside of a forced color?
-			draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
-
-		if(draw_color)
-			limb.color = "[draw_color]"
-			if(aux_zone)
-				aux.color = "[draw_color]"
+	if(is_husked)
+		huskify_image(thing_to_husk = limb)
+		if(aux)
+			huskify_image(thing_to_husk = aux)
+		draw_color = husk_color
+	if(draw_color)
+		limb.color = "[draw_color]"
+		if(aux_zone)
+			aux.color = "[draw_color]"
 
 		//EMISSIVE CODE START
 		// For some reason this was applied as an overlay on the aux image and limb image before.
 		// I am very sure that this is unnecessary, and i need to treat it as part of the return list
 		// to be able to mask it proper in case this limb is a leg.
+	if(!is_husked)
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			var/atom/location = loc || owner || src
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
@@ -1050,6 +1061,17 @@
 					. += overlay.get_overlay(external_layer, src)
 
 	return .
+
+/obj/item/bodypart/proc/huskify_image(image/thing_to_husk, draw_blood = TRUE)
+	var/icon/husk_icon = new(thing_to_husk.icon)
+	husk_icon.ColorTone(HUSK_COLOR_TONE)
+	thing_to_husk.icon = husk_icon
+	if(draw_blood)
+		var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]")
+		husk_blood.blend_mode = BLEND_INSET_OVERLAY
+		husk_blood.appearance_flags |= RESET_COLOR
+		husk_blood.dir = thing_to_husk.dir
+		thing_to_husk.add_overlay(husk_blood)
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay)
@@ -1178,12 +1200,12 @@
 		if(BLEED_OVERLAY_LOW to BLEED_OVERLAY_MED)
 			new_bleed_icon = "[body_zone]_1"
 		if(BLEED_OVERLAY_MED to BLEED_OVERLAY_GUSH)
-			if(owner.body_position == LYING_DOWN || IS_IN_STASIS(owner) || owner.stat == DEAD)
+			if(owner.body_position == LYING_DOWN || HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 				new_bleed_icon = "[body_zone]_2s"
 			else
 				new_bleed_icon = "[body_zone]_2"
 		if(BLEED_OVERLAY_GUSH to INFINITY)
-			if(IS_IN_STASIS(owner) || owner.stat == DEAD)
+			if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 				new_bleed_icon = "[body_zone]_2s"
 			else
 				new_bleed_icon = "[body_zone]_3"
@@ -1212,17 +1234,18 @@
  * Arguments:
  * * gauze- Just the gauze stack we're taking a sheet from to apply here
  */
-/obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
-	if(!istype(gauze) || !gauze.absorption_capacity)
+/obj/item/bodypart/proc/apply_gauze(obj/item/stack/medical/gauze/new_gauze)
+	if(!istype(new_gauze) || !new_gauze.absorption_capacity)
 		return
 	var/newly_gauzed = FALSE
 	if(!current_gauze)
 		newly_gauzed = TRUE
 	QDEL_NULL(current_gauze)
-	current_gauze = new gauze.type(src, 1)
-	gauze.use(1)
+	current_gauze = new new_gauze.type(src, 1)
+	new_gauze.use(1)
+	current_gauze.gauzed_bodypart = src
 	if(newly_gauzed)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, gauze)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, current_gauze, new_gauze)
 
 /**
  * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
@@ -1239,7 +1262,6 @@
 	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message(span_danger("\The [current_gauze.name] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze.name] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 
 ///Loops through all of the bodypart's external organs and update's their color.
 /obj/item/bodypart/proc/recolor_external_organs()
@@ -1287,9 +1309,10 @@
 	else
 		update_icon_dropped()
 
+// Note: Does NOT return EMP protection value from parent call or pass it on to subtypes
 /obj/item/bodypart/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
+	var/protection = ..()
+	if((protection & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
 	// with defines at the time of writing, this is 2 brute and 1.5 burn
@@ -1306,16 +1329,14 @@
 		burn_damage *= 2
 
 	receive_damage(brute_damage, burn_damage)
-	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
-	var/damage_percent_to_max = (get_damage() / max_damage)
-	if (time_needed && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
-		owner.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
-		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-		addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
-	return TRUE
+	do_sparks(number = 1, cardinal_only = FALSE, source = owner || src)
 
-/obj/item/bodypart/proc/un_paralyze()
-	REMOVE_TRAITS_IN(src, EMP_TRAIT)
+	if(can_be_disabled && (get_damage() / max_damage) >= robotic_emp_paralyze_damage_percent_threshold)
+		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
+		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_PARALYSIS, EMP_TRAIT), time_needed)
+		owner?.visible_message(span_danger("[owner]'s [plaintext_zone] seems to malfunction!"))
+
+	return TRUE
 
 /// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()

@@ -1,4 +1,6 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+// Conversion between internal drunk power and common blood alcohol content
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003
 
 /****************************************************
 				BLOOD SYSTEM
@@ -41,11 +43,14 @@
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
 	switch(blood_volume)
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+		if(BLOOD_VOLUME_MAX_LETHAL to INFINITY)
 			if(SPT_PROB(7.5, seconds_per_tick))
 				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
+		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(src, span_warning("You feel your skin swelling."))
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(src, span_warning("You feel terribly bloated."))
@@ -94,7 +99,7 @@
 
 	//Blood loss still happens in locker, floor stays clean
 	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
-		add_splatter_floor(loc, (amt >= 10))
+		add_splatter_floor(loc, (amt <= 10))
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -283,7 +288,7 @@
 		return /datum/reagent/blood
 
 /mob/living/carbon/human/get_blood_id()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK) || !dna)
 		return
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return /datum/reagent/colorful_reagent
@@ -373,4 +378,13 @@
 	if(!B)
 		B = new(T)
 
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
+
 #undef BLOOD_DRIP_RATE_MOD
+#undef DRUNK_POWER_TO_BLOOD_ALCOHOL

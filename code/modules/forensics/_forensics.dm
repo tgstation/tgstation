@@ -66,7 +66,7 @@
 		src.fibers = LAZY_LISTS_OR(src.fibers, fibers)
 	check_blood()
 
-/datum/forensics/Destroy(force, ...)
+/datum/forensics/Destroy(force)
 	var/atom/parent_atom = parent.resolve()
 	if (!isnull(parent_atom))
 		UnregisterSignal(parent_atom, list(COMSIG_COMPONENT_CLEAN_ACT))
@@ -231,6 +231,8 @@
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
 	if(!parent || !isitem(parent.resolve()))
+		return
+	if(isorgan(parent.resolve())) // organs don't spawn with blood decals by default
 		return
 	if(!length(blood_DNA))
 		return

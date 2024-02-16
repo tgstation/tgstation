@@ -3,10 +3,7 @@
 	////////////
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
-	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
-
+	"1622" = "Bug breaking rendering can lead to wallhacks.",
 	))
 
 #define LIMITER_SIZE 5
@@ -107,6 +104,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (href_list["player_ticket_panel"])
 		view_latest_ticket()
 		return
+	// Admin message
+	if(href_list["messageread"])
+		var/message_id = round(text2num(href_list["messageread"]), 1)
+		if(!isnum(message_id))
+			return
+		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
+			list("id" = message_id, "player_key" = usr.ckey)
+		)
+		query_message_read.warn_execute()
+		return
+
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
@@ -266,6 +275,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
 		prefs.parent = src
+		prefs.load_savefile() // just to make sure we have the latest data
 		prefs.apply_all_client_preferences()
 	else
 		prefs = new /datum/preferences(src)
@@ -434,9 +444,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(holder)
 		add_admin_verbs()
-		var/memo_message = get_message_output("memo")
-		if(memo_message)
-			to_chat(src, memo_message)
+		display_admin_memos(src)
 		adminGreet()
 	if (mob && reconnecting)
 		var/stealth_admin = mob.client?.holder?.fakekey
@@ -453,9 +461,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(query_last_connected.warn_execute() && length(query_last_connected.rows))
 		query_last_connected.NextRow()
 		var/time_stamp = query_last_connected.item[1]
-		var/unread_notes = get_message_output("note", ckey, FALSE, time_stamp)
-		if(unread_notes)
-			to_chat(src, unread_notes)
+		display_unread_notes(src, time_stamp)
 	qdel(query_last_connected)
 
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
@@ -464,6 +470,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/nnpa = CONFIG_GET(number/notify_new_player_age)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (nnpa >= 0)
+			log_admin_private("New login: [key_name(key, FALSE, TRUE)] (IP: [address], ID: [computer_id]) logged onto the servers for the first time.")
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (CONFIG_GET(flag/irc_first_connection_alert))
 				var/new_player_alert_role = CONFIG_GET(string/new_player_alert_role_id)
@@ -483,7 +490,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				"new_byond_user",
 				"[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].[new_player_alert_role ? " <@&[new_player_alert_role]>" : ""]"
 			)
-	get_message_output("watchlist entry", ckey)
+	scream_about_watchlists(src)
 	check_ip_intel()
 	validate_key_in_db()
 	// If we aren't already generating a ban cache, fire off a build request
@@ -509,9 +516,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(CONFIG_GET(flag/autoconvert_notes))
 		convert_notes_sql(ckey)
-	var/user_messages = get_message_output("message", ckey)
-	if(user_messages)
-		to_chat(src, user_messages)
+	display_admin_messages(src)
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
@@ -1007,6 +1012,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+	calculate_move_dir()
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

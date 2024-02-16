@@ -114,7 +114,7 @@
 	opacity = TRUE
 	density = TRUE
 	max_integrity = 90
-	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 /obj/structure/spider/solid/Initialize(mapload)
@@ -130,7 +130,7 @@
 	opacity = TRUE
 	max_integrity = 60
 	alpha = 200
-	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 /obj/structure/spider/passage/Initialize(mapload)
@@ -174,11 +174,11 @@
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isspider(mover))
+	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(isspider(mover.pulledby))
+	if(!isnull(mover.pulledby) && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE
@@ -193,6 +193,22 @@
 /obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+
+/obj/structure/spider/reflector
+	name = "Reflective silk screen"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Made up of an extremly reflective silk material looking at it hurts."
+	icon_state = "reflector"
+	max_integrity = 30
+	density = TRUE
+	opacity = TRUE
+	anchored = TRUE
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
+
+/obj/structure/spider/reflector/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/spider/effigy
 	name = "web effigy"

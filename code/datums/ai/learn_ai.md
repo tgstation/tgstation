@@ -25,7 +25,7 @@ First, let's look at the blackboard.
 ```dm
 /datum/ai_controller/basic/cow
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
+		BB_TARGETING_STRATEGY = new /datum/targeting_strategy/basic/allow_items(),
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 	)
@@ -81,7 +81,7 @@ Okay, so we have blackboard variables, which are considered by subtrees to plan 
 
 	//now we know we have a target but should let a hostile subtree plan attacking humans. let's check if it's actually food
 	if(target in wanted)
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 		return SUBTREE_RETURN_FINISH_PLANNING //this prevents further subtrees from planning since we want to focus on eating the food
 ```
 
@@ -94,7 +94,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 	//flag tells the AI it needs to have a movement target to work, and since it doesn't have "AI_BEHAVIOR_MOVE_AND_PERFORM", it won't call perform() every 0.6 seconds until it is in melee range. Smart!
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
-/datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	//all this is doing in setup is setting the movement target. setup is called once when the behavior is first planned, and returning FALSE can cancel the behavior if something isn't right.
 
@@ -107,20 +107,20 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 	controller.current_movement_target = target
 
 ///perform will run every "action_cooldown" deciseconds as long as the conditions are good for it to do so (we set "AI_BEHAVIOR_REQUIRE_MOVEMENT", so it won't perform until in range).
-/datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	//targetting datum will kill the action if not real anymore
+	//targeting strategy will kill the action if not real anymore
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
 
-	if(!targetting_datum.can_attack(basic_mob, target))
+	if(!targeting_strategy.can_attack(basic_mob, target))
 		///We have a target that is no longer valid to attack. Remember that returning doesn't end the behavior, JUST this single performance. So we call "finish_action" with whether it succeeded in doing what it wanted to do (it didn't, so FALSE) and the blackboard keys passed into this behavior.
 		finish_action(controller, FALSE, target_key)
 		return //don't forget to end the performance too
 
-	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = targeting_strategy.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
 
 	controller.blackboard[hiding_location_key] = hiding_target
 
@@ -131,7 +131,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 		basic_mob.melee_attack(target)
 
 ///and so the action has ended. we can now clean up the AI's blackboard based on the success of the action, and the keys passed in.
-/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	///if the behavior failed, the target is no longer valid, so we should lose aggro of them. We remove the target_key (which could be anything, it's whatever key was passed into the behavior by the subtree) from the blackboard. Couldn't do THAT with normal variables!
 	if(!succeeded)

@@ -61,9 +61,9 @@
 /datum/wound/blunt/bone/set_victim(new_victim)
 
 	if (victim)
-		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+		UnregisterSignal(victim, COMSIG_LIVING_UNARMED_ATTACK)
 	if (new_victim)
-		RegisterSignal(new_victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
+		RegisterSignal(new_victim, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
 
 	return ..()
 
@@ -76,7 +76,7 @@
 /datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 
-	if (!victim || IS_IN_STASIS(victim))
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
@@ -114,8 +114,8 @@
 /datum/wound/blunt/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if(victim.get_active_hand() != limb || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
-		return
+	if(victim.get_active_hand() != limb || !proximity || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
+		return NONE
 
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
 	if(prob((severity - 1) * 15))
@@ -131,6 +131,7 @@
 			limb.receive_damage(brute=rand(3,7))
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	return NONE
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
@@ -385,7 +386,7 @@
 	threshold_minimum = 115
 
 // doesn't make much sense for "a" bone to stick out of your head
-/datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
+/datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
 	if(L.body_zone == BODY_ZONE_HEAD)
 		occur_text = "splits open, exposing a bare, cracked skull through the flesh and blood"
 		examine_desc = "has an unsettling indent, with bits of skull poking out"
@@ -412,22 +413,11 @@
 		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] finishes applying [I] to your [limb.plaintext_zone], and you can feel the bones exploding with pain as they begin melting and reforming!"))
 	else
-		var/painkiller_bonus = 0
-		if(victim.get_drunk_amount() > 10)
-			painkiller_bonus += 10
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
-			painkiller_bonus += 20
-		if(victim.reagents.has_reagent(/datum/reagent/determination))
-			painkiller_bonus += 10
-		if(victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/painkiller))
-			painkiller_bonus += 15
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
-			painkiller_bonus += 20
-
-		if(prob(25 + (20 * (severity - 2)) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers
-			victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
-			victim.AdjustUnconscious(5 SECONDS)
-			return TRUE
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunk_amount(), 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
+				victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
+				victim.AdjustUnconscious(5 SECONDS)
+				return TRUE
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
 
 	limb.receive_damage(25, wound_bonus=CANT_WOUND)

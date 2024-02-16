@@ -249,7 +249,7 @@
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	last_patron = WEAKREF(user.mind)
-	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
+	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return

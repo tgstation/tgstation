@@ -17,7 +17,7 @@
 
 	abstract_type = /datum/traitor_objective/destroy_heirloom
 
-	/// The jobs that this objective is targetting.
+	/// The jobs that this objective is targeting.
 	var/list/target_jobs
 	/// the item we need to destroy
 	var/obj/item/target_item

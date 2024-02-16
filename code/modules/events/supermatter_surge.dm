@@ -2,6 +2,7 @@
 #define SURGE_DURATION_MAX 270 EVENT_SECONDS
 #define SURGE_SEVERITY_MIN 1
 #define SURGE_SEVERITY_MAX 4
+#define SURGE_SEVERITY_RANDOM 5
 /// The amount of bullet energy we add for the duration of the SM surge
 #define SURGE_BULLET_ENERGY_ADDITION 5
 /// The amount of powerloss inhibition (energy retention) we add for the duration of the SM surge
@@ -46,7 +47,7 @@
 	announce_when = 4
 	end_when = SURGE_DURATION_MIN
 	/// How powerful is the supermatter surge going to be?
-	var/surge_class =  SURGE_SEVERITY_MIN
+	var/surge_class = SURGE_SEVERITY_RANDOM
 	/// Typecasted reference to the supermatter chosen at event start
 	var/obj/machinery/power/supermatter_crystal/engine
 	/// Typecasted reference to the nitrogen properies in the SM chamber
@@ -54,11 +55,11 @@
 
 /datum/event_admin_setup/input_number/surge_spiciness
 	input_text = "Set surge intensity. (Higher is more severe.)"
-	min_value = 1
-	max_value = 4
+	min_value = SURGE_SEVERITY_MIN
+	max_value = SURGE_SEVERITY_MAX
 
 /datum/event_admin_setup/input_number/surge_spiciness/prompt_admins()
-	default_value = rand(1, 4)
+	default_value = rand(SURGE_SEVERITY_MIN, SURGE_SEVERITY_MAX)
 	return ..()
 
 /datum/event_admin_setup/input_number/surge_spiciness/apply_to_event(datum/round_event/supermatter_surge/event)
@@ -75,13 +76,22 @@
 		stack_trace("SM surge event failed to find gas properties for [engine].")
 		return
 
-	if(isnull(surge_class))
-		surge_class = rand(SURGE_SEVERITY_MIN, SURGE_SEVERITY_MAX)
+	if(surge_class == SURGE_SEVERITY_RANDOM)
+		var/severity_weight = rand(1, 100)
+		switch(severity_weight)
+			if(1 to 14)
+				surge_class = 1
+			if(15 to 34)
+				surge_class = 2
+			if(35 to 69)
+				surge_class = 3
+			if(70 to 100)
+				surge_class = 4
 
 	end_when = rand(SURGE_DURATION_MIN, SURGE_DURATION_MAX)
 
-/datum/round_event/supermatter_surge/announce()
-	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber and energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class [surge_class] Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
+/datum/round_event/supermatter_surge/announce(fake)
+	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class [surge_class] Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
 
 /datum/round_event/supermatter_surge/start()
 	engine.bullet_energy = surge_class + SURGE_BULLET_ENERGY_ADDITION
@@ -99,10 +109,30 @@
 	engine = null
 	sm_gas = null
 
+/datum/round_event_control/supermatter_surge/poly
+	name = "Supermatter Surge: Poly's Revenge"
+	typepath = /datum/round_event/supermatter_surge/poly
+	category = EVENT_CATEGORY_ENGINEERING
+	weight = 0
+	max_occurrences = 0
+	description = "For when Poly is sacrificed to the SM. Not really useful to run manually."
+	min_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+	max_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+	admin_setup = null
+
+/datum/round_event/supermatter_surge/poly
+	announce_when = 4
+	surge_class =  4
+	fakeable = FALSE
+
+/datum/round_event/supermatter_surge/poly/announce(fake)
+	priority_announce("The Crystal Integrity Monitoring System has detected unusual parrot type resonance in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class P Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
+
 #undef SURGE_DURATION_MIN
 #undef SURGE_DURATION_MAX
 #undef SURGE_SEVERITY_MIN
 #undef SURGE_SEVERITY_MAX
+#undef SURGE_SEVERITY_RANDOM
 #undef SURGE_BULLET_ENERGY_ADDITION
 #undef SURGE_BASE_POWERLOSS_INHIBITION
 #undef SURGE_POWERLOSS_INHIBITION_MODIFIER

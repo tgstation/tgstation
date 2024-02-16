@@ -28,7 +28,7 @@
 
 	return ..()
 
-/datum/component/reagent_refiller/Destroy(force, silent)
+/datum/component/reagent_refiller/Destroy(force)
 	power_draw_callback = null
 	return ..()
 
@@ -51,15 +51,15 @@
 	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 	var/obj/item/reagent_containers/container = parent
-	var/refill = container.reagents.get_master_reagent_id()
 	var/amount = min((container.amount_per_transfer_from_this + container.reagents.total_volume), container.reagents.total_volume)
-
 	if (amount == 0)
 		return
-	if (!is_path_in_list(refill, whitelisted_reagents))
+
+	var/datum/reagent/refill = container.reagents.get_master_reagent()
+	if (!is_path_in_list(refill?.type, whitelisted_reagents))
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(add_reagents), container, container.loc, refill, amount), time_to_refill)
+	addtimer(CALLBACK(src, PROC_REF(add_reagents), container, container.loc, refill.type, amount), time_to_refill)
 
 /// Refills the reagent container, and uses cell power if applicable
 /datum/component/reagent_refiller/proc/add_reagents(obj/item/reagent_containers/target, oldloc, reagent_to_refill, amount)

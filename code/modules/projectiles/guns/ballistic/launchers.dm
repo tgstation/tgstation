@@ -91,14 +91,14 @@
 	if(can_shoot())
 		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
-		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
+		animate(user, pixel_z = 300, time = 30, flags = ANIMATION_RELATIVE, easing = LINEAR_EASING)
 		sleep(7 SECONDS)
-		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
+		animate(user, pixel_z = -300, time = 5, flags = ANIMATION_RELATIVE, easing = LINEAR_EASING)
 		sleep(0.5 SECONDS)
 		REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 		process_fire(user, user, TRUE)
 		if(!QDELETED(user)) //if they weren't gibbed by the explosion, take care of them for good.
-			user.gib()
+			user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 	else
 		sleep(0.5 SECONDS)

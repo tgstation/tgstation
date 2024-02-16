@@ -55,6 +55,7 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	summon_line = "Your trial begins now."
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -71,11 +72,11 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
-	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus()
-	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus()
-	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus()
-	dir_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus()
-	colossus_final = new /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final()
+	spiral_shots = new(src)
+	random_shots = new(src)
+	shotgun_blast = new(src)
+	dir_shots = new(src)
+	colossus_final = new(src)
 	spiral_shots.Grant(src)
 	random_shots.Grant(src)
 	shotgun_blast.Grant(src)
@@ -87,10 +88,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	RemoveElement(/datum/element/projectile_shield)
-	QDEL_NULL(spiral_shots)
-	QDEL_NULL(random_shots)
-	QDEL_NULL(shotgun_blast)
-	QDEL_NULL(dir_shots)
+	spiral_shots = null
+	random_shots = null
+	shotgun_blast = null
+	dir_shots = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
@@ -154,8 +155,8 @@
 		return FALSE
 	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
 		return TRUE
-	var/mob/living/carbon/human/human_victim = victim
-	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
+
+	return istype(victim.mind?.martial_art, /datum/martial_art/the_sleeping_carp)
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -164,7 +165,7 @@
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 2
 	duration = 8
 	var/target
@@ -180,7 +181,6 @@
 	damage = 25
 	armour_penetration = 100
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
@@ -191,7 +191,7 @@
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
-/obj/projectile/colossus/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dust_mob = target
@@ -239,7 +239,6 @@
 	var/use_time = 0
 	/// If we are being used
 	var/active = FALSE
-	var/list/affected_targets = list()
 	var/activation_sound = 'sound/effects/break_stone.ogg'
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -321,14 +320,28 @@
 	possible_methods = list(ACTIVATE_MOB_BUMP, ACTIVATE_SPEECH)
 	activation_sound = 'sound/items/bikehorn.ogg'
 	use_time = 3 SECONDS
+	/// List of REFs to mobs that have been turned into a clown
+	var/list/clowned_mob_refs = list()
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
-	if(..() && ishuman(user) && !(user in affected_targets) && (user in viewers(src)))
-		var/mob/living/carbon/human/new_clown = user
-		for(var/obj/item/to_strip in new_clown)
-			new_clown.dropItemToGround(to_strip)
-		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
-		affected_targets.Add(new_clown)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!ishuman(user))
+		return FALSE
+	if(!(user in viewers(src)))
+		return FALSE
+	var/clown_ref = REF(user)
+	if(clown_ref in clowned_mob_refs)
+		return FALSE
+
+	var/mob/living/carbon/human/new_clown = user
+	for(var/obj/item/to_strip in new_clown.get_equipped_items())
+		new_clown.dropItemToGround(to_strip)
+	new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
+	clowned_mob_refs += clown_ref
+	return TRUE
 
 /// Transforms the area to look like a new one
 /obj/machinery/anomalous_crystal/theme_warp
@@ -336,130 +349,32 @@
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 20 SECONDS
 	use_time = 5 SECONDS
-	var/datum/crystal_warp_theme/terrain_theme
+	/// Theme which we turn areas into on activation
+	var/datum/dimension_theme/terrain_theme
+	/// List of all areas we've affected
+	var/list/converted_areas = list()
 
 /obj/machinery/anomalous_crystal/theme_warp/Initialize(mapload)
 	. = ..()
-	var/terrain_type = pick(subtypesof(/datum/crystal_warp_theme))
+	var/terrain_type = pick(subtypesof(/datum/dimension_theme))
 	terrain_theme = new terrain_type()
-	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme]\"."
+	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme.name]\"."
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
 	. = ..()
 	if (!.)
 		return FALSE
 	var/area/current_area = get_area(src)
-	if (current_area in affected_targets)
+	if (current_area in converted_areas)
 		return FALSE
-	if (terrain_theme.transform_area(current_area))
-		affected_targets += current_area
+	terrain_theme.apply_theme_to_list_of_turfs(current_area.get_turfs_from_all_zlevels())
+	converted_areas += current_area
 	return TRUE
 
-/// Transforms an area's turfs and objects into a different theme
-/datum/crystal_warp_theme
-	/// Friendly name of theme
-	var/name = ""
-	/// Typepath of floor to replace open turfs with
-	var/floor
-	/// Typepath of wall to replace closed turfs with
-	var/wall
-	/// Typepath of object to replace chairs with
-	var/chair
-	/// Typepath of object to replace tables with
-	var/table
-	/// Typepath of things to potentially spawn on transformed open turfs
-	var/list/flora_and_fauna = list()
-	/// Chance per turf to create the things in the list above
-	var/flora_and_fauna_chance = 8
-
-/// Change appropriate objects in provided area to those matching our theme, and spawn some plants or animals
-/datum/crystal_warp_theme/proc/transform_area(area/target_area)
-	if (target_area.outdoors)
-		return FALSE
-	for(var/atom/thing in target_area)
-		if(isturf(thing))
-			replace_turf(thing)
-			continue
-		if(chair && istype(thing, /obj/structure/chair))
-			replace_object(thing, chair)
-			continue
-		if(table && istype(thing, /obj/structure/table))
-			replace_object(thing, table)
-			continue
-	return TRUE
-
-/// Replaces a turf with a different themed turf
-/datum/crystal_warp_theme/proc/replace_turf(turf/target_turf)
-	if(isindestructiblefloor(target_turf) || isindestructiblewall(target_turf) || isopenspaceturf(target_turf))
-		return
-
-	if(wall && iswallturf(target_turf))
-		target_turf.ChangeTurf(wall)
-		return
-
-	if(!isopenturf(target_turf))
-		return
-
-	if(length(flora_and_fauna) && !target_turf.is_blocked_turf(exclude_mobs = TRUE) && prob(flora_and_fauna_chance))
-		var/atom/new_flora_and_fauna = pick(flora_and_fauna)
-		new new_flora_and_fauna(target_turf)
-
-	if(floor)
-		var/turf/open/open_turf = target_turf
-		open_turf.replace_floor(floor, flags = CHANGETURF_IGNORE_AIR)
-
-/// Replaces an object with a different themed object
-/datum/crystal_warp_theme/proc/replace_object(atom/original, new_type)
-	var/atom/new_thing = new new_type(original.loc)
-	new_thing.setDir(original.dir)
-	qdel(original)
-
-// Depressurizes the place... and free cult metal, I guess.
-/datum/crystal_warp_theme/lavaland
-	name = "lavaland"
-	floor = /turf/open/floor/fakebasalt
-	wall = /turf/closed/wall/mineral/cult
-	flora_and_fauna = list(/mob/living/basic/mining/goldgrub)
-	flora_and_fauna_chance = 1
-
-// Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
-/datum/crystal_warp_theme/winter
-	name = "winter"
-	floor = /turf/open/misc/snow/actually_safe
-	wall = /turf/closed/wall/mineral/wood
-	chair = /obj/structure/chair/wood
-	table = /obj/structure/table/glass
-	flora_and_fauna = list(
-		/obj/structure/flora/grass/both/style_random,
-		/obj/structure/flora/grass/brown/style_random,
-		/obj/structure/flora/grass/green/style_random,
-	)
-
-// Beneficial due to actually having breathable air. Plus, monkeys and bows and arrows.
-/datum/crystal_warp_theme/jungle
-	name = "jungle"
-	floor = /turf/open/floor/grass
-	wall = /turf/closed/wall/mineral/wood
-	chair = /obj/structure/chair/wood
-	table = /obj/structure/table/wood
-	flora_and_fauna = list(
-		/mob/living/carbon/human/species/monkey,
-		/obj/structure/flora/bush/ferny/style_random,
-		/obj/structure/flora/bush/grassy/style_random,
-		/obj/structure/flora/bush/leavy/style_random,
-		/obj/structure/flora/tree/palm/style_random,
-		/obj/structure/flora/bush/sparsegrass/style_random,
-		/obj/structure/flora/bush/sunny/style_random,
-	)
-	flora_and_fauna_chance = 20
-
-// Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
-/datum/crystal_warp_theme/ayylmao
-	name = "ayy lmao"
-	floor = /turf/open/floor/mineral/abductor
-	wall = /turf/closed/wall/mineral/abductor
-	chair = /obj/structure/bed/abductor //ayys apparently don't have chairs. An entire species of people who only recline.
-	table = /obj/structure/table/abductor
+/obj/machinery/anomalous_crystal/theme_warp/Destroy()
+	QDEL_NULL(terrain_theme)
+	converted_areas.Cut()
+	return ..()
 
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."
@@ -513,7 +428,13 @@
 	if(..() && !ready_to_deploy)
 		SSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, header = "Anomalous crystal activated")
+		notify_ghosts(
+			"An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.",
+			source = src,
+			header = "Anomalous crystal activated",
+			click_interact = TRUE,
+			ghost_sound = 'sound/effects/ghost2.ogg',
+		)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()
@@ -524,13 +445,6 @@
 		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
 			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
 			deployable.key = user.key
-
-
-/obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
-	if(href_list["ghostjoin"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			attack_ghost(ghost)
 
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
@@ -607,7 +521,7 @@
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			holder_animal.gib()
+			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()
 	return ..()
 

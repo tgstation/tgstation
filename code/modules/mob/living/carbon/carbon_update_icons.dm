@@ -278,15 +278,21 @@
 	update_held_items()
 	update_worn_handcuffs()
 	update_worn_legcuffs()
-	update_fire()
 	update_body()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/carbon/update_held_items()
+	. = ..()
 	remove_overlay(HANDS_LAYER)
 	if (handcuffed)
 		drop_all_held_items()
 		return
 
+	overlays_standing[HANDS_LAYER] = get_held_overlays()
+	apply_overlay(HANDS_LAYER)
+
+/// Generate held item overlays
+/mob/living/carbon/proc/get_held_overlays()
 	var/list/hands = list()
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
@@ -307,31 +313,20 @@
 			icon_file = I.righthand_file
 
 		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+	return hands
 
-	overlays_standing[HANDS_LAYER] = hands
-	apply_overlay(HANDS_LAYER)
-
-/mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"][suffix]"
+/mob/living/carbon/get_fire_overlay(stacks, on_fire)
+	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"]"
 
 	if(!GLOB.fire_appearances[fire_icon])
-		GLOB.fire_appearances[fire_icon] = mutable_appearance('icons/mob/effects/onfire.dmi', fire_icon, -FIRE_LAYER, appearance_flags = RESET_COLOR)
+		GLOB.fire_appearances[fire_icon] = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			fire_icon,
+			-HIGHEST_LAYER,
+			appearance_flags = RESET_COLOR,
+		)
 
-	if((stacks > 0 && on_fire) || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
-		if(fire_icon == last_icon_state)
-			return last_icon_state
-
-		remove_overlay(FIRE_LAYER)
-		overlays_standing[FIRE_LAYER] = GLOB.fire_appearances[fire_icon]
-		apply_overlay(FIRE_LAYER)
-		return fire_icon
-
-	if(!last_icon_state)
-		return last_icon_state
-
-	remove_overlay(FIRE_LAYER)
-	apply_overlay(FIRE_LAYER)
-	return null
+	return GLOB.fire_appearances[fire_icon]
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
@@ -403,6 +398,14 @@
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
+
+/mob/living/carbon/update_worn_legcuffs()
+	remove_overlay(LEGCUFF_LAYER)
+	clear_alert("legcuffed")
+	if(legcuffed)
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		apply_overlay(LEGCUFF_LAYER)
+		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
@@ -567,6 +570,7 @@
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
 	. = list()
+	. += "[limb_id]-"
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"

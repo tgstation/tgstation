@@ -710,11 +710,13 @@
 						human_bloodbag.visible_message(span_warning("[human_bloodbag] is partially healed by [human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"] blood magic."))
 						uses = 0
 					ratio *= -1
-					human_bloodbag.adjustOxyLoss((overall_damage*ratio) * (human_bloodbag.getOxyLoss() / overall_damage), 0)
-					human_bloodbag.adjustToxLoss((overall_damage*ratio) * (human_bloodbag.getToxLoss() / overall_damage), 0)
-					human_bloodbag.adjustFireLoss((overall_damage*ratio) * (human_bloodbag.getFireLoss() / overall_damage), 0)
-					human_bloodbag.adjustBruteLoss((overall_damage*ratio) * (human_bloodbag.getBruteLoss() / overall_damage), 0)
-					human_bloodbag.updatehealth()
+					var/need_mob_update = FALSE
+					need_mob_update += human_bloodbag.adjustOxyLoss((overall_damage*ratio) * (human_bloodbag.getOxyLoss() / overall_damage), updating_health = FALSE)
+					need_mob_update += human_bloodbag.adjustToxLoss((overall_damage*ratio) * (human_bloodbag.getToxLoss() / overall_damage), updating_health = FALSE)
+					need_mob_update += human_bloodbag.adjustFireLoss((overall_damage*ratio) * (human_bloodbag.getFireLoss() / overall_damage), updating_health = FALSE)
+					need_mob_update += human_bloodbag.adjustBruteLoss((overall_damage*ratio) * (human_bloodbag.getBruteLoss() / overall_damage), updating_health = FALSE)
+					if(need_mob_update)
+						human_bloodbag.updatehealth()
 					playsound(get_turf(human_bloodbag), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
 					user.Beam(human_bloodbag, icon_state="sendbeam", time = 15)
@@ -737,15 +739,15 @@
 					to_chat(user,span_warning("[human_bloodbag.p_Theyre()] missing too much blood - you cannot drain [human_bloodbag.p_them()] further!"))
 					return
 		if(isconstruct(target))
-			var/mob/living/simple_animal/construct_thing = target
+			var/mob/living/basic/construct/construct_thing = target
 			var/missing_health = construct_thing.maxHealth - construct_thing.health
 			if(missing_health)
 				if(uses > missing_health)
-					construct_thing.adjustHealth(-missing_health)
+					construct_thing.adjust_health(-missing_health)
 					construct_thing.visible_message(span_warning("[construct_thing] is fully healed by [user]'s blood magic!"))
 					uses -= missing_health
 				else
-					construct_thing.adjustHealth(-uses)
+					construct_thing.adjust_health(-uses)
 					construct_thing.visible_message(span_warning("[construct_thing] is partially healed by [user]'s blood magic!"))
 					uses = 0
 				playsound(get_turf(construct_thing), 'sound/magic/staff_healing.ogg', 25)

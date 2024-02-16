@@ -74,7 +74,7 @@
 		return FALSE
 	if (basic_mob.see_invisible < object.invisibility)
 		return FALSE
-	var/list/whitelist = basic_mob.ai_controller.blackboard[BB_OBSTACLE_TARGETTING_WHITELIST]
+	var/list/whitelist = basic_mob.ai_controller.blackboard[BB_OBSTACLE_TARGETING_WHITELIST]
 	if(whitelist && !is_type_in_typecache(object, whitelist))
 		return FALSE
 

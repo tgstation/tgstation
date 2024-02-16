@@ -111,7 +111,7 @@
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 15)
-		if(living_mob.apply_damages(10, 10))
+		if(living_mob.apply_damages(brute = 10, burn = 10))
 			to_chat(living_mob, span_userdanger("The blast from \the [src] bruises and burns you!"))
 
 	// only checking if they're on top of the tile, cause being one tile over will be its own punishment

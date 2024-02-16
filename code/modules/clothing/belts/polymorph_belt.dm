@@ -35,8 +35,8 @@
 	return slot & ITEM_SLOT_BELT
 
 /obj/item/polymorph_belt/update_icon_state()
-	icon_state = base_icon_state + (active) ? "" : "_inactive"
-	worn_icon_state = base_icon_state + (active) ? "" : "_inactive"
+	icon_state = base_icon_state + (active ? "" : "_inactive")
+	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
 	return ..()
 
 /obj/item/polymorph_belt/attackby(obj/item/weapon, mob/user, params)

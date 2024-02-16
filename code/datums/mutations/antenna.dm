@@ -11,7 +11,7 @@
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
 	desc = "The internal organ part of the antenna. Science has not yet given it a good name."
-	icon = 'icons/obj/radio.dmi'//maybe make a unique sprite later. not important
+	icon = 'icons/obj/devices/voice.dmi'//maybe make a unique sprite later. not important
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/antenna/Initialize(mapload)
@@ -91,32 +91,11 @@
 		// chance to alert the read-ee
 		to_chat(cast_on, span_danger("You feel something foreign enter your mind."))
 
-	var/list/recent_speech = list()
-	var/list/say_log = list()
-	var/log_source = cast_on.logging
-	//this whole loop puts the read-ee's say logs into say_log in an easy to access way
-	for(var/log_type in log_source)
-		var/nlog_type = text2num(log_type)
-		if(nlog_type & LOG_SAY)
-			var/list/reversed = log_source[log_type]
-			if(islist(reversed))
-				say_log = reverse_range(reversed.Copy())
-				break
-
-	for(var/spoken_memory in say_log)
-		//up to 3 random lines of speech, favoring more recent speech
-		if(length(recent_speech) >= 3)
-			break
-		if(prob(50))
-			continue
-		// log messages with tags like telepathy are displayed like "(Telepathy to Ckey/(target)) "greetings"""
-		// by splitting the text by using a " delimiter, we can grab JUST the greetings part
-		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
-
+	var/list/recent_speech = cast_on.copy_recent_speech(copy_amount = 3, line_chance = 50)
 	if(length(recent_speech))
 		to_chat(owner, span_boldnotice("You catch some drifting memories of their past conversations..."))
 		for(var/spoken_memory in recent_speech)
-			to_chat(owner, span_notice("[recent_speech[spoken_memory]]"))
+			to_chat(owner, span_notice("[spoken_memory]"))
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on

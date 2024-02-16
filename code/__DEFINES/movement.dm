@@ -39,6 +39,14 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 ///Is the loop moving the movable outside its control, like it's an external force? e.g. footsteps won't play if enabled.
 #define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<4)
 
+// Movement loop status flags
+/// Has the loop been paused, soon to be resumed?
+#define MOVELOOP_STATUS_PAUSED (1<<0)
+/// Is the loop running? (Is true even when paused)
+#define MOVELOOP_STATUS_RUNNING (1<<1)
+/// Is the loop queued in a subsystem?
+#define MOVELOOP_STATUS_QUEUED (1<<2)
+
 /**
  * Returns a bitfield containing flags both present in `flags` arg and the `processing_move_loop_flags` move_packet variable.
  * Has no use outside of procs called within the movement proc chain.

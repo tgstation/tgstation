@@ -433,7 +433,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 10000
+	e_cost = LASER_SHOTS(5, 50000) // Beam rifle has a custom cell
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/projectile/beam/beam_rifle
@@ -520,8 +520,8 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
-	handle_hit(target, piercing_hit)
+/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0, pierce_hit)
+	handle_hit(target, pierce_hit)
 	return ..()
 
 /obj/projectile/beam/beam_rifle/is_hostile_projectile()
@@ -567,7 +567,8 @@
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
-/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit(atom/target, blocked = 0, pierce_hit)
+	SHOULD_CALL_PARENT(FALSE) // This is some snowflake stuff so whatever
 	qdel(src)
 	return BULLET_ACT_BLOCK
 

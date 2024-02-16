@@ -84,7 +84,7 @@
 	return ..()
 
 /obj/structure/toilet/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		for(var/obj/toilet_item in contents)
 			toilet_item.forceMove(drop_location())
 		if(buildstacktype)
@@ -105,7 +105,7 @@
 			cistern = !cistern
 			update_appearance()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	else if(I.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		I.play_tool_sound(src)
 		deconstruct()
 		return TRUE
@@ -228,7 +228,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	return TRUE
 
 /obj/structure/urinal/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/wallframe/urinal(loc)
 	qdel(src)
 
@@ -419,7 +419,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	if(O.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		O.play_tool_sound(src)
 		deconstruct()
 		return
@@ -496,7 +496,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return ..()
 
 /obj/structure/sink/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		drop_materials()
 		if(has_water_reclaimer)
 			new /obj/item/stock_parts/water_recycler(drop_location())
@@ -572,7 +572,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	return TRUE
 
 /obj/structure/sinkframe/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		drop_materials()
 	return ..()
 
@@ -590,6 +590,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	anchored = TRUE
 	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+
+/obj/structure/water_source/Initialize(mapload)
+	. = ..()
+
+	create_reagents(INFINITY, NO_REACT)
+	reagents.add_reagent(dispensedreagent, INFINITY)
 
 /obj/structure/water_source/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -754,12 +760,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
@@ -872,7 +876,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)

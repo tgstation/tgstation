@@ -1,0 +1,4338 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/door/airlock/engineering,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"af" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"aj" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/structure/table,
+/obj/item/paper_bin,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"at" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"au" = (
+/obj/lightning_thrower,
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ay" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north,
+/obj/item/flashlight/flare/candle{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/flashlight/flare/candle{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/flashlight/flare/candle{
+	pixel_y = 8
+	},
+/obj/item/toy/toy_xeno,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"aE" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"aF" = (
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"aV" = (
+/obj/effect/gibspawner/generic,
+/obj/item/mop,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"aW" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"bh" = (
+/obj/structure/sign/directions/science/directional/west,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"bi" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"bR" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/table,
+/obj/structure/microscope,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ch" = (
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"cp" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"cQ" = (
+/obj/structure/holosign/barrier,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"dv" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/gibspawner/generic,
+/mob/living/basic/living_limb_flesh,
+/mob/living/basic/living_limb_flesh,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/circuit{
+	baseturfs = /turf/open/indestructible/plating
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"dD" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/machinery/computer/old,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"dQ" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/rack,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"dR" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"dW" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ea" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"eo" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"eq" = (
+/mob/living/basic/living_floor/white,
+/obj/effect/gibspawner/generic,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ex" = (
+/obj/machinery/door/airlock/grunge{
+	id_tag = "md_morgue"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "Reminder for medbay staff to not stick failed and active experiments in the morgue."
+	},
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"eA" = (
+/obj/machinery/door/airlock/security/glass,
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"eD" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "md_morgue"
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"eF" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/cold/dim/directional/west,
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"eP" = (
+/obj/structure/meateor_fluff/eyeball,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"eT" = (
+/obj/item/fakeartefact,
+/obj/structure/table/wood/fancy/orange,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"fc" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 10
+	},
+/obj/structure/table,
+/obj/effect/spawner/random/medical/supplies,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"fm" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"fo" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"fB" = (
+/obj/machinery/computer/operating,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"fH" = (
+/turf/closed/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"fW" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"go" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"gK" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/end,
+/obj/structure/rack,
+/obj/item/climbing_hook,
+/obj/item/extinguisher,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"gN" = (
+/obj/structure/table,
+/obj/item/storage/box/petridish,
+/obj/item/healthanalyzer,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"gO" = (
+/obj/structure/toiletbong,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"gP" = (
+/obj/structure/broken_flooring/pile/always_floorplane{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"gQ" = (
+/obj/item/ammo_casing/spent,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"gX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"hd" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space)
+"hf" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/medkit/toxin,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"hk" = (
+/obj/structure/aquarium/prefilled,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"hN" = (
+/obj/structure/puzzle_blockade{
+	id = "md_toeng"
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"hQ" = (
+/obj/structure/broken_flooring/plating/directional/west,
+/obj/item/crowbar,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"hR" = (
+/obj/structure/sign/warning,
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"hW" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/scalpel{
+	pixel_y = 16;
+	pixel_x = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"hY" = (
+/obj/structure/barricade/wooden,
+/obj/machinery/door/airlock/science/glass{
+	name = "Janitorial Closet"
+	},
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "DO NOT ENTER!!!"
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"id" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ih" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ij" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/biooutpost)
+"il" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"io" = (
+/mob/living/basic/living_floor,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"iA" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"iB" = (
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"iI" = (
+/obj/structure/chair/sofa/bench/left,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"iO" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"iQ" = (
+/obj/machinery/computer/old,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"iX" = (
+/obj/structure/broken_flooring/pile/always_floorplane{
+	dir = 8
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ja" = (
+/obj/item/food/muffin/moffin{
+	preserved_food = 1
+	},
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"jf" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/spawner/random/medical/supplies,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jj" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 8
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jo" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_name = "notice";
+	note_info = "This area is condemned by Nanotrasen. Employees seen near or in this area will be fined or punished otherwise."
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jr" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jt" = (
+/obj/item/crowbar,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/reagent_containers/cup/bucket,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jA" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jE" = (
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jO" = (
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jU" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/item/ammo_box/magazine/wt550m9{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"jV" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 6
+	},
+/obj/item/surgery_tray/full/deployed,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"kh" = (
+/obj/machinery/computer/terminal/meatderelict{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ki" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"kl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"kn" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/cold/directional/south,
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/cup/glass/coffee_cup{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/coffee_cup{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/coffee_cup,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ku" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/flash_powder,
+/obj/item/reagent_containers/cup/bottle/lithium,
+/obj/item/reagent_containers/cup/bottle/nitrogen,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"kB" = (
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"kX" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"la" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/light/cold/directional/west,
+/obj/effect/spawner/random/medical/supplies,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"lf" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"lh" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"lm" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/obj/item/ammo_casing/c45/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"lJ" = (
+/obj/machinery/door/airlock/science/glass,
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"lT" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"mc" = (
+/obj/machinery/door/airlock/engineering,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"mx" = (
+/obj/structure/broken_flooring/side/always_floorplane,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"mA" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/blood/innards,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"mM" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"mO" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/structure/table,
+/obj/item/storage/medkit/brute,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"mU" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/cold/dim/directional/south,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ne" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/reagent_containers/hypospray/medipen/methamphetamine{
+	pixel_x = -3
+	},
+/obj/item/book/manual/wiki/research_and_development{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"ni" = (
+/mob/living/basic/living_floor/white,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"nr" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"nx" = (
+/obj/structure/table,
+/obj/item/pen/fourcolor,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ny" = (
+/obj/structure/closet/secure_closet/chemical,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"nM" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/machinery/door/puzzle{
+	puzzle_id = "md_42069";
+	desc = "This door only opens from the other side. It looks virtually indestructible."
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"nP" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/grenade/flashbang,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"nR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_machine,
+/obj/machinery/vending/snack/orange,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"nY" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"oh" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"oj" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/turf_decal/siding/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"op" = (
+/turf/closed/mineral/random/stationside/asteroid{
+	baseturfs = /turf/open/indestructible/white
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"os" = (
+/obj/structure/grille/indestructible,
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"oI" = (
+/mob/living/basic/living_floor,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"oO" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/a357/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"oQ" = (
+/obj/machinery/puzzle_button/meatderelict{
+	pixel_y = 32;
+	queue_size = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"oX" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pe" = (
+/obj/structure/chair/office,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ph" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pj" = (
+/obj/machinery/door/airlock/research/glass{
+	id_tag = "md_scis"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pk" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"pl" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/trimline/yellow/filled/warning,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"po" = (
+/obj/structure/broken_flooring/corner/always_floorplane,
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pp" = (
+/obj/item/pressure_plate/puzzle{
+	puzzle_id = "md_42069"
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pC" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pK" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pQ" = (
+/obj/machinery/computer/old{
+	dir = 1
+	},
+/obj/machinery/light/cold/dim/directional/south,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pY" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/restraints/handcuffs,
+/obj/machinery/light/warm/directional/south,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qh" = (
+/obj/structure/table,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/stamp,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qi" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/machinery/light/cold/dim/directional/north,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"qs" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qw" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"qx" = (
+/mob/living/basic/living_floor/white,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/gibspawner/generic,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qV" = (
+/obj/machinery/power/rtg/old_station,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qY" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"qZ" = (
+/obj/structure/table,
+/obj/effect/spawner/random/bureaucracy/paper,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ra" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"re" = (
+/turf/closed/mineral/random/low_chance,
+/area/ruin/space)
+"rh" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/item/ammo_casing/a357/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"rl" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/closet/secure_closet/chemical,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"rm" = (
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"rw" = (
+/obj/effect/turf_decal/siding/blue/corner,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"rK" = (
+/obj/structure/showcase/horrific_experiment,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"sd" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"se" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/mutagen,
+/obj/item/reagent_containers/cup/bottle/mutagen,
+/obj/item/reagent_containers/cup/bottle/mutagen,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"sk" = (
+/obj/structure/chair/sofa/bench/right,
+/obj/effect/mob_spawn/corpse/human/scientist{
+	brute_damage = 100;
+	corpse_description = "They were shot in the head, and heart."
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"sl" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"sp" = (
+/obj/machinery/button/door/directional/south{
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "md_scis";
+	name = "safety lock control"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"sJ" = (
+/obj/structure/broken_flooring/corner/always_floorplane{
+	dir = 4
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"sL" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"sM" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/c45/spent,
+/obj/item/ammo_casing/c45/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"sR" = (
+/obj/effect/turf_decal/trimline/yellow/filled/end,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"tg" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"tq" = (
+/mob/living/basic/living_floor,
+/obj/effect/mob_spawn/corpse/human/engineer,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"tt" = (
+/obj/effect/spawner/structure/window/hollow/middle{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"tv" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/mob/living/simple_animal/hostile/zombie,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"tF" = (
+/obj/structure/broken_flooring/plating/directional/east,
+/obj/effect/spawner/random/structure/chair_flipped,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"tN" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"tS" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"uc" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"uf" = (
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"uh" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ui" = (
+/obj/structure/closet/wardrobe/science_white,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"uq" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"us" = (
+/obj/machinery/suit_storage_unit/spaceruin,
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"uC" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"uH" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/holosign/barrier,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"uS" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_x = 16
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"uU" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"uZ" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "whitehall";
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"vd" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 9
+	},
+/obj/machinery/vending/medical{
+	shut_up = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"vl" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/obj/item/crowbar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"vt" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"vF" = (
+/obj/structure/fluff/empty_cryostasis_sleeper{
+	name = "broken genetics device";
+	desc = "Depowered and broken, this machine no longer serves its purpose."
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"vY" = (
+/obj/machinery/door/puzzle/keycard{
+	puzzle_id = "md_director";
+	name = "Directors Office"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"vZ" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/gibspawner/generic,
+/turf/open/floor/circuit{
+	baseturfs = /turf/open/indestructible/plating
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"wf" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 6
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/random/directional/south,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wj" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wn" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/obj/item/knife/combat/survival,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"wy" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wH" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/wt550{
+	pin = /obj/item/firing_pin/explorer
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wJ" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/window/spawner/directional/east,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wM" = (
+/obj/structure/sign/warning/biohazard/directional/east,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wR" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wU" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"wX" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken/directional/north,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"xk" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/south,
+/obj/effect/gibspawner/generic,
+/mob/living/basic/living_limb_flesh,
+/turf/open/floor/circuit{
+	baseturfs = /turf/open/indestructible/plating
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"xm" = (
+/obj/item/kirbyplants/random/dead,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"xr" = (
+/obj/machinery/door/puzzle/meatderelict,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"xA" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"xE" = (
+/obj/lightning_thrower,
+/obj/machinery/light/small/dim/directional/north,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"xU" = (
+/mob/living/basic/living_floor/white,
+/obj/item/flashlight,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yf" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/broken_flooring/corner/always_floorplane{
+	dir = 8
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yl" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yr" = (
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yu" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yw" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"yU" = (
+/obj/structure/fluff/empty_cryostasis_sleeper{
+	name = "broken genetics device";
+	desc = "Depowered and broken, this machine no longer serves its purpose."
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/structure/sign/warning/chem_diamond/directional/west,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"za" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/west,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"zg" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/box/handcuffs,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"zs" = (
+/obj/structure/chair/office,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"zF" = (
+/obj/effect/mob_spawn/corpse/human/scientist{
+	brute_damage = 100;
+	corpse_description = "They were shot in the head, and heart."
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"zL" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"zP" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"zS" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/effect/spawner/random/entertainment/money_large,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"An" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"AD" = (
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/powered/biooutpost)
+"AG" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/obj/item/seeds/cannabis/white,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"AP" = (
+/obj/structure/fluff/empty_cryostasis_sleeper{
+	name = "broken genetics device";
+	desc = "Depowered and broken, this machine no longer serves its purpose."
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"AT" = (
+/obj/structure/sign/warning,
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost)
+"AV" = (
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"AX" = (
+/obj/machinery/light/directional/north,
+/mob/living/basic/mothroach{
+	name = "Moff"
+	},
+/obj/machinery/door/window/right/directional/south{
+	req_access = list("science")
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"AY" = (
+/obj/effect/turf_decal/tile/red/diagonal_centre,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Be" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/fancy/coffee_cart_rack,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Bl" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Bp" = (
+/obj/structure/broken_flooring/pile/always_floorplane,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Br" = (
+/obj/structure/closet/l3closet/scientist,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Bt" = (
+/obj/machinery/door/puzzle/meatderelict,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Bu" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Bx" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/cup/beaker/meta,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"By" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"BA" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"Ca" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 8
+	},
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Cf" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Cl" = (
+/obj/machinery/door/airlock/science,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"CD" = (
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"CF" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"CI" = (
+/mob/living/basic/living_limb_flesh,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"CN" = (
+/obj/structure/table,
+/obj/item/toy/figure/secofficer,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"CS" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"CW" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Df" = (
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Dg" = (
+/obj/structure/mecha_wreckage/ripley,
+/obj/structure/window/spawner/directional/east,
+/turf/open/indestructible{
+	icon_state = "recharge_floor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"Dh" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/chem_dispenser,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Dk" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Du" = (
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"DB" = (
+/mob/living/basic/living_floor,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"DC" = (
+/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/a357/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"DJ" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"DR" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/paper/crumpled/fluff/meatderelict/fridge,
+/obj/item/pen{
+	pixel_x = 12
+	},
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"DU" = (
+/obj/structure/chair/sofa/bench,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ec" = (
+/mob/living/basic/living_floor/white,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ei" = (
+/obj/machinery/door/airlock/science,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ew" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ex" = (
+/obj/structure/table/optable,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"EC" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"EE" = (
+/obj/structure/broken_flooring/pile/always_floorplane,
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/light/broken/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"EN" = (
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"EQ" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 1
+	},
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/keycard/meatderelict/engpost,
+/obj/item/food/candy,
+/obj/item/food/candy,
+/obj/item/food/candy_corn,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ES" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"EY" = (
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Fc" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/box/beakers,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Fv" = (
+/obj/item/food/muffin/moffin{
+	preserved_food = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"FE" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"FI" = (
+/obj/item/instrument/piano_synth/headphones,
+/obj/structure/table,
+/obj/machinery/puzzle_button/directional/north{
+	used = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Gb" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Gd" = (
+/obj/machinery/light/cold/dim/directional/east,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Gj" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"Gn" = (
+/obj/structure/table,
+/obj/item/plate,
+/obj/item/food/burger/cheese,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/light/small/broken/directional/south,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"GA" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/item/ammo_casing/c45/spent,
+/obj/item/ammo_casing/c45/spent,
+/obj/item/ammo_casing/c45/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"GC" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/coffeemaker,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"GE" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"GF" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/grille/indestructible,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"GO" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/machinery/iv_drip,
+/obj/machinery/light/cold/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Hb" = (
+/obj/item/kirbyplants/organic/plant12,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/structure/sign/directions/engineering/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Hh" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/obj/item/keycard/meatderelict/director,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Hm" = (
+/obj/structure/grille/indestructible,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/effect/turf_decal/trimline/yellow/filled/warning,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Hx" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"HA" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"HC" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"HF" = (
+/mob/living/basic/living_floor/white,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"HV" = (
+/obj/structure/broken_flooring/side/always_floorplane,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ip" = (
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"IK" = (
+/obj/structure/puzzle_blockade{
+	id = "md_armory"
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Jb" = (
+/obj/item/ammo_casing/c45/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Jf" = (
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/structure/sign/departments/security/directional/east,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Jh" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Jo" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/mod/module/recycler/donk,
+/obj/item/mod/module/recycler,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Jt" = (
+/obj/machinery/puzzle_button/directional/north{
+	id = "md_tosci";
+	name = "shield power panel"
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ju" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Jx" = (
+/obj/machinery/door/airlock/vault,
+/obj/item/grown/bananapeel,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"JF" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/item/food/grown/carrot{
+	preserved_food = 1
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ka" = (
+/mob/living/basic/living_floor/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Kc" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/mob/living/basic/rabbit,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ki" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 5
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Kl" = (
+/obj/structure/chair/sofa/bench,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Kx" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"KC" = (
+/obj/machinery/puzzle_button/directional/north{
+	id = "md_toeng";
+	queue_size = 4
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"KH" = (
+/obj/structure/broken_flooring/pile/always_floorplane{
+	dir = 1
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"KP" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"KU" = (
+/obj/machinery/door/airlock/engineering,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Lc" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/paper/pamphlet/cybernetics,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Lj" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ll" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"LR" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"Mb" = (
+/obj/effect/turf_decal/siding/red,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Mo" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/plasma/end{
+	dir = 4
+	},
+/obj/structure/sign/warning/electric_shock/directional/west,
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Mp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"MF" = (
+/obj/structure/grille/indestructible,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"MH" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ML" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"MO" = (
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"MS" = (
+/obj/structure/table,
+/obj/item/paper/crumpled/fluff/meatderelict,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Nn" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/table,
+/obj/item/petri_dish/random,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Nr" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Nz" = (
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/indestructible{
+	icon_state = "recharge_floor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"NE" = (
+/obj/structure/sign/warning/biohazard/directional/west,
+/obj/structure/broken_flooring/corner/always_floorplane{
+	dir = 1
+	},
+/obj/item/kirbyplants/random/dead,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"NI" = (
+/obj/lightning_thrower,
+/obj/machinery/light/small/dim/directional/north,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"NK" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"NL" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"NU" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/south,
+/obj/effect/gibspawner/generic,
+/turf/open/floor/circuit{
+	baseturfs = /turf/open/indestructible/plating
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"Oh" = (
+/obj/effect/spawner/structure/window/hollow/end{
+	dir = 1
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Oi" = (
+/obj/structure/sign/warning/biohazard/directional/north,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Oo" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"OC" = (
+/obj/structure/table,
+/obj/item/plate/large,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"OM" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"OP" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 1
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"OQ" = (
+/obj/machinery/door/airlock/vault{
+	name = "Teleportation Research"
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"OW" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Pa" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Pj" = (
+/obj/structure/broken_flooring/corner/always_floorplane,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Pt" = (
+/obj/structure/broken_flooring/pile/always_floorplane{
+	dir = 8
+	},
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"PF" = (
+/obj/structure/puzzle_blockade{
+	id = "md_tosci"
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"PJ" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"PQ" = (
+/obj/structure/puzzle_blockade{
+	id = "md_armory"
+	},
+/obj/effect/turf_decal/stripes/full,
+/obj/machinery/puzzle_keycardpad/directional/south{
+	id = "md_armory";
+	name = "armory authentication pad";
+	queue_size = 5
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"PT" = (
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"PU" = (
+/turf/template_noop,
+/area/template_noop)
+"Qa" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Qc" = (
+/obj/machinery/light/small/dim/directional/east,
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Qd" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/effect/spawner/random/engineering/tool_advanced,
+/obj/effect/spawner/random/engineering/tool_advanced,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Qh" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/plasma/end{
+	dir = 8
+	},
+/obj/structure/sign/warning/electric_shock/directional/east,
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Qj" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/welded,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Qw" = (
+/obj/structure/chair/office/light,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"QM" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/structure/sign/directions/engineering/directional/east,
+/obj/effect/spawner/random/bureaucracy/pen,
+/obj/item/paper/crumpled/fluff/meatderelict/shieldgens,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"QP" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/chair/office/light,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ra" = (
+/obj/effect/spawner/structure/window/hollow/end,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Rb" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Rf" = (
+/obj/machinery/light/dim/directional/north,
+/obj/lightning_thrower,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"RD" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"RH" = (
+/mob/living/basic/living_floor/white,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"RN" = (
+/obj/item/flashlight/flare{
+	icon_state = "flare-on"
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"RQ" = (
+/obj/effect/decal/cleanable/glass,
+/mob/living/basic/living_limb_flesh,
+/obj/item/kirbyplants/random/dead,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"RS" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Se" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Sj" = (
+/obj/machinery/power/rtg/old_station,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/light/small/directional/south,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Sz" = (
+/mob/living/basic/meteor_heart/opens_puzzle_door{
+	id = "md_heart";
+	name = "tumor heart"
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"SX" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"SZ" = (
+/obj/machinery/door/airlock/engineering,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Tc" = (
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Tl" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Tw" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/food/pancakes/chocolatechip,
+/obj/item/toy/figure/cargotech{
+	pixel_y = 12
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"TP" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"TU" = (
+/obj/structure/showcase/horrific_experiment,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Ue" = (
+/obj/machinery/photocopier,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ui" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/north,
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Uj" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/obj/effect/gibspawner/generic,
+/mob/living/basic/living_limb_flesh,
+/turf/open/floor/circuit{
+	baseturfs = /turf/open/indestructible/plating
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ut" = (
+/mob/living/basic/living_limb_flesh,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Uv" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"UD" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"UG" = (
+/obj/machinery/vending/tool,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"UN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"UX" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Vc" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Vj" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Vn" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/raw_anomaly_core/bluespace,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Vu" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 4
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"VB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"VJ" = (
+/obj/machinery/door/airlock/medical,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"VN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/c45/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"VT" = (
+/obj/structure/broken_flooring/singular{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/food/strawberryicecreamsandwich,
+/obj/item/food/strawberryicecreamsandwich,
+/obj/item/food/strawberryicecreamsandwich,
+/obj/item/food/strawberryicecreamsandwich,
+/obj/structure/closet/mini_fridge,
+/obj/structure/broken_flooring/singular/always_floorplane{
+	dir = 1
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"VW" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/light/floor,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"We" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Wj" = (
+/mob/living/basic/living_floor,
+/obj/item/chair,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Wx" = (
+/obj/structure/broken_flooring/pile/always_floorplane{
+	dir = 1
+	},
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/machinery/light/cold/dim/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"WJ" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Xe" = (
+/obj/effect/turf_decal/siding/red,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/light/cold/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Xh" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Xl" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Xm" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/ai_module/core/full/ten_commandments,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Xo" = (
+/obj/structure/showcase/horrific_experiment,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Xp" = (
+/obj/structure/puzzle_blockade/meat{
+	id = "md_heart"
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Xz" = (
+/obj/machinery/door/puzzle/keycard{
+	puzzle_id = "md_engpost"
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"XA" = (
+/turf/closed/mineral/random,
+/area/ruin/space)
+"XD" = (
+/obj/structure/broken_flooring/pile/always_floorplane,
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"XO" = (
+/obj/structure/sign/directions/security/directional/south{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"XP" = (
+/turf/closed/mineral/bananium,
+/area/ruin/space)
+"XQ" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Yc" = (
+/turf/closed/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
+"Yd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Yr" = (
+/obj/structure/window/spawner/directional/east,
+/mob/living/basic/living_limb_flesh,
+/mob/living/basic/living_limb_flesh,
+/obj/item/keycard/meatderelict/armory,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Ys" = (
+/obj/effect/turf_decal/trimline/yellow/filled/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"YD" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/item/ammo_casing/c45/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"YI" = (
+/obj/structure/broken_flooring/corner/always_floorplane{
+	dir = 8
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"YW" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/rack,
+/obj/structure/sign/warning/chem_diamond/directional/south,
+/obj/machinery/door/window/left/directional/north,
+/obj/item/grenade/chem_grenade/large,
+/obj/item/grenade/chem_grenade/adv_release{
+	pixel_x = 8
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"YY" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/indestructible/white{
+	icon_state = "showroomfloor"
+	},
+/area/ruin/space/has_grav/powered/biooutpost)
+"Zd" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Zp" = (
+/obj/effect/turf_decal/siding/blue/corner,
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 8
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Zr" = (
+/obj/item/gps/spaceruin,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"Zs" = (
+/obj/structure/door_assembly/door_assembly_science,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Zv" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"Zx" = (
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ZG" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/medkit/brute,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ZT" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/light/cold/dim/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"ZZ" = (
+/obj/structure/fluff/oldturret,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+
+(1,1,1) = {"
+PU
+PU
+PU
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+PU
+re
+re
+re
+re
+re
+re
+re
+PU
+PU
+PU
+re
+re
+re
+re
+re
+PU
+PU
+PU
+PU
+PU
+PU
+"}
+(2,1,1) = {"
+PU
+PU
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+PU
+"}
+(3,1,1) = {"
+PU
+PU
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+Jh
+Jh
+Jh
+Jh
+Jh
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+"}
+(4,1,1) = {"
+PU
+PU
+re
+re
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+re
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+lh
+eF
+PJ
+Jh
+hd
+re
+re
+re
+Jh
+Jh
+Jh
+Jh
+re
+re
+re
+re
+re
+re
+"}
+(5,1,1) = {"
+PU
+PU
+re
+re
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+re
+Jh
+fH
+fH
+fH
+fH
+fH
+fH
+Jh
+Dh
+vt
+vt
+oX
+dQ
+hd
+re
+re
+Jh
+Jh
+se
+ku
+Jh
+Jh
+re
+re
+re
+re
+re
+"}
+(6,1,1) = {"
+PU
+PU
+re
+re
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+re
+Jh
+fH
+xU
+Ec
+eq
+tF
+fH
+Jh
+Fc
+fo
+oX
+oX
+YW
+hd
+re
+re
+Jh
+ny
+Gb
+Gb
+ny
+Jh
+Jh
+Jh
+re
+re
+re
+"}
+(7,1,1) = {"
+PU
+PU
+re
+re
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+re
+Jh
+fH
+Ec
+Hh
+Ec
+aV
+fH
+Jh
+Bx
+CS
+RS
+HC
+rl
+hd
+re
+re
+Jh
+Jh
+Ei
+Jh
+Jh
+Jh
+Yr
+Jh
+Jh
+re
+re
+"}
+(8,1,1) = {"
+PU
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+re
+Jh
+fH
+qx
+ni
+Ec
+jt
+fH
+Jh
+Jh
+Ra
+Zs
+Oh
+fH
+Jh
+re
+Jh
+Jh
+AP
+DJ
+yU
+AT
+vF
+ih
+hf
+Jh
+Jh
+re
+"}
+(9,1,1) = {"
+PU
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+re
+Jh
+Jh
+Jh
+Jh
+Jh
+hY
+Jh
+fH
+EE
+Ec
+at
+Ec
+Pt
+Jh
+Jh
+Jh
+pK
+DJ
+DJ
+qs
+pj
+kl
+kl
+QP
+kh
+Jh
+re
+"}
+(10,1,1) = {"
+XA
+XA
+XP
+XP
+XA
+XA
+XA
+re
+re
+re
+re
+re
+re
+re
+re
+Jh
+dv
+cp
+DJ
+NU
+fH
+OC
+Ec
+yl
+Ec
+Ec
+Jh
+Kc
+JF
+DJ
+kl
+qs
+sp
+Jh
+RQ
+jA
+lf
+Jh
+Jh
+re
+"}
+(11,1,1) = {"
+XA
+XA
+XP
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+Jh
+iQ
+cp
+DJ
+CI
+lJ
+Ka
+RH
+uC
+Mp
+uC
+Cl
+DJ
+DJ
+DJ
+DJ
+dW
+DJ
+Jh
+Jh
+Ut
+Jh
+Jh
+re
+re
+"}
+(12,1,1) = {"
+XA
+XA
+XA
+re
+re
+re
+re
+re
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Uj
+DJ
+Gb
+xk
+Jh
+hQ
+iX
+Zx
+Zx
+iB
+Jh
+Nn
+DJ
+ZT
+DJ
+dW
+kl
+ui
+Jh
+Jh
+Jh
+re
+re
+re
+"}
+(13,1,1) = {"
+XA
+XA
+re
+re
+re
+re
+Jh
+Jh
+Jh
+eT
+Xm
+Tw
+tg
+Jh
+gN
+Ue
+cp
+Ju
+fW
+pQ
+Jh
+Bp
+Lj
+wy
+Zx
+Wx
+Jh
+bR
+DJ
+Jh
+Jh
+oj
+Jh
+Jh
+Jh
+re
+re
+re
+re
+re
+"}
+(14,1,1) = {"
+XA
+re
+re
+re
+re
+re
+Jh
+Zv
+il
+id
+MH
+HF
+KP
+vY
+Ju
+DJ
+ea
+mA
+Gb
+vZ
+Jh
+Jh
+tt
+wJ
+tt
+Jh
+Jh
+Jh
+Cl
+Jh
+oX
+gQ
+zL
+Jh
+re
+re
+re
+re
+re
+re
+"}
+(15,1,1) = {"
+re
+re
+re
+re
+re
+re
+Jh
+oQ
+SX
+Lc
+Bl
+dR
+MO
+Jh
+wX
+wM
+DJ
+cp
+XO
+Ju
+op
+op
+at
+HF
+CW
+Jh
+Br
+Mb
+at
+eA
+vt
+zs
+Gn
+Jh
+re
+re
+re
+re
+re
+re
+"}
+(16,1,1) = {"
+re
+re
+re
+re
+re
+re
+Jh
+NK
+il
+oh
+Nr
+kB
+Jh
+UX
+UX
+EC
+xr
+hR
+UX
+UX
+UX
+op
+Gd
+WJ
+Jf
+Jh
+Br
+Xe
+jE
+Jh
+FI
+CN
+Xl
+Jh
+re
+re
+nr
+nr
+re
+nr
+"}
+(17,1,1) = {"
+re
+re
+re
+re
+re
+re
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Yc
+Yc
+EC
+OQ
+EC
+Yc
+Yc
+UX
+UX
+Jh
+uZ
+Jh
+Jh
+Jh
+Jh
+PF
+Jh
+af
+sl
+Jh
+Jh
+re
+ZZ
+ML
+ML
+ML
+ML
+"}
+(18,1,1) = {"
+re
+re
+re
+EC
+EC
+EC
+EC
+EC
+EC
+re
+re
+re
+Yc
+Yc
+TU
+EN
+EN
+eP
+TU
+Yc
+Yc
+UX
+wR
+yw
+nP
+zg
+Jh
+Df
+GA
+bh
+bi
+UN
+Jh
+ij
+ij
+ML
+BA
+LR
+LR
+eo
+"}
+(19,1,1) = {"
+re
+re
+EC
+EC
+Jo
+Qd
+zS
+hk
+EC
+Yc
+EC
+Yc
+Yc
+TU
+EN
+eP
+EN
+EN
+EN
+TU
+Yc
+UX
+uh
+AY
+AY
+Se
+Jh
+sk
+at
+sM
+Jb
+Pa
+Jh
+Uv
+ij
+ML
+tS
+AV
+AV
+kX
+"}
+(20,1,1) = {"
+re
+re
+EC
+Fv
+PT
+aW
+OW
+PT
+EC
+Xo
+XQ
+TU
+Yc
+EN
+EN
+EN
+EN
+EN
+eP
+EN
+EC
+EC
+Oi
+AY
+AY
+fm
+Jh
+Kl
+zF
+Bu
+VN
+HA
+ph
+FE
+jo
+cQ
+tS
+AV
+AV
+kX
+"}
+(21,1,1) = {"
+re
+re
+EC
+AX
+PT
+qw
+sd
+PT
+Jx
+CD
+EN
+CD
+Xp
+EN
+eP
+EN
+Sz
+eP
+EN
+EN
+OQ
+Bt
+gX
+VB
+VB
+qg
+Jh
+DU
+mM
+YD
+lm
+mU
+Jh
+us
+ij
+cQ
+tS
+AV
+AV
+kX
+"}
+(22,1,1) = {"
+re
+re
+EC
+ja
+PT
+NL
+uU
+PT
+EC
+TU
+rK
+Xo
+Yc
+EN
+EN
+EN
+EN
+EN
+EN
+eP
+EC
+hR
+IK
+IK
+IK
+PQ
+Jh
+iI
+jE
+Hx
+Ew
+nY
+Qj
+Oo
+uq
+uH
+tS
+AV
+AV
+kX
+"}
+(23,1,1) = {"
+re
+re
+EC
+EC
+ne
+AG
+Vn
+GE
+EC
+Yc
+EC
+Yc
+Yc
+TU
+EN
+eP
+EN
+eP
+EN
+TU
+Yc
+UX
+wH
+jU
+ZG
+gK
+Jh
+Hb
+Kx
+nR
+uc
+QM
+Jh
+Qc
+ij
+ML
+tS
+AV
+AV
+kX
+"}
+(24,1,1) = {"
+re
+re
+re
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+Yc
+Yc
+TU
+EN
+EN
+EN
+TU
+Yc
+Yc
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+oO
+zF
+hW
+Jh
+Jh
+ij
+ij
+Zr
+sL
+Gj
+Gj
+RD
+"}
+(25,1,1) = {"
+re
+re
+re
+re
+re
+ij
+xE
+MF
+Mo
+dD
+Zd
+EC
+EC
+Yc
+Yc
+EC
+OQ
+EC
+Yc
+Yc
+UX
+Jh
+Jh
+vd
+jf
+la
+fc
+Jh
+rh
+DC
+Be
+Jh
+re
+re
+re
+ZZ
+ML
+ML
+ML
+ML
+"}
+(26,1,1) = {"
+re
+re
+re
+re
+re
+ij
+Jt
+pl
+We
+Vc
+Rb
+Sj
+EC
+Yc
+hR
+EC
+xr
+EC
+EC
+UX
+Jh
+YY
+Jh
+Tl
+jE
+jE
+Zp
+VJ
+TP
+jE
+kn
+Jh
+re
+re
+re
+re
+nr
+re
+re
+nr
+"}
+(27,1,1) = {"
+re
+re
+re
+re
+re
+ij
+NI
+Hm
+Qh
+ki
+UD
+qV
+ij
+Nz
+sJ
+OM
+Vu
+NE
+fH
+Jh
+fB
+ch
+Jh
+Ll
+jE
+nx
+aj
+Jh
+Cf
+go
+GC
+Jh
+re
+re
+re
+re
+re
+re
+re
+re
+"}
+(28,1,1) = {"
+re
+re
+re
+re
+re
+ij
+ij
+ij
+ij
+ab
+ij
+ij
+ij
+Dg
+jj
+mx
+Zx
+EQ
+fH
+Jh
+Ex
+tv
+ex
+Tl
+jE
+Qw
+Qa
+Jh
+Jh
+KU
+Jh
+Jh
+ij
+ij
+ij
+ij
+re
+re
+re
+re
+"}
+(29,1,1) = {"
+re
+re
+re
+re
+re
+re
+re
+ij
+GF
+zP
+iA
+iA
+hN
+sJ
+OP
+io
+jj
+uS
+ij
+Jh
+qi
+ch
+Jh
+eD
+jE
+at
+mO
+Jh
+ra
+rm
+iA
+An
+ij
+yu
+za
+ij
+re
+re
+nr
+nr
+"}
+(30,1,1) = {"
+PU
+re
+re
+re
+re
+re
+re
+ij
+Rf
+Ys
+sR
+iA
+hN
+jj
+Zx
+Vu
+pe
+DR
+ij
+Jh
+aE
+pk
+Jh
+Tl
+jE
+rw
+jV
+Jh
+pY
+Vj
+pY
+By
+nM
+pp
+jr
+ij
+re
+re
+nr
+nr
+"}
+(31,1,1) = {"
+PU
+re
+re
+re
+re
+re
+re
+ij
+GF
+xA
+iA
+qY
+hN
+jj
+Zx
+Zx
+VT
+po
+ij
+Jh
+wn
+ch
+Jh
+Ki
+GO
+wf
+Jh
+Jh
+Yd
+yp
+Yd
+ij
+ij
+DB
+Zx
+fH
+re
+re
+nr
+PU
+"}
+(32,1,1) = {"
+PU
+re
+re
+re
+re
+re
+re
+ij
+ij
+ij
+wj
+wj
+ij
+Ui
+Zx
+Zx
+OP
+fH
+fH
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+ij
+KH
+au
+yr
+ij
+CF
+sJ
+ij
+ij
+re
+re
+re
+PU
+"}
+(33,1,1) = {"
+PU
+re
+re
+re
+re
+re
+re
+re
+re
+ij
+MS
+pC
+wj
+ES
+Zx
+Zx
+OP
+ij
+fH
+ij
+fH
+fH
+fH
+ij
+ij
+ij
+re
+ij
+RN
+os
+yr
+wj
+lT
+Ca
+ij
+re
+re
+re
+re
+PU
+"}
+(34,1,1) = {"
+PU
+PU
+re
+re
+re
+re
+re
+re
+re
+ij
+KC
+qY
+Xz
+YI
+mx
+mx
+Pj
+ij
+tq
+Wj
+DB
+DB
+DB
+oI
+uf
+ij
+ij
+ij
+yr
+au
+yr
+wj
+jO
+yf
+ij
+re
+re
+re
+re
+PU
+"}
+(35,1,1) = {"
+PU
+PU
+re
+nr
+nr
+nr
+re
+re
+re
+ij
+ij
+ij
+ij
+ij
+vl
+tN
+UD
+ij
+DB
+DB
+qh
+qZ
+Ip
+Du
+mx
+ij
+aF
+yr
+yr
+os
+yr
+ij
+gO
+jO
+ij
+re
+re
+re
+re
+nr
+"}
+(36,1,1) = {"
+PU
+PU
+nr
+nr
+nr
+nr
+nr
+re
+re
+re
+re
+re
+re
+ij
+ay
+VW
+iA
+SZ
+jO
+Tc
+Dk
+DB
+DB
+Du
+jO
+mc
+yr
+au
+os
+au
+XD
+ij
+ij
+iO
+ij
+re
+re
+re
+re
+nr
+"}
+(37,1,1) = {"
+PU
+PU
+re
+re
+re
+nr
+nr
+nr
+re
+re
+re
+re
+re
+ij
+UG
+iA
+xm
+ij
+DB
+DB
+DB
+DB
+Wj
+DB
+Vu
+ij
+aF
+gP
+EY
+yr
+wU
+Xh
+jO
+HV
+ij
+re
+re
+re
+re
+re
+"}
+(38,1,1) = {"
+PU
+PU
+PU
+re
+re
+nr
+re
+re
+re
+re
+re
+re
+re
+ij
+ij
+ij
+ij
+ij
+ij
+fH
+AD
+AD
+AD
+AD
+fH
+ij
+ij
+ij
+ij
+ij
+ij
+ij
+ij
+ij
+ij
+re
+re
+re
+re
+re
+"}
+(39,1,1) = {"
+PU
+PU
+PU
+re
+re
+nr
+nr
+nr
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+fH
+fH
+ij
+fH
+ij
+ij
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+nr
+"}
+(40,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+re
+nr
+nr
+"}

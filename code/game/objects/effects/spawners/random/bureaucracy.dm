@@ -54,7 +54,7 @@
 	icon_state = "briefcase"
 	loot = list(
 		/obj/item/storage/briefcase = 3,
-		/obj/item/storage/secure/briefcase = 1,
+		/obj/item/storage/briefcase/secure = 1,
 	)
 
 /obj/effect/spawner/random/bureaucracy/folder

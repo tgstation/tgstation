@@ -14,7 +14,6 @@
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
-		"bepis",
 		"blast",
 		"bounced_radio",
 		"bowl",
@@ -49,7 +48,9 @@
 		"experimentor",
 		"extinguisher",
 		"fax",
+		"fish_case",
 		"fishing_rod",
+		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
 		"foam_dart",
@@ -97,6 +98,7 @@
 		"sec_dart",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -115,6 +117,7 @@
 		"titaniumglass",
 		"toner_large",
 		"toner",
+		"tongs",
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
@@ -126,6 +129,14 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
+	)
+	experiments_to_unlock = list(
+		/datum/experiment/autopsy/nonhuman,
+		/datum/experiment/scanning/random/material/medium/one,
+		/datum/experiment/scanning/random/material/medium/three,
+		/datum/experiment/scanning/random/material/hard/one,
+		/datum/experiment/scanning/random/material/hard/two,
+		/datum/experiment/scanning/people/novel_organs,
 	)
 
 /datum/techweb_node/mmi
@@ -288,6 +299,7 @@
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
+		"penlight",
 		"retractor",
 		"scalpel",
 		"stethoscope",
@@ -307,6 +319,7 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_access_checker",
+		"comp_arctan2",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
 		"comp_assoc_list_remove",
@@ -406,6 +419,7 @@
 		"medigel",
 		"medipen_refiller",
 		"pandemic",
+		"penlight_paramedic",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -475,6 +489,7 @@
 		"gibber",
 		"griddle",
 		"microwave",
+		"microwave_engineering",
 		"monkey_recycler",
 		"oven",
 		"processor",
@@ -628,6 +643,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
+	experiments_to_unlock = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
@@ -837,7 +853,7 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
-		"comp_mod_action",
+		"comp_equip_action",
 		"controller_shell",
 		"dispenser_shell",
 		"door_shell",
@@ -859,7 +875,6 @@
 		"bci_implanter",
 		"bci_shell",
 		"comp_bar_overlay",
-		"comp_bci_action",
 		"comp_counter_overlay",
 		"comp_install_detector",
 		"comp_object_overlay",
@@ -908,9 +923,13 @@
 /datum/techweb_node/adv_robotics
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
-	description = "Machines using actual neural networks to simulate human lives."
-	prereq_ids = list("neural_programming", "robotics")
+	description = "Advanced synthetic neural networks and synaptic pathways allows for extraordinary leaps in cybernetic intelligence and interfacing."
+	prereq_ids = list("robotics")
 	design_ids = list(
+		"advanced_l_arm",
+		"advanced_r_arm",
+		"advanced_l_leg",
+		"advanced_r_leg",
 		"mmi_posi",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -997,6 +1016,7 @@
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
 		"borg_upgrade_hypermod",
+		"borg_upgrade_inducer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1093,6 +1113,7 @@
 		"holosignrestaurant",
 		"holosignbar",
 		"inducer",
+		"inducerengi",
 		"tray_goggles",
 		"holopad",
 		"vendatray",
@@ -1159,10 +1180,11 @@
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
 	design_ids = list(
+		"bankmachine",
+		"barcode_scanner",
 		"cargo",
 		"cargorequest",
 		"comconsole",
-		"bankmachine",
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
@@ -1241,6 +1263,19 @@
 		"s_treatment",
 	)
 
+/datum/techweb_node/tram
+	id = "tram"
+	display_name = "Tram Technology"
+	description = "Technology for linear induction transportation systems."
+	prereq_ids = list("telecomms")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	design_ids = list(
+		"tram_controller",
+		"tram_display",
+		"crossing_signal",
+		"guideway_sensor",
+	)
+
 /datum/techweb_node/integrated_hud
 	id = "integrated_HUDs"
 	display_name = "Integrated HUDs"
@@ -1305,9 +1340,21 @@
 		"c38_trac",
 		"implant_chem",
 		"implant_tracking",
+		"implant_exile",
 		"implantcase",
 		"implanter",
 		"locator",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/advanced_implants
+	id = "adv_subdermal_implants"
+	display_name = "Advanced Subdermal Implants"
+	description = "Subdermal implants that leverage bluespace research to control their bluespace signature."
+	prereq_ids = list("subdermal_implants", "micro_bluespace")
+	design_ids = list(
+		"implant_beacon",
+		"implant_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1437,6 +1484,9 @@
 		"superresonator",
 		"triggermod",
 		"mining_scanner",
+		"brm",
+		"b_smelter",
+		"b_refinery",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1490,6 +1540,19 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
+
+/datum/techweb_node/fishing
+	id = "fishing"
+	display_name = "Fishing Technology"
+	description = "Cutting edge fishing advancements."
+	prereq_ids = list("base")
+	design_ids = list(
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	required_experiments = list(/datum/experiment/scanning/fish)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1562,6 +1625,7 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
+		"lasershell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
@@ -1835,6 +1899,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/paddy
+	id = "mech_paddy"
+	display_name = "EXOSUIT: APLU \"Paddy\""
+	description = "Paddy exosuit designs"
+	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	design_ids = list(
+		"paddyupgrade",
+		"mech_hydraulic_claw"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
+
 /datum/techweb_node/gygax
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"
@@ -1951,7 +2027,7 @@
 		"mech_proj_armor",
 	)
 	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_equipped_scan = 5000)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/mech_scattershot
@@ -2106,7 +2182,7 @@
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
@@ -2149,7 +2225,7 @@
 		"alien_scalpel",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
@@ -2188,7 +2264,7 @@
 		"alien_wrench",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/circuitboard/machine/abductor,
 		/obj/item/crowbar/abductor,
@@ -2213,7 +2289,6 @@
 		"advanced_camera",
 		"ai_cam_upgrade",
 		"borg_syndicate_module",
-		"decloner",
 		"donksoft_refill",
 		"donksofttoyvendor",
 		"largecrossbow",
@@ -2241,12 +2316,12 @@
 /datum/techweb_node/syndicate_basic/proc/register_uplink_items()
 	SIGNAL_HANDLER
 	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	boost_item_paths = list()
+	required_items_to_unlock = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
 		if(!item.item || !item.illegal_tech)
 			continue
-		boost_item_paths |= item.item //allows deconning to unlock.
+		required_items_to_unlock |= item.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////
@@ -2350,20 +2425,6 @@
 		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/fishing
-	id = "fishing"
-	display_name = "Fishing Technology"
-	description = "Cutting edge fishing advancements."
-	prereq_ids = list("base")
-	design_ids = list(
-		"fishing_rod_tech",
-		"stabilized_hook",
-		"fish_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

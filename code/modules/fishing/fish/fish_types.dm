@@ -203,6 +203,8 @@
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
 	icon_state = "needlefish"
+	dedicated_in_aquarium_icon_state = "needlefish_small"
+	sprite_width = 7
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
 	fillet_type = null
@@ -216,6 +218,9 @@
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
 	icon_state = "armorfish"
+	dedicated_in_aquarium_icon_state = "armorfish_small"
+	sprite_height = 5
+	sprite_width = 6
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
@@ -231,8 +236,6 @@
 	dedicated_in_aquarium_icon_state = "chrab_small"
 	sprite_height = 9
 	sprite_width = 8
-	source_height = 9
-	source_width = 8
 	stable_population = 4
 	feeding_frequency = 15 MINUTES
 	random_case_rarity = FISH_RARITY_RARE
@@ -341,7 +344,6 @@
 	icon_state = "sludgefish_purple"
 	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
 	random_case_rarity = FISH_RARITY_NOPE
-	random_case_rarity = FISH_RARITY_VERY_RARE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
 /obj/item/fish/slimefish
@@ -439,11 +441,13 @@
 	fillet_type = null
 	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
+	experisci_scannable = FALSE
 
 /obj/item/fish/holo/Initialize(mapload)
 	. = ..()
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
+		addtimer(CALLBACK(src, PROC_REF(set_status), FISH_DEAD), 1 MINUTES)
 		return
 	holo_area.linked.add_to_spawned(src)
 
@@ -488,9 +492,9 @@
 	sprite_height = 5
 
 /obj/item/fish/holo/checkered
-	name = "unrendered holographic fish" //it's a meta joke, buddy.
+	name = "unrendered holographic fish"
 	desc = "A checkered silhoutte of searing purple and pitch black presents itself before your eyes, like a tear in fabric of reality. It hurts to watch."
-	icon_state = "checkered"
+	icon_state = "checkered" //it's a meta joke, buddy.
 	dedicated_in_aquarium_icon_state = "checkered_small"
 	sprite_width = 4
 
@@ -502,3 +506,37 @@
 	sprite_height = 4
 	sprite_width = 10
 	average_size = 50
+
+/obj/item/fish/starfish
+	name = "cosmostarfish"
+	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
+	icon_state = "starfish"
+	dedicated_in_aquarium_icon_state = "starfish_small"
+	icon_state_dead = "starfish_dead"
+	sprite_width = 4
+	average_size = 30
+	average_weight = 300
+	stable_population = 3
+	required_fluid_type = AQUARIUM_FLUID_AIR
+	random_case_rarity = FISH_RARITY_NOPE
+	required_temperature_min = 0
+	required_temperature_max = INFINITY
+	safe_air_limits = null
+	min_pressure = 0
+	max_pressure = INFINITY
+	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
+	fillet_type = null
+	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+
+/obj/item/fish/starfish/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/fish/starfish/update_overlays()
+	. = ..()
+	if(status == FISH_ALIVE)
+		. += emissive_appearance(icon, "starfish_emissive", src)
+
+///It spins, and dimly glows in the dark.
+/obj/item/fish/starfish/flop_animation()
+	DO_FLOATING_ANIM(src)

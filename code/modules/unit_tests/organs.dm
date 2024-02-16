@@ -25,14 +25,10 @@
 	))
 
 /datum/unit_test/organ_sanity/Run()
-	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ))
+	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - test_organ_blacklist)
 		organ_test_insert(organ_type)
 
 /datum/unit_test/organ_sanity/proc/organ_test_insert(obj/item/organ/organ_type)
-	// Skip prototypes.
-	if(test_organ_blacklist[organ_type])
-		return
-
 	// Appropriate mob (Human) which will receive organ.
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/test_organ = new organ_type()
@@ -41,8 +37,8 @@
 	var/mob/living/basic/pet/dog/lab_dog = allocate(/mob/living/basic/pet/dog/corgi)
 	var/obj/item/organ/reject_organ = new organ_type()
 
-	TEST_ASSERT(test_organ.Insert(lab_rat, special = TRUE, drop_if_replaced = FALSE), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should return TRUE to indicate success."))
-	TEST_ASSERT(!reject_organ.Insert(lab_dog, special = TRUE, drop_if_replaced = FALSE), TEST_ORGAN_INSERT_MESSAGE(test_organ, "shouldn't return TRUE when inserting into a basic mob (Corgi)."))
+	TEST_ASSERT(test_organ.Insert(lab_rat, special = TRUE, movement_flags = DELETE_IF_REPLACED), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should return TRUE to indicate success."))
+	TEST_ASSERT(!reject_organ.Insert(lab_dog, special = TRUE, movement_flags = DELETE_IF_REPLACED), TEST_ORGAN_INSERT_MESSAGE(test_organ, "shouldn't return TRUE when inserting into a basic mob (Corgi)."))
 
 	// Species change swaps out all the organs, making test_organ un-usable by this point.
 	if(species_changing_organs[test_organ.type])
@@ -96,19 +92,22 @@
 	var/slot_to_use = test_organ.slot
 
 	// Tests [mob/living/proc/adjustOrganLoss]
-	dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10)
+	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
 	dummy.fully_heal(HEAL_ORGANS)
 
 	// Tests [mob/living/proc/set_organ_damage]
-	dummy.setOrganLoss(slot_to_use, test_organ.maxHealth * 10)
+	TEST_ASSERT_EQUAL(dummy.setOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+		"Mob level \"set organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"set organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
 	dummy.fully_heal(HEAL_ORGANS)
 
 	// Tests [mob/living/proc/adjustOrganLoss] with a large max supplied
-	dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10, INFINITY)
+	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10, INFINITY), -test_organ.maxHealth, \
+		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with a large maximum supplied.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
 	dummy.fully_heal(HEAL_ORGANS)

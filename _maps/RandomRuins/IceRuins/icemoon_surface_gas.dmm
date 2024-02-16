@@ -1,0 +1,1324 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aN" = (
+/obj/machinery/door/airlock/material/glass,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"aR" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"bn" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"bJ" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"cv" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"cE" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/machinery/duct,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"cF" = (
+/obj/structure/rack,
+/obj/item/food/cornchips/blue{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/food/cornchips/blue{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/food/cornchips/green{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/food/cornchips/green{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/food/cornchips/red{
+	pixel_y = 5
+	},
+/obj/item/food/cornchips/red{
+	pixel_y = 3
+	},
+/obj/item/food/cornchips/red{
+	pixel_y = 1
+	},
+/obj/item/food/cornchips/red{
+	pixel_y = -1
+	},
+/obj/item/food/cornchips/purple{
+	pixel_y = 4
+	},
+/obj/item/food/cornchips/purple,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"cI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sink/directional/west,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"dd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"ed" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"es" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"eF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/obj/structure/sign/poster/fluff/lizards_gas_power/directional/west,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/cola,
+/obj/item/vending_refill/snack,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"eM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"eZ" = (
+/obj/structure/rack,
+/obj/item/food/cornuto,
+/obj/item/food/cornuto{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/food/cornuto{
+	pixel_y = -2;
+	pixel_x = 6
+	},
+/obj/item/food/cornuto{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/obj/item/food/cornuto{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/machinery/duct,
+/obj/structure/window/spawner/directional/east,
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered/lizard_gas)
+"gm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced,
+/obj/structure/sign/poster/official/midtown_slice/directional/east,
+/obj/item/food/taco{
+	pixel_x = 5
+	},
+/obj/item/food/hotdog{
+	pixel_y = 4;
+	pixel_x = -7
+	},
+/obj/structure/window/spawner/directional/north,
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"gv" = (
+/turf/template_noop,
+/area/template_noop)
+"gW" = (
+/obj/structure/sink/directional/east,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"ih" = (
+/obj/structure/sign/poster/fluff/lizards_gas_payment/directional/east,
+/mob/living/basic/lizard/space,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"iS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"jD" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"jQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"kc" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"ku" = (
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"kI" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"kS" = (
+/obj/machinery/duct,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"kT" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"lK" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"ma" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"mE" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"oo" = (
+/turf/closed/wall,
+/area/ruin/powered/lizard_gas)
+"oy" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"pL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/duct,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"pO" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"qM" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"rh" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"sm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"sn" = (
+/obj/structure/rack,
+/obj/machinery/duct,
+/obj/item/storage/cans/sixsoda{
+	pixel_y = -1
+	},
+/obj/item/storage/cans/sixsoda,
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered/lizard_gas)
+"sQ" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"sU" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"tx" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"tW" = (
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"ul" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"ur" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"uv" = (
+/obj/structure/shipping_container/donk_co,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"vA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/jim_nortons/directional/south,
+/obj/machinery/light/cold/directional/south,
+/obj/machinery/duct,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"wK" = (
+/obj/machinery/space_heater,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"wN" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"wU" = (
+/obj/structure/table/reinforced,
+/obj/item/food/croissant{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/food/breadslice/banana{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/food/butterbiscuit,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"xw" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"xK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"xN" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"yG" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/condiment/vegetable_oil,
+/obj/item/reagent_containers/condiment/vegetable_oil{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/condiment/vegetable_oil{
+	pixel_x = -4
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"yH" = (
+/obj/structure/reagent_dispensers/plumbed/fuel,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"zh" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_y = 2
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"zm" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/lizard_gas)
+"zJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"zL" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/lizard_gas)
+"Ao" = (
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"AM" = (
+/obj/structure/mineral_door/wood,
+/obj/machinery/duct,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"Bc" = (
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"CW" = (
+/obj/machinery/duct,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/lizard_gas)
+"El" = (
+/obj/structure/table,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"Ez" = (
+/obj/structure/billboard/roadsign/twothousand,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Fp" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"FP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/machinery/light/cold/directional/north,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = -2
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"Gn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"GO" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"HE" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/lizard_gas)
+"HI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"IF" = (
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/lizard_gas)
+"Ji" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"Jv" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/lizard_gas)
+"KG" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Lh" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"LG" = (
+/obj/structure/billboard/lizards_gas,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"LP" = (
+/obj/structure/mop_bucket,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"Md" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"Mz" = (
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"MA" = (
+/obj/structure/rack,
+/obj/item/storage/box/matches{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"Py" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/machinery/coffeemaker,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"QI" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"QK" = (
+/obj/structure/cable,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/storage/cans/sixbeer{
+	pixel_y = 8
+	},
+/obj/item/storage/cans/sixbeer{
+	pixel_y = -1
+	},
+/obj/machinery/door/window/left/directional/south,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered/lizard_gas)
+"QQ" = (
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
+/obj/structure/rack,
+/obj/item/grenade/firecracker{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/grenade/firecracker{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/obj/item/grenade/firecracker{
+	pixel_x = 5
+	},
+/obj/item/grenade/firecracker{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/grenade/firecracker{
+	pixel_y = -7;
+	pixel_x = -6
+	},
+/obj/item/grenade/firecracker{
+	pixel_x = -6
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"Rc" = (
+/obj/structure/shipping_container/nanotrasen,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"Rs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"RC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/powered/lizard_gas)
+"RD" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/ruin/powered/lizard_gas)
+"RE" = (
+/obj/machinery/light/cold/directional/east,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/lizard_gas)
+"RW" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"SZ" = (
+/obj/structure/table,
+/obj/item/mop,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"Tz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/food/candy{
+	pixel_x = 11
+	},
+/obj/item/food/candy{
+	pixel_x = -9
+	},
+/obj/item/food/candy{
+	pixel_x = -2
+	},
+/obj/item/food/candy{
+	pixel_x = 4
+	},
+/obj/machinery/light/cold/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/item/food/chocolatebar{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/food/chocolatebar{
+	pixel_y = -3;
+	pixel_x = -4
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"TA" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/closet/mini_fridge,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"Vq" = (
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/unexplored)
+"Ww" = (
+/obj/machinery/duct,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/lizard_gas)
+"WG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/structure/rack,
+/obj/item/reagent_containers/condiment/yoghurt{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/condiment/yoghurt{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/condiment/yoghurt{
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/door/window/left/directional/south,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered/lizard_gas)
+"WN" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/turf/open/floor/iron,
+/area/ruin/powered/lizard_gas)
+"YC" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+
+(1,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+LG
+Ji
+Ji
+gv
+gv
+"}
+(2,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+Ji
+Ji
+Ji
+gv
+gv
+gv
+gv
+gv
+ur
+Ji
+Ji
+gv
+gv
+"}
+(3,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+Ji
+Ji
+tx
+tx
+GO
+Ji
+Ji
+gv
+gv
+gv
+gv
+ur
+Ji
+ur
+gv
+gv
+"}
+(4,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+gv
+zh
+tx
+tx
+El
+Vq
+Ji
+gv
+gv
+gv
+gv
+Ez
+ur
+Ji
+gv
+gv
+"}
+(5,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+gv
+gv
+SZ
+tx
+tx
+kT
+LP
+Ji
+gv
+gv
+gv
+gv
+ur
+Ji
+Ji
+gv
+gv
+"}
+(6,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+gv
+gv
+Jv
+Jv
+HE
+rh
+rh
+Jv
+Jv
+HE
+HE
+gv
+gv
+gv
+ur
+Ji
+ur
+gv
+gv
+"}
+(7,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+HE
+Bc
+Bc
+jD
+Ww
+jD
+Ww
+cE
+Jv
+Ji
+Ji
+Ji
+Ji
+Ji
+Ji
+gv
+gv
+"}
+(8,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+Jv
+Bc
+Bc
+cI
+Bc
+cI
+Bc
+Ww
+Jv
+Ji
+ur
+Ji
+ur
+Ji
+Ji
+gv
+gv
+"}
+(9,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+Jv
+Bc
+Mz
+oo
+Bc
+oo
+bJ
+Ww
+Jv
+gv
+gv
+Ji
+Ji
+ur
+gv
+gv
+gv
+"}
+(10,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+Jv
+Fp
+Bc
+gW
+Bc
+gW
+Bc
+Ww
+HE
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(11,1,1) = {"
+gv
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+HE
+Bc
+Bc
+jD
+Ww
+jD
+Ww
+Ww
+Jv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(12,1,1) = {"
+gv
+gv
+gv
+gv
+Ji
+Ji
+gv
+gv
+zm
+Jv
+HE
+Jv
+IF
+HE
+CW
+zL
+RE
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(13,1,1) = {"
+gv
+gv
+gv
+gv
+Ji
+gv
+gv
+gv
+oo
+aR
+aR
+aR
+oo
+eM
+kc
+oo
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(14,1,1) = {"
+gv
+gv
+gv
+gv
+Ji
+gv
+gv
+gv
+oo
+FP
+yG
+cF
+Tz
+Gn
+ma
+sn
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(15,1,1) = {"
+gv
+gv
+gv
+gv
+Ji
+gv
+gv
+gv
+oo
+QQ
+lK
+dd
+es
+lK
+es
+eZ
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(16,1,1) = {"
+gv
+gv
+gv
+gv
+Ji
+gv
+gv
+gv
+oo
+MA
+lK
+cv
+zJ
+jQ
+es
+vA
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(17,1,1) = {"
+gv
+gv
+gv
+sQ
+sQ
+sQ
+KG
+sQ
+oo
+WG
+Ao
+wU
+oy
+QI
+TA
+AM
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(18,1,1) = {"
+gv
+gv
+gv
+sQ
+Ji
+Rc
+Ji
+Ji
+oo
+QK
+ul
+gm
+ih
+WN
+pL
+kS
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(19,1,1) = {"
+gv
+gv
+gv
+sQ
+Ji
+ur
+Ji
+Ji
+oo
+oo
+oo
+oo
+oo
+oo
+aN
+oo
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(20,1,1) = {"
+gv
+gv
+gv
+sU
+Ji
+Ji
+sU
+YC
+ed
+Ji
+oo
+tW
+Py
+xN
+sm
+eF
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(21,1,1) = {"
+gv
+gv
+gv
+Lh
+bn
+Ji
+Ji
+wN
+Ji
+ed
+oo
+xK
+iS
+Rs
+Rs
+RC
+RD
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(22,1,1) = {"
+gv
+gv
+gv
+sU
+Ji
+uv
+sU
+Ji
+Ji
+Ji
+xw
+ku
+HI
+wK
+yH
+qM
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(23,1,1) = {"
+gv
+gv
+gv
+sQ
+Ji
+Ji
+Ji
+Ji
+ed
+Ji
+oo
+aR
+aR
+oo
+oo
+oo
+oo
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(24,1,1) = {"
+gv
+gv
+gv
+sQ
+Ji
+Ji
+ed
+wN
+RW
+mE
+pO
+ur
+Ji
+Ji
+Ji
+ur
+kI
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}
+(25,1,1) = {"
+gv
+gv
+gv
+KG
+Ji
+Ji
+YC
+Md
+Ji
+Ji
+Ji
+Ji
+Ji
+ur
+Ji
+Ji
+kI
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+"}

@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
@@ -69,6 +69,24 @@
 	name = "emergency crowbar"
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/crowbar/hammer
+	name = "claw hammer"
+	desc = "It's a heavy hammer with a pry bar on the back of its head. Nails aren't common in space, but this tool can still be used as a weapon or a crowbar."
+	force = 11
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "clawhammer"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	inhand_icon_state = "clawhammer"
+	belt_icon_state = "clawhammer"
+	throwforce = 10
+	throw_range = 5
+	throw_speed = 3
+	toolspeed = 2
+	custom_materials = list(/datum/material/wood=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
+	wound_bonus = 35
 
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
@@ -217,7 +235,7 @@
 	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
 	playsound(mech, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
+	if(!use_tool(mech, user, (mech.mecha_flags & IS_ENCLOSED) ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
 		mech.balloon_alert(user, "interrupted!")
 		return
 	user.log_message("pried open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)

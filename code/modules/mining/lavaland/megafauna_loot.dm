@@ -285,7 +285,6 @@
 	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
-	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && SPT_PROB(1, seconds_per_tick)) //cursed by bubblegum
 		if(prob(7.5))
@@ -399,7 +398,7 @@
 		give_blood(10)
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
-	if(soul.ckey && !soul.faction_check_mob(user))
+	if(soul.ckey && !soul.faction_check_atom(user))
 		to_chat(user, span_warning("You can't pick up [src]!"))
 		return
 	return ..()
@@ -423,19 +422,31 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/picked_ghost = pick(candidates)
-		soul.ckey = picked_ghost.ckey
-		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		soul.faction = list("[REF(user)]")
-		balloon_alert(user, "the scythe glows up")
-		add_overlay("soulscythe_gem")
-		density = TRUE
-		if(!ismob(loc))
-			reset_spin()
-	else
-		balloon_alert(user, "the scythe is dormant!")
+
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user)
+	AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
+		job_bans = ROLE_PAI, \
+		to_call = to_call, \
+	)
+
+/// Ghost poll has concluded and a candidate has been chosen.
+/obj/item/soulscythe/proc/on_poll_concluded(mob/living/master, mob/dead/observer/ghost)
+	if(isnull(ghost))
+		balloon_alert(master, "the scythe is dormant!")
+		REMOVE_TRAIT(src, TRAIT_NODROP, type)
+		using = FALSE
+		return
+
+	soul.ckey = ghost.ckey
+	soul.copy_languages(master, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the master.
+	soul.faction = list("[REF(master)]")
+	balloon_alert(master, "the scythe glows")
+	add_overlay("soulscythe_gem")
+	density = TRUE
+	if(!ismob(loc))
+		reset_spin()
+
 	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 	using = FALSE
 
@@ -606,7 +617,7 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
-/obj/projectile/soulscythe/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ishostile(target))
 		damage *= 2
 	return ..()
@@ -623,7 +634,7 @@
 	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
@@ -649,7 +660,7 @@
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
@@ -660,17 +671,14 @@
 		return
 	to_chat(user, span_notice("You call out for aid, attempting to summon spirits to your side."))
 
-	notify_ghosts("[user] is raising [user.p_their()] [name], calling for your help!",
-		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, ignore_key = POLL_IGNORE_SPECTRAL_BLADE, header = "Spectral blade")
+	notify_ghosts(
+		"[user] is raising [user.p_their()] [name], calling for your help!",
+		source = user,
+		ignore_key = POLL_IGNORE_SPECTRAL_BLADE,
+		header = "Spectral blade",
+	)
 
 	summon_cooldown = world.time + 600
-
-/obj/item/melee/ghost_sword/Topic(href, href_list)
-	if(href_list["orbit"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
 	ghost_check()
@@ -688,10 +696,10 @@
 			continue
 		var/mob/dead/observer/G = i
 		ghost_counter++
-		G.invisibility = 0
+		G.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		current_spirits |= G
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits = current_spirits
 	return ghost_counter
 

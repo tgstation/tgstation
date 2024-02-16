@@ -1,7 +1,8 @@
 #define ENRAGE_ADDITION 25
 /datum/ai_controller/basic_controller/ice_whelp
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_WHELP_ENRAGED = 0,
 	)
 
@@ -13,53 +14,33 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/sculpt_statues,
-		/datum/ai_planning_subtree/find_and_hunt_target/cannibalize,
+		/datum/ai_planning_subtree/find_and_hunt_target/corpses/ice_whelp,
 		/datum/ai_planning_subtree/burn_trees,
 	)
 
-
-/datum/ai_planning_subtree/find_and_hunt_target/cannibalize
+/datum/ai_planning_subtree/find_and_hunt_target/corpses/ice_whelp
 	target_key = BB_TARGET_CANNIBAL
-	hunting_behavior = /datum/ai_behavior/cannibalize
-	finding_behavior = /datum/ai_behavior/find_hunt_target/dragon_corpse
+	finding_behavior = /datum/ai_behavior/find_hunt_target/corpses/dragon_corpse
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise
 	hunt_targets = list(/mob/living/basic/mining/ice_whelp)
 	hunt_range = 10
 
-/datum/ai_behavior/find_hunt_target/dragon_corpse
+/datum/ai_behavior/find_hunt_target/corpses/dragon_corpse
 
-/datum/ai_behavior/find_hunt_target/dragon_corpse/valid_dinner(mob/living/source, mob/living/dinner, radius)
-	if(dinner.stat != DEAD)
-		return FALSE
+/datum/ai_behavior/find_hunt_target/corpses/dragon_corpse/valid_dinner(mob/living/source, mob/living/dinner, radius)
 	if(dinner.pulledby) //someone already got him before us
 		return FALSE
+	return ..()
 
-	return can_see(source, dinner, radius)
-
-/datum/ai_behavior/cannibalize
+/datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/cannibalize/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/cannibalize/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
-	. = ..()
-	var/mob/living/basic/living_pawn = controller.pawn
+/datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	var/mob/living/target = controller.blackboard[target_key]
-
-	if(QDELETED(target))
+	if(QDELETED(target) || target.stat != DEAD || target.pulledby) //we were too slow
 		finish_action(controller, FALSE)
 		return
-
-	if(target.stat != DEAD || target.pulledby) //we were too slow
-		finish_action(controller, FALSE)
-		return
-
-	living_pawn.melee_attack(target)
-	finish_action(controller, TRUE)
+	return ..()
 
 /datum/ai_behavior/cannibalize/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -69,14 +50,10 @@
 /datum/ai_planning_subtree/sculpt_statues
 
 /datum/ai_planning_subtree/sculpt_statues/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/obj/target = controller.blackboard[BB_TARGET_ROCK]
-
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_TARGET_ROCK, /obj/structure/flora/rock/icy)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/sculpt_statue, BB_TARGET_ROCK)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_TARGET_ROCK))
+		controller.queue_behavior(/datum/ai_behavior/sculpt_statue, BB_TARGET_ROCK)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_TARGET_ROCK, /obj/structure/flora/rock/icy)
 
 /datum/ai_behavior/sculpt_statue
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -135,16 +112,13 @@
 
 /datum/ai_planning_subtree/burn_trees/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE]
-	if (!using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
-	var/obj/structure/target = controller.blackboard[BB_TARGET_TREE]
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/set_target_tree, BB_TARGET_TREE)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees, BB_WHELP_STRAIGHTLINE_FIRE, BB_TARGET_TREE)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_TARGET_TREE))
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees, BB_WHELP_STRAIGHTLINE_FIRE, BB_TARGET_TREE)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/set_target_tree, BB_TARGET_TREE)
 
 /datum/ai_behavior/set_target_tree
 

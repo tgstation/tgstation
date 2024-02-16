@@ -4,13 +4,14 @@
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
+	mutantbrain = /obj/item/organ/internal/brain/felinid
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_CATLIKE_GRACE,
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_USES_SKINTONES,
 	)
@@ -21,8 +22,6 @@
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
-	/// Brain size for scaling
-	var/brain_size = 0.8
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -42,24 +41,15 @@
 				target_human.dna.features["ears"] = "Cat"
 		if(target_human.dna.features["ears"] == "Cat")
 			var/obj/item/organ/internal/ears/cat/ears = new
-			ears.Insert(target_human, drop_if_replaced = FALSE)
+			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 		else
 			mutantears = /obj/item/organ/internal/ears
-		var/obj/item/organ/internal/brain/current_brain = target_human.get_organ_by_type(/obj/item/organ/internal/brain)
-		if(current_brain)
-			current_brain.transform = current_brain.transform.Scale(brain_size) //smaller brain
-	return ..()
-
-/datum/species/human/felinid/on_species_loss(mob/living/carbon/former_feline, datum/species/old_species, pref_load)
-	if(iscarbon(former_feline))
-		var/obj/item/organ/internal/brain/current_brain = former_feline.get_organ_by_type(/obj/item/organ/internal/brain)
-		if(current_brain)
-			current_brain.transform = current_brain.transform.Scale(1 / brain_size) //bigger brain
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
-	randomize_external_organs(human_mob)
-	return ..()
+	var/list/features = ..()
+	features["ears"] = pick("None", "Cat")
+	return features
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
@@ -102,8 +92,8 @@
 		// Humans get converted directly to felinids, and the key is handled in on_species_gain.
 		// Now when we get mob.dna.features[feature_key], it returns None, which is why the tail is invisible.
 		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
-		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, drop_if_replaced = FALSE)
-		kitty_tail.Insert(soon_to_be_felinid, special = TRUE, drop_if_replaced = FALSE)
+		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(!silent)
 		to_chat(soon_to_be_felinid, span_boldnotice("Something is nya~t right."))
 		playsound(get_turf(soon_to_be_felinid), 'sound/effects/meow1.ogg', 50, TRUE, -1)
@@ -126,16 +116,16 @@
 			for(var/external_organ in target_species.external_organs)
 				if(ispath(external_organ, /obj/item/organ/external/tail))
 					var/obj/item/organ/external/tail/new_tail = new external_organ()
-					new_tail.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
+					new_tail.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 				// Don't forget the spines we removed earlier
 				else if(ispath(external_organ, /obj/item/organ/external/spines))
 					var/obj/item/organ/external/spines/new_spines = new external_organ()
-					new_spines.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
+					new_spines.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 		var/obj/item/organ/internal/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
 		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
 			var/obj/item/organ/new_ears = new target_species.mutantears()
-			new_ears.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
+			new_ears.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(!silent)
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))
 
@@ -147,6 +137,10 @@
 	if (cat_ears)
 		cat_ears.color = human_for_preview.hair_color
 		human_for_preview.update_body()
+
+/datum/species/human/felinid/get_physical_attributes()
+	return "Felinids are very similar to humans in almost all respects, with their biggest differences being the ability to lick their wounds, \
+		and an increased sensitivity to noise, which is often detrimental. They are also rather fond of eating oranges."
 
 /datum/species/human/felinid/get_species_description()
 	return "Felinids are one of the many types of bespoke genetic \
@@ -178,6 +172,14 @@
 			SPECIES_PERK_ICON = "grin-tongue",
 			SPECIES_PERK_NAME = "Grooming",
 			SPECIES_PERK_DESC = "Felinids can lick wounds to reduce bleeding.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
+			SPECIES_PERK_NAME = "Catlike Grace",
+			SPECIES_PERK_DESC = "Felinids have catlike instincts allowing them to land upright on their feet.  \
+				Instead of being knocked down from falling, you only recieve a short slowdown. \
+				However, they do not have catlike legs, and the fall will deal additional damage.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

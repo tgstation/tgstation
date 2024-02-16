@@ -23,7 +23,6 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun))
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
@@ -104,8 +103,6 @@
 				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - world.icon_size/2) * (climbed_thing.dir & WEST ? -1 : 1)
 				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - world.icon_size/2) * (climbed_thing.dir & SOUTH ? -1 : 1)
 				dir_step = (x_dist >= y_dist ? (EAST|WEST) : (NORTH|SOUTH)) & climbed_thing.dir
-			else //user is being moved by a forced_movement datum. dir_step will be the direction to the forced movement target.
-				dir_step = get_dir(user, user.force_moving.target)
 		else
 			dir_step = get_dir(user, get_step(climbed_thing, climbed_thing.dir))
 	. = step(user, dir_step)
@@ -114,20 +111,10 @@
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)
 	SIGNAL_HANDLER
-	if(user == dropped_atom && isliving(dropped_atom))
-		var/mob/living/living_target = dropped_atom
-		if(isanimal(living_target))
-			var/mob/living/simple_animal/animal = dropped_atom
-			if (!animal.dextrous)
-				return
-		if(living_target.mobility_flags & MOBILITY_MOVE)
-			INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
-			return
-
-///Tries to climb onto the target if the forced movement of the mob allows it
-/datum/element/climbable/proc/try_speedrun(datum/source, mob/bumpee)
-	SIGNAL_HANDLER
-	if(!istype(bumpee))
+	if(user != dropped_atom || !isliving(dropped_atom))
 		return
-	if(bumpee.force_moving?.allow_climbing)
-		do_climb(source, bumpee)
+	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence
+		return
+	var/mob/living/living_target = dropped_atom
+	if(living_target.mobility_flags & MOBILITY_MOVE)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)

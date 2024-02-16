@@ -17,12 +17,12 @@
 	icon_state = "tentacle_end"
 	damage = 0
 
-/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!iscarbon(target) || blocked >= 100)
 		return
 	var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/restraint = new(get_turf(target))
-	restraint.spring_trap(null, target)
+	restraint.spring_trap(target)
 
 /obj/item/restraints/legcuffs/beartrap/mega_arachnid
 	name = "fleshy restraints"

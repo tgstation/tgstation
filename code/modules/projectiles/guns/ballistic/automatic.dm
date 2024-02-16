@@ -146,6 +146,17 @@
 	mag_display = TRUE
 	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 
+/**
+ * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
+/obj/item/gun/ballistic/automatic/mini_uzi/chimpgun
+	name = "\improper MONK-10"
+	desc = "Developed by Syndicate monkeys, for syndicate Monkeys. Despite the name, this weapon resembles an Uzi significantly more than a MAC-10. Uses 9mm rounds. There's a label on the other side of the gun that says \"Do what comes natural.\""
+	projectile_damage_multiplier = 0.4
+	projectile_wound_bonus = -25
+	pin = /obj/item/firing_pin/monkey
+
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher."
@@ -218,10 +229,25 @@
 	bolt_type = BOLT_TYPE_OPEN
 	empty_indicator = TRUE
 	show_bolt_icon = FALSE
+	/// Rate of fire, set on initialize only
+	var/rof = 0.1 SECONDS
 
 /obj/item/gun/ballistic/automatic/tommygun/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, rof)
+
+/**
+ * Weak tommygun for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
+/obj/item/gun/ballistic/automatic/tommygun/chimpgun
+	name = "\improper Typewriter"
+	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
+	fire_delay = 2
+	rof = 0.2 SECONDS
+	projectile_damage_multiplier = 0.4
+	projectile_wound_bonus = -25
+	pin = /obj/item/firing_pin/monkey
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"

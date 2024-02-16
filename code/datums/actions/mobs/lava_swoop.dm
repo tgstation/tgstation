@@ -21,9 +21,10 @@
 	M.remove_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE), REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	attack_sequence(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/attack_sequence(atom/target)
@@ -147,7 +148,7 @@
 		if(isindestructiblefloor(T))
 			continue
 		if(!isindestructiblewall(T))
-			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
+			T.TerraformTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
@@ -199,7 +200,6 @@
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pixel_x = -32
 	duration = 10
 	randomdir = FALSE

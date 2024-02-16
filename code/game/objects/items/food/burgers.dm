@@ -688,3 +688,4 @@
 	tastes = list("juicy meat" = 4, "BBQ sauce" = 3, "onions" = 2, "bun" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3

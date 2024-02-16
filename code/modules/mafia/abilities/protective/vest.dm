@@ -33,7 +33,7 @@
 
 /datum/mafia_ability/vest/proc/self_defense(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	SIGNAL_HANDLER
-	to_chat(host_role.body, span_greentext("Your vest saved you!"))
+	host_role.send_message_to_player(span_greentext("Your vest saved you!"))
 	return MAFIA_PREVENT_KILL
 
 /datum/mafia_ability/vest/proc/end_protection(datum/mafia_controller/game)

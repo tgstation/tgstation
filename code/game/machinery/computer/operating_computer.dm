@@ -25,11 +25,15 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
-	experiment_handler = AddComponent( \
+	var/list/operating_signals = list(
+		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment),
+	)
+	experiment_handler = AddComponent(
 		/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		experiment_signals = operating_signals, \
 	)
 
 /obj/machinery/computer/operating/Destroy()

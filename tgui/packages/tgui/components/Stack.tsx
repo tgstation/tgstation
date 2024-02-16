@@ -5,22 +5,33 @@
  */
 
 import { classes } from 'common/react';
-import { RefObject } from 'inferno';
-import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
+import { RefObject } from 'react';
 
-type StackProps = FlexProps & {
-  vertical?: boolean;
-  fill?: boolean;
-};
+import {
+  computeFlexClassName,
+  computeFlexItemClassName,
+  computeFlexItemProps,
+  computeFlexProps,
+  FlexItemProps,
+  FlexProps,
+} from './Flex';
 
-export const Stack = (props: StackProps) => {
-  const { className, vertical, fill, ...rest } = props;
+type Props = Partial<{
+  vertical: boolean;
+  fill: boolean;
+  zebra: boolean;
+}> &
+  FlexProps;
+
+export const Stack = (props: Props) => {
+  const { className, vertical, fill, zebra, ...rest } = props;
   return (
     <div
       className={classes([
         'Stack',
         fill && 'Stack--fill',
         vertical ? 'Stack--vertical' : 'Stack--horizontal',
+        zebra && 'Stack--zebra',
         className,
         computeFlexClassName(props),
       ])}
@@ -32,9 +43,10 @@ export const Stack = (props: StackProps) => {
   );
 };
 
-type StackItemProps = FlexProps & {
-  innerRef?: RefObject<HTMLDivElement>;
-};
+type StackItemProps = FlexItemProps &
+  Partial<{
+    innerRef: RefObject<HTMLDivElement>;
+  }>;
 
 const StackItem = (props: StackItemProps) => {
   const { className, innerRef, ...rest } = props;
@@ -53,9 +65,10 @@ const StackItem = (props: StackItemProps) => {
 
 Stack.Item = StackItem;
 
-type StackDividerProps = FlexItemProps & {
-  hidden?: boolean;
-};
+type StackDividerProps = FlexItemProps &
+  Partial<{
+    hidden: boolean;
+  }>;
 
 const StackDivider = (props: StackDividerProps) => {
   const { className, hidden, ...rest } = props;

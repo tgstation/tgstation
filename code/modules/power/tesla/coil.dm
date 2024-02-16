@@ -1,7 +1,5 @@
 // zap needs to be over this amount to get power
-#define TESLA_COIL_THRESHOLD 80
-// each zap power unit produces 400 joules
-#define ZAP_TO_ENERGY(p) (joules_to_energy((p) * 400))
+#define TESLA_COIL_THRESHOLD 32000
 
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
@@ -75,7 +73,7 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/energy_accumulator/tesla_coil/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
@@ -107,7 +105,7 @@
 		power /= 10
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
-	stored_energy += max(ZAP_TO_ENERGY(power_removed - TESLA_COIL_THRESHOLD), 0)
+	stored_energy += max(joules_to_energy(power_removed - TESLA_COIL_THRESHOLD), 0)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/energy_accumulator/tesla_coil/proc/zap()
@@ -118,7 +116,7 @@
 	power = min(surplus(), power) //Take the smaller of the two
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', zap_sound_volume, TRUE, zap_sound_range)
-	tesla_zap(src, 10, power, zap_flags)
+	tesla_zap(source = src, zap_range = 10, power = power, cutoff = 1e3, zap_flags = zap_flags)
 	zap_buckle_check(power)
 
 /obj/machinery/power/energy_accumulator/grounding_rod
@@ -155,7 +153,7 @@
 /obj/machinery/power/energy_accumulator/grounding_rod/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/energy_accumulator/grounding_rod/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grounding_rod_open[anchored]", "grounding_rod[anchored]", W))
@@ -170,10 +168,9 @@
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
 		zap_buckle_check(power)
-		stored_energy += ZAP_TO_ENERGY(power)
+		stored_energy += joules_to_energy(power)
 		return 0
 	else
 		. = ..()
 
 #undef TESLA_COIL_THRESHOLD
-#undef ZAP_TO_ENERGY

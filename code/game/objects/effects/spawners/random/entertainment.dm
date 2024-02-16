@@ -271,7 +271,6 @@
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,
 		/obj/item/toy/plush/lizard_plushie/space/green = 3,
-		/obj/item/toy/plush/awakenedplushie = 3,
 		/obj/item/toy/plush/goatplushie = 3,
 		/obj/item/toy/plush/rouny = 3,
 		/obj/item/toy/plush/abductor = 3,
@@ -281,4 +280,13 @@
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
+	)
+
+/obj/effect/spawner/random/entertainment/colorful_grenades
+	name = "colorful/glitter grenades spawner"
+	loot = list(
+		/obj/item/grenade/chem_grenade/glitter/pink,
+		/obj/item/grenade/chem_grenade/glitter/blue,
+		/obj/item/grenade/chem_grenade/glitter/white,
+		/obj/item/grenade/chem_grenade/colorful
 	)

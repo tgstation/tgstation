@@ -7,6 +7,8 @@
 	var/account_balance = 0
 	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
 	var/mining_points = 0
+	/// Points for bit runner's vendor. Awarded for completing virtual domains.
+	var/bitrunning_points = 0
 	///Debt. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
 	var/account_debt = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
@@ -33,6 +35,8 @@
 	var/pay_token
 	///List with a transaction history for NT pay app
 	var/list/transaction_history = list()
+	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
+	var/list/redeemed_coupons
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -45,6 +49,7 @@
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
+	QDEL_LIST(redeemed_coupons)
 	return ..()
 
 /**

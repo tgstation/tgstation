@@ -19,7 +19,7 @@
 
 	hand_to_watch = (user.active_hand_index % user.held_items.len) + 1
 
-/datum/tutorial/switch_hands/Destroy(force, ...)
+/datum/tutorial/switch_hands/Destroy(force)
 	user.client?.screen -= hand_preview
 	QDEL_NULL(hand_preview)
 

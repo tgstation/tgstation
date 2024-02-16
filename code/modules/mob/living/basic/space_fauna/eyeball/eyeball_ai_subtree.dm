@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/eyeball
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/eyeball,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/eyeball,
 		BB_EYE_DAMAGE_THRESHOLD = 10,
 	)
 
@@ -17,16 +17,12 @@
 /datum/ai_planning_subtree/heal_the_blind
 
 /datum/ai_planning_subtree/heal_the_blind/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/carbon/target = controller.blackboard[BB_BLIND_TARGET]
+	if(controller.blackboard_key_exists(BB_BLIND_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/heal_eye_damage, BB_BLIND_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_the_blind, BB_BLIND_TARGET, BB_EYE_DAMAGE_THRESHOLD)
 
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_the_blind, BB_BLIND_TARGET, BB_EYE_DAMAGE_THRESHOLD)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/heal_eye_damage, BB_BLIND_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/targetting_datum/basic/eyeball/can_attack(mob/living/owner, atom/target)
+/datum/targeting_strategy/basic/eyeball/can_attack(mob/living/owner, atom/target, vision_range)
 	. = ..()
 	if(!.)
 		return FALSE

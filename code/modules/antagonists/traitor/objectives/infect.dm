@@ -101,10 +101,10 @@
 			continue
 		//removes heads of staff from being targets from non heads of staff assassinations, and vice versa
 		if(heads_of_staff)
-			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			if(!(possible_target.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 				continue
 		else
-			if((possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			if((possible_target.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 				continue
 		possible_targets += possible_target
 	for(var/datum/traitor_objective/target_player/objective as anything in possible_duplicates)
@@ -121,7 +121,7 @@
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 	replace_in_name("%TARGET%", target.real_name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
@@ -129,17 +129,17 @@
 
 /datum/traitor_objective/target_player/infect/ungenerate_objective()
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
-	target = null
+	set_target(null)
 
 ///proc for checking for special states that invalidate a target
 /datum/traitor_objective/target_player/infect/proc/special_target_filter(list/possible_targets)
 	return
 
-/datum/traitor_objective/target_player/infect/proc/on_target_qdeleted()
-	SIGNAL_HANDLER
+/datum/traitor_objective/target_player/infect/target_deleted()
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
 		//don't take an objective target of someone who is already obliterated
 		fail_objective()
+	return ..()
 
 /datum/traitor_objective/target_player/infect/proc/on_target_death()
 	SIGNAL_HANDLER

@@ -55,7 +55,7 @@
 	/// Current elevator status for processing
 	var/elevator_status
 	/// What specific lift ID do we link with?
-	var/elevator_linked_id
+	var/transport_linked_id
 
 /datum/armor/machinery_door
 	melee = 30
@@ -78,7 +78,7 @@
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
-		if(elevator_linked_id)
+		if(transport_linked_id)
 			elevator_status = LIFT_PLATFORM_LOCKED
 			GLOB.elevator_doors += src
 		else
@@ -329,7 +329,7 @@
 
 /obj/machinery/door/welder_act(mob/living/user, obj/item/tool)
 	try_to_weld(tool, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -340,7 +340,7 @@
 		var/obj/item/crowbar/crowbar = tool
 		forced_open = crowbar.force_opens
 	try_to_crowbar(tool, user, forced_open)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/attackby(obj/item/weapon, mob/living/user, params)
 	if(istype(weapon, /obj/item/access_key))
@@ -359,7 +359,7 @@
 
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	var/forced_open = FALSE
@@ -367,7 +367,7 @@
 		var/obj/item/crowbar/crowbar = tool
 		forced_open = crowbar.force_opens
 	try_to_crowbar_secondary(tool, user, forced_open)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -500,12 +500,13 @@
 			if(isalien(future_pancake))  //For xenos
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 				future_pancake.emote("roar")
+			else if(ismonkey(future_pancake)) //For monkeys
+				future_pancake.emote("screech")
+				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+				future_pancake.Paralyze(100)
 			else if(ishuman(future_pancake)) //For humans
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.emote("scream")
-				future_pancake.Paralyze(100)
-			else if(ismonkey(future_pancake)) //For monkeys
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.Paralyze(100)
 			else //for simple_animals & borgs
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)

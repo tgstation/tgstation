@@ -51,7 +51,10 @@
 /// Finds the singleton for the element type given and attaches it to src
 /datum/proc/_AddElement(list/arguments)
 	if(QDELING(src))
-		CRASH("We just tried to add an element to a qdeleted datum, something is fucked")
+		var/datum/element/element_type = arguments[1]
+		stack_trace("We just tried to add the element [element_type] to a qdeleted datum, something is fucked")
+		return
+
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	if(!ele) // We couldn't fetch the element, likely because it was not an element.
 		return // the crash message has already been sent

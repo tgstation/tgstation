@@ -22,7 +22,7 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	death_message = "wails, disintegrating into a pile of ectoplasm!"
 	gold_core_spawnable = NO_SPAWN //too spooky for science
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1 // same glowing as visible player ghosts
 	light_power = 2
 	ai_controller = /datum/ai_controller/basic_controller/ghost
@@ -71,10 +71,11 @@
 			ghost_facial_hair_color = ghost_hair_color
 
 	if(!isnull(ghost_hairstyle) && ghost_hairstyle != "Bald") //Bald hairstyle and the Shaved facial hairstyle lack an associated sprite and will not properly generate hair, and just cause runtimes.
-		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
+		var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
 		ghost_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
+		ghost_hair.pixel_y = hair_style.y_offset
 		add_overlay(ghost_hair)
 
 	if(!isnull(ghost_facial_hairstyle) && ghost_facial_hairstyle != "Shaved")
@@ -93,7 +94,7 @@
 
 /datum/ai_controller/basic_controller/ghost
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

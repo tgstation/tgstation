@@ -58,60 +58,6 @@
 /proc/random_backpack()
 	return pick(GLOB.backpacklist)
 
-/proc/random_features()
-	if(!GLOB.tails_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/, GLOB.tails_list,  add_blank = TRUE)
-	if(!GLOB.tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human,  add_blank = TRUE)
-	if(!GLOB.tails_list_lizard.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard, add_blank = TRUE)
-	if(!GLOB.snouts_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
-	if(!GLOB.horns_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, GLOB.horns_list)
-	if(!GLOB.ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.horns_list)
-	if(!GLOB.frills_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
-	if(!GLOB.spines_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
-	if(!GLOB.legs_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
-	if(!GLOB.body_markings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
-	if(!GLOB.wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
-	if(!GLOB.moth_wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
-	if(!GLOB.moth_antennae_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
-	if(!GLOB.moth_markings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
-	if(!GLOB.pod_hair_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
-
-	//For now we will always return none for tail_human and ears. | "For now" he says.
-	return(list(
-		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
-		"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)],
-		"tail_cat" = "None",
-		"tail_lizard" = "Smooth",
-		"wings" = "None",
-		"snout" = pick(GLOB.snouts_list),
-		"horns" = pick(GLOB.horns_list),
-		"ears" = "None",
-		"frills" = pick(GLOB.frills_list),
-		"spines" = pick(GLOB.spines_list),
-		"body_markings" = pick(GLOB.body_markings_list),
-		"legs" = "Normal Legs",
-		"caps" = pick(GLOB.caps_list),
-		"moth_wings" = pick(GLOB.moth_wings_list),
-		"moth_antennae" = pick(GLOB.moth_antennae_list),
-		"moth_markings" = pick(GLOB.moth_markings_list),
-		"tail_monkey" = "Monkey",
-		"pod_hair" = pick(GLOB.pod_hair_list),
-	))
-
 /proc/random_hairstyle(gender)
 	switch(gender)
 		if(MALE)
@@ -366,7 +312,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			X.flags_1 |= ADMIN_SPAWNED_1
 	return X //return the last mob spawned
 
-/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
+/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE, cardinals_only = TRUE)
 	var/turf/T = get_turf(target)
 	var/step_count = 0
 	if(!T)
@@ -395,7 +341,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				step_count = rand(1, max_walk)
 
 			for(var/i in 1 to step_count)
-				step(X, pick(NORTH, SOUTH, EAST, WEST))
+				step(X, cardinals_only ? pick(GLOB.cardinals) : pick(GLOB.alldirs))
 
 	return spawned_mobs
 
@@ -592,8 +538,6 @@ GLOBAL_LIST_EMPTY(species_list)
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 
-#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))
-
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.
 #define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)
@@ -710,11 +654,6 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(isliving(occupant))
 		mob_occupant = occupant
 
-	else if(isbodypart(occupant))
-		var/obj/item/bodypart/head/head = occupant
-
-		mob_occupant = head.brainmob
-
 	else if(isorgan(occupant))
 		var/obj/item/organ/internal/brain/brain = occupant
 		mob_occupant = brain.brainmob
@@ -778,7 +717,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview
 	name = "INTERNAL DVIEW MOB"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	move_resist = INFINITY
 	var/ready_to_die = FALSE

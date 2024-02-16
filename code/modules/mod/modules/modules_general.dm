@@ -31,11 +31,10 @@
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
-	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.locked = STORAGE_FULLY_LOCKED
-	qdel(modstorage)
+	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
-		atom_storage.remove_all(get_turf(src))
+		atom_storage.remove_all(mod.drop_location())
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
@@ -366,7 +365,7 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 4
 	light_power = 1
@@ -476,12 +475,16 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
-	if(!drain_power(use_power_cost*levels))
-		return
+	SIGNAL_HANDLER
+	if(!drain_power(use_power_cost * levels))
+		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
-	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
-	return NO_Z_IMPACT_DAMAGE
+	mod.wearer.visible_message(
+		span_notice("[mod.wearer] lands on [fell_on] safely."),
+		span_notice("[src] protects you from the damage!"),
+	)
+	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 
 ///Thermal Regulator - Regulates the wearer's core temperature.
 /obj/item/mod/module/thermal_regulator
@@ -751,6 +754,15 @@
 		return
 	mod.core.add_charge(power_per_step)
 
+/obj/item/mod/module/hat_stabilizer/syndicate
+	name = "MOD elite hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
+		You still need to take the hat off your head while the helmet deploys, though. This is a must-have for \
+		Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit."
+	complexity = 0
+	removable = FALSE
+
 /// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
 /obj/item/mod/module/recycler
 	name = "MOD recycler module"
@@ -853,7 +865,7 @@
 		insert_trash(new_atom)
 
 /obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
-	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)

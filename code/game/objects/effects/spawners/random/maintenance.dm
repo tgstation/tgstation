@@ -13,7 +13,7 @@
 	return ..()
 
 /obj/effect/spawner/random/maintenance/proc/hide()
-	invisibility = INVISIBILITY_OBSERVER
+	SetInvisibility(INVISIBILITY_OBSERVER)
 	alpha = 100
 
 /obj/effect/spawner/random/maintenance/proc/get_effective_lootcount()

@@ -1,15 +1,1 @@
-arrowParens: always
-breakLongMethodChains: true
-endOfLine: lf
-importFormatting: oneline
-jsxBracketSameLine: true
-jsxSingleQuote: false
-offsetTernaryExpressions: true
-printWidth: 80
-proseWrap: preserve
-quoteProps: preserve
-semi: true
 singleQuote: true
-tabWidth: 2
-trailingComma: es5
-useTabs: false

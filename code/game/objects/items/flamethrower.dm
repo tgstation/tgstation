@@ -6,7 +6,7 @@
 	inhand_icon_state = "flamethrower_0"
 	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -15,7 +15,7 @@
 	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 0.5)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 	var/status = FALSE
 	var/lit = FALSE //on or off
@@ -34,6 +34,12 @@
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flamethrower)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
@@ -46,8 +52,7 @@
 
 /obj/item/flamethrower/process()
 	if(!lit || !igniter)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	var/turf/location = loc
 	if(ismob(location))
 		var/mob/M = location

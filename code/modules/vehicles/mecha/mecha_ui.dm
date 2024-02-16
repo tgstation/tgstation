@@ -82,6 +82,8 @@
 	data["internal_damage"] = internal_damage
 
 	data["can_use_overclock"] = can_use_overclock
+	data["overclock_safety_available"] = overclock_safety_available
+	data["overclock_safety"] = overclock_safety
 	data["overclock_mode"] = overclock_mode
 	data["overclock_temp_percentage"] = overclock_temp / overclock_temp_danger
 
@@ -95,7 +97,7 @@
 	data["capacitor_rating"] = capacitor?.rating
 
 	data["weapons_safety"] = weapons_safety
-	data["enclosed"] = enclosed
+	data["enclosed"] = mecha_flags & IS_ENCLOSED
 	data["cabin_sealed"] = cabin_sealed
 	data["cabin_temp"] =  round(cabin_air.temperature - T0C)
 	data["cabin_pressure"] = round(cabin_air.return_pressure())
@@ -188,7 +190,7 @@
 			if(userinput == format_text(name)) //default mecha names may have improper span artefacts in their name, so we format the name
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
-			name = userinput
+			name = "\proper [userinput]"
 			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
@@ -210,9 +212,8 @@
 			toggle_lights(user = usr)
 		if("toggle_overclock")
 			toggle_overclock()
-			var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in usr.actions
-			act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
-			act.build_all_button_icons()
+		if("toggle_overclock_safety")
+			overclock_safety = !overclock_safety
 		if("repair_int_damage")
 			try_repair_int_damage(usr, params["flag"])
 			return FALSE

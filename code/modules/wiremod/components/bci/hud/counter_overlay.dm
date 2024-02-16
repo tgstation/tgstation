@@ -76,6 +76,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"counter_overlay_[REF(src)]",
 		counter,
+		null,
 		owner,
 	)
 	alt_appearance.show_to(owner)
@@ -101,6 +102,7 @@
 			/datum/atom_hud/alternate_appearance/basic/one_person,
 			"counter_overlay_[REF(src)]_[i]",
 			number,
+			null,
 			owner,
 		)
 		number_alt_appearance.show_to(owner)

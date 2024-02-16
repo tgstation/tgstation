@@ -25,7 +25,6 @@
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/cup/glass/bottle/holywater = 30,
-		/obj/item/toy/plush/awakenedplushie = 10,
 		/obj/item/grenade/chem_grenade/holy = 5,
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/ratplush = 1

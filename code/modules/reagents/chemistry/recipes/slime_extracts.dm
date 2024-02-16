@@ -10,7 +10,7 @@
 	if(!istype(extract))
 		return FALSE
 
-	return extract.Uses > 0
+	return extract.extract_uses > 0
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	use_slime_core(holder)
@@ -22,7 +22,7 @@
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
 	var/obj/item/slime_extract/M = holder.my_atom
-	if(M.Uses <= 0 && !results.len) //if the slime doesn't output chemicals
+	if(M.extract_uses <= 0 && !results.len) //if the slime doesn't output chemicals
 		qdel(M)
 
 //Grey
@@ -31,8 +31,8 @@
 	required_container = /obj/item/slime_extract/grey
 
 /datum/chemical_reaction/slime/slimespawn/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "grey")
-	S.visible_message(span_danger("Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!"))
+	var/mob/living/simple_animal/slime/spawning_slime = new(get_turf(holder.my_atom), /datum/slime_type/grey)
+	spawning_slime.visible_message(span_danger("Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!"))
 	..()
 
 /datum/chemical_reaction/slime/slimeinaprov
@@ -319,7 +319,7 @@
 			slime.docile = FALSE
 			slime.update_name()
 			continue
-		slime.rabid = 1
+		slime.rabid = TRUE
 		slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
 	..()
 
@@ -472,7 +472,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	new /obj/effect/timestop(T, null, null, null)
 	if(istype(extract))
-		if(extract.Uses > 0)
+		if(extract.extract_uses > 0)
 			var/mob/lastheld = get_mob_by_key(holder.my_atom.fingerprintslast)
 			if(lastheld && !lastheld.equip_to_slot_if_possible(extract, ITEM_SLOT_HANDS, disable_warning = TRUE))
 				extract.forceMove(get_turf(lastheld))
@@ -527,8 +527,8 @@
 		S.active = TRUE
 		addtimer(CALLBACK(S, TYPE_PROC_REF(/obj/item/grenade, detonate)), rand(15,60))
 	else
-		var/mob/living/simple_animal/slime/random/S = new (get_turf(holder.my_atom))
-		S.visible_message(span_danger("Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!"))
+		var/mob/living/simple_animal/slime/random/random_slime = new (get_turf(holder.my_atom))
+		random_slime.visible_message(span_danger("Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!"))
 	..()
 
 /datum/chemical_reaction/slime/slimebomb

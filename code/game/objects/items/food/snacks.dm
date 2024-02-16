@@ -4,7 +4,7 @@
 
 /obj/item/food/candy
 	name = "candy"
-	desc = "Nougat love it or hate it."
+	desc = "It's nougat, love it or hate it."
 	icon_state = "candy"
 	trash_type = /obj/item/trash/candy
 	food_reagents = list(

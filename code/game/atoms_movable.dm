@@ -18,7 +18,10 @@
 	var/initial_language_holder = /datum/language_holder
 	/// Holds all languages this mob can speak and understand
 	VAR_PRIVATE/datum/language_holder/language_holder
+	/// The list of factions this atom belongs to
+	var/list/faction
 
+	/// Use get_default_say_verb() in say.dm instead of reading verb_say.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -43,7 +46,6 @@
 	var/atom/movable/moving_from_pull
 	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
 	var/datum/movement_packet/move_packet
-	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
 	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))
 	 * each channel has a specific purpose and is meant to replace potentially expensive nested contents iteration.
@@ -67,7 +69,7 @@
 	var/movement_type = GROUND
 
 	var/atom/movable/pulling
-	var/grab_state = 0
+	var/grab_state = GRAB_PASSIVE
 	/// The strongest grab we can acomplish
 	var/max_grab = GRAB_KILL
 	var/throwforce = 0
@@ -176,11 +178,11 @@
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
-		if(MOVABLE_LIGHT)
+		if(OVERLAY_LIGHT)
 			AddComponent(/datum/component/overlay_lighting)
-		if(MOVABLE_LIGHT_DIRECTIONAL)
+		if(OVERLAY_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
-		if(MOVABLE_LIGHT_BEAM)
+		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
 /atom/movable/Destroy(force)
@@ -273,7 +275,11 @@
 	QDEL_NULL(em_block)
 	// We're gonna build a light, and mask it with the base turf's appearance
 	// grab a 32x32 square of it
-	var/mutable_appearance/light = new(GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(generate_for) + 1])
+	// I would like to use GLOB.starbright_overlays here
+	// But that breaks down for... some? reason. I think recieving a render relay breaks keep_together or something
+	// So we're just gonna accept  that this'll break with starlight color changing. hardly matters since this is really only for offset stuff, but I'd love to fix it someday
+	var/mutable_appearance/light = new(GLOB.starlight_objects[GET_TURF_PLANE_OFFSET(generate_for) + 1])
+	light.render_target = ""
 	light.appearance_flags |= KEEP_TOGETHER
 	// Now apply a copy of the turf, set to multiply
 	// This will multiply against our light, so we only light up the bits that aren't "on" the wall
@@ -313,18 +319,15 @@
 		overlays.Insert(1, emissive_block)
 	return overlays
 
-/atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
+/atom/movable/proc/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(message)
-		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
-	var/atom/highest = impacted_turf
-	for(var/atom/hurt_atom as anything in impacted_turf.contents)
-		if(!hurt_atom.density)
-			continue
-		if(isobj(hurt_atom) || ismob(hurt_atom))
-			if(hurt_atom.layer > highest.layer)
-				highest = hurt_atom
-	INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
+	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
+		visible_message(
+			span_danger("[src] crashes into [impacted_turf]!"),
+			span_userdanger("You crash into [impacted_turf]!"),
+		)
+	if(!(impact_flags & ZIMPACT_NO_SPIN))
+		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
 	return TRUE
 
@@ -423,7 +426,7 @@
 			else
 				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
-	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination, (z_move_flags & ZMOVE_ALLOW_ANCHORED)) && destination.zPassIn(src, direction, start)))
+	if((!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(direction) && destination.zPassIn(direction))) || (!(z_move_flags & ZMOVE_ALLOW_ANCHORED) && anchored))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
@@ -1240,7 +1243,7 @@
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE
-	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
 	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
 		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
 
@@ -1248,12 +1251,15 @@
 		return // in case a signal interceptor broke or deleted the thing before we could process our hit
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
 		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
+	if(HAS_TRAIT(src, TRAIT_NO_THROW_HITPUSH))
+		hitpush = FALSE
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, hitting_atom.dir)
-	..()
+	return ..()
 
 /atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
@@ -1442,12 +1448,6 @@
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
-/atom/movable/vv_get_dropdown()
-	. = ..()
-	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
-	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
-
-
 /* Language procs
 * Unless you are doing something very specific, these are the ones you want to use.
 */
@@ -1612,6 +1612,9 @@
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_OBSERVE_FOLLOW, "Observe Follow")
+	VV_DROPDOWN_OPTION(VV_HK_GET_MOVABLE, "Get Movable")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
@@ -1622,6 +1625,18 @@
 	if(!.)
 		return
 
+	if(href_list[VV_HK_OBSERVE_FOLLOW])
+		if(!check_rights(R_ADMIN))
+			return
+		usr.client?.admin_follow(src)
+
+	if(href_list[VV_HK_GET_MOVABLE])
+		if(!check_rights(R_ADMIN))
+			return
+		if(QDELETED(src))
+			return
+		forceMove(get_turf(usr))
+
 	if(href_list[VV_HK_EDIT_PARTICLES] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
 		C?.open_particle_editor(src)
@@ -1629,16 +1644,13 @@
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
 		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) != "Allow")
 			return
-
 		// Alert is async, so quick sanity check to make sure we should still be doing this.
 		if(QDELETED(src))
 			return
-
 		// This should never happen, but if it does it should not be silent.
 		if(deadchat_plays() == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Deadchat control not compatible with [src]."))
 			CRASH("deadchat_control component incompatible with object of type: [type]")
-
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
@@ -1650,3 +1662,20 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/**
+ * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.
+ *
+ * If exact match is set, then all our factions must match exactly
+ */
+/atom/movable/proc/faction_check_atom(atom/movable/target, exact_match)
+	if(!exact_match)
+		return faction_check(faction, target.faction, FALSE)
+
+	var/list/faction_src = LAZYCOPY(faction)
+	var/list/faction_target = LAZYCOPY(target.faction)
+	if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+		faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
+	if(!("[REF(target)]" in faction_src))
+		faction_target -= "[REF(target)]" //same thing here.
+	return faction_check(faction_src, faction_target, TRUE)

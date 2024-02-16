@@ -177,7 +177,7 @@
 /area/misc/hilbertshotel)
 "aU" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)

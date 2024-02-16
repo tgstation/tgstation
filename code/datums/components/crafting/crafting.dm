@@ -106,8 +106,11 @@
 	for(var/atom/movable/AM in range(radius_range, a))
 		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
 			continue
+		if(isitem(AM))
+			var/obj/item/item = AM
+			if(item.item_flags & ABSTRACT) //let's not tempt fate, shall we?
+				continue
 		. += AM
-
 
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
@@ -123,14 +126,15 @@
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
-			else if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
-				var/obj/item/reagent_containers/container = item
-				for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
-					.["other"][reagent.type] += reagent.volume
-			else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
-				if(item.tool_behaviour)
-					.["tool_behaviour"] += item.tool_behaviour
+			else
 				.["other"][item.type] += 1
+				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
+					var/obj/item/reagent_containers/container = item
+					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
+						.["other"][reagent.type] += reagent.volume
+				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
+					if(item.tool_behaviour)
+						.["tool_behaviour"] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))
@@ -210,8 +214,13 @@
 				if(result.atom_storage && recipe.delete_contents)
 					for(var/obj/item/thing in result)
 						qdel(thing)
-			if (IsEdible(result))
-				result.reagents?.clear_reagents()
+			var/datum/reagents/holder = locate() in parts
+			if(holder) //transfer reagents from ingredients to result
+				if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
+					result.reagents.clear_reagents()
+					holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+				parts -= holder
+				qdel(holder)
 			result.CheckParts(parts, recipe)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
@@ -244,9 +253,11 @@
 */
 
 /datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, atom/a)
+	. = list()
+
+	var/datum/reagents/holder
 	var/list/surroundings
 	var/list/Deletion = list()
-	. = list()
 	var/data
 	var/amt
 	var/list/requirements = list()
@@ -264,36 +275,30 @@
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(path_key, /datum/reagent))
-				var/datum/reagent/RG = new path_key
-				var/datum/reagent/RGNT
 				while(amt > 0)
 					var/obj/item/reagent_containers/RC = locate() in surroundings
-					RG = RC.reagents.get_reagent(path_key)
-					if(RG)
-						if(!locate(RG.type) in Deletion)
-							Deletion += new RG.type()
-						if(RG.volume > amt)
-							RG.volume -= amt
-							data = RG.data
-							RC.reagents.conditional_update(RC)
-							RC.update_appearance(UPDATE_ICON)
-							RG = locate(RG.type) in Deletion
-							RG.volume = amt
-							RG.data += data
+					if(isnull(RC)) //not found
+						break
+					if(QDELING(RC)) //deleting so is unusable
+						surroundings -= RC
+						continue
+
+					var/reagent_volume = RC.reagents.get_reagent_amount(path_key)
+					if(reagent_volume)
+						if(!holder)
+							holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
+							. += holder
+						if(reagent_volume >= amt)
+							RC.reagents.trans_to(holder, amt, target_id = path_key, no_react = TRUE)
 							continue main_loop
 						else
+							RC.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
 							surroundings -= RC
-							amt -= RG.volume
-							RC.reagents.reagent_list -= RG
-							RC.reagents.conditional_update(RC)
-							RC.update_appearance(UPDATE_ICON)
-							RGNT = locate(RG.type) in Deletion
-							RGNT.volume += RG.volume
-							RGNT.data += RG.data
-							qdel(RG)
+							amt -= reagent_volume
 						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
+					RC.update_appearance(UPDATE_ICON)
 			else if(ispath(path_key, /obj/item/stack))
 				var/obj/item/stack/S
 				var/obj/item/stack/SD

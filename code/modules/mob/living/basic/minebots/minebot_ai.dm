@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/minebot
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite),
 		BB_AUTOMATED_MINING = FALSE,
 	)
@@ -12,21 +12,17 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot,
-		/datum/ai_planning_subtree/find_and_hunt_target/consume_ores/minebot,
+		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot,
 		/datum/ai_planning_subtree/minebot_mining,
 		/datum/ai_planning_subtree/locate_dead_humans,
 	)
 
 ///find dead humans and report their location on the radio
 /datum/ai_planning_subtree/locate_dead_humans/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/dead_target = controller.blackboard[BB_NEARBY_DEAD_MINER]
-
-	if(QDELETED(dead_target))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/unconscious_human, BB_NEARBY_DEAD_MINER, /mob/living/carbon/human)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/send_sos_message, BB_NEARBY_DEAD_MINER)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_NEARBY_DEAD_MINER))
+		controller.queue_behavior(/datum/ai_behavior/send_sos_message, BB_NEARBY_DEAD_MINER)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/unconscious_human, BB_NEARBY_DEAD_MINER, /mob/living/carbon/human)
 
 /datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
@@ -64,6 +60,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/minebot
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	avoid_friendly_fire = TRUE
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
@@ -73,18 +70,12 @@
 
 ///mine walls if we are on automated mining mode
 /datum/ai_planning_subtree/minebot_mining/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/mineral_target = controller.blackboard[BB_TARGET_MINERAL_TURF]
-	var/automated_mining = controller.blackboard[BB_AUTOMATED_MINING]
-
-	if(!automated_mining)
+	if(!controller.blackboard[BB_AUTOMATED_MINING])
 		return
-
-	if(QDELETED(mineral_target))
-		controller.queue_behavior(/datum/ai_behavior/find_mineral_wall/minebot, BB_TARGET_MINERAL_TURF)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/minebot_mine_turf, BB_TARGET_MINERAL_TURF)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_TURF))
+		controller.queue_behavior(/datum/ai_behavior/minebot_mine_turf, BB_TARGET_MINERAL_TURF)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall/minebot, BB_TARGET_MINERAL_TURF)
 
 /datum/ai_behavior/find_mineral_wall/minebot
 
@@ -142,11 +133,11 @@
 	controller.clear_blackboard_key(target_key)
 
 ///store ores in our body
-/datum/ai_planning_subtree/find_and_hunt_target/consume_ores/minebot
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/minebot
 	hunt_chance = 100
 
-/datum/ai_planning_subtree/find_and_hunt_target/consume_ores/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/automated_mining = controller.blackboard[BB_AUTOMATED_MINING]
 	var/mob/living/living_pawn = controller.pawn
 
@@ -190,7 +181,7 @@
 
 /datum/pet_command/minebot_ability/execute_action(datum/ai_controller/controller)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
-	if(QDELETED(ability) || !ability.IsAvailable())
+	if(!ability?.IsAvailable())
 		return
 	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, ability_key)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
@@ -210,10 +201,10 @@
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
 
-/datum/pet_command/point_targetting/attack/minebot
+/datum/pet_command/point_targeting/attack/minebot
 	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
 
-/datum/pet_command/point_targetting/attack/minebot/execute_action(datum/ai_controller/controller)
+/datum/pet_command/point_targeting/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.combat_mode)

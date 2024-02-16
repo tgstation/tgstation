@@ -10,7 +10,7 @@
  * AI also has special checks becaus it gets in and out of the mech differently
  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
  *
- * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * For multi-crew, you need to set how the occupants receive ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
  *
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
@@ -29,7 +29,7 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	COOLDOWN_DECLARE(mecha_bump_smash)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	light_range = 8
 	generic_canpass = FALSE
@@ -54,7 +54,7 @@
 	/// Keeps track of the mech's servo motor
 	var/obj/item/stock_parts/servo/servo
 	///Contains flags for the mecha
-	var/mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 
 	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system
@@ -70,8 +70,6 @@
 	var/bumpsmash = FALSE
 
 	///////////ATMOS
-	///Whether the pilot is hidden from the outside viewers and whether the cabin can be sealed to be airtight
-	var/enclosed = TRUE
 	///Whether the cabin exchanges gases with the environment
 	var/cabin_sealed = FALSE
 	///Internal air mix datum
@@ -173,6 +171,10 @@
 	var/overclock_temp = 0
 	///Temperature threshold at which actuators may start causing internal damage
 	var/overclock_temp_danger = 15
+	///Whether the mech has an option to enable safe overclocking
+	var/overclock_safety_available = FALSE
+	///Whether the overclocking turns off automatically when overheated
+	var/overclock_safety = FALSE
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -263,6 +265,7 @@
 			equip_by_category[key] -= path
 
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
+	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -323,7 +326,7 @@
 			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
-				ai.gib() //No wreck, no AI to recover
+				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
 			else
 				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
@@ -392,7 +395,7 @@
 
 /obj/vehicle/sealed/mecha/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	if(enclosed)
+	if(mecha_flags & IS_ENCLOSED)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
 	if(can_use_overclock)
 		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overclock)
@@ -463,7 +466,7 @@
 			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
 			. += span_warning("It's missing a scanning module.")
-	if(enclosed)
+	if(mecha_flags & IS_ENCLOSED)
 		return
 	if(mecha_flags & SILICON_PILOT)
 		. += span_notice("[src] appears to be piloting itself...")
@@ -517,8 +520,12 @@
 	if(!overclock_mode && overclock_temp > 0)
 		overclock_temp -= seconds_per_tick
 		return
-	overclock_temp = min(overclock_temp + seconds_per_tick, overclock_temp_danger * 2)
+	var/temp_gain = seconds_per_tick * (1 + 1 / movedelay)
+	overclock_temp = min(overclock_temp + temp_gain, overclock_temp_danger * 2)
 	if(overclock_temp < overclock_temp_danger)
+		return
+	if(overclock_temp >= overclock_temp_danger && overclock_safety)
+		toggle_overclock(FALSE)
 		return
 	var/damage_chance = 100 * ((overclock_temp - overclock_temp_danger) / (overclock_temp_danger * 2))
 	if(SPT_PROB(damage_chance, seconds_per_tick))
@@ -565,10 +572,10 @@
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
-		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
-		if(cell)
+		if(cell && cell.maxcharge)
 			var/cellcharge = cell.charge/cell.maxcharge
 			switch(cellcharge)
 				if(0.75 to INFINITY)
@@ -581,6 +588,8 @@
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 3)
 				else
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell/mech)
+		else
+			occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
@@ -675,7 +684,7 @@
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(livinguser, span_warning("You're in the wrong seat to interact with your hands."))
 		return
-	var/on_cooldown = TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK)
+	var/on_cooldown = TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_MELEE_ATTACK)
 	var/adjacent = Adjacent(target)
 	if(SEND_SIGNAL(src, COMSIG_MECHA_MELEE_CLICK, livinguser, target, on_cooldown, adjacent) & COMPONENT_CANCEL_MELEE_CLICK)
 		return
@@ -714,12 +723,12 @@
 /////////////////////////////////////
 
 /obj/vehicle/sealed/mecha/remove_air(amount)
-	if(enclosed && cabin_sealed)
+	if((mecha_flags & IS_ENCLOSED) && cabin_sealed)
 		return cabin_air.remove(amount)
 	return ..()
 
 /obj/vehicle/sealed/mecha/return_air()
-	if(enclosed && cabin_sealed)
+	if((mecha_flags & IS_ENCLOSED) && cabin_sealed)
 		return cabin_air
 	return ..()
 
@@ -738,11 +747,11 @@
 
 ///makes cabin unsealed, dumping cabin air outside or airtight filling the cabin with external air mix
 /obj/vehicle/sealed/mecha/proc/set_cabin_seal(mob/user, cabin_sealed)
-	if(!enclosed)
+	if(!(mecha_flags & IS_ENCLOSED))
 		balloon_alert(user, "cabin can't be sealed!")
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_CABIN_SEAL))
 		balloon_alert(user, "on cooldown!")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 1 SECONDS)
@@ -811,6 +820,15 @@
 	else
 		overclock_mode = !overclock_mode
 	log_message("Toggled overclocking.", LOG_MECHA)
+
+	for(var/mob/occupant as anything in occupants)
+		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in occupant.actions
+		if(!act)
+			continue
+		act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
+		balloon_alert(occupant, "overclock [overclock_mode ? "on":"off"]")
+		act.build_all_button_icons()
+
 	if(overclock_mode)
 		movedelay = movedelay / overclock_coeff
 		visible_message(span_notice("[src] starts heating up, making humming sounds."))
@@ -857,5 +875,5 @@
 			act.button_icon_state = "mech_lights_on"
 		else
 			act.button_icon_state = "mech_lights_off"
-		balloon_alert(occupant, "toggled lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
+		balloon_alert(occupant, "lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
 		act.build_all_button_icons()

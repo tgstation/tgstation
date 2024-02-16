@@ -16,6 +16,19 @@
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
+	. = ..()
+	// Only actual KAs can be converted
+	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
+		return
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
 	max_mod_capacity = modify_fantasy_variable("max_mod_capacity", max_mod_capacity, bonus * 10)
@@ -140,7 +153,7 @@
 	icon_state = "kineticgun_b"
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
+	max_mod_capacity = 90
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -152,8 +165,8 @@
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
-	e_cost = 500
-	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
+	fire_sound = 'sound/weapons/kinetic_accel.ogg'
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -196,7 +209,7 @@
 	strike_thing()
 	..()
 
-/obj/projectile/kinetic/on_hit(atom/target)
+/obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
 	strike_thing(target)
 	. = ..()
 
@@ -350,7 +363,7 @@
 	name = "minebot cooldown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Only rated for minebot use."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
 	modifier = 10
 	cost = 0
@@ -603,4 +616,3 @@
 
 	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
 	bolt_color = new_color || bolt_color
-

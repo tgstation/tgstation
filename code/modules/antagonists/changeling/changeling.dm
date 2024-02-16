@@ -156,11 +156,16 @@
 	else
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
+	make_brain_decoy(living_mob)
+
+/datum/antagonist/changeling/proc/make_brain_decoy(mob/living/ling)
+	var/obj/item/organ/internal/brain/our_ling_brain = ling.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(isnull(our_ling_brain) || our_ling_brain.decoy_override)
+		return
+
 	// Brains are optional for lings.
-	var/obj/item/organ/internal/brain/our_ling_brain = living_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(our_ling_brain)
-		our_ling_brain.organ_flags &= ~ORGAN_VITAL
-		our_ling_brain.decoy_override = TRUE
+	// This is automatically cleared if the ling is.
+	our_ling_brain.AddComponent(/datum/component/ling_decoy_brain, src)
 
 /datum/antagonist/changeling/proc/generate_name()
 	var/honorific
@@ -204,15 +209,10 @@
 		QDEL_NULL(lingchemdisplay)
 		QDEL_NULL(lingstingdisplay)
 
+	// The old body's brain still remains a decoy, I guess?
+
 /datum/antagonist/changeling/on_removal()
 	remove_changeling_powers(include_innate = TRUE)
-	if(!iscarbon(owner.current))
-		return
-	var/mob/living/carbon/carbon_owner = owner.current
-	var/obj/item/organ/internal/brain/not_ling_brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(not_ling_brain && (not_ling_brain.decoy_override != initial(not_ling_brain.decoy_override)))
-		not_ling_brain.organ_flags |= ORGAN_VITAL
-		not_ling_brain.decoy_override = FALSE
 	return ..()
 
 /datum/antagonist/changeling/farewell()
@@ -272,13 +272,17 @@
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
 
 /**
- * Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], getting admin-healed restores our chemicals.
+ * Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL]
  */
-/datum/antagonist/changeling/proc/on_fullhealed(datum/source, heal_flags)
+/datum/antagonist/changeling/proc/on_fullhealed(mob/living/source, heal_flags)
 	SIGNAL_HANDLER
 
+	// Aheal restores all chemicals
 	if(heal_flags & HEAL_ADMIN)
 		adjust_chemicals(INFINITY)
+
+	// Makes sure the brain, if recreated, is a decoy as expected
+	make_brain_decoy(source)
 
 /**
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
@@ -346,13 +350,12 @@
 /datum/antagonist/changeling/proc/regain_powers()
 	emporium_action.Grant(owner.current)
 	for(var/datum/action/changeling/power as anything in innate_powers)
-		if(power.needs_button)
-			power.Grant(owner.current)
+		power.on_purchase(owner.current)
 
 	for(var/power_path in purchased_powers)
 		var/datum/action/changeling/power = purchased_powers[power_path]
-		if(istype(power) && power.needs_button)
-			power.Grant(owner.current)
+		if(istype(power))
+			power.on_purchase(owner.current)
 
 /*
  * The act of purchasing a certain power for a changeling.
@@ -412,7 +415,8 @@
 
 	purchased_powers[power_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
-	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
+	log_changeling_power("[key_name(owner)] adapted the [new_action.name] power")
+	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, new_action.name)
 
 	return TRUE
 
@@ -687,16 +691,21 @@
 		else
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			objectives += maroon_objective
 
 			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 				var/datum/objective/escape/escape_with_identity/identity_theft = new
 				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
+				identity_theft.find_target()
 				identity_theft.update_explanation_text()
-				objectives += identity_theft
 				escape_objective_possible = FALSE
+				maroon_objective.target = identity_theft.target || maroon_objective.find_target()
+				maroon_objective.update_explanation_text()
+				objectives += maroon_objective
+				objectives += identity_theft
+			else
+				maroon_objective.find_target()
+				objectives += maroon_objective
+
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))
@@ -855,6 +864,7 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	user.name = user.get_visible_name()
 	current_profile = chosen_profile
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
@@ -1043,9 +1053,6 @@
 
 /datum/outfit/changeling_space
 	name = "Changeling (Space)"
-
-	head = /obj/item/clothing/head/helmet/space/changeling
-	suit = /obj/item/clothing/suit/space/changeling
 	l_hand = /obj/item/melee/arm_blade
 
 #undef FORMAT_CHEM_CHARGES_TEXT

@@ -164,7 +164,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	pixel_y = 4
 	max_integrity = 10000
 	anchored = TRUE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_power = 5
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
@@ -233,7 +233,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	set_light_on(chassis.defense_mode)
 
 	if(chassis.defense_mode)
-		invisibility = 0
+		SetInvisibility(INVISIBILITY_NONE, id=type)
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		icon_state = "shield"
@@ -256,7 +256,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
  */
 /obj/durand_shield/proc/make_invisible()
 	if(!chassis.defense_mode)
-		invisibility = INVISIBILITY_MAXIMUM
+		RemoveInvisibility(type)
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
 	SIGNAL_HANDLER

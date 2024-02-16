@@ -367,7 +367,7 @@
 	icon_state = "mod-core-plasma-flower"
 	desc = "A strange flower from the desolate wastes of lavaland. It pulses with a strange purple glow.  \
 		The wires coming out of it could be hooked into a MODsuit."
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_color = "#cc00cc"
 	light_range = 2
 	// Slightly better than the normal plasma core.
@@ -399,7 +399,7 @@
 	SIGNAL_HANDLER
 	if(mod.active)
 		particle_effect = new(mod.wearer, /particles/pollen, PARTICLE_ATTACH_MOB)
-		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3)
+		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3, faction=mod.wearer.faction)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))
 

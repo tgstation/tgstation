@@ -1,4 +1,4 @@
-#define CABLE_LAYER_ALL (~0)
+#define CABLE_LAYER_ALL ALL
 #define CABLE_LAYER_1 (1<<0)
 	#define CABLE_LAYER_1_NAME "Red Power Line"
 #define CABLE_LAYER_2 (1<<1)

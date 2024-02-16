@@ -1,3 +1,9 @@
+/// Disk containing info for doing advanced plastic surgery. Spawns in maint and available as a role-restricted item in traitor uplinks.
+/obj/item/disk/surgery/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery Disk"
+	desc = "The disk provides instructions on how to do an Advanced Plastic Surgery, this surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face. With the surgery long becoming obsolete with the rise of genetics technology. This item became an antique to many collectors, With only the cheaper and easier basic form of plastic surgery remaining in use in most places."
+	surgeries = list(/datum/surgery/plastic_surgery/advanced)
+
 /datum/surgery/plastic_surgery
 	name = "Plastic surgery"
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
@@ -8,6 +14,43 @@
 		/datum/surgery_step/reshape_face,
 		/datum/surgery_step/close,
 	)
+
+/datum/surgery/plastic_surgery/advanced
+	name = "Advanced plastic surgery"
+	desc =  "Surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face."
+	requires_tech = TRUE
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/insert_plastic,
+		/datum/surgery_step/reshape_face,
+		/datum/surgery_step/close,
+	)
+
+//Insert plastic step, It ain't called plastic surgery for nothing! :)
+/datum/surgery_step/insert_plastic
+	name = "insert plastic (plastic)"
+	implements = list(
+		/obj/item/stack/sheet/plastic = 100,
+		/obj/item/stack/sheet/meat = 100)
+	time = 3.2 SECONDS
+	preop_sound = 'sound/effects/blobattack.ogg'
+	success_sound = 'sound/effects/attackblob.ogg'
+	failure_sound = 'sound/effects/blobattack.ogg'
+
+/datum/surgery_step/insert_plastic/preop(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery)
+	display_results(
+		user,
+		target,
+		span_notice("You begin to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]..."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+	)
+	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
+
+/datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery, default_display_results)
+	. = ..()
+	tool.use(1)
 
 //reshape_face
 /datum/surgery_step/reshape_face
@@ -43,8 +86,15 @@
 	else
 		var/list/names = list()
 		if(!isabductor(user))
-			for(var/i in 1 to 10)
-				names += target.dna.species.random_name(target.gender, TRUE)
+			var/obj/item/offhand = user.get_inactive_held_item()
+			if(istype(offhand, /obj/item/photo) && istype(surgery, /datum/surgery/plastic_surgery/advanced))
+				var/obj/item/photo/disguises = offhand
+				for(var/namelist as anything in disguises.picture?.names_seen)
+					names += namelist
+			else
+				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
+				for(var/i in 1 to 10)
+					names += target.dna.species.random_name(target.gender, TRUE)
 		else
 			for(var/_i in 1 to 9)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"

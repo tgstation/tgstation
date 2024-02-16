@@ -41,7 +41,7 @@
 		cost = get_total_cost(), \
 		contains = things_to_order,
 	)
-	var/datum/supply_order/new_order = new(
+	var/datum/supply_order/disposable/new_order = new(
 		pack = mining_pack,
 		orderer = purchaser,
 		orderer_rank = "Mining Vendor",

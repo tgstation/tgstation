@@ -4,7 +4,8 @@
 
 /datum/wires/microwave/New(atom/holder)
 	wires = list(
-		WIRE_ACTIVATE
+		WIRE_ACTIVATE,
+		WIRE_MODE_SELECT
 	)
 	..()
 
@@ -12,18 +13,23 @@
 	if(!..())
 		return FALSE
 	. = FALSE
-	var/obj/machinery/microwave/M = holder
-	if(M.panel_open)
+	var/obj/machinery/microwave/mw = holder
+	if(mw.panel_open)
 		. = TRUE
 
 /datum/wires/microwave/on_pulse(wire)
-	var/obj/machinery/microwave/M = holder
+	var/obj/machinery/microwave/mw = holder
 	switch(wire)
 		if(WIRE_ACTIVATE)
-			M.cook()
+			mw.cook()
+		if(WIRE_MODE_SELECT)
+			if(mw.vampire_charging_capable)
+				mw.vampire_charging_enabled = !mw.vampire_charging_enabled
 
 /datum/wires/microwave/on_cut(wire, mend, source)
-	var/obj/machinery/microwave/M = holder
+	var/obj/machinery/microwave/mw = holder
 	switch(wire)
 		if(WIRE_ACTIVATE)
-			M.wire_disabled = !mend
+			mw.wire_disabled = !mend
+		if(WIRE_MODE_SELECT)
+			mw.wire_mode_swap = !mend

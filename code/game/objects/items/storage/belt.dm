@@ -75,7 +75,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/spess_knife,
-		/obj/item/melee/sickly_blade/knock,
+		/obj/item/melee/sickly_blade/lock,
 	))
 
 /obj/item/storage/belt/utility/chief
@@ -188,6 +188,26 @@
 	to_preload += /obj/item/wirecutters
 	to_preload += /obj/item/t_scanner
 	to_preload += /obj/item/extinguisher/mini
+	return to_preload
+
+/obj/item/storage/belt/utility/full/inducer/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/screwdriver, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool, src)
+	SSwardrobe.provide_type(/obj/item/crowbar/red, src)
+	SSwardrobe.provide_type(/obj/item/wirecutters, src)
+	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/inducer, src)
+
+/obj/item/storage/belt/utility/full/inducer/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/screwdriver
+	to_preload += /obj/item/wrench
+	to_preload += /obj/item/weldingtool
+	to_preload += /obj/item/crowbar
+	to_preload += /obj/item/wirecutters
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/inducer
 	return to_preload
 
 /obj/item/storage/belt/utility/syndicate
@@ -425,6 +445,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/skeleton_key,
 	))
 
 
@@ -466,9 +487,7 @@
 /obj/item/storage/belt/soulstone/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
-	atom_storage.set_holdable(list(
-		/obj/item/soulstone,
-	))
+	atom_storage.set_holdable(/obj/item/soulstone)
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -489,9 +508,7 @@
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/mask/luchador,
-	))
+	atom_storage.set_holdable(/obj/item/clothing/mask/luchador)
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -642,9 +659,7 @@
 /obj/item/storage/belt/wands/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
-	atom_storage.set_holdable(list(
-		/obj/item/gun/magic/wand,
-	))
+	atom_storage.set_holdable(/obj/item/gun/magic/wand)
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -670,6 +685,7 @@
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	atom_storage.set_holdable(list(
+		/obj/item/access_key,
 		/obj/item/assembly/mousetrap,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight,
@@ -696,19 +712,23 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding rifle and shotgun ammunition."
+	desc = "A bandolier for holding rifle shotgun, and bigger revolver caliber ammunition."
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 
 /obj/item/storage/belt/bandolier/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 18
-	atom_storage.max_total_storage = 18
+	atom_storage.max_slots = 24
+	atom_storage.max_total_storage = 24
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.allow_quick_empty = TRUE
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_casing/a357,
 	))
 
 /obj/item/storage/belt/fannypack
@@ -798,11 +818,7 @@
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(
-		list(
-			/obj/item/melee/sabre,
-		)
-	)
+	atom_storage.set_holdable(/obj/item/melee/sabre)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()

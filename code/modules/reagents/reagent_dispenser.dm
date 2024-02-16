@@ -31,6 +31,8 @@
 	var/mutable_appearance/assembliesoverlay
 	/// The person who attached an assembly to this dispenser, for bomb logging purposes
 	var/last_rigger = ""
+	/// is it climbable? some of our wall-mounted dispensers should not have this
+	var/climbable = FALSE
 
 // This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
@@ -53,6 +55,9 @@
 
 	if(icon_state == "water" && check_holidays(APRIL_FOOLS))
 		icon_state = "water_fools"
+	if(climbable)
+		AddElement(/datum/element/climbable, climb_time = 4 SECONDS, climb_stun = 4 SECONDS)
+		AddElement(/datum/element/elevation, pixel_shift = 14)
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	. = ..()
@@ -178,7 +183,7 @@
 		// It did not account for how much fuel was actually in the tank at all, just the size of the tank.
 		// I encourage others to better scale these numbers in the future.
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
-		switch(volatiles.volume)
+		switch(fuel_amt)
 			if(25 to 150)
 				explosion(src, light_impact_range = 1, flame_range = 2)
 			if(150 to 300)
@@ -192,7 +197,7 @@
 	qdel(src)
 
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(!disassembled)
 			boom()
 	else
@@ -222,7 +227,7 @@
 	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
 	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
 	tank_leak()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -233,6 +238,7 @@
 	desc = "A water tank."
 	icon_state = "water"
 	openable = TRUE
+	climbable = TRUE
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
@@ -247,6 +253,7 @@
 	reagent_id = /datum/reagent/firefighting_foam
 	tank_volume = 500
 	openable = TRUE
+	climbable = TRUE
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
@@ -255,6 +262,7 @@
 	reagent_id = /datum/reagent/fuel
 	openable = TRUE
 	accepts_rig = TRUE
+	climbable = TRUE
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
@@ -419,7 +427,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/plumbed/storage
 	name = "stationary storage tank"

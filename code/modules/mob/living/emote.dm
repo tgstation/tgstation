@@ -107,9 +107,14 @@
 		message_animal_or_basic = custom_message
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
-	if(. && user.death_sound)
-		if(!user.can_speak() || user.oxyloss >= 50)
-			return //stop the sound if oxyloss too high/cant speak
+	if(!. && !user.can_speak() || user.getOxyLoss() >= 50)
+		return //stop the sound if oxyloss too high/cant speak
+	var/mob/living/carbon/carbon_user = user
+	// For masks that give unique death sounds
+	if(istype(carbon_user) && isclothing(carbon_user.wear_mask) && carbon_user.wear_mask.unique_death)
+		playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
+		return
+	if(user.death_sound)
 		playsound(user, user.death_sound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
@@ -141,6 +146,8 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+
+		// open/close functional wings
 		if(istype(wings))
 			if(wings.wings_open)
 				open = TRUE
@@ -149,9 +156,14 @@
 				wings.open_wings()
 			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/external/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/external/wings/functional, close_wings)), wing_time)
 
+		// play moth flutter noise if moth wing
+		if(istype(wings, /obj/item/organ/external/wings/moth))
+			playsound(H, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+
 /datum/emote/living/flap/aflap
 	key = "aflap"
 	key_third_person = "aflaps"
+	name = "flap (Angry)"
 	message = "flaps their wings ANGRILY!"
 	hands_use_check = TRUE
 	wing_time = 10
@@ -179,6 +191,7 @@
 /datum/emote/living/gasp_shock
 	key = "gaspshock"
 	key_third_person = "gaspsshock"
+	name = "gasp (Shock)"
 	message = "gasps in shock!"
 	message_mime = "gasps in silent shock!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
@@ -188,8 +201,8 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.gender == FEMALE)
+	if(ishumanbasic(human_user) || isfelinid(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+		if(human_user.physique == FEMALE)
 			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
 		else
 			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
@@ -277,7 +290,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+	if((ishumanbasic(human_user) || isfelinid(human_user)) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
 		if(human_user.gender == FEMALE)
 			return 'sound/voice/human/womanlaugh.ogg'
 		else
@@ -328,6 +341,11 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
+
+/datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
@@ -464,7 +482,7 @@
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"
-	message = "trembles in fear!"
+	message = "trembles!"
 
 #define TREMBLE_LOOP_DURATION (4.4 SECONDS)
 /datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)
@@ -495,6 +513,7 @@
 
 /datum/emote/living/twitch_s
 	key = "twitch_s"
+	name = "twitch (Slight)"
 	message = "twitches."
 
 /datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
@@ -519,12 +538,13 @@
 /datum/emote/living/wsmile
 	key = "wsmile"
 	key_third_person = "wsmiles"
+	name = "smile (Weak)"
 	message = "smiles weakly."
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_BASE 40
-/// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_DECAY 8
+#define YAWN_PROPAGATE_CHANCE_BASE 20
+/// The amount the base chance to propagate yawns falls for each tile of distance
+#define YAWN_PROPAGATE_CHANCE_DECAY 4
 
 /datum/emote/living/yawn
 	key = "yawn"
@@ -541,7 +561,7 @@
 	if(!isliving(user))
 		return
 
-	if(!TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+	if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_YAWN_PROPAGATION))
 		TIMER_COOLDOWN_START(user, COOLDOWN_YAWN_PROPAGATION, cooldown * 3)
 
 	var/mob/living/carbon/carbon_user = user
@@ -551,7 +571,7 @@
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 
 	for(var/mob/living/iter_living in view(user, propagation_distance))
-		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(iter_living, COOLDOWN_YAWN_PROPAGATION))
+		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_RUNNING(iter_living, COOLDOWN_YAWN_PROPAGATION))
 			continue
 
 		var/dist_between = get_dist(user, iter_living)
@@ -570,7 +590,7 @@
 
 /// This yawn has been triggered by someone else yawning specifically, likely after a delay. Check again if they don't have the yawned recently trait
 /datum/emote/living/yawn/proc/propagate_yawn(mob/user)
-	if(!istype(user) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+	if(!istype(user) || TIMER_COOLDOWN_RUNNING(user, COOLDOWN_YAWN_PROPAGATION))
 		return
 	user.emote("yawn")
 

@@ -173,10 +173,13 @@
 	alert_type = /atom/movable/screen/alert/status_effect/clone_decay
 
 /datum/status_effect/slime_clone_decay/tick(seconds_between_ticks)
-	owner.adjustToxLoss(1, 0)
-	owner.adjustOxyLoss(1, 0)
-	owner.adjustBruteLoss(1, 0)
-	owner.adjustFireLoss(1, 0)
+	var/need_mob_update
+	need_mob_update = owner.adjustToxLoss(1, updating_health = FALSE)
+	need_mob_update += owner.adjustOxyLoss(1, updating_health = FALSE)
+	need_mob_update += owner.adjustBruteLoss(1, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(1, updating_health = FALSE)
+	if(need_mob_update)
+		owner.updatehealth()
 	owner.color = "#007BA7"
 
 /atom/movable/screen/alert/status_effect/bloodchill
@@ -470,10 +473,10 @@
 	colour = SLIME_TYPE_GREY
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
-	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
-		if(!(owner in S.Friends))
-			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [S]."))
-			S.set_friendship(owner, 1)
+	for(var/mob/living/simple_animal/slime/slimes_in_range in range(1, get_turf(owner)))
+		if(!(owner in slimes_in_range.Friends))
+			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
+			slimes_in_range.set_friendship(owner, 1)
 	return ..()
 
 /datum/status_effect/stabilized/orange
@@ -505,19 +508,23 @@
 
 /datum/status_effect/stabilized/purple/tick(seconds_between_ticks)
 	healed_last_tick = FALSE
+	var/need_mob_update = FALSE
 
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.2)
+		need_mob_update += owner.adjustBruteLoss(-0.2, updating_health = FALSE)
 		healed_last_tick = TRUE
 
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2)
+		need_mob_update += owner.adjustFireLoss(-0.2, updating_health = FALSE)
 		healed_last_tick = TRUE
 
 	if(owner.getToxLoss() > 0)
 		// Forced, so slimepeople are healed as well.
-		owner.adjustToxLoss(-0.2, forced = TRUE)
+		need_mob_update += owner.adjustToxLoss(-0.2, updating_health = FALSE, forced = TRUE)
 		healed_last_tick = TRUE
+
+	if(need_mob_update)
+		owner.updatehealth()
 
 	// Technically, "healed this tick" by now.
 	if(healed_last_tick)
@@ -984,11 +991,9 @@
 		healing_types += BURN
 	if(owner.getToxLoss() > 0)
 		healing_types += TOX
-	if(owner.getCloneLoss() > 0)
-		healing_types += CLONE
 
 	if(length(healing_types))
-		owner.apply_damage_type(-heal_amount, damagetype = pick(healing_types))
+		owner.heal_damage_type(heal_amount, damagetype = pick(healing_types))
 
 	owner.adjust_nutrition(3)
 	drained.apply_damage(heal_amount * DRAIN_DAMAGE_MULTIPLIER, damagetype = BRUTE, spread_damage = TRUE)
