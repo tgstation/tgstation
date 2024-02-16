@@ -1,10 +1,9 @@
 import { Color } from 'common/color';
-import { KEY_ALT, KEY_CTRL } from 'common/keycodes';
 import { decodeHtmlEntities, multiline } from 'common/string';
 import { Component, createRef, RefObject } from 'react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, KeyListener, Tooltip } from '../components';
+import { Box, Button, Flex, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;
