@@ -130,7 +130,7 @@
 	RegisterSignal(part.owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
 	RegisterSignal(part.owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(owner_shocked)) //detach if we are shocked, not beneficial for the host but hey its a sideeffect
 
-/mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, source, siemens_coeff, flags)
+/mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER
 	if(shock_damage < 10)
 		return
@@ -152,7 +152,7 @@
 	current_bodypart.dismember()
 	return TRUE//on_limb_lost should be called after that
 
-/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, dismembered)
+/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, special, dismembered)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_BODYPART_REMOVED)
 	UnregisterSignal(old_owner, COMSIG_LIVING_ELECTROCUTE_ACT)

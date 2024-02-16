@@ -716,7 +716,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "nQ" = (
-/mob/living/simple_animal/bot/hygienebot,
+/mob/living/basic/bot/hygienebot,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "nV" = (

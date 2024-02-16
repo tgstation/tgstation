@@ -25,7 +25,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	connect_to_new_turf()
 
-/datum/component/redirect_attack_hand_from_turf/Destroy(force, silent)
+/datum/component/redirect_attack_hand_from_turf/Destroy(force)
 	disconnect_from_old_turf()
 	return ..()
 

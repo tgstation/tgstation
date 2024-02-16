@@ -19,6 +19,7 @@
 	additional_access = /datum/id_trim/job/janitor
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
+	path_image_color = "#993299"
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
@@ -93,7 +94,6 @@
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/wrapping,
-		/obj/effect/decal/remains,
 	))
 	///blood we can clean
 	var/static/list/cleanable_blood = typecacheof(list(
@@ -110,6 +110,7 @@
 	var/static/list/huntable_trash = typecacheof(list(
 		/obj/item/trash,
 		/obj/item/food/deadmouse,
+		/obj/effect/decal/remains,
 	))
 	///drawings we hunt
 	var/static/list/cleanable_drawings = typecacheof(list(/obj/effect/decal/cleanable/crayon))
@@ -320,15 +321,18 @@
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)
 	stabbed_carbon.Knockdown(2 SECONDS)
 
-/mob/living/basic/bot/cleanbot/proc/pre_attack(mob/living/source, atom/target)
+/mob/living/basic/bot/cleanbot/proc/pre_attack(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
+
+	if(!proximity || !can_unarmed_attack())
+		return NONE
 
 	if(is_type_in_typecache(target, huntable_pests) && !isnull(our_mop))
 		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!iscarbon(target) && !is_type_in_typecache(target, huntable_trash))
-		return
+		return NONE
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
 	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)

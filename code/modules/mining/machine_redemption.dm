@@ -1,4 +1,4 @@
-/**********************Ore Redemption Unit**************************/
+/**********************Ore Redemption Unit (ORM)**************************/
 //Turns all the various mining machines into a single unit to speed up mining and establish a point system
 
 /obj/machinery/mineral/ore_redemption
@@ -52,13 +52,21 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	materials = AddComponent(
+
+	//mat_container_signals is for reedeming points from local storage if silo is not required
+	var/list/local_signals = null
+	if(!requires_silo)
+		local_signals = list(
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, local_redeem_points)
+		)
+	materials = AddComponent( \
 		/datum/component/remote_materials, \
 		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_ORM \
+		mat_container_signals = local_signals \
 	)
 
-	RegisterSignal(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, redeem_points))
+	//for reedeming points from items inserted into ore silo
+	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, silo_redeem_points))
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
@@ -71,7 +79,12 @@
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
 
-/obj/machinery/mineral/ore_redemption/proc/redeem_points(obj/machinery/mineral/ore_redemption/machine, container, obj/item/stack/ore/gathered_ore)
+/obj/machinery/mineral/ore_redemption/proc/silo_redeem_points(obj/machinery/mineral/ore_redemption/machine, container, obj/item/stack/ore/gathered_ore)
+	SIGNAL_HANDLER
+
+	local_redeem_points(container, gathered_ore)
+
+/obj/machinery/mineral/ore_redemption/proc/local_redeem_points(container, obj/item/stack/ore/gathered_ore)
 	SIGNAL_HANDLER
 
 	if(istype(gathered_ore) && gathered_ore.refined_type)
@@ -160,7 +173,7 @@
 		if(isnull(gathered_ore.refined_type))
 			continue
 
-		if(materials.mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM, context = src) <= 0)
+		if(materials.insert_item(gathered_ore, ore_multiplier) <= 0)
 			unload_mineral(gathered_ore) //if rejected unload
 
 		SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
@@ -293,21 +306,26 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
+			//requires silo but silo not in range
+			if(requires_silo && !materials.check_z_level())
+				return FALSE
+
+			//no ID
 			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level() && (requires_silo || !user_id_card.registered_account.replaceable))
-				return TRUE
+			if(isnull(user_id_card))
+				to_chat(usr, span_warning("No valid ID detected."))
+				return FALSE
+
+			//we have points
 			if(points)
-				if(user_id_card)
-					user_id_card.registered_account.mining_points += points
-					points = 0
-				else
-					to_chat(usr, span_warning("No valid ID detected."))
-			else
-				to_chat(usr, span_warning("No points to claim."))
-			return TRUE
+				user_id_card.registered_account.mining_points += points
+				points = 0
+				return TRUE
+
+			return FALSE
 		if("Release")
 			if(!mat_container)
 				return

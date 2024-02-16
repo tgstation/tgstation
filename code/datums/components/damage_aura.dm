@@ -74,7 +74,7 @@
 	src.immune_factions = immune_factions
 	src.current_owner = WEAKREF(current_owner)
 
-/datum/component/damage_aura/Destroy(force, silent)
+/datum/component/damage_aura/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

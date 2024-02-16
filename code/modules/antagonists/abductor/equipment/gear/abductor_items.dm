@@ -446,7 +446,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
 		species = span_notice("[human_victim.dna.species.name]")
-		if(human_victim.mind && human_victim.mind.has_antag_datum(/datum/antagonist/changeling))
+		if(IS_CHANGELING(human_victim))
 			species = span_warning("Changeling lifeform")
 		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
 		if(temp)

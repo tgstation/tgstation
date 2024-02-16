@@ -359,7 +359,7 @@ export const StripMenu = (props) => {
                             position: 'relative',
                             width: '100%',
                             height: '100%',
-                            padding: 0,
+                            padding: '0',
                           }}
                         >
                           {slot.image && (
@@ -386,9 +386,9 @@ export const StripMenu = (props) => {
                             style={{
                               background: 'rgba(0, 0, 0, 0.6)',
                               position: 'absolute',
-                              bottom: 0,
-                              right: 0,
-                              zIndex: 2,
+                              bottom: '0',
+                              right: '0',
+                              zIndex: '2',
                             }}
                           >
                             <Icon name={alternateAction.icon} />

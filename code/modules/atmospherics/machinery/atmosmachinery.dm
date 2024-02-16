@@ -280,8 +280,8 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	//if target is not multiz then we have to check if the target & src connect in the same direction
-	if(!istype(target, /obj/machinery/atmospherics/pipe/multiz) && !((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
+	//check if the target & src connect in the same direction
+	if(!((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
 		return FALSE
 
 	//both target & src can't be connected either way
@@ -398,6 +398,9 @@
 			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
 			if(!gas_mix.total_moles())
 				empty_mixes++
+			if(!nodes[gas_mix_number] || (istype(nodes[gas_mix_number], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(gas_mix_number)))
+				var/pressure_delta = all_gas_mixes[gas_mix_number].return_pressure() - env_air.return_pressure()
+				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
 		if(empty_mixes == device_type)
 			empty_pipe = TRUE
 	if(!int_air.total_moles())
@@ -465,16 +468,16 @@
  *
  * Called by wrench_act(), create a pipe fitting and remove the pipe
  */
-/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
-			stored.set_piping_layer(piping_layer)
-			if(!disassembled)
-				stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
-			transfer_fingerprints_to(stored)
-			. = stored
-	..()
+/obj/machinery/atmospherics/on_deconstruction(disassembled = TRUE)
+	if(!can_unwrench)
+		return
+
+	var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
+	stored.set_piping_layer(piping_layer)
+	if(!disassembled)
+		stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
+	transfer_fingerprints_to(stored)
+	. = stored
 
 /**
  * Getter for piping layer shifted, pipe colored overlays
@@ -628,6 +631,13 @@
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+/// Return TRUE if there is device connected to portables_connector
+/obj/machinery/atmospherics/proc/portable_device_connected(node)
+	var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = nodes[node]
+	if(portable_devices_connector.connected_device)
+		return TRUE
+	return FALSE
 
 #undef PIPE_VISIBLE_LEVEL
 #undef PIPE_HIDDEN_LEVEL

@@ -853,7 +853,7 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
-		"comp_mod_action",
+		"comp_equip_action",
 		"controller_shell",
 		"dispenser_shell",
 		"door_shell",
@@ -875,7 +875,6 @@
 		"bci_implanter",
 		"bci_shell",
 		"comp_bar_overlay",
-		"comp_bci_action",
 		"comp_counter_overlay",
 		"comp_install_detector",
 		"comp_object_overlay",
@@ -1114,6 +1113,7 @@
 		"holosignrestaurant",
 		"holosignbar",
 		"inducer",
+		"inducerengi",
 		"tray_goggles",
 		"holopad",
 		"vendatray",
@@ -1180,10 +1180,11 @@
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
 	design_ids = list(
+		"bankmachine",
+		"barcode_scanner",
 		"cargo",
 		"cargorequest",
 		"comconsole",
-		"bankmachine",
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
@@ -1339,9 +1340,21 @@
 		"c38_trac",
 		"implant_chem",
 		"implant_tracking",
+		"implant_exile",
 		"implantcase",
 		"implanter",
 		"locator",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/advanced_implants
+	id = "adv_subdermal_implants"
+	display_name = "Advanced Subdermal Implants"
+	description = "Subdermal implants that leverage bluespace research to control their bluespace signature."
+	prereq_ids = list("subdermal_implants", "micro_bluespace")
+	design_ids = list(
+		"implant_beacon",
+		"implant_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1471,6 +1484,9 @@
 		"superresonator",
 		"triggermod",
 		"mining_scanner",
+		"brm",
+		"b_smelter",
+		"b_refinery",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

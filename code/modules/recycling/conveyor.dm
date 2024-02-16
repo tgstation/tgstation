@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/conveyable_exit(datum/source, atom/convayable, direction)
 	SIGNAL_HANDLER
 	var/has_conveyor = neighbors["[direction]"]
-	if(!has_conveyor || !isturf(convayable.loc)) //If you've entered something on us, stop moving
+	if(convayable.z != z || !has_conveyor || !isturf(convayable.loc)) //If you've entered something on us, stop moving
 		SSmove_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)

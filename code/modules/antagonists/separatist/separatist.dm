@@ -14,7 +14,7 @@
 	src.potential_recruits = potential_recruits
 	src.department = department
 
-/datum/team/nation/Destroy(force, ...)
+/datum/team/nation/Destroy(force)
 	department = null
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	. = ..()

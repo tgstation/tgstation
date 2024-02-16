@@ -71,7 +71,7 @@
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(check_holidays("Ian's Birthday"))
+	if(check_holidays(IAN_HOLIDAY))
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
 //only pet worth reviving

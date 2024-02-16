@@ -891,7 +891,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/ai_module/upgrade/mecha_domination
 	name = "Unlock Mech Domination"
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
-		Once uploaded to the mech, it is impossible to leave. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
+		Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
 		Upgrade is done immediately upon purchase."
 	cost = 30
 	upgrade = TRUE

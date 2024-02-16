@@ -145,3 +145,12 @@
 	after_use_message = "The Stewards hear your call..."
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1.3
+
+// Path of Moon's blade
+/obj/item/melee/sickly_blade/moon
+	name = "\improper moon blade"
+	desc = "A blade of iron, reflecting the truth of the earth: All join the troupe one day. \
+		A troupe bringing joy, carving smiles on their faces if they want one or not."
+	icon_state = "moon_blade"
+	inhand_icon_state = "moon_blade"
+	after_use_message = "The Moon hears your call..."

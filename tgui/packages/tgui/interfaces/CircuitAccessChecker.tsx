@@ -28,8 +28,8 @@ export const CircuitAccessChecker = (props) => {
           </LabeledList.Item>
         </LabeledList>
         <AccessConfig
-          accesses={regions}
-          selectedList={accesses}
+          accesses={regions || []}
+          selectedList={accesses || []}
           accessMod={(ref) =>
             act('set', {
               access: ref,

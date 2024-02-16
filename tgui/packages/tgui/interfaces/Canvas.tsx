@@ -288,11 +288,10 @@ export const Canvas = (props) => {
           {!!data.editable && !!data.paint_tool_color && (
             <Flex.Item>
               <Button
-                title="Grid Toggle"
+                tooltip="Grid Toggle"
                 icon="th-large"
                 backgroundColor={data.show_grid ? 'green' : 'red'}
                 onClick={() => act('toggle_grid')}
-                size={1.5}
                 m={0.5}
               />
             </Flex.Item>

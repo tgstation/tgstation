@@ -30,10 +30,18 @@
 	if(stat)
 		return FALSE
 
+	if(buckled)
+		stop_feeding()
+		return TRUE
+
 	var/list/choices = list()
 	for(var/mob/living/nearby_mob in view(1,src))
-		if(nearby_mob != src && Adjacent(nearby_mob))
+		if(nearby_mob != src && Adjacent(nearby_mob) && nearby_mob.appears_alive())
 			choices += nearby_mob
+
+	if(length(choices) == 1)
+		start_feeding(choices[1])
+		return TRUE
 
 	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
 	if(isnull(choice))
@@ -133,25 +141,27 @@
 
 ///The slime will stop feeding
 /mob/living/simple_animal/slime/proc/stop_feeding(silent = FALSE, living=TRUE)
-	if(buckled)
-		if(!living)
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
-			"This subject does not have life energy", "This subject is empty", \
-			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
+	if(!buckled)
+		return
 
-		var/mob/living/victim = buckled
+	if(!living)
+		to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+		"This subject does not have life energy", "This subject is empty", \
+		"I am not satisified", "I can not feed from this subject", \
+		"I do not feel nourished", "This subject is not food")]!</span>")
 
-		if(istype(victim))
-			var/bio_protection = 100 - victim.getarmor(null, BIO)
-			if(prob(bio_protection))
-				victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
+	var/mob/living/victim = buckled
 
-		if(!silent)
-			visible_message(span_warning("[src] lets go of [buckled]!"), \
-							span_notice("<i>I stopped feeding.</i>"))
-		layer = initial(layer)
-		buckled.unbuckle_mob(src,force=TRUE)
+	if(istype(victim))
+		var/bio_protection = 100 - victim.getarmor(null, BIO)
+		if(prob(bio_protection))
+			victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
+
+	if(!silent)
+		visible_message(span_warning("[src] lets go of [buckled]!"), \
+						span_notice("<i>I stopped feeding.</i>"))
+	layer = initial(layer)
+	buckled.unbuckle_mob(src,force=TRUE)
 
 /mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"
@@ -160,19 +170,16 @@
 	if(stat)
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
-	if(is_adult)
+	if(life_stage == SLIME_LIFE_STAGE_ADULT)
 		to_chat(src, "<i>I have already evolved...</i>")
 		return
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		to_chat(src, "<i>I am not ready to evolve yet...</i>")
 		return
 
-	is_adult = TRUE
-	maxHealth = 200
+	set_life_stage(SLIME_LIFE_STAGE_ADULT)
 	amount_grown = 0
-	for(var/datum/action/innate/slime/evolve/evolve_action in actions)
-		evolve_action.Remove(src)
-	GRANT_ACTION(/datum/action/innate/slime/reproduce)
+
 	regenerate_icons()
 	update_name()
 
@@ -196,7 +203,7 @@
 	if(!isopenturf(loc))
 		balloon_alert(src, "can't reproduce here!")
 
-	if(!is_adult)
+	if(life_stage != SLIME_LIFE_STAGE_ADULT)
 		balloon_alert(src, "not old enough to reproduce!")
 		return
 

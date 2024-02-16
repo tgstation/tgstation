@@ -419,6 +419,7 @@
 		they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is, like most artificially-flavoured moth food, mixed-herb flavoured."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "sustenance_bar"
+	trash_type = /obj/item/trash/fleet_ration
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
 	tastes = list("herbs" = 1)
 	foodtypes = VEGETABLES | GRAIN
@@ -756,7 +757,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
 	crafting_complexity = FOOD_COMPLEXITY_5

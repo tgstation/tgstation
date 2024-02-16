@@ -507,7 +507,6 @@ class PlaneMaster extends Component<PlaneMasterProps> {
               ? 'ObjectComponent__Greyed_Content'
               : 'ObjectComponent__Content'
           }
-          unselectable="on"
           py={1}
           px={1}
         >

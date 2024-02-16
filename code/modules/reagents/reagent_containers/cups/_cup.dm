@@ -125,6 +125,7 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -137,6 +138,7 @@
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 
 	target.update_appearance()
 

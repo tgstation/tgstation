@@ -3995,15 +3995,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-radar@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "eslint-plugin-radar@npm:0.2.1"
-  peerDependencies:
-    eslint: ">= 3.0.0 <= 7.x.x"
-  checksum: dece5c02506ab40a4e231c813f1a8ecd7a57c0a4d177cd35dbfcf56222333d5434a8c06901e8b06409d919b7beeea870428a3574315419252a3698b3766d1a91
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-react@npm:^7.33.2":
   version: 7.33.2
   resolution: "eslint-plugin-react@npm:7.33.2"
@@ -4036,6 +4027,15 @@ __metadata:
   peerDependencies:
     eslint: ">=5.0.0"
   checksum: 23221ff63f80f9c52da807d388ee8a51bc36a3b73345f60ec886e7973c28d75eb1d1e47f7f2916a7c1f94a1b5037b1450356a64a8fbd58096fd6bee57c6e3e48
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-sonarjs@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "eslint-plugin-sonarjs@npm:0.23.0"
+  peerDependencies:
+    eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 4f56557740ab438eee8d98e4d93363a8dadcf8d6d795a5d95e6a0b0d6335273a06c5633fe753271c6a56c14a3b0086014b8278984b5594fad5db274ec7fd7edf
   languageName: node
   linkType: hard
 
@@ -6632,7 +6632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -7762,6 +7762,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-fast-compare@npm:^3.0.1":
+  version: 3.2.2
+  resolution: "react-fast-compare@npm:3.2.2"
+  checksum: 2071415b4f76a3e6b55c84611c4d24dcb12ffc85811a2840b5a3f1ff2d1a99be1020d9437ee7c6e024c9f4cbb84ceb35e48cf84f28fcb00265ad2dfdd3947704
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -7773,6 +7780,20 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-popper@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "react-popper@npm:2.3.0"
+  dependencies:
+    react-fast-compare: ^3.0.1
+    warning: ^4.0.2
+  peerDependencies:
+    "@popperjs/core": ^2.0.0
+    react: ^16.8.0 || ^17 || ^18
+    react-dom: ^16.8.0 || ^17 || ^18
+  checksum: 837111c98738011c69b3069a464ea5bdcbf487105b6148e8faf90cb7337e134edb1b98b8824322941c378756cca30a15c18c25f558e53b85ed5762fa0dc8e6b2
   languageName: node
   linkType: hard
 
@@ -9113,9 +9134,9 @@ resolve@^1.20.0:
     esbuild-loader: ^4.0.2
     eslint: ^8.56.0
     eslint-config-prettier: ^9.1.0
-    eslint-plugin-radar: ^0.2.1
     eslint-plugin-react: ^7.33.2
     eslint-plugin-simple-import-sort: ^10.0.0
+    eslint-plugin-sonarjs: ^0.23.0
     eslint-plugin-unused-imports: ^3.0.0
     file-loader: ^6.2.0
     jest: ^29.7.0
@@ -9152,6 +9173,7 @@ resolve@^1.20.0:
     marked: ^4.2.12
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-popper: ^2.3.0
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
@@ -9659,6 +9681,15 @@ resolve@^1.20.0:
   dependencies:
     makeerror: 1.0.12
   checksum: ad7a257ea1e662e57ef2e018f97b3c02a7240ad5093c392186ce0bcf1f1a60bbadd520d073b9beb921ed99f64f065efb63dfc8eec689a80e569f93c1c5d5e16c
+  languageName: node
+  linkType: hard
+
+"warning@npm:^4.0.2":
+  version: 4.0.3
+  resolution: "warning@npm:4.0.3"
+  dependencies:
+    loose-envify: ^1.0.0
+  checksum: 4f2cb6a9575e4faf71ddad9ad1ae7a00d0a75d24521c193fa464f30e6b04027bd97aa5d9546b0e13d3a150ab402eda216d59c1d0f2d6ca60124d96cd40dfa35c
   languageName: node
   linkType: hard
 

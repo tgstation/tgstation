@@ -122,7 +122,7 @@ export const ModularShieldGen = (props) => {
               <LabeledList>
                 <LabeledList.Item label="Toggle Power">
                   <Button
-                    bold={1}
+                    bold
                     disabled={recovering || initiating_field}
                     selected={active}
                     content={active ? 'On' : 'Off'}

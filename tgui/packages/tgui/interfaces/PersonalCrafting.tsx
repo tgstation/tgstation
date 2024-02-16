@@ -2,8 +2,9 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
+import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -168,30 +169,27 @@ export const PersonalCrafting = (props) => {
     craftability,
     diet,
   } = data;
-  const [searchText, setSearchText] = useLocalState('searchText', '');
-  const [pages, setPages] = useLocalState('pages', 1);
+  const [searchText, setSearchText] = useState('');
+  const [pages, setPages] = useState(1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
-  const [activeCategory, setCategory] = useLocalState<string>(
-    'category',
+  const [activeCategory, setCategory] = useState(
     Object.keys(craftability).length
       ? 'Can Make'
       : mode === MODE.cooking
         ? DEFAULT_CAT_COOKING
         : DEFAULT_CAT_CRAFTING,
   );
-  const [activeType, setFoodType] = useLocalState(
-    'foodtype',
+  const [activeType, setFoodType] = useState(
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
   const material_occurences = flow([
     sortBy<Material>((material) => -material.occurences),
   ])(data.material_occurences);
-  const [activeMaterial, setMaterial] = useLocalState(
-    'material',
+  const [activeMaterial, setMaterial] = useState(
     material_occurences[0].atom_id,
   );
-  const [tabMode, setTabMode] = useLocalState('tabMode', 0);
+  const [tabMode, setTabMode] = useState(0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   let recipes = flow([
     filter<Recipe>(
@@ -492,8 +490,7 @@ export const PersonalCrafting = (props) => {
           </Stack.Item>
           <Stack.Item grow my={-1}>
             <Box
-              id="content"
-              height={'100%'}
+              height="100%"
               pr={1}
               pt={1}
               mr={-1}

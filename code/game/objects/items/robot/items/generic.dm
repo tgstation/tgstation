@@ -9,21 +9,6 @@
 #define HARM_ALARM_NO_SAFETY_COOLDOWN (60 SECONDS)
 #define HARM_ALARM_SAFETY_COOLDOWN (20 SECONDS)
 
-/datum/mood_event/borg_touch
-	description = "Being touched by those manipulators is nice."
-	mood_change = 2
-	timeout = 2 MINUTES
-
-/datum/mood_event/borg_hug
-	description = "Those robo-hugs were really nice!"
-	mood_change = 4
-	timeout = 3 MINUTES
-
-/datum/mood_event/pat_borg
-	description = "There is something really special about touching my robotic friends!"
-	mood_change = 4
-	timeout = 1 MINUTES
-
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
@@ -126,12 +111,11 @@
 					span_notice("You playfully boop [attacked_mob] on the head!"),
 				)
 				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
-				SEND_SIGNAL(attacked_mob, COMSIG_BORG_TOUCH_MOB)
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
 					user.visible_message(
-						span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"), 
+						span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"),
 						span_notice("You shake [attacked_mob] trying to get [attacked_mob.p_them()] up!"),
 					)
 				else
@@ -139,7 +123,6 @@
 						span_notice("[user] hugs [attacked_mob] to make [attacked_mob.p_them()] feel better!"),
 						span_notice("You hug [attacked_mob] to make [attacked_mob.p_them()] feel better!"),
 					)
-					SEND_SIGNAL(attacked_mob, COMSIG_BORG_TOUCH_MOB)
 				if(attacked_mob.resting)
 					attacked_mob.set_resting(FALSE, TRUE)
 			else
@@ -160,7 +143,6 @@
 					user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"),
 						span_warning("You bop [attacked_mob] on the head!"),
 					)
-					SEND_SIGNAL(attacked_mob, COMSIG_BORG_TOUCH_MOB)
 					user.do_attack_animation(attacked_mob, ATTACK_EFFECT_PUNCH)
 				else
 					if(!(SEND_SIGNAL(attacked_mob, COMSIG_BORG_HUG_MOB, user) & COMSIG_BORG_HUG_HANDLED))

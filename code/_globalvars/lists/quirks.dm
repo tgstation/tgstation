@@ -58,3 +58,10 @@ GLOBAL_LIST_INIT(hemiplegic_side, list(
 	"Right side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right
 ))
 
+///Transhumanist quirk
+GLOBAL_LIST_INIT(limb_choice_transhuman, list(
+	"Left Arm" = /obj/item/bodypart/arm/left/robot,
+	"Right Arm" = /obj/item/bodypart/arm/right/robot,
+	"Left Leg" = /obj/item/bodypart/leg/left/robot,
+	"Right Leg" = /obj/item/bodypart/leg/right/robot,
+))

@@ -285,7 +285,7 @@ export class PrimaryView extends Component {
     this.scrollableRef = createRef();
     this.lastDistanceFromBottom = 0;
 
-    this.onScrollHandler = (ev: Event) => {
+    this.onScrollHandler = (ev) => {
       const scrollable = ev.currentTarget as HTMLDivElement;
       if (scrollable) {
         this.lastDistanceFromBottom =
@@ -673,9 +673,9 @@ export class PreviewView extends Component<PreviewViewProps> {
     color: string,
     bold: boolean = false,
   ): string => {
-    return `<span style={{color:${color};font-family:${font};${
+    return `<span style="color:${color};font-family:${font};${
       bold ? 'font-weight: bold;' : ''
-    }}}>${text}</span>`;
+    }">${text}</span>`;
   };
 
   // Parses the given raw text through marked for applying markdown.
@@ -938,12 +938,12 @@ export class PreviewView extends Component<PreviewViewProps> {
         fitted
         scrollable
         ref={scrollableRef}
-        onScroll={handleOnScroll}
+        onScroll={handleOnScroll as any}
       >
         <Box
           fillPositionedParent
           position="relative"
-          bottom={'100%'}
+          bottom="100%"
           minHeight="100%"
           backgroundColor={paper_color}
           className="Paper__Page"

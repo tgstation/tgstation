@@ -145,10 +145,29 @@ export const DreamMaker = async (dmeFile, options = {}) => {
       throw err;
     }
   };
+
+  const testDmVersion = async (dmPath) => {
+    const execReturn = await Juke.exec(dmPath, [], { silent: true, throw: false });
+    const version = execReturn.combined.match(`DM compiler version (\\d+)\\.(\\d+)`)
+    if(version == null){
+      Juke.logger.error(`Unexpected DreamMaker return, ensure "${dmPath}" is correct DM path.`)
+      throw new Juke.ExitCode(1);
+    }
+    const requiredMajorVersion = 515;
+    const requiredMinorVersion = 1597 // First with -D switch functionality
+    const major = Number(version[1]);
+    const minor = Number(version[2]);
+    if(major < requiredMajorVersion || major == requiredMajorVersion && minor < requiredMinorVersion){
+      Juke.logger.error(`${requiredMajorVersion}.${requiredMinorVersion} DM version required`)
+      throw new Juke.ExitCode(1);
+    }
+  }
+
+  await testDmVersion(dmPath);
   testOutputFile(`${dmeBaseName}.dmb`);
   testOutputFile(`${dmeBaseName}.rsc`);
-  const runWithWarningChecks = async (dmeFile, args) => {
-    const execReturn = await Juke.exec(dmeFile, args);
+  const runWithWarningChecks = async (dmPath, args) => {
+    const execReturn = await Juke.exec(dmPath, args);
     const ignoredWarningCodes = options.ignoreWarningCodes ?? [];
     const reg = ignoredWarningCodes.length > 0 ? new RegExp(`\d+:warning: (?!(${ignoredWarningCodes.join('|')}))`) : /\d+:warning: /;
     if (options.warningsAsErrors && execReturn.combined.match(reg)) {

@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	if (!isnull(ckey))
 		GLOB.escape_menus[ckey] = src
 
-/datum/escape_menu/Destroy(force, ...)
+/datum/escape_menu/Destroy(force)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
 

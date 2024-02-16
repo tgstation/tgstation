@@ -135,7 +135,7 @@ export class BodyZoneSelector extends Component<
           <Image
             src={resolveAsset(`body_zones.${hoverZone}.png`)}
             style={{
-              opacity: 0.5,
+              opacity: '0.5',
               pointerEvents: 'none',
               position: 'absolute',
               width: `${32 * scale}px`,

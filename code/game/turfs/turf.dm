@@ -200,12 +200,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	QDEL_LIST(blueprint_data)
+	LAZYCLEARLIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
 
-	if (length(vis_contents))
+	if(length(vis_contents))
 		vis_contents.Cut()
 
 /// WARNING WARNING
@@ -228,9 +228,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	//move the turf
-	old_area.turfs_to_uncontain += src
+	LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, z, list())
+	LISTASSERTLEN(new_area.turfs_by_zlevel, z, list())
+	old_area.turfs_to_uncontain_by_zlevel[z] += src
+	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
-	new_area.contained_turfs += src
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)

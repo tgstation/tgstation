@@ -283,6 +283,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /// Will invoke `do_copy_loop` asynchronously. Passes the supplied arguments on to it.
 /obj/machinery/photocopier/proc/do_copies(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return
+
 	busy = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 	// fucking god proc

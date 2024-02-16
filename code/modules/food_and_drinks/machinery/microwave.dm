@@ -105,7 +105,7 @@
 				itemized_ingredient.pixel_y = itemized_ingredient.base_pixel_y + rand(-5, 6)
 	return ..()
 
-/obj/machinery/microwave/on_deconstruction()
+/obj/machinery/microwave/on_deconstruction(disassembled)
 	eject()
 	return ..()
 
@@ -486,7 +486,7 @@
 
 /obj/machinery/microwave/CtrlClick(mob/user)
 	. = ..()
-	if(cell_powered && !isnull(cell) && anchored)
+	if(user.can_perform_action(src) && cell_powered && !isnull(cell) && anchored)
 		user.put_in_hands(cell)
 		balloon_alert(user, "removed cell")
 		cell = null

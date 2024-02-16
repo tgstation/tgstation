@@ -31,11 +31,10 @@
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
-	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.locked = STORAGE_FULLY_LOCKED
-	qdel(modstorage)
+	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
-		atom_storage.remove_all(get_turf(src))
+		atom_storage.remove_all(mod.drop_location())
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
@@ -366,7 +365,7 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 4
 	light_power = 1
@@ -866,7 +865,7 @@
 		insert_trash(new_atom)
 
 /obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
-	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)

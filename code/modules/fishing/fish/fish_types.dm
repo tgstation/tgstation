@@ -203,6 +203,8 @@
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
 	icon_state = "needlefish"
+	dedicated_in_aquarium_icon_state = "needlefish_small"
+	sprite_width = 7
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
 	fillet_type = null
@@ -216,6 +218,9 @@
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
 	icon_state = "armorfish"
+	dedicated_in_aquarium_icon_state = "armorfish_small"
+	sprite_height = 5
+	sprite_width = 6
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
@@ -231,8 +236,6 @@
 	dedicated_in_aquarium_icon_state = "chrab_small"
 	sprite_height = 9
 	sprite_width = 8
-	source_height = 9
-	source_width = 8
 	stable_population = 4
 	feeding_frequency = 15 MINUTES
 	random_case_rarity = FISH_RARITY_RARE

@@ -32,6 +32,7 @@
 		/obj/singularity,
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
+		/obj/structure/ore_vent,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
@@ -108,6 +109,9 @@
 		return CHASM_NOT_DROPPING
 	if(dropped_thing.throwing || (dropped_thing.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return CHASM_REGISTER_SIGNALS
+	for(var/atom/thing_to_check as anything in parent)
+		if(HAS_TRAIT(thing_to_check, TRAIT_CHASM_STOPPER))
+			return CHASM_NOT_DROPPING
 
 	//Flies right over the chasm
 	if(ismob(dropped_thing))

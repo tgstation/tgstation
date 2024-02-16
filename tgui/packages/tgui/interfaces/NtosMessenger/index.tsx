@@ -1,8 +1,9 @@
 import { sortBy } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
+import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -97,7 +98,7 @@ const ContactsScreen = (props: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState('searchUser', '');
+  const [searchUser, setSearchUser] = useState('');
 
   const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
 
@@ -213,7 +214,7 @@ const ContactsScreen = (props: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onChange={(_, value) => setSearchUser(value)}
+              onInput={(_, value) => setSearchUser(value)}
             />
           </Stack>
         </Section>
@@ -298,7 +299,7 @@ const SendToAllSection = (props) => {
   const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useLocalState('everyoneMessage', '');
+  const [message, setmessage] = useState('');
 
   return (
     <>

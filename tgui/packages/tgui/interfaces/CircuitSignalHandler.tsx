@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Component, KeyboardEvent } from 'react';
+import { Component, KeyboardEvent, MouseEvent } from 'react';
 
 import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Input, Section, Stack } from '../components';
@@ -193,7 +193,7 @@ export class CircuitSignalHandler extends Component<
 }
 
 type EntryProps = {
-  onRemove: (e: MouseEvent) => any;
+  onRemove: (e: MouseEvent<HTMLDivElement>) => any;
   onChange: (e: KeyboardEvent<HTMLInputElement>, value: string) => any;
   onSetOption?: (type: string) => any;
   name: string;
@@ -205,7 +205,7 @@ const Entry = (props: EntryProps) => {
   const {
     onRemove,
     onChange,
-    onSetOption,
+    onSetOption = () => null,
     name,
     current_option,
     options = [],

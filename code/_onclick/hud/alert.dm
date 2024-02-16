@@ -464,7 +464,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/living_owner = owner
 	var/last_whisper
 	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
 		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 			return
@@ -826,6 +826,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
 	. = ..()
+	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	register_context()
 
 /atom/movable/screen/alert/poll_alert/proc/set_role_overlay()
@@ -843,6 +844,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	QDEL_NULL(stacks_overlay)
 	QDEL_NULL(candidates_num_overlay)
 	QDEL_NULL(signed_up_overlay)
+	if(poll)
+		poll.alert_buttons -= src
+	poll = null
 	return ..()
 
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -873,9 +877,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		time_left_overlay.maptext = MAPTEXT("<span style='color: [(timeleft <= 10 SECONDS) ? "red" : "white"]'><b>[CEILING(timeleft / (1 SECONDS), 1)]</b></span>")
 		time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)
 		add_overlay(time_left_overlay)
-	if(isnull(poll))
-		return
-	..()
 
 /atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
@@ -895,11 +896,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		poll.remove_candidate(owner)
 	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.sign_up(owner)
+	update_signed_up_overlay()
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.do_never_for_this_round(owner)
 		color = "red"
+		update_signed_up_overlay()
 		return
 	poll.undo_never_for_this_round(owner)
 	color = initial(color)
@@ -922,7 +925,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
-	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	if(owner in poll.signed_up)
 		add_overlay(signed_up_overlay)
 	else

@@ -39,7 +39,7 @@
 		special_effects = new(parent_movable, /particles/unusual_effect)
 	START_PROCESSING(SSobj, src)
 
-/datum/component/unusual_effect/Destroy(force, silent)
+/datum/component/unusual_effect/Destroy(force)
 	var/atom/movable/parent_movable = parent
 	if (istype(parent_movable))
 		parent_movable.remove_filter("unusual_effect")

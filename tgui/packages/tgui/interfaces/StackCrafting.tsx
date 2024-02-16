@@ -57,7 +57,6 @@ type RecipeListFilterableEntry = [string, RecipeList | Recipe | undefined];
  * @param value the value to test
  * @returns type guard boolean
  */
-// eslint-disable-next-line func-style
 function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
   return (value as Recipe).ref === undefined;
 }
@@ -120,7 +119,7 @@ export const StackCrafting = (_props) => {
               <Input
                 autoFocus
                 value={searchText}
-                onChange={(e, value) => setSearchText(value)}
+                onInput={(e, value) => setSearchText(value)}
                 mx={1}
               />
             </>
