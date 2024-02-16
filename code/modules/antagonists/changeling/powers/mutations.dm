@@ -685,7 +685,6 @@
 	name = "legion hive head"
 	desc = "A strange, boney coating covering your head with a fleshy inside. Surprisingly comfortable."
 	icon_state = "hivehead_legion"
-	inhand_icon_state = "hivehead_legion"
 	actions_types = list(/datum/action/cooldown/hivehead_spawn_minions/legion)
 	holds_reagents = FALSE
 
