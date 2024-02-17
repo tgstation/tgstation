@@ -1228,7 +1228,6 @@
 	)
 	results =  list(
 		/datum/reagent/consumable/nutriment/soup/oatmeal = 20,
-		/datum/reagent/consumable/milk = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	percentage_of_nutriment_converted = 0 // Oats have barely any nutrients
@@ -1484,12 +1483,15 @@
 	drink_type = MEAT | VEGETABLES
 
 /datum/chemical_reaction/food/soup/rootbread_soup
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/eggyolk = 2,
+		/datum/reagent/consumable/eggwhite = 4
+	)
 	required_ingredients = list(
 		/obj/item/food/breadslice/root = 2,
 		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/egg = 1
+		/obj/item/food/grown/chili = 1
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/rootbread = 30,

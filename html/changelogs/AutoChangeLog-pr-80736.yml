@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an image hard del"
-  - code_imp: "adds context to image hard dels to make them easier to track"

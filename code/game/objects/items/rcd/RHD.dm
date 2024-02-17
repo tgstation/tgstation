@@ -95,16 +95,17 @@
 /obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/design_disk, mob/user)
 	if(design_disk.upgrade & upgrade)
 		balloon_alert(user, "already installed!")
-		return
+		return FALSE
 	if(design_disk.upgrade & banned_upgrades)
 		balloon_alert(user, "cannot install upgrade!")
-		return
+		return FALSE
 	upgrade |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 	update_static_data_for_all_viewers()
+	return TRUE
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/item, mob/user)

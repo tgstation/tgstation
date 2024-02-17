@@ -771,8 +771,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "bV" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Surgery Chamber";
 	req_access = list("syndicate")
 	},
@@ -1712,9 +1711,7 @@
 /obj/machinery/nuclearbomb/syndicate{
 	anchored = 1
 	},
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
@@ -1758,8 +1755,7 @@
 	dir = 1;
 	name = "Connector to Ship"
 	},
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Systems Chamber";
 	req_access = list("syndicate")
 	},

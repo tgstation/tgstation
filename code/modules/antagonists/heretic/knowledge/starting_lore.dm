@@ -237,6 +237,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 1
 	route = PATH_START
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
+	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
 
 /datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
 	if(item_path == /obj/item/pen)
@@ -248,12 +249,16 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(!.)
 		return FALSE
 
-	for(var/mob/living/body in atoms)
-		if(body.stat != DEAD)
-			continue
-
-		selected_atoms += body
-		return TRUE
+	for(var/thingy in atoms)
+		if(is_type_in_typecache(thingy, non_mob_bindings))
+			selected_atoms += thingy
+			return TRUE
+		else if(isliving(thingy))
+			var/mob/living/body = thingy
+			if(body.stat != DEAD)
+				continue
+			selected_atoms += body
+			return TRUE
 	return FALSE
 
 /datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)

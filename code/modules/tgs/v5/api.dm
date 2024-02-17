@@ -8,7 +8,11 @@
 
 	var/reboot_mode = TGS_REBOOT_MODE_NORMAL
 
+	/// List of chat messages list()s that attempted to be sent during a topic call. To be bundled in the result of the call
 	var/list/intercepted_message_queue
+
+	/// List of chat messages list()s that attempted to be sent during a topic call. To be bundled in the result of the call
+	var/list/offline_message_queue
 
 	var/list/custom_commands
 
@@ -194,17 +198,7 @@
 		var/datum/tgs_chat_channel/channel = I
 		ids += channel.id
 
-	message2 = UpgradeDeprecatedChatMessage(message2)
-
-	if (!length(channels))
-		return
-
-	var/list/data = message2._interop_serialize()
-	data[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = ids
-	if(intercepted_message_queue)
-		intercepted_message_queue += list(data)
-	else
-		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = data))
+	SendChatMessageRaw(message2, ids)
 
 /datum/tgs_api/v5/ChatTargetedBroadcast(datum/tgs_message_content/message2, admin_only)
 	var/list/channels = list()
@@ -213,26 +207,42 @@
 		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only) || (!channel.is_admin_channel && !admin_only)))
 			channels += channel.id
 
+	SendChatMessageRaw(message2, channels)
+
+/datum/tgs_api/v5/ChatPrivateMessage(datum/tgs_message_content/message2, datum/tgs_chat_user/user)
+	SendChatMessageRaw(message2, list(user.channel.id))
+
+/datum/tgs_api/v5/proc/SendChatMessageRaw(datum/tgs_message_content/message2, list/channel_ids)
 	message2 = UpgradeDeprecatedChatMessage(message2)
 
-	if (!length(channels))
+	if (!length(channel_ids))
 		return
 
 	var/list/data = message2._interop_serialize()
-	data[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = channels
+	data[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = channel_ids
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(data)
-	else
-		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = data))
+		return
 
-/datum/tgs_api/v5/ChatPrivateMessage(datum/tgs_message_content/message2, datum/tgs_chat_user/user)
-	message2 = UpgradeDeprecatedChatMessage(message2)
-	var/list/data = message2._interop_serialize()
-	data[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = list(user.channel.id)
-	if(intercepted_message_queue)
-		intercepted_message_queue += list(data)
+	if(offline_message_queue)
+		offline_message_queue += list(data)
+		return
+
+	if(detached)
+		offline_message_queue = list(data)
+
+		WaitForReattach(FALSE)
+
+		data = offline_message_queue
+		offline_message_queue = null
+
+		for(var/queued_message in data)
+			SendChatDataRaw(queued_message)
 	else
-		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = data))
+		SendChatDataRaw(data)
+
+/datum/tgs_api/v5/proc/SendChatDataRaw(list/data)
+	Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = data))
 
 /datum/tgs_api/v5/ChatChannelInfo()
 	RequireInitialBridgeResponse()

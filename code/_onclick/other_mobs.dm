@@ -11,6 +11,8 @@
 
 /**
  * Checks if this mob is in a valid state to punch someone.
+ *
+ * (Potentially) gives feedback to the mob if they cannot.
  */
 /mob/living/proc/can_unarmed_attack()
 	return !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
@@ -34,7 +36,7 @@
 /mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	// The sole reason for this signal needing to exist is making FotNS incompatible with Hulk.
 	// Note that it is send before [proc/can_unarmed_attack] is called, keep this in mind.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, modifiers)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
 	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(sigreturn & COMPONENT_SKIP_ATTACK)
@@ -226,6 +228,9 @@
 
 /mob/living/carbon/alien/larva/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_larva_secondary(src, modifiers)
+
+/mob/living/carbon/alien/larva/can_unarmed_attack() //We bite stuff, and our head is always free.
+	return TRUE
 
 /atom/proc/attack_larva(mob/user, list/modifiers)
 	return

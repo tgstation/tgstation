@@ -162,6 +162,7 @@
 	return data
 
 /datum/computer_file/program/scipaper_program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("et_alia")
 			paper_to_be.et_alia = !paper_to_be.et_alia

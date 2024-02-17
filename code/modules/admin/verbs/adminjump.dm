@@ -10,10 +10,10 @@
 		return
 
 	var/list/turfs = list()
-	for(var/turf/T in A.get_contained_turfs())
-		if(T.density)
-			continue
-		turfs.Add(T)
+	for (var/list/zlevel_turfs as anything in A.get_zlevel_turf_lists())
+		for (var/turf/area_turf as anything in zlevel_turfs)
+			if(!area_turf.density)
+				turfs.Add(area_turf)
 
 	if(length(turfs))
 		var/turf/T = pick(turfs)

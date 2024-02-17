@@ -15,7 +15,6 @@ type BeakerReagent = {
 
 export type Beaker = {
   maxVolume: number;
-  transferAmounts: number[];
   pH: number;
   currentVolume: number;
   contents: BeakerReagent[];

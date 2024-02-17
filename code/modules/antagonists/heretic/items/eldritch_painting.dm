@@ -28,18 +28,17 @@
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
 	. = ..()
-	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_trauma))
-	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = range, works_in_containers = FALSE)
+	if(ispath(applied_trauma))
+		var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_trauma))
+		AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = range, works_in_containers = FALSE)
 
 /obj/structure/sign/painting/eldritch/proc/apply_trauma(datum/source, mob/living/carbon/viewer)
-	if (!isliving(viewer) || !can_see(viewer, src, range))
+	SIGNAL_HANDLER
+	if(!isliving(viewer) || !can_see(viewer, src, range))
 		return
-	if (!viewer.mind || !viewer.mob_mood || viewer.stat != CONSCIOUS || viewer.is_blind())
+	if(isnull(viewer.mind) || isnull(viewer.mob_mood) || viewer.stat != CONSCIOUS || viewer.is_blind())
 		return
-	// Certain paintings have no applied trauma, so we shouldnt do further effects if they don't
-	if(!applied_trauma)
-		return
-	if (viewer.has_trauma_type(applied_trauma))
+	if(viewer.has_trauma_type(applied_trauma))
 		return
 	if(IS_HERETIC(viewer))
 		return
@@ -47,24 +46,27 @@
 		return
 	to_chat(viewer, span_notice(text_to_display))
 	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_SURGERY)
-	viewer.emote("scream")
-	to_chat(viewer, span_warning("As you gaze upon the painting your mind rends to its truth!"))
+	INVOKE_ASYNC(viewer, TYPE_PROC_REF(/mob, emote), "scream")
+	to_chat(viewer, span_hypnophrase("As you gaze upon the painting, your mind rends to its truth!"))
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	if(!user.can_block_magic(MAGIC_RESISTANCE))
 		user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-		to_chat(user, span_notice("Laughter echoes through your mind...."))
+		to_chat(user, span_hypnophrase("Laughter echoes through your mind...."))
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 // On examine eldritch paintings give a trait so their effects can not be spammed
-/obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
+/obj/structure/sign/painting/eldritch/examine(mob/user)
 	. = ..()
+	if(!iscarbon(user))
+		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE))
 		return
 
 	ADD_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE, REF(src))
 	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_ELDRITCH_PAINTING_EXAMINE, REF(src)), 3 MINUTES)
-	examine_effects(user)
+	addtimer(CALLBACK(src, PROC_REF(examine_effects), user), 0.2 SECONDS)
 
 /obj/structure/sign/painting/eldritch/proc/examine_effects(mob/living/carbon/examiner)
 	if(IS_HERETIC(examiner))
@@ -88,7 +90,7 @@
 
 /obj/structure/sign/painting/eldritch/weeping/examine_effects(mob/living/carbon/examiner)
 	if(!IS_HERETIC(examiner))
-		to_chat(examiner, span_notice("Respite, for now...."))
+		to_chat(examiner, span_hypnophrase("Respite, for now...."))
 		examiner.mob_mood.mood_events.Remove("eldritch_weeping")
 		examiner.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
 		return
@@ -116,7 +118,7 @@
 	if(!IS_HERETIC(examiner))
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
-		to_chat(examiner, warning("You feel a searing pain in your stomach!"))
+		to_chat(examiner, span_warning("You feel a searing pain in your stomach!"))
 		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		to_chat(examiner, span_notice("You feel less hungry, but more empty somehow?"))
 		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
@@ -157,12 +159,12 @@
 	applied_trauma = null
 	// A static list of 5 pretty strong mutations, simple to expand for any admins
 	var/list/mutations = list(
-		/datum/spacevine_mutation/hardened,
-		/datum/spacevine_mutation/toxicity,
-		/datum/spacevine_mutation/thorns,
-		/datum/spacevine_mutation/fire_proof,
 		/datum/spacevine_mutation/aggressive_spread,
-		)
+		/datum/spacevine_mutation/fire_proof,
+		/datum/spacevine_mutation/hardened,
+		/datum/spacevine_mutation/thorns,
+		/datum/spacevine_mutation/toxicity,
+	)
 	// Poppy and harebell are used in heretic rituals
 	var/list/items_to_spawn = list(
 		/obj/item/food/grown/poppy,
@@ -177,7 +179,7 @@
 	. = ..()
 	if(!IS_HERETIC(examiner))
 		new /datum/spacevine_controller(get_turf(examiner), mutations, 0, 10)
-		to_chat(examiner, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
+		to_chat(examiner, span_hypnophrase("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
 		return
 
 	var/item_to_spawn = pick(items_to_spawn)
@@ -199,8 +201,8 @@
 	icon_state = "eldritch_painting_beauty"
 	applied_trauma = /datum/brain_trauma/severe/eldritch_beauty
 	text_to_display = "Her flesh glows in the pale light, and mine can too...If it wasnt for these imperfections...."
-	// Set to mutadone by default to remove mutations
-	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone)
+	/// List of reagents to add to heretics on examine, set to mutadone by default to remove mutations
+	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone = 5)
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/beauty/examine_effects(mob/living/carbon/examiner)
@@ -209,12 +211,12 @@
 		return
 
 	if(!IS_HERETIC(examiner))
-		to_chat(examiner, "You feel changed, more perfect....")
+		to_chat(examiner, span_hypnophrase("You feel changed, more perfect...."))
 		examiner.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 		return
 
-	to_chat(examiner, "Your imperfections shed and you are restored.")
-	examiner.reagents.add_reagent(reagents_to_add, 5)
+	to_chat(examiner, span_notice("Your imperfections shed and you are restored."))
+	examiner.reagents.add_reagent_list(reagents_to_add)
 
 // Climb over the rusted mountain, gives a brain trauma causing the person to randomly rust tiles beneath them
 /obj/item/wallframe/painting/eldritch/rust
@@ -235,9 +237,9 @@
 	. = ..()
 
 	if(!IS_HERETIC(examiner))
-		to_chat(examiner, "It can wait...")
+		to_chat(examiner, span_hypnophrase("It can wait..."))
 		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
 		return
 
-	to_chat(examiner, "You see the climber, and are inspired by it!")
+	to_chat(examiner, span_notice("You see the climber, and are inspired by it!"))
 	examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)

@@ -11,6 +11,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_combat
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /datum/armor/gloves_combat
 	bio = 90

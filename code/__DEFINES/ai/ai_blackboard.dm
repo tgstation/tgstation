@@ -141,5 +141,8 @@
 /// The next time at which this mob can call for reinforcements
 #define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"
 
+/// the direction we started when executing stare at things
+#define BB_STARTING_DIRECTION "BB_startdir"
+
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"

@@ -83,6 +83,12 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
+	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
+		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
@@ -155,7 +161,7 @@
 				continue
 			var/obj/item/bodypart/head/as_head = thing
 			var/obj/item/mmi/as_mmi = thing
-			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && locate(/obj/item/organ/internal/brain) in as_head) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
 			if(isitem(as_object))
 				var/obj/item/as_item = as_object
@@ -241,7 +247,7 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 
-/obj/machinery/recycler/on_deconstruction()
+/obj/machinery/recycler/on_deconstruction(disassembled)
 	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap

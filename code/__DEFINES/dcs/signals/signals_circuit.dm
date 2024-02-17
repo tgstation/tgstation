@@ -81,3 +81,8 @@
 
 /// Called when an equipment action component is removed from a shell (/obj/item/circuit_component/equipment_action/action_comp)
 #define COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED "circuit_action_component_unregistered"
+
+///Sent to the shell component when a circuit is attached.
+#define COMSIG_SHELL_CIRCUIT_ATTACHED "shell_circuit_attached"
+///Sent to the shell component when a circuit is removed.
+#define COMSIG_SHELL_CIRCUIT_REMOVED "shell_circuit_removed"
