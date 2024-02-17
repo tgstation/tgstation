@@ -1496,6 +1496,7 @@
 #include "code\datums\elements\weather_listener.dm"
 #include "code\datums\elements\web_walker.dm"
 #include "code\datums\elements\wheel.dm"
+#include "code\datums\elements\window_smash.dm"
 #include "code\datums\elements\decals\_decal.dm"
 #include "code\datums\elements\decals\blood.dm"
 #include "code\datums\elements\food\dunkable.dm"
