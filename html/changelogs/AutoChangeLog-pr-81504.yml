@@ -1,0 +1,4 @@
+author: "Roastglue"
+delete-after: True
+changes:
+  - bugfix: "Crafting Bulgogi no longer makes Bibimbap. It instead makes Bulgogi."
