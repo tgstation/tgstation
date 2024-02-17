@@ -41,6 +41,12 @@
 	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/mineral_door/LateInitialize(mapload)
+	. = ..()
+	if(mapload)
+		auto_align()
 
 /obj/structure/mineral_door/Destroy()
 	if(!door_opened)
@@ -103,9 +109,8 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
 	playsound(src, openSound, 100, TRUE)
+	sleep(0.8 SECONDS)
 	set_opacity(FALSE)
-	flick("[initial(icon_state)]opening",src)
-	sleep(1 SECONDS)
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
@@ -124,8 +129,7 @@
 		return
 	isSwitchingStates = TRUE
 	playsound(src, closeSound, 100, TRUE)
-	flick("[initial(icon_state)]closing",src)
-	sleep(1 SECONDS)
+	sleep(0.8 SECONDS)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	door_opened = FALSE
@@ -135,7 +139,7 @@
 	isSwitchingStates = FALSE
 
 /obj/structure/mineral_door/update_icon_state()
-	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
+	icon_state = "[initial(icon_state)][door_opened ? "_open":""]"
 	return ..()
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
