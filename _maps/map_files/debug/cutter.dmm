@@ -794,6 +794,10 @@
 /obj/structure/sign/departments/medbay/alt/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
+"iV" = (
+/obj/machinery/flasher/directional/north,
+/turf/open/floor/wood,
+/area/misc/testroom)
 "iW" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
@@ -1750,7 +1754,7 @@
 /area/misc/testroom)
 "tv" = (
 /obj/machinery/keycard_auth/directional/north,
-/turf/open/floor/iron,
+/turf/open/floor/wood,
 /area/misc/testroom)
 "tx" = (
 /obj/structure/fluff/paper,
@@ -2226,6 +2230,10 @@
 /obj/machinery/door/airlock/command/glass,
 /turf/open/floor/iron,
 /area/misc/testroom)
+"yD" = (
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/wood,
+/area/misc/testroom)
 "yE" = (
 /turf/closed/wall/mineral/silver,
 /area/misc/testroom)
@@ -2292,6 +2300,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
+/area/misc/testroom)
+"zz" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/wood,
 /area/misc/testroom)
 "zA" = (
 /obj/structure/lattice/catwalk,
@@ -5110,7 +5122,7 @@ oL
 oL
 oL
 oL
-at
+oL
 at
 at
 at
@@ -5365,9 +5377,9 @@ oL
 hf
 Ft
 oL
-GB
+iV
+gC
 oL
-at
 at
 at
 at
@@ -5622,9 +5634,9 @@ oL
 mN
 Ft
 oL
-Ej
+yD
+gC
 oL
-at
 at
 at
 at
@@ -5879,9 +5891,9 @@ oL
 Ft
 Ft
 uK
-co
+gC
+gC
 oL
-at
 at
 at
 at
@@ -6137,8 +6149,8 @@ aV
 Ft
 oL
 tv
+gC
 oL
-at
 at
 at
 at
@@ -6393,9 +6405,9 @@ Rj
 Ft
 Ft
 oL
-ki
+zz
+gC
 oL
-at
 at
 at
 at
@@ -6650,9 +6662,9 @@ oL
 Lz
 Ft
 oL
-co
+gC
+gC
 oL
-at
 at
 at
 at
@@ -6909,7 +6921,7 @@ oL
 oL
 oL
 oL
-at
+oL
 at
 at
 at
