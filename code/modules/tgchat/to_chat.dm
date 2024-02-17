@@ -37,7 +37,10 @@
 
 	//Monkestation Edit: REPLAYS
 	if(!confidential)
-		SSdemo.write_chat(target, message)
+		if(html)
+			SSdemo.write_chat(target, html)
+		else
+			SSdemo.write_chat(target, message)
 	//Monkestation Edit: REPLAYS
 
 	// send it immediately
@@ -87,6 +90,9 @@
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
 
 	if(!confidential) //Monkestation Edit: REPLAYS
-		SSdemo.write_chat(target, message) //Monkestation Edit: REPLAYS
+		if(html)
+			SSdemo.write_chat(target, html)
+		else
+			SSdemo.write_chat(target, message) //Monkestation Edit: REPLAYS
 
 	SSchat.queue(target, message)
