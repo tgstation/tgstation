@@ -1,7 +1,4 @@
 /datum/deathmatch_lobby
-	/// The deathmatch controller
-	var/datum/deathmatch_controller/game
-
 	/// Ckey of the host
 	var/host
 	/// Assoc list of ckey to list()
@@ -27,13 +24,12 @@
 		stack_trace("Attempted to create a deathmatch lobby without a host.")
 		return qdel(src)
 	host = player.ckey
-	game = GLOB.deathmatch_game
-	map = game.maps[pick(game.maps)]
+	map = game.maps[pick(GLOB.deathmatch_game.maps)]
 	log_game("[host] created a deathmatch lobby.")
 	if (map.allowed_loadouts)
 		loadouts = map.allowed_loadouts
 	else
-		loadouts = game.loadouts
+		loadouts = GLOB.deathmatch_game.loadouts
 	add_player(player, loadouts[1], TRUE)
 	ui_interact(player)
 
@@ -62,13 +58,13 @@
 		playing = FALSE
 		return FALSE
 
-	if (!game.spawnpoint_processing.len)
+	if (!length(GLOB.deathmatch_game.spawnpoint_processing))
 		clear_reservation()
 		playing = FALSE
 		return FALSE
 
-	var/list/spawns = game.spawnpoint_processing.Copy()
-	game.spawnpoint_processing.Cut()
+	var/list/spawns = GLOB.deathmatch_game.spawnpoint_processing.Copy()
+	GLOB.deathmatch_game.spawnpoint_processing.Cut()
 	if (!length(spawns) || length(spawns) < length(players))
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
 		clear_reservation()
@@ -155,7 +151,7 @@
 		qdel(loser)
 
 	clear_reservation()
-	game.remove_lobby(host)
+	GLOB.deathmatch_game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")
 
 /datum/deathmatch_lobby/proc/player_died(mob/living/player, gibbed)
@@ -217,7 +213,7 @@
 	if (host == ckey)
 		var/total_count = players.len + observers.len
 		if (total_count <= 1) // <= just in case.
-			game.remove_lobby(host)
+			GLOB.deathmatch_game.remove_lobby(host)
 			return
 		else
 			if (players[ckey] && players.len <= 1)
@@ -234,7 +230,7 @@
 					host = key
 					players[key]["host"] = TRUE
 					break
-			game.passoff_lobby(ckey, host)
+			GLOB.deathmatch_game.passoff_lobby(ckey, host)
 	
 	remove_ckey_from_play(ckey)
 
@@ -256,9 +252,9 @@
 	player.forceMove(pick(location.reserved_turfs))
 
 /datum/deathmatch_lobby/proc/change_map(new_map)
-	if (!new_map || !game.maps[new_map])
+	if (!new_map || !GLOB.deathmatch_game.maps[new_map])
 		return
-	map = game.maps[new_map]
+	map = GLOB.deathmatch_game.maps[new_map]
 	var/max_players = map.max_players
 	for (var/possible_unlucky_loser in players)
 		max_players--
@@ -267,7 +263,7 @@
 			remove_ckey_from_play(possible_unlucky_loser)
 			add_observer(loser_mob)
 
-	loadouts = map.allowed_loadouts ? map.allowed_loadouts : game.loadouts
+	loadouts = map.allowed_loadouts ? map.allowed_loadouts : GLOB.deathmatch_game.loadouts
 	for (var/player_key in players)
 		if (players[player_key]["loadout"] in loadouts)
 			continue
@@ -300,7 +296,7 @@
 /datum/deathmatch_lobby/ui_static_data(mob/user)
 	. = list()
 	.["maps"] = list()
-	for (var/map_key in game.maps)
+	for (var/map_key in GLOB.deathmatch_game.maps)
 		.["maps"] += map_key
 
 /datum/deathmatch_lobby/ui_data(mob/user)
@@ -359,7 +355,7 @@
 				return FALSE
 			leave(usr.ckey)
 			ui.close()
-			game.ui_interact(usr)
+			GLOB.deathmatch_game.ui_interact(usr)
 			return TRUE
 		if ("change_loadout")
 			if (playing)
@@ -399,12 +395,12 @@
 					var/umob = get_mob_by_ckey(uckey)
 					var/datum/tgui/uui = SStgui.get_open_ui(umob, src)
 					uui?.close()
-					game.ui_interact(umob)
+					GLOB.deathmatch_game.ui_interact(umob)
 					return TRUE
 				if ("Transfer host")
 					if (host == uckey)
 						return FALSE
-					game.passoff_lobby(host, uckey)
+					GLOB.deathmatch_game.passoff_lobby(host, uckey)
 					host = uckey
 					return TRUE
 				if ("Toggle observe")
@@ -417,7 +413,7 @@
 						add_player(umob, loadouts[1], host == uckey)
 					return TRUE
 				if ("change_map")
-					if (!(params["map"] in game.maps))
+					if (!(params["map"] in GLOB.deathmatch_game.maps))
 						return FALSE
 					change_map(params["map"])
 					return TRUE
