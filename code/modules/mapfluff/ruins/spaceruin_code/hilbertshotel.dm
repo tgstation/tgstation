@@ -253,7 +253,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "hotel wall"
 	icon = 'icons/turf/walls/hotel_wall.dmi'
 	desc = "A wall designed to protect the security of the hotel's guests."
-	icon_state = "hotelwall"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
 	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
@@ -296,7 +295,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
 	icon = 'icons/turf/walls/hotel_door.dmi'
-	icon_state = "hoteldoor"
 	explosive_resistance = INFINITY
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
