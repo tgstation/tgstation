@@ -1576,7 +1576,8 @@
 		advanced actuators, feeling practically weightless when turned on. Scraping the paint of this suit is \
 		counted as a war-crime and reason for immediate execution in over fifty Nanotrasen space stations. \
 		The resemblance to a Gorlex Marauder helmet is purely coincidental. This is the newest V2 revision, which has \
-		reflective reinforced-plasmaglass shielding weaved with advanced kevlar fibers."
+		reflective reinforced-plasmaglass shielding weaved with advanced kevlar fibers. Sources say that some of the armor \
+		is ripped straight from an Apocryphal MODsuit."
 	default_skin = "corporate"
 	armor_type = /datum/armor/mod_theme_corporate
 	resistance_flags = FIRE_PROOF|ACID_PROOF
@@ -1621,8 +1622,8 @@
 /datum/armor/mod_theme_corporate
 	melee = 65
 	bullet = 65
-	laser = 60
-	energy = 60
+	laser = 55
+	energy = 50
 	bomb = 60
 	bio = 100
 	fire = 100
