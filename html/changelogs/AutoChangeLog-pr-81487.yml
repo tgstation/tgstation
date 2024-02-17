@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Indestructible items like the pai card don't teleport to the ore silo when you insert them into silo linked machine & also displays a message saying it was rejected."
