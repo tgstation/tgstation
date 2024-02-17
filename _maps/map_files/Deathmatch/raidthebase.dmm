@@ -469,9 +469,6 @@
 /turf/open/indestructible/rockyground,
 /area/deathmatch)
 "Oc" = (
-/obj/machinery/conveyor/auto{
-	dir = 8
-	},
 /obj/effect/mine/explosive,
 /turf/open/indestructible/plating,
 /area/deathmatch)
