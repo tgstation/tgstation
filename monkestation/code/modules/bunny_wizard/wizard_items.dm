@@ -40,7 +40,8 @@
 	worn_icon_state = "bunnywand"
 	inhand_icon_state = "bunnywand"
 	ammo_type = /obj/item/ammo_casing/magic/bunny
-	max_charges = 8 //8, 4, 4, 3
+	max_charges = 8
+	variable_charges = FALSE
 	can_charge = TRUE
 
 /obj/item/gun/magic/wand/bunny/zap_self(mob/living/carbon/human/user)
