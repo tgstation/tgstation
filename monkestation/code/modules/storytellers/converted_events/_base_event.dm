@@ -214,6 +214,8 @@
 	if(length(cliented_list))
 		mass_adjust_antag_rep(cliented_list, 1)
 
+	var/list/weighted_candidates = return_antag_rep_weight(possible_candidates)
+
 	while(length(possible_candidates) && length(candidates) < antag_count) //both of these pick_n_take from possible_candidates so this should be fine
 		if(prompted_picking)
 			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
@@ -221,16 +223,16 @@
 			if(picked_mob)
 				candidates |= poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, list(picked_mob))
 		else
-			candidates |= pick_n_take(possible_candidates)
+			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
+			var/mob/picked_mob = picked_client.mob
+			candidates |= picked_mob
 
-	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 	for(var/i in 1 to antag_count)
 		if(!length(weighted_candidates))
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
-		var/client/mob_client = pick_n_take_weighted(weighted_candidates)
-		var/mob/candidate = mob_client.mob
+		var/mob/candidate = pick_n_take(candidates)
 
 		candidate.client?.prefs.reset_antag_rep()
 
