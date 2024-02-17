@@ -466,11 +466,15 @@
 			balloon_alert(src, "remove [p_their()] mask first!")
 			return FALSE
 
+		if(HAS_TRAIT_FROM(src, TRAIT_NOBREATH, DISEASE_TRAIT))
+			to_chat(src, span_warning("you can't breathe!"))
+			return FALSE
+
 		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(human_lungs))
 			balloon_alert(src, "you have no lungs!")
 			return FALSE
-		if(human_lungs.failed)
+		if(human_lungs.organ_flags & ORGAN_FAILING)
 			balloon_alert(src, "your lungs are too damaged!")
 			return FALSE
 
