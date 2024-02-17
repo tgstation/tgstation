@@ -89,12 +89,10 @@
 	return ..()
 
 /obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(iscarbon(hit_atom))
+	if(iscarbon(hit_atom) && HAS_TRAIT(hit_atom, TRAIT_PAPER_MASTER))
 		var/mob/living/carbon/hit_carbon = hit_atom
 		if(hit_carbon.can_catch_item(TRUE))
-			var/datum/action/innate/origami/origami_action = locate() in hit_carbon.actions
-			if(origami_action && origami_action.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
-				hit_carbon.throw_mode_on(THROW_MODE_TOGGLE)
+			hit_carbon.throw_mode_on(THROW_MODE_TOGGLE)
 
 	. = ..()
 	if(. || !ishuman(hit_atom)) //if the plane is caught or it hits a nonhuman

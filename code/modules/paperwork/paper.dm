@@ -363,8 +363,7 @@
 	. = ..()
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
-	var/datum/action/innate/origami/origami_action = locate() in user.actions
-	if(origami_action?.active)
+	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
 		return make_plane(user, /obj/item/paperplane/syndicate)
 	return make_plane(user, /obj/item/paperplane)
 
