@@ -281,7 +281,7 @@ SUBSYSTEM_DEF(explosions)
 	epicenter = get_turf(epicenter)
 
 	var/area/checking = get_area(epicenter)
-	if((checking.area_flags & NO_EXPLOSIONS_DURING) && SSticker.current_state == GAME_STATE_PLAYING)
+	if(SEND_SIGNAL(checking, COMSIG_AREA_EXPLOSION_SHOCKWAVE) & COMSIG_CANCEL_EXPLOSION)
 		return
 
 	if(!epicenter)

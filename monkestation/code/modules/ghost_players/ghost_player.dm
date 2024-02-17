@@ -132,12 +132,16 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 			brain.temporary_sleep = TRUE
 
 	var/client/our_client = client || GLOB.directory[ckey]
-	var/mob/living/carbon/human/ghost/new_existance = new(key, mind, can_reenter_corpse, brain)
-	our_client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
-	new_existance.move_to_ghostspawn()
-	new_existance.key = key
-	new_existance.equipOutfit(/datum/outfit/job/assistant)
-	SSquirks.AssignQuirks(new_existance, our_client)
+	var/mob/living/carbon/human/ghost/new_existence = new(key, mind, can_reenter_corpse, brain)
+	our_client?.prefs.safe_transfer_prefs_to(new_existence, TRUE, FALSE)
+	new_existence.move_to_ghostspawn()
+	new_existence.key = key
+	new_existence.equip_outfit_and_loadout(/datum/outfit/ghost_player, our_client.prefs)
+	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(our_client?.prefs?.loadout_list))
+		if(length(item.restricted_roles))
+			continue
+		item.post_equip_item(our_client.prefs, new_existence)
+	SSquirks.AssignQuirks(new_existence, our_client)
 	our_client?.init_verbs()
 	qdel(src)
 	return TRUE

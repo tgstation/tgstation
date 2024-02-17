@@ -152,17 +152,19 @@
 	spawned_weapons += WEAKREF(one_weapon)
 	var/turf/one_spot = locate(148, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
 	player_one.forceMove(one_spot)
-	player_one.equipOutfit(/datum/outfit/job/assistant)
+	player_one.equipOutfit(/datum/outfit/ghost_player)
 	player_one.put_in_active_hand(one_weapon, TRUE)
 	player_one.dueling = TRUE
+	SEND_SIGNAL(player_one, COMSIG_HUMAN_BEGIN_DUEL)
 
 	var/obj/item/two_weapon = new weapon_of_choice(src)
 	spawned_weapons += WEAKREF(two_weapon)
 	var/turf/two_spot = locate(164, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
 	player_two.forceMove(two_spot)
-	player_two.equipOutfit(/datum/outfit/job/assistant)
+	player_two.equipOutfit(/datum/outfit/ghost_player)
 	player_two.put_in_active_hand(two_weapon, TRUE)
 	player_two.dueling = TRUE
+	SEND_SIGNAL(player_two, COMSIG_HUMAN_BEGIN_DUEL)
 
 /obj/structure/fight_button/proc/end_duel(mob/living/carbon/human/ghost/loser)
 	if(loser == player_one)
@@ -175,6 +177,8 @@
 	player_two.linked_button = null
 	player_one.dueling = FALSE
 	player_two.dueling = FALSE
+	SEND_SIGNAL(player_one, COMSIG_HUMAN_END_DUEL)
+	SEND_SIGNAL(player_two, COMSIG_HUMAN_END_DUEL)
 
 	player_one = null
 	player_two = null
