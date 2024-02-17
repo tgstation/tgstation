@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(!in_queue)
 		return
 
-	to_chat(owner, "Your request to play as [in_queue] has been approved.")
+	to_chat(owner, span_boldnicegreen("Your request to play as [in_queue] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been approved")
 	spend_antag_token(in_queued_tier, queued_donor)
 	if(!owner.mob.mind)
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(!in_queue)
 		return
 
-	to_chat(owner, "Your request to play as [in_queue] has been denied.")
+	to_chat(owner, span_boldwarning("Your request to play as [in_queue] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been denied.")
 	in_queue = null
 	in_queued_tier = null
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(!queued_token_event)
 		return
 
-	to_chat(owner, "Your request to trigger [queued_token_event] has been approved.")
+	to_chat(owner, span_boldnicegreen("Your request to trigger [queued_token_event] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been approved.")
 	adjust_event_tokens(-queued_token_event.token_cost)
 	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
@@ -167,6 +167,6 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(!queued_token_event)
 		return
 
-	to_chat(owner, "Your request to trigger [queued_token_event] has been denied.")
+	to_chat(owner, span_boldwarning("Your request to trigger [queued_token_event] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been denied.")
 	queued_token_event = null
