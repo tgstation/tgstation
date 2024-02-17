@@ -214,7 +214,7 @@
 	cutouts.appearance = applied_appearance
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc
-	SEND_SIGNAL(cutouts, COMSIG_CARDBOARD_CUTOUT_APPLY_APPEARANCE, src)
+	cutouts.update_appearance() //forces an update on the tactical comp's appearance.
 
 /datum/cardboard_cutout/assistant
 	name = "Assistant"

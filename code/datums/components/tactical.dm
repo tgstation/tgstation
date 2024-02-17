@@ -14,7 +14,7 @@
 /datum/component/tactical/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignals(parent, list(COMSIG_ATOM_UPDATED_ICON, COMSIG_CARDBOARD_CUTOUT_APPLY_APPEARANCE), PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(tactical_update))
 	var/obj/item/item = parent
 	if(ismob(item.loc))
 		var/mob/holder = item.loc
@@ -25,7 +25,6 @@
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ATOM_UPDATED_ICON,
-		COMSIG_CARDBOARD_CUTOUT_APPLY_APPEARANCE,
 	))
 	unmodify()
 

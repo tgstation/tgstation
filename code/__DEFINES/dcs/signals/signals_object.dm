@@ -488,9 +488,6 @@
 /// from /obj/machinery/mineral/ore_redemption/pickup_item when it successfully picks something up
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
 
-/// from /datum/cardboard_cutout/apply: (datum/cardboard_cutout)
-#define COMSIG_CARDBOARD_CUTOUT_APPLY_APPEARANCE "cardboard_cutout_apply_appearance"
-
 /// from /obj/plunger_act when an object is being plungered
 #define COMSIG_PLUNGER_ACT "plunger_act"
 
