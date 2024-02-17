@@ -115,7 +115,7 @@
 
 /// Helder to wipe the passed memory type ONLY from our list of memories
 /datum/mind/proc/wipe_memory_type(memory_type)
-	qdel(memories?[memory_type])
+	qdel(memories[memory_type])
 	memories -= memory_type
 
 /// Helper to create quick copies of all of our memories
