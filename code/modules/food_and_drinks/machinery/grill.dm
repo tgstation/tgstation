@@ -90,6 +90,10 @@
 			smoke.start()
 	if(grilled_item)
 		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick)
+		if(QDELETED(grilled_item))
+			grilled_item = null
+			finish_grill()
+			return
 		grill_time += seconds_per_tick
 		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * seconds_per_tick)
 		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * seconds_per_tick
