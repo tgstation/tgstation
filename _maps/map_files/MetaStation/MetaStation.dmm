@@ -56637,10 +56637,6 @@
 "uhI" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/obj/machinery/requests_console/directional/north{
-	department = "Security";
-	name = "Security Requests Console"
-	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "uhP" = (
