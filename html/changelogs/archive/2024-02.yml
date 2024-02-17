@@ -414,3 +414,78 @@
   - spellcheck: knit flesh chat messages are no longer gramatically incorrect
   vinylspiders:
   - bugfix: '*wag emote is now functional again'
+2024-02-15:
+  CandleJaxx and Iamgoofball:
+  - bugfix: Fixes Krav Maga allowing pacifism bypasses.
+  IndieanaJones:
+  - balance: Nightmare's Light Eater takes less time in jaunt to gain a critical strike,
+      being reduced to 7 seconds from 15 seconds.
+  K4rlox:
+  - balance: Maintenance drones now can use RPED, RCD, Holosign, and Spray bottles
+  LemonInTheDark:
+  - rscadd: AI's acceleration now smoothly decays, instead of just falling back down
+      to 0 after 0.5 seconds
+  - bugfix: AI's standard movement (non accelerated) is smooth now, instead of constantly
+      jumping around
+  - bugfix: AIs will now follow their targets more closely, shouldn't have any issues
+      with them lagging behind anymore
+  Melbert:
+  - bugfix: Valentines no longer see themselves covered in hearts. They only see their
+      Valentine covered in hearts.
+  - balance: Scientists have discovered Nuka Cola is not good for short term health.
+2024-02-16:
+  00-Steven:
+  - bugfix: Fixed the lizardperson spine preference dropdown not showing up in the
+      character menu.
+  Kylerace:
+  - admin: admins/maintainers can now make the profiler focus on specific subsystems
+      by setting the subsystem var profile_focused to TRUE
+  LemonInTheDark:
+  - refactor: Fucks with how movement keys are handled. Please report any bugs
+  WinterDarkraven:
+  - rscadd: In an attempt to stop the greytide, NanoTrasen has increased security's
+      baton energy output. This has, through testing, done nothing but make the device
+      spark more than it used to.
+2024-02-17:
+  00-Steven:
+  - bugfix: Space cats CAN into space. (They're back to surviving being in unsuitable
+      atmos.)
+  13spacemen:
+  - code_imp: Removed unused global lists and sprite accessories related to tail spines
+  - code_imp: removed redundant check for plasmamen in survival box code
+  Ghommie:
+  - rscadd: Added three new 'special' bedsheets. One of them is quite rare and made
+      from gondola hide.
+  IndieanaJones:
+  - bugfix: Tank spider corpses should no longer be conditionally invisible
+  - bugfix: Blob Zombies now render their blob heads correctly again.
+  MLGTASTICa:
+  - balance: Oxandrolone now scales with purity. Its default purity is 100%
+  - balance: Salicylic acid now scales with purity. Its default purity is 100%
+  Melbert:
+  - rscadd: Wizards have a new mobility option available, the Telegram Scepter. The
+      ability to travel anywhere you can see at the point of a wand... but at a price?
+  Sylphet:
+  - bugfix: cargo lockboxes update iconstates correctly now
+  SyncIt21:
+  - bugfix: Indestructible items like the pai card don't teleport to the ore silo
+      when you insert them into silo linked machine & also displays a message saying
+      it was rejected.
+  - qol: adds examines & screentips for ore box
+  - code_imp: cleans up some procs for ore box
+  - spellcheck: corrected description & ui notice of ore box to specify it can hold
+      boulders too
+  Thunder12345:
+  - qol: The bitrunning quantum console UI now lists domains in tabs by difficulty.
+  destrucktoid:
+  - bugfix: Restorative Nanites now heal Slimepeople just as well as they do other
+      people.
+  kawaiinick:
+  - rscadd: Your mouth now fits combat or survival knives(it's totally safe)
+  mc-oofert:
+  - balance: assemblybombs are bulky
+  - qol: you may altclick action buttons to bind them to a key
+  mogeoko:
+  - bugfix: Thermomachines now reconnect to pipes on multitool's act.
+  - bugfix: Multi-deck connectors won't connect pipes not located in front/top/bottom
+      of it.

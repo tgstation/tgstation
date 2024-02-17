@@ -9299,7 +9299,7 @@
 /area/station/maintenance/department/medical/central)
 "dBA" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/station/commons/dorms)
@@ -11067,7 +11067,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
@@ -19620,13 +19620,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/storage/fancy/candle_box,
 /obj/machinery/light_switch/directional/west,
+/obj/structure/rack/skeletal,
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "hei" = (
@@ -39807,7 +39803,7 @@
 /area/station/security/checkpoint/customs)
 "ohO" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/red,
 /area/station/commons/dorms)
@@ -70063,7 +70059,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
