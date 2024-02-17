@@ -113,7 +113,7 @@
 	heat_resistance = 1600
 	armor_type = /datum/armor/reinforced_shuttle
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE + SMOOTH_GROUP_SHUTTLE_PARTS
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
 	explosion_block = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
