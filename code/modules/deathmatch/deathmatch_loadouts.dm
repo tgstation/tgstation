@@ -22,13 +22,13 @@
 		new_ability.Grant(user)
 
 /datum/outfit/deathmatch_loadout/naked
-	name = "DM: Naked"
+	name = "Deathmatch: Naked"
 	display_name = "Unarmed, Butt-naked"
 	desc = "Naked man craves for bloodshed."
 	shoes = null
 
 /datum/outfit/deathmatch_loadout/assistant
-	name = "DM: Assistant loadout"
+	name = "Deathmatch: Assistant loadout"
 	display_name = "Assistant"
 	desc = "A simple assistant loadout: greyshirt and a toolbox"
 	
@@ -39,13 +39,13 @@
 	belt = /obj/item/flashlight
 
 /datum/outfit/deathmatch_loadout/assistant/weaponless
-	name = "DM: Assistant loadout (Weaponless)"
+	name = "Deathmatch: Assistant loadout (Weaponless)"
 	display_name = "Assistant (Unarmed)"
 	desc = "What is an assistant without a toolbox? nothing"
 	l_hand = null
 
 /datum/outfit/deathmatch_loadout/operative
-	name = "DM: Operative"
+	name = "Deathmatch: Operative"
 	display_name = "Operative"
 	desc = "A syndicate operative."
 	
@@ -56,7 +56,7 @@
 	id = /obj/item/card/id/advanced/chameleon
 
 /datum/outfit/deathmatch_loadout/operative/ranged
-	name = "DM: Ranged Operative"
+	name = "Deathmatch: Ranged Operative"
 	display_name = "Ranged Operative"
 	desc = "A syndicate operative with a gun and a knife."
 	
@@ -65,7 +65,7 @@
 	backpack_contents = list(/obj/item/ammo_box/magazine/m9mm = 5)
 
 /datum/outfit/deathmatch_loadout/operative/melee
-	name = "DM: Melee Operative"
+	name = "Deathmatch: Melee Operative"
 	display_name = "Melee Operative"
 	desc = "A syndicate operative with multiple knives."
 	
@@ -77,7 +77,7 @@
 	l_pocket = /obj/item/knife/combat
 
 /datum/outfit/deathmatch_loadout/securing_sec
-	name = "DM: SecOff"
+	name = "Deathmatch: Security Officer"
 	display_name = "Security Officer"
 	desc = "A security officer."
 	
@@ -104,7 +104,7 @@
 	l_hand = /obj/item/gun/energy/laser/instakill
 
 /datum/outfit/deathmatch_loadout/operative/sniper
-	name = "DM: Sniper"
+	name = "Deathmatch: Sniper"
 	display_name = "Sniper"
 	desc = "You know what do you need to do"
 	backpack_contents = list(
@@ -117,7 +117,7 @@
 	l_hand = /obj/item/gun/ballistic/rifle/sniper_rifle
 
 /datum/outfit/deathmatch_loadout/chef
-	name = "DM: Chef"
+	name = "Deathmatch: Chef"
 	display_name = "Chef"
 	desc = "He love pizza."
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
@@ -131,7 +131,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/samurai
-	name = "DM: Samurai"
+	name = "Deathmatch: Samurai"
 	display_name = "Samurai"
 	desc = "Bare-footed man craves to bloodshed."
 	l_hand = /obj/item/katana
@@ -140,7 +140,7 @@
 /// battlers
 
 /datum/outfit/deathmatch_loadout/battler
-	name = "DM: Battler Base"
+	name = "Deathmatch: Battler Base"
 	display_name = "Battler"
 	desc = "What is a battler whith out weapone?."
 	
@@ -151,7 +151,7 @@
 	id = /obj/item/card/id/advanced/chameleon
 
 /datum/outfit/deathmatch_loadout/battler/soldier
-	name = "DM: Soldier"
+	name = "Deathmatch: Soldier"
 	display_name = "Soldier"
 	desc = "Ready for combat."
 	
@@ -168,7 +168,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/druid
-	name = "DM: Druid"
+	name = "Deathmatch: Druid"
 	display_name = "Druid"
 	desc = "How can plants help you?"
 	species_override = /datum/species/pod
@@ -196,7 +196,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/northstar
-	name = "DM: North Star"
+	name = "Deathmatch: North Star"
 	display_name = "North Star"
 	desc = "flip flip flip"
 	
@@ -209,7 +209,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/janitor
-	name = "DM: Janitor"
+	name = "Deathmatch: Janitor"
 	display_name = "Janitor"
 	desc = "Regular work"
 	
@@ -226,7 +226,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/surgeon
-	name = "DM: Surgeon"
+	name = "Deathmatch: Surgeon"
 	display_name = "Surgeon"
 	desc = "Treatment has come"
 	
@@ -245,7 +245,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/raider
-	name = "DM: Raider"
+	name = "Deathmatch: Raider"
 	display_name = "Raider"
 	desc = "Not from Shadow Legends"
 	
@@ -282,7 +282,7 @@
 		)
 
 /datum/outfit/deathmatch_loadout/battler/tgcoder //tg doesnt stand for tgstation dont ask
-	name = "DM: Coder"
+	name = "Deathmatch: Coder"
 	display_name = "Coder"
 	desc = "What"
 	
@@ -296,7 +296,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/enginer
-	name = "DM: Engineer"
+	name = "Deathmatch: Engineer"
 	display_name = "Engineer"
 	desc = "Meet the engineer"
 	
@@ -308,7 +308,7 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/deathmatch_loadout/battler/scientist
-	name = "DM: Scientist"
+	name = "Deathmatch: Scientist"
 	display_name = "Scientist"
 	desc = "What a nerd"
 	
@@ -335,7 +335,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/bloodminer
-	name = "DM: Blood Miner"
+	name = "Deathmatch: Blood Miner"
 	display_name = "Blood Miner"
 	desc = "Rip and tear!!!"
 
@@ -350,7 +350,7 @@
 	)
 
 /datum/outfit/deathmatch_loadout/battler/ripper
-	name = "DM: Ripper"
+	name = "Deathmatch: Ripper"
 	display_name = "Ripper"
 	desc = "Die die die!!!"
 	
@@ -363,7 +363,7 @@
 	belt = /obj/item/melee/cleric_mace
 
 /datum/outfit/deathmatch_loadout/battler/cowboy
-	name = "DM: Cowboy"
+	name = "Deathmatch: Cowboy"
 	display_name = "Cowboy"
 	desc = "Yeehaw partner"
 	

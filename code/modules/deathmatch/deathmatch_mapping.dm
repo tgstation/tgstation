@@ -13,14 +13,12 @@
 
 /obj/effect/landmark/deathmatch_player_spawn/Initialize(mapload)
 	. = ..()
-	if (!GLOB.deathmatch_game)
+	if (isnull(GLOB.deathmatch_game))
 		return INITIALIZE_HINT_QDEL
-	var/datum/deathmatch_controller/deathmatch = GLOB.deathmatch_game
-	deathmatch.spawnpoint_processing += src
+	GLOB.deathmatch_game.spawnpoint_processing += src
 
 /obj/effect/landmark/deathmatch_player_spawn/Destroy()
 	. = ..()
 	if(isnull(GLOB.deathmatch_game))
 		return
-	var/datum/deathmatch_controller/deathmatch = GLOB.deathmatch_game
-	deathmatch.spawnpoint_processing -= src
+	GLOB.deathmatch_game.spawnpoint_processing -= src

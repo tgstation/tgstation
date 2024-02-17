@@ -61,7 +61,6 @@
 	game.ui_interact(usr)
 
 /datum/minigames_menu/proc/deathmatch()
-	var/datum/deathmatch_controller/game = GLOB.deathmatch_game
-	if(!game)
-		game = new
-	game.ui_interact(usr)
+	if(isnull(GLOB.deathmatch_game))
+		GLOB.deathmatch_game = new
+	GLOB.deathmatch_game.ui_interact(usr)
