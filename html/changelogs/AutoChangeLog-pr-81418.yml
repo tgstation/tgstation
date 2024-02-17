@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixed stamps not accounting for scroll offset. You can actually stamp paperwork properly without using accursed knowledge again."
-  - bugfix: "Fixed PDA messenger not scrolling to the bottom when a new message gets sent."

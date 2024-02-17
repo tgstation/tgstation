@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Fixes fancy lights not updating their source location when picked up and moved"

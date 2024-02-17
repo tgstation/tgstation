@@ -81,10 +81,14 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
+/datum/emote/carbon/human/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
+
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-
 	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
@@ -136,9 +140,9 @@
 	//I am so sorry my son
 	//We bypass helpers here cause we already have the tail
 	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
-		oranges_accessory.stop_wag(src)
+		oranges_accessory.stop_wag(user)
 	else
-		oranges_accessory.start_wag(src)
+		oranges_accessory.start_wag(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()

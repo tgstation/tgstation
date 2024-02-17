@@ -341,3 +341,151 @@
   - balance: Contractor kit no longer gets RNG items, it's a specific pool now
   mc-oofert:
   - rscadd: nanotrasen museum gateway map
+2024-02-13:
+  00-Steven:
+  - bugfix: Fixed stamps not accounting for scroll offset. You can actually stamp
+      paperwork properly without using accursed knowledge again.
+  - bugfix: Fixed PDA messenger not scrolling to the bottom when a new message gets
+      sent.
+  - bugfix: Paperwork should actually use the writing utensil's font, colour, and
+      boldness outside of input fields again.
+  LemonInTheDark:
+  - bugfix: Fixes fancy lights not updating their source location when picked up and
+      moved
+  Melbert:
+  - bugfix: You can once again see love on Valentines Day
+  MelokGleb and KREKS, McRamon, Ghommie:
+  - image: New sprites for changeling powers and items. Woooh.
+  Rex9001:
+  - balance: Smile of the moon's effects now last for longer and have a longer minimum
+      active time
+  - balance: Mark of moon detonations now do sanity damage
+  - qol: Ascended moon heretics and lunatics are now able to see who is and isn't
+      a lunatic.
+  - qol: People inside the ascended moon heretics sanity draining aura now gain an
+      effect under their tile.
+  Rhials:
+  - qol: Venus Human Traps are now visible in the orbit menu. Cool!
+  - bugfix: Spawning as a Venus Human Trap now properly gives you an antag datum/objective.
+  - bugfix: Venus human trap flowers no longer have a second, identical flower under
+      themselves.
+  - qol: Map hazard anomalies are no longer treated as points-of-interest in the orbit
+      menu.
+  Singul0:
+  - balance: Brainwashed individuals can no longer be debrainwashed through a mindshield
+      implant, they still protect you from brainwashing though! You just need to get
+      medical to fix them up.
+  - bugfix: You can now use bluespace launchpads from shuttles (except cargo and ferry
+      shuttles)
+  - bugfix: Fixes backwards engines in a few of centcom's ferries!
+  intercepti0n:
+  - bugfix: Separated logs list into pages in ore silo UI, thus fixing lag when logs
+      list grows too long.
+  siliconOpossum:
+  - bugfix: Getting blood on your hand when you only have one no longer makes your
+      hands visually permanently bloody
+  - bugfix: Holding bloodied gloves no longer makes your hands look bloody, bloodied
+      gloves now look bloody when worn, and damaged gloves now look damaged when worn
+  - bugfix: Gaining or losing an arm now correctly updates your hand overlays
+2024-02-14:
+  Absolucy:
+  - rscadd: Painkillers (i.e morphine, miner's salve) now actually induce analgesic
+      effects, preventing various pain-related effects, such as screaming due to pain,
+      and also provides a speed bonus during surgery.
+  - rscadd: The tenacity trauma (traumatic neuropathy) also applies analgesic effects.
+  - refactor: Simplified code related to reagents adding traits.
+  Aylong:
+  - rscadd: Added `Mute` button into `Chat Tabs` settings, it disables tab unread
+      counter
+  - rscadd: Added `Clear chat` button into `General` settings, you can clear your
+      dirty chat like you did it before TGchat
+  - bugfix: Case-sensitive highlighting now works properly
+  JohnFulpWillard:
+  - bugfix: Revenants (and other flying mobs) will not make noise when walking into
+      pools of gibs,
+  Rhials:
+  - spellcheck: Some space ruin area names have been made more distinct.
+  - bugfix: Ghost role polls should spam you less when multiple of the same roll occur
+      in succession.
+  ViktorKoL:
+  - bugfix: heretics no longer lose their spells when returning from a shapeshift
+  - bugfix: knit flesh now heals organs as intended, and does not cause its victims
+      to be red forever if interrupted
+  - spellcheck: knit flesh chat messages are no longer gramatically incorrect
+  vinylspiders:
+  - bugfix: '*wag emote is now functional again'
+2024-02-15:
+  CandleJaxx and Iamgoofball:
+  - bugfix: Fixes Krav Maga allowing pacifism bypasses.
+  IndieanaJones:
+  - balance: Nightmare's Light Eater takes less time in jaunt to gain a critical strike,
+      being reduced to 7 seconds from 15 seconds.
+  K4rlox:
+  - balance: Maintenance drones now can use RPED, RCD, Holosign, and Spray bottles
+  LemonInTheDark:
+  - rscadd: AI's acceleration now smoothly decays, instead of just falling back down
+      to 0 after 0.5 seconds
+  - bugfix: AI's standard movement (non accelerated) is smooth now, instead of constantly
+      jumping around
+  - bugfix: AIs will now follow their targets more closely, shouldn't have any issues
+      with them lagging behind anymore
+  Melbert:
+  - bugfix: Valentines no longer see themselves covered in hearts. They only see their
+      Valentine covered in hearts.
+  - balance: Scientists have discovered Nuka Cola is not good for short term health.
+2024-02-16:
+  00-Steven:
+  - bugfix: Fixed the lizardperson spine preference dropdown not showing up in the
+      character menu.
+  Kylerace:
+  - admin: admins/maintainers can now make the profiler focus on specific subsystems
+      by setting the subsystem var profile_focused to TRUE
+  LemonInTheDark:
+  - refactor: Fucks with how movement keys are handled. Please report any bugs
+  WinterDarkraven:
+  - rscadd: In an attempt to stop the greytide, NanoTrasen has increased security's
+      baton energy output. This has, through testing, done nothing but make the device
+      spark more than it used to.
+2024-02-17:
+  00-Steven:
+  - bugfix: Space cats CAN into space. (They're back to surviving being in unsuitable
+      atmos.)
+  13spacemen:
+  - code_imp: Removed unused global lists and sprite accessories related to tail spines
+  - code_imp: removed redundant check for plasmamen in survival box code
+  Ghommie:
+  - rscadd: Added three new 'special' bedsheets. One of them is quite rare and made
+      from gondola hide.
+  IndieanaJones:
+  - bugfix: Tank spider corpses should no longer be conditionally invisible
+  - bugfix: Blob Zombies now render their blob heads correctly again.
+  MLGTASTICa:
+  - balance: Oxandrolone now scales with purity. Its default purity is 100%
+  - balance: Salicylic acid now scales with purity. Its default purity is 100%
+  Melbert:
+  - rscadd: Wizards have a new mobility option available, the Telegram Scepter. The
+      ability to travel anywhere you can see at the point of a wand... but at a price?
+  Sylphet:
+  - bugfix: cargo lockboxes update iconstates correctly now
+  SyncIt21:
+  - bugfix: Indestructible items like the pai card don't teleport to the ore silo
+      when you insert them into silo linked machine & also displays a message saying
+      it was rejected.
+  - qol: adds examines & screentips for ore box
+  - code_imp: cleans up some procs for ore box
+  - spellcheck: corrected description & ui notice of ore box to specify it can hold
+      boulders too
+  Thunder12345:
+  - qol: The bitrunning quantum console UI now lists domains in tabs by difficulty.
+  destrucktoid:
+  - bugfix: Restorative Nanites now heal Slimepeople just as well as they do other
+      people.
+  kawaiinick:
+  - rscadd: Your mouth now fits combat or survival knives(it's totally safe)
+  mc-oofert:
+  - balance: assemblybombs are bulky
+  - qol: you may altclick action buttons to bind them to a key
+  mogeoko:
+  - bugfix: Thermomachines now reconnect to pipes on multitool's act.
+  - bugfix: Multi-deck connectors won't connect pipes not located in front/top/bottom
+      of it.

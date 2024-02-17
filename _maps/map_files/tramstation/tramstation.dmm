@@ -7399,7 +7399,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/west,
@@ -10153,7 +10153,7 @@
 /area/station/command/heads_quarters/captain)
 "cvg" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/north,
 /obj/item/pillow/random,
@@ -11368,7 +11368,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -14339,7 +14339,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/south,
@@ -22946,7 +22946,7 @@
 /obj/structure/bed{
 	dir = 8
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/structure/sign/clock/directional/east,
 /obj/item/pillow/random,
 /turf/open/floor/wood,
@@ -24807,7 +24807,7 @@
 /area/station/security/brig)
 "hRK" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/clock/directional/south,
 /obj/item/pillow/random,
@@ -26240,7 +26240,7 @@
 /area/station/hallway/secondary/entry)
 "iuJ" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/structure/sign/clock/directional/north,
 /obj/item/pillow/random,
 /turf/open/floor/carpet,
@@ -28780,7 +28780,7 @@
 /obj/structure/bed{
 	dir = 8
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/east,
 /obj/item/pillow/random,
@@ -36170,7 +36170,7 @@
 /obj/structure/bed{
 	dir = 8
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/east,
 /obj/item/pillow/random,
@@ -45357,7 +45357,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "pfm" = (
-/obj/item/bedsheet/dorms_double{
+/obj/effect/spawner/random/bedsheet/double{
 	dir = 4
 	},
 /obj/structure/bed/double{
@@ -59236,7 +59236,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/west,
@@ -59848,7 +59848,7 @@
 /obj/structure/bed{
 	dir = 8
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/structure/sign/clock/directional/east,
 /obj/item/pillow/random,
 /turf/open/floor/carpet,
@@ -60450,7 +60450,7 @@
 /area/station/hallway/secondary/command)
 "upb" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/clock/directional/north,
 /obj/item/pillow/random,
@@ -67481,7 +67481,7 @@
 /obj/structure/bed/double{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms_double{
+/obj/effect/spawner/random/bedsheet/double{
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/north,

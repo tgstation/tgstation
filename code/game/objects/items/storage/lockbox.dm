@@ -237,6 +237,8 @@
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
 	icon_state = "secure"
+	icon_closed = "secure"
+	icon_locked = "secure_locked"
 	icon_broken = "secure+b"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -265,8 +267,10 @@
 
 	if(privacy_lock)
 		atom_storage.locked = STORAGE_NOT_LOCKED
+		icon_state = icon_locked
 	else
 		atom_storage.locked = STORAGE_FULLY_LOCKED
+		icon_state = icon_closed
 	privacy_lock = atom_storage.locked
 	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
