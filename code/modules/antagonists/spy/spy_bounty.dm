@@ -394,7 +394,6 @@
 		/obj/machinery/vending/boozeomat,
 		/obj/machinery/vending/medical,
 		/obj/machinery/vending/wardrobe,
-		/obj/structure/bodycontainer/morgue,
 	)
 
 /datum/spy_bounty/machine/random/medium
