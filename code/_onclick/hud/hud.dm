@@ -634,6 +634,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/button_number = 0
 	for(var/atom/movable/screen/button as anything in actions)
+		if(!button)
+			continue
 		var/postion = ButtonNumberToScreenCoords(button_number )
 		button.screen_loc = postion
 		button_number++
