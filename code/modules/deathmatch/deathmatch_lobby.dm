@@ -24,7 +24,7 @@
 		stack_trace("Attempted to create a deathmatch lobby without a host.")
 		return qdel(src)
 	host = player.ckey
-	map = game.maps[pick(GLOB.deathmatch_game.maps)]
+	map = GLOB.deathmatch_game.maps[pick(GLOB.deathmatch_game.maps)]
 	log_game("[host] created a deathmatch lobby.")
 	if (map.allowed_loadouts)
 		loadouts = map.allowed_loadouts
