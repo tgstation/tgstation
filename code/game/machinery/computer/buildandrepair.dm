@@ -121,8 +121,10 @@
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
 					replacer.play_rped_sound()
+					if(replacer.works_from_distance)
+						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 					no_sound = TRUE
-				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)
+				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
 			return FALSE
 
@@ -132,7 +134,10 @@
 				return FALSE
 
 			if(add_glass(user, glass_sheets, time = 0))
-				replacer.play_rped_sound()
+				if(!no_sound)
+					replacer.play_rped_sound()
+					if(replacer.works_from_distance)
+						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 				return TRUE
 
 			return FALSE

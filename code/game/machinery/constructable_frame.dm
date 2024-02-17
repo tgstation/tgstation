@@ -180,6 +180,8 @@
 		install_parts_from_part_replacer(user, replacer, no_sound = TRUE)
 		if(!no_sound)
 			replacer.play_rped_sound()
+			if(replacer.works_from_distance)
+				user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 		return TRUE
 
 	return FALSE
@@ -353,6 +355,8 @@
 
 	if(play_sound && !no_sound)
 		replacer.play_rped_sound()
+		if(replacer.works_from_distance)
+			user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 	return TRUE
 
 /**
