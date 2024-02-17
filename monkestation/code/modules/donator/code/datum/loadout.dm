@@ -251,15 +251,19 @@
 	item_path = /obj/item/choice_beacon/pet/donator/plantcrab
 	donator_only = TRUE
 	requires_purchase = FALSE
-	ckeywhitelist = list("rickdude")
+	ckeywhitelist = list("Rickdude1231")
 
 /datum/loadout_item/effects/plantcrab
-	ckeywhitelist = list("rickdude")
+	ckeywhitelist = list("Rickdude1231")
 	name = "Plant Crab Transformation"
 	item_path = /obj/item/effect_granter/donator/plant_crab
 	requires_purchase = FALSE
 
-
+/datum/loadout_item/toys/liefflos
+	name = "Lief Flos Plush"
+	item_path = /obj/item/toy/plush/liefflos
+	donator_only = TRUE
+	requires_purchase = FALSE
 
 //kon chieko
 /datum/loadout_item/head/bells
