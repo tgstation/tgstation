@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	null, \
 	new/datum/stack_recipe("atmos canister", /obj/machinery/portable_atmospherics/canister, 10, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ATMOSPHERIC), \
+	new/datum/stack_recipe("pipe", /obj/item/pipe/quaternary/pipe/crafted, 1, time = 4 SECONDS, check_density = FALSE, category = CAT_ATMOSPHERIC), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60, category = CAT_MISC), \
