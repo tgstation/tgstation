@@ -72,7 +72,7 @@
 /obj/machinery/bouldertech/refinery/smelter/set_light_on(new_value)
 	if(panel_open || !anchored || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		new_value = FALSE
-	return ..(new_value)
+	return ..()
 
 /obj/machinery/bouldertech/refinery/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	. = ..()

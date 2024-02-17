@@ -8,7 +8,7 @@
 	var/uses = 3
 
 /obj/item/boulder_beacon/attack_self()
-	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
+	visible_message(span_warning("\The [src] begins to beep loudly!"))
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /**
