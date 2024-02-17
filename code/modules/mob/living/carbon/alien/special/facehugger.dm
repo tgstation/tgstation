@@ -2,8 +2,8 @@
 
 //TODO: Make these basic mobs
 
-#define MIN_IMPREGNATION_TIME 100 //time it takes to impregnate someone
-#define MAX_IMPREGNATION_TIME 150
+#define MIN_IMPREGNATION_TIME 25 //time it takes to impregnate someone
+#define MAX_IMPREGNATION_TIME 50
 
 #define MIN_ACTIVE_TIME 200 //time between being dropped and going idle
 #define MAX_ACTIVE_TIME 400
@@ -182,8 +182,9 @@
 
 	if(!sterile)
 		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
-		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
-
+		M.emote("scream")
+		M.Paralyze(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
+		
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
