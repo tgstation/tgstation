@@ -1,5 +1,3 @@
-GLOBAL_VAR(deathmatch_game)
-
 /datum/deathmatch_controller
 	/// Assoc list of all lobbies (ckey = lobby)
 	var/list/datum/deathmatch_lobby/lobbies = list()
