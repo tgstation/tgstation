@@ -474,7 +474,7 @@
 		if(isnull(human_lungs))
 			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
 			return FALSE
-		else if(human_lungs.failed)
+		if(human_lungs.failed)
 			to_chat(src, span_warning("Your lungs are too badly damaged to perform CPR!"))
 			return FALSE
 
