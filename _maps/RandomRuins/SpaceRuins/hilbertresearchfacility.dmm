@@ -349,7 +349,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jt" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jC" = (

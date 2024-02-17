@@ -440,6 +440,10 @@
 
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
+	
+	if(isitem(loc)) // we are in a storage item
+		balloon_alert(user, "can't reach!")
+		return
 
 	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
 		balloon_alert(user, "it's stuck!")
@@ -456,6 +460,7 @@
 	tank_assembly = assembly //Tell the tank about its assembly part
 	assembly.master = src //Tell the assembly about its new owner
 	assembly.on_attach()
+	w_class = WEIGHT_CLASS_BULKY
 
 	balloon_alert(user, "bomb assembled")
 	update_appearance(UPDATE_OVERLAYS)
@@ -469,6 +474,7 @@
 	user.put_in_hands(tank_assembly)
 	tank_assembly.master = null
 	tank_assembly = null
+	w_class = initial(w_class)
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Ignites the contents of the tank. Called when receiving a signal if the tank is welded and has an igniter attached.
