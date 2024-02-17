@@ -757,7 +757,7 @@
 	//when on a grill allow it to roast without deleting itself
 	if(istype(grill_source, /obj/machinery/grill))
 		grill_source.visible_message(span_notice("[parent] is grilled to perfection"))
-	else //when on a girddle allow it burn to a mouldy mess
+	else //when on a girddle allow it to burn into an mouldy mess
 		return ..()
 
 /obj/item/food/bbqribs/make_grillable()
