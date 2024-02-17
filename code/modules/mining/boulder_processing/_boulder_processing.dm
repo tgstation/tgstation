@@ -356,7 +356,6 @@
 	specific_boulder.processed_by = src //so we don't take in the boulder again after we just ejected it
 	specific_boulder.forceMove(drop_location())
 	specific_boulder.processed_by = null //now since move is done we can safely clear the reference
-
-	balloon_alert_to_viewers("clear!")
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+
 	return TRUE
