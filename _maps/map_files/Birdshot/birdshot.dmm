@@ -19620,13 +19620,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/storage/fancy/candle_box,
 /obj/machinery/light_switch/directional/west,
+/obj/structure/rack/skeletal,
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "hei" = (
