@@ -196,7 +196,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/smooth_structures/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
 	icon_state = MAP_SWITCH("window_reinforced-0", "fake_window")
 	base_icon_state = "window_reinforced"
 	opacity = FALSE
