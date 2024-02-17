@@ -263,7 +263,7 @@
 		wires_are_in = TRUE
 	else // wires are in, lets finish this up
 		var/obj/item/assembly/assembly = item
-		if(!istype(assembly) || !assembly.type in allowed_activators)
+		if(!istype(assembly) || (!assembly.type in allowed_activators))
 			return
 		if(assembly.secured)
 			balloon_alert(user, "unsecure assembly first!")
