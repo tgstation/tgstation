@@ -309,5 +309,13 @@
 /datum/loadout_item/effects/void_butterfly
 	ckeywhitelist = list("tonymcsp")
 	name = "Void Butterfly Transformation"
-	item_path = /obj/item/effect_granter/donator/void_butterfly/
+	item_path = /obj/item/effect_granter/donator/void_butterfly
+	requires_purchase = FALSE
+
+
+Django
+/datum/loadout_item/suit/lambcloak
+	name = "Lamb's Cloak"
+	item_path = /obj/item/clothing/suit/lambcloak
+	donator_only = TRUE
 	requires_purchase = FALSE

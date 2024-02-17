@@ -243,3 +243,14 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
+
+/obj/item/clothing/suit/lambcloak
+	name = "lamb's cloak"
+	desc = "A brilliant red cloak adorned with a bell."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "lambcloak"
+	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
+	layer = NECK_LAYER
+
