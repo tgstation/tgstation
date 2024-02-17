@@ -313,7 +313,7 @@
 	requires_purchase = FALSE
 
 
-Django
+//Django
 /datum/loadout_item/suit/lambcloak
 	name = "Lamb's Cloak"
 	item_path = /obj/item/clothing/suit/lambcloak
