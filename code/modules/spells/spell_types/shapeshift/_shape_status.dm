@@ -190,6 +190,10 @@
 	if(!QDELETED(source_spell) && source_spell.owner == owner)
 		source_spell.Grant(caster_mob)
 
+	// Prevent round removal by consuming stuff when shapeshifted
+	for(var/atom/movable/thing as anything in owner.contents)
+		thing.forceMove(get_turf(owner))
+
 	for(var/datum/action/bodybound_action as anything in owner.actions)
 		if(bodybound_action.target != caster_mob)
 			continue
