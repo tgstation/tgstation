@@ -827,6 +827,7 @@
 
 /obj/structure/rack/skeletal
 	name = "skeletal minibar"
+	desc = "Rattle me boozes!"
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
 
