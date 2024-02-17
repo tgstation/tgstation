@@ -144,8 +144,9 @@
 		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] seems stuck to your hand!"))
 		return FALSE
 
-	handler.all_claimed_bounty_types[stealing.type] += 1
-	handler.claimed_bounties_from_last_pool[stealing.type] = TRUE
+	var/bounty_key = bounty.get_dupe_protection_key(stealing)
+	handler.all_claimed_bounty_types[bounty_key] += 1
+	handler.claimed_bounties_from_last_pool[bounty_key] = TRUE
 
 	bounty.clean_up_stolen_item(stealing, spy, handler)
 	bounty.claimed = TRUE

@@ -10,9 +10,11 @@
 	var/refresh_timer
 	/// Number of times we have refreshed bounties
 	var/num_refreshes = 0
-	/// Assoc list of item typepaths stolen in the past to how many times they have been stolen
+	/// Assoc list of items stolen in the past to how many times they have been stolen
+	/// Sometimes item typepaths, sometimes REFs, in general just strings that represent stolen items
 	var/list/all_claimed_bounty_types = list()
-	/// Typecache of all typepaths of items stolen in the last pool of bounties.
+	/// List of all items stolen in the last pool of bounties.
+	/// Same as above - strings that represent stolen items.
 	var/list/claimed_bounties_from_last_pool = list()
 
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.

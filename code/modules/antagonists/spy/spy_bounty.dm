@@ -92,6 +92,36 @@
 	return FALSE
 
 /**
+ * What is this bounty's "dupe protection key"?
+ * This is used to determine if a duplicate of this bounty has been rolled before / in the last refresh.
+ * You can check if a bounty has been duped by accessing the handler's claimed_bounties_from_last_pool or all_claimed_bounty_types list.
+ *
+ * * stealing - The item that was stolen.
+ * * handler - The handler that is handling the bounty.
+ *
+ * Return a string key, what this uses for dupe protection.
+ */
+/datum/spy_bounty/proc/get_dupe_protection_key(atom/movable/stealing)
+	return stealing.type
+
+/**
+ * Checks if the passed dupe key is a duplicate of an previously claimed bounty.
+ *
+ * * handler - The handler that is handling the bounty.
+ * * dupe_key - The key to check for dupes
+ * * dupe_prob - The probability of a dupe being allowed when checking all_claimed_bounty_types.
+ * This allows you to have a chance that distant dupes allowed depending on how many times they've been done.
+ *
+ * Returns TRUE if the bounty is a dupe, FALSE if it is not.
+ */
+/datum/spy_bounty/proc/check_dupe(datum/spy_bounty_handler/handler, dupe_key, dupe_prob = 0)
+	if(handler.claimed_bounties_from_last_pool[dupe_key])
+		return TRUE
+	if(prob(dupe_prob * handler.all_claimed_bounty_types[dupe_key]))
+		return TRUE
+	return FALSE
+
+/**
  * Called when the bounty is completed, to handle how the stolen item is "stolen".
  *
  * By default, stolen items are simply deleted.
@@ -163,6 +193,9 @@
 /datum/spy_bounty/objective_item/can_claim(mob/user)
 	return !(user.mind?.assigned_role.title in desired_item.excludefromjob)
 
+/datum/spy_bounty/objective_item/get_dupe_protection_key(atom/movable/stealing)
+	return desired_item.targetitem
+
 /// Determines if the passed objective item is a reasonable, valid theft target.
 /datum/spy_bounty/objective_item/proc/is_valid_objective_item(datum/objective_item/item)
 	if(length(item.special_equipment) || item.difficulty <= 0 || item.difficulty >= 6)
@@ -186,13 +219,9 @@
 /datum/spy_bounty/objective_item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
+		if(check_dupe(handler, item.targetitem, 33))
+			continue
 		if(!is_valid_objective_item(item))
-			continue
-		// Skip bounties we JUST did in the last loot pool
-		if(handler.claimed_bounties_from_last_pool[item.targetitem])
-			continue
-		// Also % chance to skip stuff we've done in the past
-		if(prob(33 * handler.all_claimed_bounty_types[item.targetitem]))
 			continue
 		// Determine difficulty. Has some overlap between the categories, which is OK
 		switch(difficulty)
@@ -252,6 +281,9 @@
 /datum/spy_bounty/machine/Destroy()
 	original_options_weakrefs.Cut() // Just in case
 	return ..()
+
+/datum/spy_bounty/machine/get_dupe_protection_key(atom/movable/stealing)
+	return target_type
 
 /datum/spy_bounty/machine/send_to_black_market(obj/machinery/thing)
 	if(!istype(thing.circuit, /obj/item/circuitboard))
@@ -336,7 +368,7 @@
 		options -= existing_bounty.target_type
 
 	for(var/remaining_option in options)
-		if(handler.claimed_bounties_from_last_pool[remaining_option] || prob(33 * handler.all_claimed_bounty_types[remaining_option]))
+		if(check_dupe(handler, remaining_option, 33))
 			options -= remaining_option
 
 	if(!length(options))
@@ -417,6 +449,10 @@
 	/// Weakref to the mob target of the bounty
 	VAR_FINAL/datum/weakref/target_ref
 
+/datum/spy_bounty/targets_person/get_dupe_protection_key(atom/movable/stealing)
+	// Prevents the same player from being selected twice, but if they're straight up gone, whatever
+	return REF(target_ref.resolve() || stealing)
+
 /datum/spy_bounty/targets_person/can_claim(mob/user)
 	return !IS_WEAKREF_OF(user, target_ref)
 
@@ -426,6 +462,8 @@
 		var/mob/living/real_target = crew_mind.current
 		// Ideally we want it to be a player, but we don't care if they DC after being selected
 		if(!istype(real_target) || isnull(GET_CLIENT(real_target)))
+			continue
+		if(check_dupe(handler, REF(real_target), 50))
 			continue
 		if(!is_valid_crewmember(real_target))
 			continue
@@ -583,6 +621,9 @@
 	var/mob/living/simple_animal/bot/bot_type
 	/// Weakref to the bot we want to steal.
 	VAR_FINAL/datum/weakref/target_bot_ref
+
+/datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
+	return bot_type
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
