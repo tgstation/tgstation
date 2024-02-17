@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	thing.smoothing_flags |= SMOOTH_QUEUED
 	// If we're currently locked into mapload BY something
 	// Then put us in a deferred list that we release when this mapload run is finished
-	if(initialized && length(SSatoms.initialized_state))
+	if(initialized && length(SSatoms.initialized_state) && SSatoms.initialized == INITIALIZATION_INNEW_MAPLOAD)
 		var/source = SSatoms.get_initialized_source()
 		LAZYADD(deferred_by_source[source], thing)
 		return
