@@ -63,7 +63,6 @@ BUNNY EARS
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
 	icon_state = "playbunny_ears"
-	clothing_flags = LARGE_WORN_ICON
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/playbunnyears
 	greyscale_config_worn = /datum/greyscale_config/playbunnyears_worn
@@ -73,7 +72,7 @@ BUNNY EARS
 	name = "blood-red bunny ears headband"
 	desc = "An unusually suspicious pair of bunny ears attached to a headband. The headband looks reinforced with plasteel... but why?"
 	icon_state = "syndibunny_ears"
-	clothing_flags = SNUG_FIT | LARGE_WORN_ICON
+	clothing_flags = SNUG_FIT
 	armor_type = /datum/armor/playbunnyears_syndicate
 	greyscale_colors = null
 	greyscale_config = null
