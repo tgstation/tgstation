@@ -55,10 +55,6 @@
 
 	// You can't drill harder by clicking more.
 	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
-		// Check if we can even use the equipment to begin with.
-		if(!action_checks(target))
-			return
-
 		target.visible_message(span_warning("[chassis] starts to drill [target]."), \
 					span_userdanger("[chassis] starts to drill [target]..."), \
 					span_hear("You hear drilling."))
@@ -67,8 +63,13 @@
 
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
+			// Check if we can even use the equipment to begin with.
+			if(!action_checks(target))
+				return
+
 			var/turf/T = target
 			T.drill_act(src, source)
+
 			return ..()
 
 		// Drilling objects and mobs is a repeating procedure.
