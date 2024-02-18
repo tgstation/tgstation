@@ -49,7 +49,7 @@
 	var/datum/mind/mind = source
 	var/datum/brain_trauma/magic/stalker/T = new()
 	if(isliving(mind.current))
-		var/mob/living/carbon/human/current_human = current_human
+		var/mob/living/carbon/human/current_human = mind.current
 		if(!ishuman(current_human))
 			return
 		current_human.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
