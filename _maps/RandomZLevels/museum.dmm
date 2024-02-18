@@ -5620,7 +5620,7 @@
 /area/awaymission/museum)
 "Vb" = (
 /obj/effect/replica_spawner{
-	obvious_replica = FALSE;
+	obvious_replica = 0;
 	pixel_y = 30;
 	target_path = /obj/structure/sign/painting/eldritch/weeping
 	},
