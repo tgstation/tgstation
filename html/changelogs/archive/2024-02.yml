@@ -170,3 +170,7 @@
       instead they are stripped in the wizard den
   TTNT789:
   - rscadd: beast claw
+2024-02-18:
+  Absolucy:
+  - qol: Chat messages relating to antag/event token submissions are now properly
+      formatted.

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Chat messages relating to antag/event token submissions are now properly formatted."
