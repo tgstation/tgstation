@@ -48,7 +48,7 @@ export const ChallengeSelector = (_props, context) => {
                   <ItemListEntry
                     key={name}
                     buttonName={
-                      selected_challenges.indexOf(path) ? 'Add' : 'Remove'
+                      selected_challenges.includes(path) ? 'Remove' : 'Add'
                     }
                     product={purchase}
                     onClick={() => act('select_challenge', { path })}
