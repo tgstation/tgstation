@@ -252,7 +252,7 @@
 /datum/supply_pack/goody/naturalbait
 	name = "Freshness Jars full of Natural Bait"
 	desc = "Homemade in the Spinward Sector."
-	cost = PAYCHECK_CREW * 5 //rock on
+	cost = PAYCHECK_CREW * 4 //rock on
 	contains = list(/obj/item/storage/pill_bottle/naturalbait)
 
 /datum/supply_pack/goody/telescopic_fishing_rod
