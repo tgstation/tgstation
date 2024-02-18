@@ -308,7 +308,7 @@
  * Arguments
  *
  * * amount - the amount to remove
- * * relative - should amount be treated as an percentage between 0->1 instead like an direct amount
+ * * relative - if TRUE amount is treated as an percentage between 0->1. If FALSE amount is the direct volume to remove
  */
 /datum/reagents/proc/remove_all(amount = 1, relative = FALSE)
 	if(!total_volume)
@@ -317,7 +317,7 @@
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to remove all reagents [amount]")
 		return FALSE
-	if(relative && (amount <=0 || amount > 1))
+	if(relative && (amount < 0 || amount > 1))
 		stack_trace("illegal percentage value passed to remove all reagents [amount]")
 		return FALSE
 
