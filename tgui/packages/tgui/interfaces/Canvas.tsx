@@ -7,7 +7,6 @@ import { Box, Button, Flex, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;
-const MAX_ZOOM = 3;
 
 type PaintCanvasProps = Partial<{
   onCanvasModifiedHandler: (data: PointData[]) => void;
