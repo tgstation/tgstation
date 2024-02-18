@@ -632,13 +632,14 @@
 
 /obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core/legion) && holds_reagents)
-		visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
-		var/mob/living/carbon/wearer = loc
-		playsound(wearer, 'sound/effects/attackblob.ogg', 60, TRUE)
-		wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
-		wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
-		qdel(attacking_item)
+	if(!istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core/legion) || !holds_reagents)
+		return
+	visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
+	var/mob/living/carbon/wearer = loc
+	playsound(wearer, 'sound/effects/attackblob.ogg', 60, TRUE)
+	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
+	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
+	qdel(attacking_item)
 
 
 /datum/action/cooldown/hivehead_spawn_minions
@@ -655,6 +656,12 @@
 	var/spawn_count = 6
 	///How long our summoned mobs last for
 	var/spawn_lifespan = 25 SECONDS
+
+/datum/action/cooldown/hivehead_spawn_minions/PreActivate(atom/target)
+	if(owner.movement_type & VENTCRAWLING)
+		owner.balloon_alert(owner, "unavailable here")
+		return
+	. = ..()
 
 /datum/action/cooldown/hivehead_spawn_minions/Activate(atom/target)
 	. = ..()
