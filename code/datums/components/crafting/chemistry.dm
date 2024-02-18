@@ -1,11 +1,12 @@
 /datum/crafting_recipe/improv_explosive
 	name = "Improvised Explosive"
 	result = /obj/item/grenade/iedcasing/spawned
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
 	reqs = list(
 		/datum/reagent/fuel = 20,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/assembly/timer = 1,
-		/obj/item/stack/sheet/iron = 1,
+		/obj/item/pipe/quaternary/pipe = 1,
 	)
 	time = 6 SECONDS
 	category = CAT_CHEMISTRY
