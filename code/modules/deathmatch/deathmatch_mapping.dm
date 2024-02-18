@@ -10,15 +10,3 @@
 
 /obj/effect/landmark/deathmatch_player_spawn
 	name = "Deathmatch Player Spawner"
-
-/obj/effect/landmark/deathmatch_player_spawn/Initialize(mapload)
-	. = ..()
-	if (isnull(GLOB.deathmatch_game))
-		return INITIALIZE_HINT_QDEL
-	GLOB.deathmatch_game.spawnpoint_processing += src
-
-/obj/effect/landmark/deathmatch_player_spawn/Destroy()
-	. = ..()
-	if(isnull(GLOB.deathmatch_game))
-		return
-	GLOB.deathmatch_game.spawnpoint_processing -= src
