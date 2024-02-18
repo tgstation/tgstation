@@ -41,25 +41,42 @@
 	. = ..()
 	update_appearance()
 
-/obj/structure/grille/update_appearance(updates)
-	..()
-	if(QDELETED(src) || broken)
+/obj/structure/grille/update_icon(updates=ALL)
+	. = ..()
+	if(QDELETED(src))
 		return
 
-/obj/structure/grille/update_icon()
-	..()
-	if(QDELETED(src) || broken)
-		return
+	var/old_icon = icon
 	var/ratio = atom_integrity / max_integrity
-
-	if(ratio <= 0.5)
-		base_icon_state = "grille-d50"
+	if(ratio <= 0.7)
+		icon = 'icons/obj/smooth_structures/grille_damaged.dmi'
+		base_icon_state = "grille_damaged"
 	else
+		icon = 'icons/obj/smooth_structures/grille.dmi'
 		base_icon_state = "grille"
 
-	//WALLENDING TODO: this causes smoothing loops or so I'm told, fix that
-	//if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
-	//	QUEUE_SMOOTH(src)
+	var/old_smoothing_flags = smoothing_flags
+	if(broken)
+		icon = 'icons/obj/smooth_structures/tall_structure_variations.dmi'
+		icon_state = "grille-broken"
+		base_icon_state = "grille-broken"
+		smoothing_flags = NONE
+		smoothing_groups = null
+		canSmoothWith = null
+	else
+		smoothing_flags = initial(smoothing_flags)
+		smoothing_groups = initial(smoothing_groups)
+		canSmoothWith = initial(canSmoothWith)
+		SETUP_SMOOTHING()
+
+	if(!(updates & UPDATE_SMOOTHING))
+		return
+	if(old_smoothing_flags == smoothing_flags && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+		if(old_icon != icon)
+			QUEUE_SMOOTH(src)
+		return
+	// If our flags changed, update EVERYBODY
+	QUEUE_SMOOTH_NEIGHBORS(src) // Update our neighbors about our changes
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
@@ -319,21 +336,21 @@
 /obj/structure/grille/atom_break()
 	. = ..()
 	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
-		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
 		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(dropped_rods)
+		update_appearance()
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
-		icon_state = "grille"
 		set_density(TRUE)
 		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
+		update_appearance()
 		return TRUE
 	return FALSE
 
@@ -394,6 +411,8 @@
 	broken = TRUE
 	rods_amount = 1
 	smoothing_flags = null
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()

@@ -175,7 +175,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/smooth_structures/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
 	icon_state = MAP_SWITCH("window_reinforced-0", "fake_window")
 	base_icon_state = "window_reinforced"
 	opacity = FALSE
@@ -186,8 +186,17 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/fakeglass/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/window_smoothing, /turf/closed/indestructible/fakeglass)
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01) //add a grille underlay
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02) //add the plating underlay, below the grille
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", offset_spokesman = src, plane = FLOOR_PLANE)
+
+/turf/closed/indestructible/fakeglass/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
+
+/turf/closed/indestructible/fakeglass/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]")
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", offset_spokesman = src, plane = OVER_TILE_PLANE)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
@@ -199,9 +208,18 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/window_smoothing, /turf/closed/indestructible/fakeglass)
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01)
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02)
+	AddComponent(/datum/component/window_smoothing, /turf/closed/indestructible/opsglass)
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", offset_spokesman = src, plane = FLOOR_PLANE)
+
+/turf/closed/indestructible/opsglass/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
+
+/turf/closed/indestructible/opsglass/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]")
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", offset_spokesman = src, plane = OVER_TILE_PLANE)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"

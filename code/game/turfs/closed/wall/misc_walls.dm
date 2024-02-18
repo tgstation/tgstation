@@ -56,9 +56,6 @@
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
-	//SDMM supports colors, this is simply for easier mapping
-	//and should be removed on initialize
-	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
 	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
@@ -80,7 +77,7 @@
 /turf/closed/wall/rock
 	name = "reinforced rock"
 	desc = "It has metal struts that need to be welded away before it can be mined."
-// wallening todo	icon = 'icons/turf/walls/reinforced_rock.dmi'
+	icon = 'icons/turf/walls/reinforced_red_rock_wall.dmi'
 	turf_flags = NO_RUST
 	sheet_amount = 1
 	hardness = 50
