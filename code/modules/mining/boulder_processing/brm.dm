@@ -242,6 +242,8 @@
  * * boulders_remaining - how many boulders we want to try & collect spawning a boulder every TELEPORTATION_TIME seconds
  */
 /obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1)
+	PRIVATE_PROC(TRUE)
+
 	batch_processing = TRUE
 
 	//not within operation parameters
