@@ -3147,7 +3147,6 @@
 /obj/structure/transport/linear/tram/slow,
 /obj/structure/thermoplastic,
 /obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
-/obj/effect/spawner/random/maintenance/five,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Cc" = (
