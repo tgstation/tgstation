@@ -106,7 +106,7 @@
 	if(density)
 		layer = closingLayer
 
-/obj/machinery/door/firedoor/LateInitialize()
+/obj/machinery/door/firedoor/LateInitialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
@@ -115,6 +115,9 @@
 
 	if(alarm_type) // Fucking subtypes fucking mappers fucking hhhhhhhh
 		start_activation_process(alarm_type)
+
+	if(mapload)
+		auto_align()
 
 /**
  * Sets the offset for the warning lights.
