@@ -159,7 +159,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
-	set_disabled(disrupt_duration)
+	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
 	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/porta_turret/proc/check_should_process()
