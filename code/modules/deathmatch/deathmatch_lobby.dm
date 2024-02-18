@@ -54,23 +54,22 @@
 		return
 	playing = TRUE
 
-	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns))
+	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
 		playing = FALSE
 		UnregisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED)
 		return FALSE
-	
-	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
 
-/datum/deathmatch_lobby/proc/find_spawns(datum/lazy_template/source, list/atoms)
+/datum/deathmatch_lobby/proc/find_spawns_and_start_delay(datum/lazy_template/source, list/atoms)
 	SIGNAL_HANDLER
 	for(var/thing in atoms)
 		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn)) 
 			player_spawns += thing
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
+	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
 	if (!length(player_spawns) || length(player_spawns) < length(players))
