@@ -1060,6 +1060,14 @@
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
 
+				// Edit START (secondary color)
+
+				if(overlay.get_extended_overlay(external_layer, src)) // MASSMETA EDIT
+					for(var/mutable_appearance/item as anything in overlay.get_extended_overlay(external_layer, src))
+						. += item
+
+				// Edit END
+
 	return .
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk, draw_blood = TRUE)
