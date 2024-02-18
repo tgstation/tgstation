@@ -33,6 +33,10 @@
 
 	new_replica.name = "[appearance_object.name][obvious_replica ? " replica" : ""]"
 	new_replica.desc = "[appearance_object.desc][obvious_replica ? " ..except this one is a replica.": ""]"
+
+	new_replica.pixel_y = pixel_y
+	new_replica.pixel_x = pixel_x
+
 	qdel(appearance_object)
 	qdel(src)
 	return INITIALIZE_HINT_QDEL
@@ -194,20 +198,3 @@
 	destination.contents += src
 
 #undef CAFE_KEYCARD_TOILETS
-
-/obj/item/paper/fluff/museum/numbers
-	name = "deranged note"
-	icon_state = "scrap"
-
-/obj/item/paper/fluff/museum/numbers/Initialize(mapload)
-	. = ..()
-	if(mapload)
-		SSqueuelinks.add_to_queue(src, "museum_r_wing_puzzle")
-
-/obj/item/paper/fluff/museum/numbers/MatchedLinks(id, partners)
-	var/obj/machinery/puzzle/password/pin/pad = locate() in partners
-	var/the_numbers_what_do_they_mean = ""
-	var/list/pass_digits = splittext(pad.password, "")
-	for(var/i in 1 to rand(50, 60))
-		the_numbers_what_do_they_mean += pick(pass_digits)
-	add_raw_text(the_numbers_what_do_they_mean)

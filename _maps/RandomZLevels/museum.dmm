@@ -1242,7 +1242,9 @@
 	dir = 9
 	},
 /obj/item/reagent_containers/cup/glass/coffee,
-/obj/item/paper/fluff/museum/numbers,
+/obj/item/paper/fluff/scrambled_pass{
+	puzzle_id = "museum_r_wing_puzzle"
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "jU" = (
@@ -5618,6 +5620,7 @@
 /area/awaymission/museum)
 "Vb" = (
 /obj/effect/replica_spawner{
+	obvious_replica = FALSE;
 	pixel_y = 30;
 	target_path = /obj/structure/sign/painting/eldritch/weeping
 	},

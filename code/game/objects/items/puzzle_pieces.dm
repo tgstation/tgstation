@@ -386,7 +386,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/pass_input = tgui_input_text(user, tgui_text, tgui_title, max_length = input_max_len_is_pass ? length(password) : MAX_NAME_LEN)
-	if(!isnull(pass_input) || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
+	if(isnull(pass_input) || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/correct = pass_input == password
 	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
@@ -523,8 +523,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 			openclose = door.density
 		INVOKE_ASYNC(door, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
-#define MAX_PUZZLE_DOTS_PER_ROW 6
-#define PUZZLE_DOTS_VERTICAL_OFFSET 5
+#define MAX_PUZZLE_DOTS_PER_ROW 4
+#define PUZZLE_DOTS_VERTICAL_OFFSET 7
+#define PUZZLE_DOTS_HORIZONTAL_OFFSET 7
 
 ///A dotted board that can be used as clue for PIN puzzle machinery
 /obj/effect/decal/puzzle_dots
@@ -557,12 +558,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	for(var/i in 1 to pass_len)
 		var/mutable_appearance/colored_dot = mutable_appearance(icon, "puzzle_dot_single")
 		colored_dot.color = pad.digit_to_color[pass_digits[i]]
-		colored_dot.pixel_x = 4 * (i-1)
+		colored_dot.pixel_x = PUZZLE_DOTS_HORIZONTAL_OFFSET * ((i-1)%MAX_PUZZLE_DOTS_PER_ROW)
 		colored_dot.pixel_y -= CEILING((i/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)*PUZZLE_DOTS_VERTICAL_OFFSET
 		add_overlay(colored_dot)
 
 #undef MAX_PUZZLE_DOTS_PER_ROW
 #undef PUZZLE_DOTS_VERTICAL_OFFSET
+#undef PUZZLE_DOTS_HORIZONTAL_OFFSET
+
 
 /obj/effect/decal/cleanable/crayon/puzzle
 	name = "graffiti that's clue to a puzzle"
@@ -579,7 +582,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 /obj/effect/decal/cleanable/crayon/puzzle/MatchedLinks(id, partners)
 	var/obj/machinery/puzzle/password/pad = locate() in partners
 	var/list/pass_character = splittext(pad.password, "")
-	if(!findtext(pass_character, GLOB.is_alphanumeric))
+	var/chosen_character = icon_state
+	if(!findtext(chosen_character, GLOB.is_alphanumeric))
 		qdel(src)
 		return FALSE
 	icon_state = pick(pass_character)
@@ -595,3 +599,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	. = ..()
 	var/obj/machinery/puzzle/password/pin/pad = locate() in partners
 	add_atom_colour(pad.digit_to_color[icon_state], FIXED_COLOUR_PRIORITY)
+
+/obj/item/paper/fluff/scrambled_pass
+	name = "gibberish note"
+	icon_state = "scrap"
+	///The ID associated to the puzzle we're part of.
+	var/puzzle_id
+
+/obj/item/paper/fluff/scrambled_pass/Initialize(mapload)
+	. = ..()
+	if(mapload && puzzle_id)
+		SSqueuelinks.add_to_queue(src, puzzle_id)
+
+/obj/item/paper/fluff/scrambled_pass/MatchedLinks(id, partners)
+	var/obj/machinery/puzzle/password = locate() in partners
+	var/scrambled_text = ""
+	var/list/pass_characters = splittext(pad.password, "")
+	for(var/i in 1 to rand(200, 300))
+		scrambled_text += pick(scrambled_text)
+	add_raw_text(scrambled_text)
