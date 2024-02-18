@@ -3,7 +3,14 @@ import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../backend';
-import { Button, Modal, Section, Stack } from '../components';
+import {
+  Button,
+  Collapsible,
+  Modal,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -69,16 +76,20 @@ export const MatMarket = (props) => {
             )
           }
         >
-          Buy orders for material sheets placed here will be ordered on the next
-          cargo shipment.
-          <br /> <br />
-          To <b>sell materials</b>, please insert sheets or similar stacks of
-          materials. All minerals sold on the market directly are subject to an
-          20% market fee. To prevent market manipulation, all registered traders
-          can buy a total of <b>10 full stacks of materials at a time</b>.
-          <br /> <br />
-          All new purchases will <b>include the cost of the shipped crate</b>,
-          which may be recycled afterwards.
+          <NoticeBox info>
+            <Collapsible title="Instructions" color="blue">
+              Buy orders for material sheets placed here will be ordered on the
+              next cargo shipment.
+              <br /> <br />
+              To sell materials, please insert sheets or similar stacks of
+              materials. All minerals sold on the market directly are subject to
+              an 20% market fee. To prevent market manipulation, all registered
+              traders can buy a total of 10 full stacks of materials at a time.
+              <br /> <br />
+              All new purchases will include the cost of the shipped crate,
+              which may be recycled afterwards.
+            </Collapsible>
+          </NoticeBox>
           <Section>
             <Stack>
               <Stack.Item width="15%">
@@ -89,7 +100,7 @@ export const MatMarket = (props) => {
               </Stack.Item>
               <Stack.Item
                 width="20%"
-                color={data.updateTime > 150 ? 'green' : 'orange'}
+                color={data.updateTime > 150 ? 'green' : '#ad7526'}
               >
                 <b>{Math.round(data.updateTime / 10)} seconds</b> until next
                 update
