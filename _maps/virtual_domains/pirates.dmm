@@ -474,14 +474,10 @@
 /area/virtual_domain/fullbright)
 "AF" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/storage/bag/money/dutchmen{
 	pixel_y = 13
 	},
+/obj/structure/rack/skeletal,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
 "AP" = (

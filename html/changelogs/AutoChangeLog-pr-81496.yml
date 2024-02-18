@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "The Spawners menu now accurately displays the amount of uses left in each spawner option, taking into account individual spawners that either allow more than one use, or an infinite amount of uses."

@@ -195,6 +195,6 @@
 	if(!tracker || tracker.stat == DEAD)
 		return
 	// Need to make sure the tracked mob is in our list
-	track_name(tracked.name)
+	track_name(tracker, tracked.name)
 
 #undef CAMERA_TICK_LIMIT
