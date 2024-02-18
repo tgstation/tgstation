@@ -46,7 +46,7 @@
 /datum/challenge/proc/on_revive()
 	return
 
-/datum/challenge/no_heals/proc/on_transfer(datum/source, mob/previous_body)
+/datum/challenge/proc/on_transfer(datum/source, mob/previous_body)
 	SIGNAL_HANDLER
 	if(applied_trait)
 		REMOVE_TRAIT(previous_body, applied_trait, CHALLENGE_TRAIT)
