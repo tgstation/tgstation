@@ -73293,7 +73293,7 @@
 /area/station/security/detectives_office/private_investigators_office)
 "thH" = (
 /obj/structure/cable,
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "mining"

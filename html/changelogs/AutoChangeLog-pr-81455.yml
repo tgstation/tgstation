@@ -1,0 +1,4 @@
+author: "Kashargul"
+delete-after: True
+changes:
+  - qol: "hides the delete button on the main tab allows to reorder all other chat tabs"
