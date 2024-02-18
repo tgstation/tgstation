@@ -612,7 +612,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 		SSqueuelinks.add_to_queue(src, puzzle_id)
 
 /obj/item/paper/fluff/scrambled_pass/MatchedLinks(id, partners)
-	var/obj/machinery/puzzle/password = locate() in partners
+	var/obj/machinery/puzzle/password/pad = locate() in partners
 	var/scrambled_text = ""
 	var/list/pass_characters = splittext(pad.password, "")
 	for(var/i in 1 to rand(200, 300))
