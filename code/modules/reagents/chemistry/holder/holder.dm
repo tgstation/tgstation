@@ -304,7 +304,11 @@
 	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
 
 /**
- * Removes all reagents either proportionally or relatively(percentile) by the specified amount
+ * Removes all reagents either proportionally(amount is the direct volume to remove)
+ * when proportional the total volume of all reagents removed will equal to amount
+ * or relatively(amount is a percentile between 0->1) when relative amount is the %
+ * of each reagent to be removed
+ *
  * Arguments
  *
  * * amount - the amount to remove
