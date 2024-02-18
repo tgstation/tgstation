@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(ore_generation)
 	)
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
-		"Ore Generation spawned the following vent sizes: large:[GLOB.ore_vent_sizes[LARGE_VENT_TYPE]], medium:[GLOB.ore_vent_sizes[MEDIUM_VENT_TYPE]], small:[GLOB.post_ore_manual[SMALL_VENT_TYPE]]",
+		"Ore Generation spawned the following vent sizes: large:[LAZYACCESS(GLOB.ore_vent_sizes, LARGE_VENT_TYPE)], medium:[LAZYACCESS(GLOB.ore_vent_sizes, MEDIUM_VENT_TYPE)], small:[LAZYACCESS(GLOB.ore_vent_sizes, SMALL_VENT_TYPE)]",
 	)
 	return SS_INIT_SUCCESS
 
