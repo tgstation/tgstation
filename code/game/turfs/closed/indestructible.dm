@@ -176,8 +176,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/fakeglass
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
-	icon_state = MAP_SWITCH("window_reinforced-0", "fake_window")
-	base_icon_state = "window_reinforced"
+	MAP_SWITCH(, icon_state = "fake_window")
 	opacity = FALSE
 	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -200,7 +199,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = 'icons/obj/smooth_structures/windows/plastitanium_window.dmi'
+	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	MAP_SWITCH(, icon_state = "fake_window")
 	opacity = FALSE
 	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
