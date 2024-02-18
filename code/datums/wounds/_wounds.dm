@@ -170,6 +170,7 @@
 
 /**
  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
+ * DO NOT USE THIS TO APPLY NEW WOUNDS. USE cause_wound_of_type_and_severity!
  *
  *
  * Arguments:

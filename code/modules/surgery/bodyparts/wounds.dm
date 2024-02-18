@@ -149,7 +149,8 @@
 		log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 		return new_wound
 
-// try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
+/// try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
+/// DO NOT USE THIS TO APPLY NEW WOUNDS. USE cause_wound_of_type_and_severity!
 /obj/item/bodypart/proc/force_wound_upwards(datum/wound/potential_wound, smited = FALSE, wound_source)
 	SHOULD_NOT_OVERRIDE(TRUE)
 

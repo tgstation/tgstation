@@ -16,14 +16,16 @@
 
 	cast_range = 4
 	/// What type of wound we apply
-	var/wound_type = /datum/wound/slash/flesh/critical/cleave
+	var/wound_type = WOUND_SLASH
+	/// The severity of the wound we apply
+	var/wound_severity = WOUND_SEVERITY_CRITICAL
 
 /datum/action/cooldown/spell/pointed/apetra_vulnera/is_valid_target(atom/cast_on)
 	return ..() && ishuman(cast_on)
 
 /datum/action/cooldown/spell/pointed/apetra_vulnera/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	
+
 	if(IS_HERETIC_OR_MONSTER(cast_on))
 		return FALSE
 
@@ -42,18 +44,16 @@
 		if(bodypart.brute_dam < 15)
 			continue
 		a_limb_got_damaged = TRUE
-		var/datum/wound/slash/crit_wound = new wound_type()
-		crit_wound.apply_wound(bodypart)
-	
+		cast_on.cause_wound_of_type_and_severity(wound_type, bodypart, wound_severity)
+
 	if(!a_limb_got_damaged)
-		var/datum/wound/slash/crit_wound = new wound_type()
-		crit_wound.apply_wound(pick(cast_on.bodyparts))
+		cast_on.cause_wound_of_type_and_severity(wound_type, pick(cast_on.bodyparts), wound_severity)
 
 	cast_on.visible_message(
 		span_danger("[cast_on]'s scratches and bruises are torn open by an unholy force!"),
 		span_danger("Your scratches and bruises are torn open by some horrible unholy force!")
 	)
-	
+
 	new /obj/effect/temp_visual/cleave(get_turf(cast_on))
 
 	return TRUE

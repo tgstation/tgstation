@@ -511,12 +511,11 @@
 		return BRUTELOSS
 
 	patient.emote("scream")
-	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
-		var/datum/wound/blunt/bone/severe/oof_ouch = new
-		oof_ouch.apply_wound(bone, wound_source = "bone gel")
-		var/datum/wound/blunt/bone/critical/oof_OUCH = new
-		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
+	if (iscarbon(patient))
+		var/mob/living/carbon/carbon_patient = patient
+		for(var/i in carbon_patient.bodyparts)
+			var/obj/item/bodypart/bone = i
+			carbon_patient.cause_wound_of_type_and_severity(WOUND_BLUNT, bone, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL, wound_source = "bone gel")
 
 	for(var/i in patient.bodyparts)
 		var/obj/item/bodypart/bone = i
