@@ -127,7 +127,12 @@ export const EventSection = (props) => {
         return false;
       }
       // remove events not being searched for, if a search is active
-      if (searchQuery && !event.name.toLowerCase().includes(searchQuery)) {
+      if (
+        searchQuery &&
+        event.name &&
+        typeof event.name === 'string' &&
+        !event.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
         return false;
       }
       return true;
