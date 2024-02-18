@@ -2,7 +2,7 @@
 // also make this less crap
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/windows/normal_window.dmi'
-	icon_state = "null"
+	icon_state = null
 	frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
 	max_integrity = 50
 	fulltile = TRUE

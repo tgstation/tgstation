@@ -329,8 +329,9 @@
 /obj/structure/falsewall/meat
 	name = "meat wall"
 	desc = "A wall of somone's compacted meat."
-	icon = 'icons/turf/walls/meat_wall.dmi'
-	icon_state = "meat"
+	fake_icon = 'icons/turf/walls/meat_wall.dmi'
+	icon_state = "meat_wall-open"
+	base_icon_state = "meat_wall"
 	mineral = /obj/item/stack/sheet/meat
 	walltype = /turf/closed/wall/mineral/meat
 	smoothing_flags = SMOOTH_BITMASK
