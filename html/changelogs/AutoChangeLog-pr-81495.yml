@@ -1,0 +1,5 @@
+author: "Kashargul"
+delete-after: True
+changes:
+  - qol: "makes the tgui_input_number user friendly for negative and decimal inputs"
+  - code_imp: "the  onBlur={(_, value) => onBlur(value)} event should now be used on all uses of RestrictedInput to ensure that the number is fully sanitized whenever the user leaves the field or submits it through a button"
