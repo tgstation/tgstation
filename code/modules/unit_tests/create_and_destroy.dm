@@ -2,6 +2,7 @@
 /datum/unit_test/create_and_destroy
 	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
+	abstract_type = /datum/unit_test/create_and_destroy
 
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
