@@ -489,3 +489,18 @@
   - bugfix: Thermomachines now reconnect to pipes on multitool's act.
   - bugfix: Multi-deck connectors won't connect pipes not located in front/top/bottom
       of it.
+2024-02-18:
+  1393F:
+  - bugfix: The crystallizer screentip for rotating it has been updated with the correct
+      button
+  Ghommie:
+  - rscadd: Players holding cardboard cutouts will now assume their appearance, just
+      like for potted plants.
+  GoldenAlpharex:
+  - bugfix: The Spawners menu now accurately displays the amount of uses left in each
+      spawner option, taking into account individual spawners that either allow more
+      than one use, or an infinite amount of uses.
+  Melbert:
+  - bugfix: Lifeline can no longer track mobs with suit sensors off
+  Roastglue:
+  - bugfix: Crafting Bulgogi no longer makes Bibimbap. It instead makes Bulgogi.
