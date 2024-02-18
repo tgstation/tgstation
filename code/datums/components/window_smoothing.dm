@@ -13,8 +13,8 @@
 
 GLOBAL_LIST_EMPTY(window_appearances)
 
-/proc/get_window_appearance(z_offset, icon_path, junction, side, alt = FALSE, shadow = FALSE, alpha = 255, pixel_y = 0, plane = GAME_PLANE, layer = ABOVE_OBJ_LAYER)
-	var/key = "[icon_path]-[junction]-[side]-[alt]-[shadow]-[alpha]-[pixel_y]-[plane]-[layer]-[z_offset]"
+/proc/get_window_appearance(z_offset, icon_path, junction, side, alt = FALSE, pixel_y = 0, plane = GAME_PLANE)
+	var/key = "[icon_path]-[junction]-[side]-[alt]-[pixel_y]-[plane]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.window_appearances[key]
 	if(vis)
 		return vis
@@ -25,12 +25,8 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	if(alt)
 		state = "alt-[state]"
 	vis.icon_state = state
-	if(shadow)
-		vis.overlays += get_window_appearance(z_offset, icon_path, junction, side, alt, FALSE, 120, pixel_y = 0, plane = UNDER_FRILL_PLANE)
-	vis.alpha = alpha
 	vis.pixel_y = pixel_y
 	SET_PLANE_W_SCALAR(vis, plane, z_offset)
-	vis.layer = layer
 
 	GLOB.window_appearances[key] = vis
 	return vis
@@ -77,7 +73,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHEAST)) && (!ignored_turf || !istype(get_step(our_turf, SOUTHWEST), ignored_turf))) || \
 		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHWEST)) && (!ignored_turf || !istype(get_step(our_turf, SOUTHWEST), ignored_turf)))
 	// If there's a wall below us, we render different
-	our_appearances += get_window_appearance(offset, icon_path, junction, "lower", wall_below, FALSE)
+	our_appearances += get_window_appearance(offset, icon_path, junction, "lower", wall_below)
 
 	if(paired_turf)
 		stack_trace("We tried to generate a connection to a turf while one already exists")
@@ -86,12 +82,12 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	paired_turf = get_step(our_turf, NORTH)
 	// We only display an above state if there's a wall, OR if we're smoothing with nothing up there
 	if(isclosedturf(paired_turf) && (!ignored_turf || !istype(paired_turf, ignored_turf)))
-		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", TRUE, FALSE, pixel_y = 32)
+		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", FALSE, pixel_y = 32)
 		UnregisterSignal(paired_turf, COMSIG_QDELETING)
 	else if(!(NORTH & junction))
 		// Draw to the turf above you so this can be seen without seeing the window's turf. Oh and draw this as a frill
 		// We use the parent's pixel y as a part of this to ensure everything lines up proper when the parent is all shifted around
-		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", FALSE, TRUE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
+		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", TRUE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
 		paired_turf.overlays += appearance_above
 		RegisterSignal(paired_turf, COMSIG_QDELETING, PROC_REF(tied_turf_deleted), override = TRUE) // Override because this could be called multiple times
 	else

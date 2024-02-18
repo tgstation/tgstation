@@ -271,30 +271,24 @@
 	documentation = "Contains frills, or the upper parts of some 3/4th'd structures.\
 		<br>Is masked by a few things, the floor and client visible images"
 	plane = FRILL_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+	// Clicking on a frill can't get you the wall it's on (cause it's not overlayed onto it)
+	// So this just fucks people up, we should simply make it transparent.
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(RENDER_PLANE_FRILL)
 
 /atom/movable/screen/plane_master/frill/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FRILL_LAYER, relay_color = GLOB.em_block_color)
-
-/atom/movable/screen/plane_master/frill/show_to(mob/mymob)
-	. = ..()
-	remove_filter(FRILL_FLOOR_CUT)
-	remove_filter(FRILL_GAME_CUT)
-	remove_filter(FRILL_MOB_MASK)
-	if(!mymob.client)
-		return
-	if(!mymob.client.frills_over_floors)
-		add_filter(FRILL_FLOOR_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FLOOR_PLANE_RENDER_TARGET, offset), flags = MASK_INVERSE))
-	//WALLENING TODO: decide what to do about this, ensure frills filter out emissives/maybe all lighting
-	//add_filter(FRILL_GAME_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
-	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/frill_mask
 	name = "Frill Mask"
 	documentation = "Masks the frill plane, this allows us to hide frills around the area of our mob, or really just as we desire"
 	plane = FRILL_MASK_PLANE
 	render_target = FRILL_MASK_RENDER_TARGET
+	/// TEMP CHANGE REMOVE ON MERGE
+	/// I want to retain a bit of what's beneath the mask, so we alpha it out
+	/// This would likely be better done by alphaing the mask itself, I am unsure
+	alpha = 200
 	render_relay_planes = list()
 
 // Not entirely sure how required this is, it's the plane we use for things that sit "on" walls

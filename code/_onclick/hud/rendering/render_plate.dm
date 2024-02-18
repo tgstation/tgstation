@@ -193,6 +193,27 @@
 	AddComponent(/datum/component/plane_hide_highest_offset)
 	color = list(0.9,0,0,0, 0,0.9,0,0, 0,0,0.9,0, 0,0,0,1, 0,0,0,0)
 
+/atom/movable/screen/plane_master/rendering_plate/frill
+	name = "Frill plate"
+	documentation = "Contains frills (the tops of windows/walls). Exists so we can mask this with the frill mask and avoid double transforming in rare cases."
+	plane = RENDER_PLANE_FRILL
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/rendering_plate/frill/show_to(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_FLOOR_CUT)
+	remove_filter(FRILL_GAME_CUT)
+	remove_filter(FRILL_MOB_MASK)
+	if(!mymob.client)
+		return
+	if(!mymob.client.frills_over_floors)
+		add_filter(FRILL_FLOOR_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FLOOR_PLANE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	//WALLENING TODO: decide what to do about this, ensure frills filter out emissives/maybe all lighting
+	//add_filter(FRILL_GAME_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 ///Contains most things in the game world
 /atom/movable/screen/plane_master/rendering_plate/game_world
 	name = "Game world plate"
