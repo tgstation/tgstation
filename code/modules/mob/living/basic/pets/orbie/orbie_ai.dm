@@ -81,8 +81,7 @@
 /datum/ai_behavior/interact_with_playmate/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-	if(success)
-		controller.set_blackboard_key(BB_NEXT_PLAYDATE, world.time + PET_PLAYTIME_COOLDOWN)
+	controller.set_blackboard_key(BB_NEXT_PLAYDATE, world.time + PET_PLAYTIME_COOLDOWN)
 
 /datum/ai_planning_subtree/relay_pda_message
 
