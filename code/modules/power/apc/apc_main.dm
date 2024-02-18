@@ -299,9 +299,7 @@
 		else
 			. += "The cover is closed."
 
-/obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/machinery/power/apc/on_deconstruction(disassembled = TRUE)
 	if(!(machine_stat & BROKEN))
 		set_broken()
 	if(opened != APC_COVER_REMOVED)

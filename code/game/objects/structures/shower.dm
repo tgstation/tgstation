@@ -315,11 +315,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	reagents.remove_any(SHOWER_SPRAY_VOLUME)
 
-/obj/machinery/shower/deconstruct(disassembled = TRUE)
+/obj/machinery/shower/on_deconstruction(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(drop_location(), 2)
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
-	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
 	var/mob/living/carbon/C = L

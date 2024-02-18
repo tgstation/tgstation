@@ -60,7 +60,7 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-		visible_message(span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]"),\
+		visible_message(span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]!"),\
 			span_userdanger("You violently crash into [hit_atom][extra_speed ? " extra hard" : ""]!"))
 		log_combat(hit_atom, src, "crashes ")
 		oof_noise = TRUE
@@ -922,7 +922,7 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 	return ..()
 
@@ -1420,3 +1420,20 @@
 	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?
 		return FALSE
 	return ..()
+
+/// Helper to cleanly trigger tail wagging
+/// Accepts an optional timeout after which we remove the tail wagging
+/// Returns true if successful, false otherwise
+/mob/living/carbon/proc/wag_tail(timeout = INFINITY)
+	var/obj/item/organ/external/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(!wagged)
+		return FALSE
+	return wagged.start_wag(src, timeout)
+
+/// Helper to cleanly stop all tail wagging
+/// Returns true if successful, false otherwise
+/mob/living/carbon/proc/unwag_tail() // can't unwag a tail
+	var/obj/item/organ/external/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(!unwagged)
+		return FALSE
+	return unwagged.stop_wag(src)

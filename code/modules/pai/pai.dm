@@ -16,7 +16,7 @@
 	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
 	light_range = 3
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	maxHealth = 500
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT

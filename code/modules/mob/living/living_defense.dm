@@ -215,17 +215,34 @@
 	adjust_fire_stacks(3)
 	ignite_mob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+/**
+ * Called when a mob is grabbing another mob.
+ */
+/mob/living/proc/grab(mob/living/target)
+	if(!istype(target))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
+		return FALSE
+	if(target.check_block(src, 0, "[src]'s grab"))
+		return FALSE
+	target.grabbedby(src)
+	return TRUE
+
+/**
+ * Called when this mob is grabbed by another mob.
+ */
+/mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-
+	// This line arbitrarily prevents any non-carbon from upgrading grabs
+	if(!iscarbon(user))
+		return
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
-
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
@@ -359,17 +376,9 @@
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		user.disarm(src)
 		return TRUE

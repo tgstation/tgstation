@@ -144,18 +144,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		bulb.burn_out()
 		power_change()
 
-/obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(bulb)
-			bulb.forceMove(loc)
-		if(disassembled)
-			var/obj/item/wallframe/flasher/flasher_obj = new(get_turf(src))
-			transfer_fingerprints_to(flasher_obj)
-			flasher_obj.id = id
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		else
-			new /obj/item/stack/sheet/iron (loc, 2)
-	qdel(src)
+/obj/machinery/flasher/on_deconstruction(disassembled)
+	if(bulb)
+		bulb.forceMove(loc)
+	if(disassembled)
+		var/obj/item/wallframe/flasher/flasher_obj = new(get_turf(src))
+		transfer_fingerprints_to(flasher_obj)
+		flasher_obj.id = id
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	else
+		new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"

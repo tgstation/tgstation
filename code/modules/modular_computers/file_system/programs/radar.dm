@@ -149,16 +149,13 @@
 		return RADAR_NOT_TRACKABLE
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(signal)
-	if(!here || !there)
-		return RADAR_NOT_TRACKABLE //I was still getting a runtime even after the above check while scanning, so fuck it
-	if(there.z != here.z && (!is_station_level(here.z) || !is_station_level(there.z)))
+	if(isnull(here) || isnull(there) || !is_valid_z_level(here, there))
 		return RADAR_NOT_TRACKABLE
 	var/trackable_signal = SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_RADAR_TRACKABLE, signal, here, there)
-	switch(trackable_signal)
-		if(COMPONENT_RADAR_TRACK_ANYWAY)
-			return RADAR_TRACKABLE_ANYWAY
-		if(COMPONENT_RADAR_DONT_TRACK)
-			return RADAR_NOT_TRACKABLE
+	if(trackable_signal & COMPONENT_RADAR_TRACK_ANYWAY)
+		return RADAR_TRACKABLE_ANYWAY
+	if(trackable_signal & COMPONENT_RADAR_DONT_TRACK)
+		return RADAR_NOT_TRACKABLE
 	return RADAR_TRACKABLE
 
 /**
@@ -268,15 +265,16 @@
 
 /datum/computer_file/program/radar/lifeline/trackable(mob/living/carbon/human/humanoid)
 	. = ..()
-	if(. == RADAR_TRACKABLE_ANYWAY)
-		return RADAR_TRACKABLE_ANYWAY
-	if(!humanoid || !istype(humanoid))
+	if(. != RADAR_TRACKABLE)
+		return .
+	if(!istype(humanoid))
 		return RADAR_NOT_TRACKABLE
 	if(!istype(humanoid.w_uniform, /obj/item/clothing/under))
 		return RADAR_NOT_TRACKABLE
 	var/obj/item/clothing/under/uniform = humanoid.w_uniform
-	if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
-		return RADAR_TRACKABLE
+	if(!uniform.has_sensor || uniform.sensor_mode < SENSOR_COORDS) // Suit sensors must be on maximum
+		return RADAR_NOT_TRACKABLE
+	return .
 
 ///Tracks all janitor equipment
 /datum/computer_file/program/radar/custodial_locator

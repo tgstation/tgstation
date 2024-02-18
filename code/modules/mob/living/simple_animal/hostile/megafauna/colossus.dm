@@ -155,8 +155,8 @@
 		return FALSE
 	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
 		return TRUE
-	var/mob/living/carbon/human/human_victim = victim
-	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
+
+	return istype(victim.mind?.martial_art, /datum/martial_art/the_sleeping_carp)
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -165,7 +165,7 @@
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 2
 	duration = 8
 	var/target
