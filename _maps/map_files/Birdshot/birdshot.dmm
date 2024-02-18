@@ -18462,10 +18462,10 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "gKL" = (
@@ -61163,6 +61163,21 @@
 	dir = 1
 	},
 /area/station/command/heads_quarters/hop)
+"vdl" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/east{
+	id = "qm_warehouse_aft";
+	name = "Warehouse Door Control";
+	pixel_x = -24;
+	pixel_y = -23;
+	req_access = list("cargo")
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "vdm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile/directional/east,
@@ -62667,7 +62682,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Centcom Dock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/textured_half,
 /area/station/command/corporate_dock)
 "vzY" = (
@@ -66393,10 +66409,11 @@
 	},
 /area/station/science/xenobiology)
 "wIm" = (
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/machinery/door/airlock/hatch{
 	name = "Centcom Dock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "wIp" = (
@@ -88515,7 +88532,7 @@ pJQ
 wZF
 pqv
 wZF
-sxA
+vdl
 slY
 ueX
 rVQ
