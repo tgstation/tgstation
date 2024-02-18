@@ -12,9 +12,8 @@
 /obj/projectile/energy/fisher/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	var/list/things_to_disrupt = list(target)
-	var/mob/living/live_target
 	if(isliving(target))
-		live_target = target
+		var/mob/living/live_target = target
 		things_to_disrupt += live_target.get_all_gear()
 
 	var/success = FALSE
@@ -23,7 +22,7 @@
 			success = TRUE
 
 	if(success && ismob(firer))
-		live_target.balloon_alert(firer, "disrupted")
+		target.balloon_alert(firer, "disrupted")
 
 /obj/projectile/energy/fisher/melee
 	range = 1
