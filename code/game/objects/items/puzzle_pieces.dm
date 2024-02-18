@@ -616,5 +616,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	var/scrambled_text = ""
 	var/list/pass_characters = splittext(pad.password, "")
 	for(var/i in 1 to rand(200, 300))
-		scrambled_text += pick(scrambled_text)
+		scrambled_text += pick(pass_characters)
 	add_raw_text(scrambled_text)
