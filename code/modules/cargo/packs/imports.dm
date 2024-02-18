@@ -71,13 +71,6 @@
 	crate_name = "bananium sheet crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/imports/naturalbait
-	name = "Freshness Jars full of Natural Bait"
-	desc = "Homemade in the Spinward Sector."
-	cost = 2000 //rock on
-	contains = list(/obj/item/storage/pill_bottle/naturalbait)
-	crate_name = "fishing bait crate"
-
 /datum/supply_pack/imports/dumpstercorpse
 	name = "A....Dumpster?"
 	desc = "Why does it smell so bad...."

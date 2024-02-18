@@ -249,6 +249,12 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
 
+/datum/supply_pack/goody/naturalbait
+	name = "Freshness Jars full of Natural Bait"
+	desc = "Homemade in the Spinward Sector."
+	cost = PAYCHECK_CREW * 5 //rock on
+	contains = list(/obj/item/storage/pill_bottle/naturalbait)
+
 /datum/supply_pack/goody/telescopic_fishing_rod
 	name = "Telescopic Fishing Rod"
 	desc = "A collapsible fishing rod that can fit within a backpack."
