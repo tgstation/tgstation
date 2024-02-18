@@ -21,13 +21,15 @@ const paginateEvents = (events: Event[], maxPerPage: number): Event[][] => {
   let maxChars = EVENT_PAGE_MAXCHARS;
 
   for (const event of events) {
-    maxChars -= event.name.length;
-    if (maxChars <= 0) {
-      // would overflow the next line over
-      itemsToAdd = maxPerPage;
-      maxChars = EVENT_PAGE_MAXCHARS - event.name.length;
-      pages.push(page);
-      page = [];
+    if (event.name && typeof event.name === 'string') {
+      maxChars -= event.name.length;
+      if (maxChars <= 0) {
+        // would overflow the next line over
+        itemsToAdd = maxPerPage;
+        maxChars = EVENT_PAGE_MAXCHARS - event.name.length;
+        pages.push(page);
+        page = [];
+      }
     }
     page.push(event);
     itemsToAdd--;
@@ -131,6 +133,8 @@ export const EventSection = (props) => {
         searchQuery &&
         event.name &&
         typeof event.name === 'string' &&
+        searchQuery &&
+        typeof searchQuery === 'string' &&
         !event.name.toLowerCase().includes(searchQuery.toLowerCase())
       ) {
         return false;
