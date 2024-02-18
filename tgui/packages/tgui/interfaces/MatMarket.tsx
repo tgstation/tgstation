@@ -1,3 +1,4 @@
+import { sortBy } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 
@@ -9,6 +10,7 @@ import { Window } from '../layouts';
 type Material = {
   name: string;
   quantity: number;
+  rarity: number;
   trend: string;
   price: number;
   threshold: number;
@@ -97,149 +99,151 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {materials.map((material, i) => (
-          <Section key={i}>
-            <Stack fill>
-              <Stack.Item width="75%">
-                <Stack>
-                  <Stack.Item
-                    textColor={material.color ? material.color : 'white'}
-                    fontSize="125%"
-                    width="15%"
-                    pr="3%"
-                  >
-                    {toTitleCase(material.name)}
-                  </Stack.Item>
-
-                  <Stack.Item width="15%" pr="2%">
-                    Trading at <b>{formatMoney(material.price)}</b> cr.
-                  </Stack.Item>
-                  {material.price < material.threshold ? (
-                    <Stack.Item width="33%" ml={2} textColor="grey">
-                      Material price critical!
-                      <br /> <b>Trading temporarily suspended.</b>
+        {sortBy((tempmat: Material) => tempmat.rarity)(materials).map(
+          (material, i) => (
+            <Section key={i}>
+              <Stack fill>
+                <Stack.Item width="75%">
+                  <Stack>
+                    <Stack.Item
+                      textColor={material.color ? material.color : 'white'}
+                      fontSize="125%"
+                      width="15%"
+                      pr="3%"
+                    >
+                      {toTitleCase(material.name)}
                     </Stack.Item>
-                  ) : (
-                    <Stack.Item width="33%" ml={2}>
-                      <b>{material.quantity || 'Zero'}</b> sheets of{' '}
-                      <b>{material.name}</b> trading.{' '}
-                      {material.requested || 'Zero'} sheets ordered.
-                    </Stack.Item>
-                  )}
 
-                  <Stack.Item
-                    width="40%"
-                    color={
-                      material.trend === 'up'
-                        ? 'green'
-                        : material.trend === 'down'
-                          ? 'red'
-                          : 'white'
+                    <Stack.Item width="15%" pr="2%">
+                      Trading at <b>{formatMoney(material.price)}</b> cr.
+                    </Stack.Item>
+                    {material.price < material.threshold ? (
+                      <Stack.Item width="33%" ml={2} textColor="grey">
+                        Material price critical!
+                        <br /> <b>Trading temporarily suspended.</b>
+                      </Stack.Item>
+                    ) : (
+                      <Stack.Item width="33%" ml={2}>
+                        <b>{material.quantity || 'Zero'}</b> sheets of{' '}
+                        <b>{material.name}</b> trading.{' '}
+                        {material.requested || 'Zero'} sheets ordered.
+                      </Stack.Item>
+                    )}
+
+                    <Stack.Item
+                      width="40%"
+                      color={
+                        material.trend === 'up'
+                          ? 'green'
+                          : material.trend === 'down'
+                            ? 'red'
+                            : 'white'
+                      }
+                    >
+                      <b>{toTitleCase(material.name)}</b> is trending{' '}
+                      <b>{material.trend}</b>.
+                    </Stack.Item>
+                  </Stack>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    disabled={
+                      catastrophe === 1 ||
+                      material.price <= material.threshold ||
+                      creditBalance - total_order_cost <
+                        material.price * multiplier ||
+                      material.requested + 1 > material.quantity
+                    }
+                    tooltip={material.price * 1}
+                    onClick={() =>
+                      act('buy', {
+                        quantity: 1,
+                        material: material.name,
+                      })
                     }
                   >
-                    <b>{toTitleCase(material.name)}</b> is trending{' '}
-                    <b>{material.trend}</b>.
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  disabled={
-                    catastrophe === 1 ||
-                    material.price <= material.threshold ||
-                    creditBalance - total_order_cost <
-                      material.price * multiplier ||
-                    material.requested + 1 > material.quantity
-                  }
-                  tooltip={material.price * 1}
-                  onClick={() =>
-                    act('buy', {
-                      quantity: 1,
-                      material: material.name,
-                    })
-                  }
-                >
-                  Buy 1
-                </Button>
-                <Button
-                  disabled={
-                    catastrophe === 1 ||
-                    material.price <= material.threshold ||
-                    creditBalance - total_order_cost <
-                      material.price * 5 * multiplier ||
-                    material.requested + 5 > material.quantity
-                  }
-                  tooltip={material.price * 5}
-                  onClick={() =>
-                    act('buy', {
-                      quantity: 5,
-                      material: material.name,
-                    })
-                  }
-                >
-                  5
-                </Button>
-                <Button
-                  disabled={
-                    catastrophe === 1 ||
-                    material.price <= material.threshold ||
-                    creditBalance - total_order_cost <
-                      material.price * 10 * multiplier ||
-                    material.requested + 10 > material.quantity
-                  }
-                  tooltip={material.price * 10}
-                  onClick={() =>
-                    act('buy', {
-                      quantity: 10,
-                      material: material.name,
-                    })
-                  }
-                >
-                  10
-                </Button>
-                <Button
-                  disabled={
-                    catastrophe === 1 ||
-                    material.price <= material.threshold ||
-                    creditBalance - total_order_cost <
-                      material.price * 25 * multiplier ||
-                    material.requested + 25 > material.quantity
-                  }
-                  tooltip={material.price * 25}
-                  onClick={() =>
-                    act('buy', {
-                      quantity: 25,
-                      material: material.name,
-                    })
-                  }
-                >
-                  25
-                </Button>
-                <Button
-                  disabled={
-                    catastrophe === 1 ||
-                    material.price <= material.threshold ||
-                    creditBalance - total_order_cost <
-                      material.price * 50 * multiplier ||
-                    material.requested + 50 > material.quantity
-                  }
-                  tooltip={material.price * 50}
-                  onClick={() =>
-                    act('buy', {
-                      quantity: 50,
-                      material: material.name,
-                    })
-                  }
-                >
-                  50
-                </Button>
-              </Stack.Item>
-              {material.requested > 0 && (
-                <Stack.Item ml={2}>x {material.requested}</Stack.Item>
-              )}
-            </Stack>
-          </Section>
-        ))}
+                    Buy 1
+                  </Button>
+                  <Button
+                    disabled={
+                      catastrophe === 1 ||
+                      material.price <= material.threshold ||
+                      creditBalance - total_order_cost <
+                        material.price * 5 * multiplier ||
+                      material.requested + 5 > material.quantity
+                    }
+                    tooltip={material.price * 5}
+                    onClick={() =>
+                      act('buy', {
+                        quantity: 5,
+                        material: material.name,
+                      })
+                    }
+                  >
+                    5
+                  </Button>
+                  <Button
+                    disabled={
+                      catastrophe === 1 ||
+                      material.price <= material.threshold ||
+                      creditBalance - total_order_cost <
+                        material.price * 10 * multiplier ||
+                      material.requested + 10 > material.quantity
+                    }
+                    tooltip={material.price * 10}
+                    onClick={() =>
+                      act('buy', {
+                        quantity: 10,
+                        material: material.name,
+                      })
+                    }
+                  >
+                    10
+                  </Button>
+                  <Button
+                    disabled={
+                      catastrophe === 1 ||
+                      material.price <= material.threshold ||
+                      creditBalance - total_order_cost <
+                        material.price * 25 * multiplier ||
+                      material.requested + 25 > material.quantity
+                    }
+                    tooltip={material.price * 25}
+                    onClick={() =>
+                      act('buy', {
+                        quantity: 25,
+                        material: material.name,
+                      })
+                    }
+                  >
+                    25
+                  </Button>
+                  <Button
+                    disabled={
+                      catastrophe === 1 ||
+                      material.price <= material.threshold ||
+                      creditBalance - total_order_cost <
+                        material.price * 50 * multiplier ||
+                      material.requested + 50 > material.quantity
+                    }
+                    tooltip={material.price * 50}
+                    onClick={() =>
+                      act('buy', {
+                        quantity: 50,
+                        material: material.name,
+                      })
+                    }
+                  >
+                    50
+                  </Button>
+                </Stack.Item>
+                {material.requested > 0 && (
+                  <Stack.Item ml={2}>x {material.requested}</Stack.Item>
+                )}
+              </Stack>
+            </Section>
+          ),
+        )}
       </Window.Content>
     </Window>
   );

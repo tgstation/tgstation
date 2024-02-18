@@ -173,6 +173,7 @@
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
+			"rarity" = initial(traded_mat.value_per_unit),
 			"threshold" = minimum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
