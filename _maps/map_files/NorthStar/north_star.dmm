@@ -26977,7 +26977,7 @@
 /area/station/medical/pharmacy)
 "heS" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -27019,7 +27019,7 @@
 /area/station/maintenance/floor1/starboard/aft)
 "hfy" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -33741,7 +33741,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "iTn" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/carpet/black,
 /area/station/hallway/secondary/service)
 "iTu" = (
@@ -63497,7 +63497,7 @@
 /area/station/science/genetics)
 "qBh" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -63553,7 +63553,7 @@
 /area/station/commons/fitness)
 "qCn" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "qCo" = (
@@ -73293,7 +73293,7 @@
 /area/station/security/detectives_office/private_investigators_office)
 "thH" = (
 /obj/structure/cable,
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "mining"
