@@ -2,6 +2,7 @@
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
+#define MINERALS_PER_BOULDER 3
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -22,13 +23,8 @@
 	var/unique_vent = FALSE
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"
-
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
 	var/list/mineral_breakdown = list()
-	/// How many rolls on the mineral_breakdown list are made per boulder produced? EG: 3 rolls means 3 minerals per boulder, with order determining percentage.
-	var/minerals_per_boulder = 3
-	/// How many minerals are picked to be in the ore vent? These are added to the mineral_breakdown list.
-	var/minerals_per_breakdown = MINERAL_TYPE_OPTIONS_RANDOM
 	/// What size boulders does this vent produce?
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Reference to this ore vent's NODE drone, to track wave success.
@@ -67,8 +63,8 @@
 	var/artifact_chance = 0
 	/// We use a cooldown to prevent the wave defense from being started multiple times.
 	COOLDOWN_DECLARE(wave_cooldown)
+	/// We use a cooldown to prevent players from tapping boulders rapidly from vents.
 	COOLDOWN_DECLARE(manual_vent_cooldown)
-
 
 /obj/structure/ore_vent/Initialize(mapload)
 	if(mapload)
@@ -121,14 +117,14 @@
 		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	produce_boulder()
+	produce_boulder(TRUE)
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 
 /obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
 	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		return
-	produce_boulder()
+	produce_boulder(TRUE)
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -154,17 +150,6 @@
 	if(is_type_in_list(held_item, scanning_equipment))
 		context[SCREENTIP_CONTEXT_LMB] = "Scan vent"
 		return CONTEXTUAL_SCREENTIP_SET
-
-/**
- * Picks n types of materials to pack into a boulder created by this ore vent, where n is this vent's minerals_per_boulder.
- * Then assigns custom_materials based on boulder_size, assigned via the ore_quantity_function
- */
-/obj/structure/ore_vent/proc/create_mineral_contents()
-	var/list/refined_list = list()
-	for(var/iteration in 1 to minerals_per_boulder)
-		var/datum/material/material = pick_weight(mineral_breakdown)
-		refined_list[material] += ore_quantity_function(iteration)
-	return refined_list
 
 /**
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
@@ -372,21 +357,37 @@
  * @params apply_cooldown Should we apply a cooldown to producing boulders? Default's false, used by manual boulder production (goldgrubs, golems, etc).
  */
 /obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
-	if(!COOLDOWN_FINISHED(src, manual_vent_cooldown))
+	RETURN_TYPE(/obj/item/boulder)
+
+	//cooldown applies only for manual processing by hand
+	if(apply_cooldown && !COOLDOWN_FINISHED(src, manual_vent_cooldown))
 		return
+
+	//produce the boulder
 	var/obj/item/boulder/new_rock
 	if(prob(artifact_chance))
 		new_rock = new /obj/item/boulder/artifact(loc)
 	else
 		new_rock = new /obj/item/boulder(loc)
-	var/list/mats_list = create_mineral_contents()
 	Shake(duration = 1.5 SECONDS)
+
+	//decorate the boulder with materials
+	var/list/mats_list = list()
+	for(var/iteration in 1 to MINERALS_PER_BOULDER)
+		var/datum/material/material = pick_weight(mineral_breakdown)
+		mats_list[material] += ore_quantity_function(iteration)
 	new_rock.set_custom_materials(mats_list)
-	new_rock.flavor_boulder(src)
+
+	//set size & durability
+	new_rock.boulder_size = boulder_size
+	new_rock.durability = rand(2, boulder_size) //randomize durability a bit for some flavor.
+	new_rock.boulder_string = boulder_icon_state
+	new_rock.update_appearance(UPDATE_ICON_STATE)
+
+	//start the cooldown & return the boulder
 	if(apply_cooldown)
 		COOLDOWN_START(src, manual_vent_cooldown, 10 SECONDS)
 	return new_rock
-
 
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
@@ -402,12 +403,6 @@
 	)
 
 /obj/structure/ore_vent/random
-	/// Static list of ore vent types, for random generation.
-	var/static/list/ore_vent_types = list(
-		BOULDER_SIZE_SMALL,
-		BOULDER_SIZE_MEDIUM,
-		BOULDER_SIZE_LARGE,
-	)
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
@@ -446,7 +441,7 @@
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
 	ore_vent_options = list(
-		"small",
+		SMALL_VENT_TYPE,
 	)
 
 /obj/structure/ore_vent/random/icebox/lower
@@ -459,11 +454,10 @@
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
 	ore_vent_options = list(
-		"small",
-		"medium",
-		"large",
+		SMALL_VENT_TYPE = 3,
+		MEDIUM_VENT_TYPE = 5,
+		LARGE_VENT_TYPE = 7,
 	)
-
 
 /obj/structure/ore_vent/boss
 	name = "menacing ore vent"
@@ -536,3 +530,4 @@
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
+#undef MINERALS_PER_BOULDER

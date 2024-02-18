@@ -365,7 +365,7 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 4
 	light_power = 1

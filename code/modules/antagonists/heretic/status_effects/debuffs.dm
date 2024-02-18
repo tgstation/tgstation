@@ -251,7 +251,7 @@
 	owner.adjustBruteLoss( -150 + owner.mob_mood.sanity)
 	owner.adjustFireLoss(-150 + owner.mob_mood.sanity)
 
-	to_chat(owner, span_warning(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
+	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, REF(src))
@@ -271,6 +271,7 @@
 
 	if (damage_sustained < 75)
 		return
+
 	qdel(src)
 
 /datum/status_effect/moon_converted/proc/update_owner_overlay(atom/source, list/overlays)

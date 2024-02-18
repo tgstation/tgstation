@@ -70,13 +70,13 @@
 
 /obj/item/mod/module/waddle/on_suit_activation()
 	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElement(/datum/element/waddling)
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
 	if(!deleting)
 		qdel(mod.boots.GetComponent(/datum/component/squeak))
-	mod.wearer.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")

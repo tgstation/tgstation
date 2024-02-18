@@ -23,16 +23,15 @@
 	color = "90560B"
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	metabolized_traits = list(TRAIT_RESISTHEAT)
 
 /datum/reagent/halon/on_mob_metabolize(mob/living/breather)
 	. = ..()
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(breather, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/halon/on_mob_end_metabolize(mob/living/breather)
 	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	REMOVE_TRAIT(breather, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/healium
 	name = "Healium"
@@ -81,14 +80,7 @@
 	ph = 1.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 14)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
-	. = ..()
-	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
-	. = ..()
-	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
+	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
 	. = ..()

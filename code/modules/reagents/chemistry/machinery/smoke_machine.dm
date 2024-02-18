@@ -111,10 +111,9 @@
 		return
 	return ..()
 
-/obj/machinery/smoke_machine/deconstruct()
+/obj/machinery/smoke_machine/on_deconstruction(disassembled)
 	reagents.expose(loc, TOUCH)
 	reagents.clear_reagents()
-	return ..()
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -5,7 +5,7 @@
  */
 
 import { canRender, classes } from 'common/react';
-import { forwardRef, ReactNode, RefObject, useEffect, useRef } from 'react';
+import { forwardRef, ReactNode, RefObject, useEffect } from 'react';
 
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
@@ -70,19 +70,18 @@ export const Section = forwardRef(
       ...rest
     } = props;
 
-    const contentRef = useRef<HTMLDivElement>(null);
-
     const hasTitle = canRender(title) || canRender(buttons);
 
     /** We want to be able to scroll on hover, but using focus will steal it from inputs */
     useEffect(() => {
-      if (!contentRef.current) return;
+      if (!forwardedRef?.current) return;
       if (!scrollable && !scrollableHorizontal) return;
 
-      addScrollableNode(contentRef.current);
+      addScrollableNode(forwardedRef.current);
 
       return () => {
-        removeScrollableNode(contentRef.current!);
+        if (!forwardedRef?.current) return;
+        removeScrollableNode(forwardedRef.current!);
       };
     }, []);
 
@@ -98,7 +97,6 @@ export const Section = forwardRef(
           computeBoxClassName(rest),
         ])}
         {...computeBoxProps(rest)}
-        ref={forwardedRef}
       >
         {hasTitle && (
           <div className="Section__title">
@@ -110,7 +108,9 @@ export const Section = forwardRef(
           <div
             className="Section__content"
             onScroll={onScroll}
-            ref={contentRef}
+            // For posterity: the forwarded ref needs to be here specifically
+            // to actually let things interact with the scrolling.
+            ref={forwardedRef}
           >
             {children}
           </div>

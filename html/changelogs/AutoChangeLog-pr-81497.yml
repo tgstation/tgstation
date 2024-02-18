@@ -1,0 +1,4 @@
+author: "rageguy505"
+delete-after: True
+changes:
+  - bugfix: "The door above tool storage on birdshot now has maintenance access on it and officials can now enter the CC dock room."
