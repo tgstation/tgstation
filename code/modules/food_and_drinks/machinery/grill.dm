@@ -78,7 +78,6 @@
 	..()
 
 /obj/machinery/grill/process(seconds_per_tick)
-	..()
 	update_appearance()
 	if(grill_fuel <= 0)
 		return
@@ -94,7 +93,7 @@
 			grilled_item = null
 			finish_grill()
 			return
-		grill_time += seconds_per_tick
+		grill_time += seconds_per_tick * 10 //convert to deciseconds
 		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * seconds_per_tick)
 		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * seconds_per_tick
 		grilled_item.AddComponent(/datum/component/sizzle)
@@ -129,9 +128,16 @@
 
 /obj/machinery/grill/proc/finish_grill()
 	if(!QDELETED(grilled_item))
-		if(grill_time >= 20)
+		var/time_limit = 20 SECONDS
+		//when items grill themselves in their own unique ways we want to follow their constraints
+		var/datum/component/grillable/custom_grilling = grilled_item.GetComponent(/datum/component/grillable)
+		if(!isnull(custom_grilling))
+			time_limit = custom_grilling.required_cook_time
+
+		if(grill_time >= time_limit)
 			grilled_item.AddElement(/datum/element/grilled_item, grill_time)
 		UnregisterSignal(grilled_item, COMSIG_ITEM_GRILLED)
+
 	grill_time = 0
 	grill_loop.stop()
 
