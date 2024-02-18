@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "mecha drill won't use power & do other checks if the target cannot be drilled."
+  - bugfix: "mecha drill will stop drilling if the mech moves even without changing direction. Also will use power & check other conditions every drill cycle."
