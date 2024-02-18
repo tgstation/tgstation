@@ -6115,6 +6115,7 @@
 #include "monkestation\code\modules\coin-events\challenges\challenge\heavy_bleeder.dm"
 #include "monkestation\code\modules\coin-events\challenges\challenge\no_healing.dm"
 #include "monkestation\code\modules\coin-events\challenges\challenge\no_sprint.dm"
+#include "monkestation\code\modules\coin-events\challenges\challenge\paranoia.dm"
 #include "monkestation\code\modules\conveyor\code\conveyor.dm"
 #include "monkestation\code\modules\cryopods\_cryopod.dm"
 #include "monkestation\code\modules\cryopods\ai_cryo.dm"
