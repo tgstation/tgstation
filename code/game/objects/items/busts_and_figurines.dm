@@ -130,8 +130,9 @@
 	attack_verb_simple = list("bash", "beckon", "hit")
 
 /obj/item/maneki_neko/Initialize(mapload)
-	color = pick(3;COLOR_WHITE, 2;COLOR_GOLD, 1;COLOR_DARK) //Not compatible with greyscale configs because it's animated.
 	. = ..()
+	//Not compatible with greyscale configs because it's animated.
+	color = pick_weight(list(COLOR_WHITE = 3, COLOR_GOLD = 2, COLOR_DARK = 1))
 	var/mutable_appearance/neko_overlay = mutable_appearance(icon, "maneki-neko-overlay", appearance_flags = RESET_COLOR)
 	add_overlay(neko_overlay)
 	AddElement(/datum/element/art, GOOD_ART)

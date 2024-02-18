@@ -43,10 +43,8 @@
 		return
 
 	SSpersistence.load_piggy_bank(src)
-	//End of round silliness shouldn't count toward this stuff, as eeryone's free to bomb and destroy stuff..
-	if(SSticker.current_state < GAME_STATE_FINISHED)
-		persistence_cb = CALLBACK(src, PROC_REF(save_cash))
-		SSticker.OnRoundend(persistence_cb)
+	persistence_cb = CALLBACK(src, PROC_REF(save_cash))
+	SSticker.OnRoundend(persistence_cb)
 
 	if(initial_value & initial_value + calculate_dosh_amount() <= maximum_value)
 		new /obj/item/holochip(src, initial_value)
@@ -61,9 +59,10 @@
 	return ..()
 
 /obj/item/piggy_bank/deconstruct(disassembled = TRUE)
-	for(var/obj/item/thing as anything in src)
+	for(var/obj/item/thing as anything in contents)
 		thing.forceMove(loc)
-	if(persistence_id)
+	//Smashing the piggy after the round is over doesn't count.
+	if(persistence_id && SSticker.current_state < GAME_STATE_FINISHED)
 		LAZYADD(SSpersistence.queued_broken_piggy_ids, persistence_id)
 	return ..()
 
@@ -98,12 +97,16 @@
 	if(isnull(creds_value))
 		return ..()
 
-	if(calculate_dosh_amount() + creds_value > maximum_value)
-		balloon_alert(user, "cannot hold so much cash!")
+	var/dosh_amount = calculate_dosh_amount()
+
+	if(dosh_amount >= maximum_value)
+		balloon_alert(user, "it's full!")
+	else if(dosh_amount + creds_value > maximum_value)
+		balloon_alert(user, "too much cash!")
 	else if(!user.transferItemToLoc(item, src))
-		balloon_alert(user, "item stuck in your hands!")
+		balloon_alert(user, "stuck in your hands!")
 	else
-		balloon_alert(user, "inserted [creds_value] credits")
+		balloon_alert(user, "inserted [creds_value] creds")
 	return TRUE
 
 ///Returns the total amount of credits that its contents amount to.

@@ -416,7 +416,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 	for(var/iteration in 1 to pin_length)
 		password += "[rand(1, 9)]"
 
-	var/possible_colors = list(
+	var/list/possible_colors = list(
 			"white",
 			"black",
 			"red",
@@ -568,7 +568,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 
 /obj/effect/decal/cleanable/crayon/puzzle
-	name = "graffiti that's clue to a puzzle"
+	name = "Password character"
 	icon_state = "0"
 	///The id of the puzzle we're linked to.
 	var/puzzle_id
@@ -593,7 +593,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	return TRUE
 
 /obj/effect/decal/cleanable/crayon/puzzle/pin
-	name = "graffiti that's clue to a PIN puzzle"
+	name = "PIN number"
 
 /obj/effect/decal/cleanable/crayon/puzzle/pin/MatchedLinks(id, partners)
 	. = ..()
