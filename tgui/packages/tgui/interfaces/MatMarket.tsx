@@ -26,6 +26,7 @@ type Data = {
   materials: Material[];
   catastrophe: BooleanLike;
   CARGO_CRATE_VALUE: number;
+  updateTime: number;
 };
 
 export const MatMarket = (props) => {
@@ -80,11 +81,18 @@ export const MatMarket = (props) => {
           which may be recycled afterwards.
           <Section>
             <Stack>
-              <Stack.Item width="232px">
+              <Stack.Item width="15%">
                 Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
               </Stack.Item>
-              <Stack.Item width="232px">
+              <Stack.Item width="15%">
                 Current Order Cost: <b>{formatMoney(orderBalance)}</b> cr.
+              </Stack.Item>
+              <Stack.Item
+                width="20%"
+                color={data.updateTime > 150 ? 'green' : 'orange'}
+              >
+                <b>{Math.round(data.updateTime / 10)} seconds</b> until next
+                update
               </Stack.Item>
               <Stack.Item>
                 <Button

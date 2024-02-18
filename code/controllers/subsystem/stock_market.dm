@@ -1,7 +1,7 @@
 
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
-	wait = 5 SECONDS
+	wait = 60 SECONDS
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 
@@ -88,14 +88,14 @@ SUBSYSTEM_DEF(stock_market)
 	var/quantity_change = 0
 	switch(trend)
 		if(MARKET_TREND_UPWARD)
-			price_change = ROUND_UP(gaussian(price_units * 0.20, price_baseline * 0.1)) //If we don't ceil, small numbers will get trapped at low values
-			quantity_change = -round(gaussian(quantity_baseline * 0.1, quantity_baseline * 0.1))
+			price_change = ROUND_UP(gaussian(price_units * 0.30, price_baseline * 0.15)) //If we don't ceil, small numbers will get trapped at low values
+			quantity_change = -round(gaussian(quantity_baseline * 0.15, quantity_baseline * 0.15))
 		if(MARKET_TREND_STABLE)
 			price_change = round(gaussian(0, price_baseline * 0.01))
 			quantity_change = round(gaussian(0, quantity_baseline * 0.5))
 		if(MARKET_TREND_DOWNWARD)
-			price_change = -ROUND_UP(gaussian(price_units * 0.2, price_baseline * 0.1))
-			quantity_change = round(gaussian(quantity_baseline * 0.1, quantity_baseline * 0.1))
+			price_change = -ROUND_UP(gaussian(price_units * 0.3, price_baseline * 0.15))
+			quantity_change = round(gaussian(quantity_baseline * 0.15, quantity_baseline * 0.15))
 	materials_prices[mat] =  round(clamp(price_units + price_change, price_minimum, price_maximum))
 	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, quantity_baseline * 2))
 

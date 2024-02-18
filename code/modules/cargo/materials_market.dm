@@ -207,6 +207,7 @@
 	.["orderBalance"] = current_cost
 	.["orderingPrive"] = ordering_private
 	.["canOrderCargo"] = can_buy_via_budget
+	.["updateTime"] = SSstock_market.next_fire - world.time
 
 /obj/machinery/materials_market/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
