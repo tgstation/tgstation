@@ -283,15 +283,14 @@
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
 
 		if(KIT_SAM_FISHER)
-			new /obj/item/clothing/under/rank/centcom/military(src)
+			new /obj/item/clothing/under/syndicate/combat(src)
 			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
 			new /obj/item/clothing/head/helmet/marine/pmc(src)
 			new /obj/item/clothing/mask/gas/sechailer(src)
 			new /obj/item/clothing/glasses/night(src) // 3~ TC
-			new /obj/item/clothing/gloves/combat(src)
+			/obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
 			new /obj/item/clothing/shoes/jackboots(src)
 			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
-			new /obj/item/storage/box/syndie_kit/emp(src) // 2 TC
 
 		if(KIT_PROP_HUNT)
 			new /obj/item/chameleon(src) // 7 TC
@@ -317,8 +316,8 @@
 /obj/item/storage/belt/military/assault/fisher/PopulateContents()
 	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 7 TC
 	new /obj/item/suppressor(src) // 3 TC
-	new /obj/item/ammo_box/magazine/m9mm(src) // 1 TC
-	new /obj/item/ammo_box/magazine/m9mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src) // 1 TC
+	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/gun/energy/recharge/fisher(src) // Acquirable through black market, shit utility item 1 TC
 	new /obj/item/card/emag/doorjack(src) // 3 TC
 	new /obj/item/knife/combat(src) //comparable to the e-dagger, 2 TC
