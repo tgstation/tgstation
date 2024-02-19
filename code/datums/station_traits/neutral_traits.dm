@@ -435,12 +435,16 @@
 	switch(skub_stance)
 		if(PRO_SKUB)
 			skubbers[player.ckey] = ANTI_SKUB
+			lobby_button.balloon_alert(player, "anti-skub")
 		if(ANTI_SKUB)
 			skubbers[player.ckey] = SKUB_IDFC
+			lobby_button.balloon_alert(player, "don't care")
 		if(SKUB_IDFC)
 			skubbers[player.ckey] = RANDOM_SKUB
+			lobby_button.balloon_alert(player, "on the best side")
 		if(RANDOM_SKUB)
 			skubbers[player.ckey] = PRO_SKUB
+			lobby_button.balloon_alert(player, "pro-skub")
 
 /datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
