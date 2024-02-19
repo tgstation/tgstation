@@ -107,17 +107,19 @@
 	if (!(loadout in loadouts))
 		loadout = loadouts[1]
 
-	observer.forceMove(loc)
-	var/datum/mind/observer_mind = observer.mind
-	var/mob/living/observer_current = observer.mind?.current
-	var/mob/living/carbon/human/new_player = observer.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
-	if(!isnull(observer_mind) && observer_current)
+	var/mob/living/carbon/human/new_player = new(loc)
+	observer.client?.prefs.safe_transfer_prefs_to(new_player)
+	new_player.dna.update_dna_identity()
+	new_player.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	new_player.add_traits(list(TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT)
+	if(!isnull(observer.mind) && observer.mind?.current)
 		new_player.AddComponent( \
 			/datum/component/temporary_body, \
-			old_mind = observer_mind, \
-			old_body = observer_current, \
+			old_mind = observer.mind, \
+			old_body = observer.mind.current, \
 		)
 	new_player.equipOutfit(loadout) // Loadout
+	new_player.key = ckey
 	players[ckey]["mob"] = new_player
 
 	// register death handling.
