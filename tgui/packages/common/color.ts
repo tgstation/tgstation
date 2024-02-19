@@ -24,7 +24,7 @@ export class Color {
   }
 
   // Darkens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value.
-  darken(percent) {
+  darken(percent: number): Color {
     percent /= 100;
     return new Color(
       this.r - this.r * percent,
@@ -35,7 +35,7 @@ export class Color {
   }
 
   // Brightens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value.
-  lighten(percent) {
+  lighten(percent: number): Color {
     // No point in rewriting code we already have.
     return this.darken(-percent);
   }
