@@ -356,7 +356,14 @@
 	name = "Fancy"
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "fancycrown"
+	replace_floors = null
 	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
+	)
+	///cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
+	COOLDOWN_DECLARE(carpet_switch_cd)
 
 #define FANCY_CARPETS list(\
 	/turf/open/floor/eighties, \
@@ -372,14 +379,12 @@
 	/turf/open/floor/carpet/royalblack, \
 	/turf/open/floor/carpet/royalblue,)
 
-/datum/dimension_theme/fancy/New()
-	. = ..()
-	replace_floors = list(pick(FANCY_CARPETS) = 1)
-	replace_objs = list(
-		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
-		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
-		/obj/structure/table/wood = list(pick(subtypesof(/obj/structure/table/wood/fancy)) = 1),
-	)
+/datum/dimension_theme/fancy/apply_theme(turf/affected_turf, skip_sound = FALSE, show_effect = FALSE)
+	if(COOLDOWN_FINISHED(src, carpet_switch_cd))
+		replace_floors = list(pick(FANCY_CARPETS) = 1)
+		replace_objs[/obj/structure/table/wood] = list(pick(subtypesof(/obj/structure/table/wood/fancy)) = 1)
+		COOLDOWN_START(src, carpet_switch_cd, 90 SECONDS)
+	return ..()
 
 #undef FANCY_CARPETS
 

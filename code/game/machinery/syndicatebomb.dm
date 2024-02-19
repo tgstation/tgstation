@@ -584,6 +584,8 @@
 
 	qdel(src)
 
+#define DIMENSION_CHOICE_RANDOM "None/Randomized"
+
 /obj/item/bombcore/dimensional
 	name = "multi-dimensional payload"
 	desc = "A wicked payload meant to wildly transmutate terrain over a wide area, a power no mere human should wield."
@@ -598,7 +600,6 @@
 	. = ..()
 	. += span_notice("Use in hand to change the linked dimension. Current dimension: [chosen_theme?.name || "None, output will be random"].")
 
-#define DIMENSION_CHOICE_RANDOM "None/Randomized"
 /obj/item/bombcore/dimensional/attack_self(mob/user)
 	. = ..()
 	var/list/choosable_dimensions = list()
@@ -620,8 +621,6 @@
 		chosen_theme = picked
 	balloon_alert(user, "set to [chosen_theme?.name || DIMENSION_CHOICE_RANDOM]")
 
-#undef DIMENSION_CHOICE_RANDOM
-
 /obj/item/bombcore/dimensional/proc/check_menu(mob/user)
 	if(!user.is_holding(src) || user.incapacitated())
 		return FALSE
@@ -630,13 +629,22 @@
 /obj/item/bombcore/dimensional/detonate()
 	var/list/affected_turfs = circle_range_turfs(src, range_heavy)
 	var/theme_count = length(SSmaterials.dimensional_themes)
+	var/num_affected = 0
 	for(var/turf/affected as anything in affected_turfs)
 		var/datum/dimension_theme/theme_to_use = chosen_theme
 		if(isnull(chosen_theme))
 			theme_to_use = SSmaterials.dimensional_themes[SSmaterials.dimensional_themes[rand(1, theme_count)]]
+		if(!theme_to_use.can_convert(affected))
+			continue
+		num_affected++
+		var/skip_sound = TRUE
+		if(num_affected % 5) //makes it play the sound more sparingly
+			skip_sound = FALSE
 		var/time_mult = round(get_dist_euclidian(get_turf(src), affected)) + 1
-		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, FALSE, TRUE), 0.2 SECONDS * time_mult)
+		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, skip_sound, TRUE), 0.1 SECONDS * time_mult)
 	qdel(src)
+
+#undef DIMENSION_CHOICE_RANDOM
 
 ///Syndicate Detonator (aka the big red button)///
 
