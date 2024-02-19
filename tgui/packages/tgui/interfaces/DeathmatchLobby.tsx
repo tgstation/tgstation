@@ -26,6 +26,7 @@ type Data = {
   host: BooleanLike;
   admin: BooleanLike;
   global_chat: BooleanLike;
+  playing: BooleanLike;
   loadouts: string[];
   maps: string[];
   map: {
@@ -171,6 +172,14 @@ export const DeathmatchLobby = (props) => {
               <Box textAlign="center">Loadout Description</Box>
               <Divider />
               <Box textAlign="center">{data.loadoutdesc}</Box>
+              {!!data.playing && (
+                <>
+                  <Divider />
+                  <Box textAlign="center">
+                    The game is currently in progress, or loading.
+                  </Box>
+                </>
+              )}
             </Section>
           </Flex.Item>
         </Flex>
