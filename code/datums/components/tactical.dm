@@ -13,8 +13,6 @@
 
 /datum/component/tactical/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(tactical_update))
 	var/obj/item/item = parent
 	if(ismob(item.loc))
 		var/mob/holder = item.loc
@@ -23,8 +21,6 @@
 /datum/component/tactical/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_ITEM_DROPPED,
-		COMSIG_ATOM_UPDATED_ICON,
 	))
 	unmodify()
 
@@ -40,10 +36,10 @@
 			unmodify(source, user)
 		return
 
-	if(current_slot) //If the current slot is set, this means the icon was updated or the item changed z-levels.
-		user.remove_alt_appearance("sneaking_mission[REF(src)]")
-	else
-		RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	current_slot = slot
 
@@ -58,19 +54,22 @@
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	var/obj/item/master = parent
 	if(!user)
-		if(!ismob(master.loc))
-			return
-		user = master.loc
+		user = source.loc
+	if(!istype(user))
+		return
 
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	current_slot = null
-	UnregisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_UPDATED_ICON, COMSIG_MOVABLE_MOVED))
 
-/datum/component/tactical/proc/tactical_update(datum/source)
+/datum/component/tactical/proc/tactical_update(obj/item/source)
 	SIGNAL_HANDLER
-	var/obj/item/master = parent
-	if(!ismob(master.loc))
+	if(!ismob(source.loc))
 		return
-	modify(master, master.loc, current_slot)
+	modify(source, source.loc, current_slot)
+
+///We really want to make sure that, if things ever slightly breaks, that the alt appearance will be removed anyway.
+/datum/component/tactical/proc/on_moved(obj/item/source, atom/oldloc, direction, forced)
+	SIGNAL_HANDLER
+	unmodify(source, oldloc)
