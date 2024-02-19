@@ -76,6 +76,8 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
 	. = ..()
@@ -105,6 +107,11 @@
 		else
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_appearance()
+
+/obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
+	inhand_icon_state = icon_state
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
@@ -159,9 +166,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	helmet_on = !helmet_on
-	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
-	inhand_icon_state = icon_state
-	user.update_worn_head() //So the mob overlay updates
+	update_appearance()
 
 	if(helmet_on)
 		if(!up)
@@ -173,6 +178,14 @@
 		set_light_on(FALSE)
 
 	update_item_action_buttons()
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!helmet_on)
+		return
+	helmet_on = FALSE
+	update_appearance()
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
 	..()
