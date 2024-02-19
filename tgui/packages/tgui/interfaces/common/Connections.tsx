@@ -35,7 +35,7 @@ export const Connections = (props: {
 
   const isColorClass = (str) => {
     if (typeof str === 'string') {
-      return CSS_COLORS.includes(str);
+      return CSS_COLORS.includes(str as any);
     }
   };
 

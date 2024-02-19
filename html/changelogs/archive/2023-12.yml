@@ -804,3 +804,168 @@
   - bugfix: NTOS Software Hub should focus on the input immediately now
   - bugfix: Ore container UI should autofocus on the search bar now
   - bugfix: Vend-a-tray registration text should display as intended
+2023-12-26:
+  13spacemen:
+  - rscadd: Canisters now have wires! You can pulse wires to do various canister functions
+      like opening/closing the valve. Make sure it has a cell though.
+  - rscadd: You can rig assembly combos (igniter-timer, prox-signaler, etc.) onto
+      canisters
+  - qol: Canisters now have screentips
+  - qol: You can now build multiple pipe layers with the RPD, with just 1 click!
+  Fikou:
+  - spellcheck: changes mutiline text to multiline text in vv
+  Ghommie:
+  - bugfix: Regal rats (and others), won't be punished by the automute system for
+      repeating the same command several times.
+  - rscadd: Added the 'Coupon Master' program for the PDA. Install it to receive periodical,
+      redeemable coupons for several cargo packs. Requires NTnet connection and the
+      messenger enabled to work.
+  - rscadd: Coupons are no longer only limited to goodies, but may also apply discount
+      to some other packs as well.
+  - bugfix: fixing damaged sandy dirt lacking an icon
+  Ical92:
+  - qol: Wendigo Cave ruin gets an aesthetic refresh
+  - bugfix: Wendigos (Wendigi?) no longer attack corpses
+  MelokGleb and KREKS:
+  - image: modified wizard weapon textures
+  ReinaCoder:
+  - rscadd: Adds a brown suit jacket to the detective's vendor
+  - image: 'Adds a new sprite for the a brown detective suit jacket
+
+      :cl:'
+  SyncIt21:
+  - bugfix: debug chem heater now withdraws more than 100 units from its inserted
+      beaker.
+  - bugfix: chem heater has correct overlay when its panel is closed with a screwdriver
+      while a beaker is inside.
+  - qol: added more examines and tooltips for the chem heater.
+  - code_imp: converted chem heater UI to typescript. removed unused procs, vars,
+      ui tracking code. Added auto doc for everything.
+  - refactor: removed chem heater tutorial help button & its related reward, chem
+      heater code has been optimized as a whole.
+  - bugfix: plumbing rcd ui no longer has any graphical glitches
+  - bugfix: mat container displays correct number of sheets inserted for alloy materials.
+  - bugfix: remote materials now properly respect the `MATCONTAINER_NO_INSERT` flag.
+  - code_imp: removes material breakdown flags and related traits.
+  - code_imp: adds helper proc to insert materials via the remote material component
+      with proper context.
+  jlsnow301:
+  - bugfix: LUA editor should be usable again
+  vinylspiders:
+  - bugfix: fixes a potential mob hard del with cardboard boxes
+  - bugfix: fixes a hard del with thrown items
+2023-12-27:
+  Melbert:
+  - bugfix: Fixed some occasions in which heartbeat SFX will continue on revival for
+      longer than expected
+  Mothblocks:
+  - bugfix: Fixed the surgery menu spamming chat messages when on the eyes section
+      of a player with no eyes.
+  Ryll/Shaps:
+  - balance: Yawns are less likely to propagate
+  jlsnow301:
+  - bugfix: NTOS Messenger should search as you type now
+  timothymtorres:
+  - qol: Add UI screentips to spraycans
+2023-12-28:
+  Ben10Omintrix:
+  - rscadd: basic bots can now display their paths on huds
+  - bugfix: medbots can research healing again
+  Ghommie:
+  - rscadd: Added a "postal workers strike" negative station trait. In the case of
+      holidays and sunday though, it'll be a "postal system overtime" instead.
+  LemonInTheDark:
+  - rscdel: Removes the wires from canisters. It's a cool idea, but cheap controlled
+      maxcaps are bad actually
+  SyncIt21:
+  - bugfix: mercury & lithium will no longer make you randomly move outside of cryotubes
+      or in ground less turfs (space, water, lava etc)
+  necromanceranne:
+  - spellcheck: Fixes a typo in chat message when starting a Death Knell with the
+      Vorpal Scythe
+  - admin: Adds logging for the death knell, both when starts and when it is completed
+      successfully.
+2023-12-29:
+  Diamond-74:
+  - bugfix: ai can now tell if it is in a do_after for resisting and will not interrupt
+      it. monkeys also now don't freeze up when aggressively grabbed and will resist
+      out of those and cuffs.
+  Ghommie, 13spacemen:
+  - bugfix: Signing or removing your candidature from ghost roles now properly updates
+      the screen button for it.
+  LemonInTheDark:
+  - bugfix: Dear mappers, the light debugger tool no longer deletes dragged wall lights
+  Mothblocks:
+  - bugfix: Fixed a lot of missing/broken images, such as emojis, language icons,
+      commendation hearts, icons in R&D menu, etc.
+  - refactor: Photo albums and photo frames are now more resilient to data loss, especially
+      when a server crashes.
+  - bugfix: Fixed "was shocked by /datum/component/energized" message.
+  SyncIt21:
+  - bugfix: reaction chamber open its UI when inserting/removing beakers from it
+  - bugfix: reaction chamber triggers new reactions & updates UI more often during
+      heating
+  - bugfix: instant and  normal reactions now get triggered more often so for e.g.
+      more plastic sheets from polymer reactions or more reactions occur when there
+      are multiple reagents present
+  - bugfix: Off station ORM's can redeem points again.
+  jlsnow301:
+  - bugfix: NTOS Messenger should clear on enter now
+  timothymtorres:
+  - rscadd: Add 50% graffiti speed boost to tagger quirk
+  - bugfix: Fix time duration of large graffiti not applying properly
+  vinylspiders:
+  - bugfix: reduces lag in the tgui textarea input boxes
+  - spellcheck: changes some let's to lets
+2023-12-30:
+  13spacemen:
+  - bugfix: Poll alert buttons candidate number should be more responsive
+  Melbert:
+  - bugfix: Lizards now show a proper description in the magic mirror
+  ReturnToZender:
+  - bugfix: JSX files, when edited, cause TGUI to recompile on build
+  Tristrian:
+  - bugfix: Bot launchpads can deploy cleanbots and medibots again.
+  - spellcheck: Clarified the message when failling to recall a bot.
+  mc-oofert:
+  - rscadd: 69(roughly?) new vox phrases
+  mogeoko:
+  - bugfix: Atmospherics components will now move air into connected pipeline on deconstruction
+      if possible. Otherwise, air will be released to the outside from open nodes.
+  - bugfix: Unsafe pressure release on atmos components will now work the same way
+      it does in the normal pipes if there is an empty node with air.
+  - bugfix: The HFR user interface would close when the machine is shut down.
+  - bugfix: Atmospherics machinery will now share air from nodes after being rotated
+      and reconnected to pipenet.
+2023-12-31:
+  13spacemen:
+  - bugfix: Dimensional anomlies converting airlocks preserves the old name
+  Echomori:
+  - bugfix: trying to move up or down while controlling an advanced camera console
+      now properly moves the camera up or down, not your body
+  Ghommie:
+  - bugfix: The transhumanist quirk now should work as intended.
+  GoldenAlpharex:
+  - bugfix: Vending machines now display the proper color customization options and
+      item quantities again!
+  PapaMichael:
+  - sound: added *gaspshock emote sound effect to felinids
+  Rhials:
+  - code_imp: Unholy water no longer calls parent twice in on_mob_life().
+  SyncIt21:
+  - bugfix: chem heater now shows the new value of its buffer dispense volume immediately
+      when it gets changed.
+  - bugfix: debug chem synthesizer now shows the new values of amount & purity immediately
+      when it gets changed.
+  Time-Green:
+  - bugfix: Fixes borg polymorph
+  - bugfix: Holodeck monkeys are properly cleaned up now
+  - bugfix: Holodeck monkeys have organs now
+  vinylspiders:
+  - qol: makes modal list uis autofocus
+  - bugfix: fishing up a spawner will now give you the spawned item instead of a broken,
+      undeletable spawner object
+  - code_imp: adds a warning to the stack trace when something tries to forceMove()
+      a qdeleted spawner
+  - bugfix: fixes textarea input boxes not updating on prop change (such as changing
+      tabs)

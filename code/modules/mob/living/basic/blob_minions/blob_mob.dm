@@ -17,6 +17,7 @@
 	lighting_cutoff_green = 40
 	lighting_cutoff_blue = 30
 	initial_language_holder = /datum/language_holder/empty
+	can_buckle_to = FALSE
 
 /mob/living/basic/blob_minion/Initialize(mapload)
 	. = ..()

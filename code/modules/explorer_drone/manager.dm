@@ -79,7 +79,7 @@
 /datum/adventure_browser/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/simple/adventure))
 
-/datum/adventure_browser/Destroy(force, ...)
+/datum/adventure_browser/Destroy(force)
 	. = ..()
 	QDEL_NULL(temp_adventure)
 

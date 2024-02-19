@@ -21,7 +21,7 @@
 		return ELEMENT_INCOMPATIBLE
 	src.thrown_effect = thrown_effect
 
-/datum/component/on_hit_effect/Destroy(force, silent)
+/datum/component/on_hit_effect/Destroy(force)
 	on_hit_callback = null
 	extra_check_callback = null
 	return ..()

@@ -133,6 +133,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!has_cover)
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
+	AddElement(/datum/element/hostile_machine)
+
 /obj/machinery/porta_turret/proc/toggle_on(set_to)
 	var/current = on
 	if (!isnull(set_to))
@@ -399,9 +401,6 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
-
-/obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
-	qdel(src)
 
 /obj/machinery/porta_turret/atom_break(damage_flag)
 	. = ..()

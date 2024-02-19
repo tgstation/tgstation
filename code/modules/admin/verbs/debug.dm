@@ -217,6 +217,8 @@
 		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
 	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
+	if(isnull(newkey))
+		return
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
 	if((isobserver(oldmob) || tgui_alert(usr,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
@@ -544,8 +546,8 @@
 
 /datum/admins/proc/modify_goals()
 	var/dat = ""
-	for(var/datum/station_goal/S in GLOB.station_goals)
-		dat += "[S.name] - <a href='?src=[REF(S)];[HrefToken()];announce=1'>Announce</a> | <a href='?src=[REF(S)];[HrefToken()];remove=1'>Remove</a><br>"
+	for(var/datum/station_goal/goal as anything in SSstation.get_station_goals())
+		dat += "[goal.name] - <a href='?src=[REF(goal)];[HrefToken()];announce=1'>Announce</a> | <a href='?src=[REF(goal)];[HrefToken()];remove=1'>Remove</a><br>"
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 

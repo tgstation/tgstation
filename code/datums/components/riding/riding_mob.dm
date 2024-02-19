@@ -26,7 +26,7 @@
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = TRUE
 
-/datum/component/riding/creature/Destroy(force, silent)
+/datum/component/riding/creature/Destroy(force)
 	unequip_buckle_inhands(parent)
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
@@ -437,7 +437,7 @@
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 
-/datum/component/riding/creature/goliath/Destroy(force, silent)
+/datum/component/riding/creature/goliath/Destroy(force)
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.remove_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 	return ..()

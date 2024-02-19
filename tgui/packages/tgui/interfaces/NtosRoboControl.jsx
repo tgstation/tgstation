@@ -153,8 +153,9 @@ export const RobotInfo = (props) => {
             <LabeledList.Item label="Status">{robot.mode}</LabeledList.Item>
             {mule && (
               <>
+                <LabeledList.Item label="Bot ID">{mule.id}</LabeledList.Item>
                 <LabeledList.Item label="Loaded Cargo">
-                  {data.load || 'N/A'}
+                  {mule.load || 'N/A'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Home">{mule.home}</LabeledList.Item>
                 <LabeledList.Item label="Destination">

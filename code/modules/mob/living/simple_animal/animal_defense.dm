@@ -4,21 +4,7 @@
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(user.move_force < move_resist)
-			return
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-		var/shove_dir = get_dir(user, src)
-		if(!Move(get_step(src, shove_dir), shove_dir))
-			log_combat(user, src, "shoved", "failing to move it")
-			user.visible_message(span_danger("[user.name] shoves [src]!"),
-				span_danger("You shove [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
-			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
-			return TRUE
-		log_combat(user, src, "shoved", "pushing it")
-		user.visible_message(span_danger("[user.name] shoves [src], pushing [p_them()]!"),
-			span_danger("You shove [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
-		to_chat(src, span_userdanger("You're pushed by [user.name]!"))
+		user.disarm(src)
 		return TRUE
 
 	if(!user.combat_mode)
@@ -43,6 +29,19 @@
 		log_combat(user, src, "attacked")
 		updatehealth()
 		return TRUE
+
+/mob/living/simple_animal/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)
+	if(weapon) // no "gently pushing aside" if you're pressing a shield at them.
+		return ..()
+	var/moved = !(shove_flags & SHOVE_BLOCKED)
+	shover.visible_message(
+		span_danger("[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()]" : ""]!"),
+		span_danger("You [response_disarm_simple] [src][moved ? ", pushing [p_them()]" : ""]!"),
+		span_hear("You hear aggressive shuffling!"),
+		COMBAT_MESSAGE_RANGE,
+		list(src),
+	)
+	to_chat(src, span_userdanger("You're [moved ? "pushed" : "shoved"] by [shover.name]!"))
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
@@ -90,13 +89,6 @@
 		var/damage_done = apply_damage(rand(L.melee_damage_lower, L.melee_damage_upper), BRUTE)
 		if(damage_done > 0)
 			L.amount_grown = min(L.amount_grown + damage_done, L.max_grown)
-
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
-	if(..()) //successful slime attack
-		var/damage = rand(15, 25)
-		if(user.is_adult)
-			damage = rand(20, 35)
-		return apply_damage(damage, user.melee_damage_type)
 
 /mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
 	if(user.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.

@@ -27,4 +27,5 @@
 	return newscaster_ui.ui_static_data(user)
 
 /datum/computer_file/program/newscaster/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	return newscaster_ui.ui_act(action, params, ui, state)

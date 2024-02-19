@@ -750,6 +750,19 @@
 	foodtypes = MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+///Special private component to handle how bbq is grilled, not meant to be used anywhere else
+/datum/component/grillable/bbq
+
+/datum/component/grillable/bbq/finish_grilling(atom/grill_source)
+	//when on a grill allow it to roast without deleting itself
+	if(istype(grill_source, /obj/machinery/grill))
+		grill_source.visible_message(span_notice("[parent] is grilled to perfection!"))
+	else //when on a girddle allow it to burn into an mouldy mess
+		return ..()
+
+/obj/item/food/bbqribs/make_grillable()
+	AddComponent(/datum/component/grillable/bbq, /obj/item/food/badrecipe, rand(30 SECONDS, 40 SECONDS), FALSE)
+
 /obj/item/food/meatclown
 	name = "meat clown"
 	desc = "A delicious, round piece of meat clown. How horrifying."
@@ -935,6 +948,39 @@
 	)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/korta_wellington
+	name = "Kotra wellington"
+	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in korta pastry."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "korta_wellington"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/korta_wellington/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/korta_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/korta_wellington_slice
+	name = "korta wellington slice"
+	desc = "A slice of korta & beef wellington, topped with a rich gravy. Simply delicious."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "korta_wellington_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added the 'Coupon Master' program for the PDA. Install it to receive periodical, redeemable coupons for several cargo packs. Requires NTnet connection and the messenger enabled to work."
-  - rscadd: "Coupons are no longer only limited to goodies, but may also apply discount to some other packs as well."

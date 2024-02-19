@@ -35,8 +35,7 @@
 
 /obj/item/t_scanner/process()
 	if(!on)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	scan()
 
 /obj/item/t_scanner/proc/scan()

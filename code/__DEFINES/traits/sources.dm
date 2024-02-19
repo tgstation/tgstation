@@ -41,6 +41,9 @@
 /// Trait from light debugging
 #define LIGHT_DEBUG_TRAIT "light-debug"
 
+/// Trait given by an Action datum
+#define ACTION_TRAIT "action"
+
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 /// inherited from the mask
@@ -180,6 +183,8 @@
 #define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 /// Trait applied by MODsuits.
 #define MOD_TRAIT "mod"
+/// Trait applied to tram passengers
+#define TRAM_PASSENGER_TRAIT "tram-passenger"
 
 /// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"
@@ -279,3 +284,6 @@
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
 /// Trait when something was labelled by a pen.
 #define PEN_LABEL_TRAIT "pen_label"
+
+/// Trait when a drink was renamed by a shaker
+#define SHAKER_LABEL_TRAIT "shaker_trait"

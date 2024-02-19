@@ -32,7 +32,7 @@
 	if(!isturf(target) || !icon || !icon_state || !mask_icon)
 		return ELEMENT_INCOMPATIBLE
 
-	if(!movables_to_ignore)
+	if(isnull(movables_to_ignore))
 		movables_to_ignore = typecacheof(list(
 			/obj/effect,
 			/mob/dead,
@@ -213,15 +213,13 @@
 ///This proc removes the vis_overlay, the keep together trait and some signals from the movable.
 /datum/element/immerse/proc/remove_immerse_overlay(atom/movable/movable)
 	var/atom/movable/immerse_overlay/vis_overlay = LAZYACCESS(immersed_movables, movable)
-	if(!vis_overlay)
-		return
-	movable.vis_contents -= vis_overlay
 	LAZYREMOVE(immersed_movables, movable)
-	if(HAS_TRAIT(movable, TRAIT_UNIQUE_IMMERSE))
-		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
-		qdel(vis_overlay)
 	REMOVE_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
-
+	movable.vis_contents -= vis_overlay
+	if(HAS_TRAIT(movable, TRAIT_UNIQUE_IMMERSE))
+		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM, COMSIG_QDELETING))
+		if(!QDELETED(vis_overlay))
+			qdel(vis_overlay)
 /**
  * Called by init_or_entered() and on_set_buckled().
  * This applies the overlay if neither the movable or whatever is buckled to (exclusive to living mobs) are flying
@@ -309,9 +307,9 @@
 		buckled = living_mob.buckled
 	try_unimmerse(movable, buckled)
 
+	LAZYREMOVE(attached_turfs_and_movables[source], movable)
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING))
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
-	LAZYREMOVE(attached_turfs_and_movables[source], movable)
 
 /// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)

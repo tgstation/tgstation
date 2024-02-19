@@ -1,4 +1,4 @@
-@You can use the |, + and _ characters to emphasize parts of what you say in-game (e.g. say"my _ass_ |is| +heavy+." will be outputted as "my <u>ass</u> <i>is</i> <b>heavy</b>."). You can also escape these emphasizers by appending backslashes before them (e.g. say"1\+2\+3" will come out as "1+2+3" and not "1\<b>2\</b>3").
+@You can <i>italicize</i>, <b>embolden</b> or <u>underline</u> portions of your messages by enclosing them with |, + or _ respectively. You can also avoid this by adding backslashes (they won't show in the message) before these characters.
 ♪ Hey, have you ever tried appending the % character before your messages when speaking in-game? ♫
 A Scientist will pay top dollar for your frogs!
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
@@ -271,3 +271,4 @@ You can use a machine in the vault to deposit cash or rob Cargo's department fun
 You can use an upgraded microwave to charge your PDA!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.
+Modular computers are compatible with integrated circuits, but most of the program-dependent circuits require them to be open/backgrounded to work. To install circuits on stationary consoles, you need to toggle interaction with the frame with right-click first.

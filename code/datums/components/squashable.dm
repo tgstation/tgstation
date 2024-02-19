@@ -29,7 +29,7 @@
 
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-/datum/component/squashable/Destroy(force, silent)
+/datum/component/squashable/Destroy(force)
 	on_squash_callback = null
 	return ..()
 

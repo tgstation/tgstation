@@ -713,7 +713,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/abandoned/crew)
 "dh" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Captain's Quarters"
 	},
 /obj/effect/turf_decal/stripes/white/line{
@@ -1004,9 +1004,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "sR" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 8
-	},
+/obj/machinery/door/window/survival_pod/left/directional/west,
 /obj/effect/turf_decal/delivery/red,
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
@@ -1279,9 +1277,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "PI" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/delivery/red,
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)

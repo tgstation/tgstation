@@ -442,7 +442,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
             </Box>
           )}
           {finalObjective && objectiveState === ObjectiveState.Inactive && (
-            <NoticeBox warning mt={1}>
+            <NoticeBox mt={1}>
               Taking this objective will lock you out of getting anymore
               objectives! Furthermore, you will be unable to abort this
               objective.

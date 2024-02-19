@@ -236,6 +236,11 @@
 		voice = vendor_voice_by_type[type]
 
 	if(build_inv) //non-constructable vending machine
+		///Non-constructible vending machines do not have a refill canister to populate its products list from,
+		///Which apparently is still needed in the case we use product categories instead.
+		if(product_categories)
+			for(var/list/category as anything in product_categories)
+				products |= category["products"]
 		build_inventories()
 
 	slogan_list = splittext(product_slogans, ";")
@@ -298,12 +303,10 @@
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
 
-/obj/machinery/vending/deconstruct(disassembled = TRUE)
+/obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
 		return ..()
-	if(!(obj_flags & NO_DECONSTRUCTION)) //the non constructable vendors drop metal instead of a machine frame.
-		new /obj/item/stack/sheet/iron(loc, 3)
-	qdel(src)
+	new /obj/item/stack/sheet/iron(loc, 3)
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
@@ -1085,7 +1088,7 @@
 		replacer.play_rped_sound()
 	return TRUE
 
-/obj/machinery/vending/on_deconstruction()
+/obj/machinery/vending/on_deconstruction(disassembled)
 	update_canister()
 	. = ..()
 
@@ -1206,11 +1209,12 @@
 	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		var/list/product_data = list(
 			name = product_record.name,
+			path = replacetext(replacetext("[product_record.product_path]", "/obj/item/", ""), "/", "-"),
 			amount = product_record.amount,
 			colorable = product_record.colorable,
 		)
 
-		.["stock"] += list(product_data)
+		.["stock"][product_data["path"]] = product_data
 
 	.["extended_inventory"] = extended_inventory
 
@@ -1589,7 +1593,7 @@
 	if(loaded_item.custom_price)
 		return TRUE
 
-/obj/machinery/vending/custom/ui_interact(mob/user)
+/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
 	if(!linked_account)
 		balloon_alert(user, "no registered owner!")
 		return FALSE
@@ -1655,14 +1659,13 @@
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE
 
-/obj/machinery/vending/custom/deconstruct(disassembled)
+/obj/machinery/vending/custom/on_deconstruction(disassembled)
 	unbuckle_all_mobs(TRUE)
 	var/turf/current_turf = get_turf(src)
 	if(current_turf)
 		for(var/obj/item/stored_item in contents)
 			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
-	return ..()
 
 /**
  * Vends an item to the user. Handles all the logic:
