@@ -307,13 +307,9 @@
 	storage = null
 	set_occupant(null)
 
-/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		open_machine()
-		dump_inventory_contents()
-		if(card_reader_installed)
-			new /obj/item/stock_parts/card_reader(loc)
-	return ..()
+/obj/machinery/suit_storage_unit/on_deconstruction(disassembled)
+	if(card_reader_installed)
+		new /obj/item/stock_parts/card_reader(loc)
 
 /obj/machinery/suit_storage_unit/proc/access_check(mob/living/user)
 	if(!isnull(id_card))

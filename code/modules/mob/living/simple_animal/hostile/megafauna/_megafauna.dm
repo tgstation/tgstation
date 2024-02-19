@@ -27,6 +27,7 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	can_buckle_to = FALSE
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -49,6 +50,8 @@
 	var/chosen_attack = 1
 	/// Attack actions, sets chosen_attack to the number in the action
 	var/list/attack_action_types = list()
+	/// Summoning line, said when summoned via megafauna vents.
+	var/summon_line = "I'll kick your ass!"
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -115,33 +118,34 @@
 	if(recovery_time >= world.time)
 		return
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.stat != DEAD)
-			if(!client && ranged && ranged_cooldown <= world.time)
-				OpenFire()
-
-			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
-				devour(L)
-		else
-			devour(L)
+	if(!.)
+		LoseTarget()
+		return
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.stat == DEAD || (living_target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(living_target, TRAIT_NODEATH)))
+		devour(living_target)
+		return
+	if(isnull(client) && ranged && ranged_cooldown <= world.time)
+		OpenFire()
 
 /// Devours a target and restores health to the megafauna
-/mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
-	if(!L || L.has_status_effect(/datum/status_effect/gutted))
+/mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/victim)
+	if(isnull(victim) || victim.has_status_effect(/datum/status_effect/gutted))
+		LoseTarget()
 		return FALSE
-	celebrate_kill(L)
+	celebrate_kill(victim)
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
-		adjustBruteLoss(-L.maxHealth/2)
-	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	var/mob/living/carbon/carbonTarget = L
-	if(istype(carbonTarget))
-		qdel(L.get_organ_slot(ORGAN_SLOT_LUNGS))
-		qdel(L.get_organ_slot(ORGAN_SLOT_HEART))
-		qdel(L.get_organ_slot(ORGAN_SLOT_LIVER))
-	L.adjustBruteLoss(500)
-	L.death() //make sure they die
-	L.apply_status_effect(/datum/status_effect/gutted)
+		heal_overall_damage(victim.maxHealth * 0.5)
+	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
+	if(iscarbon(victim))
+		qdel(victim.get_organ_slot(ORGAN_SLOT_LUNGS))
+		qdel(victim.get_organ_slot(ORGAN_SLOT_HEART))
+		qdel(victim.get_organ_slot(ORGAN_SLOT_LIVER))
+	victim.adjustBruteLoss(500)
+	victim.death() //make sure they die
+	victim.apply_status_effect(/datum/status_effect/gutted)
 	LoseTarget()
 	return TRUE
 

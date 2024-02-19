@@ -195,8 +195,9 @@ const GenderButton = (props: {
   return (
     <Popper
       isOpen={genderMenuOpen}
+      onClickOutside={() => setGenderMenuOpen(false)}
       placement="right-end"
-      popperContent={
+      content={
         <Stack backgroundColor="white" ml={0.5} p={0.3}>
           {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
             (gender) => {
@@ -264,9 +265,9 @@ const MainFeature = (props: {
   return (
     <Popper
       placement="bottom-start"
-      onClickOutside={() => handleClose()}
       isOpen={isOpen}
-      popperContent={
+      onClickOutside={handleClose}
+      content={
         <ChoicedSelection
           name={catalog.name}
           catalog={catalog}

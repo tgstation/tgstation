@@ -44,7 +44,8 @@
 		data["valid_id"] = TRUE
 	return data
 
-/datum/computer_file/program/coupon/ui_act(action, params, datum/tgui/ui)
+/datum/computer_file/program/coupon/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/obj/item/card/id/user_id = computer.computer_id_slot
 	if(!(user_id?.registered_account.add_to_accounts))
 		return TRUE

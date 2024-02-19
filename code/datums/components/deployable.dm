@@ -76,10 +76,8 @@
 		new_direction = direction
 
 	deployed_object = new thing_to_be_deployed(deploy_location)
-	deployed_object.setDir(new_direction)
-
-	// Sets the direction of the resulting object if the variable says to
 	if(direction_setting)
+		deployed_object.setDir(new_direction)
 		deployed_object.update_icon_state()
 
 	deployments -= 1

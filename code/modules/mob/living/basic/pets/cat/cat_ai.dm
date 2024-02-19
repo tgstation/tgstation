@@ -2,6 +2,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_HOSTILE_MEOWS = list("Mawwww", "Mrewwww", "mhhhhng..."),
+		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/cat),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/cat/kitten),
 	)
 

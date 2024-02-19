@@ -358,9 +358,8 @@ and displays selected entry.
 - See inherited props: [Box](#box)
 - See inherited props: [Icon](#icon)
 - `options: string[] | DropdownEntry[]` - An array of strings which will be displayed in the
-  dropdown when open. See Dropdown.tsx for more adcanced usage with DropdownEntry
+  dropdown when open. See Dropdown.tsx for more advanced usage with DropdownEntry
 - `selected: any` - Currently selected entry
-- `width: string` - Width of dropdown button and resulting menu; css width value
 - `over: boolean` - Dropdown renders over instead of below
 - `color: string` - Color of dropdown button
 - `noChevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
@@ -740,12 +739,10 @@ Popper lets you position elements so that they don't go out of the bounds of the
 
 **Props:**
 
-- `popperContent: ReactNode` - The content that will be put inside the popper.
-- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options]
+- `content: ReactNode` - The content that will be put inside the popper.
 - `isOpen: boolean` - Whether or not the popper is open.
-- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
 - `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
-- `additionalStyles: { ... }` - A map of CSS styles to add to the element that will contain the popper.
+- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
 
 ### `ProgressBar`
 

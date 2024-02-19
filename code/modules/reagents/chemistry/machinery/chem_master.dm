@@ -59,7 +59,7 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_master/on_deconstruction()
+/obj/machinery/chem_master/on_deconstruction(disassembled)
 	replace_beaker()
 	return ..()
 

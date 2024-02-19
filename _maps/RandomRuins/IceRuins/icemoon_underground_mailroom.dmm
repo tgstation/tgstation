@@ -113,7 +113,7 @@
 /area/ruin/powered/mailroom)
 "kZ" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
-/obj/item/valentine,
+/obj/item/paper/valentine,
 /obj/item/grenade/c4,
 /obj/item/clothing/accessory/medal/conduct,
 /obj/item/paper/crumpled/muddy/fluff/instructions,
@@ -270,15 +270,11 @@
 /area/icemoon/underground/explored)
 "DY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window{
-	dir = 1
-	},
-/obj/machinery/door/window{
-	dir = 2
-	},
+/obj/machinery/door/window/left/directional/north,
 /obj/structure/window/spawner/directional/east,
 /obj/item/toy/figure/cargotech,
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/noslip,
 /area/ruin/powered/mailroom)
 "FC" = (

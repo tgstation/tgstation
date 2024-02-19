@@ -229,6 +229,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	step_away(src, user, 15)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(user), 15), 3)
 
+/mob/living/silicon/robot/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	if(isnull(weapon) || stat != CONSCIOUS)
+		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING)
+
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode && usr != src)
 		return FALSE

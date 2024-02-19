@@ -15,7 +15,7 @@
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()
-	if (!SSmapping.is_planetary())
+	if (SSmapping.is_planetary())
 		return EVENT_CANT_RUN
 	return ..()
 
