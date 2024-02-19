@@ -38,7 +38,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/festivus_pole
 
 	///how much charge we give off to cells around us when rubbed
-	var/recharge_value = 75
+	var/recharge_value = 75000
 
 
 /mob/living/basic/festivus/Initialize(mapload)

@@ -168,7 +168,7 @@
 	alert_icon_state = "sheet-plasma"
 	alert_desc = "You are protected from high pressure and can convert heat damage into power."
 	/// What do we multiply our damage by to convert it into power?
-	var/power_multiplier = 5
+	var/power_multiplier = 5000
 	/// Multiplier to apply to burn damage, not 0 so that we can reverse it more easily
 	var/burn_multiplier = 0.05
 

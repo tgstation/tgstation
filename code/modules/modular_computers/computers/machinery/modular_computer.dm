@@ -140,7 +140,7 @@
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(isnull(cell) || cell.percent() >= 100)
 		return
-	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5
+	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5 // Why halve it?
 	if(!use_power_from_net(power_to_draw))
 		return
 	cell.give(power_to_draw)

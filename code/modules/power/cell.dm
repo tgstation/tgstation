@@ -57,7 +57,7 @@
 	if(empty)
 		charge = 0
 	if(ratingdesc)
-		desc += " This one has a rating of [display_energy(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
+		desc += " This one has a rating of [display_joules(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
 	update_appearance()
 
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
@@ -137,27 +137,32 @@
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
 
-// use power from a cell
-/obj/item/stock_parts/cell/use(used, force)
-	if(rigged && used > 0)
+/// Use power from the cell.
+/// Args:
+/// - used: Amount of power in joules to use.
+/// - force: If true, uses the remaining power from the cell if there isn't enough power to supply the demand. If false, n
+/// Returns: The power used from the cell in joules.
+/obj/item/stock_parts/cell/use(used, force = FALSE)
+	var/power_used = min(used, charge)
+	if(rigged && power_used > 0)
 		explode()
-		return FALSE
+		return 0 // The cell decided to explode so we won't be able to use it.
 	if(!force && charge < used)
-		return FALSE
-	charge = max(charge - used, 0)
+		return 0
+	charge -= power_used
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return TRUE
+	return power_used
 
-// recharge the cell
+/// Recharge the cell.
+/// Args:
+/// - amount: The amount of energy to give to the cell in joules.
+/// Returns: The power given to the cell in joules.
 /obj/item/stock_parts/cell/proc/give(amount)
-	if(rigged && amount > 0)
-		explode()
-		return 0
-	if(maxcharge < amount)
-		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	if(rigged && amount > 0)
+		explode()
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)
@@ -180,9 +185,9 @@
 /obj/item/stock_parts/cell/proc/explode()
 	if(!charge)
 		return
-	var/range_devastation = -1 //round(charge/11000)
-	var/range_heavy = round(sqrt(charge)/60)
-	var/range_light = round(sqrt(charge)/30)
+	var/range_devastation = -1
+	var/range_heavy = round(sqrt(charge / (3.6 * STANDARD_CELL_CHARGE)))
+	var/range_light = round(sqrt(charge / (0.9 * STANDARD_CELL_CHARGE)))
 	var/range_flash = range_light
 	if(!range_light)
 		rigged = FALSE
@@ -193,7 +198,6 @@
 	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
 	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
 
-	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
 	qdel(src)
 

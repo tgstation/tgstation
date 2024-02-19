@@ -146,8 +146,8 @@
 	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
-			charging_cell.give(charging_cell.chargerate * recharge_coeff * seconds_per_tick / 2)
-			use_power(active_power_usage * recharge_coeff * seconds_per_tick)
+			var/power_used = charging_cell.give(charging_cell.chargerate * recharge_coeff * seconds_per_tick / 2)
+			use_power(power_used)
 			using_power = TRUE
 		update_appearance()
 

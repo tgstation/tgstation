@@ -40,8 +40,14 @@
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
+///Changes the energy of the crystal stomach.
+///Args:
+/// - amount: The change of the energy, in joules.
+///Returns: The amount of energy that actually got changed in joules.
 /obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
-	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - crystal_charge, ETHERHEAL_CHARGE_DANGEROUS - crystal_charge)
+	crystal_charge = crystal_charge + amount
+	return amount_changed
 
 /obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
 	switch(crystal_charge)

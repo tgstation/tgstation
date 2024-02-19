@@ -401,7 +401,7 @@
 	if(!silent)
 		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
 	toggle_steam()
-	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+	use_power(active_power_usage * time / (1 SECONDS)) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/coffeemaker/proc/stop_operating()

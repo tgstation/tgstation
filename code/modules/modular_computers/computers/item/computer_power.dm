@@ -9,11 +9,11 @@
 
 	if(!internal_cell)
 		return FALSE
-	if(internal_cell.use(amount JOULES))
+	if(internal_cell.use(amount))
 		return TRUE
 	if(!check_programs)
 		return FALSE
-	internal_cell.use(min(amount JOULES, internal_cell.charge)) //drain it anyways.
+	internal_cell.use(min(amount, internal_cell.charge)) //drain it anyways.
 	if(active_program?.program_flags & PROGRAM_RUNS_WITHOUT_POWER)
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(close_all_programs))

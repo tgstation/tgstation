@@ -11,9 +11,12 @@
 #define SOLAR_TRACK_AUTO 2
 
 ///conversion ratio from joules to watts
-#define WATTS / 0.002
+//#define WATTS / 0.002
 ///conversion ratio from watts to joules
-#define JOULES * 0.002
+//#define JOULES * 0.002
+
+///The amount of energy, in joules, a standard powercell has.
+#define STANDARD_CELL_CHARGE 1e6
 
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 

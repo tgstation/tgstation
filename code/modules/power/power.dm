@@ -448,9 +448,9 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy WATTS)
+		source_area.use_power(drained_energy)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy WATTS //convert from "joules" to "watts"
+		var/drained_power = drained_energy
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)

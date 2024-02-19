@@ -174,7 +174,7 @@
 	// excess power into watts when charging cells.
 	// With the current configuration of wait=20 and CELLRATE=0.002, this
 	// means that one unit is 1 kJ.
-	return display_joules(energy_to_joules(units) WATTS)
+	return display_joules(energy_to_joules(units))
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)

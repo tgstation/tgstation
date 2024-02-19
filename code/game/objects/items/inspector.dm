@@ -29,7 +29,7 @@
 	///Power used per print in cell units
 	var/power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 	///Power used to say an error message
-	var/power_to_speak = 1
+	var/power_to_speak = 1e3
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()

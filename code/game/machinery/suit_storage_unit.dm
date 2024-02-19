@@ -563,7 +563,7 @@
 
 	var/cell_charged = cell.give(final_charge_rate * seconds_per_tick)
 	if(cell_charged)
-		use_power((active_power_usage + final_charge_rate) * seconds_per_tick)
+		use_power(active_power_usage * seconds_per_tick + cell_charged)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

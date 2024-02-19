@@ -244,8 +244,7 @@
 		return
 	if(istype(stomach))
 		balloon_alert(ethereal, "transferred power")
-		stomach.adjust_charge(-APC_POWER_GAIN)
-		cell.give(APC_POWER_GAIN)
+		cell.give(-stomach.adjust_charge(-APC_POWER_GAIN))
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 
