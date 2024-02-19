@@ -99,6 +99,9 @@
 	catwalk_type = "smoothiron"
 
 //Airless variants of the above
+/turf/open/floor/catwalk_floor/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/catwalk_floor/iron/airless
 	initial_gas_mix = AIRLESS_ATMOS
 

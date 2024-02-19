@@ -80,6 +80,9 @@
 	floor_tile = /obj/item/stack/tile/rglass
 	alpha_to_leave = 206
 
+/turf/open/floor/glass/reinforced/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
+
 /turf/open/floor/glass/reinforced/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
