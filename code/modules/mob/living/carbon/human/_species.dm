@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				qdel(existing_organ)
 			continue
 
-		 // we don't want to remove organs that are not the default for this species
+		// we don't want to remove organs that are not the default for this species
 		if(!isnull(existing_organ))
 			if(!isnull(old_species) && existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
 				continue
