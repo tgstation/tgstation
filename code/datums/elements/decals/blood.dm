@@ -23,18 +23,20 @@
 		// It's something which takes on the look of other items, probably
 		icon = I.icon
 		icon_state = I.icon_state
+	var/icon/icon_for_size = icon(icon, icon_state)
+	var/scale_factor_x = icon_for_size.Width()/world.icon_size
+	var/scale_factor_y = icon_for_size.Height()/world.icon_size
 	var/static/list/blood_splatter_appearances = list()
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
-	var/index = "[REF(icon)]-[icon_state]"
+	var/index = "[scale_factor_x]-[scale_factor_y]"
 	pic = blood_splatter_appearances[index]
+	pic.color = _color
 
 	if(!pic)
-		var/icon/blood_splatter_icon = icon(I.icon, I.icon_state, , 1) //icon of the item that will become splattered
-		var/icon/blood_icon = icon(_icon, _icon_state) //icon of the blood that we apply
-		blood_icon.Scale(blood_splatter_icon.Width(), blood_splatter_icon.Height())
-		blood_splatter_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
-		blood_splatter_icon.Blend(blood_icon, ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-		pic = mutable_appearance(blood_splatter_icon, I.icon_state)
+		var/mutable_appearance/blood_splatter = mutable_appearance(_icon, _icon_state, appearance_flags = RESET_COLOR) //MA of the blood that we apply
+		blood_splatter.transform = blood_splatter.transform.Scale(scale_factor_x, scale_factor_y)
+		blood_splatter.blend_mode = BLEND_INSET_OVERLAY
+		pic = blood_splatter
 		blood_splatter_appearances[index] = pic
 	return TRUE
 
