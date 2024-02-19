@@ -40,11 +40,6 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/corgi
 
-GLOBAL_LIST_INIT(gondola_recipes, list ( \
-	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	))
-
 /obj/item/stack/sheet/animalhide/corgi/five
 	amount = 5
 
@@ -58,6 +53,12 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/mothroach/five
 	amount = 5
+
+GLOBAL_LIST_INIT(gondola_recipes, list ( \
+	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1, check_density = FALSE, category = CAT_FURNITURE), \
+	))
 
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"

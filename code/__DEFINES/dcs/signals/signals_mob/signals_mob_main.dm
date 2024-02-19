@@ -243,3 +243,6 @@
 
 /// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
 #define COMSIG_MOB_SLIPPED "mob_slipped"
+
+/// from /mob/proc/key_down(): (key, client/client, full_key)
+#define COMSIG_MOB_KEYDOWN "mob_key_down"
