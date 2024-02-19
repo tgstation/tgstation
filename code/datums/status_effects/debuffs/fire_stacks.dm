@@ -176,7 +176,7 @@
 		qdel(src)
 		return TRUE
 
-	deal_damage(seconds_between_ticks)
+	deal_damage(seconds_per_tick)
 
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
 	if(on_fire)

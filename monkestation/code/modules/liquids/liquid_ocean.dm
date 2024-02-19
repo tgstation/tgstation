@@ -601,13 +601,9 @@ GLOBAL_LIST_INIT(the_lever, list())
 	var/mob/living/burn_living = burn_target
 	burn_living.AddElement(/datum/element/perma_fire_overlay)
 	burn_living.ignite_mob()
-	burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
-	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
-
+	burn_living.adjust_fire_stacks(20 * seconds_per_tick)
 	burn_living.adjustFireLoss(20 * seconds_per_tick)
-	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
-		burn_living.adjust_fire_stacks(20 * seconds_per_tick)
-		burn_living.ignite_mob()
+
 /turf/open/floor/plating/ocean/dark/rock/medium
 	icon_state = "seafloor_med"
 	base_icon_state = "seafloor_med"
