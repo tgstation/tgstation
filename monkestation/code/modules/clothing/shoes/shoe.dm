@@ -63,8 +63,8 @@
 	force = 10
 	throwforce = 15
 	sharpness = SHARP_POINTY
-	attack_verb_continuous = list("attacks", "slices", "slashes", "cuts")
-	attack_verb_simple = list("attack", "slice", "slash", "cut")
+	attack_verb_continuous = list("attacks", "slices", "slashes", "cuts", "stabs")
+	attack_verb_simple = list("attack", "slice", "slash", "cut", "stab")
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
