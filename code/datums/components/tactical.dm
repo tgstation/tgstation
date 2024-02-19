@@ -53,7 +53,8 @@
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-
+	if(!source)
+		source = parent
 	if(!user)
 		user = source.loc
 	if(!istype(user))
