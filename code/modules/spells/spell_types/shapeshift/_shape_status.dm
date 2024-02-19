@@ -189,7 +189,7 @@
 	// is no longer in control of the shapeshifted mob, such as mindswapping out of a shapeshift
 	if(!QDELETED(source_spell) && source_spell.owner == owner)
 		source_spell.Grant(caster_mob)
-	else if(owner?.contents)
+	if(owner?.contents)
 		// Prevent round removal and consuming stuff when losing shapeshift
 		for(var/atom/movable/thing as anything in owner.contents)
 			thing.forceMove(get_turf(owner))
