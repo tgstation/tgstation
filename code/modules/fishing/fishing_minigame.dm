@@ -18,9 +18,15 @@
 // Acceleration mod when bait is over fish
 #define FISH_ON_BAIT_ACCELERATION_MULT 0.6
 /// The minimum velocity required for the bait to bounce
-#define BAIT_MIN_VELOCITY_BOUNCE 200
+#define BAIT_MIN_VELOCITY_BOUNCE 150
 /// The extra deceleration of velocity that happens when the bait switches direction
-#define BAIT_DECELERATION_MULT 2
+#define BAIT_DECELERATION_MULT 1.5
+
+/// Reduce initial completion rate depending on difficulty
+#define MAX_FISH_COMPLETION_MALUS 15
+/// The window of time between biting phase and back to baiting phase
+#define BITING_TIME_WINDOW 4 SECONDS
+
 
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
@@ -162,6 +168,8 @@
 		if(rod.line.fishing_line_traits & FISHING_LINE_STIFF)
 			completion_loss += 1
 			completion_gain -= 1
+		if(rod.line.fishing_line_traits & FISHING_LINE_AUTOREEL)
+			special_effects |= FISHING_MINIGAME_AUTOREEL
 	if(rod.hook)
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_WEIGHTED)
 			bait_bounce_mult = 0.1
@@ -179,6 +187,9 @@
 
 	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
 	difficulty = clamp(round(difficulty), 1, 100)
+
+	if(difficulty > FISHING_EASY_DIFFICULTY)
+		completion -= round(MAX_FISH_COMPLETION_MALUS * (difficulty/100), 1)
 
 	if(HAS_TRAIT(user, TRAIT_REVEAL_FISH) || (user.mind && HAS_TRAIT(user.mind, TRAIT_REVEAL_FISH)))
 		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
@@ -259,7 +270,7 @@
 		return
 	if(phase == WAIT_PHASE) //Reset wait
 		send_alert("miss!")
-		start_baiting_phase()
+		start_baiting_phase(TRUE)
 	else if(phase == BITING_PHASE)
 		start_minigame_phase()
 	return COMSIG_MOB_CANCEL_CLICKON
@@ -302,14 +313,19 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/datum/fishing_challenge/proc/start_baiting_phase()
+/datum/fishing_challenge/proc/start_baiting_phase(penalty = FALSE)
+	var/wait_time
+	if(penalty)
+		wait_time = min(timeleft(next_phase_timer) + rand(3 SECONDS, 5 SECONDS), 30 SECONDS)
+	else
+		wait_time = rand(1 SECONDS, 30 SECONDS)
+		if(special_effects & FISHING_MINIGAME_AUTOREEL && wait_time >= 15 SECONDS)
+			wait_time = max(wait_time - 7.5 SECONDS, 15 SECONDS)
 	deltimer(next_phase_timer)
 	phase = WAIT_PHASE
 	//Bobbing animation
 	animate(lure, pixel_y = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-	//Setup next phase
-	var/wait_time = rand(1 SECONDS, 30 SECONDS)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE)
 
 /datum/fishing_challenge/proc/start_biting_phase()
@@ -342,9 +358,11 @@
 		send_alert("!!!")
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
+	if(special_effects & FISHING_MINIGAME_AUTOREEL)
+		start_minigame_phase(auto_reel = TRUE)
+		return
 	// Setup next phase
-	var/wait_time = rand(3 SECONDS, 6 SECONDS)
-	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), wait_time, TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), BITING_TIME_WINDOW, TIMER_STOPPABLE)
 
 ///The damage dealt per second to the fish when FISHING_MINIGAME_RULE_KILL is active.
 #define FISH_DAMAGE_PER_SECOND 2
@@ -366,7 +384,21 @@
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
 		reward.adjust_health(reward.health - damage)
 
-/datum/fishing_challenge/proc/start_minigame_phase()
+/datum/fishing_challenge/proc/start_minigame_phase(auto_reel = FALSE)
+	if(auto_reel)
+		completion *= 1.3
+	else
+		var/time_left = timeleft(next_phase_timer)
+		switch(time_left)
+			if(0 to BITING_TIME_WINDOW - 3 SECONDS)
+				completion *= 0.65
+			if(BITING_TIME_WINDOW - 3 SECONDS to BITING_TIME_WINDOW - 2 SECONDS)
+				completion *= 0.82
+			if(BITING_TIME_WINDOW - 1 SECONDS to BITING_TIME_WINDOW - 0.5 SECONDS)
+				completion *= 1.2
+			if(BITING_TIME_WINDOW - 0.5 SECONDS to BITING_TIME_WINDOW)
+				completion *= 1.4
+	completion = round(completion, 1)
 	if(!prepare_minigame_hud())
 		return
 	phase = MINIGAME_PHASE
@@ -691,3 +723,5 @@
 #undef REELING_STATE_UP
 #undef REELING_STATE_DOWN
 
+#undef MAX_FISH_COMPLETION_MALUS
+#undef BITING_TIME_WINDOW

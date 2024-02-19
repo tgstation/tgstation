@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "boulders are no longer lost when teleported by the BRM"
+  - bugfix: "batch processing cooldown works when teleporting multiple boulders"

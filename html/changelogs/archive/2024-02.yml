@@ -504,3 +504,81 @@
   - bugfix: Lifeline can no longer track mobs with suit sensors off
   Roastglue:
   - bugfix: Crafting Bulgogi no longer makes Bibimbap. It instead makes Bulgogi.
+2024-02-19:
+  Cursor:
+  - rscadd: Security Officers are now Haram.
+  Ghommie:
+  - qol: Circuit multitools can now mark (visible) items worn/held by a mob.
+  Kashargul:
+  - qol: makes the tgui_input_number user friendly for negative and decimal inputs
+  - code_imp: the  onBlur={(_, value) => onBlur(value)} event should now be used on
+      all uses of RestrictedInput to ensure that the number is fully sanitized whenever
+      the user leaves the field or submits it through a button
+  - qol: hides the delete button on the main tab allows to reorder all other chat
+      tabs
+  LT3:
+  - rscadd: The tram has been equipped with enhanced safety glass to reduce the severity
+      of crew injuries
+  LemonInTheDark:
+  - bugfix: Maps loaded in after roundstart will no longer have broken smoothing
+  Melbert:
+  - rscadd: Valentines Day now polls all players for candidates when it triggers rather
+      than forcing all players to be a Valentine. Consent is important.
+  - rscadd: Valentine silicons now gain special laws pertaining to their date.
+  - qol: Valentines Cards are now paper, so you can write on them, stamp them, or
+      burn them.
+  - qol: Valentine's roundend report no longer takes up a massive amount of space
+      and also no longer sound so, so weird.
+  - bugfix: Fixes AI double-click tracking
+  - rscdel: You can only vote for 1 map at a time again
+  - admin: You can now set someone's TC to 0
+  - admin: Removing Traitor from automatically removes the uplink from them
+  - admin: Removing Uplink from someone no longer wipes ALL of their memories
+  Rhials:
+  - bugfix: Removes the double-newscaster from the arrivals sec post.
+  SyncIt21:
+  - qol: adds examines & screentips for crowbar, screwdriver acts to BRM & refinery
+      machines
+  - qol: adds examines about the number of boulders stored & processed to BRM & refinery
+      machines
+  - qol: BRM now has its lights turn on/off depending on wether automatic boulder
+      retrieval is on/off for visual clarity along with examines
+  - qol: refinery machines now display ballon alerts & plays sounds more frequently
+      when processing boulders for better feedback
+  - bugfix: vents now spawn boulders of all sizes & not just small ones
+  - bugfix: expanded gulag boulders now have correct materials in them.
+  - bugfix: manual tapping of vents now has a cooldown applied as intended.
+  - bugfix: BRM has its light turned off when area power goes off
+  - bugfix: boulders ejected from refineries by hand no longer teleport all over the
+      place occasionally.
+  - bugfix: refineries no longer eject boulders with 0 durability
+  - bugfix: Boulders & refineries no longer pile up on top of BRM's & refineries in
+      long rounds. Their locs have to be clear of boulders before they spit out more
+      boulders to prevent a large pile of boulders from causing lag
+  - bugfix: sheets ejected from lathes no longer get rejected when inserted back which
+      could happen at random, no more boulders with empty materials
+  - code_imp: splits boulder types into its own file along with other items
+  - code_imp: merges & autodocs procs, vars related to boulders
+  - refactor: repaths BRM to a simpler subtype
+  - refactor: BRM now spawns boulders in batches(batch size can be increased with
+      upgraded parts) with a boulder appearing every second. After a batch is processed
+      a 3 second cooldown is applied to stop the conveyer belt from clogging up, With
+      this BRM wires are removed as there is no need for timers to be attached to
+      wires which intefers without our batch processing timings.
+  - bugfix: mecha drill won't use power & do other checks if the target cannot be
+      drilled.
+  - bugfix: mecha drill will stop drilling if the mech moves even without changing
+      direction. Also will use power & check other conditions every drill cycle.
+  - bugfix: Grill checks if the item got deleted to avoid runtimes. Also cook time
+      is set based on the individual items type & not a constant of 20 seconds
+  - bugfix: BBQ ribs can be grilled on a grill but now takes anywhere between 30 to
+      40 seconds to get proper smoked ribs and not lightly smoked ribs or turn into
+      a mouldy mess on a girddle. Delicious.
+  mc-oofert:
+  - rscadd: deathmatch minigame
+  - bugfix: you may not put disposal outlets on cargo shuttle
+  - bugfix: forcefully pushing disposal outlets and chutes deconstructs them instead
+      of making them behave like budget eigenstatium lockers
+  rageguy505:
+  - bugfix: The door above tool storage on birdshot now has maintenance access on
+      it and officials can now enter the CC dock room.

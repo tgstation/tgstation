@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - code_imp: "deathmatch lobbies take 8 seconds to start as to give lighting a breather"
