@@ -251,20 +251,6 @@
 	else
 		disable_alpha()
 
-//Yes this is currently used for JUST shadows. Need to figure out how I want it to work
-/atom/movable/screen/plane_master/frill_under
-	name = "Under Frill"
-	documentation = "Holds anything that should sit UNDER frills. This is currently quite limited, and is only used for \"shadows\"\
-		that persist above a wall even if their frill is masked away"
-	plane = UNDER_FRILL_PLANE
-	render_target = UNDER_FRILL_RENDER_TARGET
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/frill_under/show_to(mob/mymob)
-	. = ..()
-	remove_filter(FRILL_MOB_MASK)
-	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
 ///Contains wall frills
 /atom/movable/screen/plane_master/frill
 	name = "Frill"

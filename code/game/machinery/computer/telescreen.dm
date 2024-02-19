@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/telescreens.dmi'
 	icon_state = "telescreen"
 	base_icon_state = "telescreen"
+	icon_screen = null
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
@@ -42,20 +43,18 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
-	icon = 'icons/obj/machines/status_display.dmi'
-	icon_state = "entertainment_blank" // wallening todo - Should this be merged back into telescreens or keep using status display icons? Icon needs updating regardless.
+	icon = 'icons/obj/machines/telescreens.dmi'
+	icon_state = "telescreen" // wallening todo - Should this be merged back into telescreens or keep using status display icons? Icon needs updating regardless.
 	network = list()
 	density = FALSE
 	circuit = null
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	frame_type = /obj/item/wallframe/telescreen/entertainment
-	var/icon_state_off = "entertainment_blank"
-	var/icon_state_on = "entertainment"
 
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"
-	icon = 'icons/obj/machines/status_display.dmi'
-	icon_state = "entertainment_blank"
+	icon = 'icons/obj/machines/telescreens.dmi'
+	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment) // Wallening todo: Depending on the comment on icon_state, adjust offset. Keep wall_mount element in mind.
@@ -81,10 +80,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/enter
 
 ///Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
-	if(on && icon_state == icon_state_off)
-		icon_state = icon_state_on
-	else
-		icon_state = icon_state_off
 	if(announcement)
 		say(announcement)
 
