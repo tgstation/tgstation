@@ -198,10 +198,6 @@
 		if(bodybound_action.target != caster_mob)
 			continue
 		bodybound_action.Grant(caster_mob)
-
-	
-	
-
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/after_unchange()
