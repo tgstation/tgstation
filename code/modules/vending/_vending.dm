@@ -281,6 +281,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	QDEL_NULL(sec_radio)
+	GLOB.vending_machines_to_restock -= src
 	return ..()
 
 /obj/machinery/vending/can_speak()
