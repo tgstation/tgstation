@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "The DNA scanner's joker button no longer instantly activates itself when the cooldown between uses is done."
