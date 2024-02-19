@@ -7,5 +7,10 @@
 	if(!length(whispers))
 		return
 
-	for(var/mob/living/living in range(rand(7, 10), component.parent))
+	var/center_turf = get_turf(component.parent)
+
+	if(!center_turf)
+		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
+
+	for(var/mob/living/living in range(rand(7, 10), center_turf))
 		to_chat(living, span_hear("[pick(whispers)]"))
