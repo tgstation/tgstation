@@ -19353,6 +19353,19 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
+"eVK" = (
+/obj/structure/table,
+/obj/item/disk/data{
+	pixel_x = 5
+	},
+/obj/item/disk/data{
+	pixel_x = -6
+	},
+/obj/item/disk/data{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/genetics)
 "eVN" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
@@ -31761,9 +31774,9 @@
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "ikY" = (
-/obj/structure/hedge,
 /obj/machinery/light/cold/no_nightlight/directional/west,
-/turf/open/floor/plating,
+/obj/machinery/vending/wardrobe/gene_wardrobe,
+/turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "ilb" = (
 /obj/effect/turf_decal/trimline/purple/line{
@@ -33604,7 +33617,7 @@
 /area/station/command/bridge)
 "iJP" = (
 /obj/structure/hedge,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "iJX" = (
 /obj/machinery/door_buttons/airlock_controller{
@@ -193215,7 +193228,7 @@ wtw
 tUq
 hFL
 maW
-iJP
+eVK
 ikY
 iJP
 ibw
