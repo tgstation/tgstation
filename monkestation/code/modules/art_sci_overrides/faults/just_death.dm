@@ -3,7 +3,6 @@
 	trigger_chance = 1
 	visible_message = "blows someone up with mind."
 
-
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)
 	var/list/mobs = list()
 	var/mob/living/carbon/human

@@ -14,4 +14,3 @@
 /datum/artifact_fault/on_trigger(datum/component/artifact/component)
 	if(component.active)
 		component.artifact_deactivate()
-
