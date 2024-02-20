@@ -3,7 +3,7 @@
 	name = "human-legged monkey"
 	id = SPECIES_MONKEY_HUMAN_LEGGED
 	examine_limb_id = SPECIES_MONKEY
-	changesource_flags = MIRROR_BADMIN | WABBAJACK
+	changesource_flags = MIRROR_BADMIN
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
@@ -13,22 +13,5 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 
-/datum/species/monkey/monkey_freak
-	name = "human-armed monkey"
-	id = SPECIES_MONKEY_FREAK
-	examine_limb_id = SPECIES_MONKEY
-	changesource_flags = MIRROR_BADMIN | WABBAJACK
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
-	)
-
 /mob/living/carbon/human/species/monkey/humand_legged
 	race = /datum/species/monkey/human_legged
-
-/mob/living/carbon/human/species/monkey/monkey_freak
-	race = /datum/species/monkey/monkey_freak

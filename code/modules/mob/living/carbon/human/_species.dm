@@ -433,8 +433,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			wearer.dropItemToGround(equipped_item, force = TRUE)
 
 /datum/species/proc/update_no_equip_flags(mob/living/carbon/wearer, new_flags)
-	if(new_flags)
-		no_equip_flags = new_flags
+	no_equip_flags = new_flags
 	wearer.hud_used?.update_locked_slots()
 	worn_items_fit_body_check(wearer)
 
