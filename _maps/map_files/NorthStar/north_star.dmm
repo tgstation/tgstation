@@ -7953,9 +7953,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "bYp" = (
@@ -10184,9 +10182,6 @@
 /area/station/medical/morgue)
 "cBP" = (
 /obj/effect/spawner/structure/window/hollow/plasma/middle{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -17340,6 +17335,7 @@
 /area/station/security/office)
 "exv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/purple,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "exw" = (
@@ -21756,8 +21752,9 @@
 /area/station/maintenance/floor3/starboard)
 "fLX" = (
 /obj/structure/railing/corner,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/purple,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -21992,8 +21989,8 @@
 /turf/open/floor/grass,
 /area/station/security/courtroom)
 "fPd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -32140,6 +32137,9 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "ixf" = (
@@ -38806,6 +38806,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/structure/window/hollow/plasma/middle,
+/obj/machinery/atmospherics/pipe/smart/simple/purple,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "kiA" = (
@@ -45404,6 +45405,13 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/science/genetics)
+"lRw" = (
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/purple,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/testlab)
 "lRF" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -54173,8 +54181,8 @@
 /area/station/engineering/lobby)
 "obC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -87439,6 +87447,12 @@
 	dir = 5
 	},
 /area/station/security/prison)
+"wLQ" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/testlab)
 "wLV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -88961,10 +88975,10 @@
 "xgo" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/structure/railing,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+/obj/effect/turf_decal/box/red,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "xgC" = (
@@ -313754,7 +313768,7 @@ xpL
 qRI
 mKO
 rDL
-fPd
+wLQ
 jha
 nPE
 xVV
@@ -314781,7 +314795,7 @@ rrs
 bYl
 kiw
 exv
-wMU
+lRw
 fLX
 ixd
 bDn
