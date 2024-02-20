@@ -23,6 +23,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
+	sentience_type = SENTIENCE_SPECIAL
 
 	ai_controller = /datum/ai_controller/basic_controller/headslug
 
