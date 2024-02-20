@@ -1,0 +1,4 @@
+author: "The_Awful and DimWhat"
+delete-after: True
+changes:
+  - rscadd: "Added the ability to store a bonus tiny item in bunnysuits. The syndi one holds small items."
