@@ -22,7 +22,7 @@
 	if(starting_cutout)
 		return INITIALIZE_HINT_LATELOAD
 	if(!pushed_over)
-		AddComponent(/datum/component/tactical)
+		tacticool = AddComponent(/datum/component/tactical)
 
 /obj/item/cardboard_cutout/Destroy()
 	tacticool = null
