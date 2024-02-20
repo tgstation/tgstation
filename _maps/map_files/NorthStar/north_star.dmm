@@ -2714,10 +2714,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/fore)
 "aJD" = (
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "aJE" = (
 /obj/effect/turf_decal/delivery,
@@ -2860,10 +2857,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
-"aLo" = (
-/obj/effect/landmark/start/depsec/supply,
-/turf/open/floor/iron,
-/area/station/cargo/lobby)
 "aLv" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/green/full,
@@ -3258,10 +3251,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "aRl" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -24331,6 +24321,13 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/south,
+/obj/machinery/lift_indicator/directional/south{
+	linked_elevator_id = "com_vator";
+	pixel_y = -36
+	},
+/obj/machinery/button/elevator/directional/south{
+	id = "com_vator"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -36367,7 +36364,6 @@
 /area/station/engineering/supermatter)
 "jxf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/depsec/engineering,
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -38731,10 +38727,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "kca" = (
 /turf/closed/wall/r_wall,
@@ -49514,7 +49507,6 @@
 /area/station/hallway/floor2/fore)
 "mJr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/depsec/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
@@ -50260,7 +50252,6 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
 "mTQ" = (
@@ -51738,12 +51729,8 @@
 /area/station/maintenance/floor3/starboard)
 "nln" = (
 /obj/effect/turf_decal/trimline/red/line,
-/obj/machinery/camera{
-	c_tag = "Engineering Foyer #1";
-	dir = 5;
-	network = list("ss13","engine")
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "nlu" = (
@@ -53762,7 +53749,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/depsec/engineering,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
 "nMz" = (
@@ -56171,10 +56157,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/space/basic,
 /area/station/maintenance/floor1/starboard/fore)
 "osu" = (
 /obj/structure/cable,
@@ -60152,7 +60135,6 @@
 /area/station/command/heads_quarters/cmo)
 "pwY" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
 "pxb" = (
@@ -60528,7 +60510,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/effect/landmark/start/depsec/supply,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
@@ -63318,10 +63299,7 @@
 /area/station/engineering/atmos/pumproom)
 "qnA" = (
 /mob/living/simple_animal/slime,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "qnB" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -67122,10 +67100,7 @@
 "rjB" = (
 /obj/structure/sign/warning/biohazard/directional/east,
 /obj/machinery/light/cold/no_nightlight/directional/east,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "rjD" = (
 /turf/closed/wall,
@@ -69217,7 +69192,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
 "rPK" = (
@@ -69990,10 +69964,7 @@
 /area/station/maintenance/floor1/port)
 "sav" = (
 /obj/effect/turf_decal/box/corners,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "saA" = (
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -72306,7 +72277,6 @@
 /obj/structure/sign/directions/upload/directional/north{
 	pixel_y = 40
 	},
-/obj/structure/ladder,
 /obj/structure/ladder,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor1/fore)
@@ -75072,7 +75042,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
 "tpS" = (
@@ -78877,10 +78846,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Xenobio - Holding Pen"
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "urO" = (
 /obj/machinery/firealarm/directional/east,
@@ -85069,10 +85035,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;bz=82;TEMP=293.15";
-	name = "xenobio BZ floor"
-	},
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "vTY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -116641,7 +116604,7 @@ ncc
 pbF
 iir
 pxk
-aLo
+iir
 fbO
 vyZ
 rhx
