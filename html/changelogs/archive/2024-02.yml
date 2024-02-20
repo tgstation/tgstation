@@ -174,3 +174,9 @@
   Absolucy:
   - qol: Chat messages relating to antag/event token submissions are now properly
       formatted.
+2024-02-20:
+  KittyNoodle:
+  - rscadd: Adds an admin office for AbberantQuerist.
+  Seven:
+  - bugfix: Fixes changelings not being put into their headslug when using last resort
+  - bugfix: 'Fixes changeling headslugs not putting their eggs into dead bodies /:cl:'
