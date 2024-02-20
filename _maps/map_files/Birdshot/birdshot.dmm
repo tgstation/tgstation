@@ -57586,7 +57586,7 @@
 	desc = "A cold, hard place for your final rest.";
 	name = "Morgue Slab"
 	},
-/mob/living/carbon/human/species/monkey/humand_legged{
+/mob/living/carbon/human/species/monkey{
 	name = "Charles";
 	real_name = "Charles"
 	},
