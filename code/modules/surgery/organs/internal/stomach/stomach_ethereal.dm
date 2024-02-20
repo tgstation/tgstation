@@ -45,7 +45,7 @@
 /// - amount: The change of the energy, in joules.
 ///Returns: The amount of energy that actually got changed in joules.
 /obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
-	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - crystal_charge, ETHERHEAL_CHARGE_DANGEROUS - crystal_charge)
+	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - crystal_charge, ETHEREAL_CHARGE_DANGEROUS - crystal_charge)
 	crystal_charge = crystal_charge + amount
 	return amount_changed
 
