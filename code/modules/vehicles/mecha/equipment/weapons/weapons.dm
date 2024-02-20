@@ -552,6 +552,7 @@
 	range = MECHA_MELEE
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
+	projectiles_per_shot = 0
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp
