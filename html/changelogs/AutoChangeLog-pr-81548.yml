@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Regenerative cores (and other monster organs) now work when using it in-hand while resting."

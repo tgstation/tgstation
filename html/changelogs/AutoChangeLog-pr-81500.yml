@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Curators now get a 22.5% cut on credits spent on painting patronages (divided by the number of curators). The service department also gets another, 12.5% cut."
-  - qol: "Added a zoom in and out buttons to the painting UI."
