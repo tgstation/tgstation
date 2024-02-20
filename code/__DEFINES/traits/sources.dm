@@ -86,6 +86,8 @@
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with ctf
 #define CTF_TRAIT "ctf"
+/// Trait associated with deathmatch
+#define DEATHMATCH_TRAIT "deathmatch"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes

@@ -19,6 +19,8 @@
 	var/list/loadouts
 	/// Current map player spawn locations, cleared after spawning
 	var/list/player_spawns = list()
+	/// A list of paths of chosen modifiers that'll be applied when the game starts.
+	var/list/modifiers = list()
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
@@ -48,6 +50,7 @@
 	map = null
 	location = null
 	loadouts = null
+	modifiers = null
 
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
@@ -65,7 +68,7 @@
 /datum/deathmatch_lobby/proc/find_spawns_and_start_delay(datum/lazy_template/source, list/atoms)
 	SIGNAL_HANDLER
 	for(var/thing in atoms)
-		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn)) 
+		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn))
 			player_spawns += thing
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
@@ -126,6 +129,10 @@
 	new_player.equipOutfit(loadout) // Loadout
 	players[ckey]["mob"] = new_player
 
+	///Apply any chosen modifier to the player
+	for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier].apply(new_player)
+
 	// register death handling.
 	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING), PROC_REF(player_died))
 	if (global_chat)
@@ -145,10 +152,10 @@
 	if(players.len)
 		var/list/winner_info = players[pick(players)]
 		if(!isnull(winner_info["mob"]))
-			winner = winner_info["mob"] //only one should remain anyway but incase of a draw 
-	
+			winner = winner_info["mob"] //only one should remain anyway but incase of a draw
+
 	announce(span_reallybig("THE GAME HAS ENDED.<BR>THE WINNER IS: [winner ? winner.real_name : "no one"]."))
-	
+
 	for(var/ckey in players)
 		var/mob/loser = players[ckey]["mob"]
 		UnregisterSignal(loser, list(COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING))
@@ -172,7 +179,7 @@
 			if(player_info["mob"] && player_info["mob"] == player)
 				ckey = potential_ckey
 				break
-	
+
 	if(!islist(players[ckey])) // if we STILL didnt find a good ckey
 		return
 
@@ -181,7 +188,7 @@
 	var/mob/dead/observer/ghost = !player.client ? player.get_ghost() : player.ghostize() //this doesnt work on those who used the ghost verb
 	if(!isnull(ghost))
 		add_observer(ghost, (host == ckey))
-	
+
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
 	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
@@ -237,7 +244,7 @@
 					players[key]["host"] = TRUE
 					break
 			GLOB.deathmatch_game.passoff_lobby(ckey, host)
-	
+
 	remove_ckey_from_play(ckey)
 
 /datum/deathmatch_lobby/proc/join(mob/player)
@@ -274,6 +281,9 @@
 		if (players[player_key]["loadout"] in loadouts)
 			continue
 		players[player_key]["loadout"] = loadouts[1]
+
+	for(var/deathmatch_mod in modifiers)
+		GLOB.deathmatch_game.modifiers[deathmatch_mod].on_map_changed(src)
 
 /datum/deathmatch_lobby/proc/clear_reservation()
 	if(isnull(location) || isnull(map))
@@ -427,6 +437,17 @@
 				if ("global_chat")
 					global_chat = !global_chat
 					return TRUE
+				if("toggle_modifier")
+					var/datum/deathmatch_modifier/modpath = text2path(params["match_mod"])
+					if(!istype(modpath))
+						return TRUE
+					var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
+					if(modpath in modifiers)
+						chosen_modifier.unselect(src)
+					else if(chosen_modifier.selectable(src))
+						chosen_modifier.on_select(src)
+						modifiers += modpath
+					return TRUE
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
 				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby!")
@@ -436,5 +457,6 @@
 				if ("Force start")
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
 					start_game()
+
 
 

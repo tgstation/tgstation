@@ -26,12 +26,15 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/Initialize(mapload)
 	. = ..()
+	add_component_parts()
+	refresh_parts()
+
+/obj/vehicle/ridden/wheelchair/motorized/proc/add_component_parts()
 	// Add tier 1 stock parts so that non-crafted wheelchairs aren't empty
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	power_cell = new /obj/item/stock_parts/cell(src)
-	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
@@ -221,3 +224,12 @@
 	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
 	return TRUE
+
+///Version with slightly better components. Used by deathmatches.
+/obj/vehicle/ridden/wheelchair/motorized/improved
+
+/obj/vehicle/ridden/wheelchair/motorized/improved/add_component_parts()
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
+	power_cell = new /obj/item/stock_parts/cell/upgraded/plus(src)
