@@ -1064,6 +1064,9 @@
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
 
+/mob/living/carbon/proc/get_footprint_sprite()
+	return FOOTPRINT_SPRITE_PAWS
+
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")

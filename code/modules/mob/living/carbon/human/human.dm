@@ -24,7 +24,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
-	AddComponent(/datum/component/bloodysoles/feet)
+	AddComponent(/datum/component/bloodysoles/feet, FOOTPRINT_SPRITE_SHOES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human/, should_strip))
 	var/static/list/loc_connections = list(
@@ -346,6 +346,10 @@
 			target_zone = get_bodypart(check_zone(user.zone_selected))
 		var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
+
+/mob/living/carbon/human/get_footprint_sprite()
+	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
+	return shoes?.footprint_sprite || L?.footprint_sprite
 
 #define CHECK_PERMIT(item) (item && item.item_flags & NEEDS_PERMIT)
 
