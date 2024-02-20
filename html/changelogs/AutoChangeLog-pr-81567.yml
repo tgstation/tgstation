@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "if you died as a changeling/anyone that has cool mind spells you do not get them in deathmatch"
