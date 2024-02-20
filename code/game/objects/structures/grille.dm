@@ -339,15 +339,14 @@
 	var/turf/T = get_turf(src)
 	if(T.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	// Shocking hurts the grille (to weaken monkey powersinks)
-	if(prob(50))
-		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/obj/structure/cable/C = T.get_cable_node()
-	if(C)
-		if(electrocute_mob(user, C, src, 1, TRUE))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
+	var/obj/structure/cable/cable_node = T.get_cable_node()
+	if(cable_node)
+		if(electrocute_mob(user, cable_node, src, 1, TRUE))
+			if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
+				take_damage(1, BURN, FIRE, sound_effect = FALSE)
+			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+			sparks.set_up(3, 1, src)
+			sparks.start()
 			return TRUE
 		else
 			return FALSE
