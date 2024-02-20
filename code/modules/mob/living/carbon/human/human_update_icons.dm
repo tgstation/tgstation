@@ -102,9 +102,7 @@ There are several things that need to be remembered:
 		var/icon_file
 		var/woman
 		//BEGIN SPECIES HANDLING
-		if((bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-			icon_file = MONKEY_UNIFORM_FILE
-		else if((bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if((bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
 		else if(dna.species.sexes && (bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
@@ -709,9 +707,6 @@ generate/load female uniform sprites matching all previously decided variables
 				.[2] = offsets["y"]
 	else
 		.[2] = worn_y_offset
-	if(ishuman(loc) && slot_flags != ITEM_SLOT_FEET) /// we adjust the human body for high given by body parts, execpt shoes, because they are always on the bottom
-		var/mob/living/carbon/human/human_holder = loc
-		.[2] += human_holder.get_top_offset()
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)
@@ -820,9 +815,20 @@ generate/load female uniform sprites matching all previously decided variables
 		"Lenghten_Torso",
 		"Gnome_Cut_Torso",
 		"Gnome_Cut_Legs",
+		"Monkey_Torso",
+		"Monkey_Legs",
+		"Monkey_Gnome_Cut_Torso",
+		"Monkey_Gnome_Cut_Legs",
 	))
 
 	switch(get_mob_height())
+		// Don't set this one directly, use TRAIT_DWARF
+		if(MONKEY_HEIGHT_DWARF)
+			appearance.add_filter("Monkey_Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3))
+			appearance.add_filter("Monkey_Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 6))
+		if(MONKEY_HEIGHT_MEDIUM)
+			appearance.add_filter("Monkey_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Monkey_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 6))
 		// Don't set this one directly, use TRAIT_DWARF
 		if(HUMAN_HEIGHT_DWARF)
 			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))

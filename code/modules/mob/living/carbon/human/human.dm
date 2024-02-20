@@ -717,6 +717,10 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
+		var/static/list/monkey_heights = list(
+			MONKEY_HEIGHT_DWARF,
+			MONKEY_HEIGHT_MEDIUM,
+		)
 		var/static/list/heights = list(
 			HUMAN_HEIGHT_SHORTEST,
 			HUMAN_HEIGHT_SHORT,
@@ -725,7 +729,10 @@
 			HUMAN_HEIGHT_TALLER,
 			HUMAN_HEIGHT_TALLEST
 		)
-		if(!(var_value in heights))
+		if(ismonkey(src))
+			if(!(var_value in monkey_heights))
+				return
+		else if(!(var_value in heights))
 			return
 
 		. = set_mob_height(var_value)

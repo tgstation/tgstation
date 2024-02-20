@@ -3649,6 +3649,7 @@
 #include "code\modules\client\preferences\species_features\ethereal.dm"
 #include "code\modules\client\preferences\species_features\felinid.dm"
 #include "code\modules\client\preferences\species_features\lizard.dm"
+#include "code\modules\client\preferences\species_features\monkey.dm"
 #include "code\modules\client\preferences\species_features\moth.dm"
 #include "code\modules\client\preferences\species_features\mushperson.dm"
 #include "code\modules\client\preferences\species_features\mutants.dm"

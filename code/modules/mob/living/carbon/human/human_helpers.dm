@@ -271,8 +271,10 @@
 /mob/living/carbon/human/proc/set_mob_height(new_height)
 	if(mob_height == new_height)
 		return FALSE
-	if(new_height == HUMAN_HEIGHT_DWARF)
-		CRASH("Don't set height to dwarf height directly, use dwarf trait")
+	if(new_height == HUMAN_HEIGHT_DWARF || new_height == MONKEY_HEIGHT_DWARF)
+		CRASH("Don't set height to dwarf height directly, use dwarf trait instead.")
+	if(new_height == new_height == MONKEY_HEIGHT_MEDIUM)
+		CRASH("Don't set height to monkey height directly, use monkified gene/species instead.")
 
 	mob_height = new_height
 	regenerate_icons()
@@ -286,10 +288,13 @@
  * Returns a mob height num
  */
 /mob/living/carbon/human/proc/get_mob_height()
+	var/returned_height = mob_height
+	if(ismonkey(src))
+		returned_height = MONKEY_HEIGHT_MEDIUM
 	if(HAS_TRAIT(src, TRAIT_DWARF))
-		return HUMAN_HEIGHT_DWARF
+		returned_height /= 2
 
-	return mob_height
+	return returned_height
 
 /**
  * Makes a full copy of src and returns it.
