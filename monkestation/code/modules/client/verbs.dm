@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	client_token_holder.in_queued_tier = tier
 	client_token_holder.in_queue = new chosen_antagonist
 
-	to_chat(src, "Your request has been sent to the admins.")
+	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
 	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> \
 							[ADMIN_APPROVE_ANTAG_TOKEN(src)] [ADMIN_REJECT_ANTAG_TOKEN(src)] | \
 							[src] has requested to use their antag token to be a [chosen_antagonist].")]")
@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(confirm == "Yes")
 		if(client_token_holder.event_tokens >= selected_event.token_cost)
 			client_token_holder.queued_token_event = selected_event
-			to_chat(src, "Your request has been sent.")
+			to_chat(src, span_boldnotice("Your request has been sent."))
 			logger.Log(LOG_CATEGORY_META, "[usr] has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).")
 			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
 																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \

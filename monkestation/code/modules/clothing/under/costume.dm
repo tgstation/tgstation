@@ -141,6 +141,11 @@ BUNNY SUITS
 	body_parts_covered = CHEST|GROIN|LEGS
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/costume/playbunny/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/tiny)
+
 /obj/item/clothing/under/syndicate/syndibunny //heh
 	name = "blood-red bunny suit"
 	desc = "The staple of any bunny themed syndicate assassins. Are those carbon nanotube stockings?"
@@ -148,6 +153,11 @@ BUNNY SUITS
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "syndibunny"
 	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/under/syndicate/syndibunny/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/small)
 
 /obj/item/clothing/under/costume/playbunny/magician
 	name = "magician's bunny suit"
@@ -157,6 +167,19 @@ BUNNY SUITS
 	greyscale_config_worn = null
 	greyscale_colors = null
 	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/under/costume/playbunny/magician/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/tiny/magician)
+
+/datum/storage/pockets/tiny/magician/New() //this is probably a good idea
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(
+		/obj/item/gun/magic/wand,
+		/obj/item/warp_whistle,
+	))
+	exception_hold = exception_cache
 
 /obj/item/clothing/under/costume/playbunny/centcom
 	name = "centcom bunnysuit"

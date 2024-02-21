@@ -76098,6 +76098,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/white/line,
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "xlV" = (

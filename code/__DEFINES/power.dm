@@ -15,8 +15,8 @@
 
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
-#define KW * 1000
-#define MW * 1000000
-#define GW * 1000000000
-#define TW * 1000000000000
-#define PW * 1000000000000000
+#define KW *1000
+#define MW KW*1000
+#define GW MW*1000
+#define TW GW*1000
+#define PW TW*1000

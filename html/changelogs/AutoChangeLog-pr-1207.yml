@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fix kidnap objectives having incorrect area names (i.e Port instead of West)"

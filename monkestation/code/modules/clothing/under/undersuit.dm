@@ -62,14 +62,6 @@
 	icon_state = "syndimaid"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/civilian/janitor
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
-
-/obj/item/clothing/under/rank/civilian/janitor/maid //heckin subtypes
-	icon = 'icons/obj/clothing/under/civilian.dmi'
-	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
-
 /obj/item/clothing/under/wonka
 	name = "wonky suit"
 	desc = "Come with me, and you'll be, in a world of OSHA violations!"
