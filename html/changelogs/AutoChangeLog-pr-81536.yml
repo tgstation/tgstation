@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Grill checks if the item got deleted to avoid runtimes. Also cook time is set based on the individual items type & not a constant of 20 seconds"
-  - bugfix: "BBQ ribs can be grilled on a grill but now takes anywhere between 30 to 40 seconds to get proper smoked ribs and not lightly smoked ribs or turn into a mouldy mess on a girddle. Delicious."
