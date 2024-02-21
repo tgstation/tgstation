@@ -379,7 +379,6 @@
 		if(payees[AM] > 0)
 			change = TRUE
 			var/obj/item/holochip/holocred = new /obj/item/holochip(AM.loc, payees[AM]) //Change is made in holocredits exclusively.
-			holocred.name = "[holocred.credits] credit holochip"
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(!H.put_in_hands(holocred))
