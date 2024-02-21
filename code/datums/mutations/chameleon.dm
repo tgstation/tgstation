@@ -23,6 +23,7 @@
 /datum/mutation/human/chameleon/changeling
 	instability = 0
 	power_coeff = 2.5
+	locked = TRUE
 
 /**
  * Resets the alpha of the host to the chameleon default if they move.
