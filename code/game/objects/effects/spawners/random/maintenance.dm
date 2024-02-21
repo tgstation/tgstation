@@ -7,7 +7,7 @@
 // A subtype of maintenance loot spawner that does not spawn any decals, for when you want to place them on chasm turfs and such
 // decals such as ashes will cause NeverShouldHaveComeHere() to fail on such turfs, which creates annoying rng based CI failures
 /obj/effect/spawner/random/maintenance/no_decals/can_spawn(atom/loot)
-	return !istype(loot, obj/effect/decal)
+	return !istype(loot, /obj/effect/decal)
 
 /obj/effect/spawner/random/maintenance/examine(mob/user)
 	. = ..()
