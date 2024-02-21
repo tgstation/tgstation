@@ -171,6 +171,25 @@
 	blend_mode = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
+	// We start out hidden
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/gravpulse/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	RegisterSignal(GLOB, SIGNAL_ADDTRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_enabled))
+	RegisterSignal(GLOB, SIGNAL_REMOVETRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_disabled))
+	if(HAS_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset)))
+		distortion_enabled()
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_enabled(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_disabled(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	hide_plane()
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -384,7 +403,7 @@
 	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		// You might ask "why not use ambient occlusion?"
 		// Because it's one of the most expensive possible visual effects, and there is NO reason to use it for runechat
-		// When we can get an ok backdrop like this 
+		// When we can get an ok backdrop like this
 		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 /atom/movable/screen/plane_master/balloon_chat

@@ -7,6 +7,44 @@
 	pixel_x = -176
 	pixel_y = -176
 
+/atom/movable/warp_effect/Initialize(mapload)
+	. = ..()
+	var/turf/new_turf = get_turf(src)
+	if(new_turf)
+		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
+/atom/movable/warp_effect/Destroy(force)
+	// Just in case I've forgotten how the movement api works
+	var/offset = GET_TURF_PLANE_OFFSET(loc)
+	REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset), ref(src))
+	return ..()
+
+/atom/movable/warp_effect/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/turf/new_turf = get_turf(src)
+	var/turf/old_turf = get_turf(old_loc)
+	if(!new_turf)
+		var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
+		REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(old_offset), ref(src))
+		return
+	else if(get_turf(old_loc))
+		return
+	// If we're in a thing on a turf we COUNT as a distortion source
+	var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+	ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
+/atom/movable/warp_effect/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	if(old_turf)
+		var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
+		REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(old_offset), ref(src))
+	if(new_turf)
+		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon = 'icons/effects/effects.dmi'
