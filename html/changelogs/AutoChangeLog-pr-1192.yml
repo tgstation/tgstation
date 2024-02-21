@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Slimes feed more aggressively on mindless mobs and monkeys, up to 2x faster on a mindless monkey."
-  - qol: "Slimes will now automatically attach onto a monkey placed next to them with a xenobio console (the slime that's grown the most will always be the one to attach, as long as it's not already feeding on something)"

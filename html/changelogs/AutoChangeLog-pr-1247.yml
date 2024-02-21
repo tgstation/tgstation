@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "the PTL no longer caps its power output at 2.5 Terawatts due to an obscure bug"
