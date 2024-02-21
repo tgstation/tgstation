@@ -824,11 +824,11 @@ generate/load female uniform sprites matching all previously decided variables
 	switch(get_mob_height())
 		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
-			appearance.add_filter("Monkey_Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3))
-			appearance.add_filter("Monkey_Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 6))
+			appearance.add_filter("Monkey_Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 5))
+			appearance.add_filter("Monkey_Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4))
 		if(MONKEY_HEIGHT_MEDIUM)
-			appearance.add_filter("Monkey_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Monkey_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 6))
+			appearance.add_filter("Monkey_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3))
+			appearance.add_filter("Monkey_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4))
 		// Don't set this one directly, use TRAIT_DWARF
 		if(HUMAN_HEIGHT_DWARF)
 			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
