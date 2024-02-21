@@ -382,7 +382,10 @@
 		return
 	remove_filter("AO")
 	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
-		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+		// You might ask "why not use ambient occlusion?"
+		// Because it's one of the most expensive possible visual effects, and there is NO reason to use it for runechat
+		// When we can get an ok backdrop like this 
+		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"
