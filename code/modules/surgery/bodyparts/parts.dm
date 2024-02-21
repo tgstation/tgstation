@@ -254,19 +254,6 @@
 	unarmed_effectiveness = 0
 	appendage_noun = "paw"
 
-/obj/item/bodypart/arm/left/monkey/Initialize(mapload)
-	worn_glove_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_GLOVES,
-		offset_y = list("south" = -4),
-	)
-	held_hand_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_HELD,
-		offset_y = list("south" = -4),
-	)
-	return ..()
-
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -363,19 +350,6 @@
 	unarmed_damage_high = 2
 	unarmed_effectiveness = 0
 	appendage_noun = "paw"
-
-/obj/item/bodypart/arm/right/monkey/Initialize(mapload)
-	worn_glove_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_GLOVES,
-		offset_y = list("south" = -4),
-	)
-	held_hand_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_HELD,
-		offset_y = list("south" = -4),
-	)
-	return ..()
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
