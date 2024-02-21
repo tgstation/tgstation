@@ -66,7 +66,7 @@
 
 ///Inventory slots that can be blacklisted by a species from being equipped into
 DEFINE_BITFIELD(no_equip_flags, list(
-	"SUIT STORAGE" = ITEM_SLOT_OCLOTHING,
+	"EXOSUIT" = ITEM_SLOT_OCLOTHING,
 	"JUMPSUIT" = ITEM_SLOT_ICLOTHING,
 	"GLOVES" = ITEM_SLOT_GLOVES,
 	"GLASSES" = ITEM_SLOT_EYES,
