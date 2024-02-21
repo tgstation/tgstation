@@ -788,10 +788,11 @@
 /datum/reagent/drug/kronkaine/on_new(data)
 	. = ..()
 	// Kronkaine also makes for a great fishing bait (found in "natural" baits)
-	if(istype(holder?.my_atom, /obj/item/food))
-		ADD_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
-		RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
-		RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+	if(!istype(holder?.my_atom, /obj/item/food))
+		return
+	ADD_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
+	RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
+	RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
 
 /datum/reagent/drug/kronkaine/proc/on_reagents_clear(datum/reagents/reagents)
 	SIGNAL_HANDLER
