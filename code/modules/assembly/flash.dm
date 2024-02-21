@@ -167,11 +167,13 @@
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
-			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
-			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
-			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			//easy way to make sure that you can only long get full effect on someone who is facing in your direction
+			flashed.adjustStaminaLoss(rand(60, 80) * (1 - (deviation * 0.5)))
+			//making it so that the paralyze requires initially having confused the target with a flash or something else
+			if(flashed.get_timed_status_effect_duration(/datum/status_effect/confusion) > 0)
+				flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
+			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 
 		else if(user)
