@@ -44,7 +44,7 @@
 	return ..()
 
 /// Override to define loot blacklist behavior
-/obj/effect/spawner/procs/can_spawn(atom/loot)
+/obj/effect/spawner/proc/can_spawn(atom/loot)
 	return TRUE
 
 /obj/effect/list_container
