@@ -398,17 +398,17 @@
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 /datum/armor/item_shield/ballistic
-	melee = 5
+	melee = 30
 	bullet = 80
 	bomb = 10
 	laser = 80
 
 /obj/item/shield/ballistic
 	name = "ballistic shield"
-	desc = "A heavy shield designed for blocking projectiles, horrible against melee attacks."
+	desc = "A heavy shield designed for blocking projectiles, weaker to melee."
 	icon_state = "ballistic"
 	inhand_icon_state = "ballistic"
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3.75)
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT * 3.75)
 	max_integrity = 75
 	shield_break_leftover = /obj/item/stack/rods/ten
 	armor_type = /datum/armor/item_shield/ballistic
