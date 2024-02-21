@@ -236,14 +236,12 @@
 
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	var/atom/parent_atom = parent?.resolve()
-	if(isnull(parent_atom))
+	var/atom/the_thing = parent?.resolve()
+	if(isnull(the_thing))
 		parent = null
 		return
-	if(!isitem(parent.resolve()))
-		return
-	if(isorgan(parent.resolve())) // organs don't spawn with blood decals by default
+	if(!istype(the_thing) || isorgan(the_thing)) // organs don't spawn with blood decals by default
 		return
 	if(!length(blood_DNA))
 		return
-	parent_atom.AddElement(/datum/element/decal/blood)
+	the_thing.AddElement(/datum/element/decal/blood)

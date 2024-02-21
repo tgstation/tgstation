@@ -14,7 +14,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	flags_1 |= INITIALIZED_1
 	// Initial is non standard here, but ghosts move before they get here so it's needed. this is a cold path too so it's ok
 	SET_PLANE_IMPLICIT(src, initial(plane))
-	tag = "mob_[next_mob_id++]"
 	add_to_mob_list()
 
 	prepare_huds()
