@@ -1,4 +1,4 @@
-
+//CHEBUTEK ACTION DATUMS
 /datum/action/vehicle/sealed/gopnik
 	button_icon = 'massmeta/icons/mob/actions/actions_vehicle.dmi'
 	name = "Toggle Gop Mode"
@@ -81,6 +81,4 @@
 /datum/action/vehicle/sealed/blyat/Trigger(trigger_flags)
 	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/cheburek))
 		return
-
-	var/obj/vehicle/sealed/car/clowncar/cheburek = vehicle_entered_target
 	owner.say("Блять!") // yes, without delay
