@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Air alarms now display the source of triggered fire alarms/firedoors"

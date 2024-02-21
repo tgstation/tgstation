@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "sec-hailers no longer apply filters on TTS when pushed out of the way."
