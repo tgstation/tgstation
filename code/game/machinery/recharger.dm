@@ -40,7 +40,7 @@
 	if(using_power)
 		status_display_message_shown = TRUE
 		. += span_notice("The status display reads:")
-		. += span_notice("- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.")
+		. += span_notice("- Recharging efficiency: <b>[recharge_coeff*100]%</b>.")
 
 	if(isnull(charging))
 		return
@@ -146,8 +146,7 @@
 	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
-			var/power_used = charging_cell.give(charging_cell.chargerate * recharge_coeff * seconds_per_tick / 2)
-			use_power(power_used)
+			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 

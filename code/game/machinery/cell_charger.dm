@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 250
+	var/charge_rate = 2.5e5
 
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
@@ -125,7 +125,7 @@
 
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
-	charge_rate = 250
+	charge_rate = 2.5e5
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		charge_rate *= capacitor.tier
 
@@ -139,7 +139,8 @@
 	var/main_draw = use_power_from_net(charge_rate * seconds_per_tick, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
 	if(!main_draw)
 		return
-	charging.give(main_draw)
+
 	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
+	charge_cell(charge_rate * seconds_per_tick, charging)
 
 	update_appearance()

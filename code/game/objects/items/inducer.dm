@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 7
-	var/powertransfer = 1000
+	var/powertransfer = STANDARD_CELL_CHARGE
 	var/opened = FALSE
 	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
@@ -106,7 +106,7 @@
 		return FALSE
 	if(recharging)
 		return TRUE
-	
+
 	recharging = TRUE
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	var/obj/item/stock_parts/cell/target_cell = target.get_cell()

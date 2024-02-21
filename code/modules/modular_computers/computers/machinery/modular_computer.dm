@@ -6,7 +6,7 @@
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.025
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
@@ -140,10 +140,7 @@
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(isnull(cell) || cell.percent() >= 100)
 		return
-	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5 // Why halve it?
-	if(!use_power_from_net(power_to_draw))
-		return
-	cell.give(power_to_draw)
+	charge_cell(idle_power_usage * seconds_per_tick, cell)
 
 /obj/machinery/modular_computer/get_cell()
 	return cpu?.internal_cell

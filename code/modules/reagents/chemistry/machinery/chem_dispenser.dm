@@ -134,9 +134,11 @@
 		begin_processing()
 
 /obj/machinery/chem_dispenser/process(seconds_per_tick)
-	var/usedpower = cell.give(recharge_amount * seconds_per_tick)
-	if(usedpower)
-		use_power(active_power_usage * seconds_per_tick + usedpower)
+	if(cell.maxcharge == cell.charge)
+		return
+	var/used_power = charge_cell(recharge_amount * seconds_per_tick, cell)
+	if(used_power)
+		use_power(active_power_usage * seconds_per_tick)
 
 
 /obj/machinery/chem_dispenser/proc/display_beaker()

@@ -163,7 +163,7 @@
  * If the take_any var arg is set to true, this proc will use and return any surplus that is under the requested amount, assuming that
  * the surplus is above zero.
  * Args:
- * - amount, the amount of power requested from the Powernet. In standard loosely-defined SS13 power units.
+ * - amount, the amount of power requested from the powernet. In joules.
  * - take_any, a bool of whether any amount of power is acceptable, instead of all or nothing. Defaults to FALSE
  */
 /obj/machinery/proc/use_power_from_net(amount, take_any = FALSE)
@@ -188,6 +188,40 @@
 		amount = surplus
 	local_apc.add_load(amount)
 	return amount
+
+/**
+ * Attempts to remove load from the APC and powernet. Use this after adding load if you were not able to make use of all the power requested.
+ * Args:
+ * - amount: The amount of energy returning to the powernet.
+ * Returns: The amount of energy returned.
+ */
+/obj/machinery/proc/return_power(amount)
+	if(amount <= 0)
+		return FALSE
+	var/area/home = get_area(src)
+
+	if(!home)
+		return FALSE
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(!local_apc)
+		return FALSE
+
+	local_apc.add_load(-amount)
+	return amount
+
+/**
+ * Draws power from the apc's powernet to charge a power cell. Returns excess power back to the grid.
+ * Args:
+ * - amount: The amount of energy given to the cell.
+ * Returns: The amount of energy the cell received.
+ */
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell)
+	var/demand = use_power_from_net(amount, take_any = TRUE)
+	var/power_given = cell.give(demand)
+	return_power(demand - power_given)
+	return power_given
+
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
@@ -469,3 +503,5 @@
 			C.update_appearance() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
 			return C
 	return null
+
+

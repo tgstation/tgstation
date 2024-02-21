@@ -30,8 +30,8 @@
 	var/rigged = FALSE
 	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/corrupted = FALSE
-	///how much power is given every tick in a recharger
-	var/chargerate = STANDARD_CELL_CHARGE * 0.1
+	///How much power is given per second in a recharger.
+	var/chargerate = STANDARD_CELL_CHARGE * 0.05
 	///If true, the cell will state it's maximum charge in it's description
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
@@ -296,7 +296,7 @@
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	chargerate = STANDARD_CELL_CHARGE
+	chargerate = STANDARD_CELL_CHARGE * 0.5
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
@@ -322,7 +322,7 @@
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
 	maxcharge = STANDARD_CELL_CHARGE * 40
-	chargerate = STANDARD_CELL_CHARGE * 1.5
+	chargerate = STANDARD_CELL_CHARGE * 0.75
 
 /obj/item/stock_parts/cell/pulse/carbine //25 pulse shots
 	name = "pulse carbine power cell"
@@ -337,14 +337,14 @@
 	icon_state = "bscell"
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = STANDARD_CELL_CHARGE * 2
+	chargerate = STANDARD_CELL_CHARGE
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = STANDARD_CELL_CHARGE * 1.5
+	chargerate = STANDARD_CELL_CHARGE * 0.75
 
 /obj/item/stock_parts/cell/high/empty
 	empty = TRUE
@@ -354,7 +354,7 @@
 	icon_state = "scell"
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
-	chargerate = STANDARD_CELL_CHARGE * 2
+	chargerate = STANDARD_CELL_CHARGE
 
 /obj/item/stock_parts/cell/super/empty
 	empty = TRUE
@@ -364,7 +364,7 @@
 	icon_state = "hpcell"
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
-	chargerate = STANDARD_CELL_CHARGE * 3
+	chargerate = STANDARD_CELL_CHARGE * 1.5
 
 /obj/item/stock_parts/cell/hyper/empty
 	empty = TRUE
@@ -375,7 +375,7 @@
 	icon_state = "bscell"
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
-	chargerate = STANDARD_CELL_CHARGE * 4
+	chargerate = STANDARD_CELL_CHARGE * 2
 
 /obj/item/stock_parts/cell/bluespace/empty
 	empty = TRUE
@@ -445,7 +445,7 @@
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
 	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_CHARGE * 5 //Extremely energy intensive
+	chargerate = STANDARD_CELL_CHARGE * 2.5 //Extremely energy intensive
 
 /obj/item/stock_parts/cell/beam_rifle/corrupt()
 	return
