@@ -4988,7 +4988,7 @@
 /obj/machinery/door/window/elevator/right/directional/south{
 	transport_linked_id = "museum_cargo"
 	},
-/obj/effect/spawner/random/maintenance/seven,
+/obj/effect/spawner/random/maintenance/no_decals/seven,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Um" = (
@@ -5343,7 +5343,7 @@
 "WJ" = (
 /obj/structure/transport/linear/tram/slow,
 /obj/structure/thermoplastic,
-/obj/effect/spawner/random/maintenance/seven,
+/obj/effect/spawner/random/maintenance/no_decals/seven,
 /obj/item/storage/pill_bottle/maintenance_pill/full,
 /obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /turf/open/chasm/true/no_smooth,
