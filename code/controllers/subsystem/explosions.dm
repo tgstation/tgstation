@@ -138,9 +138,9 @@ SUBSYSTEM_DEF(explosions)
 		else if (dist + block * 1.5 < heavy)
 			explode.color = "yellow"
 			explode.maptext = MAPTEXT("[dist + block * 1.5]")
-		else if (dist + block * 2 < light)
+		else if (dist + block * 2.5 < light)
 			explode.color = "blue"
-			explode.maptext = MAPTEXT("[dist + block * 3]")
+			explode.maptext = MAPTEXT("[dist + block * 2.5]")
 		else
 			continue
 
@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(explosions)
 			severity = EXPLODE_DEVASTATE
 		else if(dist + block * 1.5 < heavy_impact_range)
 			severity = EXPLODE_HEAVY
-		else if(dist + block * 2 < light_impact_range)
+		else if(dist + block * 2.5 < light_impact_range)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
