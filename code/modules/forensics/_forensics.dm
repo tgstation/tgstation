@@ -237,8 +237,10 @@
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
 	var/obj/item/the_thing = parent?.resolve()
-	if(!istype(the_thing))
+	if(isnull(the_thing))
 		parent = null
+		return
+	if(!istype(the_thing))
 		return
 	if(isorgan(the_thing)) // organs don't spawn with blood decals by default
 		return
