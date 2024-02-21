@@ -22,6 +22,9 @@
 
 /obj/crystal_mass/Initialize(mapload, dir_to_remove)
 	. = ..()
+	// sanity check, I'm just throwing shit at the wall to hope one of these checks prevents the server crash bug
+	if(!isturf(loc) || QDELING(loc))
+		return INITIALIZE_HINT_QDEL
 	icon_state = "crystal_cascade_[rand(1,6)]"
 	START_PROCESSING(SSsupermatter_cascade, src)
 
@@ -44,7 +47,7 @@
 	if(!COOLDOWN_FINISHED(src, sm_wall_cooldown))
 		return
 
-	if(!available_dirs || available_dirs.len <= 0)
+	if(!length(available_dirs))
 		return PROCESS_KILL
 
 	COOLDOWN_START(src, sm_wall_cooldown, rand(0, 3 SECONDS))
@@ -54,7 +57,12 @@
 
 	icon_state = "crystal_cascade_[rand(1,6)]"
 
-	if(!next_turf || locate(/obj/crystal_mass) in next_turf)
+	// we gotta stop the cascade from eating reality itself, so we're going to go a bit overboard on the checks here.
+	// ensure the next turf actually fucking exists
+	if(!istype(next_turf) || QDELING(next_turf))
+		return
+	// ensure there's no crystal mass in the next turf
+	if(locate(/obj/crystal_mass) in next_turf)
 		return
 
 	for(var/atom/movable/checked_atom as anything in next_turf)
