@@ -204,6 +204,7 @@
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/tailcoat
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_worn
+	greyscale_config_worn_digitigrade = /datum/greyscale_config/tailcoat_worn/digitigrade
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/jacket/tailcoat/bartender
@@ -213,6 +214,7 @@
 	greyscale_colors = "#39393f#ffffff"
 	greyscale_config = /datum/greyscale_config/tailcoat_bar
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_bar_worn
+	greyscale_config_worn_digitigrade = /datum/greyscale_config/tailcoat_bar_worn/digitigrade
 	armor_type = /datum/armor/tailcoat_bar
 
 /datum/armor/tailcoat_bar
@@ -240,6 +242,7 @@
 	armor_type = /datum/armor/tailcoat_syndi
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 
@@ -281,30 +284,45 @@
 	armor_type = /datum/armor/armor_centcom_formal
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
+
 
 /obj/item/clothing/suit/jacket/tailcoat/british
 	name = "british flag tailcoat"
-	desc = "Spot of tea anyone?"
+	desc = "A tailcoat emblazoned with the Union Jack. Perfect attire for teatime."
 	icon_state = "tailcoat_brit"
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
+
 
 /obj/item/clothing/suit/jacket/tailcoat/communist
 	name = "really red tailcoat"
-	desc = "A red tailcoat with a star on the back."
+	desc = "A red tailcoat emblazoned with a golden star. The official uniform of the Bunny Waiter Union."
 	icon_state = "tailcoat_communist"
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/usa
 	name = "stars tailcoat"
-	desc = "A blue tailcoat speckled with white stars."
+	desc = "A vintage coat worn by the 5th bunny battalion during the Revolutionary War. Smooth-bore musket not included."
 	icon_state = "tailcoat_stars"
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
+	greyscale_colors = null
+
+/obj/item/clothing/suit/jacket/tailcoat/plasmaman
+	name = "purple tailcoat"
+	desc = "A purple coat that looks to be the same purple used in several plasmaman evirosuits."
+	icon_state = "tailcoat_plasma"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 //End of Bunny Costume Jackets

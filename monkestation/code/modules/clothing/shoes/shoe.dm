@@ -52,6 +52,7 @@
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
+	greyscale_config_worn_digitigrade = /datum/greyscale_config/heels_worn/digitigrade
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/heels/syndicate
@@ -68,6 +69,7 @@
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/shoes/heels/magician
 	name = "magical heels"
@@ -78,6 +80,7 @@
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/shoes/heels/centcom
 	name = "green heels"
@@ -86,18 +89,33 @@
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/shoes/heels/red
 	name = "red heels"
+	desc = "A pair of classy red heels."
 	icon_state = "heels_red"
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/shoes/heels/blue
 	name = "blue heels"
+	desc = "A pair of classy blue heels."
 	icon_state = "heels_blue"
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/shoes/heels/enviroheels
+	name = "enviroheels"
+	desc = "A pair of heels designed to function marginally better with envirosuits."
+	icon_state = "enviroheels"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_config_worn_digitigrade = null
+
 //END HEELS

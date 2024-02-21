@@ -86,7 +86,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	id = /obj/item/card/id/advanced/centcom
 	r_pocket = /obj/item/reagent_containers/cup/rag
-	suit_store = /obj/item/toy/cards/deck
+	l_pocket = /obj/item/toy/cards/deck
 	l_hand = /obj/item/storage/bag/tray
 	undershirt = "Nude"
 

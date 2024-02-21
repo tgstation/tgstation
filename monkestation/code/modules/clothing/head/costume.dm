@@ -63,7 +63,6 @@ BUNNY EARS
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
 	icon_state = "playbunny_ears"
-	clothing_flags = LARGE_WORN_ICON
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/playbunnyears
 	greyscale_config_worn = /datum/greyscale_config/playbunnyears_worn
@@ -73,7 +72,7 @@ BUNNY EARS
 	name = "blood-red bunny ears headband"
 	desc = "An unusually suspicious pair of bunny ears attached to a headband. The headband looks reinforced with plasteel... but why?"
 	icon_state = "syndibunny_ears"
-	clothing_flags = SNUG_FIT | LARGE_WORN_ICON
+	clothing_flags = SNUG_FIT
 	armor_type = /datum/armor/playbunnyears_syndicate
 	greyscale_colors = null
 	greyscale_config = null
@@ -91,7 +90,7 @@ BUNNY EARS
 
 /obj/item/clothing/head/playbunnyears/centcom
 	name = "centcom bunny ears headband"
-	desc = "A pair of very professional bunny ears attached to a headband. The ears themselves came from an endangered species of green rabbits"
+	desc = "A pair of very professional bunny ears attached to a headband. The ears themselves came from an endangered species of green rabbits."
 	icon_state = "playbunny_ears_centcom"
 	greyscale_colors = null
 	greyscale_config = null
@@ -99,7 +98,7 @@ BUNNY EARS
 
 /obj/item/clothing/head/playbunnyears/british
 	name = "british bunny ears headband"
-	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
+	desc = "A pair of classy bunny ears attached to a headband. Worn to honor the crown."
 	icon_state = "playbunny_ears_brit"
 	greyscale_colors = null
 	greyscale_config = null
@@ -107,7 +106,7 @@ BUNNY EARS
 
 /obj/item/clothing/head/playbunnyears/communist
 	name = "really red bunny ears headband"
-	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
+	desc = "A pair of red and gold bunny ears attached to a headband. Commonly used by any collectivizing bunny waiters."
 	icon_state = "playbunny_ears_communist"
 	greyscale_colors = null
 	greyscale_config = null
@@ -115,7 +114,7 @@ BUNNY EARS
 
 /obj/item/clothing/head/playbunnyears/usa
 	name = "usa bunny ears headband"
-	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
+	desc = "A pair of star spangled bunny ears attached to a headband. The headband of a true patriot."
 	icon_state = "playbunny_ears_usa"
 	greyscale_colors = null
 	greyscale_config = null
