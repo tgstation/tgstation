@@ -54,6 +54,8 @@
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purrs!")
+	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(huntable_items))
@@ -63,6 +65,9 @@
 		RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	if(can_interact_with_stove)
 		RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_unarmed_attack))
+
+/mob/living/basic/pet/cat/proc/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
 	SIGNAL_HANDLER
@@ -129,6 +134,7 @@
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = T0C + 40
 	held_state = "spacecat"
@@ -150,6 +156,8 @@
 		/obj/item/food/breadslice/plain = 1
 	)
 
+/mob/living/basic/pet/cat/breadcat/add_cell_sample()
+	return
 
 /mob/living/basic/pet/cat/original
 	name = "Batsy"
@@ -161,6 +169,9 @@
 	collar_icon_state = null
 	unique_pet = TRUE
 	held_state = "original"
+
+/mob/living/basic/pet/cat/original/add_cell_sample()
+	return
 
 /mob/living/basic/pet/cat/kitten
 	name = "kitten"

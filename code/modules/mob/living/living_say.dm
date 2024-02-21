@@ -206,6 +206,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	if(LAZYACCESS(message_mods,WHISPER_MODE)) // whisper away
+		spans |= SPAN_ITALICS
 
 	if(!message)
 		if(succumbed)
@@ -267,7 +269,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/understood = TRUE
 	if(!is_custom_emote) // we do not translate emotes
 		var/untranslated_raw_message = raw_message
-		raw_message = translate_language(src, message_language, raw_message) // translate
+		raw_message = translate_language(speaker, message_language, raw_message, spans, message_mods) // translate
 		if(raw_message != untranslated_raw_message)
 			understood = FALSE
 
@@ -398,11 +400,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			var/mob/living/carbon/human/human_speaker = src
 			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
 				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(worn_mask.voice_override)
-					voice_to_use = worn_mask.voice_override
-				if(worn_mask.voice_filter)
-					filter += worn_mask.voice_filter
-				use_radio = worn_mask.use_radio_beeps_tts
+				if(!worn_mask.mask_adjusted)
+					if(worn_mask.voice_override)
+						voice_to_use = worn_mask.voice_override
+					if(worn_mask.voice_filter)
+						filter += worn_mask.voice_filter
+					use_radio = worn_mask.use_radio_beeps_tts
 		if(use_radio)
 			special_filter += TTS_FILTER_RADIO
 		if(issilicon(src))

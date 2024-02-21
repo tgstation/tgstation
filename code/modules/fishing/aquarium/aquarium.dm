@@ -113,17 +113,17 @@
 	//optional todo: hook up sending surface changed on aquarium changing layers
 	switch(layer_type)
 		if(AQUARIUM_LAYER_MODE_BEHIND_GLASS)
-			return AQUARIUM_BELOW_GLASS_LAYER
+			return layer + AQUARIUM_BELOW_GLASS_LAYER
 		if(AQUARIUM_LAYER_MODE_BOTTOM)
-			return AQUARIUM_MIN_OFFSET
+			return layer + AQUARIUM_MIN_OFFSET
 		if(AQUARIUM_LAYER_MODE_TOP)
-			return AQUARIUM_MAX_OFFSET
+			return layer + AQUARIUM_MAX_OFFSET
 		if(AQUARIUM_LAYER_MODE_AUTO)
 			var/chosen_layer = AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
 			while((chosen_layer in used_layers) && (chosen_layer <= AQUARIUM_MAX_OFFSET))
 				chosen_layer += AQUARIUM_LAYER_STEP
 			used_layers += chosen_layer
-			return chosen_layer
+			return layer + chosen_layer
 
 /obj/structure/aquarium/proc/free_layer(value)
 	used_layers -= value
@@ -149,9 +149,9 @@
 	var/suffix = fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"
 	if(broken)
 		suffix += "_broken"
-		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = AQUARIUM_BORDERS_LAYER)
-	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = AQUARIUM_GLASS_LAYER)
-	. += mutable_appearance(icon, "aquarium_borders", layer = AQUARIUM_BORDERS_LAYER)
+		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
+	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
+	. += mutable_appearance(icon, "aquarium_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()

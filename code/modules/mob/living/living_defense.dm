@@ -210,22 +210,59 @@
 		hitpush = FALSE
 	return ..()
 
+///The core of catching thrown items, which non-carbons cannot without the help of items or abilities yet, as they've no throw mode.
+/mob/living/proc/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(!can_catch_item(skip_throw_mode_check, try_offhand) || !isitem(item) || HAS_TRAIT(item, TRAIT_UNCATCHABLE) || !isturf(item.loc))
+		return FALSE
+	if(!can_hold_items(item))
+		return FALSE
+	INVOKE_ASYNC(item, TYPE_PROC_REF(/obj/item, attempt_pickup), src, TRUE)
+	if(get_active_held_item() == item) //if our attack_hand() picks up the item...
+		visible_message(span_warning("[src] catches [item]!"), \
+						span_userdanger("You catch [item] in mid-air!"))
+		return TRUE
+
+///Checks the requites for catching a throw item.
+/mob/living/proc/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return FALSE
+	if(get_active_held_item() && (!try_offhand || get_inactive_held_item() || !swap_hand()))
+		return FALSE
+	return TRUE
+
 /mob/living/fire_act()
 	. = ..()
 	adjust_fire_stacks(3)
 	ignite_mob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+/**
+ * Called when a mob is grabbing another mob.
+ */
+/mob/living/proc/grab(mob/living/target)
+	if(!istype(target))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
+		return FALSE
+	if(target.check_block(src, 0, "[src]'s grab"))
+		return FALSE
+	target.grabbedby(src)
+	return TRUE
+
+/**
+ * Called when this mob is grabbed by another mob.
+ */
+/mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-
+	// This line arbitrarily prevents any non-carbon from upgrading grabs
+	if(!iscarbon(user))
+		return
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
-
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
@@ -359,17 +396,9 @@
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		user.disarm(src)
 		return TRUE

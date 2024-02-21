@@ -1599,8 +1599,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/crowbar,
 /obj/item/stock_parts/cell/high,
-/obj/machinery/door/window/right/directional/east{
-	dir = 1;
+/obj/machinery/door/window/right/directional/north{
 	req_access = list("away_general")
 	},
 /obj/item/paper/fluff/ruins/oldstation/apc_note,
@@ -4800,9 +4799,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "zm" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "Plasma Canister Storage"
 	},
 /obj/effect/turf_decal/stripes/line{

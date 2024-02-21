@@ -8,7 +8,7 @@
 	name = "lighting"
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_WHITE
 	blocks_emissive = EMISSIVE_BLOCK_NONE

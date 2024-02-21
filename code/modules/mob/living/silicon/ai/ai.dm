@@ -77,7 +77,7 @@
 
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
-	var/cooldown = 0
+	var/last_moved = 0
 	var/acceleration = TRUE
 
 	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
@@ -191,7 +191,8 @@
 	builtInCamera.network = list("ss13")
 
 	ai_tracking_tool = new(src)
-	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
 	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
 
@@ -211,8 +212,7 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
-				if(ai_tracking_tool.tracking)
-					ai_tracking_tool.set_tracking(FALSE)
+				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -223,8 +223,7 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
-				if(ai_tracking_tool.tracking)
-					ai_tracking_tool.set_tracking(FALSE)
+				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -250,7 +249,6 @@
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
 		ai_voicechanger = null
-	UnregisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET)
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
@@ -401,7 +399,7 @@
 	set name = "track"
 	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
-	ai_tracking_tool.set_tracked_mob(src)
+	ai_tracking_tool.track_input(src)
 
 ///Called when an AI finds their tracking target.
 /mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, mob/living/target)
@@ -410,6 +408,12 @@
 		eyeobj.setLoc(get_turf(target))
 	else
 		view_core()
+
+/// Keeps our rate of gliding in step with the mob we're following
+/mob/living/silicon/ai/proc/tracked_glidesize_changed(datum/trackable/source, mob/living/target, new_glide_size)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		eyeobj.glide_size = new_glide_size
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
@@ -496,10 +500,6 @@
 	if(incapacitated())
 		return
 
-	if (href_list["mach_close"])
-		var/t1 = "window=[href_list["mach_close"]]"
-		unset_machine()
-		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
 	if (href_list["showalerts"])
@@ -528,7 +528,7 @@
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
-		ai_tracking_tool.set_tracked_mob(src, href_list["track"])
+		ai_tracking_tool.track_name(src, href_list["track"])
 		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
@@ -571,8 +571,7 @@
 		view_core()
 		return
 
-	if(ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
 
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
@@ -646,8 +645,7 @@
 	set category = "AI Commands"
 	set name = "Jump To Network"
 	unset_machine()
-	if(ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
 	if(incapacitated())
@@ -902,7 +900,7 @@
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	var/raw_translation = translate_language(speaker, message_language, raw_message)
+	var/raw_translation = translate_language(speaker, message_language, raw_message, spans, message_mods)
 	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
 	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
 

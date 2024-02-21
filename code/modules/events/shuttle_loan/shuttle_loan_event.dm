@@ -80,7 +80,7 @@
 	var/list/blocked_shutte_turfs = list()
 	var/list/area/shuttle/shuttle_areas = SSshuttle.supply.shuttle_areas
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/turf/open/floor/shuttle_turf in shuttle_area.get_contained_turfs())
+		for(var/turf/open/floor/shuttle_turf in shuttle_area.get_turfs_from_all_zlevels())
 			if(shuttle_turf.is_blocked_turf())
 				blocked_shutte_turfs += shuttle_turf
 				continue

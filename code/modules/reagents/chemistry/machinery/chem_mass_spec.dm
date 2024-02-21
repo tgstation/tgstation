@@ -58,14 +58,13 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.tier
 
-/obj/machinery/chem_mass_spec/deconstruct(disassembled)
+/obj/machinery/chem_mass_spec/on_deconstruction(disassembled)
 	if(beaker1)
 		beaker1.forceMove(drop_location())
 		beaker1 = null
 	if(beaker2)
 		beaker2.forceMove(drop_location())
 		beaker2 = null
-	. = ..()
 
 /obj/machinery/chem_mass_spec/update_overlays()
 	. = ..()

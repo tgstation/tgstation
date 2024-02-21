@@ -867,11 +867,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
 	var/area/morgue_area = get_area(src)
 	var/list/obj/structure/bodycontainer/morgue/trays = list()
-	for(var/turf/area_turf as anything in morgue_area.get_contained_turfs())
-		var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
-		if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
-			continue
-		trays += morgue_tray
+	for (var/list/zlevel_turfs as anything in morgue_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
+			if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
+				continue
+			trays += morgue_tray
 
 	var/numtrays = length(trays)
 	if(numtrays == 0)
@@ -959,14 +960,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/list/table_turfs = list()
 	var/list/open_turfs = list()
 	var/turf/dogbed_turf
-	for(var/turf/area_turf as anything in celebration_area.get_contained_turfs())
-		if(locate(/obj/structure/table/reinforced) in area_turf)
-			table_turfs += area_turf
-		if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
-			dogbed_turf = area_turf
-		if(isopenturf(area_turf))
-			new /obj/effect/decal/cleanable/confetti(area_turf)
-			open_turfs += area_turf
+	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(locate(/obj/structure/table/reinforced) in area_turf)
+				table_turfs += area_turf
+			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
+				dogbed_turf = area_turf
+			if(isopenturf(area_turf))
+				new /obj/effect/decal/cleanable/confetti(area_turf)
+				open_turfs += area_turf
 
 	if(isnull(dogbed_turf) && map_warning)
 		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
@@ -1031,11 +1033,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/area/celebration_area = get_area(src)
 	var/list/table_turfs = list()
 	var/turf/dogbed_turf
-	for(var/turf/area_turf as anything in celebration_area.get_contained_turfs())
-		if(locate(/obj/structure/table/reinforced) in area_turf)
-			table_turfs += area_turf
-		if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
-			dogbed_turf = area_turf
+	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(locate(/obj/structure/table/reinforced) in area_turf)
+				table_turfs += area_turf
+			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
+				dogbed_turf = area_turf
 
 	if(isnull(dogbed_turf))
 		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
@@ -1391,4 +1394,33 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/turf/our_turf = get_turf(src) // In case a locker ate us or something
 	our_turf.AddElement(/datum/element/bombable_turf)
+	return INITIALIZE_HINT_QDEL
+
+/// this helper buckles all mobs on the tile to the first buckleable object
+/obj/effect/mapping_helpers/mob_buckler
+	name = "Buckle Mob"
+	icon_state = "buckle"
+	late = TRUE
+	///whether we force a buckle
+	var/force_buckle = FALSE
+
+/obj/effect/mapping_helpers/mob_buckler/Initialize(mapload)
+	. = ..()
+	var/atom/movable/buckle_to
+	var/list/mobs = list()
+	for(var/atom/movable/possible_buckle as anything in loc)
+		if(isnull(buckle_to) && possible_buckle.can_buckle)
+			buckle_to = possible_buckle
+			continue
+
+		if(isliving(possible_buckle))
+			mobs += possible_buckle 
+	
+	if(isnull(buckle_to))
+		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
+		return INITIALIZE_HINT_QDEL
+		
+	for(var/mob/living/mob as anything in mobs)
+		buckle_to.buckle_mob(mob, force = force_buckle)
+	
 	return INITIALIZE_HINT_QDEL

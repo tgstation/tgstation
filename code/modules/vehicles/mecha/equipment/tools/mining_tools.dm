@@ -29,12 +29,19 @@
 	butcher_sound = null, \
 	disabled = TRUE, \
 	)
+	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
+
+/obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
+	// Check if we can still use the equipment & use power for every iteration of do after
+	if(!action_checks(target))
+		return FALSE
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
-	// Check if we can even use the equipment to begin with.
-	if(!action_checks(target))
-		return
-
 	// We can only drill non-space turfs, living mobs and objects.
 	if(isspaceturf(target) || !(isliving(target) || isobj(target) || isturf(target)))
 		return
@@ -48,17 +55,23 @@
 
 	// You can't drill harder by clicking more.
 	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
-
 		target.visible_message(span_warning("[chassis] starts to drill [target]."), \
 					span_userdanger("[chassis] starts to drill [target]..."), \
 					span_hear("You hear drilling."))
 
 		log_message("Started drilling [target]", LOG_MECHA)
+
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
+			// Check if we can even use the equipment to begin with.
+			if(!action_checks(target))
+				return
+
 			var/turf/T = target
 			T.drill_act(src, source)
+
 			return ..()
+
 		// Drilling objects and mobs is a repeating procedure.
 		while(do_after_mecha(target, source, drill_delay))
 			if(isliving(target))
@@ -66,8 +79,12 @@
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
-				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+				if(istype(O, /obj/item/boulder))
+					var/obj/item/boulder/nu_boulder = O
+					nu_boulder.manual_process(src, source)
+				else
+					O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
+				playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
 
 			// If we caused a qdel drilling the target, we can stop drilling them.
 			// Prevents starting a do_after on a qdeleted target.
@@ -154,10 +171,11 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
 	var/scanning_time = 0
+	COOLDOWN_DECLARE(area_scan_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)
 	. = ..()
@@ -174,7 +192,25 @@
 	if(!LAZYLEN(chassis.occupants))
 		return
 	scanning_time = world.time + equip_cooldown
-	mineral_scan_pulse(get_turf(src))
+	mineral_scan_pulse(get_turf(src), scanner = src)
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_ORE_SCANNER,
+		"cooldown" = COOLDOWN_TIMELEFT(src, area_scan_cooldown),
+	)
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/handle_ui_act(action, list/params)
+	switch(action)
+		if("area_scan")
+			if(!COOLDOWN_FINISHED(src, area_scan_cooldown))
+				return FALSE
+			COOLDOWN_START(src, area_scan_cooldown, 15 SECONDS)
+			for(var/mob/living/carbon/human/driver in chassis.return_drivers())
+				for(var/obj/structure/ore_vent/vent as anything in range(5, chassis))
+					if(istype(vent, /obj/structure/ore_vent))
+						vent.scan_and_confirm(driver, TRUE)
+			return TRUE
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED
