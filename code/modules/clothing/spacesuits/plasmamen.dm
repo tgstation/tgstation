@@ -76,7 +76,6 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
-	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
@@ -144,6 +143,7 @@
 		hitting_clothing.forceMove(src)
 		update_appearance()
 
+///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands && smile)
