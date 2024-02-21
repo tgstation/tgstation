@@ -41,9 +41,7 @@
 	ai_controlled_species = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
-	var/randname = "monkey ([rand(1,999)])"
-
-	return randname
+	return "monkey ([rand(1, 999)])"
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -169,7 +167,7 @@
 
 /obj/item/organ/internal/brain/primate/on_mob_insert(mob/living/carbon/primate)
 	. = ..()
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
+	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed))
 
 /obj/item/organ/internal/brain/primate/on_mob_remove(mob/living/carbon/primate)
 	. = ..()
@@ -184,12 +182,14 @@
 	var/mob/living/in_the_way_mob = crossed
 	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
 		return
-	if(in_the_way_mob.pass_flags & PASSTABLE)
+	if(in_the_way_mob.pass_flags & PASSMOB)
 		return
 	in_the_way_mob.knockOver(owner)
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
-	return owner.get_bodypart(BODY_ZONE_HEAD)
+	if(!HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
+		return owner.get_bodypart(BODY_ZONE_HEAD)
+	return ..()
 
 /// Virtual monkeys that crave virtual bananas. Everything about them is ephemeral (except that bite).
 /datum/species/monkey/holodeck
