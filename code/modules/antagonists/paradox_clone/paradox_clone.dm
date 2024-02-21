@@ -1,3 +1,6 @@
+//Chance to get an objective to kill your original, instead of a fluff objective
+#define KILL_OBJECTIVE_CHANCE 50
+
 /datum/antagonist/paradox_clone
 	name = "\improper Paradox Clone"
 	roundend_category = "Paradox Clone"
@@ -46,11 +49,22 @@
 /datum/antagonist/paradox_clone/proc/setup_clone()
 	var/datum/mind/original_mind = original_ref?.resolve()
 
-	var/datum/objective/assassinate/paradox_clone/kill = new
-	kill.owner = owner
-	kill.target = original_mind
-	kill.update_explanation_text()
-	objectives += kill
+	if(prob(KILL_OBJECTIVE_CHANCE))
+		var/datum/objective/assassinate/paradox_clone/kill = new
+		kill.owner = owner
+		kill.target = original_mind
+		kill.update_explanation_text()
+		objectives += kill
+	else
+		var/list/explanation_texts = list(
+		"You're the superior [original_mind.name]! Show everyone how cool you are and prove to the crew that you're the only one worthy of having that name!",
+		"You're the best, so obviously, the other [original_mind.name] is the best too. Prove your loyalty to them, and assist them with whatever they're doing this shift!",
+		"You're obviously the REAL [original_mind.name]. Anyone else who looks like you should be given the cold shoulder, no matter how much they try to interact with you.",
+		"The other [original_mind.name] is a FRAUD! Do what you can to make their job as difficult as possible.",
+		)
+		var/explanation_text = pick(explanation_texts)
+		var/datum/objective/paradox_clone_fluff/fluff = new(explanation_text)
+		objectives += fluff
 
 	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 
@@ -96,8 +110,13 @@
 		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
 	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
 
+/datum/objective/paradox_clone_fluff
+	name = "paradox clone fluff objective"
+
 ///Static bluespace stream used in its ghost poll icon.
 /obj/effect/bluespace_stream
 	name = "bluespace stream"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bluestream"
+
+#undef KILL_OBJECTIVE_CHANCE
