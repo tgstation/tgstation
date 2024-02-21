@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(explosions)
 		else if (dist + block * 1.5 < heavy)
 			explode.color = "yellow"
 			explode.maptext = MAPTEXT("[dist + block * 1.5]")
-		else if (dist + block * 3 < light)
+		else if (dist + block * 2 < light)
 			explode.color = "blue"
 			explode.maptext = MAPTEXT("[dist + block * 3]")
 		else
@@ -395,7 +395,7 @@ SUBSYSTEM_DEF(explosions)
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
 		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
 		// So we always sample from a "loop" closer
-		// It's kind of behaviorly unimpressive that that's a problem for the future
+		// It's kind of behaviorly unimpressive but that's a problem for the future
 		if(reactionary)
 			if(explode == epicenter)
 				cached_exp_block[explode] = explode.explosive_resistance
@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(explosions)
 			severity = EXPLODE_DEVASTATE
 		else if(dist + block * 1.5 < heavy_impact_range)
 			severity = EXPLODE_HEAVY
-		else if(dist + block * 3 < light_impact_range)
+		else if(dist + block * 2 < light_impact_range)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
