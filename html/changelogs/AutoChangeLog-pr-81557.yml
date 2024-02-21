@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "you may not teleport in or out of deathmatch arenas"

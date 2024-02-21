@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "fixed an issue with tactical appearance (potted plants / cardboard cutouts) not going away after giving the item to someone else."
-  - bugfix: "Fixed slaughter demon cutouts being invisible. Also fixed another issue with the tactical appearance not going away when the cardboard cutout is pushed down."
