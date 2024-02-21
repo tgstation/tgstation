@@ -50,7 +50,7 @@
 	if(!has_known_fishes)
 		return
 
-	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 
 /datum/component/fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -68,7 +68,7 @@
 	if(!length(known_fishes))
 		return
 
-	. += span_info("A list of fishes you can catch here: [english_list(known_fishes)].")
+	examine_text += span_info("You can catch the following fish here: [english_list(known_fishes)].")
 
 /datum/component/fishing_spot/proc/try_start_fishing(obj/item/possibly_rod, mob/user)
 	SIGNAL_HANDLER
