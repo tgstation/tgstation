@@ -32,7 +32,8 @@
 
 ///we just use the client to try and apply this as its easier to track mobs
 /datum/challenge/proc/on_apply(client/owner)
-	return
+	if(applied_trait)
+		ADD_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
 
 ///this fires every 10 seconds
 /datum/challenge/proc/on_process()

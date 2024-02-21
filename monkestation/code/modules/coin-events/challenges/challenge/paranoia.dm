@@ -23,6 +23,7 @@
 
 
 /datum/challenge/paranoia/on_apply(client/owner)
+	. = ..()
 	var/mob/living/carbon/human/H = host.mob
 	if(!ishuman(H))
 		return
