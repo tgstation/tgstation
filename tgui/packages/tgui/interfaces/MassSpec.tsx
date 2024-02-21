@@ -1,4 +1,5 @@
 import { round } from 'common/math';
+import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
 import {
@@ -12,27 +13,47 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
+type Reagent = {
+  name: string;
+  volume: number;
+  mass: number;
+  purity: number;
+  type: string;
+  log: string;
+};
+
+type Beaker = {
+  currentVolume: number;
+  maxVolume: number;
+  contents: Reagent[];
+};
+
+type Data = {
+  lowerRange: number;
+  upperRange: number;
+  processing: BooleanLike;
+  eta: number;
+  graphUpperRange: number;
+  peakHeight: number;
+  beaker1: Beaker;
+  beaker2: Beaker;
+};
+
 export const MassSpec = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
     processing,
     lowerRange,
     upperRange,
     graphUpperRange,
-    graphLowerRange,
     eta,
-    beaker1CurrentVolume,
-    beaker2CurrentVolume,
-    beaker1MaxVolume,
-    beaker2MaxVolume,
     peakHeight,
     beaker1,
     beaker2,
-    beaker1Contents = [],
-    beaker2Contents = [],
   } = data;
 
   const centerValue = (lowerRange + upperRange) / 2;
+  const beaker_1_has_contents = beaker1?.contents?.length > 0;
 
   return (
     <Window width={490} height={650}>
@@ -40,7 +61,7 @@ export const MassSpec = (props) => {
         {!!processing && (
           <Dimmer fontSize="32px">
             <Icon name="cog" spin={1} />
-            {' Purifying... ' + round(eta) + 's'}
+            {' Purifying... ' + round(eta, 0) + 's'}
           </Dimmer>
         )}
         <Section
@@ -48,10 +69,9 @@ export const MassSpec = (props) => {
           buttons={
             <Button
               icon="power-off"
-              content="Start"
-              disabled={!!processing || !beaker1Contents.length || !beaker2}
+              disabled={!!processing || !beaker_1_has_contents || !beaker2}
               tooltip={
-                !beaker1Contents.length
+                !beaker_1_has_contents
                   ? 'Missing input reagents!'
                   : !beaker2
                     ? 'Missing an output beaker!'
@@ -59,18 +79,19 @@ export const MassSpec = (props) => {
               }
               tooltipPosition="left"
               onClick={() => act('activate')}
-            />
+            >
+              Start
+            </Button>
           }
         >
-          {(beaker1Contents.length && (
+          {(beaker_1_has_contents && (
             <MassSpectroscopy
               lowerRange={lowerRange}
               centerValue={centerValue}
               upperRange={upperRange}
-              graphLowerRange={graphLowerRange}
               graphUpperRange={graphUpperRange}
               maxAbsorbance={peakHeight}
-              reagentPeaks={beaker1Contents}
+              reagentPeaks={beaker1.contents}
             />
           )) || <Box>Please insert an input beaker with reagents!</Box>}
         </Section>
@@ -78,51 +99,50 @@ export const MassSpec = (props) => {
         <Section
           title="Input beaker"
           buttons={
-            !!beaker1Contents && (
+            !!beaker1 && (
               <>
-                {!!beaker1MaxVolume && (
+                {
                   <Box inline color="label" mr={2}>
-                    {beaker1CurrentVolume} / {beaker1MaxVolume} units
+                    {beaker1.currentVolume} / {beaker1.maxVolume} units
                   </Box>
-                )}
-                <Button
-                  icon="eject"
-                  content="Eject"
-                  disabled={!beaker1}
-                  onClick={() => act('eject1')}
-                />
-              </>
-            )
-          }
-        >
-          <BeakerMassProfile loaded={!!beaker1} beaker={beaker1Contents} />
-          {!!beaker1Contents.length && (
-            <Box>{'Eta of selection: ' + round(eta) + ' seconds'}</Box>
-          )}
-        </Section>
-        <Section
-          title="Output beaker"
-          buttons={
-            !!beaker2Contents && (
-              <>
-                {!!beaker2MaxVolume && (
-                  <Box inline color="label" mr={2}>
-                    {beaker2CurrentVolume} / {beaker2MaxVolume} units
-                  </Box>
-                )}
-                <Button
-                  icon="eject"
-                  content="Eject"
-                  disabled={!beaker2}
-                  onClick={() => act('eject2')}
-                />
+                }
+                <Button icon="eject" onClick={() => act('eject1')}>
+                  Eject
+                </Button>
               </>
             )
           }
         >
           <BeakerMassProfile
-            loaded={!!beaker2}
-            beaker={beaker2Contents}
+            lowerRange={lowerRange}
+            upperRange={upperRange}
+            beaker={beaker1}
+          />
+          {!!beaker_1_has_contents && (
+            <Box>{'Eta of selection: ' + round(eta, 0) + ' seconds'}</Box>
+          )}
+        </Section>
+        <Section
+          title="Output beaker"
+          buttons={
+            !!beaker2 && (
+              <>
+                {
+                  <Box inline color="label" mr={2}>
+                    {beaker2.currentVolume} / {beaker2.maxVolume} units
+                  </Box>
+                }
+                <Button icon="eject" onClick={() => act('eject2')}>
+                  Eject
+                </Button>
+              </>
+            )
+          }
+        >
+          <BeakerMassProfile
+            lowerRange={lowerRange}
+            upperRange={upperRange}
+            beaker={beaker2}
             details
           />
         </Section>
@@ -131,13 +151,22 @@ export const MassSpec = (props) => {
   );
 };
 
-const BeakerMassProfile = (props) => {
-  const { loaded, details, beaker = [] } = props;
+type ProfileProps = {
+  lowerRange: number;
+  upperRange: number;
+  details?: BooleanLike;
+  beaker: Beaker;
+};
+
+const BeakerMassProfile = (props: ProfileProps) => {
+  const { lowerRange, upperRange, details, beaker } = props;
 
   return (
     <Box>
-      {(!loaded && <Box color="label">No beaker loaded.</Box>) ||
-        (beaker.length === 0 && <Box color="label">Beaker is empty.</Box>) || (
+      {(!beaker && <Box color="label">No beaker loaded.</Box>) ||
+        (beaker.contents.length === 0 && (
+          <Box color="label">Beaker is empty.</Box>
+        )) || (
           <Table className="candystripe">
             <Table.Row>
               <Table.Cell bold collapsing color="label">
@@ -161,63 +190,71 @@ const BeakerMassProfile = (props) => {
                 </Table.Cell>
               )}
             </Table.Row>
-            {beaker.map((reagent) => (
-              <Table.Row key={reagent.name}>
-                <Table.Cell
-                  collapsing
-                  color={reagent.selected ? 'green' : 'default'}
-                >
-                  {reagent.name}
-                </Table.Cell>
-                <Table.Cell
-                  collapsing
-                  color={reagent.selected ? 'green' : 'default'}
-                >
-                  {reagent.volume}
-                </Table.Cell>
-                <Table.Cell
-                  collapsing
-                  color={reagent.selected ? 'green' : 'default'}
-                >
-                  {reagent.mass}
-                </Table.Cell>
-                <Table.Cell
-                  collapsing
-                  color={reagent.selected ? 'green' : 'default'}
-                >
-                  {`${reagent.purity}%`}
-                </Table.Cell>
-                <Table.Cell collapsing color={reagent.color}>
-                  ▮{reagent.type}
-                </Table.Cell>
-                {!!details && <Table.Cell>{reagent.log}</Table.Cell>}
-              </Table.Row>
-            ))}
+            {beaker.contents.map((reagent) => {
+              const selected =
+                reagent.mass >= lowerRange && reagent.mass <= upperRange;
+              const color = reagent.type === 'Inverted' ? '#b60046' : '#3cf096';
+
+              return (
+                <Table.Row key={reagent.name}>
+                  <Table.Cell collapsing color={selected ? 'green' : 'default'}>
+                    {reagent.name}
+                  </Table.Cell>
+                  <Table.Cell collapsing color={selected ? 'green' : 'default'}>
+                    {reagent.volume}
+                  </Table.Cell>
+                  <Table.Cell collapsing color={selected ? 'green' : 'default'}>
+                    {reagent.mass}
+                  </Table.Cell>
+                  <Table.Cell collapsing color={selected ? 'green' : 'default'}>
+                    {`${reagent.purity}%`}
+                  </Table.Cell>
+                  <Table.Cell collapsing color={color}>
+                    ▮{reagent.type}
+                  </Table.Cell>
+                  {details && <Table.Cell>{reagent.log}</Table.Cell>}
+                </Table.Row>
+              );
+            })}
           </Table>
         )}
     </Box>
   );
 };
 
-const MassSpectroscopy = (props) => {
-  const { act, data } = useBackend();
+type SpectroscopyProps = {
+  lowerRange: number;
+  centerValue: number;
+  upperRange: number;
+  graphUpperRange: number;
+  maxAbsorbance: number;
+  reagentPeaks: Reagent[];
+};
+
+const MassSpectroscopy = (props: SpectroscopyProps) => {
+  const { act } = useBackend();
   const {
     lowerRange,
     centerValue,
     upperRange,
     graphUpperRange,
-    graphLowerRange,
     maxAbsorbance,
     reagentPeaks = [],
   } = props;
 
+  const graphLowerRange = 0;
   const deltaRange = graphUpperRange - graphLowerRange;
-
   const graphIncrement = deltaRange * 0.2;
 
   return (
     <>
-      <Box position="absolute" x="200" transform="translate(30,30)">
+      <Box
+        style={{
+          position: 'absolute',
+          right: '255px',
+          top: '25px',
+        }}
+      >
         <svg background-size="200px" width="200" height="400">
           <text
             x="0"
@@ -290,7 +327,9 @@ const MassSpectroscopy = (props) => {
                   ((peak.mass + 10) / graphUpperRange) * 500
                 },265 `}
                 opacity="0.6"
-                style={{ fill: peak.color }}
+                style={{
+                  fill: peak.type === 'Inverted' ? '#b60046' : '#3cf096',
+                }}
               />
             ))}
             <polygon
@@ -327,7 +366,7 @@ const MassSpectroscopy = (props) => {
           position="relative"
           step={graphUpperRange / 400}
           height={17.2}
-          format={(value) => round(value)}
+          format={(value: number) => round(value, 2)}
           width={(centerValue / graphUpperRange) * 400 + 'px'}
           value={lowerRange}
           minValue={graphLowerRange}
@@ -338,14 +377,12 @@ const MassSpectroscopy = (props) => {
               value: value,
             })
           }
-        >
-          {' '}
-        </Slider>
+        />
         <Slider
           name={'Right slider'}
           position="absolute"
           height={17.2}
-          format={(value) => round(value)}
+          format={(value: number) => round(value, 2)}
           step={graphUpperRange / 400}
           width={400 - (centerValue / graphUpperRange) * 400 + 'px'}
           value={upperRange}
@@ -357,9 +394,7 @@ const MassSpectroscopy = (props) => {
               value: value,
             })
           }
-        >
-          {' '}
-        </Slider>
+        />
         <Box>
           <Slider
             name={'Center slider'}
@@ -369,7 +404,7 @@ const MassSpectroscopy = (props) => {
             mb={5}
             value={centerValue}
             height={1.9}
-            format={(value) => round(value)}
+            format={(value: number) => round(value, 2)}
             width={400 + 'px'}
             minValue={graphLowerRange + 1}
             maxValue={graphUpperRange - 1}
@@ -379,9 +414,7 @@ const MassSpectroscopy = (props) => {
                 value: value,
               })
             }
-          >
-            {' '}
-          </Slider>
+          />
         </Box>
       </Box>
     </>
