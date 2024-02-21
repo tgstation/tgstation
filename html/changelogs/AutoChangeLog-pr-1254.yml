@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fix the supermatter cascade eating the server itself on icebox"
+  - bugfix: "Fixed a runtime with the SM cascade from a mistyped check"
