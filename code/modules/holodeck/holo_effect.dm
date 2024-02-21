@@ -65,8 +65,7 @@
 	ADD_TRAIT(our_mob, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 
 	// these vars are not really standardized but all would theoretically create stuff on death
-	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
-		our_mob.vars[v] = null
+	our_mob.add_traits(list(TRAIT_GENELESS, TRAIT_NO_BLOOD_OVERLAY, TRAIT_NOBLOOD, TRAIT_NOHUNGER), INNATE_TRAIT)
 	RegisterSignal(our_mob, COMSIG_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
@@ -103,7 +102,7 @@
 	mobtype = /mob/living/basic/bee/toxin
 
 /obj/effect/holodeck_effect/mobspawner/monkey
-	mobtype = /mob/living/carbon/human/species/monkey/holodeck
+	mobtype = /mob/living/carbon/human/species/monkey
 
 /obj/effect/holodeck_effect/mobspawner/monkey/activate(obj/machinery/computer/holodeck/computer)
 	var/mob/living/carbon/human/monkey = ..()
