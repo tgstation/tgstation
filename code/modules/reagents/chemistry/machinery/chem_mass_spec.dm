@@ -115,9 +115,9 @@
 		. += mutable_appearance(icon, "[base_icon_state]_panel-o")
 		return
 
-	if(beaker1)
+	if(!QDELETED(beaker1))
 		. += "HPLC_beaker1"
-	if(beaker2)
+	if(!QDELETED(beaker2))
 		. += "HPLC_beaker2"
 
 	if(is_operational && !panel_open && anchored && !(machine_stat & (BROKEN | NOPOWER)))
