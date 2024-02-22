@@ -210,6 +210,26 @@
 		hitpush = FALSE
 	return ..()
 
+///The core of catching thrown items, which non-carbons cannot without the help of items or abilities yet, as they've no throw mode.
+/mob/living/proc/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(!can_catch_item(skip_throw_mode_check, try_offhand) || !isitem(item) || HAS_TRAIT(item, TRAIT_UNCATCHABLE) || !isturf(item.loc))
+		return FALSE
+	if(!can_hold_items(item))
+		return FALSE
+	INVOKE_ASYNC(item, TYPE_PROC_REF(/obj/item, attempt_pickup), src, TRUE)
+	if(get_active_held_item() == item) //if our attack_hand() picks up the item...
+		visible_message(span_warning("[src] catches [item]!"), \
+						span_userdanger("You catch [item] in mid-air!"))
+		return TRUE
+
+///Checks the requites for catching a throw item.
+/mob/living/proc/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return FALSE
+	if(get_active_held_item() && (!try_offhand || get_inactive_held_item() || !swap_hand()))
+		return FALSE
+	return TRUE
+
 /mob/living/fire_act()
 	. = ..()
 	adjust_fire_stacks(3)
