@@ -24,7 +24,7 @@
 		new /obj/item/stack/sheet/iron(drop_loc, 5)
 		circuit?.forceMove(drop_loc)
 
-	qdel(src)
+	return ..()
 
 /// Called when circuit has been set to a new board
 /obj/structure/frame/proc/circuit_added(obj/item/circuitboard/added)
