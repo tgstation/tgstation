@@ -13,92 +13,6 @@
 	..()
 	syndicate_name = syndicate_name()
 
-/datum/team/nuclear/proc/update_objectives()
-	if(core_objective)
-		var/datum/objective/O = new core_objective
-		O.team = src
-		objectives += O
-
-/datum/team/nuclear/proc/is_disk_rescued()
-	for(var/obj/item/disk/nuclear/nuke_disk in SSpoints_of_interest.real_nuclear_disks)
-		//If emergency shuttle is in transit disk is only safe on it
-		if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-			if(!SSshuttle.emergency.is_in_shuttle_bounds(nuke_disk))
-				return FALSE
-		//If shuttle escaped check if it's on centcom side
-		else if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-			if(!nuke_disk.onCentCom())
-				return FALSE
-		else //Otherwise disk is safe when on station
-			var/turf/disk_turf = get_turf(nuke_disk)
-			if(!disk_turf || !is_station_level(disk_turf.z))
-				return FALSE
-	return TRUE
-
-/datum/team/nuclear/proc/are_all_operatives_dead()
-	for(var/datum/mind/operative_mind as anything in members)
-		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
-			return FALSE
-	return TRUE
-
-/datum/team/nuclear/proc/get_result()
-	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
-	var/shuttle_landed_base = SSshuttle.emergency.is_hijacked()
-	var/disk_rescued = is_disk_rescued()
-	var/syndies_didnt_escape = !is_infiltrator_docked_at_syndiebase()
-	var/team_is_dead = are_all_operatives_dead()
-	var/station_was_nuked = GLOB.station_was_nuked
-	var/station_nuke_source = GLOB.station_nuke_source
-
-	// The nuke detonated on the syndicate base
-	if(station_nuke_source == DETONATION_HIT_SYNDIE_BASE)
-		return NUKE_RESULT_FLUKE
-
-	// The station was nuked
-	if(station_was_nuked)
-		// The station was nuked and the infiltrator failed to escape
-		if(syndies_didnt_escape)
-			return NUKE_RESULT_NOSURVIVORS
-		// The station was nuked and the infiltrator escaped, and the nuke ops won
-		else
-			return NUKE_RESULT_NUKE_WIN
-
-	// The station was not nuked, but something was
-	else if(station_nuke_source && !disk_rescued)
-		// The station was not nuked, but something was, and the syndicates didn't escape it
-		if(syndies_didnt_escape)
-			return NUKE_RESULT_WRONG_STATION_DEAD
-		// The station was not nuked, but something was, and the syndicates returned to their base
-		else
-			return NUKE_RESULT_WRONG_STATION
-
-	// Nuke didn't blow, but nukies somehow hijacked the emergency shuttle to land at the base anyways.
-	else if(shuttle_landed_base)
-		if(disk_rescued)
-			return NUKE_RESULT_HIJACK_DISK
-		else
-			return NUKE_RESULT_HIJACK_NO_DISK
-
-	// No nuke went off, the station rescued the disk
-	else if(disk_rescued)
-		// No nuke went off, the shuttle left, and the team is dead
-		if(shuttle_evacuated && team_is_dead)
-			return NUKE_RESULT_CREW_WIN_SYNDIES_DEAD
-		// No nuke went off, but the nuke ops survived
-		else
-			return NUKE_RESULT_CREW_WIN
-
-	// No nuke went off, but the disk was left behind
-	else
-		// No nuke went off, the disk was left, but all the ops are dead
-		if(team_is_dead)
-			return NUKE_RESULT_DISK_LOST
-		// No nuke went off, the disk was left, there are living ops, but the shuttle left successfully
-		else if(shuttle_evacuated)
-			return NUKE_RESULT_DISK_STOLEN
-
-	CRASH("[type] - got an undefined / unexpected result.")
-
 /datum/team/nuclear/roundend_report()
 	var/list/parts = list()
 	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
@@ -301,6 +215,92 @@
 	playsound(spawn_loc, 'sound/effects/phasein.ogg', 50, TRUE)
 
 	tgui_alert(admin, "Reinforcement spawned at [infil_or_nukebase] with [tc_to_spawn].", "Reinforcements have arrived", list("God speed"))
+
+/datum/team/nuclear/proc/update_objectives()
+	if(core_objective)
+		var/datum/objective/O = new core_objective
+		O.team = src
+		objectives += O
+
+/datum/team/nuclear/proc/is_disk_rescued()
+	for(var/obj/item/disk/nuclear/nuke_disk in SSpoints_of_interest.real_nuclear_disks)
+		//If emergency shuttle is in transit disk is only safe on it
+		if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+			if(!SSshuttle.emergency.is_in_shuttle_bounds(nuke_disk))
+				return FALSE
+		//If shuttle escaped check if it's on centcom side
+		else if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+			if(!nuke_disk.onCentCom())
+				return FALSE
+		else //Otherwise disk is safe when on station
+			var/turf/disk_turf = get_turf(nuke_disk)
+			if(!disk_turf || !is_station_level(disk_turf.z))
+				return FALSE
+	return TRUE
+
+/datum/team/nuclear/proc/are_all_operatives_dead()
+	for(var/datum/mind/operative_mind as anything in members)
+		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
+			return FALSE
+	return TRUE
+
+/datum/team/nuclear/proc/get_result()
+	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
+	var/shuttle_landed_base = SSshuttle.emergency.is_hijacked()
+	var/disk_rescued = is_disk_rescued()
+	var/syndies_didnt_escape = !is_infiltrator_docked_at_syndiebase()
+	var/team_is_dead = are_all_operatives_dead()
+	var/station_was_nuked = GLOB.station_was_nuked
+	var/station_nuke_source = GLOB.station_nuke_source
+
+	// The nuke detonated on the syndicate base
+	if(station_nuke_source == DETONATION_HIT_SYNDIE_BASE)
+		return NUKE_RESULT_FLUKE
+
+	// The station was nuked
+	if(station_was_nuked)
+		// The station was nuked and the infiltrator failed to escape
+		if(syndies_didnt_escape)
+			return NUKE_RESULT_NOSURVIVORS
+		// The station was nuked and the infiltrator escaped, and the nuke ops won
+		else
+			return NUKE_RESULT_NUKE_WIN
+
+	// The station was not nuked, but something was
+	else if(station_nuke_source && !disk_rescued)
+		// The station was not nuked, but something was, and the syndicates didn't escape it
+		if(syndies_didnt_escape)
+			return NUKE_RESULT_WRONG_STATION_DEAD
+		// The station was not nuked, but something was, and the syndicates returned to their base
+		else
+			return NUKE_RESULT_WRONG_STATION
+
+	// Nuke didn't blow, but nukies somehow hijacked the emergency shuttle to land at the base anyways.
+	else if(shuttle_landed_base)
+		if(disk_rescued)
+			return NUKE_RESULT_HIJACK_DISK
+		else
+			return NUKE_RESULT_HIJACK_NO_DISK
+
+	// No nuke went off, the station rescued the disk
+	else if(disk_rescued)
+		// No nuke went off, the shuttle left, and the team is dead
+		if(shuttle_evacuated && team_is_dead)
+			return NUKE_RESULT_CREW_WIN_SYNDIES_DEAD
+		// No nuke went off, but the nuke ops survived
+		else
+			return NUKE_RESULT_CREW_WIN
+
+	// No nuke went off, but the disk was left behind
+	else
+		// No nuke went off, the disk was left, but all the ops are dead
+		if(team_is_dead)
+			return NUKE_RESULT_DISK_LOST
+		// No nuke went off, the disk was left, there are living ops, but the shuttle left successfully
+		else if(shuttle_evacuated)
+			return NUKE_RESULT_DISK_STOLEN
+
+	CRASH("[type] - got an undefined / unexpected result.")
 
 /// Returns whether or not syndicate operatives escaped.
 /proc/is_infiltrator_docked_at_syndiebase()

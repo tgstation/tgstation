@@ -29,24 +29,6 @@
 	/// The amount of limited discounts that the team get
 	var/discount_limited_amount = 10
 
-/datum/antagonist/nukeop/proc/equip_op()
-	if(!ishuman(owner.current))
-		return
-
-	var/mob/living/carbon/human/operative = owner.current
-	ADD_TRAIT(operative, TRAIT_NOFEAR_HOLDUPS, INNATE_TRAIT)
-
-	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
-		return
-
-	// If our nuke_ops_species pref is set to TRUE, (or we have no client) make us a human
-	if(isnull(operative.client) || operative.client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
-		operative.set_species(/datum/species/human)
-
-	operative.equip_species_outfit(nukeop_outfit)
-
-	return TRUE
-
 /datum/antagonist/nukeop/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
 	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
@@ -86,6 +68,95 @@
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	add_team_hud(mob_override || owner.current, /datum/antagonist/nukeop)
 
+/datum/antagonist/nukeop/forge_objectives()
+	if(nuke_team)
+		objectives |= nuke_team.objectives
+
+/datum/antagonist/nukeop/leader/get_spawnpoint()
+	return pick(GLOB.nukeop_leader_start)
+
+/datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
+	if(!new_team)
+		if(!always_new_team)
+			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
+				if(!N.owner)
+					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
+					continue
+				if(N.nuke_team)
+					nuke_team = N.nuke_team
+					return
+		nuke_team = new /datum/team/nuclear
+		nuke_team.update_objectives()
+		assign_nuke() //This is bit ugly
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	nuke_team = new_team
+
+/datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
+	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
+
+/datum/antagonist/nukeop/get_admin_commands()
+	. = ..()
+	.["Send to base"] = CALLBACK(src, PROC_REF(admin_send_to_base))
+	.["Tell code"] = CALLBACK(src, PROC_REF(admin_tell_code))
+
+/datum/antagonist/nukeop/get_preview_icon()
+	if (!preview_outfit)
+		return null
+
+	var/icon/final_icon = render_preview_outfit(preview_outfit)
+
+	if (!isnull(preview_outfit_behind))
+		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
+		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
+
+		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
+
+	if (!isnull(nuke_icon_state))
+		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)
+		nuke.Shift(SOUTH, 6)
+		final_icon.Blend(nuke, ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
+
+/datum/antagonist/nukeop/proc/equip_op()
+	if(!ishuman(owner.current))
+		return
+
+	var/mob/living/carbon/human/operative = owner.current
+	ADD_TRAIT(operative, TRAIT_NOFEAR_HOLDUPS, INNATE_TRAIT)
+
+	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
+		return
+
+	// If our nuke_ops_species pref is set to TRUE, (or we have no client) make us a human
+	if(isnull(operative.client) || operative.client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
+		operative.set_species(/datum/species/human)
+
+	operative.equip_species_outfit(nukeop_outfit)
+
+	return TRUE
+
+/datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
+	owner.current.forceMove(pick(GLOB.nukeop_start))
+
+/datum/antagonist/nukeop/proc/admin_tell_code(mob/admin)
+	var/code
+	for (var/obj/machinery/nuclearbomb/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
+		if (length(bombue.r_code) <= 5 && bombue.r_code != initial(bombue.r_code))
+			code = bombue.r_code
+			break
+	if (code)
+		antag_memory += "<B>Syndicate Nuclear Bomb Code</B>: [code]<br>"
+		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
+	else
+		to_chat(admin, span_danger("No valid nuke found!"))
+
 /datum/antagonist/nukeop/proc/assign_nuke()
 	if(!nuke_team || nuke_team.tracked_nuke)
 		return
@@ -123,10 +194,6 @@
 	else
 		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
 
-/datum/antagonist/nukeop/forge_objectives()
-	if(nuke_team)
-		objectives |= nuke_team.objectives
-
 /// Actually moves our nukie to where they should be
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
 	// Ensure that the nukiebase is loaded, and wait for it if required
@@ -144,70 +211,3 @@
 		team_number = nuke_team.members.Find(owner)
 
 	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
-
-/datum/antagonist/nukeop/leader/get_spawnpoint()
-	return pick(GLOB.nukeop_leader_start)
-
-/datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
-	if(!new_team)
-		if(!always_new_team)
-			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
-				if(!N.owner)
-					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
-					continue
-				if(N.nuke_team)
-					nuke_team = N.nuke_team
-					return
-		nuke_team = new /datum/team/nuclear
-		nuke_team.update_objectives()
-		assign_nuke() //This is bit ugly
-		return
-	if(!istype(new_team))
-		stack_trace("Wrong team type passed to [type] initialization.")
-	nuke_team = new_team
-
-/datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
-	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
-
-/datum/antagonist/nukeop/get_admin_commands()
-	. = ..()
-	.["Send to base"] = CALLBACK(src, PROC_REF(admin_send_to_base))
-	.["Tell code"] = CALLBACK(src, PROC_REF(admin_tell_code))
-
-/datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
-	owner.current.forceMove(pick(GLOB.nukeop_start))
-
-/datum/antagonist/nukeop/proc/admin_tell_code(mob/admin)
-	var/code
-	for (var/obj/machinery/nuclearbomb/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
-		if (length(bombue.r_code) <= 5 && bombue.r_code != initial(bombue.r_code))
-			code = bombue.r_code
-			break
-	if (code)
-		antag_memory += "<B>Syndicate Nuclear Bomb Code</B>: [code]<br>"
-		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
-	else
-		to_chat(admin, span_danger("No valid nuke found!"))
-
-/datum/antagonist/nukeop/get_preview_icon()
-	if (!preview_outfit)
-		return null
-
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
-
-	if (!isnull(preview_outfit_behind))
-		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
-		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
-
-		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
-		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
-
-	if (!isnull(nuke_icon_state))
-		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)
-		nuke.Shift(SOUTH, 6)
-		final_icon.Blend(nuke, ICON_OVERLAY)
-
-	return finish_preview_icon(final_icon)
