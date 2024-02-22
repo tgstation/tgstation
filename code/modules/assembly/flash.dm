@@ -171,7 +171,7 @@
 			//easy way to make sure that you can only long get full effect on someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(60, 80) * (1 - (deviation * 0.5)))
 			//making it so that the paralyze requires initially having confused the target with a flash or something else
-			if(flashed.get_timed_status_effect_duration(/datum/status_effect/confusion) > 0)
+			if(flashed.get_timed_status_effect_duration(/datum/status_effect/confusion) > 0 || flashed.get_eye_protection() <= FLASH_PROTECTION_SENSITIVE)
 				flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
