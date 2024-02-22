@@ -1344,7 +1344,6 @@
 	else
 		set_lying_angle(new_lying_angle)
 
-
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, disgust))
@@ -1360,17 +1359,18 @@
 
 	return ..()
 
-
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
 		return active_arm.attack_type
 	return ..()
 
-
 /mob/living/carbon/proc/attach_rot()
-	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
-		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	if(flags_1 & HOLOGRAM_1)
+		return
+	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.
