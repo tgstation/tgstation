@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /datum/escape_menu
 	/// The client that owns this escape menu
 	var/client/client
+	/// A weakref to the hud this escape menu currently applies to
+	var/datum/weakref/our_hud_ref
 
 	VAR_PRIVATE
 		ckey
@@ -37,6 +39,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 	ckey = client?.ckey
 	src.client = client
+	refresh_hud()
 
 	base_holder = new(client)
 	populate_base_ui()
@@ -54,8 +57,12 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
 
+	var/datum/our_hud = our_hud_ref?.resolve()
+	if(our_hud)
+		REMOVE_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
 	GLOB.escape_menus -= ckey
 	plane_master_controller.remove_filter("escape_menu_blur")
+	client = null
 
 	return ..()
 
@@ -68,9 +75,21 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /datum/escape_menu/proc/on_client_mob_login()
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
-
 	if (menu_page == PAGE_LEAVE_BODY)
 		qdel(src)
+		return
+	// Otherwise our client just switched bodies, let's update our hud
+	refresh_hud()
+
+/datum/escape_menu/proc/refresh_hud()
+	var/datum/old_hud = our_hud_ref?.resolve()
+	if(old_hud)
+		REMOVE_TRAIT(old_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
+
+	var/datum/new_hud = client.mob?.hud_used
+	our_hud_ref = WEAKREF(new_hud)
+	if(new_hud)
+		ADD_TRAIT(new_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
 
 /datum/escape_menu/proc/show_page()
 	PRIVATE_PROC(TRUE)

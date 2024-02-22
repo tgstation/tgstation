@@ -26,20 +26,6 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
-	// We could do not do parallax for anything except the main plane group
-	// This could be changed, but it would require refactoring this whole thing
-	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
-	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
-		if(screenmob != mymob)
-			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-			C.screen += plane_master
-		plane_master.color = list(
-			0, 0, 0, 0,
-			0, 0, 0, 0,
-			0, 0, 0, 0,
-			1, 1, 1, 1,
-			0, 0, 0, 0
-			)
 
 /datum/hud/proc/remove_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob

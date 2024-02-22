@@ -65,7 +65,7 @@
 
 /atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER, relay_color = GLOB.emissive_color)
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
@@ -76,7 +76,7 @@
 		<br>Also notice that the parent parallax plane is mirrored down to all children. We want to support viewing parallax across all z levels at once."
 	plane = PLANE_SPACE_PARALLAX
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_INSET_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
 
@@ -448,3 +448,25 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	allows_offsetting = FALSE
+
+/atom/movable/screen/plane_master/escape_menu/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	var/datum/hud/our_hud = home.our_hud
+	if(!our_hud)
+		return
+	RegisterSignal(our_hud, SIGNAL_ADDTRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_opened), override = TRUE)
+	RegisterSignal(our_hud, SIGNAL_REMOVETRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_closed), override = TRUE)
+	if(!HAS_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN))
+		escape_closed()
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_opened(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_closed(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	hide_plane(our_mob)

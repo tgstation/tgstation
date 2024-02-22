@@ -56,19 +56,9 @@
 
 /datum/colorblind_tester/proc/set_selected_type(selected, datum/hud/remove_from)
 	var/atom/movable/plane_master_controller/colorblind_planes = remove_from.plane_master_controllers[PLANE_MASTERS_COLORBLIND]
-	// This is dumb, but well
-	// The parralax plane has a blend mode of 4, or BLEND_MULTIPLY
-	// It's like that so it is properly masked by darkness and such
-	// The problem is blend modes apply to filters like this too
-	// So I need to manually set and reset its blendmode to allow for proper shading of the background
-	// Sorry...
 	if(selected_type)
 		colorblind_planes.remove_filter(selected_type)
-		for(var/atom/movable/screen/plane_master/parralax as anything in remove_from.get_true_plane_masters(PLANE_SPACE_PARALLAX))
-			parralax.blend_mode = initial(parralax.blend_mode)
 	selected_type = selected
 	if(selected_type)
 		var/list/matrix = color_matrixes[selected_type]
 		colorblind_planes.add_filter(selected_type, 0, color_matrix_filter(matrix))
-		for(var/atom/movable/screen/plane_master/parralax as anything in remove_from.get_true_plane_masters(PLANE_SPACE_PARALLAX))
-			parralax.blend_mode = BLEND_DEFAULT

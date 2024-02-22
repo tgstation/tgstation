@@ -98,9 +98,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
-	// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
-	// They typically use * in their render target. They exist solely so we can reuse them,
-	// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
+	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
+	/// They typically use * in their render target. They exist solely so we can reuse them,
+	/// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
 
 /datum/hud/New(mob/owner)
