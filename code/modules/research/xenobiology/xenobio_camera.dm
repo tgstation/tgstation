@@ -210,6 +210,7 @@
 				food.LAssailant = WEAKREF(C)
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
+				remote_eye.auto_attach_slime(food) // monke edit: hungry slimes that aren't feeding will now immediately latch onto monkeys placed on top of them
 				to_chat(owner, span_notice("[X] now has [X.monkeys] monkeys stored."))
 		else
 			to_chat(owner, span_warning("[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored."))
@@ -421,6 +422,7 @@
 				food.LAssailant = WEAKREF(C)
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
+				E.auto_attach_slime(food) // monke edit: hungry slimes that aren't feeding will now immediately latch onto monkeys placed on top of them
 				to_chat(C, span_notice("[X] now has [X.monkeys] monkeys stored."))
 		else
 			to_chat(C, span_warning("[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored."))

@@ -1,5 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Fixes changelings not being put into their headslug when using last resort"
-  - bugfix: "Fixes changeling headslugs not putting their eggs into dead bodies /:cl:"

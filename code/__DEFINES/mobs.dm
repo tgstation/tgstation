@@ -478,9 +478,6 @@
 #define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
 #define ROBOTIC_BURN_EXAMINE_TEXT "charring"
 
-// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
-#define MOB_BIG_FIRE_STACK_THRESHOLD 3
-
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
@@ -721,8 +718,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define WOUND_LAYER 3
 /// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
 #define HALO_LAYER 2
-/// Fire layer when you're on fire
-#define FIRE_LAYER 1
+/// The highest most layer for mob overlays. Unused
+#define HIGHEST_LAYER 1
 
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
@@ -763,7 +760,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
 	// DAMAGE_LAYER (full body)
-	// FIRE_LAYER (full body)
+	// HIGHEST_LAYER (full body)
 	// UNIFORM_LAYER (full body)
 	// WOUND_LAYER (full body)
 ))

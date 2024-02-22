@@ -4,6 +4,36 @@
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_VIRUSIMMUNE), PROC_REF(on_virusimmune_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GENELESS), PROC_REF(on_geneless_trait_gain))
+
+/**
+ * On gain of TRAIT_AGENDER
+ *
+ * This will make the mob get it's gender set to PLURAL.
+ */
+/mob/living/carbon/proc/on_agender_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	gender = PLURAL
+
+/**
+ * On removal of TRAIT_AGENDER
+ *
+ * This will make the mob get it's gender set to whatever the DNA says it should be.
+ */
+/mob/living/carbon/proc/on_agender_trait_loss(datum/source)
+	SIGNAL_HANDLER
+
+	//updates our gender to be whatever our DNA wants it to be
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3) || pick(G_MALE, G_FEMALE))
+		if(G_MALE)
+			gender = MALE
+		if(G_FEMALE)
+			gender = FEMALE
+		else
+			gender = PLURAL
 
 /**
  * On gain of TRAIT_NOBREATH
@@ -44,3 +74,34 @@
 		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	reagents.end_metabolization(keep_liverless = TRUE)
+
+/**
+ * On gain of TRAIT_VIRUSIMMUNE
+ *
+ * This will clear all diseases on the mob.
+ */
+/mob/living/carbon/proc/on_virusimmune_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	for(var/datum/disease/disease as anything in diseases)
+		disease.cure(FALSE)
+
+/**
+ * On gain of TRAIT_TOXIMMUNE
+ *
+ * This will clear all toxin damage on the mob.
+ */
+/mob/living/carbon/proc/on_toximmune_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	setToxLoss(0, updating_health = TRUE, forced = TRUE)
+
+/**
+ * On gain of TRAIT_GENELLESS
+ *
+ * This will clear all DNA mutations on on the mob.
+ */
+/mob/living/carbon/proc/on_geneless_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	dna?.remove_all_mutations()
