@@ -99,7 +99,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/datum/target
@@ -235,7 +235,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	set name = "Atom ProcCall"
 	set waitfor = FALSE
 
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null

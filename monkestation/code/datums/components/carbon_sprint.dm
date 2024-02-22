@@ -31,7 +31,7 @@
 			stopSprint()
 		return
 
-	if(sprint_key_down && !HAS_TRAIT(src, TRAIT_NO_SPRINT))
+	if(sprint_key_down && !HAS_TRAIT(carbon_parent, TRAIT_NO_SPRINT))
 		var/_step_size = (direct & (direct-1)) ? 1.4 : 1 //If we're moving diagonally, we're taking roughly 1.4x step size
 		if(!sprinting)
 			sprinting = TRUE
