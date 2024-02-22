@@ -84,6 +84,7 @@
 #define JOB_BARTENDER "Bartender"
 #define JOB_BOTANIST "Botanist"
 #define JOB_COOK "Cook"
+#define JOB_CHEF "Chef" // Alternate cook title.
 #define JOB_JANITOR "Janitor"
 #define JOB_CLOWN "Clown"
 #define JOB_MIME "Mime"
