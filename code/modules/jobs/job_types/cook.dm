@@ -88,16 +88,16 @@
 		if(!visualsOnly)
 			other_chefs.cooks++
 
-/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
 	// Update PDA to match possible new trim.
-	var/obj/item/card/id/worn_id = H.wear_id
-	var/obj/item/modular_computer/pda/pda = H.get_item_by_slot(pda_slot)
+	var/obj/item/card/id/worn_id = user.wear_id
+	var/obj/item/modular_computer/pda/pda = user.get_item_by_slot(pda_slot)
 	if(!istype(worn_id) || !istype(pda))
 		return
 	var/assignment = worn_id.get_trim_assignment()
 	if(!isnull(assignment))
-		pda.imprint_id(H.real_name, assignment)
+		pda.imprint_id(user.real_name, assignment)
 
 /datum/outfit/job/cook/get_types_to_preload()
 	. = ..()
