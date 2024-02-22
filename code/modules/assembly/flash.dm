@@ -166,7 +166,7 @@
 		return
 
 	if(targeted)
-		if(flashed.flash_act(1, 1))
+		if(flashed.flash_act(1, 1, length = 3.5 SECONDS))
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long get full effect on someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(60, 80) * (1 - (deviation * 0.5)))
@@ -246,7 +246,7 @@
 		var/mob/living/silicon/robot/flashed_borgo = M
 		log_combat(user, flashed_borgo, "flashed", src)
 		update_icon(ALL, TRUE)
-		if(flashed_borgo.flash_act(affect_silicon = TRUE))
+		if(flashed_borgo.flash_act(affect_silicon = TRUE, length = 3.5 SECONDS))
 			if(flashed_borgo.is_blind())
 				var/flash_duration = rand(8,12) SECONDS
 				flashed_borgo.Paralyze(flash_duration)
