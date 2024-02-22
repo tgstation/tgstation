@@ -80,10 +80,6 @@
 		if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
 			return FALSE
 
-		var/obj/structure/girder/girder = locate() in src
-		if(girder)
-			return girder.rcd_vals(user, the_rcd)
-
 		return list("delay" = 0, "cost" = 3)
 	return FALSE
 
@@ -91,10 +87,6 @@
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
 		if(rcd_data["[RCD_DESIGN_PATH]"] != /turf/open/floor/plating/rcd)
 			return FALSE
-
-		var/obj/structure/girder/girder = locate() in src
-		if(girder)
-			return girder.rcd_act(user, the_rcd, rcd_data)
 
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
