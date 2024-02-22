@@ -299,9 +299,6 @@
 	update_appearance(UPDATE_ICON_STATE)
 	return TRUE
 
-/obj/structure/frame/computer/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/structure/frame/computer/finalize_construction(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	var/obj/machinery/new_machine = new circuit.build_path(loc)
