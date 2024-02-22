@@ -112,6 +112,7 @@
 	if(!SSmapping.max_plane_offset)
 		return
 
+	var/old_offset = active_offset
 	active_offset = new_offset
 
 	// Each time we go "down" a visual z level, we'll reduce the scale by this amount
@@ -147,6 +148,8 @@
 
 	// So we can talk in 1 -> max_offset * 2 + 1, rather then -max_offset -> max_offset
 	var/offset_offset = SSmapping.max_plane_offset + 1
+	var/turf/viewing = get_turf(our_mob)
+	var/lowest_possible_offset = GET_LOWEST_STACK_OFFSET(viewing.z)
 
 	for(var/plane_key in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
@@ -155,20 +158,17 @@
 
 		var/visual_offset = plane.offset - new_offset
 
-		// Basically uh, if we're showing something down X amount of levels, or up any amount of levels
-		if(multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && (visual_offset > multiz_boundary || visual_offset < 0))
-			plane.outside_bounds(our_mob)
-		else if(plane.is_outside_bounds)
-			plane.inside_bounds(our_mob)
+		// If we aren't being displayed, don't fuckin render ya hear me?
+		// inverse the offset so it's in a nicer to think about space (- == below)
+		if(!plane.set_distance_from_owner(our_mob, visual_offset * -1, multiz_boundary, lowest_possible_offset))
+			continue
 
 		if(!plane.multiz_scaled)
 			continue
 
-		if(plane.force_hidden || plane.is_outside_bounds || visual_offset < 0)
-			// We don't animate here because it should be invisble, but we do mark because it'll look nice
-			plane.transform = offsets[visual_offset + offset_offset]
-			continue
-
+		// Set the transform to what we expect it to be at this point
+		plane.transform = offsets[(plane.offset - old_offset) + offset_offset]
+		// So this will always animate nicely
 		animate(plane, transform = offsets[visual_offset + offset_offset], 0.05 SECONDS, easing = LINEAR_EASING)
 
 /// Holds plane masters for popups, like camera windows

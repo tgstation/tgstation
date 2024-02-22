@@ -302,15 +302,18 @@
 
 //Plane master critical flags
 //Describes how different plane masters behave when they are being culled for performance reasons
-/// This plane master will not go away if its layer is culled. useful for preserving effects
+/// This plane master will not go away if its layer BELOW the cull line. useful for preserving effects
 #define PLANE_CRITICAL_DISPLAY (1<<0)
+/// This plane master will draw even while its z layer is ABOVE the cull
+#define PLANE_CRITICAL_SOURCE (1<<1)
 /// This plane master will temporarially remove relays to all other planes
 /// Allows us to retain the effects of a plane while cutting off the changes it makes
-#define PLANE_CRITICAL_NO_RELAY (1<<1)
+#define PLANE_CRITICAL_NO_RELAY (1<<2)
 /// We assume this plane master has a render target starting with *, it'll be removed, forcing it to render in place
-#define PLANE_CRITICAL_CUT_RENDER (1<<2)
+#define PLANE_CRITICAL_CUT_RENDER (1<<3)
 
-#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
+#define PLANE_CRITICAL_ALWAYS_DISPLAY (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1

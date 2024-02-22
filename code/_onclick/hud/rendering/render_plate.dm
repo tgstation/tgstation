@@ -212,9 +212,30 @@
 	. = ..()
 	if(!.)
 		return
+	refresh_ao(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/game_world/set_distance_from_owner(mob/relevant, new_distance)
+	. = ..()
+	// if it's hidden, no sense in fucking with it
+	if(!.)
+		return
+	// Otherwise...
+	refresh_ao(relevant)
+
+/// Refreshes our AO filter
+/// This is a very heavy filter for clients, so we decide how to implement this based off how impactful it actually is ya feel?
+/atom/movable/screen/plane_master/rendering_plate/game_world/proc/refresh_ao(mob/refresh_for)
 	remove_filter("AO")
-	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+	if(!istype(refresh_for))
+		return
+	if(!refresh_for.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+		return
+	// If we're on the same z layer as our owner we draw with high fidelity
+	if(distance_from_owner == 0)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+	// Otherwise let's use the "worse" version
+	else
+		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/rendering_plate/lighting

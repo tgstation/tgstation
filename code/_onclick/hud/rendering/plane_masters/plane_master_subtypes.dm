@@ -85,6 +85,8 @@
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
+	// The "home" parallax plate ALWAYS displays. ALWAYS
+	critical = PLANE_CRITICAL_ALWAYS_DISPLAY
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 	RegisterSignal(SSdcs, COMSIG_NARSIE_SUMMON_UPDATE, PROC_REF(narsie_modified))
 	if(GLOB.narsie_summon_count >= 1)
@@ -102,11 +104,13 @@
 			// Overlay so we don't multiply twice, and thus fuck up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
-// Hacky shit to ensure parallax works in perf mode
-/atom/movable/screen/plane_master/parallax/outside_bounds(mob/relevant)
-	if(offset == 0)
-		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
-		is_outside_bounds = TRUE // I'm sorry :(
+/atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_offset, multiz_boundary)
+	. = ..()
+	if(.)
+		// if we're rendering, always readd.
+		// just in case we lost it
+		var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 		return
 	// If we can't render, and we aren't the bottom layer, don't render us
 	// This way we only multiply against stuff that's not fullwhite space
@@ -116,22 +120,22 @@
 		parent_parallax.remove_relay_from(plane)
 	else
 		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
-	return ..()
 
-/atom/movable/screen/plane_master/parallax/inside_bounds(mob/relevant)
-	if(offset == 0)
-		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
-		is_outside_bounds = FALSE
-		return
-	// Always readd, just in case we lost it
-	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
-	parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
-	return ..()
+/atom/movable/screen/plane_master/parallax/retain_hidden_plane(mob/relevant)
+	// The 0'th prallax plane always wants to render, but we do want to avoid drawing to our parent so let's yeet that
+	if(offset != 0)
+		return ..()
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
+
+/atom/movable/screen/plane_master/parallax/restore_hidden_plane(mob/relevant)
+	if(offset != 0)
+		return ..()
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 
 // Needs to handle rejoining on a lower z level, so we NEED to readd old planes
 /atom/movable/screen/plane_master/parallax/check_outside_bounds()
-	// If we're outside bounds AND we're the 0th plane, we need to show cause parallax is hacked to hell
-	return offset != 0 && is_outside_bounds
+	// If we're outside bounds AND we're the 0th plane we still need to show cause parallax is hacked to hell
+	return offset != 0 && hidden_by_distance
 
 /// Starts the narsie animation midway, so we can catch up to everyone else quickly
 /atom/movable/screen/plane_master/parallax/proc/narsie_start_midway(start_time)
@@ -189,7 +193,7 @@
 /atom/movable/screen/plane_master/gravpulse/proc/distortion_disabled(datum/source)
 	SIGNAL_HANDLER
 	var/mob/our_mob = home?.our_hud?.mymob
-	hide_plane()
+	hide_plane(our_mob)
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor

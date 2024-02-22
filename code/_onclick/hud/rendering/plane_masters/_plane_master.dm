@@ -61,8 +61,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// See [code\__DEFINES\layers.dm] for our bitflags
 	var/critical = NONE
 
-	/// If this plane master is outside of our visual bounds right now
-	var/is_outside_bounds = FALSE
+	/// How far this plane master is from the z layer of our owner
+	/// + means it's higher, - means it's lower
+	var/distance_from_owner = 0
+	/// If this plane master has been hidden by its z layer distance
+	var/hidden_by_distance = FALSE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
 	. = ..()
@@ -133,32 +136,23 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		return FALSE
 
 	var/client/our_client = mymob?.canon_client
-	// Alright, let's get this out of the way
-	// Mobs can move z levels without their client. If this happens, we need to ensure critical display settings are respected
-	// This is done here. Mild to severe pain but it's nessesary
-	if(check_outside_bounds())
-		if(!(critical & PLANE_CRITICAL_DISPLAY))
-			return FALSE
-		if(!our_client)
-			return TRUE
-		our_client.screen += src
-
-		if(!(critical & PLANE_CRITICAL_NO_RELAY))
-			our_client.screen += relays
-			return TRUE
-		return TRUE
-
 	if(!our_client)
 		return TRUE
 
 	our_client.screen += src
-	our_client.screen += relays
+	// Alright, let's get this out of the way
+	// Mobs can move z levels without their client. If this happens, we need to ensure critical display settings are respected
+	// This is done here. Mild to severe pain but it's nessesary
+	// (We check to see if we use the critical system, then if we don't want some realys, then if we are actually outside bounds)
+	// If we want all our relays then there's no point doing this now is there
+	if(!(critical & (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE)) || !(critical & PLANE_CRITICAL_NO_RELAY) || !check_outside_bounds())
+		our_client.screen += relays
 	return TRUE
 
 /// Hook to allow planes to work around is_outside_bounds
 /// Return false to allow a show, true otherwise
 /atom/movable/screen/plane_master/proc/check_outside_bounds()
-	return is_outside_bounds
+	return hidden_by_distance
 
 /// Hides a plane master from the passeed in mob
 /// Do your effect cleanup here
@@ -199,38 +193,79 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	else
 		unhide_plane(our_mob)
 
-/atom/movable/screen/plane_master/proc/outside_bounds(mob/relevant)
-	if(force_hidden || is_outside_bounds)
+/// Sets and reacts to the distance we are from our owner's z layer
+/// This is what handles culling plane masters that are out of the sight of our mob
+/// Takse the mob to apply changes to, the new working distance,
+// the multiz_boundary of the mob and the lowest possible offset for anything the mob will see  (expensive lookup, faster this way)
+/// Returns TRUE if the plane master is still visible, FALSE if it's hidden
+/atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+	SHOULD_CALL_PARENT(TRUE)
+	distance_from_owner = new_distance
+	// If we are above our owner's z layer
+	#warn in order to make this work disabling a plane fully needs to disable any relays that draw at it
+	#warn otherwise this shit is fucked. so we need a linkback list.
+	#warn (do we need to disable all of them? I guess we would, and then prevent adding new ones without asking)
+	#warn this is gonna fuck up plane master handling real bad, need to make removing/readding relays efficent somehow
+	#warn group them by when we remove them maybe and then stick em in the vis_contents of screen objects?
+	#warn also we need hidden_by_distance to track what kind of hidden we are, so we can fullhide everything on the z layer below the bottom displayed
+	//if(distance_from_owner > 0)
+	//	if(hidden_by_distance || force_hidden)
+	//		return critical & PLANE_CRITICAL_SOURCE
+	//	hidden_by_distance = TRUE
+	//	// If critical, hold on
+	//	if(critical & PLANE_CRITICAL_SOURCE)
+	//		retain_hidden_plane(relevant)
+	//		return TRUE
+	//	// otherwise, hide that shit
+	//	hide_from(relevant)
+	//	return FALSE
+	// If we are below the acceptable z level offset (set by pref)
+	// (Or if we're just not visible at all)
+	//else
+	if(distance_from_owner < 0 && (offset > lowest_possible_offset || \
+		multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && abs(distance_from_owner) > multiz_boundary))
+		if(hidden_by_distance || force_hidden)
+			return (critical & PLANE_CRITICAL_DISPLAY && offset < lowest_possible_offset) // yeah this is dumb I'm sorry
+		hidden_by_distance = TRUE
+		// If it's critical to how lower layers look visually (mostly lighting)
+		// Keep the bare bones
+		if(critical & PLANE_CRITICAL_DISPLAY && (offset < lowest_possible_offset))
+			retain_hidden_plane(relevant)
+			return TRUE
+		// Otherwise, yayeeet
+		hide_from(relevant)
+		return FALSE
+	else if(hidden_by_distance)
+		hidden_by_distance = FALSE
+		if(critical & (PLANE_CRITICAL_SOURCE|PLANE_CRITICAL_DISPLAY))
+			restore_hidden_plane(relevant)
+			return TRUE
+		show_to(relevant)
+	return TRUE
+
+/// Hides a plane from either relays or render targets (or both), but does not actually remove it from the screen
+/// Lets us partially hide planes for performance reasons without fully disabling them
+/atom/movable/screen/plane_master/proc/retain_hidden_plane(mob/relevant)
+	// We here assume that your render target starts with *
+	if(critical & PLANE_CRITICAL_CUT_RENDER && render_target)
+		render_target = copytext_char(render_target, 2)
+	if(!(critical & PLANE_CRITICAL_NO_RELAY))
 		return
-	is_outside_bounds = TRUE
-	// If we're of critical importance, AND we're below the rendering layer
-	if(critical & PLANE_CRITICAL_DISPLAY)
-		// We here assume that your render target starts with *
-		if(critical & PLANE_CRITICAL_CUT_RENDER && render_target)
-			render_target = copytext_char(render_target, 2)
-		if(!(critical & PLANE_CRITICAL_NO_RELAY))
-			return
-		var/client/our_client = relevant.client
-		if(our_client)
-			for(var/atom/movable/render_plane_relay/relay as anything in relays)
-				our_client.screen -= relay
-
+	var/client/our_client = relevant.client
+	if(!our_client)
 		return
-	hide_from(relevant)
+	for(var/atom/movable/render_plane_relay/relay as anything in relays)
+		our_client.screen -= relay
 
-/atom/movable/screen/plane_master/proc/inside_bounds(mob/relevant)
-	is_outside_bounds = FALSE
-	if(critical & PLANE_CRITICAL_DISPLAY)
-		// We here assume that your render target starts with *
-		if(critical & PLANE_CRITICAL_CUT_RENDER && render_target)
-			render_target = "*[render_target]"
-
-		if(!(critical & PLANE_CRITICAL_NO_RELAY))
-			return
-		var/client/our_client = relevant.client
-		if(our_client)
-			for(var/atom/movable/render_plane_relay/relay as anything in relays)
-				our_client.screen += relay
-
+/// Restores a formerly partially hidden plane
+/atom/movable/screen/plane_master/proc/restore_hidden_plane(mob/relevant)
+	// We once again assume that your render target WANTS to start with *
+	if(critical & PLANE_CRITICAL_CUT_RENDER && render_target)
+		render_target = "*[render_target]"
+	if(!(critical & PLANE_CRITICAL_NO_RELAY))
 		return
-	show_to(relevant)
+	var/client/our_client = relevant.client
+	if(!our_client)
+		return
+	for(var/atom/movable/render_plane_relay/relay as anything in relays)
+		our_client.screen += relay
