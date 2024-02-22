@@ -30,7 +30,6 @@
 
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
-
 	if(current_slot == slot)
 		return
 
@@ -41,18 +40,27 @@
 
 	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_icon_update))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	current_slot = slot
 
+	on_icon_update(source)
+
+/datum/component/tactical/proc/on_icon_update(obj/item/source)
+	SIGNAL_HANDLER
+	var/mob/user = source.loc
+	if(!istype(user))
+		return
+
+	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	var/obj/item/master = parent
 	var/image/image = image(master, loc = user)
 	image.copy_overlays(master)
 	image.override = TRUE
 	image.layer = ABOVE_MOB_LAYER
 	image.plane = FLOAT_PLANE
-	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
+	user.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
