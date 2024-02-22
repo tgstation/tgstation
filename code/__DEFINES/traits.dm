@@ -424,8 +424,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)
 #define TRAIT_RDS_SUPPRESSED "rds_suppressed"
-/// overrides the update_fire proc to always add fire (for lava)
-#define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
+/// Mobs that have this trait cannot be extinguished
+#define TRAIT_NO_EXTINGUISH "no_extinguish"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
 /// The mob's nanites are sending a monitoring signal visible on diag HUD
