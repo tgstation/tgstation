@@ -117,10 +117,41 @@
 		state = FRAME_COMPUTER_STATE_BOARD_SECURED
 		update_appearance(UPDATE_ICON_STATE)
 
+/obj/structure/frame/computer/install_parts_from_part_replacer(mob/living/user, obj/item/storage/part_replacer/replacer, no_sound = FALSE)
+	switch(state)
+		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
+			var/obj/item/stack/cable_coil/cable = locate() in replacer
+			if(isnull(cable))
+				return FALSE
+
+			if(add_cabling(user, cable, time = 0))
+				if(!no_sound)
+					replacer.play_rped_sound()
+					if(replacer.works_from_distance)
+						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+					no_sound = TRUE
+				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
+
+			return FALSE
+
+		if(FRAME_COMPUTER_STATE_WIRED)
+			var/obj/item/stack/sheet/glass/glass_sheets = locate() in replacer
+			if(isnull(glass_sheets))
+				return FALSE
+
+			if(add_glass(user, glass_sheets, time = 0))
+				if(!no_sound)
+					replacer.play_rped_sound()
+					if(replacer.works_from_distance)
+						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+				return TRUE
+
+			return FALSE
+
 /obj/structure/frame/computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+		return
 
 	switch(state)
 		if(FRAME_COMPUTER_STATE_EMPTY)
@@ -140,8 +171,6 @@
 
 			if(istype(tool, /obj/item/storage/part_replacer))
 				return install_parts_from_part_replacer(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-	return
 
 /obj/structure/frame/computer/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -220,37 +249,6 @@
 	if (!QDELETED(dropped_cables))
 		dropped_cables.add_fingerprint(user)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/structure/frame/computer/install_parts_from_part_replacer(mob/living/user, obj/item/storage/part_replacer/replacer, no_sound = FALSE)
-	switch(state)
-		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			var/obj/item/stack/cable_coil/cable = locate() in replacer
-			if(isnull(cable))
-				return FALSE
-
-			if(add_cabling(user, cable, time = 0))
-				if(!no_sound)
-					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-					no_sound = TRUE
-				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
-
-			return FALSE
-
-		if(FRAME_COMPUTER_STATE_WIRED)
-			var/obj/item/stack/sheet/glass/glass_sheets = locate() in replacer
-			if(isnull(glass_sheets))
-				return FALSE
-
-			if(add_glass(user, glass_sheets, time = 0))
-				if(!no_sound)
-					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-				return TRUE
-
-			return FALSE
 
 /**
  * Adds cable to the computer to wire it
