@@ -36,10 +36,10 @@
 			if(held_item.tool_behaviour == TOOL_WRENCH)
 				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
 				return CONTEXTUAL_SCREENTIP_SET
-			if(anchored && istype(held_item, /obj/item/circuitboard/computer))
+			else if(anchored && istype(held_item, /obj/item/circuitboard/computer))
 				context[SCREENTIP_CONTEXT_LMB] = "Install board"
 				return CONTEXTUAL_SCREENTIP_SET
-			if(held_item.tool_behaviour == TOOL_WELDER)
+			else if(held_item.tool_behaviour == TOOL_WELDER)
 				context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"
 				return CONTEXTUAL_SCREENTIP_SET
 			else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
@@ -115,7 +115,7 @@
 	if(. && !by_hand) // Installing via RPED auto-secures it
 		state = FRAME_COMPUTER_STATE_BOARD_SECURED
 		update_appearance(UPDATE_ICON_STATE)
-	return . 
+	return .
 
 /obj/structure/frame/computer/install_parts_from_part_replacer(mob/living/user, obj/item/storage/part_replacer/replacer, no_sound = FALSE)
 	switch(state)
@@ -205,7 +205,8 @@
 			return ITEM_INTERACT_BLOCKING
 
 /obj/structure/frame/computer/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
+	if(user.combat_mode)
+		return NONE
 
 	switch(state)
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
@@ -216,14 +217,12 @@
 			return ITEM_INTERACT_SUCCESS
 
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			if(!user.combat_mode)
-				balloon_alert(user, "unsecure the circuit!")
-				return ITEM_INTERACT_BLOCKING
+			balloon_alert(user, "unsecure the circuit!")
+			return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_WIRED)
-			if(!user.combat_mode)
-				balloon_alert(user, "remove the wiring!")
-				return ITEM_INTERACT_BLOCKING
+			balloon_alert(user, "remove the wiring!")
+			return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			tool.play_tool_sound(src)
@@ -236,6 +235,9 @@
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/computer/wirecutter_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
 	if(state != FRAME_COMPUTER_STATE_WIRED)
 		return ITEM_INTERACT_BLOCKING
 

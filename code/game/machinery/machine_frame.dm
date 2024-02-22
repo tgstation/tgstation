@@ -54,7 +54,7 @@
 			if(held_item.tool_behaviour == TOOL_WIRECUTTER)
 				context[SCREENTIP_CONTEXT_LMB] = "Cut wires"
 				return CONTEXTUAL_SCREENTIP_SET
-			if(istype(held_item, board_type))
+			else if(istype(held_item, board_type))
 				context[SCREENTIP_CONTEXT_LMB] = "Insert board"
 				return CONTEXTUAL_SCREENTIP_SET
 		if(FRAME_STATE_BOARD_INSTALLED)
@@ -297,8 +297,10 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/frame/machine/wirecutter_act(mob/living/user, obj/item/tool)
-	if(state != FRAME_STATE_WIRED)
+	if(user.combat_mode)
 		return NONE
+	if(state != FRAME_STATE_WIRED)
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "removing cables...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50) || state != FRAME_STATE_WIRED)
@@ -310,8 +312,10 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/machine/crowbar_act(mob/living/user, obj/item/tool)
-	if(state != FRAME_STATE_BOARD_INSTALLED)
+	if(user.combat_mode)
 		return NONE
+	if(state != FRAME_STATE_BOARD_INSTALLED)
+		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	var/list/leftover_components = components.Copy() - circuit
