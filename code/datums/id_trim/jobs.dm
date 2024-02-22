@@ -789,12 +789,14 @@
 		)
 	job = /datum/job/psychologist
 
+//Monkestation Edit Start - QM is not a head
+
 /datum/id_trim/job/quartermaster
 	assignment = "Quartermaster"
 	trim_state = "trim_quartermaster"
-	department_color = COLOR_COMMAND_BLUE
+	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
-	department_state = "departmenthead"
+	department_state = "department"
 	sechud_icon_state = SECHUD_QUARTERMASTER
 	minimal_access = list(
 		ACCESS_AUX_BASE,
@@ -817,6 +819,8 @@
 		ACCESS_HOP,
 	)
 	job = /datum/job/quartermaster
+
+//Monkestation Edit End
 
 /datum/id_trim/job/research_director
 	assignment = "Research Director"
