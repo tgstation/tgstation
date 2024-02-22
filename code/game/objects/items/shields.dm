@@ -408,7 +408,7 @@
 	desc = "A heavy shield designed for blocking projectiles, weaker to melee."
 	icon_state = "ballistic"
 	inhand_icon_state = "ballistic"
-	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT * 3.75)
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	max_integrity = 75
 	shield_break_leftover = /obj/item/stack/rods/ten
 	armor_type = /datum/armor/item_shield/ballistic
