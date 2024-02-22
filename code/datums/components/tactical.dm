@@ -31,6 +31,9 @@
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
 
+	if(current_slot == slot)
+		return
+
 	if(allowed_slot && !(slot & allowed_slot))
 		if(current_slot)
 			unmodify(source, user)
