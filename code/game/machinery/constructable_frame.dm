@@ -103,6 +103,7 @@
 			return ITEM_INTERACT_SUCCESS
 		if(FAILED_UNFASTEN)
 			return ITEM_INTERACT_BLOCKING
+	return .
 
 /obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
