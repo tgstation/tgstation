@@ -36,10 +36,9 @@
 			if(held_item.tool_behaviour == TOOL_WRENCH)
 				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
 				return CONTEXTUAL_SCREENTIP_SET
-			if(anchored)
-				if(istype(held_item, /obj/item/circuitboard/computer))
-					context[SCREENTIP_CONTEXT_LMB] = "Install board"
-					return CONTEXTUAL_SCREENTIP_SET
+			if(anchored && istype(held_item, /obj/item/circuitboard/computer))
+				context[SCREENTIP_CONTEXT_LMB] = "Install board"
+				return CONTEXTUAL_SCREENTIP_SET
 			if(held_item.tool_behaviour == TOOL_WELDER)
 				context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"
 				return CONTEXTUAL_SCREENTIP_SET
@@ -113,9 +112,10 @@
 		balloon_alert(user, "frame must be anchored!")
 		return FALSE
 	. = ..()
-	if(. && !by_hand)
+	if(. && !by_hand) // Installing via RPED auto-secures it
 		state = FRAME_COMPUTER_STATE_BOARD_SECURED
 		update_appearance(UPDATE_ICON_STATE)
+	return . 
 
 /obj/structure/frame/computer/install_parts_from_part_replacer(mob/living/user, obj/item/storage/part_replacer/replacer, no_sound = FALSE)
 	switch(state)
@@ -151,7 +151,7 @@
 /obj/structure/frame/computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return
+		return .
 
 	switch(state)
 		if(FRAME_COMPUTER_STATE_EMPTY)
@@ -174,8 +174,8 @@
 
 /obj/structure/frame/computer/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(. & ITEM_INTERACT_SUCCESS)
-		return
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
 	switch(state)
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
@@ -236,9 +236,8 @@
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/computer/wirecutter_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(state != FRAME_COMPUTER_STATE_WIRED)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	balloon_alert(user, "cables removed")

@@ -62,11 +62,10 @@
 				context[SCREENTIP_CONTEXT_LMB] = "Pry out components"
 				return CONTEXTUAL_SCREENTIP_SET
 			else if(held_item.tool_behaviour == TOOL_WRENCH)
-				. = NONE
 				if(!circuit.needs_anchored)
 					context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
-					. = CONTEXTUAL_SCREENTIP_SET
-				return
+					return CONTEXTUAL_SCREENTIP_SET
+				return NONE
 			else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 				var/needs_components = FALSE
 				for(var/component in req_components)
@@ -283,7 +282,7 @@
 		balloon_alert(user, "frame must be anchored!")
 		return FAILED_UNFASTEN
 
-	return
+	return .
 
 /obj/structure/frame/machine/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -298,13 +297,12 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/frame/machine/wirecutter_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(state != FRAME_STATE_WIRED)
 		return NONE
 
 	balloon_alert(user, "removing cables...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50) || state != FRAME_STATE_WIRED)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	state = FRAME_STATE_EMPTY
 	update_appearance(UPDATE_ICON_STATE)
@@ -312,7 +310,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/machine/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(state != FRAME_STATE_BOARD_INSTALLED)
 		return NONE
 
@@ -325,9 +322,10 @@
 
 /**
  * Attempts to add the passed part to the frame
- * Requires no sanity check that the passed part is a stock part
- * Arguments
  *
+ * Requires no sanity check that the passed part is a stock part
+ *
+ * Arguments
  * * user - the player
  * * tool - the part to add
  */
@@ -427,7 +425,7 @@
 			if(!user.combat_mode)
 				return add_part(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	return
+	return  .
 
 /**
  * Attempt to finalize the construction of the frame into a machine
