@@ -240,9 +240,7 @@
 	if(isnull(the_thing))
 		parent = null
 		return
-	if(!istype(the_thing))
-		return
-	if(isorgan(the_thing)) // organs don't spawn with blood decals by default
+	if(!istype(the_thing) || isorgan(the_thing)) // organs don't spawn with blood decals by default
 		return
 	if(!length(blood_DNA))
 		return
