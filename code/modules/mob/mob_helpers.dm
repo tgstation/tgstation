@@ -376,10 +376,7 @@
 
 ///Can the mob hear
 /mob/proc/can_hear()
-	. = TRUE
-
-	if(HAS_TRAIT(src, TRAIT_DEAF))
-		. = FALSE
+	return !HAS_TRAIT(src, TRAIT_DEAF)
 
 /**
  * Examine text for traits shared by multiple types.
