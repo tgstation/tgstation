@@ -60,6 +60,7 @@
 
 /datum/species/monkey/check_roundstart_eligible()
 	// STOP ADDING MONKEY SUBTYPES YOU HEATHEN
+	// ok we killed monkey subtypes but we're keeping this in cause we can't trust you fuckers
 	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
