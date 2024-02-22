@@ -85,10 +85,7 @@
 			if(girder)
 				return girder.rcd_vals(user, the_rcd)
 
-			return rcd_result_with_memory(
-				list("delay" = 2 SECONDS, "cost" = 16),
-				src, RCD_MEMORY_WALL,
-			)
+			return list("delay" = 0, "cost" = 3)
 		if(RCD_WINDOWGRILLE)
 			//default cost for building a grill for fulltile windows
 			var/cost = 4
@@ -144,7 +141,7 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, rcd_data)
 
-			place_on_top(/turf/closed/wall)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			//check if we are building a window
