@@ -455,7 +455,7 @@
 			return FALSE
 
 		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
-			balloon_alert(src, "[target.name] is dead!")
+			balloon_alert(src, "[target.p_they()] [target.p_are()] dead!")
 			return FALSE
 
 		if (is_mouth_covered())
@@ -463,7 +463,7 @@
 			return FALSE
 
 		if (target.is_mouth_covered())
-			balloon_alert(src, "remove [p_their()] mask first!")
+			balloon_alert(src, "remove [target.p_their()] mask first!")
 			return FALSE
 
 		if(HAS_TRAIT_FROM(src, TRAIT_NOBREATH, DISEASE_TRAIT))
@@ -472,7 +472,7 @@
 
 		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(human_lungs))
-			balloon_alert(src, "you have no lungs!")
+			balloon_alert(src, "you don't have lungs!")
 			return FALSE
 		if(human_lungs.organ_flags & ORGAN_FAILING)
 			balloon_alert(src, "your lungs are too damaged!")
