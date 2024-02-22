@@ -13,7 +13,7 @@
 	. = ..()
 	if(amount)
 		credits = amount
-	if(credits <= 0)
+	if(credits <= 0 && !mapload)
 		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
 		return INITIALIZE_HINT_QDEL
 	update_appearance()
