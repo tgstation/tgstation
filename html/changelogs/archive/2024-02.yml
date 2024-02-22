@@ -607,3 +607,39 @@
   - bugfix: batch processing cooldown works when teleporting multiple boulders
   mc-oofert:
   - code_imp: deathmatch lobbies take 8 seconds to start as to give lighting a breather
+2024-02-21:
+  00-Steven:
+  - bugfix: Ethereal heart revive doesn't delete organs alien to your species, like
+      prosthetics, cybernetics, and possibly itself.
+  - bugfix: Nightmare heart revive doesn't delete organs alien to your species, like
+      itself, upon which it would stop the conversion to shadowperson.
+  Cheshify:
+  - bugfix: The North Star's disposals are now functional!
+  - qol: The North Star has had a staggering amount of quality of life changes.
+  - rscadd: Nanotrasen has now supplied North Star security outposts with a disposals
+      line leading directly to the drunk tank.
+  Ghommie:
+  - bugfix: fixed an issue with tactical appearance (potted plants / cardboard cutouts)
+      not going away after giving the item to someone else.
+  - bugfix: Fixed slaughter demon cutouts being invisible. Also fixed another issue
+      with the tactical appearance not going away when the cardboard cutout is pushed
+      down.
+  mc-oofert:
+  - bugfix: you may not teleport in or out of deathmatch arenas
+  - bugfix: if you died as a changeling/anyone that has cool mind spells you do not
+      get them in deathmatch
+2024-02-22:
+  Derpguy3:
+  - bugfix: Adds a missing servo component into the MK1 Ripley Crate ordered from
+      cargo.
+  Ghommie:
+  - bugfix: sec-hailers no longer apply filters on TTS when pushed out of the way.
+  Melbert:
+  - bugfix: Chasms no longer break your verbs
+  - refactor: Frames have been refactored, you know the things you use to build computers
+      and machines, report any oddities
+  - bugfix: You can now smack (de)constructed computer and machine frames to break
+      them, rather than doing nothing.
+  - rscadd: Machine frames can now be deconstructed with screwdrivers, and computer
+      frames can now be deconstructed with welding torches. Welders are faster.
+  - bugfix: Organs have the blood DNA of their owns on them again
