@@ -378,6 +378,9 @@
 /mob/proc/can_hear()
 	. = TRUE
 
+	if(HAS_TRAIT(src, TRAIT_DEAF))
+		. = FALSE
+
 /**
  * Examine text for traits shared by multiple types.
  *
