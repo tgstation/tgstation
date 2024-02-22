@@ -192,7 +192,7 @@
 	if(owner?.contents)
 		// Prevent round removal and consuming stuff when losing shapeshift
 		for(var/atom/movable/thing as anything in owner.contents)
-			thing.forceMove(get_turf(usr)) // Considering a certain dead cockroach is moved to nullspace at this point, maybe this will work?
+			thing.forceMove(get_turf(owner))
 
 	for(var/datum/action/bodybound_action as anything in owner.actions)
 		if(bodybound_action.target != caster_mob)
