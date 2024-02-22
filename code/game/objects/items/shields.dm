@@ -399,7 +399,7 @@
 
 /datum/armor/item_shield/ballistic
 	melee = 30
-	bullet = 80
+	bullet = 85
 	bomb = 10
 	laser = 80
 
