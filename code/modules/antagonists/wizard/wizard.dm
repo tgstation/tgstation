@@ -25,8 +25,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/antag_token(datum/mind/hosts_mind, mob/spender)
 	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
-		newmob.mind.make_wizard()
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human , delete_old_mob = TRUE)
+		new_mob.mind.make_wizard()
 	else
 		hosts_mind.make_wizard()
 

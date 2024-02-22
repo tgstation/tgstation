@@ -596,13 +596,12 @@
 #undef SUMMON_POSSIBILITIES
 
 /datum/antagonist/cult/antag_token(datum/mind/hosts_mind, mob/spender)
-	. = ..()
-	var/datum/antagonist/cult/new_cultist = new()
+	var/datum/antagonist/cult/new_cultist = new
 	new_cultist.cult_team = get_team()
 	new_cultist.give_equipment = TRUE
 	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
-		newmob.equipOutfit(/datum/outfit/job/assistant)
-		newmob.mind.add_antag_datum(new_cultist)
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type( /mob/living/carbon/human, delete_old_mob = TRUE)
+		new_mob.equipOutfit(/datum/outfit/job/assistant)
+		new_mob.mind.add_antag_datum(new_cultist)
 	else
 		hosts_mind.add_antag_datum(new_cultist)
