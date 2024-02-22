@@ -80,6 +80,38 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
+/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		beaker = null
+		update_appearance()
+
+/obj/machinery/chem_heater/RefreshParts()
+	. = ..()
+	heater_coefficient = 0.1
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
+
+
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers, is_right_clicking)
+	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return ..()
+
+	if(QDELETED(beaker))
+		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/injector = held_item
+			injector.afterattack(beaker, user, proximity_flag = TRUE)
+			return ITEM_INTERACT_SUCCESS
+
+	if(is_reagent_container(held_item)  && held_item.is_open_container())
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
+		balloon_alert(user, "beaker added!")
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
@@ -94,37 +126,6 @@
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == beaker)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
-		beaker = null
-		update_appearance()
-
-/obj/machinery/chem_heater/RefreshParts()
-	. = ..()
-	heater_coefficient = 0.1
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		heater_coefficient *= micro_laser.tier
-
-/obj/machinery/chem_heater/attackby(obj/item/held_item, mob/user, params)
-	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return ..()
-
-	if(beaker)
-		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/injector = held_item
-			injector.afterattack(beaker, user, proximity_flag = TRUE)
-			return TRUE
-
-	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		if(replace_beaker(user, held_item))
-			ui_interact(user)
-		balloon_alert(user, "beaker added!")
-		return TRUE
-
-	return ..()
 
 /obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

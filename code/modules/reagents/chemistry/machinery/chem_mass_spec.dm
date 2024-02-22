@@ -133,6 +133,41 @@
 		icon_state = "HPLC"
 	return ..()
 
+/obj/machinery/chem_mass_spec/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker1)
+		beaker1 = null
+	if(gone == beaker2)
+		beaker2 = null
+
+/obj/machinery/chem_mass_spec/RefreshParts()
+	. = ..()
+
+	cms_coefficient = 1
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		cms_coefficient /= laser.tier
+
+/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return ..()
+
+	if(processing_reagents)
+		balloon_alert(user, "still processing")
+		return ..()
+
+	if(is_reagent_container(item) && item.is_open_container())
+		. = ITEM_INTERACT_SUCCESS
+		var/obj/item/reagent_containers/beaker = item
+		if(!user.transferItemToLoc(beaker, src))
+			return
+		replace_beaker(user, !is_right_clicking, beaker)
+		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "Output" : "Input"] slot."))
+		update_appearance()
+		ui_interact(user)
+		return
+
+	return ..()
+
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(processing_reagents)
@@ -161,60 +196,6 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/chem_mass_spec/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == beaker1)
-		beaker1 = null
-	if(gone == beaker2)
-		beaker2 = null
-
-/obj/machinery/chem_mass_spec/RefreshParts()
-	. = ..()
-
-	cms_coefficient = 1
-	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		cms_coefficient /= laser.tier
-
-/obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
-	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return ..()
-
-	if(processing_reagents)
-		balloon_alert(user, "still processing")
-		return ..()
-
-	if(is_reagent_container(item) && item.is_open_container())
-		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/beaker = item
-		if(!user.transferItemToLoc(beaker, src))
-			return
-		replace_beaker(user, TRUE, beaker)
-		to_chat(user, span_notice("You add [beaker] to input slot."))
-		update_appearance()
-		ui_interact(user)
-		return
-
-	return ..()
-
-/obj/machinery/chem_mass_spec/attackby_secondary(obj/item/item, mob/user, params)
-	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return ..()
-
-	if(processing_reagents)
-		balloon_alert(user, "still processing")
-		return ..()
-
-	if(is_reagent_container(item) && item.is_open_container())
-		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		var/obj/item/reagent_containers/beaker = item
-		if(!user.transferItemToLoc(beaker, src))
-			return
-		replace_beaker(user, FALSE, beaker)
-		to_chat(user, span_notice("You add [beaker] to output slot."))
-		ui_interact(user)
-		return
-
-	return ..()
 
 /**
  * Computes either the lightest or heaviest reagent in the input beaker
