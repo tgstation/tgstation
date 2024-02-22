@@ -628,3 +628,18 @@
   - bugfix: you may not teleport in or out of deathmatch arenas
   - bugfix: if you died as a changeling/anyone that has cool mind spells you do not
       get them in deathmatch
+2024-02-22:
+  Derpguy3:
+  - bugfix: Adds a missing servo component into the MK1 Ripley Crate ordered from
+      cargo.
+  Ghommie:
+  - bugfix: sec-hailers no longer apply filters on TTS when pushed out of the way.
+  Melbert:
+  - bugfix: Chasms no longer break your verbs
+  - refactor: Frames have been refactored, you know the things you use to build computers
+      and machines, report any oddities
+  - bugfix: You can now smack (de)constructed computer and machine frames to break
+      them, rather than doing nothing.
+  - rscadd: Machine frames can now be deconstructed with screwdrivers, and computer
+      frames can now be deconstructed with welding torches. Welders are faster.
+  - bugfix: Organs have the blood DNA of their owns on them again
