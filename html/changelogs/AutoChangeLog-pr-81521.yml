@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "You can now set someone's TC to 0"
-  - admin: "Removing Traitor from automatically removes the uplink from them"
-  - admin: "Removing Uplink from someone no longer wipes ALL of their memories"

@@ -17,6 +17,8 @@
 	var/ready_count
 	/// List of loadouts, either gotten from the deathmatch controller or the map
 	var/list/loadouts
+	/// Current map player spawn locations, cleared after spawning
+	var/list/player_spawns = list()
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
@@ -52,20 +54,25 @@
 		return
 	playing = TRUE
 
+	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
 		playing = FALSE
+		UnregisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED)
 		return FALSE
 
-	if (!length(GLOB.deathmatch_game.spawnpoint_processing))
-		clear_reservation()
-		playing = FALSE
-		return FALSE
+/datum/deathmatch_lobby/proc/find_spawns_and_start_delay(datum/lazy_template/source, list/atoms)
+	SIGNAL_HANDLER
+	for(var/thing in atoms)
+		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn)) 
+			player_spawns += thing
 
-	var/list/spawns = GLOB.deathmatch_game.spawnpoint_processing.Copy()
-	GLOB.deathmatch_game.spawnpoint_processing.Cut()
-	if (!length(spawns) || length(spawns) < length(players))
+	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
+	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
+
+/datum/deathmatch_lobby/proc/start_game_after_delay()
+	if (!length(player_spawns) || length(player_spawns) < length(players))
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
 		clear_reservation()
 		playing = FALSE
@@ -79,13 +86,12 @@
 			continue
 
 		// pick spawn and remove it.
-		var/picked_spawn = pick_n_take(spawns)
+		var/picked_spawn = pick_n_take(player_spawns)
 		spawn_observer_as_player(key, get_turf(picked_spawn))
 		qdel(picked_spawn)
 
 	// Remove rest of spawns.
-	for (var/unused_spawn in spawns)
-		qdel(unused_spawn)
+	QDEL_LIST(player_spawns)
 
 	for (var/observer_key in observers)
 		var/mob/observer = observers[observer_key]["mob"]
@@ -107,17 +113,19 @@
 	if (!(loadout in loadouts))
 		loadout = loadouts[1]
 
-	observer.forceMove(loc)
-	var/datum/mind/observer_mind = observer.mind
-	var/mob/living/observer_current = observer.mind?.current
-	var/mob/living/carbon/human/new_player = observer.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
-	if(!isnull(observer_mind) && observer_current)
+	var/mob/living/carbon/human/new_player = new(loc)
+	observer.client?.prefs.safe_transfer_prefs_to(new_player)
+	new_player.dna.update_dna_identity()
+	new_player.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	new_player.add_traits(list(TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT)
+	if(!isnull(observer.mind) && observer.mind?.current)
 		new_player.AddComponent( \
 			/datum/component/temporary_body, \
-			old_mind = observer_mind, \
-			old_body = observer_current, \
+			old_mind = observer.mind, \
+			old_body = observer.mind.current, \
 		)
 	new_player.equipOutfit(loadout) // Loadout
+	new_player.key = ckey
 	players[ckey]["mob"] = new_player
 
 	// register death handling.
@@ -305,6 +313,7 @@
 	.["host"] = (user.ckey == host)
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
 	.["global_chat"] = global_chat
+	.["playing"] = playing
 	.["loadouts"] = list()
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
 		.["loadouts"] += initial(loadout.display_name)

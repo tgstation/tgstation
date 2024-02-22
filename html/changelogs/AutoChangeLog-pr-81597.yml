@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Chefs (not to be confused with cooks) actually display as being a part of service on the crew monitor."
