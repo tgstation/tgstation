@@ -105,8 +105,6 @@
 	if(!length(req_components))
 		. += span_info("It requires no components.")
 		return
-	if(!anchored && circuit.needs_anchored)
-		. += span_warning("Needs to be [EXAMINE_HINT("anchored")] to finish it")
 
 	var/list/nice_list = list()
 	for(var/component in req_components)
