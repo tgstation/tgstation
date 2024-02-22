@@ -12,6 +12,7 @@
 /obj/structure/frame/machine/Initialize(mapload)
 	. = ..()
 	register_context()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/frame/machine/Destroy()
 	QDEL_LIST(components)
@@ -469,7 +470,3 @@
 /obj/structure/frame/machine/secured
 	state = FRAME_STATE_WIRED
 	anchored = TRUE
-
-/obj/structure/frame/machine/secured/Initialize(mapload)
-	. = ..()
-	update_appearance(UPDATE_ICON_STATE)
