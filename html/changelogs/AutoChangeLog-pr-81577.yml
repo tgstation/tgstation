@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - refactor: "Bloody item overlays no longer use icon procs to generate the overlay"
