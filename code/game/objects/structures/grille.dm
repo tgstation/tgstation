@@ -330,27 +330,29 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
+	. = FALSE
 	if(!anchored || broken) // anchored/broken grilles are never connected
-		return FALSE
+		return
 	if(!prob(prb))
-		return FALSE
+		return
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
-		return FALSE
+		return
 	var/turf/T = get_turf(src)
 	if(T.overfloor_placed)//cant be a floor in the way!
-		return FALSE
+		return
+
 	var/obj/structure/cable/cable_node = T.get_cable_node()
-	if(cable_node)
-		if(electrocute_mob(user, cable_node, src, 1, TRUE))
-			if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
-				take_damage(1, BURN, FIRE, sound_effect = FALSE)
-			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-			sparks.set_up(3, 1, src)
-			sparks.start()
-			return TRUE
-		else
-			return FALSE
-	return FALSE
+	if(isnull(cable_node))
+		return
+	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
+		return
+	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
+		take_damage(1, BURN, FIRE, sound_effect = FALSE)
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(3, 1, src)
+	sparks.start()
+
+	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + 1500 && !broken
