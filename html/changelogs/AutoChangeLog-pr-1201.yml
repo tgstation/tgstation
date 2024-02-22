@@ -1,8 +1,0 @@
-author: "DimWhat"
-delete-after: True
-changes:
-  - rscadd: "Added a new wand for wizards to purchase"
-  - rscadd: "Added a plasmabunny clothing set"
-  - image: "Fixed a few sprite errors in the syndi and british bunnysuits."
-  - bugfix: "Made the bowtie collar layer properly\nfixes a strange bug with greyscale bunnysuits for lizards"
-  - spellcheck: "fixed a few descriptions to the bunny sets."

@@ -204,3 +204,16 @@
     - rscadd: Transgender-themed thigh-highs and knee-highs to the clothing options
         for socks (sadkris)
     - rscadd: Added in a new sock type, Thigh-high and Knee-high ace socks. (CRITAWAKETS)
+2024-02-22:
+  Absolucy:
+  - bugfix: Fix the supermatter cascade eating the server itself on icebox
+  - bugfix: Fixed a runtime with the SM cascade from a mistyped check
+  - bugfix: Fixed a potential roundstart runtime in the Achievements subsystem.
+  DimWhat:
+  - rscadd: Added a new wand for wizards to purchase
+  - rscadd: Added a plasmabunny clothing set
+  - image: Fixed a few sprite errors in the syndi and british bunnysuits.
+  - bugfix: 'Made the bowtie collar layer properly
+
+      fixes a strange bug with greyscale bunnysuits for lizards'
+  - spellcheck: fixed a few descriptions to the bunny sets.
