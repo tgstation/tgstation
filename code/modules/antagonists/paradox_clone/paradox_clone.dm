@@ -112,7 +112,7 @@
 		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
 			possible_spawns += warp_point
 	if(!possible_spawns.len)
-		message_admins("No valid spawn locations found for Paradox Clone token , aborting...")
+		message_admins("No valid spawn locations found for Paradox Clone token, aborting...")
 		return MAP_ERROR
 
 

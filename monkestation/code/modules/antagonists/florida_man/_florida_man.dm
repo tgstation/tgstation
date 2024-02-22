@@ -55,8 +55,8 @@
 /datum/antagonist/florida_man/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
 	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
-		newmob.equipOutfit(/datum/outfit/florida_man_three)
-		newmob.mind.add_antag_datum(/datum/antagonist/florida_man)
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
+		new_mob.equipOutfit(/datum/outfit/florida_man_three)
+		new_mob.mind.add_antag_datum(/datum/antagonist/florida_man)
 	else
 		hosts_mind.add_antag_datum(/datum/antagonist/florida_man)
