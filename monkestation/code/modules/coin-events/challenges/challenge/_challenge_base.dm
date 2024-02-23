@@ -17,6 +17,8 @@
 	var/processes = FALSE
 	///the current mob we are in
 	var/mob/current_mob
+	///the trait we apply if any
+	var/applied_trait
 
 /datum/challenge/New(client/creator)
 	. = ..()
@@ -24,10 +26,14 @@
 		return
 	host = creator
 	current_mob = host.mob
+	if(!host)
+		return
+	RegisterSignal(host.mob, COMSIG_MIND_TRANSFERRED, PROC_REF(on_transfer))
 
 ///we just use the client to try and apply this as its easier to track mobs
-/datum/challenge/proc/on_apply()
-	return
+/datum/challenge/proc/on_apply(client/owner)
+	if(applied_trait)
+		ADD_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
 
 ///this fires every 10 seconds
 /datum/challenge/proc/on_process()
@@ -40,3 +46,10 @@
 ///this fires when a mob is revived
 /datum/challenge/proc/on_revive()
 	return
+
+/datum/challenge/proc/on_transfer(datum/source, mob/previous_body)
+	SIGNAL_HANDLER
+	if(applied_trait)
+		REMOVE_TRAIT(previous_body, applied_trait, CHALLENGE_TRAIT)
+		var/datum/mind/mind = source
+		ADD_TRAIT(mind.current, applied_trait, CHALLENGE_TRAIT)

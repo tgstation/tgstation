@@ -217,3 +217,16 @@
 
       fixes a strange bug with greyscale bunnysuits for lizards'
   - spellcheck: fixed a few descriptions to the bunny sets.
+2024-02-23:
+  Absolucy:
+  - refactor: Cleaned up unneeded repetitive code for antag token granting
+  - config: Token redeemable antags are now config-based instead of hardcoded.
+  - bugfix: The menu to choose an antag now shows the antag's name instead of the
+      datum typepath.
+  Melbert:
+  - refactor: Fire effects get added to mobs in a different way now. Maybe it will
+      get stuck less. Report any oddities.
+  dwasint:
+  - rscadd: antag rep, for every roll you go without being antag your odds increase,
+      resetting when you become and antag, passing a roll won't remove your rep
+  - rscadd: replays are back

@@ -103,7 +103,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!check_rights_for(usr.client, R_DEBUG))
+	if(!check_rights_for(usr.client, R_ADMIN))
 		return
 	switch(action)
 		if("newState")
@@ -230,7 +230,7 @@
 /client/proc/open_lua_editor()
 	set name = "Open Lua Editor"
 	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
+	if(!check_rights_for(src, R_ADMIN))
 		return
 	var/datum/lua_editor/editor = new()
 	editor.ui_interact(usr)

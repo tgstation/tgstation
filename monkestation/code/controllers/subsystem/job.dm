@@ -57,6 +57,15 @@
 		return FALSE
 
 	var/list/candidates = SSgamemode.current_roundstart_event.get_candidates()
+
+	var/list/cliented_list = list()
+	for(var/mob/living/mob as anything in candidates)
+		cliented_list += mob.client
+	if(length(cliented_list))
+		mass_adjust_antag_rep(cliented_list, 1)
+
+	var/list/weighted_candidates = return_antag_rep_weight(candidates)
+
 	var/antag_selection_loops = SSgamemode.current_roundstart_event.get_antag_amount()
 	for(var/i in 1 to antag_selection_loops)
 		if(antag_selection_loops >= 100)
@@ -67,7 +76,8 @@
 				JobDebug("h_r_a failed, below required candidates for selected roundstart event")
 				return FALSE
 			break
-		var/mob/dead/new_player/candidate = pick_n_take(candidates)
+		var/client/dead_client = pick_n_take_weighted(weighted_candidates)
+		var/mob/dead/new_player/candidate = dead_client.mob
 		if(!candidate.mind || !istype(candidate))
 			antag_selection_loops++
 			continue
@@ -86,16 +96,16 @@
 		var/mob/dead/new_player/player = player_mind.current //we should always have a current mob as we get set from it
 		if(!player.temp_assignment && !GiveRandomJob(player, TRUE, enemy_job_instances + restricted_job_instances) && !handle_temp_assignments(player, GetJobType(overflow_role)))
 			SSgamemode.roundstart_antag_minds -= player_mind
-			if(!length(candidates))
+			if(!length(weighted_candidates))
 				if(length(SSgamemode.roundstart_antag_minds) < SSgamemode.current_roundstart_event.base_antags)
 					JobDebug("h_r_a failed, removing unassigned antag player put us below current event minimum candidates")
 					return FALSE
 				continue
 			var/mob/dead/new_player/candidate
 			var/sanity = 0
-			while(!candidate && length(candidates) && !sanity >= 100)
+			while(!candidate && length(weighted_candidates) && !sanity >= 100)
 				sanity++
-				candidate = pick_n_take(candidates)
+				candidate = pick_n_take_weighted(weighted_candidates)
 				if(!candidate.mind || !istype(candidate))
 					candidate = null
 			if(!candidate)

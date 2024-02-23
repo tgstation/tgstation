@@ -12,7 +12,7 @@
 		***********************************************************"))
 
 /datum/buildmode_mode/proccall/change_settings(client/target_client)
-	if(!check_rights_for(target_client, R_DEBUG))
+	if(!check_rights_for(target_client, R_ADMIN))
 		return
 
 	proc_name = input("Proc name, eg: fake_blood", "Proc:", null) as text|null
@@ -27,7 +27,7 @@
 	if(!proc_name || !proc_args)
 		tgui_alert(target_client, "Undefined ProcCall or arguments.")
 		return
-	
+
 	if(!hascall(object, proc_name))
 		to_chat(target_client, span_warning("Error: callproc_datum(): type [object.type] has no proc named [proc_name]."), confidential = TRUE)
 		return
@@ -36,7 +36,7 @@
 		to_chat(target_client, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
 
-	
+
 	var/msg = "[key_name(target_client)] called [object]'s [proc_name]() with [proc_args.len ? "the arguments [list2params(proc_args)]":"no arguments"]."
 	log_admin(msg)
 	message_admins(msg)

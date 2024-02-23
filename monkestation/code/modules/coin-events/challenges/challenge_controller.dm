@@ -22,5 +22,7 @@ SUBSYSTEM_DEF(challenges)
 		var/datum/challenge/new_challenge = new listed(owner)
 		if(new_challenge.processes)
 			processing_challenges += processing_challenges
-		new_challenge.on_apply()
+		new_challenge.on_apply(owner)
 		owner.applied_challenges += new_challenge
+
+

@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Cleaned up unneeded repetitive code for antag token granting"
-  - config: "Token redeemable antags are now config-based instead of hardcoded."
-  - bugfix: "The menu to choose an antag now shows the antag's name instead of the datum typepath."
