@@ -250,8 +250,8 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
-	unarmed_damage_high = 2
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
 	unarmed_effectiveness = 0
 	appendage_noun = "paw"
 
@@ -347,8 +347,8 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1
-	unarmed_damage_high = 2
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
 	unarmed_effectiveness = 0
 	appendage_noun = "paw"
 
