@@ -3,7 +3,7 @@
 /obj/structure/railing/corner/end{
 	dir = 4
 	},
-/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/door/airlock/wood,
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
@@ -60,7 +60,7 @@
 /turf/open/floor/engine/cult,
 /area/deathmatch)
 "dj" = (
-/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/door/airlock/wood,
 /turf/open/floor/engine/cult,
 /area/deathmatch)
 "ds" = (
@@ -73,6 +73,14 @@
 "fH" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/griddle,
+/obj/item/food/burger/spell{
+	pixel_y = 11;
+	pixel_x = -3
+	},
+/obj/item/stack/medical/ointment{
+	pixel_y = -2;
+	pixel_x = 9
+	},
 /turf/open/floor/iron,
 /area/deathmatch)
 "fI" = (
@@ -87,24 +95,11 @@
 /obj/structure/chair/wood,
 /turf/open/floor/iron,
 /area/deathmatch)
-"gR" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/reinforced,
-/obj/item/food/burger/spell{
-	pixel_y = 11;
-	pixel_x = -3
-	},
-/obj/item/stack/medical/ointment{
-	pixel_y = -2;
-	pixel_x = 9
-	},
-/turf/open/floor/iron,
-/area/deathmatch)
 "hg" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 8
 	},
-/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/door/airlock/wood,
 /obj/structure/railing/corner/end{
 	dir = 8
 	},
@@ -161,7 +156,7 @@
 /turf/open/floor/iron,
 /area/deathmatch)
 "jb" = (
-/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/door/airlock/wood,
 /obj/structure/railing/corner/end/flip,
 /obj/structure/railing/corner/end,
 /turf/open/floor/engine/cult,
@@ -187,7 +182,7 @@
 /area/deathmatch)
 "jV" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/door/airlock/wood,
 /turf/open/floor/iron,
 /area/deathmatch)
 "kl" = (
@@ -260,7 +255,7 @@
 /turf/open/floor/carpet/red,
 /area/deathmatch)
 "nQ" = (
-/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/door/airlock/wood,
 /turf/open/floor/plastic,
 /area/deathmatch)
 "on" = (
@@ -548,8 +543,8 @@
 /turf/open/floor/engine/cult,
 /area/deathmatch)
 "GC" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/plastic,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/engine/cult,
 /area/deathmatch)
 "GZ" = (
 /obj/structure/curtain,
@@ -1013,7 +1008,7 @@ ph
 ph
 ph
 Jm
-GC
+QT
 Jo
 HS
 iQ
@@ -1045,9 +1040,9 @@ PD
 iz
 ph
 ph
-Gv
-Jm
-QT
+ph
+dj
+FL
 FL
 Bm
 QH
@@ -1121,7 +1116,7 @@ Jm
 nQ
 Jm
 Jm
-Jm
+dj
 Jm
 Jm
 pL
@@ -1155,7 +1150,7 @@ Jm
 ph
 AD
 Eh
-Hf
+ph
 vR
 Jm
 Jm
@@ -1287,7 +1282,7 @@ Cq
 ds
 ds
 Cq
-gn
+GC
 Zo
 Sa
 xs
@@ -1321,7 +1316,7 @@ Cq
 ds
 ds
 Cq
-gn
+GC
 Sa
 kl
 nk
@@ -1355,7 +1350,7 @@ Cq
 ds
 ds
 Cq
-gn
+GC
 Sa
 pV
 SK
@@ -1495,7 +1490,7 @@ Jm
 ph
 ph
 Eh
-Gv
+ph
 vh
 Jm
 Jm
@@ -1529,7 +1524,7 @@ Jm
 jV
 Jm
 Jm
-Jm
+dj
 Jm
 Jm
 RI
@@ -1589,9 +1584,9 @@ bg
 ph
 ph
 Fv
-Hf
-Jm
-gR
+ph
+dj
+js
 js
 jg
 js

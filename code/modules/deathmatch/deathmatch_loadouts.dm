@@ -479,7 +479,6 @@
 
 	l_hand = null
 	granted_spells = list(
-		/datum/action/cooldown/spell/stimpack,
 		/datum/action/cooldown/spell/charge,
 	)
 
