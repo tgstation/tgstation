@@ -23,7 +23,7 @@
 
 		if(100 SECONDS to INFINITY) //grill marks reach max alpha
 			this_food.name = "Powerfully Grilled [this_food.name]"
-			this_food.desc += "A [this_food.name]. Reminds you of your wife, wait, no, it's prettier!"
+			this_food.desc = "A [this_food.name]. Reminds you of your wife, wait, no, it's prettier!"
 
 	if(grill_time > 30 SECONDS && isnull(this_food.GetComponent(/datum/component/edible)))
 		this_food.AddComponent(/datum/component/edible, foodtypes = FRIED)
