@@ -107,7 +107,7 @@
 	/// The outfit given to plasmaman operatives
 	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 	/// The antag datum applied
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
+	var/datum/antagonist/nukeop/reinforcement/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
 	/// Do we use a random subtype of the outfit?
@@ -158,7 +158,6 @@
 		nukie.forceMove(locate(1,1,1))
 
 	antag_datum = new()
-	antag_datum.send_to_spawnpoint = FALSE
 
 	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
