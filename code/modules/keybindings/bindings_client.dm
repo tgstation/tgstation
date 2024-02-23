@@ -75,10 +75,9 @@
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
-	holder?.key_down(_key, src)
-	mob.focus?.key_down(_key, src)
+	holder?.key_down(_key, src, full_key)
+	mob.focus?.key_down(_key, src, full_key)
 	mob.update_mouse_pointer()
-
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
