@@ -474,7 +474,7 @@
 	desc = "Ook eek aaa ooo eee!"
 	species_override = /datum/species/monkey
 	l_hand = /obj/item/food/grown/banana
-	uniform = /obj/item/clothing/under/color/lightpurple
+	uniform = null
 	suit = null
 	head = /obj/item/clothing/head/wizard
 	shoes = null
