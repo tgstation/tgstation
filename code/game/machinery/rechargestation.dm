@@ -156,7 +156,7 @@
 /obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	var/main_draw = use_power_from_net(recharge_speed * seconds_per_tick, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	var/main_draw = use_power(recharge_speed * seconds_per_tick) //Pulls directly from the Powernet to dump into the cell
 	if(!main_draw)
 		return
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, main_draw, repairs, sendmats)

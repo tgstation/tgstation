@@ -475,7 +475,7 @@
 	if(user == remote_control_user)
 		disconnect_remote_access()
 
-/obj/machinery/power/apc/process()
+/obj/machinery/power/apc/process(seconds_per_tick)
 	if(icon_update_needed)
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
@@ -496,15 +496,23 @@
 	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
 	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP] : 0
 	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	var/total_static_power_usage = 0
+	total_static_power_usage += APC_CHANNEL_IS_ON(lighting) * area.power_usage[AREA_USAGE_STATIC_LIGHT]
+	total_static_power_usage += APC_CHANNEL_IS_ON(equipment) * area.power_usage[AREA_USAGE_STATIC_EQUIP]
+	total_static_power_usage += APC_CHANNEL_IS_ON(environ) * area.power_usage[AREA_USAGE_STATIC_ENVIRON]
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
+
 
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
 	var/last_ch = charging
+
+	if(total_static_power_usage)
+		draw_power(total_static_power_usage)
 
 	var/excess = surplus()
 
@@ -514,34 +522,6 @@
 		main_status = APC_LOW_POWER
 	else
 		main_status = APC_HAS_POWER
-
-	var/cellused
-	if(cell && !shorted)
-		// draw power from cell as before to power the area
-		cellused = min(cell.charge, lastused_total) // clamp deduction to a max, amount left in cell
-		cell.use(cellused)
-
-	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after use().
-		if(excess > lastused_total) // if power excess recharge the cell
-										// by the same amount just used
-			cell.give(cellused)
-			if(cell) //make sure the cell didn't expode and actually used power.
-				add_load(cellused) // add the load used to recharge the cell
-
-
-		else // no excess, and not enough per-apc
-			if((cell.charge + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + excess) //recharge with what we can
-				add_load(excess) // so draw what we can from the grid
-				charging = APC_NOT_CHARGING
-
-			else // not enough power available to run the last tick!
-				charging = APC_NOT_CHARGING
-				chargecount = 0
-				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
-				equipment = autoset(equipment, AUTOSET_FORCE_OFF)
-				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
-				environ = autoset(environ, AUTOSET_FORCE_OFF)
 
 	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
 
@@ -561,7 +541,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
+		else if(cell.percent() < 15 && !excess) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -569,7 +549,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
+		else if(cell.percent() < 30 && !excess) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
@@ -590,15 +570,15 @@
 
 
 		// now trickle-charge the cell
-		if(chargemode && charging == APC_CHARGING && operating)
-			if(excess > 0) // check to make sure we have enough to charge
-				// Max charge is capped to % per second constant
-				var/ch = min(excess, cell.maxcharge)
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-			else
-				charging = APC_NOT_CHARGING // stop charging
+		if(chargemode && charging == APC_CHARGING && operating && excess && cell.charge < cell.maxcharge)
+			// Max charge is capped to % per second constant
+			//var/ch = min(excess, cell.maxcharge)
+			//add_load(ch) // Removes the power we're taking from the grid
+			//cell.give(ch) // actually recharge the cell
+			charge_cell(min(cell.chargerate, cell.maxcharge * GLOB.CHARGELEVEL) * seconds_per_tick, cell = cell, grid_only = TRUE)
+		else
+			charging = APC_NOT_CHARGING
+			if(!excess)
 				chargecount = 0
 
 		// show cell as fully charged if so
@@ -608,7 +588,7 @@
 
 		if(chargemode)
 			if(!charging)
-				if(excess > cell.maxcharge*GLOB.CHARGELEVEL)
+				if(excess > cell.maxcharge * GLOB.CHARGELEVEL)
 					chargecount++
 				else
 					chargecount = 0
@@ -660,8 +640,8 @@
 /obj/machinery/power/apc/proc/overload_lighting()
 	if(!operating || shorted)
 		return
-	if(cell && cell.charge >= 20)
-		cell.use(20)
+	if(cell && cell.charge >= 2e4)
+		cell.use(2e4)
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
@@ -723,6 +703,18 @@
 /// Used for full_charge apc helper, which sets apc charge to 100%.
 /obj/machinery/power/apc/proc/set_full_charge()
 	cell.charge = cell.maxcharge
+
+/// Returns the cell's current charge.
+/obj/machinery/power/apc/proc/charge()
+	return cell.charge
+
+/// Adds the load to the connected grid. Drains the cell when there isn't enough surplus power. Returns the used power.
+/obj/machinery/power/apc/proc/draw_power(amount)
+	var/grid_used = terminal?.add_load(min(terminal.surplus(), amount))
+	var/cell_used = 0
+	if(amount > grid_used)
+		cell_used += cell.use(amount - grid_used)
+	return grid_used + cell_used
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

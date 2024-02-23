@@ -294,7 +294,7 @@
 		if(attached_circuit)
 			remove_circuit()
 		return
-	location.use_power(power_to_use, AREA_USAGE_EQUIP)
+	location.apc?.terminal?.use_power(power_to_use, channel = AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
 	COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
 	return COMPONENT_OVERRIDE_POWER_USAGE
@@ -327,7 +327,7 @@
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
 	attached_circuit.set_shell(parent_atom)
-	
+
 	// call after set_shell() sets on to true
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		attached_circuit.set_on(parent_atom.anchored)

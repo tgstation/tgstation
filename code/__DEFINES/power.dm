@@ -10,15 +10,19 @@
 #define SOLAR_TRACK_TIMED 1
 #define SOLAR_TRACK_AUTO 2
 
-///conversion ratio from joules to watts
-//#define WATTS / 0.002
-///conversion ratio from watts to joules
-//#define JOULES * 0.002
+///The watt is the standard unit of power for this codebase.
+#define WATT 1
+///The joule is the standard unit of energy for this codebase.
+#define JOULE 1
+///The watt is the standard unit of power for this codebase.
+#define WATTS / WATT
+///The joule is the standard unit of energy for this codebase.
+#define JOULES / JOULE
 
 ///The amount of energy, in joules, a standard powercell has.
-#define STANDARD_CELL_CHARGE 1e6
+#define STANDARD_CELL_CHARGE (1e6 JOULES) // 1 MJ.
 
-GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+GLOBAL_VAR_INIT(CHARGELEVEL, 0.01) // Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
 
 // Converts cable layer to its human readable name
 GLOBAL_LIST_INIT(cable_layer_to_name, list(

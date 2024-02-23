@@ -473,7 +473,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /**
- * Add a static amount of power load to an area
+ * Add a static amount of power load to an area. The value is assumed as the watt.
  *
  * Possible channels
  * *AREA_USAGE_STATIC_EQUIP
@@ -481,6 +481,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * *AREA_USAGE_STATIC_ENVIRON
  */
 /area/proc/addStaticPower(value, powerchannel)
+	value = power_to_energy(value)
 	switch(powerchannel)
 		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
 			power_usage[powerchannel] += value

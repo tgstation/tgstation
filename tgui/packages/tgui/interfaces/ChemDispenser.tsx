@@ -1,4 +1,3 @@
-import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { useState } from 'react';
@@ -31,6 +30,8 @@ type Data = {
   amount: number;
   energy: number;
   maxEnergy: number;
+  displayedEnergy: string;
+  displayedMaxEnergy: string;
   chemicals: DispensableReagent[];
   recipes: string[];
   recordingRecipe: string[];
@@ -91,7 +92,7 @@ export const ChemDispenser = (props) => {
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar value={data.energy / data.maxEnergy}>
-                {toFixed(data.energy) + ' J'}
+                {data.displayedEnergy + " / " + data.displayedMaxEnergy}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>

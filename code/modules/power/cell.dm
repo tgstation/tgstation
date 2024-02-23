@@ -57,7 +57,7 @@
 	if(empty)
 		charge = 0
 	if(ratingdesc)
-		desc += " This one has a rating of [display_joules(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
+		desc += " This one has a rating of [display_energy(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
 	update_appearance()
 
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
@@ -134,13 +134,34 @@
 	return ..()
 
 
+/**
+ * Returns the percentage of the cell's charge.
+ */
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
+
+/**
+ * Returns the maximum charge of the cell.
+ */
+/obj/item/stock_parts/cell/proc/max_charge()
+	return maxcharge
+
+/**
+ * Returns the current charge of the cell.
+ */
+/obj/item/stock_parts/cell/proc/charge()
+	return charge
+
+/**
+ * Returns the amount of charge used on the cell.
+ */
+/obj/item/stock_parts/cell/proc/used_charge()
+	return maxcharge - charge
 
 /// Use power from the cell.
 /// Args:
 /// - used: Amount of power in joules to use.
-/// - force: If true, uses the remaining power from the cell if there isn't enough power to supply the demand. If false, n
+/// - force: If true, uses the remaining power from the cell if there isn't enough power to supply the demand.
 /// Returns: The power used from the cell in joules.
 /obj/item/stock_parts/cell/use(used, force = FALSE)
 	var/power_used = min(used, charge)
@@ -388,7 +409,7 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/use(used)
+/obj/item/stock_parts/cell/infinite/use(used, force = FALSE)
 	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor

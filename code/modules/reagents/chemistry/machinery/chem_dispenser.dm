@@ -123,8 +123,8 @@
 		. += span_notice("[src]'s maintenance hatch is open!")
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads:\n\
-		Recharge rate: <b>[display_power(recharge_amount)]</b>.\n\
-		Power efficiency: <b>[siunit(powerefficiency, "U/J", 3)]</b>.</span>"
+		Recharge rate: <b>[display_power(recharge_amount, convert = FALSE)]</b>.\n\
+		Energy cost: <b>[siunit(INVERSE(powerefficiency), "J/u", 3)]</b>.</span>"
 	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
@@ -136,9 +136,8 @@
 /obj/machinery/chem_dispenser/process(seconds_per_tick)
 	if(cell.maxcharge == cell.charge)
 		return
-	var/used_power = charge_cell(recharge_amount * seconds_per_tick, cell)
-	if(used_power)
-		use_power(active_power_usage * seconds_per_tick)
+	use_power(active_power_usage * seconds_per_tick) //Additional power cost before charging the cell.
+	charge_cell(recharge_amount * seconds_per_tick, cell) //This also costs power.
 
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
@@ -216,6 +215,8 @@
 	.["amount"] = amount
 	.["energy"] = cell.charge ? cell.charge : 0 //To prevent NaN in the UI.
 	.["maxEnergy"] = cell.maxcharge
+	.["displayedEnergy"] = display_energy(cell.charge)
+	.["displayedMaxEnergy"] = display_energy(cell.maxcharge)
 
 	var/list/chemicals = list()
 	var/is_hallucinating = FALSE

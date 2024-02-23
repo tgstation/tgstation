@@ -831,11 +831,9 @@
 	if(cell_powered && !cell.use(charge_rate))
 		charge_loop_finish(cooker)
 
-	var/demand = use_power_from_net(charge_rate)
-	var/given = vampire_cell.give(demand * (0.5 + efficiency * 0.12)) //Some of the power gets wasted as heat.
-	return_power(demand * (0.5 + efficiency * 0.12) - given)
+	use_power(charge_rate * (0.5 - efficiency * 0.12)) //Some of the power gets lost as heat.
+	charge_cell(charge_rate * (0.5 + efficiency * 0.12), vampire_cell) //Cell gets charged, which further uses power.
 
-	use_power(charge_rate)
 
 	vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 

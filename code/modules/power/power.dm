@@ -132,11 +132,52 @@
 
 	return A.powered(chan) // return power status of the area
 
+
+
 // increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = power_channel)
-	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
-	var/area/A = get_area(src) // make sure it's in an area
-	A?.use_power(amount, chan)
+///obj/machinery/proc/use_power(amount, chan = power_channel)
+//	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
+//	var/area/A = get_area(src) // make sure it's in an area
+//	A?.use_power(amount, chan)
+
+/**
+ * Draws power from the APC. Will use excess power from the APC's connected grid,
+ * then use power from the APC's cell if there wasn't enough power from the grid, unless ignore_apc is true.
+ * Args:
+ * - amount: The amount of power to use.
+ * - channel: The power channel to use.
+ * - ignore_apc: If true, do not consider the APC's cell when demanding power.
+ * Returns: The amount of power used.
+ */
+/obj/machinery/proc/use_power(amount, channel = power_channel, ignore_apc = FALSE)
+	if(amount <= 0) //just in case
+		return FALSE
+	var/area/home = get_area(src)
+
+	if(!home)
+		return FALSE //apparently space isn't an area
+	if(!home.requires_power)
+		return amount //Shuttles get free power, don't ask why
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(!local_apc)
+		return FALSE
+
+	//Surplus from the grid.
+	var/surplus = local_apc.surplus()
+	//Available power from the APC's cell if there isn't enough surplus.
+	//var/apc_charge = ignore_apc ? 0 : local_apc.charge()
+	//amount = min(amount, surplus + apc_charge)
+
+	var/grid_used = min(surplus, amount)
+	local_apc.add_load(grid_used)
+	var/apc_used = 0
+	if(amount > grid_used && !ignore_apc)
+		apc_used = local_apc.cell.use(amount - grid_used, force = TRUE)
+
+	amount = grid_used + apc_used
+	home.use_power(amount, channel)
+	return amount
 
 /**
  * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
@@ -190,36 +231,17 @@
 	return amount
 
 /**
- * Attempts to remove load from the APC and powernet. Use this after adding load if you were not able to make use of all the power requested.
- * Args:
- * - amount: The amount of energy returning to the powernet.
- * Returns: The amount of energy returned.
- */
-/obj/machinery/proc/return_power(amount)
-	if(amount <= 0)
-		return FALSE
-	var/area/home = get_area(src)
-
-	if(!home)
-		return FALSE
-
-	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
-		return FALSE
-
-	local_apc.add_load(-amount)
-	return amount
-
-/**
- * Draws power from the apc's powernet to charge a power cell. Returns excess power back to the grid.
+ * Draws power from the apc's powernet and cell to charge a power cell.
  * Args:
  * - amount: The amount of energy given to the cell.
+ * - cell: The cell to charge.
+ * - grid_only: If true, only draw from the grid and ignore the APC's cell.
  * Returns: The amount of energy the cell received.
  */
-/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell)
-	var/demand = use_power_from_net(amount, take_any = TRUE)
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE)
+	var/demand = use_power(min(amount, cell.used_charge()), channel = AREA_USAGE_EQUIP, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
-	return_power(demand - power_given)
+	//return_power(demand - power_given, AREA_USAGE_EQUIP)
 	return power_given
 
 
@@ -482,7 +504,7 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy)
+		source_area.apc?.terminal?.use_power(drained_energy)
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))

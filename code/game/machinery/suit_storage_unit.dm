@@ -561,7 +561,7 @@
 	if(!cell || cell.charge == cell.maxcharge)
 		return
 
-	charge_cell(final_charge_rate * seconds_per_tick)
+	charge_cell(final_charge_rate * seconds_per_tick, cell)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

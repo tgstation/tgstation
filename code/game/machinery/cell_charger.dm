@@ -31,7 +31,7 @@
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Charging power: <b>[charge_rate]W</b>.")
+		. += span_notice("The status display reads: Charging power: <b>[display_power(charge_rate, convert = FALSE)]</b>.")
 
 /obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -136,11 +136,11 @@
 	if(charging.percent() >= 100)
 		return
 
-	var/main_draw = use_power_from_net(charge_rate * seconds_per_tick, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	var/main_draw = charge_rate * seconds_per_tick
 	if(!main_draw)
 		return
 
-	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
-	charge_cell(charge_rate * seconds_per_tick, charging)
+	use_power(main_draw * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
+	charge_cell(main_draw, charging)
 
 	update_appearance()
