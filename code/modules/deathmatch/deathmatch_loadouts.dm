@@ -21,7 +21,7 @@
 		var/datum/action/new_ability = new act(user)
 		if(istype(new_ability, /datum/action/cooldown/spell))
 			var/datum/action/cooldown/spell/new_spell = new_ability
-			new_spell.spell_requirements &= ~SPELL_REQUIRES_STATION|SPELL_REQUIRES_WIZARD_GARB
+			new_spell.spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 		new_ability.Grant(user)
 
 /datum/outfit/deathmatch_loadout/naked
