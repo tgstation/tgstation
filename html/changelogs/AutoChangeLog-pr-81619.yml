@@ -1,4 +1,0 @@
-author: "SgtHunk"
-delete-after: True
-changes:
-  - bugfix: "The Summon Simians spell will now properly check for monkey faction, allowing people who are monkeys to not be mauled."
