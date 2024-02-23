@@ -19,6 +19,9 @@
 		user.set_species(species_override)
 	for(var/datum/action/act as anything in granted_spells)
 		var/datum/action/new_ability = new act(user)
+		if(istype(new_abililty, /datum/action/cooldown/spell)
+		    var/datum/action/cooldown/spell/new_spell = new_ability
+		    new_spell.spell_requirements &= ~SPELL_REQUIRES_STATION|SPELL_REQUIRES_WIZARD_GARB
 		new_ability.Grant(user)
 
 /datum/outfit/deathmatch_loadout/naked
@@ -431,7 +434,7 @@
 	head = /obj/item/clothing/head/wizard/marisa
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
 	granted_spells = list(
-		/datum/action/cooldown/spell/chuuni_invocations/deathmatch,
+		/datum/action/cooldown/spell/chuuni_invocations,
 		/datum/action/cooldown/spell/pointed/projectile/spell_cards,
 	)
 
@@ -492,8 +495,8 @@
 	head = /obj/item/clothing/head/wizard/red
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
 	granted_spells = list(
-		/datum/action/cooldown/spell/rod_form/deathmatch,
-		/datum/action/cooldown/spell/conjure/the_traps/deathmatch,
+		/datum/action/cooldown/spell/rod_form,
+		/datum/action/cooldown/spell/conjure/the_traps,
 	)
 
 /datum/outfit/deathmatch_loadout/wizard/clown
@@ -507,6 +510,4 @@
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	back = /obj/item/storage/backpack/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
-	granted_spells = list(
-		null,
-	)
+	granted_spells = null
