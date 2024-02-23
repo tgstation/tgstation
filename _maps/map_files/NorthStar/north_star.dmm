@@ -54146,7 +54146,6 @@
 	linked_elevator_id = "com_vator";
 	range = 2
 	},
-/obj/machinery/light/floor,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
 "nRn" = (
