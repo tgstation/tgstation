@@ -237,9 +237,9 @@
 
 	if(target_mob.is_mouth_covered(ITEM_SLOT_HEAD) || target_mob.is_mouth_covered(ITEM_SLOT_MASK))
 		if(target_mob == user)
-			to_chat(user, span_danger("You can't eat with your mouth covered!"))
+			target_mob.balloon_alert(user, "can't eat with mouth covered!")
 		else
-			to_chat(user, span_danger("You can't feed [target_mob] with [target_mob.p_their()] mouth covered!"))
+			target_mob.balloon_alert(user, "[target_mob.p_their()] mouth is covered!")
 		return TRUE
 
 	if(target_mob == user)
