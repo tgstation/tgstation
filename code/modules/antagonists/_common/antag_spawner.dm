@@ -104,8 +104,6 @@
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
-	/// The outfit given to plasmaman operatives
-	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 	/// The antag datum applied
 	var/datum/antagonist/nukeop/reinforcement/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
@@ -176,6 +174,7 @@
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
 	use_subtypes = FALSE
+	special_role_name = "Clown Operative"
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -183,18 +182,23 @@
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "gangtool-red"
+	antag_datum = /datum/antagonist/nukeop/reinforcement/cyborg
+	special_role_name = "Syndicate Cyborg"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"
 	borg_to_spawn = "Assault"
+	special_role_name = "Syndicate Assault Cyborg"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	name = "syndicate medical beacon"
 	borg_to_spawn = "Medical"
+	special_role_name = "Syndicate Medical Cyborg"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	name = "syndicate saboteur beacon"
 	borg_to_spawn = "Saboteur"
+	special_role_name = "Syndicate Saboteur Cyborg"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/borg
@@ -226,10 +230,9 @@
 
 	borg.key = C.key
 
-	var/datum/antagonist/nukeop/new_borg = new()
-	new_borg.send_to_spawnpoint = FALSE
-	borg.mind.add_antag_datum(new_borg,creator_op.nuke_team)
-	borg.mind.special_role = "Syndicate Cyborg"
+	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	borg.mind.add_antag_datum(antag_datum, creator_op.nuke_team)
+	borg.mind.special_role = special_role_name
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
