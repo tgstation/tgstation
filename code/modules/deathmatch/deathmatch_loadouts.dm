@@ -19,9 +19,9 @@
 		user.set_species(species_override)
 	for(var/datum/action/act as anything in granted_spells)
 		var/datum/action/new_ability = new act(user)
-		if(istype(new_abililty, /datum/action/cooldown/spell)
-		    var/datum/action/cooldown/spell/new_spell = new_ability
-		    new_spell.spell_requirements &= ~SPELL_REQUIRES_STATION|SPELL_REQUIRES_WIZARD_GARB
+		if(istype(new_ability, /datum/action/cooldown/spell))
+			var/datum/action/cooldown/spell/new_spell = new_ability
+			new_spell.spell_requirements &= ~SPELL_REQUIRES_STATION|SPELL_REQUIRES_WIZARD_GARB
 		new_ability.Grant(user)
 
 /datum/outfit/deathmatch_loadout/naked
