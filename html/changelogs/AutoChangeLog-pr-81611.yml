@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes spurious CI failure in museum"
+  - code_imp: "adds a blacklist feature to spawners"

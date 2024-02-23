@@ -245,6 +245,11 @@ var/list/vendor_nocrush = list(
 		voice = vendor_voice_by_type[type]
 
 	if(build_inv) //non-constructable vending machine
+		///Non-constructible vending machines do not have a refill canister to populate its products list from,
+		///Which apparently is still needed in the case we use product categories instead.
+		if(product_categories)
+			for(var/list/category as anything in product_categories)
+				products |= category["products"]
 		build_inventories()
 
 	slogan_list = splittext(product_slogans, ";")
