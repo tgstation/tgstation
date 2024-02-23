@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Alien larvas' examine text no longer tells you they are missing arms and legs."
