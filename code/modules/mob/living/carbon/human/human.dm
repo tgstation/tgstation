@@ -459,30 +459,34 @@
 			return FALSE
 
 		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
-			to_chat(src, span_warning("[target.name] is dead!"))
+			balloon_alert(src, "[target.p_they()] [target.p_are()] dead!")
 			return FALSE
 
 		if (is_mouth_covered())
-			to_chat(src, span_warning("Remove your mask first!"))
+			balloon_alert(src, "remove your mask first!")
 			return FALSE
 
 		if (target.is_mouth_covered())
-			to_chat(src, span_warning("Remove [p_their()] mask first!"))
+			balloon_alert(src, "remove [target.p_their()] mask first!")
 			return FALSE
 
-		if (!get_organ_slot(ORGAN_SLOT_LUNGS))
-			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
+		if(HAS_TRAIT_FROM(src, TRAIT_NOBREATH, DISEASE_TRAIT))
+			to_chat(src, span_warning("you can't breathe!"))
 			return FALSE
 
-		if (HAS_TRAIT(src, TRAIT_NOBREATH))
-			to_chat(src, span_warning("You do not breathe, so you cannot perform CPR!"))
+		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		if(isnull(human_lungs))
+			balloon_alert(src, "you don't have lungs!")
+			return FALSE
+		if(human_lungs.organ_flags & ORGAN_FAILING)
+			balloon_alert(src, "your lungs are too damaged!")
 			return FALSE
 
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
 						span_notice("You try to perform CPR on [target.name]... Hold still!"))
 
 		if (!do_after(src, delay = panicking ? CPR_PANIC_SPEED : (3 SECONDS), target = target))
-			to_chat(src, span_warning("You fail to perform CPR on [target]!"))
+			balloon_alert(src, "you fail to perform CPR!")
 			return FALSE
 
 		if (target.health > target.crit_threshold)
