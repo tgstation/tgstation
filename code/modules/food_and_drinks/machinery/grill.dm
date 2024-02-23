@@ -47,14 +47,6 @@
 		smoke.set_up(1, holder = src, location = loc)
 		smoke.start()
 
-/obj/machinery/grill/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == grilled_item)
-		grill_time = 0
-		grill_loop.stop()
-		grilled_item = null
-		end_processing()
-
 /obj/machinery/grill/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || (held_item.resistance_flags & INDESTRUCTIBLE))
@@ -98,6 +90,14 @@
 		return ..()
 	icon_state = "grill_open"
 	return ..()
+
+/obj/machinery/grill/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == grilled_item)
+		grill_time = 0
+		grill_loop.stop()
+		grilled_item = null
+		end_processing()
 
 /obj/machinery/grill/attack_hand(mob/living/user, list/modifiers)
 	if(!QDELETED(grilled_item))
