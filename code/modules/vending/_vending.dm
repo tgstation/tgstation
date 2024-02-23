@@ -830,7 +830,7 @@ var/list/vendor_nocrush = list(
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(is_type_in_list(atom_target, vendor_nocrush)))
+			else if  (can_be_vendorcrushed(atom_target))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
@@ -869,6 +869,12 @@ var/list/vendor_nocrush = list(
  */
 /atom/movable/proc/post_tilt()
 	return
+
+/atom/movable/proc/can_be_vendorcrushed(atom_target)
+	if !(is_type_in_list(atom_target, vendor_nocrush))//make sure its not in the list of "uncrushable" stuff
+		if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) //allow ninjas, etc to be crushed in cloak
+			return TRUE //yep its crushable
+	return FALSE //turns out its not crushable.
 
 /obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
 
