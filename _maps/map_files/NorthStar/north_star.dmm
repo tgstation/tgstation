@@ -6521,17 +6521,6 @@
 /obj/structure/chair/plastic,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/aft)
-"bBT" = (
-/obj/effect/turf_decal/trimline/blue/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 8
-	},
-/obj/machinery/light/floor,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor2/fore)
 "bBV" = (
 /obj/effect/turf_decal/trimline/green/arrow_cw{
 	dir = 8
@@ -26255,7 +26244,6 @@
 /area/station/medical/psychology)
 "gPA" = (
 /obj/machinery/light/floor,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -26477,17 +26465,6 @@
 /obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/port/aft)
-"gSv" = (
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 8
-	},
-/obj/machinery/light/floor,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor1/fore)
 "gSw" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/line,
@@ -27805,17 +27782,6 @@
 	dir = 1
 	},
 /area/station/hallway/floor1/aft)
-"hko" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/machinery/light/floor,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor3/fore)
 "hkq" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
@@ -93061,7 +93027,6 @@
 /area/station/hallway/secondary/service)
 "xSd" = (
 /obj/machinery/light/floor,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -124407,7 +124372,7 @@ qIz
 jYY
 ptd
 cbT
-gSv
+daR
 okN
 daR
 mXx
@@ -189945,7 +189910,7 @@ loK
 umC
 qso
 gYX
-bBT
+qso
 feX
 feX
 feX
@@ -255481,7 +255446,7 @@ uNx
 hkV
 jWY
 viX
-hko
+jWY
 oZx
 oZx
 oZx
