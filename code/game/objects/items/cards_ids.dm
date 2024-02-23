@@ -1455,7 +1455,7 @@
 /obj/item/card/id/advanced/chameleon/ui_state(mob/user)
 	return GLOB.always_state
 
-/obj/item/card/id/advanced/chameleon/ui_status(mob/user)
+/obj/item/card/id/advanced/chameleon/ui_status(mob/user, datum/ui_state/state)
 	var/target = theft_target?.resolve()
 
 	if(!target)

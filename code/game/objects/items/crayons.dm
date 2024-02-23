@@ -747,6 +747,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 2.5
 
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+
 	instant = TRUE
 	edible = FALSE
 	has_cap = TRUE
