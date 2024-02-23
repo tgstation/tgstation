@@ -15,9 +15,9 @@
 ///The joule is the standard unit of energy for this codebase.
 #define JOULE 1
 ///The watt is the standard unit of power for this codebase.
-#define WATTS / WATT
+#define WATTS * WATT
 ///The joule is the standard unit of energy for this codebase.
-#define JOULES / JOULE
+#define JOULES * JOULE
 
 ///The amount of energy, in joules, a standard powercell has.
 #define STANDARD_CELL_CHARGE (1e6 JOULES) // 1 MJ.
