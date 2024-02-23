@@ -1,30 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "at" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/hollow/survival_pod,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "geodebridge"
-	},
-/turf/open/misc/dirt{
-	planetary_atmos = 0;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "aM" = (
-/obj/machinery/power/shuttle_engine/huge{
+/obj/structure/table/wood,
+/obj/machinery/light/small/blacklight/directional{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "bY" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "cx" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -48,8 +44,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ev" = (
-/obj/structure/flora/lunar_plant/style_2,
-/turf/open/misc/dirt/jungle,
+/obj/machinery/computer/piratepad_control,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "fB" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -67,10 +63,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ga" = (
-/obj/item/stack/sheet/bluespace_crystal{
-	amount = 2
-	},
-/turf/open/misc/dirt/jungle,
+/obj/machinery/space_heater,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "ge" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -86,21 +80,22 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "gv" = (
-/obj/item/reagent_containers/cup/beaker/large,
-/turf/open/misc/dirt/jungle,
+/obj/machinery/suit_storage_unit/pirate{
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
+	suit_type = /obj/item/clothing/suit/space/syndicate/blue
+	},
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "gM" = (
-/obj/structure/barricade/wooden,
-/turf/open/misc/dirt,
+/obj/structure/flora/lunar_plant/style_2,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "hM" = (
-/obj/item/stack/sheet/bluespace_crystal,
-/obj/machinery/button/door{
-	id = "geodebridge";
-	name = "Window Shutters Control";
-	pixel_y = 30
+/obj/machinery/porta_turret/syndicate/teleport{
+	dir = 4;
+	faction = list("pirate")
 	},
-/turf/open/misc/dirt/jungle,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "id" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -132,21 +127,19 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"iG" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "geodebridge";
+	dir = 4
+	},
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
 "jh" = (
 /turf/open/floor/catwalk_floor,
 /area/shuttle/pirate)
-"jt" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/turf/closed/mineral/random/jungle{
-	baseturfs = /turf/open/misc/dirt
-	},
-/area/shuttle/pirate)
 "jx" = (
-/turf/closed/mineral/random/jungle{
-	baseturfs = /turf/open/misc/dirt
-	},
+/turf/closed/mineral/random/jungle/space_safe,
 /area/shuttle/pirate)
 "jD" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -159,14 +152,13 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ka" = (
-/obj/machinery/light/small/blacklight/directional{
-	dir = 4
-	},
-/turf/open/misc/dirt/jungle,
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/item/trash/energybar,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ko" = (
-/obj/machinery/piratepad,
-/turf/open/misc/dirt/jungle,
+/obj/item/trash/energybar,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "kp" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -198,12 +190,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "kV" = (
-/obj/item/stack/sheet/bluespace_crystal{
-	amount = 2
-	},
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder,
-/turf/open/misc/dirt/jungle,
+/obj/item/reagent_containers/cup/beaker/large,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "lt" = (
 /turf/template_noop,
@@ -221,20 +209,17 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "mv" = (
-/turf/open/misc/dirt,
+/obj/machinery/porta_turret/syndicate/teleport{
+	dir = 8;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "nk" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small/blacklight/directional{
-	dir = 8
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 2
 	},
-/obj/item/restraints/legcuffs/beartrap,
-/obj/item/restraints/legcuffs/beartrap,
-/obj/item/restraints/legcuffs/beartrap,
-/obj/item/grenade/c4,
-/obj/item/grenade/c4,
-/obj/item/grenade/c4,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "nD" = (
 /obj/machinery/light/small/blacklight/directional{
@@ -315,8 +300,13 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "qp" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/misc/dirt/jungle,
+/obj/item/stack/sheet/bluespace_crystal,
+/obj/machinery/button/door{
+	id = "geodebridge";
+	name = "Window Shutters Control";
+	pixel_y = 30
+	},
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "qK" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -342,6 +332,12 @@
 	pixel_y = 9
 	},
 /turf/open/floor/plating,
+/area/shuttle/pirate)
+"rn" = (
+/obj/structure/closet/crate/miningcar,
+/obj/effect/spawner/random/maintenance/three,
+/obj/item/mining_scanner,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "rG" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -383,6 +379,17 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "uH" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small/blacklight/directional{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "uP" = (
@@ -395,10 +402,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"vj" = (
+/obj/machinery/computer/shuttle/pirate{
+	dir = 8
+	},
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
 "vl" = (
+/obj/effect/spawner/random/maintenance,
+/obj/item/shovel,
 /obj/structure/closet/crate/miningcar,
-/obj/effect/spawner/random/maintenance/three,
-/turf/open/misc/dirt/jungle,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/rods{
+	amount = 5
+	},
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "vP" = (
 /obj/structure/table/reinforced,
@@ -431,16 +449,23 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "wz" = (
-/obj/machinery/computer/piratepad_control,
-/turf/open/misc/dirt/jungle,
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 3
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "xg" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
-/turf/open/misc/dirt{
-	planetary_atmos = 0;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "xN" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -450,8 +475,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "xS" = (
-/obj/structure/chair/wood,
-/turf/open/misc/dirt/jungle,
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/north,
+/obj/item/stack/ore/silver,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "yh" = (
 /obj/structure/cable,
@@ -464,8 +490,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "yz" = (
-/obj/structure/flora/lunar_plant/style_1,
-/turf/open/misc/dirt/jungle,
+/obj/structure/flora/lunar_plant/style_3,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "zO" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -475,28 +501,16 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "zS" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 2
 	},
-/turf/open/floor/plating,
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "zZ" = (
-/obj/item/stack/sheet/bluespace_crystal,
-/turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"At" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light/small/blacklight/directional{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "AT" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -519,11 +533,13 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "BA" = (
-/obj/machinery/airalarm/directional/north,
-/obj/structure/table/wood,
-/obj/machinery/microwave,
-/obj/effect/mapping_helpers/airalarm/all_access,
-/turf/open/misc/dirt/jungle,
+/obj/structure/closet/crate/cardboard{
+	name = "box of climbing hooks"
+	},
+/obj/item/climbing_hook/syndicate,
+/obj/item/climbing_hook/syndicate,
+/obj/item/climbing_hook/syndicate,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "BI" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -547,11 +563,8 @@
 /turf/closed/wall/mineral/iron,
 /area/shuttle/pirate)
 "Ds" = (
-/obj/structure/rack,
-/obj/item/storage/box/syringes,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/fire,
-/turf/open/misc/dirt/jungle,
+/obj/machinery/loot_locator,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Dw" = (
 /obj/machinery/power/port_gen/pacman{
@@ -575,14 +588,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "DT" = (
-/obj/effect/spawner/random/maintenance,
-/obj/item/shovel,
-/obj/structure/closet/crate/miningcar,
-/obj/item/stack/sheet/mineral/coal,
-/obj/item/stack/rods{
-	amount = 5
-	},
-/turf/open/misc/dirt/jungle,
+/obj/structure/fluff/minepost,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Ec" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -614,10 +621,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Gj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/misc/dirt/jungle,
+/obj/machinery/piratepad,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "GQ" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -641,12 +646,12 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "HJ" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/misc/dirt/jungle,
+/obj/machinery/shuttle_scrambler,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "HY" = (
-/obj/machinery/loot_locator,
-/turf/open/misc/dirt/jungle,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Ig" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -691,6 +696,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"JK" = (
+/obj/item/stack/sheet/bluespace_crystal,
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
 "JL" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -713,9 +722,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "KK" = (
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/north,
-/obj/item/stack/ore/silver,
-/turf/open/misc/dirt/jungle,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Mc" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -764,17 +772,19 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Nb" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/hollow/survival_pod,
-/obj/structure/barricade/wooden/crude,
-/turf/open/misc/dirt{
-	planetary_atmos = 0;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/obj/structure/rack,
+/obj/item/storage/box/syringes,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "NT" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/dirt/jungle,
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/item/trash/energybar,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "Od" = (
 /turf/closed/wall/mineral/iron,
@@ -792,33 +802,6 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "OP" = (
-/obj/machinery/space_heater,
-/turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"OR" = (
-/obj/machinery/porta_turret/syndicate/teleport{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/iron,
-/area/shuttle/pirate)
-"OX" = (
-/obj/structure/sign/poster/contraband/bountyhunters,
-/turf/closed/wall/mineral/iron,
-/area/shuttle/pirate)
-"Pq" = (
-/obj/machinery/power/shuttle_engine/large{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"Pr" = (
-/obj/structure/flora/lunar_plant/style_3,
-/turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"PB" = (
 /obj/structure/rack,
 /obj/item/gun/energy/recharge/kinetic_accelerator{
 	pixel_y = 5
@@ -841,13 +824,37 @@
 /obj/item/borg/upgrade/modkit/indoors{
 	pixel_y = -5
 	},
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
-"Qg" = (
-/obj/machinery/computer/shuttle/pirate{
+"OR" = (
+/obj/machinery/porta_turret/syndicate/teleport{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/iron,
+/area/shuttle/pirate)
+"OX" = (
+/obj/structure/sign/poster/contraband/bountyhunters,
+/turf/closed/wall/mineral/iron,
+/area/shuttle/pirate)
+"Pq" = (
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
-/turf/open/misc/dirt/jungle,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Pr" = (
+/obj/structure/table/wood,
+/obj/item/food/energybar{
+	pixel_y = 9
+	},
+/obj/item/food/energybar,
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
+"PB" = (
+/obj/machinery/light/small/blacklight/directional{
+	dir = 4
+	},
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Qo" = (
 /turf/open/floor/iron/stairs{
@@ -864,8 +871,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Rp" = (
-/obj/machinery/shuttle_scrambler,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Rv" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -902,7 +908,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Sy" = (
-/turf/open/misc/dirt/jungle,
+/obj/structure/chair/wood,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "SP" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -915,8 +922,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "TC" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/turf/open/floor/plating,
+/obj/structure/flora/lunar_plant/style_1,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Uf" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -925,7 +932,6 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/barricade/wooden/crude,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Un" = (
@@ -940,21 +946,15 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "UM" = (
-/obj/item/stack/sheet/bluespace_crystal{
-	amount = 2
-	},
-/obj/machinery/light/small/blacklight/directional{
-	dir = 8
-	},
-/turf/open/misc/dirt/jungle,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "UY" = (
+/obj/machinery/airalarm/directional/north,
 /obj/structure/table/wood,
-/obj/item/food/energybar{
-	pixel_y = 9
-	},
-/obj/item/food/energybar,
-/turf/open/misc/dirt/jungle,
+/obj/machinery/microwave,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "WR" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -994,11 +994,13 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ZF" = (
-/obj/machinery/suit_storage_unit/pirate{
-	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
-	suit_type = /obj/item/clothing/suit/space/syndicate/blue
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 2
 	},
-/turf/open/misc/dirt/jungle,
+/obj/machinery/light/small/blacklight/directional{
+	dir = 8
+	},
+/turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 
 (1,1,1) = {"
@@ -1007,15 +1009,15 @@ lt
 lt
 lt
 lt
-lt
-lt
-lt
 yu
 yu
-aM
-lt
-lt
-lt
+jh
+yu
+yu
+yu
+jh
+yu
+yu
 lt
 lt
 lt
@@ -1026,19 +1028,19 @@ lt
 lt
 lt
 lt
-lt
-lt
-yu
+mv
+Od
 Pq
-jh
-uH
-uH
-uH
-jh
-yu
 Pq
-lt
-lt
+jx
+Pq
+Pq
+Pq
+jx
+Pq
+Pq
+Od
+mv
 lt
 lt
 lt
@@ -1046,21 +1048,21 @@ lt
 (3,1,1) = {"
 lt
 lt
-lt
+jx
 jx
 Od
-uH
-uH
-jx
-uH
-uH
-uH
-jx
-uH
-uH
+Uf
+Uf
+Od
+Uf
+Uf
+Uf
+Od
+Uf
+Uf
 Od
 jx
-lt
+jx
 lt
 lt
 "}
@@ -1070,15 +1072,15 @@ lt
 jx
 jx
 Od
-Uf
-Uf
-Od
-Uf
-Uf
-Uf
-Od
-Uf
-Uf
+DT
+kp
+Uw
+Ku
+ME
+Dw
+Uw
+ZD
+DT
 Od
 jx
 jx
@@ -1088,77 +1090,56 @@ lt
 (5,1,1) = {"
 lt
 lt
-jx
-jx
-Od
-NT
-kp
-Uw
-Ku
-ME
-Dw
-Uw
-ZD
-NT
-Od
-jx
-jx
-lt
-lt
-"}
-(6,1,1) = {"
-lt
-lt
 lt
 jx
 Od
-Sy
-zS
+Rp
+fO
 IP
 DM
 JL
 DM
 SP
 Ih
-ga
+nk
 Od
 jx
 lt
 lt
 lt
 "}
-(7,1,1) = {"
+(6,1,1) = {"
 lt
 jx
 jx
 jx
 Od
-xS
-kV
+Sy
+zS
 nR
 WR
 Oq
 Mc
 xN
 wd
-OP
+ga
 Od
 jx
 jx
 jx
 lt
 "}
-(8,1,1) = {"
+(7,1,1) = {"
 jx
 jx
 jx
 jx
 Od
-KK
-gv
-Sy
-Sy
-Sy
+xS
+kV
+ko
+Rp
+Rp
 Od
 Od
 kM
@@ -1169,28 +1150,28 @@ jx
 jx
 jx
 "}
-(9,1,1) = {"
+(8,1,1) = {"
 jx
 jx
 jx
 jx
 Od
-ZF
-ZF
-ZF
-Ds
-PB
+gv
+gv
+gv
+Nb
+OP
 Od
-Pr
+yz
 Mm
-Sy
-vl
+Rp
+rn
 Od
 jx
 jx
 jx
 "}
-(10,1,1) = {"
+(9,1,1) = {"
 jx
 jx
 Od
@@ -1202,58 +1183,58 @@ Od
 Od
 Od
 OX
-UY
+Pr
 Mm
-ga
-DT
+nk
+vl
 Od
 jx
 jx
 jx
+"}
+(10,1,1) = {"
+lt
+jx
+Od
+DT
+ZF
+TC
+Od
+HJ
+aM
+Ds
+Od
+UY
+Mm
+Rp
+DT
+Od
+Od
+Od
+lt
 "}
 (11,1,1) = {"
 lt
-jt
-Od
-NT
+at
 UM
-yz
-Od
-Rp
-nk
-HY
-Od
-BA
-Mm
-Sy
 NT
-Od
-Od
-Od
-lt
-"}
-(12,1,1) = {"
-lt
-gM
-xg
-bY
 oa
 zO
 Od
-Sy
-ga
-Sy
+Rp
+nk
+Rp
 Od
-Sy
+BA
 Mm
-Sy
+Rp
 Dx
 uk
 St
 AT
 lt
 "}
-(13,1,1) = {"
+(12,1,1) = {"
 lt
 XB
 Od
@@ -1274,49 +1255,49 @@ Od
 OR
 lt
 "}
-(14,1,1) = {"
+(13,1,1) = {"
 lt
-mv
-Nb
+Rp
+xg
 fO
 pO
 im
 Od
-ev
-rG
-Gj
+gM
+wz
+bY
 Od
-Sy
-zZ
-Sy
+HY
+JK
+Rp
 lA
 id
 St
 Fx
 lt
 "}
-(15,1,1) = {"
+(14,1,1) = {"
 lt
 jx
 Od
-NT
-ka
-ga
+DT
+PB
+nk
 Od
-wz
+ev
 rG
-ko
+Gj
 Od
-qp
-HJ
-Sy
-NT
+KK
+zZ
+Rp
+DT
 Od
 Od
 Od
 lt
 "}
-(16,1,1) = {"
+(15,1,1) = {"
 lt
 jx
 Od
@@ -1337,7 +1318,7 @@ jx
 jx
 lt
 "}
-(17,1,1) = {"
+(16,1,1) = {"
 lt
 jx
 Od
@@ -1345,7 +1326,7 @@ Er
 YK
 Qo
 el
-At
+uH
 kx
 iu
 iu
@@ -1358,14 +1339,14 @@ Od
 jx
 lt
 "}
-(18,1,1) = {"
+(17,1,1) = {"
 lt
 jx
 Od
 jD
-TC
+ka
 yh
-hM
+qp
 oV
 Hm
 Mz
@@ -1379,18 +1360,18 @@ Cg
 jx
 lt
 "}
-(19,1,1) = {"
+(18,1,1) = {"
 lt
 jx
 Od
 Od
 Od
 Od
-NT
-Qg
+DT
+vj
 vP
 vY
-NT
+DT
 Rv
 uP
 JV
@@ -1400,7 +1381,7 @@ Od
 jx
 lt
 "}
-(20,1,1) = {"
+(19,1,1) = {"
 lt
 jx
 jx
@@ -1408,9 +1389,9 @@ jx
 jx
 Od
 Od
-at
-at
-at
+iG
+iG
+iG
 Od
 Od
 Od
@@ -1419,30 +1400,30 @@ Od
 Od
 jx
 jx
+lt
+"}
+(20,1,1) = {"
+lt
+lt
+jx
+jx
+jx
+jx
+hM
+lt
+lt
+lt
+hM
+jx
+jx
+jx
+jx
+jx
+jx
+lt
 lt
 "}
 (21,1,1) = {"
-lt
-lt
-jx
-jx
-jx
-jx
-jx
-lt
-lt
-lt
-jx
-jx
-jx
-jx
-jx
-jx
-jx
-lt
-lt
-"}
-(22,1,1) = {"
 lt
 lt
 lt

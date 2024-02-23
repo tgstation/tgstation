@@ -14,6 +14,7 @@
 				/obj/item/kitchen/spoon/soup_ladle = 3,
 				/obj/item/clothing/suit/apron/chef = 2,
 				/obj/item/kitchen/rollingpin = 2,
+				/obj/item/kitchen/tongs = 2,
 				/obj/item/knife/kitchen = 2,
 			),
 		),

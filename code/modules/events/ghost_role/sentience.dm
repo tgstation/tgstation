@@ -4,20 +4,20 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/chicken,
 	/mob/living/basic/cow,
-	/mob/living/basic/spider/giant/sgt_araneus,
+	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mouse/brown/tom,
+	/mob/living/basic/parrot,
 	/mob/living/basic/pet,
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
+	/mob/living/basic/sloth,
+	/mob/living/basic/snake,
+	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
-	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-	/mob/living/simple_animal/hostile/retaliate/snake,
-	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/sloth,
 )))
 
 /datum/round_event_control/sentience
@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
-	candidates = get_candidates(ROLE_SENTIENCE, ROLE_SENTIENCE)
+	candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, pic_source = /obj/item/slimepotion/slime/sentience, role_name_text = role_name)
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless, on station, and NOT holograms.

@@ -3,7 +3,8 @@
 
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -19,9 +20,6 @@
 		/datum/ai_planning_subtree/goliath_dig,
 	)
 
-/datum/targetting_datum/basic/allow_items/goliath
-	stat_attack = HARD_CRIT
-
 /datum/ai_planning_subtree/basic_melee_attack_subtree/goliath
 	operational_datums = list(/datum/component/ai_target_timer)
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/goliath
@@ -29,7 +27,7 @@
 /// Go for the tentacles if they're available
 /datum/ai_behavior/basic_melee_attack/goliath
 
-/datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+/datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, health_ratio_key)
 	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
 	if (time_on_target < MIN_TIME_TO_TENTACLE)
 		return ..()
@@ -96,8 +94,7 @@
 	var/target_key = BB_GOLIATH_HOLE_TARGET
 
 /datum/ai_planning_subtree/goliath_dig/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/target_turf = controller.blackboard[target_key]
-	if (QDELETED(target_turf))
+	if (!controller.blackboard_key_exists(target_key))
 		return
 	controller.queue_behavior(/datum/ai_behavior/goliath_dig, target_key)
 	return SUBTREE_RETURN_FINISH_PLANNING

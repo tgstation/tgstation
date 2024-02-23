@@ -22,6 +22,7 @@
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
 	brute_modifier = 1.25 //ethereal are weak to brute damages
+	wing_types = NONE
 
 /obj/item/bodypart/chest/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -36,6 +37,7 @@
 	dmg_overlay_type = null
 	attack_type = BURN //burn bish
 	unarmed_attack_verb = "burn"
+	grappled_attack_verb = "scorch"
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
@@ -53,6 +55,7 @@
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
 	unarmed_attack_verb = "burn"
+	grappled_attack_verb = "scorch"
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage

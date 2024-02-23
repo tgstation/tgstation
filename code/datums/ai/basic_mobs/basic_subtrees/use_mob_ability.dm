@@ -1,6 +1,6 @@
 /**
  * Simple behaviours which simply try to use an ability whenever it is available.
- * For something which wants a target try `targetted_mob_ability`.
+ * For something which wants a target try `targeted_mob_ability`.
  */
 /datum/ai_planning_subtree/use_mob_ability
 	/// Blackboard key for the ability
@@ -15,7 +15,7 @@
 		CRASH("You forgot to tell this mob where to find its ability")
 
 	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
-	if (QDELETED(using_action) || !using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key)

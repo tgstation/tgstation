@@ -40,22 +40,21 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		),
 	)
 
-/datum/chasm_detritus/proc/dispense_reward(turf/fishing_spot, turf/fisher_turf)
-	if (prob(default_contents_chance))
+/datum/chasm_detritus/proc/dispense_detritus(mob/fisherman, turf/fishing_spot)
+	if(prob(default_contents_chance))
 		var/default_spawn = pick(default_contents[default_contents_key])
-		return new default_spawn(fisher_turf)
-	return find_chasm_contents(fishing_spot, fisher_turf)
+		return new default_spawn(get_turf(fisherman))
+	return find_chasm_contents(fishing_spot, get_turf(fisherman))
 
 /// Returns the chosen detritus from the given list of things to choose from
 /datum/chasm_detritus/proc/determine_detritus(list/chasm_stuff)
 	return pick(chasm_stuff)
 
-/// Returns an objected which is currently inside of a nearby chasm.
-/datum/chasm_detritus/proc/find_chasm_contents(datum/source, turf/fishing_spot, turf/fisher_turf)
-	SIGNAL_HANDLER
+/// Returns an object which is currently inside of a nearby chasm.
+/datum/chasm_detritus/proc/find_chasm_contents(turf/fishing_spot, turf/fisher_turf)
 	var/list/chasm_contents = get_chasm_contents(fishing_spot)
 
-	if (!length(chasm_contents))
+	if(!length(chasm_contents))
 		var/default_spawn = pick(default_contents[default_contents_key])
 		return new default_spawn(fisher_turf)
 
@@ -63,7 +62,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 
 /datum/chasm_detritus/proc/get_chasm_contents(turf/fishing_spot)
 	. = list()
-	for (var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
+	for(var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
 		for (var/thing as anything in storage.contents)
 			. += thing
 
@@ -76,7 +75,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 
 /datum/chasm_detritus/restricted/get_chasm_contents(turf/fishing_spot)
 	. = list()
-	for (var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
+	for(var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
 		for (var/thing as anything in storage.contents)
 			if(!istype(thing, chasm_storage_restricted_type))
 				continue

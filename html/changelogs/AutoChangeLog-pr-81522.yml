@@ -1,0 +1,4 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - qol: "CPR can be administered by species which do not need to breathe, so long as they have functional lungs."

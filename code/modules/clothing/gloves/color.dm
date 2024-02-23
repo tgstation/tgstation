@@ -9,6 +9,16 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
+	clothing_traits = list(TRAIT_FAST_CUFFING)
+
+/obj/item/clothing/gloves/color/black/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/radiogloves)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/gloves/fingerless
 	name = "fingerless gloves"
@@ -22,6 +32,15 @@
 	custom_price = PAYCHECK_CREW * 1.5
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
+
+/obj/item/clothing/gloves/color/fingerless/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gripperoffbrand)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"

@@ -52,7 +52,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -301,7 +300,7 @@
 /area/shuttle/pirate)
 "aW" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "be" = (
@@ -491,7 +490,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/medbot/nukie{
+/mob/living/basic/bot/medbot/nukie{
 	name = "Dr. Pax";
 	desc = "A twitchy medibot. It can't seem to hold still. Slightly concerning."
 	},

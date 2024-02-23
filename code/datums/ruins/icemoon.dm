@@ -7,10 +7,16 @@
 	ruin_type = ZTRAIT_ICE_RUINS
 	default_area = /area/icemoon/surface/outdoors/unexplored
 	has_ceiling = TRUE
-	ceiling_turf = /turf/closed/mineral/random/snow/do_not_chasm
+	ceiling_turf = /turf/closed/mineral/snowmountain/do_not_chasm
 	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon/do_not_chasm)
 
 // above ground only
+
+/datum/map_template/ruin/icemoon/gas
+	name = "Lizard Gas Station"
+	id = "lizgasruin"
+	description = "A gas station. It appears to have been recently open and is in mint condition."
+	suffix = "icemoon_surface_gas.dmm"
 
 /datum/map_template/ruin/icemoon/lust
 	name = "Ruin of Lust"
@@ -173,3 +179,23 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+
+/datum/map_template/ruin/icemoon/underground/vent
+	name = "Icemoon Ore Vent"
+	id = "ore_vent_i"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon." //Make this a subtype that only spawns medium and large vents. Some smalls will go to the top level.
+	suffix = "icemoon_underground_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE
+
+/datum/map_template/ruin/icemoon/ruin/vent
+	name = "Surface Icemoon Ore Vent"
+	id = "ore_vent_i"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon. Smaller than the underground ones."
+	suffix = "icemoon_surface_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE

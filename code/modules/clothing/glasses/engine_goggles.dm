@@ -97,15 +97,16 @@
 		return
 	var/list/shuttle_areas = port.shuttle_areas
 	for(var/area/region as anything in shuttle_areas)
-		for(var/turf/place as anything in region.get_contained_turfs())
-			if(get_dist(user, place) > 7)
-				continue
-			var/image/pic
-			if(isshuttleturf(place))
-				pic = new('icons/turf/overlays.dmi', place, "greenOverlay", AREA_LAYER)
-			else
-				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
-			flick_overlay_global(pic, list(user.client), 8)
+		for (var/list/zlevel_turfs as anything in region.get_zlevel_turf_lists())
+			for (var/turf/place as anything in zlevel_turfs)
+				if(get_dist(user, place) > 7)
+					continue
+				var/image/pic
+				if(isshuttleturf(place))
+					pic = new('icons/turf/overlays.dmi', place, "greenOverlay", AREA_LAYER)
+				else
+					pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
+				flick_overlay_global(pic, list(user.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_connections()
 	var/mob/living/carbon/human/user = loc

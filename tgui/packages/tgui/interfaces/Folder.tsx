@@ -10,8 +10,8 @@ type Data = {
   contents_ref: string;
 };
 
-export const Folder = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Folder = (props) => {
+  const { act, data } = useBackend<Data>();
   const { theme, bg_color, folder_name, contents, contents_ref } = data;
 
   return (
@@ -19,7 +19,8 @@ export const Folder = (props, context) => {
       title={folder_name || 'Folder'}
       theme={theme}
       width={400}
-      height={500}>
+      height={500}
+    >
       <Window.Content backgroundColor={bg_color || '#7f7f7f'} scrollable>
         {!contents.length && (
           <Section>
@@ -33,7 +34,8 @@ export const Folder = (props, context) => {
             key={contents_ref[index]}
             color="black"
             backgroundColor="white"
-            style={{ padding: '2px 2px 0 2px' }}>
+            style={{ padding: '2px 2px 0 2px' }}
+          >
             <Stack.Item align="center" grow>
               <Box align="center">{item}</Box>
             </Stack.Item>

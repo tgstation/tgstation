@@ -8,10 +8,17 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	var/modifies_speech = FALSE
+	///Whether the mask is pushed out of the food hole or not.
 	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
+	/// If defined, what voice should we override with if TTS is active?
+	var/voice_override
+	/// If set to true, activates the radio effect on TTS. Used for sec hailers, but other masks can utilize it for their own vocal effect.
+	var/use_radio_beeps_tts = FALSE
+	/// The unique sound effect of dying while wearing this
+	var/unique_death
 
 /obj/item/clothing/mask/attack_self(mob/user)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))

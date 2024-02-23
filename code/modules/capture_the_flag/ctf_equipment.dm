@@ -10,7 +10,7 @@
 		return PROJECTILE_PIERCE_NONE /// hey uhhh don't hit anyone behind them
 	. = ..()
 
-/obj/projectile/beam/ctf/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/ctf/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(is_ctf_target(target) && blocked == FALSE)
 		if(iscarbon(target))
@@ -165,7 +165,7 @@
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/projectile/beam/instakill
-	e_cost = 0
+	e_cost = 0 // Not possible to use the macro
 	select_name = "DESTROY"
 
 /obj/projectile/beam/instakill
@@ -176,7 +176,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	light_color = LIGHT_COLOR_PURPLE
 
-/obj/projectile/beam/instakill/on_hit(atom/target)
+/obj/projectile/beam/instakill/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/target_mob = target
@@ -207,12 +207,18 @@
 	var/lose_multiple_charges = TRUE
 	var/show_charge_as_alpha = TRUE
 
-/obj/item/clothing/suit/armor/vest/ctf/equipped(mob/user, slot)
+/obj/item/clothing/suit/armor/vest/ctf/Initialize(mapload)
 	. = ..()
-	if(!slot || slot & ITEM_SLOT_HANDS)
-		return
-	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, show_charge_as_alpha = show_charge_as_alpha, shield_icon = team_shield_icon)
+	AddComponent( \
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		show_charge_as_alpha = show_charge_as_alpha, \
+		shield_icon = team_shield_icon, \
+	)
 
 // LIGHT SHIELDED VEST
 

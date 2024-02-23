@@ -1,13 +1,13 @@
 ///An item that can be used to gather information on the fish, such as but not limited to: health, hunger and traits.
 /obj/item/fish_analyzer
 	name = "fish analyzer"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "fish_analyzer_map"
 	base_icon_state = "fish_analyzer"
 	inhand_icon_state = "fish_analyzer"
 	worn_icon_state = "fish_analyzer"
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
@@ -33,6 +33,17 @@
 	case_color = rgb(rand(16, 255), rand(16, 255), rand(16, 255))
 	set_greyscale(colors = list(case_color))
 	. = ..()
+
+	var/static/list/fishe_signals = list(
+		COMSIG_FISH_ANALYZER_ANALYZE_STATUS = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+	)
+	AddComponent(/datum/component/experiment_handler, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		allowed_experiments = list(/datum/experiment/scanning/fish), \
+		config_flags = EXPERIMENT_CONFIG_SILENT_FAIL|EXPERIMENT_CONFIG_IMMEDIATE_ACTION, \
+		experiment_signals = fishe_signals, \
+	)
+
 	register_item_context()
 	update_appearance()
 
@@ -41,6 +52,10 @@
 		QDEL_NULL(fish_menu)
 	radial_choices = null
 	return ..()
+
+/obj/item/fish_analyzer/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
 
 /obj/item/fish_analyzer/update_icon_state()
 	. = ..()
@@ -190,20 +205,23 @@
 
 	if(fish.status != FISH_DEAD)
 		render_list += "\n"
-		var/hunger = PERCENT(min((world.time - fish.last_feeding) / fish.feeding_frequency, 1))
-		var/hunger_string = "[hunger]%"
-		switch(hunger)
-			if(0 to 60)
-				hunger_string = span_info(hunger_string)
-			if(60 to 90)
-				hunger_string = span_warning(hunger_string)
-			if(90 to 100)
-				hunger_string = span_alert(hunger_string)
-		render_list += "<span class='info ml-1'>Hunger: [hunger_string]</span>\n"
+		if(!HAS_TRAIT(fish, TRAIT_FISH_NO_HUNGER))
+			var/hunger = PERCENT(min((world.time - fish.last_feeding) / fish.feeding_frequency, 1))
+			var/hunger_string = "[hunger]%"
+			switch(hunger)
+				if(0 to 60)
+					hunger_string = span_info(hunger_string)
+				if(60 to 90)
+					hunger_string = span_warning(hunger_string)
+				if(90 to 100)
+					hunger_string = span_alert(hunger_string)
+			render_list += "<span class='info ml-1'>Hunger: [hunger_string]</span>\n"
 		var/time_left = round(max(fish.breeding_wait - world.time, 0)/10)
 		render_list += "<span class='info ml-1'>Time until it can breed: [time_left] seconds</span>"
 
 	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+
+	SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, fish, user)
 
 /**
  * Called when a fish or a menu choice is left-clicked.

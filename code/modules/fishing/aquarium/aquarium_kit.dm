@@ -35,6 +35,7 @@
 	var/fish_type = get_fish_type()
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
+		ADD_TRAIT(spawned_fish, TRAIT_FISH_FROM_CASE, TRAIT_GENERIC)
 		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
@@ -96,9 +97,9 @@
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/aquarium_kit/attack_self(mob/user)
+/obj/item/aquarium_kit/Initialize(mapload)
 	. = ..()
-	to_chat(user,span_notice("There's instruction and tools necessary to build aquarium inside. All you need is to start crafting."))
+	AddComponent(/datum/component/slapcrafting, /datum/crafting_recipe/aquarium)
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
@@ -126,10 +127,10 @@
 	icon_state = "seaweeds_back"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
-/obj/item/aquarium_prop/rockfloor
-	name = "rock floor"
-	icon_state = "rockfloor"
-	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+/obj/item/aquarium_prop/sand
+	name = "aquarium sand"
+	icon_state = "sand"
+	layer_mode = AQUARIUM_LAYER_MODE_BEHIND_GLASS
 
 /obj/item/aquarium_prop/treasure
 	name = "tiny treasure chest"

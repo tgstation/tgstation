@@ -1,4 +1,0 @@
-author: "Vincent983"
-delete-after: True
-changes:
-  - bugfix: "normal ethereal blood now works for electrolysis, the hydrogen and oxygen output of the electrolysis recipe has been increased."

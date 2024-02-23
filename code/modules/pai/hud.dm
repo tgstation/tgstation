@@ -94,6 +94,7 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		pAI.host_scan(PAI_SCAN_MASTER)
 		return TRUE
+
 /atom/movable/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"
@@ -147,7 +148,8 @@
 	required_software = "Photography Module"
 
 /atom/movable/screen/pai/image_take/Click()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.aicamera.toggle_camera_mode(usr)

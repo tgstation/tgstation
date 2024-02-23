@@ -140,6 +140,7 @@
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
+#define BODYPART_ID_MEAT "meat"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -393,6 +394,14 @@
 #define SHOCK_NOSTUN (1 << 3)
 /// No default message is sent from the shock
 #define SHOCK_SUPPRESS_MESSAGE (1 << 4)
+/// No skeleton animation if a human was shocked
+#define SHOCK_NO_HUMAN_ANIM (1 << 5)
+/// Ignores TRAIT_STUNIMMUNE
+#define SHOCK_IGNORE_IMMUNITY (1 << 6)
+/// Prevents the immediate stun, instead only gives the delay
+#define SHOCK_DELAY_STUN (1 << 7)
+/// Makes the paralyze into a knockdown
+#define SHOCK_KNOCKDOWN (1 << 8)
 
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
@@ -463,29 +472,18 @@
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
 
-// Roundstart trait system
-
-#define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
-
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
-
-// /obj/item/bodypart on_mob_life() retval flag
-#define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
 
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
 #define DEFAULT_BURN_EXAMINE_TEXT "burns"
-#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
 
 #define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
 #define ROBOTIC_BURN_EXAMINE_TEXT "charring"
-
-// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
-#define MOB_BIG_FIRE_STACK_THRESHOLD 3
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -754,8 +752,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define WOUND_LAYER 3
 /// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
 #define HALO_LAYER 2
-/// Fire layer when you're on fire
-#define FIRE_LAYER 1
+/// The highest most layer for mob overlays. Unused
+#define HIGHEST_LAYER 1
 
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
@@ -796,7 +794,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
 	// DAMAGE_LAYER (full body)
-	// FIRE_LAYER (full body)
+	// HIGHEST_LAYER (full body)
 	// UNIFORM_LAYER (full body)
 	// WOUND_LAYER (full body)
 ))
@@ -893,39 +891,37 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_TOX (1<<3)
 /// Heals all oxyloss.
 #define HEAL_OXY (1<<4)
-/// Heals all cellular damage.
-#define HEAL_CLONE (1<<5)
 /// Heals all stamina damage.
-#define HEAL_STAM (1<<6)
+#define HEAL_STAM (1<<5)
 /// Restore all limbs to their initial state.
-#define HEAL_LIMBS (1<<7)
+#define HEAL_LIMBS (1<<6)
 /// Heals all organs from failing.
-#define HEAL_ORGANS (1<<8)
+#define HEAL_ORGANS (1<<7)
 /// A "super" heal organs, this refreshes all organs entirely, deleting old and replacing them with new.
-#define HEAL_REFRESH_ORGANS (1<<9)
+#define HEAL_REFRESH_ORGANS (1<<8)
 /// Removes all wounds.
-#define HEAL_WOUNDS (1<<10)
+#define HEAL_WOUNDS (1<<9)
 /// Removes all brain traumas, not including permanent ones.
-#define HEAL_TRAUMAS (1<<11)
+#define HEAL_TRAUMAS (1<<10)
 /// Removes all reagents present.
-#define HEAL_ALL_REAGENTS (1<<12)
+#define HEAL_ALL_REAGENTS (1<<11)
 /// Removes all non-positive diseases.
-#define HEAL_NEGATIVE_DISEASES (1<<13)
+#define HEAL_NEGATIVE_DISEASES (1<<12)
 /// Restores body temperature back to nominal.
-#define HEAL_TEMP (1<<14)
+#define HEAL_TEMP (1<<13)
 /// Restores blood levels to normal.
-#define HEAL_BLOOD (1<<15)
+#define HEAL_BLOOD (1<<14)
 /// Removes all non-positive mutations (neutral included).
-#define HEAL_NEGATIVE_MUTATIONS (1<<16)
+#define HEAL_NEGATIVE_MUTATIONS (1<<15)
 /// Removes status effects with this flag set that also have remove_on_fullheal = TRUE.
-#define HEAL_STATUS (1<<17)
+#define HEAL_STATUS (1<<16)
 /// Same as above, removes all CC related status effects with this flag set that also have remove_on_fullheal = TRUE.
-#define HEAL_CC_STATUS (1<<18)
+#define HEAL_CC_STATUS (1<<17)
 /// Deletes any restraints on the mob (handcuffs / legcuffs)
-#define HEAL_RESTRAINTS (1<<19)
+#define HEAL_RESTRAINTS (1<<18)
 
 /// Combination flag to only heal the main damage types.
-#define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)
+#define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_STAM)
 /// Combination flag to only heal things messed up things about the mob's body itself.
 #define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_REFRESH_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
 /// Combination flag to heal negative things affecting the mob.

@@ -145,7 +145,9 @@
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
-	. += update_reagent_overlay()
+	var/list/reagent_overlays = update_reagent_overlay()
+	if(reagent_overlays)
+		. += reagent_overlays
 
 /// Returns a list of overlays to add that relate to the reagents inside the syringe
 /obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
@@ -264,6 +266,12 @@
 	var/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity/enriched, /datum/reagent/ants)
 	list_reagents = list((toxin_to_get) = 5)
 	return ..()
+
+/obj/item/reagent_containers/syringe/crude/mushroom
+	list_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 5)
+
+/obj/item/reagent_containers/syringe/crude/blastoff
+	list_reagents = list(/datum/reagent/drug/blastoff = 5)
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

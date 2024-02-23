@@ -56,6 +56,9 @@
 	// No tongue, no tastin'
 	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
+	// Handled in here since the brain trauma can't modify taste directly (/datum/brain_trauma/severe/flesh_desire)
+	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
+		return GORE | MEAT
 	return tongue.liked_foodtypes
 
 /**
@@ -83,7 +86,17 @@
 	// No tongue, no tastin'
 	if(!tongue)
 		return TOXIC
+	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
+		return VEGETABLES | DAIRY | FRUIT | FRIED
 	return tongue.toxic_foodtypes
+
+/**
+ * Gets food this mob is allergic to
+ * Essentially toxic food+, not only disgusting but outright lethal
+ */
+/mob/living/proc/get_allergic_foodtypes()
+	var/datum/quirk/item_quirk/food_allergic/allergy = get_quirk(/datum/quirk/item_quirk/food_allergic)
+	return allergy?.target_foodtypes || NONE
 
 /**
  * Gets the food reaction a mob would normally have from the given food item,

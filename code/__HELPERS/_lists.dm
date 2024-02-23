@@ -97,6 +97,19 @@
 	LAZYINITLIST(lazy_list[key]); \
 	lazy_list[key] |= value;
 
+///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
+#define LISTASSERTLEN(L, I, V...) \
+	if (length(L) < I) { \
+		var/_OLD_LENGTH = length(L); \
+		L.len = I; \
+		/* Convert the optional argument to a if check */ \
+		for (var/_USELESS_VAR in list(V)) { \
+			for (var/_INDEX_TO_ASSIGN_TO in _OLD_LENGTH+1 to I) { \
+				L[_INDEX_TO_ASSIGN_TO] = V; \
+			} \
+		} \
+	}
+
 #define reverseList(L) reverse_range(L.Copy())
 
 /// Passed into BINARY_INSERT to compare keys
@@ -403,9 +416,18 @@
  * Returns TRUE if the list had nulls, FALSE otherwise
 **/
 /proc/list_clear_nulls(list/list_to_clear)
+	return (list_to_clear.RemoveAll(null) > 0)
+	
+
+/**
+ * Removes any empty weakrefs from the list
+ * Returns TRUE if the list had empty refs, FALSE otherwise
+**/
+/proc/list_clear_empty_weakrefs(list/list_to_clear)
 	var/start_len = list_to_clear.len
-	var/list/new_list = new(start_len)
-	list_to_clear -= new_list
+	for(var/datum/weakref/entry in list_to_clear)
+		if(!entry.resolve())
+			list_to_clear -= entry
 	return list_to_clear.len < start_len
 
 /*
@@ -418,9 +440,9 @@
 		return
 	var/list/result = new
 	if(skiprep)
-		for(var/e in first)
-			if(!(e in result) && !(e in second))
-				UNTYPED_LIST_ADD(result, e)
+		for(var/entry in first)
+			if(!(entry in result) && !(entry in second))
+				UNTYPED_LIST_ADD(result, entry)
 	else
 		result = first - second
 	return result
@@ -754,9 +776,9 @@
 			inserted_list.Cut(to_index, to_index + 1)
 	else
 		if(to_index > from_index)
-			var/a = to_index
+			var/temp = to_index
 			to_index = from_index
-			from_index = a
+			from_index = temp
 
 		for(var/i in 1 to len)
 			inserted_list.Swap(from_index++, to_index++)
@@ -885,6 +907,13 @@
 		if(value?.locked)
 			continue
 		UNTYPED_LIST_ADD(keys, key)
+	return keys
+
+///Gets the total amount of everything in the associative list.
+/proc/assoc_value_sum(list/input)
+	var/keys = 0
+	for(var/key in input)
+		keys += input[key]
 	return keys
 
 ///compare two lists, returns TRUE if they are the same

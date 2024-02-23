@@ -101,14 +101,14 @@
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(consume_bullets))
+	RegisterSignal(parent, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(consume_bullets))
 
 	if (notify_admins)
 		admin_investigate_setup()
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
 	consume_callback = null
 	target = null
@@ -127,7 +127,7 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
-		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_PRE_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_ATOM_ATTACKBY,
@@ -180,6 +180,7 @@
 	SIGNAL_HANDLER
 
 	qdel(projectile)
+	return COMPONENT_BULLET_BLOCKED
 
 /// Calls singularity_act on the thing passed, usually destroying the object
 /datum/component/singularity/proc/default_singularity_act(atom/thing)

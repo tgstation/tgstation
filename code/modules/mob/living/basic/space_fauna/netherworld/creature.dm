@@ -27,7 +27,7 @@
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 15
 
-	ai_controller = /datum/ai_controller/basic_controller/creature
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
@@ -39,8 +39,7 @@
 		min_health_slowdown = -1.5,\
 	)
 
-	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
-	teleport.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/creature_teleport)
 
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness
@@ -101,16 +100,3 @@
 		exit_jaunt(cast_on)
 		return
 	enter_jaunt(cast_on)
-
-/datum/ai_controller/basic_controller/creature
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

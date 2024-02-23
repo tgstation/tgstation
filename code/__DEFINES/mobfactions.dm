@@ -21,6 +21,8 @@
 #define FACTION_CLOWN "clowns"
 /// Headslugs
 #define FACTION_CREATURE "creature"
+/// Cats
+#define FACTION_CAT "cat"
 /// Faithless and shadowpeople
 #define FACTION_FAITHLESS "faithless"
 /// Gnomes

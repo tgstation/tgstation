@@ -29,3 +29,9 @@
 /datum/bodypart_overlay/simple/creampie
 	icon_state = "creampie_human"
 	layers = EXTERNAL_FRONT
+
+///bags drawn beneath the eyes
+/datum/bodypart_overlay/simple/bags
+	icon_state = "bags"
+	draw_color = COLOR_WEBSAFE_DARK_GRAY
+	layers = EXTERNAL_ADJACENT

@@ -109,35 +109,37 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
+	var/datum/dna/record_dna = new()
+	person.dna.copy_dna(record_dna)
 
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = record_dna.blood_type,
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
 		trim = assignment,
 		// Locked specifics
-		dna_ref = person.dna,
+		locked_dna = record_dna,
 		mind_ref = person.mind,
 	)
 
 	new /datum/record/crew(
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = record_dna.blood_type,
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
 		trim = assignment,
 		// Crew specific
 		lock_ref = REF(lockfile),
@@ -158,3 +160,36 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	target.rank = assignment
 	target.trim = trim
+
+/datum/manifest/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/manifest/ui_status(mob/user, datum/ui_state/state)
+	return (isnewplayer(user) || isobserver(user) || isAI(user) || ispAI(user) || user.client?.holder) ? UI_INTERACTIVE : UI_CLOSE
+
+/datum/manifest/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "CrewManifest")
+		ui.open()
+
+/datum/manifest/ui_data(mob/user)
+	var/list/positions = list()
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		var/open = 0
+		var/list/exceptions = list()
+		for(var/datum/job/job as anything in department.department_jobs)
+			if(job.total_positions == -1)
+				exceptions += job.title
+				continue
+			var/open_slots = job.total_positions - job.current_positions
+			if(open_slots < 1)
+				continue
+			open += open_slots
+		positions[department.department_name] = list("exceptions" = exceptions, "open" = open)
+
+	return list(
+		"manifest" = get_manifest(),
+		"positions" = positions
+	)
+

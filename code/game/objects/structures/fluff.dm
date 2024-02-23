@@ -74,7 +74,7 @@
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
+
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing
  */
@@ -269,18 +269,48 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/fluff/tram_rails.dmi'
+	icon = 'icons/obj/tram/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE
-	deconstructible = TRUE
+	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	deconstructible = FALSE
 
 /obj/structure/fluff/tram_rail/floor
+	name = "tram rail protective cover"
 	icon_state = "rail_floor"
 
 /obj/structure/fluff/tram_rail/end
 	icon_state = "railend"
 
+/obj/structure/fluff/tram_rail/electric
+	desc = "Great for trams, not so great for skating. This one is a power rail."
+
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric/anchor
+	name = "tram rail anchor"
+	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
+	if(user.electrocute_act(75, src))
+		do_sparks(5, TRUE, src)
+
+/obj/structure/fluff/broken_canister_frame
+	name = "broken canister frame"
+	desc = "A torn apart canister. It looks like some metal can be salvaged with a wrench."
+	icon_state = "broken_canister"
+	anchored = FALSE
+	density = TRUE
+	deconstructible = TRUE
+
+/obj/structure/fluff/wallsign
+	name = "direction sign"
+	desc = "Now, where to go?"
+	density = FALSE
+	icon = 'icons/obj/fluff/general.dmi'
+	icon_state = "wallsign"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/wallsign, 32)

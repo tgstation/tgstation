@@ -71,55 +71,57 @@
 	if(!ishuman(arrived))
 		return
 
-	var/mob/living/carbon/human/H = arrived
-	if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
+	var/mob/living/carbon/human/digitigrade_fan = arrived
+	if(HAS_TRAIT(digitigrade_fan, TRAIT_PIERCEIMMUNE))
 		return
 
-	if((flags & CALTROP_IGNORE_WALKERS) && H.move_intent == MOVE_INTENT_WALK)
+	if((flags & CALTROP_IGNORE_WALKERS) && digitigrade_fan.move_intent == MOVE_INTENT_WALK)
 		return
 
-	if(H.movement_type & (FLOATING|FLYING)) //check if they are able to pass over us
+	if(digitigrade_fan.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //check if they are able to pass over us
 		//gravity checking only our parent would prevent us from triggering they're using magboots / other gravity assisting items that would cause them to still touch us.
 		return
 
-	if(H.buckled) //if they're buckled to something, that something should be checked instead.
+	if(digitigrade_fan.buckled) //if they're buckled to something, that something should be checked instead.
 		return
 
-	if(H.body_position == LYING_DOWN && !(flags & CALTROP_NOCRAWL)) //if we're not standing we cant step on the caltrop
+	if(digitigrade_fan.body_position == LYING_DOWN && !(flags & CALTROP_NOCRAWL)) //if we're not standing we cant step on the caltrop
 		return
 
 	var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
-	if(!istype(O))
+	var/obj/item/bodypart/leg = digitigrade_fan.get_bodypart(picked_def_zone)
+	if(!istype(leg))
 		return
 
-	if(!IS_ORGANIC_LIMB(O))
+	if(!IS_ORGANIC_LIMB(leg))
 		return
 
 	if (!(flags & CALTROP_BYPASS_SHOES))
-		if ((H.wear_suit?.body_parts_covered | H.w_uniform?.body_parts_covered | H.shoes?.body_parts_covered) & FEET)
+		if ((digitigrade_fan.wear_suit?.body_parts_covered | digitigrade_fan.w_uniform?.body_parts_covered | digitigrade_fan.shoes?.body_parts_covered) & FEET)
 			return
 
 	var/damage = rand(min_damage, max_damage)
-	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+	if(HAS_TRAIT(digitigrade_fan, TRAIT_LIGHT_STEP))
 		damage *= 0.75
 
 
-	if(!(flags & CALTROP_SILENT) && !H.has_status_effect(/datum/status_effect/caltropped))
-		H.apply_status_effect(/datum/status_effect/caltropped)
-		H.visible_message(
-			span_danger("[H] steps on [parent]."),
+	if(!(flags & CALTROP_SILENT) && !digitigrade_fan.has_status_effect(/datum/status_effect/caltropped))
+		digitigrade_fan.apply_status_effect(/datum/status_effect/caltropped)
+		digitigrade_fan.visible_message(
+			span_danger("[digitigrade_fan] steps on [parent]."),
 			span_userdanger("You step on [parent]!")
 		)
 
-	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
+	digitigrade_fan.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
-		H.Paralyze(paralyze_duration)
-
+		if(!HAS_TRAIT(digitigrade_fan, TRAIT_LIGHT_STEP))
+			digitigrade_fan.Paralyze(paralyze_duration)
+		else
+			digitigrade_fan.Knockdown(paralyze_duration)
 	if(!soundfile)
 		return
-	playsound(H, soundfile, 15, TRUE, -3)
+	playsound(digitigrade_fan, soundfile, 15, TRUE, -3)
 
 /datum/component/caltrop/UnregisterFromParent()
 	if(ismovable(parent))

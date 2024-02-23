@@ -1,7 +1,7 @@
 /// Place some grappling tentacles underfoot
 /datum/action/cooldown/mob_cooldown/goliath_tentacles
 	name = "Unleash Tentacles"
-	desc = "Unleash burrowed tentacles at a targetted location, grappling targets after a delay."
+	desc = "Unleash burrowed tentacles at a targeted location, grappling targets after a delay."
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "goliath_tentacle_wiggle"
 	background_icon_state = "bg_demon"
@@ -9,7 +9,6 @@
 	click_to_activate = TRUE
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
 	/// Furthest range we can activate ability at
 	var/max_range = 7
@@ -44,7 +43,6 @@
 	overlay_icon_state = "bg_demon_border"
 	cooldown_time = 24 SECONDS
 	melee_cooldown_time = 0
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
 	click_to_activate = FALSE
 
@@ -61,7 +59,7 @@
 /// Summon a line of tentacles towards the target
 /datum/action/cooldown/mob_cooldown/tentacle_grasp
 	name = "Tentacle Grasp"
-	desc = "Unleash burrowed tentacles in a line towards a targetted location, grappling targets after a delay."
+	desc = "Unleash burrowed tentacles in a line towards a targeted location, grappling targets after a delay."
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "goliath_tentacle_wiggle"
 	background_icon_state = "bg_demon"
@@ -69,7 +67,6 @@
 	click_to_activate = TRUE
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/tentacle_grasp/Activate(atom/target)

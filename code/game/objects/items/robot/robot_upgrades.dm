@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
@@ -268,7 +268,7 @@
 /obj/item/borg/upgrade/lavaproof
 	name = "mining cyborg lavaproof chassis"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock and liquid plasma."
-	icon_state = "ash_plating"
+	icon_state = "cyborg_ash_tracks"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
@@ -375,7 +375,7 @@
 			cyborg.cell.use(5)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
-		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BORG_SELF_REPAIR))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
 			TIMER_COOLDOWN_START(src, COOLDOWN_BORG_SELF_REPAIR, 200 SECONDS)
 			var/msgmode = "standby"
 			if(cyborg.health < 0)
@@ -522,7 +522,7 @@
 /obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		if(R.shell)
+		if(locate(/obj/item/borg/upgrade/ai) in R.upgrades)
 			to_chat(user, span_warning("This unit is already an AI shell!"))
 			return FALSE
 		if(R.key) //You cannot replace a player unless the key is completely removed.
@@ -589,7 +589,6 @@
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
 		if(RPED)
 			to_chat(user, span_warning("This unit is already equipped with a RPED module!"))
@@ -606,10 +605,52 @@
 		if (RPED)
 			R.model.remove_module(RPED, TRUE)
 
+/obj/item/borg/upgrade/inducer
+	name = "engineering integrated power inducer"
+	desc = "An integrated inducer that can charge a device's internal cell from power provided by the cyborg."
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/silicon_friend, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend
+		if(inter_inducer)
+			silicon_friend.balloon_alert(user, "already has one!")
+			return FALSE
+
+		inter_inducer = new(silicon_friend.model)
+		silicon_friend.model.basic_modules += inter_inducer
+		silicon_friend.model.add_module(inter_inducer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/silicon_friend, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend.model
+		if(inter_inducer)
+			silicon_friend.model.remove_module(inter_inducer, TRUE)
+
+/obj/item/inducer/cyborg
+	name = "Internal inducer"
+	powertransfer = 1500
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "inducer-engi"
+	cell_type = null
+
+/obj/item/inducer/cyborg/get_cell()
+	var/obj/item/robot_model/possible_model = loc
+	var/mob/living/silicon/robot/silicon_friend = istype(possible_model) ? possible_model.robot : possible_model
+	if(istype(silicon_friend))
+		. = silicon_friend.cell
+
+/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
+
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinpointer_crew"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
@@ -923,7 +964,7 @@
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)

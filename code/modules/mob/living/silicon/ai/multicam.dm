@@ -86,7 +86,7 @@
 	name = ""
 	icon = 'icons/misc/pic_in_pic.dmi'
 	icon_state = "room_background"
-	flags_1 = NOJAUNT
+	turf_flags = NOJAUNT
 
 /turf/open/ai_visible/Initialize(mapload)
 	. = ..()

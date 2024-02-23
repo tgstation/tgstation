@@ -56,11 +56,11 @@
 	if(user.put_in_hands(card))
 		user.visible_message(span_notice("[user] promptly scoops up [user.p_their()] pAI's card."))
 
-/mob/living/silicon/pai/bullet_act(obj/projectile/Proj)
-	if(Proj.stun)
+/mob/living/silicon/pai/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	. = ..()
+	if(. == BULLET_ACT_HIT && (hitting_projectile.stun || hitting_projectile.paralyze))
 		fold_in(force = TRUE)
-		src.visible_message(span_warning("The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!"))
-	. = ..(Proj)
+		visible_message(span_warning("The electrically-charged projectile disrupts [src]'s holomatrix, forcing [p_them()] to fold in!"))
 
 /mob/living/silicon/pai/ignite_mob(silent)
 	return FALSE
@@ -73,17 +73,17 @@
 		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
 	return amount
 
-/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	return take_holo_damage(amount)
+/// Called when we take burn or brute damage, pass it to the shell instead
+/mob/living/silicon/pai/proc/on_shell_damaged(datum/hurt, type, amount, forced)
+	SIGNAL_HANDLER
+	take_holo_damage(amount)
+	return COMPONENT_IGNORE_CHANGE
 
-/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	return take_holo_damage(amount)
-
-/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_stamina, forced = FALSE, required_biotype)
-	if(forced)
-		take_holo_damage(amount)
-	else
-		take_holo_damage(amount * 0.25)
+/// Called when we take stamina damage, pass it to the shell instead
+/mob/living/silicon/pai/proc/on_shell_weakened(datum/hurt, type, amount, forced)
+	SIGNAL_HANDLER
+	take_holo_damage(amount * ((forced) ? 1 : 0.25))
+	return COMPONENT_IGNORE_CHANGE
 
 /mob/living/silicon/pai/getBruteLoss()
 	return HOLOCHASSIS_MAX_HEALTH - holochassis_health

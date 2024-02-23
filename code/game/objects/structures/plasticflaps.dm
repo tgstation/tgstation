@@ -36,7 +36,7 @@
 
 /obj/structure/plasticflaps/proc/gen_overlay()
 	var/turf/our_turf = get_turf(src)
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -83,18 +83,15 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/plasticflaps/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	if(isliving(caller))
-		if(isbot(caller))
+/obj/structure/plasticflaps/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info.is_living)
+		if(pass_info.is_bot)
 			return TRUE
-
-		var/mob/living/living_caller = caller
-		var/ventcrawler = HAS_TRAIT(living_caller, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_caller, TRAIT_VENTCRAWLER_NUDE)
-		if(!ventcrawler && living_caller.mob_size != MOB_SIZE_TINY)
+		if(pass_info.can_ventcrawl && pass_info.mob_size != MOB_SIZE_TINY)
 			return FALSE
 
-	if(caller?.pulling)
-		return CanAStarPass(ID, to_dir, caller.pulling, no_id = no_id)
+	if(pass_info.pulling_info)
+		return CanAStarPass(to_dir, pass_info.pulling_info)
 	return TRUE //diseases, stings, etc can pass
 
 
@@ -128,7 +125,7 @@
 
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
 

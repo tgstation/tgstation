@@ -81,7 +81,6 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_blocker"
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	pixel_x = -32
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -190,7 +189,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, sound_to_use = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
-		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
+		notify_ghosts(
+			"Legion has been released in the [get_area(src)]!",
+			source = src,
+			alert_overlay = release_overlay,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 
 /obj/effect/decal/necropolis_gate_decal
 	icon = 'icons/effects/96x96.dmi'

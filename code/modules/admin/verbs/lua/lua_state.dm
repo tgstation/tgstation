@@ -21,6 +21,9 @@ GLOBAL_PROTECT(lua_usr)
 	/// A list in which to store datums and lists instantiated in lua, ensuring that they don't get garbage collected
 	var/list/references = list()
 
+	/// Ckey of the last user who ran a script on this lua state.
+	var/ckey_last_runner = ""
+
 /datum/lua_state/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == NAMEOF(src, internal_id))

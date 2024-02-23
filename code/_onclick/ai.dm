@@ -11,7 +11,7 @@
 		return
 
 	if(ismob(A))
-		ai_tracking_tool.set_tracked_mob(src, A.name)
+		ai_tracking_tool.track_mob(src, A)
 	else
 		A.move_camera_by_click()
 
@@ -73,10 +73,6 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode)
-		aicamera.toggle_camera_mode(sound = FALSE)
-		aicamera.captureimage(pixel_turf, usr)
-		return
 	if(waypoint_mode)
 		waypoint_mode = 0
 		set_waypoint(A)

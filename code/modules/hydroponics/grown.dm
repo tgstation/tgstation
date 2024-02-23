@@ -114,7 +114,7 @@
 /obj/item/food/grown/proc/ferment()
 	var/reagent_purity = seed.get_reagent_purity()
 	var/purity_above_base = clamp((reagent_purity - 0.5) * 2, 0, 1)
-	var/quality_min = 0
+	var/quality_min = DRINK_NICE
 	var/quality_max = DRINK_FANTASTIC
 	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	for(var/datum/reagent/reagent in reagents.reagent_list)
@@ -146,9 +146,9 @@
 	var/grind_results_num = LAZYLEN(grind_results)
 	if(grind_results_num)
 		var/average_purity = reagents.get_average_purity()
-		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, include_subtypes = TRUE)
+		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_SUB_TYPE)
 		var/single_reagent_amount = grind_results_num > 1 ? round(total_nutriment_amount / grind_results_num, CHEMICAL_QUANTISATION_LEVEL) : total_nutriment_amount
-		reagents.remove_all_type(/datum/reagent/consumable/nutriment, total_nutriment_amount)
+		reagents.remove_reagent(/datum/reagent/consumable/nutriment, total_nutriment_amount, include_subtypes = TRUE)
 		for(var/reagent in grind_results)
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 

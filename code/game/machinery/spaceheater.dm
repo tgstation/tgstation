@@ -69,6 +69,8 @@
 		),
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
 
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)
@@ -79,7 +81,7 @@
 	set_panel_open(TRUE)
 	QDEL_NULL(cell)
 
-/obj/machinery/space_heater/on_deconstruction()
+/obj/machinery/space_heater/on_deconstruction(disassembled)
 	if(cell)
 		LAZYADD(component_parts, cell)
 		cell = null
@@ -187,7 +189,7 @@
 /obj/machinery/space_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)

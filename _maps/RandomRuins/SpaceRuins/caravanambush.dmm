@@ -26,7 +26,7 @@
 /area/template_noop)
 "ah" = (
 /obj/structure/lattice/catwalk,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/template_noop,
@@ -587,7 +587,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/airless,
@@ -707,7 +707,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/syndicate/ranged/smg/space,
+/mob/living/basic/trooper/syndicate/ranged/smg/space,
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter3)
 "Cj" = (
@@ -736,7 +736,7 @@
 /area/ruin/space/has_grav)
 "Fr" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/plating/airless,
@@ -941,7 +941,7 @@
 "Nm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/airless,
@@ -978,7 +978,7 @@
 /area/shuttle/ruin/caravan/freighter3)
 "PF" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/syndicate/ranged/smg/space,
+/mob/living/basic/trooper/syndicate/ranged/smg/space,
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter3)
 "PY" = (
@@ -1134,7 +1134,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter3)
 "Zz" = (

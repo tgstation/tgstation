@@ -1,7 +1,7 @@
 /obj/item/wallframe
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -42,8 +42,6 @@
 
 		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
 		hanging_object.setDir(floor_to_wall)
-		on_wall.AddComponent(/datum/component/wall_mounted, hanging_object)
-
 		if(pixel_shift)
 			switch(floor_to_wall)
 				if(NORTH)
@@ -55,7 +53,7 @@
 				if(WEST)
 					hanging_object.pixel_x = -pixel_shift
 		after_attach(hanging_object)
-		hanging_object.find_and_hang_on_wall()
+
 	qdel(src)
 
 /obj/item/wallframe/proc/after_attach(obj/attached_to)
@@ -66,7 +64,7 @@
 	var/turf/T = get_step(get_turf(user), user.dir)
 	if(iswallturf(T))
 		T.attackby(src, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
 	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
@@ -81,16 +79,16 @@
 	if(glass_amt)
 		new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "door_electronics"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

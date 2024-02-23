@@ -47,6 +47,11 @@
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
+		// preemptively expel the contents from the trunk
+		// in case the outlet is deleted before expel_holder could be called.
+		var/obj/structure/disposalholder/holder = locate() in trunk
+		if(holder)
+			trunk.expel(holder)
 		trunk.linked = null
 		trunk = null
 	QDEL_NULL(stored)
@@ -60,15 +65,15 @@
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, FALSE)
-		addtimer(CALLBACK(src, PROC_REF(expel_holder), H, TRUE), 20)
+		addtimer(CALLBACK(src, PROC_REF(expel_holder), H, TRUE), 2 SECONDS)
 	else
-		addtimer(CALLBACK(src, PROC_REF(expel_holder), H), 20)
+		addtimer(CALLBACK(src, PROC_REF(expel_holder), H), 2 SECONDS)
 
 /obj/structure/disposaloutlet/proc/expel_holder(obj/structure/disposalholder/H, playsound=FALSE)
 	if(playsound)
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
-	if(!H)
+	if(QDELETED(H))
 		return
 
 	pipe_eject(H, dir, TRUE, target, eject_range, eject_speed)
@@ -131,6 +136,24 @@
 	eject_speed = EJECT_SPEED_YEET
 	eject_range = EJECT_RANGE_YEET
 	return TRUE
+
+/obj/structure/disposaloutlet/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	if(!isnull(stored))
+		stored.forceMove(loc)
+		transfer_fingerprints_to(stored)
+		stored = null
+		visible_message(span_warning("[src] is ripped free from the floor!"))
+		qdel(src)
+
+/obj/structure/disposaloutlet/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	if(!isnull(stored))
+		stored.forceMove(loc)
+		transfer_fingerprints_to(stored)
+		stored = null
+		visible_message(span_warning("[src] is ripped free from the floor!"))
+		qdel(src)
 
 #undef EJECT_SPEED_SLOW
 #undef EJECT_SPEED_MED

@@ -6,10 +6,6 @@
 	var/airlock_state
 	var/frequency
 
-/obj/machinery/door/airlock/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
-
 /// Forces the airlock to unbolt and open
 /obj/machinery/door/airlock/proc/secure_open()
 	locked = FALSE
@@ -34,17 +30,6 @@
 	// Airlocks should unlock themselves when knock is casted, THEN open up.
 	locked = FALSE
 	return ..()
-
-/obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
-	SIGNAL_HANDLER
-
-	if(!is_station_level(z) || critical_machine)
-		return //Skip doors in critical positions, such as the SM chamber.
-
-	for(var/area_type in grey_tide_areas)
-		if(!istype(get_area(src), area_type))
-			continue
-		INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/machines/wallmounts.dmi'

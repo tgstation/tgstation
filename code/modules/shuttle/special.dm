@@ -79,7 +79,7 @@
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
@@ -90,17 +90,14 @@
 	. = ..()
 
 /obj/structure/table/abductor/wabbajack/process()
-	var/area = orange(4, src)
-	if(!our_statue)
-		for(var/obj/machinery/power/emitter/energycannon/magical/M in area)
-			our_statue = M
-			break
+	if(isnull(our_statue))
+		our_statue = locate() in orange(4, src)
 
-	if(!our_statue)
+	if(isnull(our_statue))
 		name = "inert [initial(name)]"
 		return
-	else
-		name = initial(name)
+
+	name = initial(name)
 
 	var/turf/T = get_turf(src)
 	var/list/found = list()
@@ -154,7 +151,7 @@
 // Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
 
-/mob/living/simple_animal/drone/snowflake/bardrone
+/mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."
 	hacked = TRUE
@@ -166,9 +163,8 @@
 	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
 
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
+/mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
-	access_card.add_access(list(ACCESS_CENT_BAR))
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
@@ -202,7 +198,7 @@
 
 /obj/structure/table/wood/shuttle_bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -229,6 +225,9 @@
 		var/mob/living/carbon/human/human_user = user
 		if(is_bartender_job(human_user.mind?.assigned_role))
 			return TRUE
+
+	if(istype(user, /mob/living/basic/drone/snowflake/bardrone))
+		return TRUE
 
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))

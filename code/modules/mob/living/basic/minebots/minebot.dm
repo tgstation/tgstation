@@ -23,7 +23,7 @@
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC
 	death_message = "blows apart!"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 6
 	light_on = FALSE
 	combat_mode = FALSE
@@ -40,7 +40,7 @@
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/minebot,
+		/datum/pet_command/point_targeting/attack/minebot,
 	)
 
 /mob/living/basic/mining_drone/Initialize(mapload)
@@ -58,14 +58,13 @@
 		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_light/toggle_light_action = new(src)
-	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision/toggle_meson_vision_action = new(src)
-	var/datum/action/cooldown/mob_cooldown/minedrone/dump_ore/dump_ore_action = new(src)
-	toggle_light_action.Grant(src)
-	toggle_meson_vision_action.Grant(src)
-	dump_ore_action.Grant(src)
-	ai_controller.set_blackboard_key(BB_MINEBOT_LIGHT_ABILITY, toggle_light_action)
-	ai_controller.set_blackboard_key(BB_MINEBOT_DUMP_ABILITY, dump_ore_action)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/minedrone/toggle_light = BB_MINEBOT_LIGHT_ABILITY,
+		/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision = null,
+		/datum/action/cooldown/mob_cooldown/minedrone/dump_ore = BB_MINEBOT_DUMP_ABILITY,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)
@@ -119,10 +118,8 @@
 	return ..()
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-
-	if(. || user.combat_mode)
-		return
+	if(user.combat_mode)
+		return ..()
 	set_combat_mode(!combat_mode)
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 

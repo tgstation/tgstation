@@ -750,6 +750,19 @@
 	foodtypes = MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+///Special private component to handle how bbq is grilled, not meant to be used anywhere else
+/datum/component/grillable/bbq
+
+/datum/component/grillable/bbq/finish_grilling(atom/grill_source)
+	//when on a grill allow it to roast without deleting itself
+	if(istype(grill_source, /obj/machinery/grill))
+		grill_source.visible_message(span_notice("[parent] is grilled to perfection!"))
+	else //when on a girddle allow it to burn into an mouldy mess
+		return ..()
+
+/obj/item/food/bbqribs/make_grillable()
+	AddComponent(/datum/component/grillable/bbq, /obj/item/food/badrecipe, rand(30 SECONDS, 40 SECONDS), FALSE)
+
 /obj/item/food/meatclown
 	name = "meat clown"
 	desc = "A delicious, round piece of meat clown. How horrifying."
@@ -939,6 +952,138 @@
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
+/obj/item/food/korta_wellington
+	name = "Kotra wellington"
+	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in korta pastry."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "korta_wellington"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/korta_wellington/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/korta_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/korta_wellington_slice
+	name = "korta wellington slice"
+	desc = "A slice of korta & beef wellington, topped with a rich gravy. Simply delicious."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "korta_wellington_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner
+	name = "roast dinner"
+	desc = "A luxuriously roasted chicken, accompanied by cabbage, parsnip, potatoes, peas, stuffing and a small boat of gravy."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "full_roast"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/roast_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/roast_slice
+	name = "plate of roast dinner"
+	desc = "A small plate of roast chicken, peas, cabbage, parsnips, potatoes, stuffing and... WAIT is this all the gravy I get?!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "roast_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_lizzy
+	name = "grain-free roast dinner"
+	desc = "A luxuriously roasted chicken, accompanied by cabbage, parsnip, potatoes, peas, korta stuffing and a small boat of korta-blood gravy."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "full_roast_lizzy"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_lizzy/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/roast_slice_lizzy, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/roast_slice_lizzy
+	name = "plate of grain-free roast dinner"
+	desc = "A small plate of roast chicken, peas, cabbage, parsnips, potatoes, korta stuffing and... WAIT is this all the korta-blood gravy I get?!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "roast_slice_lizzy"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_tofu
+	name = "tofu roast dinner"
+	desc = "A luxuriously roasted tofu-'chicken', accompanied by cabbage, parsnip, potatoes, peas, stuffing and a small boat of soybased gravy."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "full_roast_tofu"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("tofu" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_tofu/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/roast_slice_tofu, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/roast_slice_tofu
+	name = "plate of tofu roast dinner"
+	desc = "A small plate of roast tofu-'chicken', peas, cabbage, parsnips, potatoes, stuffing and... WAIT is this all the soy gravy I get?!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "roast_slice_tofu"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("tofu" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
 /obj/item/food/full_english
 	name = "full english breakfast"
 	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."
@@ -1017,6 +1162,7 @@
 	)
 	tastes = list("meat" = 5, "savory sauce" = 4, "tangy pineapple" = 3, "pepper" = 2)
 	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/kebab/pineapple_skewer
 	name = "pineapple skewer"
@@ -1029,6 +1175,7 @@
 	)
 	tastes = list("juicy meat" = 4, "pineapple" = 3)
 	foodtypes = MEAT | FRUIT | PINEAPPLE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/futomaki_sushi_roll
 	name = "futomaki sushi roll"
@@ -1042,6 +1189,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/futomaki_sushi_roll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/futomaki_sushi_slice, 4, screentip_verb = "Chop")
@@ -1058,6 +1206,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/philadelphia_sushi_roll
 	name = "Philadelphia sushi roll"
@@ -1071,6 +1220,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/philadelphia_sushi_roll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/philadelphia_sushi_slice, 4, screentip_verb = "Chop")
@@ -1087,3 +1237,4 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

@@ -21,46 +21,35 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
 	. = ..()
 	if(.)
-		return
-
-	if(!works_from_distance && !user.Adjacent(attacked_object))
-		return
+		return .
 
 	return part_replace_action(attacked_object, user)
 
 /obj/item/storage/part_replacer/proc/part_replace_action(obj/attacked_object, mob/living/user)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine) && !istype(attacked_object, /obj/structure/frame/computer))
+	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
 		return FALSE
 
-	if(ismachinery(attacked_object) && !istype(attacked_object, /obj/machinery/computer))
-		var/obj/machinery/attacked_machinery = attacked_object
+	var/obj/machinery/attacked_machinery = attacked_object
+	if(!LAZYLEN(attacked_machinery.component_parts))
+		return FALSE
 
-		if(!attacked_machinery.component_parts)
-			return FALSE
-
-		attacked_machinery.exchange_parts(user, src)
-		if(works_from_distance)
-			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
-		return TRUE
-
-	var/obj/structure/frame/attacked_frame = attacked_object
-	if(istype(attacked_frame, /obj/structure/frame/machine))
-		var/obj/structure/frame/machine/machine_frame = attacked_frame
-		if(attacked_frame.state == 1 || (!machine_frame.components && !(locate(/obj/item/circuitboard/machine) in contents)))
-			return FALSE
-	else
-		if(attacked_frame.state == 0 || (attacked_frame.state == 1 && !(locate(/obj/item/circuitboard/computer) in contents)))
-			return FALSE
-
-	attacked_frame.attackby(src, user)
-	if(works_from_distance)
-		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
+	if(attacked_machinery.exchange_parts(user, src) && works_from_distance)
+		user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(works_from_distance)
-		part_replace_action(attacked_object, user)
-	return ..()
+	. = ..()
+	if(!works_from_distance || adjacent) // Adjacent things = already handled by pre-attack
+		return .
+
+	if(part_replace_action(attacked_object, user))
+		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return . | AFTERATTACK_PROCESSED_ITEM
+
+	if(istype(attacked_object, /obj/structure/frame))
+		attacked_object.item_interaction(user, src) // Cursed snowflake but we need to handle frame ranged interaction here
+		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -197,11 +186,17 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has an extra large compartment for more parts."
 	icon_state = "borgrped"
 	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
+/obj/item/storage/part_replacer/cyborg/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 400
+	atom_storage.max_total_storage = 800
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
 	var/list/part_list = list()
@@ -224,7 +219,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/stock_parts
 	name = "stock part"
 	desc = "What?"
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
@@ -465,6 +460,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."

@@ -120,6 +120,12 @@
 			return
 	..()
 
+/obj/structure/floodlight_frame/completed
+	name = "floodlight frame"
+	desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
+	icon_state = "floodlight_c3"
+	state = FLOODLIGHT_NEEDS_LIGHTS
+
 /obj/machinery/power/floodlight
 	name = "floodlight"
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
@@ -255,7 +261,7 @@
 		connect_to_network()
 	else
 		disconnect_from_network()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/floodlight/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

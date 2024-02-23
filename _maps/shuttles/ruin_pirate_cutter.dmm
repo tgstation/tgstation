@@ -75,7 +75,7 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "iN" = (
-/mob/living/simple_animal/hostile/pirate/melee{
+/mob/living/basic/trooper/pirate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron,
@@ -139,7 +139,7 @@
 	pixel_y = -30;
 	req_access = null
 	},
-/mob/living/simple_animal/hostile/pirate/ranged{
+/mob/living/basic/trooper/pirate/ranged{
 	environment_smash = 0
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -344,7 +344,7 @@
 "wV" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/pirate,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "xb" = (
@@ -501,7 +501,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/brown{
+/obj/item/bedsheet/pirate{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -514,7 +514,7 @@
 "Ha" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/pirate,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "Hb" = (
@@ -551,9 +551,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "Iu" = (
 /obj/structure/table,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Weapon Storage"
 	},
 /obj/item/gun/energy/laser,
@@ -702,7 +700,7 @@
 "Ry" = (
 /obj/structure/rack,
 /obj/item/storage/bag/money/vault,
-/mob/living/simple_animal/parrot{
+/mob/living/basic/parrot{
 	faction = list("pirate");
 	name = "Pegwing"
 	},
@@ -787,7 +785,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "WV" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged{
+/mob/living/basic/trooper/pirate/ranged{
 	environment_smash = 0
 	},
 /turf/open/floor/iron,
@@ -840,7 +838,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/brown{
+/obj/item/bedsheet/pirate{
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/west,

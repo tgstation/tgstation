@@ -6,11 +6,36 @@ GLOBAL_LIST_EMPTY(deadmins) //all ckeys who have used the de-admin verb.
 GLOBAL_LIST_EMPTY(directory) //all ckeys with associated client
 GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for stealthmins
 
-GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
-	/turf/open/lava,
-	/turf/open/chasm,
-	/turf/open/space,
-	/turf/open/openspace)))
+/// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
+GLOBAL_LIST_INIT(abstract_mob_types, list(
+	/mob/living/basic/blob_minion,
+	/mob/living/basic/bot,
+	/mob/living/basic/construct,
+	/mob/living/basic/guardian,
+	/mob/living/basic/heretic_summon,
+	/mob/living/basic/mining,
+	/mob/living/basic/pet,
+	/mob/living/basic,
+	/mob/living/basic/spider,
+	/mob/living/carbon/alien/adult,
+	/mob/living/carbon/alien,
+	/mob/living/carbon/human/consistent,
+	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/dummy,
+	/mob/living/carbon/human/species,
+	/mob/living/carbon,
+	/mob/living/silicon,
+	/mob/living/simple_animal/bot,
+	/mob/living/simple_animal/hostile/asteroid/elite,
+	/mob/living/simple_animal/hostile/asteroid,
+	/mob/living/simple_animal/hostile/megafauna,
+	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
+	/mob/living/simple_animal/hostile/retaliate,
+	/mob/living/simple_animal/hostile,
+	/mob/living/simple_animal/pet,
+	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
+	/mob/living/simple_animal,
+))
 
 
 //Since it didn't really belong in any other category, I'm putting this here
@@ -51,6 +76,12 @@ GLOBAL_LIST_EMPTY(current_living_antags)
 
 /// All observers with clients that joined as observers.
 GLOBAL_LIST_EMPTY(current_observers_list)
+
+/// All living mobs which can hear blob telepathy
+GLOBAL_LIST_EMPTY(blob_telepathy_mobs)
+
+/// All "living" (because revenants are in between mortal planes or whatever) mobs that can hear revenants
+GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
@@ -113,7 +144,7 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 /proc/get_crewmember_minds()
 	var/list/minds = list()
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind = target.mind_ref
+		var/datum/mind/mind = target.mind_ref.resolve()
 		if(mind)
 			minds += mind
 	return minds

@@ -12,6 +12,7 @@
 		fish_source = configuration
 	else
 		return COMPONENT_INCOMPATIBLE
+	fish_source.on_fishing_spot_init()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 
@@ -32,10 +33,10 @@
 	var/obj/item/fishing_rod/rod = possibly_rod
 	if(!istype(rod))
 		return
-	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
+	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.fishing_line)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
-	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
+	var/denial_reason = fish_source.reason_we_cant_fish(rod, user, parent)
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK

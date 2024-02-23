@@ -190,7 +190,7 @@
 	return ..()
 
 /// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
-/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype)
+/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BURN)
 		return
@@ -292,6 +292,7 @@
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
 	arm.unarmed_attack_verb = "slash"
+	arm.grappled_attack_verb = "lacerate"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -343,7 +344,7 @@
 	if (!.)
 		return FALSE
 	var/mob/living/carbon/human/human_owner = owner
-	RegisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_punched))
+	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
 	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
 		if (arm.limb_id != SPECIES_GOLEM)
@@ -354,23 +355,22 @@
 /datum/status_effect/golem/titanium/proc/on_punched(mob/living/puncher, atom/punchee, proximity)
 	SIGNAL_HANDLER
 	if (!proximity || !isliving(punchee))
-		return
+		return NONE
 	var/mob/living/victim = punchee
 	if (victim.body_position == LYING_DOWN || (!(FACTION_MINING in victim.faction) && !(FACTION_BOSS in victim.faction)))
-		return
+		return NONE
 	victim.apply_damage(mining_bonus, BRUTE)
 
 /// Make the targeted arm big and strong
 /datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
-	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
 	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
 	var/mob/living/carbon/human/human_owner = owner
-	UnregisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	UnregisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK)
 	human_owner.physiology.brute_mod /= brute_modifier
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		debuff_arm(arm)
@@ -383,7 +383,6 @@
 		return
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
-	arm.unarmed_stun_threshold -= damage_increase
 	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
@@ -405,7 +404,7 @@
 	. = ..()
 	if (!.)
 		return
-	owner.AddElement(/datum/element/waddling)
+	owner.AddElementTrait(TRAIT_WADDLING, TRAIT_STATUS_EFFECT(id), /datum/element/waddling)
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 	slipperiness = owner.AddComponent(\
 		/datum/component/slippery,\
@@ -419,8 +418,7 @@
 	return owner.body_position == LYING_DOWN
 
 /datum/status_effect/golem/bananium/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
-	owner.RemoveElement(/datum/element/waddling)
+	owner.remove_traits(owner, list(TRAIT_WADDLING, TRAIT_NO_SLIP_WATER), TRAIT_STATUS_EFFECT(id))
 	QDEL_NULL(slipperiness)
 	return ..()
 
@@ -442,7 +440,7 @@
 	if (!.)
 		return
 	to_chat(owner, span_notice("You start to emit a healthy glow."))
-	owner.light_system = MOVABLE_LIGHT
+	owner.light_system = OVERLAY_LIGHT
 	lightbulb = owner.AddComponent(/datum/component/overlay_lighting, _range = glow_range, _power = glow_power, _color = glow_color)
 	owner.add_filter(LIGHTBULB_FILTER, 2, list("type" = "outline", "color" = glow_color, "alpha" = 60, "size" = 1))
 

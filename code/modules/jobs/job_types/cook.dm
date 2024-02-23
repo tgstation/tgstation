@@ -33,13 +33,14 @@
 	// Adds up to 100, don't mess it up
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 40,
-		/obj/item/reagent_containers/cup/bottle/caramel = 8,
-		/obj/item/reagent_containers/condiment/flour = 8,
-		/obj/item/reagent_containers/condiment/rice = 8,
-		/obj/item/reagent_containers/condiment/ketchup = 8,
-		/obj/item/reagent_containers/condiment/enzyme = 8,
-		/obj/item/reagent_containers/condiment/soymilk = 8,
+		/obj/item/reagent_containers/cup/bottle/caramel = 7,
+		/obj/item/reagent_containers/condiment/flour = 7,
+		/obj/item/reagent_containers/condiment/rice = 7,
+		/obj/item/reagent_containers/condiment/ketchup = 7,
+		/obj/item/reagent_containers/condiment/enzyme = 7,
+		/obj/item/reagent_containers/condiment/soymilk = 7,
 		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/kitchen/tongs = 6,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2,
 	)
@@ -86,6 +87,17 @@
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
 			other_chefs.cooks++
+
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	// Update PDA to match possible new trim.
+	var/obj/item/card/id/worn_id = user.wear_id
+	var/obj/item/modular_computer/pda/pda = user.get_item_by_slot(pda_slot)
+	if(!istype(worn_id) || !istype(pda))
+		return
+	var/assignment = worn_id.get_trim_assignment()
+	if(!isnull(assignment))
+		pda.imprint_id(user.real_name, assignment)
 
 /datum/outfit/job/cook/get_types_to_preload()
 	. = ..()

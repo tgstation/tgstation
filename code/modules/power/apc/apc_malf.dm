@@ -37,7 +37,7 @@
 	if(!is_station_level(z))
 		return
 	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY? //IKR????
+	occupier = new /mob/living/silicon/ai(src, malf.laws.copy_lawset(), malf) //DEAR GOD WHY? //IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
@@ -69,7 +69,7 @@
 	if(forced)
 		occupier.forceMove(drop_location())
 		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
-		occupier.gib()
+		occupier.gib(DROP_ALL_REMAINS)
 
 	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
 		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)

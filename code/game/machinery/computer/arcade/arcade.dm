@@ -71,13 +71,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/party_poppers = 2))
 
 /obj/machinery/computer/arcade
-	name = "random arcade"
-	desc = "random arcade machine"
+	name = "\proper the arcade cabinet which shouldn't exist"
+	desc = "This arcade cabinet has no games installed, and in fact, should not exist. \
+		Report the location of this machine to your local diety."
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -136,19 +137,21 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new empprize(loc)
 	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
-/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/stack/arcadeticket))
-		var/obj/item/stack/arcadeticket/T = O
-		var/amount = T.get_amount()
-		if(amount <2)
-			to_chat(user, span_warning("You need 2 tickets to claim a prize!"))
-			return
-		prizevend(user)
-		T.pay_tickets()
-		T.update_appearance()
-		O = T
-		to_chat(user, span_notice("You turn in 2 tickets to the [src] and claim a prize!"))
-		return
+/obj/machinery/computer/arcade/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!istype(tool, /obj/item/stack/arcadeticket))
+		return .
+
+	var/obj/item/stack/arcadeticket/tickets = tool
+	if(!tickets.use(2))
+		balloon_alert(user, "need 2 tickets!")
+		return ITEM_INTERACT_BLOCKING
+
+	prizevend(user)
+	balloon_alert(user, "prize claimed")
+	return ITEM_INTERACT_SUCCESS
 
 // ** BATTLE ** //
 /obj/machinery/computer/arcade/battle
@@ -156,6 +159,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 
 	var/enemy_name = "Space Villain"
 	///Enemy health/attack points
@@ -582,7 +587,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			var/mob/living/living_user = user
 			if (istype(living_user))
 				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
-				living_user.gib()
+				living_user.gib(DROP_ALL_REMAINS)
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user.lost_game()
 
@@ -693,4 +698,4 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"
 	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	prize_override = list(/obj/item/a_gift/anything = 1)
+	prize_override = list(/obj/item/gift/anything = 1)

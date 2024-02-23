@@ -56,7 +56,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "q" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/prison_shuttle)
 "r" = (
@@ -84,7 +84,7 @@
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
 "w" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "x" = (

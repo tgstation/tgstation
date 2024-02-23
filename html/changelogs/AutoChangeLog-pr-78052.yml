@@ -1,4 +1,0 @@
-author: "Ghommie (Thanks Sealed101)"
-delete-after: True
-changes:
-  - refactor: "Reworked the fishing minigame into a game screen object from a TGUI interface"

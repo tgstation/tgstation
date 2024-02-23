@@ -12,6 +12,7 @@
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the initial vector into new hosts."
 	severity = DISEASE_SEVERITY_MEDIUM
+	bypasses_immunity = TRUE
 
 
 /datum/disease/dnaspread/stage_act(seconds_per_tick, times_fired)
@@ -24,7 +25,7 @@
 		return FALSE
 
 	//Only species that can be spread by transformation sting can be spread by the retrovirus
-	if(HAS_TRAIT(affected_mob, TRAIT_NO_TRANSFORMATION_STING) || HAS_TRAIT(affected_mob, TRAIT_NO_DNA_COPY))
+	if(HAS_TRAIT(affected_mob, TRAIT_NO_DNA_COPY))
 		cure()
 		return FALSE
 

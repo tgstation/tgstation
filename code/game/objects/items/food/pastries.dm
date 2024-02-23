@@ -186,9 +186,9 @@
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/cookie/sugar/Initialize(mapload)
+/obj/item/food/cookie/sugar/Initialize(mapload, seasonal_changes = TRUE)
 	. = ..()
-	if(check_holidays(FESTIVE_SEASON))
+	if(seasonal_changes && check_holidays(FESTIVE_SEASON))
 		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
 		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
 		icon_state = "sugarcookie_[shape]"
@@ -372,6 +372,8 @@
 	var/list/prefill_flavours
 
 /obj/item/food/icecream/New(loc, list/prefill_flavours)
+	if(ingredients)
+		ingredients_text = "Requires: [reagent_paths_list_to_text(ingredients)]"
 	return ..()
 
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
@@ -540,6 +542,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/snickerdoodle
 	name = "snickerdoodle"
@@ -550,6 +553,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/macaron
 	name = "macaron"
@@ -561,6 +565,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/macaron/Initialize(mapload)
 	. = ..()
@@ -575,3 +580,4 @@
 	foodtypes = GRAIN | SUGAR | FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

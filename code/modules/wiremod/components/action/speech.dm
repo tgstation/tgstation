@@ -26,10 +26,10 @@
 	if(!parent.shell)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_SPEECH))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_SPEECH))
 		return
 
 	if(message.value)
 		var/atom/movable/shell = parent.shell
-		shell.say(message.value, forced = "circuit speech | [key_name(parent.get_creator())]")
+		shell.say(message.value, forced = "circuit speech | [parent.get_creator()]")
 		TIMER_COOLDOWN_START(shell, COOLDOWN_CIRCUIT_SPEECH, speech_cooldown)

@@ -8,27 +8,31 @@
 	/// List of refs to falling objects -> how many levels deep we've fallen
 	var/static/list/falling_atoms = list()
 	var/static/list/forbidden_types = typecacheof(list(
-		/obj/singularity,
-		/obj/energy_ball,
-		/obj/narsie,
 		/obj/docking_port,
-		/obj/structure/lattice,
-		/obj/structure/stone_tile,
-		/obj/projectile,
-		/obj/effect/projectile,
-		/obj/effect/portal,
 		/obj/effect/abstract,
-		/obj/effect/hotspot,
-		/obj/effect/landmark,
-		/obj/effect/temp_visual,
-		/obj/effect/light_emitter/tendril,
 		/obj/effect/collapse,
-		/obj/effect/particle_effect/ion_trails,
+		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
-		/obj/effect/mapping_helpers,
-		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
+		/obj/effect/hotspot,
+		/obj/effect/landmark,
+		/obj/effect/light_emitter/tendril,
+		/obj/effect/mapping_helpers,
+		/obj/effect/particle_effect/ion_trails,
+		/obj/effect/particle_effect/sparks,
+		/obj/effect/portal,
+		/obj/effect/projectile,
+		/obj/effect/spectre_of_resurrection,
+		/obj/effect/temp_visual,
+		/obj/effect/wisp,
+		/obj/energy_ball,
+		/obj/narsie,
+		/obj/projectile,
+		/obj/singularity,
+		/obj/structure/lattice,
+		/obj/structure/stone_tile,
+		/obj/structure/ore_vent,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
@@ -40,6 +44,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
+	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_teleport))
 	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
@@ -60,6 +65,9 @@
 /datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
 	SIGNAL_HANDLER
 	drop_stuff(movable)
+
+/datum/component/chasm/proc/block_teleport()
+	return COMPONENT_BLOCK_TELEPORT
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER
@@ -99,8 +107,11 @@
 		return CHASM_NOT_DROPPING
 	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
 		return CHASM_NOT_DROPPING
-	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
+	if(dropped_thing.throwing || (dropped_thing.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return CHASM_REGISTER_SIGNALS
+	for(var/atom/thing_to_check as anything in parent)
+		if(HAS_TRAIT(thing_to_check, TRAIT_CHASM_STOPPER))
+			return CHASM_NOT_DROPPING
 
 	//Flies right over the chasm
 	if(ismob(dropped_thing))
@@ -235,13 +246,13 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
-	if (isliving(arrived))
+	if(isliving(arrived))
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 		GLOB.chasm_fallen_mobs += arrived
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
-	if (isliving(gone))
+	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 		GLOB.chasm_fallen_mobs -= gone
 

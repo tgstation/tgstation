@@ -78,7 +78,7 @@
 		"oh, let me guess, you're a big fan of those japanese tourist bots",
 	)
 	input_obj_or_mob = list(
-		/mob/living/simple_animal/pet/cat,
+		/mob/living/basic/pet/cat,
 	)
 	output_organs = list(
 		/obj/item/organ/internal/ears/cat,

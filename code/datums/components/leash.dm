@@ -109,6 +109,14 @@
 	if (get_dist(parent, owner) <= distance)
 		return
 
+	var/atom/movable/atom_parent = parent
+	if (isnull(owner.loc))
+		atom_parent.moveToNullspace() // If our parent is in nullspace I guess we gotta go there too
+		return
+	if (isnull(atom_parent.loc))
+		force_teleport_back("in nullspace") // If we're in nullspace, get outta there
+		return
+
 	SEND_SIGNAL(parent, COMSIG_LEASH_PATH_STARTED)
 
 	current_path_tick += 1

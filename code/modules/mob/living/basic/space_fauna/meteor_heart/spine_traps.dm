@@ -86,7 +86,7 @@
 
 /// Called when something enters our turf, if it is a non-flying mob then give it a stab
 /obj/effect/temp_visual/thrusting_spines/proc/on_entered(datum/source, atom/movable/arrived)
-	if (!active || !isliving(arrived) || (arrived.movement_type & (FLYING | FLOATING)))
+	if (!active || !isliving(arrived) || (arrived.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return
 	if (!COOLDOWN_FINISHED(src, thrust_delay))
 		return

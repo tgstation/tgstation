@@ -16,7 +16,7 @@
 	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
 	light_range = 3
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	maxHealth = 500
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
@@ -31,7 +31,7 @@
 
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
-	/// Whether this pAI can recieve radio messages
+	/// Whether this pAI can receive radio messages
 	var/can_receive = TRUE
 	/// Whether this pAI can transmit radio messages
 	var/can_transmit = TRUE
@@ -71,8 +71,6 @@
 	// Onboard Items
 	/// Atmospheric analyzer
 	var/obj/item/analyzer/atmos_analyzer
-	/// Health analyzer
-	var/obj/item/healthanalyzer/host_scan
 	/// GPS
 	var/obj/item/gps/pai/internal_gps
 	/// Music Synthesizer
@@ -81,6 +79,9 @@
 	var/obj/machinery/newscaster/pai/newscaster
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
+
+	///The messeenger ability that pAIs get when they are put in a PDA.
+	var/datum/action/innate/pai/messenger/messenger_ability
 
 	// Static lists
 	/// List of all available downloads
@@ -111,6 +112,7 @@
 		"crow" = TRUE,
 		"duffel" = TRUE,
 		"fox" = FALSE,
+		"frog" = TRUE,
 		"hawk" = FALSE,
 		"lizard" = FALSE,
 		"monkey" = TRUE,
@@ -150,9 +152,9 @@
 	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(messenger_ability)
 	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(hacking_cable)
-	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
@@ -192,8 +194,6 @@
 		atmos_analyzer = null
 	else if(gone == aicamera)
 		aicamera = null
-	else if(gone == host_scan)
-		host_scan = null
 	else if(gone == internal_gps)
 		internal_gps = null
 	else if(gone == instrument)
@@ -215,6 +215,8 @@
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
+	if(istype(loc, /obj/item/modular_computer))
+		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
@@ -234,6 +236,8 @@
 	update_appearance(UPDATE_DESC)
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
+	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -268,6 +272,15 @@
 	icon_state = resting ? "[chassis]_rest" : "[chassis]"
 	held_state = "[chassis]"
 	return ..()
+
+/mob/living/silicon/pai/set_stat(new_stat)
+	. = ..()
+	update_stat()
+
+/mob/living/silicon/pai/on_knockedout_trait_loss(datum/source)
+	. = ..()
+	set_stat(CONSCIOUS)
+	update_stat()
 
 /**
  * Resolves the weakref of the pai's master.
@@ -458,3 +471,14 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+///Gives the messenger ability to the pAI, creating a new one if it doesn't have one already.
+/mob/living/silicon/pai/proc/give_messenger_ability()
+	if(!messenger_ability)
+		messenger_ability = new(src)
+	messenger_ability.Grant(src)
+
+///Removes the messenger ability from the pAI, but does not delete it.
+/mob/living/silicon/pai/proc/remove_messenger_ability()
+	if(messenger_ability)
+		messenger_ability.Remove(src)

@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/retaliate/goat{name="Pete"} : /mob/living/basic/goat/pete{@OLD}
+/mob/living/simple_animal/hostile/retaliate/goat : /mob/living/basic/goat{@OLD}

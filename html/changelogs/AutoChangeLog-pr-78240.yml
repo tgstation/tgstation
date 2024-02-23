@@ -1,4 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - server: "Default-configuration MINUTE_TOPIC_LIMIT has been increased"

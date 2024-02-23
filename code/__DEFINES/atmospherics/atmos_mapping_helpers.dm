@@ -7,6 +7,8 @@
 #define OPENTURF_DEFAULT_ATMOS GAS_O2 + "=22;" + GAS_N2 + "=82;TEMP=293.15"
 /// the default low-pressure air mix used mostly for mining areas.
 #define OPENTURF_LOW_PRESSURE GAS_O2 + "=14;" + GAS_N2 + "=30;TEMP=293.15"
+/// breathable air that causes disease
+#define OPENTURF_DIRTY_ATMOS GAS_MIASMA + "=15;" + GAS_O2 + "=88;TEMP=293.15"
 /// -193,15°C telecommunications. also used for xenobiology slime killrooms
 #define TCOMMS_ATMOS GAS_N2 + "=100;TEMP=80"
 /// space
@@ -23,6 +25,8 @@
 #define BURNING_COLD GAS_N2 + "=82;" + GAS_PLASMA + "=24;TEMP=120"
 ///Space temperature hyper nob
 #define SPACE_TEMP_NOBLIUM GAS_HYPER_NOBLIUM + "=7500;TEMP=2.7"
+///Xenobio slime containment turf
+#define XENOBIO_BZ GAS_BZ + "=100;TEMP=293.15"
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
 #define ATMOS_TANK_N2O GAS_N2O + "=6000;TEMP=293.15"

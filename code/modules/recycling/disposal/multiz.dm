@@ -21,11 +21,11 @@
 		return ..()
 
 	//Are we a trunk that goes up? Or down?
-	var/turf/target = null
+	var/turf/target = get_turf(src)
 	if(multiz_dir == MULTIZ_PIPE_UP)
-		target = GET_TURF_ABOVE(get_turf(src))
+		target = GET_TURF_ABOVE(target)
 	if(multiz_dir == MULTIZ_PIPE_DOWN)
-		target = GET_TURF_BELOW(get_turf(src))
+		target = GET_TURF_BELOW(target)
 	if(!target) //Nothing located.
 		return
 

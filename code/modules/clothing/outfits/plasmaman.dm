@@ -281,3 +281,17 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/clown
 	head = /obj/item/clothing/head/helmet/space/plasmaman/clown
 	mask = /obj/item/clothing/mask/gas/clown_hat/plasmaman
+
+/datum/outfit/plasmaman/bitrunner
+	name = "Bitrunner Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman/bitrunner
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman/bitrunner
+
+/datum/outfit/plasmaman/bridge_assistant
+	name = "Bridge Assistant Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman //call me when this is gags and not 10 million new assets
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman

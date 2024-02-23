@@ -73,11 +73,13 @@
 
 /obj/item/melee/touch_attack/star_touch/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/effect_remover, \
+	AddComponent(\
+		/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, PROC_REF(after_clear_rune)), \
-		effects_we_clear = list(/obj/effect/cosmic_rune))
+		effects_we_clear = list(/obj/effect/cosmic_rune), \
+	)
 
 /*
  * Callback for effect_remover component.
@@ -231,16 +233,13 @@
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-	return
 
 /// What to process when the beam is connected to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
-	target.adjustFireLoss(3)
-	target.adjustCloneLoss(1)
-	return
+	if(target.adjustFireLoss(3, updating_health = FALSE))
+		target.updatehealth()
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-	return

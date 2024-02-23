@@ -26,11 +26,15 @@
 	set_cap = 1
 	set_luminosity = 1.6
 
+/obj/effect/light_emitter/fake_outdoors
+	light_color = COLOR_LIGHT_YELLOW
+	set_cap = 1
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
 	name = "mining wardrobe"
-	icon_door = "mixed"
+	icon_door = "mining_wardrobe"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
 	new /obj/item/storage/backpack/duffelbag/explorer(src)
@@ -69,7 +73,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
-	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/mining_scanner(src)
 	new /obj/item/clothing/glasses/meson(src)
 	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
 		new /obj/item/survivalcapsule/bathroom(src)
@@ -103,6 +107,13 @@
 	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
+
+	if(isliving(user))
+		var/mob/living/living_user = user
+		for(var/obj/item/implant/exile/exile_implant in living_user.implants)
+			to_chat(living_user, span_warning("A warning flashes across the screen, and the shuttle controls lock in response to your exile implant."))
+			return
+
 	return ..()
 
 /obj/machinery/computer/shuttle/mining/common

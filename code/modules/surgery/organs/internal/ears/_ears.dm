@@ -68,7 +68,7 @@
 	visual = TRUE
 	damage_multiplier = 2
 
-/obj/item/organ/internal/ears/cat/on_insert(mob/living/carbon/human/ear_owner)
+/obj/item/organ/internal/ears/cat/on_mob_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
@@ -76,7 +76,7 @@
 		ear_owner.dna.update_uf_block(DNA_EARS_BLOCK)
 		ear_owner.update_body()
 
-/obj/item/organ/internal/ears/cat/on_remove(mob/living/carbon/human/ear_owner)
+/obj/item/organ/internal/ears/cat/on_mob_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
@@ -87,17 +87,15 @@
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."
 
-/obj/item/organ/internal/ears/penguin/on_insert(mob/living/carbon/human/ear_owner)
+/obj/item/organ/internal/ears/penguin/on_mob_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
-	if(istype(ear_owner))
-		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
-		ear_owner.AddElement(/datum/element/waddling)
+	to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
+	ear_owner.AddElementTrait(TRAIT_WADDLING, ORGAN_TRAIT, /datum/element/waddling)
 
-/obj/item/organ/internal/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
+/obj/item/organ/internal/ears/penguin/on_mob_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
-	if(istype(ear_owner))
-		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
-		ear_owner.RemoveElement(/datum/element/waddling)
+	to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
+	REMOVE_TRAIT(ear_owner, TRAIT_WADDLING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/cybernetic
 	name = "basic cybernetic ears"
@@ -105,6 +103,7 @@
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
 
 /obj/item/organ/internal/ears/cybernetic/upgraded
 	name = "cybernetic ears"
@@ -121,11 +120,11 @@
 
 // The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
 // This seems like the least invasive solution
-/obj/item/organ/internal/ears/cybernetic/whisper/on_insert(mob/living/carbon/ear_owner)
+/obj/item/organ/internal/ears/cybernetic/whisper/on_mob_insert(mob/living/carbon/ear_owner)
 	. = ..()
 	ADD_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
 
-/obj/item/organ/internal/ears/cybernetic/whisper/on_remove(mob/living/carbon/ear_owner)
+/obj/item/organ/internal/ears/cybernetic/whisper/on_mob_remove(mob/living/carbon/ear_owner)
 	. = ..()
 	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
 
@@ -137,11 +136,11 @@
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 
-/obj/item/organ/internal/ears/cybernetic/xray/on_insert(mob/living/carbon/ear_owner)
+/obj/item/organ/internal/ears/cybernetic/xray/on_mob_insert(mob/living/carbon/ear_owner)
 	. = ..()
 	ADD_TRAIT(ear_owner, TRAIT_XRAY_HEARING, ORGAN_TRAIT)
 
-/obj/item/organ/internal/ears/cybernetic/xray/on_remove(mob/living/carbon/ear_owner)
+/obj/item/organ/internal/ears/cybernetic/xray/on_mob_remove(mob/living/carbon/ear_owner)
 	. = ..()
 	REMOVE_TRAIT(ear_owner, TRAIT_XRAY_HEARING, ORGAN_TRAIT)
 
@@ -149,4 +148,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	apply_organ_damage(40/severity)
+	apply_organ_damage(20 / severity)

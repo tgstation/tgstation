@@ -93,8 +93,8 @@
 	CRASH("External organ has no feature list, it will render invisible")
 
 ///Give the organ its color. Force will override the existing one.
-/datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/ownerlimb, force)
-	if(isnull(ownerlimb))
+/datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/bodypart_owner, force)
+	if(isnull(bodypart_owner))
 		draw_color = null
 		return TRUE
 
@@ -103,14 +103,14 @@
 
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
-			draw_color = override_color(ownerlimb.draw_color)
+			draw_color = override_color(bodypart_owner.draw_color)
 		if(ORGAN_COLOR_INHERIT)
-			draw_color = ownerlimb.draw_color
+			draw_color = bodypart_owner.draw_color
 		if(ORGAN_COLOR_HAIR)
-			if(!ishuman(ownerlimb.owner))
+			if(!ishuman(bodypart_owner.owner))
 				return
-			var/mob/living/carbon/human/human_owner = ownerlimb.owner
-			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as ownerlimb
+			var/mob/living/carbon/human/human_owner = bodypart_owner.owner
+			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as bodypart_owner
 			//head hair color takes priority, owner hair color is a backup if we lack a head or something
 			if(my_head)
 				draw_color = my_head.hair_color
@@ -121,12 +121,18 @@
 
 ///Sprite accessories are singletons, stored list("Big Snout" = instance of /datum/sprite_accessory/snout/big), so here we get that singleton
 /datum/bodypart_overlay/mutant/proc/fetch_sprite_datum(datum/sprite_accessory/accessory_path)
-	var/list/feature_list = get_global_feature_list()
-
-	return feature_list[initial(accessory_path.name)]
+	return fetch_sprite_datum_from_name(initial(accessory_path.name))
 
 ///Get the singleton from the sprite name
 /datum/bodypart_overlay/mutant/proc/fetch_sprite_datum_from_name(accessory_name)
 	var/list/feature_list = get_global_feature_list()
+	var/found = feature_list[accessory_name]
+	if(found)
+		return found
 
-	return feature_list[accessory_name]
+	if(!length(feature_list))
+		CRASH("External organ [type] returned no sprite datums from get_global_feature_list(), so no accessories could be found!")
+	else if(accessory_name)
+		CRASH("External organ [type] couldn't find sprite accessory [accessory_name]!")
+	else
+		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")

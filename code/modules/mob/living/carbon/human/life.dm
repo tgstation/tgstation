@@ -28,7 +28,7 @@
 
 	//Body temperature stability and damage
 	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
-	if(!IS_IN_STASIS(src))
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
 			//handle active mutations
 			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
@@ -100,7 +100,7 @@
 /// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	// If we are in a cryo bed do not process life functions
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/cryo_cell))
 		return
 
 	dna.species.handle_environment(src, environment, seconds_per_tick, times_fired)

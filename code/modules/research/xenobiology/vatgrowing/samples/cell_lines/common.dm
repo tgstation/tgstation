@@ -108,7 +108,7 @@
 		/datum/reagent/consumable/milk/chocolate_milk = -1)
 
 	virus_suspectibility = 1.5
-	resulting_atoms = list(/mob/living/simple_animal/pet/cat = 1) //The basic cat mobs are all male, so you mightt need a gender swap potion if you want to fill the fortress with kittens.
+	resulting_atoms = list(/mob/living/basic/pet/cat = 1)
 
 /datum/micro_organism/cell_line/corgi
 	desc = "Canid cells"
@@ -223,7 +223,7 @@
 		/datum/reagent/consumable/corn_syrup = -6,
 		/datum/reagent/sulfur = -3) //sulfur repels snakes according to professor google.
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/snake = 1)
+	resulting_atoms = list(/mob/living/basic/snake = 1)
 
 
 ///////////////////////////////////////////
@@ -263,7 +263,7 @@
 		/datum/reagent/medicine/psicodine = -2) //Blob zombies likely wouldn't appreciate psicodine so why this is here
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore/independent = 2) //These are useless so we might as well spawn 2.
+	resulting_atoms = list(/mob/living/basic/blob_minion/spore = 2) //These are useless so we might as well spawn 2.
 
 /datum/micro_organism/cell_line/blobbernaut
 	desc = "Blobular myocytes"
@@ -282,7 +282,7 @@
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobbernaut/independent = 1)
+	resulting_atoms = list(/mob/living/basic/blob_minion/blobbernaut = 1)
 
 /datum/micro_organism/cell_line/gelatinous_cube
 	desc = "Cubic ooze particles"
@@ -481,7 +481,7 @@
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
-	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))
+	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
@@ -509,7 +509,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/fuel/oil = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/banana = 1)
+	resulting_atoms = list(/mob/living/basic/clown/banana = 1)
 
 /datum/micro_organism/cell_line/clown/glutton
 	desc = "hyperadipogenic clown stem cells"
@@ -535,7 +535,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/toxin/bad_food = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton = 1)
+	resulting_atoms = list(/mob/living/basic/clown/mutant/glutton = 1)
 
 /datum/micro_organism/cell_line/clown/longclown
 	desc = "long clown bits"
@@ -558,7 +558,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/sulfur = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
+	resulting_atoms = list(/mob/living/basic/clown/longface = 1)
 
 /datum/micro_organism/cell_line/frog
 	desc = "anura amphibian cells"
@@ -652,7 +652,7 @@
 		/datum/reagent/drug/nicotine = -1)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/obj/item/queen_bee = 1)
+	resulting_atoms = list(/obj/item/queen_bee/bought = 1)
 
 /datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
@@ -683,30 +683,6 @@
 
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/basic/butterfly = 3)
-
-/datum/micro_organism/cell_line/leaper
-	desc = "atypical amphibian cells"
-	required_reagents = list(
-		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/ants,
-		/datum/reagent/consumable/eggyolk,
-		/datum/reagent/medicine/c2/synthflesh)
-
-	supplementary_reagents = list(
-		/datum/reagent/growthserum = 4,
-		/datum/reagent/drug/blastoff = 3,
-		/datum/reagent/drug/space_drugs = 2,
-		/datum/reagent/consumable/ethanol/eggnog = 2,
-		/datum/reagent/consumable/vanilla = 2,
-		/datum/reagent/consumable/banana = 1,
-		/datum/reagent/consumable/nutriment/vitamin = 1)
-
-	suppressive_reagents = list(
-		/datum/reagent/toxin/cyanide = -5,
-		/datum/reagent/consumable/mold = -2,
-		/datum/reagent/toxin/spore = -1)
-
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/leaper = 1)
 
 /datum/micro_organism/cell_line/mega_arachnid
 	desc = "pseudoarachnoid cells"

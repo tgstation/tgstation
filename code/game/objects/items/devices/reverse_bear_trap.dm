@@ -3,11 +3,11 @@
 /obj/item/reverse_bear_trap
 	name = "reverse bear trap"
 	desc = "A horrifying set of shut metal jaws, rigged to a kitchen timer and secured by padlock to a head-mounted clamp. To apply, hit someone with it."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "reverse_bear_trap"
 	slot_flags = ITEM_SLOT_HEAD
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
@@ -107,7 +107,14 @@
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD)
 	arm()
-	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/beep.ogg', notify_volume = 75, header = "Reverse bear trap armed")
+	notify_ghosts(
+		"[user] put a reverse bear trap on [target]!",
+		source = src,
+		header = "Reverse bear trap armed",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		ghost_sound = 'sound/machines/beep.ogg',
+		notify_volume = 75,
+	)
 
 /obj/item/reverse_bear_trap/proc/snap()
 	reset()

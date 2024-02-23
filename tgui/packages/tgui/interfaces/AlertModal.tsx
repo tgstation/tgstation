@@ -1,8 +1,17 @@
-import { Loader } from './common/Loader';
-import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
+import { useState } from 'react';
+
+import {
+  KEY_ENTER,
+  KEY_ESCAPE,
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_SPACE,
+  KEY_TAB,
+} from '../../common/keycodes';
+import { useBackend } from '../backend';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { Loader } from './common/Loader';
 
 type AlertModalData = {
   autofocus: boolean;
@@ -17,8 +26,8 @@ type AlertModalData = {
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
-export const AlertModal = (props, context) => {
-  const { act, data } = useBackend<AlertModalData>(context);
+export const AlertModal = (props) => {
+  const { act, data } = useBackend<AlertModalData>();
   const {
     autofocus,
     buttons = [],
@@ -27,7 +36,7 @@ export const AlertModal = (props, context) => {
     timeout,
     title,
   } = data;
-  const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
+  const [selected, setSelected] = useState(0);
   // Dynamically sets window dimensions
   const windowHeight =
     115 +
@@ -65,7 +74,8 @@ export const AlertModal = (props, context) => {
             e.preventDefault();
             onKey(KEY_INCREMENT);
           }
-        }}>
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
@@ -89,8 +99,8 @@ export const AlertModal = (props, context) => {
  * Technically this handles more than 2 buttons, but you
  * should just be using a list input in that case.
  */
-const ButtonDisplay = (props, context) => {
-  const { data } = useBackend<AlertModalData>(context);
+const ButtonDisplay = (props) => {
+  const { data } = useBackend<AlertModalData>();
   const { buttons = [], large_buttons, swapped_buttons } = data;
   const { selected } = props;
 
@@ -100,7 +110,8 @@ const ButtonDisplay = (props, context) => {
       direction={!swapped_buttons ? 'row-reverse' : 'row'}
       fill
       justify="space-around"
-      wrap>
+      wrap
+    >
       {buttons?.map((button, index) =>
         !!large_buttons && buttons.length < 3 ? (
           <Flex.Item grow key={index}>
@@ -118,7 +129,7 @@ const ButtonDisplay = (props, context) => {
               selected={selected === index}
             />
           </Flex.Item>
-        )
+        ),
       )}
     </Flex>
   );
@@ -127,8 +138,8 @@ const ButtonDisplay = (props, context) => {
 /**
  * Displays a button with variable sizing.
  */
-const AlertButton = (props, context) => {
-  const { act, data } = useBackend<AlertModalData>(context);
+const AlertButton = (props) => {
+  const { act, data } = useBackend<AlertModalData>();
   const { large_buttons } = data;
   const { button, selected } = props;
   const buttonWidth = button.length > 7 ? button.length : 7;
@@ -144,7 +155,8 @@ const AlertButton = (props, context) => {
       pt={large_buttons ? 0.33 : 0}
       selected={selected}
       textAlign="center"
-      width={!large_buttons && buttonWidth}>
+      width={!large_buttons && buttonWidth}
+    >
       {!large_buttons ? button : button.toUpperCase()}
     </Button>
   );

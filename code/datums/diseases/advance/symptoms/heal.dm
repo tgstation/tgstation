@@ -75,7 +75,7 @@
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
 	if(direction == UP)
-		turf_to_check = turf_to_check.above()
+		turf_to_check = GET_TURF_ABOVE(turf_to_check)
 		if(!turf_to_check)
 			return STARLIGHT_CANNOT_HEAL
 	var/area/area_to_check = get_area(turf_to_check)
@@ -98,9 +98,9 @@
 		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
 			// Check above or below us
 			if(direction == UP)
-				turf_to_check = turf_to_check.above()
+				turf_to_check = GET_TURF_ABOVE(turf_to_check)
 			else
-				turf_to_check = turf_to_check.below()
+				turf_to_check = GET_TURF_BELOW(turf_to_check)
 
 			// If we found a turf above or below us,
 			// then we can rerun the loop on the newly found turf / area
@@ -161,8 +161,8 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -303,8 +303,8 @@
 	if(prob(5))
 		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, BODYTYPE_ORGANIC)) //more effective on brute
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, required_bodytype = BODYTYPE_ORGANIC)) //more effective on brute
 			M.update_damage_overlays()
 	return 1
 
@@ -405,8 +405,8 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
@@ -469,8 +469,8 @@
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	return 1
@@ -592,8 +592,8 @@
 		return
 	if(prob(5))
 		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -616,7 +616,6 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
-	var/cellular_damage = FALSE
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
@@ -628,8 +627,6 @@
 		return
 	if(A.totalResistance() >= 7)
 		power = 2
-	if(A.totalTransmittable() >= 6)
-		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
 	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
@@ -637,10 +634,8 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 
-	if(cellular_damage)
-		M.adjustCloneLoss(-heal_amt * 0.5)
-
-	M.adjustToxLoss(-(2 * heal_amt))
+	if(M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE))
+		M.updatehealth()
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 
@@ -650,8 +645,8 @@
 	if(prob(4))
 		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 

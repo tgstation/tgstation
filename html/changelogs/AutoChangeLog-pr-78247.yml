@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - code_imp: "Scars now stack trace if they fail to get a valid description"

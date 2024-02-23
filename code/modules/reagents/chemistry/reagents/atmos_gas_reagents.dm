@@ -12,8 +12,8 @@
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 
 /datum/reagent/freon/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
-	return ..()
 
 /datum/reagent/halon
 	name = "Halon"
@@ -23,16 +23,15 @@
 	color = "90560B"
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	metabolized_traits = list(TRAIT_RESISTHEAT)
 
 /datum/reagent/halon/on_mob_metabolize(mob/living/breather)
 	. = ..()
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(breather, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/halon/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	REMOVE_TRAIT(breather, TRAIT_RESISTHEAT, type)
-	return ..()
 
 /datum/reagent/healium
 	name = "Healium"
@@ -44,16 +43,18 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.SetSleeping(1 SECONDS)
-	return ..()
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
-	breather.SetSleeping(30 SECONDS)
-	breather.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	breather.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	breather.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	. = ..()
-	return TRUE
+	breather.SetSleeping(30 SECONDS)
+	var/need_mob_update
+	need_mob_update = breather.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += breather.adjustToxLoss(-5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += breather.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
@@ -65,9 +66,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+	. = ..()
 	if(isplasmaman(breather))
 		breather.set_timed_status_effect(10 SECONDS * REM * seconds_per_tick, /datum/status_effect/hypernob_protection)
-	..()
 
 /datum/reagent/nitrium_high_metabolization
 	name = "Nitrosyl plasmide"
@@ -79,20 +80,15 @@
 	ph = 1.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 14)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
-	. = ..()
-	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
-	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-	return ..()
+	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
-	breather.adjustStaminaLoss(-2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	breather.adjustToxLoss(0.1 * current_cycle * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
 	. = ..()
-	return TRUE
+	var/need_mob_update
+	need_mob_update = breather.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += breather.adjustToxLoss(0.1 * (current_cycle-1) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitrium_low_metabolization
 	name = "Nitrium"
@@ -109,8 +105,8 @@
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
 
 /datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
-	return ..()
 
 /datum/reagent/pluoxium
 	name = "Pluoxium"
@@ -122,18 +118,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
-	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
-		return ..()
-
 	. = ..()
+	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
+		return
+
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)
 		if(!organ_being_healed.damage)
 			continue
 
-		organ_being_healed.apply_organ_damage(-0.5 * REM * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
-		. = TRUE
-
-	return .
+		if(organ_being_healed.apply_organ_damage(-0.5 * REM * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC))
+			. = UPDATE_MOB_HEALTH
 
 /datum/reagent/zauker
 	name = "Zauker"
@@ -147,9 +141,11 @@
 	affected_respiration_type = ALL
 
 /datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
-	breather.adjustBruteLoss(6 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	breather.adjustOxyLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	breather.adjustFireLoss(2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	breather.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	..()
-	return TRUE
+	. = ..()
+	var/need_mob_update
+	need_mob_update = breather.adjustBruteLoss(6 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += breather.adjustOxyLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += breather.adjustFireLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += breather.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH

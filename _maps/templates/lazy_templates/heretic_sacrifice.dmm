@@ -40,6 +40,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/centcom/heretic_sacrifice/rust)
+"fL" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
+"fO" = (
+/turf/open/indestructible,
+/area/space)
 "gJ" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/dirt/jungle/dark{
@@ -47,6 +55,11 @@
 	slowdown = 0
 	},
 /area/centcom/heretic_sacrifice/ash)
+"hE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "hZ" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/necropolis/air,
@@ -56,6 +69,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating/rust,
 /area/centcom/heretic_sacrifice/rust)
+"jt" = (
+/turf/closed/indestructible/reinforced,
+/area/centcom/heretic_sacrifice/lock)
 "jB" = (
 /obj/machinery/light/very_dim/directional/south,
 /turf/open/misc/asteroid,
@@ -85,6 +101,11 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/heretic_sacrifice/rust)
+"mW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/spear,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "mZ" = (
 /obj/effect/decal/fakelattice{
 	density = 0
@@ -150,6 +171,12 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid,
 /area/centcom/heretic_sacrifice/void)
+"qo" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "qu" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/ashplanet/wateryrock{
@@ -202,6 +229,12 @@
 	},
 /turf/open/floor/plating/rust,
 /area/centcom/heretic_sacrifice/rust)
+"uM" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/under/color/grey/ancient,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "uT" = (
 /obj/structure/cable,
 /turf/open/floor/plating/rust,
@@ -225,6 +258,9 @@
 	slowdown = 0
 	},
 /area/centcom/heretic_sacrifice/ash)
+"wo" = (
+/turf/closed/indestructible/grille,
+/area/centcom/heretic_sacrifice/lock)
 "wt" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -240,6 +276,16 @@
 	slowdown = 0
 	},
 /area/centcom/heretic_sacrifice/ash)
+"wP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare{
+	fuel = 1e+031;
+	randomize_fuel = 0;
+	icon_state = "flare-on";
+	start_on = 1
+	},
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "wS" = (
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
@@ -252,6 +298,9 @@
 	name = "void glass floor"
 	},
 /area/centcom/heretic_sacrifice/void)
+"xc" = (
+/turf/open/indestructible/white,
+/area/space)
 "yC" = (
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1
@@ -273,6 +322,11 @@
 	},
 /turf/open/floor/plating/rust,
 /area/centcom/heretic_sacrifice/rust)
+"Aw" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/mask/gas,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "AH" = (
 /obj/effect/turf_decal/trimline/brown/corner,
 /turf/open/floor/plating/rust,
@@ -287,6 +341,15 @@
 "AO" = (
 /turf/open/floor/fakespace,
 /area/centcom/heretic_sacrifice/void)
+"AW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
+"AY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "Bv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/brown/line,
@@ -340,6 +403,9 @@
 	slowdown = 0
 	},
 /area/centcom/heretic_sacrifice/ash)
+"En" = (
+/turf/closed/indestructible/fakedoor/maintenance,
+/area/centcom/heretic_sacrifice/lock)
 "ER" = (
 /turf/open/misc/ironsand,
 /area/centcom/heretic_sacrifice/rust)
@@ -467,6 +533,17 @@
 /obj/machinery/light/very_dim/directional/west,
 /turf/open/floor/fakespace,
 /area/centcom/heretic_sacrifice/void)
+"MZ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare{
+	fuel = 1e+031;
+	randomize_fuel = 0;
+	icon_state = "flare-on";
+	start_on = 1
+	},
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "Nh" = (
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1
@@ -508,6 +585,11 @@
 	slowdown = 0
 	},
 /area/centcom/heretic_sacrifice/ash)
+"OW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/under/color/grey/ancient,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "Pl" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
@@ -627,11 +709,29 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/necropolis/air,
 /area/centcom/heretic_sacrifice/flesh)
+"Zw" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/heretic/lock,
+/turf/open/indestructible/plating,
+/area/centcom/heretic_sacrifice/lock)
 "ZA" = (
 /turf/closed/indestructible/riveted/boss,
 /area/centcom/heretic_sacrifice/ash)
 
 (1,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -691,11 +791,36 @@ Fd
 Fd
 Fd
 Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
 ab
 "}
 (3,1,1) = {"
 ab
 Fd
+jt
+jt
+wo
+wo
+jt
+En
+En
+jt
+wo
+wo
+jt
+jt
+Fd
 ZA
 ZA
 ZA
@@ -721,11 +846,23 @@ La
 La
 La
 La
-Fd
 ab
 "}
 (4,1,1) = {"
 ab
+Fd
+jt
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+fL
+AY
+jt
 Fd
 ZA
 Pl
@@ -752,11 +889,23 @@ AO
 wY
 Wb
 La
-Fd
 ab
 "}
 (5,1,1) = {"
 ab
+Fd
+wo
+AY
+fL
+uM
+AY
+AY
+qo
+fL
+AY
+mW
+MZ
+wo
 Fd
 ZA
 wS
@@ -783,11 +932,23 @@ AO
 AO
 wY
 La
-Fd
 ab
 "}
 (6,1,1) = {"
 ab
+Fd
+wo
+AY
+Aw
+fL
+AY
+wP
+fL
+fL
+AY
+qo
+AY
+wo
 Fd
 ZA
 OG
@@ -814,11 +975,23 @@ AO
 AO
 AO
 La
-Fd
 ab
 "}
 (7,1,1) = {"
 ab
+Fd
+jt
+AY
+fL
+fL
+AY
+AY
+fL
+AY
+AY
+fL
+Aw
+jt
 Fd
 ZA
 Bw
@@ -845,11 +1018,23 @@ AO
 AO
 wY
 La
-Fd
 ab
 "}
 (8,1,1) = {"
 ab
+Fd
+En
+AY
+MZ
+fL
+AY
+Zw
+OW
+AY
+AY
+AY
+fL
+En
 Fd
 ZA
 Bw
@@ -876,11 +1061,23 @@ AO
 wY
 jB
 La
-Fd
 ab
 "}
 (9,1,1) = {"
 ab
+Fd
+En
+fL
+AY
+AY
+AY
+fL
+fL
+AY
+AY
+fL
+AY
+En
 Fd
 ZA
 Bw
@@ -907,11 +1104,23 @@ AO
 wY
 Wb
 La
-Fd
 ab
 "}
 (10,1,1) = {"
 ab
+Fd
+jt
+AY
+AY
+fL
+AY
+fL
+AY
+fL
+AY
+AW
+fL
+jt
 Fd
 ZA
 Bw
@@ -938,11 +1147,23 @@ AO
 wY
 Wb
 La
-Fd
 ab
 "}
 (11,1,1) = {"
 ab
+Fd
+wo
+fL
+AY
+hE
+MZ
+AY
+AY
+hE
+fL
+wP
+AY
+wo
 Fd
 ZA
 Pl
@@ -969,11 +1190,23 @@ AO
 AO
 wY
 La
-Fd
 ab
 "}
 (12,1,1) = {"
 ab
+Fd
+wo
+AY
+fL
+AY
+AY
+AY
+fL
+AY
+OW
+fL
+fL
+wo
 Fd
 ZA
 wS
@@ -1000,11 +1233,23 @@ wY
 AO
 AO
 La
-Fd
 ab
 "}
 (13,1,1) = {"
 ab
+Fd
+jt
+AY
+AY
+fL
+fL
+AY
+AY
+AY
+AY
+AY
+AY
+jt
 Fd
 ZA
 OG
@@ -1031,12 +1276,24 @@ qn
 wY
 AO
 La
-Fd
 ab
 "}
 (14,1,1) = {"
 ab
 Fd
+jt
+jt
+wo
+wo
+jt
+En
+En
+jt
+wo
+wo
+jt
+jt
+Fd
 ZA
 ZA
 ZA
@@ -1062,11 +1319,22 @@ La
 La
 La
 La
-Fd
 ab
 "}
 (15,1,1) = {"
 ab
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
 Fd
 Fd
 Fd
@@ -1099,6 +1367,19 @@ ab
 (16,1,1) = {"
 ab
 Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+Fd
 WD
 WD
 WD
@@ -1124,11 +1405,23 @@ HQ
 HQ
 HQ
 HQ
-Fd
 ab
 "}
 (17,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+xc
+xc
+xc
+xc
+xc
+fO
 Fd
 WD
 dZ
@@ -1155,11 +1448,23 @@ St
 ui
 St
 HQ
-Fd
 ab
 "}
 (18,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+xc
+fO
+fO
+fO
 Fd
 WD
 dZ
@@ -1186,11 +1491,23 @@ Xt
 Vd
 ui
 HQ
-Fd
 ab
 "}
 (19,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+xc
+xc
+xc
+xc
+xc
+fO
 Fd
 WD
 ER
@@ -1217,11 +1534,23 @@ hZ
 ui
 St
 HQ
-Fd
 ab
 "}
 (20,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
 Fd
 WD
 Se
@@ -1248,11 +1577,23 @@ RW
 RW
 St
 HQ
-Fd
 ab
 "}
 (21,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+xc
+fO
+xc
+xc
+xc
+fO
 Fd
 WD
 Xr
@@ -1279,11 +1620,23 @@ St
 RW
 St
 HQ
-Fd
 ab
 "}
 (22,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
 Fd
 WD
 Se
@@ -1310,11 +1663,23 @@ JJ
 ui
 St
 HQ
-Fd
 ab
 "}
 (23,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
 Fd
 WD
 Xr
@@ -1341,11 +1706,23 @@ ui
 ui
 St
 HQ
-Fd
 ab
 "}
 (24,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
 Fd
 WD
 ps
@@ -1372,11 +1749,23 @@ rP
 ui
 St
 HQ
-Fd
 ab
 "}
 (25,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
 Fd
 WD
 Je
@@ -1403,11 +1792,23 @@ RW
 cS
 ui
 HQ
-Fd
 ab
 "}
 (26,1,1) = {"
 ab
+Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
 Fd
 WD
 ER
@@ -1434,12 +1835,24 @@ Yp
 Xt
 St
 HQ
-Fd
 ab
 "}
 (27,1,1) = {"
 ab
 Fd
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+fO
+Fd
 WD
 WD
 WD
@@ -1465,11 +1878,22 @@ HQ
 HQ
 HQ
 HQ
-Fd
 ab
 "}
 (28,1,1) = {"
 ab
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
 Fd
 Fd
 Fd
@@ -1526,6 +1950,18 @@ ab
 ab
 ab
 ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Fd
 ab
 ab
 ab

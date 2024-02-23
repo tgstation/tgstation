@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -11,8 +12,8 @@ type Data = {
   node2_concentration: number;
 };
 
-export const AtmosMixer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosMixer = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     on,
     set_pressure,

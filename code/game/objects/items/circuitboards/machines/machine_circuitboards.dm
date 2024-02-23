@@ -243,10 +243,10 @@
 		/datum/stock_part/servo = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/generator
+/obj/item/circuitboard/machine/thermoelectric_generator
 	name = "Thermo-Electric Generator"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/generator
+	build_path = /obj/machinery/power/thermoelectric_generator
 	req_components = list()
 
 /obj/item/circuitboard/machine/ntnet_relay
@@ -255,7 +255,8 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -282,7 +283,7 @@
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/inlet_compressor/constructed
+	build_path = /obj/machinery/power/turbine/inlet_compressor
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -290,7 +291,7 @@
 /obj/item/circuitboard/machine/turbine_rotor
 	name = "Turbine - Core Rotor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/core_rotor/constructed
+	build_path = /obj/machinery/power/turbine/core_rotor
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -298,7 +299,7 @@
 /obj/item/circuitboard/machine/turbine_stator
 	name = "Turbine - Turbine Outlet"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/turbine_outlet/constructed
+	build_path = /obj/machinery/power/turbine/turbine_outlet
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -307,9 +308,6 @@
 	name = "Departmental Protolathe - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
-
-/obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
-	build_path = /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
 
 /obj/item/circuitboard/machine/rtg
 	name = "RTG"
@@ -462,7 +460,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/servo = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -513,7 +511,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -550,7 +548,7 @@
 
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
-	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+	if(!fridges_name_paths.Find(build_path))
 		name = "[initial(smartfridge.name)]" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
@@ -601,7 +599,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -615,50 +613,51 @@
 	req_components = list(/obj/item/vending_refill/custom = 1)
 
 	var/static/list/vending_names_paths = list(
-		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-		/obj/machinery/vending/cola = "Robust Softdrinks",
-		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-		/obj/machinery/vending/games = "\improper Good Clean Fun",
-		/obj/machinery/vending/autodrobe = "AutoDrobe",
-		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
-		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
-		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
-		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
-		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
-		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
-		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
-		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
-		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
-		/obj/machinery/vending/wardrobe/coroner_wardrobe = "MortiDrobe",
-		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
-		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
-		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
-		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
-		/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
-		/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
-		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
-		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
-		/obj/machinery/vending/clothing = "ClothesMate",
-		/obj/machinery/vending/medical = "NanoMed Plus",
-		/obj/machinery/vending/drugs = "NanoDrug Plus",
-		/obj/machinery/vending/wallmed = "NanoMed",
 		/obj/machinery/vending/assist = "Part-Mart",
+		/obj/machinery/vending/autodrobe = "AutoDrobe",
+		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+		/obj/machinery/vending/cart = "PTech",
+		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
+		/obj/machinery/vending/clothing = "ClothesMate",
+		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
+		/obj/machinery/vending/cola = "Robust Softdrinks",
+		/obj/machinery/vending/custom = "Custom Vendor",
+		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
+		/obj/machinery/vending/drugs = "NanoDrug Plus",
+		/obj/machinery/vending/engineering = "Robco Tool Maker",
 		/obj/machinery/vending/engivend = "Engi-Vend",
+		/obj/machinery/vending/games = "\improper Good Clean Fun",
 		/obj/machinery/vending/hydronutrients = "NutriMax",
 		/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
-		/obj/machinery/vending/sustenance = "Sustenance Vendor",
-		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
-		/obj/machinery/vending/cart = "PTech",
-		/obj/machinery/vending/robotics = "Robotech Deluxe",
-		/obj/machinery/vending/engineering = "Robco Tool Maker",
-		/obj/machinery/vending/sovietsoda = "BODA",
-		/obj/machinery/vending/security = "SecTech",
+		/obj/machinery/vending/medical = "NanoMed Plus",
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
+		/obj/machinery/vending/robotics = "Robotech Deluxe",
+		/obj/machinery/vending/security = "SecTech",
+		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
+		/obj/machinery/vending/sovietsoda = "BODA",
+		/obj/machinery/vending/sustenance = "Sustenance Vendor",
 		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/custom = "Custom Vendor")
+		/obj/machinery/vending/wallmed = "NanoMed",
+		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
+		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
+		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
+		/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
+		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
+		/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
+		/obj/machinery/vending/wardrobe/coroner_wardrobe = "MortiDrobe",
+		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
+		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
+		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
+		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
+		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
+		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
+		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
+		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
+		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
+		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
+		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
+		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
+	)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -815,7 +814,7 @@
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	build_path = /obj/machinery/cryo_cell
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -960,7 +959,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
@@ -1245,9 +1245,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
@@ -1303,6 +1315,15 @@
 	req_components = list(
 		/datum/stock_part/card_reader = 1)
 
+/obj/item/circuitboard/machine/fishing_portal_generator
+	name = "Fishing Portal Generator"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/fishing_portal_generator
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/capacitor = 1)
+	needs_anchored = FALSE
+
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption"
@@ -1351,16 +1372,29 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
-/obj/item/circuitboard/machine/bepis
-	name = "BEPIS Chamber"
+/obj/item/circuitboard/machine/materials_market
+	name = "Galactic Materials Market"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/rnd/bepis
+	build_path = /obj/machinery/materials_market
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/datum/stock_part/capacitor = 1,
-		/datum/stock_part/servo = 1,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/card_reader = 1)
+
+//Tram
+/obj/item/circuitboard/machine/crossing_signal
+	name = "Crossing Signal"
+	build_path = /obj/machinery/transport/crossing_signal
+	req_components = list(
 		/datum/stock_part/micro_laser = 1,
-		/datum/stock_part/scanning_module = 1)
+	)
+
+/obj/item/circuitboard/machine/guideway_sensor
+	name = "Guideway Sensor"
+	build_path = /obj/machinery/transport/guideway_sensor
+	req_components = list(
+		/obj/item/assembly/prox_sensor = 1,
+	)
 
 //Misc
 /obj/item/circuitboard/machine/sheetifier
@@ -1519,5 +1553,45 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
 		/obj/item/mod/module/rad_protection = 1,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/brm
+	name = "Boulder Retrieval Matrix"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/brm
+	req_components = list(
+		/datum/stock_part/capacitor = 1,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/refinery
+	name = "Boulder Refinery"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/refinery
+	req_components = list(
+		/obj/item/assembly/igniter/condenser = 1,
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/matter_bin = 2,
+	)
+
+/obj/item/circuitboard/machine/smelter
+	name = "Boulder Smelter"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/refinery/smelter
+	req_components = list(
+		/obj/item/assembly/igniter = 1,
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/matter_bin = 2,
+	)
+
+/obj/item/circuitboard/machine/shieldwallgen
+	name = "Shield Wall Generator"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/power/shieldwallgen
+	req_components = list(
+		/datum/stock_part/capacitor/tier2 = 2,
+		/datum/stock_part/micro_laser/tier2 = 2,
 		/obj/item/stack/sheet/plasteel = 2,
 	)

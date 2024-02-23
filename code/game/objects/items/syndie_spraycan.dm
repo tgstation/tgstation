@@ -1,3 +1,5 @@
+#define SYNDIE_DRAW_TIME 3 SECONDS
+
 // Extending the existing spraycan item was more trouble than it was worth, I don't want or need this to be able to draw arbitrary shapes.
 /obj/item/traitor_spraycan
 	name = "seditious spraycan"
@@ -79,7 +81,12 @@
 /obj/item/traitor_spraycan/proc/try_draw_step(start_output, mob/living/user, atom/target)
 	drawing_rune = TRUE
 	user.balloon_alert(user, "[start_output]")
-	if (!do_after(user, 3 SECONDS, target))
+	var/wait_time = SYNDIE_DRAW_TIME
+
+	if(HAS_TRAIT(user, TRAIT_TAGGER))
+		wait_time *= 0.5
+
+	if(!do_after(user, wait_time, target))
 		user.balloon_alert(user, "interrupted!")
 		drawing_rune = FALSE
 		return FALSE
@@ -181,7 +188,7 @@
  * * victim - whoever just slipped, point and laugh at them
  */
 /obj/effect/decal/cleanable/traitor_rune/proc/slip(mob/living/victim)
-	if(victim.movement_type & FLYING)
+	if(victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
 	if (!victim.slip(slip_time, src, slip_flags))
 		return
@@ -220,6 +227,7 @@
 
 	return ..()
 
+#undef SYNDIE_DRAW_TIME
 #undef RUNE_STAGE_COLOURED
 #undef RUNE_STAGE_COMPLETE
 #undef RUNE_STAGE_OUTLINE

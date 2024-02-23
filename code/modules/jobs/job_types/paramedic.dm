@@ -32,7 +32,8 @@
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 10,
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 10,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 10,
-		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5
+		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5,
+		/obj/item/storage/box/bandages = 5,
 	)
 	rpg_title = "Corpse Runner"
 	job_flags = STATION_JOB_FLAGS
@@ -56,6 +57,7 @@
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/modular_computer/pda/medical/paramedic
+	r_pocket = /obj/item/storage/box/bandages
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

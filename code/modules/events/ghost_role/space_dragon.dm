@@ -20,7 +20,7 @@
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SPACE_DRAGON, role = ROLE_SPACE_DRAGON, pic_source = /mob/living/basic/space_dragon)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -31,7 +31,7 @@
 	if(isnull(spawn_location))
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)
+	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
 	dragon.key = key
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)

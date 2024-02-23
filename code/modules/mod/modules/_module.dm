@@ -237,7 +237,7 @@
 	return list()
 
 /// Creates a list of configuring options for this module
-/obj/item/mod/module/proc/get_configuration()
+/obj/item/mod/module/proc/get_configuration(mob/user)
 	return list()
 
 /// Generates an element of the get_configuration list with a display name, type and value
@@ -308,12 +308,12 @@
 	if(module_type == MODULE_PASSIVE)
 		return
 
-	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
+	var/datum/action/item_action/mod/pinnable/module/existing_action = pinned_to[REF(user)]
 	if(existing_action)
 		mod.remove_item_action(existing_action)
 		return
 
-	var/datum/action/item_action/mod/pinned_module/new_action = new(mod, src, user)
+	var/datum/action/item_action/mod/pinnable/module/new_action = new(mod, user, src)
 	mod.add_item_action(new_action)
 
 /// On drop key, concels a device item.
@@ -336,6 +336,8 @@
 	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
 	/// If this one starts with a core in.
 	var/prebuilt = FALSE
+	/// If the core is removable once socketed.
+	var/core_removable = TRUE
 
 /obj/item/mod/module/anomaly_locked/Initialize(mapload)
 	. = ..()
@@ -354,13 +356,15 @@
 	if(!length(accepted_anomalies))
 		return
 	if(core)
-		. += span_notice("There is a [core.name] installed in it. You could remove it with a <b>screwdriver</b>...")
+		. += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
 	else
 		var/list/core_list = list()
 		for(var/path in accepted_anomalies)
 			var/atom/core_path = path
 			core_list += initial(core_path.name)
 		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+		if(!core_removable)
+			. += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
 
 /obj/item/mod/module/anomaly_locked/on_select()
 	if(!core)
@@ -396,6 +400,9 @@
 	. = ..()
 	if(!core)
 		balloon_alert(user, "no core!")
+		return
+	if(!core_removable)
+		balloon_alert(user, "can't remove core!")
 		return
 	balloon_alert(user, "removing core...")
 	if(!do_after(user, 3 SECONDS, target = src))

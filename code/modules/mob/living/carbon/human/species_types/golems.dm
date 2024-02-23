@@ -3,19 +3,22 @@
 	name = "Golem"
 	id = SPECIES_GOLEM
 	inherent_traits = list(
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_GENELESS,
 		TRAIT_LAVA_IMMUNE,
-		TRAIT_NOBREATH,
+		TRAIT_NEVER_WOUNDED,
 		TRAIT_NOBLOOD,
+		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_PLASMA_TRANSFORM,
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_TRANSFORMATION_STING,
-		TRAIT_NO_AUGMENTS,
-		TRAIT_NODISMEMBER,
-		TRAIT_NEVER_WOUNDED
+		TRAIT_SNOWSTORM_IMMUNE, // Shared with plasma river... but I guess if you can survive a plasma river a blizzard isn't a big deal
+		TRAIT_UNHUSKABLE,
+		TRAIT_BOULDER_BREAKER,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -57,6 +60,10 @@
 		name += " [pick(GLOB.last_names)]"
 	return name
 
+/datum/species/golem/get_physical_attributes()
+	return "Golems are hardy creatures made out of stone, which are thus naturally resistant to many dangers, including asphyxiation, fire, radiation, electricity, and viruses.\
+		They gain special abilities depending on the type of material consumed, but they need to consume material to keep their body animated."
+
 /datum/species/golem/create_pref_unique_perks()
 	var/list/to_add = list()
 
@@ -80,7 +87,7 @@
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "pickaxe",
 		SPECIES_PERK_NAME = "Natural Miners",
-		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, and mine stone with their bare hands. \
+		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, break boulders, and mine stone with their bare hands. \
 			They can even smelt ores in an internal furnace, if their surrounding environment is hot enough.",
 	))
 

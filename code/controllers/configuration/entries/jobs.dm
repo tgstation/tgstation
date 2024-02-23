@@ -9,7 +9,7 @@
 	return returnable_list
 
 /// Sets all of the job datum configurable values to what they've been set to in the config file, jobconfig.toml.
-/datum/controller/subsystem/job/proc/load_jobs_from_config()
+/datum/controller/subsystem/job/proc/load_jobs_from_config(silent = FALSE)
 	if(!length(job_config_datum_singletons))
 		stack_trace("SSjob tried to load jobs from config, but the config singletons were not initialized! Likely tried to load jobs before SSjob was initialized.")
 		return
@@ -25,7 +25,8 @@
 		var/job_key = occupation.config_tag
 		if(!job_config[job_key]) // Job isn't listed, skip it.
 			// List both job_title and job_key in case they de-sync over time.
-			message_admins(span_notice("[occupation.title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
+			if(!silent)
+				message_admins(span_notice("[occupation.title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
 			continue
 
 		for(var/config_datum_key in job_config_datum_singletons)

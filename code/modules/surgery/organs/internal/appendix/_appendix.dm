@@ -34,7 +34,7 @@
 
 	if(organ_flags & ORGAN_FAILING)
 		// forced to ensure people don't use it to gain tox as slime person
-		owner.adjustToxLoss(2 * seconds_per_tick, updating_health = TRUE, forced = TRUE)
+		owner.adjustToxLoss(2 * seconds_per_tick, forced = TRUE)
 	else if(inflamation_stage)
 		inflamation(seconds_per_tick)
 	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick))
@@ -46,7 +46,11 @@
 	if(owner)
 		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		owner.med_hud_set_status()
-		notify_ghosts("[owner] has developed spontaneous appendicitis!", source = owner, action = NOTIFY_ORBIT, header = "Whoa, Sick!")
+		notify_ghosts(
+			"[owner] has developed spontaneous appendicitis!",
+			source = owner,
+			header = "Whoa, Sick!",
+		)
 
 /obj/item/organ/internal/appendix/proc/inflamation(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner
@@ -62,7 +66,7 @@
 				to_chat(organ_owner, span_warning("You feel a stabbing pain in your abdomen!"))
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)
 				organ_owner.Stun(rand(40, 60))
-				organ_owner.adjustToxLoss(1, updating_health = TRUE, forced = TRUE)
+				organ_owner.adjustToxLoss(1, forced = TRUE)
 		if(3)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				organ_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
@@ -72,12 +76,12 @@
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantappendix
 
-/obj/item/organ/internal/appendix/on_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 
-/obj/item/organ/internal/appendix/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	if(inflamation_stage)
 		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)

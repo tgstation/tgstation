@@ -1,4 +1,0 @@
-author: "Vincent983"
-delete-after: True
-changes:
-  - rscadd: "mass drivers are now buildable, you activate them by attaching a signaler to their launch wire, and can increase their power by pulsing the safeties wire, and reset it back to normal by cutting the safeties wire."

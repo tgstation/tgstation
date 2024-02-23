@@ -67,9 +67,12 @@ multiple modular subtrees with behaviors
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
 
-/datum/ai_controller/Destroy(force, ...)
+/datum/ai_controller/Destroy(force)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
+	set_movement_target(type, null)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
@@ -118,6 +121,7 @@ multiple modular subtrees with behaviors
 	reset_ai_status()
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
+	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
@@ -152,7 +156,7 @@ multiple modular subtrees with behaviors
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
-	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	pawn.ai_controller = null
@@ -171,6 +175,7 @@ multiple modular subtrees with behaviors
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
+
 	if(!able_to_run())
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
@@ -230,6 +235,8 @@ multiple modular subtrees with behaviors
 ///Determines whether the AI can currently make a new plan
 /datum/ai_controller/proc/able_to_plan()
 	. = TRUE
+	if(QDELETED(pawn))
+		return FALSE
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
 			. = FALSE
@@ -334,7 +341,15 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
+// Turn the controller off if the pawn has been qdeleted
+/datum/ai_controller/proc/on_pawn_qdeleted()
+	SIGNAL_HANDLER
+	set_ai_status(AI_STATUS_OFF)
+	set_movement_target(type, null)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
+
+/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
 	return
 
@@ -348,6 +363,15 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
+
+/// Returns true if we have a blackboard key with the provided key and it is not qdeleting
+/datum/ai_controller/proc/blackboard_key_exists(key)
+	var/datum/key_value = blackboard[key]
+	if (isdatum(key_value))
+		return !QDELETED(key_value)
+	if (islist(key_value))
+		return length(key_value) > 0
+	return !!key_value
 
 /**
  * Used to manage references to datum by AI controllers
@@ -410,6 +434,25 @@ multiple modular subtrees with behaviors
 	TRACK_AI_DATUM_TARGET(thing, key)
 	blackboard[key] = thing
 	post_blackboard_key_set(key)
+
+/**
+ * Helper to force a key to be a certain thing no matter what's already there
+ *
+ * Useful for if you're overriding a list with a new list entirely,
+ * as otherwise it would throw a runtime error from trying to override a list
+ *
+ * Not necessary to use if you aren't dealing with lists, as set_blackboard_key will clear the existing value
+ * in that case already, but may be useful for clarity.
+ *
+ * * key - A blackboard key
+ * * thing - a value to set the blackboard key to.
+ */
+/datum/ai_controller/proc/override_blackboard_key(key, thing)
+	if(blackboard[key] == thing)
+		return
+
+	clear_blackboard_key(key)
+	set_blackboard_key(key, thing)
 
 /**
  * Sets the key at index thing to the passed value
@@ -614,6 +657,7 @@ multiple modular subtrees with behaviors
 			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
 			else if(associated_value == source)
 				next_to_clear -= inner_value
+				SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(inner_value))
 
 		index += 1
 

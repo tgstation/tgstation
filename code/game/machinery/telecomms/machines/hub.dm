@@ -1,13 +1,12 @@
-/*
-	The HUB idles until it receives information. It then passes on that information
-	depending on where it came from.
-
-	This is the heart of the Telecommunications Network, sending information where it
-	is needed. It mainly receives information from long-distance Relays and then sends
-	that information to be processed. Afterwards it gets the uncompressed information
-	from Servers/Buses and sends that back to the relay, to then be broadcasted.
-*/
-
+/**
+ * The HUB idles until it receives information. It then passes on that information
+ * depending on where it came from.
+ *
+ * This is the heart of the Telecommunications Network, sending information where it
+ * is needed. It mainly receives information from long-distance Relays and then sends
+ * that information to be processed. Afterwards it gets the uncompressed information
+ * from Servers/Buses and sends that back to the relay, to then be broadcasted.
+ */
 /obj/machinery/telecomms/hub
 	name = "telecommunication hub"
 	icon_state = "hub"
@@ -53,12 +52,31 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
-//Preset HUB
+// Preset HUB
 
 /obj/machinery/telecomms/hub/preset
 	id = "Hub"
 	network = "tcommsat"
-	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "h_relay", "science", "medical",
-	"supply", "service", "common", "command", "engineering", "security",
-	"receiverA", "receiverB", "broadcasterA", "broadcasterB", "autorelay", "messaging")
+	autolinkers = list(
+		"hub",
+		"relay",
+		"s_relay",
+		"m_relay",
+		"r_relay",
+		"h_relay",
+		"science",
+		"medical",
+		"supply",
+		"service",
+		"common",
+		"command",
+		"engineering",
+		"security",
+		"receiverA",
+		"receiverB",
+		"broadcasterA",
+		"broadcasterB",
+		"autorelay",
+		"messaging",
+	)
 

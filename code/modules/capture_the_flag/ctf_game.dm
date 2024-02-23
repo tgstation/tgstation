@@ -9,7 +9,7 @@
 /obj/machinery/ctf
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -151,6 +151,15 @@
 	new_team_member.prefs.safe_transfer_prefs_to(player_mob, is_antag = TRUE)
 	if(player_mob.dna.species.outfit_important_for_life)
 		player_mob.set_species(/datum/species/human)
+
+	var/datum/mind/new_member_mind = new_team_member.mob.mind
+	if(new_member_mind?.current)
+		player_mob.AddComponent( \
+			/datum/component/temporary_body, \
+			old_mind = new_member_mind, \
+			old_body = new_member_mind.current, \
+		)
+
 	player_mob.ckey = new_team_member.ckey
 	if(isnull(ctf_player_component))
 		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game, ammo_type)
@@ -455,7 +464,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1
@@ -501,17 +510,26 @@
 
 	var/ctf_enabled = FALSE
 	ctf_enabled = ctf_controller.toggle_ctf()
-	for(var/obj/machinery/power/emitter/emitter in ctf_area)
-		emitter.active = ctf_enabled
+	for(var/turf/ctf_turf as anything in get_area_turfs(ctf_area))
+		for(var/obj/machinery/power/emitter/emitter in ctf_turf)
+			emitter.active = ctf_enabled
 	if(user)
 		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
 	else if(automated)
 		message_admins("CTF has finished a round and automatically restarted.")
-		notify_ghosts("CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",'sound/effects/ghost2.ogg')
+		notify_ghosts(
+			"CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",
+			ghost_sound = 'sound/effects/ghost2.ogg',
+			header = "CTF Restarted"
+		)
 	else
 		message_admins("The players have spoken! Voting has enabled CTF!")
 	if(!automated)
-		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",'sound/effects/ghost2.ogg')
+		notify_ghosts(
+			"CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",
+			ghost_sound = 'sound/effects/ghost2.ogg',
+			header = "CTF [ctf_enabled? "Enabled" : "Disabled"]"
+		)
 
 #undef CTF_LOADING_UNLOADED
 #undef CTF_LOADING_LOADING

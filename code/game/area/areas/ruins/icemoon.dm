@@ -1,5 +1,8 @@
 // Icemoon Ruins
 
+/area/ruin/powered/lizard_gas
+	name = "\improper Lizard Gas Station"
+
 /area/ruin/unpowered/buried_library
 	name = "\improper Buried Library"
 

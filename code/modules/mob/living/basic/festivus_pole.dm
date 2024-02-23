@@ -40,19 +40,18 @@
 	///how much charge we give off to cells around us when rubbed
 	var/recharge_value = 75
 
+
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
 	var/static/list/death_loot = list(/obj/item/stack/rods)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
-	var/datum/action/cooldown/mob_cooldown/charge_apc/charge_ability = new(src)
-	charge_ability.Grant(src)
-	ai_controller.set_blackboard_key(BB_FESTIVE_APC, charge_ability)
+	grant_actions_by_list(list(/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC))
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // APCs
 	)
 

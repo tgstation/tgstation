@@ -60,9 +60,17 @@ GLOBAL_PROTECT(admin_activities)
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)
 
-/// All signals here in format: "[src] used [REF(src)] @ location [src.loc]: [freq]/[code]"
-GLOBAL_LIST_EMPTY(lastsignalers)
-GLOBAL_PROTECT(lastsignalers)
+/// Investigate log for signaler usage, use the add_to_signaler_investigate_log proc
+GLOBAL_LIST_EMPTY(investigate_signaler)
+GLOBAL_PROTECT(investigate_signaler)
+
+/// Used to add a text log to the signaler investigation log.
+/// Do not add to the list directly; if the list is too large it can cause lag when an admin tries to view it.
+/proc/add_to_signaler_investigate_log(text)
+	var/log_length = length(GLOB.investigate_signaler)
+	if(log_length >= INVESTIGATE_SIGNALER_LOG_MAX_LENGTH)
+		GLOB.investigate_signaler = GLOB.investigate_signaler.Copy((INVESTIGATE_SIGNALER_LOG_MAX_LENGTH - log_length) + 2)
+	GLOB.investigate_signaler += list(text)
 
 /// Stores who uploaded laws to which silicon-based lifeform, and what the law was
 GLOBAL_LIST_EMPTY(lawchanges)

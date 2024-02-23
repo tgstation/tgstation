@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "Fixes a misplaced status display in Meta's medical storage."

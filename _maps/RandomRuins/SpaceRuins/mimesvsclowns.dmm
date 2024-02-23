@@ -6,6 +6,11 @@
 /area/ruin)
 "dI" = (
 /obj/item/grown/bananapeel,
+/obj/item/ammo_casing/a357/spent{
+	dir = 9;
+	pixel_x = -13;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "ef" = (
@@ -71,20 +76,21 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/obj/item/ammo_casing/energy/c3dbullet{
-	pixel_y = 10;
-	pixel_x = 115;
-	dir = 9
-	},
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/light/small/broken/directional/south,
+/obj/item/ammo_casing/a357/spent,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "uc" = (
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
+/obj/item/ammo_casing/a357/spent{
+	pixel_x = -5;
+	dir = 5;
+	pixel_y = 6
+	},
+/obj/item/ammo_casing/a357/spent,
 /obj/item/gps/spaceruin,
 /turf/open/floor/plating/airless,
 /area/ruin)
@@ -139,11 +145,6 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Ar" = (
-/obj/item/ammo_casing/energy/c3dbullet{
-	dir = 5;
-	pixel_x = 59;
-	pixel_y = 6
-	},
 /obj/item/clothing/mask/gas/clown_hat{
 	pixel_y = 39
 	},
@@ -216,7 +217,6 @@
 /area/ruin)
 "JK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/plating/airless,
 /area/ruin)
@@ -252,8 +252,8 @@
 /area/ruin)
 "Pq" = (
 /obj/machinery/light/broken/directional/north,
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/structure/reagent_dispensers/watertank,
+/obj/item/ammo_casing/a357/spent,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Qb" = (
@@ -267,7 +267,6 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Vj" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/mapping_helpers/damaged_window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,

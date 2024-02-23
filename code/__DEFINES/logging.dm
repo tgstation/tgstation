@@ -5,6 +5,9 @@
 /// Admins can still manually request a re-render
 #define LOG_UPDATE_TIMEOUT 5 SECONDS
 
+// The maximum number of entries allowed in the signaler investigate log, keep this relatively small to prevent performance issues when an admin tries to query it
+#define INVESTIGATE_SIGNALER_LOG_MAX_LENGTH 500
+
 //Investigate logging defines
 #define INVESTIGATE_ACCESSCHANGES "id_card_changes"
 #define INVESTIGATE_ATMOS "atmos"
@@ -22,6 +25,7 @@
 #define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_RECORDS "records"
 #define INVESTIGATE_RESEARCH "research"
+#define INVESTIGATE_TRANSPORT "transport"
 #define INVESTIGATE_WIRES "wires"
 
 // Logging types for log_message()
@@ -47,6 +51,7 @@
 #define LOG_VICTIM (1 << 19)
 #define LOG_RADIO_EMOTE (1 << 20)
 #define LOG_SPEECH_INDICATORS (1 << 21)
+#define LOG_TRANSPORT (1 << 22)
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
@@ -83,8 +88,9 @@
 #define LOG_ENTRY_KEY_ID "id"
 #define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
 
-// Category for invalid/missing categories
-#define LOG_CATEGORY_NOT_FOUND "invalid-category"
+// Internal categories
+#define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"
+#define LOG_CATEGORY_INTERNAL_ERROR "internal-error"
 
 // Misc categories
 #define LOG_CATEGORY_ATTACK "attack"
@@ -107,6 +113,7 @@
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
+#define LOG_CATEGORY_TRANSPORT "transport"
 #define LOG_CATEGORY_VIRUS "virus"
 
 // Admin categories

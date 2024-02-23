@@ -116,7 +116,7 @@
 	if(!isliving(moving_atom))
 		return
 	var/mob/living/moving_mob = moving_atom
-	if(!(moving_mob.movement_type & (FLYING|FLOATING)) || moving_mob.buckled)
+	if(!(moving_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || moving_mob.buckled)
 		playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter(moving_mob)

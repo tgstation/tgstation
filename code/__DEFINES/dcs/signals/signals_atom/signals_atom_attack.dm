@@ -52,11 +52,13 @@
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
 ///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
-///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected.
+///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)
 #define COMSIG_PRE_TILT_AND_CRUSH "atom_pre_tilt_and_crush"
 	#define COMPONENT_IMMUNE_TO_TILT_AND_CRUSH (1<<0)
-///Called when a atom gets something tilted on them
+///Called when a atom gets something tilted on them: (atom/target, atom/source)
 #define COMSIG_POST_TILT_AND_CRUSH "atom_post_tilt_and_crush"
+/// Called when an atom is splashed with something: (atom/source)
+#define COMSIG_ATOM_SPLASHED "atom_splashed"
 
 	///The damage type of the weapon projectile is non-lethal stamina
 	#define ATTACKER_STAMINA_ATTACK (1<<0)
@@ -64,3 +66,6 @@
 	#define ATTACKER_SHOVING (1<<1)
 	/// The attack is a damaging-type attack
 	#define ATTACKER_DAMAGING_ATTACK (1<<2)
+
+/// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
+#define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"

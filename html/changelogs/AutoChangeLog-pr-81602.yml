@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Chef and department security have the assignment on their ID imprinted onto their PDA by default, instead of defaulting to Cook/Security Officer and requiring you to do so manually."

@@ -43,26 +43,29 @@
 		)
 	return ..()
 
-/datum/species/pod/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/pod/spec_life(mob/living/carbon/human/podperson, seconds_per_tick, times_fired)
 	. = ..()
-	if(H.stat == DEAD)
+	if(podperson.stat == DEAD)
 		return
 
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(H.loc)) //else, there's considered to be no light
-		var/turf/T = H.loc
-		light_amount = min(1, T.get_lumcount()) - 0.5
-		H.adjust_nutrition(5 * light_amount * seconds_per_tick)
+	if(isturf(podperson.loc)) //else, there's considered to be no light
+		var/turf/turf_loc = podperson.loc
+		light_amount = min(1, turf_loc.get_lumcount()) - 0.5
+		podperson.adjust_nutrition(5 * light_amount * seconds_per_tick)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-			H.adjustToxLoss(-0.5 * seconds_per_tick)
-			H.adjustOxyLoss(-0.5 * seconds_per_tick)
+			var/need_mob_update = FALSE
+			need_mob_update += podperson.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			need_mob_update += podperson.adjustToxLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
+			need_mob_update += podperson.adjustOxyLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
+			if(need_mob_update)
+				podperson.updatehealth()
 
-	if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
-		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
+	if(podperson.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
+		podperson.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 
-	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+	if(podperson.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		podperson.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	. = ..()
@@ -70,6 +73,10 @@
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		affected.adjustToxLoss(3 * REM * seconds_per_tick)
+
+/datum/species/pod/get_physical_attributes()
+	return "Podpeople are in many ways the inverse of shadows, healing in light and starving with the dark. \
+		Their bodies are like tinder and easy to char."
 
 /datum/species/pod/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -98,6 +105,3 @@
 	))
 
 	return to_add
-
-/datum/species/pod/randomize_features(mob/living/carbon/human_mob)
-	randomize_external_organs(human_mob)

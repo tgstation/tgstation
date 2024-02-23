@@ -42,11 +42,10 @@
 	QDEL_NULL(beaker)
 	update_appearance()
 
-/obj/machinery/reagentgrinder/deconstruct()
+/obj/machinery/reagentgrinder/on_deconstruction(disassmbled)
 	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
-	return ..()
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
@@ -142,10 +141,10 @@
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 	if(!beaker && !length(holdingitems))
 		return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
 
@@ -308,18 +307,23 @@
 	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.holder_full())
 		return
 	operate_for(50, juicing = TRUE)
-	for(var/obj/item/i in holdingitems)
+	for(var/obj/item/ingredient in holdingitems)
 		if(beaker.reagents.holder_full())
 			break
-		var/obj/item/I = i
-		if(I.juice_typepath)
-			juice_item(I, user)
 
-/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I, mob/user) //Juicing results can be found in respective object definitions
-	if(!I.juice(beaker.reagents, user))
-		to_chat(usr, span_danger("[src] shorts out as it tries to juice up [I], and transfers it back to storage."))
+		if(ingredient.flags_1 & HOLOGRAM_1)
+			to_chat(user, span_notice("You try to juice [ingredient], but it fades away!"))
+			qdel(ingredient)
+			continue
+
+		if(ingredient.juice_typepath)
+			juice_item(ingredient, user)
+
+/obj/machinery/reagentgrinder/proc/juice_item(obj/item/ingredient, mob/user) //Juicing results can be found in respective object definitions
+	if(!ingredient.juice(beaker.reagents, user))
+		to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
 		return
-	remove_object(I)
+	remove_object(ingredient)
 
 /obj/machinery/reagentgrinder/proc/grind(mob/user)
 	power_change()
@@ -327,21 +331,26 @@
 		return
 	operate_for(60)
 	warn_of_dust() // don't breathe this.
-	for(var/i in holdingitems)
+	for(var/obj/item/ingredient in holdingitems)
 		if(beaker.reagents.holder_full())
 			break
-		var/obj/item/I = i
-		if(I.grind_results)
-			grind_item(i, user)
 
-/obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
-	if(!I.grind(beaker.reagents, user))
-		if(isstack(I))
-			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [I] as possible."))
+		if(ingredient.flags_1 & HOLOGRAM_1)
+			to_chat(user, span_notice("You try to grind [ingredient], but it fades away!"))
+			qdel(ingredient)
+			continue
+
+		if(ingredient.grind_results)
+			grind_item(ingredient, user)
+
+/obj/machinery/reagentgrinder/proc/grind_item(obj/item/ingredient, mob/user) //Grind results can be found in respective object definitions
+	if(!ingredient.grind(beaker.reagents, user))
+		if(isstack(ingredient))
+			to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
 		else
-			to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
+			to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
 		return
-	remove_object(I)
+	remove_object(ingredient)
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
 	//For butter and other things that would change upon shaking or mixing

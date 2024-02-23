@@ -91,10 +91,26 @@
 	visible_message(span_danger(destruction_message))
 	qdel(src)
 
+/obj/structure/statue/petrified/animate_atom_living(mob/living/owner)
+	if(isnull(petrified_mob))
+		return ..()
+	var/mob/living/basic/statue/new_statue = new(drop_location())
+	new_statue.name = "statue of [petrified_mob.name]"
+	if(owner)
+		new_statue.befriend(owner)
+	new_statue.icon = icon
+	new_statue.icon_state = icon_state
+	new_statue.copy_overlays(src, TRUE)
+	new_statue.atom_colours = atom_colours.Copy()
+	petrified_mob.mind?.transfer_to(new_statue)
+	to_chat(new_statue, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! [owner ? "Do not harm [owner], your creator" : ""]."))
+	forceMove(new_statue)
+
 
 /mob/proc/petrify(statue_timer)
+	return
 
-/mob/living/carbon/human/petrify(statue_timer, save_brain)
+/mob/living/carbon/human/petrify(statue_timer, save_brain, colorlist)
 	if(!isturf(loc))
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
@@ -102,6 +118,8 @@
 	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	if(colorlist)
+		newcolor = colorlist
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
 

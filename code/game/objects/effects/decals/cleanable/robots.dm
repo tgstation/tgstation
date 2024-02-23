@@ -25,8 +25,9 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
-			if(prob(40) && (!isgroundlessturf(loc) || GET_TURF_BELOW(loc)))
-				new /obj/effect/decal/cleanable/oil/streak(loc)
+			var/turf/my_turf = get_turf(src)
+			if(prob(40) && (!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf)))
+				new /obj/effect/decal/cleanable/oil/streak(my_turf)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
 		return
