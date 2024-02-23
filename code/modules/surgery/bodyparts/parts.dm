@@ -252,7 +252,7 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 3
 	unarmed_damage_high = 8
-	unarmed_effectiveness = 0
+	unarmed_effectiveness = 5
 	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/left/alien
@@ -551,7 +551,7 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_effectiveness = 0
+	unarmed_effectiveness = 5
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
