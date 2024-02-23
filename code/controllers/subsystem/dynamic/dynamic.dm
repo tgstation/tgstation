@@ -110,27 +110,27 @@ SUBSYSTEM_DEF(dynamic)
 	/// threat, then you will get 2 midround rolls.
 	var/threat_per_midround_roll = 7
 
-	/// A number between -5 and +5.
-	/// A negative value will give a more peaceful round and
-	/// a positive value will give a round with higher threat.
-	var/threat_curve_centre = 0
+	/// A number between 0 and 1.
+	/// 0.5 is centered on the middle of the range
+	/// For threat, this means 0.5 is centered on 50 threat level
+	var/threat_curve_centre = 0.5
 
-	/// A number between 0.5 and 4.
+	/// A number between 0 and 1.
 	/// Higher value will favour extreme rounds and
 	/// lower value rounds closer to the average.
-	var/threat_curve_width = 1.8
+	var/threat_curve_width = 0.3
 
-	/// A number between -5 and +5.
+	/// A number between 0 and 1.
 	/// Equivalent to threat_curve_centre, but for the budget split.
-	/// A negative value will weigh towards midround rulesets, and a positive
-	/// value will weight towards roundstart ones.
-	var/roundstart_split_curve_centre = 1
+	/// A value less than 0.5 will weigh towards midround rulesets,
+	/// and a value more than 0.5 will weigh towards roundstart ones.
+	var/roundstart_split_curve_centre = 0.8
 
-	/// A number between 0.5 and 4.
+	/// A number between 0 and 1.
 	/// Equivalent to threat_curve_width, but for the budget split.
 	/// Higher value will favour more variance in splits and
 	/// lower value rounds closer to the average.
-	var/roundstart_split_curve_width = 1.8
+	var/roundstart_split_curve_width = 0.3
 
 	/// The minimum amount of time for antag random events to be hijacked.
 	var/random_event_hijack_minimum = 10 MINUTES
@@ -989,22 +989,18 @@ SUBSYSTEM_DEF(dynamic)
 	if (!isnull(threat_log))
 		log_threat(-cost, threat_log, reason)
 
-#define MAXIMUM_DYN_DISTANCE 5
-
 /**
- * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
- * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
+ * Returns a random number on a lorentz distribution, using centre and width,  then multiplied by the maximum
  * threat and then rounded to the nearest interval.
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
  */
-/datum/controller/subsystem/dynamic/proc/lorentz_to_amount(centre = 0, scale = 1.8, max_threat = 100, interval = 1)
-	var/location = RANDOM_DECIMAL(-MAXIMUM_DYN_DISTANCE, MAXIMUM_DYN_DISTANCE) * rand()
-	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, location, scale)
+/datum/controller/subsystem/dynamic/proc/lorentz_to_amount(centre = 0.5, scale = 0.3, max_threat = 100, interval = 1)
+	var/lorentz_result = -1
+	while (lorentz_result < 0 || lorentz_result > 1)
+		lorentz_result = LORENTZ_DISTRIBUTION(centre, scale)
 	var/std_threat = lorentz_result * max_threat
-	///Without these, the amount won't come close to hitting 0% or 100% of the max threat.
-	var/lower_deviation = max(std_threat * (location-centre)/MAXIMUM_DYN_DISTANCE, 0)
-	var/upper_deviation = max((max_threat - std_threat) * (centre-location)/MAXIMUM_DYN_DISTANCE, 0)
-	return clamp(round(std_threat + upper_deviation - lower_deviation, interval), 0, 100)
+
+	return round(std_threat, interval)
 
 /proc/reopen_roundstart_suicide_roles()
 	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
@@ -1043,8 +1039,6 @@ SUBSYSTEM_DEF(dynamic)
 
 			print_command_report(suicide_command_report, "Central Command Personnel Update")
 
-
-#undef MAXIMUM_DYN_DISTANCE
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE

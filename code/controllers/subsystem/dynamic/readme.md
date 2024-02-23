@@ -4,7 +4,7 @@
 
 Dynamic rolls threat based on a special sauce formula:
 
-> [dynamic_curve_width][/datum/controller/global_vars/var/dynamic_curve_width] \* tan((3.1416 \* (rand() - 0.5) \* 57.2957795)) + [dynamic_curve_centre][/datum/controller/global_vars/var/dynamic_curve_centre]
+> [dynamic_curve_width][/datum/controller/global_vars/var/dynamic_curve_width] \* tan((3.1416 \* (rand() - 0.5))) + [dynamic_curve_centre][/datum/controller/global_vars/var/dynamic_curve_centre]
 
 This threat is split into two separate budgets--`round_start_budget` and `mid_round_budget`. For example, a round with 50 threat might be split into a 30 roundstart budget, and a 20 midround budget. The roundstart budget is used to apply antagonists applied on readied players when the roundstarts (`/datum/dynamic_ruleset/roundstart`). The midround budget is used for two types of rulesets:
 - `/datum/dynamic_ruleset/midround` - Rulesets that apply to either existing alive players, or to ghosts. Think Blob or Space Ninja, which poll ghosts asking if they want to play as these roles.
@@ -173,10 +173,10 @@ The "Dynamic" key has the following configurable values:
 - `pop_per_requirement` - The default value of `pop_per_requirement` for any ruleset that does not explicitly set it. Defaults to 6.
 - `latejoin_delay_min`, `latejoin_delay_max` - The time range, in deciseconds (take your seconds, and multiply by 10), for a latejoin to attempt rolling. Once this timer is finished, a new one will be created within the same range.
 	- Suppose you have a `latejoin_delay_min` of 600 (60 seconds, 1 minute) and a `latejoin_delay_max` of 1800 (180 seconds, 3 minutes). Once the round starts, a random number in this range will be picked--let's suppose 1.5 minutes. After 1.5 minutes, Dynamic will decide if a latejoin threat should be created (a probability of `/datum/controller/subsystem/dynamic/proc/get_injection_chance()`). Regardless of its decision, a new timer will be started within the range of 1 to 3 minutes, repeatedly.
-- `threat_curve_centre` - A number between -5 and +5. A negative value will give a more peaceful round and a positive value will give a round with higher threat.
-- `threat_curve_width` - A number between 0.5 and 4. Higher value will favour extreme rounds and lower value rounds closer to the average.
-- `roundstart_split_curve_centre` - A number between -5 and +5. Equivalent to threat_curve_centre, but for the budget split. A negative value will weigh towards midround rulesets, and a positive value will weight towards roundstart ones.
-- `roundstart_split_curve_width` - A number between 0.5 and 4. Equivalent to threat_curve_width, but for the budget split. Higher value will favour more variance in splits and lower value rounds closer to the average.
+- `threat_curve_centre` - A number between 0 and 1. 0.5 is centered on the middle of the range. For max threat 100, this means 0.5 is centered on 50 threat level.
+- `threat_curve_width` - A number between 0 and 1. Higher value will favour extreme rounds and lower value rounds closer to the average.
+- `roundstart_split_curve_centre` - A number between 0 and 1. Equivalent to threat_curve_centre, but for the budget split. A value less than 0.5 will weigh towards midround rulesets, and a value more than 0.5 will weigh towards roundstart ones.
+- `roundstart_split_curve_width` - A number between 0 and 1. Equivalent to threat_curve_width, but for the budget split. Higher value will favour more variance in splits and lower value rounds closer to the average.
 - `random_event_hijack_minimum` - The minimum amount of time for antag random events to be hijacked. (See [Random Event Hijacking](#random-event-hijacking))
 - `random_event_hijack_maximum` - The maximum amount of time for antag random events to be hijacked. (See [Random Event Hijacking](#random-event-hijacking))
 - `hijacked_random_event_injection_chance` - The amount of injection chance to give to Dynamic when a random event is hijacked. (See [Random Event Hijacking](#random-event-hijacking))
