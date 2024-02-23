@@ -710,7 +710,8 @@
 
 /// Adds the load to the connected grid. Drains the cell when there isn't enough surplus power. Returns the used power.
 /obj/machinery/power/apc/proc/draw_power(amount)
-	var/grid_used = terminal?.add_load(min(terminal.surplus(), amount))
+	var/grid_used = min(terminal.surplus(), amount)
+	terminal?.add_load(grid_used)
 	var/cell_used = 0
 	if(amount > grid_used)
 		cell_used += cell.use(amount - grid_used)
