@@ -46,7 +46,7 @@
 	for(var/obj/item/bodypart/disabled_limb as anything in get_disabled_limbs())
 		var/damage_text
 		damage_text = (disabled_limb.brute_dam >= disabled_limb.burn_dam) ? disabled_limb.heavy_brute_msg : disabled_limb.heavy_burn_msg
-		msg += "<B>[capitalize(t_his)] [disabled_limb.name] is [damage_text]!</B>\n"
+		msg += "<B>[t_His] [disabled_limb.name] is [damage_text]!</B>\n"
 
 	for(var/obj/item/bodypart/missing_limb as anything in get_missing_limbs())
 		if(missing_limb == BODY_ZONE_HEAD)
