@@ -174,7 +174,6 @@
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
 	use_subtypes = FALSE
-	special_role_name = "Clown Operative"
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
