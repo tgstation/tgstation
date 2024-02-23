@@ -1,4 +1,0 @@
-author: "dwasint"
-delete-after: True
-changes:
-  - rscadd: "antag rep, for every roll you go without being antag your odds increase, resetting when you become and antag, passing a roll won't remove your rep"
