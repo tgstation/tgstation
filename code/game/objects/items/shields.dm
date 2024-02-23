@@ -426,7 +426,7 @@
 	return ..()
 
 /datum/armor/item_shield/improvised
-	melee = 50
+	melee = 40
 	bullet = 30
 	laser = 30
 
