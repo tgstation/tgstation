@@ -867,11 +867,14 @@ GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
 /atom/movable/proc/post_tilt()
 	return
 
-/atom/movable/proc/can_be_vendorcrushed(atom_target)
-	if !(is_type_in_list(atom_target, vendor_nocrush))//make sure its not in the list of "uncrushable" stuff
-		if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) //allow ninjas, etc to be crushed in cloak
-			return TRUE //yep its crushable
-	return FALSE //turns out its not crushable.
+/atom/movable/proc/can_be_vendorcrushed(atom/atom_target)
+	if(is_type_in_list(atom_target, GLOB.vendor_uncrushable_items)) //make sure its not in the list of "uncrushable" stuff
+		return FALSE
+
+	if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING)) //allow ninjas, etc to be crushed in cloak
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
 
