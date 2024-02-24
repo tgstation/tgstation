@@ -190,3 +190,8 @@
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()
+
+/datum/outfit/syndicate/support
+	name = "Nuclear Operative Overwatch Agent"
+	back = /obj/item/storage/backpack/satchel
+	uniform = /obj/item/clothing/under/misc/syndicate_souvenir

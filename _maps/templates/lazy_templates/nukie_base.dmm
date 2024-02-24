@@ -1367,6 +1367,7 @@
 /obj/structure/chair/greyscale{
 	dir = 4
 	},
+/obj/effect/landmark/start/nukeop_overwatch,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
 "pU" = (
@@ -1641,6 +1642,17 @@
 /area/centcom/syndicate_mothership/control)
 "sv" = (
 /obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership)
+"sA" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating,
+/obj/machinery/door/airlock/hatch{
+	name = "Workout Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
 "sE" = (
@@ -1972,6 +1984,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"xh" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "xj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -3482,6 +3498,10 @@
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 6
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_y = 9;
+	pixel_x = 3
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
@@ -5766,7 +5786,7 @@ sU
 sU
 Ye
 Kq
-Xk
+xh
 Xk
 Xk
 Xk
@@ -5871,12 +5891,12 @@ Kq
 Kq
 Kq
 Kq
-lg
+sA
 Kq
+xh
 Xk
 Xk
-Xk
-Kq
+tO
 uT
 ds
 HW

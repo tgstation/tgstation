@@ -3120,6 +3120,7 @@
 #include "code\modules\antagonists\nukeop\datums\operative_leader.dm"
 #include "code\modules\antagonists\nukeop\datums\operative_lone.dm"
 #include "code\modules\antagonists\nukeop\datums\operative_reinforcement.dm"
+#include "code\modules\antagonists\nukeop\datums\operative_support.dm"
 #include "code\modules\antagonists\nukeop\datums\operative_team.dm"
 #include "code\modules\antagonists\nukeop\equipment\borgchameleon.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_authentication_disk.dm"
