@@ -100,7 +100,8 @@
 ///The limb is snouted.
 #define BODYSHAPE_SNOUTED (1<<3)
 
-#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) !(bodytype & BODYTYPE_ROBOTIC)
+#define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM)
+#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
