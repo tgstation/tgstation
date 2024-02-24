@@ -14098,7 +14098,6 @@
 "fls" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16055,6 +16054,12 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"fRZ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/greater)
 "fSe" = (
 /turf/closed/wall/rust,
 /area/station/cargo/miningfoundry)
@@ -17812,7 +17817,6 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/duct,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24626,6 +24630,9 @@
 "iSW" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/boxing/yellow,
+/obj/item/clothing/gloves/boxing/green{
+	pixel_y = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "iTn" = (
@@ -24699,8 +24706,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "iUy" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/boxing/green,
+/obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "iUz" = (
@@ -27372,7 +27378,6 @@
 "jPr" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30610,7 +30615,6 @@
 "kZo" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -44161,7 +44165,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pId" = (
-/obj/structure/reagent_dispensers/plumbed,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 4
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/prison/mess)
 "pIi" = (
@@ -110128,7 +110134,7 @@ aJN
 tIE
 nFW
 iSW
-rdh
+fRZ
 liR
 jQL
 uwH
