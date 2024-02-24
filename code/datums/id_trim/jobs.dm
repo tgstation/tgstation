@@ -1248,3 +1248,23 @@
 
 #undef POPULATION_SCALED_ACCESS
 #undef ALWAYS_GETS_ACCESS
+
+/datum/id_trim/job/human_ai
+	assignment = "Human AI"
+	trim_state = "trim_recluse"
+	department_color = COLOR_BLUE_GRAY
+	subdepartment_color = COLOR_BLUE_GRAY
+	sechud_icon_state = SECHUD_ASSISTANT
+	minimal_access = list(
+		ACCESS_COMMAND, //to access comms consoles
+		ACCESS_CE, //to access APCs
+		ACCESS_NETWORK, //to access NTOS
+		ACCESS_KEYCARD_AUTH, //to access holopads
+		ACCESS_RC_ANNOUNCE, //to make announcements
+		ACCESS_RD, //to access RD machines
+		ACCESS_MINISAT,
+		ACCESS_AI_UPLOAD,
+	)
+	extra_access = list()
+	template_access = list()
+	job = /datum/job/human_ai

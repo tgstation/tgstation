@@ -164,6 +164,25 @@
 	new /obj/item/reagent_containers/cup/coffeepot(picked_turf)
 	new /obj/item/storage/box/coffeepack(picked_turf)
 
+/datum/station_trait/job/human_ai
+	name = "Human AI"
+	button_desc = "Sign up to become the AI."
+	weight = 2
+	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
+	show_in_report = TRUE
+	can_roll_antag = CAN_ROLL_PROTECTED
+	job_to_add = /datum/job/human_ai
+	blacklist = list(/datum/station_trait/triple_ai)
+
+/datum/station_trait/job/human_ai/New()
+	. = ..()
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(replace_ai))
+
+/datum/station_trait/job/human_ai/proc/replace_ai(datum/source)
+	SIGNAL_HANDLER
+	var/datum/job_department/department = SSjob.joinable_departments_by_type[/datum/job_department/silicon]
+	department.remove_job(/datum/job/ai)
+
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED
 #undef CAN_ROLL_NEVER

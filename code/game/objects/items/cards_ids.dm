@@ -1080,6 +1080,14 @@
 	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
 
+/obj/item/card/id/advanced/robotic
+	name = "magnetic identification card"
+	desc = "An integrated card which shows the work poured into opening doors."
+	icon_state = "card_carp" //im not a spriter
+	inhand_icon_state = "silver_id"
+	assigned_icon_state = "assigned_silver"
+	wildcard_slots = WILDCARD_LIMIT_GREY
+
 /datum/id_trim/maint_reaper
 	access = list(ACCESS_MAINT_TUNNELS)
 	trim_state = "trim_janitor"

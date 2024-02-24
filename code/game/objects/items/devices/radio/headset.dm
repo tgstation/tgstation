@@ -343,6 +343,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
+/obj/item/radio/headset/silicon/human_ai
+	name = "\proper Disconnected Subspace Transceiver "
+	keyslot2 = new /obj/item/encryptionkey/ai_with_binary
+	command = TRUE
+
 /obj/item/radio/headset/silicon/ai/evil
 	name = "\proper Evil Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai/evil

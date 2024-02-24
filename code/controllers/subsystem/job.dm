@@ -197,6 +197,8 @@ SUBSYSTEM_DEF(job)
 	joinable_departments_by_type = new_joinable_departments_by_type
 	experience_jobs_map = new_experience_jobs_map
 
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_SETUP)
+
 	return TRUE
 
 

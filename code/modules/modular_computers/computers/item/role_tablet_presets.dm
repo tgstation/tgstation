@@ -429,6 +429,21 @@
 		/datum/computer_file/program/status,
 	)
 
+/obj/item/modular_computer/pda/human_ai
+	name = "modular interface"
+	icon_state = "tablet-silicon"
+	base_icon_state = "tablet-silicon"
+	greyscale_config = null
+	greyscale_colors = null
+
+	has_light = FALSE //tablet light button actually enables/disables the borg lamp
+	comp_light_luminosity = 0
+	inserted_item = null
+	has_pda_programs = FALSE
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+	)
+
 /**
  * Non-roles
  */
