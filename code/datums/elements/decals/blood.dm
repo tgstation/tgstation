@@ -13,6 +13,7 @@
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	var/obj/item/I = source
+	ADD_KEEP_TOGETHER(I, "item_blood_overlay")
 	var/icon = I.icon
 	var/icon_state = I.icon_state
 	if(!icon || !icon_state)
