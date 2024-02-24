@@ -76,8 +76,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		assembly_ref = WEAKREF(assembly) //important to do this now since upgrades call back to the assembly_ref
 		setDir(assembly.dir)
 		assembly.forceMove(src)
-		var/area/A = get_area(src)
-		c_tag = "[format_text(A.name)] ([rand(1, 999)])"
+		var/area/assembly_area = get_area(src)
+		c_tag = "[format_text(assembly_area.name)] ([rand(1, 999)])"
 
 		if(assembly.xray_module)
 			upgradeXRay()
