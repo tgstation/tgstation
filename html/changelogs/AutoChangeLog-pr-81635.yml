@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Cyborgs spark and spit out oil when smacked again. Among other things."
