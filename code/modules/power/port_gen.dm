@@ -66,7 +66,7 @@
 			TogglePower()
 			return
 		if(powernet)
-			add_avail(power_gen * power_output)
+			add_avail(power_to_energy(power_gen * power_output))
 		UseFuel()
 	else
 		handleInactive()

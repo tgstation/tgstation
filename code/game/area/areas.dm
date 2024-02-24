@@ -79,6 +79,7 @@
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
+	var/power_apc_charge = TRUE
 
 	var/has_gravity = FALSE
 
@@ -487,7 +488,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			power_usage[powerchannel] += value
 
 /**
- * Remove a static amount of power load to an area
+ * Remove a static amount of power load to an area. The value is assumed as the watt.
  *
  * Possible channels
  * *AREA_USAGE_STATIC_EQUIP
@@ -495,6 +496,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * *AREA_USAGE_STATIC_ENVIRON
  */
 /area/proc/removeStaticPower(value, powerchannel)
+	value = power_to_energy(value)
 	switch(powerchannel)
 		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
 			power_usage[powerchannel] -= value
@@ -508,6 +510,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_usage[AREA_USAGE_EQUIP] = 0
 	power_usage[AREA_USAGE_LIGHT] = 0
 	power_usage[AREA_USAGE_ENVIRON] = 0
+	power_usage[AREA_USAGE_APC_CHARGE] = 0
 
 
 /**
@@ -515,7 +518,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/proc/use_power(amount, chan)
 	switch(chan)
-		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
+			return
+		else
 			power_usage[chan] += amount
 
 /**

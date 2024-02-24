@@ -6,7 +6,8 @@
 #define AREA_USAGE_STATIC_EQUIP 4
 #define AREA_USAGE_STATIC_LIGHT 5
 #define AREA_USAGE_STATIC_ENVIRON 6
-#define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+#define AREA_USAGE_APC_CHARGE 7
+#define AREA_USAGE_LEN AREA_USAGE_APC_CHARGE // largest idx
 
 /// Index of the first dynamic usage channel
 #define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP

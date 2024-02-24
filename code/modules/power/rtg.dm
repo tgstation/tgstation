@@ -22,7 +22,7 @@
 	connect_to_network()
 
 /obj/machinery/power/rtg/process()
-	add_avail(power_gen)
+	add_avail(power_to_energy(power_gen))
 
 /obj/machinery/power/rtg/RefreshParts()
 	. = ..()
@@ -35,7 +35,7 @@
 /obj/machinery/power/rtg/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Power generation now at <b>[power_gen*0.001]</b>kW.")
+		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
 
 /obj/machinery/power/rtg/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))

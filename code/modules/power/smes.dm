@@ -248,6 +248,26 @@
 	var/input_energy = power_to_energy(input_level)
 	var/output_energy = power_to_energy(output_level)
 
+	//outputting
+	if(output_attempt)
+		if(outputting)
+			output_used = min(charge, output_energy) //limit output to that stored
+
+			if (add_avail(output_used)) // add output to powernet if it exists (smes side)
+				charge -= output_used // reduce the storage (may be recovered in /restore() if excessive)
+			else
+				outputting = FALSE
+
+			if(output_used < 0.1) // either from no charge or set to 0
+				outputting = FALSE
+				investigate_log("lost power and turned off", INVESTIGATE_ENGINE)
+		else if(output_attempt && charge > output_energy && output_level > 0)
+			outputting = TRUE
+		else
+			output_used = 0
+	else
+		outputting = FALSE
+
 	//inputting
 	if(terminal && input_attempt)
 		input_available = terminal.surplus()
@@ -269,26 +289,6 @@
 				inputting = TRUE
 	else
 		inputting = FALSE
-
-	//outputting
-	if(output_attempt)
-		if(outputting)
-			output_used = min(charge, output_energy) //limit output to that stored
-
-			if (add_avail(output_used)) // add output to powernet if it exists (smes side)
-				charge -= output_used // reduce the storage (may be recovered in /restore() if excessive)
-			else
-				outputting = FALSE
-
-			if(output_used < 0.1) // either from no charge or set to 0
-				outputting = FALSE
-				investigate_log("lost power and turned off", INVESTIGATE_ENGINE)
-		else if(output_attempt && charge > output_energy && output_level > 0)
-			outputting = TRUE
-		else
-			output_used = 0
-	else
-		outputting = FALSE
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)

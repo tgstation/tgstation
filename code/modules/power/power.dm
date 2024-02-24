@@ -132,14 +132,6 @@
 
 	return A.powered(chan) // return power status of the area
 
-
-
-// increment the power usage stats for an area
-///obj/machinery/proc/use_power(amount, chan = power_channel)
-//	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
-//	var/area/A = get_area(src) // make sure it's in an area
-//	A?.use_power(amount, chan)
-
 /**
  * Draws power from the APC. Will use excess power from the APC's connected grid,
  * then use power from the APC's cell if there wasn't enough power from the grid, unless ignore_apc is true.
@@ -236,10 +228,11 @@
  * - amount: The amount of energy given to the cell.
  * - cell: The cell to charge.
  * - grid_only: If true, only draw from the grid and ignore the APC's cell.
+ * - channel: The power channel to use.
  * Returns: The amount of energy the cell received.
  */
-/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE)
-	var/demand = use_power(min(amount, cell.used_charge()), channel = AREA_USAGE_EQUIP, ignore_apc = grid_only)
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
+	var/demand = use_power(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
 	//return_power(demand - power_given, AREA_USAGE_EQUIP)
 	return power_given

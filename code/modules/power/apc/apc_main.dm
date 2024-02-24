@@ -323,6 +323,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
+		"chargingPowerDisplay" = display_power(area.power_usage[AREA_USAGE_APC_CHARGE]),
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
@@ -475,6 +476,19 @@
 	if(user == remote_control_user)
 		disconnect_remote_access()
 
+/**
+ * APC early processing. This gets processed before any other machine does.
+ * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
+ * This is done early so machines that use dynamic power get a more truthful surplus when accessing available energy.
+ */
+/obj/machinery/power/apc/proc/early_process()
+	var/total_static_power_usage = 0
+	total_static_power_usage += APC_CHANNEL_IS_ON(lighting) * area.power_usage[AREA_USAGE_STATIC_LIGHT]
+	total_static_power_usage += APC_CHANNEL_IS_ON(equipment) * area.power_usage[AREA_USAGE_STATIC_EQUIP]
+	total_static_power_usage += APC_CHANNEL_IS_ON(environ) * area.power_usage[AREA_USAGE_STATIC_ENVIRON]
+	if(total_static_power_usage) //Use power from static power users.
+		draw_power(total_static_power_usage)
+
 /obj/machinery/power/apc/process(seconds_per_tick)
 	if(icon_update_needed)
 		update_appearance()
@@ -496,10 +510,6 @@
 	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
 	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP] : 0
 	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON] : 0
-	var/total_static_power_usage = 0
-	total_static_power_usage += APC_CHANNEL_IS_ON(lighting) * area.power_usage[AREA_USAGE_STATIC_LIGHT]
-	total_static_power_usage += APC_CHANNEL_IS_ON(equipment) * area.power_usage[AREA_USAGE_STATIC_EQUIP]
-	total_static_power_usage += APC_CHANNEL_IS_ON(environ) * area.power_usage[AREA_USAGE_STATIC_ENVIRON]
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
@@ -510,9 +520,6 @@
 	var/last_eq = equipment
 	var/last_en = environ
 	var/last_ch = charging
-
-	if(total_static_power_usage)
-		draw_power(total_static_power_usage)
 
 	var/excess = surplus()
 
@@ -541,7 +548,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < 15 && !excess) // <15%, turn off lighting & equipment
+		else if(cell.percent() < 15) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -549,7 +556,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < 30 && !excess) // <30%, turn off equipment
+		else if(cell.percent() < 30) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
@@ -571,11 +578,8 @@
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating && excess && cell.charge < cell.maxcharge)
-			// Max charge is capped to % per second constant
-			//var/ch = min(excess, cell.maxcharge)
-			//add_load(ch) // Removes the power we're taking from the grid
-			//cell.give(ch) // actually recharge the cell
-			charge_cell(min(cell.chargerate, cell.maxcharge * GLOB.CHARGELEVEL) * seconds_per_tick, cell = cell, grid_only = TRUE)
+			// Max charge is capped to % per second constant.
+			lastused_total += charge_cell(min(cell.chargerate, cell.maxcharge * GLOB.CHARGELEVEL) * seconds_per_tick, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
 		else
 			charging = APC_NOT_CHARGING
 			if(!excess)
