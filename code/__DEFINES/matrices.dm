@@ -1,6 +1,9 @@
 /// Helper macro for creating a matrix at the given offsets.
 /// Works at compile time.
 #define TRANSLATE_MATRIX(offset_x, offset_y) matrix(1, 0, (offset_x), 0, 1, (offset_y))
+/// Helper macro for creating a matrix at the given scaling.
+/// Works at compile time.
+#define SCALE_MATRIX(scale_x, scale_y) matrix((scale_x), 0, 0, 0, (scale_y), 0)
 /// The color matrix of an image which colors haven't been altered. Does nothing.
 #define COLOR_MATRIX_IDENTITY list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 /// Color inversion

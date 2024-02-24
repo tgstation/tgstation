@@ -61,7 +61,10 @@
 	plane = PLANE_SPACE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
-	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
+	// We NEED to render this or emissives go fucky
+	critical = PLANE_CRITICAL_DISPLAY
+	#warn parallax can't be BLEND_INSET_OVERALY because if not all planes are caught we'll end up drawing over the z layers below us
+	#warn so we need a way of tracking if color should be set or not
 
 /atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
@@ -107,6 +110,9 @@
 /atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_offset, multiz_boundary)
 	. = ..()
 	if(.)
+		// Don't draw to yourself bro
+		if(offset == 0)
+			return
 		// if we're rendering, always readd.
 		// just in case we lost it
 		var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
@@ -397,18 +403,21 @@
 	name = "Runechat"
 	documentation = "Holds runechat images, that text that pops up when someone say something. Uses a dropshadow to well, look nice."
 	plane = RUNECHAT_PLANE
+	render_target = RUNECHAT_RENDER_TARGET
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
-/atom/movable/screen/plane_master/runechat/show_to(mob/mymob)
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao
+	name = "Runechat AO"
+	plane = RUNECHAT_AO_PLANE
+	render_relay_planes = list()
+
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	if(!.)
-		return
-	remove_filter("AO")
-	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
-		// You might ask "why not use ambient occlusion?"
-		// Because it's one of the most expensive possible visual effects, and there is NO reason to use it for runechat
-		// When we can get an ok backdrop like this
-		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+#warn is this transform actually saving time? what happens if we do this work on a non plane master screen overlay
+	add_filter("games", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(RUNECHAT_RENDER_TARGET, offset), y = -2, color = "#04080F6F", transform = SCALE_MATRIX(1/2, 1/2)))
+	add_filter("blur", 2, gauss_blur_filter(1))
+	add_relay_to(RENDER_PLANE_NON_GAME, relay_transform = SCALE_MATRIX(2, 2), relay_appearance_flags = PIXEL_SCALE)
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"

@@ -225,11 +225,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(distance_from_owner < 0 && (offset > lowest_possible_offset || \
 		multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && abs(distance_from_owner) > multiz_boundary))
 		if(hidden_by_distance || force_hidden)
-			return (critical & PLANE_CRITICAL_DISPLAY && offset < lowest_possible_offset) // yeah this is dumb I'm sorry
+			return (critical & PLANE_CRITICAL_DISPLAY && offset <= lowest_possible_offset) // yeah this is dumb I'm sorry
 		hidden_by_distance = TRUE
 		// If it's critical to how lower layers look visually (mostly lighting)
 		// Keep the bare bones
-		if(critical & PLANE_CRITICAL_DISPLAY && (offset < lowest_possible_offset))
+		if((critical & PLANE_CRITICAL_DISPLAY) && (offset <= lowest_possible_offset))
 			retain_hidden_plane(relevant)
 			return TRUE
 		// Otherwise, yayeeet

@@ -20,15 +20,17 @@
 
 #define TRANSPARENT_FLOOR_PLANE -10
 
-#define FLOOR_PLANE -6
+#define FLOOR_PLANE -7
 
-#define WALL_PLANE -5
-#define GAME_PLANE -4
-#define ABOVE_GAME_PLANE -3
+#define WALL_PLANE -6
+#define GAME_PLANE -5
+#define ABOVE_GAME_PLANE -4
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
-#define SEETHROUGH_PLANE -2
+#define SEETHROUGH_PLANE -3
 
+#define RENDER_PLANE_GAME_WORLD_AO -2
 #define RENDER_PLANE_GAME_WORLD -1
+#define GAME_WORLD_RENDER_TARGET "*GAME_WORLD_RENDER_TARGET"
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
@@ -81,7 +83,9 @@
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
 ///Popup Chat Messages
+#define RUNECHAT_AO_PLANE 29
 #define RUNECHAT_PLANE 30
+#define RUNECHAT_RENDER_TARGET "*RUNECHAT_RENDER_TARGET"
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 31
 
@@ -312,7 +316,6 @@
 /// We assume this plane master has a render target starting with *, it'll be removed, forcing it to render in place
 #define PLANE_CRITICAL_CUT_RENDER (1<<3)
 
-#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
 #define PLANE_CRITICAL_ALWAYS_DISPLAY (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
