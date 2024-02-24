@@ -8,6 +8,7 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	var/modifies_speech = FALSE
+	///Whether the mask is pushed out of the food hole or not.
 	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?

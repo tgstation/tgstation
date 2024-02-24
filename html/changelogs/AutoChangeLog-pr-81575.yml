@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Ethereal heart revive doesn't delete organs alien to your species, like prosthetics, cybernetics, and possibly itself."
-  - bugfix: "Nightmare heart revive doesn't delete organs alien to your species, like itself, upon which it would stop the conversion to shadowperson."

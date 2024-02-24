@@ -383,7 +383,8 @@
 	unarmed_effectiveness = 15
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
-
+	/// Used by the bloodysoles component to make footprints
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 	biological_state = BIO_STANDARD_JOINTED
 
 /obj/item/bodypart/leg/Destroy()
@@ -462,7 +463,8 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_effectiveness = 0
+	unarmed_effectiveness = 5
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -552,6 +554,7 @@
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
 	unarmed_effectiveness = 5
+	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
