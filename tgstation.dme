@@ -6696,6 +6696,7 @@
 #include "monkestation\code\modules\surgery\blood_filter.dm"
 #include "monkestation\code\modules\surgery\bodyparts\arachnid_bodyparts.dm"
 #include "monkestation\code\modules\surgery\bodyparts\clockwork_bodyparts.dm"
+#include "monkestation\code\modules\surgery\bodyparts\ethereal_bodyparts.dm"
 #include "monkestation\code\modules\surgery\bodyparts\floran_bodyparts.dm"
 #include "monkestation\code\modules\surgery\bodyparts\ipc_bodyparts.dm"
 #include "monkestation\code\modules\surgery\bodyparts\oozeling_bodyparts.dm"
