@@ -2,7 +2,7 @@
  * TO DO LIST
  *
  * Make all borgs slaved to the Human AI
- * Add a way to block the Human AI from leaving the SAT
+ * Add a way to block the Human AI from leaving the SAT (maybe something similar to free golems when on-station)
  * Add a way for the Human AI to have consoles, either by replacing its surroundings (maybe with modular maps) or some form of drop-pod for computers.
  * Add some default lawset for them on a piece of paper that they are told to follow, and cyborgs are given.
  * Lobby icon for station trait
