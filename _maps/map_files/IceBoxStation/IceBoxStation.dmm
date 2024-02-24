@@ -4665,7 +4665,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/chair/stool/directional/north,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "bAk" = (
@@ -7351,13 +7351,13 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "cnU" = (
-/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/computer/security/telescreen/vault{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/computer/cargo,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "coa" = (
@@ -10934,11 +10934,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "dsf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
@@ -11214,7 +11209,6 @@
 /area/station/security/brig)
 "dwY" = (
 /obj/machinery/light_switch/directional/west,
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
@@ -31282,9 +31276,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
@@ -31648,10 +31639,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"kin" = (
-/obj/machinery/pdapainter/supply,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/qm)
 "kir" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -34740,8 +34727,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
@@ -34901,6 +34888,9 @@
 /obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
+	},
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -41681,7 +41671,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "nuH" = (
-/obj/machinery/computer/security/qm,
 /obj/machinery/requests_console/directional/west{
 	assistance_requestable = 1;
 	department = "Quartermaster's Desk";
@@ -41691,6 +41680,11 @@
 	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -43534,17 +43528,6 @@
 "nUO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
-/obj/structure/table,
-/obj/item/pen/red,
-/obj/item/pen{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/folder/yellow,
-/obj/machinery/keycard_auth/directional/west{
-	pixel_x = -25;
-	pixel_y = -5
-	},
 /obj/machinery/button/door/directional/west{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
@@ -43554,6 +43537,12 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/folder/yellow,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "nVc" = (
@@ -45144,10 +45133,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "ouZ" = (
-/obj/machinery/computer/cargo,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/computer/security/qm,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ovm" = (
@@ -47855,6 +47844,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ppD" = (
@@ -50952,15 +50942,20 @@
 /obj/machinery/status_display/supply{
 	pixel_x = -32
 	},
-/obj/structure/table,
 /obj/item/coin/silver,
 /obj/item/computer_disk/quartermaster,
 /obj/item/computer_disk/quartermaster,
 /obj/item/computer_disk/quartermaster,
-/obj/item/clipboard,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/item/pen/red,
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/structure/table,
+/obj/item/clipboard,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "qpr" = (
@@ -56751,6 +56746,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/sepia,
 /area/station/service/library)
+"sim" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
 "sin" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "maint3"
@@ -59356,13 +59355,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/eva/lower)
-"taf" = (
-/obj/effect/landmark/start/quartermaster,
-/obj/structure/chair/office{
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/qm)
 "tai" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chemistry Maintenance"
@@ -67346,6 +67338,13 @@
 	},
 /turf/open/openspace,
 /area/station/science/xenobiology)
+"vGC" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/landmark/start/quartermaster,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
 "vGI" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
@@ -70787,7 +70786,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -72025,11 +72023,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
@@ -227626,9 +227619,9 @@ tKI
 sdi
 tKI
 ouZ
-alT
-taf
+vGC
 nWk
+sim
 bAa
 xal
 wLO
@@ -227885,7 +227878,7 @@ tKI
 cnU
 alT
 dcs
-kin
+alT
 dsU
 alT
 lbg

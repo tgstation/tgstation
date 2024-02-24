@@ -9814,7 +9814,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/door/directional/east{
@@ -22369,8 +22368,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24817,10 +24816,7 @@
 /area/station/engineering/storage/tech)
 "gSi" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
+/obj/item/clipboard,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "gSj" = (
@@ -27524,9 +27520,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 4
-	},
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "hQA" = (
@@ -28828,12 +28822,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "int" = (
-/obj/structure/table,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/stamp/qm,
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
@@ -52766,12 +52754,17 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/structure/table,
 /obj/item/folder/yellow,
 /obj/item/pen{
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/structure/table,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/stamp/qm,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "pVb" = (
@@ -53764,7 +53757,6 @@
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "qmH" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
@@ -54013,10 +54005,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "qqw" = (
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/item/clipboard,
 /obj/structure/table,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "qqx" = (
@@ -72022,8 +72013,8 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -73663,7 +73654,11 @@
 	dir = 8
 	},
 /obj/structure/sign/calendar/directional/west,
-/obj/machinery/pdapainter/supply,
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "wuF" = (

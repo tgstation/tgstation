@@ -774,7 +774,7 @@
 /obj/machinery/status_display/supply{
 	pixel_x = -32
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/paper_bin,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
@@ -2428,7 +2428,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "aAU" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -3644,10 +3644,6 @@
 	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
-	},
-/obj/machinery/keycard_auth/directional/east{
-	pixel_x = 40;
-	pixel_y = -8
 	},
 /obj/machinery/button/door/directional/east{
 	id = "qmspace";
@@ -13239,8 +13235,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -16561,7 +16557,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "dXs" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -23366,13 +23362,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space,
 /area/space/nearstation)
-"fFf" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/photocopier,
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
 "fFi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23760,8 +23749,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -25842,7 +25831,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/pdapainter/supply,
+/obj/machinery/photocopier,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "gkT" = (
@@ -33905,7 +33894,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/clothing/gloves/cargo_gauntlet{
 	pixel_y = 6
 	},
@@ -41262,7 +41251,7 @@
 "jWq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/storage/box/lights/mixed,
 /obj/machinery/airalarm/directional/north,
 /obj/item/stock_parts/cell/high/empty,
@@ -46105,7 +46094,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -50083,7 +50072,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/folder/yellow,
 /obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -52042,7 +52031,7 @@
 /area/station/security/courtroom)
 "mDz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/clothing/shoes/wheelys/rollerskates,
 /obj/item/clothing/shoes/wheelys/rollerskates{
 	pixel_y = 5
@@ -64443,7 +64432,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = 4;
 	pixel_y = 6
@@ -70533,7 +70522,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rgC" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/folder/yellow,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
@@ -78050,9 +78039,6 @@
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
-	},
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -87332,7 +87318,7 @@
 "vkK" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/clipboard,
 /obj/item/reagent_containers/cup/glass/mug/tea{
 	pixel_x = -7;
@@ -95468,7 +95454,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "xhJ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/computer_disk/quartermaster,
 /obj/item/computer_disk/quartermaster,
 /obj/item/computer_disk/quartermaster,
@@ -145146,7 +145132,7 @@ awl
 ivt
 krp
 haq
-fFf
+iWR
 jmp
 cQo
 gkP

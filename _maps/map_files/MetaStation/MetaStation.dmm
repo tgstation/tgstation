@@ -20218,6 +20218,10 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"hAx" = (
+/obj/structure/closet/secure_closet/quartermaster,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/qm)
 "hAE" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/telecomms,
@@ -34628,7 +34632,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "mxO" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/north,
 /turf/open/floor/wood,
@@ -35744,10 +35747,6 @@
 	dir = 1
 	},
 /area/station/security/prison)
-"mQR" = (
-/obj/machinery/pdapainter/supply,
-/turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
 "mRg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53384,8 +53383,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -59781,12 +59780,6 @@
 /obj/structure/fireaxecabinet/mechremoval/directional/east,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"vkR" = (
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
 "vlh" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
@@ -60977,9 +60970,6 @@
 /area/station/commons/fitness/recreation)
 "vHG" = (
 /obj/structure/table/wood,
-/obj/machinery/keycard_auth/directional/south{
-	pixel_x = -6
-	},
 /obj/machinery/button/door/directional/south{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
@@ -86325,7 +86315,7 @@ cjJ
 cjJ
 cjJ
 cLc
-vkR
+eKk
 wZi
 dWF
 xOw
@@ -86580,9 +86570,9 @@ qIK
 suJ
 bor
 iLV
-mQR
+cjJ
 lud
-eKk
+hAx
 kQP
 ifI
 qzC
