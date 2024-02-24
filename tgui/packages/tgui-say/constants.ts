@@ -21,6 +21,7 @@ export const RADIO_PREFIXES = {
   ':b ': 'io',
   ':c ': 'Cmd',
   ':e ': 'Engi',
+  ':g ': 'CHive',
   ':m ': 'Med',
   ':n ': 'Sci',
   ':o ': 'AI',
