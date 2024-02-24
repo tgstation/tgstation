@@ -1,45 +1,37 @@
 ///A simple component that replacess the user's appearance with that of the parent item when equipped.
 /datum/component/tactical
-	///The allowed slot(s) for the effect.
-	var/allowed_slot
+	///The allowed slots for the effect.
+	var/list/allowed_slots
 	///A cached of where the item is currently equipped.
 	var/current_slot
 
-/datum/component/tactical/Initialize(allowed_slot)
+/datum/component/tactical/Initialize(allowed_slots)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.allowed_slot = allowed_slot
-
-/datum/component/tactical/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
-	var/obj/item/item = parent
-	if(ismob(item.loc))
-		var/mob/holder = item.loc
-		modify(item, holder, holder.get_slot_by_item(item))
-
-/datum/component/tactical/UnregisterFromParent()
-	UnregisterSignal(parent, list(
-		COMSIG_ITEM_EQUIPPED,
-	))
-	unmodify()
+	src.allowed_slots = allowed_slots
 
 /datum/component/tactical/Destroy()
 	unmodify()
 	return ..()
 
+/datum/component/tactical/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+
+/datum/component/tactical/UnregisterFromParent()
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_MOVABLE_Z_CHANGED,
+	))
+
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(allowed_slot && !(slot & allowed_slot))
+	if(allowed_slots && !(slot & allowed_slots))
 		if(current_slot)
 			unmodify(source, user)
 		return
-
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(tactical_update))
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	current_slot = slot
 
@@ -51,6 +43,9 @@
 	image.plane = FLOAT_PLANE
 	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
 
+	RegisterSignal(source, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
+	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	if(!source)
@@ -60,10 +55,14 @@
 	if(!istype(user))
 		return
 
-	user.remove_alt_appearance("sneaking_mission[REF(src)]")
+	UnregisterSignal(source, list(
+		COMSIG_ITEM_DROPPED,
+		COMSIG_MOVABLE_MOVED,
+	))
 	current_slot = null
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_UPDATED_ICON, COMSIG_MOVABLE_MOVED))
+	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 
+///Checks if a mob is holding us, and if so we will modify our appearance to properly match w/ the mob.
 /datum/component/tactical/proc/tactical_update(obj/item/source)
 	SIGNAL_HANDLER
 	if(!ismob(source.loc))
