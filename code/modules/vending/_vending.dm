@@ -207,14 +207,11 @@
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
 
-// Structures / Items vendors don't crush on landing on them
-// Currently conveyors and chairs.
-var/list/vendor_nocrush = list(
-	//WALLITEMS_EXTERIOR,
-	//WALLITEMS_INTERIOR,
+/// Contains structures and items that vendors shouldn't crush when we land on them.
+GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
 	/obj/structure/chair,
 	/obj/machinery/conveyor,
-)
+) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR)
 
 /datum/armor/machinery_vending
 	melee = 20
