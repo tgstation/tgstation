@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "Mining cyborgs now keep the state of their mining scanner when stored, without shutting off."
