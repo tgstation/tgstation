@@ -863,7 +863,7 @@
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/new_frame = new /obj/structure/frame/machine(loc)
 
-	new_frame.state = 2
+	new_frame.state = FRAME_STATE_WIRED
 
 	// If the new frame shouldn't be able to fit here due to the turf being blocked, spawn the frame deconstructed.
 	if(isturf(loc))
@@ -873,7 +873,7 @@
 			new_frame.deconstruct(disassembled)
 			return
 
-	new_frame.icon_state = "box_1"
+	new_frame.update_appearance(UPDATE_ICON_STATE)
 	. = new_frame
 	new_frame.set_anchored(anchored)
 	if(!disassembled)

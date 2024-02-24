@@ -113,7 +113,7 @@
 /area/ruin/powered/mailroom)
 "kZ" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
-/obj/item/valentine,
+/obj/item/paper/valentine,
 /obj/item/grenade/c4,
 /obj/item/clothing/accessory/medal/conduct,
 /obj/item/paper/crumpled/muddy/fluff/instructions,

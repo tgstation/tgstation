@@ -23833,7 +23833,7 @@
 /obj/machinery/conveyor{
 	id = "mining"
 	},
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "iIf" = (
@@ -24819,13 +24819,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "iWB" = (
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/storage/fancy/candle_box,
 /obj/machinery/light/small/directional/east,
+/obj/structure/rack/skeletal,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "iWD" = (
@@ -56637,10 +56633,6 @@
 "uhI" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/obj/machinery/requests_console/directional/north{
-	department = "Security";
-	name = "Security Requests Console"
-	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "uhP" = (
