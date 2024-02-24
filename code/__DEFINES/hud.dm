@@ -160,6 +160,7 @@
 #define ui_ai_state_laws "BOTTOM:6,RIGHT-1"
 #define ui_ai_mod_int "BOTTOM:6,RIGHT"
 #define ui_ai_language_menu "BOTTOM+1:8,RIGHT-1:30"
+#define ui_ai_floor_menu "BOTTOM+1:8,RIGHT-1:14"
 
 #define ui_ai_crew_monitor "BOTTOM:6,CENTER-1"
 #define ui_ai_crew_manifest "BOTTOM:6,CENTER"
