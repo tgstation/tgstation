@@ -74,6 +74,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(old_assembly) //check to see if the camera assembly was upgraded at all.
 		assembly = old_assembly
 		assembly_ref = WEAKREF(assembly) //important to do this now since upgrades call back to the assembly_ref
+		setDir(assembly.dir)
+		assembly.forceMove(src)
+		var/area/A = get_area(src)
+		c_tag = "[format_text(A.name)] ([rand(1, 999)])"
+
 		if(assembly.xray_module)
 			upgradeXRay()
 		else if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
@@ -86,9 +91,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 		if(assembly.proxy_module)
 			upgradeMotion()
+
 	else
 		assembly = new(src)
-		assembly.state = 4 //STATE_FINISHED
+		assembly.state = CAMERA_STATE_FINISHED
 		assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
@@ -323,7 +329,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				qdel(attacking_item)
 			else
 				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
 
 		else if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
@@ -332,7 +337,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 					to_chat(user, span_notice("You attach [attacking_item] into [assembly]'s inner circuits."))
 			else
 				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
 
 		else if(isprox(attacking_item))
 			if(!isMotion())
@@ -343,7 +347,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				qdel(attacking_item)
 			else
 				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
+		return
 
 	// OTHER
 	if(istype(attacking_item, /obj/item/modular_computer))

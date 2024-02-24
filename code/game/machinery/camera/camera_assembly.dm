@@ -1,8 +1,3 @@
-#define STATE_WRENCHED 1
-#define STATE_WELDED 2
-#define STATE_WIRED 3
-#define STATE_FINISHED 4
-
 /obj/item/wallframe/camera
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
@@ -28,7 +23,7 @@
 								//will be false if the camera is upgraded with the proper parts.
 	var/malf_emp_firmware_present //so the malf upgrade is restored when the normal upgrade part is removed.
 	var/obj/item/assembly/prox_sensor/proxy_module
-	var/state = STATE_WRENCHED
+	var/state = CAMERA_STATE_WRENCHED
 
 /obj/structure/camera_assembly/examine(mob/user)
 	. = ..()
@@ -37,30 +32,30 @@
 	if(emp_module)
 		. += span_info("It has electromagnetic interference shielding installed.")
 		has_upgrades = TRUE
-	else if(state == STATE_WIRED)
+	else if(state == CAMERA_STATE_WIRED)
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(xray_module)
 		. += span_info("It has an X-ray photodiode installed.")
 		has_upgrades = TRUE
-	else if(state == STATE_WIRED)
+	else if(state == CAMERA_STATE_WIRED)
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(proxy_module)
 		. += span_info("It has a proximity sensor installed.")
 		has_upgrades = TRUE
-	else if(state == STATE_WIRED)
+	else if(state == CAMERA_STATE_WIRED)
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
 
 	//construction states
 	switch(state)
-		if(STATE_WRENCHED)
+		if(CAMERA_STATE_WRENCHED)
 			. += span_info("You can secure it in place with a <b>welder</b>, or removed with a <b>wrench</b>.")
-		if(STATE_WELDED)
+		if(CAMERA_STATE_WELDED)
 			. += span_info("You can add <b>wires</b> to it, or <b>unweld</b> it from the wall.")
-		if(STATE_WIRED)
+		if(CAMERA_STATE_WIRED)
 			if(has_upgrades)
 				. += span_info("You can remove the contained upgrades with a <b>crowbar</b>.")
 			. += span_info("You can complete it with a <b>screwdriver</b>, or <b>unwire</b> it to start removal.")
-		if(STATE_FINISHED)
+		if(CAMERA_STATE_FINISHED)
 			. += span_boldwarning("You shouldn't be seeing this, tell a coder!")
 
 /obj/structure/camera_assembly/Initialize(mapload, ndir, building)
@@ -122,33 +117,32 @@
 		proxy_module = null
 
 /obj/structure/camera_assembly/welder_act(mob/living/user, obj/item/tool)
-	if(state != STATE_WRENCHED && state != STATE_WELDED)
+	if(state != CAMERA_STATE_WRENCHED && state != CAMERA_STATE_WELDED)
 		return
 	. = TRUE
 	if(!tool.tool_start_check(user, amount=1))
 		return
-	user.balloon_alert_to_viewers("[state == STATE_WELDED ? "un" : null]welding...")
+	user.balloon_alert_to_viewers("[state == CAMERA_STATE_WELDED ? "un" : null]welding...")
 	audible_message(span_hear("You hear welding."))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
-		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding!")
+		user.balloon_alert_to_viewers("stopped [state == CAMERA_STATE_WELDED ? "un" : null]welding!")
 		return
-	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)
-	set_anchored(state == STATE_WELDED)
-	user.balloon_alert_to_viewers(state == STATE_WELDED ? "welded" : "unwelded")
-
+	state = ((state == CAMERA_STATE_WELDED) ? CAMERA_STATE_WRENCHED : CAMERA_STATE_WELDED)
+	set_anchored(state == CAMERA_STATE_WELDED)
+	user.balloon_alert_to_viewers(state == CAMERA_STATE_WELDED ? "welded" : "unwelded")
 
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
-		if(STATE_WELDED)
+		if(CAMERA_STATE_WELDED)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
 					to_chat(user, span_notice("You add wires to [src]."))
-					state = STATE_WIRED
+					state = CAMERA_STATE_WIRED
 				else
 					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
 				return
-		if(STATE_WIRED) // Upgrades!
+		if(CAMERA_STATE_WIRED) // Upgrades!
 			if(istype(W, /obj/item/stack/sheet/mineral/plasma)) //emp upgrade
 				if(emp_module)
 					to_chat(user, span_warning("[src] already contains a [emp_module]!"))
@@ -189,7 +183,7 @@
 	return ..()
 
 /obj/structure/camera_assembly/crowbar_act(mob/user, obj/item/tool)
-	if(state != STATE_WIRED)
+	if(state != CAMERA_STATE_WIRED)
 		return FALSE
 	var/list/droppable_parts = list()
 	if(xray_module)
@@ -214,7 +208,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	if(state != STATE_WIRED)
+	if(state != CAMERA_STATE_WIRED)
 		return FALSE
 
 	tool.play_tool_sound(src)
@@ -228,30 +222,27 @@
 	for(var/i in tempnetwork)
 		tempnetwork -= i
 		tempnetwork += lowertext(i)
-	state = STATE_FINISHED
-	var/obj/machinery/camera/C = new(loc, src)
-	forceMove(C)
-	C.setDir(src.dir)
+	state = CAMERA_STATE_FINISHED
+	obj_flags |= NO_DECONSTRUCTION
+	var/obj/machinery/camera/new_camera = new(loc, src)
 
-	C.network = tempnetwork
-	var/area/A = get_area(src)
-	C.c_tag = "[format_text(A.name)] ([rand(1, 999)])"
+	new_camera.network = tempnetwork
 	return TRUE
 
 /obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)
 	. = ..()
-	if(state != STATE_WIRED)
+	if(state != CAMERA_STATE_WIRED)
 		return
 
 	new /obj/item/stack/cable_coil(drop_location(), 2)
 	I.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the wires from the circuits."))
-	state = STATE_WELDED
+	state = CAMERA_STATE_WELDED
 	return TRUE
 
 /obj/structure/camera_assembly/wrench_act(mob/user, obj/item/I)
 	. = ..()
-	if(state != STATE_WRENCHED)
+	if(state != CAMERA_STATE_WRENCHED)
 		return
 	I.play_tool_sound(src)
 	to_chat(user, span_notice("You detach [src] from its place."))
@@ -267,14 +258,7 @@
 	qdel(src)
 	return TRUE
 
-
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc)
 	qdel(src)
-
-
-#undef STATE_WRENCHED
-#undef STATE_WELDED
-#undef STATE_WIRED
-#undef STATE_FINISHED

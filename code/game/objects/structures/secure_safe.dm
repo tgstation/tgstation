@@ -46,6 +46,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
 	color = "#ffdd33"
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
 
