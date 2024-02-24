@@ -226,11 +226,9 @@
 	if(!ionpulse_on)
 		return
 
-	if(cell.charge <= 10)
+	if(!cell.use(1e4))
 		toggle_ionpulse()
 		return
-
-	cell.charge -= 10
 	return TRUE
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
@@ -252,7 +250,7 @@
 /mob/living/silicon/robot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+		. += "Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"
 	else
 		. += "No Cell Inserted!"
 

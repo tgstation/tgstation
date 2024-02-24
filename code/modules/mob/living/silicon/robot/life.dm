@@ -14,14 +14,14 @@
 		if(cell?.charge)
 			low_power_mode = FALSE
 	else if(stat == CONSCIOUS)
-		use_power(1000 * seconds_per_tick, times_fired)
+		use_power(seconds_per_tick, times_fired)
 
 /mob/living/silicon/robot/proc/use_power(seconds_per_tick, times_fired)
 	if(cell?.charge)
 		if(cell.charge <= 10000)
 			drop_all_held_items()
-		var/amt = clamp(1000 * lamp_enabled * lamp_intensity * seconds_per_tick, 500 * seconds_per_tick, cell.charge) //Lamp will use a max of 5kW, depending on brightness of lamp. If lamp is off, borg systems consume 500W, or the rest of the cell if it's lower than that.
-		cell.use(amt) //Usage table: 0.5/second if off/lowest setting, 4 = 2/second, 6 = 4/second, 8 = 6/second, 10 = 8/second
+		var/amt = max(1000 * lamp_enabled * lamp_intensity * seconds_per_tick, 500 * seconds_per_tick) //Lamp will use a max of 5kW, depending on brightness of lamp. If lamp is off, borg systems consume 500W, or the rest of the cell if it's lower than that.
+		cell.use(amt, force = TRUE)
 	else
 		drop_all_held_items()
 		low_power_mode = TRUE
