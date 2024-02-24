@@ -152,6 +152,13 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"bZ" = (
+/obj/item/trash/candle{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/open/misc/asteroid/snow/airless,
+/area/centcom/syndicate_mothership)
 "cl" = (
 /turf/open/lava/plasma/ice_moon,
 /area/centcom/syndicate_mothership/control)
@@ -349,6 +356,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
+"dZ" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "ec" = (
 /obj/structure/sign/poster/contraband/cc64k_ad,
 /turf/closed/indestructible/syndicate,
@@ -487,6 +498,10 @@
 "fw" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership)
+"fx" = (
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "fy" = (
 /obj/structure/lattice/catwalk,
@@ -1033,6 +1048,10 @@
 /obj/structure/sign/poster/contraband/power/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"lx" = (
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "lA" = (
 /obj/machinery/door/window/survival_pod/left/directional/west{
 	name = "Toilet Door"
@@ -1281,6 +1300,15 @@
 	dir = 8
 	},
 /area/centcom/syndicate_mothership/control)
+"oN" = (
+/obj/item/storage/fancy/candle_box,
+/obj/structure/rack,
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "oR" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets,
@@ -1644,17 +1672,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
-"sA" = (
-/obj/effect/turf_decal/siding/wideplating{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/airlock/hatch{
-	name = "Workout Room"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership)
 "sE" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 1
@@ -1743,6 +1760,17 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
+"tB" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating,
+/obj/machinery/door/airlock/hatch{
+	name = "Workout Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership)
 "tJ" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -1984,10 +2012,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
-"xh" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/syndicate_mothership)
 "xj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -3500,8 +3524,7 @@
 	pixel_y = 6
 	},
 /obj/item/flashlight/lamp/green{
-	pixel_y = 9;
-	pixel_x = 3
+	pixel_y = 9
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
@@ -3726,6 +3749,14 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
+"QD" = (
+/obj/item/flashlight{
+	pixel_y = 6
+	},
+/obj/structure/rack,
+/obj/item/flashlight,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "QJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3748,6 +3779,14 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
+"QS" = (
+/obj/item/trash/candle{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/cigbutt/cigarbutt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "Rd" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
@@ -5274,9 +5313,9 @@ sU
 sU
 sU
 sU
-sU
-sU
-sU
+Ye
+Ye
+Ye
 Ye
 Ye
 Ye
@@ -5376,10 +5415,10 @@ sU
 sU
 sU
 sU
-sU
-sU
 Ye
 Ye
+Kq
+Kq
 Kq
 Kq
 Kq
@@ -5478,11 +5517,11 @@ sU
 sU
 sU
 sU
-sU
-Ye
 Ye
 Kq
 Kq
+Xk
+fx
 Xk
 Kq
 Kq
@@ -5581,9 +5620,9 @@ sU
 sU
 sU
 Ye
-Ye
 Kq
-Kq
+oN
+Xk
 Xk
 Xk
 Xk
@@ -5684,7 +5723,7 @@ sU
 sU
 Ye
 Kq
-Kq
+QS
 Xk
 Xk
 Xk
@@ -5786,9 +5825,9 @@ sU
 sU
 Ye
 Kq
-xh
+QD
 Xk
-Xk
+lx
 Xk
 Xk
 Xk
@@ -5891,9 +5930,9 @@ Kq
 Kq
 Kq
 Kq
-sA
+tB
 Kq
-xh
+dZ
 Xk
 Xk
 tO
@@ -7220,7 +7259,7 @@ uT
 uT
 uT
 uT
-uT
+bZ
 uT
 uT
 uT
