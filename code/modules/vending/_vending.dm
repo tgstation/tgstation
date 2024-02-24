@@ -827,7 +827,7 @@ GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if(can_be_vendorcrushed(atom_target))
+			else if(vendor_can_crush_item(atom_target))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
@@ -867,7 +867,7 @@ GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
 /atom/movable/proc/post_tilt()
 	return
 
-/atom/movable/proc/can_be_vendorcrushed(atom/atom_target)
+/atom/movable/proc/vendor_can_crush_item(atom/atom_target)
 	if(is_type_in_list(atom_target, GLOB.vendor_uncrushable_items)) //make sure its not in the list of "uncrushable" stuff
 		return FALSE
 
