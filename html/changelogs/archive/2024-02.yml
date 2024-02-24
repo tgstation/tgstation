@@ -643,3 +643,48 @@
   - rscadd: Machine frames can now be deconstructed with screwdrivers, and computer
       frames can now be deconstructed with welding torches. Welders are faster.
   - bugfix: Organs have the blood DNA of their owns on them again
+2024-02-23:
+  00-Steven:
+  - bugfix: Chefs (not to be confused with cooks) actually display as being a part
+      of service on the crew monitor.
+  13spacemen:
+  - refactor: Bloody item overlays no longer use icon procs to generate the overlay
+  13spacemen, Kapu1178:
+  - refactor: Footprint sprites are now based on your shoes and legs, shoes have priority
+  - image: Monkey legs now produce pawprints instead of footprints
+  JohnFulpWillard:
+  - refactor: Holographic mobs now gives better feedback to players and should more
+      consistently not give any drops.
+  - spellcheck: Removed a double space in health analyzer's message telling you someone
+      is deaf.
+  Melbert:
+  - bugfix: You can now take our your anger upon arcade cabinets upon losing (they
+      can be hit again)
+  - rscdel: Deletes Mythril Coins from random coin spawners
+  - rscdel: Replaces Mythril sheets in icebox vent fishing with Runite sheets
+  SgtHunk:
+  - bugfix: The Summon Simians spell will now properly check for monkey faction, allowing
+      people who are monkeys to not be mauled.
+  nevimer:
+  - bugfix: ForceEvent tgui panel search is more reliable.
+2024-02-24:
+  00-Steven:
+  - bugfix: Chef and department security have the assignment on their ID imprinted
+      onto their PDA by default, instead of defaulting to Cook/Security Officer and
+      requiring you to do so manually.
+  A.C.M.O.:
+  - qol: CPR can be administered by species which do not need to breathe, so long
+      as they have functional lungs.
+  ArcaneMusic:
+  - bugfix: Mining cyborgs now keep the state of their mining scanner when stored,
+      without shutting off.
+  Echriser:
+  - bugfix: you can no longer feed people with covered mouths using spoons or ladles
+  JohnFulpWillard:
+  - bugfix: Alien larvas' examine text no longer tells you they are missing arms and
+      legs.
+  Melbert:
+  - bugfix: Cyborgs spark and spit out oil when smacked again. Among other things.
+  vinylspiders:
+  - bugfix: fixes spurious CI failure in museum
+  - code_imp: adds a blacklist feature to spawners

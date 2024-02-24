@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Deletes Mythril Coins from random coin spawners"
-  - rscdel: "Replaces Mythril sheets in icebox vent fishing with Runite sheets"
