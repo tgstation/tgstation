@@ -830,7 +830,7 @@ var/list/vendor_nocrush = list(
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if  (can_be_vendorcrushed(atom_target))
+			else if(can_be_vendorcrushed(atom_target))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
