@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "multiple reactions occuring in the same holder like mixing drinks will yield correct reagent result volumes"
-  - code_imp: " Removes `update_total()` from instant reactions improving performance slightly"
-  - code_imp: "merges `remove_all_direct()` with `remove_all()` to reduce code size"
