@@ -40,6 +40,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
+	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
 // Slight extra armor, bulky size, slows you down, can carry a large oxygen tank, won't burn off.

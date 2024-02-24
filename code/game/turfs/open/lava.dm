@@ -49,6 +49,13 @@
 	if(!smoothing_flags)
 		update_appearance()
 
+
+/turf/open/lava/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
+	return ..()
+
 /turf/open/lava/update_overlays()
 	. = ..()
 	. += emissive_appearance(mask_icon, mask_state, src)
@@ -136,12 +143,9 @@
 
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(gone))
-		var/mob/living/leaving_mob = gone
-		if(!islava(leaving_mob.loc))
-			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!leaving_mob.on_fire)
-			leaving_mob.update_fire()
+	if(isliving(gone) && !islava(gone.loc))
+		gone.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(gone, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -293,11 +297,13 @@
 #undef LAVA_BE_BURNING
 
 /turf/open/lava/proc/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
-	. = TRUE
+	if(QDELETED(burn_target))
+		return FALSE
+
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
 		if(burn_obj.resistance_flags & ON_FIRE) // already on fire; skip it.
-			return
+			return TRUE
 		if(!(burn_obj.resistance_flags & FLAMMABLE))
 			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 		if(burn_obj.resistance_flags & FIRE_PROOF)
@@ -306,19 +312,21 @@
 			burn_obj.set_armor_rating(FIRE, 50)
 		burn_obj.fire_act(temperature_damage, 1000 * seconds_per_tick)
 		if(istype(burn_obj, /obj/structure/closet))
-			var/obj/structure/closet/burn_closet = burn_obj
-			for(var/burn_content in burn_closet.contents)
+			for(var/burn_content in burn_target)
 				burn_stuff(burn_content)
-		return
+		return TRUE
 
-	var/mob/living/burn_living = burn_target
-	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	burn_living.update_fire()
-
-	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
-	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
+	if(isliving(burn_target))
+		var/mob/living/burn_living = burn_target
+		if(!HAS_TRAIT_FROM(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT))
+			burn_living.AddElement(/datum/element/perma_fire_overlay)
+			ADD_TRAIT(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
+		burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+		return TRUE
+
+	return FALSE
 
 /turf/open/lava/smooth
 	name = "lava"

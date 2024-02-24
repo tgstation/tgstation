@@ -101,3 +101,6 @@ LOG_WHISPER
 
 ## log manual target zone switching
 LOG_ZONE_SWITCH
+
+## Enable the demo subsystem
+DEMOS_ENABLED

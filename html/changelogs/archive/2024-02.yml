@@ -204,3 +204,33 @@
     - rscadd: Transgender-themed thigh-highs and knee-highs to the clothing options
         for socks (sadkris)
     - rscadd: Added in a new sock type, Thigh-high and Knee-high ace socks. (CRITAWAKETS)
+2024-02-22:
+  Absolucy:
+  - bugfix: Fix the supermatter cascade eating the server itself on icebox
+  - bugfix: Fixed a runtime with the SM cascade from a mistyped check
+  - bugfix: Fixed a potential roundstart runtime in the Achievements subsystem.
+  DimWhat:
+  - rscadd: Added a new wand for wizards to purchase
+  - rscadd: Added a plasmabunny clothing set
+  - image: Fixed a few sprite errors in the syndi and british bunnysuits.
+  - bugfix: 'Made the bowtie collar layer properly
+
+      fixes a strange bug with greyscale bunnysuits for lizards'
+  - spellcheck: fixed a few descriptions to the bunny sets.
+2024-02-23:
+  Absolucy:
+  - refactor: Cleaned up unneeded repetitive code for antag token granting
+  - config: Token redeemable antags are now config-based instead of hardcoded.
+  - bugfix: The menu to choose an antag now shows the antag's name instead of the
+      datum typepath.
+  Melbert:
+  - refactor: Fire effects get added to mobs in a different way now. Maybe it will
+      get stuck less. Report any oddities.
+  dwasint:
+  - rscadd: antag rep, for every roll you go without being antag your odds increase,
+      resetting when you become and antag, passing a roll won't remove your rep
+  - rscadd: replays are back
+2024-02-24:
+  Gboster-0:
+  - bugfix: Artefacts will no longer fail to activate their faults inside of peoples
+      backpacks. Beware!

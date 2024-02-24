@@ -1,22 +1,6 @@
-GLOBAL_LIST_INIT(high_threat_antags, list(
-	/datum/antagonist/cult,
-	/datum/antagonist/rev/head,
-	/datum/antagonist/wizard,
-	/datum/antagonist/clock_cultist,
-	/datum/antagonist/ninja,
-))
+GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 
-GLOBAL_LIST_INIT(medium_threat_antags, list(
-	/datum/antagonist/heretic,
-	/datum/antagonist/bloodsucker,
-))
-
-GLOBAL_LIST_INIT(low_threat_antags, list(
-	/datum/antagonist/florida_man,
-	/datum/antagonist/traitor,
-	/datum/antagonist/paradox_clone,
-))
-
+#define ANTAG_TOKEN_CONFIG_FILE "config/monkestation/antag-tokens.toml"
 #define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
 #define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
 #define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
@@ -62,15 +46,11 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 				if(client_token_holder.total_low_threat_tokens <= 0)
 					return
 
-	var/datum/antagonist/chosen_antagonist
-	var/static/list/token_values = list(
-		HIGH_THREAT = GLOB.high_threat_antags,
-		MEDIUM_THREAT = GLOB.medium_threat_antags,
-		LOW_THREAT = GLOB.low_threat_antags,
-	)
-	chosen_antagonist = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", token_values[tier])
-	if(!chosen_antagonist)
+	var/list/chosen_tier = GLOB.antag_token_config[tier]
+	var/antag_key = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", chosen_tier)
+	if(!antag_key || !chosen_tier[antag_key])
 		return
+	var/datum/antagonist/chosen_antagonist = chosen_tier[antag_key]
 
 	client_token_holder.queued_donor = using_donor
 	client_token_holder.in_queued_tier = tier
@@ -79,7 +59,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
 	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> \
 							[ADMIN_APPROVE_ANTAG_TOKEN(src)] [ADMIN_REJECT_ANTAG_TOKEN(src)] | \
-							[src] has requested to use their antag token to be a [chosen_antagonist].")]")
+							[src] has requested to use their antag token to be a [chosen_antagonist::name].")]")
 
 /client/verb/trigger_token_event()
 	set category = "IC"
@@ -118,6 +98,57 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 			return
 		to_chat(src, "You dont have enough tokens to trigger this event.")
 
+/proc/init_antag_list(list/antag_types)
+	. = list()
+	for(var/datum/antagonist/antag_type as anything in antag_types)
+		if(istext(antag_type))
+			antag_type = text2path("/datum/antagonist/[antag_type]")
+		if(!ispath(antag_type))
+			continue
+		.[antag_type::name] = antag_type
+
+/proc/load_antag_token_config(list/antag_types)
+	var/static/default_config = list(
+		HIGH_THREAT = init_antag_list(list(
+			/datum/antagonist/cult,
+			/datum/antagonist/rev/head,
+			/datum/antagonist/wizard,
+			/datum/antagonist/clock_cultist,
+			/datum/antagonist/ninja
+		)),
+		MEDIUM_THREAT = init_antag_list(list(
+			/datum/antagonist/heretic,
+			/datum/antagonist/bloodsucker
+		)),
+		LOW_THREAT = init_antag_list(list(
+			/datum/antagonist/florida_man,
+			/datum/antagonist/traitor,
+			/datum/antagonist/paradox_clone
+		))
+	)
+	var/static/list/toml_keys = list(
+		"high" = HIGH_THREAT,
+		"medium" = MEDIUM_THREAT,
+		"low" = LOW_THREAT
+	)
+	if(!fexists(ANTAG_TOKEN_CONFIG_FILE))
+		log_config("No antag token config file found, using default config.")
+		return default_config
+	var/list/token_config = rustg_read_toml_file(ANTAG_TOKEN_CONFIG_FILE)
+	if(!length(token_config))
+		log_config("Antag token config file is empty, using default config.")
+		return default_config
+	. = list(
+		HIGH_THREAT = list(),
+		MEDIUM_THREAT = list(),
+		LOW_THREAT = list()
+	)
+	for(var/toml_key in toml_keys)
+		var/list/tier_name = toml_keys[toml_key]
+		var/list/token_list = token_config[toml_key]
+		.[tier_name] = init_antag_list(token_list)
+
+#undef ANTAG_TOKEN_CONFIG_FILE
 #undef ADMIN_APPROVE_ANTAG_TOKEN
 #undef ADMIN_REJECT_ANTAG_TOKEN
 #undef ADMIN_APPROVE_TOKEN_EVENT

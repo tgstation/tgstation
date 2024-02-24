@@ -126,15 +126,6 @@
 		to_chat(owner.current, span_warning("You feel something pushing away the light of Rat'var, but you resist it!"))
 	return
 
-/datum/antagonist/clock_cultist/antag_token(datum/mind/hosts_mind, mob/spender)
-	. = ..()
-	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type(/mob/living/carbon/human , null, null, TRUE)
-		newmob.equipOutfit(/datum/outfit/job/assistant)
-		newmob.mind.add_antag_datum(/datum/antagonist/clock_cultist)
-	else
-		hosts_mind.add_antag_datum(/datum/antagonist/clock_cultist)
-
 /datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Rat'var.")

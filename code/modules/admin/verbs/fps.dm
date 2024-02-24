@@ -4,7 +4,7 @@
 	set name = "Set Server FPS"
 	set desc = "Sets game speed in frames-per-second. Can potentially break the game"
 
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/cfg_fps = CONFIG_GET(number/fps)
