@@ -230,3 +230,7 @@
   - rscadd: antag rep, for every roll you go without being antag your odds increase,
       resetting when you become and antag, passing a roll won't remove your rep
   - rscadd: replays are back
+2024-02-24:
+  Gboster-0:
+  - bugfix: Artefacts will no longer fail to activate their faults inside of peoples
+      backpacks. Beware!

@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "Artefacts will no longer fail to activate their faults inside of peoples backpacks. Beware!"
