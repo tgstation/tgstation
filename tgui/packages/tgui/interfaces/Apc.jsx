@@ -131,7 +131,10 @@ const ApcContent = (props) => {
               />
             }
           >
-            [ {chargingStatus.chargingText + (data.chargingStatus === 1 ? data.chargingPowerDisplay : "")} ]
+            [{' '}
+            {chargingStatus.chargingText +
+              (data.chargingStatus === 1 ? data.chargingPowerDisplay : '')}{' '}
+            ]
           </LabeledList.Item>
         </LabeledList>
       </Section>

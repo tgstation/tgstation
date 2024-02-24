@@ -92,7 +92,7 @@ export const ChemDispenser = (props) => {
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar value={data.energy / data.maxEnergy}>
-                {data.displayedEnergy + " / " + data.displayedMaxEnergy}
+                {data.displayedEnergy + ' / ' + data.displayedMaxEnergy}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>
