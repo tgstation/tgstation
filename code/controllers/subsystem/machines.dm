@@ -13,7 +13,8 @@ SUBSYSTEM_DEF(machines)
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/apc_early_processing = list()
-	var/current_part = SSMACHINES_APCS
+	var/list/apc_late_processing = list()
+	var/current_part = SSMACHINES_APCS_EARLY
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
 
@@ -81,24 +82,26 @@ SUBSYSTEM_DEF(machines)
 	if (!resumed)
 		for(var/datum/powernet/powernet as anything in powernets)
 			powernet.reset() //reset the power state.
-		current_part = SSMACHINES_APCS
-		apc_early_processing = get_machines_by_type_and_subtypes(/obj/machinery/power/apc) & processing
+		current_part = SSMACHINES_APCS_EARLY
 		src.currentrun = apc_early_processing.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	if(current_part == SSMACHINES_APCS)
+	//APC early processing. Draws static power usages from their grids.
+	if(current_part == SSMACHINES_APCS_EARLY)
 		while(currentrun.len)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
 			if(QDELETED(apc) || apc.early_process(wait * 0.1) == PROCESS_KILL)
 				apc_early_processing -= apc
+				apc.datum_flags &= ~DF_ISPROCESSING
 			if(MC_TICK_CHECK)
 				return
 		current_part = SSMACHINES_MACHINES
 		currentrun = processing.Copy()
 
+	//General machine processing. Their power usage can be dynamic and based on surplus power, so they come after static power usage have been applied.
 	if(current_part == SSMACHINES_MACHINES)
 		while(currentrun.len)
 			var/obj/machinery/thing = currentrun[currentrun.len]
@@ -107,6 +110,20 @@ SUBSYSTEM_DEF(machines)
 				processing -= thing
 				thing.datum_flags &= ~DF_ISPROCESSING
 			if (MC_TICK_CHECK)
+				return
+		current_part = SSMACHINES_APCS_LATE
+		currentrun = apc_late_processing.Copy()
+
+	//APC late processing. APCs will use the remaining power on the grid to charge their cells if needed.
+	//This is applied at the end so charging APCs don't cause others to discharge by taking all the power from the grid before machines use power.
+	if(current_part == SSMACHINES_APCS_LATE)
+		while(currentrun.len)
+			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(apc) || apc.late_process(wait * 0.1) == PROCESS_KILL)
+				apc_late_processing -= apc
+				apc.datum_flags &= ~DF_ISPROCESSING
+			if(MC_TICK_CHECK)
 				return
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)

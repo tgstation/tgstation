@@ -234,7 +234,6 @@
 /obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
 	var/demand = use_power(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
-	//return_power(demand - power_given, AREA_USAGE_EQUIP)
 	return power_given
 
 

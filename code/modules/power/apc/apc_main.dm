@@ -17,6 +17,7 @@
 	damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
+	processing_flags = START_PROCESSING_MANUALLY
 
 	///Range of the light emitted when on
 	var/light_on_range = 1.5
@@ -46,8 +47,6 @@
 	var/charging = APC_NOT_CHARGING
 	///Can the APC charge?
 	var/chargemode = TRUE
-	///Number of ticks where the apc is trying to recharge
-	var/chargecount = 0
 	///Is the apc interface locked?
 	var/locked = TRUE
 	///Is the apc cover locked?
@@ -140,6 +139,12 @@
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
+	//APCs get added to their own processing tasks for the machines subsystem.
+	if (!(datum_flags & DF_ISPROCESSING))
+		datum_flags |= DF_ISPROCESSING
+		SSmachines.apc_early_processing += src
+		SSmachines.apc_late_processing += src
+
 	//Pixel offset its appearance based on its direction
 	dir = ndir
 	switch(dir)
@@ -489,7 +494,7 @@
 	if(total_static_power_usage) //Use power from static power users.
 		draw_power(total_static_power_usage)
 
-/obj/machinery/power/apc/process(seconds_per_tick)
+/obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
@@ -525,21 +530,13 @@
 
 	if(!avail())
 		main_status = APC_NO_POWER
-	else if(excess < 0)
+	else if(excess <= 0)
 		main_status = APC_LOW_POWER
 	else
 		main_status = APC_HAS_POWER
 
 	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
-
 		// set channels depending on how much charge we have left
-
-		// Allow the APC to operate as normal if the cell can charge
-		if(charging && long_term_power < 10)
-			long_term_power += 1
-		else if(long_term_power > -10)
-			long_term_power -= 2
-
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
@@ -575,41 +572,20 @@
 			if(cell.percent() > 75)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
-
+		charging = APC_NOT_CHARGING
 		// now trickle-charge the cell
-		if(chargemode && charging == APC_CHARGING && operating && excess && cell.charge < cell.maxcharge)
+		if(chargemode && operating && excess && cell.used_charge())
 			// Max charge is capped to % per second constant.
 			lastused_total += charge_cell(min(cell.chargerate, cell.maxcharge * GLOB.CHARGELEVEL) * seconds_per_tick, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
-		else
-			charging = APC_NOT_CHARGING
-			if(!excess)
-				chargecount = 0
+			charging = APC_CHARGING
 
 		// show cell as fully charged if so
 		if(cell.charge >= cell.maxcharge)
 			cell.charge = cell.maxcharge
 			charging = APC_FULLY_CHARGED
 
-		if(chargemode)
-			if(!charging)
-				if(excess > cell.maxcharge * GLOB.CHARGELEVEL)
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 10)
-
-					chargecount = 0
-					charging = APC_CHARGING
-
-		else // chargemode off
-			charging = APC_NOT_CHARGING
-			chargecount = 0
-
 	else // no cell, switch everything off
-
 		charging = APC_NOT_CHARGING
-		chargecount = 0
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 		environ = autoset(environ, AUTOSET_FORCE_OFF)
