@@ -554,7 +554,7 @@
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
 	unarmed_effectiveness = 5
-	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
