@@ -120,6 +120,9 @@
 		return
 	balloon_alert(user, "ready to ride")
 	qdel(attacking_item)
+	make_rideable()
+
+/mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE
 	buckle_lying = 0
 	add_overlay("goliath_saddled")
@@ -149,7 +152,7 @@
 	icon_state = tentacle_warning_state
 
 /// Get ready for mounting
-/mob/living/basic/mining/goliath/proc/tamed()
+/mob/living/basic/mining/goliath/tamed(mob/living/tamer, atom/food)
 	tamed = TRUE
 
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
@@ -162,6 +165,12 @@
 
 /mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
 	tentacle_line?.Trigger(target = atom_target)
+
+/mob/living/basic/mining/goliath/saddled
+
+/mob/living/basic/mining/goliath/saddled/Initialize(mapload)
+	. = ..()
+	make_rideable()
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient

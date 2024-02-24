@@ -70,6 +70,16 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
+/obj/structure/closet/supplypod/podspawn/deathmatch
+	desc = "A blood-red styled drop pod."
+	specialised = TRUE
+
+/obj/structure/closet/supplypod/podspawn/deathmatch/Entered(atom/movable/arrived)
+	. = ..()
+	if(isliving(arrived))
+		var/mob/living/critter = arrived
+		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -89,6 +99,19 @@
 	explosionSize = list(0,0,0,0)
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/closet/supplypod/deadmatch_missile
+	name = "cruise missile"
+	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	decal = null
+	door = null
+	fin_mask = null
+	explosionSize = list(0,1,2,2)
+	effectShrapnel = TRUE
+	rubble_type = RUBBLE_THIN
+	specialised = TRUE
+	delays = list(POD_TRANSIT = 3.5 SECONDS, POD_FALLING = 0.4 SECONDS)
+	effectMissile = TRUE
 
 /datum/armor/closet_supplypod
 	melee = 30

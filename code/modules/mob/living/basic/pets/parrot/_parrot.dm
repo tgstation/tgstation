@@ -445,7 +445,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	return returnable_list
 
-/mob/living/basic/parrot/proc/tamed()
+/mob/living/basic/parrot/tamed(mob/living/tamer, atom/food)
 	new /obj/effect/temp_visual/heart(drop_location())
 
 /mob/living/basic/parrot/proc/drop_item_on_signal(mob/living/user)

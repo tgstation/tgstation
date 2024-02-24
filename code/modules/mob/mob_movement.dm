@@ -57,6 +57,8 @@
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
 		return FALSE //This is sorta the goto stop mobs from moving trait
+	if(HAS_TRAIT(mob, TRAIT_INVERTED_MOVEMENT))
+		direct = REVERSE_DIR(direct)
 	if(!isliving(mob))
 		if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE)
 			return FALSE

@@ -298,6 +298,10 @@
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
 
+///Common basic mob proc for what happens if the animal is tamed.
+/mob/living/basic/proc/tamed(mob/living/tamer, atom/food)
+	return
+
 /mob/living/basic/get_body_temp_heat_damage_limit()
 	return maximum_survivable_temperature
 

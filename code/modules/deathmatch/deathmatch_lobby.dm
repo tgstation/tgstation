@@ -12,14 +12,14 @@
 	/// Whether players hear deadchat and people through walls
 	var/global_chat = FALSE
 	/// Whether the lobby is currently playing
-	var/playing = FALSE
+	var/playing = DEATHMATCH_NOT_PLAYING
 	/// Number of total ready players
 	var/ready_count
 	/// List of loadouts, either gotten from the deathmatch controller or the map
 	var/list/loadouts
 	/// Current map player spawn locations, cleared after spawning
 	var/list/player_spawns = list()
-	/// A list of paths of chosen modifiers that'll be applied when the game starts.
+	/// A list of paths of modifiers that'll be globally applied when the game starts.
 	var/list/modifiers = list()
 
 /datum/deathmatch_lobby/New(mob/player)
@@ -55,7 +55,7 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
-	playing = TRUE
+	playing = DEATHMATCH_PRE_PLAYING
 
 	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
@@ -81,6 +81,9 @@
 		playing = FALSE
 		return FALSE
 
+	for(var/modpath in modifiers)
+		GLOB.deathmatch_game.modifiers[modpath].on_start_game(src)
+
 	for (var/key in players)
 		var/mob/dead/observer/observer = players[key]["mob"]
 		if (isnull(observer) || !observer.client)
@@ -100,19 +103,21 @@
 		var/mob/observer = observers[observer_key]["mob"]
 		observer.forceMove(pick(location.reserved_turfs))
 
+	playing = DEATHMATCH_PLAYING
 	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), initial(map.automatic_gameend_time))
 	log_game("Deathmatch game [host] started.")
 	announce(span_reallybig("GO!"))
 	return TRUE
 
 /datum/deathmatch_lobby/proc/spawn_observer_as_player(ckey, loc)
-	var/mob/dead/observer/observer = players[ckey]["mob"]
+	var/list/players_info = players[ckey]
+	var/mob/dead/observer/observer = players_info["mob"]
 	if (isnull(observer) || !observer.client)
 		remove_ckey_from_play(ckey)
 		return
 
 	// equip player
-	var/datum/outfit/deathmatch_loadout/loadout = players[ckey]["loadout"]
+	var/datum/outfit/deathmatch_loadout/loadout = players_info["loadout"]
 	if (!(loadout in loadouts))
 		loadout = loadouts[1]
 
@@ -127,11 +132,17 @@
 			old_body = observer_current, \
 		)
 	new_player.equipOutfit(loadout) // Loadout
-	players[ckey]["mob"] = new_player
+	players_info["mob"] = new_player
 
-	///Apply any chosen modifier to the player
-	for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
-		GLOB.deathmatch_game.modifiers[modifier].apply(new_player)
+	///Remove any individual modifier that clashes with global ones.
+	for(var/modpath in players_info["modifiers"])
+		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[modpath]
+		if(!modifier.selectable(src, ckey))
+			modifier.unselect(src, ckey)
+			players_info["modifiers"] -= modpath
+
+	for(var/datum/deathmatch_modifier/modifier as anything in (modifiers|players_info["modifiers"]))
+		GLOB.deathmatch_game.modifiers[modifier].apply(new_player, src)
 
 	// register death handling.
 	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING), PROC_REF(player_died))
@@ -192,7 +203,8 @@
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
 	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
-		player.dust(TRUE, TRUE, TRUE)
+		if(!HAS_TRAIT(src, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
+			player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
 		end_game()
 
@@ -204,7 +216,7 @@
 /datum/deathmatch_lobby/proc/add_player(mob/mob, loadout, host = FALSE)
 	if (observers[mob.ckey])
 		CRASH("Tried to add [mob.ckey] as a player while being an observer.")
-	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout)
+	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout, "modifiers" = list())
 
 /datum/deathmatch_lobby/proc/remove_ckey_from_play(ckey)
 	var/is_likely_player = (ckey in players)
@@ -315,10 +327,13 @@
 	for (var/map_key in GLOB.deathmatch_game.maps)
 		.["maps"] += map_key
 
+
 /datum/deathmatch_lobby/ui_data(mob/user)
 	. = list()
+	var/is_player = !isnull(players[user.ckey])
+	var/is_host = (user.ckey == host)
 	.["self"] = user.ckey
-	.["host"] = (user.ckey == host)
+	.["host"] = is_host
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
 	.["global_chat"] = global_chat
 	.["playing"] = playing
@@ -331,7 +346,28 @@
 	.["map"]["time"] = map.automatic_gameend_time
 	.["map"]["min_players"] = map.min_players
 	.["map"]["max_players"] = map.max_players
-	if(!isnull(players[user.ckey]) && !isnull(players[user.ckey]["loadout"]))
+
+	.["mod_menu_open"] = is_player && players[user.ckey]["mod_menu_open"]
+	.["modifiers"] = list()
+	for(var/modpath in GLOB.deathmatch_game.modifiers)
+		var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
+		var/list/mod_data = list()
+		mod_data["name"] = mod.name
+		mod_data["desc"] = mod.name
+		mod_data["modpath"] = modpath
+		mod_data["selected"] = modpath in modifiers
+		mod_data["selectable"] = is_host && mod.selectable(src)
+		mod_data["player_selected"] = is_player && (modpath in players[user.ckey]["modifiers"])
+		mod_data["player_selectable"] = is_player && mod.selectable(src, user.ckey)
+		.["modifiers"] += list(list(mod_data))
+	.["active_mods"] = "No modifiers selected"
+	if(length(modifiers))
+		var/list/mod_names = list()
+		for(var/datum/deathmatch_modifier/modpath as anything in modifiers)
+			mod_names += initial(modpath.name)
+		.["active_mods"] = "Selected modifiers: [english_list(mod_names)]"
+
+	if(is_player && !isnull(players[user.ckey]["loadout"]))
 		var/datum/outfit/deathmatch_loadout/loadout = players[user.ckey]["loadout"]
 		.["loadoutdesc"] = initial(loadout.desc)
 	else
@@ -437,17 +473,35 @@
 				if ("global_chat")
 					global_chat = !global_chat
 					return TRUE
-				if("toggle_modifier")
-					var/datum/deathmatch_modifier/modpath = text2path(params["match_mod"])
-					if(!istype(modpath))
-						return TRUE
-					var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
-					if(modpath in modifiers)
-						chosen_modifier.unselect(src)
-					else if(chosen_modifier.selectable(src))
-						chosen_modifier.on_select(src)
-						modifiers += modpath
+		if("open_mod_menu")
+			players[usr.ckey]["mod_menu_open"] = TRUE
+			return TRUE
+		if("exit_mod_menu")
+			players[usr.ckey] -= "mod_menu_open"
+			return TRUE
+		if("toggle_modifier")
+			var/datum/deathmatch_modifier/modpath = text2path(params["modpath"])
+			if(!istype(modpath))
+				return TRUE
+			var/global_mod = params["global_mod"]
+			if(global_mod)
+				if(usr.ckey != host && !check_rights(R_ADMIN))
 					return TRUE
+			else if(!(usr.ckey in players))
+				return TRUE
+			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
+			if(!global_mod && !chosen_modifier.player_selectable)
+				return TRUE
+			var/list/list_to_use = global_mod ? modifiers : players[usr.ckey]["modifiers"]
+			var/individual_ckey = global_mod ? null : usr.ckey
+			if(modpath in list_to_use)
+				chosen_modifier.unselect(src, individual_ckey)
+				list_to_use -= modpath
+				return TRUE
+			else if(chosen_modifier.selectable(src, individual_ckey))
+				chosen_modifier.on_select(src, individual_ckey)
+				list_to_use += modpath
+				return TRUE
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
 				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby!")
@@ -458,5 +512,7 @@
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
 					start_game()
 
-
-
+/datum/deathmatch_lobby/ui_close(mob/user)
+	. = ..()
+	if(players[user.ckey])
+		players[user.ckey] -= "mod_menu_open"

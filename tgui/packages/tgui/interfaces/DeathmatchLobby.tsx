@@ -8,7 +8,9 @@ import {
   Dropdown,
   Flex,
   Icon,
+  Modal,
   Section,
+  Stack,
   Table,
 } from '../components';
 import { ButtonCheckbox } from '../components/Button';
@@ -19,6 +21,16 @@ type PlayerLike = {
     host: number;
     ready: BooleanLike;
   };
+};
+
+type Modifier = {
+  name: string;
+  desc: string;
+  modpath: string;
+  selected: BooleanLike;
+  selectable: BooleanLike;
+  player_selected: BooleanLike;
+  player_selectable: BooleanLike;
 };
 
 type Data = {
@@ -36,6 +48,9 @@ type Data = {
     min_players: number;
     max_players: number;
   };
+  mod_menu_open: BooleanLike;
+  modifiers: Modifier[];
+  active_mods: string;
   loadoutdesc: string;
   players: PlayerLike[];
   observers: PlayerLike[];
@@ -43,6 +58,7 @@ type Data = {
 
 export const DeathmatchLobby = (props) => {
   const { act, data } = useBackend<Data>();
+  const { modifiers = [] } = data;
   return (
     <Window title="Deathmatch Lobby" width={560} height={400}>
       <Window.Content>
@@ -169,6 +185,16 @@ export const DeathmatchLobby = (props) => {
                 }
               />
               <Divider />
+              <Box textAlign="center">{data.active_mods}</Box>
+              <Divider />
+              <Button
+                textAlign="center"
+                fluid
+                content="Toggle Modifiers"
+                tooltip="Stuff to spice your rounds with."
+                onClick={() => act('open_mod_menu')}
+              />
+              <Divider />
               <Box textAlign="center">Loadout Description</Box>
               <Divider />
               <Box textAlign="center">{data.loadoutdesc}</Box>
@@ -208,5 +234,65 @@ export const DeathmatchLobby = (props) => {
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+const ShipmentSelector = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { mod_menu_open } = data;
+  if (!mod_menu_open) {
+    return null;
+  }
+  return (
+    <Modal align="center">
+      <Button content="Back" color="bad" onClick={() => act('exit_mod_menu')} />
+      {!!data.host && (
+        <>
+          <Box>
+            multiline` You can <b>Right-Click</b> some modifiers to toggle them
+            only for yourself. `
+          </Box>
+        </>
+      )}
+      <Stack mb={1}>
+        {data.modifiers.map((mod) => {
+          return (
+            <Stack.Item key={mod.name}>
+              <Button.Checkbox
+                mb={2}
+                checked={mod.selected || mod.player_selected}
+                content={mod.name}
+                tooltip={mod.desc}
+                color={
+                  mod.player_selected
+                    ? 'purple'
+                    : mod.selected
+                      ? 'green'
+                      : 'blue'
+                }
+                disabled={
+                  !mod.selected &&
+                  !mod.player_selected &&
+                  !mod.selectable &&
+                  !mod.player_selectable
+                }
+                onClick={() =>
+                  act('toggle_modifier', {
+                    modpath: mod.modpath,
+                    global_mod: data.host,
+                  })
+                }
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  act('toggle_modifier', {
+                    modpath: mod.modpath,
+                  });
+                }}
+              />
+            </Stack.Item>
+          );
+        })}
+      </Stack>
+    </Modal>
   );
 };

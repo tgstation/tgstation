@@ -461,7 +461,7 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/basic/clown/mutant/glutton/proc/tamed(mob/living/tamer)
+/mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 

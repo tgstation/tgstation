@@ -19,7 +19,7 @@
 		var/map_name = initial(template.name)
 		maps[map_name] = new template
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
-	modifiers = init_subtypes_w_path_keys(/datum/deathmatch_modifier)
+	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 
 /datum/deathmatch_controller/proc/create_new_lobby(mob/host)
 	lobbies[host.ckey] = new /datum/deathmatch_lobby(host)

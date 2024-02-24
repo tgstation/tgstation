@@ -55,7 +55,7 @@
 		food_types = list(/obj/item/stack/ore),\
 		tame_chance = 100,\
 		bonus_tame_chance = 5,\
-		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
+		after_tame = CALLBACK(src, PROC_REF(tamed)),\
 	)
 
 	var/static/list/innate_actions = list(
@@ -151,7 +151,7 @@
 		return ACCESS_ALLOWED
 	return ACCESS_DISALLOWED
 
-/mob/living/basic/mining_drone/proc/activate_bot()
+/mob/living/basic/mining_drone/tamed(mob/living/tamer, atom/food)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/mining_drone/death(gibbed)
