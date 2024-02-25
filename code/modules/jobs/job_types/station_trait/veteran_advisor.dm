@@ -44,8 +44,10 @@
 
 /datum/job/veteran_advisor/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
+	var/mob/living/carbon/veteran = spawned
 	spawned.add_quirk(/datum/quirk/paraplegic) //Even in 2300s veterans are getting it bad
-	spawned.add_mood_event("veteran_advisor", /datum/mood_event/desentized) //War, war never changes...
+	if(veteran)
+		veteran.gain_trauma(/datum/brain_trauma/special/ptsd) //War, war never changes...
 
 /datum/outfit/job/veteran_advisor
 	name = "Veteran Security Advisor"
