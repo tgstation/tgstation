@@ -357,6 +357,11 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/computer/crew
 
+/obj/item/circuitboard/computer/crew/remote
+	name = "Crew Monitoring Console"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/computer/crew/remote
+
 /obj/item/circuitboard/computer/med_data
 	name = "Medical Records Console"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL

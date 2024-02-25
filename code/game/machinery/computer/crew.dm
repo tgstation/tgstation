@@ -10,12 +10,16 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/crew
 	light_color = LIGHT_COLOR_BLUE
+	///What z-level should we be tracking sensors for? Defaults to the z the monitor is currently on if null.
+	var/z_level_focus
 
 /obj/machinery/computer/crew/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/medical_console_data,
 	))
+	if(!z_level_focus)
+		z_level_focus = z
 
 /obj/item/circuit_component/medical_console_data
 	display_name = "Crew Monitoring Data"
@@ -60,7 +64,7 @@
 		return
 
 	var/list/new_table = list()
-	for(var/list/player_record as anything in GLOB.crewmonitor.update_data(attached_console.z))
+	for(var/list/player_record as anything in GLOB.crewmonitor.update_data(attached_console.z_level_focus))
 		var/list/entry = list()
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
@@ -175,10 +179,16 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	return host_ref?.resolve()
 
 /datum/crewmonitor/ui_data(mob/user)
-	var/z = user.z
-	if(!z)
-		var/turf/T = get_turf(user)
-		z = T.z
+	var/obj/machinery/computer/crew/active_console = ui_host()
+	var/z
+	if(active_console && active_console.z_level_focus)
+		z = active_console.z_level_focus
+	else
+		z = user.z
+		if(!z)
+			var/turf/T = get_turf(user)
+			z = T.z
+
 	. = list(
 		"sensors" = update_data(z),
 		"link_allowed" = isAI(user)
