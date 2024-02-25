@@ -112,6 +112,7 @@
 	specialised = TRUE
 	delays = list(POD_TRANSIT = 3.5 SECONDS, POD_FALLING = 0.4 SECONDS)
 	effectMissile = TRUE
+	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
 
 /datum/armor/closet_supplypod
 	melee = 30
