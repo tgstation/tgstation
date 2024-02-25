@@ -103,7 +103,7 @@
 	)
 
 	belt = /obj/item/modular_computer/pda/human_ai
-	ears = /obj/item/radio/headset/silicon/human_ai
+	ears = /obj/item/radio/headset/binary
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
 
 	suit = /obj/item/clothing/suit/costume/cardborg
