@@ -1023,6 +1023,7 @@
 				set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
@@ -1049,6 +1050,7 @@
 				set_usable_hands(usable_hands - 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
