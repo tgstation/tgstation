@@ -172,7 +172,12 @@
 	else
 		var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
 		target_board = circuit_boards[option]
-		if(QDELETED(target_board) || QDELETED(src) || QDELETED(user) || !(target_board in replacer) || !user.is_holding(replacer) || !user.Adjacent(src))
+		// Everything still where it should be after the UI closed?
+		if(QDELETED(target_board) || QDELETED(src) || QDELETED(user) || !(target_board in replacer) || !user.is_holding(replacer))
+			return FALSE
+		// User still within range?
+		var/close_enough = replacer.works_from_distance || user.Adjacent(src)
+		if(!close_enough)
 			return FALSE
 
 	if(install_board(user, target_board, by_hand = FALSE))
