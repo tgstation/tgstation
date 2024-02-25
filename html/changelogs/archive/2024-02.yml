@@ -582,3 +582,113 @@
   rageguy505:
   - bugfix: The door above tool storage on birdshot now has maintenance access on
       it and officials can now enter the CC dock room.
+2024-02-20:
+  Ghommie:
+  - rscadd: Curators now get a 22.5% cut on credits spent on painting patronages (divided
+      by the number of curators). The service department also gets another, 12.5%
+      cut.
+  - qol: Added a zoom in and out buttons to the painting UI.
+  JohnFulpWillard:
+  - bugfix: The DNA scanner's joker button no longer instantly activates itself when
+      the cooldown between uses is done.
+  - bugfix: Regenerative cores (and other monster organs) now work when using it in-hand
+      while resting.
+  LT3:
+  - qol: Air alarms now display the source of triggered fire alarms/firedoors
+  LemonInTheDark, Kryson:
+  - image: Modified railing sprites to be a bit more three-d
+  SyncIt21:
+  - bugfix: multiple reactions occuring in the same holder like mixing drinks will
+      yield correct reagent result volumes
+  - code_imp: ' Removes `update_total()` from instant reactions improving performance
+      slightly'
+  - code_imp: merges `remove_all_direct()` with `remove_all()` to reduce code size
+  - bugfix: boulders are no longer lost when teleported by the BRM
+  - bugfix: batch processing cooldown works when teleporting multiple boulders
+  mc-oofert:
+  - code_imp: deathmatch lobbies take 8 seconds to start as to give lighting a breather
+2024-02-21:
+  00-Steven:
+  - bugfix: Ethereal heart revive doesn't delete organs alien to your species, like
+      prosthetics, cybernetics, and possibly itself.
+  - bugfix: Nightmare heart revive doesn't delete organs alien to your species, like
+      itself, upon which it would stop the conversion to shadowperson.
+  Cheshify:
+  - bugfix: The North Star's disposals are now functional!
+  - qol: The North Star has had a staggering amount of quality of life changes.
+  - rscadd: Nanotrasen has now supplied North Star security outposts with a disposals
+      line leading directly to the drunk tank.
+  Ghommie:
+  - bugfix: fixed an issue with tactical appearance (potted plants / cardboard cutouts)
+      not going away after giving the item to someone else.
+  - bugfix: Fixed slaughter demon cutouts being invisible. Also fixed another issue
+      with the tactical appearance not going away when the cardboard cutout is pushed
+      down.
+  mc-oofert:
+  - bugfix: you may not teleport in or out of deathmatch arenas
+  - bugfix: if you died as a changeling/anyone that has cool mind spells you do not
+      get them in deathmatch
+2024-02-22:
+  Derpguy3:
+  - bugfix: Adds a missing servo component into the MK1 Ripley Crate ordered from
+      cargo.
+  Ghommie:
+  - bugfix: sec-hailers no longer apply filters on TTS when pushed out of the way.
+  Melbert:
+  - bugfix: Chasms no longer break your verbs
+  - refactor: Frames have been refactored, you know the things you use to build computers
+      and machines, report any oddities
+  - bugfix: You can now smack (de)constructed computer and machine frames to break
+      them, rather than doing nothing.
+  - rscadd: Machine frames can now be deconstructed with screwdrivers, and computer
+      frames can now be deconstructed with welding torches. Welders are faster.
+  - bugfix: Organs have the blood DNA of their owns on them again
+2024-02-23:
+  00-Steven:
+  - bugfix: Chefs (not to be confused with cooks) actually display as being a part
+      of service on the crew monitor.
+  13spacemen:
+  - refactor: Bloody item overlays no longer use icon procs to generate the overlay
+  13spacemen, Kapu1178:
+  - refactor: Footprint sprites are now based on your shoes and legs, shoes have priority
+  - image: Monkey legs now produce pawprints instead of footprints
+  JohnFulpWillard:
+  - refactor: Holographic mobs now gives better feedback to players and should more
+      consistently not give any drops.
+  - spellcheck: Removed a double space in health analyzer's message telling you someone
+      is deaf.
+  Melbert:
+  - bugfix: You can now take our your anger upon arcade cabinets upon losing (they
+      can be hit again)
+  - rscdel: Deletes Mythril Coins from random coin spawners
+  - rscdel: Replaces Mythril sheets in icebox vent fishing with Runite sheets
+  SgtHunk:
+  - bugfix: The Summon Simians spell will now properly check for monkey faction, allowing
+      people who are monkeys to not be mauled.
+  nevimer:
+  - bugfix: ForceEvent tgui panel search is more reliable.
+2024-02-24:
+  00-Steven:
+  - bugfix: Chef and department security have the assignment on their ID imprinted
+      onto their PDA by default, instead of defaulting to Cook/Security Officer and
+      requiring you to do so manually.
+  A.C.M.O.:
+  - qol: CPR can be administered by species which do not need to breathe, so long
+      as they have functional lungs.
+  ArcaneMusic:
+  - bugfix: Mining cyborgs now keep the state of their mining scanner when stored,
+      without shutting off.
+  Echriser:
+  - bugfix: you can no longer feed people with covered mouths using spoons or ladles
+  JohnFulpWillard:
+  - bugfix: Alien larvas' examine text no longer tells you they are missing arms and
+      legs.
+  Melbert:
+  - bugfix: Cyborgs spark and spit out oil when smacked again. Among other things.
+  vinylspiders:
+  - bugfix: fixes spurious CI failure in museum
+  - code_imp: adds a blacklist feature to spawners
+2024-02-25:
+  bigfatbananacyclops:
+  - rscadd: floortile camouflage suit, boots, gloves and crate containing the former
+      items

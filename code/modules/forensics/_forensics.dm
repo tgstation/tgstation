@@ -70,6 +70,7 @@
 	var/atom/parent_atom = parent.resolve()
 	if (!isnull(parent_atom))
 		UnregisterSignal(parent_atom, list(COMSIG_COMPONENT_CLEAN_ACT))
+	parent = null
 	return ..()
 
 /// Empties the fingerprints list
@@ -147,7 +148,9 @@
 /// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/fibertext
-	var/atom/actual_parent = parent.resolve()
+	var/atom/actual_parent = parent?.resolve()
+	if(isnull(actual_parent))
+		parent = null
 	var/item_multiplier = isitem(actual_parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
 	if(suspect.wear_suit)
 		fibertext = "Material from \a [suspect.wear_suit]."
@@ -214,8 +217,11 @@
 		if(last_stamp_pos)
 			LAZYSET(hiddenprints, suspect.key, copytext(hiddenprints[suspect.key], 1, last_stamp_pos))
 		hiddenprints[suspect.key] += "\nLast: \[[current_time]\] \"[suspect.real_name]\"[has_gloves]. Ckey: [suspect.ckey]" //made sure to be existing by if(!LAZYACCESS);else
-	var/atom/parent_atom = parent.resolve()
-	parent_atom.fingerprintslast = suspect.ckey
+	var/atom/parent_atom = parent?.resolve()
+	if(!isnull(parent_atom))
+		parent_atom.fingerprintslast = suspect.ckey
+	else
+		parent = null
 	return TRUE
 
 /// Adds the given list into blood_DNA
@@ -230,11 +236,12 @@
 
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	if(!parent || !isitem(parent.resolve()))
+	var/obj/item/the_thing = parent?.resolve()
+	if(isnull(the_thing))
+		parent = null
 		return
-	if(isorgan(parent.resolve())) // organs don't spawn with blood decals by default
+	if(!istype(the_thing) || isorgan(the_thing)) // organs don't spawn with blood decals by default
 		return
 	if(!length(blood_DNA))
 		return
-	var/atom/parent_atom = parent.resolve()
-	parent_atom.AddElement(/datum/element/decal/blood)
+	the_thing.AddElement(/datum/element/decal/blood)
