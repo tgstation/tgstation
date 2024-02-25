@@ -207,12 +207,6 @@
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
 
-/// Contains structures and items that vendors shouldn't crush when we land on them.
-var/static/list/vendor_uncrushable_objects = list(
-	/obj/structure/chair,
-	/obj/machinery/conveyor,
-) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR
-
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -868,6 +862,12 @@ var/static/list/vendor_uncrushable_objects = list(
 	return
 
 /proc/check_atom_crushable(atom/atom_target)
+	/// Contains structures and items that vendors shouldn't crush when we land on them.
+	var/static/list/vendor_uncrushable_objects = list(
+		/obj/structure/chair,
+		/obj/machinery/conveyor,
+	) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR
+
 	if(is_type_in_list(atom_target, vendor_uncrushable_objects)) //make sure its not in the list of "uncrushable" stuff
 		return FALSE
 
