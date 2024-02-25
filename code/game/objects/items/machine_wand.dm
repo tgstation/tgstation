@@ -87,10 +87,10 @@
 
 /obj/item/machine_remote/AltClick(mob/user)
 	. = ..()
+	if(moving_bug) //we have a bug in transit, so let's kill it.
+		QDEL_NULL(moving_bug)
 	if(!controlling_machine_or_bot)
 		return
-	if(moving_bug)
-		QDEL_NULL(moving_bug)
 	say("Remote control over [controlling_machine_or_bot] stopped.")
 	UnregisterSignal(controlling_machine_or_bot, COMSIG_QDELETING)
 	controlling_machine_or_bot.cut_overlay(bug_appearance)
@@ -100,8 +100,8 @@
 	. = ..()
 	if(!ismachinery(target) && !isbot(target))
 		return
-	if(moving_bug) //we have a bug in transit already.
-		return
+	if(moving_bug) //we have a bug in transit already, so let's kill it.
+		QDEL_NULL(moving_bug)
 	var/turf/spawning_turf = (controlling_machine_or_bot ? get_turf(controlling_machine_or_bot) : get_turf(src))
 	moving_bug = new(spawning_turf, src, target)
 
@@ -126,7 +126,7 @@
 		CRASH("a moving bug has been created but isn't moving towards anything!")
 	src.controller = controller
 	src.thing_moving_towards = thing_moving_towards
-	var/datum/move_loop/loop = SSmove_manager.move_towards(src, get_turf(thing_moving_towards), delay = 5, flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_NO_DIR_UPDATE|MOVEMENT_LOOP_OUTSIDE_CONTROL)
+	var/datum/move_loop/loop = SSmove_manager.move_towards(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(reached_destination_check))
 	RegisterSignal(thing_moving_towards, COMSIG_QDELETING, PROC_REF(on_machine_del))
 
