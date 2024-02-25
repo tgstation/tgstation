@@ -151,3 +151,6 @@
 		SSstock_market.materials_prices[material_type] += round(SSstock_market.materials_prices[material_type] * fraction)
 		//We decrease the quantity only after adjusting our prices for accurate values
 		SSstock_market.materials_quantity[material_type] -= available_quantity
+
+	// Allow active events to modify the crate's contents
+	SSstock_market.handle_crate_events(C)
