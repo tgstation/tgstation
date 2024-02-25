@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Disabled the popsicle stick maximizer. (Producing popsicle sticks actually deletes the input logs.)"

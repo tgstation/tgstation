@@ -209,7 +209,7 @@
 
 /datum/objective/convert_brother
 	name = "convert brother"
-	explanation_text = "Convert someone else using your flash."
+	explanation_text = "Convert a brainwashable person using your flash. Any flash will work if you lose or break your starting flash."
 	admin_grantable = FALSE
 	martyr_compatible = TRUE
 
