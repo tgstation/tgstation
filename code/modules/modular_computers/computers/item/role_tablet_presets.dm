@@ -441,8 +441,11 @@
 	has_pda_programs = FALSE
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
-		/datum/computer_file/program/secureye/syndicate,
+		/datum/computer_file/program/secureye/human_ai,
 		/datum/computer_file/program/alarm_monitor,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/borg_monitor,
 	)
 
 /**

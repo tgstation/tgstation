@@ -3802,6 +3802,7 @@
 #include "code\modules\clothing\under\jobs\medical.dm"
 #include "code\modules\clothing\under\jobs\rnd.dm"
 #include "code\modules\clothing\under\jobs\security.dm"
+#include "code\modules\clothing\under\jobs\station_trait.dm"
 #include "code\modules\clothing\under\jobs\civilian\civilian.dm"
 #include "code\modules\clothing\under\jobs\civilian\clown_mime.dm"
 #include "code\modules\clothing\under\jobs\civilian\curator.dm"

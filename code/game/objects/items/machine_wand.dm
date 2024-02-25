@@ -26,9 +26,7 @@
 /obj/item/machine_remote/Destroy(force)
 	. = ..()
 	if(controlling_machine_or_bot)
-		UnregisterSignal(controlling_machine_or_bot, COMSIG_QDELETING)
-		controlling_machine_or_bot.cut_overlay(bug_appearance)
-	controlling_machine_or_bot = null
+		remove_old_machine()
 	QDEL_NULL(moving_bug)
 	QDEL_NULL(bug_appearance)
 
@@ -47,31 +45,9 @@
 /obj/item/machine_remote/GetAccess()
 	return access.Copy()
 
-///Sets a controlled machine to a new machine, if possible. Checks if AIs can even control it.
-/obj/item/machine_remote/proc/set_controlled_machine(obj/machinery/new_machine)
-	if(controlling_machine_or_bot == new_machine)
-		return
-	if(controlling_machine_or_bot)
-		UnregisterSignal(controlling_machine_or_bot, COMSIG_QDELETING)
-		controlling_machine_or_bot.cut_overlay(bug_appearance)
-	if(istype(new_machine, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/new_apc = new_machine
-		if(new_apc.aidisabled)
-			say("AI wire cut, machine uncontrollable.")
-			return
-	else if(istype(new_machine, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/new_airlock = new_machine
-		if(!new_airlock.canAIControl())
-			say("AI wire cut, machine uncontrollable.")
-			return
-	RegisterSignal(controlling_machine_or_bot, COMSIG_QDELETING, PROC_REF(on_control_destroy))
-	controlling_machine_or_bot = new_machine
-	controlling_machine_or_bot.add_overlay(bug_appearance)
-
 /obj/item/machine_remote/proc/on_control_destroy(obj/machinery/source)
 	SIGNAL_HANDLER
-	controlling_machine_or_bot.cut_overlay(bug_appearance)
-	controlling_machine_or_bot = null
+	remove_old_machine()
 
 /obj/item/machine_remote/ui_interact(mob/user, datum/tgui/ui)
 	if(!controlling_machine_or_bot)
@@ -92,9 +68,7 @@
 	if(!controlling_machine_or_bot)
 		return
 	say("Remote control over [controlling_machine_or_bot] stopped.")
-	UnregisterSignal(controlling_machine_or_bot, COMSIG_QDELETING)
-	controlling_machine_or_bot.cut_overlay(bug_appearance)
-	controlling_machine_or_bot = null
+	remove_old_machine()
 
 /obj/item/machine_remote/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -104,6 +78,35 @@
 		QDEL_NULL(moving_bug)
 	var/turf/spawning_turf = (controlling_machine_or_bot ? get_turf(controlling_machine_or_bot) : get_turf(src))
 	moving_bug = new(spawning_turf, src, target)
+	remove_old_machine()
+
+///Sets a controlled machine to a new machine, if possible. Checks if AIs can even control it.
+/obj/item/machine_remote/proc/set_controlled_machine(obj/machinery/new_machine)
+	if(controlling_machine_or_bot == new_machine)
+		return
+	remove_old_machine()
+	if(istype(new_machine, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/new_apc = new_machine
+		if(new_apc.aidisabled)
+			say("AI wire cut, machine uncontrollable.")
+			return
+	else if(istype(new_machine, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/new_airlock = new_machine
+		if(!new_airlock.canAIControl())
+			say("AI wire cut, machine uncontrollable.")
+			return
+	RegisterSignal(controlling_machine_or_bot, COMSIG_QDELETING, PROC_REF(on_control_destroy))
+	controlling_machine_or_bot = new_machine
+	controlling_machine_or_bot.add_overlay(bug_appearance)
+
+///Removes the machine being controlled as the current machine, taking its signals and overlays with it.
+/obj/item/machine_remote/proc/remove_old_machine()
+	if(!controlling_machine_or_bot)
+		return
+	UnregisterSignal(controlling_machine_or_bot, COMSIG_QDELETING)
+	controlling_machine_or_bot.cut_overlay(bug_appearance)
+	controlling_machine_or_bot = null
+
 
 ///The effect of the bug moving towards the selected machinery to mess with.
 /obj/effect/bug_moving
@@ -126,7 +129,7 @@
 		CRASH("a moving bug has been created but isn't moving towards anything!")
 	src.controller = controller
 	src.thing_moving_towards = thing_moving_towards
-	var/datum/move_loop/loop = SSmove_manager.move_towards(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
+	var/datum/move_loop/loop = SSmove_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(reached_destination_check))
 	RegisterSignal(thing_moving_towards, COMSIG_QDELETING, PROC_REF(on_machine_del))
 

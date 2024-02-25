@@ -102,6 +102,7 @@
 		/obj/item/implant/teleport_blocker,
 	)
 
+	uniform = /obj/item/clothing/under/rank/station_trait/human_ai
 	belt = /obj/item/modular_computer/pda/human_ai
 	ears = /obj/item/radio/headset/silicon/human_ai
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
@@ -138,7 +139,7 @@
 	temp_laws.set_laws_config()
 	var/list/law_box = list(
 		"This is your lawset, you and your Cyborgs must adhere to this at all times.",
-		"Notably, you are above this lawset, and Cyborgs report directly to you.",
+		"Notably, if absolutely necessary, you can bend or even go against the lawset for your own survival, and Cyborgs report to you directly.",
 		"LAWS:",
 	)
 	law_box += temp_laws.get_law_list(render_html = FALSE)

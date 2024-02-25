@@ -347,6 +347,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/silicon/human_ai
 	name = "\proper Disconnected Subspace Transceiver"
+	desc = "A headset that is rumored to be one day implanted into a brain in a jar directly."
 	icon_state = "rob_headset"
 	worn_icon_state = "rob_headset"
 	keyslot2 = new /obj/item/encryptionkey/ai_with_binary

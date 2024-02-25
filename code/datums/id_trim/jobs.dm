@@ -1250,7 +1250,7 @@
 #undef ALWAYS_GETS_ACCESS
 
 /datum/id_trim/job/human_ai
-	assignment = "Human AI"
+	assignment = JOB_HUMAN_AI
 	trim_state = "trim_recluse"
 	department_color = COLOR_BLUE_GRAY
 	subdepartment_color = COLOR_MODERATE_BLUE
