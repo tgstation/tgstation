@@ -9,6 +9,9 @@
 
 /datum/element/decal/blood/Detach(atom/source)
 	UnregisterSignal(source, COMSIG_ATOM_GET_EXAMINE_NAME)
+	if(isitem(source))
+		var/obj/item/source_item = source
+		REMOVE_KEEP_TOGETHER(source_item, "item_blood_overlay")
 	return ..()
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
