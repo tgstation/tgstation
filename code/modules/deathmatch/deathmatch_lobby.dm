@@ -19,7 +19,7 @@
 	var/list/loadouts
 	/// Current map player spawn locations, cleared after spawning
 	var/list/player_spawns = list()
-	/// A list of paths of modifiers that'll be globally applied when the game starts.
+	/// A list of paths of modifiers enabled for the match.
 	var/list/modifiers = list()
 
 /datum/deathmatch_lobby/New(mob/player)
@@ -107,6 +107,11 @@
 	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), initial(map.automatic_gameend_time))
 	log_game("Deathmatch game [host] started.")
 	announce(span_reallybig("GO!"))
+	if(length(modifiers))
+		var/list/modifier_names = list()
+		for(var/datum/deathmatch_modifier/modifier in modifiers)
+			modifier_names += uppertext(initial(modifier.name))
+		announce(span_boldnicegreen("THIS MATCH MODIFIERS: [english_list(modifier_names, and_text = " ,")]."))
 	return TRUE
 
 /datum/deathmatch_lobby/proc/spawn_observer_as_player(ckey, loc)
@@ -134,14 +139,7 @@
 	new_player.equipOutfit(loadout) // Loadout
 	players_info["mob"] = new_player
 
-	///Remove any individual modifier that clashes with global ones.
-	for(var/modpath in players_info["modifiers"])
-		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[modpath]
-		if(!modifier.selectable(src, ckey))
-			modifier.unselect(src, ckey)
-			players_info["modifiers"] -= modpath
-
-	for(var/datum/deathmatch_modifier/modifier as anything in (modifiers|players_info["modifiers"]))
+	for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
 		GLOB.deathmatch_game.modifiers[modifier].apply(new_player, src)
 
 	// register death handling.
@@ -216,7 +214,7 @@
 /datum/deathmatch_lobby/proc/add_player(mob/mob, loadout, host = FALSE)
 	if (observers[mob.ckey])
 		CRASH("Tried to add [mob.ckey] as a player while being an observer.")
-	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout, "modifiers" = list())
+	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout)
 
 /datum/deathmatch_lobby/proc/remove_ckey_from_play(ckey)
 	var/is_likely_player = (ckey in players)
@@ -332,9 +330,10 @@
 	. = list()
 	var/is_player = !isnull(players[user.ckey])
 	var/is_host = (user.ckey == host)
+	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	.["self"] = user.ckey
 	.["host"] = is_host
-	.["admin"] = check_rights_for(user.client, R_ADMIN)
+	.["admin"] = is_admin
 	.["global_chat"] = global_chat
 	.["playing"] = playing
 	.["loadouts"] = list()
@@ -347,19 +346,18 @@
 	.["map"]["min_players"] = map.min_players
 	.["map"]["max_players"] = map.max_players
 
-	.["mod_menu_open"] = is_player && players[user.ckey]["mod_menu_open"]
-	.["modifiers"] = list()
-	for(var/modpath in GLOB.deathmatch_game.modifiers)
-		var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
-		var/list/mod_data = list()
-		mod_data["name"] = mod.name
-		mod_data["desc"] = mod.name
-		mod_data["modpath"] = modpath
-		mod_data["selected"] = modpath in modifiers
-		mod_data["selectable"] = is_host && mod.selectable(src)
-		mod_data["player_selected"] = is_player && (modpath in players[user.ckey]["modifiers"])
-		mod_data["player_selectable"] = is_player && mod.selectable(src, user.ckey)
-		.["modifiers"] += list(list(mod_data))
+	.["mod_menu_open"] = FALSE
+	if((is_host || is_admin)  && players[user.ckey]["mod_menu_open"])
+		.["mod_menu_open"] = TRUE
+		for(var/modpath in GLOB.deathmatch_game.modifiers)
+			var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
+			.["modifiers"] += list(list(
+				"name" = mod.name,
+				"desc" = mod.description,
+				"modpath" = "[modpath]",
+				"selected" = (modpath in modifiers),
+				"selectable" = is_host && mod.selectable(src),
+			))
 	.["active_mods"] = "No modifiers selected"
 	if(length(modifiers))
 		var/list/mod_names = list()
@@ -481,7 +479,7 @@
 			return TRUE
 		if("toggle_modifier")
 			var/datum/deathmatch_modifier/modpath = text2path(params["modpath"])
-			if(!istype(modpath))
+			if(!ispath(modpath))
 				return TRUE
 			var/global_mod = params["global_mod"]
 			if(global_mod)
@@ -490,17 +488,13 @@
 			else if(!(usr.ckey in players))
 				return TRUE
 			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
-			if(!global_mod && !chosen_modifier.player_selectable)
+			if(modpath in modifiers)
+				chosen_modifier.unselect(src)
+				modifiers -= modpath
 				return TRUE
-			var/list/list_to_use = global_mod ? modifiers : players[usr.ckey]["modifiers"]
-			var/individual_ckey = global_mod ? null : usr.ckey
-			if(modpath in list_to_use)
-				chosen_modifier.unselect(src, individual_ckey)
-				list_to_use -= modpath
-				return TRUE
-			else if(chosen_modifier.selectable(src, individual_ckey))
-				chosen_modifier.on_select(src, individual_ckey)
-				list_to_use += modpath
+			else if(chosen_modifier.selectable(src))
+				chosen_modifier.on_select(src)
+				modifiers += modpath
 				return TRUE
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))

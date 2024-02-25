@@ -8,44 +8,34 @@
 	var/color = "blue"
 	///A list of modifiers this is incompatible with.
 	var/list/blacklisted_modifiers
-	///Can this modifier be seleted by each player for themselves, or only by the host for everyone.
-	var/player_selectable = FALSE
 	///Is this trait exempted from the "Random Modifiers" modifier.
 	var/random_exempted = FALSE
 
 ///Whether or not this modifier can be selected, for both host and player-selected modifiers.
-/datum/deathmatch_modifier/proc/selectable(datum/deathmatch_lobby/lobby, individual_ckey)
+/datum/deathmatch_modifier/proc/selectable(datum/deathmatch_lobby/lobby)
 	SHOULD_CALL_PARENT(TRUE)
-	if(individual_ckey)
-		if(!player_selectable)
-			return FALSE
-		if((src in lobby.modifiers))
-			return FALSE
-		if(length(lobby.players[individual_ckey]["modifiers"] & blacklisted_modifiers))
-			return FALSE
-	else if(!random_exempted && (/datum/deathmatch_modifier/random in lobby.modifiers))
+	if(!random_exempted && (/datum/deathmatch_modifier/random in lobby.modifiers))
 		return FALSE
 	if(length(lobby.modifiers & blacklisted_modifiers))
 		return FALSE
-	var/list/mod_checklist = individual_ckey ? (lobby.modifiers|lobby.players[individual_ckey]["modifiers"]) : lobby.modifiers
-	for(var/modpath in mod_checklist)
+	for(var/modpath in lobby.modifiers)
 		if(src in GLOB.deathmatch_game.modifiers[modpath].blacklisted_modifiers)
 			return FALSE
 	return TRUE
 
-///Called when selecting the deathmatch modifier. If individual_ckey is true, then it only applies to that player.
-/datum/deathmatch_modifier/proc/on_select(datum/deathmatch_lobby/lobby, individual_ckey)
+///Called when selecting the deathmatch modifier.
+/datum/deathmatch_modifier/proc/on_select(datum/deathmatch_lobby/lobby)
 	return
 
-///When the host changes his mind and unselects it. If individual_ckey is true, then it only applies to that player.
-/datum/deathmatch_modifier/proc/unselect(datum/deathmatch_lobby/lobby, individual_ckey)
+///When the host changes his mind and unselects it.
+/datum/deathmatch_modifier/proc/unselect(datum/deathmatch_lobby/lobby)
 	return
 
-///Called when the host chooses to change map. Only affects host-chosen modifiers.
+///Called when the host chooses to change map.
 /datum/deathmatch_modifier/proc/on_map_changed(datum/deathmatch_lobby/lobby)
 	return
 
-///Called as the game is about to start. Only affects host-chosen modifiers.
+///Called as the game is about to start.
 /datum/deathmatch_modifier/proc/on_start_game(datum/deathmatch_lobby/lobby)
 	return
 
@@ -54,7 +44,7 @@
 	return
 
 /datum/deathmatch_modifier/health
-	name = "Health * 2"
+	name = "Double-Health"
 	description = "Doubles your starting health"
 	var/multiplier = 2
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/triple)
@@ -64,7 +54,7 @@
 	player.health *= multiplier
 
 /datum/deathmatch_modifier/health/triple
-	name = "Health * 3"
+	name = "Triple-Health"
 	description = "When \"Health * 2\" isn't enough..."
 	multiplier = 3
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/health)
@@ -102,7 +92,7 @@
 	name = "Nearsightness"
 	description = "Oops, I forgot my glasses at home"
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/echolocation)
-	player_selectable = TRUE
+
 
 /datum/deathmatch_modifier/nearsightness/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.become_nearsighted(DEATHMATCH_TRAIT)
@@ -111,7 +101,6 @@
 	name = "Echolocation"
 	description = "On one hand, you're blind, but on the other..."
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/nearsightness, /datum/deathmatch_modifier/xray)
-	player_selectable = TRUE
 
 /datum/deathmatch_modifier/echolocation/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.AddComponent(/datum/component/echolocation)
@@ -147,7 +136,6 @@
 /datum/deathmatch_modifier/paraplegic
 	name = "Paraplegic"
 	description = "Wheelchairs. For. Everyone."
-	player_selectable = TRUE
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/steed)
 
 /datum/deathmatch_modifier/paraplegic/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
@@ -162,7 +150,7 @@
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/paraplegic)
 
 /datum/deathmatch_modifier/steed/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	///We do a bit of fun over balance here, so some may be better than others.
+	///We do a bit of fun over balance here, some mounts may be better than others.
 	var/mount_path = pick(list(
 		/mob/living/basic/carp,
 		/mob/living/basic/pony,
@@ -287,8 +275,8 @@
 	return
 
 /datum/deathmatch_modifier/explode_on_death
-	name = "Explosive Deaths"
-	description = "Corpses will explode into giblets upon death"
+	name = "Explosive Death"
+	description = "You're implanted with a microbomb that cannot be manually activated."
 
 /datum/deathmatch_modifier/explode_on_death/on_start_game(datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(lobby, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS, DEATHMATCH_TRAIT)
@@ -298,9 +286,8 @@
 	implant.implant(player, silent = TRUE, force = TRUE)
 
 /datum/deathmatch_modifier/helgrasp
-	name = "Helgraspped"
-	description = "Cursed hands are being thrown at you! It's like being sac'ed by an heretic all over again"
-	player_selectable = TRUE
+	name = "Helgrasped"
+	description = "Cursed hands are being thrown at you!"
 
 /datum/deathmatch_modifier/helgrasp/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	var/metabolism_rate = /datum/reagent/inverse/helgrasp/heretic::metabolization_rate
@@ -309,7 +296,6 @@
 /datum/deathmatch_modifier/wasted
 	name = "Wasted"
 	description = "You've had one drink too many"
-	player_selectable = TRUE
 
 /datum/deathmatch_modifier/wasted/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.adjust_drunk_effect(rand(30, 35))
@@ -319,15 +305,44 @@
 /datum/deathmatch_modifier/inverted_movement
 	name = "Inverted Movement"
 	description = "Up is down, left is right"
-	player_selectable = TRUE
 
 /datum/deathmatch_modifier/inverted_movement/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_INVERTED_MOVEMENT, DEATHMATCH_TRAIT)
 
+/datum/deathmatch_modifier/minefield
+	name = "Minefield"
+	description = "Oh, it seems you've trotted on a mine!"
+
+/datum/deathmatch_modifier/minefield/on_start_game(datum/deathmatch_lobby/lobby)
+	var/list/mines = subtypesof(/obj/effect/mine)
+	mines -= list(
+		/obj/effect/mine/explosive, //too lethal.
+		/obj/effect/mine/kickmine, //will kick the client, lol
+		/obj/effect/mine/gas, //Just spawns oxygen.
+	)
+
+	///1 every 10 turfs, but it will actually spawn fewer mines since groundless and closed turfs are skipped.
+	var/mines_to_spawn = length(lobby.location.reserved_turfs) * 0.1
+	for(var/iteration in 1 to mines_to_spawn)
+		var/turf/target_turf = pick(lobby.location.reserved_turfs)
+		if(!isopenturf(target_turf) || isgroundlessturf(target_turf))
+			continue
+		///don't spawn mine next to player spawns.
+		if(locate(/obj/effect/landmark/deathmatch_player_spawn) in range(1, target_turf))
+			continue
+		var/mine_path = pick(mines)
+		new mine_path (target_turf)
+
+/datum/deathmatch_modifier/flipping
+	name = "Perma-Flipping"
+	description = "You're constantly flipping, however it's purely cosmetic"
+
+/datum/deathmatch_modifier/flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	player.SpinAnimation(speed = 0.9 SECONDS, loops = -1)
+
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"
 	description = "Picks 3 to 5 random modifiers as the game is about to start"
-	random_exempted = TRUE
 
 /datum/deathmatch_modifier/random/on_select(datum/deathmatch_lobby/lobby)
 	///remove any other global modifier if chosen. It'll pick random ones when the time comes.
@@ -376,7 +391,7 @@
 	. = ..()
 	if(!.)
 		return
-	return !lobby.map.allowed_loadouts
+	return lobby.map.allowed_loadouts
 
 /datum/deathmatch_modifier/any_loadout/on_select(datum/deathmatch_lobby/lobby)
 	lobby.loadouts = GLOB.deathmatch_game.loadouts

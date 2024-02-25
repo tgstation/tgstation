@@ -60,7 +60,8 @@ export const DeathmatchLobby = (props) => {
   const { act, data } = useBackend<Data>();
   const { modifiers = [] } = data;
   return (
-    <Window title="Deathmatch Lobby" width={560} height={400}>
+    <Window title="Deathmatch Lobby" width={560} height={480}>
+      <ModSelector />
       <Window.Content>
         <Flex height="94%">
           <Flex.Item width="350px">
@@ -186,14 +187,17 @@ export const DeathmatchLobby = (props) => {
               />
               <Divider />
               <Box textAlign="center">{data.active_mods}</Box>
-              <Divider />
-              <Button
-                textAlign="center"
-                fluid
-                content="Toggle Modifiers"
-                tooltip="Stuff to spice your rounds with."
-                onClick={() => act('open_mod_menu')}
-              />
+              {(!!data.admin || !!data.host) && (
+                <>
+                  <Divider />
+                  <Button
+                    textAlign="center"
+                    fluid
+                    content="Toggle Modifiers"
+                    onClick={() => act('open_mod_menu')}
+                  />
+                </>
+              )}
               <Divider />
               <Box textAlign="center">Loadout Description</Box>
               <Divider />
@@ -237,62 +241,38 @@ export const DeathmatchLobby = (props) => {
   );
 };
 
-const ShipmentSelector = (props) => {
+const ModSelector = (props) => {
   const { act, data } = useBackend<Data>();
-  const { mod_menu_open } = data;
-  if (!mod_menu_open) {
+  const { admin, host, mod_menu_open, modifiers = [] } = data;
+  if (!mod_menu_open || !host || !admin) {
     return null;
   }
   return (
-    <Modal align="center">
-      <Button content="Back" color="bad" onClick={() => act('exit_mod_menu')} />
-      {!!data.host && (
-        <>
-          <Box>
-            multiline` You can <b>Right-Click</b> some modifiers to toggle them
-            only for yourself. `
-          </Box>
-        </>
-      )}
-      <Stack mb={1}>
-        {data.modifiers.map((mod) => {
-          return (
-            <Stack.Item key={mod.name}>
-              <Button.Checkbox
-                mb={2}
-                checked={mod.selected || mod.player_selected}
-                content={mod.name}
-                tooltip={mod.desc}
-                color={
-                  mod.player_selected
-                    ? 'purple'
-                    : mod.selected
-                      ? 'green'
-                      : 'blue'
-                }
-                disabled={
-                  !mod.selected &&
-                  !mod.player_selected &&
-                  !mod.selectable &&
-                  !mod.player_selectable
-                }
-                onClick={() =>
-                  act('toggle_modifier', {
-                    modpath: mod.modpath,
-                    global_mod: data.host,
-                  })
-                }
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  act('toggle_modifier', {
-                    modpath: mod.modpath,
-                  });
-                }}
-              />
-            </Stack.Item>
-          );
-        })}
-      </Stack>
+    <Modal>
+      <Button
+        fluid
+        content="Go Back"
+        color="bad"
+        onClick={() => act('exit_mod_menu')}
+      />
+      {modifiers.map((mod, index) => {
+        return (
+          <Button.Checkbox
+            key={index}
+            mb={2}
+            checked={mod.selected}
+            content={mod.name}
+            tooltip={mod.desc}
+            color={mod.selected ? 'green' : 'blue'}
+            disabled={!mod.selected && !mod.selectable}
+            onClick={() =>
+              act('toggle_modifier', {
+                modpath: mod.modpath,
+              })
+            }
+          />
+        );
+      })}
     </Modal>
   );
 };
