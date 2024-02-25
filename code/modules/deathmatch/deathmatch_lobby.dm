@@ -174,6 +174,9 @@
 		loser.ghostize()
 		qdel(loser)
 
+	for(var/datum/deathmatch_modifier/modifier in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier].on_end_game(src)
+
 	clear_reservation()
 	GLOB.deathmatch_game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")

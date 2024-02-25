@@ -39,6 +39,10 @@
 /datum/deathmatch_modifier/proc/on_start_game(datum/deathmatch_lobby/lobby)
 	return
 
+///Called as the game has ended, right before the reservation is deleted.
+/datum/deathmatch_modifier/proc/on_end_game(datum/deathmatch_lobby/lobby)
+	return
+
 ///Apply the modifier to the newly spawned player as the game is about to start
 /datum/deathmatch_modifier/proc/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	return
@@ -92,7 +96,6 @@
 	name = "Nearsightness"
 	description = "Oops, I forgot my glasses at home"
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/echolocation)
-
 
 /datum/deathmatch_modifier/nearsightness/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.become_nearsighted(DEATHMATCH_TRAIT)
@@ -184,6 +187,20 @@
 		var/obj/item/implant/explosive/deathmatch/implant = new()
 		implant.implant(mount, silent = TRUE, force = TRUE)
 
+/datum/deathmatch_modifier/no_gravity
+	name = "No Gravity"
+	description = "Hone your robusting skills in zero g"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/mounts, /datum/deathmatch_modifier/paraplegic, /datum/deathmatch_modifier/minefield)
+
+/datum/deathmatch_modifier/no_gravity/on_start_game(datum/deathmatch_lobby/lobby)
+	ASYNC
+		for(var/turf/turf as anything in lobby.location.reserved_turfs)
+			turf.AddElement(/datum/element/forced_gravity, 0)
+			CHECK_TICK
+
+/datum/deathmatch_modifier/no_gravity/on_end_game(datum/deathmatch_lobby/lobby)
+	for(var/turf/turf as anything in lobby.location.reserved_turfs)
+		turf.RemoveElement(/datum/element/forced_gravity, 0)
 
 /datum/deathmatch_modifier/drop_pod
 	name = "Drop Pod: Syndies"
