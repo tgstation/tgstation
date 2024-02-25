@@ -1253,8 +1253,8 @@
 	assignment = "Human AI"
 	trim_state = "trim_recluse"
 	department_color = COLOR_BLUE_GRAY
-	subdepartment_color = COLOR_BLUE_GRAY
-	sechud_icon_state = SECHUD_ASSISTANT
+	subdepartment_color = COLOR_MODERATE_BLUE
+	sechud_icon_state = SECHUD_HUMAN_AI
 	minimal_access = list(
 		ACCESS_ROBOTICS, // to access robotic controls
 		ACCESS_NETWORK, //to access NTOS

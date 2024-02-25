@@ -169,7 +169,7 @@
 /datum/station_trait/job/human_ai
 	name = "Human AI"
 	button_desc = "Sign up to become the \"AI\"."
-	weight = 2
+	weight = 1
 	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
 	show_in_report = TRUE

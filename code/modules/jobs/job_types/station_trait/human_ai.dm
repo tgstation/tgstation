@@ -96,6 +96,7 @@
 	backpack_contents = list(
 		/obj/item/door_remote/omni = 1,
 		/obj/item/machine_remote = 1,
+		/obj/item/secure_camera_console_pod = 1,
 	)
 	implants = list(
 		/obj/item/implant/teleport_blocker,
@@ -141,3 +142,26 @@
 	law_box += temp_laws.get_law_list(render_html = FALSE)
 	add_raw_text(jointext(law_box, "\n"))
 	return ..()
+
+/obj/item/secure_camera_console_pod
+	name = "advanced camera control pod"
+	desc = "Calls down a secure camera console to use for all your AI stuff, may only be activated in the SAT."
+	icon = 'icons/obj/devices/remote.dmi'
+	icon_state = "botpad_controller"
+	inhand_icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
+/obj/item/secure_camera_console_pod/attack_self(mob/user, modifiers)
+	. = ..()
+	var/area/current_area = get_area(user)
+	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored/turret_protected/ai))
+	if(!is_type_in_typecache(current_area, allowed_areas))
+		user.balloon_alert(user, "not in the sat!")
+		return
+	podspawn(list(
+		"target" = get_turf(src),
+		"style" = STYLE_BLUESPACE,
+		"spawn" = /obj/machinery/computer/camera_advanced,
+	))
+	qdel(src)
