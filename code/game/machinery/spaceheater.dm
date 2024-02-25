@@ -314,47 +314,37 @@
 	QDEL_NULL(beaker)
 
 /obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
-	message_admins("process")
 	if(!on)
 		update_appearance()
 		return PROCESS_KILL
-	message_admins("process post-on")
+
 	if(!is_operational || !cell || cell.charge <= 0)
 		on = FALSE
 		update_appearance()
 		return PROCESS_KILL
-	message_admins("process post-operational&cell")
+
 	if(!beaker)//No beaker to heat
 		update_appearance()
 		return
-	message_admins("process post-beaker")
+
 	if(beaker.reagents.total_volume)
-		message_admins("process post-beaker-volume")
 		var/power_mod = 0.1 * chem_heating_power
 		switch(set_mode)
 			if(HEATER_MODE_AUTO)
-				message_admins("process pre-mode-auto")
 				power_mod *= 0.5
 				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 				beaker.reagents.handle_reactions()
-				message_admins("process post-mode-auto")
 			if(HEATER_MODE_HEAT)
-				message_admins("process pre-mode-heat")
 				if(target_temperature < beaker.reagents.chem_temp)
 					return
 				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-				message_admins("process post-mode-heat")
 			if(HEATER_MODE_COOL)
-				message_admins("process pre-mode-cool")
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
 				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-				message_admins("process post-mode-cool")
-		message_admins("process post-switch")
 		var/required_energy = heating_power * seconds_per_tick * (power_mod * 4)
 		cell.use(required_energy / efficiency)
 		beaker.reagents.handle_reactions()
-		message_admins("process post-reactions")
 	update_appearance()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()

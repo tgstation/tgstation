@@ -13,8 +13,6 @@ SUBSYSTEM_DEF(stock_market)
 	var/list/materials_trend_life = list()
 	/// Associated list of materials alongside their available quantity. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
 	var/list/materials_quantity = list()
-	/// A list of possible stock market events, to use to check whether a given stock market event can be run.
-	var/list/all_events = list()
 	/// A list of all currently active stock market events.
 	var/list/active_events = list()
 	/// HTML string that is used to display the market events to the player.
@@ -34,11 +32,6 @@ SUBSYSTEM_DEF(stock_market)
 
 			materials_quantity += possible_market
 			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-(possible_market.tradable_base_quantity) * 0.5, possible_market.tradable_base_quantity * 0.5))
-
-	// Setup event singletons for checking possible events
-	for(var/datum/stock_market_event/event_path as anything in subtypesof(/datum/stock_market_event))
-		all_events |= new event_path
-
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/stock_market/fire(resumed)
@@ -108,27 +101,11 @@ SUBSYSTEM_DEF(stock_market)
 
 /**
  * Market events are a way to spice up the market and make it more interesting.
- * Randomly one will occur to a random material, and it could change the price of that material more drastically, reset it to a stable price, or muck with crate contents.
+ * Randomly one will occur to a random material, and it will change the price of that material more drastically, or reset it to a stable price.
  * Events are also broadcast to the newscaster as a fun little fluff piece. Good way to tell some lore as well, or just make a joke.
  */
 /datum/controller/subsystem/stock_market/proc/handle_market_event(datum/material/mat)
-	var/possible_events = list()
-	for(var/datum/stock_market_event/event as anything in all_events)
-		if(event.can_start_event(mat))
-			possible_events |= event.type
-
-	if(!length(possible_events))
-		return
-
-	var/datum/stock_market_event/chosen_event_path = pick(possible_events)
-	var/datum/stock_market_event/chosen_event = new chosen_event_path
-	if(chosen_event.start_event(mat))
-		active_events += chosen_event
-
-/**
- * Some market events may adjust the contents of materials crates when being filled.
- * This proc handles running this for all active events.
- */
-/datum/controller/subsystem/stock_market/proc/handle_crate_events(obj/structure/closet/crate/C) // MAKE THIS ONLY HANDLE EVENTS THAT HAVE A HANDLE CRATE FLAG OR SOMETHING
-	for(var/datum/stock_market_event/event as anything in active_events)
-		event.handle_crate(C)
+	var/datum/stock_market_event/event = pick(subtypesof(/datum/stock_market_event))
+	event = new event
+	if(event.start_event(mat))
+		active_events += event
