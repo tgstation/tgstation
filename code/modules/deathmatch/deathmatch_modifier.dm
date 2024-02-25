@@ -55,7 +55,7 @@
 
 /datum/deathmatch_modifier/health/triple
 	name = "Triple-Health"
-	description = "When \"Health * 2\" isn't enough..."
+	description = "When \"Double-Health\" isn't enough..."
 	multiplier = 3
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/health)
 
@@ -108,6 +108,7 @@
 /datum/deathmatch_modifier/ocelot
 	name = "Ocelot"
 	description = "Shoot faster, with extra ricochet and less spread. You're pretty good!"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/stormtrooper)
 
 /datum/deathmatch_modifier/ocelot/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.add_traits(list(TRAIT_NICE_SHOT, TRAIT_DOUBLE_TAP), DEATHMATCH_TRAIT)
@@ -125,6 +126,19 @@
 	projectile.min_ricochets += 2
 	projectile.ricochet_incidence_leeway = 0
 	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, DEATHMATCH_TRAIT)
+
+/datum/deathmatch_modifier/stormtrooper
+	name = "Stormtrooper Aim"
+	description = "Fresh out of the 'I Can't Aim For Shit' School"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/ocelot)
+
+/datum/deathmatch_modifier/stormtrooper/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	RegisterSignal(player, COMSIG_MOB_FIRED_GUN, PROC_REF(increase_spread))
+
+/datum/deathmatch_modifier/stormtrooper/proc/increase_spread(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+	bonus_spread_values[MIN_BONUS_SPREAD_INDEX] += 10
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += 35
 
 /datum/deathmatch_modifier/four_hands
 	name = "Four Hands"
@@ -276,7 +290,7 @@
 
 /datum/deathmatch_modifier/explode_on_death
 	name = "Explosive Death"
-	description = "You're implanted with a microbomb that cannot be manually activated."
+	description = "Everyone gets a microbomb that cannot be manually activated."
 
 /datum/deathmatch_modifier/explode_on_death/on_start_game(datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(lobby, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS, DEATHMATCH_TRAIT)
