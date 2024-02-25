@@ -27,14 +27,13 @@
 	light_range = 3
 	light_power = 0.9
 	del_on_death = TRUE
+	req_access = list(ACCESS_ROBOTICS)
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
 
-	///Access required to access this Bot's maintenance protocols
-	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.
@@ -285,26 +284,6 @@
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!maints_access_required) // No requirements to access it.
-		return TRUE
-	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
-		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-	return FALSE
-
 /mob/living/simple_animal/bot/bee_friendly()
 	return TRUE
 
@@ -355,7 +334,7 @@
 	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_OPEN ? "close" : "open"] it.")
 	if(bot_cover_flags & BOT_COVER_OPEN)
 		. += span_notice("Its control panel is [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
-		var/is_sillycone = issilicon(user)
+		var/is_sillycone = HAS_SILICON_ACCESS(user)
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
 			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
 	if(paicard)
@@ -443,7 +422,7 @@
 	if(bot_cover_flags & BOT_COVER_OPEN)
 		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
@@ -981,13 +960,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/ui_data(mob/user)
 	var/list/data = list()
-	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
+	data["can_hack"] = HAS_SILICON_ACCESS(user)
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["settings"] = list()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["settings"]["pai_inserted"] = !!paicard
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 		data["settings"]["possession_enabled"] = can_be_possessed
@@ -1002,7 +981,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	if(!check_access(usr))
+	var/mob/user = usr
+	if(!allowed(user))
 		to_chat(usr, span_warning("Access denied."))
 		return
 
@@ -1023,7 +1003,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!(issilicon(usr) || isAdminGhostAI(usr)))
+			if(!HAS_SILICON_ACCESS(usr))
 				return
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
@@ -1068,7 +1048,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!(bot_cover_flags & BOT_COVER_HACKED)) //Manually emagged by a human - access denied to all.
 			return TRUE
-		else if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
+		else if(!HAS_SILICON_ACCESS(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
 	return FALSE
 
@@ -1137,7 +1117,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /// Ejects the pAI remotely.
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
-	if(!check_access(user) || !paicard)
+	if(!allowed(user) || !paicard)
 		return
 	speak("Ejecting personality chip.", radio_channel)
 	ejectpai(user)

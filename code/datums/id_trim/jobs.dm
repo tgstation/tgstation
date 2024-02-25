@@ -1257,12 +1257,8 @@
 	sechud_icon_state = SECHUD_ASSISTANT
 	minimal_access = list(
 		ACCESS_ROBOTICS, // to access robotic controls
-		ACCESS_COMMAND, //to access comms consoles
-		ACCESS_CE, //to access APC controller console
 		ACCESS_NETWORK, //to access NTOS
 		ACCESS_KEYCARD_AUTH, //to access holopads
-		ACCESS_RC_ANNOUNCE, //to make announcements
-		ACCESS_RD, //to access RD machines
 		ACCESS_MINISAT,
 		ACCESS_AI_UPLOAD,
 	)

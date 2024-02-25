@@ -26,7 +26,7 @@
 	buckle_prevents_pull = TRUE // No pulling loaded shit
 	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
+	req_access = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
@@ -129,13 +129,13 @@
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
+	if(bot_cover_flags & BOT_COVER_OPEN && !HAS_AI_ACCESS(user))
 		wires.interact(user)
 		return
-	if(wires.is_cut(WIRE_RX) && isAI(user))
+	if(wires.is_cut(WIRE_RX) && HAS_AI_ACCESS(user))
 		return
 
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
@@ -263,7 +263,7 @@
 	var/list/data = list()
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
@@ -290,12 +290,12 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr))
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				return TRUE
 		if("on")

@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
-	maints_access_required = list(ACCESS_SECURITY)
+	req_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
@@ -169,7 +169,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["check_id"] = security_mode_flags & SECBOT_CHECK_IDS
 		data["custom_controls"]["check_weapons"] = security_mode_flags & SECBOT_CHECK_WEAPONS
 		data["custom_controls"]["check_warrants"] = security_mode_flags & SECBOT_CHECK_RECORDS
@@ -180,7 +180,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)

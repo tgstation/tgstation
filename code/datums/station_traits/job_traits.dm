@@ -168,7 +168,7 @@
 
 /datum/station_trait/job/human_ai
 	name = "Human AI"
-	button_desc = "Sign up to become the AI."
+	button_desc = "Sign up to become the \"AI\"."
 	weight = 2
 	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
@@ -181,6 +181,10 @@
 /datum/station_trait/job/human_ai/New()
 	. = ..()
 	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(replace_ai))
+
+/datum/station_trait/job/human_ai/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	. = ..()
+	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "human_ai_on" : "human_ai_off"
 
 /datum/station_trait/job/human_ai/proc/replace_ai(datum/source)
 	SIGNAL_HANDLER

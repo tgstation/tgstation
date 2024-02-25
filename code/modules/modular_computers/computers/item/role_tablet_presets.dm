@@ -431,8 +431,8 @@
 
 /obj/item/modular_computer/pda/human_ai
 	name = "modular interface"
-	icon_state = "tablet-silicon"
-	base_icon_state = "tablet-silicon"
+	icon_state = "pda-silicon-human"
+	base_icon_state = "pda-silicon-human"
 	greyscale_config = null
 	greyscale_colors = null
 
@@ -442,6 +442,8 @@
 	has_pda_programs = FALSE
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/secureye/syndicate,
+		/datum/computer_file/program/alarm_monitor,
 	)
 
 /**

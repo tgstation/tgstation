@@ -1100,7 +1100,7 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (!isAI(user))
+	if (!HAS_AI_ACCESS(user))
 		if(seconds_electrified && !(machine_stat & NOPOWER))
 			if(shock(user, 100))
 				return

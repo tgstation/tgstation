@@ -1,11 +1,7 @@
 /**
  * TO DO LIST
- *
- * Add a way to block the Human AI from leaving the SAT (maybe something similar to free golems when on-station)
- * Add a way for the Human AI to have consoles, either by replacing its surroundings (maybe with modular maps) or some form of drop-pod for computers.
- * Lobby icon for station trait
- * Custom PDA sprite
  * More interactions with their liver trait
+ * More mail/heirloom items
  */
 
 /datum/job/human_ai
@@ -102,6 +98,7 @@
 	id_trim = /datum/id_trim/job/human_ai
 	backpack_contents = list(
 		/obj/item/door_remote/omni = 1,
+		/obj/item/machine_remote = 1,
 	)
 	implants = list(
 		/obj/item/implant/teleport_blocker,
@@ -110,7 +107,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	belt = /obj/item/modular_computer/pda/human_ai
 	ears = /obj/item/radio/headset/silicon/human_ai
-	glasses = /obj/item/clothing/glasses/sunglasses
+	glasses = /obj/item/clothing/glasses/hud/diagnostic
 
 	suit = /obj/item/clothing/suit/costume/cardborg
 	head = /obj/item/clothing/head/costume/cardborg

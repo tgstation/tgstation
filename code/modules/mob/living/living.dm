@@ -1307,7 +1307,7 @@
 			return FALSE
 
 	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
-		if(issilicon(src) && !ispAI(src))
+		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE

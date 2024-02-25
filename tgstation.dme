@@ -2261,6 +2261,7 @@
 #include "code\game\objects\items\kitchen.dm"
 #include "code\game\objects\items\knives.dm"
 #include "code\game\objects\items\latexballoon.dm"
+#include "code\game\objects\items\machine_wand.dm"
 #include "code\game\objects\items\mail.dm"
 #include "code\game\objects\items\maintenance_loot.dm"
 #include "code\game\objects\items\manuals.dm"

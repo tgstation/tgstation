@@ -334,22 +334,24 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/silicon/pai
-	name = "\proper mini Integrated Subspace Transceiver "
+	name = "\proper mini Integrated Subspace Transceiver"
 	subspace_transmission = FALSE
 
 
 /obj/item/radio/headset/silicon/ai
-	name = "\proper Integrated Subspace Transceiver "
+	name = "\proper Integrated Subspace Transceiver"
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
 /obj/item/radio/headset/silicon/human_ai
-	name = "\proper Disconnected Subspace Transceiver "
+	name = "\proper Disconnected Subspace Transceiver"
+	icon_state = "rob_headset"
+	worn_icon_state = "rob_headset"
 	keyslot2 = new /obj/item/encryptionkey/ai_with_binary
 	command = TRUE
 
 /obj/item/radio/headset/silicon/ai/evil
-	name = "\proper Evil Integrated Subspace Transceiver "
+	name = "\proper Evil Integrated Subspace Transceiver"
 	keyslot2 = new /obj/item/encryptionkey/ai/evil
 	command = FALSE
 

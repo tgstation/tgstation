@@ -39,8 +39,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	light_range = 3
 	light_power = 0.9
 	speed = 3
-	///Access required to access this Bot's maintenance protocols
-	var/maints_access_required = list(ACCESS_ROBOTICS)
+	req_access = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.
@@ -270,27 +269,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/basic/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-	if(!length(maints_access_required)) // No requirements to access it.
-		return TRUE
-	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN) // Unlocked.
-		return TRUE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-
-	return FALSE
-
 /mob/living/basic/bot/bee_friendly()
 	return TRUE
 
@@ -393,7 +371,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		balloon_alert(user, "access panel must be closed!")
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		balloon_alert(user, "no access")
 		return
 	bot_access_flags ^= BOT_CONTROL_PANEL_OPEN
@@ -584,13 +562,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/ui_data(mob/user)
 	var/list/data = list()
-	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
+	data["can_hack"] = HAS_SILICON_ACCESS(user)
 	data["custom_controls"] = list()
 	data["emagged"] = bot_access_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
-	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || HAS_SILICON_ACCESS(user))
 		data["settings"]["pai_inserted"] = !isnull(paicard)
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 		data["settings"]["possession_enabled"] = can_be_possessed
@@ -606,7 +584,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(.)
 		return
 	var/mob/the_user = ui.user
-	if(!check_access(the_user))
+	if(!allowed(the_user))
 		balloon_alert(the_user, "access denied!")
 		return
 
@@ -627,7 +605,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!(issilicon(the_user) || isAdminGhostAI(the_user)))
+			if(!HAS_SILICON_ACCESS(the_user))
 				return
 			if(!(bot_access_flags & BOT_COVER_EMAGGED))
 				bot_access_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED)
@@ -674,7 +652,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return FALSE
 	if(!(bot_access_flags & BOT_COVER_HACKED)) //Manually emagged by a human - access denied to all.
 		return TRUE
-	if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
+	if(!HAS_SILICON_ACCESS(user)) //Bot is hacked, so only silicons and admins are allowed access.
 		return TRUE
 
 	return FALSE
@@ -744,7 +722,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Ejects the pAI remotely.
 /mob/living/basic/bot/proc/eject_pai_remote(mob/user)
-	if(!check_access(user) || !paicard)
+	if(!allowed(user) || !paicard)
 		return
 	speak("Ejecting personality chip.", radio_channel)
 	ejectpai(user)
