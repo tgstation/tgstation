@@ -63,10 +63,12 @@
 	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
-/obj/item/laser_pointer/infinite
+/obj/item/laser_pointer/infinite_range
+	name = "infinite laser pointer"
+	desc = "Used to shine in the eyes of Cyborgs who need a bit of a push, this works through camera consoles."
 	max_range = INFINITE
 
-/obj/item/laser_pointer/infinite/Initialize(mapload)
+/obj/item/laser_pointer/infinite_range/Initialize(mapload)
 	. = ..()
 	diode = new /obj/item/stock_parts/servo/femto
 

@@ -414,7 +414,6 @@
 /**
  * No Department/Station Trait
  */
-
 /obj/item/modular_computer/pda/assistant
 	name = "assistant PDA"
 	starting_programs = list(
@@ -436,7 +435,7 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-	has_light = FALSE //tablet light button actually enables/disables the borg lamp
+	has_light = FALSE //parity with borg PDAs
 	comp_light_luminosity = 0
 	inserted_item = null
 	has_pda_programs = FALSE
@@ -449,7 +448,6 @@
 /**
  * Non-roles
  */
-
 /obj/item/modular_computer/pda/syndicate
 	name = "military PDA"
 	greyscale_colors = "#891417#80FF80"

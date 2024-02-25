@@ -1,13 +1,7 @@
-/**
- * TO DO LIST
- * More interactions with their liver trait
- * More mail/heirloom items
- */
-
 /datum/job/human_ai
 	title = JOB_HUMAN_AI
 	description = "Assist the crew, open airlocks, follow your lawset, and coordinate your cyborgs."
-	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON //not really a head but close enough
+	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	department_head = list(JOB_CAPTAIN)
 	faction = FACTION_STATION
 	total_positions = 0
@@ -25,6 +19,7 @@
 	paycheck = null
 	paycheck_department = null
 
+	mind_traits = list(DISPLAYS_JOB_IN_BINARY)
 	liver_traits = list(TRAIT_HUMAN_AI_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_AI
@@ -32,11 +27,13 @@
 		/datum/job_department/silicon,
 	)
 
-	family_heirlooms = list(/obj/item/food/burger/roburger)
+	family_heirlooms = list(
+		/obj/item/mmi/posibrain/display,
+	)
 
 	mail_goodies = list(
-		/obj/item/storage/fancy/cigarettes = 1,
-		/obj/item/pen/fountain = 1,
+		/obj/item/food/burger/roburger = 1,
+		/obj/item/food/cake/hardware_cake = 1,
 	)
 	rpg_title = "Omnissiah"
 	random_spawns_possible = FALSE
@@ -76,7 +73,7 @@
 	chosen_spawn_point.used = TRUE
 	return chosen_spawn_point
 
-/datum/job/human_ai/special_check_latejoin(client/C)
+/datum/job/human_ai/special_check_latejoin(client/latejoin_client)
 	for(var/obj/structure/ai_core/latejoin_inactive/latejoin_core as anything in GLOB.latejoin_ai_cores)
 		if(latejoin_core.is_available())
 			return TRUE
@@ -104,7 +101,6 @@
 		/obj/item/implant/teleport_blocker,
 	)
 
-	uniform = /obj/item/clothing/under/color/grey
 	belt = /obj/item/modular_computer/pda/human_ai
 	ears = /obj/item/radio/headset/silicon/human_ai
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
@@ -112,7 +108,7 @@
 	suit = /obj/item/clothing/suit/costume/cardborg
 	head = /obj/item/clothing/head/costume/cardborg
 
-	l_pocket = /obj/item/laser_pointer/infinite //to punish borgs, this works through the camera console.
+	l_pocket = /obj/item/laser_pointer/infinite_range //to punish borgs, this works through the camera console.
 	r_pocket = /obj/item/assembly/flash/handheld
 
 	l_hand = /obj/item/paper/default_lawset_list
