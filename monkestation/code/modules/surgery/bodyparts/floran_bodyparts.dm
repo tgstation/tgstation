@@ -6,7 +6,7 @@
 /obj/item/bodypart/chest/floran
 	icon_greyscale = 'monkestation/icons/mob/species/floran/bodyparts.dmi'
 	limb_id = SPECIES_FLORAN
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 
 /obj/item/bodypart/arm/left/floran
 	icon_greyscale = 'monkestation/icons/mob/species/floran/bodyparts.dmi'
