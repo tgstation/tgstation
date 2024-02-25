@@ -1,4 +1,4 @@
-/ Pizza (Whole)
+// Pizza (Whole)
 /obj/item/food/pizza
 	name = "pizza"
 	icon = 'icons/obj/food/pizza.dmi'
