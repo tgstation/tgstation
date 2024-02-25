@@ -208,10 +208,10 @@
 	var/obj/item/radio/sec_radio
 
 /// Contains structures and items that vendors shouldn't crush when we land on them.
-GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
+var/static/list/vendor_uncrushable_objects = list(
 	/obj/structure/chair,
 	/obj/machinery/conveyor,
-) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR)
+) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR
 
 /datum/armor/machinery_vending
 	melee = 20
@@ -827,7 +827,7 @@ GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if(vendor_can_crush_item(atom_target))
+			else if(check_atom_crushable(atom_target))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
@@ -867,12 +867,12 @@ GLOBAL_LIST_INIT(vendor_uncrushable_items, list(
 /atom/movable/proc/post_tilt()
 	return
 
-/atom/movable/proc/vendor_can_crush_item(atom/atom_target)
-	if(is_type_in_list(atom_target, GLOB.vendor_uncrushable_items)) //make sure its not in the list of "uncrushable" stuff
+/proc/check_atom_crushable(atom/atom_target)
+	if(is_type_in_list(atom_target, vendor_uncrushable_objects)) //make sure its not in the list of "uncrushable" stuff
 		return FALSE
 
-	if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING)) //allow ninjas, etc to be crushed in cloak
-		return TRUE
+	if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING)) //check if it has integrity + allow ninjas, etc to be crushed in cloak
+		return TRUE //SMUSH IT
 
 	return FALSE
 
