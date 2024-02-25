@@ -133,7 +133,7 @@
 	icon_state = "floor_change"
 	screen_loc = ui_floor_menu
 
-/atom/movable/screen/floor_menu/Initialize()
+/atom/movable/screen/floor_menu/Initialize(mapload)
 	. = ..()
 	register_context()
 
