@@ -150,7 +150,7 @@
 /datum/deathmatch_modifier/paraplegic
 	name = "Paraplegic"
 	description = "Wheelchairs. For. Everyone."
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/steed)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/mounts)
 
 /datum/deathmatch_modifier/paraplegic/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
@@ -158,12 +158,12 @@
 	wheels.setDir(player.dir)
 	wheels.buckle_mob(player)
 
-/datum/deathmatch_modifier/steed
-	name = "Steeds"
+/datum/deathmatch_modifier/mounts
+	name = "Mounts"
 	description = "A horse! A horse! My kingdom for a horse!"
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/paraplegic)
 
-/datum/deathmatch_modifier/steed/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+/datum/deathmatch_modifier/mounts/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	///We do a bit of fun over balance here, some mounts may be better than others.
 	var/mount_path = pick(list(
 		/mob/living/basic/carp,

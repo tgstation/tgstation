@@ -10,7 +10,6 @@ import {
   Icon,
   Modal,
   Section,
-  Stack,
   Table,
 } from '../components';
 import { ButtonCheckbox } from '../components/Button';
