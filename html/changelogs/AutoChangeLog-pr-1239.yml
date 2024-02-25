@@ -1,5 +1,0 @@
-author: "MrMelbert, mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "Stairs are now resistant to being shoved by mobs with high move force."
-  - bugfix: "fixed border-only firedoors being able to be walked through while closed"
