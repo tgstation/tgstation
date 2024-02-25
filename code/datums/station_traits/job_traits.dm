@@ -63,9 +63,11 @@
 	if (!LAZYLEN(lobby_candidates))
 		on_failed_assignment()
 		return // Nobody signed up :(
+	var/datum/job/our_job = SSjob.GetJob(job_to_add::title)
 	for(var/_ in 1 to position_amount)
 		var/mob/dead/new_player/picked_player = pick_n_take(lobby_candidates)
 		picked_player.mind.assigned_role = new job_to_add()
+		our_job.current_positions++
 	lobby_candidates = null
 
 /// Called if we didn't assign a role before the round began, we add it to the latejoin menu instead
@@ -168,10 +170,12 @@
 	name = "Human AI"
 	button_desc = "Sign up to become the AI."
 	weight = 2
+	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
 	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/human_ai
+	trait_to_give = STATION_TRAIT_HUMAN_AI
 	blacklist = list(/datum/station_trait/triple_ai)
 
 /datum/station_trait/job/human_ai/New()

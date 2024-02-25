@@ -118,6 +118,7 @@
 	. = ..()
 	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)
+	ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/det_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/detective]

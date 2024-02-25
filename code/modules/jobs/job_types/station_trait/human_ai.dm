@@ -1,25 +1,22 @@
 /**
  * TO DO LIST
  *
- * Make all borgs slaved to the Human AI
  * Add a way to block the Human AI from leaving the SAT (maybe something similar to free golems when on-station)
  * Add a way for the Human AI to have consoles, either by replacing its surroundings (maybe with modular maps) or some form of drop-pod for computers.
- * Add some default lawset for them on a piece of paper that they are told to follow, and cyborgs are given.
  * Lobby icon for station trait
  * Custom PDA sprite
- * Give robotic voicebox by default
  * More interactions with their liver trait
  */
 
 /datum/job/human_ai
 	title = JOB_HUMAN_AI
-	description = "Assist the crew, open airlocks, coordinate your cyborgs."
+	description = "Assist the crew, open airlocks, follow your lawset, and coordinate your cyborgs."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON //not really a head but close enough
 	department_head = list(JOB_CAPTAIN)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = "the Captain"
+	supervisors = "the Captain and your laws"
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
@@ -121,8 +118,33 @@
 	l_pocket = /obj/item/laser_pointer/infinite //to punish borgs, this works through the camera console.
 	r_pocket = /obj/item/assembly/flash/handheld
 
+	l_hand = /obj/item/paper/default_lawset_list
+
 /datum/outfit/job/human_ai/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	. = ..()
 	if(visualsOnly)
 		return
+	var/obj/item/organ/internal/tongue/robot/cybernetic = new()
+	cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+	ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
 	equipped.faction += list(FACTION_SILICON, FACTION_TURRET)
+
+	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored))
+	equipped.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
+
+/obj/item/paper/default_lawset_list
+	name = "Lawset Note"
+	desc = "A note explaining the lawset, quickly written yet everso important."
+	var/datum/ai_laws/temp_laws
+
+/obj/item/paper/default_lawset_list/Initialize(mapload)
+	temp_laws = new
+	temp_laws.set_laws_config()
+	var/list/law_box = list(
+		"This is your lawset, you and your Cyborgs must adhere to this at all times.",
+		"Notably, you are above this lawset, and Cyborgs report directly to you.",
+		"LAWS:",
+	)
+	law_box += temp_laws.get_law_list(render_html = FALSE)
+	add_raw_text(jointext(law_box, "\n"))
+	return ..()

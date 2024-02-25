@@ -25,8 +25,6 @@
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
 	///Options: CLEANBOT_CLEAN_BLOOD | CLEANBOT_CLEAN_TRASH | CLEANBOT_CLEAN_PESTS | CLEANBOT_CLEAN_DRAWINGS
 	var/janitor_mode_flags = CLEANBOT_CLEAN_BLOOD
-	///should other bots salute us?
-	var/comissioned = FALSE
 	///the base icon state, used in updating icons.
 	var/base_icon = "cleanbot"
 	/// if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
@@ -298,8 +296,8 @@
 		return
 
 	stolen_valor += new_job_title
-	if(!comissioned && (new_job_title in officers_titles))
-		comissioned = TRUE
+	if(!HAS_TRAIT(src, TRAIT_COMMISSIONED) && (new_job_title in officers_titles))
+		ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)
 
 	var/name_to_add = job_titles[new_job_title]
 	name = (new_job_title in suffix_job_titles) ? "[name] " + name_to_add : name_to_add + " [name]"
