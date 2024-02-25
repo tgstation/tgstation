@@ -2,11 +2,11 @@
 	title = JOB_HUMAN_AI
 	description = "Assist the crew, open airlocks, follow your lawset, and coordinate your cyborgs."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
-	department_head = list(JOB_CAPTAIN)
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = "the Captain and your laws"
+	supervisors = "the Captain, Research Director, and your lawset"
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
@@ -103,7 +103,7 @@
 	)
 
 	belt = /obj/item/modular_computer/pda/human_ai
-	ears = /obj/item/radio/headset/binary
+	ears = /obj/item/radio/headset/silicon/human_ai
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
 
 	suit = /obj/item/clothing/suit/costume/cardborg
@@ -118,9 +118,11 @@
 	. = ..()
 	if(visualsOnly)
 		return
-	var/obj/item/organ/internal/tongue/robot/cybernetic = new()
-	cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-	ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
+	if(!equipped.get_quirk(/datum/quirk/body_purist))
+		var/obj/item/organ/internal/tongue/robot/cybernetic = new()
+		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		//you only get respect if you go all the way, man.
+		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
 	equipped.faction += list(FACTION_SILICON, FACTION_TURRET)
 
 	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored))
