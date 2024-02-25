@@ -688,3 +688,7 @@
   vinylspiders:
   - bugfix: fixes spurious CI failure in museum
   - code_imp: adds a blacklist feature to spawners
+2024-02-25:
+  bigfatbananacyclops:
+  - rscadd: floortile camouflage suit, boots, gloves and crate containing the former
+      items
