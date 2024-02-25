@@ -111,6 +111,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_HEAD) != src || QDELETED(src)) //This can be called as a part of destroy
+		return
 	for(var/language in language_list)
 		user.remove_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
 
