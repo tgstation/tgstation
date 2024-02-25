@@ -931,6 +931,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_FORESTED "station_trait_forested"
 #define STATION_TRAIT_HANGOVER "station_trait_hangover"
+#define STATION_TRAIT_HUMAN_AI "station_trait_human_ai"
 #define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
 #define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
 #define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
@@ -945,7 +946,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
-#define STATION_TRAIT_HUMAN_AI "station_trait_human_ai"
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
