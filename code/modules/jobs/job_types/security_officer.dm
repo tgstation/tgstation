@@ -117,6 +117,12 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
 		spawning.sec_hud_set_ID()
 
+		// Update PDA to match new trim.
+		var/obj/item/modular_computer/pda/pda = spawning.get_item_by_slot(ITEM_SLOT_BELT)
+		var/assignment = worn_id.get_trim_assignment()
+		if(istype(pda) && !isnull(assignment))
+			pda.imprint_id(spawning.real_name, assignment)
+
 	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 
 	if(!CONFIG_GET(flag/sec_start_brig) && (destination || spawn_point))
