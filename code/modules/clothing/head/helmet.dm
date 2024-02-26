@@ -184,6 +184,7 @@
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -247,6 +248,7 @@
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -394,6 +396,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/helmet_knight
 	melee = 50

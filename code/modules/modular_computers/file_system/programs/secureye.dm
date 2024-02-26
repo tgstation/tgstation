@@ -97,7 +97,7 @@
 	cam_screen.display_to(user)
 	user.client.register_map_obj(cam_background)
 
-/datum/computer_file/program/secureye/ui_status(mob/user)
+/datum/computer_file/program/secureye/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE

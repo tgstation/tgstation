@@ -4573,6 +4573,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
+"bgq" = (
+/obj/machinery/bluespace_vendor/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor2/fore)
 "bgr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_corner,
@@ -7446,6 +7450,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/third)
+"bQo" = (
+/obj/machinery/bluespace_vendor/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/hallway/floor4/aft)
 "bQv" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -16512,6 +16522,7 @@
 	dir = 8
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/machinery/bluespace_vendor/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
 "eir" = (
@@ -24904,6 +24915,13 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/fore)
+"gxE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/bluespace_vendor/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/floor1/aft)
 "gxH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47630,6 +47648,10 @@
 	dir = 4
 	},
 /area/station/hallway/floor3/fore)
+"mlc" = (
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "mlg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54284,6 +54306,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "nTI" = (
@@ -64018,6 +64041,10 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
 /area/station/commons/dorms/room4)
+"qwd" = (
+/obj/machinery/bluespace_vendor/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor3/fore)
 "qwg" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -74564,6 +74591,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/bluespace_vendor/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/aft)
 "tjV" = (
@@ -81840,6 +81868,10 @@
 /obj/machinery/duct,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port)
+"vdT" = (
+/obj/machinery/bluespace_vendor/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "vdU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
@@ -136667,7 +136699,7 @@ bJU
 pYs
 uyu
 kbu
-yhr
+gxE
 eeQ
 mdR
 gpf
@@ -141289,7 +141321,7 @@ qEw
 qEw
 qEw
 sAH
-xgW
+vdT
 kfo
 iZP
 kcB
@@ -143068,7 +143100,7 @@ owI
 owI
 css
 lwc
-vEN
+mlc
 vEN
 tGq
 vmr
@@ -178042,7 +178074,7 @@ kEI
 wwu
 sbI
 jtJ
-qfv
+bgq
 hat
 qfv
 lXq
@@ -243066,7 +243098,7 @@ nVq
 nVq
 cyX
 wRJ
-sJO
+qwd
 mUs
 oJo
 oJo
@@ -321455,7 +321487,7 @@ txa
 txa
 txa
 nWW
-kQk
+bQo
 nQX
 kQk
 eOP

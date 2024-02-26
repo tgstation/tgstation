@@ -85,12 +85,18 @@
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
 			log_combat(src, victim, "crashed into and was blocked by")
 			return
+		else if(HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+			victim.apply_damage(10 + 10 * extra_speed, STAMINA)
+			victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
+			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] was able to stay on their feet!"),\
+				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to stay on their feet!"))
 		else
 			victim.Paralyze(2 SECONDS)
 			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
-			log_combat(src, victim, "crashed into")
+		log_combat(src, victim, "crashed into")
 
 	if(oof_noise)
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
@@ -1023,6 +1029,7 @@
 				set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
@@ -1049,6 +1056,7 @@
 				set_usable_hands(usable_hands - 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()

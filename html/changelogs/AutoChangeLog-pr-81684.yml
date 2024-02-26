@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "You may no longer make deathmatch arenas dark with a lightswitch."

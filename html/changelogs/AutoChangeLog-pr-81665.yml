@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Constructs now reuse the victim's mind instead of just moving their client"

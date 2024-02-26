@@ -76,7 +76,7 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
-/obj/machinery/computer/security/ui_status(mob/user)
+/obj/machinery/computer/security/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE
