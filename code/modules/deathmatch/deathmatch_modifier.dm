@@ -333,12 +333,20 @@
 	var/metabolism_rate = /datum/reagent/consumable/ethanol/kahlua::metabolization_rate
 	player.reagents.add_reagent(/datum/reagent/consumable/ethanol/kahlua, initial(lobby.map.automatic_gameend_time) * 0.35 / metabolism_rate)
 
+/datum/deathmatch_modifier/monkeys
+	name = "Monkeyfication"
+	description = "Go back, I want to be monkey!"
+
+/datum/deathmatch_modifier/monkeys/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	//we don't call monkeyize(), because it'd set the player name to a generic "monkey(number)".
+	player.set_species(/datum/species/monkey)
+
 /datum/deathmatch_modifier/inverted_movement
 	name = "Inverted Movement"
 	description = "Up is down, left is right"
 
 /datum/deathmatch_modifier/inverted_movement/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	ADD_TRAIT(player, TRAIT_INVERTED_MOVEMENT, DEATHMATCH_TRAIT)
+	player.AddElement(/datum/element/inverted_movement)
 
 /datum/deathmatch_modifier/minefield
 	name = "Minefield"
