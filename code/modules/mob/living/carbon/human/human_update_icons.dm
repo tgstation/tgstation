@@ -824,28 +824,88 @@ generate/load female uniform sprites matching all previously decided variables
 	switch(get_mob_height())
 		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
-			appearance.add_filter("Monkey_Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3))
-			appearance.add_filter("Monkey_Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4))
+			appearance.add_filters(list(
+				list(
+					"name" = "Monkey_Gnome_Cut_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3),
+				),
+				list(
+					"name" = "Monkey_Gnome_Cut_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
+				),
+			))
 		if(MONKEY_HEIGHT_MEDIUM)
-			appearance.add_filter("Monkey_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
-			appearance.add_filter("Monkey_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4))
+			appearance.add_filters(list(
+				list(
+					"name" = "Monkey_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
+				),
+				list(
+					"name" = "Monkey_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
+				),
+			))
 		// Don't set this one directly, use TRAIT_DWARF
 		if(HUMAN_HEIGHT_DWARF)
-			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
-			appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
+			appearance.add_filters(list(
+				list(
+					"name" = "Gnome_Cut_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
+				),
+				list(
+					"name" = "Gnome_Cut_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3),
+				),
+			))
 		if(HUMAN_HEIGHT_SHORTEST)
-			appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+			appearance.add_filters(list(
+				list(
+					"name" = "Cut_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1),
+				),
+				list(
+					"name" = "Cut_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1),
+				),
+			))
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_TALL)
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_TALLER)
-			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+			appearance.add_filters(list(
+				list(
+					"name" = "Lenghten_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
+				),
+				list(
+					"name" = "Lenghten_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1),
+				),
+			))
 		if(HUMAN_HEIGHT_TALLEST)
-			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2))
+			appearance.add_filters(list(
+				list(
+					"name" = "Lenghten_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
+				),
+				list(
+					"name" = "Lenghten_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2),
+				),
+			))
 
 	return appearance
 
