@@ -1,6 +1,7 @@
 #define MINIMUM_MONSTERS_REQUIRED 2
 
 /datum/round_event_control/antagonist/solo/monsterhunter
+	name = "Monster Hunters"
 	track = EVENT_TRACK_MAJOR //being an anrtag event is for backend reasons, the event itself is major
 	antag_flag = ROLE_MONSTERHUNTER
 	tags = list(TAG_MAGICAL, TAG_TARGETED, TAG_COMBAT)
