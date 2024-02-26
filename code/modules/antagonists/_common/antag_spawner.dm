@@ -131,7 +131,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/nuke_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, pic_source = src, role_name_text = special_role_name)
+	var/list/nuke_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, pic_source = src, role_name_text = special_role_name)
 	if(LAZYLEN(nuke_candidates))
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -210,7 +210,6 @@
 			borg = new /mob/living/silicon/robot/model/syndicate()
 		else
 			stack_trace("Unknown cyborg type '[special_role_name]' could not be found by [src]!")
-
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
