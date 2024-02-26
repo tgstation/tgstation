@@ -1,5 +1,0 @@
-author: "Derpguy3"
-delete-after: True
-changes:
-  - bugfix: "Three stationary water tanks on Birdshot which supplied a sink in the bar, a sink in the medical storage and a sink in the perma-brig's kitchen are now properly rotated and connected with the plumbing."
-  - bugfix: "The unisex showers on Birdshot have been given a water tank for its plumbing."
