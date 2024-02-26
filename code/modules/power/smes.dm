@@ -424,7 +424,7 @@
 	log_smes()
 
 /obj/machinery/power/smes/engineering
-	charge = 37.5 * STANDARD_CELL_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
+	charge = 50 * STANDARD_CELL_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
 	output_level = 90000
 
 /obj/machinery/power/smes/magical
