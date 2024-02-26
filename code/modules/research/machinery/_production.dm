@@ -145,7 +145,7 @@
 	PRIVATE_PROC(TRUE)
 
 	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * initial(active_power_usage))))
+	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.02 * initial(active_power_usage))))
 		var/mat_name = "iron"
 
 		var/highest_mat = 0
@@ -158,6 +158,7 @@
 				highest_mat = present_mat
 
 		flick_animation(mat_name)
+		flick_animation("progress")
 /**
  * Plays an visual animation when materials are inserted
  * Arguments
