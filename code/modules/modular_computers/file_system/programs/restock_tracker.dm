@@ -7,6 +7,7 @@
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 4
+	program_icon = "cash-register"
 	tgui_id = "NtosRestock"
 
 /datum/computer_file/program/restock_tracker/ui_data()
