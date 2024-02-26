@@ -417,7 +417,7 @@
 	outputting = output_attempt
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)
-	charge -= 1e6/severity
+	charge -= STANDARD_CELL_CHARGE/severity
 	if (charge < 0)
 		charge = 0
 	update_appearance()
