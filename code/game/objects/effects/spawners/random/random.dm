@@ -57,6 +57,9 @@
 		var/pixel_divider = FLOOR(16 / spawn_loot_split_pixel_offsets, 1) // 16 pixels offsets is max that should be allowed in any direction
 		while((spawn_loot_count-loot_spawned) && loot.len)
 			var/lootspawn = pick_weight_recursive(loot)
+			if(!can_spawn(lootspawn))
+				loot.Remove(lootspawn)
+				continue
 			if(!spawn_loot_double)
 				loot.Remove(lootspawn)
 			if(lootspawn && (spawn_scatter_radius == 0 || spawn_locations.len))
