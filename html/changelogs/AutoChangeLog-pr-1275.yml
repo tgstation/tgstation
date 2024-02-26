@@ -1,5 +1,0 @@
-author: "DimWhat"
-delete-after: True
-changes:
-  - rscadd: "Added ethereal gender and bodytype options."
-  - image: "fixed some ethereal sprite inconsistencies."

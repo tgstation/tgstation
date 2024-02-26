@@ -238,3 +238,10 @@
   MrMelbert, mc-oofert:
   - bugfix: Stairs are now resistant to being shoved by mobs with high move force.
   - bugfix: fixed border-only firedoors being able to be walked through while closed
+2024-02-26:
+  DimWhat:
+  - rscadd: Arachnids have adopted the concept of gender.
+  - rscadd: Added ethereal gender and bodytype options.
+  - image: fixed some ethereal sprite inconsistencies.
+  - rscadd: Added dimorphism to florans.
+  - image: Fixes a few issues with bunnysuit and tailcoat sprites
