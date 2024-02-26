@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "The Paddy's Claw should be properly unusable in situations which it should be properly unusable."
