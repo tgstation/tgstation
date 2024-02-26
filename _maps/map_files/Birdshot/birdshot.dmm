@@ -5456,10 +5456,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/security/tram)
-"cgb" = (
-/obj/machinery/duct,
-/turf/open/floor/iron/kitchen/small,
-/area/station/security/prison/mess)
 "cgy" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -11344,7 +11340,9 @@
 /area/station/maintenance/starboard/aft)
 "ena" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/plumbed,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "enb" = (
@@ -14096,7 +14094,6 @@
 "fls" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16053,6 +16050,12 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"fRZ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/greater)
 "fSe" = (
 /turf/closed/wall/rust,
 /area/station/cargo/miningfoundry)
@@ -17810,7 +17813,6 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/duct,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24624,6 +24626,9 @@
 "iSW" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/boxing/yellow,
+/obj/item/clothing/gloves/boxing/green{
+	pixel_y = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "iTn" = (
@@ -24697,8 +24702,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "iUy" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/boxing/green,
+/obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "iUz" = (
@@ -27370,7 +27374,6 @@
 "jPr" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28482,6 +28485,12 @@
 /obj/item/storage/backpack/duffelbag,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
+"kld" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/turf/open/floor/iron/kitchen/small,
+/area/station/security/prison/mess)
 "klf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair{
@@ -30608,7 +30617,6 @@
 "kZo" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -32653,6 +32661,12 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/carpet/donk,
 /area/station/command/heads_quarters/qm)
+"lHi" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/iron/kitchen/small,
+/area/station/security/prison/mess)
 "lHk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49391,7 +49405,9 @@
 /area/station/maintenance/port/lesser)
 "row" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/plumbed,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "roz" = (
@@ -62899,6 +62915,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/prison/mess)
 "vEe" = (
@@ -89949,7 +89966,7 @@ qeP
 lrE
 oPV
 pId
-ect
+kld
 qRM
 vSx
 eGL
@@ -90205,7 +90222,7 @@ uPr
 qeP
 lrE
 oPV
-cgb
+eHf
 vEb
 eHf
 qsR
@@ -90463,7 +90480,7 @@ lub
 tBA
 oPV
 iNz
-jDe
+lHi
 jDe
 tSB
 eGL
@@ -110124,7 +110141,7 @@ aJN
 tIE
 nFW
 iSW
-rdh
+fRZ
 liR
 jQL
 uwH
