@@ -23,6 +23,7 @@
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_HEAD)
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_NECK)
+	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_GLOVES)
 	for(var/obj/item/trait_needed as anything in no_drops)
 		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
 		trait_needed.name = "cursed " + trait_needed.name
