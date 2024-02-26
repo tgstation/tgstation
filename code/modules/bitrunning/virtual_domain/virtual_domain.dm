@@ -29,8 +29,8 @@
 	var/list/datum/modular_mob_segment/mob_modules = list()
 	/// An assoc list of typepath/amount to spawn on completion. Not weighted - the value is the amount
 	var/list/completion_loot
-	/// An accoc list of typepath/amount to spawn from secondary objectives Not weighted - the value is the number of items that can be obtained.
-	var/list/secondary_loot
+	/// An accoc list of typepath/amount to spawn from secondary objectives. Not weighted - the value is the total number of items that can be obtained.
+	var/list/secondary_loot = list()
 	/// Forces all mob modules to only load once
 	var/modular_unique_mobs = FALSE
 	// Name to show in the UI
