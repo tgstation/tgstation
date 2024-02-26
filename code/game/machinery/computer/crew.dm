@@ -84,7 +84,7 @@
 
 /obj/machinery/computer/crew/ui_interact(mob/user)
 	. = ..()
-	GLOB.crewmonitor.show(user, src)
+	GLOB.crewmonitor.show(user,src)
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
@@ -181,7 +181,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/ui_data(mob/user)
 	var/obj/machinery/computer/crew/active_console = ui_host()
 	var/z
-	if(active_console && istype(active_console) && active_console.z_level_focus)
+	if(active_console && active_console.z_level_focus)
 		z = active_console.z_level_focus
 	else
 		z = user.z

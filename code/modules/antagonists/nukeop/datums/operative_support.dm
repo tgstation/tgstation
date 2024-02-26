@@ -22,9 +22,9 @@
 /datum/antagonist/nukeop/support/get_spawnpoint()
 	return pick(GLOB.nukeop_overwatch_start)
 
-/obj/machinery/computer/crew/remote
+	/obj/machinery/computer/crew/remote
 	name = "station crew monitoring console"
-	desc = "Remotely accesses the station's suit sensor network, tracking all signatures on the same level as the disk carrier."
+	desc = "Remotely accesses the station camera net, allowing you to spy on the crew no matter where you are!"
 	icon_screen = "tcboss"
 	icon_keyboard = "syndie_key"
 	circuit = /obj/item/circuitboard/computer/crew/remote
@@ -32,19 +32,4 @@
 
 /obj/machinery/computer/crew/remote/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	recalibrate_focus()
-
-/obj/machinery/computer/crew/remote/ui_interact(action, list/params)
-	recalibrate_focus() //If disky has moved, we re-focus on them. Doesn't update live because live tracking would be disorienting.
-	..()
-
-///Used to evaluate which z-level of sensors we should be reading out.
-/obj/machinery/computer/crew/remote/proc/recalibrate_focus()
-	var/obj/item/disk/nuclear/disky = locate() in SSpoints_of_interest.real_nuclear_disks
-	if(!disky)
-		balloon_alert_to_viewers("no disk located, uh oh!") //Defaults to same z-level as the user.
-		return
-	z_level_focus = disky.z
-	if(!z_level_focus)
-		var/turf/turf_to_check = get_turf(disky)
-		z_level_focus = turf_to_check.z
+	z_level_focus = GLOB.station_levels_cache[1]
