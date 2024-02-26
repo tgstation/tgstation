@@ -132,10 +132,9 @@
 /obj/item/paper/default_lawset_list
 	name = "Lawset Note"
 	desc = "A note explaining the lawset, quickly written yet everso important."
-	var/datum/ai_laws/temp_laws
 
 /obj/item/paper/default_lawset_list/Initialize(mapload)
-	temp_laws = new
+	var/datum/ai_laws/temp_laws = new
 	temp_laws.set_laws_config()
 	var/list/law_box = list(
 		"This is your lawset, you and your Cyborgs must adhere to this at all times.",
@@ -144,6 +143,7 @@
 	)
 	law_box += temp_laws.get_law_list(render_html = FALSE)
 	add_raw_text(jointext(law_box, "\n"))
+	qdel(temp_laws)
 	return ..()
 
 /obj/item/secure_camera_console_pod
