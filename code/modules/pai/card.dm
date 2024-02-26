@@ -92,7 +92,7 @@
 		ui = new(user, src, "PaiCard")
 		ui.open()
 
-/obj/item/pai_card/ui_status(mob/user)
+/obj/item/pai_card/ui_status(mob/user, datum/ui_state/state)
 	if(user in get_nested_locs(src))
 		return UI_INTERACTIVE
 	return ..()
