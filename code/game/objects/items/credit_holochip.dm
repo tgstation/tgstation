@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/credits = 0
 
-/obj/item/holochip/Initialize(mapload, amount)
+/obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
 	if(amount)
 		credits = amount
