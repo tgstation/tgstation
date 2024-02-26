@@ -107,7 +107,7 @@
 	if(is_reagent_container(held_item)  && held_item.is_open_container())
 		if(replace_beaker(user, held_item))
 			ui_interact(user)
-		balloon_alert(user, "beaker added!")
+		balloon_alert(user, "beaker added")
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()

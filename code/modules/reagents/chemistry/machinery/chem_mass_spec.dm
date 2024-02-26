@@ -152,7 +152,7 @@
 		return ..()
 
 	if(processing_reagents)
-		balloon_alert(user, "still processing")
+		balloon_alert(user, "still processing!")
 		return ..()
 
 	if(is_reagent_container(item) && item.is_open_container())
@@ -161,18 +161,18 @@
 		if(!user.transferItemToLoc(beaker, src))
 			return
 		replace_beaker(user, !is_right_clicking, beaker)
-		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "Output" : "Input"] slot."))
+		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
 		ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(processing_reagents)
-		balloon_alert(user, "still processing")
-		return
+		balloon_alert(user, "still processing!")
+		return .
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
@@ -180,8 +180,8 @@
 /obj/machinery/chem_mass_spec/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(processing_reagents)
-		balloon_alert(user, "still processing")
-		return
+		balloon_alert(user, "still processing!")
+		return .
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
@@ -190,8 +190,8 @@
 /obj/machinery/chem_mass_spec/crowbar_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(processing_reagents)
-		balloon_alert(user, "still processing")
-		return
+		balloon_alert(user, "still processing!")
+		return .
 
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
@@ -237,8 +237,8 @@
 		if(!QDELETED(beaker1))
 			try_put_in_hand(beaker1, user)
 		beaker1 = new_beaker
-		lower_mass_range = calculate_mass(TRUE)
-		upper_mass_range = calculate_mass(FALSE)
+		lower_mass_range = calculate_mass(smallest = TRUE)
+		upper_mass_range = calculate_mass(smallest = FALSE)
 		estimate_time()
 
 	else //replace output beaker
@@ -421,7 +421,7 @@
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
 	if(processing_reagents)
-		balloon_alert(user, "still processing")
+		balloon_alert(user, "still processing!")
 		return ..()
 	if(!can_interact(user))
 		return
@@ -430,7 +430,7 @@
 /obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
 	. = ..()
 	if(processing_reagents)
-		balloon_alert(user, "still processing")
+		balloon_alert(user, "still processing!")
 		return ..()
 	if(!can_interact(user))
 		return
@@ -440,7 +440,7 @@
 	if(!processing_reagents)
 		return PROCESS_KILL
 
-	if(!is_operational || panel_open || !anchored || machine_stat & (BROKEN | NOPOWER))
+	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
 		return
 
 	use_power(active_power_usage)
