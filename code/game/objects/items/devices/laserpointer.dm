@@ -202,7 +202,7 @@
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
-	if(max_range != -1)
+	if(max_range != INFINITE)
 		if(!IN_GIVEN_RANGE(target, user, max_range))
 			to_chat(user, span_warning("\The [target] is too far away!"))
 			return
