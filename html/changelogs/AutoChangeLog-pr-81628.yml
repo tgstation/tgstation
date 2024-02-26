@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "RCD converts miscellaneous turfs like basalt, sand, beach etc to plating first & not put a wall directly on top of them"

@@ -1955,6 +1955,7 @@
 #include "code\game\machinery\launch_pad.dm"
 #include "code\game\machinery\lightswitch.dm"
 #include "code\game\machinery\limbgrower.dm"
+#include "code\game\machinery\machine_frame.dm"
 #include "code\game\machinery\mass_driver.dm"
 #include "code\game\machinery\mechlaunchpad.dm"
 #include "code\game\machinery\medical_kiosk.dm"
