@@ -211,8 +211,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
-/// Prevents shovies against a dense object from knocking them down.
-#define TRAIT_SHOVE_KNOCKDOWN_BLOCKED "shove_knockdown_blocked"
+/// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
+#define TRAIT_BRAWLING_KNOCKDOWN_BLOCKED "brawling_knockdown_blocked"
+/// Prevents some severe head injuries being sustained from heavy collisions or blunt force injuries.
+#define TRAIT_HEAD_INJURY_BLOCKED "head_injury_blocked"
 /// Prevents staggering.
 #define TRAIT_NO_STAGGER "no_stagger"
 /// Getting hit by thrown movables won't push you away
@@ -317,6 +319,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Is a medbot healing you
 #define TRAIT_MEDIBOTCOMINGTHROUGH "medbot"
 #define TRAIT_PASSTABLE "passtable"
+/// Lets you fly through windows
+#define TRAIT_PASSWINDOW "passwindow"
 /// Makes you immune to flashes
 #define TRAIT_NOFLASH "noflash"
 /// prevents xeno huggies implanting skeletons
@@ -341,6 +345,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DEL_ON_SPACE_DUMP "del_on_hyperspace_leave"
 /// We can walk up or around cliffs, or at least we don't fall off of it
 #define TRAIT_CLIFF_WALKER "cliff_walker"
+/// This means the user is currently holding/wearing a "tactical camouflage" item (like a potted plant).
+#define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
@@ -353,10 +359,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)
 #define TRAIT_RDS_SUPPRESSED "rds_suppressed"
-/// mobs that have this trait cannot be extinguished
-#define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
+/// Mobs that have this trait cannot be extinguished
+#define TRAIT_NO_EXTINGUISH "no_extinguish"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
+/// Trait given to mobs to indicate that they can catch papers thrown at them midair without trying,
+/// and make syndicate airplanes when folding paper up.
+#define TRAIT_PAPER_MASTER "paper_master"
 /// This mob is able to use sign language over the radio.
 #define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
@@ -425,6 +434,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOV_APPLIED "fov_applied"
 /// Mob is using the scope component
 #define TRAIT_USER_SCOPED "user_scoped"
+/// Mob is unable to feel pain
+#define TRAIT_ANALGESIA "analgesia"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -601,6 +612,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LAVA_STOPPED "lava_stopped"
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
+///Chasms will be safe to cross if there is something with this trait on it
+#define TRAIT_CHASM_STOPPER "chasm_stopper"
 ///The effects of the immerse element will be halted while this trait is present.
 #define TRAIT_IMMERSE_STOPPED "immerse_stopped"
 /// The effects of hyperspace drift are blocked when the tile has this trait
@@ -630,6 +643,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Used by the honkspam element to avoid spamming the sound. Amusing considering its name.
 #define TRAIT_HONKSPAMMING "trait_honkspamming"
+/// Required by the waddling element since there are multiple sources of it.
+#define TRAIT_WADDLING "trait_waddling"
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"

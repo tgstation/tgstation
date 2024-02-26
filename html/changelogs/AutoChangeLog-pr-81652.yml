@@ -1,0 +1,4 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "The North Star finally has a bluespace gas sender system."

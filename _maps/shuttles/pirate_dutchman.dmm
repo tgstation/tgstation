@@ -464,15 +464,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/reagent_containers/cup/bucket/wooden,
+/obj/structure/rack/skeletal,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "vT" = (
@@ -550,17 +546,13 @@
 	dir = 10
 	},
 /obj/machinery/light/floor,
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/reagent_containers/condiment/milk{
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/condiment/milk{
 	pixel_x = 5
 	},
+/obj/structure/rack/skeletal,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "zE" = (

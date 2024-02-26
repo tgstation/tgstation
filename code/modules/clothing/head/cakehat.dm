@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	armor_type = /datum/armor/none
 	light_range = 2 //luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	flags_cover = HEADCOVERSEYES
 	heat = 999
 	wound_bonus = 10

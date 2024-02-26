@@ -63,8 +63,9 @@
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
 
-	for(var/datum/objective/brother_objective in source.mind.get_all_objectives())
-		if(flashed == brother_objective.target.current)
+	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
+		// If the objective has a target, are we flashing them?
+		if(flashed == brother_objective.target?.current)
 			flashed.balloon_alert(source, "that's your target!")
 			return
 
@@ -208,7 +209,7 @@
 
 /datum/objective/convert_brother
 	name = "convert brother"
-	explanation_text = "Convert someone else using your flash."
+	explanation_text = "Convert a brainwashable person using your flash. Any flash will work if you lose or break your starting flash."
 	admin_grantable = FALSE
 	martyr_compatible = TRUE
 

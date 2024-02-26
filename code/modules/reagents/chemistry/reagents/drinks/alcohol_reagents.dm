@@ -158,6 +158,7 @@
 		drinker.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	drinker.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/beer/green/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -589,37 +590,55 @@
 	taste_description = "oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/screwdrivercocktail/on_transfer(atom/atom, methods = TOUCH, trans_volume)
-	if(!(methods & INGEST))
-		return ..()
-
-	if(src == atom.reagents.get_master_reagent() && istype(atom, /obj/item/reagent_containers/cup/glass/drinkingglass))
-		var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = atom
-		drink.tool_behaviour = TOOL_SCREWDRIVER
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_new(data)
+	. = ..()
+	// We want to turn only base drinking glasses with screwdriver(cocktail) into screwdrivers(tool),
+	// but we can't check style so we have to check type, and we don't want it match subtypes like istype does
+	if(holder?.my_atom && holder.my_atom.type == /obj/item/reagent_containers/cup/glass/drinkingglass/)
 		var/list/reagent_change_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT,
-			COMSIG_REAGENTS_CLEAR_REAGENTS,
-			COMSIG_REAGENTS_REACTED,
 		)
-		RegisterSignals(drink.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
-
-	return ..()
+		RegisterSignals(holder, reagent_change_signals, PROC_REF(on_reagent_change))
+		RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
+		RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+		if(src == holder.get_master_reagent())
+			var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
+			drink.tool_behaviour = TOOL_SCREWDRIVER
+			drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	if(src != reagents.get_master_reagent())
-		var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	if(reagents.get_master_reagent() == src)
+		drink.tool_behaviour = TOOL_SCREWDRIVER
+		drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	else
 		drink.tool_behaviour = initial(drink.tool_behaviour)
-		UnregisterSignal(reagents, list(
+		drink.usesound = initial(drink.usesound)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagents_clear(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	unregister_screwdriver(reagents)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
+	SIGNAL_HANDLER
+	if(deleted_reagent != src)
+		return
+	unregister_screwdriver(reagents)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/unregister_screwdriver(datum/reagents/reagents)
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	if(drink.tool_behaviour == TOOL_SCREWDRIVER)
+		drink.tool_behaviour = initial(drink.tool_behaviour)
+		drink.usesound = initial(drink.usesound)
+	UnregisterSignal(reagents, list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_DEL_REAGENT,
 			COMSIG_REAGENTS_CLEAR_REAGENTS,
-			COMSIG_REAGENTS_REACTED,
 		))
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -666,6 +685,7 @@
 	taste_description = "alcoholic bravery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 	var/tough_text
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/drinker)
@@ -674,14 +694,12 @@
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
 	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	drinker.health += 10
-	ADD_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
 	drinker.maxHealth -= 10
 	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
-	REMOVE_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -1055,15 +1073,11 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_MADNESS_IMMUNE)
 	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
-
-/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 	drinker.remove_filter("singulo_rays")
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -1195,7 +1209,7 @@
 
 /datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	. = ..()
-	var/datum/antagonist/changeling/changeling = target.mind?.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(target)
 	changeling?.adjust_chemicals(metabolization_rate * REM * seconds_per_tick)
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -2155,14 +2169,7 @@
 	quality = DRINK_GOOD
 	taste_description = "artifical fruityness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/drinker)
-	REMOVE_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-	return ..()
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"
@@ -2242,6 +2249,7 @@
 	quality = DRINK_NICE
 	taste_description = "sugary tartness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/consumable/ethanol/pina_colada
 	name = "Pina Colada"
@@ -2624,20 +2632,13 @@
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	description = "A grounding rod in the form of a drink.  Recharges ethereals, and gives temporary shock resistance."
+	description = "A grounding rod in the form of a drink. Recharges ethereals, and gives temporary shock resistance."
 	boozepwr = 50
 	color = "#b300ff"
 	quality = DRINK_NICE
 	taste_description = "the howling storm"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/telepole/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/telepole/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/ethanol/telepole/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
