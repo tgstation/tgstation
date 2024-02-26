@@ -76,9 +76,12 @@
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
+	id_tag = assign_random_name()
 	soundloop = new(src, FALSE)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
+	if(name == initial(name))
+		update_name()
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 
@@ -181,6 +184,10 @@
 				return CONTEXTUAL_SCREENTIP_SET
 
 	return .
+
+/obj/machinery/door/firedoor/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
 
 /**
  * Calculates what areas we should worry about.
@@ -324,6 +331,8 @@
 		return //We're already active
 	soundloop.start()
 	is_playing_alarm = TRUE
+	my_area.fault_status = AREA_FAULT_AUTOMATIC
+	my_area.fault_location = name
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
@@ -336,6 +345,8 @@
 /obj/machinery/door/firedoor/proc/start_deactivation_process()
 	soundloop.stop()
 	is_playing_alarm = FALSE
+	my_area.fault_status = AREA_FAULT_NONE
+	my_area.fault_location = null
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.reset()
@@ -372,7 +383,7 @@
 		if(LAZYLEN(place.active_firelocks) != 1)
 			continue
 		//if we're the first to activate in this particular area
-		place.set_fire_effect(TRUE) //bathe in red
+		place.set_fire_effect(TRUE, AREA_FAULT_AUTOMATIC, name) //bathe in red
 		if(place == my_area)
 			// We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
 			place.alarm_manager.send_alarm(ALARM_FIRE, place)
@@ -432,7 +443,7 @@
 		LAZYREMOVE(place.active_firelocks, src)
 		if(LAZYLEN(place.active_firelocks)) // If we were the last firelock still active, clear the area effects
 			continue
-		place.set_fire_effect(FALSE)
+		place.set_fire_effect(FALSE, AREA_FAULT_NONE, name)
 		if(place == my_area)
 			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
