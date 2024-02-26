@@ -62,9 +62,6 @@
 	image.plane = FLOAT_PLANE
 	user.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
 
-	RegisterSignal(source, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	if(!source)
