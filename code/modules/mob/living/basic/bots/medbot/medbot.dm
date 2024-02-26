@@ -200,7 +200,7 @@
 // Variables sent to TGUI
 /mob/living/basic/bot/medbot/ui_data(mob/user)
 	var/list/data = ..()
-	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || HAS_SILICON_ACCESS(user))
+	if(!(bot_access_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["heal_threshold"] = heal_threshold
 		data["custom_controls"]["speaker"] = medical_mode_flags & MEDBOT_SPEAK_MODE
 		data["custom_controls"]["crit_alerts"] = medical_mode_flags & MEDBOT_DECLARE_CRIT
@@ -211,7 +211,7 @@
 // Actions received from TGUI
 /mob/living/basic/bot/medbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !HAS_SILICON_ACCESS(ui.user))
+	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(ui.user))
 		return
 	var/mob/living/our_user = ui.user
 	switch(action)

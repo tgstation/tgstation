@@ -99,7 +99,7 @@
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			. += span_notice("It has \a [cell] installed.")
 			. += span_info("You can use a <b>crowbar</b> to remove it.")
@@ -129,7 +129,7 @@
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(bot_cover_flags & BOT_COVER_OPEN && !HAS_AI_ACCESS(user))
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN && !HAS_AI_ACCESS(user))
 		wires.interact(user)
 		return
 	if(wires.is_cut(WIRE_RX) && HAS_AI_ACCESS(user))
@@ -161,7 +161,7 @@
 	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
-	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.combat_mode)
+	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN) || user.combat_mode)
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
@@ -180,7 +180,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
+	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
 			return TRUE
@@ -193,7 +193,7 @@
 			span_notice("You insert [cell] into [src]."),
 		)
 		return TRUE
-	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
+	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + I.force * 2))
@@ -209,7 +209,7 @@
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		bot_cover_flags |= BOT_COVER_EMAGGED
-	if(!(bot_cover_flags & BOT_COVER_OPEN))
+	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		bot_cover_flags ^= BOT_COVER_LOCKED
 	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
@@ -222,7 +222,7 @@
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		. += "[base_icon]-hatch"
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
@@ -301,7 +301,7 @@
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
-			else if(bot_cover_flags & BOT_COVER_OPEN)
+			else if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
 				return
 			else if(cell)

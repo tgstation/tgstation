@@ -30,6 +30,8 @@
 		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
 	)
 
+	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
+	var/commissioned = FALSE
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
 	///The type of cuffs we use on criminals after making arrests
@@ -118,7 +120,8 @@
 	. = ..()
 	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)
-	ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)
+	if(commissioned)
+		ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/det_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/detective]

@@ -181,6 +181,7 @@
 /datum/station_trait/job/human_ai/New()
 	. = ..()
 	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(replace_ai))
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(give_fax_machine))
 
 /datum/station_trait/job/human_ai/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
@@ -190,6 +191,40 @@
 	SIGNAL_HANDLER
 	var/datum/job_department/department = SSjob.joinable_departments_by_type[/datum/job_department/silicon]
 	department.remove_job(/datum/job/ai)
+
+/// Gives the AI SAT a fax machine if it doesn't have one. This is copy pasted from Bridge Assistant's coffee maker.
+/datum/station_trait/job/human_ai/proc/give_fax_machine(datum/source)
+	SIGNAL_HANDLER
+	var/area/sat_area = GLOB.areas_by_type[/area/station/ai_monitored/turret_protected/ai]
+	if(isnull(sat_area))
+		return
+	var/list/fax_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax)
+	for(var/obj/machinery/fax_machine as anything in fax_machines) //don't spawn a coffeemaker if there is already one on the bridge
+		if(is_type_in_list(get_area(fax_machine), sat_area))
+			return
+	var/list/tables = list()
+	for(var/turf/area_turf as anything in sat_area.get_turfs_from_all_zlevels())
+		var/obj/structure/table/table = locate() in area_turf
+		if(isnull(table))
+			continue
+		if(area_turf.is_blocked_turf(ignore_atoms = list(table)))
+			continue
+		tables += table
+	if(!length(tables))
+		return
+	var/picked_table = pick_n_take(tables)
+	var/picked_turf = get_turf(picked_table)
+	if(length(tables))
+		var/another_table = pick(tables)
+		for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
+			if(thing_on_table == picked_table)
+				continue
+			if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)
+				continue
+			if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
+				continue
+			thing_on_table.forceMove(get_turf(another_table))
+	new /obj/machinery/fax/auto_name(picked_turf)
 
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED

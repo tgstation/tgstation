@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define issilicon(A) (istype(A, /mob/living/silicon))
 ///Define on whether A has access to Silicon stuff either through being a silicon, admin ghost or is a non-silicon holding the Silicon remote.
 ///This can only be used for instances where you are not specifically looking for silicon, but access.
-#define HAS_SILICON_ACCESS(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A) || istype(A.get_active_held_item(), /obj/item/machine_remote))
+#define HAS_SILICON_ACCESS(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A) || A.has_unlimited_silicon_privilege || istype(A.get_active_held_item(), /obj/item/machine_remote))
 
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
 ///Define on whether A has access to AI stuff either through being a AI, admin ghost, or is a non-silicon holding the Silicon remote
