@@ -19,14 +19,6 @@
 	species_language_holder = /datum/language_holder/felinid
 	payday_modifier = 1.0
 	family_heirlooms = list(/obj/item/toy/cattoy)
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/felinid,
-	)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
 

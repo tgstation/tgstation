@@ -25,7 +25,9 @@
 	burn_modifier = 1.5 //Plasmemes are weak
 	bodypart_flags = BODYPART_UNHUSKABLE
 	wing_types = NONE
-	butt_sprite = BUTT_SPRITE_PLASMA
+
+/obj/item/bodypart/chest/plasmaman/get_butt_sprite()
+	return BUTT_SPRITE_PLASMA
 
 /obj/item/bodypart/arm/left/plasmaman
 	icon = 'icons/mob/human/species/plasmaman/bodyparts.dmi'

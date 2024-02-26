@@ -47,7 +47,6 @@
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 25
-	butt_sprite = BUTT_SPRITE_DRONE
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
@@ -264,6 +263,9 @@
 
 /mob/living/basic/drone/gib()
 	dust()
+
+/mob/living/basic/drone/get_butt_sprite()
+	return BUTT_SPRITE_DRONE
 
 /mob/living/basic/drone/examine(mob/user)
 	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")

@@ -22,7 +22,6 @@
 		/obj/item/bodypart/leg/right/alien,
 		/obj/item/bodypart/leg/left/alien,
 	)
-	butt_sprite = BUTT_SPRITE_XENOMORPH
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,
@@ -143,6 +142,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	log_combat(src, lucky_winner, "devoured")
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE
+
+/mob/living/carbon/alien/adult/get_butt_sprite()
+	return BUTT_SPRITE_XENOMORPH
 
 // Aliens can touch acid
 /mob/living/carbon/alien/can_touch_acid(atom/acided_atom, acid_power, acid_volume)

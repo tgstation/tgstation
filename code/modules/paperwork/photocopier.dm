@@ -493,7 +493,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(!check_ass())
 		return
 	var/butt_icon_state = ass.get_butt_sprite()
-	if(!butt_icon_state)
+	if(isnull(butt_icon_state))
 		return
 	var/icon/temp_img = icon('icons/mob/butts.dmi', butt_icon_state)
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
@@ -619,7 +619,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Returns FALSE if `ass` doesn't exist or is not at the copier's location. Returns TRUE otherwise.
  */
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
-	if(!ass || !isliving(ass))
+	if(!isliving(ass))
 		return FALSE
 	if(ass.loc != loc)
 		ass = null
