@@ -532,10 +532,6 @@
 	},
 /turf/open/indestructible,
 /area/deathmatch)
-"jB" = (
-/obj/machinery/light_switch/directional/west,
-/turf/open/indestructible/dark,
-/area/deathmatch)
 "jN" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/north,
@@ -894,10 +890,6 @@
 	},
 /turf/open/indestructible,
 /area/deathmatch)
-"oy" = (
-/obj/machinery/light_switch/directional/west,
-/turf/open/floor/iron/grimy,
-/area/deathmatch)
 "oA" = (
 /obj/machinery/light/directional/north,
 /turf/open/indestructible,
@@ -1160,13 +1152,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/oil/slippery,
-/turf/open/indestructible,
-/area/deathmatch)
-"rN" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/machinery/light_switch/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "sb" = (
@@ -1526,9 +1511,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/west{
-	pixel_y = -12
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/indestructible/dark,
 /area/deathmatch)
@@ -1683,7 +1665,6 @@
 "yT" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/light/directional/west,
-/obj/machinery/light_switch/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -2342,16 +2323,6 @@
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_y = 6
 	},
-/turf/open/indestructible/dark,
-/area/deathmatch)
-"Ii" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light_switch/directional/east,
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "Ik" = (
@@ -3021,11 +2992,6 @@
 /obj/structure/cable,
 /obj/item/crowbar,
 /turf/open/indestructible,
-/area/deathmatch)
-"RL" = (
-/obj/machinery/light_switch/directional/south,
-/obj/structure/cable,
-/turf/open/floor/carpet,
 /area/deathmatch)
 "RR" = (
 /obj/structure/cable,
@@ -4117,7 +4083,7 @@ tH
 xi
 Am
 EP
-Ii
+tH
 Kh
 Rv
 UU
@@ -4172,7 +4138,7 @@ yH
 uD
 xk
 Bf
-jB
+Ux
 JU
 YW
 yy
@@ -4462,7 +4428,7 @@ Hz
 Ik
 Zv
 ad
-oy
+Pt
 Pt
 eD
 QG
@@ -4563,7 +4529,7 @@ Cx
 ri
 yO
 cW
-rN
+Os
 Os
 Hp
 UQ
@@ -4671,7 +4637,7 @@ cf
 cf
 YN
 aE
-RL
+cf
 Yh
 Wg
 qP
