@@ -1,4 +1,3 @@
-#define LOW_STOCK_THRESHOLD 75
 
 /**
  * The restock tracker computer keeps tabs on which vending machines on station are running low on stock.
@@ -14,7 +13,7 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "RestockTracker", name)
+		ui = new(user, src, "Restock", name)
 		ui.open()
 
 /obj/machinery/computer/restock_tracker/ui_data(mob/living/carbon/human/user)
@@ -37,5 +36,3 @@
 		id_increment++
 	data["vending_list"] = vending_list
 	return data
-
-#undef LOW_STOCK_THRESHOLD
