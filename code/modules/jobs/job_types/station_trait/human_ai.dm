@@ -124,7 +124,7 @@
 		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
-	equipped.faction += list(FACTION_SILICON, FACTION_TURRET)
+	equipped.faction |= list(FACTION_SILICON, FACTION_TURRET)
 
 	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored))
 	equipped.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
