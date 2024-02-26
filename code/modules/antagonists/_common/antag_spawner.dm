@@ -99,7 +99,6 @@
 	desc = "MI13 designed one-use radio for calling immediate backup. Have no regards for safety of whom it summons - they are all inferior clones from Interdyne's genebanks anyway."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
-	var/borg_to_spawn
 	/// The name of the special role given to the recruit
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
 	/// The applied outfit
@@ -132,7 +131,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/nuke_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, pic_source = src, role_name_text = "syndicate [borg_to_spawn ? "[borg_to_spawn] cyborg":"operative"]")
+	var/list/nuke_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, pic_source = src, role_name_text = special_role_name)
 	if(LAZYLEN(nuke_candidates))
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -186,18 +185,15 @@
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"
-	borg_to_spawn = "Assault"
-	special_role_name = "Syndicate Assault Cyborg"
+	special_role_name = ROLE_SYNDICATE_ASSAULTBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	name = "syndicate medical beacon"
-	borg_to_spawn = "Medical"
-	special_role_name = "Syndicate Medical Cyborg"
+	special_role_name = ROLE_SYNDICATE_MEDBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	name = "syndicate saboteur beacon"
-	borg_to_spawn = "Saboteur"
-	special_role_name = "Syndicate Saboteur Cyborg"
+	special_role_name = ROLE_SYNDICATE_SABOBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/borg
@@ -205,13 +201,16 @@
 	if(!creator_op)
 		return
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	switch(borg_to_spawn)
-		if("Medical")
+	switch(special_role_name)
+		if(ROLE_SYNDICATE_MEDBORG)
 			borg = new /mob/living/silicon/robot/model/syndicate/medical()
-		if("Saboteur")
+		if(ROLE_SYNDICATE_SABOBORG)
 			borg = new /mob/living/silicon/robot/model/syndicate/saboteur()
+		if(ROLE_SYNDICATE_ASSAULTBORG)
+			borg = new /mob/living/silicon/robot/model/syndicate()
 		else
-			borg = new /mob/living/silicon/robot/model/syndicate() //Assault borg by default
+			stack_trace("Unknown cyborg type '[special_role_name]' could not be found by [src]!")
+
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
@@ -230,7 +229,6 @@
 	borg.key = C.key
 
 	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
-	borg.mind.add_antag_datum(antag_datum, creator_op.nuke_team)
 	borg.mind.special_role = special_role_name
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
