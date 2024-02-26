@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - rscadd: "Added an option to deathmatch loadout dropdown that allows you to pick a random loadout"
+  - bugfix: "In deathmatch, plasmamen are made humans and the UI supports more players"
