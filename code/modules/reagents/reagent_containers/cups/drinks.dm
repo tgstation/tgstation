@@ -138,7 +138,7 @@
 	desc = "Careful, cold ice, do not chew."
 	custom_price = PAYCHECK_LOWER * 0.6
 	icon_state = "icecup"
-	list_reagents = list(/datum/reagent/consumable/ice = 30)
+	//list_reagents = list(/datum/reagent/consumable/ice = 30) //Monkestation Removal: Ice was Instantly melting from vending machines
 	spillable = TRUE
 	isGlass = FALSE
 

@@ -6595,6 +6595,7 @@
 #include "monkestation\code\modules\reagents\medical\solder.dm"
 #include "monkestation\code\modules\reagents\medical\system_cleaner.dm"
 #include "monkestation\code\modules\reagents\reagent_containers\blood_pack.dm"
+#include "monkestation\code\modules\reagents\reagent_containers\drinks.dm"
 #include "monkestation\code\modules\reagents\recipes\fun.dm"
 #include "monkestation\code\modules\reagents\recipes\medical.dm"
 #include "monkestation\code\modules\replays\hooks\generic_hooks.dm"
