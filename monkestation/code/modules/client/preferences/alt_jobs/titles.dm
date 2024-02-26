@@ -78,6 +78,7 @@
 
 /datum/job/cargo_technician
 	alt_titles = list(
+		"Cargo Technician",
 		"Warehouse Technician",
 		"Deck Worker",
 		"Mailman",
@@ -258,6 +259,7 @@
 
 /datum/job/quartermaster
 	alt_titles = list(
+		"Quartermaster",
 		"Union Requisitions Officer",
 		"Deck Chief",
 		"Warehouse Supervisor",
@@ -313,6 +315,7 @@
 
 /datum/job/shaft_miner
 	alt_titles = list(
+		"Shaft Miner",
 		"Union Miner",
 		"Excavator",
 		"Spelunker",
