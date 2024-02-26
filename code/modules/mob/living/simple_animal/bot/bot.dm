@@ -27,7 +27,7 @@
 	light_range = 3
 	light_power = 0.9
 	del_on_death = TRUE
-	req_access = list(ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE

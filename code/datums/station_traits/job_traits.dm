@@ -63,7 +63,7 @@
 	if (!LAZYLEN(lobby_candidates))
 		on_failed_assignment()
 		return // Nobody signed up :(
-	var/datum/job/our_job = SSjob.GetJob(job_to_add::title)
+	var/datum/job/our_job = SSjob.GetJobType(job_to_add)
 	for(var/_ in 1 to position_amount)
 		var/mob/dead/new_player/picked_player = pick_n_take(lobby_candidates)
 		picked_player.mind.assigned_role = new job_to_add()

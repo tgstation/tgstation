@@ -186,6 +186,8 @@
 
 /obj/machinery/button/interact(mob/user)
 	. = ..()
+	if(.)
+		return
 	if(!initialized_button)
 		setup_device()
 	add_fingerprint(user)

@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	light_range = 3
 	light_power = 0.9
 	speed = 3
-	req_access = list(ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.

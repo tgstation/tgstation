@@ -103,7 +103,7 @@
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
 	var/obj/item/item_in_hand = get_active_held_item()
-	if(item_in_hand && istype(item_in_hand, /obj/item/machine_remote)) //snowflake, this lets you interact with all.
+	if(istype(item_in_hand, /obj/item/machine_remote)) //snowflake, this lets you interact with all.
 		var/obj/item/machine_remote/remote = item_in_hand
 		if(remote.controlling_machine_or_bot == src_object)
 			return UI_INTERACTIVE

@@ -17,7 +17,7 @@
 
 /obj/item/clothing/head/costume/pirate/dropped(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(ITEM_SLOT_HEAD) != src || QDELETED(src)) //This can be called as a part of destroy
+	if(QDELETED(src)) //This can be called as a part of destroy
 		return
 	user.remove_language(/datum/language/piratespeak, source = LANGUAGE_HAT)
 	to_chat(user, span_boldnotice("You can no longer speak like a pirate."))

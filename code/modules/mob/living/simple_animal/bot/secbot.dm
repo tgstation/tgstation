@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
-	req_access = list(ACCESS_SECURITY)
+	req_one_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT

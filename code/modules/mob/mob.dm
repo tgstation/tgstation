@@ -1115,7 +1115,7 @@
 	if(mob_dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, A))
 		return TRUE
 	var/obj/item/item_in_hand = get_active_held_item()
-	if(item_in_hand && istype(item_in_hand, /obj/item/machine_remote))
+	if(istype(item_in_hand, /obj/item/machine_remote))
 		return TRUE
 
 	//range check
