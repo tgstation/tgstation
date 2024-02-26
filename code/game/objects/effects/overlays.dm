@@ -61,3 +61,16 @@
 	layer = FLOAT_LAYER
 	vis_flags = VIS_INHERIT_ID
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE
+
+/obj/effect/overlay/airlock_part
+	anchored = TRUE
+	plane = FLOAT_PLANE
+	layer = FLOAT_LAYER - 1
+	vis_flags = VIS_INHERIT_ID
+	var/side_id
+	var/open_px = 0
+	var/open_py = 0
+	var/move_start_time = 0 // for opening; closing uses reversed.
+	var/move_end_time = 5
+	var/aperture_angle = 0
+	var/obj/machinery/door/airlock/parent
