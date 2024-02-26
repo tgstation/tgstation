@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 					else
 						to_chat(usr, span_notice("You feel kind of silly, copying [ass]\'s ass with [ass.p_their()] clothes on."))
 					return FALSE
-				do_copies(CALLBACK(src, PROC_REF(make_ass_copy), usr), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
+				do_copies(CALLBACK(src, PROC_REF(make_ass_copy)), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
 				return TRUE
 			else
 				// Basic paper
@@ -489,24 +489,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Calls `check_ass()` first to make sure that `ass` exists, among other conditions. Since this proc is called from a timer, it's possible that it was removed.
  * Additionally checks that the mob has their clothes off.
  */
-/obj/machinery/photocopier/proc/make_ass_copy(mob/user)
+/obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
-		return null
-	var/icon/temp_img
-	if(ishuman(ass))
-		var/mob/living/carbon/human/H = ass
-		var/datum/species/spec = H.dna.species
-		if(spec.ass_image)
-			temp_img = icon(spec.ass_image)
-		else
-			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
-	else if(isalienadult(ass)) //Xenos have their own asses, thanks to Pybro.
-		temp_img = icon('icons/ass/assalien.png')
-	else if(issilicon(ass))
-		temp_img = icon('icons/ass/assmachine.png')
-	else if(isdrone(ass)) //Drones are hot
-		temp_img = icon('icons/ass/assdrone.png')
-
+		return
+	var/butt_icon_state = ass.get_butt_sprite()
+	if(!butt_icon_state)
+		return
+	var/icon/temp_img = icon('icons/mob/butts.dmi', butt_icon_state)
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
 	toEmbed.psize_x = 128
@@ -630,7 +619,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Returns FALSE if `ass` doesn't exist or is not at the copier's location. Returns TRUE otherwise.
  */
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
-	if(!ass)
+	if(!ass || !isliving(ass))
 		return FALSE
 	if(ass.loc != loc)
 		ass = null

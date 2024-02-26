@@ -22,6 +22,7 @@
 		/obj/item/bodypart/leg/right/alien,
 		/obj/item/bodypart/leg/left/alien,
 	)
+	butt_sprite = BUTT_SPRITE_XENOMORPH
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,

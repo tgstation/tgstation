@@ -37,6 +37,7 @@
 	death_sound = 'sound/voice/hiss6.ogg'
 	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	footstep_type = FOOTSTEP_MOB_CLAW
+	butt_sprite = BUTT_SPRITE_XENOMORPH
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

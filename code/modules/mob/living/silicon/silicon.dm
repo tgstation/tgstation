@@ -14,6 +14,7 @@
 	examine_cursor_icon = null
 	fire_stack_decay_rate = -0.55
 	tts_silicon_voice_effect = TRUE
+	butt_sprite = BUTT_SPRITE_QR_CODE
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()

@@ -13,6 +13,7 @@
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
+	var/butt_sprite
 	///The bodyshape(s) allowed to attach to this chest.
 	var/acceptable_bodyshape = BODYSHAPE_HUMANOID
 	///The bodytype(s) allowed to attach to this chest.
@@ -68,6 +69,12 @@
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
 	return ..()
+
+/obj/item/bodypart/chest/proc/get_butt_sprite()
+	return butt_sprite || (owner.gender == FEMALE ? BUTT_SPRITE_HUMAN_FEMALE : BUTT_SPRITE_HUMAN_MALE)
+
+/obj/item/bodypart/chest/felinid
+	butt_sprite = BUTT_SPRITE_CAT
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'

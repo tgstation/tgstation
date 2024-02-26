@@ -9,6 +9,7 @@
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
+	butt_sprite = BUTT_SPRITE_LIZARD
 
 /obj/item/bodypart/arm/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'

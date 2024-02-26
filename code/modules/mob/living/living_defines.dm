@@ -162,7 +162,7 @@
 
 	///used for database logging
 	var/last_words
-
+	var/butt_sprite
 	///whether this can be picked up and held.
 	var/can_be_held = FALSE
 	/// The w_class of the holder when held.
