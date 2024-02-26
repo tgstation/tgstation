@@ -537,7 +537,7 @@
 		else
 			to_chat(src, span_warning("You are not Superman."))
 		return
-	to_chat(src, span_notice("You start moving up..."))
+	balloon_alert(src, "moving up...")
 	if(!do_after(src, 1 SECONDS))
 		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
