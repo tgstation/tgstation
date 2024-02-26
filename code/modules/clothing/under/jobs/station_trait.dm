@@ -10,4 +10,3 @@
 	desc = "A outfit made of the cleanest of bluespace and, just kidding it's all fake."
 	icon_state = "human_ai"
 	inhand_icon_state = "armor_reflec"
-	can_adjust = FALSE
