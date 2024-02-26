@@ -20,8 +20,8 @@
 	if(cell?.charge)
 		if(cell.charge <= 10000)
 			drop_all_held_items()
-		var/amt = max(1000 * lamp_enabled * lamp_intensity * seconds_per_tick, 500 * seconds_per_tick) //Lamp will use a max of 5kW, depending on brightness of lamp. If lamp is off, borg systems consume 500W, or the rest of the cell if it's lower than that.
-		cell.use(amt, force = TRUE)
+		var/energy_consumption = max(lamp_power_consumption * lamp_enabled * lamp_intensity * seconds_per_tick, BORG_MINIMUM_POWER_CONSUMPTION * seconds_per_tick) //Lamp will use a max of 5 * [BORG_LAMP_POWER_CONSUMPTION], depending on brightness of lamp. If lamp is off, borg systems consume [BORG_MINIMUM_POWER_CONSUMPTION], or the rest of the cell if it's lower than that.
+		cell.use(energy_consumption, force = TRUE)
 	else
 		drop_all_held_items()
 		low_power_mode = TRUE
