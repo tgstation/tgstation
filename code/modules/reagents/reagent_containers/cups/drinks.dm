@@ -138,14 +138,14 @@
 	desc = "Careful, cold ice, do not chew."
 	custom_price = PAYCHECK_LOWER * 0.6
 	icon_state = "icecup"
-	//list_reagents = list(/datum/reagent/consumable/ice = 30) //Monkestation Removal: Ice was Instantly melting from vending machines
+	//list_reagents = list(/datum/reagent/consumable/ice = 30) Monkestation Removal: Ice was Instantly melting from vending machines
 	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/ice/prison
 	name = "dirty ice cup"
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
-	list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/consumable/liquidgibs = 5)
+	//list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/consumable/liquidgibs = 5) Monkestation Removal: Ice was Instantly melting from vending machines
 
 /obj/item/reagent_containers/cup/glass/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
