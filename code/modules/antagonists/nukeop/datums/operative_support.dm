@@ -21,15 +21,3 @@
 
 /datum/antagonist/nukeop/support/get_spawnpoint()
 	return pick(GLOB.nukeop_overwatch_start)
-
-	/obj/machinery/computer/crew/remote
-	name = "station crew monitoring console"
-	desc = "Remotely accesses the station camera net, allowing you to spy on the crew no matter where you are!"
-	icon_screen = "tcboss"
-	icon_keyboard = "syndie_key"
-	circuit = /obj/item/circuitboard/computer/crew/remote
-	light_color = LIGHT_COLOR_BLOOD_MAGIC
-
-/obj/machinery/computer/crew/remote/Initialize(mapload, obj/item/circuitboard/C)
-	. = ..()
-	z_level_focus = GLOB.station_levels_cache[1]
