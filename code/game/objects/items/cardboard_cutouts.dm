@@ -22,7 +22,7 @@
 	if(starting_cutout)
 		return INITIALIZE_HINT_LATELOAD
 	if(!pushed_over)
-		AddComponent(/datum/component/tactical)
+		tacticool = AddComponent(/datum/component/tactical)
 
 /obj/item/cardboard_cutout/Destroy()
 	tacticool = null
@@ -341,15 +341,15 @@
 	name = "Slaughter Demon"
 	applied_name = "slaughter demon"
 	applied_desc = "A cardboard cutout of a slaughter demon."
-	direct_icon = 'icons/mob/simple/mob.dmi'
-	direct_icon_state = "daemon"
+	direct_icon = 'icons/mob/simple/demon.dmi'
+	direct_icon_state = "slaughter_demon"
 
 /datum/cardboard_cutout/laughter_demon
 	name = "Laughter Demon"
 	applied_name = "laughter demon"
 	applied_desc = "A cardboard cutout of a laughter demon."
-	direct_icon = 'icons/mob/simple/mob.dmi'
-	direct_icon_state = "bowmon"
+	direct_icon = 'icons/mob/simple/demon.dmi'
+	direct_icon_state = "bow_demon"
 
 /datum/cardboard_cutout/security_officer
 	name = "Private Security Officer"
