@@ -84,8 +84,10 @@ export const SlotMachine = (props) => {
 
   return (
     <Window>
-      <Section style={{ justifyContent: 'center', textAlign: 'center' }}>
-        <h1>Slots!</h1>
+      <Section
+        title="Slots!"
+        style={{ justifyContent: 'center', textAlign: 'center' }}
+      >
         <Section style={{ textAlign: 'left' }}>
           <p>
             Only <b>{cost}</b> credit{pluralS(cost)} for a chance to win big!
@@ -129,7 +131,7 @@ export const SlotMachine = (props) => {
         <hr />
         <Button
           onClick={() => act('spin')}
-          disabled={rolling || !(balance >= cost)}
+          disabled={rolling || balance < cost}
         >
           Spin!
         </Button>

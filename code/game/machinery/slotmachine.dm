@@ -10,7 +10,7 @@
 #define JACKPOT 10000
 #define SPIN_TIME 65 //As always, deciseconds.
 #define REEL_DEACTIVATE_DELAY 7
-#define SEVEN FA_ICON_SEVEN
+#define SEVEN "7"
 #define HOLOCHIP 1
 #define COIN 2
 
@@ -109,7 +109,7 @@
 				to_chat(user, span_warning("[src] spits your coin back out!"))
 
 			else
-				if(!user.temporarilyRemoveItemFromInventory(C))
+				if(!user.temporarilyRemoveItemFromInventory(inserted_coin))
 					return
 				balloon_alert(user, "coin insterted")
 				balance += inserted_coin.value
@@ -158,7 +158,6 @@
 	if(!ui)
 		ui = new(user, src, "SlotMachine", name)
 		ui.open()
-	return TRUE
 
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
 	. = ..()
