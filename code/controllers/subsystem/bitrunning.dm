@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(bitrunning)
 	var/choice
 
 	if(assoc_value_sum(domain.secondary_loot))
-		choice = pick(domain.secondary_loot)
+		choice = pick_weight(domain.secondary_loot)
 		domain.secondary_loot[choice] -= 1
 	else
 		choice = /obj/item/paper/paperslip/bitrunning_error
