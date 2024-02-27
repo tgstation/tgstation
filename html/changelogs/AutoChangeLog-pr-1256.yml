@@ -1,9 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - rscadd: "Voltaic Yellow Wine - New \"base\" drink, found in booze-o-mat. No special effects besides acting as a weak ethereal food. Not very potent in terms of alcohol."
-  - rscadd: "Telepole - New mixed drink themed after thunderstorms, gives the same shock-resist grey bull does. Made from 1 part Voltaic Wine, 1 Part Sake, and 2 parts Dark & Stormy. Moderately potent."
-  - rscadd: "Pod Tesla - New mixed drink, themed after the old removed tesla engine (the singulo gets a cocktail, it should too!) Grants a brave - bull phobia resist, and a stronger grey bull shock resist allowing you to (temporarily) resist tesla arcs from reactive armor and the SM's tesla coils. Gives a pleasant thought to whoever drank it, because this thing is a pain to make. Made from 5 parts admiralty, 5 parts telepole, and 3 parts brave bull. Highly potent."
-  - qol: "Unsure if this counts as QOL or balance, but the fact sol dry is in 3 different cocktails but the bartender has to buy 30u cans of it made me feel it deserved being added to the soda dispenser."
-  - image: "Added graphics for the above drinks, shown below, from left to right: Pod tesla, Voltaic Yellow wine, Telepole, Voltaic Wine (bottle)\n<img width=\"171\" alt=\"image\"\nsrc=\"https://github.com/tgstation/tgstation/assets/69398298/901b2f64-1723-44b6-8f78-ef21bd477d96\">"
-  - bugfix: "Ice cups no longer instantly melt when vended"

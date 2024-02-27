@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes hallucination and encrypted announcements printing to the Newscaster."
