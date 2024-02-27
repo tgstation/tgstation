@@ -35,7 +35,7 @@
 	if(isnull(held_item))
 		return
 
-	if(held_item.tool_behaviour == TOOL_WRENCH)
+	if(held_item.tool_behaviour == TOOL_WRENCH && !circuit?.needs_anchored)
 		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -61,11 +61,6 @@
 			if(held_item.tool_behaviour == TOOL_CROWBAR)
 				context[SCREENTIP_CONTEXT_LMB] = "Pry out components"
 				return CONTEXTUAL_SCREENTIP_SET
-			else if(held_item.tool_behaviour == TOOL_WRENCH)
-				if(!circuit.needs_anchored)
-					context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
-					return CONTEXTUAL_SCREENTIP_SET
-				return NONE
 			else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 				var/needs_components = FALSE
 				for(var/component in req_components)
