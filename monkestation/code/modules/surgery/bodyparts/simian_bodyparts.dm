@@ -37,11 +37,13 @@
 	husk_type = "simian"
 	limb_id = SPECIES_SIMIAN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/right/simian
 	icon_greyscale =  'monkestation/icons/mob/species/simian/bodyparts.dmi'
 	husk_type = "simian"
 	limb_id = SPECIES_SIMIAN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 	dmg_overlay_type = "monkey"
