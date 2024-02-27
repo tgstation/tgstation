@@ -162,7 +162,8 @@
 
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
 	. = ..()
-	var/list/data = list("icons" = list())
+	var/list/data = list()
+	data["icons"] = list()
 	for(var/icon_name in icons)
 		var/list/icon = icons[icon_name]
 		icon += list("icon" = icon_name)
