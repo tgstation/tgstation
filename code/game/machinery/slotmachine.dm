@@ -121,7 +121,7 @@
 			var/obj/item/holochip/inserted_chip = inserted
 			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
 				return
-			balloon_alert("credits inserted")
+			balloon_alert(user, "credits inserted")
 			balance += inserted_chip.credits
 			qdel(inserted_chip)
 		else
@@ -133,10 +133,10 @@
 		else
 			if(paymode == HOLOCHIP)
 				paymode = COIN
-				visible_message("<b>[src]</b> says, 'This machine now works with COINS!'")
+				balloon_alert(user, "now using coins")
 			else
 				paymode = HOLOCHIP
-				visible_message("<b>[src]</b> says, 'This machine now works with HOLOCHIPS!'")
+				balloon_alert(user, "now using holochips")
 	else
 		return ..()
 
