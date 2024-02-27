@@ -452,7 +452,7 @@
 	)
 
 /datum/brain_trauma/special/ptsd/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+	if(owner.stat != CONSCIOUS)
 		return
 
 	if(!COOLDOWN_FINISHED(src, ptsd_hallucinations))
