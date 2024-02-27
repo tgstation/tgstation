@@ -22,13 +22,25 @@
 /// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
-/proc/get_airlock_overlay(icon_state, icon_file)
+/proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block)
 	var/static/list/airlock_overlays = list()
 
 	var/base_icon_key = "[icon_state][REF(icon_file)]"
 	. = airlock_overlays[base_icon_key]
 	if(!.)
 		. = airlock_overlays[base_icon_key] = mutable_appearance(icon_file, icon_state)
+	if(isnull(em_block))
+		return
+
+	var/turf/our_turf = get_turf(offset_spokesman)
+
+	var/em_block_key = "[base_icon_key][em_block][GET_TURF_PLANE_OFFSET(our_turf)]"
+	var/mutable_appearance/em_blocker = airlock_overlays[em_block_key]
+	if(!em_blocker)
+		em_blocker = airlock_overlays[em_block_key] = mutable_appearance(icon_file, icon_state, offset_spokesman = offset_spokesman, plane = EMISSIVE_PLANE, appearance_flags = EMISSIVE_APPEARANCE_FLAGS)
+		em_blocker.color = em_block ? GLOB.em_block_color : GLOB.emissive_color
+
+	return list(., em_blocker)
 
 // Before you say this is a bad implmentation, look at what it was before then ask yourself
 // "Would this be better with a global var"
@@ -550,19 +562,15 @@
 	base.icon = icon
 	base.cut_overlays()
 	if(airlock_material)
-		base.add_overlay(get_airlock_overlay("[airlock_material]_[side]", overlays_file))
+		base.add_overlay(get_airlock_overlay("[airlock_material]_[side]", overlays_file, src, em_block = TRUE))
 	else
-		base.add_overlay(get_airlock_overlay("fill_[side]", icon))
+		base.add_overlay(get_airlock_overlay("fill_[side]", icon, src, em_block = TRUE))
 	if(panel_open && panel_attachment == side)
-		if(security_level)
-			base.add_overlay(get_airlock_overlay("panel_closed_protected", overlays_file))
-		else
-			base.add_overlay(get_airlock_overlay("panel_closed", overlays_file))
+		base.add_overlay(get_airlock_overlay("panel_closed[security_level ? "_protected" : null]", overlays_file, src, em_block = TRUE))
 	if(show_lights && lights && hasPower())
-		base.add_overlay(get_airlock_overlay("lights_[side]", overlays_file))
-
+		base.add_overlay(get_airlock_overlay("lights_[side]", overlays_file, src, em_block = FALSE))
 	if(note && note_attachment == side)
-		base.add_overlay(get_airlock_overlay(get_note_state(airlock_state), note_overlay_file))
+		base.add_overlay(get_airlock_overlay(get_note_state(airlock_state), note_overlay_file, src, em_block = TRUE))
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
@@ -610,7 +618,7 @@
 					animate(pixel_x = part.open_px, pixel_y = part.open_py, time = part.move_end_time - part.move_start_time)
 
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	SSvis_overlays.add_vis_overlay(src, overlays_file, "frame", FLOAT_LAYER, FLOAT_PLANE, dir)
+	. += get_airlock_overlay("frame", overlays_file, src, em_block = TRUE)
 	var/frame_state
 	var/light_state
 	switch(airlock_state)
@@ -635,26 +643,26 @@
 			light_state = AIRLOCK_LIGHT_OPENING
 
 	if(lights && hasPower())
-		SSvis_overlays.add_vis_overlay(src, overlays_file, "lights_[light_state]", FLOAT_LAYER, FLOAT_PLANE, dir)
+		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
-		SSvis_overlays.add_vis_overlay(src, overlays_file, "welded", FLOAT_LAYER, FLOAT_PLANE, dir)
+		. += get_airlock_overlay("welded", overlays_file, src, em_block = TRUE)
 
 	if(airlock_state == AIRLOCK_EMAG)
-		SSvis_overlays.add_vis_overlay(src, overlays_file, "sparks", FLOAT_LAYER, FLOAT_PLANE, dir)
+		. += get_airlock_overlay("sparks", overlays_file, src, em_block = FALSE)
 
 	if(hasPower())
 		if(frame_state == AIRLOCK_FRAME_CLOSED)
 			if(atom_integrity < integrity_failure * max_integrity)
-				SSvis_overlays.add_vis_overlay(src, overlays_file, "sparks_broken", FLOAT_LAYER, FLOAT_PLANE, dir)
+				. += get_airlock_overlay("sparks_broken", overlays_file, src, em_block = FALSE)
 			else if(atom_integrity < (0.75 * max_integrity))
-				SSvis_overlays.add_vis_overlay(src, overlays_file, "sparks_damaged", FLOAT_LAYER, FLOAT_PLANE, dir)
+				. += get_airlock_overlay("sparks_damaged", overlays_file, src, em_block = FALSE)
 		else if(frame_state == AIRLOCK_FRAME_OPEN)
 			if(atom_integrity < (0.75 * max_integrity))
-				SSvis_overlays.add_vis_overlay(src, overlays_file, "sparks_open", FLOAT_LAYER, FLOAT_PLANE, dir)
+				. += get_airlock_overlay("sparks_open", overlays_file, src, em_block = FALSE)
 
 	if(frame_state == AIRLOCK_FRAME_CLOSED && seal)
-		SSvis_overlays.add_vis_overlay(src, overlays_file, "sealed", FLOAT_LAYER, FLOAT_PLANE, dir)
+		. += get_airlock_overlay("sealed", overlays_file, src, em_block = TRUE)
 
 	if(hasPower() && unres_sides)
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
