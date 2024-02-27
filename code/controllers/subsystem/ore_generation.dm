@@ -35,21 +35,43 @@ SUBSYSTEM_DEF(ore_generation)
 			else
 				stallbreaker++
 				if(stallbreaker >= length(possible_vents))
-					return SS_INIT_SUCCESS //We've done all we can here.
+					break //We've done all we can here. break inner loop
+				continue
+		if(stallbreaker >= length(possible_vents))
+			break //We've done all we can here. break outer loop
 				continue
 
 	/// Handles roundstart logging
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
-		"Ore Generation spawned the following ores based on vent proximity: 1:[GLOB.post_ore_random["1"]], 2:[GLOB.post_ore_random["2"]], 3:[GLOB.post_ore_random["3"]], 4:[GLOB.post_ore_random["4"]], 5:[GLOB.post_ore_random["5"]]",
+		"Ore Generation spawned the following ores based on vent proximity",
+		list(
+			"1" = GLOB.post_ore_random["1"],
+			"2" = GLOB.post_ore_random["2"],
+			"3" = GLOB.post_ore_random["3"],
+			"4" = GLOB.post_ore_random["4"],
+			"5" = GLOB.post_ore_random["5"],
+		),
 	)
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
-		"Ore Generation spawned the following ores randomly: 1:[GLOB.post_ore_manual["1"]], 2:[GLOB.post_ore_manual["2"]], 3:[GLOB.post_ore_manual["3"]], 4:[GLOB.post_ore_manual["4"]], 5:[GLOB.post_ore_manual["5"]]",
+		"Ore Generation spawned the following ores randomly",
+		list(
+			"1" = GLOB.post_ore_manual["1"],
+			"2" = GLOB.post_ore_manual["2"],
+			"3" = GLOB.post_ore_manual["3"],
+			"4" = GLOB.post_ore_manual["4"],
+			"5" = GLOB.post_ore_manual["5"],
+		),
 	)
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
-		"Ore Generation spawned the following vent sizes: large:[LAZYACCESS(GLOB.ore_vent_sizes, LARGE_VENT_TYPE)], medium:[LAZYACCESS(GLOB.ore_vent_sizes, MEDIUM_VENT_TYPE)], small:[LAZYACCESS(GLOB.ore_vent_sizes, SMALL_VENT_TYPE)]",
+		"Ore Generation spawned the following vent sizes",
+		list(
+			"large" = LAZYACCESS(GLOB.ore_vent_sizes, LARGE_VENT_TYPE),
+			"medium" = LAZYACCESS(GLOB.ore_vent_sizes, MEDIUM_VENT_TYPE),
+			"small" = LAZYACCESS(GLOB.ore_vent_sizes, SMALL_VENT_TYPE),
+		),
 	)
 	return SS_INIT_SUCCESS
 

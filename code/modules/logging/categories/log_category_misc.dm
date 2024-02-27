@@ -68,4 +68,3 @@
 
 /datum/log_category/cave_generation
 	category = LOG_CATEGORY_CAVE_GENERATION
-	config_flag = /datum/config_entry/flag/log_cave_generation
