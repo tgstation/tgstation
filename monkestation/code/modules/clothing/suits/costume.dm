@@ -66,3 +66,39 @@
 	icon_state = "kingofbugs_helmet"
 	worn_icon_state = "kingofbugs_helmet"
 	worn_y_offset = 5
+
+/obj/item/clothing/head/helldiverhelmet
+	name = "helldiver helmet"
+	desc = "Have a Nice Cup of LIBER-TEA"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "helldiver_helm"
+	worn_icon_state = "helldiver_helm"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+
+/datum/loadout_item/head/helldiverhelmet
+	name = "Helldiver Helmet"
+	item_path = /obj/item/clothing/head/helldiverhelmet
+
+/datum/store_item/head/helldiverhelmet
+	name = "Helldiver Helmet"
+	item_path = /obj/item/clothing/head/helldiverhelmet
+	item_cost = 10000
+
+/obj/item/clothing/suit/helldiverarmor
+	name = "helldiver armor"
+	desc = "How Do You Like The Taste of DEMOCRACY?!"
+	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_state = "helldiver_armor"
+	worn_icon_state = "helldiver_armor"
+	flags_inv = HIDEJUMPSUIT
+
+/datum/loadout_item/suit/helldiverarmor
+	name = "Helldiver Armor"
+	item_path = /obj/item/clothing/suit/helldiverarmor
+
+/datum/store_item/suit/helldiverarmor
+	name = "Helldiver Armor"
+	item_path = /obj/item/clothing/suit/helldiverarmor
+	item_cost = 10000
