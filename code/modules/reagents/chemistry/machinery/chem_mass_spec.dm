@@ -159,7 +159,7 @@
 		. = ITEM_INTERACT_SUCCESS
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		replace_beaker(user, !is_right_clicking, beaker)
 		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
@@ -207,20 +207,20 @@
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
-	. = 0
 	if(QDELETED(beaker1))
-		return
+		return 0
 
+	var/result = 0
 	for(var/datum/reagent/reagent as anything in beaker1?.reagents.reagent_list)
 		var/datum/reagent/target = reagent
 		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
 
-		if(!.)
-			. = target.mass
+		if(!result)
+			result = target.mass
 		else
-			. = smallest ? min(., reagent.mass) : max(., reagent.mass)
-	. = smallest ? FLOOR(., 50) : CEILING(., 50)
+			result = smallest ? min(result, reagent.mass) : max(result, reagent.mass)
+	return smallest ? FLOOR(result, 50) : CEILING(result, 50)
 
 /*
  * Replaces a beaker in the machine, either input or output
@@ -420,20 +420,20 @@
 
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
 		return ..()
-	if(!can_interact(user))
-		return
 	replace_beaker(user, TRUE)
 
 /obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
 		return ..()
-	if(!can_interact(user))
-		return
 	replace_beaker(user, FALSE)
 
 /obj/machinery/chem_mass_spec/process(seconds_per_tick)
