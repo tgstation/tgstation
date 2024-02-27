@@ -1060,6 +1060,10 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/virtual_domain/fullbright)
+"Xe" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "Xt" = (
 /turf/open/misc/beach/coast/corner{
 	dir = 4
@@ -1503,8 +1507,8 @@ Al
 Al
 Al
 Al
-gl
-gl
+Xe
+Xe
 ml
 ml
 ml
@@ -1546,8 +1550,8 @@ Fn
 Fn
 Fn
 Al
-gl
-gl
+Xe
+Xe
 ml
 ml
 ml
@@ -1590,7 +1594,7 @@ di
 Fn
 DL
 Al
-gl
+Xe
 ml
 ml
 ml

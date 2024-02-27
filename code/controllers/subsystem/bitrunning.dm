@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(bitrunning)
 		domain.secondary_loot[choice] -= 1
 	else
 		choice = /obj/item/paper/paperslip/bitrunning_error
-		log_runtime("Virtual domain [domain.name] tried to pick secondary objective loot, but secondary_loot list was empty.")
+		CRASH("Virtual domain [domain.name] tried to pick secondary objective loot, but secondary_loot list was empty.")
 	return choice
 
 /obj/item/paper/paperslip/bitrunning_error
