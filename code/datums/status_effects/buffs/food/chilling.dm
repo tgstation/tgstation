@@ -1,3 +1,4 @@
+///food effect applied by ice cream and frozen treats
 /datum/status_effect/food/chilling
 	alert_type = /atom/movable/screen/alert/status_effect/icecream_chilling //different path, so we sprite one state and not five.
 

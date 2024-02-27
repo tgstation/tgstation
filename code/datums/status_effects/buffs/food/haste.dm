@@ -1,4 +1,4 @@
-/// Haste makes the eater move faster
+///Haste makes the eater move and act faster
 /datum/status_effect/food/haste
 	var/datum/movespeed_modifier/food_haste/speed_mod
 	var/datum/actionspeed_modifier/status_effect/food_haste/action_mod
