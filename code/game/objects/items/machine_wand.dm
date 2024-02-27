@@ -7,8 +7,6 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	///Static list of all access for GetAccess use.
-	var/static/list/access = list()
 	///The appearance put onto machines being actively controlled.
 	var/mutable_appearance/bug_appearance
 	///Direct reference to the moving bug effect that moves towards machines we direct it at.
@@ -18,8 +16,6 @@
 
 /obj/item/machine_remote/Initialize(mapload)
 	. = ..()
-	if(!access) //same access as captain, which allows you to use consoles and such.
-		access = list(SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON) + SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND))
 	bug_appearance = mutable_appearance('icons/effects/effects.dmi', "fly-surrounding", ABOVE_WINDOW_LAYER)
 	register_context()
 
@@ -41,9 +37,6 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Flush Control"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
-
-/obj/item/machine_remote/GetAccess()
-	return access.Copy()
 
 /obj/item/machine_remote/proc/on_control_destroy(obj/machinery/source)
 	SIGNAL_HANDLER
