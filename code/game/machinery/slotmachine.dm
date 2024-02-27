@@ -360,11 +360,11 @@
 
 	return amountthesame
 
-
+/// Give the specified amount of money. If the amount is greater than the amount of prize money available, add the difference as balance
 /obj/machinery/computer/slot_machine/proc/give_money(amount)
-	var/amount_to_give = money >= amount ? amount : money
-	var/surplus = amount_to_give - give_payout(amount_to_give)
-	money = max(0, money - amount)
+	var/amount_to_give = min(amount, money)
+	var/surplus = amount - give_payout(amount_to_give)
+	money -= amount_to_give
 	balance += surplus
 
 /// Pay out the specified amount in either coins or holochips
