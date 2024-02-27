@@ -30,10 +30,6 @@ type SlotsReelProps = {
   reel: IconInfo[];
 };
 
-const randomChoice = (arr: any[]) => {
-  return arr[Math.floor(Math.random() * arr.length)];
-};
-
 const pluralS = (amount: number) => {
   return amount === 1 ? '' : 's';
 };
@@ -120,7 +116,6 @@ export const SlotMachine = (props) => {
         </Section>
         <hr />
         <Section
-          className="reelsContainer"
           style={{
             flexDirection: 'row',
             display: 'flex',
