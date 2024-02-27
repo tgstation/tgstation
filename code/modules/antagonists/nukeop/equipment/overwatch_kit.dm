@@ -30,4 +30,4 @@
 	icon_state = "pocketprotector" //Change me!!
 	desc = "A camera streaming a live feed of YOU back to the Syndicate Overwatch agent back at base. \
 		Particularly impressive footage will be edited with fitting music and posted to Syndicate propaganda outlets."
-	cam_range = 3
+	cam_range = 3 //Make sure to change the window size here too!
