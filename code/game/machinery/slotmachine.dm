@@ -94,7 +94,8 @@
 		icon_screen = "slots_screen"
 	return ..()
 
-/obj/machinery/computer/slot_machine/attackby(obj/item/inserted, mob/living/user, params)
+
+/obj/machinery/computer/slot_machine/item_interaction(mob/living/user, obj/item/inserted, list/modifiers, is_right_clicking)
 	if(istype(inserted, /obj/item/coin))
 		var/obj/item/coin/inserted_coin = inserted
 		if(paymode == COIN)
