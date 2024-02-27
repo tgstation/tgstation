@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/spray
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "sprayer_large"
 	inhand_icon_state = "cleaner"
 	worn_icon_state = "spraybottle"

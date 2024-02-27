@@ -801,7 +801,7 @@
 
 /datum/greyscale_config/buckets
 	name = "Buckets"
-	icon_file = 'icons/obj/janitor.dmi'
+	icon_file = 'icons/obj/service/janitor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
 /datum/greyscale_config/buckets_worn
