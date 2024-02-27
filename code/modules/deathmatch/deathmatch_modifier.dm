@@ -86,11 +86,28 @@
 
 /datum/deathmatch_modifier/xray
 	name = "X-Ray Vision"
-	description = "I can see through the cordons of the deathmatch arena!"
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/echolocation)
+	description = "See through the cordons of the deathmatch arena!"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/thermal, /datum/deathmatch_modifier/echolocation)
 
 /datum/deathmatch_modifier/xray/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_XRAY_VISION, DEATHMATCH_TRAIT)
+	player.update_sight()
+
+/datum/deathmatch_modifier/thermal
+	name = "Thermal Vision"
+	description = "See mobs through walls"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/xray, /datum/deathmatch_modifier/echolocation)
+
+/datum/deathmatch_modifier/thermal/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	ADD_TRAIT(player, TRAIT_THERMAL_VISION, DEATHMATCH_TRAIT)
+	player.update_sight()
+
+/datum/deathmatch_modifier/regen
+	name = "Health Regen"
+	description = "The closest thing to free health insurance you can get"
+
+/datum/deathmatch_modifier/regen/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	player.AddComponent(/datum/component/regenerator, burn_per_second = 2, tox_per_second = 2)
 
 /datum/deathmatch_modifier/nearsightness
 	name = "Nearsightness"
@@ -103,7 +120,7 @@
 /datum/deathmatch_modifier/echolocation
 	name = "Echolocation"
 	description = "On one hand, you're blind, but on the other..."
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/nearsightness, /datum/deathmatch_modifier/xray)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/nearsightness, /datum/deathmatch_modifier/xray, /datum/deathmatch_modifier/thermal)
 
 /datum/deathmatch_modifier/echolocation/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.AddComponent(/datum/component/echolocation)
@@ -212,7 +229,9 @@
 	///A (weighted) list of possible contents of the drop pod. Only one is picked at a time
 	var/list/contents
 	///An interval representing the min and max cooldown between each time it's fired.
-	var/interval = list(8 SECONDS, 12 SECONDS)
+	var/interval = list(7 SECONDS, 12 SECONDS)
+	///How many (a number or a two keys list) drop pods can be dropped at a time.
+	var/amount = 1
 	///The cooldown for dropping pods into every affected deathmatch arena.
 	COOLDOWN_DECLARE(drop_pod_cd)
 
@@ -243,6 +262,7 @@
 	for(var/datum/deathmatch_lobby/lobby as anything in signed_lobbies)
 		if(lobby.playing != DEATHMATCH_PLAYING || isnull(lobby.location))
 			continue
+		var/yet_to_spawn = islist(amount) ? rand(amount[1], amount[2]) : amount
 		for(var/attempt in 1 to 10)
 			var/turf/to_strike = pick(lobby.location.reserved_turfs)
 			if(!isopenturf(to_strike) || isgroundlessturf(to_strike))
@@ -260,7 +280,9 @@
 				"spawn" = to_spawn,
 			))
 			pod_spawned = TRUE
-			break
+			yet_to_spawn--
+			if(yet_to_spawn == 0)
+				break
 
 	if(pod_spawned)
 		COOLDOWN_START(src, drop_pod_cd, rand(interval[1], interval[2]))
@@ -300,7 +322,8 @@
 	name = "Drop Pod: Cruise Missiles"
 	description = "You're going to get shelled hard"
 	drop_pod_type = /obj/structure/closet/supplypod/deadmatch_missile
-	interval = list(2 SECONDS, 5 SECONDS)
+	interval = list(3 SECONDS, 5 SECONDS)
+	amount = rand(1, 2)
 
 /datum/deathmatch_modifier/drop_pod/missiles/populate_contents()
 	return
@@ -374,10 +397,20 @@
 
 /datum/deathmatch_modifier/flipping
 	name = "Perma-Flipping"
-	description = "You're constantly flipping, however it's purely cosmetic"
+	description = "You're constantly flipping - the mob that's - however it's purely cosmetic"
 
 /datum/deathmatch_modifier/flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.SpinAnimation(speed = 0.9 SECONDS, loops = -1)
+
+/datum/deathmatch_modifier/screen_flipping
+	name = "Rotating Screen"
+	description = "♪ You spin me right round, baby right round ♪"
+
+/datum/deathmatch_modifier/screen_flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	var/atom/movable/plane_master_controller/pm_controller = player.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/clockwise = prob(50)
+	for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+		plane.SpinAnimation(4.5 SECONDS, clockwise = clockwise)
 
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"

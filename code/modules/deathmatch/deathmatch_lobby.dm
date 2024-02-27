@@ -318,6 +318,11 @@
 /datum/deathmatch_lobby/ui_state(mob/user)
 	return GLOB.observer_state
 
+/// fills the lobby with fake players for the sake of UI debug, can only be called via VV
+/datum/deathmatch_lobby/proc/fakefill(count)
+	for(var/i = 1 to count)
+		players["[rand(1,999)]"] = list("mob" = usr, "host" = FALSE, "ready" = FALSE, "loadout" = pick(loadouts))
+
 /datum/deathmatch_lobby/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, null)
 	if(!ui)
@@ -341,7 +346,7 @@
 	.["admin"] = is_admin
 	.["global_chat"] = global_chat
 	.["playing"] = playing
-	.["loadouts"] = list()
+	.["loadouts"] = list("Randomize")
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
 		.["loadouts"] += initial(loadout.display_name)
 	.["map"] = list()
@@ -418,6 +423,9 @@
 				return FALSE
 			if (params["player"] != usr.ckey && host != usr.ckey)
 				return FALSE
+			if (params["loadout"] == "Randomize")
+				players[params["player"]]["loadout"] = pick(loadouts)
+				return TRUE
 			for (var/datum/outfit/deathmatch_loadout/possible_loadout as anything in loadouts)
 				if (params["loadout"] != initial(possible_loadout.display_name))
 					continue

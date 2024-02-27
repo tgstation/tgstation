@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if(AIR_ALARM_BUILD_COMPLETE)
 			. += span_notice("Right-click to [locked ? "unlock" : "lock"] the interface.")
 
-/obj/machinery/airalarm/ui_status(mob/user)
+/obj/machinery/airalarm/ui_status(mob/user, datum/ui_state/state)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
 		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)

@@ -17,6 +17,8 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
+	else if (istype(user.dna.species.outfit_important_for_life)) //plasmamen get lit on fire and die
+		user.set_species(/datum/species/human)
 	for(var/datum/action/act as anything in granted_spells)
 		var/datum/action/new_ability = new act(user)
 		new_ability.Grant(user)

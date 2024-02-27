@@ -237,3 +237,11 @@
 	)
 	result = /obj/item/food/pie/asdfpie
 	category = CAT_PIE
+
+/datum/crafting_recipe/food/bacid_pie
+	reqs = list(
+		/obj/item/food/pie/plain = 1,
+		/obj/item/stock_parts/cell = 2,
+	)
+	result = /obj/item/food/pie/bacid_pie
+	category = CAT_PIE
