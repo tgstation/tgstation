@@ -34,9 +34,8 @@
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
 	/// Icons that can be displayed by the slot machine.
-	var/list/icons = list(
+	var/static/list/icons = list(
 		"lemon" = list("value" = 2, "colour" = "yellow"),
-		"blender-phone" = list("value" = 2, "colour" = "blue"),
 		"star" = list("value" = 2, "colour" = "yellow"),
 		"bomb" = list("value" = 2, "colour" = "red"),
 		"biohazard" = list("value" = 2, "colour" = "green"),
