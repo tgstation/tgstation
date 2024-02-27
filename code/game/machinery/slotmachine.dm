@@ -47,7 +47,6 @@
 	var/static/list/coinvalues
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/static/list/ray_filter = list(type = "rays", y = 16, size = 40, density = 4, color = COLOR_RED_LIGHT, factor = 15, flags = FILTER_OVERLAY)
-	var/debug = TRUE
 
 /obj/machinery/computer/slot_machine/Initialize(mapload)
 	. = ..()
@@ -184,6 +183,7 @@
 	data["money"] = money
 	data["plays"] = plays
 	data["jackpots"] = jackpots
+	data["paymode"] = paymode
 	return data
 
 
@@ -291,14 +291,14 @@
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
 
-	if(debug || reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
+	if(reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
 		var/prize = money + JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
 		money = 0
 		if(paymode == HOLOCHIP)
-			new /obj/item/holochip(loc, JACKPOT)
+			new /obj/item/holochip(loc, prize)
 		else
 			for(var/i in 1 to 5)
 				cointype = pick(subtypesof(/obj/item/coin))

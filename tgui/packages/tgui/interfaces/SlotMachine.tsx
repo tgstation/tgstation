@@ -18,6 +18,7 @@ type BackendData = {
   plays: number;
   jackpots: number;
   jackpot: number;
+  paymode: number;
 };
 
 type SlotsTileProps = {
@@ -80,6 +81,7 @@ export const SlotMachine = (props) => {
     balance,
     jackpot,
     working: rolling,
+    paymode,
   } = data;
 
   return (
@@ -98,12 +100,14 @@ export const SlotMachine = (props) => {
               {money} credit{pluralS(money)}
             </b>{' '}
           </p>
-          <p>
-            Current jackpot:{' '}
-            <b>
-              {money + jackpot} credit{pluralS(money + jackpot)}!
-            </b>
-          </p>
+          {paymode === 1 && (
+            <p>
+              Current jackpot:{' '}
+              <b>
+                {money + jackpot} credit{pluralS(money + jackpot)}!
+              </b>
+            </p>
+          )}
           <p>
             So far people have spun{' '}
             <b>
