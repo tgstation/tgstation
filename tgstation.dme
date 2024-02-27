@@ -57,7 +57,6 @@
 #include "code\__DEFINES\botany.dm"
 #include "code\__DEFINES\callbacks.dm"
 #include "code\__DEFINES\cameranets.dm"
-#include "code\__DEFINES\cameras.dm"
 #include "code\__DEFINES\cargo.dm"
 #include "code\__DEFINES\chat.dm"
 #include "code\__DEFINES\chat_filter.dm"
