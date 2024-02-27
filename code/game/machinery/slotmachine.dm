@@ -192,10 +192,12 @@
 	switch(action)
 		if("spin")
 			spin(ui.user)
+			return TRUE
 		if("payout")
 			if(balance > 0)
 				give_payout(balance)
 				balance = 0
+				return TRUE
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
