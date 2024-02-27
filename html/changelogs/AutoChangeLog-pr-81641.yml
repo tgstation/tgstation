@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "You can use atmos machines, holopads, crayons, spray cans, and disposal bins while floored."
-  - bugfix: "You can close extinguisher cabinets while floored."
-  - bugfix: "You can climb onto a photocopier from the floor."

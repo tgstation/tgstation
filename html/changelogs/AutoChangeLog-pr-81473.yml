@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "adds examines & screentips for building & deconstructing both machine & computer frames."
-  - qol: "Adding a circuitboard from a rped to n computer frame will automatically screw it in place like before."
-  - code_imp: "merged procs for computer & machine frames. autodocs them where possible."
-  - code_imp: "moved code for machine frame into its own file."
