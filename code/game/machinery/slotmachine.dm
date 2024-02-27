@@ -10,7 +10,7 @@
 #define JACKPOT 10000
 #define SPIN_TIME 65 //As always, deciseconds.
 #define REEL_DEACTIVATE_DELAY 7
-#define SEVEN "7"
+#define SEVEN "fa-7"
 #define HOLOCHIP 1
 #define COIN 2
 
