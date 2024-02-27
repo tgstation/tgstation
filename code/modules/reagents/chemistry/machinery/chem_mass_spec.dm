@@ -151,15 +151,15 @@
 	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return ..()
 
-	if(processing_reagents)
-		balloon_alert(user, "still processing!")
-		return ..()
-
 	if(is_reagent_container(item) && item.is_open_container())
-		. = ITEM_INTERACT_SUCCESS
+		if(processing_reagents)
+			balloon_alert(user, "still processing!")
+			return ..()
+
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
 			return ITEM_INTERACT_BLOCKING
+
 		replace_beaker(user, !is_right_clicking, beaker)
 		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
