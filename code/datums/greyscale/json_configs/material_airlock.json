@@ -1,4 +1,45 @@
-{
+{	"fill_right": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_right",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"fill_left": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_left",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"left": [
+		{
+			"type": "icon_state",
+			"icon_state": "left",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type":"icon_state",
+			"icon_state": "frame_left",
+			"blend_mode":"overlay"
+		}
+	],
+	"right": [
+		{
+			"type": "icon_state",
+			"icon_state": "right",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type":"icon_state",
+			"icon_state": "frame_right",
+			"blend_mode":"overlay"
+		}
+	],
 	"closed": [
 		{
 			"type": "icon_state",
