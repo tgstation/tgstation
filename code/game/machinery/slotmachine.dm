@@ -376,10 +376,10 @@
 
 /obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
 	if(paymode == HOLOCHIP)
-		var/obj/item/holochip/H = new /obj/item/holochip(loc,amount)
+		var/obj/item/holochip/chip = new /obj/item/holochip(loc,amount)
 
 		if(throwit && target)
-			H.throw_at(target, 3, 10)
+			chip.throw_at(target, 3, 10)
 	else
 		var/value = coinvalues["[cointype]"]
 		if(value <= 0)
