@@ -71,6 +71,7 @@
 	var/open_px = 0
 	var/open_py = 0
 	var/move_start_time = 0 // for opening; closing uses reversed.
-	var/move_end_time = 5
+	var/move_end_time = 0.5 SECONDS
 	var/aperture_angle = 0
+	/// The airlock this is a part of
 	var/obj/machinery/door/airlock/parent

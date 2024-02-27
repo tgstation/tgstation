@@ -23,12 +23,12 @@
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
 /proc/get_airlock_overlay(icon_state, icon_file)
-	var/obj/machinery/door/airlock/A
-	pass(A)	//suppress unused warning
-	var/list/airlock_overlays = A.airlock_overlays
-	var/iconkey = "[icon_state][icon_file]"
-	if((!(. = airlock_overlays[iconkey])))
-		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
+	var/static/list/airlock_overlays = list()
+
+	var/base_icon_key = "[icon_state][REF(icon_file)]"
+	. = airlock_overlays[base_icon_key]
+	if(!.)
+		. = airlock_overlays[base_icon_key] = mutable_appearance(icon_file, icon_state)
 
 // Before you say this is a bad implmentation, look at what it was before then ask yourself
 // "Would this be better with a global var"
@@ -134,8 +134,7 @@
 	var/list/part_overlays
 	var/panel_attachment = "right"
 	var/note_attachment = "left"
-	var/mask_filter
-	var/static/list/airlock_overlays = list()
+	var/parts_mask_filter
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -173,6 +172,7 @@
 		diag_hud.add_atom_to_hud(src)
 
 	diag_hud_set_electrified()
+	parts_mask_filter = alpha_mask_filter(mask_x, mask_y, mask_file)
 	rebuild_parts()
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
@@ -180,6 +180,10 @@
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+
+/obj/machinery/door/airlock/LateInitialize()
+	update_appearance(UPDATE_ICON)
+	return ..()
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
@@ -221,10 +225,8 @@
 		P.icon_state = part_id
 		P.parent = src
 		P.name = name
-	if(mask_filter)
-		filters -= mask_filter
-	mask_filter = filter(type="alpha",icon=mask_file,x=mask_x,y=mask_y)
-	filters += mask_filter
+	remove_filter("parts_mask")
+	add_filter("parts_mask", 1, parts_mask_filter)
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
@@ -329,6 +331,9 @@
 	QDEL_NULL(seal)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_atom_from_hud(src)
+	for(var/obj/effect/overlay/airlock_part/part_overlay as anything in part_overlays)
+		part_overlay.parent = null
+	QDEL_LIST(part_overlays)
 	return ..()
 
 /obj/machinery/door/airlock/Exited(atom/movable/gone, direction)
@@ -561,40 +566,42 @@
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
-	for(var/obj/effect/overlay/airlock_part/part in part_overlays)
-		set_side_overlays(part, airlock_state == AIRLOCK_CLOSING || airlock_state == AIRLOCK_OPENING)
+	var/airlock_frame_closed = airlock_state == AIRLOCK_CLOSED || airlock_state == AIRLOCK_DENY || airlock_state == AIRLOCK_EMAG
+	for(var/obj/effect/overlay/airlock_part/part as anything in part_overlays)
+		var/is_moving = airlock_state == AIRLOCK_CLOSING || airlock_state == AIRLOCK_OPENING
+		set_side_overlays(part, is_moving)
 		if(part.aperture_angle)
-			var/matrix/T
-			if(airlock_state == AIRLOCK_OPEN || airlock_state == AIRLOCK_OPENING || airlock_state == AIRLOCK_CLOSING)
-				T = matrix()
-				T.Translate(-part.open_px,-part.open_py)
-				T.Turn(part.aperture_angle)
-				T.Translate(part.open_px,part.open_py)
+			if(airlock_frame_closed)
+				part.transform = matrix()
+				continue
+			var/matrix/angular_movement = matrix()
+			angular_movement.Translate(-part.open_px, -part.open_py)
+			angular_movement.Turn(part.aperture_angle)
+			angular_movement.Translate(part.open_px, part.open_py)
 			switch(airlock_state)
-				if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
-					part.transform = matrix()
 				if(AIRLOCK_OPEN)
-					part.transform = T
+					part.transform = angular_movement
 				if(AIRLOCK_CLOSING)
-					part.transform = T
-					animate(part, transform = T, time = 5 - part.move_end_time, flags = ANIMATION_LINEAR_TRANSFORM)
+					part.transform = angular_movement
+					animate(part, transform = angular_movement, time = 0.5 SECONDS - part.move_end_time, flags = ANIMATION_LINEAR_TRANSFORM)
 					animate(transform = matrix(), time = part.move_end_time - part.move_start_time, flags = ANIMATION_LINEAR_TRANSFORM)
 				if(AIRLOCK_OPENING)
 					part.transform = matrix()
 					animate(part, transform = matrix(), time = part.move_start_time, flags = ANIMATION_LINEAR_TRANSFORM)
-					animate(transform = T, time = part.move_end_time - part.move_start_time, flags = ANIMATION_LINEAR_TRANSFORM)
+					animate(transform = angular_movement, time = part.move_end_time - part.move_start_time, flags = ANIMATION_LINEAR_TRANSFORM)
 		else
+			if(airlock_frame_closed)
+				part.pixel_x = 0
+				part.pixel_y = 0
+				continue
 			switch(airlock_state)
-				if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
-					part.pixel_x = 0
-					part.pixel_y = 0
 				if(AIRLOCK_OPEN)
 					part.pixel_x = part.open_px
 					part.pixel_y = part.open_py
 				if(AIRLOCK_CLOSING)
 					part.pixel_x = part.open_px
 					part.pixel_y = part.open_py
-					animate(part, pixel_x = part.open_px, pixel_y = part.open_py, time = 5 - part.move_end_time)
+					animate(part, pixel_x = part.open_px, pixel_y = part.open_py, time = 0.5 SECONDS - part.move_end_time)
 					animate(pixel_x = 0, pixel_y = 0, time = part.move_end_time - part.move_start_time)
 				if(AIRLOCK_OPENING)
 					part.pixel_x = 0
@@ -1638,30 +1645,20 @@
 
 /**
  * Returns a string representing the type of note pinned to this airlock
- * Arguments:
- * * frame_state - The AIRLOCK_FRAME_ value, as used in update_overlays()
  **/
 
-/obj/machinery/door/airlock/proc/note_type() //Returns a string representing the type of note pinned to this airlock
-	if(!note)
-		return
-	else if(istype(note, /obj/item/paper))
-		return "note"
-	else if(istype(note, /obj/item/photo))
-		return "photo"
-
-/obj/machinery/door/airlock/proc/get_note_state(frame_state)
+/obj/machinery/door/airlock/proc/get_note_state()
 	if(!note)
 		return
 	else if(istype(note, /obj/item/paper))
 		var/obj/item/paper/pinned_paper = note
 		if(pinned_paper.get_total_length() && pinned_paper.show_written_words)
-			return "note_words_[frame_state]"
+			return "note_words"
 		else
-			return "note_[frame_state]"
+			return "note"
 
 	else if(istype(note, /obj/item/photo))
-		return "photo_[frame_state]"
+		return "photo"
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
