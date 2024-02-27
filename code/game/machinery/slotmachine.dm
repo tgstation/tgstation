@@ -169,6 +169,7 @@
 		icon += list("icon" = icon_name)
 		data["icons"] += list(icon)
 	data["cost"] = SPIN_PRICE
+	data["jackpot"] = JACKPOT
 
 	return data
 
@@ -296,7 +297,6 @@
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
-		balance += money - give_payout(JACKPOT)
 		money = 0
 		if(paymode == HOLOCHIP)
 			new /obj/item/holochip(loc, JACKPOT)

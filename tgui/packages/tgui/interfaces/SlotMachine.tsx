@@ -17,6 +17,7 @@ type BackendData = {
   cost: number;
   plays: number;
   jackpots: number;
+  jackpot: number;
 };
 
 type SlotsTileProps = {
@@ -47,12 +48,7 @@ const SlotsReel = (props: SlotsReelProps) => {
       }}
     >
       {reel.map((slot, i) => (
-        <SlotsTile
-          key={i}
-          // background={i === 1 ? 'gold' : undefined}
-          icon={slot.icon_name}
-          color={slot.colour}
-        />
+        <SlotsTile key={i} icon={slot.icon_name} color={slot.colour} />
       ))}
     </div>
   );
@@ -86,6 +82,7 @@ export const SlotMachine = (props) => {
     cost,
     state,
     balance,
+    jackpot,
     working: rolling,
   } = data;
 
@@ -102,7 +99,12 @@ export const SlotMachine = (props) => {
             <b>
               {money} credit{pluralS(money)}
             </b>{' '}
-            (Jackpot is always 100%)
+          </p>
+          <p>
+            Current jackpot:{' '}
+            <b>
+              {money + jackpot} credit{pluralS(money + jackpot)}!
+            </b>
           </p>
           <p>
             So far people have spun{' '}
@@ -132,7 +134,7 @@ export const SlotMachine = (props) => {
         <hr />
         <Button
           onClick={() => act('spin')}
-          disabled={rolling || !(balance > cost)}
+          disabled={rolling || !(balance >= cost)}
         >
           Spin!
         </Button>
