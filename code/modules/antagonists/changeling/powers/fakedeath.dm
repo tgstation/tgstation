@@ -40,6 +40,7 @@
 		return
 
 	changeling.fakedeath(CHANGELING_TRAIT)
+	ADD_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration * duration_modifier, TIMER_UNIQUE)
 	// Basically, these let the ling exit stasis without giving away their ling-y-ness if revived through other means
 	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
@@ -54,6 +55,7 @@
 		revive_ready = FALSE
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
+	REMOVE_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
 
@@ -116,7 +118,7 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 
-	var/datum/antagonist/changeling/ling = user.mind?.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling = IS_CHANGELING(user)
 	if(QDELETED(ling) || !(src in ling.innate_powers + ling.purchased_powers)) // checking both innate and purchased for full coverage
 		return
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))

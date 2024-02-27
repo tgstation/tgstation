@@ -61,7 +61,6 @@
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
-	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
@@ -89,7 +88,7 @@
 	cam_screen.display_to(user)
 	user.client.register_map_obj(cam_background)
 
-/datum/computer_file/program/secureye/ui_status(mob/user)
+/datum/computer_file/program/secureye/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE
@@ -138,8 +137,8 @@
 				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 			if(isnull(camera_ref))
 				return TRUE
-			if(internal_tracker && internal_tracker.tracking)
-				internal_tracker.set_tracking(FALSE)
+			if(internal_tracker)
+				internal_tracker.reset_tracking()
 
 			update_active_camera_screen()
 			return TRUE
@@ -147,7 +146,8 @@
 		if("start_tracking")
 			if(!internal_tracker)
 				internal_tracker = new(src)
-			internal_tracker.set_tracked_mob(usr)
+				RegisterSignal(internal_tracker, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+			internal_tracker.track_input(usr)
 			return TRUE
 
 /datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, mob/living/target)
@@ -169,8 +169,8 @@
 /datum/computer_file/program/secureye/ui_close(mob/user)
 	. = ..()
 	//don't track anyone while we're shutting off.
-	if(internal_tracker && internal_tracker.tracking)
-		internal_tracker.set_tracking(FALSE)
+	if(internal_tracker)
+		internal_tracker.reset_tracking()
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.

@@ -410,7 +410,7 @@ effective or pretty fucking useless.
 
 		balloon_alert(user, "repaired!")
 
-/obj/machinery/porta_turret/syndicate/toolbox/deconstruct(disassembled)
+/obj/machinery/porta_turret/syndicate/toolbox/on_deconstruction(disassembled)
 	if(disassembled)
 		var/atom/movable/old_toolbox = toolbox
 		toolbox = null
@@ -431,7 +431,7 @@ effective or pretty fucking useless.
 		toolbox = null
 		qdel(src)
 
-/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user)
+/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user, datum/ui_state/state)
 	if(faction_check(user.faction, faction))
 		return ..()
 

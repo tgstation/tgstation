@@ -71,8 +71,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/party_poppers = 2))
 
 /obj/machinery/computer/arcade
-	name = "random arcade"
-	desc = "random arcade machine"
+	name = "\proper the arcade cabinet which shouldn't exist"
+	desc = "This arcade cabinet has no games installed, and in fact, should not exist. \
+		Report the location of this machine to your local diety."
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
@@ -136,19 +137,21 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new empprize(loc)
 	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
-/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/stack/arcadeticket))
-		var/obj/item/stack/arcadeticket/T = O
-		var/amount = T.get_amount()
-		if(amount <2)
-			to_chat(user, span_warning("You need 2 tickets to claim a prize!"))
-			return
-		prizevend(user)
-		T.pay_tickets()
-		T.update_appearance()
-		O = T
-		to_chat(user, span_notice("You turn in 2 tickets to the [src] and claim a prize!"))
-		return
+/obj/machinery/computer/arcade/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!istype(tool, /obj/item/stack/arcadeticket))
+		return .
+
+	var/obj/item/stack/arcadeticket/tickets = tool
+	if(!tickets.use(2))
+		balloon_alert(user, "need 2 tickets!")
+		return ITEM_INTERACT_BLOCKING
+
+	prizevend(user)
+	balloon_alert(user, "prize claimed")
+	return ITEM_INTERACT_SUCCESS
 
 // ** BATTLE ** //
 /obj/machinery/computer/arcade/battle

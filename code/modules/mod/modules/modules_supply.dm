@@ -568,7 +568,7 @@
 	range = 6
 	suppressed = SUPPRESSED_VERY
 	armor_flag = BOMB
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
@@ -590,7 +590,7 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF|LAVA_PROOF
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE

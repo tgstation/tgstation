@@ -338,7 +338,7 @@
 	deconstruct(disassembled=TRUE)
 	to_chat(user, span_notice("You finish cutting open the sealed gas tank, revealing the innards."))
 
-/obj/machinery/atmospherics/components/tank/deconstruct(disassembled)
+/obj/machinery/atmospherics/components/tank/on_deconstruction(disassembled)
 	var/turf/location = drop_location()
 	. = ..()
 	location.assume_air(air_contents)

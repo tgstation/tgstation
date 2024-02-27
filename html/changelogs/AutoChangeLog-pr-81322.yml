@@ -1,4 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes:
-  - bugfix: "Alien Hunter's pounce ability no longer has any weird offset issues once the pounce is completed."

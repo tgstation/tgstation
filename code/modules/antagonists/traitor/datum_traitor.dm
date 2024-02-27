@@ -123,6 +123,9 @@
 		uplink_handler.has_objectives = FALSE
 		uplink_handler.can_replace_objectives = null
 		uplink_handler.replace_objectives = null
+	owner.take_uplink()
+	owner.special_role = null
+	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
@@ -182,11 +185,6 @@
 	replacement_uplink_code = "[pick(GLOB.phonetic_alphabet)] [rand(10,99)]"
 	replacement_uplink_frequency = sanitize_frequency(rand(MIN_UNUSED_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
 
-/datum/antagonist/traitor/on_removal()
-	owner.special_role = null
-	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
-	return ..()
-
 /datum/antagonist/traitor/proc/pick_employer()
 	if(!employer)
 		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
@@ -209,7 +207,6 @@
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
-	objectives.Cut()
 	var/objective_count = 0
 
 	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))

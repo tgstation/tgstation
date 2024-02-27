@@ -9,7 +9,7 @@
 	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	pass_flags_self = PASSGRILLE
+	pass_flags_self = PASSGRILLE | PASSWINDOW
 	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE

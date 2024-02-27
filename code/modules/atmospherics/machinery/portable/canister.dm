@@ -353,10 +353,7 @@
 /obj/machinery/portable_atmospherics/canister/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0)
 
-/obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
-	if((obj_flags & NO_DECONSTRUCTION))
-		qdel(src)
-		return
+/obj/machinery/portable_atmospherics/canister/on_deconstruction(disassembled = TRUE)
 	if(!(machine_stat & BROKEN))
 		canister_break()
 	if(!disassembled)
@@ -366,7 +363,6 @@
 	new /obj/item/stack/sheet/iron (drop_location(), 10)
 	if(internal_cell)
 		internal_cell.forceMove(drop_location())
-	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/stock_parts/cell))

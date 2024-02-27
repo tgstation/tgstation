@@ -319,6 +319,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
+	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 	if(!in_range(user, src) && !isobserver(user))
 		. += span_warning("You're too far away to read it!")
 		return
@@ -332,7 +333,7 @@
 		return
 	. += span_warning("You cannot read it!")
 
-/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+/obj/item/paper/ui_status(mob/user, datum/ui_state/state)
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
@@ -357,6 +358,31 @@
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
 	return ..()
+
+/obj/item/paper/AltClick(mob/living/user)
+	. = ..()
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return
+	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
+		return make_plane(user, /obj/item/paperplane/syndicate)
+	return make_plane(user, /obj/item/paperplane)
+
+
+/**
+ * Paper plane folding
+ * Makes a paperplane depending on args and returns it.
+ *
+ * Arguments:
+ * * mob/living/user - who's folding
+ * * obj/item/paperplane/plane_type - what it will be folded into (path)
+ */
+/obj/item/paper/proc/make_plane(mob/living/user, obj/item/paperplane/plane_type = /obj/item/paperplane)
+	balloon_alert(user, "folded into a plane")
+	user.temporarilyRemoveItemFromInventory(src)
+	var/obj/item/paperplane/new_plane = new plane_type(loc, src)
+	if(user.Adjacent(new_plane))
+		user.put_in_hands(new_plane)
+	return new_plane
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
 	//can't be put on fire!

@@ -6,6 +6,7 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
+/cache/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -190,6 +191,9 @@ Temporary Items
 #extra map stuff
 /_maps/**/backup/
 /_maps/templates.dm
+
+#dmm palette file. You really should be using StrongDMM instead.
+*.dmm-pal
 
 #dmdoc default folder
 /dmdoc

@@ -57,7 +57,7 @@
 		QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/electrolyzer/on_deconstruction()
+/obj/machinery/electrolyzer/on_deconstruction(disassembled)
 	if(cell)
 		LAZYADD(component_parts, cell)
 		cell = null

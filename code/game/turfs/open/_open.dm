@@ -115,11 +115,27 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
+
+/turf/open/indestructible/large
+	icon_state = "floor_large"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 
+/turf/open/indestructible/white/smooth_large
+	icon_state = "white_large"
+
+/turf/open/indestructible/white/textured
+	icon_state = "textured_white"
+
 /turf/open/indestructible/dark
 	icon_state = "darkfull"
+
+/turf/open/indestructible/dark/textured
+	icon_state = "textured_dark"
+
+/turf/open/indestructible/dark/smooth_large
+	icon_state = "dark_large"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -232,6 +248,9 @@
 /turf/open/indestructible/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/indestructible/vault
+	icon_state = "rockvault"
+
 /turf/open/indestructible/plating
 	name = "plating"
 	icon_state = "plating"
@@ -242,6 +261,18 @@
 
 /turf/open/indestructible/plating/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/indestructible/kitchen
+	icon_state = /turf/open/floor/iron/kitchen::icon_state
+
+/turf/open/indestructible/rockyground
+	icon_state = /turf/open/misc/ashplanet/rocky::icon_state
+	icon = /turf/open/misc/ashplanet/rocky::icon
+	name = /turf/open/misc/ashplanet/rocky::name
+
+/turf/open/indestructible/stone
+	icon_state = /turf/open/floor/stone::icon_state
+	name = /turf/open/floor/stone::name
 
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE

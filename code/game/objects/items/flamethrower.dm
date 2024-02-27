@@ -15,7 +15,7 @@
 	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 0.5)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 	var/status = FALSE
 	var/lit = FALSE //on or off

@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Being consumed by the flesh of the necropolis while inside a cryo tube will no longer convert the tube into a legion spawn point until the tube is destroyed"

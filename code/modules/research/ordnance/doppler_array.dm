@@ -18,7 +18,7 @@
 	var/obj/item/computer_disk/inserted_disk
 
 	// Lighting system to better communicate the directions.
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 1
 	light_color = COLOR_RED
@@ -237,7 +237,7 @@
 	else if (machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[base_icon_state]_screen-off")
 
-/obj/machinery/doppler_array/on_deconstruction()
+/obj/machinery/doppler_array/on_deconstruction(disassembled)
 	eject_disk()
 	. = ..()
 
