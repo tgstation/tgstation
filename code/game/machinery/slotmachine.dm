@@ -245,6 +245,7 @@
 	give_prizes(the_name, user)
 	update_appearance()
 
+/// Check if the machine can be spun
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(machine_stat & NOPOWER)
 		balloon_alert(user, "no power!")
@@ -260,6 +261,7 @@
 		return FALSE
 	return TRUE
 
+/// Sets the spinning states of all reels to value, with a delay between them
 /obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
 	for(var/list/reel in reels)
 		if(!value)
@@ -268,10 +270,12 @@
 		if(delay)
 			sleep(delay)
 
+/// Same as toggle_reel_spin, but without the delay and runs synchronously
 /obj/machinery/computer/slot_machine/proc/toggle_reel_spin_sync(value)
 	for(var/list/reel in reels)
 		reels[reel] = value
 
+/// Randomize the states of all reels
 /obj/machinery/computer/slot_machine/proc/randomize_reels()
 
 	for(var/reel in reels)
@@ -281,6 +285,7 @@
 			var/chosen = pick(icons)
 			reel[1] = icons[chosen] + list("icon_name" = chosen)
 
+/// Checks if any prizes have been won, and pays them out
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
@@ -328,9 +333,11 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "jackpot_rays"), 3 SECONDS)
 		playsound(src, 'sound/machines/roulettejackpot.ogg', 50, TRUE)
 
+/// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)
 	return reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[name][name][name][name][name]"
 
+/// Finds the largest number of consecutive matching icons in a row
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame
 
@@ -350,12 +357,14 @@
 
 	return amountthesame
 
+
 /obj/machinery/computer/slot_machine/proc/give_money(amount)
 	var/amount_to_give = money >= amount ? amount : money
 	var/surplus = amount_to_give - give_payout(amount_to_give)
 	money = max(0, money - amount)
 	balance += surplus
 
+/// Pay out the specified amount in either coins or holochips
 /obj/machinery/computer/slot_machine/proc/give_payout(amount)
 	if(paymode == HOLOCHIP)
 		cointype = /obj/item/holochip
@@ -372,7 +381,9 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
+/// Dispense the given amount. If machine is set to use coins, will use the specified coin type.
+/// If throwit and target are set, will launch the payment at the target
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, throwit = FALSE, mob/living/target)
 	if(paymode == HOLOCHIP)
 		var/obj/item/holochip/chip = new /obj/item/holochip(loc,amount)
 
