@@ -41,7 +41,7 @@
 		"biohazard" = list("value" = 2, "colour" = "green"),
 		"apple-whole" = list("value" = 2, "colour" = "red"),
 		SEVEN = list("value" = 1, "colour" = "yellow"),
-		"dollar-sign" = list("value" = 2, "colour" = "green")
+		"dollar-sign" = list("value" = 2, "colour" = "green"),
 	)
 
 	var/static/list/coinvalues
