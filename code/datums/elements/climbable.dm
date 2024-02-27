@@ -77,8 +77,8 @@
 			vault_over_object(user, climbed_thing)
 			if(climb_stun)
 				user.Stun(climb_stun)
-				user.visible_message("<span class='warning'>[user] flips over [src]!</span>", \
-									"<span class='notice'>You flip over [climbed_thing]!</span>")
+				user.visible_message(span_warning("[user] flips over [climbed_thing]!"), \
+									span_notice("You flip over [climbed_thing]!"))
 
 		else if(do_climb(climbed_thing, user, params))
 			user.visible_message(span_warning("[user] climbs onto [climbed_thing]."), \
