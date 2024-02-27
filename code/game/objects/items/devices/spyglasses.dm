@@ -2,25 +2,27 @@
 /obj/item/clothing/glasses/sunglasses/spy
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	actions_types = list(/datum/action/item_action/activate_remote_view)
-	var/obj/item/clothing/accessory/spy_bug/linked_bug
+	///A list of our associated bugs.
+	var/list/obj/item/clothing/accessory/spy_bug/linked_bugs = list()
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
 	var/client/cool_guy = user?.client
 	if(!cool_guy)
 		return
-	if(!linked_bug)
+	if(!length(linked_bugs))
 		user.audible_message(span_warning("[src] lets off a shrill beep!"))
 	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
-	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
-	linked_bug.cam_screen.display_to(user)
-	RegisterSignal(cool_guy, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
-
-	linked_bug.update_view()
+	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
+		cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
+		our_bug.cam_screen.display_to(user)
+		RegisterSignal(cool_guy, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
+		our_bug.update_view()
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
-	linked_bug.cam_screen.hide_from(source.mob)
+	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
+		our_bug.cam_screen.hide_from(source.mob)
 
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
@@ -39,7 +41,7 @@
 		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()
-	if(linked_bug)
+	for(var/obj/item/clothing/accessory/spy_bug/linked_bug in linked_bugs)
 		linked_bug.linked_glasses = null
 	. = ..()
 
@@ -70,7 +72,7 @@
 
 /obj/item/clothing/accessory/spy_bug/Destroy()
 	if(linked_glasses)
-		linked_glasses.linked_bug = null
+		linked_glasses.linked_bugs -= src
 	QDEL_NULL(cam_screen)
 	QDEL_NULL(tracker)
 	. = ..()
@@ -104,5 +106,5 @@ A shrill beep coming from your SpySpeks means that they can't connect to the inc
 	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
 	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
 	newbug.linked_glasses = newglasses
-	newglasses.linked_bug = newbug
+	newglasses.linked_bugs += newbug
 	new /obj/item/paper/fluff/nerddocs(src)

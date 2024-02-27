@@ -12,6 +12,7 @@
 
 /datum/antagonist/nukeop/support/on_gain() //All consoles and gear they should get should be in here
 	..()
+	send_cameras()
 	var/turf/owner_turf = get_turf(owner) //We use this location multiple times so we might as well just call get_turf once
 	var/list/gear_to_deliver = list()
 	gear_to_deliver += /obj/item/storage/toolbox/mechanical
@@ -21,3 +22,11 @@
 
 /datum/antagonist/nukeop/support/get_spawnpoint()
 	return pick(GLOB.nukeop_overwatch_start)
+
+/datum/antagonist/nukeop/support/proc/send_cameras()
+	var/obj/item/clothing/glasses/sunglasses/spy/overwatch/newglasses = new(src)
+	for(var/mob/teammate in nuke_team.members)
+		var/obj/item/clothing/accessory/spy_bug/overwatch/newbug = new(teammate)
+		teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
+		newbug.linked_glasses = newglasses
+		newglasses.linked_bugs += newbug

@@ -3125,6 +3125,7 @@
 #include "code\modules\antagonists\nukeop\equipment\borgchameleon.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_authentication_disk.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_challenge.dm"
+#include "code\modules\antagonists\nukeop\equipment\overwatch_kit.dm"
 #include "code\modules\antagonists\nukeop\equipment\pinpointer.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\_nuclear_bomb.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\beer_nuke.dm"
