@@ -24,8 +24,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	light_color = LIGHT_COLOR_BROWN
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // don't need to be literate to play slots
-	tgui_id = "SlotMachine"
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
@@ -232,7 +231,6 @@
 
 	toggle_reel_spin(1)
 	update_appearance()
-	updateDialog()
 	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_spinning), spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
@@ -240,7 +238,6 @@
 
 /obj/machinery/computer/slot_machine/proc/do_spin()
 	randomize_reels()
-	updateDialog()
 	use_power(active_power_usage)
 
 /obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
@@ -249,7 +246,6 @@
 	deltimer(spin_loop)
 	give_prizes(the_name, user)
 	update_appearance()
-	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(machine_stat & NOPOWER)
