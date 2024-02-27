@@ -1,0 +1,7 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "Dirty ice cups should work as intended"
+  - rscadd: "Added wellcheers, a contraband soda with various side effects."
+  - image: "resprites all cans in the drinks icon file"
+  - image: "resprites the canholder sprite in storage.dmi"
