@@ -107,7 +107,7 @@
 	description = "The closest thing to free health insurance you can get"
 
 /datum/deathmatch_modifier/regen/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.AddComponent(/datum/component/regenerator, burn_per_second = 2, tox_per_second = 2)
+	player.AddComponent(/datum/component/regenerator, regeneration_delay = 4 SECONDS, brute_per_second = 2.5, burn_per_second = 2.5, tox_per_second = 2.5)
 
 /datum/deathmatch_modifier/nearsightness
 	name = "Nearsightness"
@@ -323,7 +323,7 @@
 	description = "You're going to get shelled hard"
 	drop_pod_type = /obj/structure/closet/supplypod/deadmatch_missile
 	interval = list(3 SECONDS, 5 SECONDS)
-	amount = rand(1, 2)
+	amount = list(1, 2)
 
 /datum/deathmatch_modifier/drop_pod/missiles/populate_contents()
 	return
