@@ -328,6 +328,7 @@
 
 	else
 		balloon_alert(user, "no luck!")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 		did_player_win = FALSE
 
 	if(did_player_win)
