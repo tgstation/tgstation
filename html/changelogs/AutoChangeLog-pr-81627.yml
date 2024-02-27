@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes cardboard cutouts not updating when held and using the crayon on them to change their appearance, and fixes the alt_appearance being added to the cutout instead of the mob holding it"

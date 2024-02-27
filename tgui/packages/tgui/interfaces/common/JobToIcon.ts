@@ -53,6 +53,7 @@ export const JOB2ICON = {
   'Shaft Miner': 'digging',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
+  'Veteran Security Advisor': 'ribbon',
   Virologist: 'virus',
   Warden: 'handcuffs',
 } as const;

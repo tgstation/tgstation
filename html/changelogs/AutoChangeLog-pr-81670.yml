@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixed Bluespace RPEDs failing to apply circuits from a distance if you had to select between multiple."

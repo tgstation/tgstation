@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes:
-  - balance: "Adds a 1 second delay to moving up and down with the verb/keybinds to disable z-level combat cheese"
