@@ -5,4 +5,3 @@
 /atom/movable/screen/alert/status_effect/food_trait_shockimmune
 	name = "Grounded"
 	desc = "That meal made me feel like a superconductor..."
-	icon_state = "food_buff_4"
