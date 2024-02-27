@@ -35,9 +35,11 @@
 	limb_id = SPECIES_LIZARD
 	can_be_digitigrade = TRUE
 	digitigrade_id = "digitigrade"
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	can_be_digitigrade = TRUE
 	digitigrade_id = "digitigrade"
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS

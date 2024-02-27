@@ -329,8 +329,12 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			// god help me
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
-			else if(species == SPECIES_MONKEY || SPECIES_SIMIAN)
+			else if(species == SPECIES_MONKEY)
 				. += "[icon2html('icons/mob/species/human/human.dmi', user, "monkey")] Some <B>monkey paws</B>."
+			else if(species == SPECIES_SIMIAN)
+				. += "[icon2html('monkestation/icons/mob/species/simian/bodyparts.dmi', user, "simian_l_leg")] Some <B>simian paws</B>."
+			else if(species == SPECIES_LIZARD)
+				. += "[icon2html('icons/mob/species/lizard/bodyparts.dmi', user, "digitigrade_l_leg")] Some <B>lizard claws</B>."
 			else if(species == SPECIES_HUMAN)
 				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
 			else
