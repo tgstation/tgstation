@@ -158,7 +158,6 @@
 		ui.open()
 
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["icons"] = list()
 	for(var/icon_name in icons)
