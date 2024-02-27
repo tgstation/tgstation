@@ -67,9 +67,9 @@
 
 /// Initializes a new domain if the given key is valid and the user has enough points
 /obj/machinery/quantum_server/proc/load_domain(map_key)
-	for(var/datum/lazy_template/virtual_domain/available as anything in subtypesof(/datum/lazy_template/virtual_domain))
-		if(map_key == initial(available.key) && points >= initial(available.cost))
-			generated_domain = new available()
+	for(var/datum/lazy_template/virtual_domain/available in SSbitrunning.all_domains)
+		if(map_key == available.key && points >= available.cost)
+			generated_domain = available
 			RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))
 			generated_domain.lazy_load()
 			return TRUE

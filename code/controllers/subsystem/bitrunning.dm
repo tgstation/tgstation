@@ -37,4 +37,24 @@ SUBSYSTEM_DEF(bitrunning)
 
 	return levels
 
+/datum/controller/subsystem/bitrunning/proc/pick_secondary_loot(completed_domain)
+	var/datum/lazy_template/virtual_domain/domain = completed_domain
+	var/choice
+
+	if(assoc_value_sum(domain.secondary_loot))
+		choice = pick(domain.secondary_loot)
+		domain.secondary_loot[choice] -= 1
+	else
+		choice = /obj/item/paper/paperslip/bitrunning_error
+		log_runtime("Virtual domain [domain.name] tried to pick secondary objective loot, but secondary_loot list was empty.")
+	return choice
+
+/obj/item/paper/paperslip/bitrunning_error
+	name = "Apology Letter"
+	desc = "Something went wrong here."
+
+/obj/item/paper/paperslip/bitrunning_error/Initialize(mapload)
+	default_raw_text = "Your reward for collecting the encrypted curiosity failed to arrive, please report this to technical support."
+	return ..()
+
 #undef REDACTED

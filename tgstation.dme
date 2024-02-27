@@ -3416,6 +3416,7 @@
 #include "code\modules\bitrunning\objects\hololadder.dm"
 #include "code\modules\bitrunning\objects\host_monitor.dm"
 #include "code\modules\bitrunning\objects\landmarks.dm"
+#include "code\modules\bitrunning\objects\loot_box.dm"
 #include "code\modules\bitrunning\objects\loot_crate.dm"
 #include "code\modules\bitrunning\objects\netpod.dm"
 #include "code\modules\bitrunning\objects\quantum_console.dm"
