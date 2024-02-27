@@ -24,7 +24,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	light_color = LIGHT_COLOR_BROWN
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON // don't need to be literate to play slots
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
@@ -39,7 +39,7 @@
 		FA_ICON_BOMB = list("value" = 2, "colour" = "red"),
 		FA_ICON_BIOHAZARD = list("value" = 2, "colour" = "green"),
 		FA_ICON_APPLE_WHOLE = list("value" = 2, "colour" = "red"),
-		SEVEN = list("value" = 1, "colour" = "yellow"),
+		FA_ICON_7 = list("value" = 1, "colour" = "yellow"),
 		FA_ICON_DOLLAR_SIGN = list("value" = 2, "colour" = "green"),
 	)
 
@@ -120,7 +120,7 @@
 			var/obj/item/holochip/inserted_chip = inserted
 			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
 				return
-			balloon_alert(user, "credits inserted")
+			balloon_alert(user, "[inserted_chip.credits] credit[inserted_chip.credits == 1 ? "" : "s"] inserted")
 			balance += inserted_chip.credits
 			qdel(inserted_chip)
 		else
