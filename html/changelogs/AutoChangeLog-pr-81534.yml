@@ -1,0 +1,5 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - balance: "xenomorph stomachs will no longer destroy items directly, refactored it to use acid_act()"
+  - bugfix: "fixes xenomorph vore accidentally destroying mobs it wasn't supposed to destroy, im thinking this was modified list in place shenanigans"
