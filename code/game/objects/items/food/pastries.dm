@@ -364,7 +364,7 @@
 	bite_consumption = 4
 	foodtypes = DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	crafting_complexity = FOOD_COMPLEXITY_1
+	crafting_complexity = FOOD_COMPLEXITY_2
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
 	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
 	var/list/ingredients = list(
@@ -402,7 +402,6 @@
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/consumable/coco,
 	)
-	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/icecream/korta
 	name = "korta cone"
