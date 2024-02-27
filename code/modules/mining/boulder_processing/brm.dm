@@ -46,11 +46,14 @@
 
 	if(!isnull(held_item))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""] Anchor"
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+			return CONTEXTUAL_SCREENTIP_SET
 		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+			return CONTEXTUAL_SCREENTIP_SET
 		else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/brm/examine(mob/user)
 	. = ..()
@@ -125,8 +128,6 @@
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
 		balloon_alert(user, "no space")
-	else if(result)
-		balloon_alert(user, "teleporting")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
