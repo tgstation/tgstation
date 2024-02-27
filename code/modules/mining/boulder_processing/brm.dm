@@ -37,26 +37,20 @@
 	register_context()
 
 /obj/machinery/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = CONTEXTUAL_SCREENTIP_SET
+	. = NONE
 
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle [toggled_on ? "Off" : "On"] automatic boulder retrieval"
-		return
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(!isnull(held_item))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "" : "Un"] Anchor"
-			return
-		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
-			return
-
-		if(panel_open)
-			if(held_item.tool_behaviour == TOOL_CROWBAR)
-				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-
-	return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""] Anchor"
+		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 
 /obj/machinery/brm/examine(mob/user)
 	. = ..()

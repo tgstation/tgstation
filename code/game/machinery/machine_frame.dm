@@ -25,8 +25,8 @@
 	return ..()
 
 /obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time)
-	if(anchored)
-		balloon_alert(user, "must be unsecured first!")
+	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
+		balloon_alert(user, "must be unanchored first!")
 		return FALSE
 	return ..()
 
@@ -35,13 +35,14 @@
 	if(isnull(held_item))
 		return
 
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	switch(state)
 		if(FRAME_STATE_EMPTY)
 			if(istype(held_item, /obj/item/stack/cable_coil))
 				context[SCREENTIP_CONTEXT_LMB] = "Wire Frame"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(held_item.tool_behaviour == TOOL_WRENCH)
-				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
 				return CONTEXTUAL_SCREENTIP_SET
 			else if(held_item.tool_behaviour == TOOL_WELDER)
 				context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"

@@ -66,7 +66,7 @@
 	else if(istype(held_item, /obj/item/card/id) && points_held > 0)
 		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
 	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "" : "Un"] Anchor"
 	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
