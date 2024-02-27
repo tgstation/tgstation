@@ -25,10 +25,6 @@
 	response_harm_continuous = "squashes"
 	response_harm_simple = "squash"
 
-	mob_size = MOB_SIZE_LARGE
-	pixel_x = -16
-	base_pixel_x = -16
-
 	speed = 1
 	maxHealth = 10
 	health = 10
