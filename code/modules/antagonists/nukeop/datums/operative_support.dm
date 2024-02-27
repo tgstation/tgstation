@@ -16,6 +16,9 @@
 	var/turf/owner_turf = get_turf(owner) //We use this location multiple times so we might as well just call get_turf once
 	var/list/gear_to_deliver = list()
 	gear_to_deliver += /obj/item/storage/toolbox/mechanical
+	gear_to_deliver += /obj/item/stack/sheet/glass/fifty
+	gear_to_deliver += /obj/item/stack/sheet/iron/fifty
+	gear_to_deliver += /obj/item/stack/cable_coil/thirty
 
 	for(var/atom/thing_to_deliver in gear_to_deliver)
 		new thing_to_deliver(owner_turf)
@@ -25,8 +28,18 @@
 
 /datum/antagonist/nukeop/support/proc/send_cameras()
 	var/obj/item/clothing/glasses/sunglasses/spy/overwatch/newglasses = new(src)
-	for(var/mob/teammate in nuke_team.members)
-		var/obj/item/clothing/accessory/spy_bug/overwatch/newbug = new(teammate)
+	owner.current.put_in_hands(newglasses)
+
+	for(var/datum/mind/teammate_mind in nuke_team.members)
+		var/mob/living/carbon/teammate = teammate_mind.current
+		var/obj/item/clothing/accessory/spy_bug/overwatch/new_camera = new(get_turf(teammate))
+		if(istype(teammate) && teammate.put_in_hands(new_camera))
+			to_chat(teammate, span_boldnotice("[new_camera] materializes into your hands!"))
+		else
+			to_chat(teammate, span_boldnotice("[new_camera] materializes onto the floor!"))
 		teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
-		newbug.linked_glasses = newglasses
-		newglasses.linked_bugs += newbug
+		new_camera.linked_glasses = newglasses
+		newglasses.linked_bugs += new_camera
+
+/datum/antagonist/nukeop/support/give_uplink()
+	return

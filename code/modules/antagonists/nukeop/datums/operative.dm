@@ -46,7 +46,10 @@
 		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 		if (uplink)
 			uplink.uplink_handler.add_telecrystals(extra_tc)
+	give_uplink()
+	memorize_code()
 
+/datum/antagonist/nukeop/proc/give_uplink()
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	if(uplink)
 		var/datum/team/nuclear/nuke_team = get_team()
@@ -59,8 +62,6 @@
 			nuke_team.team_discounts += create_uplink_sales(discount_team_amount, /datum/uplink_category/discount_team_gear, -1, uplink_items)
 			nuke_team.team_discounts += create_uplink_sales(discount_limited_amount, /datum/uplink_category/limited_discount_team_gear, 1, uplink_items)
 		uplink.uplink_handler.extra_purchasable += nuke_team.team_discounts
-
-	memorize_code()
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
