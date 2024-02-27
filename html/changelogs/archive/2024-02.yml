@@ -692,3 +692,101 @@
   bigfatbananacyclops:
   - rscadd: floortile camouflage suit, boots, gloves and crate containing the former
       items
+2024-02-26:
+  00-Steven:
+  - bugfix: Disabled the popsicle stick maximizer. (Producing popsicle sticks actually
+      deletes the input logs.)
+  13spacemen:
+  - refactor: Bodytypes to do with character sprite shape now have their own bodyshape
+      var, all sprite handling is done with bodyshape and not bodytype anymore
+  Cheshify:
+  - bugfix: meatwheat is now firmly made out of meat, instead of sometimes being wheat
+      and sometimes being meat and sometimes being both.
+  - bugfix: The North Star finally has a bluespace gas sender system.
+  Derpguy3:
+  - bugfix: Three stationary water tanks on Birdshot which supplied a sink in the
+      bar, a sink in the medical storage and a sink in the perma-brig's kitchen are
+      now properly rotated and connected with the plumbing.
+  - bugfix: The unisex showers on Birdshot have been given a water tank for its plumbing.
+  EEASAS:
+  - balance: buffs corporate modsuit(centcom only)
+  Higgin:
+  - qol: Blood Brother convert objective now explains who you can convert and what
+      to do if you mess up with your flash.
+  MrDas:
+  - spellcheck: The tier of servo in mech construction is no longer explicitly stated.
+  necromanceranne:
+  - balance: Nanotrasen, in direct response to the increasing danger posed by wannabe
+      martial artists and rioters in the fringes of the Spinward Sector, have upgraded
+      the impact dampeners found in their riot armor. Staff have also started to rediscover
+      the value of medieval armor; it isn't particularly easy to topple a knight in
+      a suit of plate with just your fists.
+  - balance: Melee-focused armor is now more able to protect you from various RNG-based
+      knockdowns, such as critical hits from punches (as well as the ones applied
+      through the staggered status), shoves, critical hits with a blunt weapon to
+      the chest, and body throws.
+  - balance: Melee-focused helmets also protect you from head injuries, such as bottle
+      smashes, accidentally hitting something dense during a tackle, and critical
+      hits from a blunt weapon to the head.
+  - balance: Bottlesmash knockdowns are less reliable in general.
+  - rscadd: A new module, the Safety-First Head Protection module, protects you from
+      head trauma! Available in most modsuits expected to take hits to the head often.
+      And from roundstart exofabricators.
+2024-02-27:
+  00-Steven:
+  - bugfix: Newscasters no longer say "No wanted issue posted. Have a secure day."
+      when there is, in fact, an active wanted issue currently posted.
+  - bugfix: Medical/security records now show an icon based on the registered trim,
+      rather than showing a question mark for records with customized titles.
+  13spacemen:
+  - bugfix: Blood overlays on items no longer leak onto other objects
+  Absolucy:
+  - qol: Constructs now reuse the victim's mind instead of just moving their client
+  ArcaneMusic:
+  - bugfix: Fixed instances where holochip/holocredits would spawn with a total of
+      zero credits contained within.
+  Ben10Omintrix:
+  - bugfix: fixes pokemon ai still being active when inside the pokeball
+  Iamgoofball:
+  - balance: Adds a 1 second delay to moving up and down with the verb/keybinds to
+      disable z-level combat cheese
+  IndieanaJones:
+  - balance: Gorillas are faster, stronger, but not bigger too. Note while holding
+      an item, they are the same speed as they were prior.
+  - balance: Gorillas now have the understanding of languages as monkeys do.
+  - balance: The Gorilla Cube Box for traitors has been replaced with a singular gorilla
+      cube. Due to the aforementioned changes, this singular gorilla should be as
+      scary if not scarier than 3 gorillas were prior.
+  - balance: ' Magillitis Serum Autoinjector now grants the resulting gorilla a slow
+      passive regeneration effect which kicks in after not taking damage for 12 seconds.'
+  JohnFulpWillard:
+  - qol: You can use atmos machines, holopads, crayons, spray cans, and disposal bins
+      while floored.
+  - bugfix: You can close extinguisher cabinets while floored.
+  - bugfix: You can climb onto a photocopier from the floor.
+  Melbert:
+  - bugfix: The Paddy's Claw should be properly unusable in situations which it should
+      be properly unusable.
+  Singul0:
+  - bugfix: The say TGUI would recognize :g (changeling hivemind) prefix. and give
+      a visual indicator in it that you are talking in the right channel
+  SyncIt21:
+  - qol: adds examines & screentips for building & deconstructing both machine & computer
+      frames.
+  - qol: Adding a circuitboard from a rped to n computer frame will automatically
+      screw it in place like before.
+  - code_imp: merged procs for computer & machine frames. autodocs them where possible.
+  - code_imp: moved code for machine frame into its own file.
+  - bugfix: RCD converts miscellaneous turfs like basalt, sand, beach etc to plating
+      first & not put a wall directly on top of them
+  TJatPBnJ:
+  - balance: Power crepes are now finger food
+  mc-oofert:
+  - bugfix: You may no longer make deathmatch arenas dark with a lightswitch.
+  - rscadd: Added an option to deathmatch loadout dropdown that allows you to pick
+      a random loadout
+  - bugfix: In deathmatch, plasmamen are made humans and the UI supports more players
+  vinylspiders:
+  - bugfix: fixes cardboard cutouts not updating when held and using the crayon on
+      them to change their appearance, and fixes the alt_appearance being added to
+      the cutout instead of the mob holding it

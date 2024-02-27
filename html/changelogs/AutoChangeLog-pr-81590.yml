@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - refactor: "Bodytypes to do with character sprite shape now have their own bodyshape var, all sprite handling is done with bodyshape and not bodytype anymore"

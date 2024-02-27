@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Lobby manifest shows the head/captain symbols next to heads and captains with custom titles, as long as they're registered with a head/captain trim."
