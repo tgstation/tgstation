@@ -191,7 +191,7 @@
 
 	switch(action)
 		if("spin")
-			spin(usr)
+			spin(ui.user)
 		if("payout")
 			if(balance > 0)
 				give_payout(balance)
