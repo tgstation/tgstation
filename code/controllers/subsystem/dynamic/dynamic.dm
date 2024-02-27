@@ -995,12 +995,10 @@ SUBSYSTEM_DEF(dynamic)
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
  */
 /datum/controller/subsystem/dynamic/proc/lorentz_to_amount(centre = 0.5, scale = 0.3, max_threat = 100, interval = 1)
-	var/lorentz_result = -1
-	while (lorentz_result < 0 || lorentz_result > 1)
-		lorentz_result = LORENTZ_DISTRIBUTION(centre, scale)
-	var/std_threat = lorentz_result * max_threat
-
-	return round(std_threat, interval)
+	var/std_threat = -1
+	while (std_threat <= 0 || std_threat >= max_threat)
+		std_threat = round(LORENTZ_DISTRIBUTION(centre, scale) * max_threat, interval)
+	return std_threat
 
 /proc/reopen_roundstart_suicide_roles()
 	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
