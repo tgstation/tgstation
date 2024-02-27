@@ -860,7 +860,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/spawne
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
-	icon_state = "fwindow"
+	icon = 'icons/obj/smooth_structures/windows/frosted_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/frosted/spawner)
 

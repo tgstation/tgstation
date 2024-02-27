@@ -27,10 +27,9 @@
 #define GAME_PLANE -9
 #define ABOVE_GAME_PLANE -8
 #define HIDDEN_WALL_PLANE -7
-#define UNDER_FRILL_PLANE -6
-#define UNDER_FRILL_RENDER_TARGET "*UNDER_FRILL_PLANE"
-#define FRILL_PLANE -5
-#define FRILL_MASK_PLANE -4
+#define FRILL_PLANE -6
+#define FRILL_MASK_PLANE -5
+#define RENDER_PLANE_FRILL -4
 #define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 #define OVER_FRILL_PLANE -3
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees

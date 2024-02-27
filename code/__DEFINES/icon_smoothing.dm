@@ -17,17 +17,6 @@
 /// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
 #define SMOOTH_BORDER_OBJECT (1<<6)
 
-/// Components of a smoothing junction
-/// Redefinitions of the diagonal directions so they can be stored in one var without conflicts
-#define NORTH_JUNCTION NORTH //(1<<0)
-#define SOUTH_JUNCTION SOUTH //(1<<1)
-#define EAST_JUNCTION EAST  //(1<<2)
-#define WEST_JUNCTION WEST  //(1<<3)
-#define NORTHEAST_JUNCTION (1<<4)
-#define SOUTHEAST_JUNCTION (1<<5)
-#define SOUTHWEST_JUNCTION (1<<6)
-#define NORTHWEST_JUNCTION (1<<7)
-
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BITMASK" = SMOOTH_BITMASK,

@@ -144,10 +144,10 @@
 	dir = ndir
 	switch(dir)
 		if(NORTH)
-			offset_old = pixel_y
+			offset_old = pixel_z
 			pixel_z = APC_PIXEL_OFFSET
 		if(SOUTH)
-			offset_old = pixel_y
+			offset_old = pixel_z
 			pixel_z = -APC_PIXEL_OFFSET
 		if(EAST)
 			offset_old = pixel_x
@@ -194,7 +194,7 @@
 		make_terminal()
 		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
-			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
+			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "z"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 	// For apcs created during the round players need to configure them from scratch
 	else
 		opened = APC_COVER_OPENED

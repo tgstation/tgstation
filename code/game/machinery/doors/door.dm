@@ -434,7 +434,7 @@
 /// Accepts the animation to start as an arg
 /obj/machinery/door/proc/run_animation(animation)
 	set_animation(animation)
-	addtimer(src, CALLBACK(PROC_REF(set_animation), null), animation_delay(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_delay(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
 
 // React to our animation changing
 /obj/machinery/door/proc/set_animation(animation)

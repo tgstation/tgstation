@@ -5,7 +5,7 @@
 	desc = "A flimsy framework of iron rods."
 	name = "grille"
 	icon = 'icons/obj/smooth_structures/grille.dmi'
-	icon_state = "grille"
+	icon_state = "grille-0"
 	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
