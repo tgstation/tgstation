@@ -22,6 +22,9 @@
 	var/retry_counter
 	var/crushing_in_progress = FALSE
 	bound_width = 64
+	mask_file = 'icons/obj/doors/airlocks/mask_64x32_airlocks.dmi'
+	mask_x = 16 // byond is consistent and sane
+	anim_parts = "rightu=27,0;left=-28,0;right=27,0"
 
 /obj/machinery/door/airlock/tram/Initialize(mapload)
 	. = ..()
