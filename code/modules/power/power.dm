@@ -180,7 +180,6 @@
 	var/datum/controller/subsystem/subsystem = locate(subsystem_type) in Master.subsystems
 	if(!subsystem)
 		CRASH("No subsystem of the machine's subsystem_type \"[subsystem_type]\" was found in the master controller.")
-		return 0
 	return use_energy(amount * subsystem.wait / (1 SECONDS), channel = channel, ignore_apc = ignore_apc)
 
 /**
