@@ -184,7 +184,7 @@
 	return data
 
 
-/obj/machinery/computer/slot_machine/ui_act(action, list/params)
+/obj/machinery/computer/slot_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
