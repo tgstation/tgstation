@@ -96,14 +96,14 @@
 		icon_screen = "slots_screen"
 	return ..()
 
-/obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/coin))
-		var/obj/item/coin/C = I
+/obj/machinery/computer/slot_machine/attackby(obj/item/inserted, mob/living/user, params)
+	if(istype(inserted, /obj/item/coin))
+		var/obj/item/coin/inserted_coin = inserted
 		if(paymode == COIN)
 			if(prob(2))
-				if(!user.transferItemToLoc(C, drop_location(), silent = FALSE))
+				if(!user.transferItemToLoc(inserted_coin, drop_location(), silent = FALSE))
 					return
-				C.throw_at(user, 3, 10)
+				inserted_coin.throw_at(user, 3, 10)
 				if(prob(10))
 					balance = max(balance - SPIN_PRICE, 0)
 				to_chat(user, span_warning("[src] spits your coin back out!"))
@@ -112,23 +112,23 @@
 				if(!user.temporarilyRemoveItemFromInventory(C))
 					return
 				balloon_alert(user, "coin insterted")
-				balance += C.value
-				qdel(C)
+				balance += inserted_coin.value
+				qdel(inserted_coin)
 		else
 			balloon_alert(user, "holochips only!")
 
-	else if(istype(I, /obj/item/holochip))
+	else if(istype(inserted, /obj/item/holochip))
 		if(paymode == HOLOCHIP)
-			var/obj/item/holochip/H = I
-			if(!user.temporarilyRemoveItemFromInventory(H))
+			var/obj/item/holochip/inserted_chip = inserted
+			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
 				return
 			balloon_alert("credits inserted")
-			balance += H.credits
-			qdel(H)
+			balance += inserted_chip.credits
+			qdel(inserted_chip)
 		else
 			balloon_alert(user, "coins only!")
 
-	else if(I.tool_behaviour == TOOL_MULTITOOL)
+	else if(inserted.tool_behaviour == TOOL_MULTITOOL)
 		if(balance > 0)
 			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
 		else
@@ -383,12 +383,12 @@
 		if(value <= 0)
 			CRASH("Coin value of zero, refusing to payout in dispenser")
 		while(amount >= value)
-			var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
+			var/obj/item/coin/thrown_coin = new cointype(loc) //DOUBLE THE PAIN
 			amount -= value
 			if(throwit && target)
-				C.throw_at(target, 3, 10)
+				thrown_coin.throw_at(target, 3, 10)
 			else
-				random_step(C, 2, 40)
+				random_step(thrown_coin, 2, 40)
 
 	playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 50, TRUE)
 	return amount
