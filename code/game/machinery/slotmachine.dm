@@ -224,7 +224,7 @@
 /obj/machinery/computer/slot_machine/proc/do_spin()
 	randomize_reels()
 	updateDialog()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
 	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)

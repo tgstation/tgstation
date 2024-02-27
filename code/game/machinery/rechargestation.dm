@@ -138,12 +138,12 @@
 /obj/machinery/recharge_station/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
 	sendmats = FALSE
-	update_use_power(IDLE_POWER_USE)
+	update_use_energy(IDLE_POWER_USE)
 
 /obj/machinery/recharge_station/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
 	if(occupant)
-		update_use_power(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.
+		update_use_energy(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.
 		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon_state()
@@ -156,7 +156,7 @@
 /obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	var/main_draw = use_power(recharge_speed * seconds_per_tick) //Pulls directly from the Powernet to dump into the cell
+	var/main_draw = use_energy(recharge_speed * seconds_per_tick) //Pulls directly from the Powernet to dump into the cell
 	if(!main_draw)
 		return
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, main_draw, repairs, sendmats)

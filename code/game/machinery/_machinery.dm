@@ -57,13 +57,13 @@
  *
  *
  *     Default definition uses 'use_power', 'power_channel', 'active_power_usage',
- *     'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
+ *     'idle_power_usage', 'powered()', and 'use_energy()' implement behavior.
  *
  *  powered(chan = -1)         'modules/power/power.dm'
  *     Checks to see if area that contains the object has power available for power
  *     channel given in 'chan'. -1 defaults to power_channel
  *
- *  use_power(amount, chan=-1)   'modules/power/power.dm'
+ *  use_energy(amount, chan=-1)   'modules/power/power.dm'
  *     Deducts 'amount' from the power channel 'chan' of the area that contains the object.
  *
  *  power_change()               'modules/power/power.dm'
@@ -306,7 +306,7 @@
 	. = ..()
 	if(!use_power || machine_stat || (. & EMP_PROTECT_SELF))
 		return
-	use_power(7500/severity)
+	use_energy(7500/severity)
 	new /obj/effect/temp_visual/emp(loc)
 
 	if(!prob(70/severity))
@@ -419,7 +419,7 @@
 	update_appearance()
 
 ///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
-/obj/machinery/proc/update_use_power(new_use_power)
+/obj/machinery/proc/update_use_energy(new_use_power)
 	SHOULD_CALL_PARENT(TRUE)
 	if(new_use_power == use_power)
 		return FALSE

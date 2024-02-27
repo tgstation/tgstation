@@ -80,7 +80,7 @@
 	return ..()
 
 /obj/machinery/ntnet_relay/process(seconds_per_tick)
-	update_use_power(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+	update_use_energy(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
 	update_appearance()
 

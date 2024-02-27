@@ -212,7 +212,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 
 	target_mob.visible_message(span_notice("[target_mob] vanishes as [p_theyre()] reclaimed for recycling!"))
-	connected_recycler.use_power(500)
+	connected_recycler.use_energy(500)
 	monkeys += connected_recycler.cube_production
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
 	qdel(target_mob)

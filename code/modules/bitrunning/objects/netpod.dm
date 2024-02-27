@@ -154,7 +154,7 @@
 	playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_opening", src)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_NETPOD_OPENED)
-	update_use_power(IDLE_POWER_USE)
+	update_use_energy(IDLE_POWER_USE)
 
 	return ..()
 
@@ -247,7 +247,7 @@
 	target.AddComponent(/datum/component/netpod_healing, pod = src)
 	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, vary = TRUE)
 	target.extinguish_mob()
-	update_use_power(ACTIVE_POWER_USE)
+	update_use_energy(ACTIVE_POWER_USE)
 
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()

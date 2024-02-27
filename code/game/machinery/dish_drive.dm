@@ -161,7 +161,7 @@
 		if(is_type_in_list(dish, disposable_items))
 			LAZYREMOVE(dish_drive_contents, dish)
 			dish.forceMove(bin)
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			disposed++
 	if (disposed)
 		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name]."))

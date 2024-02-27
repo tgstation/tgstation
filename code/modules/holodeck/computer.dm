@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	spawning_simulation = TRUE
 	active = (map_id != offline_program)
-	update_use_power(active + IDLE_POWER_USE)
+	update_use_energy(active + IDLE_POWER_USE)
 	program = map_id
 
 	clear_projection()

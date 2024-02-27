@@ -314,10 +314,10 @@
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
-		update_use_power(ACTIVE_POWER_USE)
+		update_use_energy(ACTIVE_POWER_USE)
 		begin_processing()
 		return
-	update_use_power(IDLE_POWER_USE)
+	update_use_energy(IDLE_POWER_USE)
 	end_processing()
 
 /obj/machinery/transport/crossing_signal/process()

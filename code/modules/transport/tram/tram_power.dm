@@ -41,9 +41,9 @@
 	SIGNAL_HANDLER
 
 	if(controller_active && destination_platform == connected_platform)
-		update_use_power(ACTIVE_POWER_USE)
+		update_use_energy(ACTIVE_POWER_USE)
 	else
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 
 	update_appearance()
 

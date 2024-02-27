@@ -47,5 +47,5 @@
 		if(G.distill_reagent)
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)
-			use_power(active_power_usage * amount)
+			use_energy(active_power_usage * amount)
 			qdel(G)

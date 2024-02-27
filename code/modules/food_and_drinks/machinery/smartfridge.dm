@@ -411,7 +411,7 @@
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 					desired--
 
 			if (visible_contents)
@@ -546,7 +546,7 @@
 
 		SStgui.update_uis(src)
 		update_appearance()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	return HAS_TRAIT(O, TRAIT_DRYABLE)
@@ -560,12 +560,12 @@
 	if(drying || forceoff)
 		drying = FALSE
 		current_user = FALSE
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 	else
 		drying = TRUE
 		if(user?.mind)
 			current_user = WEAKREF(user.mind)
-		update_use_power(ACTIVE_POWER_USE)
+		update_use_energy(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)

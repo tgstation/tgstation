@@ -140,7 +140,7 @@
 	if(!main_draw)
 		return
 
-	use_power(main_draw * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
+	use_energy(main_draw * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
 	charge_cell(main_draw, charging)
 
 	update_appearance()

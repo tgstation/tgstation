@@ -114,7 +114,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, list/modifiers)
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
 	SEND_SIGNAL(source, COMSIG_MOB_USED_MECH_EQUIPMENT, chassis)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	return TRUE
 
 /**
@@ -128,7 +128,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key)
 	if(!chassis)
 		return FALSE
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment

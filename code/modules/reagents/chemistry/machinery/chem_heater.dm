@@ -129,7 +129,7 @@
 
 	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
 	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-	use_power(active_power_usage * seconds_per_tick * 0.3)
+	use_energy(active_power_usage * seconds_per_tick * 0.3)
 	return TRUE
 
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)

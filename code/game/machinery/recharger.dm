@@ -61,7 +61,7 @@
 	if(is_type_in_typecache(arrived, allowed_devices))
 		charging = arrived
 		START_PROCESSING(SSmachines, src)
-		update_use_power(ACTIVE_POWER_USE)
+		update_use_energy(ACTIVE_POWER_USE)
 		finished_recharging = FALSE
 		using_power = TRUE
 		update_appearance()
@@ -72,7 +72,7 @@
 		if(!QDELING(charging))
 			charging.update_appearance()
 		charging = null
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 		using_power = FALSE
 		update_appearance()
 	return ..()
@@ -154,7 +154,7 @@
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		if(power_pack.stored_ammo.len < power_pack.max_ammo)
 			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_power(active_power_usage * recharge_coeff * seconds_per_tick)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 		return

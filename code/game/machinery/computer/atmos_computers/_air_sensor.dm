@@ -43,7 +43,7 @@
 	if(!on)
 		return
 	. = ..()
-	use_power(active_power_usage) //use power for analyzing gases
+	use_energy(active_power_usage) //use power for analyzing gases
 
 /obj/machinery/air_sensor/process()
 	//update appearance according to power state

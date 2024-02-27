@@ -75,7 +75,7 @@
 		return
 	if (ismovable(M))
 		if(do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
@@ -196,7 +196,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

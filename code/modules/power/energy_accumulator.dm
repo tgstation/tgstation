@@ -35,7 +35,7 @@
  * - time: The amount of time that is being processed, in seconds.
  * Returns: The amount of energy it would release in the timespan.
  */
-/obj/machinery/power/energy_accumulator/proc/calculate_power_output(time = 0)
+/obj/machinery/power/energy_accumulator/proc/calculate_energy_output(time = 0)
 	// dE/dt = -[ACCUMULATOR_PROPORTIONAL_COEFFICIENT] * E - [ACCUMULATOR_CONSTANT_COEFFICIENT]
 	return min(stored_energy, stored_energy - ((ACCUMULATOR_PROPORTIONAL_COEFFICIENT * stored_energy + ACCUMULATOR_CONSTANT_COEFFICIENT) * NUM_E ** (-ACCUMULATOR_PROPORTIONAL_COEFFICIENT * time) - ACCUMULATOR_CONSTANT_COEFFICIENT) / ACCUMULATOR_PROPORTIONAL_COEFFICIENT)
 
@@ -46,7 +46,7 @@
 	return ACCUMULATOR_PROPORTIONAL_COEFFICIENT * stored_energy + ACCUMULATOR_CONSTANT_COEFFICIENT
 
 /obj/machinery/power/energy_accumulator/process(seconds_per_tick)
-	release_energy(calculate_power_output(seconds_per_tick))
+	release_energy(calculate_energy_output(seconds_per_tick))
 
 /**
  * Releases joules amount of its stored energy onto the powernet.

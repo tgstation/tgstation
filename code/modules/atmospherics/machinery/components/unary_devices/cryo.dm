@@ -267,7 +267,7 @@
 	on = active
 	update_appearance()
 
-	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+	update_use_energy(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	if(on) //Turned on
 		begin_processing()
 	else //Turned off

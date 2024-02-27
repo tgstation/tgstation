@@ -14,9 +14,9 @@
 		if(cell?.charge)
 			low_power_mode = FALSE
 	else if(stat == CONSCIOUS)
-		use_power(seconds_per_tick, times_fired)
+		use_energy(seconds_per_tick, times_fired)
 
-/mob/living/silicon/robot/proc/use_power(seconds_per_tick, times_fired)
+/mob/living/silicon/robot/proc/use_energy(seconds_per_tick, times_fired)
 	if(cell?.charge)
 		if(cell.charge <= 10000)
 			drop_all_held_items()

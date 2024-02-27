@@ -178,7 +178,7 @@
 		if(DRONE_PRODUCTION)
 			materials.use_materials(using_materials)
 			if(power_used)
-				use_power(power_used)
+				use_energy(power_used)
 
 			var/atom/A = new dispense_type(loc)
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)

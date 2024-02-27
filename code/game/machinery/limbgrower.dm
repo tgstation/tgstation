@@ -184,7 +184,7 @@
 				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
 
 			busy = TRUE
-			use_power(power)
+			use_energy(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
 			var/temp_category = params["active_tab"]

@@ -118,7 +118,7 @@
 		return PROCESS_KILL
 
 	location.hotspot_expose(1000, 500, 1)
-	use_power(active_power_usage) //use power to keep the turf hot
+	use_energy(active_power_usage) //use power to keep the turf hot
 
 /obj/machinery/igniter/update_icon_state()
 	icon_state = "[base_icon_state][on]"
@@ -254,7 +254,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	spark_system.start()
 	last_spark = world.time
 	location.hotspot_expose(1000, 2500, 1)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	return TRUE
 

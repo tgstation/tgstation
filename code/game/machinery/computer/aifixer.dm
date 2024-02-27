@@ -64,7 +64,7 @@
 				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	use_power(1000)
+	use_energy(1000)
 	var/need_mob_update = FALSE
 	need_mob_update += occupier.adjustOxyLoss(-5, updating_health = FALSE)
 	need_mob_update += occupier.adjustFireLoss(-5, updating_health = FALSE)

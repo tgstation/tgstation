@@ -133,15 +133,15 @@
 	return A.powered(chan) // return power status of the area
 
 /**
- * Draws power from the APC. Will use excess power from the APC's connected grid,
- * then use power from the APC's cell if there wasn't enough power from the grid, unless ignore_apc is true.
+ * Draws energy from the APC. Will use excess energy from the APC's connected grid,
+ * then use energy from the APC's cell if there wasn't enough energy from the grid, unless ignore_apc is true.
  * Args:
- * - amount: The amount of power to use.
+ * - amount: The amount of energy to use.
  * - channel: The power channel to use.
- * - ignore_apc: If true, do not consider the APC's cell when demanding power.
- * Returns: The amount of power used.
+ * - ignore_apc: If true, do not consider the APC's cell when demanding energy.
+ * Returns: The amount of energy used.
  */
-/obj/machinery/proc/use_power(amount, channel = power_channel, ignore_apc = FALSE)
+/obj/machinery/proc/use_energy(amount, channel = power_channel, ignore_apc = FALSE)
 	if(amount <= 0) //just in case
 		return FALSE
 	var/area/home = get_area(src)
@@ -157,10 +157,6 @@
 
 	//Surplus from the grid.
 	var/surplus = local_apc.surplus()
-	//Available power from the APC's cell if there isn't enough surplus.
-	//var/apc_charge = ignore_apc ? 0 : local_apc.charge()
-	//amount = min(amount, surplus + apc_charge)
-
 	var/grid_used = min(surplus, amount)
 	local_apc.add_load(grid_used)
 	var/apc_used = 0
@@ -168,14 +164,30 @@
 		apc_used = local_apc.cell.use(amount - grid_used, force = TRUE)
 
 	amount = grid_used + apc_used
-	home.use_power(amount, channel)
+	home.use_energy(amount, channel)
 	return amount
+
+/**
+ * Does what use_energy() does, but it automatically scales the amount by the machine's subsystem wait.
+ * This draws the energy needed such that it will be drawing amount watts if this was called every process().
+ * Args:
+ * - amount: The amount of power to use.
+ * - channel: The power channel to use.
+ * - ignore_apc: If true, do not consider the APC's cell when demanding power.
+ * Returns: The amount of energy used.
+ */
+/obj/machinery/proc/use_power(amount, channel = power_channel, ignore_apc = FALSE)
+	var/datum/controller/subsystem/subsystem = locate(subsystem_type) in Master.subsystems
+	if(!subsystem)
+		CRASH("No subsystem of the machine's subsystem_type \"[subsystem_type]\" was found in the master controller.")
+		return 0
+	return use_energy(amount * subsystem.wait / (1 SECONDS), channel = channel, ignore_apc = ignore_apc)
 
 /**
  * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
  * - Amount: How much power the APC's cell is to be costed.
  */
-/obj/machinery/proc/directly_use_power(amount)
+/obj/machinery/proc/directly_use_energy(amount)
 	var/area/my_area = get_area(src)
 	if(isnull(my_area))
 		stack_trace("machinery is somehow not in an area, nullspace?")
@@ -232,7 +244,7 @@
  * Returns: The amount of energy the cell received.
  */
 /obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
-	var/demand = use_power(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
+	var/demand = use_energy(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
 	return power_given
 
@@ -496,7 +508,7 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.apc?.terminal?.use_power(drained_energy)
+		source_area.apc?.terminal?.use_energy(drained_energy)
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))

@@ -541,7 +541,7 @@
 
 	self_sustaining = new_value
 
-	update_use_power(self_sustaining ? ACTIVE_POWER_USE : NO_POWER_USE)
+	update_use_energy(self_sustaining ? ACTIVE_POWER_USE : NO_POWER_USE)
 	update_appearance()
 
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, new_value)
@@ -1092,7 +1092,7 @@
 		return
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
-		update_use_power(NO_POWER_USE)
+		update_use_energy(NO_POWER_USE)
 		return
 	if(!anchored)
 		return

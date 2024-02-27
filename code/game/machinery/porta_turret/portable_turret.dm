@@ -626,11 +626,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/obj/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
+		use_energy(reqpower)
 		A = new stun_projectile(T)
 		playsound(loc, stun_projectile_sound, 75, TRUE)
 	else
-		use_power(reqpower * 2)
+		use_energy(reqpower * 2)
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, TRUE)
 

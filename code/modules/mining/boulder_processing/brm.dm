@@ -273,7 +273,7 @@
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with
 	boulders_remaining -= 1

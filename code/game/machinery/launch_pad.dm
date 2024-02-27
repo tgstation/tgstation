@@ -203,7 +203,7 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()

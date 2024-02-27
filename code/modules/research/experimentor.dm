@@ -235,7 +235,7 @@
 		stored_research.unhide_node(SSresearch.techweb_node_by_id(picked_node_id))
 
 	experiment(reaction, loaded_item)
-	use_power(750)
+	use_energy(750)
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
@@ -505,7 +505,7 @@
 			ejectItem(TRUE)
 		if(globalMalf > 76 && globalMalf < 98)
 			visible_message(span_warning("[src] begins to smoke and hiss, shaking violently!"))
-			use_power(500000)
+			use_energy(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 		if(globalMalf == 99)
 			visible_message(span_warning("[src] begins to glow and vibrate. It's going to blow!"))

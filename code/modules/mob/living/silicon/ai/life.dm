@@ -31,7 +31,7 @@
 	if(!lacks_power())
 		var/area/home = get_area(src)
 		if(home.powered(AREA_USAGE_EQUIP))
-			home.apc?.terminal?.use_power(500 * seconds_per_tick, channel = AREA_USAGE_EQUIP)
+			home.apc?.terminal?.use_energy(500 * seconds_per_tick, channel = AREA_USAGE_EQUIP)
 
 		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 			ai_restore_power()

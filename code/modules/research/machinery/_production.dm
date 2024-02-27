@@ -145,7 +145,7 @@
 	PRIVATE_PROC(TRUE)
 
 	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * initial(active_power_usage))))
+	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * initial(active_power_usage))))
 		var/mat_name = "iron"
 
 		var/highest_mat = 0
@@ -288,7 +288,7 @@
 				return
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-			if(!directly_use_power(ROUND_UP((amount / MAX_STACK_SIZE) * 0.01 * initial(active_power_usage))))
+			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.01 * initial(active_power_usage))))
 				say("No power to dispense sheets")
 				return
 
@@ -374,7 +374,7 @@
 		finalize_build()
 		return
 
-	if(!is_operational || !directly_use_power(charge_per_item))
+	if(!is_operational || !directly_use_energy(charge_per_item))
 		say("Unable to continue production, power failure.")
 		finalize_build()
 		return

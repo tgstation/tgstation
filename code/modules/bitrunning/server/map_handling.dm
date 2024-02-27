@@ -60,7 +60,7 @@
 	balloon_alert_to_viewers("domain loaded.")
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
-	update_use_power(ACTIVE_POWER_USE)
+	update_use_energy(ACTIVE_POWER_USE)
 	update_appearance()
 
 	return TRUE
@@ -130,7 +130,7 @@
 	addtimer(CALLBACK(src, PROC_REF(cool_off)), ROUND_UP(server_cooldown_time * capacitor_coefficient), TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	update_appearance()
 
-	update_use_power(IDLE_POWER_USE)
+	update_use_energy(IDLE_POWER_USE)
 	domain_randomized = FALSE
 	retries_spent = 0
 

@@ -95,7 +95,7 @@
 
 		next_index++
 
-		use_power(active_power_usage * seconds_per_tick)
+		use_energy(active_power_usage * seconds_per_tick)
 
 ///Notify all senders to forget us
 /obj/machinery/plumbing/receiver/proc/lose_senders()

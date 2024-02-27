@@ -294,7 +294,7 @@
 		if(attached_circuit)
 			remove_circuit()
 		return
-	location.apc?.terminal?.use_power(power_to_use, channel = AREA_USAGE_EQUIP)
+	location.apc?.terminal?.use_energy(power_to_use, channel = AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
 	COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
 	return COMPONENT_OVERRIDE_POWER_USAGE

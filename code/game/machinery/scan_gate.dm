@@ -193,7 +193,7 @@
 			assembly?.activate()
 		set_scanline("scanning", 10)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)

@@ -136,7 +136,7 @@
 /obj/machinery/chem_dispenser/process(seconds_per_tick)
 	if(cell.maxcharge == cell.charge)
 		return
-	use_power(active_power_usage * seconds_per_tick) //Additional power cost before charging the cell.
+	use_energy(active_power_usage * seconds_per_tick) //Additional power cost before charging the cell.
 	charge_cell(recharge_amount * seconds_per_tick, cell) //This also costs power.
 
 

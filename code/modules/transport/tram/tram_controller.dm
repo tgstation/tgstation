@@ -951,7 +951,7 @@
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
  */
 /obj/machinery/transport/tram_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(controller != controller_datum)
 		return
 	update_appearance()

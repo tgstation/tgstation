@@ -1253,14 +1253,14 @@
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
-			use_power(50)
+			use_energy(50)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
@@ -1335,7 +1335,7 @@
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50)
 			playsound(src, doorClose, 30, TRUE)
 			return TRUE
 

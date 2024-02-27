@@ -228,7 +228,7 @@
 	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
 	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
@@ -474,7 +474,7 @@
 	var/amount = seconds_per_tick * synth_speed / LAZYLEN(processed_reagents)
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
-		chassis.use_power(energy_drain)
+		chassis.use_energy(energy_drain)
 
 #undef FIRE_SYRINGE_MODE
 #undef ANALYZE_SYRINGE_MODE

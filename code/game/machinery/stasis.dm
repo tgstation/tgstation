@@ -115,13 +115,13 @@
 	target.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
 	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	target.extinguish_mob()
-	update_use_power(ACTIVE_POWER_USE)
+	update_use_energy(ACTIVE_POWER_USE)
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
 	target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
 	REMOVE_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	if(target == occupant)
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 
 /obj/machinery/stasis/post_buckle_mob(mob/living/L)
 	if(!can_be_occupant(L))
@@ -139,7 +139,7 @@
 
 /obj/machinery/stasis/process()
 	if(!(occupant && isliving(occupant) && check_nap_violations()))
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())

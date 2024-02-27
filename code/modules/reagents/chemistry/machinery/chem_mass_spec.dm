@@ -303,7 +303,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return FALSE
 	if(!processing_reagents)
 		return TRUE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(progress_time >= delay_time)
 		processing_reagents = FALSE
 		progress_time = 0

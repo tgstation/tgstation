@@ -129,7 +129,7 @@
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu?.use_power()) // If it still has a power source, PC wouldn't go offline.
+	if(cpu?.use_energy()) // If it still has a power source, PC wouldn't go offline.
 		set_machine_stat(machine_stat & ~NOPOWER)
 		update_appearance()
 		return

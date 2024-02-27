@@ -34,13 +34,13 @@
 		gate_active = FALSE
 		flick("prisongate_turningoff", src)
 		icon_state = "prisongate_off"
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 	else
 		gate_active = TRUE
 		visible_message(span_notice("[src] whirrs back to life as its hardlight barrier fills the space between it."))
 		flick("prisongate_turningon", src)
 		icon_state = "prisongate_on"
-		update_use_power(ACTIVE_POWER_USE)
+		update_use_energy(ACTIVE_POWER_USE)
 
 /obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir)
 	. = ..()

@@ -320,7 +320,7 @@
 	switch(action)
 		if("start_power")
 			connected_core.start_power = !connected_core.start_power
-			connected_core.update_use_power(connected_core.start_power ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+			connected_core.update_use_energy(connected_core.start_power ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 			. = TRUE
 		if("start_cooling")
 			connected_core.start_cooling = !connected_core.start_cooling

@@ -160,7 +160,7 @@
 ///Try to draw power from our internal cell first, before switching to that of the circuit.
 /obj/item/modular_computer/proc/use_power_for_circuits(datum/source, power_usage_per_input)
 	SIGNAL_HANDLER
-	if(use_power(power_usage_per_input, check_programs = FALSE))
+	if(use_energy(power_usage_per_input, check_programs = FALSE))
 		return COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/modular_computer/proc/on_circuit_removed(datum/source)
@@ -443,7 +443,7 @@
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
 		internal_cell = null
-		if(enabled && !use_power())
+		if(enabled && !use_energy())
 			shutdown_computer()
 	if(computer_id_slot == gone)
 		computer_id_slot = null
@@ -478,7 +478,7 @@
 				to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	if(use_power()) // checks if the PC is powered
+	if(use_energy()) // checks if the PC is powered
 		if(looping_sound)
 			soundloop.start()
 		enabled = TRUE
@@ -543,7 +543,7 @@
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
-	if(!use_power())
+	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)

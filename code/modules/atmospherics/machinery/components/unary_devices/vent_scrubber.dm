@@ -161,10 +161,10 @@
 	var/new_power_usage = 0
 	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
 		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
-		update_use_power(IDLE_POWER_USE)
+		update_use_energy(IDLE_POWER_USE)
 	else
 		new_power_usage = active_power_usage
-		update_use_power(ACTIVE_POWER_USE)
+		update_use_energy(ACTIVE_POWER_USE)
 
 	if(widenet)
 		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))

@@ -125,7 +125,7 @@
 
 	var/power_to_use = (5 * (3 * working_power) * working_power) / (efficiency + working_power)
 	if(anchored)
-		use_power(power_to_use)
+		use_energy(power_to_use)
 	else
 		cell.use(power_to_use)
 

@@ -64,7 +64,7 @@
 		//full power for doing reactions
 		power_usage *= 2
 
-	use_power(power_usage * seconds_per_tick)
+	use_energy(power_usage * seconds_per_tick)
 
 ///For subtypes that want to do additional reagent handling
 /obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
@@ -198,7 +198,7 @@
 			return
 
 		//some power for accurate ph balancing & keep track of attempts made
-		use_power(active_power_usage * 0.03 * buffer_amount)
+		use_energy(active_power_usage * 0.03 * buffer_amount)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

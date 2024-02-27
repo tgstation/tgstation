@@ -169,7 +169,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(target)
 		target.wanted_status = WANTED_PRISONER
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"

@@ -70,7 +70,7 @@
 	air_output.merge(remove_output)
 
 	if(power_usage)
-		use_power(power_usage)
+		use_energy(power_usage)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
