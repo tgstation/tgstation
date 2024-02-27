@@ -10,7 +10,7 @@
 #define JACKPOT 10000
 #define SPIN_TIME 65 //As always, deciseconds.
 #define REEL_DEACTIVATE_DELAY 7
-#define SEVEN "7"
+#define SEVEN FA_ICON_SEVEN
 #define HOLOCHIP 1
 #define COIN 2
 
@@ -35,13 +35,13 @@
 	var/cointype = /obj/item/coin/iron //default cointype
 	/// Icons that can be displayed by the slot machine.
 	var/static/list/icons = list(
-		"lemon" = list("value" = 2, "colour" = "yellow"),
-		"star" = list("value" = 2, "colour" = "yellow"),
-		"bomb" = list("value" = 2, "colour" = "red"),
-		"biohazard" = list("value" = 2, "colour" = "green"),
-		"apple-whole" = list("value" = 2, "colour" = "red"),
+		FA_ICON_LEMON = list("value" = 2, "colour" = "yellow"),
+		FA_ICON_STAR = list("value" = 2, "colour" = "yellow"),
+		FA_ICON_BOMB = list("value" = 2, "colour" = "red"),
+		FA_ICON_BIOHAZARD = list("value" = 2, "colour" = "green"),
+		FA_ICON_APPLE_WHOLE = list("value" = 2, "colour" = "red"),
 		SEVEN = list("value" = 1, "colour" = "yellow"),
-		"dollar-sign" = list("value" = 2, "colour" = "green"),
+		FA_ICON_DOLLAR_SIGN = list("value" = 2, "colour" = "green"),
 	)
 
 	var/static/list/coinvalues
