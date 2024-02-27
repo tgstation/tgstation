@@ -287,7 +287,11 @@
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
 
-	if(reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
+	if(check_jackpot(FA_ICON_BOMB))
+		var/obj/item/grenade/flashbang/bang = new(get_turf(src))
+		bang.arm_grenade(null, 1 SECONDS)
+
+	else if(check_jackpot(SEVEN))
 		var/prize = money + JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
@@ -325,6 +329,9 @@
 		animate(get_filter("jackpot_rays"), offset = 10, time = 3 SECONDS, loop = -1)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "jackpot_rays"), 3 SECONDS)
 		playsound(src, 'sound/machines/roulettejackpot.ogg', 50, TRUE)
+
+/obj/machinery/computer/slot_machine/proc/check_jackpot(name)
+	return reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[name][name][name][name][name]"
 
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame
