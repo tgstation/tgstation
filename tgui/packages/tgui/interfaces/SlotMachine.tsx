@@ -111,9 +111,8 @@ export const SlotMachine = (props) => {
             </b>{' '}
             and won{' '}
             <b>
-              {jackpots} jackpot{pluralS(jackpots)}
+              {jackpots} jackpot{pluralS(jackpots)}!
             </b>
-            !
           </p>
         </Section>
         <hr />
