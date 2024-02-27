@@ -2063,6 +2063,7 @@
 #include "code\game\machinery\doors\brigdoors.dm"
 #include "code\game\machinery\doors\door.dm"
 #include "code\game\machinery\doors\firedoor.dm"
+#include "code\game\machinery\doors\moving_parts.dm"
 #include "code\game\machinery\doors\passworddoor.dm"
 #include "code\game\machinery\doors\poddoor.dm"
 #include "code\game\machinery\doors\shutters.dm"

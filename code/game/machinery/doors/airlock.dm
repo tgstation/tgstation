@@ -142,7 +142,7 @@
 	var/mask_file = 'icons/obj/doors/airlocks/mask_32x32_airlocks.dmi' // because filters aren't allowed to have icon_states :(
 	var/mask_x = 0
 	var/mask_y = 0
-	var/anim_parts = "left=-14,0;right=13,0"
+	var/list/moving_parts = list(/obj/effect/overlay/airlock_part/standard/left, /obj/effect/overlay/airlock_part/standard/right)
 	var/list/part_overlays
 	var/panel_attachment = "right"
 	var/note_attachment = "left"
@@ -218,25 +218,8 @@
 		QDEL_LIST(part_overlays)
 	else
 		part_overlays = list()
-	var/list/parts_desc = params2list(anim_parts)
-	for(var/part_id in parts_desc)
-		var/obj/effect/overlay/airlock_part/P = new
-		P.side_id = part_id
-		var/list/open_offset = splittext(parts_desc[part_id], ",")
-		P.open_px = text2num(open_offset[1])
-		P.open_py = text2num(open_offset[2])
-		if(open_offset.len >= 3)
-			P.move_start_time = text2num(open_offset[3])
-		if(open_offset.len >= 4)
-			P.move_end_time = text2num(open_offset[4])
-		if(open_offset.len >= 5)
-			P.aperture_angle = text2num(open_offset[5])
-		vis_contents += P
-		part_overlays += P
-		P.icon = icon
-		P.icon_state = part_id
-		P.parent = src
-		P.name = name
+	for(var/moving_part in moving_parts)
+		new moving_part(null, src)
 	remove_filter("parts_mask")
 	add_filter("parts_mask", 1, parts_mask_filter)
 
@@ -583,9 +566,9 @@
 				part.transform = matrix()
 				continue
 			var/matrix/angular_movement = matrix()
-			angular_movement.Translate(-part.open_px, -part.open_py)
+			angular_movement.Translate(-part.open_pixel_x, -part.open_pixel_y)
 			angular_movement.Turn(part.aperture_angle)
-			angular_movement.Translate(part.open_px, part.open_py)
+			angular_movement.Translate(part.open_pixel_x, part.open_pixel_y)
 			switch(airlock_state)
 				if(AIRLOCK_OPEN)
 					part.transform = angular_movement
@@ -604,18 +587,18 @@
 				continue
 			switch(airlock_state)
 				if(AIRLOCK_OPEN)
-					part.pixel_x = part.open_px
-					part.pixel_y = part.open_py
+					part.pixel_x = part.open_pixel_x
+					part.pixel_y = part.open_pixel_y
 				if(AIRLOCK_CLOSING)
-					part.pixel_x = part.open_px
-					part.pixel_y = part.open_py
-					animate(part, pixel_x = part.open_px, pixel_y = part.open_py, time = 0.5 SECONDS - part.move_end_time)
+					part.pixel_x = part.open_pixel_x
+					part.pixel_y = part.open_pixel_y
+					animate(part, pixel_x = part.open_pixel_x, pixel_y = part.open_pixel_y, time = 0.5 SECONDS - part.move_end_time)
 					animate(pixel_x = 0, pixel_y = 0, time = part.move_end_time - part.move_start_time)
 				if(AIRLOCK_OPENING)
 					part.pixel_x = 0
 					part.pixel_y = 0
 					animate(part, pixel_x = 0, pixel_y = 0, time = part.move_start_time)
-					animate(pixel_x = part.open_px, pixel_y = part.open_py, time = part.move_end_time - part.move_start_time)
+					animate(pixel_x = part.open_pixel_x, pixel_y = part.open_pixel_y, time = part.move_end_time - part.move_start_time)
 
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	. += get_airlock_overlay("frame", overlays_file, src, em_block = TRUE)
@@ -2184,7 +2167,7 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	normal_integrity = 400
-	anim_parts = "rightu=11,0;left=-12,0;right=11,0"
+	moving_parts = list(/obj/effect/overlay/airlock_part/shuttle/rightu, /obj/effect/overlay/airlock_part/shuttle/left, /obj/effect/overlay/airlock_part/shuttle/right)
 
 /obj/machinery/door/airlock/titanium/glass
 	normal_integrity = 350
@@ -2196,7 +2179,7 @@
 	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze
-	anim_parts = "left=-13,0;right=13,0"
+	moving_parts = list(/obj/effect/overlay/airlock_part/pinion/left, /obj/effect/overlay/airlock_part/pinion/right)
 
 /obj/machinery/door/airlock/bronze/seethru
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
@@ -2237,7 +2220,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
-	anim_parts = "top=0,16;bottom=0,-16"
+	moving_parts = list(/obj/effect/overlay/airlock_part/external/top, /obj/effect/overlay/airlock_part/external/bottom)
 	note_attachment = "bottom"
 	panel_attachment = "bottom"
 
@@ -2319,8 +2302,8 @@
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
-	anim_parts = "rightpins=15,0;leftpins=-17,0;rightu=13,0;left=-15,0;right=13,0"
-
+	moving_parts = list(/obj/effect/overlay/airlock_part/vault/rightpins, /obj/effect/overlay/airlock_part/vault/leftpins, /obj/effect/overlay/airlock_part/vault/rightu,\
+					/obj/effect/overlay/airlock_part/vault/left, /obj/effect/overlay/airlock_part/vault/right)
 
 // Hatch Airlocks
 
@@ -2330,7 +2313,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
-	anim_parts = "ul=-15,0,0,5,-90;ur=0,15,0,5,-90;dl=0,-15,0,5,-90;dr=15,0,0,5,-90"
+	moving_parts = list(/obj/effect/overlay/airlock_part/hatch/ul, /obj/effect/overlay/airlock_part/hatch/ur, /obj/effect/overlay/airlock_part/hatch/dl,\
+					/obj/effect/overlay/airlock_part/hatch/dr)
 	note_attachment = "ul"
 	panel_attachment = "dr"
 
@@ -2340,7 +2324,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
-	anim_parts = "ul=-15,0,0,5,-90;ur=0,15,0,5,-90;dl=0,-15,0,5,-90;dr=15,0,0,5,-90"
+	moving_parts = list(/obj/effect/overlay/airlock_part/hatch/ul, /obj/effect/overlay/airlock_part/hatch/ur, /obj/effect/overlay/airlock_part/hatch/dl,\
+					/obj/effect/overlay/airlock_part/hatch/dr)
 	note_attachment = "ul"
 	panel_attachment = "dr"
 
@@ -2355,7 +2340,7 @@
 	normal_integrity = 500
 	security_level = 1
 	damage_deflection = 30
-	anim_parts = "rightu=14,0;left=-14,0;right=14,0"
+	moving_parts = list(/obj/effect/overlay/airlock_part/high_security/rightu, /obj/effect/overlay/airlock_part/high_security/left, /obj/effect/overlay/airlock_part/high_security/right)
 
 // Shuttle Airlocks
 
@@ -2364,7 +2349,7 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
-	anim_parts = "rightu=11,0;left=-12,0;right=11,0"
+	moving_parts = list(/obj/effect/overlay/airlock_part/shuttle/rightu, /obj/effect/overlay/airlock_part/shuttle/left, /obj/effect/overlay/airlock_part/shuttle/right)
 
 /obj/machinery/door/airlock/shuttle/glass
 	opacity = FALSE
@@ -2383,7 +2368,9 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
-	anim_parts="p1=0,40,0;p2=0,24,2;p3=0,-36,0.5;p4=0,16,3;p5=0,-40,0;p6=0,32,1;p7=0,-24,2" // the door has 7 fucking parts. SEVEN.
+	moving_parts = list(/obj/effect/overlay/airlock_part/abductor/p1, /obj/effect/overlay/airlock_part/abductor/p2, /obj/effect/overlay/airlock_part/abductor/p3,\
+					/obj/effect/overlay/airlock_part/abductor/p4, /obj/effect/overlay/airlock_part/abductor/p5, /obj/effect/overlay/airlock_part/abductor/p6,\
+					/obj/effect/overlay/airlock_part/abductor/p7)
 
 // Cult Airlocks
 
@@ -2525,7 +2512,7 @@
 	glass = TRUE
 	mask_file = 'icons/obj/doors/airlocks/mask_64x32_airlocks.dmi'
 	mask_x = 16 // byond is consistent and sane
-	anim_parts = "left=-21,0;right=21,0;top=0,29"
+	moving_parts = list(/obj/effect/overlay/airlock_part/multi_tile/left, /obj/effect/overlay/airlock_part/multi_tile/right, /obj/effect/overlay/airlock_part/multi_tile/top)
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"

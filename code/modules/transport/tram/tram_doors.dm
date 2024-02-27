@@ -24,7 +24,7 @@
 	bound_width = 64
 	mask_file = 'icons/obj/doors/airlocks/mask_64x32_airlocks.dmi'
 	mask_x = 16 // byond is consistent and sane
-	anim_parts = "rightu=27,0;left=-28,0;right=27,0"
+	moving_parts = list(/obj/effect/overlay/airlock_part/tram/rightu, /obj/effect/overlay/airlock_part/tram/left, /obj/effect/overlay/airlock_part/tram/right)
 
 /obj/machinery/door/airlock/tram/Initialize(mapload)
 	. = ..()
