@@ -1,5 +1,5 @@
 /datum/status_effect/food/trait/shockimmune
-	alert_type = /atom/movable/screen/alert/status_effect/food_trait_shockimmune
+	alert_type = /atom/movable/screen/alert/status_effect/food/trait_shockimmune
 	trait = TRAIT_SHOCKIMMUNE
 
 /atom/movable/screen/alert/status_effect/food/trait_shockimmune
