@@ -48,6 +48,7 @@
 	var/static/list/coinvalues
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/static/list/ray_filter = list(type = "rays", y = 16, size = 40, density = 4, color = COLOR_RED_LIGHT, factor = 15, flags = FILTER_OVERLAY)
+	var/debug = TRUE
 
 /obj/machinery/computer/slot_machine/Initialize(mapload)
 	. = ..()
@@ -111,21 +112,23 @@
 			else
 				if(!user.temporarilyRemoveItemFromInventory(C))
 					return
-				to_chat(user, span_notice("You insert [C] into [src]'s slot!"))
+				balloon_alert(user, "coin insterted")
 				balance += C.value
 				qdel(C)
 		else
-			to_chat(user, span_warning("This machine is only accepting holochips!"))
+			balloon_alert(user, "holochips only!")
+
 	else if(istype(I, /obj/item/holochip))
 		if(paymode == HOLOCHIP)
 			var/obj/item/holochip/H = I
 			if(!user.temporarilyRemoveItemFromInventory(H))
 				return
-			to_chat(user, span_notice("You insert [H.credits] holocredits into [src]'s slot!"))
+			balloon_alert("credits inserted")
 			balance += H.credits
 			qdel(H)
 		else
-			to_chat(user, span_warning("This machine is only accepting coins!"))
+			balloon_alert(user, "coins only!")
+
 	else if(I.tool_behaviour == TOOL_MULTITOOL)
 		if(balance > 0)
 			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
@@ -188,7 +191,7 @@
 	. = ..()
 	if(.)
 		return
-	to_chat(world, "received action [action] params [params]")
+
 	switch(action)
 		if("spin")
 			spin(usr)
@@ -250,16 +253,16 @@
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(machine_stat & NOPOWER)
-		to_chat(user, span_warning("The slot machine has no power!"))
+		balloon_alert(user, "no power!")
 		return FALSE
 	if(machine_stat & BROKEN)
-		to_chat(user, span_warning("The slot machine is broken!"))
+		balloon_alert(user, "machine broken!")
 		return FALSE
 	if(working)
-		to_chat(user, span_warning("You need to wait until the machine stops spinning before you can play again!"))
+		balloon_alert(user, "already spinning!")
 		return FALSE
 	if(balance < SPIN_PRICE)
-		to_chat(user, span_warning("Insufficient money to play!"))
+		balloon_alert(user, "insufficient balance!")
 		return FALSE
 	return TRUE
 
@@ -288,8 +291,9 @@
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
 
-	if(reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
-		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits!'")
+	if(debug || reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
+		var/prize = money + JACKPOT
+		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
 		balance += money - give_payout(JACKPOT)
@@ -318,7 +322,7 @@
 		money = max(money - SPIN_PRICE * 4, money)
 
 	else
-		to_chat(user, span_warning("No luck!"))
+		balloon_alert(user, "no luck!")
 		did_player_win = FALSE
 
 	if(did_player_win)
