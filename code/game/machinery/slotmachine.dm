@@ -170,7 +170,6 @@
 	return data
 
 /obj/machinery/computer/slot_machine/ui_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	var/list/reel_states = list()
 	for(var/reel_state in reels)
