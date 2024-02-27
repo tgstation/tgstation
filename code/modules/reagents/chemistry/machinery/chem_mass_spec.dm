@@ -154,7 +154,7 @@
 	if(is_reagent_container(item) && item.is_open_container())
 		if(processing_reagents)
 			balloon_alert(user, "still processing!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
