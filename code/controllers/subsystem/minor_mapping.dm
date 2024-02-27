@@ -30,7 +30,9 @@ SUBSYSTEM_DEF(minor_mapping)
 			return
 
 		if (prob(PROB_MOUSE_SPAWN))
-			new /mob/living/basic/mouse(proposed_turf)
+			var/obj/structure/cable = locate(/obj/structure/cable) in proposed_turf
+			if (cable)
+				cable.deconstruct()
 		else
 			new /mob/living/basic/regal_rat/controlled(proposed_turf)
 

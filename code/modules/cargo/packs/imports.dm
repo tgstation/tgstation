@@ -275,6 +275,16 @@
 	dangerous = TRUE //these are literally bombs so....
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
+/datum/supply_pack/imports/mice
+	name = "Mice Crate"
+	desc = "Contains dangerous critters"
+	cost = CARGO_CRATE_VALUE * 50
+	contains = list(/mob/living/basic/mouse = 4)
+	crate_name = "mice crate"
+	contraband = TRUE
+	dangerous = TRUE
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
 /datum/supply_pack/imports/shambler_evil
 	name = "Shamber's Juice Eldritch Energy! Crate"
 	desc = "~J'I'CE!~"
