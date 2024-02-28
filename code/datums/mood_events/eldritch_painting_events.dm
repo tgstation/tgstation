@@ -23,7 +23,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/desire_heretic
-	description = "A part gained, the manus takes and gives. What did it take from me?"
+	description = "A part gained, the mansus takes and gives. What did it take from me?"
 	mood_change = -2
 	timeout = 3 MINUTES
 
