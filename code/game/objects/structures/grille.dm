@@ -330,22 +330,21 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
-	. = FALSE
 	if(!anchored || broken) // anchored/broken grilles are never connected
-		return
+		return FALSE
 	if(!prob(prb))
-		return
+		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
-		return
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(T.overfloor_placed)//cant be a floor in the way!
-		return
+		return FALSE
 
 	var/obj/structure/cable/cable_node = T.get_cable_node()
 	if(isnull(cable_node))
-		return
+		return FALSE
 	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
-		return
+		return FALSE
 	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
