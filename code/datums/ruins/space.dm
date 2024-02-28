@@ -469,7 +469,7 @@
 /datum/map_template/ruin/space/space_phonebooth
 	id = "Space_phonebooth"
 	suffix = "phonebooth.dmm"
-	name = "Space-Ruin Space Phonebooth"
+	name = "Space-Ruin Phonebooth"
 	description = "A venture by nanotrasen to help popularize the use of holopads."
 
 /datum/map_template/ruin/space/the_outlet
