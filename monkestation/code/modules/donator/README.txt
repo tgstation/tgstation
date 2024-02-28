@@ -33,6 +33,8 @@ This PR adds adds donator specific items to the game.  Also migrates old donator
 
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code -->
 <!-- Orignal Coders -->
-Code and sprites done by Lmenvs.
+Code and most sprites done by Lmenvs.
+Lamb cloak by Dimwhat.
+Sprites for Zed's clothing done by CannibalHunter.
 <!-- Orignal Coders -->
 

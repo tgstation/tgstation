@@ -64,3 +64,9 @@
 	name = "void butterfly transformation"
 	icon_state = "void_butterfly"
 	animal_transformation = /mob/living/basic/butterfly/void/spacial
+
+//rickdude
+/obj/item/effect_granter/donator/plant_crab
+	name = "plantcrab transformation"
+	icon_state = "crab_plant"
+	animal_transformation = /mob/living/basic/crab/plant

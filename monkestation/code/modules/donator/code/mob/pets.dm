@@ -126,3 +126,12 @@
 
 /mob/living/basic/butterfly/void/spacial
 	fixed_color = TRUE
+
+/mob/living/basic/crab/plant
+	name = "Plant crab"
+	desc = "Is it a crab made of plant or a plant made of crab?"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "crab_plant"
+	icon_living = "crab_plant"
+	icon_dead = "crab_plant_dead"
+	gold_core_spawnable = NO_SPAWN
