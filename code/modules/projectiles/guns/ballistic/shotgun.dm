@@ -152,7 +152,7 @@
 	fire_delay = 1
 	pin = /obj/item/firing_pin/implant/pindicate
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
-	actions_types = list()
+	actions_types = list(/datum/action/item_action/toggle_firemode)
 	mag_display = TRUE
 	empty_indicator = TRUE
 	empty_alarm = TRUE
@@ -165,6 +165,8 @@
 	var/secondary_magazine_type
 	///the secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
+	///Whether or not we're in burst mode. If true, we burst fire. If false, we are semi-automatic.
+	var/burst_fire_on = TRUE
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
 	. = ..()
@@ -187,6 +189,26 @@
 	. += "You can load a secondary magazine by right-clicking [src] with the magazine you want to load."
 	. += "You can remove a secondary magazine by alt-right-clicking [src]."
 	. += "Right-click to swap the magazine to the secondary position, and vice versa."
+
+/obj/item/gun/ballistic/shotgun/bulldog/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
+
+/obj/item/gun/ballistic/shotgun/bulldog/proc/burst_select()
+	var/mob/living/carbon/human/user = usr
+	burst_fire_on = !burst_fire_on
+	if(!burst_fire_on)
+		burst_size = 1
+		fire_delay = 0
+		balloon_alert(user, "switched to semi-automatic")
+	else
+		burst_size = initial(burst_size)
+		fire_delay = initial(fire_delay)
+		balloon_alert(user, "switched to [burst_size]-round burst")
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
