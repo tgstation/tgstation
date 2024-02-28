@@ -112,7 +112,7 @@
 ///Returns the total amount of credits that its contents amount to.
 /obj/item/piggy_bank/proc/calculate_dosh_amount()
 	var/total_value = 0
-	for(var/obj/item/item in src)
+	for(var/obj/item/item in contents)
 		total_value += item.get_item_credit_value()
 	return total_value
 
