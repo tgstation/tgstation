@@ -1,6 +1,0 @@
-author: "13spacemen, Kapu1178, KnigTheThrasher"
-delete-after: True
-changes:
-  - refactor: "Footprint sprites are now based on your shoes and legs, shoes have priority"
-  - image: "Monkey legs now produce pawprints instead of footprints"
-  - rscadd: "Footprint support for simians and lizards"

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Vaulting over climbables now displays the proper name of the object, instead of just `/datum/element/climbable`"
