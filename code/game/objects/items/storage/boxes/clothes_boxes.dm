@@ -206,8 +206,8 @@
 		risky-espionage hallway operations. Enjoy our product!"
 
 /obj/item/storage/box/floor_camo/PopulateContents()
-	new /obj/item/clothing/under/syndicate/floortilecamo(src),
-	new /obj/item/clothing/mask/floortilebalaclava(src),
-	new /obj/item/clothing/gloves/combat/floortile(src),
-	new /obj/item/clothing/shoes/jackboots/floortile(src),
+	new /obj/item/clothing/under/syndicate/floortilecamo(src)
+	new /obj/item/clothing/mask/floortilebalaclava(src)
+	new /obj/item/clothing/gloves/combat/floortile(src)
+	new /obj/item/clothing/shoes/jackboots/floortile(src)
 	new /obj/item/storage/backpack/floortile(src)
