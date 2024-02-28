@@ -189,7 +189,8 @@
 	desc = "The ascension ritual of the Path of Knock. \
 		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
 		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and in addition, create a tear to the Labyrinth's heart; \
+		and your keyblades will become even deadlier. \
+		In addition, you will create a tear to the Labyrinth's heart; \
 		a tear in reality located at the site of this ritual. \
 		Eldritch creatures will endlessly pour from this rift \
 		who are bound to obey your instructions."
