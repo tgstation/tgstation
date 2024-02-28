@@ -603,11 +603,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Rw" = (
-/obj/structure/grille,
 /obj/machinery/camera/emp_proof/directional/west{
 	c_tag = "Singularity Engine #4"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/station/engineering/supermatter/room)
 "Sh" = (
 /obj/effect/turf_decal/stripes/line,
