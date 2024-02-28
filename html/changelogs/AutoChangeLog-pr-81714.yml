@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - image: "adds a visual effect for hive head bees despawning"
