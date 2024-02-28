@@ -1,0 +1,6 @@
+author: "Momo8289"
+delete-after: True
+changes:
+  - bugfix: "Fixes the slot machine's jackpot. It should now give all of the available prize money + 10,000 credits as payout for a jackpot."
+  - refactor: "Converts the slot machine's UI over to TGUI"
+  - rscadd: "The slot machine now has a whole new type of jackpot! This one's a banger!"
