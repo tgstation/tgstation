@@ -69,13 +69,17 @@ export const MassSpec = (props) => {
           buttons={
             <Button
               icon="power-off"
-              disabled={!!processing || !beaker_1_has_contents || !beaker2}
+              disabled={
+                !!processing || eta <= 0 || !beaker_1_has_contents || !beaker2
+              }
               tooltip={
                 !beaker_1_has_contents
                   ? 'Missing input reagents!'
                   : !beaker2
                     ? 'Missing an output beaker!'
-                    : 'Begin purifying'
+                    : eta <= 0
+                      ? 'Already at max purity'
+                      : 'Begin purifying'
               }
               tooltipPosition="left"
               onClick={() => act('activate')}
