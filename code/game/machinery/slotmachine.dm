@@ -10,7 +10,7 @@
 #define JACKPOT 10000
 #define SPIN_TIME 65 //As always, deciseconds.
 #define REEL_DEACTIVATE_DELAY 7
-#define SEVEN "fa-7"
+#define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2
 
@@ -297,7 +297,7 @@
 		var/obj/item/grenade/flashbang/bang = new(get_turf(src))
 		bang.arm_grenade(null, 1 SECONDS)
 
-	else if(check_jackpot(SEVEN))
+	else if(check_jackpot(JACKPOT_SEVENS))
 		var/prize = money + JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
@@ -413,7 +413,7 @@
 #undef HOLOCHIP
 #undef JACKPOT
 #undef REEL_DEACTIVATE_DELAY
-#undef SEVEN
+#undef JACKPOT_SEVENS
 #undef SMALL_PRIZE
 #undef SPIN_PRICE
 #undef SPIN_TIME
