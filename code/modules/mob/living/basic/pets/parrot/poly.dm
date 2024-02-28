@@ -191,8 +191,8 @@
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF77"
+	ADD_TRAIT(src, TRAIT_NO_SHUTTLE_CRUSH, TRAIT_GENERIC)
 	status_flags = GODMODE
-	basic_mob_flags = NO_SHUTTLE_CRUSH
 	sentience_type = SENTIENCE_BOSS //This is so players can't mindswap into ghost poly to become a literal god
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	butcher_results = list(/obj/item/ectoplasm = 1)
