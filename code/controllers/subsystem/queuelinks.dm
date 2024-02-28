@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(queuelinks)
 
 /datum/queue_link/proc/pop()
 	for(var/atom/item as anything in partners)
-		item.MatchedLinks(id, partners)
+		item.MatchedLinks(id, partners - item)
 	qdel(src)
 
 /datum/queue_link/Destroy()
