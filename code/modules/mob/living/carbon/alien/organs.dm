@@ -210,7 +210,7 @@
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
 		var/mob/living/lad = thing
-		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
+		RegisterSignal(lad, COMSIG_LIVING_DEATH, PROC_REF(content_died))
 		if(lad.stat == DEAD)
 			qdel(lad)
 			return
