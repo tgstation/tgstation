@@ -221,6 +221,7 @@
 	current_active_effects += 1
 	_rcd_create_effect(target, user, delay, rcd_results)
 	current_active_effects -= 1
+	log_tool("used RCD with design mode: \"[rcd_results["[RCD_DESIGN_MODE]"]]\" and design path: \"[rcd_results["[RCD_DESIGN_PATH]"]]\" with delay [delay]", user)
 
 /**
  * Internal proc which creates the rcd effects & creates the structure
