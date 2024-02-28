@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - bugfix: "You can build material airlocks again"
