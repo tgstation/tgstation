@@ -35,6 +35,7 @@
 				return FALSE
 
 			var/value = trim(params["value"], MAX_BROADCAST_LEN)
+			investigate_log("[key_name(usr)] changed the field: \"[field]\" with value: \"[target.vars[field]]\" to new value: \"[value || "Unknown"]\"", INVESTIGATE_RECORDS)
 			target.vars[field] = value || "Unknown"
 
 			return TRUE
@@ -56,6 +57,7 @@
 
 		if("login")
 			authenticated = secure_login(usr)
+			investigate_log("[key_name(usr)] [authenticated ? "successfully logged" : "failed to log"] into the [src].", INVESTIGATE_RECORDS)
 			return TRUE
 
 		if("logout")
