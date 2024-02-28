@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Cryostylane reaction now has a moderate & not extreme cooling effect. Helps you achieve more pure amounts of  Cryostylane"
