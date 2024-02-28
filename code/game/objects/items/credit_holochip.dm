@@ -9,10 +9,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/credits = 0
 
-/obj/item/holochip/Initialize(mapload, amount)
+/obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
 	if(amount)
 		credits = amount
+	if(credits <= 0 && !mapload)
+		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
+		return INITIALIZE_HINT_QDEL
 	update_appearance()
 
 /obj/item/holochip/examine(mob/user)

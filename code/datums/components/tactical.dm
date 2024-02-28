@@ -17,34 +17,50 @@
 
 /datum/component/tactical/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+	var/obj/item/item = parent
+	if(ismob(item.loc))
+		var/mob/holder = item.loc
+		modify(item, holder, holder.get_slot_by_item(item))
 
 /datum/component/tactical/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_MOVABLE_Z_CHANGED,
 	))
+	unmodify()
 
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
+	if(current_slot == slot)
+		return
 
 	if(allowed_slots && !(slot & allowed_slots))
 		if(current_slot)
 			unmodify(source, user)
 		return
 
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_icon_update))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
 	current_slot = slot
 
+	on_icon_update(source)
+
+/datum/component/tactical/proc/on_icon_update(obj/item/source)
+	SIGNAL_HANDLER
+	var/mob/user = source.loc
+	if(!istype(user))
+		return
+
+	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	var/obj/item/master = parent
 	var/image/image = image(master, loc = user)
 	image.copy_overlays(master)
 	image.override = TRUE
 	image.layer = ABOVE_MOB_LAYER
 	image.plane = FLOAT_PLANE
-	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
-
-	RegisterSignal(source, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	user.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", image)
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
@@ -56,8 +72,10 @@
 		return
 
 	UnregisterSignal(source, list(
+		COMSIG_MOVABLE_Z_CHANGED,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_ATOM_UPDATED_ICON,
 	))
 	current_slot = null
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
