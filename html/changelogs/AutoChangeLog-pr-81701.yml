@@ -1,0 +1,4 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - bugfix: "Fixed the AI hologram's ability to copy the appearance of crew members."
