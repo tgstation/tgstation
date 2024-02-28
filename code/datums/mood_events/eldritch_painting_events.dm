@@ -17,7 +17,7 @@
 	mood_change = 5
 	timeout = 3 MINUTES
 
-/datum/mood_event/eldritch_painting/weeping_withdrawl
+/datum/mood_event/eldritch_painting/weeping_withdrawal
 	description = "My mind is clear from his influence."
 	mood_change = 1
 	timeout = 3 MINUTES
