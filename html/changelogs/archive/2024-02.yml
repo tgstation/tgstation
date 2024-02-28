@@ -790,3 +790,55 @@
   - bugfix: fixes cardboard cutouts not updating when held and using the crayon on
       them to change their appearance, and fixes the alt_appearance being added to
       the cutout instead of the mob holding it
+2024-02-28:
+  00-Steven:
+  - bugfix: Lobby manifest shows the head/captain symbols next to heads and captains
+      with custom titles, as long as they're registered with a head/captain trim.
+  - bugfix: Fixed Bluespace RPEDs failing to apply circuits from a distance if you
+      had to select between multiple.
+  ArcaneMusic:
+  - image: New sprites for plant grafts!
+  Cheshify:
+  - bugfix: the north star's main intersections are brighter, the elevator is properly
+      lit, and a single floating poster was moved.
+  - qol: The chapel has been slightly overhauled on Birdshot, with the chaplain now
+      having a place to preach sermons.
+  - bugfix: Sparring chaplains are now able to operate on Birdshot!
+  DrDiasyl:
+  - rscadd: 'NEW TRAIT JOB: Veteran Security Advisor! Advise HoS and Captain on Security
+      matters, mentor Security Officers. Note that they are paraplegic and are suffering
+      PTSD due to their past experience.'
+  Ghommie:
+  - rscadd: Added a multi-dimensional bomb payload to the black market. It's very
+      expensive.
+  - balance: '"Freshness Jars full of Natural Bait" is now a goodie and costs 200
+      credits instead of 2000'
+  Iamgoofball:
+  - balance: xenomorph stomachs will no longer destroy items directly, refactored
+      it to use acid_act()
+  - bugfix: fixes xenomorph vore accidentally destroying mobs it wasn't supposed to
+      destroy, im thinking this was modified list in place shenanigans
+  IndieanaJones:
+  - rscadd: 'New Changeling Ability: Hive Head'
+  - bugfix: Fixed bees having an improper sprite offset
+  Jacquerel:
+  - rscadd: Displaying the voting statistics is now optional on a per-poll basis,
+      and is disabled for map voting.
+  JohnFulpWillard:
+  - qol: Intelligent monkeys now punch people instead of biting them.
+  KingkumaArt:
+  - rscadd: a list of items called vendor_nocrush that vendors dont deal integrity
+      damage to upon hitting them.
+  - bugfix: Makes vending machines no longer crush chairs and conveyors.
+  LT3:
+  - code_imp: Tram throwing now breaks grilles consistently
+  - code_imp: Tram malfunction lethality/throw chance are now a multiplier instead
+      of flat value
+  - code_imp: Tram throw chance can be adjusted
+  - code_imp: Unlucky trait is now used in tram throw calculation
+  Melbert:
+  - bugfix: Rat hearts apply their damage modifier malus correctly
+  PapaMichael:
+  - balance: Fugitive hunters will spawn early if the emergency shuttle is called.
+  softcerv:
+  - code_imp: TRAIT_DEAF now works on non-carbon mobs
