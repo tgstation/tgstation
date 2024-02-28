@@ -198,8 +198,8 @@
 	new /obj/item/clothing/shoes/divine_archer(src)
 
 /obj/item/storage/box/floor_camo
-    name = "floor tile camo box"
-    desc = "Thank you for shopping from Camo-J's, our uniquely designed \
+	name = "floor tile camo box"
+	desc = "Thank you for shopping from Camo-J's, our uniquely designed \
 		floor-tile 'NT scum' styled camouflage fatigues is the ultimate \
 		espionage uniform used by the very best. Providing the best \
 		flexibility, with our latest Camo-tech threads. Perfect for \
