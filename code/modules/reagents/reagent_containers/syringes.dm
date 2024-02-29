@@ -267,6 +267,12 @@
 	list_reagents = list((toxin_to_get) = 5)
 	return ..()
 
+/obj/item/reagent_containers/syringe/crude/mushroom
+	list_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 5)
+
+/obj/item/reagent_containers/syringe/crude/blastoff
+	list_reagents = list(/datum/reagent/drug/blastoff = 5)
+
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"
 	desc = "Contains crikey juice - makes any gold core create the most deadly companions in the world."

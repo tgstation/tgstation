@@ -13,8 +13,10 @@
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
+	///The bodyshape(s) allowed to attach to this chest.
+	var/acceptable_bodyshape = BODYSHAPE_HUMANOID
 	///The bodytype(s) allowed to attach to this chest.
-	var/acceptable_bodytype = BODYTYPE_HUMANOID
+	var/acceptable_bodytype = ALL
 
 	var/obj/item/cavity_item
 
@@ -78,8 +80,8 @@
 	should_draw_greyscale = FALSE
 	is_dimorphic = FALSE
 	wound_resistance = -10
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_MONKEY
+	bodyshape = BODYSHAPE_MONKEY
+	acceptable_bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
 /obj/item/bodypart/chest/alien
@@ -87,12 +89,13 @@
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_chest"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = LIMB_MAX_HP_ALIEN_CORE
-	acceptable_bodytype = BODYTYPE_HUMANOID
+	acceptable_bodyshape = BODYSHAPE_HUMANOID
 	wing_types = NONE
 
 /obj/item/bodypart/chest/larva
@@ -245,14 +248,14 @@
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
-	unarmed_damage_high = 2
-	unarmed_effectiveness = 0
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
+	unarmed_effectiveness = 5
 	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/left/alien
@@ -260,7 +263,8 @@
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_arm"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
@@ -341,14 +345,14 @@
 	husk_type = "monkey"
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	should_draw_greyscale = FALSE
 	wound_resistance = -10
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1
-	unarmed_damage_high = 2
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
 	unarmed_effectiveness = 0
 	appendage_noun = "paw"
 
@@ -357,7 +361,8 @@
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_arm"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
@@ -383,7 +388,8 @@
 	unarmed_effectiveness = 15
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
-
+	/// Used by the bloodysoles component to make footprints
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 	biological_state = BIO_STANDARD_JOINTED
 
 /obj/item/bodypart/leg/Destroy()
@@ -456,20 +462,22 @@
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_effectiveness = 0
+	unarmed_effectiveness = 5
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_leg"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
@@ -545,20 +553,22 @@
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_effectiveness = 0
+	unarmed_effectiveness = 5
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_leg"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE

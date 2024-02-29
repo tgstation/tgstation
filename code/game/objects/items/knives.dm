@@ -144,7 +144,6 @@
 		user.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
 		playsound(user, 'sound/weapons/slice.ogg', 50, TRUE)
 		user.visible_message(span_danger("[user] accidentally cuts [user.p_them()]self while pulling [src] out of [user.p_them()] teeth! What a doofus!"), span_userdanger("You accidentally cut your mouth with [src]!"))
-		. = ..()
 
 /obj/item/knife/combat/equipped(mob/living/user, slot, initial = FALSE)
 	. = ..()

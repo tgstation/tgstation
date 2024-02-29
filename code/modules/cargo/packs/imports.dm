@@ -71,13 +71,6 @@
 	crate_name = "bananium sheet crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/imports/naturalbait
-	name = "Freshness Jars full of Natural Bait"
-	desc = "Homemade in the Spinward Sector."
-	cost = 2000 //rock on
-	contains = list(/obj/item/storage/pill_bottle/naturalbait)
-	crate_name = "fishing bait crate"
-
 /datum/supply_pack/imports/dumpstercorpse
 	name = "A....Dumpster?"
 	desc = "Why does it smell so bad...."
@@ -319,3 +312,20 @@
 	)
 	crate_name = "materials market crate"
 	crate_type = /obj/structure/closet/crate/cargo
+
+/datum/supply_pack/imports/floortilecamo
+	name = "Floor-tile Camouflage Uniform"
+	desc = "Thank you for shopping from Camo-J's, our uniquely designed \
+		floor-tile 'NT SCUM' styled camouflage fatigues is the ultimate \
+		espionage uniform used by the very best. Providing the best \
+		flexibility, with our latest Camo-tech threads. Perfect for \
+		risky espionage hallway operations. Enjoy our product!"
+	hidden = TRUE
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 4,
+			/obj/item/clothing/mask/floortilebalaclava = 4,
+			/obj/item/clothing/gloves/combat/floortile = 4,
+			/obj/item/clothing/shoes/jackboots/floortile = 4
+	)
+	crate_name = "floortile camouflauge crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon

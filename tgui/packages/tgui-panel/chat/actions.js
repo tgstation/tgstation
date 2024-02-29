@@ -21,3 +21,5 @@ export const toggleAcceptedType = createAction('chat/toggleAcceptedType');
 export const removeChatPage = createAction('chat/removePage');
 export const changeScrollTracking = createAction('chat/changeScrollTracking');
 export const saveChatToDisk = createAction('chat/saveToDisk');
+export const moveChatPageLeft = createAction('chat/movePageLeft');
+export const moveChatPageRight = createAction('chat/movePageRight');
