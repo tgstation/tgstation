@@ -2,8 +2,12 @@
 	name = "base class curiosity"
 	desc = "Talk to a coder."
 	req_access = list(ACCESS_INACCESSIBLE)
-	//icon_state = "bitrunning"
-	//base_icon_state = "bitrunning"
+	icon_state = "bitrunning+l"
+	inhand_icon_state = "bitrunning"
+	base_icon_state = "bitrunning"
+	icon_locked = "bitrunning+l"
+	icon_closed = "bitrunning"
+	icon_broken = "bitrunning+b"
 
 /obj/item/storage/lockbox/bitrunning/encrypted
 	name = "encrypted curiosity"
