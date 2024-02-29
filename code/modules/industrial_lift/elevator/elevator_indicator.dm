@@ -19,10 +19,10 @@
 	light_color = LIGHT_COLOR_DARK_BLUE
 	luminosity = 1
 
-	maptext_x = 17
-	maptext_y = 21
-	maptext_width = 4
-	maptext_height = 8
+	maptext_x = 18
+	maptext_y = 20
+	maptext_width = 8
+	maptext_height = 16
 
 	/// What specific_lift_id do we link with?
 	var/linked_elevator_id
@@ -150,7 +150,7 @@
 		return
 
 	set_light(l_on = TRUE)
-	maptext = {"<div style="font:5pt 'Small Fonts';color:[LIGHT_COLOR_DARK_BLUE]">[current_lift_floor]</div>"}
+	maptext = "<div style='font-family: TinyUnicode; font-size: 12pt; color: [LIGHT_COLOR_DARK_BLUE]'>[current_lift_floor]</div>"
 
 /obj/machinery/lift_indicator/update_overlays()
 	. = ..()
