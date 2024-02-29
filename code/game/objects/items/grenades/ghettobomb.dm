@@ -1,8 +1,3 @@
-#define EFFECT_GIBS /obj/item/food/meat/slab
-#define EFFECT_PAPER /obj/item/paper
-#define EFFECT_SHRAPNEL /obj/item/shard
-#define EFFECT_SCIFIBULLSHIT /obj/item/stack/ore/bluespace_crystal/refined
-
 /obj/item/grenade/iedcasing
 	name = "improvised explosive"
 	desc = "An improvised explosive device."
@@ -27,10 +22,10 @@
 	var/obj/item/assembly/activator
 	/// List of effects, the key is a path to compare to and the value is incremented by one everytime theres one that is the same type in our contents
 	var/list/effects = list(
-		EFFECT_GIBS = 0,
-		EFFECT_PAPER = 0,
-		EFFECT_SHRAPNEL = 0,
-		EFFECT_SCIFIBULLSHIT = 0,
+		/obj/item/food/meat/slab = 0,
+		/obj/item/paper = 0,
+		/obj/item/shard = 0,
+		/obj/item/stack/ore/bluespace_crystal/refined = 0,
 	)
 	/// Cooldown to prevent spam
 	COOLDOWN_DECLARE(spam_cd)
@@ -138,26 +133,26 @@
 	COOLDOWN_START(src, spam_cd, 1 SECONDS)
 	
 /obj/item/grenade/iedcasing/detonate(mob/living/lanced_by) //Blowing that can up
-	if(effects[EFFECT_SHRAPNEL]) //this has to be before so it initializes us a pellet cloud or something
-		shrapnel_radius = effects[EFFECT_SHRAPNEL]
+	if(effects[/obj/item/shard]) //this has to be before so it initializes us a pellet cloud or something
+		shrapnel_radius = effects[/obj/item/shard]
 	. = ..()
 	if(!.)
 		return
 
 	update_mob()
-	for(var/i = 1 to effects[EFFECT_GIBS])
+	for(var/i = 1 to effects[/obj/item/food/meat/slab])
 		new /obj/effect/gibspawner/generic(loc)
-	if(effects[EFFECT_PAPER])
-		for(var/turf/open/floor in view(effects[EFFECT_PAPER], loc)) //this couldve been light impact range but fake pipebombs exploding into confetti is funny
+	if(effects[/obj/item/paper])
+		for(var/turf/open/floor in view(effects[/obj/item/paper], loc)) //this couldve been light impact range but fake pipebombs exploding into confetti is funny
 			new /obj/effect/decal/cleanable/confetti(floor)
 	var/heavy = floor(power * 0.2)
 	var/light = round(power * 0.7, 1)
 	var/flame = round(power + rand(-1, 1), 1)
 	explosion(loc, devastation_range = -1, heavy_impact_range = heavy, light_impact_range = light, flame_range = flame, explosion_cause = src)
 
-	if(effects[EFFECT_SCIFIBULLSHIT])
+	if(effects[/obj/item/stack/ore/bluespace_crystal/refined])
 		for(var/mob/living/victim in view(light, loc))
-			do_teleport(victim, get_turf(victim), min(12, effects[EFFECT_SCIFIBULLSHIT] * 3), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+			do_teleport(victim, get_turf(victim), min(12, effects[/obj/item/stack/ore/bluespace_crystal/refined] * 3), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 	qdel(src)
 
@@ -184,10 +179,10 @@
 	var/wires_are_in = FALSE
 	/// Typecache of items we are allowed to stuff into the pipebomb for effects, only add items with effects
 	var/static/list/allowed = typecacheof(list(
-		EFFECT_GIBS,
-		EFFECT_PAPER,
-		EFFECT_SHRAPNEL,
-		EFFECT_SCIFIBULLSHIT,
+		/obj/item/food/meat/slab,
+		/obj/item/paper,
+		/obj/item/shard,
+		/obj/item/stack/ore/bluespace_crystal/refined,
 	))
 	//this probably shouldve been a blacklist instead but god do i not wanna update this anytime a new assembly is added
 	/// A static list of types of assemblies that are allowed to be used to finish the bomb
@@ -204,6 +199,8 @@
 	var/static/list/fuel_power = list(
 		/datum/reagent/fuel = 0.5,
 		/datum/reagent/gunpowder = 1,
+		/datum/reagent/nitroglycerin = 2,
+		/datum/reagent/tatp = 2.5,
 	)
 	/// Explosion power to be transferred to the new pipebomb
 	var/power = 5
@@ -285,7 +282,3 @@
 			user.put_in_hands(pipebomb)
 
 #undef MAX_STUFFINGS
-#undef EFFECT_GIBS
-#undef EFFECT_PAPER
-#undef EFFECT_SHRAPNEL
-#undef EFFECT_SCIFIBULLSHIT
