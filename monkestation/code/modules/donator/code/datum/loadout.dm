@@ -240,6 +240,31 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/aotuniform
+	name = "Survey Corps Uniform"
+	item_path = /obj/item/clothing/under/costume/aotuniform
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/plantcrab
+	name = "Pet Delivery Beacon - Plant Crab"
+	item_path = /obj/item/choice_beacon/pet/donator/plantcrab
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Rickdude1231")
+
+/datum/loadout_item/effects/plantcrab
+	ckeywhitelist = list("Rickdude1231")
+	name = "Plant Crab Transformation"
+	item_path = /obj/item/effect_granter/donator/plant_crab
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/liefflos
+	name = "Lief Flos Plush"
+	item_path = /obj/item/toy/plush/liefflos
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //kon chieko
 /datum/loadout_item/head/bells
 	name = "Hair ribbons with bells"
@@ -268,7 +293,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/toys/puppycat
+/datum/loadout_item/toys/jackfrost
 	name = "Jack Frost Plush"
 	item_path = /obj/item/toy/plush/jackfrost
 	donator_only = TRUE
@@ -284,5 +309,13 @@
 /datum/loadout_item/effects/void_butterfly
 	ckeywhitelist = list("tonymcsp")
 	name = "Void Butterfly Transformation"
-	item_path = /obj/item/effect_granter/donator/void_butterfly/
+	item_path = /obj/item/effect_granter/donator/void_butterfly
+	requires_purchase = FALSE
+
+
+//Django
+/datum/loadout_item/suit/lambcloak
+	name = "Lamb's Cloak"
+	item_path = /obj/item/clothing/suit/lambcloak
+	donator_only = TRUE
 	requires_purchase = FALSE

@@ -230,3 +230,69 @@
   - rscadd: antag rep, for every roll you go without being antag your odds increase,
       resetting when you become and antag, passing a roll won't remove your rep
   - rscadd: replays are back
+2024-02-24:
+  Gboster-0:
+  - bugfix: Artefacts will no longer fail to activate their faults inside of peoples
+      backpacks. Beware!
+2024-02-25:
+  MrMelbert, mc-oofert:
+  - bugfix: Stairs are now resistant to being shoved by mobs with high move force.
+  - bugfix: fixed border-only firedoors being able to be walked through while closed
+2024-02-26:
+  DimWhat:
+  - rscadd: Arachnids have adopted the concept of gender.
+  - rscadd: Added ethereal gender and bodytype options.
+  - image: fixed some ethereal sprite inconsistencies.
+  - rscadd: Added dimorphism to florans.
+  - image: Fixes a few issues with bunnysuit and tailcoat sprites
+2024-02-27:
+  Absolucy:
+  - bugfix: The Monster Hunters midround event no longer has a blank name.
+  - rscadd: You can now light cigarettes by striking it across your local ethereal!
+      Don't worry, it doesn't harm them, although they may find it annoying.
+  AlbertNanotracen:
+  - rscadd: Voltaic Yellow Wine - New "base" drink, found in booze-o-mat. No special
+      effects besides acting as a weak ethereal food. Not very potent in terms of
+      alcohol.
+  - rscadd: Telepole - New mixed drink themed after thunderstorms, gives the same
+      shock-resist grey bull does. Made from 1 part Voltaic Wine, 1 Part Sake, and
+      2 parts Dark & Stormy. Moderately potent.
+  - rscadd: Pod Tesla - New mixed drink, themed after the old removed tesla engine
+      (the singulo gets a cocktail, it should too!) Grants a brave - bull phobia resist,
+      and a stronger grey bull shock resist allowing you to (temporarily) resist tesla
+      arcs from reactive armor and the SM's tesla coils. Gives a pleasant thought
+      to whoever drank it, because this thing is a pain to make. Made from 5 parts
+      admiralty, 5 parts telepole, and 3 parts brave bull. Highly potent.
+  - qol: Unsure if this counts as QOL or balance, but the fact sol dry is in 3 different
+      cocktails but the bartender has to buy 30u cans of it made me feel it deserved
+      being added to the soda dispenser.
+  - image: 'Added graphics for the above drinks, shown below, from left to right:
+      Pod tesla, Voltaic Yellow wine, Telepole, Voltaic Wine (bottle)
+
+      <img width="171" alt="image"
+
+      src="https://github.com/tgstation/tgstation/assets/69398298/901b2f64-1723-44b6-8f78-ef21bd477d96">'
+  - bugfix: Ice cups no longer instantly melt when vended
+  DimWhat:
+  - bugfix: Fixed the bunny wand not giving you cursed gloves
+  Melbert:
+  - bugfix: Fixes hallucination and encrypted announcements printing to the Newscaster.
+  lessthnthree:
+  - qol: Air alarms now display the source of triggered fire alarms/firedoors
+2024-02-28:
+  13spacemen, Kapu1178, KnigTheThrasher:
+  - refactor: Footprint sprites are now based on your shoes and legs, shoes have priority
+  - image: Monkey legs now produce pawprints instead of footprints
+  - rscadd: Footprint support for simians and lizards
+  Absolucy:
+  - bugfix: Vaulting over climbables now displays the proper name of the object, instead
+      of just `/datum/element/climbable`
+  AlbertNanotracen:
+  - bugfix: Dirty ice cups should work as intended
+  - rscadd: Added wellcheers, a contraband soda with various side effects.
+  - image: resprites all cans in the drinks icon file
+  - image: resprites the canholder sprite in storage.dmi
+2024-02-29:
+  lmenvs:
+  - rscadd: Adds Rickdude's Nukie tier redeems.  Thank you!
+  - rscadd: Adds Django's donator items, sprited by Dimwhat.  Thank you!

@@ -47,13 +47,10 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 					return
 
 	var/list/chosen_tier = GLOB.antag_token_config[tier]
-	to_chat(world, span_boldbig("tier=[tier] / [length(chosen_tier)]"))
 	var/antag_key = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", chosen_tier)
-	to_chat(world, span_boldbig("antag_key=[antag_key]"))
 	if(!antag_key || !chosen_tier[antag_key])
 		return
 	var/datum/antagonist/chosen_antagonist = chosen_tier[antag_key]
-	to_chat(world, span_boldbig("chosen_antagonist=[chosen_antagonist]"))
 
 	client_token_holder.queued_donor = using_donor
 	client_token_holder.in_queued_tier = tier

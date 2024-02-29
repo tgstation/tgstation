@@ -1,0 +1,5 @@
+author: "Absolucy, itsmeowdev"
+delete-after: True
+changes:
+  - rscadd: "Added TGUI color picker and replaced all use of BYOND color pickers with it (TGUI input preference is still respected)."
+  - qol: "The Generic UI theme will now affect the border color of number inputs and text areas the same as text inputs."

@@ -524,6 +524,14 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
 	drink_type = FRUIT
 
+/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	desc = "Electrically infused wine! Recharges etherials, safe for consumption."
+	custom_price = PAYCHECK_CREW
+	icon_state = "wine_voltaic_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/wine_voltaic = 100)
+	drink_type = FRUIT
+
 /obj/item/reagent_containers/cup/glass/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
@@ -784,7 +792,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment

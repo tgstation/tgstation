@@ -2,7 +2,7 @@
 	name = "\improper Floran"
 	plural_form = "Florans"
 	id = SPECIES_FLORAN
-	sexes = FALSE
+	sexes = TRUE
 	species_traits = list(
 		MUTCOLORS,
 		MUTCOLORS_SECONDARY,

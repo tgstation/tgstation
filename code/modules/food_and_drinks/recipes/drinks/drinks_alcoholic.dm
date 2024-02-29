@@ -168,6 +168,10 @@
 	results = list(/datum/reagent/consumable/ethanol/whiskeysoda = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/sodawater = 1)
 
+/datum/chemical_reaction/drink/wellcheers
+	results = list(/datum/reagent/consumable/wellcheers = 5)
+	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/watermelonjuice = 1, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/ethanol/absinthe = 1)
+
 /datum/chemical_reaction/drink/black_russian
 	results = list(/datum/reagent/consumable/ethanol/black_russian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 3, /datum/reagent/consumable/ethanol/kahlua = 2)
@@ -570,3 +574,15 @@
 /datum/chemical_reaction/drink/gin_garden
 	results = list(/datum/reagent/consumable/ethanol/gin_garden = 15)
 	required_reagents = list(/datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/ethanol/gin = 3, /datum/reagent/consumable/cucumberjuice = 3, /datum/reagent/consumable/sol_dry = 5, /datum/reagent/consumable/ice = 2)
+
+/datum/chemical_reaction/drink/telepole
+	results = list(/datum/reagent/consumable/ethanol/telepole = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/wine_voltaic = 1, /datum/reagent/consumable/ethanol/dark_and_stormy = 2, /datum/reagent/consumable/ethanol/sake = 1)
+	mix_message = "You swear you saw a spark fly from the glass..."
+
+/datum/chemical_reaction/drink/pod_tesla
+	results = list(/datum/reagent/consumable/ethanol/pod_tesla = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/telepole = 5, /datum/reagent/consumable/ethanol/brave_bull = 3, /datum/reagent/consumable/ethanol/admiralty = 5)
+	mix_message = "Arcs of lightning fly from the mixture."
+	mix_sound = 'sound/weapons/zapbang.ogg'
+

@@ -44,7 +44,7 @@
 	icon = I
 	parent = P
 	icon_state = credited
-	maptext = MAPTEXT(credited)
+	maptext = MAPTEXT_PIXELLARI(credited)
 	maptext_x = world.icon_size + 8
 	maptext_y = (world.icon_size / 2) - 4
 	maptext_width = world.icon_size * 3

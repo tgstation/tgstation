@@ -136,7 +136,7 @@
 /mob/living/basic/guardian/proc/guardian_recolour()
 	if (isnull(client))
 		return
-	var/chosen_guardian_colour = input(src, "What would you like your colour to be?", "Choose Your Colour", "#ffffff") as color|null
+	var/chosen_guardian_colour = tgui_color_picker(src, "What would you like your colour to be?", "Choose Your Colour", "#ffffff")
 	if (isnull(chosen_guardian_colour)) //redo proc until we get a color
 		to_chat(src, span_warning("Invalid colour, please try again."))
 		return guardian_recolour()

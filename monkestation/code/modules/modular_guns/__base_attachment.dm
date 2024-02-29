@@ -49,7 +49,7 @@
 /obj/item/attachment/AltClick(mob/user)
 	. = ..()
 	if(attachment_flags & ATTACHMENT_COLORABLE)
-		var/new_choice = input(user,"","Choose Color",attachment_color) as color
+		var/new_choice = tgui_color_picker(user,"","Choose Color",attachment_color)
 		if(new_choice == null)
 			return
 		attachment_color = new_choice

@@ -106,7 +106,7 @@
 	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 	var/index = text2num(choice)
 	if(is_right_clicking)
-		var/chosen_color = input(user, "Pick new color", "[parent]", colors[index]) as color|null
+		var/chosen_color = tgui_color_picker(user, "Pick new color", "[parent]", colors[index])
 		if(chosen_color && !QDELETED(src) && !IS_DEAD_OR_INCAP(user) && user.is_holding(parent))
 			colors[index] = chosen_color
 		update_radial_list()

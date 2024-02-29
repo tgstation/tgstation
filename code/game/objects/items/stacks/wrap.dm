@@ -37,8 +37,8 @@
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
 
 /obj/item/stack/wrapping_paper/AltClick(mob/user, modifiers)
-	var/new_base = input(user, "", "Select a base color", color) as color
-	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
+	var/new_base = tgui_color_picker(user, "", "Select a base color", color)
+	var/new_ribbon = tgui_color_picker(user, "", "Select a ribbon color", color)
 	if(!user.can_perform_action(src))
 		return
 	set_greyscale(colors = list(new_base, new_ribbon))

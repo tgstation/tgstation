@@ -3,7 +3,7 @@
 	plural_form = "Arachnids"
 	id = SPECIES_ARACHNIDS
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
-	sexes = FALSE
+	visual_gender = FALSE
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,

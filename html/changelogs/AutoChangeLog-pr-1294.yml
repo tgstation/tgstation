@@ -1,0 +1,12 @@
+author: "Absolucy, LT3, Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored maptext (those floating words)"
+  - bugfix: "Fixed special chat bubbles for yelling, clown, redtext, greentext"
+  - bugfix: "Fixed alignment of status display text"
+  - code_imp: "Status displays now synchronize their message lines when scrolling"
+  - image: "More maptext and font tweaks"
+  - spellcheck: "Context tooltips too small, too big... just right?"
+  - bugfix: "Maptext should now properly show superscript characters when performing actions"
+  - bugfix: "Fixed text effects for runechat messages (the stuff enclosed in +, | and _ characters)."
+  - spellcheck: "Improved the tip for say/text effects."

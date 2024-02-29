@@ -763,7 +763,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
-		color = input(user,"","Choose Color",color) as color
+		color = tgui_color_picker(user, "", "Choose Color", color)
 	else
 		return ..()
 

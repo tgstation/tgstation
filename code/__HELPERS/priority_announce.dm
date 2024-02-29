@@ -37,7 +37,7 @@
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
  */
-/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players, encode_title = TRUE, encode_text = TRUE, color_override)
+/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override)
 	if(!text)
 		return
 
@@ -92,7 +92,7 @@
 
 	dispatch_announcement_to_players(finalized_announcement, players, sound)
 
-	if(isnull(sender_override))
+	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
 			GLOB.news_network.submit_article(title + "<br><br>" + text, "[command_name()]", "Station Announcements", null)
 		else
@@ -192,10 +192,7 @@
 	return jointext(returnable_strings, "")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
-/proc/dispatch_announcement_to_players(announcement, list/players, sound_override = null, should_play_sound = TRUE)
-	if(!players)
-		players = GLOB.player_list
-
+/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
 
 	for(var/mob/target in players)

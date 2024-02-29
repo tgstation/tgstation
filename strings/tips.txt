@@ -1,4 +1,4 @@
-@You can use the |, + and _ characters to emphasize parts of what you say in-game (e.g. say"my _ass_ |is| +heavy+." will be outputted as "my <u>ass</u> <i>is</i> <b>heavy</b>."). You can also escape these emphasizers by appending backslashes before them (e.g. say"1\+2\+3" will come out as "1+2+3" and not "1\<b>2\</b>3").
+@You can <i>italicize</i>, <b>embolden</b> or <u>underline</u> portions of your messages by enclosing them with |, + or _ respectively. You can also avoid this by adding backslashes (they won't show in the message) before these characters.
 ♪ Hey, have you ever tried appending the % character before your messages when speaking in-game? ♫
 A Scientist will pay top dollar for your frogs!
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
