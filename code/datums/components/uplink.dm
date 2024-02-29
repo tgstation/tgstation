@@ -375,7 +375,7 @@
 
 // PDA signal responses
 
-/datum/component/uplink/proc/new_ringtone(datum/source, atom/source, new_ring_text)
+/datum/component/uplink/proc/new_ringtone(atom/source, new_ring_text)
 	SIGNAL_HANDLER
 
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))

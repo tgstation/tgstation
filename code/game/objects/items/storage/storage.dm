@@ -55,8 +55,7 @@
 	max_total_storage,
 	list/canhold,
 	list/canthold,
-	storage_type = /datum/storage,
-	storage_type,
+	storage_type
 )
 	// If no type was passed in, default to what we already have
 	storage_type ||= src.storage_type
