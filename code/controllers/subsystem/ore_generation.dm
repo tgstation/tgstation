@@ -39,29 +39,28 @@ SUBSYSTEM_DEF(ore_generation)
 				continue
 		if(stallbreaker >= length(possible_vents))
 			break //We've done all we can here. break outer loop
-				continue
 
 	/// Handles roundstart logging
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
 		"Ore Generation spawned the following ores based on vent proximity",
 		list(
-			"1" = GLOB.post_ore_random["1"],
-			"2" = GLOB.post_ore_random["2"],
-			"3" = GLOB.post_ore_random["3"],
-			"4" = GLOB.post_ore_random["4"],
-			"5" = GLOB.post_ore_random["5"],
+			"[ORE_WALL_FAR]" = GLOB.post_ore_random["[ORE_WALL_FAR]"],
+			"[ORE_WALL_LOW]" = GLOB.post_ore_random["[ORE_WALL_LOW]"],
+			"[ORE_WALL_MEDIUM]" = GLOB.post_ore_random["[ORE_WALL_MEDIUM]"],
+			"[ORE_WALL_HIGH]" = GLOB.post_ore_random["[ORE_WALL_HIGH]"],
+			"[ORE_WALL_VERY_HIGH]" = GLOB.post_ore_random["[ORE_WALL_VERY_HIGH]"],
 		),
 	)
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
 		"Ore Generation spawned the following ores randomly",
 		list(
-			"1" = GLOB.post_ore_manual["1"],
-			"2" = GLOB.post_ore_manual["2"],
-			"3" = GLOB.post_ore_manual["3"],
-			"4" = GLOB.post_ore_manual["4"],
-			"5" = GLOB.post_ore_manual["5"],
+			"[ORE_WALL_FAR]" = GLOB.post_ore_manual["[ORE_WALL_FAR]"],
+			"[ORE_WALL_LOW]" = GLOB.post_ore_manual["[ORE_WALL_LOW]"],
+			"[ORE_WALL_MEDIUM]" = GLOB.post_ore_manual["[ORE_WALL_MEDIUM]"],
+			"[ORE_WALL_HIGH]" = GLOB.post_ore_manual["[ORE_WALL_HIGH]"],
+			"[ORE_WALL_VERY_HIGH]" = GLOB.post_ore_manual["[ORE_WALL_VERY_HIGH]"],
 		),
 	)
 	logger.Log(

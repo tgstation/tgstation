@@ -141,15 +141,15 @@
 		return rand(1,5)
 
 	if(distance < VENT_PROX_VERY_HIGH)
-		return 5
+		return ORE_WALL_VERY_HIGH
 	if(distance < VENT_PROX_HIGH)
-		return 4
+		return ORE_WALL_HIGH
 	if(distance < VENT_PROX_MEDIUM)
-		return 3
+		return ORE_WALL_MEDIUM
 	if(distance < VENT_PROX_LOW)
-		return 2
+		return ORE_WALL_LOW
 	if(distance < VENT_PROX_FAR)
-		return 1
+		return ORE_WALL_FAR
 	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

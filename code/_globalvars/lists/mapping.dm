@@ -154,19 +154,19 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(
 
 /// List of how many minerals spawned based on proximity to an ore vent.
 GLOBAL_LIST_INIT(post_ore_random, list(
-	"1" = 0,
-	"2" = 0,
-	"3" = 0,
-	"4" = 0,
-	"5" = 0,
+	"[ORE_WALL_FAR]" = 0,
+	"[ORE_WALL_LOW]" = 0,
+	"[ORE_WALL_MEDIUM]" = 0,
+	"[ORE_WALL_HIGH]" = 0,
+	"[ORE_WALL_VERY_HIGH]" = 0,
 ))
 /// List of how many minerals spawned randomly off of mining Z-levels, and at what quantity.
 GLOBAL_LIST_INIT(post_ore_manual, list(
-	"1" = 0,
-	"2" = 0,
-	"3" = 0,
-	"4" = 0,
-	"5" = 0,
+	"[ORE_WALL_FAR]" = 0,
+	"[ORE_WALL_LOW]" = 0,
+	"[ORE_WALL_MEDIUM]" = 0,
+	"[ORE_WALL_HIGH]" = 0,
+	"[ORE_WALL_VERY_HIGH]" = 0,
 ))
 /// List of how many ore vents spawned, and of what size.
 GLOBAL_LIST_INIT(ore_vent_sizes, list(
