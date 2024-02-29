@@ -203,7 +203,7 @@
 			new /obj/item/reagent_containers/cup/beaker(src)
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
-			new /obj/item/clothing/glasses/sunglasses(src)
+			new /obj/item/clothing/glasses/sunglasses/big(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 		else
 			//empty grave

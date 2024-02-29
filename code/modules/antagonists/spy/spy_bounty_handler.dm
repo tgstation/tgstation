@@ -16,6 +16,8 @@
 	/// List of all items stolen in the last pool of bounties.
 	/// Same as above - strings that represent stolen items.
 	var/list/claimed_bounties_from_last_pool = list()
+	/// Override for the number of attempts to make a bounty.
+	var/num_attempts_override = 0
 
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.
 	/// Modified by the number of times we have refreshed bounties.
@@ -96,7 +98,7 @@
 
 		var/list/pool = bounty_types[difficulty]
 		var/amount_to_give = bounties_to_give[difficulty]
-		var/failed_attempts = clamp(amount_to_give * 4, 10, 25) // more potential bounties = more attempts to make one
+		var/failed_attempts = num_attempts_override || clamp(amount_to_give * 4, 10, 25) // more potential bounties = more attempts to make one
 		while(amount_to_give > 0 && failed_attempts > 0)
 			var/picked_bounty = pick_weight(pool)
 			var/datum/spy_bounty/bounty = new picked_bounty(src)

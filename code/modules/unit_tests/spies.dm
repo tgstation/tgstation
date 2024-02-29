@@ -11,6 +11,7 @@
 	TEST_ASSERT_NOTNULL(uplink, "Spy failed to be given an uplink!")
 
 	var/datum/spy_bounty_handler/handler = uplink.handler
+	handler.num_attempts_override = 100
 
 	for(var/difficulty in handler.possible_uplink_items)
 		var/list/loot_pool = handler.possible_uplink_items[difficulty]
