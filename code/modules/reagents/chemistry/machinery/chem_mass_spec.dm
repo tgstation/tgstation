@@ -265,7 +265,7 @@
 			continue
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 			continue
-		if((initial(reagent.purity) - reagent.purity) <= 0)
+		if(initial(reagent.purity) - reagent.purity <= 0)
 			continue
 		delay_time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
 	delay_time *= cms_coefficient
