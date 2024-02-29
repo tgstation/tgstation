@@ -1919,7 +1919,7 @@
 "pz" = (
 /obj/machinery/door/poddoor/shutters/window/indestructible{
 	dir = 8;
-	id_tag = "museum_cafeteria"
+	id = "museum_cafeteria"
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
