@@ -64,10 +64,15 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/datum/pathfind/jps/path = new()
 	path.setup(caller, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
-	if(path.start())
+	if(!path.start())
+		return FALSE
+	if(!path.search_step()) //run a step
+		path.early_exit()
+		return FALSE
+	if(TICK_CHECK) //queue additional processing in the subsystem if we reached the limit before exiting
 		active_pathing += path
 		return TRUE
-	return FALSE
+	path.finished() 
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
