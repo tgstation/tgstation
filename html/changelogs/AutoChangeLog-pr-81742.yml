@@ -1,0 +1,6 @@
+author: "bigfatbananacyclops"
+delete-after: True
+changes:
+  - rscadd: "box with a set of floortile camo, which can be ordered in black market uplink"
+  - rscadd: "also adds a backpack to camouflage"
+  - bugfix: "i had the crate under emagged console, should be fixed now."
