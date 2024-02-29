@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Being in a Swat Suit appropriately protects you from collisions with a body, rather than the body thrown at you having these protections protecting YOU, the victim of the collision."
