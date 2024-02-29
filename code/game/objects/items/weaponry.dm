@@ -603,20 +603,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. += span_notice("You can activate the bust in-hand to swear or forswear a Hippocratic Oath! This has no effects except pacifism or bragging rights. Does not remove other sources of pacifism. Do not eat.")
 
 /obj/item/statuebust/hippocratic/equipped(mob/living/carbon/human/user, slot)
-	..()
+	. = ..()
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
-	var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	our_hud.show_to(user)
+	if(!HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
+		var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		our_hud.show_to(user)
 	ADD_TRAIT(user, TRAIT_MEDICAL_HUD, type)
 
 /obj/item/statuebust/hippocratic/dropped(mob/living/carbon/human/user)
-	..()
-	if(HAS_TRAIT_NOT_FROM(user, TRAIT_MEDICAL_HUD, type))
-		return
-	var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	our_hud.hide_from(user)
+	. = ..()
 	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, type)
+	if(!HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
+		var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		our_hud.hide_from(user)
 
 /obj/item/statuebust/hippocratic/attack_self(mob/user)
 	if(!iscarbon(user))
