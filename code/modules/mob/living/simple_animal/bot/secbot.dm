@@ -10,7 +10,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
-	can_buckle = FALSE
+	can_buckle_to = FALSE
 
 	maints_access_required = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
