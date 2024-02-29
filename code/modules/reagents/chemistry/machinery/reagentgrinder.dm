@@ -220,8 +220,6 @@
 			continue
 
 		holdingitems[to_dump] = TRUE
-		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
-		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
 	to_chat(user, span_notice("You dump [storage.parent] into [src]."))
 	return STORAGE_DUMP_HANDLED
