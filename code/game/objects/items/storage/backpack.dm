@@ -890,5 +890,3 @@
 	desc = "The latest in storage 'technology' from Honk Co. Hey, how does this fit so much with such a small profile anyway? The wearer will definitely never tell you."
 	icon_state = "messenger_clown"
 	inhand_icon_state = "messenger_clown"
-
-
