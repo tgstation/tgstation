@@ -30,14 +30,17 @@
 
 /datum/unit_test/leash/proc/on_leash_force_teleport()
 	SIGNAL_HANDLER
+	stack_trace("on_leash_force_teleport")
 	forcibly_teleported = TRUE
 
 /datum/unit_test/leash/proc/on_leash_path_complete()
 	SIGNAL_HANDLER
+	stack_trace("on_leash_path_complete")
 	leash_wait?.completed()
 
 /datum/unit_test/leash/proc/on_leash_path_started()
 	SIGNAL_HANDLER
+	stack_trace("on_leash_path_started")
 	leash_wait?.started()
 
 /datum/unit_test/leash/proc/move_away(atom/movable/mover, distance)
