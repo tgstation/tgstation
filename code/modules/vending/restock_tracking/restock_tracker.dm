@@ -31,7 +31,7 @@
 			"location" = get_area_name(vendor),
 			"credits" = vendor.credits_contained,
 			"percentage" = (stock / max_stock) * 100,
-			"id" = id_increment
+			"id" = id_increment,
 		))
 		id_increment++
 	data["vending_list"] = vending_list

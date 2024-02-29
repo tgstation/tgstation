@@ -629,9 +629,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  */
 /obj/machinery/vending/proc/total_loaded_stock()
 	var/total = 0
-	for(var/datum/data/vending_product/record as anything in product_records)
-		total += record.amount
-	for(var/datum/data/vending_product/record as anything in coin_records)
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
 		total += record.amount
 	return total
 
@@ -640,9 +638,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  */
 /obj/machinery/vending/proc/total_max_stock()
 	var/total_max = 0
-	for(var/datum/data/vending_product/record as anything in product_records)
-		total_max += record.max_amount
-	for(var/datum/data/vending_product/record as anything in coin_records)
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
 		total_max += record.max_amount
 	return total_max
 
@@ -693,7 +689,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					to_chat(user, span_notice("You loaded [transferred] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
 					var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 					cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
-					var/obj/item/holochip/payday = new /obj/item/holochip(src, credits_contained)
+					var/obj/item/holochip/payday = new(src, credits_contained)
 					try_put_in_hand(payday, user)
 				else
 					to_chat(user, span_warning("There's nothing to restock!"))
@@ -1433,7 +1429,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
-	if(price_to_use && attempt_charge(src, alive_user, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
+	if(price_to_use && (attempt_charge(src, alive_user, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		vend_ready = TRUE
@@ -1587,13 +1583,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 /obj/machinery/vending/proc/deploy_credits()
 	if(credits_contained <= 0)
 		return
-	var/obj/item/holochip/holochip
-	if(credits_contained > CREDITS_DUMP_THRESHOLD)
-		holochip = new /obj/item/holochip(loc, CREDITS_DUMP_THRESHOLD)
-		credits_contained -= CREDITS_DUMP_THRESHOLD
-	else if(credits_contained > 0)
-		holochip = new /obj/item/holochip(loc, round(credits_contained))
-		credits_contained = 0
+	var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
+	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
+	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
 /obj/machinery/vending/custom
