@@ -5,11 +5,12 @@
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxHealth = 25
+	health = 75
+	maxHealth = 75
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
+	can_buckle = FALSE
 
 	maints_access_required = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
@@ -66,10 +67,11 @@
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
 
+
 /mob/living/simple_animal/bot/secbot/beepsky/officer
 	name = "Officer Beepsky"
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too."
-	health = 45
+	health = 75
 
 /mob/living/simple_animal/bot/secbot/beepsky/ofitser
 	name = "Prison Ofitser"
@@ -79,7 +81,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
-	health = 45
+	health = 75
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
