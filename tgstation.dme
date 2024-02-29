@@ -5375,6 +5375,7 @@
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\tgui_input\alert.dm"
 #include "code\modules\tgui_input\checkboxes.dm"
+#include "code\modules\tgui_input\color.dm"
 #include "code\modules\tgui_input\list.dm"
 #include "code\modules\tgui_input\number.dm"
 #include "code\modules\tgui_input\text.dm"

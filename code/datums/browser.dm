@@ -397,7 +397,7 @@
 			if ("number")
 				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]") as num
 			if ("color")
-				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
+				settings["mainsettings"][setting]["value"] = tgui_color_picker(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])
 			if ("boolean")
 				settings["mainsettings"][setting]["value"] = (settings["mainsettings"][setting]["value"] == "Yes") ? "No" : "Yes"
 			if ("ckey")

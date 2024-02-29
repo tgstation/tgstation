@@ -143,7 +143,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	var/newColor = input(src, "Please select the new player OOC color.", "OOC color") as color|null
+	var/newColor = tgui_color_picker(src, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
 		return
 	if(!check_rights(R_FUN))
