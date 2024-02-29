@@ -883,3 +883,14 @@
 /obj/item/melee/baton/add_stealing_item_objective()
 	if(type == /obj/item/melee/baton)
 		return add_item_to_steal(src, /obj/item/melee/baton)
+
+/datum/objective_item/steal/spy/captain_sabre_sheathe
+	name = "the captain's sabre sheathe"
+	targetitem = /obj/item/storage/belt/sabre
+	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
+	difficulty = 3
+	steal_hint = "The sheathe for the captain's sabre, found in their closet or strapped to their waist at all times."
+
+/obj/item/storage/belt/sabre/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/storage/belt/sabre)

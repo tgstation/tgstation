@@ -720,7 +720,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	required_candidates = 3 // lives or dies by there being a few spies
 	weight = 5
 	cost = 8
-	scaling_cost = 0 // since we have a pretty low denominator, scaling up would create way too many spies
+	scaling_cost = 101 // see below
 	minimum_players = 8
 	antag_cap = list("denominator" = 8, "offset" = 1) // should have quite a few spies to work against each other
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
@@ -735,3 +735,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		picked_player.mind.restricted_roles = restricted_roles
 		GLOB.pre_setup_antags += picked_player.mind
 	return TRUE
+
+/datum/dynamic_ruleset/roundstart/spies/scale_up(population, max_scale)
+	// Disabled (at least until dynamic can handle scaling this better)
+	// Because spies have a very low demoninator, this can easily spawn like 30 of them
+	return 0
