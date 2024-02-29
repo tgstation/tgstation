@@ -161,8 +161,7 @@
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	log_spy("[key_name(spy)] completed the bounty [bounty.name] of difficulty [bounty.difficulty] for \a [reward].")
-	// SSblackbox.record_feedback("nested tally", "spy_bounty", 1, list("[stealing.type]", "[bounty.type]", "[bounty.difficulty]", "[bounty.reward_item.type]"))
-	// uncomment before merge, laugh if this is here when you read it
+	SSblackbox.record_feedback("nested tally", "spy_bounty", 1, list("[stealing.type]", "[bounty.type]", "[bounty.difficulty]", "[bounty.reward_item.type]"))
 
 	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()
 	if(!isnull(spy_datum))
