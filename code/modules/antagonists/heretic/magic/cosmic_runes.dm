@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/cosmic_rune
 	name = "Cosmic Rune"
-	desc = "Creates a cosmic rune at your position, only two can exist at a time. Invoking one rune transports you to the other."
+	desc = "Creates a cosmic rune at your position, only two can exist at a time. Invoking one rune transports you to the other. \
+		Anyone with a star mark gets transported along with you."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

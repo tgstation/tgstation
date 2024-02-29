@@ -42,7 +42,8 @@
 
 /datum/heretic_knowledge/cosmic_grasp
 	name = "Grasp of Cosmos"
-	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand."
+	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand. \
+		People with a star mark can not pass cosmic fields."
 	gain_text = "Some stars dimmed, others' magnitude increased. \
 		With newfound strength I could channel the nebula's power into myself."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
