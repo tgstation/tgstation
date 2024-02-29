@@ -186,6 +186,11 @@
 	using.screen_loc = ui_ai_language_menu
 	static_inventory += using
 
+// Z-level floor change
+	using = new /atom/movable/screen/floor_menu(null, src)
+	using.screen_loc = ui_ai_floor_menu
+	static_inventory += using
+
 //AI core
 	using = new /atom/movable/screen/ai/aicore(null, src)
 	using.screen_loc = ui_ai_core
