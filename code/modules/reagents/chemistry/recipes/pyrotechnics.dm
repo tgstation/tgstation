@@ -194,7 +194,7 @@
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
 		for(var/i in 1 to bee_amount)
-			var/mob/living/basic/bee/short/new_bee = new(location)
+			var/mob/living/basic/bee/timed/new_bee = new(location)
 			if(LAZYLEN(beeagents))
 				new_bee.assign_reagent(pick(beeagents))
 
@@ -419,7 +419,7 @@
 	determin_ph_range = 6
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 1
-	thermic_constant = -7.5
+	thermic_constant = -1.5
 	H_ion_release = 0
 	rate_up_lim = 10
 	purity_min = 0.2

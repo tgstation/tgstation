@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an issue where being gibbed while under the HARS mutation can sometimes lead to the brain being deleted when it's not supposed to be"
