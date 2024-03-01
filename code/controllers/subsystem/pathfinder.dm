@@ -72,7 +72,9 @@ SUBSYSTEM_DEF(pathfinder)
 	if(TICK_CHECK) //queue additional processing in the subsystem if we reached the limit before exiting
 		active_pathing += path
 		return TRUE
-	path.finished() 
+	
+	path.finished()
+	return TRUE
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
