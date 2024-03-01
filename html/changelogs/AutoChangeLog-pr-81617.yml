@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - code_imp: "Tram throwing now breaks grilles consistently"
-  - code_imp: "Tram malfunction lethality/throw chance are now a multiplier instead of flat value"
-  - code_imp: "Tram throw chance can be adjusted"
-  - code_imp: "Unlucky trait is now used in tram throw calculation"

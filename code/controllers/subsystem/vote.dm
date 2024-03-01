@@ -302,6 +302,7 @@ SUBSYSTEM_DEF(vote)
 				"question" = current_vote.override_question,
 				"timeRemaining" = current_vote.time_remaining,
 				"countMethod" = current_vote.count_method,
+				"displayStatistics" = current_vote.display_statistics,
 				"choices" = choices,
 				"vote" = vote_data,
 			)
