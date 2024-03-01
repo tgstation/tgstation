@@ -32,6 +32,9 @@
 	fire = 100
 	acid = 70
 
+/obj/machinery/door/poddoor/get_save_vars()
+	return ..() + NAMEOF(src, id)
+
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)

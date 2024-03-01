@@ -86,7 +86,7 @@
 	)
 
 /obj/get_save_vars()
-	return ..() + NAMEOF(src, req_access)
+	return ..() + list(NAMEOF(src, req_access), NAMEOF(src, id_tag))
 
 /obj/item/stack/get_save_vars()
 	return ..() + NAMEOF(src, amount)
