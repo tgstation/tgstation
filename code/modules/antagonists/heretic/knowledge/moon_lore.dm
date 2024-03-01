@@ -46,7 +46,7 @@
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
 	desc = "Your Mansus Grasp will cause your victims to hallucinate everyone as lunar mass, \
-		and hides your identity for a short dur	ation."
+		and hides your identity for a short duration."
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
 	cost = 1
