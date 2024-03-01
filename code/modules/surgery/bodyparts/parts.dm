@@ -76,9 +76,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	var/butt_sprite = human_owner.physique == FEMALE ? BUTT_SPRITE_HUMAN_FEMALE : BUTT_SPRITE_HUMAN_MALE
 	var/obj/item/organ/external/tail/tail = human_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-	if(tail)
-		butt_sprite = BUTT_SPRITE_CAT
-	return butt_sprite
+	return tail?.get_butt_sprite() || butt_sprite
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
