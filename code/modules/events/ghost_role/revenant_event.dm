@@ -31,7 +31,7 @@
 			return WAITING_FOR_SOMETHING
 
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, alert_pic = /mob/living/basic/revenant, amount_to_pick = 1)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	var/list/spawn_locs = list()
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies

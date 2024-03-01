@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(polling)
 	start_signed_up = FALSE,
 	amount_to_pick = 0,
 	chat_text_border_icon,
-	announce_chosen = TRUE
+	announce_chosen = TRUE,
 )
 	if(group.len == 0)
 		return

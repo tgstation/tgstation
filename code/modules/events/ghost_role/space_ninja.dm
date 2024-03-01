@@ -20,7 +20,7 @@
 
 	//selecting a candidate player
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_NINJA, role = ROLE_NINJA, alert_pic = /obj/item/energy_katana, jump_target = spawn_location, role_name_text = "space ninja", amount_to_pick = 1)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/ninja = create_space_ninja(spawn_location)

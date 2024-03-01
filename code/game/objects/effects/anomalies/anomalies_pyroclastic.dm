@@ -40,7 +40,7 @@
 	repro_action.Grant(pyro)
 
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, checked_target = pyro, ignore_category = POLL_IGNORE_PYROSLIME, alert_pic = pyro, role_name_text = "pyroclastic anomaly slime")
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return
 	pyro.key = chosen_one.key
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME

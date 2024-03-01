@@ -20,7 +20,7 @@
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SPACE_DRAGON, role = ROLE_SPACE_DRAGON, alert_pic = /mob/living/basic/space_dragon, amount_to_pick = 1)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	var/spawn_location = find_space_spawn()
 	if(isnull(spawn_location))

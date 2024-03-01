@@ -22,7 +22,7 @@
 
 /datum/round_event/ghost_role/changeling/spawn_role()
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_CHANGELING, role = ROLE_CHANGELING_MIDROUND, alert_pic = /obj/item/melee/arm_blade, role_name_text = role_name, amount_to_pick = 1)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	spawned_mobs += generate_changeling_meteor(chosen_one)
 	if(spawned_mobs)

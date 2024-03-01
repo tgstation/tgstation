@@ -34,7 +34,7 @@
 	blob_icon.Blend(icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
 	var/image/blob_image = image(blob_icon)
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_BLOB, role = ROLE_BLOB, alert_pic = blob_image, role_name_text = role_name, amount_to_pick = 1, chat_text_border_icon = blob_image)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = chosen_one
 	var/mob/camera/blob/BC = new_blob.become_overmind()

@@ -51,14 +51,14 @@
 	attempting_awakening = TRUE
 	thing.balloon_alert(user, "channeling...")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-	question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
-	check_jobban = ROLE_PAI,
-	poll_time = 20 SECONDS,
-	checked_target = thing,
-	ignore_category = POLL_IGNORE_POSSESSED_BLADE,
-	alert_pic = thing,
-	role_name_text = "possessed blade",
-	chat_text_border_icon = thing
+		question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = thing,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = thing,
+		role_name_text = "possessed blade",
+		chat_text_border_icon = thing
 	)
 	affix_spirit(user, chosen_one)
 

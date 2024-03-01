@@ -87,17 +87,10 @@
 /obj/item/ectoplasm/revenant/proc/get_new_user()
 	message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to be [span_notice(revenant.name)] (reforming)?", check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, checked_target = revenant, alert_pic = revenant, role_name_text = "reforming revenant", chat_text_border_icon = revenant)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		message_admins("No candidates were found for the new revenant.")
 		inert = TRUE
 		visible_message(span_revenwarning("[src] settles down and seems lifeless."))
 		qdel(revenant)
 		return null
-	if(isnull(chosen_one))
-		qdel(revenant)
-		message_admins("No candidate was found for the new revenant. Oh well!")
-		inert = TRUE
-		visible_message(span_revenwarning("[src] settles down and seems lifeless."))
-		return null
-
 	return chosen_one

@@ -51,7 +51,7 @@
 	polling = FALSE
 	if(!magnification)
 		return
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))

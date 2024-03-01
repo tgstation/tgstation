@@ -90,7 +90,7 @@
 		announce_chosen = poll_announce_chosen
 	)
 	awaiting_ghosts = FALSE
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return
 	assume_direct_control(chosen_one)
 

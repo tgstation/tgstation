@@ -14,7 +14,7 @@
 			continue
 		var/mob/living/carbon/human/W = M.current
 		var/mob/chosen_one = SSpolling.poll_ghost_candidates("Would you like to be an [span_notice("imposter wizard")]?", check_jobban = ROLE_WIZARD, alert_pic = /obj/item/clothing/head/wizard, jump_target = W, role_name_text = "imposter wizard", amount_to_pick = 1)
-		if(!chosen_one)
+		if(isnull(chosen_one))
 			return //Sad Trombone
 		new /obj/effect/particle_effect/fluid/smoke(W.loc)
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)

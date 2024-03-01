@@ -14,7 +14,7 @@
 
 /datum/round_event/ghost_role/sentient_disease/spawn_role()
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, alert_pic = /obj/structure/sign/warning/biohazard, role_name_text = role_name, amount_to_pick = 1)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	virus.key = chosen_one.key

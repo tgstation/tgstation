@@ -57,7 +57,7 @@
 	polling = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
 	polling = FALSE
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
 		return
 	if(QDELETED(src) || used)
@@ -338,7 +338,7 @@
 		role_name_text = role_to_play,
 		amount_to_pick = 1
 	)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		to_chat(user, span_warning(fail_text))
 		return
 	if(QDELETED(src) || !check_usability(user))

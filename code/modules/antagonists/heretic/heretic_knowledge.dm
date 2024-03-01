@@ -538,7 +538,7 @@
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_HERETIC, poll_time = 10 SECONDS, checked_target = summoned, ignore_category = poll_ignore_define, alert_pic = summoned, role_name_text = summoned.name)
-	if(!chosen_one)
+	if(isnull(chosen_one))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
 		QDEL_IN(summoned, 0.6 SECONDS)
