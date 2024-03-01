@@ -111,9 +111,9 @@
 
 /datum/heretic_knowledge/moon_amulette
 	name = "Moonlight Amulette"
-	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie \
-			if the item is used on someone with low sanity they go berserk attacking everyone \
-			, if their sanity isnt low enough it decreases their mood."
+	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulette. \
+			If the item is used on someone with low sanity they go berserk attacking everyone, \
+			if their sanity isn't low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
