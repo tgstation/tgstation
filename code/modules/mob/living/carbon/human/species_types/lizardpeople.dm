@@ -34,8 +34,6 @@
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
-	ass_image = 'icons/ass/asslizard.png'
-
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
