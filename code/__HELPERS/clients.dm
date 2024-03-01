@@ -10,3 +10,14 @@
 		if (ch < 48 || ch > 57) //0-9
 			return FALSE
 	return TRUE
+
+/// Ensures that the client has been fully initialized via New(), and can't somehow execute actions before that. Security measure.
+/// Will return false if the client is not fully initialized and send an error out. True otherwise.
+/proc/validate_client(client/target)
+	. = FALSE
+	if(target.fully_created)
+		return TRUE
+
+	to_chat(target, span_warning("You are not fully initialized yet! Please wait a moment."))
+	log_access("Client [key_name(target)] attempted to execute a verb before being fully initialized.")
+	return FALSE
