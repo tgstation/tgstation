@@ -13,6 +13,16 @@
 	..()
 	blacklist |= subtypesof(/obj/item/shield/riot)
 
+/datum/crafting_recipe/improvisedshield
+	name = "Improvised Shield"
+	result = /obj/item/shield/improvised
+	reqs = list(
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sticky_tape = 2,
+	)
+	time = 4 SECONDS
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
