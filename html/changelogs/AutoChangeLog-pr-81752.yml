@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Pete can no longer eat vines while dead."

@@ -1,0 +1,5 @@
+author: "DrDiasyl"
+delete-after: True
+changes:
+  - rscadd: "Adds 2 new shields to the game! Ballistic Shield - researched by Science, and Improvised Shield - made out of iron and sticky tape"
+  - image: "Riot, Strobe, Telescopic, Energy shields got new less flat sprites!"
