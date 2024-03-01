@@ -152,9 +152,9 @@
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
-	desc = "Grants you Ringleaders Rise, an aoe spell that deals more brain damage the lower the sanity of everyone in the AoE,\
-			causes hallucinations with those who have less sanity getting more. \
-			If their sanity is low enough turns them insane, the spell then halves their sanity."
+	desc = "Grants you Ringleaders Rise, an AoE spell that deals more brain damage the lower the sanity of everyone in the AoE \
+			and causes hallucinations, with those who have less sanity getting more. \
+			If their sanity is low enough this turns them insane, the spell then halves their sanity."
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
 	next_knowledge = list(
