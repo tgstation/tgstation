@@ -18,7 +18,7 @@
 		var/list/gas = gases[gas_path]
 		var/moles = gas[MOLES]
 		var/composition = moles / total_moles
-		value += initial(gas_path.base_value)
+		value += initial(gas_path.base_value) * moles
 		specific_gas_data[gas[GAS_META][META_GAS_NAME]] = list(
 			"moles" = moles,
 			"composition" = composition,
