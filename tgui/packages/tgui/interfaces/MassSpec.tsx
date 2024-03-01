@@ -81,7 +81,7 @@ export const MassSpec = (props) => {
                   : !beaker2
                     ? 'Missing an output beaker!'
                     : eta <= 0
-                      ? 'Already at max purity'
+                      ? 'No work to be done'
                       : 'Begin purifying'
               }
               tooltipPosition="left"

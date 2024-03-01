@@ -1,6 +1,6 @@
 /obj/machinery/chem_mass_spec
 	name = "High-performance liquid chromatography machine"
-	desc = "Allows you to purity reagents. The more impure an reagent the lesser purified volumes it yields"
+	desc = "Allows you to purify reagents & seperate out inverse reagents"
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC"
 	base_icon_state = "HPLC"
@@ -213,7 +213,7 @@
 	var/result = 0
 	for(var/datum/reagent/reagent as anything in beaker1?.reagents.reagent_list)
 		var/datum/reagent/target = reagent
-		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+		if(!istype(reagent, /datum/reagent/inverse) && (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
 			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
 
 		if(!result)
@@ -258,7 +258,7 @@
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 		//we don't bother about impure chems
-		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+		if(istype(reagent, /datum/reagent/inverse) || (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
 			continue
 		//out of our selected range
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
@@ -297,10 +297,16 @@
 			var/log = ""
 			var/datum/reagent/target = reagent
 			var/purity = target.purity
-			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			var/is_inverse = FALSE
+
+			if(istype(reagent, /datum/reagent/inverse))
+				log = "Too impure to use" //we don't bother about impure chems
+				is_inverse = TRUE
+			else if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 				purity = target.get_inverse_purity()
 				target = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				log = "Cannot purify inverse chems" //we don't bother about impure chems
+				log = "Too impure to use" //we don't bother about impure chems
+				is_inverse = TRUE
 			else
 				var/initial_purity = initial(reagent.purity)
 				if((initial_purity - reagent.purity) <= 0) //already at max purity
@@ -313,10 +319,10 @@
 				"volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING),
 				"mass" = target.mass,
 				"purity" = round(purity * 100),
-				"type" = istype(target, /datum/reagent/inverse) ? "Inverted" : "Clean",
+				"type" = is_inverse ? "Inverted" : "Clean",
 				"log" = log
 			))
-			.["peakHeight"] = max(.["peakHeight"], target.volume)
+			.["peakHeight"] = max(.["peakHeight"], reagent.volume)
 		beaker1Data["contents"] = beakerContents
 	.["beaker1"] = beaker1Data
 
@@ -332,18 +338,12 @@
 		beaker2Data["maxVolume"] = beaker_2_reagents.maximum_volume
 		var/list/beakerContents = list()
 		for(var/datum/reagent/reagent as anything in beaker_2_reagents.reagent_list)
-			var/datum/reagent/target = reagent
-			var/purity = target.purity
-			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
-				purity = target.get_inverse_purity()
-				target = GLOB.chemical_reagents_list[reagent.inverse_chem]
-
 			beakerContents += list(list(
-				"name" = target.name,
+				"name" = reagent.name,
 				"volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING),
-				"mass" = target.mass,
-				"purity" = round(purity, 0.001) * 100,
-				"type" = istype(target, /datum/reagent/inverse) ? "Inverted" : "Clean",
+				"mass" = reagent.mass,
+				"purity" = round(reagent.purity * 100),
+				"type" = "Clean",
 				"log" = log[reagent.type]
 			))
 		beaker2Data["contents"] = beakerContents
@@ -463,7 +463,7 @@
 		log.Cut()
 		for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 			//we don't bother about impure chems
-			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			if(istype(reagent, /datum/reagent/inverse) || (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
 				continue
 			//out of our selected range
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
