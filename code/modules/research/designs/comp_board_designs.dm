@@ -395,13 +395,3 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RECORDS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-
-/datum/design/board/restock_tracker
-	name = "Vending Machine Restock Tracker Board"
-	desc = "Allows for the construction of circuit boards used to track what vending machines need to be restocked, and how valuable it is to restock them."
-	id = "restock_tracker"
-	build_path = /obj/item/circuitboard/computer/restock
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO

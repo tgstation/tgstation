@@ -14,7 +14,7 @@
 	var/list/data = list()
 	var/list/vending_list = list()
 	var/id_increment = 1
-	for(var/obj/machinery/vending/vendor in GLOB.vending_machines_to_restock)
+	for(var/obj/machinery/vending/vendor as anything in GLOB.vending_machines_to_restock)
 		var/stock = vendor.total_loaded_stock()
 		var/max_stock = vendor.total_max_stock()
 		if((max_stock == 0 || (stock >= max_stock)) && vendor.credits_contained == 0)

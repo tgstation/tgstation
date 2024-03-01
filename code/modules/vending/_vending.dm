@@ -1379,7 +1379,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			vend_ready = TRUE
 			return
 
-		if(!proceed_payment(card_used, item_record, price_to_use, living_user))
+		if(!proceed_payment(card_used, living_user, item_record, price_to_use))
 			return
 
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
@@ -1421,11 +1421,12 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 /**
  * Handles payment processing: discounts, logging, balance change etc.
  * arguments:
- * paying_id_card - the id card that will be billed for the product
- * product_to_vend - the product record of the item we're trying to vend
- * price_to_use - price of the item we're trying to vend
+ * paying_id_card - the id card that will be billed for the product.
+ * mob_paying - the mob that is trying to purchase the item.
+ * product_to_vend - the product record of the item we're trying to vend.
+ * price_to_use - price of the item we're trying to vend.
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use, mob/living/alive_user)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
 	var/datum/bank_account/account = paying_id_card.registered_account
 	if(account.account_job && account.account_job.paycheck_department == payment_department)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
@@ -1433,7 +1434,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
-	if(price_to_use && attempt_charge(src, alive_user, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
+	if(price_to_use && attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		vend_ready = TRUE

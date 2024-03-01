@@ -1232,7 +1232,6 @@
 		"prisonmanage",
 		"secdata",
 		"vendor",
-		"restock_tracker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
