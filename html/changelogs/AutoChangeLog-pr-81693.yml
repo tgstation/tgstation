@@ -1,0 +1,5 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - refactor: "Butt sprites are based on the chest bodypart for humans, instead of the species"
+  - image: "Moths have their own special butt sprites"

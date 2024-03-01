@@ -432,6 +432,9 @@
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
 
+/mob/living/silicon/get_butt_sprite()
+	return BUTT_SPRITE_QR_CODE
+
 /**
  * Records an IC event log entry in the cyborg's internal tablet.
  *

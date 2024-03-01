@@ -651,17 +651,15 @@
 	button_icon_state = "queen_item"
 	cooldown_time = 30 SECONDS
 	///The mob we're going to spawn
-	var/spawn_type = /mob/living/basic/bee
+	var/spawn_type = /mob/living/basic/bee/timed/short
 	///How many are we going to spawn
 	var/spawn_count = 6
-	///How long our summoned mobs last for
-	var/spawn_lifespan = 25 SECONDS
 
 /datum/action/cooldown/hivehead_spawn_minions/PreActivate(atom/target)
 	if(owner.movement_type & VENTCRAWLING)
 		owner.balloon_alert(owner, "unavailable here")
 		return
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/hivehead_spawn_minions/Activate(atom/target)
 	. = ..()
@@ -672,8 +670,6 @@
 	for(var/i in 1 to spawns)
 		var/mob/living/basic/summoned_minion = new spawn_type(get_turf(owner))
 		summoned_minion.faction = list("[REF(owner)]")
-		if(spawn_lifespan != 0 SECONDS)
-			QDEL_IN(summoned_minion, spawn_lifespan)
 		minion_additional_changes(summoned_minion)
 
 ///Our tell that we're using this ability. Usually a sound and a visible message.area
@@ -703,8 +699,6 @@
 	cooldown_time = 15 SECONDS
 	spawn_type = /mob/living/basic/legion_brood
 	spawn_count = 4
-	//Legion heads go away by themselves, we don't have to handle that
-	spawn_lifespan = 0 SECONDS
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/do_tell()
 	owner.visible_message(span_warning("[owner]'s head begins to shake as legion begin to pour out!"), span_warning("We release the legion."), span_hear("You hear a loud squishing sound!"))
