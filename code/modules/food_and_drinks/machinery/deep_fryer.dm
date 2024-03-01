@@ -61,11 +61,10 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	QDEL_NULL(frying)
 	return ..()
 
-/obj/machinery/deepfryer/deconstruct(disassembled)
+/obj/machinery/deepfryer/on_deconstruction(disassembled)
 	// This handles nulling out frying via exited
 	if(frying)
 		frying.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
 	. = ..()

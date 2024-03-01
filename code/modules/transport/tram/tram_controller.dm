@@ -17,17 +17,15 @@
 	var/travel_remaining = 0
 	///how far in total we'll be travelling
 	var/travel_trip_length = 0
-
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
+	/// reference to the navigation landmark associated with this tram. since we potentially span multiple z levels we dont actually
+	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
+	/// and the destination landmark.
 	var/obj/effect/landmark/transport/nav_beacon/tram/nav/nav_beacon
-	/// reference to the destination landmarks we consider ourselves "at" or travelling towards. since we potentially span multiple z levels we dont actually
-	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
-	/// and the destination landmark.
+	/// reference to the landmark we consider ourself stationary at.
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/idle_platform
-	/// reference to the destination landmarks we consider ourselves travelling towards. since we potentially span multiple z levels we dont actually
-	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
-	/// and the destination landmark.
+	/// reference to the destination landmark we consider ourselves travelling towards.
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform
 
 	var/current_speed = 0
@@ -284,7 +282,11 @@
 			degraded_stop()
 			return PROCESS_KILL
 
-		normal_stop()
+		if((controller_status & COMM_ERROR) && prob(5)) // malfunctioning tram has a small chance to e-stop
+			degraded_stop()
+		else
+			normal_stop()
+
 		return PROCESS_KILL
 
 	else if(world.time >= scheduled_move)
@@ -538,7 +540,8 @@
 	set_status_code(COMM_ERROR, TRUE)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	paired_cabinet.generate_repair_signals()
-	collision_lethality = 1.25
+	collision_lethality *= 1.25
+	throw_chance *= 1.25
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
 /**
@@ -553,6 +556,7 @@
 	set_status_code(COMM_ERROR, FALSE)
 	paired_cabinet.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
+	throw_chance = initial(throw_chance)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
@@ -671,6 +675,11 @@
 	set_status_code(CONTROLS_LOCKED, TRUE)
 	dispatch_transport(destination_platform = push_destination)
 	return push_destination
+
+
+/datum/transport_controller/linear/tram/slow //for some reason speed is set to initial() in the code but if i touched it it would probably break so
+	speed_limiter = 3
+	base_speed_limiter = 3
 
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
@@ -852,10 +861,7 @@
 	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
-
+/obj/machinery/transport/tram_controller/on_deconstruction(disassembled)
 	var/turf/drop_location = find_obstruction_free_location(1, src)
 
 	if(disassembled)
@@ -863,7 +869,6 @@
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
 		new /obj/item/stack/sheet/iron(drop_location, 1)
-	qdel(src)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.

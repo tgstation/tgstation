@@ -1124,7 +1124,7 @@
 /area/station/maintenance/fore/lesser)
 "avU" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/button/door/directional/east{
 	id = "Cabin2";
@@ -23833,7 +23833,7 @@
 /obj/machinery/conveyor{
 	id = "mining"
 	},
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "iIf" = (
@@ -24819,13 +24819,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "iWB" = (
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/storage/fancy/candle_box,
 /obj/machinery/light/small/directional/east,
+/obj/structure/rack/skeletal,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "iWD" = (
@@ -31986,7 +31982,7 @@
 /area/station/medical/virology)
 "lxf" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/button/door/directional/west{
 	id = "Cabin5";
@@ -41784,7 +41780,7 @@
 "oYv" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/button/door/directional/west{
 	id = "Cabin4";
@@ -50133,7 +50129,7 @@
 /area/station/commons/locker)
 "rUo" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -51804,7 +51800,7 @@
 "sBa" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/button/door/directional/east{
 	id = "Cabin3";
@@ -56637,10 +56633,6 @@
 "uhI" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/obj/machinery/requests_console/directional/north{
-	department = "Security";
-	name = "Security Requests Console"
-	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "uhP" = (
@@ -64199,7 +64191,7 @@
 "wNp" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/button/door/directional/west{

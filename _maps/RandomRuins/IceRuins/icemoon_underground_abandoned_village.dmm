@@ -40,7 +40,7 @@
 "fD" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/bubblegum,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "gG" = (
@@ -416,7 +416,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/random{
+/obj/effect/spawner/random/bedsheet/any{
 	dir = 4
 	},
 /turf/open/floor/wood,

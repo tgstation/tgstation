@@ -847,14 +847,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 4.5
 	metabolization_rate = 0.08 * REM
 	tox_damage = 0
-
-/datum/reagent/inverse/salbutamol/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
-
-/datum/reagent/inverse/salbutamol/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
+	metabolized_traits = list(TRAIT_EASYBLEED)
 
 /datum/reagent/inverse/pen_acid
 	name = "Pendetide"

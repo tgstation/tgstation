@@ -16,7 +16,38 @@ SUBSYSTEM_DEF(polling)
 		if(running_poll.time_left() <= 0)
 			polling_finished(running_poll)
 
-/datum/controller/subsystem/polling/proc/poll_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text, list/custom_response_messages)
+/**
+ * Starts a poll.
+ *
+ * Arguments
+ * * question: Optional, The question to ask the candidates. If null, a default question will be used. ("Do you want to play as role?")
+ * * role: Optional, An antag role (IE, ROLE_TRAITOR) to pass, it won't show to any candidates who don't have it in their preferences.
+ * * check_jobban: Optional, What jobban role / flag to check, it won't show to any candidates who have this jobban.
+ * * poll_time: How long the poll will last.
+ * * ignore_category: Optional, A poll category. If a candidate has this category in their ignore list, they won't be polled.
+ * * flash_window: If TRUE, the candidate's window will flash when they're polled.
+ * * list/group: A list of candidates to poll.
+ * * pic_source: Optional, An /atom or an /image to display on the poll alert.
+ * * role_name_text: Optional, A string to display in logging / the (default) question. If null, the role name will be used.
+ * * list/custom_response_messages: Optional, A list of strings to use as responses to the poll. If null, the default responses will be used. see __DEFINES/polls.dm for valid keys to use.
+ * * start_signed_up: If TRUE, all candidates will start signed up for the poll, making it opt-out rather than opt-in.
+ *
+ * Returns a list of all mobs who signed up for the poll.
+ */
+/datum/controller/subsystem/polling/proc/poll_candidates(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	ignore_category = null,
+	flash_window = TRUE,
+	list/group = null,
+	pic_source,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+)
+	RETURN_TYPE(/list/mob)
 	if(group.len == 0)
 		return list()
 	if(role && !role_name_text)
@@ -49,7 +80,8 @@ SUBSYSTEM_DEF(polling)
 		if(role && !is_eligible(candidate_mob, role, check_jobban, ignore_category))
 			continue
 
-		SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
+		if(start_signed_up)
+			new_poll.sign_up(candidate_mob, TRUE)
 		if(flash_window)
 			window_flash(candidate_mob.client)
 
@@ -76,6 +108,8 @@ SUBSYSTEM_DEF(polling)
 		poll_alert_button.poll = alert_poll
 		poll_alert_button.set_role_overlay()
 		poll_alert_button.update_stacks_overlay()
+		poll_alert_button.update_candidates_number_overlay()
+		poll_alert_button.update_signed_up_overlay()
 
 
 		// Sign up inheritance and stacking
@@ -111,12 +145,15 @@ SUBSYSTEM_DEF(polling)
 		// Chat message
 		var/act_jump = ""
 		if(isatom(pic_source) && isobserver(candidate_mob))
-			act_jump = "<a href='?src=[REF(poll_alert_button)];jump=1'>\[Teleport]</a>"
-		var/act_signup = "<a href='?src=[REF(poll_alert_button)];signup=1'>\[Sign Up]</a>"
+			act_jump = "<a href='?src=[REF(poll_alert_button)];jump=1'>\[Teleport\]</a>"
+		var/act_signup = "<a href='?src=[REF(poll_alert_button)];signup=1'>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
 		var/act_never = ""
 		if(ignore_category)
-			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round]</a>"
-		to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
+			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round\]</a>"
+
+		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
+			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
+			to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, poll_alert_button)
@@ -192,13 +229,8 @@ SUBSYSTEM_DEF(polling)
 
 	// Take care of updating the remaining screen alerts if a similar poll is found, or deleting them.
 	if(length(finishing_poll.alert_buttons))
-		var/polls_of_same_type_left = FALSE
-		for(var/datum/candidate_poll/running_poll as anything in currently_polling)
-			if(running_poll.poll_key == finishing_poll.poll_key && running_poll.time_left() > 0)
-				polls_of_same_type_left = TRUE
-				break
 		for(var/atom/movable/screen/alert/poll_alert/alert as anything in finishing_poll.alert_buttons)
-			if(polls_of_same_type_left)
+			if(duplicate_message_check(finishing_poll))
 				alert.update_stacks_overlay()
 			else
 				alert.owner.clear_alert("[finishing_poll.poll_key]_poll_alert")
@@ -212,6 +244,13 @@ SUBSYSTEM_DEF(polling)
 	if(soonest_to_complete)
 		msg += " | Next: [DisplayTimeText(soonest_to_complete.time_left())] ([length(soonest_to_complete.signed_up)] candidates)"
 	return ..()
+
+///Is there a multiple of the given event type running right now?
+/datum/controller/subsystem/polling/proc/duplicate_message_check(datum/candidate_poll/poll_to_check)
+	for(var/datum/candidate_poll/running_poll as anything in currently_polling)
+		if((running_poll.poll_key == poll_to_check.poll_key && running_poll != poll_to_check) && running_poll.time_left() > 0)
+			return TRUE
+	return FALSE
 
 /datum/controller/subsystem/polling/proc/get_next_poll_to_finish()
 	var/lowest_time_left = INFINITY

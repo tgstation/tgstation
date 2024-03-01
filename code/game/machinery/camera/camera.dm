@@ -443,21 +443,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
-/obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
-			if(!assembly)
-				assembly = new()
-			assembly.forceMove(drop_location())
-			assembly.state = 1
-			assembly.setDir(dir)
-			assembly_ref = null
-		else
-			var/obj/item/I = new /obj/item/wallframe/camera (loc)
-			I.update_integrity(I.max_integrity * 0.5)
-			new /obj/item/stack/cable_coil(loc, 2)
-	qdel(src)
+/obj/machinery/camera/on_deconstruction(disassembled)
+	if(disassembled)
+		var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+		if(!assembly)
+			assembly = new()
+		assembly.forceMove(drop_location())
+		assembly.state = 1
+		assembly.setDir(dir)
+		assembly_ref = null
+		return
+
+	var/obj/item/I = new /obj/item/wallframe/camera (loc)
+	I.update_integrity(I.max_integrity * 0.5)
+	new /obj/item/stack/cable_coil(loc, 2)
 
 /obj/machinery/camera/update_icon_state() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
 	var/xray_module

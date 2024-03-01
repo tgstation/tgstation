@@ -21,7 +21,7 @@
 
 		var/datum/component/uplink/hidden_uplink = uplink.GetComponent(/datum/component/uplink)
 		if(hidden_uplink)
-			hidden_uplink.add_telecrystals(amount)
+			hidden_uplink.uplink_handler.add_telecrystals(amount)
 			use(amount)
 			to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 	return ITEM_INTERACT_SUCCESS
