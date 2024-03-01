@@ -1,3 +1,25 @@
+/obj/item/wallframe/secure_safe
+	name = "secure safe frame"
+	desc = "A locked safe. It being unpowered prevents any access until placed back onto a wall."
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "wall_safe"
+	base_icon_state = "wall_safe"
+	result_path = /obj/structure/secure_safe
+	pixel_shift = 32
+
+/obj/item/wallframe/secure_safe/Initialize(mapload)
+	. = ..()
+	create_storage(
+		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
+		max_total_storage = 20,
+	)
+	atom_storage.locked = STORAGE_FULLY_LOCKED
+
+/obj/item/wallframe/secure_safe/after_attach(obj/attached_to)
+	. = ..()
+	for(var/obj/item in contents)
+		item.forceMove(attached_to)
+
 /**
  * Wall safes
  * Holds items and uses the lockable storage component
@@ -20,7 +42,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	AddComponent(/datum/component/lockable_storage)
 	if(!density)
 		find_and_hang_on_wall()
-	PopulateContents()
+	if(mapload)
+		PopulateContents()
+
+/obj/structure/secure_safe/deconstruct(disassembled)
+	if(!density) //if we're a wall item, we'll drop a wall frame.
+		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
+		for(var/obj/item in contents)
+			item.forceMove(new_safe)
+	return ..()
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
