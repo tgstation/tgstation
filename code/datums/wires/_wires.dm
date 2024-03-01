@@ -277,7 +277,7 @@
 /datum/wires/ui_host()
 	return holder
 
-/datum/wires/ui_status(mob/user)
+/datum/wires/ui_status(mob/user, datum/ui_state/state)
 	if(interactable(user))
 		return ..()
 	return UI_CLOSE

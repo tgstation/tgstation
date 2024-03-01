@@ -62,7 +62,7 @@
 		HUNTER_PACK_BOUNTY,
 		HUNTER_PACK_PSYKER,
 	)
-	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -103,7 +103,13 @@
 	S.put_in_hands(A)
 	new /obj/item/autosurgeon(landing_turf)
 
-//security team gets called in after 10 minutes of prep to find the refugees
+/datum/round_event/ghost_role/fugitives/proc/check_spawn_hunters(backstory, remaining_time)
+	//if the emergency shuttle has been called, spawn hunters now to give them a chance
+	if(remaining_time == 0 || SSshuttle.emergency.mode != EMERGENCY_IDLE_OR_RECALLED)
+		spawn_hunters(backstory)
+		return
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), backstory, remaining_time - 1 MINUTES), 1 MINUTES)
+
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters(backstory)
 	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a group of [backstory]?", check_jobban = ROLE_FUGITIVE_HUNTER, pic_source = /obj/machinery/sleeper, role_name_text = backstory)
 	shuffle_inplace(candidates)
