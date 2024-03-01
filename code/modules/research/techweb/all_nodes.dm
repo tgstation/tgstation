@@ -209,6 +209,7 @@
 		"mod_plating_standard",
 		"mod_storage",
 		"mod_welding",
+		"mod_safety",
 		"mod_mouthhole",
 		"mod_flashlight",
 		"mod_longfall",
@@ -1624,6 +1625,7 @@
 	description = "Our researchers have found new ways to weaponize just about everything now."
 	prereq_ids = list("engineering")
 	design_ids = list(
+		"ballistic_shield",
 		"pin_testing",
 		"tele_shield",
 		"lasershell",

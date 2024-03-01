@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Fishes love kronkaine."
+  - qol: "Examining a fishing spot twice with sufficiently high fishing skill (or the skillchip) will get you a list of fishes that can be caught."

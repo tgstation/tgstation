@@ -399,7 +399,7 @@
 	update_appearance()
 	remote_control_user = null
 
-/obj/machinery/power/apc/ui_status(mob/user)
+/obj/machinery/power/apc/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(!QDELETED(remote_control_user) && user == remote_control_user)
 		. = UI_INTERACTIVE

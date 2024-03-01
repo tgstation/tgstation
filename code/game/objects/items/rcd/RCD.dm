@@ -521,7 +521,7 @@
 	///How much charge is used up for each matter unit.
 	var/mass_to_energy = 16
 
-/obj/item/construction/rcd/exosuit/ui_status(mob/user)
+/obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
 	if(ismecha(owner))
 		return owner.ui_status(user)
 	return UI_CLOSE

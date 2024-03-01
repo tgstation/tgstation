@@ -97,7 +97,7 @@
 	if(isnull(capacitor))
 		missing_parts += "capacitor"
 	if(isnull(servo))
-		missing_parts += "micro-servo"
+		missing_parts += "servo"
 	if(length(missing_parts))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")

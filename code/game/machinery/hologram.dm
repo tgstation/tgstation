@@ -46,6 +46,7 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	// Blue, dim light
 	light_power = 0.8
 	light_color = LIGHT_COLOR_BLUE
@@ -271,7 +272,7 @@ Possible to do for anyone motivated enough:
 
 	return ..()
 
-/obj/machinery/holopad/ui_status(mob/user)
+/obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
 		return UI_CLOSE
 	if(outgoing_call && !calling)
