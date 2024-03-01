@@ -22,44 +22,44 @@ jobs:
       group: run_linters-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Restore SpacemanDMM cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-spacemandmm-
       - name: Restore Yarn cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Restore Node cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.nvm
           key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Restore Bootstrap cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tools/bootstrap/.cache
           key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cargo
           key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
       - name: Restore Cutter cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
@@ -124,9 +124,9 @@ jobs:
       group: compile_all_maps-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Restore BYOND cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond
@@ -153,7 +153,7 @@ jobs:
       group: find_all_maps-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Find Maps
         id: map_finder
         run: |
@@ -220,7 +220,7 @@ jobs:
     name: Compare Screenshot Tests
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # If we ever add more artifacts, this is going to break, but it'll be obvious.
       - name: Download screenshot tests
         uses: actions/download-artifact@v3
@@ -244,7 +244,7 @@ jobs:
           echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
       - name: Upload bad screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bad-screenshots
           path: artifacts/screenshot_comparisons
@@ -258,9 +258,9 @@ jobs:
       group: test_windows-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Restore Yarn cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
