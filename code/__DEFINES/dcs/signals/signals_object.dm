@@ -410,6 +410,11 @@
 ///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
 #define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
 
+///from /datum/computer_file/program/messenger/proc/receive_message
+#define COMSIG_COMPUTER_RECIEVED_MESSAGE "computer_recieved_message"
+///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
+#define COMSIG_VIRTUAL_PET_LEVEL_UP "virtual_pet_level_up"
+
 // /obj/vehicle/sealed/mecha signals
 
 /// sent if you attach equipment to mecha
