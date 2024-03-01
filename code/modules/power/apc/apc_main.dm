@@ -328,7 +328,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"chargingPowerDisplay" = display_power(area.power_usage[AREA_USAGE_APC_CHARGE]),
+		"chargingPowerDisplay" = display_power(area.energy_usage[AREA_USAGE_APC_CHARGE]),
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
@@ -487,12 +487,12 @@
  * This is done early so machines that use dynamic power get a more truthful surplus when accessing available energy.
  */
 /obj/machinery/power/apc/proc/early_process()
-	var/total_static_power_usage = 0
-	total_static_power_usage += APC_CHANNEL_IS_ON(lighting) * area.power_usage[AREA_USAGE_STATIC_LIGHT]
-	total_static_power_usage += APC_CHANNEL_IS_ON(equipment) * area.power_usage[AREA_USAGE_STATIC_EQUIP]
-	total_static_power_usage += APC_CHANNEL_IS_ON(environ) * area.power_usage[AREA_USAGE_STATIC_ENVIRON]
-	if(total_static_power_usage) //Use power from static power users.
-		draw_power(total_static_power_usage)
+	var/total_static_energy_usage = 0
+	total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
+	total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
+	total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
+	if(total_static_energy_usage) //Use power from static power users.
+		draw_energy(total_static_energy_usage)
 
 /obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)
@@ -512,9 +512,9 @@
 			flicker_hacked_icon()
 
 	//dont use any power from that channel if we shut that power channel off
-	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
-	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP] : 0
-	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
+	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
+	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
@@ -688,14 +688,18 @@
 /obj/machinery/power/apc/proc/charge()
 	return cell.charge
 
-/// Adds the load to the connected grid. Drains the cell when there isn't enough surplus power. Returns the used power.
-/obj/machinery/power/apc/proc/draw_power(amount)
+/// Draws energy from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
+/obj/machinery/power/apc/proc/draw_energy(amount)
 	var/grid_used = min(terminal.surplus(), amount)
 	terminal?.add_load(grid_used)
 	var/cell_used = 0
 	if(amount > grid_used)
 		cell_used += cell.use(amount - grid_used)
 	return grid_used + cell_used
+
+/// Draws power from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
+/obj/machinery/power/apc/proc/draw_power(amount)
+	return draw_energy(power_to_energy(amount))
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc
