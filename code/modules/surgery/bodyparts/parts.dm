@@ -69,6 +69,15 @@
 		cavity_item = null
 	return ..()
 
+/// Sprite to show for photocopying mob butts
+/obj/item/bodypart/chest/proc/get_butt_sprite()
+	if(!ishuman(owner))
+		return null
+	var/mob/living/carbon/human/human_owner = owner
+	var/butt_sprite = human_owner.physique == FEMALE ? BUTT_SPRITE_HUMAN_FEMALE : BUTT_SPRITE_HUMAN_MALE
+	var/obj/item/organ/external/tail/tail = human_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	return tail?.get_butt_sprite() || butt_sprite
+
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -253,9 +262,9 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
-	unarmed_damage_high = 2
-	unarmed_effectiveness = 0
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
+	unarmed_effectiveness = 5
 	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/left/alien
@@ -351,8 +360,8 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1
-	unarmed_damage_high = 2
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
 	unarmed_effectiveness = 0
 	appendage_noun = "paw"
 
@@ -468,8 +477,8 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_effectiveness = 0
-	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+	unarmed_effectiveness = 5
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -559,8 +568,8 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_effectiveness = 0
-	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+	unarmed_effectiveness = 5
+	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
