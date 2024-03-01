@@ -221,6 +221,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - name: Setup directory
+        run: mkdir -p artifacts
       # If we ever add more artifacts, this is going to break, but it'll be obvious.
       - name: Download screenshot tests
         uses: actions/download-artifact@v4
