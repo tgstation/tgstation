@@ -456,6 +456,8 @@
 		return
 
 	use_power(active_power_usage)
+
+	progress_time += seconds_per_tick
 	if(progress_time >= delay_time)
 		processing_reagents = FALSE
 		progress_time = 0
@@ -484,5 +486,3 @@
 		estimate_time()
 		update_appearance()
 		return PROCESS_KILL
-
-	progress_time += seconds_per_tick

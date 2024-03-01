@@ -190,7 +190,7 @@ const BeakerMassProfile = (props: ProfileProps) => {
                 Type
               </Table.Cell>
               <Table.Cell bold collapsing color="label">
-                Results
+                Status
               </Table.Cell>
             </Table.Row>
             {beaker.contents.map((reagent) => {
