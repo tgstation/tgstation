@@ -39,6 +39,9 @@ type Data = {
   beaker2: Beaker;
 };
 
+const GRAPH_MAX_WIDTH = 1060;
+const GRAPH_MAX_HEIGHT = 250;
+
 export const MassSpec = (props) => {
   const { act, data } = useBackend<Data>();
   const {
@@ -56,7 +59,7 @@ export const MassSpec = (props) => {
   const beaker_1_has_contents = beaker1?.contents?.length > 0;
 
   return (
-    <Window width={490} height={650}>
+    <Window width={1050} height={650}>
       <Window.Content scrollable>
         {!!processing && (
           <Dimmer fontSize="32px">
@@ -147,7 +150,6 @@ export const MassSpec = (props) => {
             lowerRange={lowerRange}
             upperRange={upperRange}
             beaker={beaker2}
-            details
           />
         </Section>
       </Window.Content>
@@ -158,12 +160,11 @@ export const MassSpec = (props) => {
 type ProfileProps = {
   lowerRange: number;
   upperRange: number;
-  details?: BooleanLike;
   beaker: Beaker;
 };
 
 const BeakerMassProfile = (props: ProfileProps) => {
-  const { lowerRange, upperRange, details, beaker } = props;
+  const { lowerRange, upperRange, beaker } = props;
 
   return (
     <Box>
@@ -177,10 +178,10 @@ const BeakerMassProfile = (props: ProfileProps) => {
                 Reagent
               </Table.Cell>
               <Table.Cell bold collapsing color="label">
-                Volume
+                Mass
               </Table.Cell>
               <Table.Cell bold collapsing color="label">
-                Mass
+                Volume
               </Table.Cell>
               <Table.Cell bold collapsing color="label">
                 Purity
@@ -188,11 +189,9 @@ const BeakerMassProfile = (props: ProfileProps) => {
               <Table.Cell bold collapsing color="label">
                 Type
               </Table.Cell>
-              {!!details && (
-                <Table.Cell bold collapsing color="label">
-                  Results
-                </Table.Cell>
-              )}
+              <Table.Cell bold collapsing color="label">
+                Results
+              </Table.Cell>
             </Table.Row>
             {beaker.contents.map((reagent) => {
               const selected =
@@ -205,10 +204,10 @@ const BeakerMassProfile = (props: ProfileProps) => {
                     {reagent.name}
                   </Table.Cell>
                   <Table.Cell collapsing color={selected ? 'green' : 'default'}>
-                    {reagent.volume}
+                    {reagent.mass}
                   </Table.Cell>
                   <Table.Cell collapsing color={selected ? 'green' : 'default'}>
-                    {reagent.mass}
+                    {reagent.volume}
                   </Table.Cell>
                   <Table.Cell collapsing color={selected ? 'green' : 'default'}>
                     {`${reagent.purity}%`}
@@ -216,7 +215,7 @@ const BeakerMassProfile = (props: ProfileProps) => {
                   <Table.Cell collapsing color={color}>
                     ▮{reagent.type}
                   </Table.Cell>
-                  {details && <Table.Cell>{reagent.log}</Table.Cell>}
+                  {<Table.Cell>{reagent.log}</Table.Cell>}
                 </Table.Row>
               );
             })}
@@ -250,177 +249,193 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
   const deltaRange = graphUpperRange - graphLowerRange;
   const graphIncrement = deltaRange * 0.2;
 
+  const base_line = GRAPH_MAX_HEIGHT * 0.85;
+  const base_width = GRAPH_MAX_WIDTH - 123;
+  const scale = base_width / GRAPH_MAX_WIDTH;
+
   return (
-    <>
-      <Box
+    <Box
+      style={{
+        width: `${GRAPH_MAX_WIDTH}px`,
+        height: `${GRAPH_MAX_HEIGHT}px`,
+      }}
+    >
+      <svg
         style={{
           position: 'absolute',
-          right: '255px',
-          top: '25px',
+          width: `${GRAPH_MAX_WIDTH}px`,
+          height: `${GRAPH_MAX_HEIGHT}px`,
         }}
       >
-        <svg background-size="200px" width="200" height="400">
-          <text
-            x="0"
-            y="250"
-            text-anchor="middle"
-            fill="white"
-            font-size="16"
-            transform="translate(0,0) scale(0.8 0.8)"
-          >
-            {/* x axis*/}
-            <tspan x="250" y="318" font-weight="bold" font-size="1.4em">
-              Mass (g)
-            </tspan>
-            <tspan x="0" y="283">
-              {graphLowerRange}
-            </tspan>
-            <tspan x="100" y="283">
-              {round(graphLowerRange + graphIncrement, 1)}
-            </tspan>
-            <tspan x="200" y="283">
-              {round(graphLowerRange + graphIncrement * 2, 1)}
-            </tspan>
-            <tspan x="300" y="283">
-              {round(graphLowerRange + graphIncrement * 3, 1)}
-            </tspan>
-            <tspan x="400" y="283">
-              {round(graphLowerRange + graphIncrement * 4, 1)}
-            </tspan>
-            <tspan x="500" y="283">
-              {graphUpperRange}
-            </tspan>
-            {/* y axis*/}
-            <tspan x="520" y="0" dy="6">
-              {round(maxAbsorbance, 1)}
-            </tspan>
-            <tspan x="520" y="50" dy="6">
-              {round(maxAbsorbance * 0.8, 1)}
-            </tspan>
-            <tspan x="520" y="100" dy="6">
-              {round(maxAbsorbance * 0.6, 1)}
-            </tspan>
-            <tspan x="520" y="150" dy="6">
-              {round(maxAbsorbance * 0.4, 1)}
-            </tspan>
-            <tspan x="520" y="200" dy="6">
-              {round(maxAbsorbance * 0.2, 1)}
-            </tspan>
-            <tspan x="520" y="250" dy="6">
-              0
-            </tspan>
-          </text>
-          <text
-            text-anchor="middle"
-            transform="translate(430,100) rotate(90) scale(0.8 0.8)"
-            fill="white"
+        {/* x axis*/}
+        <text text-anchor="middle" fill="white">
+          <tspan
+            x="40%"
+            y={`${base_line + 35}px`}
+            font-weight="bold"
             font-size="16"
           >
-            <tspan font-weight="bold" font-size="1.4em">
-              Absorbance (AU)
-            </tspan>
-          </text>
-          <g transform="translate(0, 0) scale(0.8 0.8)">
-            {reagentPeaks.map((peak) => (
-              // Triangle peak
-              <polygon
-                key={peak.name}
-                points={`${((peak.mass - 10) / graphUpperRange) * 500},265 ${
-                  (peak.mass / graphUpperRange) * 500
-                },${250 - (peak.volume / maxAbsorbance) * 250} ${
-                  ((peak.mass + 10) / graphUpperRange) * 500
-                },265 `}
-                opacity="0.6"
-                style={{
-                  fill: peak.type === 'Inverted' ? '#b60046' : '#3cf096',
-                }}
-              />
-            ))}
+            Mass (G)
+          </tspan>
+          <tspan x="0%" y={`${base_line + 20}px`}>
+            {graphLowerRange}
+          </tspan>
+          <tspan x="16%" y={`${base_line + 20}px`}>
+            {round(graphLowerRange + graphIncrement, 1)}
+          </tspan>
+          <tspan x="32%" y={`${base_line + 20}px`}>
+            {round(graphLowerRange + graphIncrement * 2, 1)}
+          </tspan>
+          <tspan x="48%" y={`${base_line + 20}px`}>
+            {round(graphLowerRange + graphIncrement * 3, 1)}
+          </tspan>
+          <tspan x="64%" y={`${base_line + 20}px`}>
+            {round(graphLowerRange + graphIncrement * 4, 1)}
+          </tspan>
+          <tspan x="80%" y={`${base_line + 20}px`}>
+            {graphUpperRange}
+          </tspan>
+        </text>
+        <line
+          x1={0}
+          y1={base_line}
+          x2={base_width}
+          y2={base_line}
+          stroke={'white'}
+          stroke-width={3}
+        />
+
+        {/* y axis*/}
+        <text text-anchor="middle" fill="white">
+          <tspan x={`${base_width + 20}px`} y="80%">
+            0
+          </tspan>
+          <tspan x={`${base_width + 20}px`} y="65%">
+            {round(maxAbsorbance * 0.2, 1)}
+          </tspan>
+          <tspan x={`${base_width + 20}px`} y="50%">
+            {round(maxAbsorbance * 0.4, 1)}
+          </tspan>
+          <tspan x={`${base_width + 20}px`} y="35%">
+            {round(maxAbsorbance * 0.6, 1)}
+          </tspan>
+          <tspan x={`${base_width + 20}px`} y="20%">
+            {round(maxAbsorbance * 0.8, 1)}
+          </tspan>
+          <tspan x={`${base_width + 20}px`} y="5%">
+            {round(maxAbsorbance, 1)}
+          </tspan>
+        </text>
+        <text
+          text-anchor="middle"
+          transform={`translate(${base_width + 35},${
+            GRAPH_MAX_HEIGHT * 0.4
+          }) rotate(90) scale(1, 1.2)`}
+          fill="white"
+          font-size="17"
+          font-weight="bold"
+        >
+          <tspan>Absorbance (AU)</tspan>
+        </text>
+        <line
+          x1={base_width}
+          y1={base_line}
+          x2={base_width}
+          y2={0}
+          stroke={'white'}
+          stroke-width={3}
+        />
+
+        {/* Graph */}
+        <g transform={`translate(0 0) scale(${scale} 1)`}>
+          {reagentPeaks.map((peak) => (
+            // Triangle peak
             <polygon
-              points={`${(lowerRange / deltaRange) * 500},265 ${
-                (lowerRange / deltaRange) * 500
-              },0 ${(upperRange / deltaRange) * 500},0 ${
-                (upperRange / deltaRange) * 500
-              },265`}
-              opacity="0.2"
-              style={{ fill: 'blue' }}
+              key={peak.name}
+              points={`${
+                ((peak.mass - 5) / graphUpperRange) * base_width
+              },${base_line}
+                ${(peak.mass / graphUpperRange) * base_width},${
+                  base_line +
+                  50 -
+                  (peak.volume / maxAbsorbance) * (base_line + 50)
+                }
+                ${
+                  ((peak.mass + 5) / graphUpperRange) * base_width
+                }, ${base_line}`}
+              opacity="0.6"
+              style={{
+                fill: peak.type === 'Inverted' ? '#b60046' : '#3cf096',
+              }}
             />
-            <line
-              x1={0}
-              y1={265}
-              x2={502}
-              y2={264}
-              stroke={'white'}
-              stroke-width={3}
-            />
-            <line
-              x1={501}
-              y1={264}
-              x2={501}
-              y2={0}
-              stroke={'white'}
-              stroke-width={3}
-            />
-          </g>
-        </svg>
-      </Box>
-      <Box>
-        <Slider
-          name={'Left slider'}
-          position="relative"
-          step={graphUpperRange / 400}
-          height={17.2}
-          format={(value: number) => round(value, 2)}
-          width={(centerValue / graphUpperRange) * 400 + 'px'}
-          value={lowerRange}
-          minValue={graphLowerRange}
-          maxValue={centerValue}
-          color={'invisible'}
-          onDrag={(e, value) =>
-            act('leftSlider', {
-              value: value,
-            })
-          }
+          ))}
+        </g>
+
+        {/* Background */}
+        <polygon
+          points={`${
+            (lowerRange / deltaRange) * base_width * scale
+          },${base_line} ${(lowerRange / deltaRange) * base_width * scale},0 ${
+            (upperRange / deltaRange) * base_width * scale
+          },0 ${(upperRange / deltaRange) * base_width * scale},${base_line}`}
+          opacity="0.2"
+          style={{ fill: 'blue' }}
         />
-        <Slider
-          name={'Right slider'}
-          position="absolute"
-          height={17.2}
-          format={(value: number) => round(value, 2)}
-          step={graphUpperRange / 400}
-          width={400 - (centerValue / graphUpperRange) * 400 + 'px'}
-          value={upperRange}
-          minValue={centerValue}
-          maxValue={graphUpperRange}
-          color={'invisible'}
-          onDrag={(e, value) =>
-            act('rightSlider', {
-              value: value,
-            })
-          }
-        />
-        <Box>
-          <Slider
-            name={'Center slider'}
-            position="relative"
-            step={graphUpperRange / 400}
-            mt={0.3}
-            mb={5}
-            value={centerValue}
-            height={1.9}
-            format={(value: number) => round(value, 2)}
-            width={400 + 'px'}
-            minValue={graphLowerRange + 1}
-            maxValue={graphUpperRange - 1}
-            color={'invisible'}
-            onDrag={(e, value) =>
-              act('centerSlider', {
-                value: value,
-              })
-            }
-          />
-        </Box>
-      </Box>
-    </>
+      </svg>
+
+      {/* Sliders */}
+      <Slider
+        name={'Left slider'}
+        step={graphUpperRange / base_width}
+        suppressFlicker
+        height={17.2}
+        format={(value: number) => round(value, 2)}
+        width={(centerValue / graphUpperRange) * base_width + 'px'}
+        value={lowerRange}
+        minValue={graphLowerRange / scale}
+        maxValue={centerValue / scale}
+        color={'invisible'}
+        onDrag={(e, value) =>
+          act('leftSlider', {
+            value: value,
+          })
+        }
+      />
+      <Slider
+        name={'Right slider'}
+        height={17.2}
+        suppressFlicker
+        format={(value: number) => round(value, 2)}
+        step={graphUpperRange / base_width}
+        width={base_width - (centerValue / graphUpperRange) * base_width + 'px'}
+        value={upperRange}
+        minValue={centerValue / scale}
+        maxValue={graphUpperRange / scale}
+        color={'invisible'}
+        onDrag={(e, value) =>
+          act('rightSlider', {
+            value: value,
+          })
+        }
+      />
+      <Slider
+        name={'Center slider'}
+        step={graphUpperRange / base_width}
+        suppressFlicker
+        mt={1.2}
+        value={centerValue}
+        height={1.9}
+        format={(value: number) => round(value, 2)}
+        width={base_width + 'px'}
+        minValue={(graphLowerRange + 1) / scale}
+        maxValue={(graphUpperRange - 1) / scale}
+        color={'invisible'}
+        onDrag={(e, value) =>
+          act('centerSlider', {
+            value: value,
+          })
+        }
+      />
+    </Box>
   );
 };

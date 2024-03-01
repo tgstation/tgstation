@@ -257,17 +257,18 @@
 		return
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
+		//we don't bother about impure chems
 		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
-			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
-			if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
-				continue
-			delay_time += (((inverse_reagent.mass * reagent.volume) + (inverse_reagent.mass * reagent.purity * 0.1)) * 0.003) + 10 ///Roughly 10 - 30s?
 			continue
+		//out of our selected range
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 			continue
+		//already at max purity
 		if((initial(reagent.purity) - reagent.purity) <= 0)
 			continue
-		delay_time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
+		///Roughly 10 - 30s?
+		delay_time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10
+
 	delay_time *= cms_coefficient
 
 /obj/machinery/chem_mass_spec/ui_interact(mob/user, datum/tgui/ui)
@@ -293,25 +294,34 @@
 		beaker1Data["maxVolume"] = beaker_1_reagents.maximum_volume
 		var/list/beakerContents = list()
 		for(var/datum/reagent/reagent as anything in beaker_1_reagents.reagent_list)
+			var/log = ""
 			var/datum/reagent/target = reagent
 			var/purity = target.purity
 			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 				purity = target.get_inverse_purity()
 				target = GLOB.chemical_reagents_list[reagent.inverse_chem]
+				log = "Cannot purify inverse chems" //we don't bother about impure chems
+			else
+				var/initial_purity = initial(reagent.purity)
+				if((initial_purity - reagent.purity) <= 0) //already at max purity
+					log = "Cannot purify above [round(initial_purity * 100)]%"
+				else
+					log = "Ready"
 
 			beakerContents += list(list(
 				"name" = target.name,
 				"volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING),
 				"mass" = target.mass,
-				"purity" = round(purity, 0.001) * 100,
-				"type" = istype(target, /datum/reagent/inverse) ? "Inverted" : "Clean"
+				"purity" = round(purity * 100),
+				"type" = istype(target, /datum/reagent/inverse) ? "Inverted" : "Clean",
+				"log" = log
 			))
 			.["peakHeight"] = max(.["peakHeight"], target.volume)
 		beaker1Data["contents"] = beakerContents
 	.["beaker1"] = beaker1Data
 
 	//+10 because of the range on the peak
-	.["graphUpperRange"] = calculate_mass(FALSE)
+	.["graphUpperRange"] = calculate_mass(smallest = FALSE)
 
 	//output reagents
 	var/list/beaker2Data = null
@@ -377,7 +387,7 @@
 			if(isnull(value))
 				return
 
-			lower_mass_range = clamp(value, calculate_mass(TRUE), (lower_mass_range + upper_mass_range) / 2)
+			lower_mass_range = clamp(value, calculate_mass(smallest = TRUE), (lower_mass_range + upper_mass_range) / 2)
 			estimate_time()
 			return TRUE
 
@@ -390,7 +400,7 @@
 			if(isnull(value))
 				return
 
-			upper_mass_range = clamp(value, (lower_mass_range + upper_mass_range) / 2, calculate_mass(FALSE))
+			upper_mass_range = clamp(value, (lower_mass_range + upper_mass_range) / 2, calculate_mass(smallest = FALSE))
 			estimate_time()
 			return TRUE
 
@@ -404,8 +414,8 @@
 				return
 
 			var/delta_center = ((lower_mass_range + upper_mass_range) / 2) - params["value"]
-			var/lowest = calculate_mass(TRUE)
-			var/highest = calculate_mass(FALSE)
+			var/lowest = calculate_mass(smallest = TRUE)
+			var/highest = calculate_mass(smallest = FALSE)
 			lower_mass_range = clamp(lower_mass_range - delta_center, lowest, highest)
 			upper_mass_range = clamp(upper_mass_range - delta_center, lowest, highest)
 			estimate_time()
@@ -452,29 +462,16 @@
 
 		log.Cut()
 		for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-			//Inverse first
-			var/volume = reagent.volume
+			//we don't bother about impure chems
 			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
-				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
-					continue
-				log[inverse_reagent.type] = "Cannot purify inverted" //Might as well make it do something - just updates the reagent's name
-				beaker1.reagents.remove_reagent(reagent.type, volume)
-				beaker2.reagents.add_reagent(reagent.inverse_chem, volume, reagtemp = beaker1.reagents.chem_temp, added_purity = reagent.get_inverse_purity())
 				continue
-
-			//Out of range
+			//out of our selected range
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 				continue
-
-			//find how far we are from the target purity
+			//already at max purity
 			var/delta_purity = initial(reagent.purity) - reagent.purity
-			if(delta_purity <= 0)//As pure as we can be - so lets not add more than we need
-				log[reagent.type] = "Can't purify over [initial(reagent.purity) * 100]%"
-				beaker1.reagents.remove_reagent(reagent.type, volume)
-				beaker2.reagents.add_reagent(reagent.type, volume, reagtemp = beaker1.reagents.chem_temp, added_purity = reagent.purity, added_ph = reagent.ph)
+			if(delta_purity <= 0)
 				continue
-
 			//add the purified reagent. More impure reagents will yield smaller amounts
 			var/product_vol = reagent.volume
 			beaker1.reagents.remove_reagent(reagent.type, product_vol)
@@ -482,8 +479,8 @@
 			log[reagent.type] = "Purified to [initial(reagent.purity) * 100]%"
 
 		//recompute everything
-		lower_mass_range = calculate_mass(TRUE)
-		upper_mass_range = calculate_mass(FALSE)
+		lower_mass_range = calculate_mass(smallest = TRUE)
+		upper_mass_range = calculate_mass(smallest = FALSE)
 		estimate_time()
 		update_appearance()
 		return PROCESS_KILL
