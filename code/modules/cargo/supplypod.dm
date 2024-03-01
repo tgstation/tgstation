@@ -90,6 +90,14 @@
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/closet/supplypod/back_to_station
+	name = "blood-red supply pod"
+	desc = "An intimidating supply pod, covered in the blood-red markings"
+	bluespace = TRUE
+	explosionSize = list(0,0,0,0)
+	style = STYLE_SYNDICATE
+	specialised = TRUE
+
 /datum/armor/closet_supplypod
 	melee = 30
 	bullet = 50

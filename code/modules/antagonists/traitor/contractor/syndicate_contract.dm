@@ -15,6 +15,8 @@
 	var/wanted_message
 	///List of everything found on the victim at the time of contracting, used to return their stuff afterwards.
 	var/list/victim_belongings = list()
+	///timerid for stuff that handles victim chat messages, effects and returnal
+	var/victim_timerid
 
 /datum/syndicate_contract/New(contract_owner, blacklist, type=CONTRACT_PAYOUT_SMALL)
 	contract = new(src)
@@ -119,6 +121,11 @@
 		// After we remove items, at least give them what they need to live.
 		target.dna.species.give_important_for_life(target)
 
+	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.
+	var/datum/market_item/slave/slaveryisbad = new(person_sent, ransom * (rand(5, 7)/10))
+	SSblackmarket.markets[/datum/market/blackmarket].add_item(slaveryisbad)
+	RegisterSignal(slaveryisbad, COMSIG_MARKET_ITEM_SPAWNED, PROC_REF(on_victim_shipped))
+
 	//we'll start the effects in a few seconds since it takes a moment for the pod to leave.
 	addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), person_sent), 3 SECONDS)
 
@@ -166,10 +173,10 @@
  * level - The current stage of harassement they are facing. This increases by itself, looping until finished.
  */
 /datum/syndicate_contract/proc/handle_victim_experience(mob/living/victim, level = VICTIM_EXPERIENCE_START)
-	// Ship 'em back - dead or alive, 4 minutes wait.
+	// Ship 'em back - dead or alive
 	// Even if they weren't the target, we're still treating them the same.
 	if(!level)
-		addtimer(CALLBACK(src, PROC_REF(return_victim), victim), (60 * 10) * 4)
+		victim_timerid = addtimer(CALLBACK(src, PROC_REF(return_victim), victim), 5 MINUTES, TIMER_STOPPABLE)
 	if(victim.stat == DEAD)
 		return
 
@@ -209,7 +216,7 @@
 
 	level++ //move onto the next level.
 	if(time_until_next)
-		addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), victim, level), time_until_next)
+		victim_timerid = addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), victim, level), time_until_next, TIMER_STOPPABLE)
 
 #undef VICTIM_EXPERIENCE_START
 #undef VICTIM_EXPERIENCE_FIRST_HIT
@@ -237,14 +244,23 @@
 				carbon_victim.set_heartattack(TRUE)
 
 	var/pod_rand_loc = rand(1, possible_drop_loc.len)
-	var/obj/structure/closet/supplypod/return_pod = new()
-	return_pod.bluespace = TRUE
-	return_pod.explosionSize = list(0,0,0,0)
-	return_pod.style = STYLE_SYNDICATE
+	var/obj/structure/closet/supplypod/back_to_station/return_pod = new()
 
 	do_sparks(8, FALSE, victim)
 	victim.visible_message(span_notice("[victim] vanishes..."))
 
+	victim.forceMove(src)
+
+	returnal_side_effects(return_pod, victim)
+
+	new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
+
+/datum/syndicate_contract/proc/on_victim_shipped(datum/market_item/source, obj/item/market_uplink/uplink, shipping_method, turf/shipping_loc)
+	SIGNAL_HANDLER
+	deltimer(victim_timerid)
+	returnal_side_effects(shipping_loc, source.item)
+
+/datum/syndicate_contract/proc/returnal_side_effects(atom/dropoff_location, mob/living/victim)
 	for(var/datum/weakref/belonging_ref in victim_belongings)
 		var/obj/item/belonging = belonging_ref.resolve()
 		if(!belonging)
@@ -256,16 +272,12 @@
 				continue
 			if(belonging == human_victim.shoes)
 				continue
-		belonging.forceMove(return_pod)
+		belonging.forceMove(dropoff_location)
 
-	for(var/obj/item/W in victim_belongings)
-		W.forceMove(return_pod)
-
-	victim.forceMove(return_pod)
+	for(var/obj/item/item in victim_belongings)
+		item.forceMove(dropoff_location)
 
 	victim.flash_act()
 	victim.adjust_eye_blur(3 SECONDS)
 	victim.adjust_dizzy(3.5 SECONDS)
 	victim.adjust_confusion(2 SECONDS)
-
-	new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
