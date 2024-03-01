@@ -347,7 +347,7 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         />
 
         {/* Graph */}
-        <g transform={`translate(0 0) scale(${scale} 1)`}>
+        <g transform={`scale(${scale} 1)`}>
           {reagentPeaks.map((peak) => (
             // Triangle peak
             <polygon
