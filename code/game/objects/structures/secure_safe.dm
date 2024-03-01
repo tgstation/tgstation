@@ -18,7 +18,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
-	find_and_hang_on_wall()
+	if(!density)
+		find_and_hang_on_wall()
 	PopulateContents()
 
 /obj/structure/secure_safe/proc/PopulateContents()
@@ -43,11 +44,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 		There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
 		It remains quite flush against the wall, and there only seems to be enough room to fit something as slim as an ID card."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "safe"
+	base_icon_state = "safe"
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
 	color = "#ffdd33"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
+	density = TRUE
 
 /datum/armor/safe_caps_spare
 	melee = 100

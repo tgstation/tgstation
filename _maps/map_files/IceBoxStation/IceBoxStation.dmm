@@ -17962,11 +17962,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/engineering/atmos)
 "fwQ" = (
-/obj/structure/table/reinforced,
-/obj/structure/secure_safe/caps_spare/directional/east,
-/obj/item/papercutter{
-	pixel_x = 7
-	},
+/obj/structure/secure_safe/caps_spare,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "fwS" = (
@@ -237781,7 +237777,7 @@ utR
 uEQ
 lET
 grA
-cEv
+fwQ
 nOH
 gxU
 gZq
@@ -240350,8 +240346,8 @@ nfk
 utR
 tmQ
 qnV
-fwQ
 kBr
+cEv
 lhv
 iGH
 bGm
