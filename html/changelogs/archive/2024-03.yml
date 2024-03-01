@@ -1,0 +1,27 @@
+2024-03-01:
+  Absolucy, LT3, Ghommie:
+  - refactor: Refactored maptext (those floating words)
+  - bugfix: Fixed special chat bubbles for yelling, clown, redtext, greentext
+  - bugfix: Fixed alignment of status display text
+  - code_imp: Status displays now synchronize their message lines when scrolling
+  - image: More maptext and font tweaks
+  - spellcheck: Context tooltips too small, too big... just right?
+  - bugfix: Maptext should now properly show superscript characters when performing
+      actions
+  - bugfix: Fixed text effects for runechat messages (the stuff enclosed in +, | and
+      _ characters).
+  - spellcheck: Improved the tip for say/text effects.
+  Absolucy, itsmeowdev:
+  - rscadd: Added TGUI color picker and replaced all use of BYOND color pickers with
+      it (TGUI input preference is still respected).
+  - qol: The Generic UI theme will now affect the border color of number inputs and
+      text areas the same as text inputs.
+  DexeeXI:
+  - bugfix: Baseline job titles for Cargo Tech, Quartermaster and Shaft Miner return.
+  - rscdel: Removed a single extra air pipe on the Icebox Maid Cafe so it stops causing
+      11 lines of test failures
+  - bugfix: Tweaks the Metastation Singularity Engine Complex to also stop unit test
+      failures.
+  MrMelbert:
+  - qol: Glasses colors should be a lot less harsh, and being blind no longer also
+      blinds your hud.

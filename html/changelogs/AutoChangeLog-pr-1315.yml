@@ -1,6 +1,0 @@
-author: "DexeeXI"
-delete-after: True
-changes:
-  - bugfix: "Baseline job titles for Cargo Tech, Quartermaster and Shaft Miner return."
-  - rscdel: "Removed a single extra air pipe on the Icebox Maid Cafe so it stops causing 11 lines of test failures"
-  - bugfix: "Tweaks the Metastation Singularity Engine Complex to also stop unit test failures."
