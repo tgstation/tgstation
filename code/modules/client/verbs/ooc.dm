@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	if(isnull(mob) || !validate_client(src))
-		to_chat(usr, span_warning("Failed to send your OOC message. You attempted to send the following message:\n[msg]"))
+		to_chat(usr, span_warning("Failed to send your OOC message. You attempted to send the following message:\n[span_big(msg)]"))
 		return
 
 	if(isnull(holder))
