@@ -272,7 +272,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/tactical_lite
-	name = "combat first aid kid"
+	name = "combat first aid kit"
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE

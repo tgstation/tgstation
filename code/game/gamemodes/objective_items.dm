@@ -349,7 +349,7 @@
 	excludefromjob = list(JOB_CAPTAIN)
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
-	difficulty = 4
+	difficulty = 3
 	steal_hint = "A special yellow jetpack found in the Suit Storage Unit in the Captain's Quarters."
 
 /obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
@@ -387,7 +387,7 @@
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
 	item_owner = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
-	difficulty = 4
+	difficulty = 3
 	steal_hint = "The Chief Medical Officer's personal medical injector. \
 		Usually found amongst their medical supplies on their person, in their belt, or otherwise in their locker."
 
@@ -530,7 +530,7 @@
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
 	exists_on_map = TRUE
-	difficulty = 4
+	difficulty = 3
 	steal_hint = "The blueprints of the station, found in the Chief Engineer's locker, or on their person. A picture may suffice."
 
 /obj/item/areaeditor/blueprints/add_stealing_item_objective()

@@ -202,18 +202,19 @@
 		return FALSE
 	if(is_type_in_typecache(item, blacklisted_item_types))
 		return FALSE
-	if(item.exists_on_map)
-		var/list/all_valid_existing_things = list()
-		for(var/obj/item/existing_thing as anything in GLOB.steal_item_handler.objectives_by_path[item.targetitem])
-			var/turf/thing_turf = get_turf(existing_thing)
-			if(isnull(thing_turf)) // nullspaced likely means it was stolen and is in the black market.
-				continue
-			if(!is_station_level(thing_turf.z) && !is_mining_level(thing_turf.z))
-				continue
-			all_valid_existing_things += existing_thing
+	if(!item.exists_on_map)
+		return TRUE
+	var/list/all_valid_existing_things = list()
+	for(var/obj/item/existing_thing as anything in GLOB.steal_item_handler.objectives_by_path[item.targetitem])
+		var/turf/thing_turf = get_turf(existing_thing)
+		if(isnull(thing_turf)) // nullspaced likely means it was stolen and is in the black market.
+			continue
+		if(!is_station_level(thing_turf.z) && !is_mining_level(thing_turf.z))
+			continue
+		all_valid_existing_things += existing_thing
 
-		if(!length(all_valid_existing_things))
-			return FALSE
+	if(!length(all_valid_existing_things))
+		return FALSE
 	return TRUE
 
 /datum/spy_bounty/objective_item/init_bounty(datum/spy_bounty_handler/handler)
@@ -580,6 +581,7 @@
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom
 	desired_type = /obj/item
+	black_market_prob = 100
 
 /datum/spy_bounty/targets_person/some_item/heirloom/find_desired_thing(mob/living/crewmember)
 	var/datum/quirk/item_quirk/family_heirloom/quirk = crewmember.get_quirk(/datum/quirk/item_quirk/family_heirloom)
