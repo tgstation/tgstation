@@ -75,7 +75,7 @@
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
-		TRAIT_SHOVE_KNOCKDOWN_BLOCKED,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
@@ -431,6 +431,9 @@
 
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
+
+/mob/living/silicon/get_butt_sprite()
+	return BUTT_SPRITE_QR_CODE
 
 /**
  * Records an IC event log entry in the cyborg's internal tablet.

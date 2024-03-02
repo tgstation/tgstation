@@ -44,11 +44,11 @@ type Data = {
 export const DeathmatchLobby = (props) => {
   const { act, data } = useBackend<Data>();
   return (
-    <Window title="Deathmatch Lobby" width={560} height={400}>
+    <Window title="Deathmatch Lobby" width={560} height={420}>
       <Window.Content>
         <Flex height="94%">
-          <Flex.Item width="350px">
-            <Section height="99%">
+          <Flex.Item width="63%">
+            <Section fill scrollable>
               <Table>
                 <Table.Row>
                   <Table.Cell collapsing />
@@ -148,6 +148,7 @@ export const DeathmatchLobby = (props) => {
               </Box>
               <Divider />
               {data.map.desc}
+              <Divider />
               <Box textAlign="center">
                 Maximum Play Time: <b>{`${data.map.time / 600}min`}</b>
                 <br />
