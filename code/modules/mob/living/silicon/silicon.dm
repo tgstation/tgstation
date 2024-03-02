@@ -97,7 +97,7 @@
 		unbuckle_mob(living_mob)
 		living_mob.electrocute_act(shock_damage/100, shock_source, siemens_coeff, flags) //Hard metal shell conducts!
 
-	return COMPONENT_LIVING_BLOCK_SHOCK //So borgs they don't die trying to fix wiring
+	return COMPONENT_LIVING_BLOCK_SHOCK //So borgs don't die trying to fix wiring
 
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
