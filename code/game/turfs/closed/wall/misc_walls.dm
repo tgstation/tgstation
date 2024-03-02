@@ -2,8 +2,6 @@
 	name = "runed metal wall"
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
-	icon_state = "cult_wall-0"
-	base_icon_state = "cult_wall"
 	turf_flags = IS_SOLID
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
@@ -30,12 +28,9 @@
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
 /turf/closed/wall/ice
-// wallening todo	icon = 'icons/turf/walls/icedmetal_wall.dmi'
-	icon_state = "icedmetal_wall-0"
-	base_icon_state = "icedmetal_wall"
+	icon = 'icons/turf/walls/iced_metal_wall.dmi'
 	desc = "A wall covered in a thick sheet of ice."
 	turf_flags = IS_SOLID
-	canSmoothWith = null
 	rcd_memory = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
@@ -45,8 +40,6 @@
 	name = "rusted wall"
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
-	icon_state = "rusty_wall-0"
-	base_icon_state = "rusty_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
 	//SDMM supports colors, this is simply for easier mapping
@@ -61,13 +54,8 @@
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
-	icon_state = "rusty_reinforced_wall-0"
-	base_icon_state = "rusty_reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
-	//SDMM supports colors, this is simply for easier mapping
-	//and should be removed on initialize
-	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
 	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
@@ -78,8 +66,6 @@
 	name = "clockwork wall"
 	desc = "A huge chunk of bronze, decorated like gears and cogs."
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall-0"
-	base_icon_state = "clockwork_wall"
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/sheet/bronze
@@ -91,9 +77,7 @@
 /turf/closed/wall/rock
 	name = "reinforced rock"
 	desc = "It has metal struts that need to be welded away before it can be mined."
-// wallening todo	icon = 'icons/turf/walls/reinforced_rock.dmi'
-	icon_state = "porous_rock-0"
-	base_icon_state = "porous_rock"
+	icon = 'icons/turf/walls/reinforced_red_rock_wall.dmi'
 	turf_flags = NO_RUST
 	sheet_amount = 1
 	hardness = 50

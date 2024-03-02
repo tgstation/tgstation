@@ -812,6 +812,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
+	icon = 'icons/obj/machines/newscaster.dmi'
 	icon_state = "newscaster_assembly"
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/newscaster

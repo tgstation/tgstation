@@ -17,17 +17,6 @@
 /// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
 #define SMOOTH_BORDER_OBJECT (1<<6)
 
-/// Components of a smoothing junction
-/// Redefinitions of the diagonal directions so they can be stored in one var without conflicts
-#define NORTH_JUNCTION NORTH //(1<<0)
-#define SOUTH_JUNCTION SOUTH //(1<<1)
-#define EAST_JUNCTION EAST  //(1<<2)
-#define WEST_JUNCTION WEST  //(1<<3)
-#define NORTHEAST_JUNCTION (1<<4)
-#define SOUTHEAST_JUNCTION (1<<5)
-#define SOUTHWEST_JUNCTION (1<<6)
-#define NORTHWEST_JUNCTION (1<<7)
-
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
@@ -166,17 +155,18 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_MEAT_WALLS S_TURF(17) //![/turf/closed/wall/mineral/meat, /obj/structure/falsewall/meat]
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
 #define SMOOTH_GROUP_PIZZA_WALLS S_OBJ(19)  ///turf/closed/wall/mineral/pizza, /obj/structure/falsewall/pizza (wallening todo: these don't exist)
-#define SMOOTH_GROUP_CLOCK_WALLS S_OBJ(20) ///turf/closed/wall/mineral/bronze,
+#define SMOOTH_GROUP_CLOCK_WALLS S_OBJ(20) ///turf/closed/wall/mineral/bronze
+#define SMOOTH_GROUP_SNOW_WALLS S_OBJ(21) ///turf/closed/wall/mineral/snow
 
-#define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
+#define SMOOTH_GROUP_PAPERFRAME S_OBJ(22) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
-#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(22) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
-#define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(23) ///obj/structure/window/bronze/fulltile
-#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(24) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
-#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(25) ///obj/structure/window/reinforced/shuttle
-#define SMOOTH_GROUP_WINDOW_FRAMES S_OBJ(26) ///obj/structure/window_frame
+#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(23) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(24) ///obj/structure/window/bronze/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(25) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
+#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(26) ///obj/structure/window/reinforced/shuttle
+#define SMOOTH_GROUP_WINDOW_FRAMES S_OBJ(27) ///obj/structure/window_frame
 
-#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/tram
+#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(28) ///obj/structure/tram
 
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk

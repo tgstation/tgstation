@@ -526,6 +526,7 @@ Difficulty: Hard
 		M.gets_drilled(caster)
 
 // wallening todo:	does this work?
+// It doesn't, we need a unique sprite for this
 /obj/effect/temp_visual/hierophant/wall //smoothing and pooling were not friends, but pooling is dead.
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall.dmi'

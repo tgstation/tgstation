@@ -34,30 +34,21 @@
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
 	use_splitvis = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /turf/closed/indestructible/weeb
 	name = "paper wall"
 	desc = "Reinforced paper walling. Someone really doesn't want you to leave."
-	icon = 'icons/obj/smooth_structures/paperframes.dmi'
-	icon_state = "paperframes-0"
-	base_icon_state = "paperframes"
-	smoothing_groups = SMOOTH_GROUP_PAPERFRAME
-	canSmoothWith = SMOOTH_GROUP_PAPERFRAME
-	var/static/mutable_appearance/indestructible_paper = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-whole", layer = CLOSED_TURF_LAYER - 0.1)
-
-/turf/closed/indestructible/weeb/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
-/turf/closed/indestructible/weeb/update_overlays()
-	. = ..()
-	. += indestructible_paper
+	icon = 'icons/turf/walls/paperframe_wall.dmi'
+	smoothing_groups = SMOOTH_GROUP_PAPERFRAME + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_PAPERFRAME + SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/closed/indestructible/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	base_icon_state = "sandstone_wall"
 	baseturfs = /turf/closed/indestructible/sandstone
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
@@ -72,10 +63,10 @@
 	icon_state = ""
 	pixel_x = -64
 	plane = SPLASHSCREEN_PLANE
+	use_splitvis = FALSE
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	use_splitvis = FALSE
 	bullet_bounce_sound = null
 
 INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
@@ -112,57 +103,45 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = null
 	desc = null
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	use_splitvis = FALSE
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	use_splitvis = FALSE
 
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/riveted_wall.dmi'
-	icon_state = "riveted_wall-0"
-	base_icon_state = "riveted_wall"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted_wall.dmi'
-	icon_state = "riveted_wall-0"
-	base_icon_state = "riveted_wall"
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "plastitanium_wall-0"
-	base_icon_state = "plastitanium_wall"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SYNDICATE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
-	icon_state = "uranium_wall-0"
-	base_icon_state = "uranium_wall"
 
 /turf/closed/indestructible/riveted/plastinum
 	name = "plastinum wall"
 	desc = "A luxurious wall made out of a plasma-platinum alloy. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/plastinum_wall.dmi'
-	icon_state = "plastinum_wall-0"
-	base_icon_state = "plastinum_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_PLASTINUM_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_PLASTINUM_WALLS
 
+// Wallening todo: remove
 /turf/closed/indestructible/riveted/plastinum/nodiagonal
-	icon_state = "map-shuttle_nd"
 
 /turf/closed/indestructible/wood
 	icon = 'icons/turf/walls/wood_wall.dmi'
-	icon_state = "wood_wall-0"
-	base_icon_state = "wood_wall"
 	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 
@@ -171,8 +150,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "alien wall"
 	desc = "A wall with alien alloy plating."
 	icon = 'icons/turf/walls/abductor_wall.dmi'
-	icon_state = "abductor_wall-0"
-	base_icon_state = "abductor_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
@@ -182,8 +159,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "runed metal wall"
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/cult_wall.dmi'
-	icon_state = "cult_wall-0"
-	base_icon_state = "cult_wall"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 
@@ -191,44 +166,60 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/abductor
 	name = "alien wall"
 	icon = 'icons/turf/walls/abductor_wall.dmi'
-	icon_state = "abductor_wall-0"
-	base_icon_state = "abductor_wall"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 
 /turf/closed/indestructible/opshuttle
-	icon_state = "wall3"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/smooth_structures/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
-	icon_state = MAP_SWITCH("reinforced_window-0", "fake_window")
-	base_icon_state = "reinforced_window"
+	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	MAP_SWITCH(, icon_state = "fake_window")
 	opacity = FALSE
+	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 
 /turf/closed/indestructible/fakeglass/Initialize(mapload)
 	. = ..()
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01) //add a grille underlay
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02) //add the plating underlay, below the grille
+	AddComponent(/datum/component/window_smoothing, /turf/closed/indestructible/fakeglass)
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", offset_spokesman = src, plane = FLOOR_PLANE)
+
+/turf/closed/indestructible/fakeglass/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
+
+/turf/closed/indestructible/fakeglass/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]")
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", offset_spokesman = src, plane = OVER_TILE_PLANE)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
-	icon_state = "plastitanium_window-0"
-	base_icon_state = "plastitanium_window"
+	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	MAP_SWITCH(, icon_state = "fake_window")
 	opacity = FALSE
+	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 
 /turf/closed/indestructible/opsglass/Initialize(mapload)
 	. = ..()
-	icon_state = null
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01)
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02)
+	AddComponent(/datum/component/window_smoothing, /turf/closed/indestructible/opsglass)
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", offset_spokesman = src, plane = FLOOR_PLANE)
+
+/turf/closed/indestructible/opsglass/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
+
+/turf/closed/indestructible/opsglass/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]")
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", offset_spokesman = src, plane = OVER_TILE_PLANE)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
@@ -253,10 +244,10 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "dense rock"
 	desc = "An extremely densely-packed rock, most mining tools or explosives would never get through this."
 	icon = 'icons/turf/walls/rock_wall2.dmi'
-	base_icon_state = "rock_wall"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
+/// Wallening todo need a new state for
 /turf/closed/indestructible/rock/snow
 	name = "mountainside"
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
@@ -266,25 +257,23 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	bullet_bounce_sound = null
 
 /turf/closed/indestructible/rock/snow/ice
-	name = "iced rock"
-	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "icerock"
-
-/turf/closed/indestructible/rock/snow/ice/ore
 	icon = 'icons/turf/walls/icerock_wall.dmi'
-	icon_state = "icerock_wall-0"
-	base_icon_state = "icerock_wall"
+	name = "iced rock"
+	icon_state = null
+	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
-	pixel_x = -4
-	pixel_y = -4
 
+// Is it ok that this looks the same as its parent? why does it exist?
+// Something is wrong here huh
+// rock/snow used to have a unique state, do we need to put it back?
+// also we need a sprite for /rock, I think? need to dig more
+#warn wallenin todo, the above
+/turf/closed/indestructible/rock/snow/ice/ore
 /turf/closed/indestructible/paper
 	name = "thick paper wall"
 	desc = "A wall layered with impenetrable sheets of paper."
-	icon = 'icons/turf/walls/paperframe_wall.dmi'
-	icon_state = "paperwall"
+	icon = 'icons/turf/walls/paper_wall.dmi'
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
@@ -292,7 +281,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "necropolis wall"
 	desc = "A seemingly impenetrable wall."
 	icon = 'icons/turf/walls/necro_wall.dmi'
-	icon_state = "necro"
 	explosive_resistance = 50
 	baseturfs = /turf/closed/indestructible/necropolis
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
@@ -307,8 +295,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "impervious iron wall"
 	desc = "A wall with tough iron plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
-	icon_state = "iron_wall-0"
-	base_icon_state = "iron_wall"
 	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 	opacity = FALSE
@@ -317,8 +303,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "necropolis wall"
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
-	icon_state = "boss_wall-0"
-	base_icon_state = "boss_wall"
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_BOSS_WALLS
 	canSmoothWith = SMOOTH_GROUP_BOSS_WALLS
 	explosive_resistance = 50
@@ -339,15 +323,12 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "wall"
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
-	icon_state = "wall"
 	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
 	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 
 /turf/closed/indestructible/resin
 	name = "resin wall"
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "resin_wall-0"
-	base_icon_state = "resin_wall"
 	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
@@ -366,9 +347,14 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/grille
 	name = "grille"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "grille"
+	desc = "A flimsy framework of iron rods."
+	icon = 'icons/obj/smooth_structures/grille.dmi'
+	icon_state = "grille-0"
 	base_icon_state = "grille"
+	use_splitvis = FALSE
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GRILLE
+	canSmoothWith = SMOOTH_GROUP_GRILLE
 
 /turf/closed/indestructible/grille/Initialize(mapload)
 	. = ..()
@@ -378,7 +364,5 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "dense meat wall"
 	desc = "A huge chunk of dense, packed meat. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/meat_wall.dmi'
-	icon_state = "meat_wall-0"
-	base_icon_state = "meat_wall"
 	smoothing_groups = SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_WALLS

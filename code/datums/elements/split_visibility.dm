@@ -22,8 +22,10 @@ GLOBAL_LIST_INIT(diagonal_junctions, generate_splitvis_lookup())
 
 GLOBAL_LIST_EMPTY(split_visibility_objects)
 
-/proc/get_splitvis_object(z_offset, icon_path, junction, dir, frill = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
-	var/key = "[icon_path]-[junction]-[dir]-[frill]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
+// Thinking on it, we really only need to generate a copy for each direction accounting for frill, and then just set the overlay based off that
+// Except that doesn't work with frills, but frills don't vary by direction, and frills could inherit icon/state from the parent with appearance flags
+/proc/get_splitvis_object(z_offset, icon_path, junction, dir, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
+	var/key = "[icon_path]-[junction]-[dir]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.split_visibility_objects[key]
 	if(vis)
 		return vis
@@ -32,9 +34,6 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	vis.icon = icon_path
 	var/junc = junction ? junction : "0"
 	vis.icon_state = "[junc]-[dir]"
-	if(frill)
-		vis.overlays += get_splitvis_object(z_offset, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
-	vis.alpha = alpha
 	vis.pixel_x = pixel_x
 	vis.pixel_y = pixel_y
 	SET_PLANE_W_SCALAR(vis, plane, z_offset)
@@ -131,10 +130,8 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			continue
 
 		var/active_plane = GAME_PLANE
-		var/is_frill = FALSE
 		if(direction & NORTH)
 			active_plane = FRILL_PLANE
-			is_frill = TRUE
 
 		var/turf/operating_turf = get_step(target_turf, direction)
 		// Right up against an edge of the map eh?
@@ -145,17 +142,17 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			var/mutable_appearance/split_vis/vis
 			// If we're trying to draw to something with splitvis, just draw to yourself, and use the hidden wall plane
 			if(HAS_TRAIT(operating_turf, TRAIT_CONTAINS_SPLITVIS))
-				vis = get_splitvis_object(offset, icon_path, junction, direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE)
+				vis = get_splitvis_object(offset, icon_path, junction, direction, 0, 0, HIDDEN_WALL_PLANE)
 				target_turf.overlays += vis
 			else
-				vis = get_splitvis_object(offset, icon_path, junction, direction, is_frill, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
+				vis = get_splitvis_object(offset, icon_path, junction, direction, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 				operating_turf.overlays += vis
 		else
 			// I HATE the code duping, but we need to try both to ensure it's properly cleared
 			var/mutable_appearance/split_vis/vis
-			vis = get_splitvis_object(offset, icon_path, junction, direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE)
+			vis = get_splitvis_object(offset, icon_path, junction, direction, 0, 0, HIDDEN_WALL_PLANE)
 			target_turf.overlays -= vis
-			vis = get_splitvis_object(offset, icon_path, junction, direction, is_frill, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
+			vis = get_splitvis_object(offset, icon_path, junction, direction, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 			operating_turf.overlays -= vis
 
 	for(var/direction in GLOB.diagonals)
@@ -177,17 +174,17 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			// If we're trying to draw to something with splitvis, just draw to yourself, and use the hidden wall plane
 			// Wallening todo: Frills should block emissives
 			if(HAS_TRAIT(operating_turf, TRAIT_CONTAINS_SPLITVIS))
-				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
+				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
 				target_turf.overlays += vis
 			else
-				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
+				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
 				operating_turf.overlays += vis
 		else
 			// I HATE the code duping, but we need to try both to ensure it's properly cleared
 			var/mutable_appearance/split_vis/vis
-			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
+			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
 			target_turf.overlays -= vis
-			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
+			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
 			operating_turf.overlays -= vis
 
 /datum/element/split_visibility/Detach(atom/target)

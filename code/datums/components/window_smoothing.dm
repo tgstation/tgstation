@@ -13,8 +13,8 @@
 
 GLOBAL_LIST_EMPTY(window_appearances)
 
-/proc/get_window_appearance(z_offset, icon_path, junction, side, alt = FALSE, shadow = FALSE, alpha = 255, pixel_y = 0, plane = GAME_PLANE, layer = ABOVE_OBJ_LAYER)
-	var/key = "[icon_path]-[junction]-[side]-[alt]-[shadow]-[alpha]-[pixel_y]-[plane]-[layer]-[z_offset]"
+/proc/get_window_appearance(z_offset, icon_path, junction, side, alt = FALSE, pixel_y = 0, plane = GAME_PLANE)
+	var/key = "[icon_path]-[junction]-[side]-[alt]-[pixel_y]-[plane]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.window_appearances[key]
 	if(vis)
 		return vis
@@ -25,12 +25,8 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	if(alt)
 		state = "alt-[state]"
 	vis.icon_state = state
-	if(shadow)
-		vis.overlays += get_window_appearance(z_offset, icon_path, junction, side, alt, FALSE, 120, pixel_y = 0, plane = UNDER_FRILL_PLANE)
-	vis.alpha = alpha
 	vis.pixel_y = pixel_y
 	SET_PLANE_W_SCALAR(vis, plane, z_offset)
-	vis.layer = layer
 
 	GLOB.window_appearances[key] = vis
 	return vis
@@ -40,8 +36,11 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	var/list/mutable_appearance/our_appearances = list()
 	var/mutable_appearance/appearance_above
 	var/turf/paired_turf
+	/// A type of turf to ignore when doing our closed check
+	/// Useful for cases where WE are a turf! *gasp of shock/fear*
+	var/turf/ignored_turf
 
-/datum/component/window_smoothing/Initialize()
+/datum/component/window_smoothing/Initialize(ignored_turf = null)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -70,11 +69,11 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	// what we are checking here is if there's a wall below, OR if there's a wall to the south(east|west) and
 	// a SMOOTHING TARGET to the south.
 	// This ensures we only use the alt display if there's a wall there, AND we're smoothing into it
-	var/wall_below = isclosedturf(get_step(our_turf, SOUTH)) || \
-		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHEAST))) || \
-		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHWEST)))
+	var/wall_below = (isclosedturf(get_step(our_turf, SOUTH)) && (!ignored_turf || !istype(get_step(our_turf, SOUTH), ignored_turf))) || \
+		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHEAST)) && (!ignored_turf || !istype(get_step(our_turf, SOUTHWEST), ignored_turf))) || \
+		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHWEST)) && (!ignored_turf || !istype(get_step(our_turf, SOUTHWEST), ignored_turf)))
 	// If there's a wall below us, we render different
-	our_appearances += get_window_appearance(offset, icon_path, junction, "lower", wall_below, FALSE)
+	our_appearances += get_window_appearance(offset, icon_path, junction, "lower", wall_below)
 
 	if(paired_turf)
 		stack_trace("We tried to generate a connection to a turf while one already exists")
@@ -82,13 +81,13 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	// If there's nothin, we'll use a frill. Otherwise we won't
 	paired_turf = get_step(our_turf, NORTH)
 	// We only display an above state if there's a wall, OR if we're smoothing with nothing up there
-	if(isclosedturf(paired_turf))
-		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", TRUE, FALSE, pixel_y = 32)
+	if(isclosedturf(paired_turf) && (!ignored_turf || !istype(paired_turf, ignored_turf)))
+		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", FALSE, pixel_y = 32)
 		UnregisterSignal(paired_turf, COMSIG_QDELETING)
 	else if(!(NORTH & junction))
 		// Draw to the turf above you so this can be seen without seeing the window's turf. Oh and draw this as a frill
 		// We use the parent's pixel y as a part of this to ensure everything lines up proper when the parent is all shifted around
-		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", FALSE, TRUE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
+		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", TRUE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
 		paired_turf.overlays += appearance_above
 		RegisterSignal(paired_turf, COMSIG_QDELETING, PROC_REF(tied_turf_deleted), override = TRUE) // Override because this could be called multiple times
 	else

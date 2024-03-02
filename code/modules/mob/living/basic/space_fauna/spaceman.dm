@@ -1,4 +1,6 @@
 /mob/living/basic/spaceman
+	// Sovl
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "Spaceman"
 	desc = "What in the actual hell..?"
 	icon = 'icons/mob/simple/animal.dmi'

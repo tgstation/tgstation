@@ -90,8 +90,6 @@
 /obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/windows/pod_window.dmi'
-	icon_state = "pod_window-0"
-	base_icon_state = "pod_window"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
