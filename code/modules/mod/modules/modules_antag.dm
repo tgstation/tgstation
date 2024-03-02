@@ -11,7 +11,7 @@
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
@@ -26,6 +26,8 @@
 	var/list/armor_mod = /datum/armor/mod_module_armor_boost
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
+	/// List of traits added when the mod is activated
+	var/list/traits_to_add = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/mod_module_armor_boost
 	melee = 25
@@ -50,6 +52,7 @@
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	mod.slowdown -= actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
+	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
@@ -69,6 +72,7 @@
 		balloon_alert(mod.wearer, "armor retracts, EVA ready")
 	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
+	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
@@ -483,12 +487,15 @@
 /obj/item/mod/module/infiltrator
 	name = "MOD infiltration core programs module"
 	desc = "The primary stealth systems operating within the suit. Utilizing electromagnetic signals, \
-		the wearer simply cannot be observed closely, or heard clearly by those around them."
+		the wearer simply cannot be observed closely, or heard clearly by those around them.\
+		It also contains some dampening systems to help protect a user from blows to the head."
 	icon_state = "infiltrator"
 	complexity = 0
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
-	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
+	/// List of traits added when the suit is activated
+	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
 	mod.item_flags |= EXAMINE_SKIP
@@ -497,11 +504,11 @@
 	mod.item_flags &= ~EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
+	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
+	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	if(deleting)
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)

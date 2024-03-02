@@ -2,7 +2,6 @@
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list(FACTION_NEUTRAL, FACTION_MONKEY)
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	if (cubespawned)
@@ -31,12 +30,6 @@
 	var/obj/item/clothing/head/helmet/toggleable/justice/escape/helmet = new(src)
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
-
-/mob/living/carbon/human/species/monkey/holodeck
-	race = /datum/species/monkey/holodeck
-
-/mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
-	return
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 

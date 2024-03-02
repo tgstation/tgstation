@@ -89,7 +89,7 @@
 	gender = PLURAL
 	bite_consumption_mod = 0.5
 	seed = /obj/item/seeds/wheat/meat
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT
 	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE

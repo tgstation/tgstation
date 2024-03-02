@@ -213,7 +213,7 @@
 
 // UI Stuff
 
-/obj/machinery/atmospherics/components/ui_status(mob/user)
+/obj/machinery/atmospherics/components/ui_status(mob/user, datum/ui_state/state)
 	if(allowed(user))
 		return ..()
 	to_chat(user, span_danger("Access denied."))
@@ -268,6 +268,10 @@
 	if(!.)
 		return FALSE
 	set_init_directions()
+	reconnect_nodes()
+	return TRUE
+
+/obj/machinery/atmospherics/components/proc/reconnect_nodes()
 	for(var/i in 1 to device_type)
 		var/obj/machinery/atmospherics/node = nodes[i]
 		if(node)
@@ -285,7 +289,6 @@
 			node.add_member(src)
 			update_parents()
 		SSair.add_to_rebuild_queue(src)
-	return TRUE
 
 /**
  * Disconnects all nodes from ourselves, remove us from the node's nodes.
