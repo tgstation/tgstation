@@ -5,6 +5,8 @@
 	icon_state = "thermo_base"
 	plane = GAME_PLANE
 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
 
@@ -129,7 +131,7 @@
 	if(!initial(icon))
 		return
 	var/mutable_appearance/thermo_overlay = new(initial(icon))
-	. += get_pipe_image(thermo_overlay, "pipe", dir, COLOR_LIME, piping_layer)
+	. += get_pipe_image(thermo_overlay, "pipe", dir, pipe_color, piping_layer)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
@@ -222,6 +224,8 @@
 		return ITEM_INTERACT_SUCCESS
 	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
+	if(anchored)
+		reconnect_nodes()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -233,6 +237,8 @@
 	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]])
 	visible_message(span_notice("[user] set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."), ignored_mobs = user)
 	to_chat(user, span_notice("You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."))
+	if(anchored)
+		reconnect_nodes()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -253,7 +259,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return
 
-/obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user, datum/ui_state/state)
 	if(interactive)
 		return ..()
 	return UI_CLOSE

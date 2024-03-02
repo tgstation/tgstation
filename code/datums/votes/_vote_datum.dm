@@ -32,6 +32,8 @@
 	var/count_method = VOTE_COUNT_METHOD_SINGLE
 	/// The method for selecting a winner.
 	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
+	/// Should we show details about the number of votes submitted for each option?
+	var/display_statistics = TRUE
 
 /**
  * Used to determine if this vote is a possible
@@ -193,21 +195,22 @@
 	if(total_votes <= 0)
 		return span_bold("Vote Result: Inconclusive - No Votes!")
 
-	returned_text += "\nResults:"
-	for(var/option in choices)
-		returned_text += "\n"
-		var/votes = choices[option]
-		var/percentage_text = ""
-		if(votes > 0)
-			var/actual_percentage = round((votes / total_votes) * 100, 0.1)
-			var/text = "[actual_percentage]"
-			var/spaces_needed = 5 - length(text)
-			for(var/_ in 1 to spaces_needed)
-				returned_text += " "
-			percentage_text += "[text]%"
-		else
-			percentage_text = "    0%"
-		returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
+	if (display_statistics)
+		returned_text += "\nResults:"
+		for(var/option in choices)
+			returned_text += "\n"
+			var/votes = choices[option]
+			var/percentage_text = ""
+			if(votes > 0)
+				var/actual_percentage = round((votes / total_votes) * 100, 0.1)
+				var/text = "[actual_percentage]"
+				var/spaces_needed = 5 - length(text)
+				for(var/_ in 1 to spaces_needed)
+					returned_text += " "
+				percentage_text += "[text]%"
+			else
+				percentage_text = "    0%"
+			returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
 
 	if(!real_winner) // vote has no winner or cannot be won, but still had votes
 		return returned_text

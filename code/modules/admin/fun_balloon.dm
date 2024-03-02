@@ -54,7 +54,7 @@
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
 	return GLOB.admin_state
 
-/obj/effect/fun_balloon/sentience/ui_status(mob/user)
+/obj/effect/fun_balloon/sentience/ui_status(mob/user, datum/ui_state/state)
 	if(popped)
 		return UI_CLOSE
 	if(isAdminObserver(user)) // ignore proximity if we're an admin

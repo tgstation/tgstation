@@ -92,6 +92,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(.)
 		set_operating(TRUE)
 
+/obj/machinery/conveyor/auto/inverted
+	icon_state = "conveyor_map_inverted"
+	flipped = TRUE
+
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	..()
