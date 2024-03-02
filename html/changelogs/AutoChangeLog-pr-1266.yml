@@ -1,0 +1,10 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - bugfix: "QM is NOT a head."
+  - bugfix: "QM no longer has command related items on spawn."
+  - bugfix: "QM is not chain of command. No more biscuit."
+  - bugfix: "QM's SECHUD icon is no longer blue. It's improved, hope you appreciate the cringe."
+  - bugfix: "QM's PDA doesn't have bullshit programs on it anymore. In fact, it's a non-head PDA that has what you require to **do your job**."
+  - bugfix: "QM offices properly reflect their non-head status."
+  - bugfix: "Maid Cafe on Icebox had extra pipe causing a litany of issues. The extra pipe is now removed."
