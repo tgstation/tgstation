@@ -19,7 +19,36 @@ SUBSYSTEM_DEF(chat)
 	/// Assosciates a ckey with their next sequence number.
 	var/list/client_to_sequence_number = list()
 
+
 /datum/controller/subsystem/chat/proc/generate_payload(client/target, message_data)
+	var/static/chain = 1
+	switch(chain)
+		if (1)
+			. = generate_payload_old(arglist(args))
+			if (prob(10))
+				if (prob(50))
+					chain = 2
+				else
+					chain = 3
+
+		if (2)
+			. = generate_payload_mso(arglist(args))
+			if (prob(10))
+				if (prob(50))
+					chain = 3
+				else
+					chain = 1
+
+		if (3)
+			. = generate_payload_potato(arglist(args))
+			if (prob(10))
+				if (prob(50))
+					chain = 1
+				else
+					chain = 2
+
+
+/datum/controller/subsystem/chat/proc/generate_payload_old(client/target, message_data)
 	var/sequence = client_to_sequence_number[target.ckey]
 	client_to_sequence_number[target.ckey] += 1
 
@@ -30,6 +59,50 @@ SUBSYSTEM_DEF(chat)
 	if(!(target.ckey in client_to_reliability_history))
 		client_to_reliability_history[target.ckey] = list()
 	var/list/client_history = client_to_reliability_history[target.ckey]
+	client_history["[sequence]"] = payload
+
+	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
+		var/oldest = text2num(client_history[1])
+		for(var/index in 2 to length(client_history))
+			var/test = text2num(client_history[index])
+			if(test < oldest)
+				oldest = test
+		client_history -= "[oldest]"
+	return payload
+
+/datum/controller/subsystem/chat/proc/generate_payload_mso(client/target, message_data)
+	var/sequence = client_to_sequence_number[target.ckey]++
+
+	var/datum/chat_payload/payload = new
+	payload.sequence = sequence
+	payload.content = message_data
+
+	var/list/client_history = (client_to_reliability_history[target.ckey] ||= list())
+	
+	client_history["[sequence]"] = payload
+
+	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
+		var/oldest = text2num(client_history[1])
+		for(var/index in 2 to length(client_history))
+			var/test = text2num(client_history[index])
+			if(test < oldest)
+				oldest = test
+		client_history -= "[oldest]"
+	return payload
+
+/datum/controller/subsystem/chat/proc/generate_payload_potato(client/target, message_data)
+	var/sequence = client_to_sequence_number[target.ckey]
+	client_to_sequence_number[target.ckey] += 1
+	
+	var/datum/chat_payload/payload = new
+	payload.sequence = sequence
+	payload.content = message_data
+
+	if(!islist(client_to_reliability_history[target.ckey]))
+		client_to_reliability_history[target.ckey] = list()
+	
+	var/list/client_history = client_to_reliability_history[target.ckey] 
+	
 	client_history["[sequence]"] = payload
 
 	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
