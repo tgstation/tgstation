@@ -17,8 +17,8 @@
 	melee_damage_upper = max(PET_CULT_ATTACK + 5, initial(melee_damage_upper))
 	maxHealth = max(PET_CULT_HEALTH, initial(maxHealth))
 	fully_heal()
-	//we only serve the cult
-	faction = list(FACTION_CULT)
+
+	faction = list(FACTION_CULT) //we only serve the cult
 
 	if(isnull(cult_icon_state))
 		add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
