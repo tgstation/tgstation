@@ -107,8 +107,8 @@
 	// (Primarily a way to prevent cheese with damage healing chem mixes,
 	// but also serves as a counter-counter to stuff like mute toxin.)
 	var/obj/item/organ/user_stomach = user.get_organ_slot(ORGAN_SLOT_STOMACH)
-	user.reagents?.remove_all_direct(0.33)
-	user_stomach?.reagents?.remove_all_direct(0.33)
+	user.reagents?.remove_all(0.33, relative = TRUE)
+	user_stomach?.reagents?.remove_all(0.33, relative = TRUE)
 	if(user.has_status_effect(/datum/status_effect/teleport_flux/perma))
 		return
 
