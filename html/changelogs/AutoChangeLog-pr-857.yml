@@ -1,0 +1,4 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - balance: "Returns mindswap to its original, targeted form"
