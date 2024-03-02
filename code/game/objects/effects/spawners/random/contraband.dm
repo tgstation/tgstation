@@ -33,7 +33,7 @@
 		/obj/item/reagent_containers/cup/bottle/thermite = 20,
 		/obj/item/restraints/legcuffs/beartrap = 10,
 		/obj/item/food/drug/saturnx = 5,
-		/obj/item/reagent_containers/cup/blastoff_ampoule =5,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 5,
 		/obj/item/food/drug/moon_rock = 5,
 		/obj/item/grenade/empgrenade = 5,
 		/obj/effect/spawner/random/contraband/armory = 1,
