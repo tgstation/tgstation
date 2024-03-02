@@ -93,6 +93,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 
 /obj/structure/secure_safe/caps_spare/Initialize(mapload)
 	. = ..()
+	var/matrix/small_safe_transformation = new
+	small_safe_transformation.Scale(0.6)
+	transform = small_safe_transformation
 	atom_storage.set_holdable(/obj/item/card/id)
 	AddComponent(/datum/component/lockable_storage, \
 		lock_code = SSid_access.spare_id_safe_code, \

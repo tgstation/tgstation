@@ -11479,6 +11479,7 @@
 "cRe" = (
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/secure_safe/caps_spare,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cRs" = (

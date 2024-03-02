@@ -35115,6 +35115,7 @@
 /area/station/engineering/atmos)
 "lrZ" = (
 /obj/structure/table/glass,
+/obj/structure/secure_safe/caps_spare,
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "lse" = (
@@ -64155,7 +64156,6 @@
 "vxv" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/warm/directional/north,
-/obj/structure/secure_safe/caps_spare,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "vyo" = (

@@ -17963,6 +17963,7 @@
 /area/station/engineering/atmos)
 "fwQ" = (
 /obj/structure/secure_safe/caps_spare,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "fwS" = (

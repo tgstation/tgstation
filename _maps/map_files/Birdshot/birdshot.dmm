@@ -18008,6 +18008,7 @@
 "gBT" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/secure_safe/caps_spare,
+/obj/structure/table/glass,
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
 "gCe" = (
