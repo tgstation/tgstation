@@ -1,0 +1,4 @@
+author: "Melbert, Absolucy"
+delete-after: True
+changes:
+  - rscadd: "You can now wear multiple accessories on your uniform at once (up to five by default)"
