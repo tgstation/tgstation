@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - image: "Bubblegum Hallucination Surround Charge, Wendigo Shockwave Scream, and Ice Demon Floor Freeze all have more appropriate action icons."
-  - qol: "Adds a tooltip to Ice Demon Afterimages ability."
-  - image: "Cyborg view items now use the same sprites as their corresponding goggles instead of old versions of those sprites."
