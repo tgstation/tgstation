@@ -146,3 +146,20 @@
 	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	icon_state = "admin"
 	worn_icon_state = "admin"
+
+/obj/item/clothing/neck/helldivercape
+	name = "helldiver cape"
+	desc = "For Super Earth!."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_state = "helldiver_cape"
+	worn_icon_state = "helldiver_cape"
+
+/datum/loadout_item/neck/helldivercape
+	name = "Helldiver Cape"
+	item_path = /obj/item/clothing/neck/helldivercape
+
+/datum/store_item/neck/helldivercape
+	name = "Helldiver Cape"
+	item_path = /obj/item/clothing/neck/helldivercape
+	item_cost = 20000
