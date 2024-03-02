@@ -4,12 +4,6 @@
 
 //engineering
 
-/datum/award/achievement/jobs/theoretical_limits
-	name = "All Within Theoretical Limits"
-	desc = "I never thought I'd see a resonance cascade, let alone prevent one..."
-	database_id = MEDAL_THEORETICAL_LIMITS
-	icon_state = "theoreticallimits"
-
 //medical
 
 /datum/award/achievement/jobs/sandman
