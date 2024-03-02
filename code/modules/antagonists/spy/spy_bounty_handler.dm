@@ -75,7 +75,8 @@
 	refresh_bounty_list()
 
 /// Helper that returns a list of all active bounties in a single list, regardless of difficulty.
-/datum/spy_bounty_handler/proc/get_all_bounties() as /list
+/datum/spy_bounty_handler/proc/get_all_bounties()
+	RETURN_TYPE(/list)
 	var/list/all_bounties = list()
 	for(var/difficulty in bounties)
 		all_bounties += bounties[difficulty]

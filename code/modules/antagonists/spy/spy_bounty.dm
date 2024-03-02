@@ -438,7 +438,7 @@
 /datum/spy_bounty/machine/random/hard/ai_sat_teleporter
 	random_options = list(
 		/obj/machinery/teleport,
-		/obj/machinery/computer/teleporter.
+		/obj/machinery/computer/teleporter,
 	)
 	location_type = /area/station/ai_monitored/aisat
 
