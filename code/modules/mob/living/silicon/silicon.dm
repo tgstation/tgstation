@@ -93,10 +93,9 @@
 
 /mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER
-	if(buckled_mobs)
-		for(var/mob/living/living_mob in buckled_mobs)
-			unbuckle_mob(living_mob)
-			living_mob.electrocute_act(shock_damage/100, shock_source, siemens_coeff, flags) //Hard metal shell conducts!
+	for(var/mob/living/living_mob in buckled_mobs)
+		unbuckle_mob(living_mob)
+		living_mob.electrocute_act(shock_damage/100, shock_source, siemens_coeff, flags) //Hard metal shell conducts!
 
 	return COMPONENT_LIVING_BLOCK_SHOCK //So borgs they don't die trying to fix wiring
 
