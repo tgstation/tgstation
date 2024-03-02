@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Medical/security records now show an icon based on the registered trim, rather than showing a question mark for records with customized titles."

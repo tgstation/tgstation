@@ -47,6 +47,17 @@
 			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
 			return FALSE
 
+	var/display_stats = tgui_alert(
+		vote_creator,
+		"Should voting statistics be public?",
+		"Show voting stats?",
+		list("Yes", "No"),
+	)
+
+	if(display_stats == null)
+		return FALSE
+	display_statistics = display_stats == "Yes"
+
 	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
 	if(!override_question)
 		return FALSE
