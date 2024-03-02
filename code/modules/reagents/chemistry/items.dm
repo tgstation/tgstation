@@ -315,7 +315,7 @@
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(remove_thermometer), user)
 
-/obj/item/thermometer/ui_status(mob/user)
+/obj/item/thermometer/ui_status(mob/user, datum/ui_state/state)
 	if(!(in_range(src, user)))
 		return UI_CLOSE
 	return UI_INTERACTIVE
