@@ -11,13 +11,8 @@
 			return FALSE
 	return TRUE
 
-/// Ensures that the client has been fully initialized via New(), and can't somehow execute actions before that. Security measure.
-/// Will return false if the client is not fully initialized and send an error out. True otherwise.
-/proc/validate_client(client/target)
-	. = FALSE
-	if(target.fully_created)
-		return TRUE
-
+/// Proc that just logs whenever an uninitialized client tries to do something before they have fully gone through New().
+/// Intended to be used in conjunction with the `CLIENT_FULLY_INITIALIZED()` macro, but can be dropped anywhere when we look at the `fully_created` var on /client.
+/proc/unvalidated_client_error(client/target)
 	to_chat(target, span_warning("You are not fully initialized yet! Please wait a moment."))
 	log_access("Client [key_name(target)] attempted to execute a verb before being fully initialized.")
-	return FALSE
