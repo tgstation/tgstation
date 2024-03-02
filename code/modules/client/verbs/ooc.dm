@@ -10,7 +10,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	var/client_initalized = CLIENT_FULLY_INITIALIZED(src)
+	var/client_initalized = VALIDATE_CLIENT_INITIALIZATION(src)
 	if(isnull(mob) || !client_initalized)
 		if(!client_initalized)
 			unvalidated_client_error() // we only want to throw this warning message when it's directly related to client failure.
