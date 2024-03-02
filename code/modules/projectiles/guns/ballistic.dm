@@ -264,8 +264,7 @@
 				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
-			UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
-			chambered = null
+			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 

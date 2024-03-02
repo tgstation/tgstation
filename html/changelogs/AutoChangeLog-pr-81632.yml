@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "Splits up the nuclear operative antagonist datum folder."

@@ -1,0 +1,4 @@
+author: "xXPawnStarrXx"
+delete-after: True
+changes:
+  - bugfix: "makes custom pizzas dairy and vegetable free, unless you choose to add them."

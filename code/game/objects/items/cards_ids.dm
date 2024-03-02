@@ -125,9 +125,8 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.GetJobType(/datum/job/unassigned), player_account = FALSE)
 	registered_account = blank_bank_account
-	blank_bank_account.account_job = new /datum/job/unassigned
 	registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
@@ -1237,7 +1236,7 @@
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
 	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	registered_account.account_job = new /datum/job/admin // so we can actually use this account without being filtered as a "departmental" card
+	registered_account.account_job = SSjob.GetJobType(/datum/job/admin) // so we can actually use this account without being filtered as a "departmental" card
 
 /obj/item/card/id/advanced/prisoner
 	name = "prisoner ID card"
