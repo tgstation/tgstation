@@ -3,13 +3,12 @@
 	description = "Coordinate cargo technicians and shaft miners, assist with \
 		economical purchasing."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
-	head_announce = list(RADIO_CHANNEL_SUPPLY)
+	// head_announce = list(RADIO_CHANNEL_SUPPLY) // Monkestation Edit- QMs are not heads. No head announcement for non-heads.
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
 	minimal_player_age = 7
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = SUPERVISOR_HOP //Monkestation Edit - QMs are not command
 	exp_requirements = 120
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
@@ -40,10 +39,10 @@
 	name = "Quartermaster"
 	jobtype = /datum/job/quartermaster
 	id_trim = /datum/id_trim/job/quartermaster
-	id = /obj/item/card/id/advanced/silver
+	id = /obj/item/card/id/advanced // Monkestation Edit - QM is not a head
 	uniform = /obj/item/clothing/under/rank/cargo/qm
-	belt = /obj/item/modular_computer/pda/heads/quartermaster
-	ears = /obj/item/radio/headset/heads/qm
+	belt = /obj/item/modular_computer/pda/quartermaster //Monkestation Edit - QM is not a head, re-defined the PDA to the non-head typepath.
+	ears = /obj/item/radio/headset/headset_cargo //Monkestation Edit - QM is not a head, changed headset to standard cargo headset.
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard

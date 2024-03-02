@@ -6,7 +6,7 @@
 /obj/structure/closet/secure_closet/quartermaster/PopulateContents()
 	..()
 	new /obj/item/storage/lockbox/medal/cargo(src)
-	new /obj/item/radio/headset/heads/qm(src)
+///	new /obj/item/radio/headset/heads/qm(src) // Monkestation Edit - QM is not a head. They do not need a command headset.
 	new /obj/item/megaphone/cargo(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/universal_scanner(src)
@@ -15,6 +15,7 @@
 	new /obj/item/storage/photo_album/qm(src)
 	new /obj/item/circuitboard/machine/ore_silo(src)
 	new /obj/item/storage/bag/garment/quartermaster(src)
+	new /obj/item/encryptionkey/headset_cargo(src) // Monkestation Edit - An extra encryption key for someone joining Cargyptia
 
 /obj/structure/closet/secure_closet/quartermaster/populate_contents_immediate()
 	. = ..()

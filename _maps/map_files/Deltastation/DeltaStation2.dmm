@@ -774,7 +774,7 @@
 /obj/machinery/status_display/supply{
 	pixel_x = -32
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/paper_bin,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
@@ -2428,11 +2428,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "aAU" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "aBi" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/directional/south,
@@ -3177,7 +3177,7 @@
 /area/space/nearstation)
 "aJE" = (
 /turf/closed/wall,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "aJG" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet/green,
@@ -3645,10 +3645,6 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/east{
-	pixel_x = 40;
-	pixel_y = -8
-	},
 /obj/machinery/button/door/directional/east{
 	id = "qmspace";
 	name = "Space Shutters Control";
@@ -3660,7 +3656,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "aPq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -4629,7 +4625,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "bdI" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -10896,7 +10892,7 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/qm,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cAH" = (
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/camera/directional/east{
@@ -10935,7 +10931,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cBd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -12171,7 +12167,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cQr" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 1
@@ -13239,11 +13235,11 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "deD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -13341,7 +13337,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "dfX" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -13412,7 +13408,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "dgH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16561,7 +16557,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "dXs" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -17566,7 +17562,7 @@
 	pixel_y = 30
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "eke" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/yjunction{
@@ -19276,7 +19272,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "eGO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -23366,13 +23362,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space,
 /area/space/nearstation)
-"fFf" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/photocopier,
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
 "fFi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23760,11 +23749,11 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command{
-	name = "Quartermaster's Office"
+/obj/machinery/door/airlock/mining{
+	name = "Quatermaster's Office"
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "fKH" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/structure/chair/comfy/black{
@@ -25842,9 +25831,9 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/pdapainter/supply,
+/obj/machinery/photocopier,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "gkT" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/reagent_dispensers/fueltank,
@@ -25933,7 +25922,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "gmr" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -29202,7 +29191,7 @@
 	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "haw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -29613,7 +29602,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "hfV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30343,7 +30332,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "hoQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/green/corner{
@@ -33905,7 +33894,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/clothing/gloves/cargo_gauntlet{
 	pixel_y = 6
 	},
@@ -34123,7 +34112,7 @@
 	},
 /obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "ilG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -35878,7 +35867,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "iIk" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
@@ -36848,7 +36837,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "iWX" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
@@ -38310,7 +38299,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "jmA" = (
 /obj/machinery/newscaster/directional/north,
 /obj/item/kirbyplants/random,
@@ -41262,7 +41251,7 @@
 "jWq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/storage/box/lights/mixed,
 /obj/machinery/airalarm/directional/north,
 /obj/item/stock_parts/cell/high/empty,
@@ -42924,7 +42913,7 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "krs" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -44769,7 +44758,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "kOy" = (
 /obj/vehicle/sealed/mecha/working/ripley/cargo,
 /turf/open/floor/iron/recharge_floor,
@@ -46105,7 +46094,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -46473,7 +46462,7 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "ljT" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -49264,7 +49253,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "lRY" = (
 /obj/structure/cable,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
@@ -50083,12 +50072,12 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/folder/yellow,
 /obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "meW" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/green,
@@ -52042,7 +52031,7 @@
 /area/station/security/courtroom)
 "mDz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/clothing/shoes/wheelys/rollerskates,
 /obj/item/clothing/shoes/wheelys/rollerskates{
 	pixel_y = 5
@@ -58346,7 +58335,7 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "ofE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line{
@@ -61182,7 +61171,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "oSF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61428,7 +61417,7 @@
 /mob/living/basic/sloth/citrus,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "oVF" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -64443,7 +64432,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = 4;
 	pixel_y = 6
@@ -65982,7 +65971,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "pYl" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -67357,7 +67346,7 @@
 "qqx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "qqA" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair{
@@ -70098,7 +70087,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "qZG" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -70533,7 +70522,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rgC" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/folder/yellow,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
@@ -71491,7 +71480,7 @@
 /obj/effect/landmark/start/quartermaster,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "rrF" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -72260,7 +72249,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "rBo" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/optable,
@@ -72971,7 +72960,7 @@
 "rLg" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "rLt" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Holodeck Control";
@@ -74671,7 +74660,7 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "sgh" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -77298,7 +77287,7 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "sNC" = (
 /obj/structure/easel,
 /obj/item/canvas/twentythree_twentythree,
@@ -78051,11 +78040,8 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 8
-	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "sWI" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Central Hallway - Starboard";
@@ -78845,7 +78831,7 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "thf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -79378,7 +79364,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "tpI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -82345,7 +82331,7 @@
 /obj/effect/landmark/start/quartermaster,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "tYE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -82855,7 +82841,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "udJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -87332,7 +87318,7 @@
 "vkK" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/clipboard,
 /obj/item/reagent_containers/cup/glass/mug/tea{
 	pixel_x = -7;
@@ -89557,7 +89543,7 @@
 "vMd" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "vMe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -91867,7 +91853,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "woc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood{
@@ -95468,7 +95454,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "xhJ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/computer_disk/quartermaster,
 /obj/item/computer_disk/quartermaster,
 /obj/item/computer_disk/quartermaster,
@@ -95476,7 +95462,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/paper_bin/carbon,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "xhR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -95536,7 +95522,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "xiG" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
@@ -98891,7 +98877,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "xZM" = (
 /obj/docking_port/stationary/escape_pod{
 	dir = 4
@@ -145146,7 +145132,7 @@ awl
 ivt
 krp
 haq
-fFf
+iWR
 jmp
 cQo
 gkP

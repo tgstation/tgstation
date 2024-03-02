@@ -264,8 +264,9 @@
 		"Deck Chief",
 		"Warehouse Supervisor",
 		"Supply Foreman",
-		"Head of Supply",
+		"Pretend Head of Supply",
 		"Logistics Coordinator",
+		"Cargyptian Overseer",
 	)
 
 /datum/job/research_director
