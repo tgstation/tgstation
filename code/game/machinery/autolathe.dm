@@ -97,25 +97,17 @@
 
 	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
 	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.02 * initial(active_power_usage))))
-		var/mat_name = "iron"
-		var/highest_mat = 0
+		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "autolathe_mat"), 1 SECONDS)
 
-		var/list/supported_animations = SSmaterials.materials_by_category[MAT_CATEGORY_ORE]
+		var/datum/material/highest_mat_ref
+		var/highest_mat = 0
 		for(var/datum/material/mat as anything in mats_consumed)
-			var/target_name = initial(mat.name)
-			if(target_name == "silver" || target_name == "titanium" || target_name == "plastic" || target_name == "adamantine") //these materials have similar appearances so use an common overlay for them
-				target_name = "shiny"
-			else if(target_name == "wood")
-				target_name = "gold" //ehh similar appearance after looking at our available overlays
-			else if(!(mat in supported_animations))
-				continue
 			var/present_mat = mats_consumed[mat]
 			if(present_mat > highest_mat)
-				mat_name = target_name
 				highest_mat = present_mat
+				highest_mat_ref = mat
 
-		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "autolathe_mat"), 1 SECONDS)
-		flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_[mat_name]"), 1 SECONDS)
+		flick_overlay_view(material_insertion_animation(highest_mat_ref.greyscale_colors), 1 SECONDS)
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)

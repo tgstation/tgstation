@@ -166,15 +166,10 @@
 	SHOULD_CALL_PARENT(FALSE)
 
 	//first play the insertion animation
-	var/mat_name = mat_ref.name
-	if(mat_name == "silver" || mat_name == "titanium" || mat_name == "plastic") //these materials have similar appearances so use an common overlay for them
-		mat_name = "shiny"
-	var/mutable_appearance/app = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_[mat_name]")
-	flick_overlay_view(app, 1 SECONDS)
+	flick_overlay_view(material_insertion_animation(mat_ref.greyscale_colors), 1 SECONDS)
 
 	//now play the progress bar animation
-	app = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress")
-	flick_overlay_view(app, 1 SECONDS)
+	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
 
 ///When materials are instered into local storage
 /obj/machinery/rnd/production/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
