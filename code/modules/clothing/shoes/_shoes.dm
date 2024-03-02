@@ -22,6 +22,7 @@
 	var/lace_time = 5 SECONDS
 	///An active alert
 	var/datum/weakref/our_alert_ref
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
 /datum/armor/clothing_shoes
 	bio = 50

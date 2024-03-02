@@ -21,6 +21,7 @@
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT
 	armor_type = /datum/armor/machinery_atmospherics
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
@@ -280,8 +281,8 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	//if target is not multiz then we have to check if the target & src connect in the same direction
-	if(!istype(target, /obj/machinery/atmospherics/pipe/multiz) && !((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
+	//check if the target & src connect in the same direction
+	if(!((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
 		return FALSE
 
 	//both target & src can't be connected either way

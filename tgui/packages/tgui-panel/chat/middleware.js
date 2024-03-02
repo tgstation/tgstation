@@ -21,6 +21,8 @@ import {
   changeScrollTracking,
   clearChat,
   loadChat,
+  moveChatPageLeft,
+  moveChatPageRight,
   rebuildChat,
   removeChatPage,
   saveChatToDisk,
@@ -154,7 +156,9 @@ export const chatMiddleware = (store) => {
       type === changeChatPage.type ||
       type === addChatPage.type ||
       type === removeChatPage.type ||
-      type === toggleAcceptedType.type
+      type === toggleAcceptedType.type ||
+      type === moveChatPageLeft.type ||
+      type === moveChatPageRight.type
     ) {
       next(action);
       const page = selectCurrentChatPage(store.getState());

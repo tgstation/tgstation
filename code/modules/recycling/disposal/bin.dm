@@ -305,6 +305,16 @@
 		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
+/obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	visible_message(span_warning("[src] is ripped free from the floor!"))
+	deconstruct()
+
+/obj/machinery/disposal/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	visible_message(span_warning("[src] is ripped free from the floor!"))
+	deconstruct()
+
 // Disposal bin
 // Holds items for disposal into pipe system
 // Draws air from turf, gradually charges internal reservoir
@@ -316,6 +326,7 @@
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)

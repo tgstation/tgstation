@@ -304,19 +304,25 @@
 	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
 
 /**
- * Removes all reagents by an amount equal to
- * [amount specified] / total volume present in this holder
+ * Removes all reagents either proportionally(amount is the direct volume to remove)
+ * when proportional the total volume of all reagents removed will equal to amount
+ * or relatively(amount is a percentile between 0->1) when relative amount is the %
+ * of each reagent to be removed
+ *
  * Arguments
  *
- * * amount - the volume of each reagent
+ * * amount - the amount to remove
+ * * relative - if TRUE amount is treated as an percentage between 0->1. If FALSE amount is the direct volume to remove
  */
-
-/datum/reagents/proc/remove_all(amount = 1)
+/datum/reagents/proc/remove_all(amount = 1, relative = FALSE)
 	if(!total_volume)
 		return FALSE
 
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to remove all reagents [amount]")
+		return FALSE
+	if(relative && (amount < 0 || amount > 1))
+		stack_trace("illegal percentage value passed to remove all reagents [amount]")
 		return FALSE
 
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
@@ -324,9 +330,10 @@
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
-	var/part = amount / total_volume
 	var/total_removed_amount = 0
-
+	var/part = amount
+	if(!relative)
+		part /= total_volume
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		total_removed_amount += remove_reagent(reagent.type, reagent.volume * part)
 

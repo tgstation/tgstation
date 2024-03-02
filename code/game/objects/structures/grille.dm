@@ -9,7 +9,7 @@
 	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	pass_flags_self = PASSGRILLE
+	pass_flags_self = PASSGRILLE | PASSWINDOW
 	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
@@ -339,19 +339,19 @@
 	var/turf/T = get_turf(src)
 	if(T.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	// Shocking hurts the grille (to weaken monkey powersinks)
-	if(prob(50))
+
+	var/obj/structure/cable/cable_node = T.get_cable_node()
+	if(isnull(cable_node))
+		return FALSE
+	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
+		return FALSE
+	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/obj/structure/cable/C = T.get_cable_node()
-	if(C)
-		if(electrocute_mob(user, C, src, 1, TRUE))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
-			return TRUE
-		else
-			return FALSE
-	return FALSE
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(3, 1, src)
+	sparks.start()
+
+	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + 1500 && !broken

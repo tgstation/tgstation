@@ -63,6 +63,10 @@
 	using.screen_loc = ui_alien_language_menu
 	static_inventory += using
 
+	using = new /atom/movable/screen/floor_menu(null, src)
+	using.screen_loc = ui_alien_floor_menu
+	static_inventory += using
+
 	using = new /atom/movable/screen/navigate(null, src)
 	using.screen_loc = ui_alien_navigate_menu
 	static_inventory += using
@@ -87,7 +91,7 @@
 	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_above_movement
 	static_inventory += pull_icon
-		
+
 	rest_icon = new /atom/movable/screen/rest(null, src)
 	rest_icon.icon = ui_style
 	rest_icon.screen_loc = ui_above_intent
