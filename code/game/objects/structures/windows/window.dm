@@ -47,6 +47,8 @@
 
 /obj/structure/window/Initialize(mapload, direct)
 	AddElement(/datum/element/blocks_explosives)
+	if(!fulltile)
+		blocks_emissive = EMISSIVE_BLOCK_NONE
 	. = ..()
 	if(direct)
 		setDir(direct)
@@ -470,21 +472,22 @@
 		. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		return .
 
+	var/list/states_to_apply = list()
 	var/handled_junctions = NONE
 	if(smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & EAST_JUNCTION)
 		handled_junctions |= NORTHEAST_JUNCTION | SOUTHEAST_JUNCTION | EAST_JUNCTION
 		switch(dir)
 			if(NORTH)
-				. += mutable_appearance(icon, "quad-tr")
+				states_to_apply += "quad-tr"
 			if(SOUTH)
-				. += mutable_appearance(icon, "quad-br")
+				states_to_apply += "quad-br"
 	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & WEST_JUNCTION)
 		handled_junctions |= NORTHWEST_JUNCTION | SOUTHWEST_JUNCTION | WEST_JUNCTION
 		switch(dir)
 			if(NORTH)
-				. += mutable_appearance(icon, "quad-tl")
+				states_to_apply += "quad-tl"
 			if(SOUTH)
-				. += mutable_appearance(icon, "quad-bl")
+				states_to_apply += "quad-bl"
 	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & SOUTH_JUNCTION)
 		handled_junctions |= SOUTHWEST_JUNCTION | SOUTHEAST_JUNCTION | SOUTH_JUNCTION
 	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & NORTH_JUNCTION)
@@ -494,44 +497,44 @@
 		switch(dir)
 			if(SOUTH)
 				handled_junctions |= NORTHWEST_JUNCTION | WEST_JUNCTION
-				. += mutable_appearance(icon, "up-triple-bl")
+				states_to_apply += "up-triple-bl"
 	if(smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & EAST_JUNCTION && !(handled_junctions & (NORTHEAST_JUNCTION|EAST_JUNCTION)))
 		switch(dir)
 			if(SOUTH)
 				handled_junctions |= NORTHEAST_JUNCTION | EAST_JUNCTION
-				. += mutable_appearance(icon, "up-triple-br")
+				states_to_apply += "up-triple-br"
 	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & WEST_JUNCTION && !(handled_junctions & (SOUTHWEST_JUNCTION|WEST_JUNCTION)))
 		switch(dir)
 			if(NORTH)
 				handled_junctions |= SOUTHWEST_JUNCTION | WEST_JUNCTION
-				. += mutable_appearance(icon, "down-triple-tl")
+				states_to_apply += "down-triple-tl"
 	if(smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & EAST_JUNCTION && !(handled_junctions & (SOUTHEAST_JUNCTION|EAST_JUNCTION)))
 		switch(dir)
 			if(NORTH)
 				handled_junctions |= SOUTHEAST_JUNCTION | EAST_JUNCTION
-				. += mutable_appearance(icon, "down-triple-tr")
+				states_to_apply += "down-triple-tr"
 
 	if(smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & SOUTH_JUNCTION && !(handled_junctions & (SOUTHEAST_JUNCTION|SOUTH_JUNCTION)))
 		switch(dir)
 			if(WEST)
 				handled_junctions |= SOUTHEAST_JUNCTION | SOUTH_JUNCTION | EAST_JUNCTION
-				. += mutable_appearance(icon, "right-triple-bl")
+				states_to_apply += "right-triple-bl"
 	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & SOUTH_JUNCTION && !(handled_junctions & (SOUTHWEST_JUNCTION|SOUTH_JUNCTION)))
 		switch(dir)
 			if(EAST)
 				handled_junctions |= SOUTHWEST_JUNCTION | SOUTH_JUNCTION | WEST_JUNCTION
-				. += mutable_appearance(icon, "left-triple-br")
+				states_to_apply += "left-triple-br"
 
 	if(smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & NORTH_JUNCTION && !(handled_junctions & (NORTHEAST_JUNCTION|NORTH_JUNCTION)))
 		switch(dir)
 			if(WEST)
 				handled_junctions |= NORTHEAST_JUNCTION | NORTH_JUNCTION | EAST_JUNCTION
-				. += mutable_appearance(icon, "right-triple-tl")
+				states_to_apply += "right-triple-tl"
 	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & NORTH_JUNCTION && !(handled_junctions & (NORTHWEST_JUNCTION|NORTH_JUNCTION)))
 		switch(dir)
 			if(EAST)
 				handled_junctions |= NORTHWEST_JUNCTION | NORTH_JUNCTION | WEST_JUNCTION
-				. += mutable_appearance(icon, "left-triple-tr")
+				states_to_apply += "left-triple-tr"
 
 	// These cases exist JUST to eat diagonal smooths for NORTH/SOUTH windows
 	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & NORTHWEST_JUNCTION)
@@ -554,78 +557,90 @@
 		// hhhh
 		switch(dir)
 			if(SOUTH)
-				. += mutable_appearance(icon, "up-right-corner-bl")
+				states_to_apply += "up-right-corner-bl"
 	if(smoothing_junction & NORTHEAST_JUNCTION && !(handled_junctions & NORTHEAST_JUNCTION))
 		handled_junctions |= NORTH_JUNCTION | EAST_JUNCTION
 		switch(dir)
 			if(SOUTH)
-				. += mutable_appearance(icon, "up-left-corner-br")
+				states_to_apply += "up-left-corner-br"
 	if(smoothing_junction & SOUTHWEST_JUNCTION && !(handled_junctions & SOUTHWEST_JUNCTION))
 		handled_junctions |= SOUTH_JUNCTION | WEST_JUNCTION
 		switch(dir)
 			if(NORTH)
-				. += mutable_appearance(icon, "down-right-corner-tl")
+				states_to_apply += "down-right-corner-tl"
 	if(smoothing_junction & SOUTHEAST_JUNCTION && !(handled_junctions & SOUTHEAST_JUNCTION))
 		handled_junctions |= SOUTH_JUNCTION | EAST_JUNCTION
 		switch(dir)
 			if(NORTH)
-				. += mutable_appearance(icon, "down-left-corner-tr")
+				states_to_apply += "down-left-corner-tr"
 
 	if(!(handled_junctions & WEST_JUNCTION))
 		if(smoothing_junction & WEST_JUNCTION)
 			switch(dir)
 				if(NORTH)
-					. += mutable_appearance(icon, "horizontal-cont-tl")
+					states_to_apply += "horizontal-cont-tl"
 				if(SOUTH)
-					. += mutable_appearance(icon, "horizontal-cont-bl")
+					states_to_apply += "horizontal-cont-bl"
 		else
 			switch(dir)
 				if(NORTH)
-					. += mutable_appearance(icon, "horizontal-edge-tl")
+					states_to_apply += "horizontal-edge-tl"
 				if(SOUTH)
-					. += mutable_appearance(icon, "horizontal-edge-bl")
+					states_to_apply += "horizontal-edge-bl"
 
 	if(!(handled_junctions & EAST_JUNCTION))
 		if(smoothing_junction & EAST_JUNCTION)
 			switch(dir)
 				if(NORTH)
-					. += mutable_appearance(icon, "horizontal-cont-tr")
+					states_to_apply += "horizontal-cont-tr"
 				if(SOUTH)
-					. += mutable_appearance(icon, "horizontal-cont-br")
+					states_to_apply += "horizontal-cont-br"
 		else
 			switch(dir)
 				if(NORTH)
-					. += mutable_appearance(icon, "horizontal-edge-tr")
+					states_to_apply += "horizontal-edge-tr"
 				if(SOUTH)
-					. += mutable_appearance(icon, "horizontal-edge-br")
+					states_to_apply += "horizontal-edge-br"
 
 	if(!(handled_junctions & SOUTH_JUNCTION))
 		if(smoothing_junction & SOUTH_JUNCTION)
 			switch(dir)
 				if(EAST)
-					. += mutable_appearance(icon, "vertical-cont-br")
+					states_to_apply += "vertical-cont-br"
 				if(WEST)
-					. += mutable_appearance(icon, "vertical-cont-bl")
+					states_to_apply += "vertical-cont-bl"
 		else
 			switch(dir)
 				if(EAST)
-					. += mutable_appearance(icon, "vertical-edge-br")
+					states_to_apply += "vertical-edge-br"
 				if(WEST)
-					. += mutable_appearance(icon, "vertical-edge-bl")
+					states_to_apply += "vertical-edge-bl"
 
 	if(!(handled_junctions & NORTH_JUNCTION))
 		if(smoothing_junction & NORTH_JUNCTION)
 			switch(dir)
 				if(EAST)
-					. += mutable_appearance(icon, "vertical-cont-tr")
+					states_to_apply += "vertical-cont-tr"
 				if(WEST)
-					. += mutable_appearance(icon, "vertical-cont-tl")
+					states_to_apply += "vertical-cont-tl"
 		else
 			switch(dir)
 				if(EAST)
-					. += mutable_appearance(icon, "vertical-edge-tr")
+					states_to_apply += "vertical-edge-tr"
 				if(WEST)
-					. += mutable_appearance(icon, "vertical-edge-tl")
+					states_to_apply += "vertical-edge-tl"
+
+	for(var/window_state in states_to_apply)
+		. += mutable_appearance(icon, window_state)
+
+	// We can't use typical emissive blocking because of the pixel offset, remove when that's fixed please
+	var/list/states_to_block = states_to_apply + icon_state
+	for(var/blocked_state in states_to_block)
+		// Cancels out the pixel offset we apply to the parent
+		// (Which is needed because render_target is bugged)
+		var/mutable_appearance/blocker = emissive_blocker(icon, blocked_state, offset_spokesman = src)
+		blocker.pixel_z = -pixel_z
+		. += blocker
 
 /obj/structure/window/set_smoothed_icon_state(new_junction)
 	if(fulltile)
