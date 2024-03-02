@@ -84,6 +84,7 @@
 	return FALSE
 
 /obj/machinery/door/password/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/machinery/door/password/ex_act(severity, target)

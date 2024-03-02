@@ -358,6 +358,7 @@
 	var/obj/item/flashlight/eyelight/eye
 
 /obj/item/organ/internal/eyes/robotic/flashlight/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/organ/internal/eyes/robotic/flashlight/on_mob_insert(mob/living/carbon/victim)
@@ -383,6 +384,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/organ/internal/eyes/robotic/shield/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 #define MATCH_LIGHT_COLOR 1

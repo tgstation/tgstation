@@ -157,6 +157,7 @@
 	shaded_charge = FALSE
 
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/gun/energy/laser/instakill/ctf/Initialize(mapload)

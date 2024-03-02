@@ -18,6 +18,7 @@
 		overlay_y = 9)
 
 /obj/item/gun/energy/ionrifle/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/gun/energy/ionrifle/carbine
@@ -130,9 +131,7 @@
 		..()
 
 /obj/item/gun/energy/plasmacutter/emp_act(severity)
-	if(!cell.charge)
-		return
-	cell.use(cell.charge/3)
+	. = ..()
 	if(isliving(loc))
 		var/mob/living/user = loc
 		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
@@ -307,6 +306,7 @@
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/gun/energy/printer/emp_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/gun/energy/temperature

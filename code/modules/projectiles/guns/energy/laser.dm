@@ -94,6 +94,7 @@
 	use_cyborg_cell = TRUE
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/gun/energy/laser/scatter

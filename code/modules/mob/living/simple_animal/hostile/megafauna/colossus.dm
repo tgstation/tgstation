@@ -525,6 +525,7 @@
 	return ..()
 
 /obj/structure/closet/stasis/emp_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/closet/stasis/ex_act()

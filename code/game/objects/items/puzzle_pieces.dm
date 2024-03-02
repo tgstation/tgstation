@@ -83,6 +83,7 @@
 	return !density && ..()
 
 /obj/machinery/door/puzzle/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/machinery/door/puzzle/ex_act(severity, target)
@@ -445,7 +446,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	if(isnull(id) || isnull(queue_id))
 		log_mapping("[src] id:[id] has no id or door id and has been deleted")
 		return INITIALIZE_HINT_QDEL
-	
+
 	SSqueuelinks.add_to_queue(src, queue_id)
 
 /obj/effect/puzzle_poddoor_open/MatchedLinks(id, list/partners)

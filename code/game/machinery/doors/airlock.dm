@@ -2346,6 +2346,7 @@
 	return
 
 /obj/machinery/door/airlock/cult/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/machinery/door/airlock/cult/friendly

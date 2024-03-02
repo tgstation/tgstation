@@ -13,6 +13,7 @@
 	cell_type = /obj/item/stock_parts/cell/pulse
 
 /obj/item/gun/energy/pulse/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/gun/energy/pulse/prize

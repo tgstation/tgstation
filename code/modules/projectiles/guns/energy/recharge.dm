@@ -79,6 +79,7 @@
 	recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
 
 /obj/item/gun/energy/recharge/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/gun/energy/recharge/proc/reload()
