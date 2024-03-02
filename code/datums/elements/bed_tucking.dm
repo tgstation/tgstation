@@ -20,13 +20,13 @@
 	y_offset = y
 	starting_angle = rotation
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(tuck_into_bed))
-	if(mapload)
+	if(!mapload)
 		return
 	var/turf/our_home = get_turf(target)
-	var/obj/structure/bed/our_home = locate(/obj/structure/bed) in our_home
-	if(!our_home)
+	var/obj/structure/bed/eepy = locate(/obj/structure/bed) in our_home
+	if(!eepy)
 		return
-	tuck(target, our_home)
+	tuck(target, eepy)
 
 /datum/element/bed_tuckable/Detach(obj/target)
 	. = ..()
