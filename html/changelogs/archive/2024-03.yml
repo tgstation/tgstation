@@ -34,3 +34,30 @@
   vinylspiders:
   - bugfix: fixes an issue where being gibbed while under the HARS mutation can sometimes
       lead to the brain being deleted when it's not supposed to be
+2024-03-02:
+  13spacemen:
+  - refactor: Butt sprites are based on the chest bodypart for humans, instead of
+      the species
+  - image: Moths have their own special butt sprites
+  DrDiasyl:
+  - rscadd: Adds 2 new shields to the game! Ballistic Shield - researched by Science,
+      and Improvised Shield - made out of iron and sticky tape
+  - image: Riot, Strobe, Telescopic, Energy shields got new less flat sprites!
+  Ghommie:
+  - rscadd: Fishes love kronkaine.
+  - qol: Examining a fishing spot twice with sufficiently high fishing skill (or the
+      skillchip) will get you a list of fishes that can be caught.
+  Jacquerel:
+  - image: Bubblegum Hallucination Surround Charge, Wendigo Shockwave Scream, and
+      Ice Demon Floor Freeze all have more appropriate action icons.
+  - qol: Adds a tooltip to Ice Demon Afterimages ability.
+  - image: Cyborg view items now use the same sprites as their corresponding goggles
+      instead of old versions of those sprites.
+  JohnFulpWillard:
+  - bugfix: Buying the advanced plastic surgery disk from the uplink now gives you
+      advanced plastic surgery instead of brainwashing.
+  Melbert:
+  - rscadd: Spies may now roam the halls of Space Station 13. Watch your belongings
+      closely.
+  Rhials:
+  - bugfix: Pete can no longer eat vines while dead.

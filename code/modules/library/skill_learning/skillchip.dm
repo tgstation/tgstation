@@ -491,9 +491,9 @@
 
 /obj/item/skillchip/master_angler
 	name = "Mast-Angl-Er skillchip"
-	auto_traits = list(TRAIT_REVEAL_FISH)
+	auto_traits = list(TRAIT_REVEAL_FISH, TRAIT_EXAMINE_FISHING_SPOT)
 	skill_name = "Fisherman's Discernment"
-	skill_description = "While fishing, it'll make a smidge easier to guess whatever you're trying to catch."
+	skill_description = "Lists fishes when examining a fishing spot, and gives a hint of whatever thing's biting the hook."
 	skill_icon = "fish"
 	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")

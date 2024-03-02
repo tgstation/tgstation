@@ -347,6 +347,10 @@
 		var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
 
+/mob/living/carbon/human/get_butt_sprite()
+	var/obj/item/bodypart/chest/chest = get_bodypart(BODY_ZONE_CHEST)
+	return chest?.get_butt_sprite()
+
 /mob/living/carbon/human/get_footprint_sprite()
 	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
 	return shoes?.footprint_sprite || L?.footprint_sprite
