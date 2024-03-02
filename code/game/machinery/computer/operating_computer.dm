@@ -25,12 +25,15 @@
 
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
-
+	var/static/list/dissection_signals = list(
+		COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_dissection_experiment)
+	)
 	experiment_handler = AddComponent(
 		/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/dissection), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		experiment_signals = dissection_signals, \
 	)
 
 /obj/machinery/computer/operating/Destroy()
