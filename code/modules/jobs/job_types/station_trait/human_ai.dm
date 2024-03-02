@@ -8,9 +8,11 @@
 	spawn_positions = 0
 	supervisors = "the Captain, Research Director, and your lawset"
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SILICON
 	exp_granted_type = EXP_TYPE_CREW
+	display_order = JOB_DISPLAY_ORDER_AI
 	config_tag = "HUMAN_AI"
 
 	outfit = /datum/outfit/job/human_ai
@@ -22,7 +24,6 @@
 	mind_traits = list(DISPLAYS_JOB_IN_BINARY)
 	liver_traits = list(TRAIT_HUMAN_AI_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_AI
 	departments_list = list(
 		/datum/job_department/silicon,
 	)
@@ -50,9 +51,9 @@
 			continue
 		GLOB.latejoin_ai_cores -= inactive_core
 		inactive_core.available = FALSE
-		. = inactive_core.loc
+		var/turf/core_turf = get_turf(inactive_core)
 		qdel(inactive_core)
-		return
+		return core_turf
 	var/list/primary_spawn_points = list() // Ideal locations.
 	var/list/secondary_spawn_points = list() // Fallback locations.
 	for(var/obj/effect/landmark/start/ai/spawn_point in GLOB.landmarks_list)

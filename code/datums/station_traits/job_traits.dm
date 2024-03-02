@@ -62,12 +62,14 @@
 			LAZYREMOVE(lobby_candidates, signee)
 
 	var/datum/job/our_job = SSjob.GetJobType(job_to_add)
+	our_job.total_positions = position_amount
+	our_job.spawn_positions = position_amount
 	while(length(lobby_candidates) && position_amount > 0)
 		var/mob/dead/new_player/picked_player = pick_n_take(lobby_candidates)
 		picked_player.mind.set_assigned_role(our_job)
+		our_job.current_positions++
 		position_amount--
 
-	our_job.total_positions = max(0, position_amount)
 	lobby_candidates = null
 
 /datum/station_trait/job/can_display_lobby_button(client/player)
@@ -184,21 +186,28 @@
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/human_ai
 	trait_to_give = STATION_TRAIT_HUMAN_AI
-	blacklist = list(/datum/station_trait/triple_ai)
 
 /datum/station_trait/job/human_ai/New()
 	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(replace_ai))
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(remove_ai_job))
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(give_fax_machine))
+
+/datum/station_trait/job/human_ai/revert()
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	return ..()
 
 /datum/station_trait/job/human_ai/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "human_ai_on" : "human_ai_off"
 
-/datum/station_trait/job/human_ai/proc/replace_ai(datum/source)
+/datum/station_trait/job/human_ai/proc/remove_ai_job(datum/source)
 	SIGNAL_HANDLER
 	var/datum/job_department/department = SSjob.joinable_departments_by_type[/datum/job_department/silicon]
 	department.remove_job(/datum/job/ai)
+	var/datum/station_trait/triple_ai/triple_ais = locate() in SSstation.station_traits
+	if(triple_ais)
+		position_amount = 3
 
 /// Gives the AI SAT a fax machine if it doesn't have one. This is copy pasted from Bridge Assistant's coffee maker.
 /datum/station_trait/job/human_ai/proc/give_fax_machine(datum/source)

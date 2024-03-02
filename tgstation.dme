@@ -316,7 +316,6 @@
 #include "code\__DEFINES\dcs\signals\signals_hud.dm"
 #include "code\__DEFINES\dcs\signals\signals_hydroponic.dm"
 #include "code\__DEFINES\dcs\signals\signals_janitor.dm"
-#include "code\__DEFINES\dcs\signals\signals_job.dm"
 #include "code\__DEFINES\dcs\signals\signals_key.dm"
 #include "code\__DEFINES\dcs\signals\signals_ladder.dm"
 #include "code\__DEFINES\dcs\signals\signals_lazy_templates.dm"

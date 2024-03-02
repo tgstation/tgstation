@@ -386,7 +386,6 @@ SUBSYSTEM_DEF(job)
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO, allow_all = [allow_all], pure = [pure]")
 	run_divide_occupation_pure = pure
-	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED, pure, allow_all)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)

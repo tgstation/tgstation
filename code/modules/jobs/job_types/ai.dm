@@ -20,7 +20,6 @@
 		)
 	random_spawns_possible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
-	var/do_special_check = TRUE
 	config_tag = "AI"
 
 
@@ -44,9 +43,9 @@
 			continue
 		GLOB.latejoin_ai_cores -= inactive_core
 		inactive_core.available = FALSE
-		. = inactive_core.loc
+		var/turf/core_turf = get_turf(inactive_core)
 		qdel(inactive_core)
-		return
+		return core_turf
 	var/list/primary_spawn_points = list() // Ideal locations.
 	var/list/secondary_spawn_points = list() // Fallback locations.
 	for(var/obj/effect/landmark/start/ai/spawn_point in GLOB.landmarks_list)
@@ -68,8 +67,6 @@
 	return chosen_spawn_point
 
 /datum/job/ai/special_check_latejoin(client/C)
-	if(!do_special_check)
-		return TRUE
 	for(var/obj/structure/ai_core/latejoin_inactive/latejoin_core as anything in GLOB.latejoin_ai_cores)
 		if(latejoin_core.is_available())
 			return TRUE

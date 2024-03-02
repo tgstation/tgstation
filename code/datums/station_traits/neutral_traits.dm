@@ -370,21 +370,27 @@
 	show_in_report = TRUE
 	weight = 1
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
-	blacklist = list(/datum/station_trait/job/human_ai)
 
 /datum/station_trait/triple_ai/New()
 	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(on_occupations_setup))
 
 /datum/station_trait/triple_ai/revert()
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
 	return ..()
 
-/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
+/datum/station_trait/triple_ai/proc/on_occupations_setup(datum/controller/subsystem/job/source)
 	SIGNAL_HANDLER
 
+	//allows for latejoining AIs
+	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+		secondary_ai_spawn.latejoin_active = TRUE
+
+	var/datum/station_trait/job/human_ai/ai_trait = locate() in SSstation.station_traits
+	//human AI quirk will handle adding its own job positions, but for now don't allow more AI slots.
+	if(ai_trait)
+		return
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
-	if(!pure)
-		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-			secondary_ai_spawn.latejoin_active = TRUE
+		ai_datum.total_positions = 3
+
