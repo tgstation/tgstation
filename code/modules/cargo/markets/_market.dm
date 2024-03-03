@@ -66,7 +66,7 @@
 /datum/market/blackmarket
 	name = "Black Market"
 	shipping = list(
-		SHIPPING_METHOD_LTSRBT =40,
+		SHIPPING_METHOD_LTSRBT = 40,
 		SHIPPING_METHOD_LAUNCH = 10,
 		SHIPPING_METHOD_TELEPORT= 75,
 	)

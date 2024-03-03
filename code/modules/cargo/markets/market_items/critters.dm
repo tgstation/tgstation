@@ -1,4 +1,4 @@
-///A special category for mobs captured by ninjas or contractors, should someone buy them before they're sent back.
+///A special category for mobs captured by ninjas, pirates and contractors, should someone buy them before they're sent back.
 /datum/market_item/slave
 	category = "Critters & Servants"
 	stock = 1
@@ -16,7 +16,7 @@
 		var/mob/living/carbon/human/humie = slave
 		specimen = humie.dna.species.name
 	desc = pick(list(
-		"If you're looking for a [specimen] servant, you've come to the right place.",
+		"If you're looking for a [specimen], you've come to the right place.",
 		"If you're interested, we've recently aquired a fine [specimen].",
 		"If you've coin, then you should buy this [specimen].",
 	))
@@ -25,6 +25,11 @@
 		desc +=" The offer will expire once the NT-paid ransom reaches us and the product is returned to the station."
 
 	price = new_price
+	RegisterSignal(slave, COMSIG_LIVING_RETURN_FROM_CAPTURE, PROC_REF(on_return_from_capture))
+
+/datum/market_item/slave/proc/on_return_from_capture(mob/living/source, turf/destination)
+	SIGNAL_HANDLER
+	qdel(src) //as if we never existed, our mentions we'll be removed from the market.
 
 /datum/market_item/slave/Destroy()
 	button = null
@@ -39,7 +44,8 @@
 
 /datum/market_item/slave/spawn_item(loc, datum/market_purchase/purchase)
 	var/mob/living/slave = item
-	if(!ishuman(slave))
+	UnregisterSignal(slave, COMSIG_LIVING_RETURN_FROM_CAPTURE)
+	if(!ishuman(item))
 		return ..()
 	var/mob/living/carbon/human/humie = slave
 	if(isnull(humie.w_uniform))

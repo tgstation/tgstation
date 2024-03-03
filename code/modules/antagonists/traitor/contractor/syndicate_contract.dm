@@ -121,28 +121,10 @@
 		// After we remove items, at least give them what they need to live.
 		target.dna.species.give_important_for_life(target)
 
-	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.
-	var/datum/market_item/slave/slaveryisbad = new(person_sent, ransom * (rand(5, 7)/10))
-	SSblackmarket.markets[/datum/market/blackmarket].add_item(slaveryisbad)
-	RegisterSignal(slaveryisbad, COMSIG_MARKET_ITEM_SPAWNED, PROC_REF(on_victim_shipped))
-
 	//we'll start the effects in a few seconds since it takes a moment for the pod to leave.
 	addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), person_sent), 3 SECONDS)
 
-	// This is slightly delayed because of the sleep calls above to handle the narrative.
-	// We don't want to tell the station instantly.
-	var/points_to_check
-	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(cargo_account)
-		points_to_check = cargo_account.account_balance
-	if(points_to_check >= ransom)
-		cargo_account.adjust_money(-ransom)
-	else
-		cargo_account.adjust_money(-points_to_check)
-	priority_announce(
-		text = "One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-		As is policy we've taken a portion of the station's funds to offset the overall cost.",
-		sender_override = "Nanotrasen Asset Protection")
+	person_sent.process_capture(ransom, ransom * (rand(13, 15)/10))
 
 	addtimer(CALLBACK(src, PROC_REF(finish_enter)), 3 SECONDS)
 
@@ -176,7 +158,7 @@
 	// Ship 'em back - dead or alive
 	// Even if they weren't the target, we're still treating them the same.
 	if(!level)
-		victim_timerid = addtimer(CALLBACK(src, PROC_REF(return_victim), victim), 5 MINUTES, TIMER_STOPPABLE)
+		victim_timerid = addtimer(CALLBACK(src, PROC_REF(return_victim), victim), COME_BACK_FROM_CAPTURE_TIME, TIMER_STOPPABLE)
 	if(victim.stat == DEAD)
 		return
 
@@ -227,33 +209,18 @@
 // We're returning the victim
 /datum/syndicate_contract/proc/return_victim(mob/living/victim)
 	var/list/possible_drop_loc = list()
-
-	for(var/turf/possible_drop in contract.dropoff.contents)
+	for(var/turf/possible_drop in shuffle(contract.dropoff.contents))
 		if(!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
 			if(!possible_drop.is_blocked_turf())
 				possible_drop_loc.Add(possible_drop)
 
-	if(!possible_drop_loc.len)
-		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent here from won't \
-			be able to handle our pod... if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
-		for(var/turf/possible_drop in contract.dropoff.contents)
-			possible_drop_loc.Add(possible_drop)
-		if(iscarbon(victim))
-			var/mob/living/carbon/carbon_victim = victim
-			if(carbon_victim.can_heartattack())
-				carbon_victim.set_heartattack(TRUE)
+	var/turf/destination
+	if(length(possible_drop_loc))
+		destination = pick(possible_drop_loc)
 
-	var/pod_rand_loc = rand(1, possible_drop_loc.len)
 	var/obj/structure/closet/supplypod/back_to_station/return_pod = new()
-
-	do_sparks(8, FALSE, victim)
-	victim.visible_message(span_notice("[victim] vanishes..."))
-
-	victim.forceMove(src)
-
+	return_pod.return_from_capture(victim, destination)
 	returnal_side_effects(return_pod, victim)
-
-	new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
 
 /datum/syndicate_contract/proc/on_victim_shipped(datum/market_item/source, obj/item/market_uplink/uplink, shipping_method, turf/shipping_loc)
 	SIGNAL_HANDLER
