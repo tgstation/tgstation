@@ -34,6 +34,7 @@
 	id = "lizgas2"
 	description = "A recently opened gas station from the Lizard's Gas franchise."
 	suffix = "lavaland_surface_gas.dmm"
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
