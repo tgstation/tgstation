@@ -531,6 +531,10 @@
 					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_DEFEND)
 					return TRUE
 				if("flee")
+					//you can't outrun the cuban pete
+					if(obj_flags & EMAGGED)
+						lose_game(gamer)
+						return
 					player_turn = TRUE
 					ui_panel = UI_PANEL_WORLD_MAP
 					player_gold /= 2
