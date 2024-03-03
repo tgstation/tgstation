@@ -13,6 +13,8 @@
 
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
+	has_cap_visuals = TRUE
+
 	custom_reconcilation = TRUE
 
 	///Reference to the connected device
