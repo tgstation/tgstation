@@ -56,6 +56,6 @@
 
 /obj/item/clothing/shoes/clown_shoes/moffers
 	name = "moffers"
-	desc = "No moths died in the making of these slippers."
+	desc = "No moths were harmed in the making of these slippers."
 	icon_state = "moffers"
 	squeak_sound = list('sound/voice/moth/scream_moth.ogg'=1) //like sweet music to my ears
