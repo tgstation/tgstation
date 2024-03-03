@@ -1058,10 +1058,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	// Assuming we decide to shake again, how long until we check to shake again
 	var/next_check_time = 1 SECONDS
 
+	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
+	var/shake_duration =  0.3 SECONDS
+
 	for(var/mob/living/mob in contents)
 		if(DOING_INTERACTION_WITH_TARGET(mob, src))
 			// Shake and queue another check_if_shake
-			src.Shake(x_shake_pixel_shift, y_shake_pixel_shift, next_check_time, shake_interval = 0.1 SECONDS)
+			src.Shake(x_shake_pixel_shift, y_shake_pixel_shift, shake_duration, shake_interval = 0.1 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
