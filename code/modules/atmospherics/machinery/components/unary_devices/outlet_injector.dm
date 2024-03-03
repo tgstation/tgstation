@@ -75,6 +75,8 @@
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
 		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
