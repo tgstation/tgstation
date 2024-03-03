@@ -19,10 +19,10 @@
 	)
 
 	var/static/list/icon/cap_masks = list(
-		"[NORTH]"=icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", NORTH),
-		"[EAST]"=icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", EAST),
-		"[SOUTH]"=icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", SOUTH),
-		"[WEST]"=icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", WEST),
+		"[NORTH]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", NORTH),
+		"[EAST]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", EAST),
+		"[SOUTH]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", SOUTH),
+		"[WEST]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", WEST),
 	)
 
 	var/icon/generated_icons

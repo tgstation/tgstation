@@ -225,7 +225,7 @@
 /obj/machinery/atmospherics/update_icon()
 	update_layer()
 	update_cap_visuals()
-	. = ..()
+	return ..()
 
 /**
  * Find a connecting /obj/machinery/atmospherics in specified direction, called by relaymove()
