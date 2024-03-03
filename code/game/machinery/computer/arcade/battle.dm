@@ -526,7 +526,7 @@
 					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_COUNTERATTACK)
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_DEFEND)
-					player_current_hp = min(player_current_hp + SPELL_MP_COST, PLAYER_MAX_HP)
+					player_current_hp = min(player_current_hp + (SPELL_MP_COST / 2), PLAYER_MAX_HP)
 					player_current_mp = min(player_current_mp + SPELL_MP_COST, PLAYER_MAX_MP)
 					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_DEFEND)
 					return TRUE
