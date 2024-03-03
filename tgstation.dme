@@ -2955,6 +2955,7 @@
 #include "code\modules\antagonists\changeling\powers\augmented_eyesight.dm"
 #include "code\modules\antagonists\changeling\powers\biodegrade.dm"
 #include "code\modules\antagonists\changeling\powers\chameleon_skin.dm"
+#include "code\modules\antagonists\changeling\powers\darkness_adaptation.dm"
 #include "code\modules\antagonists\changeling\powers\defib_grasp.dm"
 #include "code\modules\antagonists\changeling\powers\digitalcamo.dm"
 #include "code\modules\antagonists\changeling\powers\fakedeath.dm"

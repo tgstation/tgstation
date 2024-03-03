@@ -61,3 +61,10 @@
       closely.
   Rhials:
   - bugfix: Pete can no longer eat vines while dead.
+2024-03-03:
+  Rhials:
+  - bugfix: Fixes some tiles outside the Icebox AI satellite not getting hit by storms.
+  - code_imp: Splits up the nuclear operative antagonist datum folder.
+  xXPawnStarrXx:
+  - bugfix: makes custom pizzas dairy and vegetable free, unless you choose to add
+      them.
