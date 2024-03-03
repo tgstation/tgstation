@@ -1,166 +1,10 @@
-GLOBAL_LIST_INIT(arcade_prize_pool, list(
-		/obj/item/storage/box/snappops = 2,
-		/obj/item/toy/talking/ai = 2,
-		/obj/item/toy/talking/codex_gigas = 2,
-		/obj/item/clothing/under/syndicate/tacticool = 2,
-		/obj/item/toy/sword = 2,
-		/obj/item/toy/gun = 2,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,
-		/obj/item/storage/box/fakesyndiesuit = 2,
-		/obj/item/storage/crayons = 2,
-		/obj/item/toy/spinningtoy = 2,
-		/obj/item/toy/spinningtoy/dark_matter = 1,
-		/obj/item/toy/balloon/arrest = 2,
-		/obj/item/toy/mecha/ripley = 1,
-		/obj/item/toy/mecha/ripleymkii = 1,
-		/obj/item/toy/mecha/hauler = 1,
-		/obj/item/toy/mecha/clarke = 1,
-		/obj/item/toy/mecha/odysseus = 1,
-		/obj/item/toy/mecha/gygax = 1,
-		/obj/item/toy/mecha/durand = 1,
-		/obj/item/toy/mecha/savannahivanov = 1,
-		/obj/item/toy/mecha/phazon = 1,
-		/obj/item/toy/mecha/honk = 1,
-		/obj/item/toy/mecha/darkgygax = 1,
-		/obj/item/toy/mecha/mauler = 1,
-		/obj/item/toy/mecha/darkhonk = 1,
-		/obj/item/toy/mecha/deathripley = 1,
-		/obj/item/toy/mecha/reticence = 1,
-		/obj/item/toy/mecha/marauder = 1,
-		/obj/item/toy/mecha/seraph = 1,
-		/obj/item/toy/mecha/firefighter = 1,
-		/obj/item/toy/cards/deck = 2,
-		/obj/item/toy/nuke = 2,
-		/obj/item/toy/minimeteor = 2,
-		/obj/item/toy/redbutton = 2,
-		/obj/item/toy/talking/owl = 2,
-		/obj/item/toy/talking/griffin = 2,
-		/obj/item/coin/antagtoken = 2,
-		/obj/item/stack/tile/fakepit/loaded = 2,
-		/obj/item/stack/tile/eighties/loaded = 2,
-		/obj/item/toy/toy_xeno = 2,
-		/obj/item/storage/box/actionfigure = 1,
-		/obj/item/restraints/handcuffs/fake = 2,
-		/obj/item/grenade/chem_grenade/glitter/pink = 1,
-		/obj/item/grenade/chem_grenade/glitter/blue = 1,
-		/obj/item/grenade/chem_grenade/glitter/white = 1,
-		/obj/item/toy/eightball = 2,
-		/obj/item/toy/windup_toolbox = 2,
-		/obj/item/toy/clockwork_watch = 2,
-		/obj/item/toy/toy_dagger = 2,
-		/obj/item/extendohand/acme = 1,
-		/obj/item/hot_potato/harmless/toy = 1,
-		/obj/item/card/emagfake = 1,
-		/obj/item/clothing/shoes/wheelys = 2,
-		/obj/item/clothing/shoes/kindle_kicks = 2,
-		/obj/item/toy/plush/goatplushie = 2,
-		/obj/item/toy/plush/moth = 2,
-		/obj/item/toy/plush/pkplush = 2,
-		/obj/item/toy/plush/rouny = 2,
-		/obj/item/toy/plush/abductor = 2,
-		/obj/item/toy/plush/abductor/agent = 2,
-		/obj/item/toy/plush/shark = 2,
-		/obj/item/storage/belt/military/snack/full = 2,
-		/obj/item/toy/brokenradio = 2,
-		/obj/item/toy/braintoy = 2,
-		/obj/item/toy/eldritch_book = 2,
-		/obj/item/storage/box/heretic_box = 1,
-		/obj/item/toy/foamfinger = 2,
-		/obj/item/clothing/glasses/trickblindfold = 2,
-		/obj/item/clothing/mask/party_horn = 2,
-		/obj/item/storage/box/party_poppers = 2))
-
-/obj/machinery/computer/arcade
-	name = "\proper the arcade cabinet which shouldn't exist"
-	desc = "This arcade cabinet has no games installed, and in fact, should not exist. \
-		Report the location of this machine to your local diety."
-	icon_state = "arcade"
-	icon_keyboard = null
-	icon_screen = "invaders"
-	light_color = LIGHT_COLOR_GREEN
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
-	var/list/prize_override
-
-/obj/machinery/computer/arcade/proc/Reset()
-	return
-
-/obj/machinery/computer/arcade/Initialize(mapload)
-	. = ..()
-
-	Reset()
-
-/obj/machinery/computer/arcade/proc/prizevend(mob/living/user, prizes = 1)
-	SEND_SIGNAL(src, COMSIG_ARCADE_PRIZEVEND, user, prizes)
-	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
-		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
-		span_notice("You hear a flurry of buttons being pressed."))
-		say("CODE ACTIVATED: EXTRA PRIZES.")
-		prizes *= 2
-	for(var/i in 1 to prizes)
-		user.add_mood_event("arcade", /datum/mood_event/arcade)
-		if(prob(0.0001)) //1 in a million
-			new /obj/item/gun/energy/pulse/prize(src)
-			visible_message(span_notice("[src] dispenses.. woah, a gun! Way past cool."), span_notice("You hear a chime and a shot."))
-			user.client.give_award(/datum/award/achievement/misc/pulse, user)
-			return
-
-		var/prizeselect
-		if(prize_override)
-			prizeselect = pick_weight(prize_override)
-		else
-			prizeselect = pick_weight(GLOB.arcade_prize_pool)
-		var/atom/movable/the_prize = new prizeselect(get_turf(src))
-		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))
-
-/obj/machinery/computer/arcade/emp_act(severity)
-	. = ..()
-	var/override = FALSE
-	if(prize_override)
-		override = TRUE
-
-	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
-		return
-
-	var/empprize = null
-	var/num_of_prizes = 0
-	switch(severity)
-		if(1)
-			num_of_prizes = rand(1,4)
-		if(2)
-			num_of_prizes = rand(0,2)
-	for(var/i = num_of_prizes; i > 0; i--)
-		if(override)
-			empprize = pick_weight(prize_override)
-		else
-			empprize = pick_weight(GLOB.arcade_prize_pool)
-		new empprize(loc)
-	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
-
-/obj/machinery/computer/arcade/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if(!istype(tool, /obj/item/stack/arcadeticket))
-		return .
-
-	var/obj/item/stack/arcadeticket/tickets = tool
-	if(!tickets.use(2))
-		balloon_alert(user, "need 2 tickets!")
-		return ITEM_INTERACT_BLOCKING
-
-	prizevend(user)
-	balloon_alert(user, "prize claimed")
-	return ITEM_INTERACT_SUCCESS
-
-// ** BATTLE ** //
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY|INTERACT_MACHINE_SET_MACHINE
 
 	var/enemy_name = "Space Villain"
 	///Enemy health/attack points
@@ -196,6 +40,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
 	var/bomb_cooldown = 19
 
+/obj/machinery/computer/arcade/battle/Initialize(mapload)
+	. = ..()
+	setup_new_opponent()
 
 ///creates the enemy base stats for a new round along with the enemy passives
 /obj/machinery/computer/arcade/battle/proc/enemy_setup(player_skill)
@@ -228,7 +75,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		player_hp += player_skill * 2
 
 
-/obj/machinery/computer/arcade/battle/Reset()
+/obj/machinery/computer/arcade/battle/proc/setup_new_opponent()
 	max_passive = 3
 	var/name_action
 	var/name_part1
@@ -350,7 +197,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		temp = "<br><center><h3>New Round<center><h3>"
 
 		if(obj_flags & EMAGGED)
-			Reset()
+			setup_new_opponent()
 			obj_flags &= ~EMAGGED
 
 		enemy_setup(gamerSkill)
@@ -565,7 +412,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
-				Reset()
+				setup_new_opponent()
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
 			else
@@ -651,51 +498,3 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	updateUsrDialog()
 	return TRUE
-
-// ** AMPUTATION ** //
-
-/obj/machinery/computer/arcade/amputation
-	name = "Mediborg's Amputation Adventure"
-	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	icon_state = "arcade"
-	circuit = /obj/item/circuitboard/computer/arcade/amputation
-
-/obj/machinery/computer/arcade/amputation/attack_tk(mob/user)
-	return //that's a pretty damn big guillotine
-
-/obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(!iscarbon(user))
-		return
-	to_chat(user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
-	user.played_game()
-	var/obj/item/bodypart/chopchop = user.get_active_hand()
-	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
-		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
-		chopchop.dismember()
-		qdel(chopchop)
-		user.mind?.adjust_experience(/datum/skill/gaming, 100)
-		user.won_game()
-		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
-		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
-		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
-		return
-	else if(!do_they_still_have_that_hand(user, chopchop))
-		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
-		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-	else
-		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
-	user.lost_game()
-
-///Makes sure the user still has their starting hand.
-/obj/machinery/computer/arcade/amputation/proc/do_they_still_have_that_hand(mob/user, obj/item/bodypart/chopchop)
-	if(QDELETED(chopchop) || chopchop.owner != user) //No pulling your arm out of the machine!
-		return FALSE
-	return TRUE
-
-
-/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
-	name = "Mediborg's Festive Amputation Adventure"
-	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	prize_override = list(/obj/item/gift/anything = 1)
