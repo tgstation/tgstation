@@ -32,14 +32,14 @@
 
 /// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
 /datum/market/proc/purchase(identifier, category, method, obj/item/market_uplink/uplink, user)
-	if(!istype(uplink) || !(method in shipping))
+	if(!istype(uplink) || (!(method in shipping) && (method in item.shipping_override)))
 		return FALSE
 
 	var/datum/market_item/item = available_items[category][identifier]
 	if(isnull(item))
 		return FALSE
 
-	var/shipment_fee = item.shipping_override[method]
+	var/shipment_fee = item.shipping_override?[method]
 	if(isnull(shipment_fee))
 		shipment_fee = shipping[method]
 	var/price = item.price + shipment_fee
@@ -61,7 +61,7 @@
 			m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		return TRUE
 
-		return FALSE
+	return FALSE
 
 /datum/market/blackmarket
 	name = "Black Market"

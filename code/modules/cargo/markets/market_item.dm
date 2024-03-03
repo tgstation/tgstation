@@ -45,8 +45,10 @@
 	if(ismovable(item))
 		UnregisterSignal(item, COMSIG_QDELETING)
 	item = path_or_ref
+	identifier = "[path_or_ref]"
 	if(ismovable(path_or_ref))
 		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_item_del))
+		identifier = "[REF(src)]"
 
 /datum/market_item/Destroy()
 	item = null
@@ -112,13 +114,12 @@
 		CRASH("[type] created with a false value arg: (entry: [entry] - uplink: [uplink] - method: [method])")
 	src.entry = entry
 	src.uplink = uplink
+	src.method = method
 	RegisterSignal(entry, COMSIG_QDELETING, PROC_REF(on_instance_del))
 	RegisterSignal(uplink, COMSIG_QDELETING, PROC_REF(on_instance_del))
 	if(ismovable(entry.item))
 		item = entry.item
 		RegisterSignal(entry.item, COMSIG_QDELETING, PROC_REF(on_instance_del))
-	src.uplink = uplink
-	src.method = method
 
 /datum/market_purchase/Destroy()
 	entry = null

@@ -7,7 +7,7 @@
 	/// temporary reference to the decapitator button that'll later be synced with the collar.
 	var/obj/item/decapitator_button/button
 
-/datum/market_item/slave/New(mob/living/slave, new_price, from_ransom = TRUE)
+/datum/market_item/slave/New(mob/living/slave, new_price)
 	..()
 	set_item(slave)
 	name = "[slave.real_name]"
@@ -20,9 +20,7 @@
 		"If you're interested, we've recently aquired a fine [specimen].",
 		"If you've coin, then you should buy this [specimen].",
 	))
-	desc += " DISCLAIMER: We're not responsible for catatonia, death and misbehavior of the product."
-	if(from_ransom)
-		desc +=" The offer will expire once the NT-paid ransom reaches us and the product is returned to the station."
+	desc += " DISCLAIMER: The offer will expire once the product is returned to the station."
 
 	price = new_price
 	RegisterSignal(slave, COMSIG_LIVING_RETURN_FROM_CAPTURE, PROC_REF(on_return_from_capture))
