@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - rscadd: "Adds a new changeling ability, \"Darkness Adaptation\". Making you more translucent, especially in darkness and allowing you to see slightly better in the dark"
+  - balance: "The changeling power \"Chameleon Skin\" has been buffed, Reduces the cost to 1 and sped up the time it takes to turn invisible"
