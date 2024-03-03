@@ -361,38 +361,40 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         {/* Graph */}
         <g transform={`scale(${x_scale} ${y_scale})`}>
           {reagentPeaks.map((peak) => (
-            // Triangle peak
-            <polygon
-              key={peak.name}
-              points={`${
-                ((peak.mass - 5) / graphUpperRange) * GRAPH_MAX_WIDTH
-              },${GRAPH_MAX_HEIGHT}
-                ${(peak.mass / graphUpperRange) * GRAPH_MAX_WIDTH},${
-                  GRAPH_MAX_HEIGHT -
-                  (peak.volume / maxAbsorbance) * GRAPH_MAX_HEIGHT
-                }
-                ${
-                  ((peak.mass + 5) / graphUpperRange) * GRAPH_MAX_WIDTH
-                }, ${GRAPH_MAX_HEIGHT}`}
-              opacity="0.6"
-              style={{
-                fill: peak.type === 'Inverted' ? '#b60046' : '#3cf096',
-              }}
-            />
-          ))}
-        </g>
+            <>
+              {/* Triangle peak */}
+              <polygon
+                key={peak.name}
+                points={`${
+                  ((peak.mass - 5) / graphUpperRange) * GRAPH_MAX_WIDTH
+                },${GRAPH_MAX_HEIGHT}
+                  ${(peak.mass / graphUpperRange) * GRAPH_MAX_WIDTH},${
+                    GRAPH_MAX_HEIGHT -
+                    (peak.volume / maxAbsorbance) * GRAPH_MAX_HEIGHT
+                  }
+                  ${
+                    ((peak.mass + 5) / graphUpperRange) * GRAPH_MAX_WIDTH
+                  }, ${GRAPH_MAX_HEIGHT}`}
+                opacity="0.6"
+                style={{
+                  fill: peak.type === 'Inverted' ? '#b60046' : '#3cf096',
+                }}
+              />
 
-        {/* Background */}
-        <g transform={`scale(${x_scale} 1)`}>
-          <polygon
-            points={`${
-              (lowerRange / deltaRange) * GRAPH_MAX_WIDTH
-            },${base_line} ${(lowerRange / deltaRange) * GRAPH_MAX_WIDTH},0 ${
-              (upperRange / deltaRange) * GRAPH_MAX_WIDTH
-            },0 ${(upperRange / deltaRange) * GRAPH_MAX_WIDTH},${base_line}`}
-            opacity="0.2"
-            style={{ fill: 'blue' }}
-          />
+              {/* Background */}
+              <polygon
+                points={`${
+                  (lowerRange / deltaRange) * GRAPH_MAX_WIDTH
+                },${GRAPH_MAX_HEIGHT} ${
+                  (lowerRange / deltaRange) * GRAPH_MAX_WIDTH
+                },0 ${(upperRange / deltaRange) * GRAPH_MAX_WIDTH},0 ${
+                  (upperRange / deltaRange) * GRAPH_MAX_WIDTH
+                },${GRAPH_MAX_HEIGHT}`}
+                opacity="0.1"
+                style={{ fill: 'blue' }}
+              />
+            </>
+          ))}
         </g>
       </svg>
 
