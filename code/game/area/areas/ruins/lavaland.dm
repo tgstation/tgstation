@@ -10,7 +10,7 @@
 	name = "\improper Clown Biodome"
 	ambientsounds = list('sound/ambience/clown.ogg')
 
-/area/ruin/unpowered/lizard_gaslava
+/area/ruin/lizard_gaslava
 	name = "\improper Lizard's Gas(Lava)"
 
 /area/ruin/unpowered/gaia

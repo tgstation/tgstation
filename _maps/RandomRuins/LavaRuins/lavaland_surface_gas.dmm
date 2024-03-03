@@ -5,7 +5,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "aK" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/entertainment/cigarette_pack,
@@ -17,51 +17,53 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "bT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "ck" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "dm" = (
 /obj/machinery/door/airlock/engineering,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "fy" = (
 /obj/machinery/light/directional/north,
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "fH" = (
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "fX" = (
 /obj/structure/sink/directional/east{
 	has_water_reclaimer = 0
 	},
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "go" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "ia" = (
 /obj/effect/spawner/random/structure/billboard/lizardsgas,
 /turf/open/misc/ashplanet/rocky,
 /area/template_noop)
 "iK" = (
 /obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "jY" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -75,17 +77,17 @@
 	pixel_y = -1
 	},
 /turf/open/floor/iron/freezer,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "ks" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "mn" = (
 /obj/structure/reagent_dispensers/plumbed/fuel,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "mz" = (
 /obj/structure/rack,
 /obj/item/food/candy,
@@ -100,27 +102,27 @@
 	},
 /obj/structure/sign/poster/contraband/hacking_guide/directional/north,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "nc" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "ng" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "pp" = (
 /obj/structure/sign/poster/contraband/jumbo_bar/directional/east,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "pJ" = (
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "rM" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -137,7 +139,7 @@
 /obj/item/food/cheese/cheese_curds,
 /obj/item/food/cheese/curd_cheese,
 /turf/open/floor/iron/freezer,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "sY" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -146,7 +148,7 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/plating,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "tD" = (
 /obj/structure/rack,
 /obj/item/food/chips{
@@ -165,39 +167,39 @@
 	pixel_x = -5
 	},
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "uV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "vt" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/tank/oxygen{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "vH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "wl" = (
 /obj/structure/sink/directional/west{
 	has_water_reclaimer = 0
 	},
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "xH" = (
 /obj/machinery/light/directional/south,
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "xW" = (
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "yH" = (
 /obj/structure/rack,
 /obj/item/food/sticko/nutty{
@@ -209,7 +211,7 @@
 	pixel_x = 6
 	},
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Ag" = (
 /obj/structure/table,
 /obj/item/coffee_cartridge,
@@ -219,18 +221,18 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Ao" = (
 /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/south,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Bf" = (
 /mob/living/basic/lizard,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "BH" = (
 /obj/structure/table/reinforced,
 /obj/item/food/hotdog{
@@ -243,12 +245,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "BX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "DI" = (
 /turf/template_noop,
 /area/template_noop)
@@ -258,7 +260,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Eh" = (
 /obj/structure/table/reinforced,
 /obj/item/food/honeybar{
@@ -287,7 +289,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "El" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/rack,
@@ -305,7 +307,7 @@
 	pixel_x = 3
 	},
 /turf/open/floor/iron/freezer,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Es" = (
 /obj/structure/sign/warning/fire/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -313,7 +315,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "EA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/rack,
@@ -323,16 +325,16 @@
 	},
 /obj/item/storage/fancy/pickles_jar,
 /turf/open/floor/iron/freezer,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "FC" = (
 /obj/structure/sign/poster/fluff/lizards_gas_power/directional/west,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "FL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Gv" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -345,7 +347,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "HI" = (
 /obj/structure/table/reinforced,
 /obj/structure/closet/mini_fridge{
@@ -359,13 +361,13 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "HL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "HS" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -387,7 +389,7 @@
 	pixel_x = -3
 	},
 /turf/open/floor/iron/freezer,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "HW" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -395,13 +397,13 @@
 	},
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "IU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Kl" = (
 /obj/structure/rack,
 /obj/item/food/cornchips/random,
@@ -412,84 +414,84 @@
 /obj/item/food/cornchips/random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Km" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Mv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/fluff/lizards_gas_payment/directional/west,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Nr" = (
 /obj/structure/window/plasma/spawner/directional/west,
 /obj/structure/window/spawner/directional/east,
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Ov" = (
 /obj/structure/table,
 /obj/machinery/coffeemaker{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "PS" = (
-/obj/machinery/power/rtg,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Qb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Qt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Rq" = (
 /obj/machinery/computer/security/telescreen/bar{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "RA" = (
 /turf/closed/wall,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "RK" = (
 /obj/machinery/light/directional/east,
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "SL" = (
 /obj/machinery/duct,
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "SZ" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "TA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Uk" = (
 /obj/machinery/duct,
 /obj/machinery/light/directional/north,
 /turf/open/misc/ashplanet/rocky,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "UK" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/smooth,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "VD" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "VF" = (
 /turf/open/misc/ashplanet/rocky,
 /area/template_noop)
@@ -505,7 +507,7 @@
 	},
 /obj/item/reagent_containers/condiment/olive_oil,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Xe" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -513,11 +515,11 @@
 /obj/item/storage/cans/sixbeer,
 /obj/item/storage/cans/sixsoda,
 /turf/open/floor/iron/freezer,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 "Zf" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/iron,
-/area/ruin/unpowered/lizard_gaslava)
+/area/ruin/lizard_gaslava)
 
 (1,1,1) = {"
 DI
