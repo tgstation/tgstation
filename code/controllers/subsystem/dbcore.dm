@@ -1,4 +1,4 @@
-#define SHUTDOWN_QUERY_TIMELIMIT (1 MINUTE)
+#define SHUTDOWN_QUERY_TIMELIMIT (1 MINUTES)
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_TICKER
@@ -662,3 +662,4 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 /datum/db_query/proc/Close()
 	rows = null
 	item = null
+#undef SHUTDOWN_QUERY_TIMELIMIT
