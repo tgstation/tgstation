@@ -1,500 +1,552 @@
+///How many enemies needs to be defeated until the 'Boss' of the stage appears.
+#define WORLD_ENEMY_BOSS 2
+///The default amount of EXP you gain from killing an enemy, modifiers stacked on top of this.
+#define DEFAULT_EXP_GAIN 50
+///The default cost to purchase an item. Sleeping at the Inn is half of this.
+#define DEFAULT_ITEM_PRICE 30
+
+///The max HP the player can have at any time.
+#define PLAYER_MAX_HP 100
+///The max MP the player can have at any time.
+#define PLAYER_MAX_MP 50
+///The default cost of a spell, in MP. Defending will instead restore this amount.
+#define SPELL_MP_COST 10
+
+///The player is currently in the Shop.
+#define UI_PANEL_SHOP "Shop"
+///The player is currently in the World Map.
+#define UI_PANEL_WORLD_MAP "World Map"
+///The player is currently in Batle.
+#define UI_PANEL_BATTLE "Battle"
+///The player is currently between battles.
+#define UI_PANEL_BETWEEN_FIGHTS "Between Battle"
+///The player is currently Game Overed.
+#define UI_PANEL_GAMEOVER "Game Over"
+
+///The player is set to counterattack the enemy's next move.
+#define BATTLE_ATTACK_FLAG_COUNTERATTACK (1<<0)
+///The player is set to defend against the enemy's next move.
+#define BATTLE_ATTACK_FLAG_DEFEND (1<<1)
+
+///The player is trying to Attack the Enemy.
+#define BATTLE_ARCADE_PLAYER_ATTACK "Attack"
+///The player is trying to Attack the Enemy with an MP boost.
+#define BATTLE_ARCADE_PLAYER_HEAVY_ATTACK "Heavy Attack"
+///The player is setting themselves to counterattack a potential incoming Enemy attack.
+#define BATTLE_ARCADE_PLAYER_COUNTERATTACK "Counterattack"
+///The player is defending against the Enemy and restoring MP.
+#define BATTLE_ARCADE_PLAYER_DEFEND "Defend"
+
 /obj/machinery/computer/arcade/battle
-	name = "arcade machine"
-	desc = "Does not support Pinball."
+	name = "battle arcade"
+	desc = "Explore vast worlds and conquer."
 	icon_state = "arcade"
+	icon_screen = "battle"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY|INTERACT_MACHINE_SET_MACHINE
+	///Static list of radial menu options so we don't have to remake it every time.
+	var/static/list/radial_menu_options
+	///List of all worlds in the game.
+	var/static/list/all_worlds = list(
+		BATTLE_WORLD_ONE = 1,
+		BATTLE_WORLD_TWO = 1.25,
+		BATTLE_WORLD_THREE = 1.5,
+		BATTLE_WORLD_FOUR = 1.75,
+		BATTLE_WORLD_FIVE = 2,
+		BATTLE_WORLD_SIX = 2.25,
+		BATTLE_WORLD_SEVEN = 2.5,
+		BATTLE_WORLD_EIGHT = 2.75,
+		BATTLE_WORLD_NINE = 3,
+	)
+	var/static/list/all_attack_types = list(
+		BATTLE_ARCADE_PLAYER_ATTACK = "Attack the enemy in a default attack at no MP cost.",
+		BATTLE_ARCADE_PLAYER_HEAVY_ATTACK = "Attack the enemy with the power of Magic, costing MP for additional damage.",
+		BATTLE_ARCADE_PLAYER_COUNTERATTACK = "Use magic to prepare a counterattack of your enemy, allowing you to deal extra damage if you succeed.",
+		BATTLE_ARCADE_PLAYER_DEFEND = "Defend from the next incoming attack, lowing the amount of damage you take while restoring some HP and MP.",
+	)
+	///The world we're currently in.
+	var/player_current_world = BATTLE_WORLD_ONE
+	///The latest world the player has unlocked, granting access to all worlds below this.
+	var/latest_unlocked_world = BATTLE_WORLD_ONE
+	///How many enemies we've defeated in a row, used to tell when we need to spawn the boss in.
+	var/enemies_defeated
+	///The current panel the player is viewieng in the UI.
+	var/ui_panel = UI_PANEL_WORLD_MAP
 
-	var/enemy_name = "Space Villain"
-	///Enemy health/attack points
-	var/enemy_hp = 100
-	var/enemy_mp = 40
-	///Temporary message, for attack messages, etc
-	var/temp = "<br><center><h3>Winners don't use space drugs<center><h3>"
-	///the list of passive skill the enemy currently has. the actual passives are added in the enemy_setup() proc
-	var/list/enemy_passive
-	///if all the enemy's weakpoints have been triggered becomes TRUE
-	var/finishing_move = FALSE
-	///linked to passives, when it's equal or above the max_passive finishing move will become TRUE
-	var/pissed_off = 0
-	///the number of passives the enemy will start with
-	var/max_passive = 3
-	///weapon wielded by the enemy, the shotgun doesn't count.
-	var/chosen_weapon
+	/** PLAYER INFORMATION */
 
-	///Player health
-	var/player_hp = 85
-	///player magic points
-	var/player_mp = 20
-	///used to remember the last three move of the player before this turn.
-	var/list/last_three_move
-	///if the enemy or player died. restart the game when TRUE
-	var/gameover = FALSE
-	///the player cannot make any move while this is set to TRUE. should only TRUE during enemy turns.
-	var/blocked = FALSE
-	///used to clear the enemy_action proc timer when the game is restarted
-	var/timer_id
-	///weapon used by the enemy, pure fluff.for certain actions
-	var/list/weapons
+	///Boolean on whether it's the player's time to do their turn.
+	var/player_turn = TRUE
+	///How much money the player has, used in the Inn. Starts with the default price for a single item.
+	var/player_gold = DEFAULT_ITEM_PRICE
+	///The current amount of HP the player has.
+	var/player_current_hp = PLAYER_MAX_HP
+	///The current amount of MP the player has.
+	var/player_current_mp = PLAYER_MAX_MP
+	///Assoc list of gear the player has equipped.
+	var/list/datum/battle_arcade_gear/equipped_gear = list(
+		WEAPON_SLOT = null,
+		ARMOR_SLOT = null,
+	)
+
+	/** CURRENT ENEMY INFORMATION */
+
+	///A feedback message displayed in the UI during combat sequences.
+	var/feedback_message
+	///Determines which boss image to use on the UI.
+	var/enemy_icon_id = 1
+	///The enemy's name
+	var/enemy_name
+	///How much HP the current enemy has.
+	var/enemy_max_hp
+	///How much HP the current enemy has.
+	var/enemy_hp
+	///How much MP the current enemy has.
+	var/enemy_mp
+	///How much gold the enemy will drop, randomized on new opponent.
+	var/enemy_gold_reward
 	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
 	var/bomb_cooldown = 19
 
-/obj/machinery/computer/arcade/battle/Initialize(mapload)
+/obj/machinery/computer/arcade/battle/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
-	setup_new_opponent()
-
-///creates the enemy base stats for a new round along with the enemy passives
-/obj/machinery/computer/arcade/battle/proc/enemy_setup(player_skill)
-	player_hp = 85
-	player_mp = 20
-	enemy_hp = 100
-	enemy_mp = 40
-	gameover = FALSE
-	blocked = FALSE
-	finishing_move = FALSE
-	pissed_off = 0
-	last_three_move = null
-
-	enemy_passive = list("short_temper" = TRUE, "poisonous" = TRUE, "smart" = TRUE, "shotgun" = TRUE, "magical" = TRUE, "chonker" = TRUE)
-	for(var/i = LAZYLEN(enemy_passive); i > max_passive; i--) //we'll remove passives from the list until we have the number of passive we want
-		var/picked_passive = pick(enemy_passive)
-		LAZYREMOVE(enemy_passive, picked_passive)
-
-	if(LAZYACCESS(enemy_passive, "chonker"))
-		enemy_hp += 20
-
-	if(LAZYACCESS(enemy_passive, "shotgun"))
-		chosen_weapon = "shotgun"
-	else if(weapons)
-		chosen_weapon = pick(weapons)
-	else
-		chosen_weapon = "null gun" //if the weapons list is somehow empty, shouldn't happen but runtimes are sneaky bastards.
-
-	if(player_skill)
-		player_hp += player_skill * 2
-
-
-/obj/machinery/computer/arcade/battle/proc/setup_new_opponent()
-	max_passive = 3
-	var/name_action
-	var/name_part1
-	var/name_part2
-
-	if(check_holidays(HALLOWEEN))
-		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
-		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
-		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
-		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
-	else if(check_holidays(CHRISTMAS))
-		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
-		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
-		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
-		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
-	else if(check_holidays(VALENTINES))
-		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
-		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
-		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
-		weapons = strings(ARCADE_FILE, "rpg_weapon_valentines")
-	else
-		name_action = pick_list(ARCADE_FILE, "rpg_action")
-		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
-		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy")
-		weapons = strings(ARCADE_FILE, "rpg_weapon")
-
-	enemy_name = ("The " + name_part1 + " " + name_part2)
-	name = (name_action + " " + enemy_name)
-
-	enemy_setup(0) //in the case it's reset we assume the player skill is 0 because the VOID isn't a gamer
-
-
-/obj/machinery/computer/arcade/battle/ui_interact(mob/user)
-	. = ..()
-	screen_setup(user)
-
-
-///sets up the main screen for the user
-/obj/machinery/computer/arcade/battle/proc/screen_setup(mob/user)
-	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
-	dat += "<center><h4>[enemy_name]</h4></center>"
-
-	dat += "[temp]"
-	dat += "<br><center>Health: [player_hp] | Magic: [player_mp] | Enemy Health: [enemy_hp]</center>"
-
-	if (gameover)
-		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a>"
-	else
-		dat += "<center><b><a href='byond://?src=[REF(src)];attack=1'>Light attack</a>"
-		dat += "<center><b><a href='byond://?src=[REF(src)];defend=1'>Defend</a>"
-		dat += "<center><b><a href='byond://?src=[REF(src)];counter_attack=1'>Counter attack</a>"
-		dat += "<center><b><a href='byond://?src=[REF(src)];power_attack=1'>Power attack</a>"
-
-	dat += "</b></center>"
-	if(user.client) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
-		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
-		popup.set_content(dat)
-		popup.open()
-
-
-/obj/machinery/computer/arcade/battle/Topic(href, href_list)
-	if(..())
-		return
-	var/gamerSkill = 0
-	if(usr?.mind)
-		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
-
-	usr.played_game()
-
-	if (!blocked && !gameover)
-		var/attackamt = rand(5,7) + rand(0, gamerSkill)
-
-		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
-			attackamt *= 100
-
-		//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
-		if (href_list["attack"])
-			temp = "<br><center><h3>you do quick jab for [attackamt] of damage!</h3></center>"
-			enemy_hp -= attackamt
-			arcade_action(usr,"attack",attackamt)
-
-		//defend lets you gain back MP and take less damage from non magical attack.
-		else if(href_list["defend"])
-			temp = "<br><center><h3>you take a defensive stance and gain back 10 mp!</h3></center>"
-			player_mp += 10
-			arcade_action(usr,"defend",attackamt)
-			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
-
-		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
-		else if(href_list["counter_attack"] && player_mp >= 10)
-			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
-			player_mp -= 10
-			arcade_action(usr,"counter_attack",attackamt)
-			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
-
-		else if(href_list["counter_attack"] && player_mp < 10)
-			temp = "<br><center><h3>you don't have the mp necessary to counter attack and defend yourself instead</h3></center>"
-			player_mp += 10
-			arcade_action(usr,"defend",attackamt)
-			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
-
-		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
-		else if (href_list["power_attack"] && player_mp >= 20)
-			temp = "<br><center><h3>You attack [enemy_name] with all your might for [attackamt * 2] damage!</h3></center>"
-			enemy_hp -= attackamt * 2
-			player_mp -= 20
-			arcade_action(usr,"power_attack",attackamt)
-
-		else if(href_list["power_attack"] && player_mp < 20)
-			temp = "<br><center><h3>You don't have the mp necessary for a power attack and settle for a light attack!</h3></center>"
-			enemy_hp -= attackamt
-			arcade_action(usr,"attack",attackamt)
-
-	if (href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=arcade")
-
-	else if (href_list["newgame"]) //Reset everything
-		temp = "<br><center><h3>New Round<center><h3>"
-
-		if(obj_flags & EMAGGED)
-			setup_new_opponent()
-			obj_flags &= ~EMAGGED
-
-		enemy_setup(gamerSkill)
-		screen_setup(usr)
-
-
-	add_fingerprint(usr)
-	return
-
-
-///happens after a player action and before the enemy turn. the enemy turn will be cancelled if there's a gameover.
-/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user,player_stance,attackamt)
-	screen_setup(user)
-	blocked = TRUE
-	if(player_stance == "attack" || player_stance == "power_attack")
-		if(attackamt > 40)
-			playsound(src, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3)
-		else
-			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
-
-	timer_id = addtimer(CALLBACK(src, PROC_REF(enemy_action),player_stance,user),1 SECONDS,TIMER_STOPPABLE)
-	gameover_check(user)
-
-
-///the enemy turn, the enemy's action entirely depend on their current passive and a teensy tiny bit of randomness
-/obj/machinery/computer/arcade/battle/proc/enemy_action(player_stance,mob/user)
-	var/list/list_temp = list()
-
-	switch(LAZYLEN(last_three_move)) //we keep the last three action of the player in a list here
-		if(0 to 2)
-			LAZYADD(last_three_move, player_stance)
-		if(3)
-			for(var/i in 1 to 2)
-				last_three_move[i] = last_three_move[i + 1]
-			last_three_move[3] = player_stance
-
-		if(4 to INFINITY)
-			last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
-
-	var/enemy_stance
-	var/attack_amount = rand(8,10) //making the attack amount not vary too much so that it's easier to see if the enemy has a shotgun
-
-	if(player_stance == "defend")
-		attack_amount -= 5
-
-	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
-	if(obj_flags & EMAGGED)
-		switch(bomb_cooldown--)
-			if(18)
-				list_temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
-			if(15)
-				list_temp += "<br><center><h3>[enemy_name] adds a remote control to the tan- ho god is that a bomb?<center><h3>"
-			if(12)
-				list_temp += "<br><center><h3>[enemy_name] throws the bomb next to you, you'r too scared to pick it up. <center><h3>"
-			if(6)
-				list_temp += "<br><center><h3>[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat. <center><h3>"
-			if(2)
-				list_temp += "<br><center><h3>[enemy_name] is going to press the button! It's now or never! <center><h3>"
-			if(0)
-				player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
-
-	//yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
-	if(LAZYACCESS(enemy_passive, "shotgun"))
-		if(weakpoint_check("shotgun","defend","defend","power_attack"))
-			list_temp += "<br><center><h3>You manage to disarm [enemy_name] with a surprise power attack and shoot him with his shotgun until it runs out of ammo! <center><h3> "
-			enemy_hp -= 10
-			chosen_weapon = "empty shotgun"
-		else
-			attack_amount += 5
-
-	//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
-	if(LAZYACCESS(enemy_passive, "chonker"))
-		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
-			list_temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
-			enemy_hp -= 30
-
-	//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
-	if(LAZYACCESS(enemy_passive, "smart"))
-		if(weakpoint_check("smart","defend","defend","attack"))
-			list_temp += "<br><center><h3>[enemy_name] is confused by your illogical strategy!<center><h3> "
-			attack_amount -= 5
-
-		else if(attack_amount >= player_hp)
-			player_hp -= attack_amount
-			list_temp += "<br><center><h3>[enemy_name] figures out you are really close to death and finishes you off with their [chosen_weapon]!<center><h3>"
-			enemy_stance = "attack"
-
-		else if(player_stance == "counter_attack")
-			list_temp += "<br><center><h3>[enemy_name] is not taking your bait. <center><h3> "
-			if(LAZYACCESS(enemy_passive, "short_temper"))
-				list_temp += "However controlling their hatred of you still takes a toll on their mental and physical health!"
-				enemy_hp -= 5
-				enemy_mp -= 5
-			enemy_stance = "defensive"
-
-	//short temper passive trait, gets easily baited into being counter attacked but will bypass your counter when low on HP
-	if(LAZYACCESS(enemy_passive, "short_temper"))
-		if(weakpoint_check("short_temper","counter_attack","counter_attack","counter_attack"))
-			list_temp += "<br><center><h3>[enemy_name] is getting frustrated at all your counter attacks and throws a tantrum!<center><h3>"
-			enemy_hp -= attack_amount
-
-		else if(player_stance == "counter_attack")
-			if(!(LAZYACCESS(enemy_passive, "smart")) && enemy_hp > 30)
-				list_temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack for [attack_amount * 2] damage!<center><h3>"
-				player_hp -= attack_amount
-				enemy_hp -= attack_amount * 2
-				enemy_stance = "attack"
-
-			else if(enemy_hp <= 30) //will break through the counter when low enough on HP even when smart.
-				list_temp += "<br><center><h3>[enemy_name] is getting tired of your tricks and breaks through your counter with their [chosen_weapon]!<center><h3>"
-				player_hp -= attack_amount
-				enemy_stance = "attack"
-
-		else if(!enemy_stance)
-			var/added_temp
-
-			if(rand())
-				added_temp = "you for [attack_amount + 5] damage!"
-				player_hp -= attack_amount + 5
-				enemy_stance = "attack"
-			else
-				added_temp = "the wall, breaking their skull in the process and losing [attack_amount] hp!" //[enemy_name] you have a literal dent in your skull
-				enemy_hp -= attack_amount
-				enemy_stance = "attack"
-
-			list_temp += "<br><center><h3>[enemy_name] grits their teeth and charge right into [added_temp]<center><h3>"
-
-	//in the case none of the previous passive triggered, Mainly here to set an enemy stance for passives that needs it like the magical passive.
-	if(!enemy_stance)
-		enemy_stance = pick("attack","defensive")
-		if(enemy_stance == "attack")
-			player_hp -= attack_amount
-			list_temp += "<br><center><h3>[enemy_name] attacks you for [attack_amount] points of damage with their [chosen_weapon]<center><h3>"
-			if(player_stance == "counter_attack")
-				enemy_hp -= attack_amount * 2
-				list_temp += "<br><center><h3>You counter [enemy_name]'s attack and deal [attack_amount * 2] points of damage!<center><h3>"
-
-		if(enemy_stance == "defensive" && enemy_mp < 15)
-			list_temp += "<br><center><h3>[enemy_name] take some time to get some mp back!<center><h3> "
-			enemy_mp += attack_amount
-
-		else if (enemy_stance == "defensive" && enemy_mp >= 15 && !(LAZYACCESS(enemy_passive, "magical")))
-			list_temp += "<br><center><h3>[enemy_name] quickly heal themselves for 5 hp!<center><h3> "
-			enemy_mp -= 15
-			enemy_hp += 5
-
-	//magical passive trait, recharges MP nearly every turn it's not blasting you with magic.
-	if(LAZYACCESS(enemy_passive, "magical"))
-		if(player_mp >= 50)
-			list_temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
-			enemy_mp = 0
-			LAZYREMOVE(enemy_passive, "magical")
-			pissed_off++
-
-		else if(LAZYACCESS(enemy_passive, "smart") && player_stance == "counter_attack" && enemy_mp >= 20)
-			list_temp += "<br><center><h3>[enemy_name] blasts you with magic from afar for 10 points of damage before you can counter!<center><h3>"
-			player_hp -= 10
-			enemy_mp -= 20
-
-		else if(enemy_hp >= 20 && enemy_mp >= 40 && enemy_stance == "defensive")
-			list_temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar!<center><h3>"
-			enemy_mp -= 40
-			player_hp -= 30
-			enemy_stance = "attack"
-
-		else if(enemy_hp < 20 && enemy_mp >= 20 && enemy_stance == "defensive") //it's a pretty expensive spell so they can't spam it that much
-			list_temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 20 hp!<center><h3>"
-			enemy_hp += 20
-			enemy_mp -= 30
-		else
-			list_temp += "<br><center><h3>[enemy_name]'s magical nature lets them get some mp back!<center><h3>"
-			enemy_mp += attack_amount
-
-	//poisonous passive trait, while it's less damage added than the shotgun it acts up even when the enemy doesn't attack at all.
-	if(LAZYACCESS(enemy_passive, "poisonous"))
-		if(weakpoint_check("poisonous","attack","attack","attack"))
-			list_temp += "<br><center><h3>your flurry of attack throws back the poisonnous gas at [enemy_name] and makes them choke on it!<center><h3> "
-			enemy_hp -= 5
-		else
-			list_temp += "<br><center><h3>the stinky breath of [enemy_name] hurts you for 3 hp!<center><h3> "
-			player_hp -= 3
-
-	//if all passive's weakpoint have been triggered, set finishing_move to TRUE
-	if(pissed_off >= max_passive && !finishing_move)
-		list_temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your next attack!<center><h3> "
-		finishing_move = TRUE
-
-	playsound(src, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3)
-
-	temp = list_temp.Join()
-	gameover_check(user)
-	screen_setup(user)
-	blocked = FALSE
-
-
-/obj/machinery/computer/arcade/battle/proc/gameover_check(mob/user)
-	var/xp_gained = 0
-	if(enemy_hp <= 0)
-		if(!gameover)
-			if(timer_id)
-				deltimer(timer_id)
-				timer_id = null
-			if(player_hp <= 0)
-				player_hp = 1 //let's just pretend the enemy didn't kill you so not both the player and enemy look dead.
-			gameover = TRUE
-			blocked = FALSE
-			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
-			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
-
-			if(obj_flags & EMAGGED)
-				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
-				new /obj/item/clothing/head/collectable/petehat(loc)
-				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
-				setup_new_opponent()
-				obj_flags &= ~EMAGGED
-				xp_gained += 100
-			else
-				new /obj/item/stack/arcadeticket((get_turf(src)), 2)
-				to_chat(user, span_notice("[src] dispenses 2 tickets!"))
-				xp_gained += 50
-			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
-			user.won_game()
-
-	else if(player_hp <= 0)
-		if(timer_id)
-			deltimer(timer_id)
-			timer_id = null
-		gameover = TRUE
-		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
-		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE)
-		xp_gained += 10//pity points
-		if(obj_flags & EMAGGED)
-			var/mob/living/living_user = user
-			if (istype(living_user))
-				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
-				living_user.gib(DROP_ALL_REMAINS)
-		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
-		user.lost_game()
-
-	if(gameover)
-		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
-
-
-///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet
-/obj/machinery/computer/arcade/battle/proc/weakpoint_check(passive,first_move,second_move,third_move)
-	if(LAZYLEN(last_three_move) < 3)
-		return FALSE
-
-	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && LAZYACCESS(enemy_passive, passive))
-		LAZYREMOVE(enemy_passive, passive)
-		pissed_off++
-		return TRUE
-	else
-		return FALSE
-
-
-/obj/machinery/computer/arcade/battle/Destroy()
-	enemy_passive = null
-	weapons = null
-	last_three_move = null
-	return ..() //well boys we did it, lists are no more
-
-/obj/machinery/computer/arcade/battle/examine_more(mob/user)
-	. = ..()
-	. += span_notice("<i>You notice some writing scribbled on the side of [src]...</i>")
-	. += "\t[span_info("smart -> defend, defend, light attack")]"
-	. += "\t[span_info("shotgun -> defend, defend, power attack")]"
-	. += "\t[span_info("short temper -> counter, counter, counter")]"
-	. += "\t[span_info("poisonous -> light attack, light attack, light attack")]"
-	. += "\t[span_info("chonker -> power attack, power attack, power attack")]"
-	. += "\t[span_info("magical -> defend until outmagiced")]"
-	return .
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!istype(tool, /obj/item/key/displaycase))
+		return .
+	if(!radial_menu_options)
+		radial_menu_options = list(
+			"Reset Cabinet" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use"),
+			"Cancel" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
+		)
+	var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options)
+	if(radial_reset_menu != "Reset Cabinet")
+		return ITEM_INTERACT_BLOCKING
+	playsound(loc, 'sound/items/rattling_keys.ogg', 25, TRUE)
+	if(!do_after(user, 10 SECONDS, src))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "cabinet reset!")
+	reset_cabinet()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-
+	obj_flags |= EMAGGED
 	balloon_alert(user, "hard mode enabled")
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
-	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
-	max_passive = 6
-	bomb_cooldown = 18
-	var/gamerSkill = 0
-	if(user?.mind)
-		gamerSkill = user.mind.get_skill_level(/datum/skill/gaming)
-	enemy_setup(gamerSkill)
-	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
-	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
+	setup_new_opponent()
+	feedback_message = "If you die in the game, you die for real!"
 
-	screen_setup(user)
-	gameover = FALSE
+///Resets the cabinet back to defaults from the beggining of the game.
+/obj/machinery/computer/arcade/battle/proc/reset_cabinet()
+	if(obj_flags & EMAGGED)
+		obj_flags &= ~EMAGGED
+	enemy_name = null
+	player_turn = initial(player_turn)
+	feedback_message = initial(feedback_message)
+	player_current_world = initial(player_current_world)
+	latest_unlocked_world = initial(latest_unlocked_world)
+	enemies_defeated = initial(enemies_defeated)
+	player_gold = initial(player_gold)
+	player_current_hp = initial(player_current_hp)
+	player_current_mp = initial(player_current_mp)
+	ui_panel = initial(ui_panel)
+	bomb_cooldown = initial(bomb_cooldown)
+	equipped_gear = list(WEAPON_SLOT = null, ARMOR_SLOT = null)
 
-	obj_flags |= EMAGGED
+///Sets up a new opponent depending on what stage they are at.
+/obj/machinery/computer/arcade/battle/proc/setup_new_opponent()
+	var/name_adjective
+	var/new_name
 
-	enemy_name = "Cuban Pete"
-	name = "Outbomb Cuban Pete"
+	if(check_holidays(HALLOWEEN))
+		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
+		new_name = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+	else if(check_holidays(CHRISTMAS))
+		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
+		new_name = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+	else if(check_holidays(VALENTINES))
+		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		new_name = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+	else
+		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective")
+		new_name = pick_list(ARCADE_FILE, "rpg_enemy")
 
-	updateUsrDialog()
-	return TRUE
+	enemy_hp = rand(90, 125) * all_worlds[player_current_world]
+	enemy_mp = rand(20, 30) * all_worlds[player_current_world]
+	enemy_gold_reward = rand((DEFAULT_ITEM_PRICE / 2), DEFAULT_ITEM_PRICE)
+
+	// there's only one boss in each stage (except the last)
+	if((player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS)
+		enemy_mp *= 1.25
+		enemy_hp *= 1.25
+		enemy_gold_reward *= 1.5
+		name_adjective = "Big Boss"
+
+	enemy_icon_id = rand(1,6)
+	enemy_name = ("The " + name_adjective + " " + new_name)
+	feedback_message = "New game started against [enemy_name]"
+
+	if(obj_flags & EMAGGED)
+		enemy_name = "Cuban Pete"
+		enemy_hp += 50 //extra HP just to make cuban pete even more bullshit
+
+	//set max HP to reference later
+	enemy_max_hp = enemy_hp
+	//set the player to fight now.
+	ui_panel = UI_PANEL_BATTLE
+
+/**
+ * on_battle_win
+ *
+ * Called when the player wins a level, this handles giving EXP, loot, tickets, etc.
+ * It also handles clearing the enemy out for the next one, and unlocking new worlds.
+ * We stop at BATTLE_WORLD_NINE because it is the last stage, and has infinite bosses.
+ */
+/obj/machinery/computer/arcade/battle/proc/on_battle_win(mob/user)
+	enemy_name = null
+	feedback_message = null
+	player_turn = TRUE
+	if(player_current_world == latest_unlocked_world)
+		if(enemies_defeated == WORLD_ENEMY_BOSS)
+			enemies_defeated = 0
+			//the last stage doesn't have a next one to move onto.
+			if(latest_unlocked_world != BATTLE_WORLD_NINE)
+				var/current_world = all_worlds.Find(latest_unlocked_world)
+				latest_unlocked_world = all_worlds[current_world + 1]
+				ui_panel = UI_PANEL_WORLD_MAP
+				say("New world unlocked, [latest_unlocked_world]!")
+		enemies_defeated++
+	if(obj_flags & EMAGGED)
+		obj_flags &= ~EMAGGED
+		bomb_cooldown = initial(bomb_cooldown)
+		new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
+		new /obj/item/clothing/head/collectable/petehat(loc)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+		usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
+	else
+		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
+		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+	player_gold += enemy_gold_reward
+	if(user)
+		var/exp_gained = DEFAULT_EXP_GAIN * all_worlds[player_current_world]
+		user.mind?.adjust_experience(/datum/skill/gaming, exp_gained)
+		user.won_game()
+	SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
+	playsound(loc, 'sound/arcade/win.ogg', 40)
+	if(ui_panel != UI_PANEL_WORLD_MAP) //we havent been booted to world map, we're still going.
+		ui_panel = UI_PANEL_BETWEEN_FIGHTS
+
+///Called when a mob loses at the battle arcade.
+/obj/machinery/computer/arcade/battle/proc/lose_game(mob/user)
+	if(obj_flags & EMAGGED)
+		var/mob/living/living_user = user
+		if(istype(living_user))
+			living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
+			living_user.gib(DROP_ALL_REMAINS)
+		user.lost_game()
+	SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+	SStgui.update_uis(src)
+
+///Called when the enemy attacks you.
+/obj/machinery/computer/arcade/battle/proc/user_take_damage(mob/user, base_damage_taken)
+	var/datum/battle_arcade_gear/armor = equipped_gear[ARMOR_SLOT]
+	var/damage_taken = (base_damage_taken * all_worlds[player_current_world]) / (!isnull(armor) ? armor.bonus_modifier : 1)
+	player_current_hp -= max(0, damage_taken)
+	if(player_current_hp <= 0)
+		ui_panel = UI_PANEL_GAMEOVER
+		feedback_message = "GAME OVER."
+		say("You have been crushed! GAME OVER.")
+		playsound(loc, 'sound/arcade/lose.ogg', 40, TRUE)
+		lose_game(user)
+	else
+		feedback_message = "User took [damage_taken] damage!"
+		playsound(loc, 'sound/arcade/hit.ogg', 40, TRUE, extrarange = -3)
+
+///Called when you attack the enemy.
+/obj/machinery/computer/arcade/battle/proc/process_player_attack(mob/user, attack_type)
+	var/damage_dealt
+	switch(attack_type)
+		if(BATTLE_ARCADE_PLAYER_ATTACK)
+			var/datum/battle_arcade_gear/weapon = equipped_gear[WEAPON_SLOT]
+			damage_dealt = (rand(5, 15) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
+		if(BATTLE_ARCADE_PLAYER_HEAVY_ATTACK)
+			var/datum/battle_arcade_gear/weapon = equipped_gear[WEAPON_SLOT]
+			damage_dealt = (rand(15, 25) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
+		if(BATTLE_ARCADE_PLAYER_COUNTERATTACK)
+			feedback_message = "User prepares to counterattack!"
+			process_enemy_turn(user, defending_flags = BATTLE_ATTACK_FLAG_COUNTERATTACK)
+			playsound(loc, 'sound/arcade/mana.ogg', 40, TRUE, extrarange = -3)
+		if(BATTLE_ARCADE_PLAYER_DEFEND)
+			feedback_message = "User pulls up their shield!"
+			process_enemy_turn(user, defending_flags = BATTLE_ATTACK_FLAG_DEFEND)
+			playsound(loc, 'sound/arcade/mana.ogg', 40, TRUE, extrarange = -3)
+
+	if(!damage_dealt)
+		return
+	enemy_hp -= max(0, damage_dealt)
+	feedback_message = "[enemy_name] took [damage_dealt] damage!"
+	playsound(loc, 'sound/arcade/hit.ogg', 40, TRUE, extrarange = -3)
+	process_enemy_turn(user)
+
+///Called when you successfully counterattack the enemy.
+/obj/machinery/computer/arcade/battle/proc/successful_counterattack()
+	var/datum/battle_arcade_gear/weapon = equipped_gear[WEAPON_SLOT]
+	var/damage_dealt = (rand(10, 20) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
+	enemy_hp -= max(0, damage_dealt)
+	feedback_message = "User counterattacked for [damage_dealt] damage!"
+	playsound(loc, 'sound/arcade/boom.ogg', 40, TRUE, extrarange = -3)
+	SStgui.update_uis(src)
+
+///Handles the delay between the user's and enemy's turns to process what's going on.
+/obj/machinery/computer/arcade/battle/proc/process_enemy_turn(mob/user, defending_flags = NONE)
+	if(enemy_hp <= 0)
+		return on_battle_win(user)
+	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
+
+	if(obj_flags & EMAGGED)
+		bomb_cooldown--
+		switch(bomb_cooldown)
+			if(18)
+				feedback_message = "[enemy_name] takes two valve tank and links them together, what's he planning?"
+			if(15)
+				feedback_message = "[enemy_name] adds a remote control to the tan- ho god is that a bomb?"
+			if(12)
+				feedback_message = "[enemy_name] throws the bomb next to you, you'r too scared to pick it up."
+			if(6)
+				feedback_message = "[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat."
+			if(2)
+				feedback_message = "[enemy_name] is going to press the button! It's now or never!"
+			if(0)
+				player_current_hp = 0 //instant death
+	addtimer(CALLBACK(src, PROC_REF(perform_enemy_turn), user, defending_flags), 1 SECONDS)
+
+/**
+ * perform_enemy_turn
+ *
+ * Actually performs the enemy's turn.
+ * We first roll to see if the enemy should use magic. As their HP goes lower, the chances of self healing goes higher, but
+ * if they lack the MP, then it's rolling to steal MP from the player.
+ * After, we will roll to see if the player counterattacks the enemy (if set), otherwise we will attack normally.
+ */
+/obj/machinery/computer/arcade/battle/proc/perform_enemy_turn(mob/user, defending_flags = NONE)
+	player_turn = TRUE
+	var/chance_to_magic = max((-(enemy_hp - enemy_max_hp) / 2), 75)
+	if(prob(chance_to_magic))
+		if(enemy_mp >= 10)
+			var/healed_amount = rand(10, 20)
+			enemy_hp = min(enemy_max_hp, enemy_hp + healed_amount)
+			enemy_mp -= max(0, 10)
+			feedback_message = "[enemy_name] healed for [healed_amount] damage!"
+			playsound(loc, 'sound/arcade/heal.ogg', 40, TRUE, extrarange = -3)
+			SStgui.update_uis(src)
+			return
+		if(player_current_mp >= 5) //minimum to steal
+			var/healed_amount = rand(5, 10)
+			player_current_mp -= max(0, healed_amount)
+			enemy_mp = min(enemy_max_hp, enemy_hp + healed_amount)
+			feedback_message = "[enemy_name] stole [healed_amount] MP from you!"
+			playsound(loc, 'sound/arcade/steal.ogg', 40, TRUE)
+			SStgui.update_uis(src)
+			return
+		//we couldn't heal ourselves or steal MP, we'll just attack instead.
+	var/skill_level = user.mind?.get_skill_level(/datum/skill/gaming) || 1
+	var/chance_at_counterattack = 40 + (skill_level * 5) //at level 1 this is 45, at legendary this is 75
+	var/damage_dealt = (defending_flags & BATTLE_ATTACK_FLAG_DEFEND) ? rand(5, 10) : rand(15, 20)
+	if((defending_flags & BATTLE_ATTACK_FLAG_COUNTERATTACK) && prob(chance_at_counterattack))
+		return successful_counterattack()
+	return user_take_damage(user, damage_dealt)
+
+/obj/machinery/computer/arcade/battle/ui_data(mob/user)
+	var/list/data = ..()
+
+	data["feedback_message"] = feedback_message
+	data["shop_items"] = list()
+	for(var/gear_name in GLOB.battle_arcade_gear_list)
+		var/datum/battle_arcade_gear/gear = GLOB.battle_arcade_gear_list[gear_name]
+		if(latest_unlocked_world != gear.world_available)
+			continue
+		data["shop_items"] += list(gear_name)
+	data["ui_panel"] = ui_panel
+	data["player_current_world"] = player_current_world
+	data["latest_unlocked_world_position"] = all_worlds.Find(latest_unlocked_world)
+	data["player_gold"] = player_gold
+	data["player_current_hp"] = player_current_hp
+	data["player_current_mp"] = player_current_mp
+	data["enemy_icon_id"] = "boss[enemy_icon_id].gif"
+	data["enemy_name"] = enemy_name
+	data["enemy_max_hp"] = enemy_max_hp
+	data["enemy_hp"] = enemy_hp
+	data["enemy_mp"] = enemy_mp
+
+	data["equipped_gear"] = list()
+	for(var/gear_slot as anything in equipped_gear)
+		var/datum/battle_arcade_gear/user_gear = equipped_gear[gear_slot]
+		if(!istype(user_gear))
+			continue
+		data["equipped_gear"] += list(list(
+			"name" = user_gear.name,
+			"slot" = gear_slot,
+		))
+
+	return data
+
+/obj/machinery/computer/arcade/battle/ui_static_data(mob/user)
+	var/list/data = ..()
+
+	data["all_worlds"] = list()
+	for(var/individual_world in all_worlds)
+		data["all_worlds"] += list(individual_world)
+	data["attack_types"] = list()
+	for(var/individual_attack_type in all_attack_types)
+		data["attack_types"] += list(list("name" = individual_attack_type, "tooltip" = all_attack_types[individual_attack_type]))
+	data["cost_of_items"] = DEFAULT_ITEM_PRICE
+	data["max_hp"] = PLAYER_MAX_HP
+	data["max_mp"] = PLAYER_MAX_MP
+
+	return data
+
+/obj/machinery/computer/arcade/battle/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/arcade),
+	)
+
+/obj/machinery/computer/arcade/battle/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BattleArcade", "Battle Arcade")
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/obj/machinery/computer/arcade/battle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/gamer = ui.user
+	if(!istype(gamer))
+		return
+
+	switch(ui_panel)
+		if(UI_PANEL_GAMEOVER)
+			switch(action)
+				if("restart")
+					reset_cabinet()
+					return TRUE
+		if(UI_PANEL_SHOP)
+			switch(action)
+				if("sleep")
+					if(player_gold < DEFAULT_ITEM_PRICE / 2)
+						say("You don't have enough gold to rest!")
+						return TRUE
+					player_gold -= DEFAULT_ITEM_PRICE / 2
+					playsound(loc, 'sound/mecha/skyfall_power_up.ogg', 40)
+					player_current_hp = PLAYER_MAX_HP
+					player_current_mp = PLAYER_MAX_MP
+					return TRUE
+				if("buy_item")
+					var/datum/battle_arcade_gear/gear = GLOB.battle_arcade_gear_list[params["purchasing_item"]]
+					if(latest_unlocked_world != gear.world_available || equipped_gear[gear.slot] == gear)
+						say("That item is not in stock.")
+						return TRUE
+					if(player_gold < (DEFAULT_ITEM_PRICE * all_worlds[latest_unlocked_world]))
+						say("You don't have enough gold to buy that!")
+						return TRUE
+					player_gold -= DEFAULT_ITEM_PRICE * all_worlds[latest_unlocked_world]
+					equipped_gear[gear.slot] = gear
+					return TRUE
+				if("leave")
+					ui_panel = UI_PANEL_WORLD_MAP
+					return TRUE
+		if(UI_PANEL_WORLD_MAP)
+			switch(action)
+				if("start_fight")
+					var/world_travelling = all_worlds.Find(params["selected_arena"])
+					var/max_unlocked_worlds = all_worlds.Find(latest_unlocked_world)
+					if(world_travelling > max_unlocked_worlds)
+						say("That world is not unlocked yet!")
+						return TRUE
+					player_current_world = all_worlds[world_travelling]
+					setup_new_opponent()
+					return TRUE
+				if("enter_inn")
+					ui_panel = UI_PANEL_SHOP
+					return TRUE
+		if(UI_PANEL_BETWEEN_FIGHTS)
+			switch(action)
+				if("continue_without_rest")
+					setup_new_opponent()
+					return TRUE
+				if("continue_with_rest")
+					if(prob(60))
+						playsound(loc, 'sound/mecha/skyfall_power_up.ogg', 40)
+						player_current_hp = PLAYER_MAX_HP
+						player_current_mp = PLAYER_MAX_MP
+					else
+						playsound(loc, 'sound/machines/defib_zap.ogg', 40)
+					setup_new_opponent()
+					return TRUE
+				if("abandon_quest")
+					if(player_current_world == latest_unlocked_world)
+						enemies_defeated = 0
+					ui_panel = UI_PANEL_WORLD_MAP
+					return TRUE
+		if(UI_PANEL_BATTLE)
+			if(!player_turn)
+				return TRUE
+			player_turn = FALSE
+			switch(action)
+				if(BATTLE_ARCADE_PLAYER_ATTACK)
+					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_ATTACK)
+					return TRUE
+				if(BATTLE_ARCADE_PLAYER_HEAVY_ATTACK)
+					if(player_current_mp < SPELL_MP_COST)
+						say("You don't have enough MP to counterattack!")
+						player_turn = TRUE
+						return TRUE
+					player_current_mp -= SPELL_MP_COST
+					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_HEAVY_ATTACK)
+					return TRUE
+				if(BATTLE_ARCADE_PLAYER_COUNTERATTACK)
+					if(player_current_mp < SPELL_MP_COST)
+						say("You don't have enough MP to counterattack!")
+						player_turn = TRUE
+						return TRUE
+					player_current_mp -= SPELL_MP_COST
+					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_COUNTERATTACK)
+					return TRUE
+				if(BATTLE_ARCADE_PLAYER_DEFEND)
+					player_current_hp = min(player_current_hp + SPELL_MP_COST, PLAYER_MAX_HP)
+					player_current_mp = min(player_current_mp + SPELL_MP_COST, PLAYER_MAX_MP)
+					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_DEFEND)
+					return TRUE
+				if("flee")
+					player_turn = TRUE
+					ui_panel = UI_PANEL_WORLD_MAP
+					player_gold /= 2
+					return TRUE
+			//they pressed something but it wasn't in the menu, we'll be nice and give them back their turn anyway.
+			player_turn = TRUE
+
+#undef WORLD_ENEMY_BOSS
+#undef DEFAULT_EXP_GAIN
+#undef DEFAULT_ITEM_PRICE
+
+#undef PLAYER_MAX_HP
+#undef PLAYER_MAX_MP
+#undef SPELL_MP_COST
+
+#undef UI_PANEL_SHOP
+#undef UI_PANEL_WORLD_MAP
+#undef UI_PANEL_BATTLE
+#undef UI_PANEL_BETWEEN_FIGHTS
+#undef UI_PANEL_GAMEOVER
+
+#undef BATTLE_ATTACK_FLAG_COUNTERATTACK
+#undef BATTLE_ATTACK_FLAG_DEFEND
+
+#undef BATTLE_ARCADE_PLAYER_ATTACK
+#undef BATTLE_ARCADE_PLAYER_HEAVY_ATTACK
+#undef BATTLE_ARCADE_PLAYER_COUNTERATTACK
+#undef BATTLE_ARCADE_PLAYER_DEFEND

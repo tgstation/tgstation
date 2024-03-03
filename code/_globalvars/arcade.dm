@@ -81,3 +81,12 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		var/datum/orion_event/new_event = new path(src)
 		events[new_event] = new_event.weight
 	return events
+
+///asoc list ([gear name] = gear datum) of all equipment that can be bought in battle arcade.
+GLOBAL_LIST_INIT(battle_arcade_gear_list, generate_battle_arcade_gear_list())
+
+/proc/generate_battle_arcade_gear_list()
+	var/list/gear = list()
+	for(var/datum/battle_arcade_gear/template as anything in subtypesof(/datum/battle_arcade_gear))
+		gear[template::name] = new template
+	return gear

@@ -662,7 +662,7 @@
 	update_last_used(user)
 	. = ..()
 
-/obj/machinery/ui_act(action, list/params)
+/obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	update_last_used(usr)
 	if(isAI(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
