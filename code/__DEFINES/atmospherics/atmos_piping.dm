@@ -12,7 +12,7 @@
 // Assumes X_FULLPIPE = X, X_SHORTPIPE >> 4 = X as above
 #define FULLPIPE_TO_CARDINALS(bitfield) ((bitfield) & ALL_CARDINALS)
 #define SHORTPIPE_TO_CARDINALS(bitfield) (((bitfield) >> 4) & ALL_CARDINALS)
-#define PIPECAPS_TO_CARDIANLS(bitfield) (((bitfield) >> 8) & ALL_CARDINALS)
+#define PIPECAPS_TO_CARDINALS(bitfield) (((bitfield) >> 8) & ALL_CARDINALS)
 #define CARDINAL_TO_FULLPIPES(cardinals) (cardinals)
 #define CARDINAL_TO_SHORTPIPES(cardinals) ((cardinals) << 4)
 #define CARDINAL_TO_PIPECAPS(cardinals) ((cardinals) << 8)
