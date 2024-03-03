@@ -234,7 +234,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 
 /turf/closed/indestructible/fakedoor/glass_airlock
-	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/external/external.dmi'
 	opacity = FALSE
 
 /turf/closed/indestructible/fakedoor/engineering

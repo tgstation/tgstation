@@ -84,7 +84,7 @@
 
 /obj/structure/door_assembly/door_assembly_ext
 	name = "external airlock assembly"
-	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/external/external.dmi'
 	base_name = "external airlock"
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	glass_type = /obj/machinery/door/airlock/external/glass
