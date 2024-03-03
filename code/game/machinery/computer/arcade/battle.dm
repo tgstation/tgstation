@@ -190,7 +190,7 @@
 
 	if(obj_flags & EMAGGED)
 		enemy_name = "Cuban Pete"
-		enemy_hp += 50 //extra HP just to make cuban pete even more bullshit
+		enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
 
 	//set max HP to reference later
 	enemy_max_hp = enemy_hp
