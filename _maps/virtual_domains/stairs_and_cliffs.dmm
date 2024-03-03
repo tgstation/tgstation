@@ -9,6 +9,11 @@
 /mob/living/basic/bear/snow/ancient,
 /turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
+"ct" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/iron/stairs,
+/area/icemoon/underground/explored/virtual_domain)
 "cu" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -943,7 +948,7 @@ dR
 bU
 dR
 dR
-Nv
+ct
 Nv
 hc
 sM
