@@ -1,0 +1,5 @@
+author: "ViktorKoL"
+delete-after: True
+changes:
+  - bugfix: "made some heretic descriptions more accurate"
+  - spellcheck: "improved english of the heretical eldritch patrons"
