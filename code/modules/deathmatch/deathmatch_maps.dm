@@ -107,6 +107,7 @@
 	desc = "Choose your battler!"
 	max_players = 10
 	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/battler/soldier, // First because its a good and easy loadout and is picked by default
 		/datum/outfit/deathmatch_loadout/battler/bloodminer,
 		/datum/outfit/deathmatch_loadout/battler/clown,
 		/datum/outfit/deathmatch_loadout/battler/cowboy,
@@ -117,7 +118,6 @@
 		/datum/outfit/deathmatch_loadout/battler/raider,
 		/datum/outfit/deathmatch_loadout/battler/ripper,
 		/datum/outfit/deathmatch_loadout/battler/scientist,
-		/datum/outfit/deathmatch_loadout/battler/soldier,
 		/datum/outfit/deathmatch_loadout/battler/surgeon,
 		/datum/outfit/deathmatch_loadout/battler/tgcoder,
 		/datum/outfit/deathmatch_loadout/naked,

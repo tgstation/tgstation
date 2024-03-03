@@ -82,11 +82,7 @@
 	if(receiving)
 		var/datum/market_purchase/P = receiving
 
-		if(!P.item || ispath(P.item))
-			P.item = P.entry.spawn_item(T)
-		else
-			var/atom/movable/M = P.item
-			M.forceMove(T)
+		P.item = P.entry.spawn_item(T)
 
 		use_power(power_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new

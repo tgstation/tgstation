@@ -27,6 +27,8 @@
 	var/chunked_requests = 0
 	var/list/chunked_topics = list()
 
+	var/list/pending_events = list()
+
 	var/detached = FALSE
 
 /datum/tgs_api/v5/New()
@@ -46,6 +48,10 @@
 
 	var/datum/tgs_version/api_version = ApiVersion()
 	version = null // we want this to be the TGS version, not the interop version
+
+	// sleep once to prevent an issue where world.Export on the first tick can hang indefinitely
+	sleep(world.tick_lag)
+
 	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = api_version.raw_parameter, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands(), DMAPI5_PARAMETER_TOPIC_PORT = GetTopicPort()))
 	if(!istype(bridge_response))
 		TGS_ERROR_LOG("Failed initial bridge request!")
@@ -125,7 +131,7 @@
 			TGS_DEBUG_LOG("RequireInitialBridgeResponse: Starting sleep")
 			logged = TRUE
 
-		sleep(1)
+		sleep(world.tick_lag)
 
 	TGS_DEBUG_LOG("RequireInitialBridgeResponse: Passed")
 
@@ -248,6 +254,40 @@
 	RequireInitialBridgeResponse()
 	WaitForReattach(TRUE)
 	return chat_channels.Copy()
+
+/datum/tgs_api/v5/TriggerEvent(event_name, list/parameters, wait_for_completion)
+	RequireInitialBridgeResponse()
+	WaitForReattach(TRUE)
+
+	if(interop_version.minor < 9)
+		TGS_WARNING_LOG("Interop version too low for custom events!")
+		return FALSE
+
+	var/str_parameters = list()
+	for(var/i in parameters)
+		str_parameters += "[i]"
+
+	var/list/response = Bridge(DMAPI5_BRIDGE_COMMAND_EVENT, list(DMAPI5_BRIDGE_PARAMETER_EVENT_INVOCATION = list(DMAPI5_EVENT_INVOCATION_NAME = event_name, DMAPI5_EVENT_INVOCATION_PARAMETERS = str_parameters, DMAPI5_EVENT_INVOCATION_NOTIFY_COMPLETION = wait_for_completion)))
+	if(!response)
+		return FALSE
+
+	var/event_id = response[DMAPI5_EVENT_ID]
+	if(!event_id)
+		return FALSE
+
+	TGS_DEBUG_LOG("Created event ID: [event_id]")
+	if(!wait_for_completion)
+		return TRUE
+
+	TGS_DEBUG_LOG("Waiting for completion of event ID: [event_id]")
+
+	while(!pending_events[event_id])
+		sleep(world.tick_lag)
+
+	TGS_DEBUG_LOG("Completed wait on event ID: [event_id]")
+	pending_events -= event_id
+
+	return TRUE
 
 /datum/tgs_api/v5/proc/DecodeChannels(chat_update_json)
 	TGS_DEBUG_LOG("DecodeChannels()")
