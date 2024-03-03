@@ -62,7 +62,7 @@ export const BattleArcade = (props) => {
           {!equipped_gear.length && 'No gear equipped!'}
           {equipped_gear.map((gear, index) => (
             <>
-              {gear.slot}: {gear.name}
+              {gear.slot}: {gear.name} <br />
             </>
           ))}
         </Section>

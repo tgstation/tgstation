@@ -256,7 +256,7 @@
 /obj/machinery/computer/arcade/battle/proc/user_take_damage(mob/user, base_damage_taken)
 	var/datum/battle_arcade_gear/armor = equipped_gear[ARMOR_SLOT]
 	var/damage_taken = (base_damage_taken * all_worlds[player_current_world]) / (!isnull(armor) ? armor.bonus_modifier : 1)
-	player_current_hp -= max(0, damage_taken)
+	player_current_hp -= round(max(0, damage_taken), 1)
 	if(player_current_hp <= 0)
 		ui_panel = UI_PANEL_GAMEOVER
 		feedback_message = "GAME OVER."
@@ -266,6 +266,7 @@
 	else
 		feedback_message = "User took [damage_taken] damage!"
 		playsound(loc, 'sound/arcade/hit.ogg', 40, TRUE, extrarange = -3)
+		SStgui.update_uis(src)
 
 ///Called when you attack the enemy.
 /obj/machinery/computer/arcade/battle/proc/process_player_attack(mob/user, attack_type)
@@ -288,7 +289,7 @@
 
 	if(!damage_dealt)
 		return
-	enemy_hp -= max(0, damage_dealt)
+	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "[enemy_name] took [damage_dealt] damage!"
 	playsound(loc, 'sound/arcade/hit.ogg', 40, TRUE, extrarange = -3)
 	process_enemy_turn(user)
@@ -296,8 +297,8 @@
 ///Called when you successfully counterattack the enemy.
 /obj/machinery/computer/arcade/battle/proc/successful_counterattack()
 	var/datum/battle_arcade_gear/weapon = equipped_gear[WEAPON_SLOT]
-	var/damage_dealt = (rand(10, 20) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
-	enemy_hp -= max(0, damage_dealt)
+	var/damage_dealt = (rand(20, 30) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
+	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "User counterattacked for [damage_dealt] damage!"
 	playsound(loc, 'sound/arcade/boom.ogg', 40, TRUE, extrarange = -3)
 	SStgui.update_uis(src)
@@ -335,20 +336,20 @@
  */
 /obj/machinery/computer/arcade/battle/proc/perform_enemy_turn(mob/user, defending_flags = NONE)
 	player_turn = TRUE
-	var/chance_to_magic = max((-(enemy_hp - enemy_max_hp) / 2), 75)
+	var/chance_to_magic = round(max((-(enemy_hp - enemy_max_hp) / 2), 75), 1)
 	if(prob(chance_to_magic))
 		if(enemy_mp >= 10)
 			var/healed_amount = rand(10, 20)
-			enemy_hp = min(enemy_max_hp, enemy_hp + healed_amount)
-			enemy_mp -= max(0, 10)
+			enemy_hp = round(min(enemy_max_hp, enemy_hp + healed_amount), 1)
+			enemy_mp -= round(max(0, 10), 1)
 			feedback_message = "[enemy_name] healed for [healed_amount] damage!"
 			playsound(loc, 'sound/arcade/heal.ogg', 40, TRUE, extrarange = -3)
 			SStgui.update_uis(src)
 			return
 		if(player_current_mp >= 5) //minimum to steal
 			var/healed_amount = rand(5, 10)
-			player_current_mp -= max(0, healed_amount)
-			enemy_mp = min(enemy_max_hp, enemy_hp + healed_amount)
+			player_current_mp -= round(max(0, healed_amount), 1)
+			enemy_mp = round(min(enemy_max_hp, enemy_hp + healed_amount), 1)
 			feedback_message = "[enemy_name] stole [healed_amount] MP from you!"
 			playsound(loc, 'sound/arcade/steal.ogg', 40, TRUE)
 			SStgui.update_uis(src)
@@ -526,8 +527,8 @@
 					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_COUNTERATTACK)
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_DEFEND)
-					player_current_hp = min(player_current_hp + (SPELL_MP_COST / 2), PLAYER_MAX_HP)
-					player_current_mp = min(player_current_mp + SPELL_MP_COST, PLAYER_MAX_MP)
+					player_current_hp = round(min(player_current_hp + (SPELL_MP_COST / 2), PLAYER_MAX_HP), 1)
+					player_current_mp = round(min(player_current_mp + SPELL_MP_COST, PLAYER_MAX_MP), 1)
 					process_player_attack(gamer, BATTLE_ARCADE_PLAYER_DEFEND)
 					return TRUE
 				if("flee")
