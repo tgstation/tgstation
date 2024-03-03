@@ -2247,6 +2247,7 @@
 	},
 /obj/machinery/status_display/evac/directional/north,
 /obj/item/radio/intercom/directional/west,
+/obj/item/goliath_infuser_hammer,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "aPv" = (
@@ -28751,6 +28752,10 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/station/commons/lounge)
+"kmf" = (
+/obj/item/goliath_infuser_hammer,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/captain/private)
 "kmN" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -36828,6 +36833,9 @@
 	req_access = list("captain")
 	},
 /obj/structure/cable,
+/obj/item/skeleton_key,
+/obj/item/skeleton_key,
+/obj/item/sord,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "njW" = (
@@ -50430,6 +50438,9 @@
 	icon_state = "map-left-MS";
 	pixel_y = 32
 	},
+/obj/item/bodybag,
+/obj/item/skeleton_key,
+/obj/item/surgicaldrill/alien,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "rZT" = (
@@ -51626,6 +51637,9 @@
 "sxR" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
+/obj/item/forcefield_projector,
+/obj/item/skeleton_key,
+/obj/item/skeleton_key,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "sxX" = (
@@ -56147,6 +56161,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/skeleton_key,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "tZJ" = (
@@ -58166,6 +58181,11 @@
 /area/station/maintenance/fore/lesser)
 "uJa" = (
 /obj/structure/cable,
+/obj/item/forcefield_projector,
+/obj/item/goliath_infuser_hammer,
+/obj/item/skeleton_key,
+/obj/item/skeleton_key,
+/obj/item/slime_extract/yellow,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "uJm" = (
@@ -65169,6 +65189,13 @@
 /obj/structure/sign/warning/hot_temp/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"xdT" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/geneshears,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain/private)
 "xdV" = (
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
 /obj/effect/mapping_helpers/broken_floor,
@@ -66789,6 +66816,8 @@
 	icon_state = "map-right-MS";
 	pixel_y = 32
 	},
+/obj/item/forcefield_projector,
+/obj/item/slime_extract/yellow,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "xFF" = (
@@ -98169,7 +98198,7 @@ syo
 syo
 shq
 syo
-syo
+kmf
 syo
 syo
 sYp
@@ -99197,7 +99226,7 @@ ifM
 hiZ
 rDT
 syL
-rDT
+xdT
 tZD
 snu
 ifM
