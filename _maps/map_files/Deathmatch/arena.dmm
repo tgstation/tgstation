@@ -151,7 +151,7 @@
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "lQ" = (
-/obj/item/gun/ballistic/revolver/reverse,
+/obj/item/gun/ballistic/revolver/syndicate,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/light_emitter{
 	set_cap = 2;
