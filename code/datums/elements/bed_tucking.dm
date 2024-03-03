@@ -24,7 +24,7 @@
 		return
 	var/turf/our_home = get_turf(target)
 	var/obj/structure/bed/eepy = locate(/obj/structure/bed) in our_home
-	if(!eepy)
+	if(isnull(eepy))
 		return
 	tuck(target, eepy)
 
