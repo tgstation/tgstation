@@ -156,7 +156,7 @@
 	equipped_gear = list(WEAPON_SLOT = null, ARMOR_SLOT = null)
 
 ///Sets up a new opponent depending on what stage they are at.
-/obj/machinery/computer/arcade/battle/proc/setup_new_opponent()
+/obj/machinery/computer/arcade/battle/proc/setup_new_opponent(enemy_gets_first_move = FALSE)
 	var/name_adjective
 	var/new_name
 
@@ -196,6 +196,9 @@
 	enemy_max_hp = enemy_hp
 	//set the player to fight now.
 	ui_panel = UI_PANEL_BATTLE
+
+	if(enemy_gets_first_move)
+		perform_enemy_turn()
 
 /**
  * on_battle_win
@@ -351,7 +354,7 @@
 			SStgui.update_uis(src)
 			return
 		//we couldn't heal ourselves or steal MP, we'll just attack instead.
-	var/skill_level = user.mind?.get_skill_level(/datum/skill/gaming) || 1
+	var/skill_level = user?.mind?.get_skill_level(/datum/skill/gaming) || 1
 	var/chance_at_counterattack = 40 + (skill_level * 5) //at level 1 this is 45, at legendary this is 75
 	var/damage_dealt = (defending_flags & BATTLE_ATTACK_FLAG_DEFEND) ? rand(5, 10) : rand(15, 20)
 	if((defending_flags & BATTLE_ATTACK_FLAG_COUNTERATTACK) && prob(chance_at_counterattack))
@@ -484,11 +487,14 @@
 						player_current_hp = PLAYER_MAX_HP
 						player_current_mp = PLAYER_MAX_MP
 					else
-						if(prob(40))
-							//you've been robbed, kid.
-							player_gold /= 2
 						playsound(loc, 'sound/machines/defib_zap.ogg', 40)
-					setup_new_opponent()
+						if(prob(40))
+							//You got robbed, and now have to go to your next fight.
+							player_gold /= 2
+							setup_new_opponent()
+						else
+							//You got ambushed, the enemy gets the first hit.
+							setup_new_opponent(enemy_gets_first_move = TRUE)
 					return TRUE
 				if("abandon_quest")
 					if(player_current_world == latest_unlocked_world)
