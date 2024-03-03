@@ -238,7 +238,7 @@ Buildable meters
 				return TRUE
 	// no conflicts found
 
-	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc, , fixed_dir(), p_init_dir)
+	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc, null, fixed_dir(), p_init_dir)
 	build_pipe(built_machine)
 	built_machine.on_construction(user, pipe_color, piping_layer)
 	transfer_fingerprints_to(built_machine)

@@ -42,7 +42,7 @@
 
 /obj/machinery/atmospherics/components/on_hide(datum/_source, underfloor_accessibility)
 	hide_pipe(underfloor_accessibility)
-	. = ..()
+	return ..()
 
 /**
  * Called in on_hide(), set the showpipe var to true or false depending on the situation, calls update_icon()
