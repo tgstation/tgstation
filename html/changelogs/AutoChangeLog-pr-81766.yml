@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Fixes some tiles outside the Icebox AI satellite not getting hit by storms."
