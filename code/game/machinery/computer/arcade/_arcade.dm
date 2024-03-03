@@ -8,6 +8,8 @@
 	light_color = LIGHT_COLOR_GREEN
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 
+	///Static list of radial menu options so we don't have to remake it every time.
+	var/static/list/radial_menu_options
 	///If set, will dispense these as prizes instead of the default GLOB.arcade_prize_pool
 	///Like prize pool, it must be a list of the prize and the weight of being selected.
 	var/list/prize_override
@@ -16,17 +18,43 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	if(!istype(tool, /obj/item/stack/arcadeticket))
-		return .
 
-	var/obj/item/stack/arcadeticket/tickets = tool
-	if(!tickets.use(2))
-		balloon_alert(user, "need 2 tickets!")
-		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/stack/arcadeticket))
+		var/obj/item/stack/arcadeticket/tickets = tool
+		if(!tickets.use(2))
+			balloon_alert(user, "need 2 tickets!")
+			return ITEM_INTERACT_BLOCKING
 
-	prizevend(user)
-	balloon_alert(user, "prize claimed")
-	return ITEM_INTERACT_SUCCESS
+		prizevend(user)
+		balloon_alert(user, "prize claimed")
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/key/displaycase))
+		if(!radial_menu_options)
+			radial_menu_options = list(
+				"Reset Cabinet" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use"),
+				"Cancel" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
+			)
+		var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options)
+		if(radial_reset_menu != "Reset Cabinet")
+			return ITEM_INTERACT_BLOCKING
+		playsound(loc, 'sound/items/rattling_keys.ogg', 25, TRUE)
+		if(!do_after(user, 10 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "cabinet reset!")
+		reset_cabinet(user)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/arcade/screwdriver_act(mob/living/user, obj/item/I)
+	//you can't stop playing when you start.
+	if(obj_flags & EMAGGED)
+		return TRUE
+	return ..()
+
+///Performs a factory reset of the cabinet and wipes all its stats.
+/obj/machinery/computer/arcade/proc/reset_cabinet(mob/living/user)
+	SHOULD_CALL_PARENT(TRUE)
+	obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()

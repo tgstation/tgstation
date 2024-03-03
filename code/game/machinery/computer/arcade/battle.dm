@@ -44,8 +44,6 @@
 	icon_screen = "battle"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
 
-	///Static list of radial menu options so we don't have to remake it every time.
-	var/static/list/radial_menu_options
 	///List of all worlds in the game.
 	var/static/list/all_worlds = list(
 		BATTLE_WORLD_ONE = 1,
@@ -108,27 +106,6 @@
 	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
 	var/bomb_cooldown = 19
 
-/obj/machinery/computer/arcade/battle/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if(!istype(tool, /obj/item/key/displaycase))
-		return .
-	if(!radial_menu_options)
-		radial_menu_options = list(
-			"Reset Cabinet" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use"),
-			"Cancel" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
-		)
-	var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options)
-	if(radial_reset_menu != "Reset Cabinet")
-		return ITEM_INTERACT_BLOCKING
-	playsound(loc, 'sound/items/rattling_keys.ogg', 25, TRUE)
-	if(!do_after(user, 10 SECONDS, src))
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "cabinet reset!")
-	reset_cabinet()
-	return ITEM_INTERACT_SUCCESS
-
 /obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -138,10 +115,8 @@
 	setup_new_opponent()
 	feedback_message = "If you die in the game, you die for real!"
 
-///Resets the cabinet back to defaults from the beggining of the game.
-/obj/machinery/computer/arcade/battle/proc/reset_cabinet()
-	if(obj_flags & EMAGGED)
-		obj_flags &= ~EMAGGED
+/obj/machinery/computer/arcade/battle/reset_cabinet(mob/living/user)
+	. = ..()
 	enemy_name = null
 	player_turn = initial(player_turn)
 	feedback_message = initial(feedback_message)
@@ -248,7 +223,7 @@
 		if(istype(living_user))
 			living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			living_user.gib(DROP_ALL_REMAINS)
-		user.lost_game()
+	user.lost_game()
 	SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 	SStgui.update_uis(src)
 
