@@ -29,3 +29,53 @@
   Absolucy:
   - rscadd: Nanotrasen has rescinded their restrictions on species such as lizards
       and moths growing hair.
+2024-03-03:
+  Absolucy:
+  - bugfix: Fix dissection experiment never completing.
+  - bugfix: Ghost players now have their own outfit, which notably lacks a PDA, so
+      they no longer clog up the PDA messenger
+  - rscadd: Ghost players get loadout items by default
+  - qol: Explosions can no longer occur in centcom at all outside of the arena.
+  - rscadd: Players in "safe" areas of centcom will now get a status effect that makes
+      them much more resilient. Entering a duel or leaving centcom will remove these
+      effects.
+  - balance: Hypercharged slime batteries are now EMP-proof, like their ordinary charged
+      counterparts.
+  - rscadd: Added "Refresh TGUI" and "Fix Chat" buttons to the Help menu at the top
+      of the game window.
+  Absolucy, Melbert:
+  - balance: Stop, drop, and roll no longer instantly clears 5 fire stacks off of
+      you - Instead, it will clear 1 fire stack off of you every time you roll, with
+      a roll every 0.8 seconds.
+  - balance: Stop, drop, and roll no longer stuns you for 6 seconds. Instead, it will
+      knock you to the floor while you are rolling. Moving around or getting up will
+      cancel the roll, and you cannot use items while rolling around.
+  - balance: Stop, drop, and roll will now repeat until the fire is put out or you
+      get up.
+  Absolucy, Momo8289:
+  - rscadd: Cigarettes can now be placed in and smoked through gas masks, so long
+      as the mask has no filters installed and is not covering the mouth.
+  Absolucy, Reality Overseer:
+  - bugfix: fixed photographs having black borders in photos
+  Absolucy, mc-oofert:
+  - qol: mice and rats now are visually spaced out from eachother for visual clarity
+  DexeeXI:
+  - bugfix: QM is NOT a head.
+  - bugfix: QM no longer has command related items on spawn.
+  - bugfix: QM is not chain of command. No more biscuit.
+  - bugfix: QM's SECHUD icon is no longer blue. It's improved, hope you appreciate
+      the cringe.
+  - bugfix: QM's PDA doesn't have bullshit programs on it anymore. In fact, it's a
+      non-head PDA that has what you require to **do your job**.
+  - bugfix: QM offices properly reflect their non-head status.
+  - bugfix: Maid Cafe on Icebox had extra pipe causing a litany of issues. The extra
+      pipe is now removed.
+  - bugfix: damned rabbit mask no longer can be knocked off and provides protection
+      from facehuggers.
+  KittyNoodle:
+  - balance: Returns mindswap to its original, targeted form
+  Melbert, Absolucy:
+  - rscadd: You can now wear multiple accessories on your uniform at once (up to five
+      by default)
+  NicoDeLuna:
+  - rscadd: Added Helldiver uniform

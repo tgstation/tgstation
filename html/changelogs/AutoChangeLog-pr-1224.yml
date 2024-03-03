@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Ghost players now have their own outfit, which notably lacks a PDA, so they no longer clog up the PDA messenger"
-  - rscadd: "Ghost players get loadout items by default"
-  - qol: "Explosions can no longer occur in centcom at all outside of the arena."
-  - rscadd: "Players in \"safe\" areas of centcom will now get a status effect that makes them much more resilient. Entering a duel or leaving centcom will remove these effects."
