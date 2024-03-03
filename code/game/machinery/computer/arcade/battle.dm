@@ -484,6 +484,9 @@
 						player_current_hp = PLAYER_MAX_HP
 						player_current_mp = PLAYER_MAX_MP
 					else
+						if(prob(40))
+							//you've been robbed, kid.
+							player_gold /= 2
 						playsound(loc, 'sound/machines/defib_zap.ogg', 40)
 					setup_new_opponent()
 					return TRUE

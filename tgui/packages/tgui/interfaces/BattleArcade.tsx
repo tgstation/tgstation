@@ -92,7 +92,7 @@ export const ShopPanel = (props) => {
       <Box m={2}>
         Feel free to browse our wares, or take a nap. I&apos;ll be here to
         ensure you&apos;ll get a good night&apos;s rest without worry of
-        ambushing.
+        ambushing or robbery.
       </Box>
       {shop_items.map((item, index) => (
         <Button
