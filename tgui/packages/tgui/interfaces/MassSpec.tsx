@@ -266,10 +266,16 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
           position: 'absolute',
           width: `${GRAPH_MAX_WIDTH}px`,
           height: `${GRAPH_MAX_HEIGHT}px`,
+          top: '10px',
         }}
       >
         {/* x axis*/}
-        <text text-anchor="middle" fill="white">
+        <text
+          text-anchor="middle"
+          fill="white"
+          transform={`scale(${x_scale} 1)`}
+          font-size="14"
+        >
           <tspan
             x="40%"
             y={`${base_line + 40}px`}
@@ -281,19 +287,19 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
           <tspan x="0%" y={`${base_line + 20}px`}>
             {graphLowerRange}
           </tspan>
-          <tspan x="16%" y={`${base_line + 20}px`}>
+          <tspan x="20%" y={`${base_line + 20}px`}>
             {round(graphLowerRange + graphIncrement, 1)}
           </tspan>
-          <tspan x="32%" y={`${base_line + 20}px`}>
+          <tspan x="40%" y={`${base_line + 20}px`}>
             {round(graphLowerRange + graphIncrement * 2, 1)}
           </tspan>
-          <tspan x="48%" y={`${base_line + 20}px`}>
+          <tspan x="60%" y={`${base_line + 20}px`}>
             {round(graphLowerRange + graphIncrement * 3, 1)}
           </tspan>
-          <tspan x="64%" y={`${base_line + 20}px`}>
+          <tspan x="80%" y={`${base_line + 20}px`}>
             {round(graphLowerRange + graphIncrement * 4, 1)}
           </tspan>
-          <tspan x="80%" y={`${base_line + 20}px`}>
+          <tspan x="100%" y={`${base_line + 20}px`}>
             {graphUpperRange}
           </tspan>
         </text>
@@ -307,23 +313,28 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         />
 
         {/* y axis*/}
-        <text text-anchor="middle" fill="white">
-          <tspan x={`${base_width + 20}px`} y="80%">
+        <text
+          text-anchor="middle"
+          fill="white"
+          transform={`scale(1 ${y_scale})`}
+          font-size="14"
+        >
+          <tspan x={`${base_width + 20}px`} y="100%">
             0
           </tspan>
-          <tspan x={`${base_width + 20}px`} y="65%">
+          <tspan x={`${base_width + 20}px`} y="80%">
             {round(maxAbsorbance * 0.2, 1)}
           </tspan>
-          <tspan x={`${base_width + 20}px`} y="50%">
+          <tspan x={`${base_width + 20}px`} y="60%">
             {round(maxAbsorbance * 0.4, 1)}
           </tspan>
-          <tspan x={`${base_width + 20}px`} y="35%">
+          <tspan x={`${base_width + 20}px`} y="40%">
             {round(maxAbsorbance * 0.6, 1)}
           </tspan>
           <tspan x={`${base_width + 20}px`} y="20%">
             {round(maxAbsorbance * 0.8, 1)}
           </tspan>
-          <tspan x={`${base_width + 20}px`} y="5%">
+          <tspan x={`${base_width + 20}px`} y="0%">
             {round(maxAbsorbance, 1)}
           </tspan>
         </text>
@@ -354,15 +365,14 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
             <polygon
               key={peak.name}
               points={`${
-                ((peak.mass - 5) / graphUpperRange) * base_width
+                ((peak.mass - 5) / graphUpperRange) * GRAPH_MAX_WIDTH
               },${base_line}
-                ${(peak.mass / graphUpperRange) * base_width},${
+                ${(peak.mass / graphUpperRange) * GRAPH_MAX_WIDTH},${
                   (base_line - (peak.volume / maxAbsorbance) * base_line) *
-                    y_scale +
-                  GRAPH_MAX_HEIGHT * 0.05
+                  y_scale
                 }
                 ${
-                  ((peak.mass + 5) / graphUpperRange) * base_width
+                  ((peak.mass + 5) / graphUpperRange) * GRAPH_MAX_WIDTH
                 }, ${base_line}`}
               opacity="0.6"
               style={{
@@ -375,11 +385,11 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         {/* Background */}
         <g transform={`scale(${x_scale} 1)`}>
           <polygon
-            points={`${(lowerRange / deltaRange) * base_width},${base_line} ${
-              (lowerRange / deltaRange) * base_width
-            },0 ${(upperRange / deltaRange) * base_width},0 ${
-              (upperRange / deltaRange) * base_width
-            },${base_line}`}
+            points={`${
+              (lowerRange / deltaRange) * GRAPH_MAX_WIDTH
+            },${base_line} ${(lowerRange / deltaRange) * GRAPH_MAX_WIDTH},0 ${
+              (upperRange / deltaRange) * GRAPH_MAX_WIDTH
+            },0 ${(upperRange / deltaRange) * GRAPH_MAX_WIDTH},${base_line}`}
             opacity="0.2"
             style={{ fill: 'blue' }}
           />
@@ -395,8 +405,8 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         format={(value: number) => round(value, 2)}
         width={(centerValue / graphUpperRange) * base_width + 'px'}
         value={lowerRange}
-        minValue={graphLowerRange / x_scale}
-        maxValue={centerValue / x_scale}
+        minValue={graphLowerRange}
+        maxValue={centerValue}
         color={'invisible'}
         onDrag={(e, value) =>
           act('leftSlider', {
@@ -412,8 +422,8 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         step={graphUpperRange / base_width}
         width={base_width - (centerValue / graphUpperRange) * base_width + 'px'}
         value={upperRange}
-        minValue={centerValue / x_scale}
-        maxValue={graphUpperRange / x_scale}
+        minValue={centerValue}
+        maxValue={graphUpperRange}
         color={'invisible'}
         onDrag={(e, value) =>
           act('rightSlider', {
@@ -430,8 +440,8 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         height={1.9}
         format={(value: number) => round(value, 2)}
         width={base_width + 'px'}
-        minValue={(graphLowerRange + 1) / x_scale}
-        maxValue={(graphUpperRange - 1) / x_scale}
+        minValue={graphLowerRange + 1}
+        maxValue={graphUpperRange - 1}
         color={'invisible'}
         onDrag={(e, value) =>
           act('centerSlider', {
