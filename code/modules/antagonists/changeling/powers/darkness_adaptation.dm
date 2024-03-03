@@ -20,12 +20,11 @@
 
 /datum/action/changeling/darkness_adaptation/sting_action(mob/living/carbon/human/cling) //SHOULD always be human, because req_human = TRUE
 	..()
+	is_active = !is_active
 	if(is_active)
-		disable_ability(cling)
-		is_active = FALSE
-	else
 		enable_ability(cling)
-		is_active = TRUE
+	else
+		disable_ability(cling)
 
 /datum/action/changeling/darkness_adaptation/Remove(mob/living/carbon/human/cling)
 	..()
