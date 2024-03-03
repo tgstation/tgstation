@@ -1061,7 +1061,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	for(var/mob/living/mob in contents)
 		if(DOING_INTERACTION_WITH_TARGET(mob, src))
 			// Shake and queue another check_if_shake
-			src.Shake(x_shake_pixel_shift, y_shake_pixel_shift, next_check_time, shake_interval = 1)
+			src.Shake(x_shake_pixel_shift, y_shake_pixel_shift, next_check_time, shake_interval = .1 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
