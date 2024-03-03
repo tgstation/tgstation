@@ -15,10 +15,7 @@
 
 		//assuming most of the icon is white we find what ratio to scale the intensity of each part roughly
 		var/list/rgb_list = rgb2num(color)
-		rgb_list[1] = rgb_list[1] / 221
-		rgb_list[2] = rgb_list[2] / 221
-		rgb_list[3] = rgb_list[3] / 221
-		modified_icon.SetIntensity(rgb_list[1], rgb_list[2], rgb_list[3])
+		modified_icon.SetIntensity(rgb_list[1] / 255, rgb_list[2] / 255, rgb_list[3] / 255)
 		cached_app = mutable_appearance(modified_icon, "material_insertion")
 
 		apps[color] = cached_app
