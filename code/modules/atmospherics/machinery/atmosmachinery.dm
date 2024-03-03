@@ -132,7 +132,7 @@
 	return ..()
 
 /**
- * Handler for `COMSIG_OBJ_HIDE`. Calls `update_cap_visuals` on pipe and its connected nodes
+ * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
  */
 /obj/machinery/atmospherics/proc/on_hide(datum/_source, _underfloor_accessibility)
 	SHOULD_CALL_PARENT(TRUE)
@@ -636,7 +636,7 @@
 	return
 
 /**
- * Handles cap overlay addition and removal, won't do anything if `has_cap_visuals` is set to `FALSE`.
+ * Handles cap overlay addition and removal, won't do anything if `has_cap_visuals` is set to `FALSE`
  */
 /obj/machinery/atmospherics/proc/update_cap_visuals()
 	if(!has_cap_visuals)
