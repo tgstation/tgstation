@@ -93,9 +93,9 @@
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/laser/cyborg/emp_act()
-	SHOULD_CALL_PARENT(FALSE)
-	return
+/obj/item/gun/energy/laser/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/laser/scatter
 	name = "scatter laser gun"

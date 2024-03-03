@@ -19,11 +19,11 @@
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/e_gun/advtaser/cyborg/add_seclight_point()
-	return
+/obj/item/gun/energy/e_gun/advtaser/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
-/obj/item/gun/energy/e_gun/advtaser/cyborg/emp_act()
-	SHOULD_CALL_PARENT(FALSE)
+/obj/item/gun/energy/e_gun/advtaser/cyborg/add_seclight_point()
 	return
 
 /obj/item/gun/energy/disabler
@@ -67,6 +67,6 @@
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/disabler/cyborg/emp_act()
-	SHOULD_CALL_PARENT(FALSE)
-	return
+/obj/item/gun/energy/disabler/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)

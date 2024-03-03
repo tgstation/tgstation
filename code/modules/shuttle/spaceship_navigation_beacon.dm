@@ -39,7 +39,7 @@
 	START_PROCESSING(SSmachines, src)
 	COOLDOWN_START(src, next_automatic_message_time, automatic_message_cooldown)
 
-/obj/machinery/spaceship_navigation_beacon/emp_act()
+/obj/machinery/spaceship_navigation_beacon/emp_act(severity)
 	. = ..()
 	locked = TRUE
 	update_appearance(UPDATE_ICON_STATE)

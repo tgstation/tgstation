@@ -10,16 +10,16 @@
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
+/obj/item/gun/energy/ionrifle/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+
 /obj/item/gun/energy/ionrifle/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 17, \
 		overlay_y = 9)
-
-/obj/item/gun/energy/ionrifle/emp_act(severity)
-	SHOULD_CALL_PARENT(FALSE)
-	return
 
 /obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
@@ -304,10 +304,7 @@
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
-
-/obj/item/gun/energy/printer/emp_act()
-	SHOULD_CALL_PARENT(FALSE)
-	return
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/temperature
 	name = "temperature gun"
