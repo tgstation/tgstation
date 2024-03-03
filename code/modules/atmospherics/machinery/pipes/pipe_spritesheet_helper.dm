@@ -116,7 +116,7 @@
 		var/icon/capped = icon(working)
 		capped.Blend(capped_mask, ICON_MULTIPLY)
 
-		var/icon_state_dirs = (dirs & ~combined_dirs) | CARDIANL_TO_PIPECAPS(combined_dirs)
+		var/icon_state_dirs = (dirs & ~combined_dirs) | CARDINAL_TO_PIPECAPS(combined_dirs)
 		outputs[capped] = "[icon_state_dirs]_[layer]"
 
 	return outputs

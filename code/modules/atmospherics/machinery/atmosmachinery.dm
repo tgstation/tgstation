@@ -659,7 +659,7 @@
 	if(connections == NONE)
 		return
 
-	var/bitfield = CARDIANL_TO_PIPECAPS(connections)
+	var/bitfield = CARDINAL_TO_PIPECAPS(connections)
 	bitfield |= ((~connections) & ALL_CARDINALS)
 
 	if(isnull(cap_overlay))
