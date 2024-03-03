@@ -47,7 +47,7 @@
 			"pinned" = module.pinned_to[REF(user)],
 			"idle_power" = module.idle_power_cost,
 			"active_power" = module.active_power_cost,
-			"use_power" = module.use_power_cost,
+			"use_energy" = module.use_energy_cost,
 			"module_complexity" = module.complexity,
 			"cooldown_time" = module.cooldown_time,
 			"cooldown" = round(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),

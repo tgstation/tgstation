@@ -217,7 +217,7 @@ As we have an usable module, we want to set a cooldown time. All modules are als
 	icon_state = "neuron_healer"
 	module_type = MODULE_USABLE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/neuron_healer)
 	cooldown_time = 15 SECONDS
 	var/brain_damage_healed = 25
@@ -245,7 +245,7 @@ After this, we want to put our special code, a basic effect of healing all mobs 
 		carbon_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brain_damage_healed)
 		mod.wearer.Beam(carbon_mob, icon_state = "plasmabeam", time = 1.5 SECONDS)
 	playsound(src, 'sound/effects/magic.ogg', 100, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 ```
 
 We now have a basic module, we can add it to the techwebs to make it printable ingame, and we can add an inbuilt, advanced version of it for our psychological suit. We'll give it more healing power, no complexity and make it unremovable.

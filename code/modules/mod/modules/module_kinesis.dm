@@ -9,7 +9,7 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
@@ -59,7 +59,7 @@
 	if(!can_grab(target))
 		balloon_alert(mod.wearer, "can't grab!")
 		return
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	grab_atom(target)
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -76,7 +76,7 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	drain_power(use_power_cost/10)
+	drain_power(use_energy_cost/10)
 	if(kinesis_catcher.mouse_params)
 		kinesis_catcher.calculate_params()
 	if(!kinesis_catcher.given_turf)
@@ -259,7 +259,7 @@
 	name = "MOD prototype kinesis module"
 	prebuilt = TRUE
 	complexity = 0
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE
 	core_removable = FALSE
 
@@ -280,7 +280,7 @@
 		This one can force some of the grasped objects to phase through walls. Oh no."
 	complexity = 0
 	grab_range = INFINITY
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	prebuilt = TRUE
 	stat_required = CONSCIOUS
 	/// Does our object phase through stuff?

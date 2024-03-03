@@ -97,7 +97,7 @@
 	module_type = MODULE_TOGGLE
 	complexity = 3
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
@@ -160,8 +160,8 @@
 
 /obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
 	if(!use_fuel)
-		return check_power(use_power_cost)
-	if(!drain_power(use_power_cost))
+		return check_power(use_energy_cost)
+	if(!drain_power(use_energy_cost))
 		return FALSE
 	return TRUE
 
@@ -186,7 +186,7 @@
 	module_type = MODULE_USABLE
 	complexity = 3
 	cooldown_time = 30 SECONDS
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/jump_jet)
 
 /obj/item/mod/module/jump_jet/on_use()
@@ -225,7 +225,7 @@
 		to alert anyone nearby that someone has, in fact, died."
 	icon_state = "status"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
 	/// Does this show damage types, body temp, satiety
@@ -434,7 +434,7 @@
 	icon_state = "dispenser"
 	module_type = MODULE_USABLE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
 	/// Path we dispense.
@@ -453,7 +453,7 @@
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	return dispensed
 
 ///Longfall - Nullifies fall damage, removing charge instead.
@@ -465,7 +465,7 @@
 		Useful for mining, monorail tracks, or even skydiving!"
 	icon_state = "longfall"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/longfall)
 
 /obj/item/mod/module/longfall/on_suit_activation()
@@ -476,7 +476,7 @@
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
 	SIGNAL_HANDLER
-	if(!drain_power(use_power_cost * levels))
+	if(!drain_power(use_energy_cost * levels))
 		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
@@ -526,7 +526,7 @@
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The DNA we lock with.
@@ -550,7 +550,7 @@
 		return
 	dna = mod.wearer.dna.unique_enzymes
 	balloon_alert(mod.wearer, "dna updated")
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
 	. = ..()

@@ -1,8 +1,8 @@
 /// Default value for the max_complexity var on MODsuits
 #define DEFAULT_MAX_COMPLEXITY 15
 
-/// Default cell drain per process on MODsuits
-#define DEFAULT_CHARGE_DRAIN 5
+/// The default cell drain of a modsuit. The standard modsuit active power usage drains this much energy per modsuit second.
+#define DEFAULT_CHARGE_DRAIN (0.005 * STANDARD_CELL_CHARGE) // A standard cell lasts 200 seconds with this on active power usage, while a high power one lasts 2,000 seconds.
 
 /// Default time for a part to seal
 #define MOD_ACTIVATION_STEP_TIME (2 SECONDS)

@@ -86,7 +86,7 @@
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
 
@@ -106,7 +106,7 @@
 	tether.firer = mod.wearer
 	playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/projectile/tether
 	name = "tether"
@@ -187,7 +187,7 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
@@ -202,7 +202,7 @@
 	if(!.)
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Safety-First Head Protection - Protects your brain matter from sudden impacts.
 /obj/item/mod/module/headprotector

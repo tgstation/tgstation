@@ -148,7 +148,7 @@
 	icon_state = "tanning"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tanner)
 	cooldown_time = 30 SECONDS
 
@@ -162,7 +162,7 @@
 	holder.trans_to(mod.wearer, 10, methods = VAPOR)
 	if(prob(5))
 		SSradiation.irradiate(mod.wearer)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Balloon Blower - Blows a balloon.
 /obj/item/mod/module/balloon
@@ -171,7 +171,7 @@
 	icon_state = "bloon"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/balloon)
 	cooldown_time = 15 SECONDS
 
@@ -185,7 +185,7 @@
 	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
 	var/obj/item/toy/balloon/balloon = new(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Paper Dispenser - Dispenses (sometimes burning) paper sheets.
 /obj/item/mod/module/paper_dispenser
@@ -195,7 +195,7 @@
 	icon_state = "paper_maker"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/paper_dispenser)
 	cooldown_time = 5 SECONDS
 	/// The total number of sheets created by this MOD. The more sheets, them more likely they set on fire.
@@ -227,7 +227,7 @@
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
 		crisp_paper.fire_act(1000, 100)
 
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	num_sheets_dispensed++
 
 
