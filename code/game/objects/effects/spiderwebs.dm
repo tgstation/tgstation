@@ -196,7 +196,12 @@
 /obj/structure/spider/passage
 	name = "web passage"
 	desc = "An opaque curtain of web which seals in air but doesn't impede passage."
-	icon_state = "webpassage"
+	icon = 'icons/obj/smooth_structures/stickyweb_rotated.dmi'
+	base_icon_state = "stickyweb_rotated"
+	icon_state = "stickyweb_rotated-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_ROOF
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB_ROOF + SMOOTH_GROUP_WALLS
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	max_integrity = 60
@@ -206,7 +211,10 @@
 
 /obj/structure/spider/passage/Initialize(mapload)
 	. = ..()
+	pixel_x = -9
+	pixel_y = -9
 	air_update_turf(TRUE, TRUE)
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffffffff", "alpha" = 0.8, "size" = 0.1))
 
 /obj/structure/spider/cocoon
 	name = "cocoon"
