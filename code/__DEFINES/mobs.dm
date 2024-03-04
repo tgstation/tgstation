@@ -325,6 +325,9 @@
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
+//Slime evolution cost in nutrition
+#define SLIME_EVOLUTION_COST 200
+
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
 

@@ -4,17 +4,22 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	var/needs_growth = FALSE
+	var/nutrition_cost = 0
 
 /datum/action/innate/slime/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
 
+	var/mob/living/basic/slime/slime_owner = owner
+
+	if(slime_owner.nutrition < nutrition_cost)
+		return FALSE
+
 	if(!needs_growth) //always available if does not need growth
 		return TRUE
 
-	var/mob/living/basic/slime/slime_owner = owner
-	return (slime_owner.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+	return slime_owner.amount_grown >= SLIME_EVOLUTION_THRESHOLD
 
 //Feeding
 
@@ -151,6 +156,7 @@
 	button_icon_state = "slimegrow"
 	desc = "This will let you evolve from baby to adult slime."
 	needs_growth = TRUE
+	nutrition_cost = SLIME_EVOLUTION_COST
 
 /datum/action/innate/slime/evolve/Activate()
 	var/mob/living/basic/slime/slime_owner = owner
@@ -168,6 +174,12 @@
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		balloon_alert(src, "need to grow!")
 		return
+	if(nutrition < SLIME_EVOLUTION_COST)
+		balloon_alert(src, "need food!")
+		return
+
+	adjust_nutrition(-SLIME_EVOLUTION_COST)
+
 	set_life_stage(SLIME_LIFE_STAGE_ADULT)
 	update_name()
 	regenerate_icons()

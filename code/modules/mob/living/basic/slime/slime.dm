@@ -122,9 +122,9 @@
 
 	UnregisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 
-	for (var/A in actions)
-		var/datum/action/AC = A
-		AC.Remove(src)
+	for (var/action in actions)
+		var/datum/action/action_to_remove = action
+		action_to_remove.Remove(src)
 
 	return ..()
 
@@ -136,6 +136,12 @@
 /mob/living/basic/slime/pet
 	ai_controller = /datum/ai_controller/basic_controller/slime/docile
 	hunger_disabled = TRUE
+
+//Overriden base procs
+
+/mob/living/basic/slime/adjust_nutrition(change)
+	..()
+	nutrition = min(nutrition, max_nutrition)
 
 /mob/living/basic/slime/update_name()
 	///Checks if the slime has a generic name, in the format of baby/adult slime (123)
@@ -215,6 +221,10 @@
 
 	. += "</span>"
 
+
+//New procs
+
+
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
@@ -247,11 +257,6 @@
 			melee_damage_upper = initial(melee_damage_upper)
 			wound_bonus = initial(wound_bonus)
 
-			max_nutrition = initial(max_nutrition)
-			grow_nutrition = initial(grow_nutrition)
-			hunger_nutrition = initial(hunger_nutrition)
-			starve_nutrition = initial(starve_nutrition)
-
 		if(SLIME_LIFE_STAGE_ADULT)
 
 			for(var/datum/action/innate/slime/evolve/evolve_action in actions)
@@ -266,11 +271,6 @@
 			melee_damage_lower += 10
 			melee_damage_upper += 10
 			wound_bonus = -90
-
-			max_nutrition += 200
-			grow_nutrition += 200
-			hunger_nutrition += 100
-			starve_nutrition += 100
 
 ///Sets the slime's type, name and its icons
 /mob/living/basic/slime/proc/set_slime_type(new_type)
@@ -335,10 +335,9 @@
 		//todo: make the targeted slime retaliate
 		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
 		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
-			var/stolen_nutrition = is_adult_slime ? 90 : 50
+			var/stolen_nutrition = min(is_adult_slime ? 90 : 50, target_slime.nutrition)
 			target_slime.adjust_nutrition(-stolen_nutrition)
-	    //todo: handle nutrition addition
-		//	our_slime.add_nutrition(stolen_nutrition)
+			our_slime.adjust_nutrition(stolen_nutrition)
 		if(target_slime.health > 0)
 			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
 
