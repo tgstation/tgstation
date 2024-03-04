@@ -784,6 +784,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	food_image = image(icon = food_icon, icon_state = food_icon_state, pixel_x = -5)
 	food_image.plane = plane
 	food_image.appearance_flags |= KEEP_APART // To be unaffected by filters applied to src
+	food_image.add_filter("simple_outline", 2, outline_filter(1, COLOR_BLACK))
 	underlays += food_image // To be below filters applied to src
 
 	SetInvisibility(INVISIBILITY_ABSTRACT, name) // Start invisible, update later
@@ -827,9 +828,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 	if(state == HUNGER_STATE_STARVING)
 		if(!get_filter("hunger_outline"))
-			add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 200, "size" = 2))
-			animate(get_filter("hunger_outline"), alpha = 0, time = 1.5 SECONDS, loop = -1)
-			animate(alpha = 200, time = 1.5 SECONDS)
+			add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 2))
+			animate(get_filter("hunger_outline"), alpha = 200, time = 1.5 SECONDS, loop = -1)
+			animate(alpha = 0, time = 1.5 SECONDS)
 
 	else if(get_filter("hunger_outline"))
 		remove_filter("hunger_outline")
