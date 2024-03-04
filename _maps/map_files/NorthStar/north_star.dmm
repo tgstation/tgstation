@@ -3794,6 +3794,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -6832,6 +6833,7 @@
 /obj/structure/table,
 /obj/item/wrench,
 /obj/item/storage/belt/utility/full,
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/floor2/starboard/fore)
 "bGV" = (
@@ -55278,12 +55280,12 @@
 	pixel_y = 6
 	},
 /obj/item/bodypart/arm/left/robot{
-	pixel_x = -6;
-	pixel_y = 6
+	pixel_x = -4;
+	pixel_y = 2
 	},
 /obj/item/bodypart/arm/right/robot{
-	pixel_x = -6;
-	pixel_y = 6
+	pixel_x = -10;
+	pixel_y = 2
 	},
 /obj/item/assembly/flash{
 	pixel_x = 6;
@@ -55294,10 +55296,12 @@
 	pixel_y = 6
 	},
 /obj/item/bodypart/arm/right/robot{
-	pixel_x = -6;
-	pixel_y = 6
+	pixel_x = -10
 	},
 /obj/item/bodypart/arm/left/robot{
+	pixel_x = -4
+	},
+/obj/machinery/ecto_sniffer{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -57109,6 +57113,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
 "oGc" = (
@@ -63251,6 +63256,9 @@
 "qmc" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 9
+	},
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/augments)
@@ -65195,7 +65203,8 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
-	id = "robo-priv"
+	id = "robo-priv";
+	icon_state = "open"
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/augments)
@@ -72889,7 +72898,8 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
-	id = "robo-priv"
+	id = "robo-priv";
+	icon_state = "open"
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/augments)
