@@ -96,6 +96,7 @@
 	AddComponent( \
 		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \
+		spin_to_win = TRUE, \
 		charge_amount = 125, \
 		cooldown_time = 0.5 SECONDS, \
 		charge_sound = 'sound/weapons/kinetic_reload.ogg', \
