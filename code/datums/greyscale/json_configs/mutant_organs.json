@@ -1,0 +1,122 @@
+{
+	"appendix": [
+		{
+			"type": "icon_state",
+			"icon_state": "appendix",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "appendix_insides",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"brain": [
+		{
+			"type": "icon_state",
+			"icon_state": "brain",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "brain_meat",
+			"blend_mode": "overlay"
+		}
+	],
+	"ears": [
+		{
+			"type": "icon_state",
+			"icon_state": "ears",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ears_meat",
+			"blend_mode": "overlay"
+		}
+	],
+	"eyes": [
+		{
+			"type": "icon_state",
+			"icon_state": "eyes",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eyes_sclera",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eyes_pupil",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eyes_meat",
+			"blend_mode": "overlay"
+		}
+	],
+	"heart": [
+		{
+			"type": "icon_state",
+			"icon_state": "heart",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "heart_meat",
+			"blend_mode": "overlay"
+		}
+	],
+	"liver": [
+		{
+			"type": "icon_state",
+			"icon_state": "liver",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "liver_meat",
+			"blend_mode": "overlay"
+		}
+	],
+	"lungs": [
+		{
+			"type": "icon_state",
+			"icon_state": "lungs",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lungs_meat",
+			"blend_mode": "overlay"
+		}
+	],
+	"tongue": [
+		{
+			"type": "icon_state",
+			"icon_state": "tongue",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"stomach": [
+		{
+			"type": "icon_state",
+			"icon_state": "stomach",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

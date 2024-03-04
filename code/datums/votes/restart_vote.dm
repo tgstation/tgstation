@@ -7,10 +7,22 @@
 		CHOICE_RESTART,
 		CHOICE_CONTINUE,
 	)
+	message = "Vote to restart the ongoing round."
+
+/// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
+/datum/vote/restart_vote/proc/admins_present()
+	for(var/client/online_admin as anything in GLOB.admins)
+		if(online_admin.is_afk() || !check_rights_for(online_admin, R_SERVER))
+			continue
+
+		return TRUE
+
+	return FALSE
 
 /datum/vote/restart_vote/toggle_votable(mob/toggler)
 	if(!toggler)
 		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
+
 	if(!check_rights_for(toggler.client, R_ADMIN))
 		return FALSE
 
@@ -26,10 +38,16 @@
 		return FALSE
 
 	if(!forced && !CONFIG_GET(flag/allow_vote_restart))
-		if(by_who)
-			to_chat(by_who, span_warning("Restart voting is disabled."))
+		message = "Restart voting is disabled by server configuration settings."
 		return FALSE
 
+	// We still want players to be able to vote to restart even if valid admins are online. Let's update the message just so that the player is aware of this fact.
+	// We don't want to lock-out the vote though, so we'll return TRUE.
+	if(admins_present())
+		message = "Regardless of the results of this vote, the round will not automatically restart because an admin is online."
+		return TRUE
+
+	message = initial(message)
 	return TRUE
 
 /datum/vote/restart_vote/get_vote_result(list/non_voters)
@@ -44,15 +62,19 @@
 		return
 
 	if(winning_option == CHOICE_RESTART)
-		for(var/client/online_admin as anything in GLOB.admins)
-			if(online_admin.is_afk() || !check_rights_for(online_admin, R_SERVER))
-				continue
-
+		if(admins_present())
 			to_chat(world, span_boldannounce("Notice: A restart vote will not restart the server automatically because there are active admins on."))
 			message_admins("A restart vote has passed, but there are active admins on with +SERVER, so it has been canceled. If you wish, you may restart the server.")
 			return
 
-		SSticker.Reboot("Restart vote successful.", "restart vote", 1)
+		// If there was a previous map vote, we revert the change.
+		if(!isnull(SSmapping.next_map_config))
+			log_game("The next map has been reset due to successful restart vote.")
+			send_to_playing_players(span_boldannounce("The next map has been reset due to successful restart vote."))
+			revert_map_vote()
+
+		SSticker.force_ending = FORCE_END_ROUND
+		log_game("End round forced by successful restart vote.")
 		return
 
 	CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")

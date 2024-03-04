@@ -17,22 +17,25 @@ SUBSYSTEM_DEF(blackmarket)
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
 
-/datum/controller/subsystem/blackmarket/Initialize(timeofday)
+/datum/controller/subsystem/blackmarket/Initialize()
 	for(var/market in subtypesof(/datum/market))
 		markets[market] += new market
 
-	for(var/item in subtypesof(/datum/market_item))
-		var/datum/market_item/I = new item()
-		if(!I.item)
+	for(var/datum/market_item/item as anything in subtypesof(/datum/market_item))
+		if(!initial(item.item))
+			continue
+		if(!prob(initial(item.availability_prob)))
 			continue
 
-		for(var/M in I.markets)
-			if(!markets[M])
-				stack_trace("SSblackmarket: Item [I] available in market that does not exist.")
+		var/datum/market_item/item_instance = new item()
+		for(var/potential_market in item_instance.markets)
+			if(!markets[potential_market])
+				stack_trace("SSblackmarket: Item [item_instance] available in market that does not exist.")
 				continue
-			markets[M].add_item(item)
-		qdel(I)
-	. = ..()
+			// If this fails the market item will just be GC'd
+			markets[potential_market].add_item(item_instance)
+
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
 	while(length(queued_purchases))
@@ -79,7 +82,7 @@ SUBSYSTEM_DEF(blackmarket)
 				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds."))
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
-				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/blackmarket,fake_teleport), purchase.entry.spawn_item(), targetturf), 60 SECONDS)
 				queued_purchases -= purchase
 				qdel(purchase)
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.

@@ -3,6 +3,12 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
+	inhand_icon_state = "greyscale_gloves"
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+	greyscale_colors = null
+	greyscale_config_inhand_left = /datum/greyscale_config/gloves_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/gloves_inhand_right
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
@@ -14,6 +20,14 @@
 	var/cut_type = null
 	/// Used for handling bloody gloves leaving behind bloodstains on objects. Will be decremented whenever a bloodstain is left behind, and be incremented when the gloves become bloody.
 	var/transfer_blood = 0
+
+/obj/item/clothing/gloves/apply_fantasy_bonuses(bonus)
+	. = ..()
+	siemens_coefficient = modify_fantasy_variable("siemens_coefficient", siemens_coefficient, -bonus / 10)
+
+/obj/item/clothing/gloves/remove_fantasy_bonuses(bonus)
+	siemens_coefficient = reset_fantasy_variable("siemens_coefficient", siemens_coefficient)
+	return ..()
 
 /obj/item/clothing/gloves/wash(clean_types)
 	. = ..()
@@ -27,30 +41,40 @@
 
 /obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(!isinhands)
+	if(isinhands)
 		return
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
+		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_gloves()
+		M.update_worn_gloves()
 
-// Called just before an attack_hand(), in mob/UnarmedAttack()
-/obj/item/clothing/gloves/proc/Touch(atom/A, proximity, mouseparams)
-	return FALSE // return 1 to cancel attack_hand()
-
-/obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
+/obj/item/clothing/gloves/proc/can_cut_with(obj/item/tool)
 	if(!cut_type)
-		return
+		return FALSE
 	if(icon_state != initial(icon_state))
-		return // We don't want to cut dyed gloves.
-	new cut_type(drop_location())
+		return FALSE // We don't want to cut dyed gloves.
+	return TRUE
+
+/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
+	. = ..()
+	if(.)
+		return
+	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
+		return
+	if (!can_cut_with(tool))
+		return
+	balloon_alert(user, "cutting off fingertips...")
+
+	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, PROC_REF(can_cut_with), tool)))
+		return
+	balloon_alert(user, "cut fingertips off")
 	qdel(src)
+	user.put_in_hands(new cut_type)
 	return TRUE

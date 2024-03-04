@@ -1,7 +1,17 @@
 import { BooleanLike } from 'common/react';
-import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible } from '../components';
-import { Window } from '../layouts';
+
 import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
+import { Window } from '../layouts';
 
 enum VoteConfig {
   None = -1,
@@ -13,6 +23,7 @@ type Vote = {
   name: string;
   canBeInitiated: BooleanLike;
   config: VoteConfig;
+  message: string;
 };
 
 type Option = {
@@ -24,14 +35,24 @@ type ActiveVote = {
   vote: Vote;
   question: string | null;
   timeRemaining: number;
+  displayStatistics: boolean;
   choices: Option[];
+  countMethod: number;
 };
 
 type UserData = {
+  ckey: string;
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
-  selectedChoice: string | null;
+  singleSelection: string | null;
+  multiSelection: string[] | null;
+  countMethod: VoteSystem;
 };
+
+enum VoteSystem {
+  VOTE_SINGLE = 1,
+  VOTE_MULTI = 2,
+}
 
 type Data = {
   currentVote: ActiveVote;
@@ -40,8 +61,8 @@ type Data = {
   voting: string[];
 };
 
-export const VotePanel = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const VotePanel = (props) => {
+  const { data } = useBackend<Data>();
   const { currentVote, user } = data;
 
   /**
@@ -49,11 +70,15 @@ export const VotePanel = (props, context) => {
    */
   let windowTitle = 'Vote';
   if (currentVote) {
-    windowTitle += ': ' + (currentVote.question || currentVote.vote.name).replace(/^\w/, (c) => c.toUpperCase());
+    windowTitle +=
+      ': ' +
+      (currentVote.question || currentVote.vote.name).replace(/^\w/, (c) =>
+        c.toUpperCase(),
+      );
   }
 
   return (
-    <Window resizable title={windowTitle} width={400} height={500}>
+    <Window title={windowTitle} width={400} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Section title="Create Vote">
@@ -72,15 +97,15 @@ export const VotePanel = (props, context) => {
  * The create vote options menu. Only upper admins can disable voting.
  * @returns A section visible to everyone with vote options.
  */
-const VoteOptions = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const VoteOptions = (props) => {
+  const { act, data } = useBackend<Data>();
   const { possibleVotes, user } = data;
 
   return (
     <Stack.Item>
       <Collapsible title="Start a Vote">
         <Stack vertical justify="space-between">
-          { possibleVotes.map(option => (
+          {possibleVotes.map((option) => (
             <Stack.Item key={option.name}>
               {!!user.isLowerAdmin && option.config !== VoteConfig.None && (
                 <Button.Checkbox
@@ -88,17 +113,28 @@ const VoteOptions = (props, context) => {
                   color="red"
                   checked={option.config === VoteConfig.Enabled}
                   disabled={!user.isUpperAdmin}
-                  content={option.config === VoteConfig.Enabled ? 'Enabled' : 'Disabled'}
-                  onClick={() => act('toggleVote', {
-                    voteName: option.name,
-                  })} />
+                  content={
+                    option.config === VoteConfig.Enabled
+                      ? 'Enabled'
+                      : 'Disabled'
+                  }
+                  onClick={() =>
+                    act('toggleVote', {
+                      voteName: option.name,
+                    })
+                  }
+                />
               )}
               <Button
                 disabled={!option.canBeInitiated}
+                tooltip={option.message}
                 content={option.name}
-                onClick={() => act('callVote', {
-                  voteName: option.name,
-                })} />
+                onClick={() =>
+                  act('callVote', {
+                    voteName: option.name,
+                  })
+                }
+              />
             </Stack.Item>
           ))}
         </Stack>
@@ -111,12 +147,16 @@ const VoteOptions = (props, context) => {
  * View Voters by ckey. Admin only.
  * @returns A collapsible list of voters
  */
-const VotersList = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const VotersList = (props) => {
+  const { data } = useBackend<Data>();
 
   return (
     <Stack.Item>
-      <Collapsible title={`View Voters${data.voting.length ? `: ${data.voting.length}` : ""}`}>
+      <Collapsible
+        title={`View Voters${
+          data.voting.length ? `: ${data.voting.length}` : ''
+        }`}
+      >
         <Section height={8} fill scrollable>
           {data.voting.map((voter) => {
             return <Box key={voter}>{voter}</Box>;
@@ -131,47 +171,88 @@ const VotersList = (props, context) => {
  * The choices panel which displays all options in the list.
  * @returns A section visible to all users.
  */
-const ChoicesPanel = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ChoicesPanel = (props) => {
+  const { act, data } = useBackend<Data>();
   const { currentVote, user } = data;
 
   return (
     <Stack.Item grow>
-      <Section fill scrollable title="Choices">
-        {currentVote && currentVote.choices.length !== 0 ? (
+      <Section fill scrollable title="Active Vote">
+        {currentVote && currentVote.countMethod === VoteSystem.VOTE_SINGLE ? (
+          <NoticeBox success>Select one option</NoticeBox>
+        ) : null}
+        {currentVote &&
+        currentVote.choices.length !== 0 &&
+        currentVote.countMethod === VoteSystem.VOTE_SINGLE ? (
           <LabeledList>
-            {currentVote.choices.map(choice => (
+            {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
                 <LabeledList.Item
                   label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
                   textAlign="right"
                   buttons={
                     <Button
-                      disabled={user.selectedChoice === choice.name}
+                      disabled={user.singleSelection === choice.name}
                       onClick={() => {
-                        act('vote', { voteOption: choice.name });
-                      }}>
+                        act('voteSingle', { voteOption: choice.name });
+                      }}
+                    >
                       Vote
                     </Button>
-                  }>
-                  {user.selectedChoice
-                  && choice.name === user.selectedChoice && (
-                    <Icon
-                      alignSelf="right"
-                      mr={2}
-                      color="green"
-                      name="vote-yea"
-                    />
-                  )}
+                  }
+                >
+                  {user.singleSelection &&
+                    choice.name === user.singleSelection && (
+                      <Icon
+                        align="right"
+                        mr={2}
+                        color="green"
+                        name="vote-yea"
+                      />
+                    )}
+                  {currentVote.displayStatistics
+                    ? choice.votes + ' Votes'
+                    : null}
+                </LabeledList.Item>
+                <LabeledList.Divider />
+              </Box>
+            ))}
+          </LabeledList>
+        ) : null}
+        {currentVote && currentVote.countMethod === VoteSystem.VOTE_MULTI ? (
+          <NoticeBox success>Select any number of options</NoticeBox>
+        ) : null}
+        {currentVote &&
+        currentVote.choices.length !== 0 &&
+        currentVote.countMethod === VoteSystem.VOTE_MULTI ? (
+          <LabeledList>
+            {currentVote.choices.map((choice) => (
+              <Box key={choice.name}>
+                <LabeledList.Item
+                  label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
+                  textAlign="right"
+                  buttons={
+                    <Button
+                      onClick={() => {
+                        act('voteMulti', { voteOption: choice.name });
+                      }}
+                    >
+                      Vote
+                    </Button>
+                  }
+                >
+                  {user.multiSelection &&
+                  user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
+                    <Icon align="right" mr={2} color="blue" name="vote-yea" />
+                  ) : null}
                   {choice.votes} Votes
                 </LabeledList.Item>
                 <LabeledList.Divider />
               </Box>
             ))}
           </LabeledList>
-        ) : (
-          <NoticeBox>{currentVote ? "No choices available!" : "No vote active!"}</NoticeBox>
-        )}
+        ) : null}
+        {currentVote ? null : <NoticeBox>No vote active!</NoticeBox>}
       </Section>
     </Stack.Item>
   );
@@ -181,22 +262,24 @@ const ChoicesPanel = (props, context) => {
  * Countdown timer at the bottom. Includes a cancel vote option for admins.
  * @returns A section visible to everyone.
  */
-const TimePanel = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TimePanel = (props) => {
+  const { act, data } = useBackend<Data>();
   const { currentVote, user } = data;
 
   return (
     <Stack.Item mt={1}>
       <Section>
         <Stack justify="space-between">
-          <Box fontSize={1.5}>Time Remaining:&nbsp;
+          <Box fontSize={1.5}>
+            Time Remaining:&nbsp;
             {currentVote?.timeRemaining || 0}s
           </Box>
           {!!user.isLowerAdmin && (
             <Button
               color="red"
               disabled={!user.isLowerAdmin || !currentVote}
-              onClick={() => act('cancel')}>
+              onClick={() => act('cancel')}
+            >
               Cancel Vote
             </Button>
           )}

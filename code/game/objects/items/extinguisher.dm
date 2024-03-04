@@ -1,34 +1,59 @@
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	custom_materials = list(/datum/material/iron = 90)
+	demolition_mod = 1.25
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.9)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	/// The max amount of water this extinguisher can hold.
 	var/max_water = 50
+	/// Does the welder extinguisher start with water.
+	var/starting_water = TRUE
+	/// Cooldown between uses.
 	var/last_use = 1
+	/// Chem we use for our extinguishing.
 	var/chem = /datum/reagent/water
+	/// Can we actually fire currently?
 	var/safety = TRUE
+	/// Can we refill this at a water tank?
 	var/refilling = FALSE
+	/// What tank we need to refill this.
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
+	/// something that should be replaced with base_icon_state
 	var/sprite_name = "fire_extinguisher"
-	var/power = 5 //Maximum distance launched water will travel
-	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
-	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
-	/// Icon state when inside a tank holder
+	/// Maximum distance launched water will travel.
+	var/power = 5
+	/// By default, turfs picked from a spray are random, set to TRUE to make it always have at least one water effect per row.
+	var/precision = FALSE
+	/// Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled.
+	var/cooling_power = 2
+	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
+
+/obj/item/extinguisher/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
+/obj/item/extinguisher/empty
+	starting_water = FALSE
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -37,27 +62,30 @@
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null //it is much lighter, after all.
-	flags_1 = null //doesn't CONDUCT_1
+	obj_flags = NONE //doesn't conduct electricity
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT* 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
 
+/obj/item/extinguisher/mini/empty
+	starting_water = FALSE
+
 /obj/item/extinguisher/crafted
 	name = "Improvised cooling spray"
-	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
+	desc = "Spraycan turned coolant dispenser. Can be sprayed on containers to cool them. Refill using water."
 	icon_state = "coolant0"
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags_1 = null //doesn't CONDUCT_1
+	obj_flags = NONE //doesn't conduct electricity
 	throwforce = 1
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 	max_water = 30
 	sprite_name = "coolant"
 	dog_fashion = null
@@ -77,12 +105,12 @@
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
-	refill()
-
-/obj/item/extinguisher/ComponentInitialize()
-	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+	if(starting_water)
+		refill()
+	else if(chem)
+		create_reagents(max_water, AMOUNT_VISIBLE)
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
@@ -96,6 +124,9 @@
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+
+/obj/item/extinguisher/advanced/empty
+	starting_water = FALSE
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
@@ -112,7 +143,7 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	to_chat(user, "<span class='infoplain'>The safety is [safety ? "on" : "off"].</span>")
+	balloon_alert(user, "safety [safety ? "on" : "off"]")
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
@@ -138,10 +169,10 @@
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, tanktype) && target.Adjacent(user))
 		if(reagents.total_volume == reagents.maximum_volume)
-			to_chat(user, span_warning("\The [src] is already full!"))
+			balloon_alert(user, "already full!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
-		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
+		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
 		if(transferred > 0)
 			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
@@ -159,20 +190,21 @@
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
-	//TODO; Add support for reagents in water.
+
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if(refilling)
 		refilling = FALSE
-		return
+		return .
 	if (!safety)
 
 
 		if (src.reagents.total_volume < 1)
-			to_chat(usr, span_warning("\The [src] is empty!"))
-			return
+			balloon_alert(user, "it's empty!")
+			return .
 
 		if (world.time < src.last_use + 12)
-			return
+			return .
 
 		src.last_use = world.time
 
@@ -182,10 +214,10 @@
 
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			var/obj/B = user.buckled
-			var/movementdirection = turn(direction,180)
-			addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection), 1)
+			var/movementdirection = REVERSE_DIR(direction)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 1)
 		else
-			user.newtonian_move(turn(direction, 180))
+			user.newtonian_move(REVERSE_DIR(direction))
 
 		//Get all the turfs that can be shot at
 		var/turf/T = get_turf(target)
@@ -208,10 +240,12 @@
 			var/datum/reagents/water_reagents = new /datum/reagents(5)
 			water.reagents = water_reagents
 			water_reagents.my_atom = water
-			reagents.trans_to(water, 1, transfered_by = user)
+			reagents.trans_to(water, 1, transferred_by = user)
 
 		//Make em move dat ass, hun
 		move_particles(water_particles)
+
+	return .
 
 //Particle movement loop
 /obj/item/extinguisher/proc/move_particles(list/particles)
@@ -225,18 +259,18 @@
 	var/datum/move_loop/loop = SSmove_manager.move(buckled_object, movementdirection, 1, timeout = 9, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	//This means the chair slowing down is dependant on the extinguisher existing, which is weird
 	//Couldn't figure out a better way though
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/manage_chair_speed)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(manage_chair_speed))
 
 /obj/item/extinguisher/proc/manage_chair_speed(datum/move_loop/move/source)
 	SIGNAL_HANDLER
 	switch(source.lifetime)
-		if(5 to 4)
+		if(4 to 5)
 			source.delay = 2
-		if(3 to 1)
+		if(1 to 3)
 			source.delay = 3
 
 /obj/item/extinguisher/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(!user.is_holding(src))
 		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
@@ -256,7 +290,7 @@
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
+	if(istype(O, /obj/item/bodypart/arm/left/robot) || istype(O, /obj/item/bodypart/arm/right/robot))
 		to_chat(user, span_notice("You add [O] to [src]."))
 		qdel(O)
 		qdel(src)

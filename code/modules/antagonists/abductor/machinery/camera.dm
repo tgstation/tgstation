@@ -8,9 +8,10 @@
 	var/abduct_created = FALSE
 	lock_override = TRUE
 
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "camera"
 	icon_keyboard = null
+	icon_screen = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/machinery/computer/camera_advanced/abductor/Destroy()
@@ -22,9 +23,9 @@
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
 	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "abductor_camera"
-	eyeobj.invisibility = INVISIBILITY_OBSERVER
+	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	if(!abduct_created)
@@ -46,7 +47,7 @@
 ///Is used to compare to world.time in order to determine if the action should early return
 	var/use_delay
 	name = "Send To"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_in/Activate()
@@ -71,7 +72,7 @@
 
 /datum/action/innate/teleport_out
 	name = "Retrieve"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_up"
 
 /datum/action/innate/teleport_out/Activate()
@@ -86,7 +87,7 @@
 	var/teleport_self_cooldown = 9 SECONDS
 	var/use_delay
 	name = "Send Self"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_self/Activate()
@@ -111,7 +112,7 @@
 
 /datum/action/innate/vest_mode_swap
 	name = "Switch Vest Mode"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "vest_mode"
 
 /datum/action/innate/vest_mode_swap/Activate()
@@ -123,7 +124,7 @@
 
 /datum/action/innate/vest_disguise_swap
 	name = "Switch Vest Disguise"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "vest_disguise"
 
 /datum/action/innate/vest_disguise_swap/Activate()
@@ -134,7 +135,7 @@
 
 /datum/action/innate/set_droppoint
 	name = "Set Experiment Release Point"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "set_drop"
 
 /datum/action/innate/set_droppoint/Activate()

@@ -9,7 +9,7 @@ at the cost of risking a vicious bite.**/
 	density = FALSE
 	///This var stores the hidden item that might be able to be retrieved from the trap
 	var/obj/item/hidden_item
-	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
+	///This var determines if there is a chance to receive a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
@@ -24,10 +24,8 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/green = 1,
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
-		/obj/item/coin/bananium = 9,
-		/obj/item/fish/ratfish = 10,
+		/obj/item/coin/bananium = 10,
 		/obj/item/knife/butcher = 5,
-		/obj/item/coin/mythril = 1,
 	)
 
 
@@ -40,6 +38,13 @@ at the cost of risking a vicious bite.**/
 	if(prob(75))
 		var/picked_item = pick_weight(loot_table)
 		hidden_item = new picked_item(src)
+
+	var/datum/fish_source/moisture_trap/fish_source = new
+	if(prob(50)) // 50% chance there's another item to fish out of there
+		var/picked_item = pick_weight(loot_table)
+		fish_source.fish_table[picked_item] = 5
+		fish_source.fish_counts[picked_item] = 1;
+	AddComponent(/datum/component/fishing_spot, fish_source)
 
 
 /obj/structure/moisture_trap/Destroy()
@@ -87,7 +92,7 @@ at the cost of risking a vicious bite.**/
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
 		return ..()
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers))
+	if(is_reagent_container(I))
 		if(istype(I, /obj/item/food/monkeycube))
 			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()
@@ -110,7 +115,7 @@ at the cost of risking a vicious bite.**/
 #define ALTAR_STAGEONE 1
 #define ALTAR_STAGETWO 2
 #define ALTAR_STAGETHREE 3
-#define ALTAR_TIME 9.5 SECONDS
+#define ALTAR_TIME (9.5 SECONDS)
 
 /obj/structure/destructible/cult/pants_altar
 	name = "strange structure"
@@ -141,11 +146,11 @@ at the cost of risking a vicious bite.**/
 		"Change Color" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_recolor"),
 		"Create Artefact" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_create")
 	)
-	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(altar_result)
 		if("Change Color")
 			var/chosen_color = input(user, "", "Choose Color", pants_color) as color|null
-			if(!isnull(chosen_color) && user.canUseTopic(src, BE_CLOSE))
+			if(!isnull(chosen_color) && user.can_perform_action(src))
 				pants_color = chosen_color
 		if("Create Artefact")
 			if(!COOLDOWN_FINISHED(src, use_cooldown) || status != ALTAR_INACTIVE)
@@ -184,7 +189,7 @@ at the cost of risking a vicious bite.**/
 	update_icon()
 	visible_message(span_warning("[src] starts creating something..."))
 	playsound(src, 'sound/magic/pantsaltar.ogg', 60)
-	addtimer(CALLBACK(src, .proc/pants_stagetwo), ALTAR_TIME)
+	addtimer(CALLBACK(src, PROC_REF(pants_stagetwo)), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby nauseous.
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagetwo()
@@ -192,9 +197,9 @@ at the cost of risking a vicious bite.**/
 	update_icon()
 	visible_message(span_warning("You start feeling nauseous..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
-		viewing_mob.blur_eyes(10)
-		viewing_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
-	addtimer(CALLBACK(src, .proc/pants_stagethree), ALTAR_TIME)
+		viewing_mob.set_eye_blur_if_lower(20 SECONDS)
+		viewing_mob.adjust_confusion(10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(pants_stagethree)), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby dizzy
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagethree()
@@ -202,8 +207,8 @@ at the cost of risking a vicious bite.**/
 	update_icon()
 	visible_message(span_warning("You start feeling horrible..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
-		viewing_mob.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-	addtimer(CALLBACK(src, .proc/pants_create), ALTAR_TIME)
+		viewing_mob.set_dizzy_if_lower(20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(pants_create)), ALTAR_TIME)
 
 /// Finishes the creation, creating the item itself, setting the cooldowns and flashing every mob nearby.
 /obj/structure/destructible/cult/pants_altar/proc/pants_create()
@@ -212,10 +217,10 @@ at the cost of risking a vicious bite.**/
 	visible_message(span_danger("[src] emits a flash of light and creates... pants?"))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.flash_act()
-	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
+	var/obj/item/clothing/under/pants/slacks/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
 	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
-	addtimer(CALLBACK(src, /atom.proc/update_icon), 1 MINUTES + 0.1 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 1 MINUTES + 0.1 SECONDS)
 	update_icon()
 
 /obj/structure/destructible/cult/pants_altar/proc/check_menu(mob/user)
@@ -225,13 +230,106 @@ at the cost of risking a vicious bite.**/
 		return FALSE
 	return TRUE
 
-/obj/item/clothing/under/pants/altar
+/obj/item/clothing/under/pants/slacks/altar
 	name = "strange pants"
-	desc = "A pair of pants. They do not look natural. They smell like fresh blood."
-	icon_state = "whitepants"
+	desc = "A pair of pants. They do not look or feel natural, and smell like fresh blood."
+	greyscale_colors = "#ffffff#ffffff#ffffff"
+	flags_1 = NONE //If IS_PLAYER_COLORABLE gets added color-changing support (i.e. spraycans), these won't end up getting it too. Plus, it already has its own recolor.
 
 #undef ALTAR_INACTIVE
 #undef ALTAR_STAGEONE
 #undef ALTAR_STAGETWO
 #undef ALTAR_STAGETHREE
 #undef ALTAR_TIME
+
+/**
+ * Spawns in maint shafts, and blocks lines of sight perodically when active.
+ */
+/obj/structure/steam_vent
+	name = "steam vent"
+	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby."
+	icon_state = "steam_vent"
+	anchored = TRUE
+	density = FALSE
+	/// How often does the vent reset the blow_steam cooldown.
+	var/steam_speed = 20 SECONDS
+	/// Is the steam vent active?
+	var/vent_active = TRUE
+	/// The cooldown for toggling the steam vent to prevent infinite steam vent looping.
+	COOLDOWN_DECLARE(steam_vent_interact)
+
+/obj/structure/steam_vent/Initialize(mapload)
+	. = ..()
+	if(prob(75))
+		vent_active = FALSE
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = PROC_REF(blow_steam),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
+	update_icon_state()
+
+/obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		balloon_alert(user, "not ready to adjust!")
+		return
+	vent_active = !vent_active
+	update_icon_state()
+	if(vent_active)
+		balloon_alert(user, "vent on")
+	else
+		balloon_alert(user, "vent off")
+		return
+	blow_steam()
+
+/obj/structure/steam_vent/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = vent_active ? "Close valve" : "Open valve"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
+/obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(vent_active)
+		balloon_alert(user, "must be off!")
+		return
+	if(tool.use_tool(src, user, 3 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct()
+		return TRUE
+
+/obj/structure/steam_vent/deconstruct(disassembled = TRUE)
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		new /obj/item/stack/sheet/iron(loc, 1)
+		new /obj/item/stock_parts/water_recycler(loc, 1)
+	qdel(src)
+
+/**
+ * Creates "steam" smoke, and determines when the vent needs to block line of sight via reset_opacity.
+ */
+/obj/structure/steam_vent/proc/blow_steam(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+	if(!vent_active)
+		return
+	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		return
+	if(!ismob(leaving))
+		return
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(range = 1, amount = 1, location = src)
+	smoke.start()
+	playsound(src, 'sound/machines/steam_hiss.ogg', 75, TRUE, -2)
+	COOLDOWN_START(src, steam_vent_interact, steam_speed)
+
+/obj/structure/steam_vent/update_icon_state()
+	. = ..()
+	icon_state = "steam_vent[vent_active ? "": "_off"]"
+
+/obj/structure/steam_vent/fast
+	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby. It's faster than most."
+	steam_speed = 10 SECONDS

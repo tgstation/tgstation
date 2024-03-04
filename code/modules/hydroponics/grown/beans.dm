@@ -10,12 +10,12 @@
 	production = 4
 	potency = 15
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "soybean-grow"
 	icon_dead = "soybean-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/soya/koi)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/consumable/cooking_oil = 0.03) //Vegetable oil!
+	mutatelist = list(/obj/item/seeds/soya/koi, /obj/item/seeds/soya/butter)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/consumable/nutriment/fat/oil = 0.03) //Vegetable oil!
 
 /obj/item/food/grown/soybeans
 	seed = /obj/item/seeds/soya
@@ -26,7 +26,7 @@
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/soymilk = 0)
 	tastes = list("soy" = 1)
-	wine_power = 20
+	distill_reagent = /datum/reagent/consumable/soysauce
 
 // Koibean
 /obj/item/seeds/soya/koi
@@ -39,7 +39,7 @@
 	potency = 10
 	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/carpotoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/koibeans
 	seed = /obj/item/seeds/soya/koi
@@ -49,6 +49,38 @@
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40
+
+//Butterbeans, the beans wid da butta!
+// Butterbeans! - Squeeze for a single butter slice!
+/obj/item/seeds/soya/butter
+	name = "pack of butterbean seeds"
+	desc = "These seeds grow into butterbean plants."
+	icon_state = "seed-butterbean"
+	species = "butterbean"
+	plantname = "butterbean Plants"
+	product = /obj/item/food/grown/butterbeans
+	potency = 10
+	mutatelist = null
+	reagents_add = list(/datum/reagent/consumable/milk = 0.05, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/cream = 0.05)
+	rarity = 20
+
+/obj/item/food/grown/butterbeans
+	seed = /obj/item/seeds/soya/butter
+	name = "butterbean"
+	desc = "Soft, creamy and milky... You could almost smear them over toast."
+	icon_state = "butterbeans"
+	foodtypes = VEGETABLES | DAIRY
+	tastes = list("creamy butter" = 1)
+	distill_reagent = /datum/reagent/consumable/yoghurt
+
+/obj/item/food/grown/butterbeans/attack_self(mob/living/user)
+	user.visible_message(span_notice("[user] crushes [src] into a pat of butter."), span_notice("You crush [src] into something that resembles butter."))
+	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	var/obj/item/food/butterslice/butties = new(null)
+	butties.reagents.set_all_reagents_purity(seed.get_reagent_purity())
+	qdel(src)
+	user.put_in_hands(butties)
+	return TRUE
 
 // Green Beans
 /obj/item/seeds/greenbean
@@ -64,7 +96,7 @@
 	potency = 10
 	growthstages = 4
 	icon_dead = "bean-dead"
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/never_mutate, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/greenbean/jump)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/medicine/c2/multiver = 0.04) //They're good for you!
@@ -96,13 +128,12 @@
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/ants = 0.1) //IRL jumping beans contain insect larve, hence the ants
 	graft_gene = /datum/plant_gene/trait/stable_stats
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/jumpingbeans
 	seed = /obj/item/seeds/greenbean/jump
 	name = "jumping bean"
 	desc = "Umm, what's causing it to move like that?"
 	icon_state = "jumpingbean"
-	foodtypes = FRUIT
+	foodtypes = FRUIT | BUGS
 	tastes = list("bugs" = 1)
-	

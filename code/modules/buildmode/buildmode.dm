@@ -22,12 +22,14 @@
 	// dirswitch UI
 	var/atom/movable/screen/buildmode/bdir/dirbutton
 	var/list/dirswitch_buttons = list()
+	/// item preview for selected item
+	var/atom/movable/screen/buildmode/preview_item/preview
 
 /datum/buildmode/New(client/c)
 	mode = new /datum/buildmode_mode/basic(src)
 	holder = c
 	buttons = list()
-	li_cb = CALLBACK(src, .proc/post_login)
+	li_cb = CALLBACK(src, PROC_REF(post_login))
 	holder.player_details.post_login_callbacks += li_cb
 	holder.show_popup_menus = FALSE
 	create_buttons()
@@ -44,6 +46,7 @@
 
 /datum/buildmode/Destroy()
 	close_switchstates()
+	close_preview()
 	holder.player_details.post_login_callbacks -= li_cb
 	li_cb = null
 	holder = null
@@ -126,10 +129,31 @@
 	switch_state = BM_SWITCHSTATE_NONE
 	holder.screen -= dirswitch_buttons
 
+/datum/buildmode/proc/preview_selected_item(atom/typepath)
+	close_preview()
+	preview = new /atom/movable/screen/buildmode/preview_item(src)
+	preview.name = initial(typepath.name)
+
+	// Scale the preview if it's bigger than one tile
+	var/mutable_appearance/preview_overlay = get_small_overlay(new /mutable_appearance(typepath))
+	preview_overlay.appearance_flags |= TILE_BOUND
+	preview_overlay.layer = FLOAT_LAYER
+	preview_overlay.plane = FLOAT_PLANE
+	preview.add_overlay(preview_overlay)
+
+	holder.screen += preview
+
+/datum/buildmode/proc/close_preview()
+	if(isnull(preview))
+		return
+	holder.screen -= preview
+	QDEL_NULL(preview)
+
 /datum/buildmode/proc/change_mode(newmode)
 	mode.exit_mode(src)
 	QDEL_NULL(mode)
 	close_switchstates()
+	close_preview()
 	mode = new newmode(src)
 	mode.enter_mode(src)
 	modebutton.update_appearance()
@@ -152,11 +176,11 @@
 		if(istype(M.client.click_intercept,/datum/buildmode))
 			var/datum/buildmode/B = M.client.click_intercept
 			B.quit()
-			log_admin("[key_name(usr)] has left build mode.")
+			log_admin("[key_name(M)] has left build mode.")
 		else
 			new /datum/buildmode(M.client)
-			message_admins("[key_name_admin(usr)] has entered build mode.")
-			log_admin("[key_name(usr)] has entered build mode.")
+			message_admins("[key_name_admin(M)] has entered build mode.")
+			log_admin("[key_name(M)] has entered build mode.")
 
 #undef BM_SWITCHSTATE_NONE
 #undef BM_SWITCHSTATE_MODE

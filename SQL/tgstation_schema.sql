@@ -172,7 +172,7 @@ CREATE TABLE `death` (
   `fireloss` smallint(5) unsigned NOT NULL,
   `oxyloss` smallint(5) unsigned NOT NULL,
   `toxloss` smallint(5) unsigned NOT NULL,
-  `cloneloss` smallint(5) unsigned NOT NULL,
+  `cloneloss` smallint(5) unsigned DEFAULT '0',
   `staminaloss` smallint(5) unsigned NOT NULL,
   `last_words` varchar(255) DEFAULT NULL,
   `suicide` tinyint(1) NOT NULL DEFAULT '0',
@@ -270,10 +270,10 @@ CREATE TABLE `library_action` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `book` int(10) unsigned NOT NULL,
   `reason` longtext DEFAULT NULL,
-  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `ckey` varchar(32) NOT NULL DEFAULT '',
   `datetime` datetime NOT NULL DEFAULT current_timestamp(),
   `action` varchar(11) NOT NULL DEFAULT '',
-  `ip_addr` int(11) NOT NULL,
+  `ip_addr` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -638,19 +638,6 @@ CREATE TABLE `discord_links` (
 ) ENGINE=InnoDB;
 
 --
--- Table structure for table `text_adventures`
---
-DROP TABLE IF EXISTS `text_adventures`;
-CREATE TABLE `text_adventures` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`adventure_data` LONGTEXT NOT NULL,
-	`uploader` VARCHAR(32) NOT NULL,
-	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
---
 -- Table structure for table `admin_connections`
 --
 DROP TABLE IF EXISTS `admin_connections`;
@@ -692,6 +679,14 @@ CREATE TABLE `telemetry_connections` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
 );
+
+DROP TABLE IF EXISTS `tutorial_completions`;
+CREATE TABLE `tutorial_completions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `tutorial_key` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

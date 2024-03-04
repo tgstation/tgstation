@@ -23,6 +23,7 @@
 			keysend_tripped = TRUE
 			next_keysend_trip_reset = world.time + (2 SECONDS)
 		else
+			to_chat(src, span_userdanger("Flooding keysends! This could have been caused by lag, or due to a plugged-in game controller. You have been disconnected from the server automatically."))
 			log_admin("Client [ckey] was just autokicked for flooding keysends; likely abuse but potentially lagspike.")
 			message_admins("Client [ckey] was just autokicked for flooding keysends; likely abuse but potentially lagspike.")
 			qdel(src)
@@ -46,9 +47,10 @@
 
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
-	if(!movement_locked)
-		var/movement = movement_keys[_key]
-		if(!(next_move_dir_sub & movement))
+	var/movement = movement_keys[_key]
+	if(movement)
+		calculate_move_dir()
+		if(!movement_locked && !(next_move_dir_sub & movement))
 			next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
@@ -73,10 +75,9 @@
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
-	holder?.key_down(_key, src)
-	mob.focus?.key_down(_key, src)
+	holder?.key_down(_key, src, full_key)
+	mob.focus?.key_down(_key, src, full_key)
 	mob.update_mouse_pointer()
-
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
@@ -92,9 +93,10 @@
 
 	keys_held -= _key
 
-	if(!movement_locked)
-		var/movement = movement_keys[_key]
-		if(!(next_move_dir_add & movement))
+	var/movement = movement_keys[_key]
+	if(movement)
+		calculate_move_dir()
+		if(!movement_locked && !(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you

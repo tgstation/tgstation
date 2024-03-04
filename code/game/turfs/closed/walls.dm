@@ -1,4 +1,4 @@
-#define MAX_DENT_DECALS 15
+#define LEANING_OFFSET 11
 
 /turf/closed/wall
 	name = "wall"
@@ -6,7 +6,7 @@
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
-	explosion_block = 1
+	explosive_resistance = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -16,8 +16,8 @@
 	flags_ricochet = RICOCHET_HARD
 
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
 	///bool on whether this wall can be chiselled into
@@ -33,6 +33,65 @@
 
 	var/list/dent_decals
 
+/turf/closed/wall/MouseDrop_T(atom/dropping, mob/user, params)
+	..()
+	if(dropping != user)
+		return
+	if(!iscarbon(dropping) && !iscyborg(dropping))
+		return
+	var/mob/living/leaner = dropping
+	if(leaner.incapacitated(IGNORE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
+		return
+	if(!leaner.density || leaner.pulledby || leaner.buckled || !(leaner.mobility_flags & MOBILITY_STAND))
+		return
+	if(HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
+		return
+	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
+	if(checked_turf != src)
+		return
+	leaner.start_leaning(src)
+
+/mob/living/proc/start_leaning(turf/closed/wall/wall)
+	var/new_y = base_pixel_y + pixel_y
+	var/new_x = base_pixel_x + pixel_x
+	switch(dir)
+		if(SOUTH)
+			new_y += LEANING_OFFSET
+		if(NORTH)
+			new_y -= LEANING_OFFSET
+		if(WEST)
+			new_x += LEANING_OFFSET
+		if(EAST)
+			new_x -= LEANING_OFFSET
+
+	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
+	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
+	visible_message(
+		span_notice("[src] leans against [wall]."),
+		span_notice("You lean against [wall]."),
+	)
+	RegisterSignals(src, list(
+		COMSIG_MOB_CLIENT_PRE_MOVE,
+		COMSIG_LIVING_DISARM_HIT,
+		COMSIG_LIVING_GET_PULLED,
+		COMSIG_MOVABLE_TELEPORTING,
+		COMSIG_ATOM_DIR_CHANGE,
+	), PROC_REF(stop_leaning))
+	update_fov()
+
+/mob/living/proc/stop_leaning()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, list(
+		COMSIG_MOB_CLIENT_PRE_MOVE,
+		COMSIG_LIVING_DISARM_HIT,
+		COMSIG_LIVING_GET_PULLED,
+		COMSIG_MOVABLE_TELEPORTING,
+		COMSIG_ATOM_DIR_CHANGE,
+	))
+	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
+	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
+	update_fov()
+
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(!can_engrave)
@@ -40,11 +99,9 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
-			underlay_appearance.icon = 'icons/turf/space.dmi'
-			underlay_appearance.icon_state = SPACE_ICON_STATE
-			underlay_appearance.plane = PLANE_SPACE
+			generate_space_underlay(underlay_appearance, src)
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
@@ -103,21 +160,24 @@
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
 		dismantle_wall(1,1)
-		return
+		return TRUE
 
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			//SN src = null
 			var/turf/NT = ScrapeAway()
 			NT.contents_explosion(severity, target)
-			return
+			return TRUE
 		if(EXPLODE_HEAVY)
 			dismantle_wall(prob(50), TRUE)
 		if(EXPLODE_LIGHT)
 			if (prob(hardness))
 				dismantle_wall(0,1)
+
 	if(!density)
-		..()
+		return ..()
+
+	return TRUE
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
@@ -129,15 +189,6 @@
 /turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user, modifiers)
-
-
-/turf/closed/wall/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
-		return
 
 /turf/closed/wall/attack_hulk(mob/living/carbon/user)
 	..()
@@ -199,20 +250,18 @@
 
 	add_fingerprint(user)
 
-	var/turf/T = user.loc //get user's location for delay checks
-
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
+	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
 		return
 
 	return ..()
 
-/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user)
 	if((user.combat_mode) || !LAZYLEN(dent_decals))
 		return FALSE
 
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=1))
 			return FALSE
 
 		to_chat(user, span_notice("You begin fixing dents on the wall..."))
@@ -225,23 +274,23 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
 	//check for wall mounted frames
 	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
-		return TRUE
+			return TRUE
+		return FALSE
 	//Poster stuff
-	else if(istype(W, /obj/item/poster))
-		place_poster(W,user)
-		return TRUE
+	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
+		return place_poster(W,user)
 
 	return FALSE
 
-/turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
+/turf/closed/wall/proc/try_decon(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=round(slicing_duration / 50)))
 			return FALSE
 
 		to_chat(user, span_notice("You begin slicing through the outer plating..."))
@@ -274,24 +323,24 @@
 /turf/closed/wall/get_dumping_location()
 	return null
 
-/turf/closed/wall/acid_act(acidpwr, acid_volume)
-	if(explosion_block >= 2)
-		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
-	return ..()
-
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
 
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+			return list("delay" = 4 SECONDS, "cost" = 26)
+		if(RCD_WALLFRAME)
+			return list("delay" = 1 SECONDS, "cost" = 8)
 	return FALSE
 
-/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
+/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
+		if(RCD_WALLFRAME)
+			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
+			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
 			return TRUE
 	return FALSE
@@ -329,4 +378,12 @@
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal
 
-#undef MAX_DENT_DECALS
+/turf/closed/wall/Bumped(atom/movable/bumped_atom)
+	. = ..()
+	SEND_SIGNAL(bumped_atom, COMSIG_LIVING_WALL_BUMP, src)
+
+/turf/closed/wall/Exited(atom/movable/gone, direction)
+	. = ..()
+	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
+#undef LEANING_OFFSET

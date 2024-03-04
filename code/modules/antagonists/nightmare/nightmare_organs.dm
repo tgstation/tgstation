@@ -4,32 +4,69 @@
 #define HEART_SPECIAL_SHADOWIFY 2
 
 
-/obj/item/organ/brain/nightmare
+/obj/item/organ/internal/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
-	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
+	applied_status = /datum/status_effect/shadow_regeneration/nightmare
+	///Our associated shadow jaunt spell, for all nightmares
+	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
+	///Our associated terrorize spell, for antagonist nightmares
+	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
 
-/obj/item/organ/brain/nightmare/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/brain/shadow/nightmare/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
-	if(M.dna.species.id != SPECIES_NIGHTMARE)
-		M.set_species(/datum/species/shadow/nightmare)
-		visible_message(span_warning("[M] thrashes as [src] takes root in [M.p_their()] body!"))
-	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
-	M.AddSpell(SW)
-	shadowwalk = SW
 
-/obj/item/organ/brain/nightmare/Remove(mob/living/carbon/M, special = FALSE)
-	if(shadowwalk)
-		M.RemoveSpell(shadowwalk)
+	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
+		brain_owner.set_species(/datum/species/shadow/nightmare)
+		visible_message(span_warning("[brain_owner] thrashes as [src] takes root in [brain_owner.p_their()] body!"))
+
+	our_jaunt = new(brain_owner)
+	our_jaunt.Grant(brain_owner)
+
+	if(brain_owner.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
+		terrorize_spell = new(src)
+		terrorize_spell.Grant(brain_owner)
+
+/obj/item/organ/internal/brain/shadow/nightmare/on_mob_remove(mob/living/carbon/brain_owner)
+	. = ..()
+	QDEL_NULL(our_jaunt)
+	QDEL_NULL(terrorize_spell)
+
+/atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
+	name = "Lightless Domain"
+	desc = "Bathed in soothing darkness you will slowly regenerate, even past the point of death. \
+		Heightened reflexes will allow you to dodge projectile weapons."
+
+/datum/status_effect/shadow_regeneration/nightmare
+	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
+
+/datum/status_effect/shadow_regeneration/nightmare/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	RegisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+	return TRUE
+
+/datum/status_effect/shadow_regeneration/nightmare/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT)
 	return ..()
 
+/datum/status_effect/shadow_regeneration/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+	source.visible_message(
+		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
+		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
+	)
+	playsound(source, SFX_BULLET_MISS, 75, TRUE)
+	return COMPONENT_BULLET_PIERCED
 
-/obj/item/organ/heart/nightmare
+/obj/item/organ/internal/heart/nightmare
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
-	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
+	base_icon_state = "demon_heart"
 	visual = TRUE
 	color = "#1C1C1C"
 	decay_factor = 0
@@ -38,16 +75,12 @@
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
 
-/obj/item/organ/heart/nightmare/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
-/obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
+/obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
 	user.visible_message(
 		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
-		span_danger("[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!")
+		span_danger("[src] feels unnaturally cold in your hands. You raise [src] to your mouth and devour it!")
 	)
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
@@ -58,35 +91,35 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/on_mob_insert(mob/living/carbon/heart_owner, special)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
-		M.put_in_hands(blade)
+		heart_owner.put_in_hands(blade)
 
-/obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/on_mob_remove(mob/living/carbon/heart_owner, special)
+	. = ..()
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
-		M.visible_message(span_warning("\The [blade] disintegrates!"))
+		heart_owner.visible_message(span_warning("\The [blade] disintegrates!"))
 		QDEL_NULL(blade)
-	return ..()
 
-/obj/item/organ/heart/nightmare/Stop()
-	return 0
+/obj/item/organ/internal/heart/nightmare/Stop()
+	return FALSE
 
-/obj/item/organ/heart/nightmare/on_death(delta_time, times_fired)
+/obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			respawn_progress += delta_time SECONDS
+			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
-	owner.revive(full_heal = TRUE, admin_revive = FALSE)
+	owner.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)
@@ -98,8 +131,8 @@
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
 
-/obj/item/organ/heart/nightmare/get_availability(datum/species/S)
-	if(istype(S,/datum/species/shadow/nightmare))
+/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	if(isnightmare(owner_mob))
 		return TRUE
 	return ..()
 

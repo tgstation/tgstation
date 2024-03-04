@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
+
 import { require } from './require.js';
 
 const globPkg = require('glob');
@@ -25,8 +26,7 @@ export const resolveGlob = (...sections) => {
     try {
       fs.statSync(path);
       safePaths.push(path);
-    }
-    catch {}
+    } catch {}
   }
   return safePaths;
 };

@@ -1,11 +1,13 @@
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	worn_icon_state = "wheelys"
-	greyscale_colors = "#545454#ffffff"
 	icon_state = "sneakers"
+	worn_icon_state = "wheelys"
+	inhand_icon_state = "sneakers_back"
+	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
-	inhand_icon_state = "wheelys"
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
@@ -60,6 +62,7 @@
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
+	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null
 	worn_icon_state = "rollerskates"
@@ -72,6 +75,7 @@
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
+	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null
 	worn_icon_state = "skishoes"

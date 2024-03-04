@@ -9,7 +9,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/misc/survivalpod)
 "c" = (
-/obj/machinery/shower,
+/obj/machinery/shower/directional/south,
 /obj/item/soap/deluxe,
 /obj/structure/curtain{
 	alpha = 240;
@@ -62,25 +62,18 @@
 /turf/open/floor/pod,
 /area/misc/survivalpod)
 "n" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8;
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
 	layer = 3
 	},
-/obj/machinery/door/window/survival_pod{
-	dir = 1
-	},
+/obj/machinery/door/window/survival_pod/left/directional/north,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "o" = (
 /obj/structure/chair/comfy/black,
 /obj/item/cardboard_cutout{
-	desc = "A cardboard cutout of a xenomorph maid.";
-	icon_state = "cutout_lusty";
-	name = "lusty xenomorph maid"
+	starting_cutout = "Xenomorph Maid"
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "p" = (
@@ -97,19 +90,17 @@
 /turf/open/floor/pod,
 /area/misc/survivalpod)
 "r" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "s" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/wood/fancy/black,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_x = -6;
 	pixel_y = 10
 	},
@@ -119,24 +110,18 @@
 /obj/machinery/microwave{
 	pixel_y = -2
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table/wood/fancy/black{
 	pixel_y = -9
 	},
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "u" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 1
-	},
+/obj/machinery/door/window/survival_pod/left/directional/north,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "v" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/displaycase{
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
@@ -155,7 +140,7 @@
 /area/misc/survivalpod)
 "x" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -163,10 +148,7 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "y" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -13
-	},
+/obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "z" = (

@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	is_position_sensitive = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -18,9 +18,9 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
 
-/obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
+/obj/item/assembly/infra/proc/post_rotation(mob/user, degrees)
 	refreshBeam()
 
 /obj/item/assembly/infra/AltClick(mob/user)
@@ -75,7 +75,7 @@
 	if(holder)
 		holder_movement() //sync the dir of the device as well if it's contained in a TTV or an assembly holder
 	else
-		refreshBeam()
+		INVOKE_ASYNC(src, PROC_REF(refreshBeam))
 
 /obj/item/assembly/infra/process()
 	if(!on || !secured)
@@ -113,7 +113,8 @@
 			beams += I
 			I.master = src
 			I.setDir(_dir)
-			I.invisibility = visible? 0 : INVISIBILITY_ABSTRACT
+			if(!visible)
+				I.SetInvisibility(INVISIBILITY_ABSTRACT)
 			T = _T
 			_T = get_step(_T, _dir)
 			CHECK_TICK
@@ -128,7 +129,7 @@
 	. = ..()
 	refreshBeam()
 
-/obj/item/assembly/infra/Moved()
+/obj/item/assembly/infra/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	var/t = dir
 	. = ..()
 	setDir(t)
@@ -149,7 +150,7 @@
 	switchListener(location)
 	if(!secured || !on || next_activate > world.time)
 		return FALSE
-	pulse(FALSE)
+	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
 		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
@@ -160,7 +161,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
-	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
+	RegisterSignal(newloc, COMSIG_ATOM_EXITED, PROC_REF(check_exit))
 	listeningTo = newloc
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/gone, direction)
@@ -174,13 +175,13 @@
 		var/obj/item/I = gone
 		if (I.item_flags & ABSTRACT)
 			return
-	INVOKE_ASYNC(src, .proc/refreshBeam)
+	INVOKE_ASYNC(src, PROC_REF(refreshBeam))
 
 /obj/item/assembly/infra/setDir()
 	. = ..()
 	refreshBeam()
 
-/obj/item/assembly/infra/ui_status(mob/user)
+/obj/item/assembly/infra/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE
@@ -217,7 +218,7 @@
 
 /obj/effect/beam/i_beam
 	name = "infrared beam"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = TRUE
 	density = FALSE
@@ -228,7 +229,7 @@
 /obj/effect/beam/i_beam/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -240,4 +241,4 @@
 		var/obj/item/I = AM
 		if (I.item_flags & ABSTRACT)
 			return
-	INVOKE_ASYNC(master, /obj/item/assembly/infra.proc/trigger_beam, AM, get_turf(src))
+	INVOKE_ASYNC(master, TYPE_PROC_REF(/obj/item/assembly/infra, trigger_beam), AM, get_turf(src))

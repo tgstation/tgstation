@@ -13,39 +13,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
-"ac" = (
-/obj/structure/fans/tiny,
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 12;
-	id = "huntership_home";
-	name = "Deep Space";
-	width = 7
-	},
-/obj/docking_port/mobile{
-	dir = 4;
-	dwidth = 3;
-	height = 12;
-	id = "huntership";
-	name = "hunter shuttle";
-	rechargeTime = 1800;
-	width = 7
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "Interpolship"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ae" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/machinery/button/door/directional/north{
-	id = "Interpolship"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
 "af" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -54,6 +21,7 @@
 /area/shuttle/hunter)
 "ag" = (
 /obj/effect/turf_decal/delivery,
+/obj/machinery/fugitive_locator,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ah" = (
@@ -64,16 +32,6 @@
 /area/shuttle/hunter)
 "aj" = (
 /obj/structure/closet/crate/eva,
-/obj/effect/turf_decal/box,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ak" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
-	dir = 1
-	},
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
@@ -90,11 +48,29 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
+"dJ" = (
+/obj/machinery/light/directional/south,
+/obj/structure/closet/crate/eva,
+/obj/effect/turf_decal/box,
+/obj/item/pinpointer/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"gc" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "hB" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"jc" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ku" = (
 /turf/closed/wall/mineral/titanium,
@@ -103,15 +79,18 @@
 /obj/machinery/fugitive_capture,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
-"rR" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
 "te" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"tW" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "Am" = (
@@ -125,15 +104,47 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"Pq" = (
-/turf/template_noop,
-/area/template_noop)
-"Rz" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+"Bn" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
+	dir = 1
+	},
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"CF" = (
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 12;
+	name = "Deep Space";
+	shuttle_id = "huntership_home";
+	width = 7
+	},
+/obj/docking_port/mobile{
+	dir = 4;
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
+"Jv" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "Interpolship";
+	req_access = list("hunter")
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
 "RO" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
@@ -142,7 +153,7 @@
 Pq
 ku
 te
-ac
+CF
 te
 ku
 Pq
@@ -150,7 +161,7 @@ Pq
 (2,1,1) = {"
 Pq
 ku
-ae
+Jv
 al
 af
 ku
@@ -161,16 +172,16 @@ Pq
 ku
 bY
 RO
-ak
+Bn
 ku
 Pq
 "}
 (4,1,1) = {"
 hB
 ku
-bY
+jc
 RO
-ak
+Bn
 ku
 hB
 "}
@@ -179,7 +190,7 @@ ku
 ku
 bY
 RO
-ak
+Bn
 ku
 ku
 "}
@@ -206,7 +217,7 @@ Pq
 ku
 lp
 RO
-aj
+dJ
 ku
 Pq
 "}
@@ -214,7 +225,7 @@ Pq
 hB
 ku
 ku
-rR
+gc
 ku
 ku
 hB
@@ -223,7 +234,7 @@ hB
 ku
 ku
 RO
-Rz
+tW
 RO
 ku
 ku

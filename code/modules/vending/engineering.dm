@@ -10,7 +10,7 @@
 		/obj/item/clothing/under/rank/engineering/chief_engineer = 4,
 		/obj/item/clothing/under/rank/engineering/engineer = 4,
 		/obj/item/clothing/shoes/sneakers/orange = 4,
-		/obj/item/clothing/head/hardhat = 4,
+		/obj/item/clothing/head/utility/hardhat = 4,
 		/obj/item/storage/belt/utility = 4,
 		/obj/item/clothing/glasses/meson/engine = 4,
 		/obj/item/clothing/gloves/color/yellow = 4,
@@ -22,13 +22,13 @@
 		/obj/item/t_scanner = 12,
 		/obj/item/stock_parts/cell = 8,
 		/obj/item/weldingtool = 8,
-		/obj/item/clothing/head/welding = 8,
+		/obj/item/clothing/head/utility/welding = 8,
 		/obj/item/light/tube = 10,
-		/obj/item/clothing/suit/fire = 4,
+		/obj/item/clothing/suit/utility/fire = 4,
 		/obj/item/stock_parts/scanning_module = 5,
 		/obj/item/stock_parts/micro_laser = 5,
 		/obj/item/stock_parts/matter_bin = 5,
-		/obj/item/stock_parts/manipulator = 5,
+		/obj/item/stock_parts/servo = 5,
 		)
 	refill_canister = /obj/item/vending_refill/engineering
 	default_price = PAYCHECK_CREW

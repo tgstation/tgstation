@@ -16,7 +16,7 @@
 
 /obj/machinery/ecto_sniffer/Initialize(mapload)
 	. = ..()
-	wires = new/datum/wires/ecto_sniffer(src)
+	set_wires(new/datum/wires/ecto_sniffer(src))
 
 /obj/machinery/ecto_sniffer/attack_ghost(mob/user)
 	. = ..()
@@ -35,7 +35,7 @@
 	say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
-		addtimer(CALLBACK(src, .proc/clear_residue, activator.ckey), 15 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(clear_residue), activator.ckey), 15 SECONDS)
 
 /obj/machinery/ecto_sniffer/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -54,7 +54,7 @@
 /obj/machinery/ecto_sniffer/update_overlays()
 	. = ..()
 	if(is_operational && on)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", alpha = src.alpha)
+		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 15)

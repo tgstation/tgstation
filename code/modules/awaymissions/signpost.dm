@@ -1,6 +1,6 @@
 /*An alternative to exit gateways, signposts send you back to somewhere safe onstation with their semiotic magic.*/
 /obj/structure/signpost
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "signpost"
 	anchored = TRUE
 	density = TRUE
@@ -39,15 +39,12 @@
 /obj/structure/signpost/attack_hulk(mob/user)
 	return
 
-/obj/structure/signpost/attack_larva(mob/user)
+/obj/structure/signpost/attack_larva(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_robot(mob/user)
 	if (Adjacent(user))
 		return interact(user)
-
-/obj/structure/signpost/attack_slime(mob/user)
-	return interact(user)
 
 /obj/structure/signpost/attack_animal(mob/user, list/modifiers)
 	return interact(user)

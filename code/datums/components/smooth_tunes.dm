@@ -1,6 +1,3 @@
-///how many lines multiplied by tempo should at least be higher than this.
-#define LONG_ENOUGH_SONG 220
-
 ///Smooth tunes component! Applied to musicians to give the songs they play special effects, according to a rite!
 ///Comes with BARTICLES!!!
 /datum/component/smooth_tunes
@@ -27,14 +24,14 @@
 	src.particles_path = particles_path
 	src.glow_color = glow_color
 
-/datum/component/smooth_tunes/Destroy(force, silent)
+/datum/component/smooth_tunes/Destroy(force)
 	if(particle_holder)
 		QDEL_NULL(particle_holder)
 	qdel(linked_songtuner_rite)
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT,.proc/start_singing)
+	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT, PROC_REF(start_singing))
 
 /datum/component/smooth_tunes/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
@@ -47,7 +44,7 @@
 	if(istype(starting_song.parent, /obj/structure/musician))
 		return //TODO: make stationary instruments work with no hiccups
 
-	if(starting_song.lines.len * starting_song.tempo > LONG_ENOUGH_SONG)
+	if(starting_song.lines.len * starting_song.tempo > FESTIVAL_SONG_LONG_ENOUGH)
 		viable_for_final_effect = TRUE
 	else
 		to_chat(parent, span_warning("This song is too short, so it won't include the song finishing effect."))
@@ -56,19 +53,21 @@
 	if(linked_songtuner_rite.song_start_message)
 		starting_song.parent.visible_message(linked_songtuner_rite.song_start_message)
 
+	linked_songtuner_rite.performer_start_effect(parent, starting_song)
+
 	///prevent more songs from being blessed concurrently, mob signal
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
 	///and hook into the instrument this time, preventing other weird exploity stuff.
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, .proc/tempo_change)
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, .proc/stop_singing)
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, PROC_REF(tempo_change))
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, PROC_REF(stop_singing))
 	if(!allow_repeats)
-		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
+		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, PROC_REF(stop_singing))
 
 	linked_song = starting_song
 
 	//barticles
 	if(particles_path && ismovable(linked_song.parent))
-		particle_holder = new(linked_song.parent, particles_path)
+		particle_holder = new(linked_song.parent, particles_path, PARTICLE_ATTACH_MOB)
 	//filters
 	linked_song.parent?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
@@ -85,10 +84,15 @@
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 	if(viable_for_final_effect)
-		if(!finished)
-			to_chat(parent, span_warning("The song was interrupted, you cannot activate the finishing ability!"))
+		if(finished && linked_songtuner_rite && linked_song)
+			for(var/mob/living/carbon/human/listener in linked_song.hearing_mobs)
+				if(listener == parent || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+					continue
+
+				linked_songtuner_rite.finish_effect(listener, parent)
 		else
-			linked_songtuner_rite.finish_effect(parent, linked_song)
+			to_chat(parent, span_warning("The song was interrupted, you cannot activate the finishing ability!"))
+
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.parent, list(
 		COMSIG_INSTRUMENT_TEMPO_CHANGE,
@@ -98,10 +102,12 @@
 	linked_song = null
 	qdel(src)
 
-/datum/component/smooth_tunes/process(delta_time = SSOBJ_DT)
-	if(linked_songtuner_rite)
-		linked_songtuner_rite.song_effect(parent, linked_song)
+/datum/component/smooth_tunes/process(seconds_per_tick = SSOBJ_DT)
+	if(linked_songtuner_rite && linked_song)
+		for(var/mob/living/carbon/human/listener in linked_song.hearing_mobs)
+			if(listener == parent || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
+				continue
+
+			linked_songtuner_rite.song_effect(listener, parent)
 	else
 		stop_singing()
-
-#undef LONG_ENOUGH_SONG

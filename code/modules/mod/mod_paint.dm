@@ -11,12 +11,12 @@
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
 	var/obj/item/mod/control/editing_mod
-	var/atom/movable/screen/color_matrix_proxy_view/proxy_view
+	var/atom/movable/screen/map_view/proxy_view
 	var/list/current_color
 
 /obj/item/mod/paint/Initialize(mapload)
 	. = ..()
-	current_color = color_matrix_identity()
+	current_color = COLOR_MATRIX_IDENTITY
 
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
@@ -43,9 +43,11 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	editing_mod = mod
 	proxy_view = new()
+	proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
+
 	proxy_view.appearance = editing_mod.appearance
 	proxy_view.color = null
-	proxy_view.register_to_client(user.client)
+	proxy_view.display_to(user)
 	ui_interact(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -64,9 +66,9 @@
 	. = ..()
 	editing_mod = null
 	QDEL_NULL(proxy_view)
-	current_color = color_matrix_identity()
+	current_color = COLOR_MATRIX_IDENTITY
 
-/obj/item/mod/paint/ui_status(mob/user)
+/obj/item/mod/paint/ui_status(mob/user, datum/ui_state/state)
 	if(check_menu(editing_mod, user))
 		return ..()
 	return UI_CLOSE
@@ -142,9 +144,10 @@
 		balloon_alert(user, "no alternate skins!")
 		return
 	var/list/skins = list()
-	for(var/mod_skin in mod.theme.skins)
-		skins[mod_skin] = image(icon = mod.icon, icon_state = "[mod_skin]-control")
-	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, .proc/check_menu, mod, user), require_near = TRUE)
+	for(var/mod_skin_name in mod.theme.skins)
+		var/list/mod_skin = mod.theme.skins[mod_skin_name]
+		skins[mod_skin_name] = image(icon = mod_skin[MOD_ICON_OVERRIDE] || mod.icon, icon_state = "[mod_skin_name]-control")
+	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), mod, user), require_near = TRUE)
 	if(!pick)
 		balloon_alert(user, "no skin picked!")
 		return

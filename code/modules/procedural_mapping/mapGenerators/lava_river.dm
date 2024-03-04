@@ -24,4 +24,4 @@
 	var/datum/map_generator/lavaland/L = mother
 	if(!istype(L))
 		return
-	spawn_rivers(L.start_z, river_nodes, river_type, min_x = L.min_x, min_y = L.min_y, max_x = L.max_x, max_y = L.max_y)
+	spawn_rivers(L.start_z, river_nodes, river_type, /area/lavaland/surface/outdoors/unexplored, min_x = L.min_x, min_y = L.min_y, max_x = L.max_x, max_y = L.max_y)

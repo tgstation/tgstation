@@ -11,8 +11,13 @@
 	///Time spent baking so far
 	var/current_bake_time = 0
 
+	/// REF() to the mind which placed us in an oven
+	var/who_baked_us
 
-/datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprite)
+	/// Reagents that should be added to the result
+	var/list/added_reagents
+
+/datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprit, list/added_reagents)
 	. = ..()
 	if(!isitem(parent)) //Only items support baking at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -20,6 +25,9 @@
 	src.bake_result = bake_result
 	src.required_bake_time = required_bake_time
 	src.positive_result = positive_result
+	src.added_reagents = added_reagents
+	if(positive_result)
+		ADD_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
@@ -33,32 +41,47 @@
 		src.positive_result = positive_result
 
 /datum/component/bakeable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_BAKED, .proc/OnBake)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	RegisterSignal(parent, COMSIG_ITEM_OVEN_PLACED_IN, PROC_REF(on_baking_start))
+	RegisterSignal(parent, COMSIG_ITEM_OVEN_PROCESS, PROC_REF(on_bake))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/bakeable/UnregisterFromParent()
-	. = ..()
-	UnregisterSignal(parent, list(COMSIG_ITEM_BAKED, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_OVEN_PLACED_IN, COMSIG_ITEM_OVEN_PROCESS, COMSIG_ATOM_EXAMINE))
+	REMOVE_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
-///Ran every time an item is baked by something
-/datum/component/bakeable/proc/OnBake(datum/source, atom/used_oven, delta_time = 1)
+/// Signal proc for [COMSIG_ITEM_OVEN_PLACED_IN] when baking starts (parent enters an oven)
+/datum/component/bakeable/proc/on_baking_start(datum/source, atom/used_oven, mob/baker)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_HANDLED_BAKING
+	if(baker && baker.mind)
+		who_baked_us = REF(baker.mind)
 
-	. |= positive_result ? COMPONENT_BAKING_GOOD_RESULT : COMPONENT_BAKING_BAD_RESULT //Are we baking shit or great food?
+///Ran every time an item is baked by something
+/datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, seconds_per_tick = 1)
+	SIGNAL_HANDLER
 
-	current_bake_time += delta_time * 10 //turn it into ds
+	// Let our signal know if we're baking something good or ... burning something
+	var/baking_result = positive_result ? COMPONENT_BAKING_GOOD_RESULT : COMPONENT_BAKING_BAD_RESULT
+
+	current_bake_time += seconds_per_tick * 10 //turn it into ds
 	if(current_bake_time >= required_bake_time)
-		FinishBaking(used_oven)
+		finish_baking(used_oven)
+
+	return COMPONENT_HANDLED_BAKING | baking_result
 
 ///Ran when an object finished baking
-/datum/component/bakeable/proc/FinishBaking(atom/used_oven)
-
+/datum/component/bakeable/proc/finish_baking(atom/used_oven)
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
+	if(baked_result.reagents && positive_result) //make space and tranfer reagents if it has any & the resulting item isn't bad food or other bad baking result
+		baked_result.reagents.clear_reagents()
+		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
+		if(added_reagents) // Add any new reagents that should be added
+			baked_result.reagents.add_reagent_list(added_reagents)
 
+	if(who_baked_us)
+		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
 
 	if(original_object.custom_materials)
 		baked_result.set_custom_materials(original_object.custom_materials, 1)
@@ -69,18 +92,22 @@
 
 	if(positive_result)
 		used_oven.visible_message(span_notice("You smell something great coming from [used_oven]."), blind_message = span_notice("You smell something great..."))
+		BLACKBOX_LOG_FOOD_MADE(baked_result.type)
 	else
 		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]."), blind_message = span_warning("You smell a burnt smell..."))
-	SEND_SIGNAL(parent, COMSIG_BAKE_COMPLETED, baked_result)
+	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
 	qdel(parent)
 
 ///Gives info about the items baking status so you can see if its almost done
-/datum/component/bakeable/proc/OnExamine(atom/A, mob/user, list/examine_list)
+/datum/component/bakeable/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(!current_bake_time) //Not baked yet
 		if(positive_result)
-			examine_list += span_notice("[parent] can be <b>baked</b> into \a [initial(bake_result.name)].")
+			if(initial(bake_result.gender) == PLURAL)
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into some [initial(bake_result.name)].")
+			else
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into \a [initial(bake_result.name)].")
 		return
 
 	if(positive_result)
@@ -89,4 +116,4 @@
 		else if(current_bake_time <= required_bake_time)
 			examine_list += span_notice("[parent] seems to be almost finished baking!")
 	else
-		examine_list += span_danger("[parent] should probably not be baked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put in the oven.")

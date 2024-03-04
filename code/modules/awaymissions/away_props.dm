@@ -65,7 +65,7 @@
 
 /obj/structure/pitgrate/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, .proc/OnButtonPressed)
+	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, PROC_REF(OnButtonPressed))
 	if(hidden)
 		update_openspace()
 
@@ -80,7 +80,10 @@
 	if(!istype(T))
 		return
 	//Simple way to keep plane conflicts away, could probably be upgraded to something less nuclear with 513
-	T.invisibility = open ? 0 : INVISIBILITY_MAXIMUM
+	if(!open)
+		T.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
+	else
+		T.RemoveInvisibility(type)
 
 /obj/structure/pitgrate/proc/toggle()
 	open = !open
@@ -91,9 +94,9 @@
 	else
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
-	plane = ABOVE_LIGHTING_PLANE //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
+	SET_PLANE_IMPLICIT(src, ABOVE_LIGHTING_PLANE) //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
-	addtimer(CALLBACK(src,.proc/reset_plane),10)
+	addtimer(CALLBACK(src, PROC_REF(reset_plane)),10)
 	if(hidden)
 		update_openspace()
 	var/turf/T = get_turf(src)
@@ -102,7 +105,7 @@
 			T.zFall(AM)
 
 /obj/structure/pitgrate/proc/reset_plane()
-	plane = FLOOR_PLANE
+	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)
@@ -115,3 +118,19 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE
+
+/// only player mobs (has ckey) may pass, reverse for the opposite
+/obj/effect/playeronly_barrier
+	name = "player-only barrier"
+	desc = "You shall pass."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	var/reverse = FALSE //Block if has ckey
+
+/obj/effect/playeronly_barrier/CanAllowThrough(mob/living/mover, border_dir)
+	. = ..()
+	if(!istype(mover))
+		return
+	return isnull(mover.ckey) == reverse

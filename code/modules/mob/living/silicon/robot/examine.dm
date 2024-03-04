@@ -1,7 +1,10 @@
 /mob/living/silicon/robot/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] <EM>[src]</EM>!")
 	if(desc)
 		. += "[desc]"
+
+	var/model_name = model ? "\improper [model.name]" : "\improper Default"
+	. += "\nIt is currently \a \"[span_bold("[model_name]")]\"-type cyborg.\n"
 
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
@@ -43,6 +46,9 @@
 			. += span_warning("It doesn't seem to be responding.")
 		if(DEAD)
 			. += span_deadsay("It looks like its system is corrupted and requires a reset.")
-	. += "*---------*</span>"
+	. += "</span>"
 
 	. += ..()
+
+/mob/living/silicon/robot/get_examine_string(mob/user, thats = FALSE)
+	return null

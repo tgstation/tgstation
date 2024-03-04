@@ -4,7 +4,7 @@
 /obj/item/implanter
 	name = "implanter"
 	desc = "A sterile automatic implant injector."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "implanter0"
 	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -12,7 +12,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 6, /datum/material/glass=SMALL_MATERIAL_AMOUNT *2)
 	///The implant in our implanter
 	var/obj/item/implant/imp = null
 	///Type of implant this will spawn as imp upon being spawned
@@ -28,10 +28,9 @@
 
 	if(target != user)
 		target.visible_message(span_warning("[user] is attempting to implant [target]."))
+		if(!do_after(user, 5 SECONDS, target))
+			return
 
-	var/turf/target_on = get_turf(target)
-	if(!(target_on && (target == user || do_mob(user, target, 5 SECONDS))))
-		return
 	if(!(src && imp))
 		return
 
@@ -54,7 +53,7 @@
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
 	if(user.get_active_held_item() != I)
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
 	if(new_name)
 		name = "implanter ([new_name])"

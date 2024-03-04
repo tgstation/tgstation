@@ -45,6 +45,7 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
+MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
 
 ## NAMES ###
@@ -119,6 +120,9 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If non-human species are barred from joining as a head of staff
 #ENFORCE_HUMAN_AUTHORITY
 
+## If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
+#ENFORCE_HUMAN_AUTHORITY_ON_EVERYONE
+
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
@@ -131,6 +135,9 @@ DYNAMIC_CONFIG_ENABLED
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
+
+## Uncomment this to disable station traits.
+#FORBID_STATION_TRAITS
 
 ## Multiplier for earliest start time of dangerous events.
 ## Set to 0 to make dangerous events avaliable from round start.
@@ -194,6 +201,12 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Comment this out this to make security officers spawn in departmental security posts
 #SEC_START_BRIG
 
+## This variable is how you may configure "Scaling Access" for Departmental Security Officers.
+## Set to 0/commented out for "off", Departmental Security Officers will never get additional room-specific access (beyond general departmental doors).
+## Set to 1 if you want to enable "Scaling Access", where Departmental Security Officers will get access to most rooms within a department depending on how many security officers there are relative to the number of people on a station.
+## Set to 2 if you want Departmental Security Officers to always have access to all rooms in a department.
+DEPSEC_ACCESS_LEVEL 1
+
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
@@ -214,7 +227,23 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+## Set to 4 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
+
+
 DEFAULT_LAWS 0
+
+## SILICON ASIMOV SUPERIORITY OVERRIDE ###
+## This makes "Asimov Superiority" show up as a perk for humans in the character creation menu even if asimov is not the default lawset, such as when used with asimov++
+## Uncomment this out to make "Asimov Superiority" show up as a perk for humans
+# SILICON_ASIMOV_SUPERIORITY_OVERRIDE
+
+## SPECIFIED LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what lawset the AI will use, edit the specified law to an *existing* lawset to make it the default.
+## See datums\ai_laws.dm for the full law lists
+## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS robocop, SPECIFIED_LAWS antimov
+
+SPECIFIED_LAWS asimovpp
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -231,7 +260,6 @@ RANDOM_LAWS corporate
 ## Quirky laws. Shouldn't cause too much harm
 #RANDOM_LAWS hippocratic
 #RANDOM_LAWS maintain
-#RANDOM_LAWS drone
 #RANDOM_LAWS liveandletlive
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
@@ -243,6 +271,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS ninja
 #RANDOM_LAWS antimov
 #RANDOM_LAWS thermodynamic
+#RANDOM_LAWS drone
 
 ## meme laws. Honk
 #RANDOM_LAWS buildawall
@@ -255,28 +284,36 @@ RANDOM_LAWS corporate
 LAW_WEIGHT custom,0
 
 ## standard-ish laws. These are fairly ok to run
-LAW_WEIGHT asimov,32
-LAW_WEIGHT asimovpp,12
-LAW_WEIGHT paladin,12
-LAW_WEIGHT robocop,12
-LAW_WEIGHT corporate,12
+## Unique AI station trait uses weights so we don't want asimov
+LAW_WEIGHT asimov,0
+LAW_WEIGHT asimovpp,5
+LAW_WEIGHT paladin,5
+LAW_WEIGHT paladin5,5
+LAW_WEIGHT robocop,5
+LAW_WEIGHT corporate,5
+LAW_WEIGHT hippocratic,5
+LAW_WEIGHT maintain,5
+LAW_WEIGHT liveandletlive,5
+LAW_WEIGHT peacekeeper,5
+LAW_WEIGHT ten_commandments,5
+LAW_WEIGHT nutimov,5
 
 ## Quirky laws. Shouldn't cause too much harm
-LAW_WEIGHT hippocratic,3
-LAW_WEIGHT maintain,4
-LAW_WEIGHT drone,3
-LAW_WEIGHT liveandletlive,3
-LAW_WEIGHT peacekeeper,3
-LAW_WEIGHT reporter,4
-LAW_WEIGHT hulkamania,4
-LAW_WEIGHT ten_commandments,4
+LAW_WEIGHT reporter,3
+LAW_WEIGHT hulkamania,3
+LAW_WEIGHT tyrant,3
+LAW_WEIGHT overlord,3
+LAW_WEIGHT painter,3
+LAW_WEIGHT dungeon_master,3
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
 LAW_WEIGHT ninja,0
 LAW_WEIGHT antimov,0
+LAW_WEIGHT balance,0
 LAW_WEIGHT thermodynamic,0
 LAW_WEIGHT buildawall,0
+LAW_WEIGHT drone,0
 
 ##------------------------------------------------
 
@@ -359,15 +396,31 @@ ROUNDSTART_RACES ethereal
 ## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
 #ROUNDSTART_NO_HARD_CHECK felinid
 
-##Overflow job. Default is assistant
+## Disable roundstart species morgue cadavers?
+## Cadavers in the morgue at the start of the round will be randomly picked from all enabled ROUNDSTART_RACES
+## Recommended to leave this commented out so nonhuman species will have viable replacement bodies / organs when they die.
+# MORGUE_CADAVER_DISABLE_NONHUMANS
+
+## Morgue Cadaver Species Probability
+## The probability for nonhuman cadavers to spawn in the morgue.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## If left undefined, defaults to 50%.
+MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
+
+## A single specific Species ID to supplement human morgue cadavers.
+## Set MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY to determine the chances between being a human and this specific species.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## Prob = 100 means all corpses will be this race.
+#MORGUE_CADAVER_OVERRIDE_SPECIES lizard
+
+
+##Overflow job. Default is assistant.
+## NOTE: This will overwrite anything you put in jobconfig.toml!
 OVERFLOW_JOB Assistant
 
 ## Overflow slot cap. Set to -1 for unlimited. If limited, it will still open up if every other job is full.
+## NOTE: This will overwrite anything you put in jobconfig.toml!
 OVERFLOW_CAP -1
-
-## Starlight for exterior walls and breaches. Uncomment for starlight!
-## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
-#STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS
@@ -434,14 +487,17 @@ ROUNDSTART_TRAITS
 ## Uncomment to disable human moods.
 #DISABLE_HUMAN_MOOD
 
-## Enable night shifts ##
+## Enable night shifts
 #ENABLE_NIGHT_SHIFTS
 
-## Enable randomized shift start times##
-#RANDOMIZE_SHIFT_TIME
+## The shift start hour in 24-hour (0-23) notation
+SHIFT_TIME_START_HOUR 7
 
-## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
+## Sets shift time to server time at roundstart. Overrides SHIFT_TIME_START_HOUR
 #SHIFT_TIME_REALTIME
+
+## Enable randomized shift start times. Overrides SHIFT_TIME_REALTIME and SHIFT_TIME_START_HOUR
+#RANDOMIZE_SHIFT_TIME
 
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
@@ -459,10 +515,46 @@ MAXFINE 2000
 ## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
 #DRONE_ROLE_PLAYTIME 14
 
-## Uncomment to enable SDQL spells
-## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
-## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
-#SDQL_SPELLS
-
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
+
+## Whether circuit sounds are allowed to be played or not.
+#DISALLOW_CIRCUIT_SOUNDS
+
+## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
+## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
+DISALLOW_TITLE_MUSIC
+
+## If enabled, then when the database is disabled, all players will get tutorials.
+## This is primarily useful for developing tutorials. If you have a proper DB setup, you
+## don't need (or want) this.
+#GIVE_TUTORIALS_WITHOUT_DB
+
+## Configuration for station traits of each type.
+## The first value (key) is the budget, or the space available to use for station traits of that type. Some take more space than others.
+## The second value (assoc) is the weight associated with said budget compared to the rest for that type.
+POSITIVE_STATION_TRAITS 0 8
+POSITIVE_STATION_TRAITS 1 4
+POSITIVE_STATION_TRAITS 2 2
+POSITIVE_STATION_TRAITS 3 1
+
+NEUTRAL_STATION_TRAITS 0 10
+NEUTRAL_STATION_TRAITS 1 10
+NEUTRAL_STATION_TRAITS 2 3
+NEUTRAL_STATION_TRAITS 2.5 1
+
+NEGATIVE_STATION_TRAITS 0 8
+NEGATIVE_STATION_TRAITS 1 4
+NEGATIVE_STATION_TRAITS 2 2
+NEGATIVE_STATION_TRAITS 3 1
+
+# Uncomment to disable Quirk point balancing for the server and clients.
+# If enabled, players will be able to select positive quirks without first selecting negative quirks.
+# If enabled, randomized Quirks will still use points internally, in order to maintain balance.
+#DISABLE_QUIRK_POINTS
+
+# The maximum amount of positive quirks one character can have at roundstart.
+# If set to -1, then players will be able to select any quantity of positive quirks.
+# If set to 0, then players won't be able to select any positive quirks.
+# If commented-out or undefined, the maximum default is 6.
+MAX_POSITIVE_QUIRKS 6

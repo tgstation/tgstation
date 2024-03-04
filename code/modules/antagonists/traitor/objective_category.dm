@@ -48,7 +48,7 @@
 			var/list/result = filter_invalid_objective_list(value, progression_points)
 			if(!length(result))
 				continue
-			filtered_objectives[value] = objectives[value]
+			filtered_objectives[result] = objectives[value]
 		else
 			if(!objective_valid(value, progression_points))
 				continue
@@ -65,4 +65,4 @@
 	/// Assoc list of objectives by type mapped to their weight. Can also contain lists of objectives mapped to weight
 	var/list/objectives = list()
 	/// The weight of the category. How likely this category is to be chosen.
-	var/weight = 1
+	var/weight = OBJECTIVE_WEIGHT_DEFAULT

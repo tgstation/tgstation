@@ -96,7 +96,7 @@
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, location = vat.loc)
+	smoke.set_up(0, holder = vat, location = vat.loc)
 	smoke.start()
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])

@@ -1,78 +1,104 @@
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { GenericUplink, Item } from './GenericUplink';
-import { Component } from 'inferno';
-import { fetchRetry } from '../../http';
-import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
+import { Component, Fragment } from 'react';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
+} from '../../components';
+import { fetchRetry } from '../../http';
+import { Window } from '../../layouts';
+import {
+  calculateDangerLevel,
+  calculateProgression,
+  dangerDefault,
+  dangerLevelsTooltip,
+} from './calculateDangerLevel';
+import { GenericUplink, Item } from './GenericUplink';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
+import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
-  id: string,
-  name: string,
-  cost: number,
-  desc: string,
-  category: string,
-  purchasable_from: number,
-  restricted: BooleanLike,
-  limited_stock: number,
-  restricted_roles: string,
-  restricted_species: string,
-  progression_minimum: number,
-  cost_override_string: string
-  ref?: string,
-}
+  id: string;
+  name: string;
+  cost: number;
+  desc: string;
+  category: string;
+  purchasable_from: number;
+  restricted: BooleanLike;
+  limited_stock: number;
+  stock_key: string;
+  restricted_roles: string;
+  restricted_species: string;
+  progression_minimum: number;
+  cost_override_string: string;
+  lock_other_purchases: BooleanLike;
+  ref?: string;
+};
 
 type UplinkData = {
-  telecrystals: number,
-  progression_points: number,
-  lockable: BooleanLike,
-  current_expected_progression: number,
-  progression_scaling_deviance: number,
-  current_progression_scaling: number,
-  uplink_flag: number,
-  assigned_role: string,
-  assigned_species: string,
-  debug: BooleanLike,
-  extra_purchasable: UplinkItem[],
+  telecrystals: number;
+  progression_points: number;
+  lockable: BooleanLike;
+  current_expected_progression: number;
+  progression_scaling_deviance: number;
+  current_progression_scaling: number;
+  uplink_flag: number;
+  assigned_role: string;
+  assigned_species: string;
+  debug: BooleanLike;
+  extra_purchasable: UplinkItem[];
   extra_purchasable_stock: {
     [key: string]: number;
-  }
+  };
   current_stock: {
     [key: string]: number;
-  }
+  };
 
-  has_objectives: BooleanLike,
-  has_progression: BooleanLike,
-  potential_objectives: Objective[],
-  active_objectives: Objective[],
-  maximum_active_objectives: number,
-  maximum_potential_objectives: number,
-}
+  has_objectives: BooleanLike;
+  has_progression: BooleanLike;
+  primary_objectives: {
+    [key: number]: string;
+  };
+  completed_final_objective: string;
+  potential_objectives: Objective[];
+  active_objectives: Objective[];
+  maximum_active_objectives: number;
+  maximum_potential_objectives: number;
+  purchased_items: number;
+  shop_locked: BooleanLike;
+  can_renegotiate: BooleanLike;
+};
 
 type UplinkState = {
-  allItems: UplinkItem[],
-  allCategories: string[],
-  currentTab: number,
-}
+  allItems: UplinkItem[];
+  allCategories: string[];
+  currentTab: number;
+};
 
 type ServerData = {
-  items: UplinkItem[],
-  categories: string[],
-}
+  items: UplinkItem[];
+  categories: string[];
+};
 
-type ItemExtraData = {
-  ref?: string | undefined
-}
+type ItemExtraData = Item & {
+  extraData: {
+    ref?: string;
+  };
+};
 
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
 
 export class Uplink extends Component<{}, UplinkState> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       allItems: [],
       allCategories: [],
@@ -86,10 +112,11 @@ export class Uplink extends Component<{}, UplinkState> {
 
   async populateServerData() {
     if (!fetchServerData) {
-      fetchServerData = fetchRetry(resolveAsset("uplink.json"))
-        .then(response => response.json());
+      fetchServerData = fetchRetry(resolveAsset('uplink.json')).then(
+        (response) => response.json(),
+      );
     }
-    const { data } = useBackend<UplinkData>(this.context);
+    const { data } = useBackend<UplinkData>();
 
     const uplinkFlag = data.uplink_flag;
     const uplinkRole = data.assigned_role;
@@ -107,29 +134,36 @@ export class Uplink extends Component<{}, UplinkState> {
     });
 
     const availableCategories: string[] = [];
-    uplinkData.items = uplinkData.items.filter(value => {
-      if (value.restricted_roles.length > 0
-        && !value.restricted_roles.includes(uplinkRole)) {
+    uplinkData.items = uplinkData.items.filter((value) => {
+      if (
+        value.restricted_roles.length > 0 &&
+        !value.restricted_roles.includes(uplinkRole)
+      ) {
         return false;
       }
-      if (value.restricted_species.length > 0
-        && !value.restricted_species.includes(uplinkSpecies)) {
+      if (
+        value.restricted_species.length > 0 &&
+        !value.restricted_species.includes(uplinkSpecies)
+      ) {
         return false;
       }
-      { if (value.purchasable_from & uplinkFlag) {
-        return true;
-      } }
+      {
+        if (value.purchasable_from & uplinkFlag) {
+          return true;
+        }
+      }
       return false;
     });
 
-    uplinkData.items.forEach(item => {
+    uplinkData.items.forEach((item) => {
       if (!availableCategories.includes(item.category)) {
         availableCategories.push(item.category);
       }
     });
 
-    uplinkData.categories = uplinkData.categories.filter(value =>
-      availableCategories.includes(value));
+    uplinkData.categories = uplinkData.categories.filter((value) =>
+      availableCategories.includes(value),
+    );
 
     this.setState({
       allItems: uplinkData.items,
@@ -138,10 +172,13 @@ export class Uplink extends Component<{}, UplinkState> {
   }
 
   render() {
-    const { data, act } = useBackend<UplinkData>(this.context);
+    const { data, act } = useBackend<UplinkData>();
     const {
       telecrystals,
       progression_points,
+      primary_objectives,
+      can_renegotiate,
+      completed_final_objective,
       active_objectives,
       potential_objectives,
       has_objectives,
@@ -155,15 +192,13 @@ export class Uplink extends Component<{}, UplinkState> {
       extra_purchasable_stock,
       current_stock,
       lockable,
+      purchased_items,
+      shop_locked,
     } = data;
-    const {
-      allItems,
-      allCategories,
-      currentTab,
-    } = this.state as UplinkState;
+    const { allItems, allCategories, currentTab } = this.state as UplinkState;
 
     const itemsToAdd = [...allItems];
-    const items: Item<ItemExtraData>[] = [];
+    const items: ItemExtraData[] = [];
     itemsToAdd.push(...extra_purchasable);
     for (let i = 0; i < extra_purchasable.length; i++) {
       const item = extra_purchasable[i];
@@ -173,10 +208,10 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
-      const hasEnoughProgression
-        = progression_points >= item.progression_minimum;
+      const hasEnoughProgression =
+        progression_points >= item.progression_minimum;
 
-      let stock: number|null = current_stock[item.id];
+      let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
         stock = extra_purchasable_stock[item.ref];
       }
@@ -191,24 +226,35 @@ export class Uplink extends Component<{}, UplinkState> {
         desc: (
           <Box>
             {item.desc}
+            {(item.lock_other_purchases && (
+              <Box color="orange" bold>
+                Taking this item will lock you from further purchasing from the
+                marketplace. Additionally, if you have already purchased an
+                item, you will not be able to purchase this.
+              </Box>
+            )) ||
+              null}
           </Box>
         ),
         cost: (
           <Box>
             {item.cost_override_string || `${item.cost} TC`}
-            {has_progression
-              ? (
-                <>
-                  ,&nbsp;
-                  <Box as="span">
-                    {calculateReputationLevel(item.progression_minimum, true)}
-                  </Box>
-                </>
-              )
-              : ""}
+            {has_progression ? (
+              <>
+                ,&nbsp;
+                <Box as="span">
+                  {calculateDangerLevel(item.progression_minimum, true)}
+                </Box>
+              </>
+            ) : (
+              ''
+            )}
           </Box>
         ),
-        disabled: !canBuy || (has_progression && !hasEnoughProgression),
+        disabled:
+          !canBuy ||
+          (has_progression && !hasEnoughProgression) ||
+          (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
         },
@@ -216,19 +262,17 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     // Get the difference between the current progression and
     // expected progression
-    let progressionPercentage
-      = (current_expected_progression - progression_points);
+    let progressionPercentage =
+      current_expected_progression - progression_points;
     // Clamp it down between 0 and 2
-    progressionPercentage
-      = Math.min(Math.max(
-        progressionPercentage / progression_scaling_deviance, -1), 1);
+    progressionPercentage = Math.min(
+      Math.max(progressionPercentage / progression_scaling_deviance, -1),
+      1,
+    );
     // Round it and convert it into a percentage
-    progressionPercentage = Math.round(progressionPercentage * 1000)/10;
+    progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
     return (
-      <Window
-        width={820}
-        height={580}
-        theme="syndicate">
+      <Window width={820} height={580} theme="syndicate">
         <Window.Content scrollable={currentTab !== 0 || !has_objectives}>
           <Stack vertical fill>
             <Stack.Item>
@@ -247,41 +291,64 @@ export class Uplink extends Component<{}, UplinkState> {
                   </Stack.Item>
                   <Stack.Item align="center">
                     <Box bold fontSize={1.2}>
-                      <Tooltip content={!!has_progression && (
-                        <Box>
-                          <Box>
-                            Your current level of reputation.&nbsp;
-                            Reputation determines what quality of objective
-                            you get and what items you can purchase.&nbsp;
-                            <Box mt={0.5}>
-                              {/* A minute in deciseconds */}
-                              Reputation passively increases by <Box color="green" as="span">{calculateProgression(current_progression_scaling)}</Box>
-                              &nbsp;every minute
-                            </Box>
-                            {Math.abs(progressionPercentage) > 0 && (
-                              <Box mt={0.5}>
-                                Because your reputation is {progressionPercentage < 0? "ahead " : "behind "}
-                                of where it should be, you are getting
-                                <Box
-                                  as="span"
-                                  color={progressionPercentage < 0? "red" : "green"}
-                                  ml={1}
-                                  mr={1}
-                                >
-                                  {progressionPercentage}%
+                      <Tooltip
+                        content={
+                          (!!has_progression && (
+                            <Box>
+                              <Box>
+                                <Box>Your current level of threat.</Box> Threat
+                                determines
+                                {has_objectives
+                                  ? ' the severity of secondary objectives you get and '
+                                  : ' '}
+                                what items you can purchase.&nbsp;
+                                <Box mt={0.5}>
+                                  {/* A minute in deciseconds */}
+                                  Threat passively increases by{' '}
+                                  <Box color="green" as="span">
+                                    {calculateProgression(
+                                      current_progression_scaling,
+                                    )}
+                                  </Box>
+                                  &nbsp;every minute
                                 </Box>
-                                {progressionPercentage < 0? "less": "more"} reputation every minute
+                                {Math.abs(progressionPercentage) > 0 && (
+                                  <Box mt={0.5}>
+                                    Because your threat level is
+                                    {progressionPercentage < 0
+                                      ? ' ahead '
+                                      : ' behind '}
+                                    of where it should be, you are getting
+                                    <Box
+                                      as="span"
+                                      color={
+                                        progressionPercentage < 0
+                                          ? 'red'
+                                          : 'green'
+                                      }
+                                      ml={1}
+                                      mr={1}
+                                    >
+                                      {progressionPercentage}%
+                                    </Box>
+                                    {progressionPercentage < 0
+                                      ? 'less'
+                                      : 'more'}{' '}
+                                    threat every minute
+                                  </Box>
+                                )}
+                                {dangerLevelsTooltip}
                               </Box>
-                            )}
-                            {reputationLevelsTooltip}
-                          </Box>
-                        </Box>
-                      ) || "Your current level of reputation. You are a respected elite and do not need to improve your reputation."}>
+                            </Box>
+                          )) ||
+                          "Your current threat level. You are a killing machine and don't need to improve your threat level."
+                        }
+                      >
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
-                          ? calculateReputationLevel(progression_points, false)
-                          : calculateReputationLevel(reputationDefault, false)}
+                          ? calculateDangerLevel(progression_points, false)
+                          : calculateDangerLevel(dangerDefault, false)}
                       </Tooltip>
                     </Box>
                     <Box color="good" bold fontSize={1.2} textAlign="right">
@@ -297,16 +364,24 @@ export class Uplink extends Component<{}, UplinkState> {
                   <Stack.Item grow={1}>
                     <Tabs fluid textAlign="center">
                       {!!has_objectives && (
-                        <Tabs.Tab
-                          selected={currentTab === 0}
-                          onClick={() => this.setState({ currentTab: 0 })}
-                        >
-                          Objectives
-                        </Tabs.Tab>
+                        <>
+                          <Tabs.Tab
+                            selected={currentTab === 0}
+                            onClick={() => this.setState({ currentTab: 0 })}
+                          >
+                            Primary Objectives
+                          </Tabs.Tab>
+                          <Tabs.Tab
+                            selected={currentTab === 1}
+                            onClick={() => this.setState({ currentTab: 1 })}
+                          >
+                            Secondary Objectives
+                          </Tabs.Tab>
+                        </>
                       )}
                       <Tabs.Tab
-                        selected={currentTab === 1 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 1 })}
+                        selected={currentTab === 2 || !has_objectives}
+                        onClick={() => this.setState({ currentTab: 2 })}
                       >
                         Market
                       </Tabs.Tab>
@@ -318,7 +393,7 @@ export class Uplink extends Component<{}, UplinkState> {
                         icon="times"
                         content="Lock"
                         color="transparent"
-                        onClick={() => act("lock")}
+                        onClick={() => act('lock')}
                       />
                     </Stack.Item>
                   )}
@@ -326,42 +401,80 @@ export class Uplink extends Component<{}, UplinkState> {
               </Section>
             </Stack.Item>
             <Stack.Item grow>
-              {(currentTab === 0 && has_objectives) && (
-                <ObjectiveMenu
-                  activeObjectives={active_objectives}
-                  potentialObjectives={potential_objectives}
-                  maximumActiveObjectives={maximum_active_objectives}
-                  maximumPotentialObjectives={maximum_potential_objectives}
-                  handleObjectiveAction={(objective, action) =>
-                    act("objective_act", { check: objective.original_progression, objective_action: action, index: objective.id })}
-                  handleStartObjective={(objective) => act("start_objective", { check: objective.original_progression, index: objective.id })}
-                  handleObjectiveAbort={(objective) =>
-                    act("objective_abort", { check: objective.original_progression, index: objective.id })}
-                  handleObjectiveCompleted={(objective) => act("finish_objective", { check: objective.original_progression, index: objective.id })}
-                  handleRequestObjectives={() => act("regenerate_objectives")}
+              {(currentTab === 0 && has_objectives && (
+                <PrimaryObjectiveMenu
+                  primary_objectives={primary_objectives}
+                  final_objective={completed_final_objective}
+                  can_renegotiate={can_renegotiate}
                 />
-              ) || (
-                <GenericUplink
-                  currency=""
-                  categories={allCategories}
-                  items={items}
-                  handleBuy={(item) => {
-                    const extraDataItem = item as Item<ItemExtraData>;
-                    if (!extraDataItem.extraData?.ref) {
-                      act("buy", { path: item.id });
-                    } else {
-                      act("buy", { ref: extraDataItem.extraData.ref });
+              )) ||
+                (currentTab === 1 && has_objectives && (
+                  <ObjectiveMenu
+                    activeObjectives={active_objectives}
+                    potentialObjectives={potential_objectives}
+                    maximumActiveObjectives={maximum_active_objectives}
+                    maximumPotentialObjectives={maximum_potential_objectives}
+                    handleObjectiveAction={(objective, action) =>
+                      act('objective_act', {
+                        check: objective.original_progression,
+                        objective_action: action,
+                        index: objective.id,
+                      })
                     }
-                  }}
-                />
-              )}
+                    handleStartObjective={(objective) =>
+                      act('start_objective', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleObjectiveAbort={(objective) =>
+                      act('objective_abort', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleObjectiveCompleted={(objective) =>
+                      act('finish_objective', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleRequestObjectives={() => act('regenerate_objectives')}
+                  />
+                )) || (
+                  <Section>
+                    <GenericUplink
+                      currency=""
+                      categories={allCategories}
+                      items={items}
+                      handleBuy={(item: ItemExtraData) => {
+                        if (!item.extraData?.ref) {
+                          act('buy', { path: item.id });
+                        } else {
+                          act('buy', { ref: item.extraData.ref });
+                        }
+                      }}
+                    />
+                    {(shop_locked && (
+                      <Dimmer>
+                        <Box
+                          color="red"
+                          fontFamily={'Bahnschrift'}
+                          fontSize={3}
+                          align={'top'}
+                          as="span"
+                        >
+                          SHOP LOCKED
+                        </Box>
+                      </Dimmer>
+                    )) ||
+                      null}
+                  </Section>
+                )}
             </Stack.Item>
           </Stack>
         </Window.Content>
       </Window>
     );
   }
-
 }
-
-

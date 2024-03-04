@@ -10,6 +10,31 @@
 	msg = "## NOTICE: [msg]"
 	log_world(msg)
 
+#define SET_SERIALIZATION_SEMVER(semver_list, semver) semver_list[type] = semver
+#define CHECK_SERIALIZATION_SEMVER(wanted, actual) (__check_serialization_semver(wanted, actual))
+
+/// Checks if the actual semver is equal or later than the wanted semver
+/// Must be passed as TEXT; you're probably looking for CHECK_SERIALIZATION_SEMVER, look right above
+/proc/__check_serialization_semver(wanted, actual)
+	if(wanted == actual)
+		return TRUE
+
+	var/list/wanted_versions = semver_to_list(wanted)
+	var/list/actual_versions = semver_to_list(actual)
+
+	if(!wanted_versions || !actual_versions)
+		stack_trace("Invalid semver string(s) passed to __check_serialization_semver: '[wanted]' and '[actual]'")
+		return FALSE
+
+	if(wanted_versions[1] != actual_versions[1])
+		return FALSE // major must always
+
+	if(wanted_versions[2] > actual_versions[2])
+		return FALSE // actual must be later than wanted
+
+	// patch is not checked
+	return TRUE
+
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
 #define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
@@ -70,53 +95,58 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
  * * color - color of the log text
  * * log_globally - boolean checking whether or not we write this log to the log file
  */
-/atom/proc/log_message(message, message_type, color = null, log_globally = TRUE)
+/atom/proc/log_message(message, message_type, color = null, log_globally = TRUE, list/data)
 	if(!log_globally)
 		return
 
-	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
+	var/log_text = "[key_name_and_tag(src)] [message] [loc_name(src)]"
 	switch(message_type)
-		if(LOG_ATTACK)
-			log_attack(log_text)
+		/// ship both attack logs and victim logs to the end of round attack.log just to ensure we don't lose information
+		if(LOG_ATTACK, LOG_VICTIM)
+			log_attack(log_text, data)
 		if(LOG_SAY)
-			log_say(log_text)
+			log_say(log_text, data)
 		if(LOG_WHISPER)
-			log_whisper(log_text)
+			log_whisper(log_text, data)
 		if(LOG_EMOTE)
-			log_emote(log_text)
+			log_emote(log_text, data)
 		if(LOG_RADIO_EMOTE)
-			log_radio_emote(log_text)
+			log_radio_emote(log_text, data)
 		if(LOG_DSAY)
-			log_dsay(log_text)
+			log_dsay(log_text, data)
 		if(LOG_PDA)
-			log_pda(log_text)
+			log_pda(log_text, data)
 		if(LOG_CHAT)
-			log_chat(log_text)
+			log_chat(log_text, data)
 		if(LOG_COMMENT)
-			log_comment(log_text)
+			log_comment(log_text, data)
 		if(LOG_TELECOMMS)
-			log_telecomms(log_text)
+			log_telecomms(log_text, data)
+		if(LOG_TRANSPORT)
+			log_transport(log_text, data)
 		if(LOG_ECON)
-			log_econ(log_text)
+			log_econ(log_text, data)
 		if(LOG_OOC)
-			log_ooc(log_text)
+			log_ooc(log_text, data)
 		if(LOG_ADMIN)
-			log_admin(log_text)
+			log_admin(log_text, data)
 		if(LOG_ADMIN_PRIVATE)
-			log_admin_private(log_text)
+			log_admin_private(log_text, data)
 		if(LOG_ASAY)
-			log_adminsay(log_text)
+			log_adminsay(log_text, data)
 		if(LOG_OWNERSHIP)
-			log_game(log_text)
+			log_game(log_text, data)
 		if(LOG_GAME)
-			log_game(log_text)
+			log_game(log_text, data)
 		if(LOG_MECHA)
-			log_mecha(log_text)
+			log_mecha(log_text, data)
 		if(LOG_SHUTTLE)
-			log_shuttle(log_text)
+			log_shuttle(log_text, data)
+		if(LOG_SPEECH_INDICATORS)
+			log_speech_indicators(log_text, data)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
-			log_game(log_text)
+			log_game(log_text, data)
 
 /* For logging round startup. */
 /proc/start_log(log)
@@ -125,6 +155,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
 	rustg_log_close_all()
+	logger.shutdown_logging()
 
 /* Helper procs for building detailed log lines */
 /proc/key_name(whom, include_link = null, include_name = TRUE)
@@ -168,7 +199,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		if(istype(whom, /atom))
 			var/atom/A = whom
 			swhom = "[A.name]"
-		else if(istype(whom, /datum))
+		else if(isdatum(whom))
 			swhom = "[whom]"
 
 		if(!swhom)
@@ -184,7 +215,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if(key)
 		if(C?.holder && C.holder.fakekey && !include_name)
 			if(include_link)
-				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
+				. += "<a href='?priv_msg=[C.getStealthKey()]'>"
 			. += "Administrator"
 		else
 			if(include_link)
@@ -211,6 +242,13 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/key_name_admin(whom, include_name = TRUE)
 	return key_name(whom, TRUE, include_name)
+
+/proc/key_name_and_tag(whom, include_link = null, include_name = TRUE)
+	var/tag = "!tagless!" // whom can be null in key_name() so lets set this as a safety
+	if(isatom(whom))
+		var/atom/subject = whom
+		tag = subject.tag
+	return "[key_name(whom, include_link, include_name)] ([tag])"
 
 /proc/loc_name(atom/A)
 	if(!istype(A))

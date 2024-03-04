@@ -34,10 +34,7 @@
 /datum/gas_mixture/immutable/copy_from()
 	return FALSE //we're immutable.
 
-/datum/gas_mixture/immutable/copy_from_turf()
-	return FALSE //we're immutable.
-
-/datum/gas_mixture/immutable/parse_gas_string()
+/datum/gas_mixture/immutable/copy_from_ratio()
 	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)

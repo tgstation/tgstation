@@ -1,8 +1,9 @@
-import { flow } from 'common/fp';
 import { map, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+
 import { useBackend } from '../backend';
+import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Stack, Section, Button } from '../components';
 
 type DestinationTaggerData = {
   locations: string[];
@@ -33,8 +34,8 @@ const sortDestinations = (locations: string[]): DestinationInfo[] => {
   ])(locations);
 };
 
-export const DestinationTagger = (props, context) => {
-  const { act, data } = useBackend<DestinationTaggerData>(context);
+export const DestinationTagger = (props) => {
+  const { act, data } = useBackend<DestinationTaggerData>();
   const { locations, currentTag } = data;
 
   return (
@@ -49,15 +50,19 @@ export const DestinationTagger = (props, context) => {
                 !currentTag
                   ? 'Please Select A Location'
                   : `Current Destination: ${locations[currentTag - 1]}`
-              }>
+              }
+            >
               {sortDestinations(locations).map((location) => {
                 return (
                   <Button.Checkbox
                     checked={currentTag === location.sorting_id}
                     height={2}
                     key={location.sorting_id}
-                    onClick={() => act('change', { index: location.sorting_id })}
-                    width={15}>
+                    onClick={() =>
+                      act('change', { index: location.sorting_id })
+                    }
+                    width={15}
+                  >
                     {location.name}
                   </Button.Checkbox>
                 );

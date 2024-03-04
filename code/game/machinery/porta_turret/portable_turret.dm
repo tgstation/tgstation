@@ -26,7 +26,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret
 	name = "turret"
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER //the turret is invisible if it's inside its cover
@@ -37,9 +37,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
-	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	// Same faction mobs will never be shot at, no matter the other settings
+	faction = list(FACTION_TURRET)
 
 	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
 	var/uses_stored = TRUE
@@ -89,8 +91,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/on = TRUE
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
-	/// Same faction mobs will never be shot at, no matter the other settings
-	var/list/faction = list("turret")
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
@@ -103,6 +103,15 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+
+/datum/armor/machinery_porta_turret
+	melee = 50
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 30
+	fire = 90
+	acid = 90
 
 /obj/machinery/porta_turret/Initialize(mapload)
 	. = ..()
@@ -118,11 +127,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
-		var/mutable_appearance/base = mutable_appearance('icons/obj/turrets.dmi', "basedark")
+		var/mutable_appearance/base = mutable_appearance('icons/obj/weapons/turrets.dmi', "basedark")
 		base.layer = NOT_HIGH_OBJ_LAYER
 		underlays += base
 	if(!has_cover)
-		INVOKE_ASYNC(src, .proc/popUp)
+		INVOKE_ASYNC(src, PROC_REF(popUp))
+
+	AddElement(/datum/element/hostile_machine)
 
 /obj/machinery/porta_turret/proc/toggle_on(set_to)
 	var/current = on
@@ -174,7 +185,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret_gun.forceMove(src)
 		stored_gun = turret_gun
 
-	RegisterSignal(stored_gun, COMSIG_PARENT_QDELETING, .proc/null_gun)
+	RegisterSignal(stored_gun, COMSIG_QDELETING, PROC_REF(null_gun))
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
@@ -317,7 +328,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
 			set_anchored(TRUE)
-			invisibility = INVISIBILITY_MAXIMUM
+			RemoveInvisibility(id=type)
 			update_appearance()
 			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
 			if(has_cover)
@@ -327,7 +338,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			set_anchored(FALSE)
 			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
 			power_change()
-			invisibility = 0
+			SetInvisibility(INVISIBILITY_NONE, id=type)
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
 	else if(I.GetID())
@@ -341,23 +352,24 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(!multitool_check_buffer(user, I))
 			return
 		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, span_notice("You add [src] to multitool buffer."))
+		M.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
-/obj/machinery/porta_turret/emag_act(mob/user)
+/obj/machinery/porta_turret/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You short out [src]'s threat assessment circuits."))
+		return FALSE
+	balloon_alert(user, "threat assessment circuits shorted")
 	audible_message(span_hear("[src] hums oddly..."))
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	toggle_on(FALSE) //turns off the turret temporarily
 	update_appearance()
 	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	return TRUE
 
 /obj/machinery/porta_turret/emp_act(severity)
 	. = ..()
@@ -376,28 +388,25 @@ DEFINE_BITFIELD(turret_flags, list(
 		toggle_on(FALSE)
 		remove_control()
 
-		addtimer(CALLBACK(src, .proc/toggle_on, TRUE), rand(60,600))
+		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
 		if(prob(30))
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL_REACT
-			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
+			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 60)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
-
-/obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
-	qdel(src)
 
 /obj/machinery/porta_turret/atom_break(damage_flag)
 	. = ..()
 	if(.)
 		power_change()
-		invisibility = 0
+		SetInvisibility(INVISIBILITY_NONE, id=type)
 		spark_system.start() //creates some sparks because they look cool
 		qdel(cover) //deletes the cover - no need on keeping it there!
 
@@ -426,14 +435,17 @@ DEFINE_BITFIELD(turret_flags, list(
 			continue
 
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
-			if(isanimal(A))
-				var/mob/living/simple_animal/SA = A
-				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
+			if(isanimal_or_basicmob(A))
+				var/mob/living/animal = A
+				if(animal.stat || in_faction(animal)) //don't target if dead or in faction
 					continue
-				targets += SA
+				targets += animal
 				continue
 
 		if(issilicon(A))
+			if(!(turret_flags & TURRET_FLAG_SHOOT_BORGS))
+				continue
+
 			var/mob/living/silicon/sillycone = A
 
 			if(ispAI(A))
@@ -443,13 +455,12 @@ DEFINE_BITFIELD(turret_flags, list(
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(sillyconerobot.stat != CONSCIOUS)
 					continue
-				if((turret_flags & TURRET_FLAG_SHOOT_BORGS))
-					targets += sillyconerobot
+				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue
-				if(in_faction(sillyconerobot))
+				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
-				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
-					targets += sillyconerobot
+
+				targets += sillyconerobot
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -502,7 +513,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return
 	if(machine_stat & BROKEN)
 		return
-	invisibility = 0
+	SetInvisibility(INVISIBILITY_NONE, id=type)
 	raising = 1
 	if(cover)
 		flick("popup", cover)
@@ -527,7 +538,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(cover)
 		cover.icon_state = "turretCover"
 	raised = 0
-	invisibility = 2
+	SetInvisibility(2, id=type)
 	update_appearance()
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
@@ -544,7 +555,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	// If we aren't shooting heads then return a threatcount of 0
 	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS))
 		var/datum/job/apparent_job = SSjob.GetJob(perp.get_assignment())
-		if(apparent_job?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(apparent_job?.job_flags & JOB_HEAD_OF_STAFF)
 			return 0
 
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS) //check for weapon authorization
@@ -560,8 +571,8 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	if(turret_flags & TURRET_FLAG_SHOOT_CRIMINALS) //if the turret can check the records, check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-		if(!R || (R.fields["criminal"] == "*Arrest*"))
+		var/datum/record/crew/target = find_record(perpname)
+		if(!target || (target.wanted_status == WANTED_ARREST))
 			threatcount += 4
 
 	if((turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED) && (!HAS_TRAIT(perp, TRAIT_MINDSHIELD)))
@@ -644,7 +655,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/turret_toggle/Trigger(trigger_flags)
@@ -655,7 +666,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /datum/action/turret_quit
 	name = "Release Control"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
 /datum/action/turret_quit/Trigger(trigger_flags)
@@ -722,9 +733,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
+	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_BORGS
 	desc = "A ballistic machine gun auto-turret."
 
-/obj/machinery/porta_turret/syndicate/ComponentInitialize()
+/obj/machinery/porta_turret/syndicate/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
@@ -742,6 +754,16 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
+	armor_type = /datum/armor/syndicate_turret
+
+/datum/armor/syndicate_turret
+	melee = 40
+	bullet = 40
+	laser = 60
+	energy = 60
+	bomb = 60
+	fire = 100
+	acid = 100
 
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_lethal"
@@ -755,13 +777,21 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile = /obj/projectile/beam/laser
 	stun_projectile_sound = 'sound/weapons/laser.ogg'
-	faction = list("neutral","silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
 /obj/machinery/porta_turret/syndicate/pod
 	integrity_failure = 0.5
 	max_integrity = 40
 	stun_projectile = /obj/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/projectile/bullet/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/irs
+	lethal_projectile = /obj/projectile/bullet/c10mm/ap
+	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	stun_projectile = /obj/projectile/bullet/c10mm/ap
+	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	armor_type = /datum/armor/syndicate_turret
+	faction = list(FACTION_PIRATE)
 
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
@@ -770,19 +800,27 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
-	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/syndicate_shuttle
+
+/datum/armor/syndicate_shuttle
+	melee = 50
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 80
+	fire = 90
+	acid = 90
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
-		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
-		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
-		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 5)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 10)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 15)
 		return TRUE
 
 /obj/machinery/porta_turret/ai
-	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
@@ -792,10 +830,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	name = "perimeter defense turret"
 	desc = "A plasma beam turret calibrated to defend outposts against non-humanoid fauna. It is more effective when exposed to the environment."
 	installation = null
+	uses_stored = FALSE
 	lethal_projectile = /obj/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
-	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET) //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
 	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
@@ -824,10 +863,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = list("neutral","silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 	mode = TURRET_LETHAL
 
-/obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
+/obj/machinery/porta_turret/centcom_shuttle/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
@@ -844,7 +883,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
 	stun_projectile = /obj/projectile/beam/weak/penetrator
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
-	faction = list("neutral","silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
 ////////////////////////
 //Turret Control Panel//
@@ -879,6 +918,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(built)
 		locked = FALSE
 	power_change() //Checks power and initial settings
+	find_and_hang_on_wall()
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
@@ -935,12 +975,13 @@ DEFINE_BITFIELD(turret_flags, list(
 		else
 			to_chat(user, span_alert("Access denied."))
 
-/obj/machinery/turretid/emag_act(mob/user)
+/obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_notice("You short out the turret controls' access analysis module."))
+		return FALSE
+	balloon_alert(user, "access analysis module shorted")
 	obj_flags |= EMAGGED
 	locked = FALSE
+	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || isAdminGhostAI(user))
@@ -989,20 +1030,29 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
 	lethal = !lethal
-	add_hiddenprint(user)
-	log_combat(user, src, "[lethal ? "enabled" : "disabled"] lethals on")
+	if (user)
+		var/enabled_or_disabled = lethal ? "disabled" : "enabled"
+		balloon_alert(user, "safeties [enabled_or_disabled]")
+		add_hiddenprint(user)
+		log_combat(user, src, "[enabled_or_disabled] lethals on")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
-	add_hiddenprint(user)
-	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
+	if (user)
+		var/enabled_or_disabled = enabled ? "enabled" : "disabled"
+		balloon_alert(user, "[enabled_or_disabled]")
+		add_hiddenprint(user)
+		log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/shoot_silicons(mob/user)
 	shoot_cyborgs = !shoot_cyborgs
-	add_hiddenprint(user)
-	log_combat(user, src, "[shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"]")
+	if (user)
+		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
+		balloon_alert(user, lowertext(status))
+		add_hiddenprint(user)
+		log_combat(user, src, "[status]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
@@ -1030,7 +1080,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
@@ -1059,7 +1109,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/item/gun/ballistic/get_turret_properties()
 	. = ..()
-	var/obj/item/ammo_box/mag = mag_type
+	var/obj/item/ammo_box/mag = spawn_magazine_type
 	var/obj/item/ammo_casing/primary_ammo = initial(mag.ammo_type)
 
 	.["base_icon_state"] = "syndie"
@@ -1118,7 +1168,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(properties["team_color"])
 		team_color = properties["team_color"]
 
-/obj/machinery/porta_turret/lasertag/ui_status(mob/user)
+/obj/machinery/porta_turret/lasertag/ui_status(mob/user, datum/ui_state/state)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(team_color == "blue" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
@@ -1142,8 +1192,21 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(team_color == "blue")
 			if(istype(P, /obj/projectile/beam/lasertag/redtag))
 				toggle_on(FALSE)
-				addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 10 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
 		else if(team_color == "red")
 			if(istype(P, /obj/projectile/beam/lasertag/bluetag))
 				toggle_on(FALSE)
-				addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 10 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
+
+#undef TURRET_STUN
+#undef TURRET_LETHAL
+#undef POPUP_ANIM_TIME
+#undef POPDOWN_ANIM_TIME
+#undef TURRET_FLAG_SHOOT_ALL_REACT
+#undef TURRET_FLAG_AUTH_WEAPONS
+#undef TURRET_FLAG_SHOOT_CRIMINALS
+#undef TURRET_FLAG_SHOOT_ALL
+#undef TURRET_FLAG_SHOOT_ANOMALOUS
+#undef TURRET_FLAG_SHOOT_UNSHIELDED
+#undef TURRET_FLAG_SHOOT_BORGS
+#undef TURRET_FLAG_SHOOT_HEADS

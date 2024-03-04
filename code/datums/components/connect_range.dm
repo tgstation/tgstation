@@ -52,14 +52,14 @@
 		unregister_signals(isturf(tracked) ? tracked : tracked.loc)
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
-			COMSIG_PARENT_QDELETING,
+			COMSIG_QDELETING,
 		))
 	tracked = new_tracked
 	if(!tracked)
 		return
 	//Register signals on the new tracked atom and its surroundings.
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
+	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(tracked, COMSIG_QDELETING, PROC_REF(handle_tracked_qdel))
 	update_signals(tracked)
 
 /datum/component/connect_range/proc/handle_tracked_qdel()
@@ -79,7 +79,7 @@
 			return
 		//Keep track of possible movement of all movables the target is in.
 		for(var/atom/movable/container as anything in get_nested_locs(target))
-			RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	if(on_same_turf && !forced)
 		return

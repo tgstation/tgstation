@@ -3,11 +3,10 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral,
+/turf/closed/mineral/asteroid/porous,
 /area/shuttle/escape/meteor)
 "c" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/open/misc/asteroid,
@@ -23,7 +22,7 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "f" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
+/mob/living/basic/mining/goliath/ancient,
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "g" = (
@@ -47,14 +46,12 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "m" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/meteor)
 "n" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/meteor)
 "u" = (
@@ -65,11 +62,8 @@
 /area/shuttle/escape/meteor)
 "L" = (
 /obj/docking_port/mobile/emergency{
-	dwidth = 20;
-	height = 40;
-	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
-	name = "\proper a meteor with engines strapped to it";
-	width = 40
+	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
+	name = "\proper a meteor with engines strapped to it"
 	},
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)

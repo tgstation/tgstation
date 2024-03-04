@@ -1,9 +1,10 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 const Obsessed: Antagonist = {
-  key: "obsessed",
-  name: "Obsessed",
+  key: 'obsessed',
+  name: 'Obsessed',
   description: [
     multiline`
     You're obsessed with someone! Your obsession may begin to notice their

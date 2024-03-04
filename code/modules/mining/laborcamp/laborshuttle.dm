@@ -26,3 +26,14 @@
 		to_chat(user, span_warning("Shuttle is already at the outpost!"))
 		return FALSE
 	return TRUE
+
+/obj/docking_port/stationary/laborcamp_home
+	name = "SS13: Labor Shuttle Dock"
+	shuttle_id = "laborcamp_home"
+	roundstart_template = /datum/map_template/shuttle/labour/delta
+	width = 9
+	dwidth = 2
+	height = 5
+
+/obj/docking_port/stationary/laborcamp_home/kilo
+	roundstart_template = /datum/map_template/shuttle/labour/kilo

@@ -76,7 +76,7 @@
 /area/misc/hilbertshotel)
 "q" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "r" = (
@@ -119,11 +119,7 @@
 /area/misc/hilbertshotel)
 "A" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "B" = (
@@ -131,9 +127,7 @@
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "C" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "D" = (
@@ -146,12 +140,8 @@
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "F" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "G" = (
@@ -207,32 +197,22 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "S" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "T" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "U" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen{
-	dir = 1
-	},
+/obj/structure/sink/kitchen/directional/north,
 /obj/machinery/light/small/directional/south,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)

@@ -10,7 +10,7 @@
 /area/icemoon/surface/outdoors/noteleport)
 "d" = (
 /obj/item/paper/crumpled{
-	info = "When one falls into this hot spring, they shall forever be turned into..."
+	default_raw_text = "When one falls into this hot spring, they shall forever be turned into..."
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)

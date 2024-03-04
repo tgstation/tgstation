@@ -1,10 +1,12 @@
-///each cell in a spatial_grid is this many turfs in length and width
+/// each cell in a spatial_grid is this many turfs in length and width (with world.max(x or y) being 255, 15 of these fit on each side of a z level)
 #define SPATIAL_GRID_CELLSIZE 17
-///Takes a coordinate, and spits out the spatial grid index (x or y) it's inside
+/// Takes a coordinate, and spits out the spatial grid index (x or y) it's inside
 #define GET_SPATIAL_INDEX(coord) ROUND_UP((coord) / SPATIAL_GRID_CELLSIZE)
+/// changes the cell_(x or y) vars on /datum/spatial_grid_cell to the x or y coordinate on the map for the LOWER LEFT CORNER of the grid cell.
+/// index is from 1 to SPATIAL_GRID_CELLS_PER_SIDE
+#define GRID_INDEX_TO_COORDS(index) ((((index) - 1) * SPATIAL_GRID_CELLSIZE) + 1)
+/// number of grid cells per x or y side of all z levels. pass in world.maxx or world.maxy
 #define SPATIAL_GRID_CELLS_PER_SIDE(world_bounds) GET_SPATIAL_INDEX(world_bounds)
-
-#define SPATIAL_GRID_CHANNELS 2
 
 //grid contents channels
 
@@ -14,6 +16,8 @@
 #define SPATIAL_GRID_CONTENTS_TYPE_CLIENTS RECURSIVE_CONTENTS_CLIENT_MOBS
 ///all atmos machines are stored in this channel (I'm sorry kyler)
 #define SPATIAL_GRID_CONTENTS_TYPE_ATMOS "spatial_grid_contents_type_atmos"
+
+#define ALL_CONTENTS_OF_CELL(cell) (cell.hearing_contents | cell.client_contents | cell.atmos_contents)
 
 ///whether movable is itself or containing something which should be in one of the spatial grid channels.
 #define HAS_SPATIAL_GRID_CONTENTS(movable) (movable.spatial_grid_key)
@@ -43,3 +47,9 @@
 	if(!length(cell_contents_list)) {\
 		cell_contents_list = dummy_list; \
 	};
+
+///remove from every list
+#define GRID_CELL_REMOVE_ALL(cell, movable) \
+	GRID_CELL_REMOVE(cell.hearing_contents, movable) \
+	GRID_CELL_REMOVE(cell.client_contents, movable) \
+	GRID_CELL_REMOVE(cell.atmos_contents, movable)

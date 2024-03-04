@@ -7,9 +7,9 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
-/datum/mutation/human/nervousness/on_life(delta_time, times_fired)
-	if(DT_PROB(5, delta_time))
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+/datum/mutation/human/nervousness/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(5, seconds_per_tick))
+		owner.set_stutter_if_lower(20 SECONDS)
 
 /datum/mutation/human/wacky
 	name = "Wacky"
@@ -21,7 +21,7 @@
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -77,7 +77,7 @@
 /datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -108,14 +108,14 @@
 /datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -143,21 +143,21 @@
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
-/datum/mutation/human/elvis/on_life(delta_time, times_fired)
+/datum/mutation/human/elvis/on_life(seconds_per_tick, times_fired)
 	switch(pick(1,2))
 		if(1)
-			if(DT_PROB(7.5, delta_time))
+			if(SPT_PROB(7.5, seconds_per_tick))
 				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
 				var/dancemoves = pick(dancetypes)
 				owner.visible_message("<b>[owner]</b> busts out some [dancemoves] moves!")
 		if(2)
-			if(DT_PROB(7.5, delta_time))
+			if(SPT_PROB(7.5, seconds_per_tick))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
 /datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -192,12 +192,12 @@
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.grant_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
-	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/medieval
@@ -210,7 +210,7 @@
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -250,7 +250,7 @@
 /datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
 	if(..())

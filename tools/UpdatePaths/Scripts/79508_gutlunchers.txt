@@ -1,0 +1,5 @@
+/mob/living/simple_animal/hostile/asteroid/gutlunch : /mob/living/basic/mining/gutlunch{@OLD}
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch : /mob/living/basic/mining/gutlunch/grub{@OLD}
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck : /mob/living/basic/mining/gutlunch/milk{@OLD}
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen : /mob/living/basic/mining/gutlunch/warrior{@OLD}
+

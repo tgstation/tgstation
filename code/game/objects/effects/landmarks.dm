@@ -3,7 +3,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	anchored = TRUE
-	layer = TURF_LAYER
+	layer = OBJ_LAYER
 	plane = GAME_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -35,8 +35,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	var/used = FALSE
 
 /obj/effect/landmark/start/proc/after_round_start()
+	// We'd like to keep these around for unit tests, so we can check that they exist.
+#ifndef UNIT_TESTS
 	if(delete_after_roundstart)
 		qdel(src)
+#endif
 
 /obj/effect/landmark/start/Initialize(mapload)
 	. = ..()
@@ -73,6 +76,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/cargo_technician
 	name = "Cargo Technician"
 	icon_state = "Cargo Technician"
+
+/obj/effect/landmark/start/bitrunner
+	name = "Bitrunner"
+	icon_state = "Bitrunner"
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
@@ -149,6 +156,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/medical_doctor
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
+
+/obj/effect/landmark/start/coroner
+	name = "Coroner"
+	icon_state = "Coroner"
 
 /obj/effect/landmark/start/paramedic
 	name = "Paramedic"
@@ -306,14 +317,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-//xenos, morphs and nightmares spawn here
-/obj/effect/landmark/xeno_spawn
-	name = "xeno_spawn"
+//generic maintenance locations
+/obj/effect/landmark/generic_maintenance_landmark
+	name = "generic_maintenance_spawn"
 	icon_state = "xeno_spawn"
 
-/obj/effect/landmark/xeno_spawn/Initialize(mapload)
+/obj/effect/landmark/generic_maintenance_landmark/Initialize(mapload)
 	..()
-	GLOB.xeno_spawn += loc
+	GLOB.generic_maintenance_landmarks += loc
 	return INITIALIZE_HINT_QDEL
 
 //objects with the stationloving component (nuke disk) respawn here.
@@ -355,6 +366,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	..()
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/ert_shuttle_spawn
+	name = "ertshuttlespawn"
+	icon_state = "ert_spawn"
+
+/obj/effect/landmark/ert_shuttle_brief_spawn
+	name = "ertshuttlebriefspawn"
+	icon_state = "ert_brief_spawn"
 
 //ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
@@ -402,12 +421,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.tdomeadmin += loc
 	return INITIALIZE_HINT_QDEL
 
-//generic event spawns
+/**
+ * Generic event spawn points
+ *
+ * These are placed in locales where there are likely to be players, and places which are identifiable at a glance -
+ * Such as public hallways, department rooms, head of staff offices, and non-generic maintenance locations
+ *
+ * Used in events to cause effects in locations where it is likely to effect players
+ */
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "generic_event"
-	layer = OBJ_LAYER
-
 
 /obj/effect/landmark/event_spawn/Initialize(mapload)
 	. = ..()
@@ -447,28 +471,49 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/unit_test_top_right
 	name = "unit test zone top right"
 
-
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
 
-	/// A list of everything this hangover spawn created
-	var/list/debris = list()
+	/// A list of everything this hangover spawn created as part of the hangover station trait
+	var/list/hangover_debris = list()
+
+	/// A list of everything this hangover spawn created as part of the birthday station trait
+	var/list/party_debris = list()
 
 /obj/effect/landmark/start/hangover/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/landmark/start/hangover/Destroy()
-	debris = null
+	hangover_debris = null
+	party_debris = null
 	return ..()
 
 /obj/effect/landmark/start/hangover/LateInitialize()
 	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
+		var/list/bonus_confetti = GLOB.alldirs
+		for(var/confettis in bonus_confetti)
+			var/party_turf_to_spawn_on = get_step(src, confettis)
+			if(!isopenturf(party_turf_to_spawn_on))
+				continue
+			var/dense_object = FALSE
+			for(var/atom/content in party_turf_to_spawn_on)
+				if(content.density)
+					dense_object = TRUE
+					break
+			if(dense_object)
+				continue
+			if(prob(50))
+				party_debris += new /obj/effect/decal/cleanable/confetti(party_turf_to_spawn_on)
+			if(prob(10))
+				party_debris += new /obj/item/toy/balloon(party_turf_to_spawn_on)
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
-		debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
+		hangover_debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
 	if(prob(70))
 		var/bottle_count = rand(1, 3)
 		for(var/index in 1 to bottle_count)
@@ -482,7 +527,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			debris += new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
+			hangover_debris += new /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
@@ -491,7 +536,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/mob/living/carbon/spawned_carbon = hangover_mob
 	spawned_carbon.set_resting(TRUE, silent = TRUE)
 	if(prob(50))
-		spawned_carbon.adjust_timed_status_effect(rand(30 SECONDS, 40 SECONDS), /datum/status_effect/drugginess)
+		spawned_carbon.adjust_drugginess(rand(30 SECONDS, 40 SECONDS))
 	else
 		spawned_carbon.adjust_drunk_effect(rand(15, 25))
 	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
@@ -507,19 +552,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "hangover_spawn_closet"
 
 /obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
-	make_hungover(joining_mob)
-	for(var/obj/structure/closet/closet in contents)
+	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet.opened)
 			continue
 		joining_mob.forceMove(closet)
+		make_hungover(joining_mob)
 		return
+
 	return ..() //Call parent as fallback
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
 	name = "navigate verb destination"
 	icon_state = "navigate"
-	layer = OBJ_LAYER
 	var/location
 
 /obj/effect/landmark/navigate_destination/Initialize(mapload)

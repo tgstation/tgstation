@@ -6,19 +6,21 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
+	/// Can non-magic folk use our staff?
+	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
-	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !allow_intruder_use)
 		return FALSE
 	return TRUE
 
-/obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
-	if(allow_intruder_use)
-		return ..()
+/obj/item/gun/magic/staff/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage && !is_wizard_or_friend(user))
+		return FALSE
+	return ..()
 
+/obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
 	if(!is_wizard_or_friend(user))
 		return !on_intruder_use(user, target)
 	return ..()
@@ -36,6 +38,10 @@
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
 	school = SCHOOL_TRANSMUTATION
+	/// If set, all wabbajacks this staff produces will be of this type, instead of random
+	var/preset_wabbajack_type
+	/// If set, all wabbajacks this staff produces will be of this changeflag, instead of only WABBAJACK
+	var/preset_wabbajack_changeflag
 
 /obj/item/gun/magic/staff/change/unrestricted
 	allow_intruder_use = TRUE
@@ -48,8 +54,11 @@
 
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
 	user.dropItemToGround(src, TRUE)
-	var/randomize = pick("monkey","humanoid","animal")
-	var/mob/new_body = user.wabbajack(randomize)
+	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
+	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
+	if(!new_body)
+		return
+
 	balloon_alert(new_body, "wabbajack, wabbajack!")
 
 /obj/item/gun/magic/staff/animate
@@ -69,6 +78,7 @@
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
 	school = SCHOOL_RESTORATION
+	/// Our internal healbeam, used if an intruder (non-magic person) tries to use our staff
 	var/obj/item/gun/medbeam/healing_beam
 
 /obj/item/gun/magic/staff/healing/pickup(mob/user)
@@ -77,13 +87,18 @@
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
 
+/obj/item/gun/magic/staff/healing/examine(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		. += span_notice("On the handle you notice a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\"")
+
 /obj/item/gun/magic/staff/healing/Initialize(mapload)
 	. = ..()
 	healing_beam = new(src)
 	healing_beam.mounted = TRUE
 
 /obj/item/gun/magic/staff/healing/Destroy()
-	qdel(healing_beam)
+	QDEL_NULL(healing_beam)
 	return ..()
 
 /obj/item/gun/magic/staff/healing/unrestricted
@@ -113,18 +128,36 @@
 	recharge_rate = 2
 	no_den_usage = 1
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
-	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/fireball,
-	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/locker, /obj/projectile/magic/flying,
-	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
-	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
+
+	/// List of all projectiles we can fire from our staff.
+	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
+	var/list/allowed_projectile_types = list(
+		/obj/projectile/magic/animate,
+		/obj/projectile/magic/antimagic,
+		/obj/projectile/magic/arcane_barrage,
+		/obj/projectile/magic/bounty,
+		/obj/projectile/magic/change,
+		/obj/projectile/magic/death,
+		/obj/projectile/magic/door,
+		/obj/projectile/magic/fetch,
+		/obj/projectile/magic/fireball,
+		/obj/projectile/magic/flying,
+		/obj/projectile/magic/locker,
+		/obj/projectile/magic/necropotence,
+		/obj/projectile/magic/resurrection,
+		/obj/projectile/magic/babel,
+		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/wipe,
+		/obj/projectile/temp/chill,
+	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
 	allow_intruder_use = TRUE
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
-	. = ..()
+	return ..()
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
 	if(!user.can_cast_magic()) // Don't let people with antimagic use the staff of chaos.
@@ -137,6 +170,46 @@
 	user.dropItemToGround(src, TRUE)
 	process_fire(user, user, FALSE)
 	return FALSE
+
+/**
+ * Staff of chaos given to the wizard upon completing a cheesy grand ritual. Is completely evil and if something
+ * breaks, it's completely intended. Fuck off.
+ * Also can be used by everyone, because why not.
+ */
+/obj/item/gun/magic/staff/chaos/true_wabbajack
+	name = "\proper Wabbajack"
+	desc = "If there is some deity out there, they've definitely skipped their psych appointment before creating this."
+	icon_state = "the_wabbajack"
+	inhand_icon_state = "the_wabbajack"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //fuck you
+	max_charges = 999999 //fuck you
+	recharge_rate = 1
+	allow_intruder_use = TRUE
+
+/obj/item/gun/magic/staff/chaos/true_wabbajack/Initialize(mapload)
+	. = ..()
+	allowed_projectile_types |= subtypesof(/obj/projectile/bullet/cannonball)
+	allowed_projectile_types |= subtypesof(/obj/projectile/bullet/rocket)
+	allowed_projectile_types |= subtypesof(/obj/projectile/energy/tesla)
+	allowed_projectile_types |= subtypesof(/obj/projectile/magic)
+	allowed_projectile_types |= subtypesof(/obj/projectile/temp)
+	allowed_projectile_types |= list(
+		/obj/projectile/beam/mindflayer,
+		/obj/projectile/bullet/gyro,
+		/obj/projectile/bullet/honker,
+		/obj/projectile/bullet/mime,
+		/obj/projectile/curse_hand,
+		/obj/projectile/energy/electrode,
+		/obj/projectile/energy/net,
+		/obj/projectile/energy/nuclear_particle,
+		/obj/projectile/gravityattract,
+		/obj/projectile/gravitychaos,
+		/obj/projectile/gravityrepulse,
+		/obj/projectile/ion,
+		/obj/projectile/meteor,
+		/obj/projectile/neurotoxin,
+		/obj/projectile/plasma,
+	) //if you ever try to expand this list, avoid adding bullets/energy projectiles, this ain't supposed to be a gun... unless it's funny
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
@@ -171,6 +244,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
@@ -180,11 +254,16 @@
 
 /obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
+	AddComponent(/datum/component/butchering, \
+		speed = 1.5 SECONDS, \
+		effectiveness = 125, \
+		bonus_modifier = 0, \
+		butcher_sound = hitsound, \
+	)
 
-/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0
+/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
 	return ..()
 
 /obj/item/gun/magic/staff/locker
@@ -211,14 +290,14 @@
 	worn_icon_state = "flightstaff"
 	school = SCHOOL_EVOCATION
 
-/obj/item/gun/magic/staff/sapping
-	name = "staff of sapping"
-	desc = "An artefact that spits bolts of sapping magic that can make something sad."
+/obj/item/gun/magic/staff/babel
+	name = "staff of babel"
+	desc = "An artefact that spits bolts of confusion magic that can make something depressed and incoherent."
 	fire_sound = 'sound/magic/staff_change.ogg'
-	ammo_type = /obj/item/ammo_casing/magic/sapping
-	icon_state = "staffofsapping"
+	ammo_type = /obj/item/ammo_casing/magic/babel
+	icon_state = "staffofbabel"
 	inhand_icon_state = "staffofdoor"
-	worn_icon_state = "sapstaff"
+	worn_icon_state = "babelstaff"
 	school = SCHOOL_FORBIDDEN //evil
 
 /obj/item/gun/magic/staff/necropotence

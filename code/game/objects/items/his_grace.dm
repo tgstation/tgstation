@@ -7,13 +7,14 @@
 /obj/item/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
+	demolition_mod = 1.25
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
@@ -31,7 +32,7 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
+	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, PROC_REF(move_gracefully))
 	update_appearance()
 
 /obj/item/his_grace/Destroy()
@@ -56,7 +57,7 @@
 
 /obj/item/his_grace/attack_self(mob/living/user)
 	if(!awakened)
-		INVOKE_ASYNC(src, .proc/awaken, user)
+		INVOKE_ASYNC(src, PROC_REF(awaken), user)
 
 /obj/item/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
@@ -91,14 +92,14 @@
 		user.forceMove(get_turf(src))
 		user.visible_message(span_warning("[user] scrambles out of [src]!"), span_notice("You climb out of [src]!"))
 
-/obj/item/his_grace/process(delta_time)
+/obj/item/his_grace/process(seconds_per_tick)
 	if(!bloodthirst)
 		drowse()
 		return
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
-		adjust_bloodthirst((1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) * delta_time) //Maybe adjust this?
+		adjust_bloodthirst((1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) * seconds_per_tick) //Maybe adjust this?
 	else
-		adjust_bloodthirst(1 * delta_time) //don't cool off rapidly once we're at the point where His Grace consumes all.
+		adjust_bloodthirst(1 * seconds_per_tick) //don't cool off rapidly once we're at the point where His Grace consumes all.
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	if(istype(master) && (src in master.held_items))
 		switch(bloodthirst)
@@ -148,6 +149,11 @@
 	gender = MALE
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
+	notify_ghosts(
+		"[user] has awoken His Grace!",
+		source = src,
+		header = "All Hail His Grace!",
+	)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	update_appearance()
 	move_gracefully()
@@ -157,22 +163,8 @@
 
 	if(!awakened)
 		return
-	var/static/list/transforms
-	if(!transforms)
-		var/matrix/M1 = matrix()
-		var/matrix/M2 = matrix()
-		var/matrix/M3 = matrix()
-		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
-		transforms = list(M1, M2, M3, M4)
 
-	animate(src, transform=transforms[1], time=0.2, loop=-1)
-	animate(transform=transforms[2], time=0.1)
-	animate(transform=transforms[3], time=0.2)
-	animate(transform=transforms[4], time=0.3)
+	spasm_animation()
 
 /obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
 	if(!awakened || ascended)
@@ -268,7 +260,7 @@
 	update_appearance()
 	playsound(src, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))
-		master.update_inv_hands()
+		master.update_held_items()
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
 		master.client?.give_award(/datum/award/achievement/misc/ascension, master)

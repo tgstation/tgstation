@@ -61,27 +61,12 @@
 	description = "The stench of rotting carcasses is unbearable!"
 	mood_change = -12
 
-//Generic needs events
-/datum/mood_event/favorite_food
-	description = "I really enjoyed eating that."
-	mood_change = 5
-	timeout = 4 MINUTES
-
-/datum/mood_event/gross_food
-	description = "I really didn't like that food."
-	mood_change = -2
-	timeout = 4 MINUTES
-
-/datum/mood_event/disgusting_food
-	description = "That food was disgusting!"
+/datum/mood_event/disgust/dirty_food
+	description = "It was too dirty to eat..."
 	mood_change = -6
 	timeout = 4 MINUTES
 
-/datum/mood_event/breakfast
-	description = "Nothing like a hearty breakfast to start the shift."
-	mood_change = 2
-	timeout = 10 MINUTES
-
+//Generic needs events
 /datum/mood_event/nice_shower
 	description = "I have recently had a nice shower."
 	mood_change = 4
@@ -91,3 +76,47 @@
 	description = "There's nothing like the feeling of a freshly laundered jumpsuit."
 	mood_change = 2
 	timeout = 10 MINUTES
+
+/datum/mood_event/surrounded_by_silicon
+	description = "I'm surrounded by perfect lifeforms!!"
+	mood_change = 8
+
+/datum/mood_event/around_many_silicon
+	description = "So many silicon lifeforms near me!"
+	mood_change = 4
+
+/datum/mood_event/around_silicon
+	description = "The silicon lifeforms near me are absolutely perfect."
+	mood_change = 2
+
+/datum/mood_event/around_organic
+	description = "The organics near me remind me of the inferiority of flesh."
+	mood_change = -2
+
+/datum/mood_event/around_many_organic
+	description = "So many disgusting organics!"
+	mood_change = -4
+
+/datum/mood_event/surrounded_by_organic
+	description = "I'm surrounded by disgusting organics!!"
+	mood_change = -8
+
+/datum/mood_event/completely_robotic
+	description = "I've abandoned my feeble flesh, my form is perfect!!"
+	mood_change = 8
+
+/datum/mood_event/very_robotic
+	description = "I'm more robot than organic!"
+	mood_change = 4
+
+/datum/mood_event/balanced_robotic
+	description = "I'm part machine, part organic."
+	mood_change = 0
+
+/datum/mood_event/very_organic
+	description = "I hate this feeble and weak flesh!"
+	mood_change = -4
+
+/datum/mood_event/completely_organic
+	description = "I'm completely organic, this is miserable!!"
+	mood_change = -8

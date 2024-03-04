@@ -4,12 +4,15 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 20
-	alert_observers = FALSE
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Destroys all lights in a large area."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1
 	var/lightsoutRange = 25
-	announceWhen = 1
+	announce_when = 1
 
 /datum/round_event/electrical_storm/announce(fake)
 	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
@@ -27,7 +30,6 @@
 		return
 
 	for(var/centre in epicentreList)
-		for(var/a in GLOB.apcs_list)
-			var/obj/machinery/power/apc/A = a
-			if(get_dist(centre, A) <= lightsoutRange)
-				A.overload_lighting()
+		for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
+			if(get_dist(centre, apc) <= lightsoutRange)
+				apc.overload_lighting()

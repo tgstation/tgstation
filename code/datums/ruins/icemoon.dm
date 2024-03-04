@@ -7,10 +7,16 @@
 	ruin_type = ZTRAIT_ICE_RUINS
 	default_area = /area/icemoon/surface/outdoors/unexplored
 	has_ceiling = TRUE
-	ceiling_turf = /turf/closed/mineral/random/snow
-	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon)
+	ceiling_turf = /turf/closed/mineral/snowmountain/do_not_chasm
+	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon/do_not_chasm)
 
 // above ground only
+
+/datum/map_template/ruin/icemoon/gas
+	name = "Lizard Gas Station"
+	id = "lizgasruin"
+	description = "A gas station. It appears to have been recently open and is in mint condition."
+	suffix = "icemoon_surface_gas.dmm"
 
 /datum/map_template/ruin/icemoon/lust
 	name = "Ruin of Lust"
@@ -32,7 +38,7 @@
 
 /datum/map_template/ruin/icemoon/fountain
 	name = "Fountain Hall"
-	id = "fountain"
+	id = "ice_fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
@@ -55,6 +61,18 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
+/datum/map_template/ruin/icemoon/frozen_phonebooth
+	name = "Frozen Phonebooth"
+	id = "frozen_phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
+	suffix = "icemoon_surface_phonebooth.dmm"
+
+/datum/map_template/ruin/icemoon/smoking_room
+	name = "Smoking Room"
+	id = "smoking_room"
+	description = "Here lies Charles Morlbaro. He died the way he lived."
+	suffix = "icemoon_surface_smoking_room.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
@@ -70,6 +88,7 @@
 	id = "miningsite-underground"
 	description = "Who knew ladders could be so useful?"
 	suffix = "icemoon_underground_mining_site.dmm"
+	has_ceiling = FALSE
 	unpickable = TRUE
 
 // below ground only
@@ -160,3 +179,23 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+
+/datum/map_template/ruin/icemoon/underground/vent
+	name = "Icemoon Ore Vent"
+	id = "ore_vent_i"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon." //Make this a subtype that only spawns medium and large vents. Some smalls will go to the top level.
+	suffix = "icemoon_underground_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE
+
+/datum/map_template/ruin/icemoon/ruin/vent
+	name = "Surface Icemoon Ore Vent"
+	id = "ore_vent_i"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon. Smaller than the underground ones."
+	suffix = "icemoon_surface_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE

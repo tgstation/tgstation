@@ -14,7 +14,7 @@
 	name = "strange closet"
 	desc = "It looks alien!"
 	icon_state = "alien"
-
+	material_drop = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/closet/gimmick
 	name = "administrative supply closet"
@@ -28,7 +28,7 @@
 /obj/structure/closet/gimmick/russian/PopulateContents()
 	..()
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/head/ushanka(src)
+		new /obj/item/clothing/head/costume/ushanka(src)
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/under/costume/soviet(src)
 
@@ -39,7 +39,6 @@
 /obj/structure/closet/gimmick/tacticool/PopulateContents()
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
@@ -53,6 +52,8 @@
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 
+/obj/structure/closet/gimmick/tacticool/populate_contents_immediate()
+	new /obj/item/clothing/glasses/sunglasses(src)
 
 /obj/structure/closet/thunderdome
 	name = "\improper Thunderdome closet"
@@ -70,13 +71,15 @@
 	for(var/i in 1 to 3)
 		new /obj/item/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser(src)
-	for(var/i in 1 to 3)
 		new /obj/item/melee/baton/security/loaded(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
+
+/obj/structure/closet/thunderdome/tdred/populate_contents_immediate()
+	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser(src)
 
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
@@ -89,13 +92,15 @@
 	for(var/i in 1 to 3)
 		new /obj/item/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser(src)
-	for(var/i in 1 to 3)
 		new /obj/item/melee/baton/security/loaded(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
+
+/obj/structure/closet/thunderdome/tdgreen/populate_contents_immediate()
+	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser(src)
 
 /obj/structure/closet/malf/suits
 	desc = "It's a storage unit for operational gear."
@@ -113,10 +118,13 @@
 
 /obj/structure/closet/mini_fridge
 	name = "grimy mini-fridge"
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill."
 	icon_state = "mini_fridge"
 	icon_welded = "welded_small"
 	max_mob_size = MOB_SIZE_SMALL
+	pass_flags = PASSTABLE
+	anchored_tabletop_offset = 3
+	anchored = 1
 	storage_capacity = 10
 
 /obj/structure/closet/mini_fridge/PopulateContents()
@@ -126,9 +134,21 @@
 	if(prob(50))
 		new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(40))
+		new /obj/item/reagent_containers/cup/glass/bottle/beer(src)
+
+/obj/structure/closet/mini_fridge/grimy
+	name = "grimy mini-fridge"
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+
+/obj/structure/closet/mini_fridge/grimy/PopulateContents()
+	. = ..()
+	if(prob(40))
 		if(prob(50))
 			new /obj/item/food/pizzaslice/moldy/bacteria(src)
 		else
 			new /obj/item/food/breadslice/moldy/bacteria(src)
-	else if(prob(30))
-		new /obj/item/food/syndicake(src)
+	else if(prob(40))
+		if(prob(50))
+			new /obj/item/food/syndicake(src)
+		else
+			new /mob/living/basic/cockroach(src)

@@ -1,1 +1,0 @@
-/obj/effect/landmark/navigate_destination : /obj/machinery/navbeacon/wayfinding {@OLD}

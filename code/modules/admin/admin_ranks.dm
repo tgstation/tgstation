@@ -13,9 +13,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
-		var/msg = " has tried to elevate permissions!"
-		message_admins("[key_name_admin(usr)][msg]")
-		log_admin("[key_name(usr)][msg]")
+		alert_to_permissions_elevation_attempt(usr)
 		if (name == "NoRank") //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
 			QDEL_IN(src, 0)
 			CRASH("Admin proc call creation of admin datum")
@@ -35,9 +33,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank/Destroy()
 	if(IsAdminAdvancedProcCall())
-		var/msg = " has tried to elevate permissions!"
-		message_admins("[key_name_admin(usr)][msg]")
-		log_admin("[key_name(usr)][msg]")
+		alert_to_permissions_elevation_attempt(usr)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
 
@@ -47,9 +43,7 @@ GLOBAL_PROTECT(protected_ranks)
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(group, group_count, datum/admin_rank/previous_rank)
 	if(IsAdminAdvancedProcCall())
-		var/msg = " has tried to elevate permissions!"
-		message_admins("[key_name_admin(usr)][msg]")
-		log_admin("[key_name(usr)][msg]")
+		alert_to_permissions_elevation_attempt(usr)
 		return
 	var/list/keywords = splittext(group, " ")
 	var/flag = 0
@@ -258,7 +252,7 @@ GLOBAL_PROTECT(protected_ranks)
 		new /datum/admins(ranks_from_rank_name(admin_rank), ckey(admin_key), force_active = FALSE, protected = TRUE)
 
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
-		var/datum/db_query/query_load_admins = SSdbcore.NewQuery("SELECT ckey, `rank` FROM [format_table_name("admin")] ORDER BY `rank`")
+		var/datum/db_query/query_load_admins = SSdbcore.NewQuery("SELECT ckey, `rank`, feedback FROM [format_table_name("admin")] ORDER BY `rank`")
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
 			log_sql("Error loading admins from database. Loading from backup.")
@@ -267,6 +261,7 @@ GLOBAL_PROTECT(protected_ranks)
 			while(query_load_admins.NextRow())
 				var/admin_ckey = ckey(query_load_admins.item[1])
 				var/admin_rank = query_load_admins.item[2]
+				var/admin_feedback = query_load_admins.item[3]
 				var/skip
 
 				var/list/admin_ranks = ranks_from_rank_name(admin_rank)
@@ -277,7 +272,8 @@ GLOBAL_PROTECT(protected_ranks)
 				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
 					skip = 1
 				if(!skip)
-					new /datum/admins(admin_ranks, admin_ckey)
+					var/datum/admins/admin_holder = new(admin_ranks, admin_ckey)
+					admin_holder.cached_feedback_link = admin_feedback || NO_FEEDBACK_LINK
 		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)

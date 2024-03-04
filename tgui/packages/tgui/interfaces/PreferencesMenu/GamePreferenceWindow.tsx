@@ -1,23 +1,22 @@
-import { Stack } from "../../components";
-import { Window } from "../../layouts";
-import { KeybindingsPage } from "./KeybindingsPage";
-import { GamePreferencesPage } from "./GamePreferencesPage";
-import { PageButton } from "./PageButton";
-import { useBackend, useLocalState } from "../../backend";
-import { GamePreferencesSelectedPage, PreferencesMenuData } from "./data";
-import { exhaustiveCheck } from "common/exhaustive";
+import { exhaustiveCheck } from 'common/exhaustive';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
+import { Stack } from '../../components';
+import { Window } from '../../layouts';
+import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
+import { GamePreferencesPage } from './GamePreferencesPage';
+import { KeybindingsPage } from './KeybindingsPage';
+import { PageButton } from './PageButton';
 
 export const GamePreferenceWindow = (props: {
-  startingPage?: GamePreferencesSelectedPage,
-}, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+  startingPage?: GamePreferencesSelectedPage;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [currentPage, setCurrentPage]
-    = useLocalState(
-      context,
-      "currentPage",
-      props.startingPage ?? GamePreferencesSelectedPage.Settings,
-    );
+  const [currentPage, setCurrentPage] = useState(
+    props.startingPage ?? GamePreferencesSelectedPage.Settings,
+  );
 
   let pageContents;
 
@@ -32,13 +31,8 @@ export const GamePreferenceWindow = (props: {
       exhaustiveCheck(currentPage);
   }
 
-
   return (
-    <Window
-      title="Game Preferences"
-      width={920}
-      height={770}
-    >
+    <Window title="Game Preferences" width={920} height={770}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>

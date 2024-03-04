@@ -24,7 +24,7 @@
 		. += span_notice("Activate it in your hand to inspire nearby allies of this banner's allegiance!")
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
-	if(!inspiration_available)
+	if(!inspiration_available || flags_1 & HOLOGRAM_1)
 		return
 	if(morale_time > world.time)
 		to_chat(user, span_warning("You aren't feeling inspired enough to flourish [src] again yet."))
@@ -64,15 +64,18 @@
 /obj/item/banner/proc/check_inspiration(mob/living/carbon/human/H) //Banner-specific conditions for being eligible
 	return
 
-/obj/item/banner/proc/inspiration(mob/living/carbon/human/H)
-	H.adjustBruteLoss(-15)
-	H.adjustFireLoss(-15)
-	H.AdjustStun(-40)
-	H.AdjustKnockdown(-40)
-	H.AdjustImmobilized(-40)
-	H.AdjustParalyzed(-40)
-	H.AdjustUnconscious(-40)
-	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
+/obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
+	inspired_human.AdjustStun(-40)
+	inspired_human.AdjustKnockdown(-40)
+	inspired_human.AdjustImmobilized(-40)
+	inspired_human.AdjustParalyzed(-40)
+	inspired_human.AdjustUnconscious(-40)
+	playsound(inspired_human, 'sound/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return
@@ -125,13 +128,16 @@
 	result = /obj/item/banner/medical/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/medical = 1)
+				/obj/item/clothing/under/rank/medical/doctor = 1)
 	category = CAT_MISC
 
-/obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
-	H.adjustToxLoss(-15)
-	H.setOxyLoss(0)
-	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
+/obj/item/banner/medical/special_inspiration(mob/living/carbon/human/inspired_human)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustToxLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
+	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"
@@ -250,72 +256,86 @@
 /obj/item/storage/backpack/bannerpack
 	name = "\improper Nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
-	icon_state = "bannerpack"
+	icon_state = "backpack-banner"
 
 /obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
+	atom_storage.max_total_storage = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
 	desc = "It's a backpack with lots of extra room.  A red banner is attached, that can't be removed."
-	icon_state = "bannerpack-red"
+	icon_state = "backpack-banner_red"
 
 /obj/item/storage/backpack/bannerpack/blue
 	name = "blue banner backpack"
 	desc = "It's a backpack with lots of extra room.  A blue banner is attached, that can't be removed."
-	icon_state = "bannerpack-blue"
+	icon_state = "backpack-banner_blue"
 
 //this is all part of one item set
-/obj/item/clothing/suit/armor/plate/crusader
-	name = "Crusader's Armour"
-	desc = "Armour that's comprised of metal and cloth."
-	icon_state = "crusader"
-	w_class = WEIGHT_CLASS_BULKY
-	slowdown = 2.0 //gotta pretend we're balanced.
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
-
-/obj/item/clothing/suit/armor/plate/crusader/red
-	icon_state = "crusader-red"
-
-/obj/item/clothing/suit/armor/plate/crusader/blue
-	icon_state = "crusader-blue"
 
 /obj/item/clothing/head/helmet/plate/crusader
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
+	icon = 'icons/obj/clothing/head/chaplain.dmi'
+	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "crusader"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/plate_crusader
+
+/datum/armor/plate_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/helmet/plate/crusader/red
 	icon_state = "crusader-red"
+	inhand_icon_state = null
 
 //Prophet helmet
 /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	icon_state = null
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
+	inhand_icon_state = null
 	flags_1 = 0
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
+	armor_type = /datum/armor/crusader_prophet
 	worn_y_offset = 6
+
+/datum/armor/crusader_prophet
+	melee = 60
+	bullet = 60
+	laser = 60
+	energy = 60
+	bomb = 70
+	bio = 50
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
 	icon_state = "prophet-blue"
+	inhand_icon_state = null
 
 //Structure conversion staff
 /obj/item/godstaff
 	name = "godstaff"
 	desc = "It's a stick..?"
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -323,11 +343,11 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
-
 /obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
 	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
@@ -342,7 +362,7 @@
 	conversion_color = "#0000ff"
 
 /obj/item/clothing/gloves/plate
-	name = "Plate Gauntlets"
+	name = "plate gauntlets"
 	icon_state = "crusader"
 	desc = "They're like gloves, but made of metal."
 	siemens_coefficient = 0
@@ -358,17 +378,25 @@
 	icon_state = "crusader-blue"
 
 /obj/item/clothing/shoes/plate
-	name = "Plate Boots"
+	name = "plate boots"
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
-	clothing_flags = NOSLIP
+	armor_type = /datum/armor/shoes_plate
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
+/datum/armor/shoes_plate
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/shoes/plate/red
 	icon_state = "crusader-red"
@@ -376,25 +404,17 @@
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
 
-
-/obj/item/storage/box/itemset/crusader
-	name = "Crusader's Armour Set" //i can't into ck2 references
-	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
-
-
 /obj/item/storage/box/itemset/crusader/blue/PopulateContents()
-	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
 
-
 /obj/item/storage/box/itemset/crusader/red/PopulateContents()
-	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
 	new /obj/item/clothing/shoes/plate/red(src)
-
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."

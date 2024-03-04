@@ -37,8 +37,8 @@
 	speed = 1
 	move_to_delay = 3
 	mouse_opacity = MOUSE_OPACITY_ICON
-	deathsound = 'sound/magic/curse.ogg'
-	deathmessage = "'s arms reach out before it falls apart onto the floor, lifeless."
+	death_sound = 'sound/magic/curse.ogg'
+	death_message = "'s arms reach out before it falls apart onto the floor, lifeless."
 	loot_drop = /obj/item/crusher_trophy/legionnaire_spine
 
 	attack_action_types = list(/datum/action/innate/elite_attack/legionnaire_charge,
@@ -123,7 +123,7 @@
 		T = get_step(T, dir_to_target)
 	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
 	visible_message(span_boldwarning("[src] prepares to charge!"))
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 4)
+	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 4)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(move_dir, times_ran)
 	if(times_ran >= 6)
@@ -147,16 +147,16 @@
 	playsound(src,'sound/effects/bang.ogg', 200, 1)
 	var/list/hit_things = list()
 	var/throwtarget = get_edge_target_turf(src, move_dir)
-	for(var/mob/living/L in T.contents - hit_things - src)
-		if(faction_check_mob(L))
-			return
-		hit_things += L
-		visible_message(span_boldwarning("[src] tramples and kicks [L]!"))
-		to_chat(L, span_userdanger("[src] tramples you and kicks you away!"))
-		L.safe_throw_at(throwtarget, 10, 1, src)
-		L.Paralyze(20)
-		L.adjustBruteLoss(melee_damage_upper)
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 0.7)
+	for(var/mob/living/trample_target in T.contents - hit_things - src)
+		hit_things += trample_target
+		if(faction_check_atom(trample_target))
+			continue
+		visible_message(span_boldwarning("[src] tramples and kicks [trample_target]!"))
+		to_chat(trample_target, span_userdanger("[src] tramples you and kicks you away!"))
+		trample_target.safe_throw_at(throwtarget, 10, 1, src)
+		trample_target.Paralyze(20)
+		trample_target.adjustBruteLoss(melee_damage_upper)
+	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), move_dir, (times_ran + 1)), 0.7)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
 	ranged_cooldown = world.time + 1 SECONDS
@@ -183,7 +183,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/onHeadDeath()
 	myhead = null
-	addtimer(CALLBACK(src, .proc/regain_head), 50)
+	addtimer(CALLBACK(src, PROC_REF(regain_head)), 50)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/regain_head()
 	has_head = TRUE
@@ -231,7 +231,7 @@
 	else
 		visible_message(span_boldwarning("[src] spews smoke from its maw!"))
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(2, location = smoke_location)
+	smoke.set_up(2, holder = src, location = smoke_location)
 	smoke.start()
 
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
@@ -255,7 +255,7 @@
 	speed = 0
 	move_to_delay = 2
 	del_on_death = 1
-	deathmessage = "crumbles away!"
+	death_message = "crumbles away!"
 	faction = list()
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
@@ -269,7 +269,7 @@
 /obj/structure/legionnaire_bonfire
 	name = "bone pile"
 	desc = "A pile of bones which seems to occasionally move a little.  It's probably a good idea to smash them."
-	icon = 'icons/obj/lavaland/legionnaire_bonfire.dmi'
+	icon = 'icons/obj/mining_zones/legionnaire_bonfire.dmi'
 	icon_state = "bonfire"
 	max_integrity = 100
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
@@ -282,7 +282,7 @@
 /obj/structure/legionnaire_bonfire/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -315,7 +315,7 @@
 /obj/item/crusher_trophy/legionnaire_spine
 	name = "legionnaire spine"
 	desc = "The spine of a legionnaire. With some creativity, you could use it as a crusher trophy. Alternatively, shaking it might do something as well."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
@@ -328,10 +328,9 @@
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
-	A.GiveTarget(target)
-	A.friends += user
-	A.faction = user.faction.Copy()
+	var/mob/living/basic/legion_brood/minion = new (user.loc)
+	minion.assign_creator(user)
+	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
@@ -342,7 +341,12 @@
 		to_chat(LivingUser, "<b>You need to wait longer to use this again.</b>")
 		return
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/LegionSkull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(LivingUser.loc)
-	LegionSkull.friends += LivingUser
-	LegionSkull.faction = LivingUser.faction.Copy()
+
+	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
+	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
+
+#undef LEGIONNAIRE_CHARGE
+#undef HEAD_DETACH
+#undef BONFIRE_TELEPORT
+#undef SPEW_SMOKE

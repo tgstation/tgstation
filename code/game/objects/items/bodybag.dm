@@ -2,9 +2,10 @@
 /obj/item/bodybag
 	name = "body bag"
 	desc = "A folded bag designed for the storage and transportation of cadavers."
-	icon = 'icons/obj/bodybag.dmi'
+	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "bodybag_folded"
 	w_class = WEIGHT_CLASS_SMALL
+	///Stored path we use for spawning a new body bag entity when unfolded.
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
@@ -19,6 +20,17 @@
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
 
+/obj/item/bodybag/attempt_pickup(mob/user)
+	// can't pick ourselves up if we are inside of the bodybag, else very weird things may happen
+	if(contains(user))
+		return TRUE
+	return ..()
+
+/**
+ * Creates a new body bag item when unfolded, at the provided location, replacing the body bag item.
+ * * mob/user: User opening the body bag.
+ * * atom/location: the place/entity/mob where the body bag is being deployed from.
+ */
 /obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/item_bag = new unfoldedbag_path(location)
 	item_bag.open(user)
@@ -27,7 +39,7 @@
 	moveToNullspace()
 	return item_bag
 
-/obj/item/bodybag/suicide_act(mob/user)
+/obj/item/bodybag/suicide_act(mob/living/user)
 	if(isopenturf(user.loc))
 		user.visible_message(span_suicide("[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
@@ -35,15 +47,14 @@
 		qdel(src)
 		user.forceMove(R)
 		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
-		return (OXYLOSS)
-	..()
+		return OXYLOSS
 
 // Bluespace bodybag
 
 /obj/item/bodybag/bluespace
 	name = "bluespace body bag"
 	desc = "A folded bluespace body bag designed for the storage and transportation of cadavers."
-	icon = 'icons/obj/bodybag.dmi'
+	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
@@ -82,7 +93,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, span_notice("You claw at the fabric of [src], trying to tear it open..."))
 	to_chat(loc, span_warning("Someone starts trying to break free of [src]!"))
-	if(!do_mob(user, src, 12 SECONDS, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
+	if(!do_after(user, 12 SECONDS, src, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		return
 	// you are still in the bag? time to go unless you KO'd, honey!
 	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
@@ -95,7 +106,7 @@
 /obj/item/bodybag/environmental
 	name = "environmental protection bag"
 	desc = "A folded, reinforced bag designed to protect against exoplanetary environmental storms."
-	icon = 'icons/obj/bodybag.dmi'
+	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "envirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental
 	w_class = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag, so it has a higher bulkiness than regular bodybag
@@ -111,7 +122,7 @@
 /obj/item/bodybag/environmental/prisoner
 	name = "prisoner transport bag"
 	desc = "Intended for transport of prisoners through hazardous environments, this folded environmental protection bag comes with straps to keep an occupant secure."
-	icon = 'icons/obj/bodybag.dmi'
+	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "prisonerenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner
 
@@ -122,7 +133,7 @@
 /obj/item/bodybag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured until they are transported to a required location."
-	icon = 'icons/obj/bodybag.dmi'
+	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "syndieenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF

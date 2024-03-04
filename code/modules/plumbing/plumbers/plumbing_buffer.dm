@@ -20,24 +20,24 @@
 
 /obj/machinery/plumbing/buffer/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
 /obj/machinery/plumbing/buffer/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
 	return NONE
 
 /obj/machinery/plumbing/buffer/proc/on_reagent_change()
 	SIGNAL_HANDLER
 	if(!buffer_net)
 		return
-	if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL >= activation_volume && mode == UNREADY)
+	if(reagents.total_volume >= activation_volume && mode == UNREADY)
 		mode = IDLE
 		buffer_net.check_active()
 
-	else if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL < activation_volume && mode != UNREADY)
+	else if(reagents.total_volume < activation_volume && mode != UNREADY)
 		mode = UNREADY
 		buffer_net.check_active()
 
@@ -68,7 +68,7 @@
 					neighbour.attempt_connect() //technically this would runtime if you made about 200~ buffers
 
 	add_overlay(icon_state + "_alert")
-	addtimer(CALLBACK(src, /atom/.proc/cut_overlay, icon_state + "_alert"), 20)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 20)
 
 /obj/machinery/plumbing/buffer/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
@@ -78,7 +78,7 @@
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
-	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	activation_volume = new_volume
 	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))

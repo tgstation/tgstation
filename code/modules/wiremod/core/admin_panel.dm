@@ -29,6 +29,13 @@
 	if (.)
 		return .
 
+	switch(action)
+		if ("disable_circuit_sound")
+			CONFIG_SET(flag/disallow_circuit_sounds, !CONFIG_GET(flag/disallow_circuit_sounds))
+			message_admins("[key_name_admin(usr)] has toggled all circuit sounds [CONFIG_GET(flag/disallow_circuit_sounds)? "off" : "on"].")
+			log_admin("[key_name(usr)] has toggled all circuit sounds [CONFIG_GET(flag/disallow_circuit_sounds)? "off" : "on"].")
+			return TRUE
+
 	if (!istext(params["circuit"]))
 		return FALSE
 

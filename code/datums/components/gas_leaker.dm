@@ -20,7 +20,7 @@
 	. = ..()
 	if(istype(parent, /obj/machinery/atmospherics/components))
 		process_type = PROCESS_COMPONENT
-	else if(istype(parent, /obj/machinery))
+	else if(ismachinery(parent))
 		process_type = PROCESS_MACHINE
 	else if(isobj(parent))
 		process_type = PROCESS_OBJ
@@ -30,13 +30,13 @@
 	src.integrity_leak_percent = integrity_leak_percent
 	src.leak_rate = leak_rate
 
-/datum/component/gas_leaker/Destroy(force, silent)
+/datum/component/gas_leaker/Destroy(force)
 	SSair.stop_processing_machine(src)
 	return ..()
 
 /datum/component/gas_leaker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
+	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(start_processing))
 
 /datum/component/gas_leaker/UnregisterFromParent()
 	. = ..()

@@ -1,16 +1,16 @@
 /datum/computer_file/program/skill_tracker
 	filename = "skilltracker"
 	filedesc = "ExperTrak Skill Tracker"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "generic"
 	extended_desc = "Scan and view your current marketable job skills."
 	size = 2
 	tgui_id = "NtosSkillTracker"
 	program_icon = "medal"
-	usage_flags = PROGRAM_TABLET // Must be a handheld device to read read your chakras or whatever
+	can_run_on_flags = PROGRAM_PDA // Must be a handheld device to read read your chakras or whatever
 
 /datum/computer_file/program/skill_tracker/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	var/list/skills = list()
 	data["skills"] = skills
@@ -50,11 +50,8 @@
 
 	return null
 
-/datum/computer_file/program/skill_tracker/ui_act(action, params, datum/tgui/ui)
+/datum/computer_file/program/skill_tracker/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
-
 	switch(action)
 		if("PRG_reward")
 			var/skill_type = find_skilltype(params["skill"])

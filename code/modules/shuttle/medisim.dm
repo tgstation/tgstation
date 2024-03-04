@@ -6,7 +6,7 @@
 
 /obj/item/paper/crumpled/retired_designs
 	name = "crumpled notes on cuirass design"
-	info = {"Yeah, you may as well just melt this crap back down into metal.<br>
+	default_raw_text = {"Yeah, you may as well just melt this crap back down into metal.<br>
 	<br>
 	<br>
 	What else am I supposed to say? Nanotrasen thinks these authentic cuirass models are too expensive for the simulation watchers.

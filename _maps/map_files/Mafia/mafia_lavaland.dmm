@@ -1,39 +1,43 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aa" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/mafia)
-"c" = (
+"ab" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"ac" = (
 /turf/closed/wall/rust,
 /area/centcom/mafia)
-"d" = (
+"ad" = (
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"e" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
+"ae" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
 	},
+/turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"f" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+"af" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/centcom/mafia)
-"g" = (
+"ag" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/centcom/mafia)
-"h" = (
-/obj/structure/grille/indestructable,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"i" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+"ah" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
 /area/centcom/mafia)
-"j" = (
+"ai" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"aj" = (
 /obj/machinery/door/airlock/external/ruin{
 	max_integrity = 99999;
 	name = "Maintenance"
@@ -41,139 +45,107 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"k" = (
+"ak" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"l" = (
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/grass/fakebasalt,
+"al" = (
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
+/turf/open/floor/fakebasalt,
 /area/centcom/mafia)
-"m" = (
+"am" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/grass/fakebasalt,
+/turf/open/floor/fakebasalt,
 /area/centcom/mafia)
-"n" = (
-/obj/effect/landmark/mafia,
+"an" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"o" = (
+"ao" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"p" = (
+"ap" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
 	id = "mafia";
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/fakeglass,
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/space/basic,
 /area/centcom/mafia)
-"q" = (
-/turf/open/floor/grass/fakebasalt,
+"aq" = (
+/turf/open/floor/fakebasalt,
 /area/centcom/mafia)
-"r" = (
+"ar" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"s" = (
+"as" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"t" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
-"u" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
-"v" = (
+"av" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/centcom/mafia)
-"w" = (
+"aw" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"x" = (
+"ax" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"y" = (
+"ay" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"z" = (
+"az" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"A" = (
-/obj/effect/landmark/mafia,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/centcom/mafia)
-"B" = (
+"aB" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 1
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"C" = (
+"aC" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -182,7 +154,7 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"D" = (
+"aD" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
@@ -191,7 +163,7 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"E" = (
+"aE" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -200,45 +172,31 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"F" = (
+"aF" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"G" = (
-/obj/effect/landmark/mafia,
+"aH" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"H" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 10
-	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/iron,
-/area/centcom/mafia)
-"I" = (
+"aI" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"J" = (
-/obj/effect/landmark/mafia,
+"aJ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
@@ -247,39 +205,29 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"K" = (
+"aK" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"L" = (
-/obj/effect/landmark/mafia,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/centcom/mafia)
-"M" = (
+"aM" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"N" = (
+"aN" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"O" = (
+"aO" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
@@ -288,643 +236,633 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"P" = (
+"aP" = (
 /obj/effect/turf_decal/trimline/brown/filled/end,
-/turf/open/floor/iron,
-/area/centcom/mafia)
-"Q" = (
 /obj/effect/landmark/mafia,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 9
-	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"R" = (
+"aR" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"S" = (
+"aS" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"T" = (
+"aT" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"U" = (
+"aU" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"V" = (
+"aV" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"W" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+"aY" = (
+/turf/closed/indestructible/reinforced,
 /area/centcom/mafia)
-"X" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+"aZ" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"Y" = (
-/turf/closed/indestructible/reinforced,
+"qp" = (
+/turf/template_noop,
+/area/template_noop)
+"GL" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron/dark,
 /area/centcom/mafia)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+qp
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+qp
 "}
 (2,1,1) = {"
-a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-a
+qp
+aa
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aa
+qp
 "}
 (3,1,1) = {"
-a
-Y
-Y
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-Y
-Y
-a
+qp
+aa
+aY
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aY
+aa
+qp
 "}
 (4,1,1) = {"
-a
-Y
-Y
-c
-g
-h
-d
-d
-d
-d
-d
-e
-d
-d
-d
-d
-d
-h
-k
-c
-Y
-Y
-a
+qp
+aa
+aY
+ac
+ag
+ah
+ad
+ad
+ad
+ad
+ad
+ai
+ad
+ad
+ad
+ad
+ad
+ah
+ak
+ac
+aY
+aa
+qp
 "}
 (5,1,1) = {"
-a
-Y
-Y
-c
-h
-d
-d
-e
-Y
-Y
-j
-Y
-j
-Y
-Y
-d
-d
-i
-h
-c
-Y
-Y
-a
+aa
+aa
+aY
+ac
+ah
+ad
+ad
+ai
+aY
+aY
+aj
+aY
+aj
+aY
+aY
+ad
+ad
+ai
+ah
+ac
+aY
+aa
+aa
 "}
 (6,1,1) = {"
-a
-Y
-Y
-c
-i
-Y
-Y
-j
-Y
-l
-q
-Y
-s
-H
-Y
-j
-Y
-Y
-d
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ai
+aY
+aY
+aj
+aY
+al
+aq
+aY
+as
+aH
+aY
+aj
+aY
+aY
+ad
+ac
+aY
+aY
+aa
 "}
 (7,1,1) = {"
-a
-Y
-c
-c
-d
-Y
-r
-M
-p
-m
-q
-p
-w
-A
-p
-q
-l
-Y
-d
-c
-c
-Y
-a
+aa
+aY
+ac
+ac
+ad
+aY
+ar
+aM
+ap
+aq
+aq
+ap
+aw
+aV
+ap
+aq
+al
+aY
+ad
+ac
+ac
+aY
+aa
 "}
 (8,1,1) = {"
-a
-Y
-c
-d
-d
-Y
-L
-N
-Y
-Y
-q
-Y
-x
-Y
-Y
-q
-m
-Y
-d
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+ad
+aY
+aF
+aN
+aY
+aY
+aq
+aY
+ax
+aY
+aY
+aq
+aq
+aY
+ad
+ad
+ac
+aY
+aa
 "}
 (9,1,1) = {"
-a
-Y
-c
-d
-Y
-Y
-p
-O
-P
-p
-q
-p
-y
-p
-q
-q
-p
-Y
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+aY
+ap
+aO
+aP
+ap
+am
+ap
+ay
+ap
+am
+aq
+ap
+aY
+aY
+ad
+ac
+aY
+aa
 "}
 (10,1,1) = {"
-a
-Y
-c
-d
-Y
-l
-p
-Y
-p
-p
-p
-p
-p
-p
-p
-Y
-p
-K
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+al
+ap
+aY
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aY
+ap
+aK
+aY
+ad
+ac
+aY
+aa
 "}
 (11,1,1) = {"
-a
-Y
-c
-d
-j
-m
-q
-q
-q
-p
-q
-u
-q
-p
-B
-C
-C
-J
-j
-e
-c
-Y
-a
+aa
+aY
+ac
+ad
+aj
+aq
+aq
+aq
+am
+ap
+aq
+aZ
+aq
+ap
+aB
+aC
+aC
+aJ
+aj
+ai
+ac
+aY
+aa
 "}
 (12,1,1) = {"
-a
-Y
-c
-e
-Y
-Y
-p
-Y
-p
-p
-t
-R
-X
-p
-p
-Y
-p
-Y
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ai
+aY
+aY
+ap
+aY
+ap
+ap
+GL
+aR
+ae
+ap
+ap
+aY
+ap
+aY
+aY
+ad
+ac
+aY
+aa
 "}
 (13,1,1) = {"
-a
-Y
-c
-d
-j
-n
-C
-C
-P
-p
-q
-W
-q
-p
-q
-q
-q
-m
-j
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aj
+an
+aC
+aC
+aP
+ap
+aq
+ab
+aq
+ap
+am
+aq
+aq
+aq
+aj
+ad
+ac
+aY
+aa
 "}
 (14,1,1) = {"
-a
-Y
-c
-d
-Y
-o
-p
-Y
-p
-p
-p
-p
-p
-p
-p
-Y
-p
-l
-Y
-i
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+ao
+ap
+aY
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aY
+ap
+al
+aY
+ai
+ac
+aY
+aa
 "}
 (15,1,1) = {"
-a
-Y
-c
-d
-Y
-Y
-p
-q
-q
-p
-S
-p
-q
-p
-B
-D
-p
-Y
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+aY
+ap
+aq
+am
+ap
+aS
+ap
+am
+ap
+aB
+aD
+ap
+aY
+aY
+ad
+ac
+aY
+aa
 "}
 (16,1,1) = {"
-a
-Y
-c
-f
-d
-Y
-m
-q
-Y
-Y
-T
-Y
-q
-Y
-Y
-E
-G
-Y
-d
-d
-c
-Y
-a
+aa
+aY
+ac
+af
+ad
+aY
+aq
+aq
+aY
+aY
+aT
+aY
+aq
+aY
+aY
+aE
+aM
+aY
+ad
+ad
+ac
+aY
+aa
 "}
 (17,1,1) = {"
-a
-Y
-c
-c
-d
-Y
-l
-q
-p
-Q
-U
-p
-q
-m
-p
-F
-I
-Y
-d
-c
-c
-Y
-a
+aa
+aY
+ac
+ac
+ad
+aY
+al
+aq
+ap
+as
+aU
+ap
+aq
+aq
+ap
+aF
+aI
+aY
+ad
+ac
+ac
+aY
+aa
 "}
 (18,1,1) = {"
-a
-Y
-Y
-c
-d
-Y
-Y
-j
-Y
-z
-V
-Y
-q
-l
-Y
-j
-Y
-Y
-d
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ad
+aY
+aY
+aj
+aY
+az
+aV
+aY
+aq
+al
+aY
+aj
+aY
+aY
+ad
+ac
+aY
+aY
+aa
 "}
 (19,1,1) = {"
-a
-Y
-Y
-c
-h
-i
-d
-d
-Y
-Y
-j
-Y
-j
-Y
-Y
-d
-e
-d
-h
-c
-Y
-Y
-a
+aa
+aa
+aY
+ac
+ah
+ai
+ad
+ad
+aY
+aY
+aj
+aY
+aj
+aY
+aY
+ad
+ai
+ad
+ah
+ac
+aY
+aa
+aa
 "}
 (20,1,1) = {"
-a
-Y
-Y
-c
-k
-h
-d
-d
-e
-d
-d
-d
-d
-d
-d
-d
-d
-h
-v
-c
-Y
-Y
-a
+qp
+aa
+aY
+ac
+ak
+ah
+ad
+ad
+ai
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ah
+av
+ac
+aY
+aa
+qp
 "}
 (21,1,1) = {"
-a
-Y
-Y
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-Y
-Y
-a
+qp
+aa
+aY
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aY
+aa
+qp
 "}
 (22,1,1) = {"
-a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-a
+qp
+aa
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aa
+qp
 "}
 (23,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+qp
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+qp
 "}

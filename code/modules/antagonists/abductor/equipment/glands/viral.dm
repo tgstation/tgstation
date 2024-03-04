@@ -1,4 +1,4 @@
-/obj/item/organ/heart/gland/viral
+/obj/item/organ/internal/heart/gland/viral
 	abductor_hint = "contamination incubator. The abductee becomes a carrier of a random advanced disease - of which they are unaffected by."
 	cooldown_low = 1800
 	cooldown_high = 2400
@@ -7,13 +7,13 @@
 	mind_control_uses = 1
 	mind_control_duration = 1800
 
-/obj/item/organ/heart/gland/viral/activate()
+/obj/item/organ/internal/heart/gland/viral/activate()
 	to_chat(owner, span_warning("You feel sick."))
 	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
 	owner.ForceContractDisease(A, FALSE, TRUE)
 
-/obj/item/organ/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
+/obj/item/organ/internal/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
 	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
 		max_symptoms = VIRUS_SYMPTOM_LIMIT
 	var/datum/disease/advance/A = new /datum/disease/advance()

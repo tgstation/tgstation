@@ -3,9 +3,6 @@
 	desc = "This is what all those research points added up to, the ultimate workplace hazard."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	/// What projectile do we shoot?
 	var/projectile_type = /obj/projectile/bullet/c10mm
 	/// Each step, this is the chance we fire a shot
@@ -13,18 +10,21 @@
 
 /obj/item/clothing/shoes/gunboots/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_step)
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_step))
 
 /obj/item/clothing/shoes/gunboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
-		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/check_kick)
+	if(slot & ITEM_SLOT_FEET)
+		RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(check_kick))
 	else
-		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+		UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 
 /obj/item/clothing/shoes/gunboots/dropped(mob/user)
 	if(user)
-		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+		UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
 
 /// After each step, check if we randomly fire a shot
@@ -33,16 +33,16 @@
 	if(!prob(shot_prob))
 		return
 
-	INVOKE_ASYNC(src, .proc/fire_shot)
+	INVOKE_ASYNC(src, PROC_REF(fire_shot))
 
 /// Stomping on someone while wearing gunboots shoots them point blank
 /obj/item/clothing/shoes/gunboots/proc/check_kick(mob/living/carbon/human/kicking_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
-	if(!isliving(attacked_atom))
-		return
+	if(!proximity || !isliving(attacked_atom))
+		return NONE
 	var/mob/living/attacked_living = attacked_atom
 	if(attacked_living.body_position == LYING_DOWN)
-		INVOKE_ASYNC(src, .proc/fire_shot, attacked_living)
+		INVOKE_ASYNC(src, PROC_REF(fire_shot), attacked_living)
 
 /// Actually fire a shot. If no target is provided, just fire off in a random direction
 /obj/item/clothing/shoes/gunboots/proc/fire_shot(atom/target)

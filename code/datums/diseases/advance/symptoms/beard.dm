@@ -10,6 +10,7 @@
 /datum/symptom/beard
 	name = "Facial Hypertrichosis"
 	desc = "The virus increases hair production significantly, causing rapid beard growth."
+	illness = "Man-Mouth"
 	stealth = 0
 	resistance = 3
 	stage_speed = 2
@@ -21,16 +22,15 @@
 
 	var/list/beard_order = list("Beard (Jensen)", "Beard (Full)", "Beard (Dwarf)", "Beard (Very Long)")
 
-/datum/symptom/beard/Activate(datum/disease/advance/A)
+/datum/symptom/beard/Activate(datum/disease/advance/disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/index = min(max(beard_order.Find(H.facial_hairstyle)+1, A.stage-1), beard_order.len)
-		if(index > 0 && H.facial_hairstyle != beard_order[index])
-			to_chat(H, span_warning("Your chin itches."))
-			H.facial_hairstyle = beard_order[index]
-			H.update_hair()
 
+	var/mob/living/manly_mob = disease.affected_mob
+	if(ishuman(manly_mob))
+		var/mob/living/carbon/human/manly_man = manly_mob
+		var/index = min(max(beard_order.Find(manly_man.facial_hairstyle)+1, disease.stage-1), beard_order.len)
+		if(index > 0 && manly_man.facial_hairstyle != beard_order[index])
+			to_chat(manly_man, span_warning("Your chin itches."))
+			manly_man.set_facial_hairstyle(beard_order[index], update = TRUE)

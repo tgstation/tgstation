@@ -69,11 +69,47 @@
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
-/mob/living/proc/has_status_effect(datum/status_effect/checked_effect)
+/mob/proc/has_status_effect(datum/status_effect/checked_effect)
+	// Yes I'm being cringe and putting this on the mob level even though status effects only apply to the living level
+	// There's quite a few places (namely examine and, bleh, cult code) where it's easier to not need to cast to living before checking
+	// for an effect such as blindness
+	return null
+
+/mob/living/has_status_effect(datum/status_effect/checked_effect)
 	RETURN_TYPE(/datum/status_effect)
 
 	for(var/datum/status_effect/present_effect as anything in status_effects)
 		if(present_effect.id == initial(checked_effect.id))
+			return present_effect
+
+	return null
+
+/**
+ * Checks if this mob has a status effect that shares the passed effect's ID
+ * and has the passed sources are in its list of sources (ONLY works for grouped efects!)
+ *
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ *
+ * Returns an instance of a status effect, or NULL if none were found.
+ */
+/mob/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
+	// See [/mob/proc/has_status_effect] for reason behind having this on the mob level
+	return null
+
+/mob/living/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
+	RETURN_TYPE(/datum/status_effect)
+
+	if(!ispath(checked_effect))
+		CRASH("has_status_effect_from_source passed with an improper status effect path.")
+
+	if(!islist(sources))
+		sources = list(sources)
+
+	for(var/datum/status_effect/grouped/present_effect in status_effects)
+		if(present_effect.id != initial(checked_effect.id))
+			continue
+		var/list/matching_sources = present_effect.sources & sources
+		if(length(matching_sources))
 			return present_effect
 
 	return null
@@ -85,7 +121,11 @@
  *
  * Returns a list
  */
-/mob/living/proc/has_status_effect_list(datum/status_effect/checked_effect)
+/mob/proc/has_status_effect_list(datum/status_effect/checked_effect)
+	// See [/mob/proc/has_status_effect] for reason behind having this on the mob level
+	return null
+
+/mob/living/has_status_effect_list(datum/status_effect/checked_effect)
 	RETURN_TYPE(/list)
 
 	var/list/effects_found = list()

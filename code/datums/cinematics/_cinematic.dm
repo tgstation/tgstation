@@ -1,3 +1,5 @@
+#define CINEMATIC_SOURCE "cinematic"
+
 /**
  * Plays a cinematic, duh. Can be to a select few people, or everyone.
  *
@@ -30,7 +32,7 @@
 /datum/cinematic
 	/// A list of all clients watching the cinematic
 	var/list/client/watching = list()
-	/// A list of all mobs who have notransform set while watching the cinematic
+	/// A list of all mobs who have TRAIT_NO_TRANSFORM set while watching the cinematic
 	var/list/datum/weakref/locked = list()
 	/// Whether the cinematic is a global cinematic or not
 	var/is_global = FALSE
@@ -52,7 +54,7 @@
 
 /datum/cinematic/Destroy()
 	QDEL_NULL(screen)
-	QDEL_NULL(special_callback)
+	special_callback = null
 	watching.Cut()
 	locked.Cut()
 	return ..()
@@ -63,7 +65,7 @@
 		return
 
 	// Register a signal to handle what happens when a different cinematic tries to play over us.
-	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, .proc/handle_replacement_cinematics)
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, PROC_REF(handle_replacement_cinematics))
 
 	// Pause OOC
 	var/ooc_toggled = FALSE
@@ -71,21 +73,22 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
-	// Place the /atom/movable/screen/cinematic into everyone's screens, prevent them from moving
+	// Place the /atom/movable/screen/cinematic into everyone's screens, and prevent movement.
 	for(var/mob/watching_mob in watchers)
 		show_to(watching_mob, GET_CLIENT(watching_mob))
-		RegisterSignal(watching_mob, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
-		//Close watcher ui's
+		RegisterSignal(watching_mob, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(show_to))
+		// Close watcher ui's, too, so they can watch it.
 		SStgui.close_user_uis(watching_mob)
 
-	//Actually play it
+	// Actually plays the animation. This will sleep, likely.
 	play_cinematic()
 
-	//Cleanup
-	sleep(cleanup_time)
+	// Cleans up after it's done playing.
+	addtimer(CALLBACK(src, PROC_REF(clean_up_cinematic), ooc_toggled), cleanup_time)
 
-	//Restore OOC
-	if(ooc_toggled)
+/// Cleans up the cinematic after a set timer of it sticking on the end screen.
+/datum/cinematic/proc/clean_up_cinematic(was_ooc_toggled = FALSE)
+	if(was_ooc_toggled)
 		toggle_ooc(TRUE)
 
 	stop_cinematic()
@@ -105,16 +108,17 @@
 /datum/cinematic/proc/show_to(mob/watching_mob, client/watching_client)
 	SIGNAL_HANDLER
 
-	if(!watching_mob.notransform)
-		locked += WEAKREF(watching_mob)
-		watching_mob.notransform = TRUE
+	if(!HAS_TRAIT_FROM(watching_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE))
+		lock_mob(watching_mob)
 
-	if(!watching_client)
+	// Only show the actual cinematic to cliented mobs.
+	if(!watching_client || (watching_client in watching))
 		return
 
 	watching += watching_client
 	watching_mob.overlay_fullscreen("cinematic", /atom/movable/screen/fullscreen/cinematic_backdrop)
 	watching_client.screen += screen
+	RegisterSignal(watching_client, COMSIG_QDELETING, PROC_REF(remove_watcher))
 
 /// Simple helper for playing sounds from the cinematic.
 /datum/cinematic/proc/play_cinematic_sound(sound_to_play)
@@ -136,13 +140,39 @@
 /// Stops the cinematic and removes it from all the viewers.
 /datum/cinematic/proc/stop_cinematic()
 	for(var/client/viewing_client as anything in watching)
-		viewing_client.mob.clear_fullscreen("cinematic")
-		viewing_client.screen -= screen
+		remove_watcher(viewing_client)
 
 	for(var/datum/weakref/locked_ref as anything in locked)
-		var/mob/locked_mob = locked_ref.resolve()
-		if(QDELETED(locked_mob))
-			continue
-		locked_mob.notransform = FALSE
+		unlock_mob(locked_ref)
 
 	qdel(src)
+
+/// Locks a mob, preventing them from moving, being hurt, or acting
+/datum/cinematic/proc/lock_mob(mob/to_lock)
+	locked += WEAKREF(to_lock)
+	ADD_TRAIT(to_lock, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
+
+/// Unlocks a previously locked weakref
+/datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
+	var/mob/locked_mob = mob_ref.resolve()
+	if(isnull(locked_mob))
+		return
+	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
+	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
+
+/// Removes the passed client from our watching list.
+/datum/cinematic/proc/remove_watcher(client/no_longer_watching)
+	SIGNAL_HANDLER
+
+	if(!(no_longer_watching in watching))
+		CRASH("cinematic remove_watcher was passed a client which wasn't watching.")
+
+	UnregisterSignal(no_longer_watching, COMSIG_QDELETING)
+	// We'll clear the cinematic if they have a mob which has one,
+	// but we won't remove TRAIT_NO_TRANSFORM. Wait for the cinematic end to do that.
+	no_longer_watching.mob?.clear_fullscreen("cinematic")
+	no_longer_watching.screen -= screen
+
+	watching -= no_longer_watching
+
+#undef CINEMATIC_SOURCE

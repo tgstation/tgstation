@@ -14,6 +14,7 @@
 	name = "pack of ambrosia vulgaris seeds"
 	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
 	icon_state = "seed-ambrosiavulgaris"
+	plant_icon_offset = 0
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
 	product = /obj/item/food/grown/ambrosia/vulgaris
@@ -71,7 +72,7 @@
 	name = "ambrosia gaia branch"
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 3
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70

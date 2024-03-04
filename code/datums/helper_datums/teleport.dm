@@ -15,6 +15,7 @@
 		/obj/effect/wisp = FALSE,
 		/obj/effect/mob_spawn = FALSE,
 		/obj/effect/immovablerod = FALSE,
+		/obj/effect/meteor = FALSE,
 	))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
@@ -63,20 +64,14 @@
 	if(!destturf || !curturf || destturf.is_transition_turf())
 		return FALSE
 
-	var/area/from_area = get_area(curturf)
-	var/area/to_area = get_area(destturf)
 	if(!forced)
-		if(HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT))
+		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
+			if(ismob(teleatom))
+				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
-		if((from_area.area_flags & NOTELEPORT) || (to_area.area_flags & NOTELEPORT))
-			return FALSE
-
-		if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel) & COMPONENT_BLOCK_TELEPORT)
-			return FALSE
-
-		if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf) & COMPONENT_BLOCK_TELEPORT)
-			return FALSE
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
+	SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, curturf, destturf)
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
@@ -90,9 +85,10 @@
 
 	if(ismob(teleatom))
 		var/mob/M = teleatom
+		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
 		M.cancel_camera()
 
-	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT, destination, channel)
 
 	return TRUE
 
@@ -140,22 +136,13 @@
 		return
 
 	var/list/floor_gases = floor_gas_mixture.gases
-	var/trace_gases
-	for(var/id in floor_gases)
-		if(id in GLOB.hardcoded_gases)
-			continue
-		trace_gases = TRUE
-		break
-
-	// Can most things breathe?
-	if(trace_gases)
-		return
-	if(!(floor_gases[/datum/gas/oxygen] && floor_gases[/datum/gas/oxygen][MOLES] >= 16))
-		return
-	if(floor_gases[/datum/gas/plasma])
-		return
-	if(floor_gases[/datum/gas/carbon_dioxide] && floor_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
-		return
+	var/static/list/gases_to_check = list(
+		/datum/gas/oxygen = list(16, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 10)
+	)
+	if(!check_gases(floor_gases, gases_to_check))
+		return FALSE
 
 	// Aim for goldilocks temperatures and pressure
 	if((floor_gas_mixture.temperature <= 270) || (floor_gas_mixture.temperature >= 360))
@@ -199,3 +186,30 @@
 	var/list/turfs = get_teleport_turfs(center, precision)
 	if (length(turfs))
 		return pick(turfs)
+
+/// Validates that the teleport being attempted is valid or not
+/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
+	var/area/origin_area = get_area(teleported_atom)
+	var/turf/origin_turf = get_turf(teleported_atom)
+
+	var/area/destination_area = get_area(destination)
+	var/turf/destination_turf = get_turf(destination)
+
+	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+		return FALSE
+
+	// prevent unprecise teleports from landing you outside of the destination's reserved area
+	if(is_reserved_level(destination_turf.z) && istype(original_destination) \
+		&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
+		return FALSE
+
+	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
+		return FALSE
+
+	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
+		return FALSE
+
+	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
+		return FALSE
+
+	return TRUE

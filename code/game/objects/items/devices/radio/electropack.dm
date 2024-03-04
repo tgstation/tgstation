@@ -1,15 +1,15 @@
 /obj/item/electropack
 	name = "electropack"
 	desc = "Dance my monkeys! DANCE!!!"
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "electropack0"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *5, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 1.25)
 
 	var/on = TRUE
 	var/code = 2
@@ -24,9 +24,9 @@
 	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/item/electropack/suicide_act(mob/user)
+/obj/item/electropack/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (FIRELOSS)
+	return FIRELOSS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/electropack/attack_hand(mob/user, list/modifiers)
@@ -40,7 +40,7 @@
 /obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
-		A.icon = 'icons/obj/assemblies.dmi'
+		A.icon = 'icons/obj/devices/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
 			to_chat(user, span_warning("[W] is stuck to your hand, you cannot attach it to [src]!"))

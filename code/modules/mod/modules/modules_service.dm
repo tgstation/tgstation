@@ -27,7 +27,7 @@
 		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
 	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
@@ -36,7 +36,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!istype(target, /obj/item))
+	if(!isitem(target))
 		return
 	if(!isturf(target.loc))
 		balloon_alert(mod.wearer, "must be on the floor!")
@@ -46,7 +46,7 @@
 	spark_effect.set_up(2, 1, mod.wearer)
 	spark_effect.start()
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
-	if(microwave_target.microwave_act())
+	if(microwave_target.microwave_act(microwaver = mod.wearer) & COMPONENT_MICROWAVE_SUCCESS)
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
@@ -69,14 +69,14 @@
 	incompatible_modules = list(/obj/item/mod/module/waddle)
 
 /obj/item/mod/module/waddle/on_suit_activation()
-	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElement(/datum/element/waddling)
+	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
-		SEND_SIGNAL(mod.wearer, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
+		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
 	if(!deleting)
 		qdel(mod.boots.GetComponent(/datum/component/squeak))
-	mod.wearer.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
-		SEND_SIGNAL(mod.wearer, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
+		mod.wearer.clear_mood_event("clownshoes")

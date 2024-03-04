@@ -1,12 +1,12 @@
 /obj/item/borg_chameleon
 	name = "cyborg chameleon projector"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/friendlyName
 	var/savedName
@@ -16,7 +16,7 @@
 	var/disguise = "engineer"
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
-			COMSIG_PARENT_ATTACKBY,
+			COMSIG_ATOM_ATTACKBY,
 			COMSIG_ATOM_ATTACK_HAND,
 			COMSIG_MOVABLE_IMPACT_ZONE,
 			COMSIG_ATOM_BULLET_ACT,
@@ -88,6 +88,7 @@
 	savedName = user.name
 	user.name = friendlyName
 	user.model.cyborg_base_icon = disguise
+	user.model.name = capitalize(disguise)
 	user.bubble_icon = "robot"
 	active = TRUE
 	user.update_icons()
@@ -96,7 +97,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, signalCache)
-	RegisterSignal(user, signalCache, .proc/disrupt)
+	RegisterSignals(user, signalCache, PROC_REF(disrupt))
 	listeningTo = user
 
 /obj/item/borg_chameleon/proc/deactivate(mob/living/silicon/robot/user)
@@ -107,6 +108,7 @@
 	do_sparks(5, FALSE, user)
 	user.name = savedName
 	user.model.cyborg_base_icon = initial(user.model.cyborg_base_icon)
+	user.model.name = initial(user.model.name)
 	user.bubble_icon = "syndibot"
 	active = FALSE
 	user.update_icons()

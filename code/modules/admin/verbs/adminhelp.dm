@@ -126,7 +126,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/admin_help/T = C.current_ticket
 		T.AddInteraction("Client disconnected.")
 		//Gotta async this cause clients only logout on destroy, and sleeping in destroy is disgusting
-		INVOKE_ASYNC(SSblackbox, /datum/controller/subsystem/blackbox/proc/LogAhelp, T.id, "Disconnected", "Client disconnected", C.ckey)
+		INVOKE_ASYNC(SSblackbox, TYPE_PROC_REF(/datum/controller/subsystem/blackbox, LogAhelp), T.id, "Disconnected", "Client disconnected", C.ckey)
 		T.initiator = null
 
 //Get a ticket given a ckey
@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ticket_list/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a ticket list statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a ticket list statclick! ([src])")
+		usr.log_message("non-holder clicked on a ticket list statclick! ([src])", LOG_ADMIN)
 		return
 
 	GLOB.ahelp_tickets.BrowseTickets(current_state)
@@ -197,6 +197,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/webhook_sent = WEBHOOK_NONE
 	/// List of player interactions
 	var/list/player_interactions
+	/// List of admin ckeys that are involved, like through responding
+	var/list/admins_involved = list()
+	/// Has the player replied to this ticket yet?
+	var/player_replied = FALSE
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -274,7 +278,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		"PLAYERS" = player_count,
 		"ROUND STATE" = round_state,
 		"ROUND ID" = GLOB.round_id,
-		"ROUND TIME" = ROUND_TIME,
+		"ROUND TIME" = ROUND_TIME(),
 		"MESSAGE" = message,
 		"ADMINS" = admin_text,
 	)
@@ -332,7 +336,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(CONFIG_GET(string/adminhelp_webhook_pfp))
 		webhook_info["avatar_url"] = CONFIG_GET(string/adminhelp_webhook_pfp)
 	// Uncomment when servers are moved to TGS4
-	// send2chat("[initiator_ckey] | [message_content]", "ahelp", TRUE)
+	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
@@ -346,9 +350,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message, player_message)
-	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
-		heard_by_no_admins = FALSE
-		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
+	if (!isnull(usr) && usr.ckey != initiator_ckey)
+		admins_involved |= usr.ckey
+		if(heard_by_no_admins)
+			heard_by_no_admins = FALSE
+			send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
+
 	ticket_interactions += "[time_stamp()]: [formatted_message]"
 	if (!isnull(player_message))
 		player_interactions += "[time_stamp()]: [player_message]"
@@ -356,13 +363,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
 	remove_verb(initiator, /client/verb/adminhelp)
-	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, TYPE_PROC_REF(/client, giveadminhelpverb)), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 //private
 /datum/admin_help/proc/FullMonty(ref_src)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
 	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
+	. += " (<A href='?_src_=holder;[HrefToken()];showmessageckey=[initiator.ckey]'>NOTES</A>)"
 	if(state == AHELP_ACTIVE)
 		if (CONFIG_GET(flag/popup_admin_pm))
 			. += " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminpopup=[REF(initiator)]'>POPUP</A>)"
@@ -395,7 +403,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
-	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='linkify'>[keywords_lookup(msg)]"))
+	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [span_linkify(keywords_lookup(msg))]"))
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>", player_message = "<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [msg]")
@@ -411,11 +419,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			confidential = TRUE)
 
 	//show it to the person adminhelping too
-	to_chat(initiator,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminnotice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"),
-		confidential = TRUE)
+	reply_to_admins_notification(msg)
 	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey, urgent = urgent)
+
+/// Sends a message to the player that they are replying to admins.
+/datum/admin_help/proc/reply_to_admins_notification(message)
+	to_chat(
+		initiator,
+		type = MESSAGE_TYPE_ADMINPM,
+		html = span_notice("PM to-<b>Admins</b>: [span_linkify(message)]"),
+		confidential = TRUE,
+	)
+
+	player_replied = TRUE
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
@@ -484,7 +500,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	state = AHELP_RESOLVED
 	GLOB.ahelp_tickets.ListInsert(src)
 
-	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
+	addtimer(CALLBACK(initiator, TYPE_PROC_REF(/client, giveadminhelpverb)), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>", player_message = "<font color='green'>Ticket resolved!</font>")
 	to_chat(initiator, span_adminhelp("Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly."), confidential = TRUE)
@@ -557,6 +573,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in ticket_interactions)
 		dat += "[I]<br>"
 
+	// Helper for opening directly to player ticket history
+	dat += "<br><br><b>Player Ticket History:</b>"
+	dat += "[FOURSPACES]<A href='?_src_=holder;[HrefToken()];player_ticket_history=[initiator_ckey]'>Open</A>"
+
 	// Append any tickets also opened by this user if relevant
 	var/list/related_tickets = GLOB.ahelp_tickets.TicketsByCKey(initiator_ckey)
 	if (related_tickets.len > 1)
@@ -566,7 +586,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 				continue
 			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
 
-	usr << browse(dat.Join(), "window=ahelp[id];size=700x480")
+	usr << browse(dat.Join(), "window=ahelp[id];size=750x480")
 
 /**
  * Renders the current status of the ticket into a displayable string
@@ -670,7 +690,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ahelp/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on an ahelp statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on an ahelp statclick! ([src])")
+		usr.log_message("non-holder clicked on an ahelp statclick! ([src])", LOG_ADMIN)
 		return
 
 	ahelp_datum.TicketPanel()
@@ -748,7 +768,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	if(user_client.handle_spam_prevention(message, MUTE_ADMINHELP))
 		return
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Adminhelp")
 
 	if(urgent)
 		if(!COOLDOWN_FINISHED(src, ahelp_cooldowns?[user_client.ckey]))
@@ -962,7 +982,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 			var/list/L = splittext(string, " ")
 			var/surname_found = 0
 			//surnames
-			for(var/i=L.len, i>=1, i--)
+			for(var/i=L.len, i >= 1, i--)
 				var/word = ckey(L[i])
 				if(word)
 					surnames[word] = M

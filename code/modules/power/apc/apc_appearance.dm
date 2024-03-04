@@ -18,11 +18,6 @@
 		set_light(light_on_range)
 		return
 
-	if(update_state & UPSTATE_BLUESCREEN)
-		set_light_color(LIGHT_COLOR_BLUE)
-		set_light(light_on_range)
-		return
-
 	set_light(0)
 
 /obj/machinery/power/apc/update_icon_state()
@@ -39,9 +34,6 @@
 	if(update_state & UPSTATE_BROKE)
 		icon_state = "apc-b"
 		return ..()
-	if(update_state & UPSTATE_BLUESCREEN)
-		icon_state = "apcemag"
-		return ..()
 	if(update_state & UPSTATE_WIREEXP)
 		icon_state = "apcewires"
 		return ..()
@@ -55,18 +47,18 @@
 		return
 
 	. += mutable_appearance(icon, "apcox-[locked]")
-	. += emissive_appearance(icon, "apcox-[locked]")
+	. += emissive_appearance(icon, "apcox-[locked]", src)
 	. += mutable_appearance(icon, "apco3-[charging]")
-	. += emissive_appearance(icon, "apco3-[charging]")
+	. += emissive_appearance(icon, "apco3-[charging]", src)
 	if(!operating)
 		return
 
 	. += mutable_appearance(icon, "apco0-[equipment]")
-	. += emissive_appearance(icon, "apco0-[equipment]")
+	. += emissive_appearance(icon, "apco0-[equipment]", src)
 	. += mutable_appearance(icon, "apco1-[lighting]")
-	. += emissive_appearance(icon, "apco1-[lighting]")
+	. += emissive_appearance(icon, "apco1-[lighting]", src)
 	. += mutable_appearance(icon, "apco2-[environ]")
-	. += emissive_appearance(icon, "apco2-[environ]")
+	. += emissive_appearance(icon, "apco2-[environ]", src)
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
@@ -85,8 +77,6 @@
 		if(cell)
 			new_update_state |= UPSTATE_CELL_IN
 
-	else if((obj_flags & EMAGGED) || malfai)
-		new_update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
 		new_update_state |= UPSTATE_WIREEXP
 
@@ -116,3 +106,16 @@
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
 	icon_update_needed = TRUE
+
+// Shows a dark-blue interface for a moment. Shouldn't appear on cameras.
+/obj/machinery/power/apc/proc/flicker_hacked_icon()
+	var/image/hacker_image = image(icon = 'icons/obj/machines/wallmounts.dmi', loc = src, icon_state = "apcemag", layer = FLOAT_LAYER)
+	var/list/mobs_to_show = list()
+	// Collecting mobs the APC can see for this animation, rather than mobs that can see the APC. Important distinction, intended such that mobs on camera / with XRAY cannot see the flicker.
+	for(var/mob/viewer in view(src))
+		if(viewer.client)
+			mobs_to_show += viewer.client
+	if(malfai?.client)
+		mobs_to_show |= malfai.client
+	flick_overlay_global(hacker_image, mobs_to_show, 1 SECONDS)
+	hacked_flicker_counter = rand(3, 5) //The counter is decrimented in the process() proc, which runs every two seconds.

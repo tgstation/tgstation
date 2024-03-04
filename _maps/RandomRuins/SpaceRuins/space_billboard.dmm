@@ -6,10 +6,10 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "s" = (
 /turf/closed/mineral/asteroid,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "t" = (
 /obj/structure/lattice/catwalk,
 /obj/item/toy/crayon/spraycan{
@@ -17,22 +17,22 @@
 	pixel_y = 4
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "D" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "G" = (
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "S" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Z" = (
 /obj/effect/spawner/random/structure/billboard,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 
 (1,1,1) = {"
 a

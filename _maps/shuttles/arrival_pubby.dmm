@@ -26,13 +26,6 @@
 "f" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
-"g" = (
-/obj/machinery/light/directional/north,
-/obj/structure/sign/poster/official/enlist{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "h" = (
 /obj/structure/closet/wardrobe/black,
 /turf/open/floor/mineral/titanium/blue,
@@ -41,24 +34,15 @@
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
-"j" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/requests_console/directional/north{
-	department = "Arrivals shuttle"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "k" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "l" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -84,13 +68,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/docking_port/mobile/arrivals{
-	height = 13;
-	name = "pubby arrivals shuttle";
-	width = 6
+	name = "pubby arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -99,7 +81,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -111,24 +93,35 @@
 /obj/item/clothing/mask/breath,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
-"t" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "u" = (
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
+"x" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 "C" = (
 /turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"P" = (
+/obj/machinery/requests_console/directional/north{
+	department = "Arrivals shuttle";
+	name = "Arrival Shuttle Requests Console"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"Y" = (
+/obj/machinery/light/directional/north,
+/obj/structure/sign/poster/official/enlist/directional/north,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
@@ -173,10 +166,10 @@ c
 "}
 (6,1,1) = {"
 b
-g
+Y
 C
 C
-t
+x
 b
 "}
 (7,1,1) = {"
@@ -205,7 +198,7 @@ d
 "}
 (10,1,1) = {"
 b
-j
+P
 o
 o
 u

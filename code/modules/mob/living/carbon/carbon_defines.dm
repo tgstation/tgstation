@@ -10,15 +10,11 @@
 	num_hands = 0 //Populated on init through list/bodyparts
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
-	blocks_emissive = NONE
-	///List of [/obj/item/organ] in the mob. They don't go in the contents for some reason I don't want to know.
-	var/list/internal_organs = list()
-	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
-	var/list/internal_organs_slot = list()
-	///Can't talk. Value goes down every life proc. NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
-	var/silent = 0
-	///How many dream images we have left to send
-	var/dreaming = 0
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
+	var/list/obj/item/organ/organs = list()
+	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
+	var/list/organs_slot = list()
 
 	///Whether or not the mob is handcuffed
 	var/obj/item/handcuffed = null
@@ -34,7 +30,10 @@
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
+	/// Equipped air tank. Never set this manually.
 	var/obj/item/tank/internal = null
+	/// "External" air tank. Never set this manually. Not required to stay directly equipped on the mob (i.e. could be a machine or MOD suit module).
+	var/obj/item/tank/external = null
 	var/obj/item/clothing/head = null
 
 	///only used by humans
@@ -46,33 +45,33 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon
+	/// Carbon, you should really only be accessing this through has_dna() but it's your life
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
 
 	///This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 	var/failed_last_breath = FALSE
-
+	/// Used in [carbon/proc/check_breath] and [lungs/proc/check_breath]]
 	var/co2overloadtime = null
+
 	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
-	var/rotate_on_lying = 1
+	rotate_on_lying = TRUE
 
-	/// Total level of visualy impairing items
-	var/tinttotal = 0
-
-	///Gets filled up in [create_bodyparts()][/mob/living/carbon/proc/create_bodyparts]
+	/// Gets filled up in [/datum/species/proc/replace_body].
+	/// Will either contain a list of typepaths if nothing has been created yet,
+	/// or a list of the body part objects.
 	var/list/bodyparts = list(
 		/obj/item/bodypart/chest,
 		/obj/item/bodypart/head,
-		/obj/item/bodypart/l_arm,
-		/obj/item/bodypart/r_arm,
-		/obj/item/bodypart/r_leg,
-		/obj/item/bodypart/l_leg,
-		)
+		/obj/item/bodypart/arm/left,
+		/obj/item/bodypart/arm/right,
+		/obj/item/bodypart/leg/right,
+		/obj/item/bodypart/leg/left,
+	)
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
@@ -81,9 +80,10 @@
 	var/list/icon_render_keys = list()
 	var/static/list/limb_icon_cache = list()
 
-	//halucination vars
-	var/hal_screwyhud = SCREWYHUD_NONE
-	var/next_hallucination = 0
+	/// Used to temporarily increase severity of / apply a new damage overlay (the red ring around the ui / screen).
+	/// This number will translate to equivalent brute or burn damage taken. Handled in [mob/living/proc/update_damage_hud].
+	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
+	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
 
 	///used to halt stamina regen temporarily
@@ -102,6 +102,9 @@
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
 
+	/// Assoc list of BODY_ZONE -> wounding_type. Set when a limb is dismembered, unset when one is attached. Used for determining what scar to add when it comes time to generate them.
+	var/list/body_zone_dismembered_by
+
 	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
 	var/skillchip_complexity_modifier = 0
 
@@ -110,5 +113,14 @@
 
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
+
+	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
+	var/last_top_offset
+
+	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
+	var/bodytype = BODYTYPE_ORGANIC
+
+	/// A bitfield of "bodyshapes", updated by /obj/item/bodypart/proc/synchronize_bodyshapes()
+	var/bodyshape = BODYSHAPE_HUMANOID
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

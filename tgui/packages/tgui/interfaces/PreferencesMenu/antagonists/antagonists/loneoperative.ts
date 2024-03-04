@@ -1,10 +1,11 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
-import { OPERATIVE_MECHANICAL_DESCRIPTION } from "./operative";
+import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
+import { OPERATIVE_MECHANICAL_DESCRIPTION } from './operative';
 
 const LoneOperative: Antagonist = {
-  key: "loneoperative",
-  name: "Lone Operative",
+  key: 'loneoperative',
+  name: 'Lone Operative',
   description: [
     multiline`
       A solo nuclear operative that has a higher chance of spawning the longer

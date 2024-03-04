@@ -20,7 +20,7 @@
 	if(lifetime)
 		QDEL_IN(src, lifetime)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -55,8 +55,8 @@
 /obj/effect/powerup/health
 	name = "health pickup"
 	desc = "Blessing from the havens."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "medicalpack"
+	icon = 'icons/obj/storage/backpack.dmi'
+	icon_state = "backpack-medical"
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"
 	pickup_sound = 'sound/magic/staff_healing.ogg'
@@ -64,28 +64,28 @@
 	var/heal_amount = 50
 	/// Does this pickup fully heal when picked up
 	var/full_heal = FALSE
-	/// If full heal, does this do an admin level heal?
-	var/admin_heal = FALSE
+	/// If full heal, what flags do we pass?
+	var/heal_flags = HEAL_ALL
 
 /obj/effect/powerup/health/trigger(mob/living/target)
 	. = ..()
 	if(!.)
 		return
 	if(full_heal)
-		target.fully_heal(admin_heal)
+		target.fully_heal(heal_flags)
 	else if(heal_amount)
 		target.heal_ordered_damage(heal_amount, list(BRUTE, BURN))
 
 /obj/effect/powerup/health/full
 	name = "mega health pickup"
 	desc = "Now this is what I'm talking about."
-	icon_state = "duffel-med"
+	icon_state = "duffel-medical"
 	full_heal = TRUE
 
 /obj/effect/powerup/ammo
 	name = "ammo pickup"
 	desc = "You like revenge, right? Everybody likes revenge! Well, let's go get some!"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "ammobox"
 	respawn_time = 30 SECONDS
 	pickup_message = "Ammunition reloaded!"

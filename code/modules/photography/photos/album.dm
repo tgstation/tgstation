@@ -4,11 +4,12 @@
 /obj/item/storage/photo_album
 	name = "photo album"
 	desc = "A big book used to store photos and mementos."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	icon_state = "album"
 	inhand_icon_state = "album"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
+	storage_type = /datum/storage/photo_album
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -16,14 +17,11 @@
 
 /obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/photo))
-	STR.max_combined_w_class = 42
-	STR.max_items = 21
-	LAZYADD(SSpersistence.photo_albums, src)
+	if (!SSpersistence.initialized)
+		LAZYADD(SSpersistence.queued_photo_albums, src)
 
 /obj/item/storage/photo_album/Destroy()
-	LAZYREMOVE(SSpersistence.photo_albums, src)
+	LAZYREMOVE(SSpersistence.queued_photo_albums, src)
 	return ..()
 
 /obj/item/storage/photo_album/proc/get_picture_id_list()
@@ -42,9 +40,9 @@
 
 //Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
 /obj/item/storage/photo_album/proc/persistence_load()
-	var/list/data = SSpersistence.GetPhotoAlbums()
-	if(data[persistence_id])
-		populate_from_id_list(data[persistence_id])
+	var/list/data = SSpersistence.photo_albums_database.get_key(persistence_id)
+	if (!isnull(data))
+		populate_from_id_list(data)
 
 /obj/item/storage/photo_album/proc/populate_from_id_list(list/ids)
 	var/list/current_ids = get_picture_id_list()
@@ -53,8 +51,34 @@
 			continue
 		var/obj/item/photo/old/P = load_photo_from_disk(i)
 		if(istype(P))
-			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, P, null, TRUE, TRUE))
+			if(!atom_storage?.attempt_insert(P, override = TRUE))
 				qdel(P)
+
+/datum/storage/photo_album
+	max_total_storage = 42
+	max_slots = 21
+
+/datum/storage/photo_album/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
+	. = ..()
+	set_holdable(/obj/item/photo)
+
+/datum/storage/photo_album/proc/save_everything()
+	var/obj/item/storage/photo_album/album = parent
+	ASSERT(istype(album))
+	SSpersistence.photo_albums_database.set_key(album.persistence_id, album.get_picture_id_list())
+
+/datum/storage/photo_album/handle_enter(datum/source, obj/item/arrived)
+	. = ..()
+	save_everything()
+
+/datum/storage/photo_album/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+	save_everything()
 
 /obj/item/storage/photo_album/hos
 	name = "photo album (Head of Security)"
@@ -111,6 +135,11 @@
 	icon_state = "album_blue"
 	persistence_id = "chapel"
 
+/obj/item/storage/photo_album/listeningstation
+	name = "photo album (Listening Station)"
+	icon_state = "album_red"
+	persistence_id = "listeningstation"
+
 /obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"
 	icon_state = "album_blue"
@@ -118,3 +147,8 @@
 
 /obj/item/storage/photo_album/personal
 	icon_state = "album_green"
+
+/obj/item/storage/photo_album/hall_of_fame
+	name = "photo album (Hall of Fame)"
+	icon_state = "album_red"
+	persistence_id = "hall_of_fame"

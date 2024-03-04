@@ -1,0 +1,1306 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"aO" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"ba" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"bC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 8
+	},
+/turf/open/floor/engine/co2/equalized_with_regular_air,
+/area/ruin/space/has_grav/atmosasteroid)
+"bF" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"df" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"eL" = (
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"fm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"fV" = (
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"gG" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/atmosasteroid)
+"gU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"hj" = (
+/turf/open/floor/engine/o2,
+/area/ruin/space/has_grav/atmosasteroid)
+"hD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"hN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"hP" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"hS" = (
+/obj/structure/rack,
+/obj/item/rpd_upgrade{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/item/rpd_upgrade/unwrench{
+	pixel_x = 5
+	},
+/obj/item/paper/crumpled{
+	default_raw_text = "Ever since I set up those miners, they've all been making a strange clunking noise, especially the Carbon Dioxide miner. I swear, it's just been getting louder and louder these past couple hours. I just hope I set it up right."
+	},
+/obj/machinery/door/window/left/directional/east,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ij" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"iu" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"iD" = (
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"jB" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"jM" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	anchored = 1
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"jP" = (
+/obj/machinery/door/airlock/atmos/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"jV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ky" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"kB" = (
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"kJ" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"lx" = (
+/obj/item/tank/internals/emergency_oxygen/double,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"mA" = (
+/obj/item/shard/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/anticorner,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"mC" = (
+/obj/item/construction/rcd,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"mI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ni" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"nz" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
+	},
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"og" = (
+/obj/machinery/power/turbine/inlet_compressor,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"om" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 1
+	},
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"os" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"oz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/dark/side/co2_pressurized{
+	dir = 1
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"oZ" = (
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 1
+	},
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"pw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/dark/corner/co2_pressurized{
+	dir = 1
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"pU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"qA" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"rg" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"rp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 8
+	},
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"rC" = (
+/obj/machinery/power/turbine/turbine_outlet,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"sH" = (
+/obj/item/analyzer/ranged,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"tL" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
+	},
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"uH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"uS" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"vo" = (
+/obj/machinery/atmospherics/components/trinary/mixer/flipped{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"vG" = (
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"vT" = (
+/obj/machinery/atmospherics/components/unary/thermomachine,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"vW" = (
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"xr" = (
+/obj/machinery/light/small/directional/south,
+/obj/item/clothing/glasses/meson/engine,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"zd" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"zw" = (
+/obj/machinery/atmospherics/miner/nitrogen,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"zD" = (
+/obj/machinery/atmospherics/pipe/bridge_pipe/general/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"zH" = (
+/obj/machinery/power/turbine/core_rotor,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"zL" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ak" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"AJ" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"AZ" = (
+/obj/structure/girder/reinforced,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"Bq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/dark/corner/co2_pressurized{
+	dir = 4
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"By" = (
+/obj/machinery/atmospherics/miner/carbon_dioxide,
+/turf/open/floor/engine/co2/equalized_with_regular_air,
+/area/ruin/space/has_grav/atmosasteroid)
+"Cb" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Cn" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/turf_decal/stripes/full,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"Co" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"Cz" = (
+/obj/item/pipe_dispenser,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"DN" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	locked = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ep" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ED" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Fj" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ft" = (
+/obj/effect/decal/cleanable/blood/gibs/core{
+	pixel_x = -12;
+	pixel_y = 15
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/gibs/up{
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood/gibs/down{
+	pixel_y = -6
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"FU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Hl" = (
+/turf/open/floor/engine/co2/equalized_with_regular_air,
+/area/ruin/space/has_grav/atmosasteroid)
+"HF" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"HW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 1
+	},
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ju" = (
+/obj/item/clothing/mask/gas/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Kg" = (
+/obj/machinery/atmospherics/miner/n2o,
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"KN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"KR" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"KT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Lj" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Lv" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/corner/co2_pressurized{
+	dir = 8
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"LJ" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"LP" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Mt" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Mz" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/suit_storage_unit,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MI" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
+/turf/open/floor/plating/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MR" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"MT" = (
+/obj/effect/turf_decal/tile/yellow/full,
+/obj/machinery/portable_atmospherics/scrubber/huge/movable,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ny" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/atmosasteroid)
+"NP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 1
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/space/has_grav/atmosasteroid)
+"Oc" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/green/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Oe" = (
+/obj/item/pickaxe,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"Oz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"OY" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/light/directional/west,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"QA" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"QI" = (
+/obj/machinery/atmospherics/miner/oxygen,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine/o2,
+/area/ruin/space/has_grav/atmosasteroid)
+"QP" = (
+/turf/closed/mineral,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ra" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/space/has_grav/atmosasteroid)
+"Rp" = (
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"RI" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"RJ" = (
+/obj/item/stack/rods,
+/obj/machinery/atmospherics/pipe/layer_manifold/dark/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/mob/living/basic/mining/hivelord,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"RK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/corner/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"So" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"Sy" = (
+/obj/effect/decal/cleanable/blood/gibs{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"SO" = (
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/engine/co2/equalized_with_regular_air,
+/area/ruin/space/has_grav/atmosasteroid)
+"TP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 8
+	},
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ub" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/reagent_dispensers/foamtank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ue" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Up" = (
+/turf/template_noop,
+/area/template_noop)
+"Uz" = (
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"UL" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"UR" = (
+/obj/machinery/atmospherics/miner/plasma,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"VH" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/tank_holder/extinguisher/advanced{
+	anchored = 1
+	},
+/turf/open/floor/iron/dark/side/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Wc" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ws" = (
+/obj/item/shard/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"YB" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"ZN" = (
+/obj/machinery/atmospherics/components/unary/thermomachine,
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+
+(1,1,1) = {"
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+gG
+Cn
+gG
+Up
+Up
+Up
+Up
+Up
+Up
+"}
+(2,1,1) = {"
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+QP
+QP
+gG
+os
+gG
+QP
+uS
+Up
+Up
+Up
+Up
+"}
+(3,1,1) = {"
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+QP
+QP
+QP
+QP
+QP
+QP
+gG
+ni
+gG
+QP
+QP
+QP
+QP
+Up
+Up
+"}
+(4,1,1) = {"
+Up
+Up
+Up
+uS
+uS
+uS
+QP
+QP
+QP
+gG
+gG
+gG
+gG
+gG
+gG
+jP
+gG
+gG
+gG
+gG
+QP
+QP
+Up
+"}
+(5,1,1) = {"
+Up
+Up
+uS
+uS
+uS
+QP
+QP
+QP
+QP
+gG
+pU
+hN
+fm
+gG
+rg
+gU
+kJ
+Uz
+MT
+gG
+QP
+QP
+QP
+"}
+(6,1,1) = {"
+Up
+uS
+uS
+uS
+QP
+QP
+QP
+QP
+QP
+gG
+pU
+Co
+hD
+gG
+UL
+Ak
+af
+QA
+gG
+gG
+gG
+gG
+QP
+"}
+(7,1,1) = {"
+Up
+uS
+uS
+QP
+QP
+QP
+QP
+vW
+QP
+gG
+gG
+ij
+AJ
+gG
+Lj
+Ak
+af
+Mz
+ij
+Ra
+hj
+gG
+QP
+"}
+(8,1,1) = {"
+Up
+QP
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+gG
+oZ
+fV
+vo
+RI
+Ep
+Ak
+af
+Wc
+zd
+hj
+QI
+gG
+QP
+"}
+(9,1,1) = {"
+QP
+QP
+QP
+QP
+QP
+vW
+vW
+zH
+vW
+gG
+jB
+LP
+LP
+af
+af
+KT
+zD
+Cb
+aO
+NP
+hj
+gG
+QP
+"}
+(10,1,1) = {"
+QP
+QP
+QP
+QP
+QP
+vW
+rC
+vW
+So
+gG
+jM
+af
+jV
+FU
+FU
+KT
+uH
+Wc
+gG
+gG
+gG
+gG
+QP
+"}
+(11,1,1) = {"
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+vW
+KN
+DN
+ba
+RK
+Ub
+Oz
+mI
+Bq
+uH
+Mz
+ij
+tL
+vG
+gG
+QP
+"}
+(12,1,1) = {"
+QP
+QP
+QP
+QP
+vW
+vT
+vW
+Oe
+xr
+gG
+HF
+VH
+Ny
+Ny
+Ny
+oz
+uH
+Wc
+zd
+vG
+zw
+gG
+QP
+"}
+(13,1,1) = {"
+QP
+QP
+QP
+QP
+vW
+vW
+og
+vW
+mC
+gG
+HF
+Lv
+MG
+OY
+hS
+pw
+kB
+Cb
+aO
+om
+vG
+gG
+QP
+"}
+(14,1,1) = {"
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+vW
+vW
+gG
+Fj
+af
+Mt
+Ju
+Cz
+KT
+uH
+bF
+gG
+gG
+gG
+gG
+QP
+"}
+(15,1,1) = {"
+QP
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+vW
+gG
+HF
+af
+af
+Ft
+Ue
+KT
+uH
+iu
+MR
+nz
+eL
+gG
+QP
+"}
+(16,1,1) = {"
+Up
+QP
+QP
+QP
+QP
+vW
+AZ
+vW
+vW
+gG
+HF
+af
+lx
+Sy
+af
+Ws
+af
+ZN
+zd
+eL
+qA
+gG
+QP
+"}
+(17,1,1) = {"
+Up
+QP
+QP
+QP
+QP
+AZ
+gG
+gG
+gG
+gG
+LJ
+KR
+sH
+Oc
+KR
+ED
+RJ
+mA
+df
+HW
+eL
+gG
+QP
+"}
+(18,1,1) = {"
+Up
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+gG
+YB
+zd
+gG
+hP
+zd
+gG
+MI
+zd
+gG
+gG
+gG
+gG
+QP
+"}
+(19,1,1) = {"
+Up
+Up
+QP
+QP
+uS
+uS
+QP
+QP
+QP
+gG
+TP
+iD
+gG
+rp
+Rp
+gG
+bC
+Hl
+gG
+QP
+QP
+QP
+QP
+"}
+(20,1,1) = {"
+Up
+Up
+QP
+uS
+uS
+uS
+uS
+QP
+QP
+gG
+UR
+ky
+gG
+Kg
+zL
+gG
+By
+SO
+gG
+QP
+QP
+QP
+uS
+"}
+(21,1,1) = {"
+Up
+Up
+Up
+uS
+uS
+uS
+uS
+QP
+QP
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+QP
+QP
+uS
+uS
+"}
+(22,1,1) = {"
+Up
+Up
+Up
+Up
+uS
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+uS
+uS
+Up
+"}
+(23,1,1) = {"
+Up
+Up
+Up
+Up
+Up
+Up
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+"}

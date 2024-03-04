@@ -9,8 +9,8 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/card.dmi'
-	icon_state = "data_3"
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon_state = "skillchip"
 	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -42,12 +42,14 @@
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	/// Used to determine if this is an abstract type or not.
+	/// If this is meant to be an abstract type, set it to the type's path.
+	/// Will be overridden by subsequent abstract parents.
 	var/abstract_parent_type = /obj/item/skillchip
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
 	/// Brain that holds this skillchip.
-	var/obj/item/organ/brain/holding_brain
+	var/obj/item/organ/internal/brain/holding_brain
 
 /obj/item/skillchip/Initialize(mapload, is_removable = TRUE)
 	. = ..()
@@ -104,7 +106,7 @@
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(QDELETED(holding_brain))
+	if(!holding_brain)
 		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 
@@ -132,7 +134,7 @@
  * Arguments:
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
-/obj/item/skillchip/proc/on_implant(obj/item/organ/brain/owner_brain)
+/obj/item/skillchip/proc/on_implant(obj/item/organ/internal/brain/owner_brain)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
@@ -149,8 +151,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	for(var/trait in auto_traits)
-		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.add_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -183,8 +185,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	for(var/trait in auto_traits)
-		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.remove_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
@@ -198,7 +200,7 @@
  * Arguments:
  * * skillchip - The skillchip you're intending to activate. Does not activate the chip.
  */
-/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/brain/brain)
+/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/internal/brain/brain)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -248,7 +250,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -267,7 +269,7 @@
  * Arguments:
  * * brain - The brain to check for implantability with.
  */
-/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/brain/brain)
+/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/internal/brain/brain)
 	if(!istype(brain))
 		stack_trace("Attempted to check incompatibility with invalid brain object [brain].")
 		return "Incompatible brain."
@@ -450,6 +452,16 @@
 	activate_message = span_notice("You feel that you can recognize special, minute details on ID cards.")
 	deactivate_message = span_notice("Was there something special about certain IDs?")
 
+/obj/item/skillchip/sabrage
+	name = "Le S48R4G3 skillchip"
+	auto_traits = list(TRAIT_SABRAGE_PRO)
+	skill_name = "Sabrage Proficiency"
+	skill_description = "Grants the user knowledge of the intricate structure of a champagne bottle's structural weakness at the neck, \
+	improving their proficiency at being a show-off at officer parties."
+	skill_icon = "bottle-droplet"
+	activate_message = span_notice("You feel a new understanding of champagne bottles and methods on how to remove their corks.")
+	deactivate_message = span_notice("The knowledge of the subtle physics residing inside champagne bottles fades from your mind.")
+
 /obj/item/skillchip/brainwashing
 	name = "suspicious skillchip"
 	auto_traits = list(TRAIT_BRAINWASHING)
@@ -467,5 +479,32 @@
 	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 	. = ..()
+
+/obj/item/skillchip/chefs_kiss
+	name = "K1SS skillchip"
+	auto_traits = list(TRAIT_CHEF_KISS)
+	skill_name = "Chef's Kiss"
+	skill_description = "Allows you to kiss food you've created to make them with love."
+	skill_icon = "cookie"
+	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
+	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
+
+/obj/item/skillchip/master_angler
+	name = "Mast-Angl-Er skillchip"
+	auto_traits = list(TRAIT_REVEAL_FISH, TRAIT_EXAMINE_FISHING_SPOT)
+	skill_name = "Fisherman's Discernment"
+	skill_description = "Lists fishes when examining a fishing spot, and gives a hint of whatever thing's biting the hook."
+	skill_icon = "fish"
+	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
+	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
+
+/obj/item/skillchip/intj
+	name = "Integrated Intuitive Thinking and Judging skillchip"
+	auto_traits = list(TRAIT_REMOTE_TASTING)
+	skill_name = "Mental Flavour Calculus"
+	skill_description = "When examining food, you can experience the flavours just as well as if you were eating it."
+	skill_icon = FA_ICON_DRUMSTICK_BITE
+	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
+	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
 
 #undef SKILLCHIP_CATEGORY_GENERAL

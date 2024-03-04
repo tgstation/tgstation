@@ -1,15 +1,16 @@
-import { binaryInsertWith, sortBy } from "common/collections";
-import { InfernoNode } from "inferno";
-import { useBackend } from "../../backend";
-import { Box, Flex, Tooltip } from "../../components";
-import { PreferencesMenuData } from "./data";
-import features from "./preferences/features";
-import { FeatureValueInput } from "./preferences/features/base";
-import { TabbedMenu } from "./TabbedMenu";
+import { binaryInsertWith, sortBy } from 'common/collections';
+import { ReactNode } from 'react';
+
+import { useBackend } from '../../backend';
+import { Box, Flex, Tooltip } from '../../components';
+import { PreferencesMenuData } from './data';
+import features from './preferences/features';
+import { FeatureValueInput } from './preferences/features/base';
+import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {
-  name: string,
-  children: InfernoNode,
+  name: string;
+  children: ReactNode;
 };
 
 const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
@@ -18,29 +19,32 @@ const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
 
 const sortByName = sortBy<[string, PreferenceChild[]]>(([name]) => name);
 
-export const GamePreferencesPage = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const GamePreferencesPage = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
 
   for (const [featureId, value] of Object.entries(
-    data.character_preferences.game_preferences
+    data.character_preferences.game_preferences,
   )) {
     const feature = features[featureId];
 
-    let nameInner: InfernoNode = feature?.name || featureId;
+    let nameInner: ReactNode = feature?.name || featureId;
 
     if (feature?.description) {
       nameInner = (
-        <Box as="span" style={{
-          "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
-        }}>
+        <Box
+          as="span"
+          style={{
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+          }}
+        >
           {nameInner}
         </Box>
       );
     }
 
-    let name: InfernoNode = (
+    let name: ReactNode = (
       <Flex.Item grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
       </Flex.Item>
@@ -59,12 +63,14 @@ export const GamePreferencesPage = (props, context) => {
         {name}
 
         <Flex.Item grow={1} basis={0}>
-          {feature && <FeatureValueInput
-            feature={feature}
-            featureId={featureId}
-            value={value}
-            act={act}
-          /> || (
+          {(feature && (
+            <FeatureValueInput
+              feature={feature}
+              featureId={featureId}
+              value={value}
+              act={act}
+            />
+          )) || (
             <Box as="b" color="red">
               ...is not filled out properly!!!
             </Box>
@@ -78,18 +84,19 @@ export const GamePreferencesPage = (props, context) => {
       children: child,
     };
 
-    const category = feature?.category || "ERROR";
+    const category = feature?.category || 'ERROR';
 
-    gamePreferences[category]
-      = binaryInsertPreference(gamePreferences[category] || [], entry);
+    gamePreferences[category] = binaryInsertPreference(
+      gamePreferences[category] || [],
+      entry,
+    );
   }
 
-  const gamePreferenceEntries: [string, InfernoNode][] = sortByName(
-    Object.entries(gamePreferences)
-  ).map(
-    ([category, preferences]) => {
-      return [category, preferences.map(entry => entry.children)];
-    });
+  const gamePreferenceEntries: [string, ReactNode][] = sortByName(
+    Object.entries(gamePreferences),
+  ).map(([category, preferences]) => {
+    return [category, preferences.map((entry) => entry.children)];
+  });
 
   return (
     <TabbedMenu

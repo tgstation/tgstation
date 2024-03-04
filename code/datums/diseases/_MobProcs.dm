@@ -46,7 +46,7 @@
 	if(prob(15/disease.spreading_modifier))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety>0 && prob(satiety/2)) // positive satiety makes it harder to contract the disease.
 		return
 
 	if(!target_zone)
@@ -64,42 +64,52 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/infecting_human = src
 
+		if(HAS_TRAIT(infecting_human, TRAIT_VIRUS_RESISTANCE) && prob(75))
+			return
+
 		switch(target_zone)
 			if(BODY_ZONE_HEAD)
 				if(isobj(infecting_human.head))
-					passed = prob(100-infecting_human.head.armor.getRating(BIO))
+					passed = prob(100-infecting_human.head.get_armor_rating(BIO))
 				if(passed && isobj(infecting_human.wear_mask))
-					passed = prob(100-infecting_human.wear_mask.armor.getRating(BIO))
+					passed = prob(100-infecting_human.wear_mask.get_armor_rating(BIO))
 				if(passed && isobj(infecting_human.wear_neck))
-					passed = prob(100-infecting_human.wear_neck.armor.getRating(BIO))
+					passed = prob(100-infecting_human.wear_neck.get_armor_rating(BIO))
 			if(BODY_ZONE_CHEST)
 				if(isobj(infecting_human.wear_suit))
-					passed = prob(100-infecting_human.wear_suit.armor.getRating(BIO))
+					passed = prob(100-infecting_human.wear_suit.get_armor_rating(BIO))
 				if(passed && isobj(infecting_human.w_uniform))
-					passed = prob(100-infecting_human.w_uniform.armor.getRating(BIO))
+					passed = prob(100-infecting_human.w_uniform.get_armor_rating(BIO))
 			if(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 				if(isobj(infecting_human.wear_suit) && infecting_human.wear_suit.body_parts_covered&HANDS)
-					passed = prob(100-infecting_human.wear_suit.armor.getRating(BIO))
+					passed = prob(100-infecting_human.wear_suit.get_armor_rating(BIO))
 				if(passed && isobj(infecting_human.gloves))
-					passed = prob(100-infecting_human.gloves.armor.getRating(BIO))
+					passed = prob(100-infecting_human.gloves.get_armor_rating(BIO))
 			if(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				if(isobj(infecting_human.wear_suit) && infecting_human.wear_suit.body_parts_covered&FEET)
-					passed = prob(100-infecting_human.wear_suit.armor.getRating(BIO))
+					passed = prob(100-infecting_human.wear_suit.get_armor_rating(BIO))
 				if(passed && isobj(infecting_human.shoes))
-					passed = prob(100-infecting_human.shoes.armor.getRating(BIO))
+					passed = prob(100-infecting_human.shoes.get_armor_rating(BIO))
 
 	if(passed)
 		disease.try_infect(src)
 
 /mob/living/proc/AirborneContractDisease(datum/disease/disease, force_spread)
-	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
+	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
+		return
+
+	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob(min((50*disease.spreading_modifier - 1), 50)))
 		ForceContractDisease(disease)
 
-/mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
+/mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)
 	if(internal)
 		return
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
+
+	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
+		return
+
 	..()
 
 
@@ -116,18 +126,18 @@
 	return TRUE
 
 
-/mob/living/carbon/human/CanContractDisease(datum/disease/D)
+/mob/living/carbon/human/CanContractDisease(datum/disease/disease)
 	if(dna)
-		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
+			return FALSE
+	if(disease.required_organ)
+		if(!disease.has_required_infectious_organ(src, disease.required_organ))
 			return FALSE
 
-	for(var/thing in D.required_organs)
-		if(!((locate(thing) in bodyparts) || (locate(thing) in internal_organs)))
-			return FALSE
 	return ..()
 
 /mob/living/proc/CanSpreadAirborneDisease()
 	return !is_mouth_covered()
 
 /mob/living/carbon/CanSpreadAirborneDisease()
-	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.armor.getRating(BIO) >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.armor.getRating(BIO) >= 25)))
+	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.get_armor_rating(BIO) >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.get_armor_rating(BIO) >= 25)))

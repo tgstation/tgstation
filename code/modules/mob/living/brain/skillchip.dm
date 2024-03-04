@@ -6,7 +6,7 @@
  * Arguments:
  * * skillchip - The skillchip you'd like to remove.
  */
-/obj/item/organ/brain/proc/remove_skillchip(obj/item/skillchip/skillchip, silent = FALSE)
+/obj/item/organ/internal/brain/proc/remove_skillchip(obj/item/skillchip/skillchip, silent = FALSE)
 	// Check this skillchip is in the brain.
 	if(!(skillchip in skillchips))
 		stack_trace("Attempted to remove skillchip [skillchip] that wasn't in [src] skillchip list.")
@@ -27,7 +27,7 @@
  * * skillchip - The skillchip you'd like to implant.
  * * force - Whether or not to force the skillchip to be implanted, ignoring any checks.
  */
-/obj/item/organ/brain/proc/implant_skillchip(obj/item/skillchip/skillchip, force = FALSE)
+/obj/item/organ/internal/brain/proc/implant_skillchip(obj/item/skillchip/skillchip, force = FALSE)
 	// If we're not forcing the implant, so let's do some checks.
 	if(!force)
 		// Slot capacity check!
@@ -50,7 +50,7 @@
  * Arguments:
  * * not_removable - Special override, whether or not to force cloned chips to be non-removable, i.e. to delete on removal.
  */
-/obj/item/organ/brain/proc/clone_skillchip_list(not_removable = FALSE)
+/obj/item/organ/internal/brain/proc/clone_skillchip_list(not_removable = FALSE)
 	var/list/skillchip_metadata = list()
 	// Remove and call on_removal proc if successful.
 	for(var/chip in skillchips)
@@ -76,7 +76,7 @@
  * Arguments:
  * * silent - Whether to give the user a chat notification with the removal flavour text.
  */
-/obj/item/organ/brain/proc/destroy_all_skillchips(silent = TRUE)
+/obj/item/organ/internal/brain/proc/destroy_all_skillchips(silent = TRUE)
 	if(!QDELETED(owner))
 		for(var/chip in skillchips)
 			var/obj/item/skillchip/skillchip = chip
@@ -86,7 +86,7 @@
 /**
  * Returns the total maximum skillchip complexity supported by this brain.
  */
-/obj/item/organ/brain/proc/get_max_skillchip_complexity()
+/obj/item/organ/internal/brain/proc/get_max_skillchip_complexity()
 	if(!QDELETED(owner))
 		return max_skillchip_complexity + owner.skillchip_complexity_modifier
 
@@ -95,7 +95,7 @@
 /**
  * Returns the total current skillchip complexity used in this brain.
  */
-/obj/item/organ/brain/proc/get_used_skillchip_complexity()
+/obj/item/organ/internal/brain/proc/get_used_skillchip_complexity()
 	var/complexity_tally = 0
 
 	for(var/chip in skillchips)
@@ -111,13 +111,13 @@
 /**
  * Returns the total maximum skillchip slot capacity supported by this brain.
  */
-/obj/item/organ/brain/proc/get_max_skillchip_slots()
+/obj/item/organ/internal/brain/proc/get_max_skillchip_slots()
 	return max_skillchip_slots
 
 /**
  * Returns the total current skillchip slot capacity used in this brain.
  */
-/obj/item/organ/brain/proc/get_used_skillchip_slots()
+/obj/item/organ/internal/brain/proc/get_used_skillchip_slots()
 	var/slot_tally = 0
 
 	for(var/chip in skillchips)
@@ -130,7 +130,7 @@
 /**
  * Deactivates all chips currently in the brain.
  */
-/obj/item/organ/brain/proc/activate_skillchip_failsafe(silent = TRUE)
+/obj/item/organ/internal/brain/proc/activate_skillchip_failsafe(silent = TRUE)
 	if(QDELETED(owner))
 		return
 
@@ -154,7 +154,7 @@
 		to_chat(owner, span_warning("Unusual brain biology detected during regeneration. Failsafe procedure engaged. [chip_tally] skillchips have been deactivated."))
 
 /// Disables or re-enables any extra skillchips after skillchip limit changes.
-/obj/item/organ/brain/proc/update_skillchips()
+/obj/item/organ/internal/brain/proc/update_skillchips()
 	var/limit = get_max_skillchip_complexity()
 	var/dt = limit - get_used_skillchip_complexity()
 

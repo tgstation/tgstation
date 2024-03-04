@@ -5,3 +5,23 @@ GLOBAL_LIST_INIT(contrast_colors, list(
 	COLOR_TAN_ORANGE,
 	COLOR_VIOLET,
 ))
+
+/// Weighted list of colours a carp can be
+/// Weighted list of usual carp colors
+GLOBAL_LIST_INIT(carp_colors, list(
+	COLOR_CARP_PURPLE = 7,
+	COLOR_CARP_PINK = 7,
+	COLOR_CARP_GREEN = 7,
+	COLOR_CARP_GRAPE = 7,
+	COLOR_CARP_SWAMP = 7,
+	COLOR_CARP_TURQUOISE = 7,
+	COLOR_CARP_BROWN = 7,
+	COLOR_CARP_TEAL = 7,
+	COLOR_CARP_LIGHT_BLUE = 7,
+	COLOR_CARP_RUSTY = 7,
+	COLOR_CARP_RED = 7,
+	COLOR_CARP_YELLOW = 7,
+	COLOR_CARP_BLUE = 7,
+	COLOR_CARP_PALE_GREEN = 7,
+	COLOR_CARP_SILVER = 1, // The rare silver carp
+))

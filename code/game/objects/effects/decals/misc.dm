@@ -1,22 +1,7 @@
-/obj/effect/temp_visual/point
-	name = "pointer"
-	icon = 'icons/hud/screen_gen.dmi'
-	icon_state = "arrow"
-	plane = POINT_PLANE
-	duration = 25
-
-/obj/effect/temp_visual/point/Initialize(mapload, set_invis = 0)
-	. = ..()
-	var/atom/old_loc = loc
-	abstract_move(get_turf(src))
-	pixel_x = old_loc.pixel_x
-	pixel_y = old_loc.pixel_y
-	invisibility = set_invis
-
 //Used by spraybottles.
 /obj/effect/decal/chempuff
 	name = "chemicals"
-	icon = 'icons/obj/chempuff.dmi'
+	icon = 'icons/obj/medical/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -28,6 +13,8 @@
 	var/lifetime = INFINITY
 	///Are we a part of a stream?
 	var/stream
+	/// String used in combat logs containing reagents present for when the puff hits something
+	var/logging_string
 
 /obj/effect/decal/chempuff/Destroy(force)
 	user = null
@@ -37,28 +24,39 @@
 /obj/effect/decal/chempuff/blob_act(obj/structure/blob/B)
 	return
 
-/obj/effect/decal/chempuff/proc/end_life(datum/move_loop/engine)
-	QDEL_IN(src, engine.delay) //Gotta let it stop drifting
-	animate(src, alpha = 0, time = engine.delay)
+/obj/effect/decal/chempuff/proc/end_life(delay = 0.5 SECONDS)
+	QDEL_IN(src, delay) //Gotta let it stop drifting
+	animate(src, alpha = 0, time = delay)
 
 /obj/effect/decal/chempuff/proc/loop_ended(datum/move_loop/source)
 	SIGNAL_HANDLER
+
 	if(QDELETED(src))
 		return
-	end_life(source)
+	end_life(source.delay)
 
-/obj/effect/decal/chempuff/proc/check_move(datum/move_loop/source, succeeded)
+/obj/effect/decal/chempuff/proc/check_move(datum/move_loop/source, result)
+	SIGNAL_HANDLER
+
 	if(QDELETED(src)) //Reasons PLEASE WORK I SWEAR TO GOD
 		return
-	if(!succeeded) //If we hit something
-		end_life(source)
+	if(result == MOVELOOP_FAILURE) //If we hit something
+		end_life(source.delay)
 		return
 
-	var/puff_reagents_string = reagents.get_reagent_log_string()
-	var/travelled_max_distance = (source.lifetime - source.delay <= 0)
-	var/turf/our_turf = get_turf(src)
+	spray_down_turf(get_turf(src), travelled_max_distance = (source.lifetime - source.delay <= 0))
 
-	for(var/atom/movable/turf_atom in our_turf)
+	if(lifetime < 0) // Did we use up all the puff early?
+		end_life(source.delay)
+
+/**
+ * Handles going through every movable on the passed turf and calling [spray_down_atom] on them.
+ *
+ * [travelled_max_distance] is used to determine if we're at the end of the life, as in some
+ * contexts an atom may or may not end up being exposed depending on how far we've travelled.
+ */
+/obj/effect/decal/chempuff/proc/spray_down_turf(turf/spraying, travelled_max_distance = FALSE)
+	for(var/atom/movable/turf_atom in spraying)
 		if(turf_atom == src || turf_atom.invisibility) //we ignore the puff itself and stuff below the floor
 			continue
 
@@ -66,8 +64,7 @@
 			break
 
 		if(!stream)
-			reagents.expose(turf_atom, VAPOR)
-			log_combat(user, turf_atom, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+			spray_down_atom(turf_atom)
 			if(ismob(turf_atom))
 				lifetime -= 1
 			continue
@@ -80,23 +77,24 @@
 			if(turf_mob.body_position != STANDING_UP && !travelled_max_distance)
 				continue
 
-			reagents.expose(turf_mob, VAPOR)
-			log_combat(user, turf_mob, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+			spray_down_atom(turf_atom)
 			lifetime -= 1
 
 		else if(travelled_max_distance)
-			reagents.expose(turf_atom, VAPOR)
-			log_combat(user, turf_atom, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+			spray_down_atom(turf_atom)
 			lifetime -= 1
 
 	if(lifetime >= 0 && (!stream || travelled_max_distance))
-		reagents.expose(our_turf, VAPOR)
-		log_combat(user, our_turf, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+		spray_down_atom(spraying)
 		lifetime -= 1
 
-	// Did we use up all the puff early?
-	if(lifetime < 0)
-		end_life(source)
+/// Actually handles exposing the passed atom to the reagents and logging
+/obj/effect/decal/chempuff/proc/spray_down_atom(atom/spraying)
+	if(isnull(logging_string))
+		logging_string = reagents.get_reagent_log_string()
+
+	reagents.expose(spraying, VAPOR)
+	log_combat(user, spraying, "sprayed", sprayer, addition = "which had [logging_string]")
 
 /obj/effect/decal/fakelattice
 	name = "lattice"

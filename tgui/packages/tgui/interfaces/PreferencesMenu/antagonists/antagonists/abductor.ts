@@ -1,9 +1,10 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 const Abductor: Antagonist = {
-  key: "abductor",
-  name: "Abductor",
+  key: 'abductor',
+  name: 'Abductor',
   description: [
     multiline`
       Abductors are technologically advanced alien society set on cataloging

@@ -8,18 +8,29 @@
 
 /obj/machinery/power
 	name = null
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/datum/powernet/powernet = null
+	obj_flags = CAN_BE_HIT
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
+
+	///The powernet our machine is connected to.
+	var/datum/powernet/powernet
+	///Cable layer to which the machine is connected.
+	var/cable_layer = CABLE_LAYER_2
+	///Can the cable_layer be tweked with a multi tool
+	var/can_change_cable_layer = FALSE
+
+/obj/machinery/power/Initialize(mapload)
+	. = ..()
+	if(isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_cable_icons_on_turf), get_turf(src)), 3)
 	return ..()
 
 ///////////////////////////////
@@ -34,6 +45,36 @@
 //override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
 /obj/machinery/power/proc/should_have_node()
 	return FALSE
+
+/obj/machinery/power/examine(mob/user)
+	. = ..()
+	if(can_change_cable_layer)
+		if(!QDELETED(powernet))
+			. += span_notice("It's operating on the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		else
+			. += span_warning("It's disconnected from the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
+
+///does the required checks to see if this machinery layer can be changed
+/obj/machinery/power/proc/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	return can_change_cable_layer
+
+/obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+
+	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
+		return
+
+	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
+	if(isnull(choice))
+		return
+
+	cable_layer = GLOB.cable_name_to_layer[choice]
+	balloon_alert(user, "now operating on the [choice]")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
+	return multitool_act(user, tool)
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
@@ -102,17 +143,17 @@
  * - Amount: How much power the APC's cell is to be costed.
  */
 /obj/machinery/proc/directly_use_power(amount)
-	var/area/A = get_area(src)
-	var/obj/machinery/power/apc/local_apc
-	if(!A)
+	var/area/my_area = get_area(src)
+	if(isnull(my_area))
+		stack_trace("machinery is somehow not in an area, nullspace?")
 		return FALSE
-	local_apc = A.apc
-	if(!local_apc)
+	if(!my_area.requires_power)
+		return TRUE
+
+	var/obj/machinery/power/apc/my_apc = my_area.apc
+	if(isnull(my_apc))
 		return FALSE
-	if(!local_apc.cell)
-		return FALSE
-	local_apc.cell.use(amount)
-	return TRUE
+	return my_apc.cell.use(amount)
 
 /**
  * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
@@ -167,6 +208,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(machine_stat & BROKEN)
+		update_appearance()
 		return
 	var/initial_stat = machine_stat
 	if(powered(power_channel))
@@ -179,7 +221,14 @@
 		if(!(initial_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
-	update_appearance()
+
+	if(appearance_power_state != (machine_stat & NOPOWER))
+		update_appearance()
+
+// Saves like 300ms of init by not duping calls in the above proc
+/obj/machinery/update_appearance(updates)
+	. = ..()
+	appearance_power_state = machine_stat & NOPOWER
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -187,7 +236,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(cable_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
@@ -412,11 +461,11 @@
 ///////////////////////////////////////////////
 
 // return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
+/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_ALL)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)
-		if(C.machinery_layer & machinery_layer)
-			C.update_appearance()
+		if(C.cable_layer & cable_layer)
+			C.update_appearance() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
 			return C
 	return null

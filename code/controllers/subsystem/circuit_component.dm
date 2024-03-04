@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(circuit_component)
 	name = "Circuit Components"
 	wait = 0.1 SECONDS
 	priority = FIRE_PRIORITY_DEFAULT
+	flags = SS_NO_INIT
 
 	var/list/callbacks_to_invoke = list()
 	var/list/currentrun = list()
@@ -27,8 +28,6 @@ SUBSYSTEM_DEF(circuit_component)
 
 		to_call.user = null
 		to_call.InvokeAsync()
-		qdel(to_call)
-
 
 		if(MC_TICK_CHECK)
 			return
@@ -40,7 +39,7 @@ SUBSYSTEM_DEF(circuit_component)
  * Those that registered first will be executed first and those registered last will be executed last.
  */
 /datum/controller/subsystem/circuit_component/proc/add_callback(datum/port/input, datum/callback/to_call)
-	if(instant_run_tick == world.time && (TICK_USAGE - instant_run_start_cpu_usage) < instant_run_max_cpu_usage)
+	if(instant_run_tick == world.time && (TICK_USAGE - instant_run_start_cpu_usage) <= instant_run_max_cpu_usage)
 		instant_run_callbacks_to_run += to_call
 		return
 
@@ -75,14 +74,13 @@ SUBSYSTEM_DEF(circuit_component)
 			instant_run_currentrun.Cut(1,2)
 			to_call.user = null
 			to_call.InvokeAsync(received_inputs)
-			qdel(to_call)
 
 	if(length(instant_run_stack))
 		instant_run_callbacks_to_run = pop(instant_run_stack)
 	else
 		instant_run_tick = 0
 
-	if((TICK_USAGE - instant_run_start_cpu_usage) < instant_run_max_cpu_usage)
+	if((TICK_USAGE - instant_run_start_cpu_usage) <= instant_run_max_cpu_usage)
 		return received_inputs
 	else
 		return null

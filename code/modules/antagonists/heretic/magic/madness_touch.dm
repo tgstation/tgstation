@@ -1,32 +1,33 @@
 // Currently unused
-/obj/effect/proc_holder/spell/pointed/touch/mad_touch
+/datum/action/cooldown/spell/touch/mad_touch
 	name = "Touch of Madness"
-	desc = "A touch spell that drains your enemy's sanity."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "mad_touch"
-	action_background_icon_state = "bg_ecult"
+	desc = "A touch spell that drains your enemy's sanity and knocks them down."
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "mad_touch"
+
 	school = SCHOOL_FORBIDDEN
-	charge_max = 150
-	clothes_req = FALSE
+	cooldown_time = 15 SECONDS
 	invocation_type = INVOCATION_NONE
-	range = 2
+	spell_requirements = NONE
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
-/obj/effect/proc_holder/spell/pointed/touch/mad_touch/can_target(atom/target, mob/user, silent)
-	if(!ishuman(target))
-		if(!silent)
-			target.balloon_alert(user, "invalid target!")
+/datum/action/cooldown/spell/touch/mad_touch/is_valid_target(atom/cast_on)
+	if(!ishuman(cast_on))
+		return FALSE
+	var/mob/living/carbon/human/human_cast_on = cast_on
+	if(!human_cast_on.mind || !human_cast_on.mob_mood || IS_HERETIC_OR_MONSTER(human_cast_on))
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/pointed/touch/mad_touch/cast(list/targets, mob/user)
-	. = ..()
-	for(var/mob/living/carbon/target in targets)
-		if(ishuman(targets))
-			var/mob/living/carbon/human/tar = target
-			if(tar.can_block_magic(antimagic_flags))
-				tar.visible_message(span_danger("The spell bounces off of [target]!"), span_danger("The spell bounces off of you!"))
-				return
-		if(target.mind && !IS_HERETIC(target))
-			to_chat(user, span_warning("[target.name] has been cursed!"))
-			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+/datum/action/cooldown/spell/touch/mad_touch/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	victim.visible_message(
+		span_danger("The spell bounces off of [victim]!"),
+		span_danger("The spell bounces off of you!"),
+	)
+
+/datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
+	to_chat(caster, span_warning("[victim.name] has been cursed!"))
+	victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	return TRUE

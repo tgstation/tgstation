@@ -1,0 +1,39 @@
+@use 'sass:color';
+@use './colors.scss';
+
+$dragSize: 0.6rem;
+$borderSize: 0.2rem;
+
+.dragzone-horizontal {
+  border-left: $borderSize solid;
+  border-right: $borderSize solid;
+  color: transparent;
+  width: 100%;
+  height: $dragSize;
+}
+.dragzone-left {
+  border-left: $borderSize solid;
+}
+
+.dragzone-right {
+  border-right: $borderSize solid;
+}
+
+.dragzone-vertical {
+  color: transparent;
+  height: 100%;
+  width: $dragSize;
+}
+
+.dragzone-top {
+  border-top: $borderSize solid;
+}
+
+.dragzone-bottom {
+  border-bottom: $borderSize solid;
+}
+
+/** Lightmode static theme */
+.dragzone-lightMode {
+  border-color: colors.$lightBorder;
+}

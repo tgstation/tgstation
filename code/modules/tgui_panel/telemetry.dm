@@ -12,7 +12,7 @@
 /**
  * Maximum time allocated for sending a telemetry packet.
  */
-#define TGUI_TELEMETRY_RESPONSE_WINDOW 30 SECONDS
+#define TGUI_TELEMETRY_RESPONSE_WINDOW (30 SECONDS)
 
 /// Time of telemetry request
 /datum/tgui_panel/var/telemetry_requested_at
@@ -108,6 +108,7 @@
 	if(found)
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
 		message_admins(msg)
+		send2tgs_adminless_only("Banned-user", msg)
 		log_admin_private(msg)
 		log_suspicious_login(msg, access_log_mirror = FALSE)
 
@@ -133,8 +134,11 @@
 			"ckey" = ckey,
 			"telemetry_ckey" = one_query["telemetry_ckey"],
 			"address" = one_query["address"],
-			"computer_id" = one_query["computer_id"], 
+			"computer_id" = one_query["computer_id"],
 			"round_id" = GLOB.round_id,
 		))
 		query.Execute()
 		qdel(query)
+
+#undef TGUI_TELEMETRY_MAX_CONNECTIONS
+#undef TGUI_TELEMETRY_RESPONSE_WINDOW

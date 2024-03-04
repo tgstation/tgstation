@@ -1,0 +1,1 @@
+/obj/effect/landmark/xeno_spawn : /obj/effect/landmark/generic_maintenance_landmark{@OLD}

@@ -18,12 +18,9 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "f" = (
-/obj/structure/mirror/directional/east{
-	icon_state = "mirror_broke"
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/structure/mirror/broken/directional/east,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -42,16 +39,12 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
-/obj/structure/mirror/directional/north{
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken/directional/north,
 /obj/item/knife/envy,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
-/obj/structure/mirror/directional/east{
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken/directional/east,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
@@ -59,15 +52,13 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "n" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "o" = (
 /obj/structure/mirror/directional/west,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "p" = (
 /obj/machinery/door/airlock/hatch,

@@ -11,6 +11,15 @@
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
+#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
+
+/// Return this from a while_present proc to call its on_loss version, if one exists
+/// Useful for doing "we're done" effects without duped code
+#define BREATH_LOST 1
+
+//The proportion of oxygen needed for metabolism compared to pluoxium. (Pluoxium is this many times efficient as oxygen)
+#define PLUOXIUM_PROPORTION 8
+
 //Defines for N2O and Healium euphoria moodlets
 #define EUPHORIA_INACTIVE 0
 #define EUPHORIA_ACTIVE 1
@@ -35,6 +44,11 @@
 /// This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 #define TEMPERATURE_DAMAGE_COEFFICIENT 1.5
 
+/// The maximum temperature of Lavaland
+#define LAVALAND_MAX_TEMPERATURE 350
+/// The minimum temperature of Icebox
+#define ICEBOX_MIN_TEMPERATURE 180
+
 /// The natural temperature for a body
 #define BODYTEMP_NORMAL 310.15
 /// This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
@@ -53,10 +67,14 @@
 /// This also affects how fast the body normalises it's temperature when hot.
 /// 340k is about 66c, and rather high for a human.
 #define BODYTEMP_HEAT_DAMAGE_LIMIT (BODYTEMP_NORMAL + 30)
+/// A temperature limit which is above the maximum lavaland temperature
+#define BODYTEMP_HEAT_LAVALAND_SAFE (LAVALAND_MAX_TEMPERATURE + 5)
 /// The body temperature limit the human body can take before it starts taking damage from cold.
 /// This also affects how fast the body normalises it's temperature when cold.
 /// 270k is about -3c, that is below freezing and would hurt over time.
 #define BODYTEMP_COLD_DAMAGE_LIMIT (BODYTEMP_NORMAL - 40)
+/// A temperature limit which is above the minimum icebox temperature
+#define BODYTEMP_COLD_ICEBOX_SAFE (ICEBOX_MIN_TEMPERATURE - 5)
 /// The body temperature limit the human body can take before it will take wound damage.
 #define BODYTEMP_HEAT_WOUND_LIMIT (BODYTEMP_NORMAL + 90) // 400.5 k
 /// The modifier on cold damage limit hulks get ontop of their regular limit
@@ -77,6 +95,9 @@
 #define BODYTEMP_COLD_WARNING_2 (BODYTEMP_COLD_DAMAGE_LIMIT - 70) //200k
 /// The temperature the blue icon is displayed.
 #define BODYTEMP_COLD_WARNING_3 (BODYTEMP_COLD_DAMAGE_LIMIT - 150) //120k
+
+/// Beyond this temperature, being on fire will increase body temperature by less and less
+#define BODYTEMP_FIRE_TEMP_SOFTCAP 1200
 
 /// The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define PRESSURE_DAMAGE_COEFFICIENT 2
@@ -129,3 +150,6 @@
 #define SHOES_MIN_TEMP_PROTECT 2.0
 /// For gloves
 #define SHOES_MAX_TEMP_PROTECT 1500
+
+///Minimum temperature for items on fire
+#define BURNING_ITEM_MINIMUM_TEMPERATURE (150+T0C)

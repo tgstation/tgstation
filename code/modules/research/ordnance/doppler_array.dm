@@ -15,19 +15,19 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_hardware/hard_drive/portable/inserted_disk
+	var/obj/item/computer_disk/inserted_disk
 
 	// Lighting system to better communicate the directions.
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 1
 	light_color = COLOR_RED
 
 /obj/machinery/doppler_array/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/update_doppler_light)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/update_doppler_light)
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(update_doppler_light))
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(update_doppler_light))
 	update_doppler_light()
 
 	// Rotation determines the detectable direction.
@@ -49,20 +49,20 @@
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
 /obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/computer_hardware/hard_drive/portable))
-		var/obj/item/computer_hardware/hard_drive/portable/disk = item
+	if(istype(item, /obj/item/computer_disk))
+		var/obj/item/computer_disk/disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(disk, src))
 			inserted_disk = disk
 			return
 		else
-			balloon_alert(user, span_warning("[disk] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 			return ..()
 	return ..()
 
 /obj/machinery/doppler_array/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))
@@ -86,7 +86,7 @@
 	record_data.explosion_record = record
 	record_data.possible_experiments = apply_experiments(record)
 
-	if(inserted_disk.store_file(record_data))
+	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
 		playsound(src, 'sound/machines/terminal_error.ogg', 25)
@@ -163,7 +163,7 @@
 	if(machine_stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)
-	if(zone.z != epicenter.z)
+	if(!is_valid_z_level(zone, epicenter))
 		return FALSE
 
 	if(next_announce > world.time)
@@ -218,7 +218,7 @@
 /obj/machinery/doppler_array/Exited(atom/movable/gone, direction)
 	if(gone == inserted_disk)
 		inserted_disk = null
-	. = ..()
+	return ..()
 
 /obj/machinery/doppler_array/powered()
 	if(panel_open)
@@ -237,7 +237,7 @@
 	else if (machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[base_icon_state]_screen-off")
 
-/obj/machinery/doppler_array/on_deconstruction()
+/obj/machinery/doppler_array/on_deconstruction(disassembled)
 	eject_disk()
 	. = ..()
 
@@ -304,7 +304,7 @@
 				return
 			records -= record
 			return TRUE
-		if("print_record")
+		if("save_record")
 			var/datum/data/tachyon_record/record  = locate(params["ref"]) in records
 			if(!records || !(record in records))
 				return

@@ -23,18 +23,28 @@
 	/// Maximum timer for c4 charges
 	var/maximum_timer = 60000
 
+/obj/item/grenade/c4/apply_grenade_fantasy_bonuses(quality)
+	var/devIncrease = round(quality / 10)
+	var/heavyIncrease = round(quality / 5)
+	var/lightIncrease = round(quality / 2)
+	boom_sizes[1] = modify_fantasy_variable("devIncrease", boom_sizes[1], devIncrease)
+	boom_sizes[2] = modify_fantasy_variable("heavyIncrease", boom_sizes[2], heavyIncrease)
+	boom_sizes[3] = modify_fantasy_variable("lightIncrease", boom_sizes[3], lightIncrease)
+
+/obj/item/grenade/c4/remove_grenade_fantasy_bonuses(quality)
+	boom_sizes[1] = reset_fantasy_variable("devIncrease", boom_sizes[1])
+	boom_sizes[2] = reset_fantasy_variable("heavyIncrease", boom_sizes[2])
+	boom_sizes[3] = reset_fantasy_variable("lightIncrease", boom_sizes[3])
+
 /obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
-	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
-	wires = new /datum/wires/explosive/c4(src)
-
-/obj/item/grenade/c4/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
+	set_wires(new /datum/wires/explosive/c4(src))
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	target = null
 	return ..()
 
@@ -80,7 +90,7 @@
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = tgui_input_number(user, "Please set the timer", "C4 Timer", minimum_timer, maximum_timer, minimum_timer)
-	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	det_time = newtime
 	to_chat(user, "Timer set for [det_time] seconds.")
@@ -88,39 +98,55 @@
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
 	aim_dir = get_dir(user, bomb_target)
+	if(isdead(bomb_target))
+		return
 	if(!flag)
 		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return
+		return .
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 
 	if(do_after(user, 30, target = bomb_target))
 		if(!user.temporarilyRemoveItemFromInventory(src))
-			return
+			return .
 		target = bomb_target
 		active = TRUE
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
-		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")
-		notify_ghosts("[user] has planted \a [src] on [target] with a [det_time] second fuse!", source = bomb_target, action = (isturf(target) ? NOTIFY_JUMP : NOTIFY_ORBIT), flashwindow = FALSE, header = "Explosive Planted")
+		user.log_message("planted [name] on [target.name] with a [det_time] second fuse.", LOG_ATTACK)
+		var/icon/target_icon = icon(bomb_target.icon, bomb_target.icon_state)
+		target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
+		var/mutable_appearance/bomb_target_image = mutable_appearance(target_icon)
+		notify_ghosts(
+			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
+			source = bomb_target,
+			header = "Explosive Planted",
+			alert_overlay = bomb_target_image,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 
 		moveToNullspace() //Yep
 
-		if(istype(bomb_target, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+		if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/thrown_weapon = bomb_target
 			thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 			thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
 			if(thrown_weapon.embedding)
 				thrown_weapon.embedding["embed_chance"] = 0
 				thrown_weapon.updateEmbedding()
-		else if(istype(bomb_target, /mob/living))
+		else if(isliving(bomb_target))
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)
 		to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
-		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
+		addtimer(CALLBACK(src, PROC_REF(detonate)), det_time*10)
+
+	return .
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/player)
 	if(!player)
@@ -139,11 +165,12 @@
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
+	user.log_message("suicided with [src].", LOG_ATTACK)
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message(span_suicide("[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!"))
 	shout_syndicate_crap(user)
 	explosion(user, heavy_impact_range = 2, explosion_cause = src) //Cheap explosion imitation because putting detonate() here causes runtimes
-	user.gib(1, 1)
+	user.gib(DROP_BODYPARTS)
 	qdel(src)
 
 // X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to. And much less safe to be standing on the other side of.

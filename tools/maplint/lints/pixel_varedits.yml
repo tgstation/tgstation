@@ -1,0 +1,4 @@
+"*":
+  banned_variables:
+  - step_x
+  - step_y

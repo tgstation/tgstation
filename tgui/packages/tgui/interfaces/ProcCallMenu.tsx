@@ -1,24 +1,32 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Stack, Section, Input, Button, Dropdown, NoticeBox } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
+import {
+  Button,
+  Dropdown,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
+import { Window } from '../layouts';
 
 type Port = {
-  name: string,
-  color: string,
-  datatype: string,
-}
+  name: string;
+  color: string;
+  datatype: string;
+};
 
 type ProcCallMenuData = {
-  input_ports: Port[],
-  possible_types: string[],
-  expected_output: string,
-  expected_output_color: string,
-  resolve_weakref: BooleanLike,
-}
+  input_ports: Port[];
+  possible_types: string[];
+  expected_output: string;
+  expected_output_color: string;
+  resolve_weakref: BooleanLike;
+};
 
-export const ProcCallMenu = (props, context) => {
-  const { act, data } = useBackend<ProcCallMenuData>(context);
+export const ProcCallMenu = (props) => {
+  const { act, data } = useBackend<ProcCallMenuData>();
   const {
     input_ports,
     possible_types,
@@ -29,19 +37,20 @@ export const ProcCallMenu = (props, context) => {
   return (
     <Window width={500} height={400}>
       <Window.Content scrollable>
-        <Stack grow height="100%">
+        <Stack fill>
           <Stack.Item>
             <Section fill title="Options">
               <Stack vertical width="180px">
-                <Stack.Item color="label">
-                  Expected Output:
-                </Stack.Item>
+                <Stack.Item color="label">Expected Output:</Stack.Item>
                 <Stack.Item>
-                  <Dropdown width="100%"
+                  <Dropdown
+                    width="100%"
                     displayText={expected_output}
                     options={possible_types}
                     color={expected_output_color}
-                    onSelected={(value) => act("set_expected_output", { datatype: value })}
+                    onSelected={(value) =>
+                      act('set_expected_output', { datatype: value })
+                    }
                   />
                 </Stack.Item>
                 <Stack.Divider />
@@ -50,7 +59,7 @@ export const ProcCallMenu = (props, context) => {
                     content="Resolve Weakref"
                     textAlign="center"
                     checked={resolve_weakref}
-                    onClick={() => act("resolve_weakref")}
+                    onClick={() => act('resolve_weakref')}
                     fluid
                   />
                 </Stack.Item>
@@ -73,17 +82,23 @@ export const ProcCallMenu = (props, context) => {
                     color={val.color}
                     datatype={val.datatype}
                     datatypeOptions={possible_types}
-                    onRemove={() => act("remove_argument", {
-                      index: index+1,
-                    })}
-                    onSetType={type => act("set_argument_datatype", {
-                      index: index+1,
-                      datatype: type,
-                    })}
-                    onEnter={(e, value) => act("rename_argument", {
-                      index: index+1,
-                      name: value,
-                    })}
+                    onRemove={() =>
+                      act('remove_argument', {
+                        index: index + 1,
+                      })
+                    }
+                    onSetType={(type) =>
+                      act('set_argument_datatype', {
+                        index: index + 1,
+                        datatype: type,
+                      })
+                    }
+                    onEnter={(e, value) =>
+                      act('rename_argument', {
+                        index: index + 1,
+                        name: value,
+                      })
+                    }
                   />
                 ))}
                 <Stack.Item>
@@ -92,7 +107,7 @@ export const ProcCallMenu = (props, context) => {
                     content="Add Argument"
                     color="good"
                     icon="plus"
-                    onClick={() => act("add_argument")}
+                    onClick={() => act('add_argument')}
                   />
                 </Stack.Item>
               </Stack>
@@ -104,7 +119,7 @@ export const ProcCallMenu = (props, context) => {
   );
 };
 
-const PortEntry = (props, context) => {
+const PortEntry = (props) => {
   const {
     onRemove,
     onEnter,
@@ -120,12 +135,7 @@ const PortEntry = (props, context) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input
-            placeholder="Name"
-            value={name}
-            onChange={onEnter}
-            fluid
-          />
+          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
         </Stack.Item>
         <Stack.Item>
           <Dropdown
@@ -136,11 +146,7 @@ const PortEntry = (props, context) => {
           />
         </Stack.Item>
         <Stack.Item>
-          <Button
-            icon="times"
-            color="red"
-            onClick={onRemove}
-          />
+          <Button icon="times" color="red" onClick={onRemove} />
         </Stack.Item>
       </Stack>
     </Stack.Item>

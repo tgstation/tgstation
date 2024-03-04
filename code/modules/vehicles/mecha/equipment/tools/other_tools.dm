@@ -58,7 +58,7 @@
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(ourturf, target_turf, 300, 1, /obj/effect/portal/anom)
 	message_admins("[ADMIN_LOOKUPFLW(source)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(ourturf)]")
-	log_game("[key_name(source)] used a Wormhole Generator in [AREACOORD(ourturf)]")
+	source.log_message("used a Wormhole Generator in [AREACOORD(ourturf)].", LOG_GAME)
 	QDEL_LIST_IN(created, rand(150,300))
 	return ..()
 
@@ -97,13 +97,13 @@
 						return
 				movable_target = target
 				to_chat(source, "[icon2html(src, source)][span_notice("locked on [target].")]")
-			else if(target!=movable_target)
+			else if(target != movable_target)
 				if(movable_target in view(chassis))
 					var/turf/targ = get_turf(target)
 					var/turf/orig = get_turf(movable_target)
 					movable_target.throw_at(target, 14, 1.5)
 					movable_target = null
-					log_game("[key_name(source)] used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
+					source.log_message("used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).", LOG_GAME)
 					return ..()
 				movable_target = null
 				to_chat(source, "[icon2html(src, source)][span_notice("Lock on [movable_target] disengaged.")]")
@@ -123,7 +123,7 @@
 						continue
 				do_scatter(scatter, target)
 			var/turf/targetturf = get_turf(target)
-			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)]")
+			source.log_message("used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)].", LOG_GAME)
 			return ..()
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/scatter, atom/movable/target)
@@ -134,14 +134,11 @@
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_snowflake_data()
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"name" = "Gravity catapult",
 		"mode" = mode == GRAVPUSH_MODE ? "Push" : "Sling",
+		"mode_label" = "Gravity Catapult",
 	)
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode++
 		if(mode > GRAVPUSH_MODE)
@@ -159,35 +156,38 @@
 	///icon in armor.dmi that shows in the UI
 	var/iconstate_name
 	//how much the armor of the mech is modified by
-	var/list/armor_mod = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	var/datum/armor/armor_mod
 
-/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
-	chassis.armor = chassis.armor.modifyRating(arglist(armor_mod))
+	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
 /obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
-	var/list/removed_armor = armor_mod.Copy()
-	for(var/armor_type in removed_armor)
-		removed_armor[armor_type] = -removed_armor[armor_type]
-	chassis.armor = chassis.armor.modifyRating(arglist(removed_armor))
+	chassis.set_armor(chassis.get_armor().subtract_other_armor(armor_mod))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
-	name = "armor booster module (Close Combat Weaponry)"
+	name = "Impact Cushion Plates"
 	desc = "Boosts exosuit armor against melee attacks"
 	icon_state = "mecha_abooster_ccw"
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
-	armor_mod = list(MELEE = 15, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+
+/datum/armor/mecha_equipment_ccw_boost
+	melee = 15
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
-	name = "armor booster module (Ranged Weaponry)"
-	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots."
+	name = "Projectile Shielding"
+	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
-	armor_mod = list(MELEE = 0, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = /datum/armor/mecha_equipment_ranged_boost
 
+/datum/armor/mecha_equipment_ranged_boost
+	bullet = 10
+	laser = 10
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 
@@ -198,34 +198,34 @@
 	icon_state = "repair_droid"
 	energy_drain = 50
 	range = 0
-	activated = FALSE
+	can_be_toggled = TRUE
+	active = FALSE
 	equipment_slot = MECHA_UTILITY
 	/// Repaired health per second
 	var/health_boost = 0.5
 	var/icon/droid_overlay
-	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
+	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_CABIN_AIR_BREACH)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	chassis?.cut_overlay(droid_overlay)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
 	. = ..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
-	M.add_overlay(droid_overlay)
+	new_mecha.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
 	chassis.cut_overlay(droid_overlay)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/repair_droid/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action != "toggle")
 		return
 	chassis.cut_overlay(droid_overlay)
-	if(activated)
+	if(active)
 		START_PROCESSING(SSobj, src)
 		droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 		log_message("Activated.", LOG_MECHA)
@@ -236,14 +236,14 @@
 	chassis.add_overlay(droid_overlay)
 
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/process(delta_time)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/process(seconds_per_tick)
 	if(!chassis)
 		return PROCESS_KILL
-	var/h_boost = health_boost * delta_time
+	var/h_boost = health_boost * seconds_per_tick
 	var/repaired = FALSE
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
-	else if(chassis.internal_damage && DT_PROB(8, delta_time))
+	else if(chassis.internal_damage && SPT_PROB(8, seconds_per_tick))
 		for(var/int_dam_flag in repairable_damage)
 			if(!(chassis.internal_damage & int_dam_flag))
 				continue
@@ -255,13 +255,13 @@
 		repaired = TRUE
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
-			activated = FALSE
+			active = FALSE
 			return PROCESS_KILL
 	else //no repair needed, we turn off
 		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
-		activated = FALSE
+		active = FALSE
 		return PROCESS_KILL
 
 
@@ -270,19 +270,21 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator
 	name = "plasma engine"
-	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
+	desc = "An exosuit module that generates power using solid plasma as fuel."
 	icon_state = "tesla"
 	range = MECHA_MELEE
 	equipment_slot = MECHA_POWER
-	activated = FALSE
-	var/coeff = 100
-	var/obj/item/stack/sheet/fuel
-	var/max_fuel = 150000
-	/// Fuel used per second while idle, not generating
-	var/fuelrate_idle = 12.5
-	/// Fuel used per second while actively generating
-	var/fuelrate_active = 100
-	/// Energy recharged per second
+	can_be_toggled = TRUE
+	active = FALSE
+	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
+	var/obj/item/stack/sheet/fuel = null
+	///Fuel used per second while idle, not generating, in units
+	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT
+	///Fuel used per second while actively generating, in units
+	var/fuelrate_active = 0.05 * SHEET_MATERIAL_AMOUNT
+	///Maximum fuel capacity of the generator, in units
+	var/max_fuel = 75 * SHEET_MATERIAL_AMOUNT
+	///Energy recharged per second
 	var/rechargerate = 10
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
@@ -293,76 +295,76 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
-
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	STOP_PROCESSING(SSobj, src)
-	activated = FALSE
+	active = FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_snowflake_data()
 	return list(
-		"active" = activated,
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_GENERATOR,
 		"fuel" = fuel.amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/generator/ui_act(action, list/params)
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/generator/handle_ui_act(action, list/params)
 	if(action == "toggle")
-		if(activated)
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation enabled.")]")
+		if(active)
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation disabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation disabled.")]")
 			STOP_PROCESSING(SSobj, src)
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon, mob/user, params)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(!istype(weapon, fuel))
+		return FALSE
 	load_fuel(weapon, user)
 
-/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P, mob/user)
-	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*MINERAL_MATERIAL_AMOUNT,0)
-		if(to_load)
-			var/units = min(max(round(to_load / MINERAL_MATERIAL_AMOUNT),1),P.amount)
-			fuel.amount += units
-			P.use(units)
-			to_chat(user, "[icon2html(src, user)][span_notice("[units] unit\s of [fuel] successfully loaded.")]")
-			return units
-		else
-			to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
-			return 0
-	else
-		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [P] cannot be used as fuel.")]")
-		return
-
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
-	load_fuel(weapon)
-
-/obj/item/mecha_parts/mecha_equipment/generator/process(delta_time)
+/obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
-		activated = FALSE
+		active = FALSE
 		return PROCESS_KILL
-	if(fuel.amount<=0)
-		activated = FALSE
+	if(fuel.amount <= 0)
+		active = FALSE
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
 		return PROCESS_KILL
-	var/cur_charge = chassis.get_charge()
-	if(isnull(cur_charge))
-		activated = FALSE
+	var/current_charge = chassis.get_charge()
+	if(isnull(current_charge))
+		active = FALSE
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("No power cell detected.")]")
 		log_message("Deactivated.", LOG_MECHA)
 		return PROCESS_KILL
-	var/use_fuel = fuelrate_idle
-	if(cur_charge < chassis.cell.maxcharge)
-		use_fuel = fuelrate_active
-		chassis.give_power(rechargerate * delta_time)
-	fuel.amount -= min(delta_time * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
+	//how much fuel are we using per tick
+	var/fuel_usage_rate = fuelrate_idle
+	if(current_charge < chassis.cell.maxcharge)
+		fuel_usage_rate = fuelrate_active
+		chassis.give_power(rechargerate * seconds_per_tick)
+	fuel.amount -= min(seconds_per_tick * fuel_usage_rate / SHEET_MATERIAL_AMOUNT, fuel.amount)
+
+///Try to insert more fuel into the generator
+/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/inserted_fuel, mob/user)
+	if(inserted_fuel.amount == 0) //if we somehow have a sheet of 0 fuel
+		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [inserted_fuel] cannot be used as fuel.")]")
+		return
+	//how much fuel is needed to fill the generator to its max capacity, in units
+	var/units_to_load = max(max_fuel - fuel.amount * SHEET_MATERIAL_AMOUNT, 0)
+	if(!units_to_load)
+		to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
+		return
+	//how much new fuel are we inserting, in sheets
+	var/fuel_to_load = min(max(round(units_to_load / SHEET_MATERIAL_AMOUNT), 1), inserted_fuel.amount)
+	fuel.amount += fuel_to_load
+	inserted_fuel.use(fuel_to_load)
+	to_chat(user, "[icon2html(src, user)][span_notice("[fuel_to_load] unit\s of [fuel] successfully loaded.")]")
+
+///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
+/obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 
@@ -371,6 +373,8 @@
 	desc = "A generic set of thrusters, from an unknown source. Uses not-understood methods to propel exosuits seemingly for free."
 	icon_state = "thrusters"
 	equipment_slot = MECHA_UTILITY
+	can_be_toggled = TRUE
+	active_label = "Thrusters"
 	var/effect_type = /obj/effect/particle_effect/sparks
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
@@ -380,31 +384,25 @@
 			return FALSE
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	M.active_thrusters = src //Enable by default
+/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
+	new_mecha.active_thrusters = src //Enable by default
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/detach()
-	if(chassis?.active_thrusters == src)
+/obj/item/mecha_parts/mecha_equipment/thrusters/detach(atom/moveto)
+	if(chassis.active_thrusters == src)
 		chassis.active_thrusters = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/Destroy()
-	if(chassis?.active_thrusters == src)
-		chassis.active_thrusters = null
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/thrusters/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/mecha_parts/mecha_equipment/thrusters/set_active(active)
 	. = ..()
-	if(params["toggle"])
-		if(activated) //inactive
-			START_PROCESSING(SSobj, src)
-			enable()
-			log_message("Activated.", LOG_MECHA)
-		else
-			STOP_PROCESSING(SSobj, src)
-			disable()
-			log_message("Deactivated.", LOG_MECHA)
+	if(active)
+		START_PROCESSING(SSobj, src)
+		enable()
+		log_message("Activated.", LOG_MECHA)
+	else
+		STOP_PROCESSING(SSobj, src)
+		disable()
+		log_message("Deactivated.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/enable()
 	if (chassis.active_thrusters == src)
@@ -426,27 +424,23 @@
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/generate_effect(movement_dir)
 	var/obj/effect/particle_effect/E = new effect_type(get_turf(chassis))
-	E.dir = turn(movement_dir, 180)
-	step(E, turn(movement_dir, 180))
+	E.dir = REVERSE_DIR(movement_dir)
+	step(E, REVERSE_DIR(movement_dir))
 	QDEL_IN(E, 5)
-
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
 	effect_type = /obj/effect/particle_effect/fluid/smoke
-	var/move_cost = 20 //moles per step
-
-/obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	if(!M.internal_tank)
-		to_chat(user, span_warning("[M] does not have an internal tank and cannot support this upgrade!"))
-		return FALSE
-	return ..()
+	var/move_cost = 0.05 //moles per step (5 times more than human jetpacks)
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/thrust(movement_dir)
-	if(!chassis || !chassis.internal_tank)
+	if(!chassis)
 		return FALSE
-	var/datum/gas_mixture/our_mix = chassis.internal_tank.return_air()
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = chassis.get_internal_tank()
+	if(!internal_tank)
+		return FALSE
+	var/datum/gas_mixture/our_mix = internal_tank.return_air()
 	var/moles = our_mix.total_moles()
 	if(moles < move_cost)
 		our_mix.remove(moles)
@@ -468,3 +462,64 @@
 		generate_effect(movement_dir)
 		return TRUE
 	return FALSE
+
+///////////////////////////////////// CONCEALED WEAPON BAY ////////////////////////////////////////
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay
+	name = "concealed weapon bay"
+	desc = "A compartment that allows a non-combat mecha to equip one weapon while hiding the weapon from plain sight."
+	icon_state = "mecha_weapon_bay"
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
+	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
+		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
+		return
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
+	if(checkonly)
+		return TRUE
+	var/obj/item/mecha_parts/mecha_equipment/existing_equip
+	if(attach_right)
+		existing_equip = mech.equip_by_category[MECHA_R_ARM]
+	else
+		existing_equip = mech.equip_by_category[MECHA_L_ARM]
+	if(existing_equip)
+		name = existing_equip.name
+		icon = existing_equip.icon
+		icon_state = existing_equip.icon_state
+		qdel(existing_equip)
+		user.visible_message(span_notice("[user] hollows out [src] and puts something in."), span_notice("You attach the concealed weapon bay to [mech] within the shell of [src]."))
+	else
+		user.visible_message(span_notice("[user] attaches [src] to [mech]."), span_notice("You attach [src] to [mech]."))
+	attach(mech, attach_right)
+	mech.mech_type |= EXOSUIT_MODULE_CONCEALED_WEP_BAY
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/detach(atom/moveto)
+	var/obj/vehicle/sealed/mecha/mech = chassis
+	. = ..()
+	name = initial(name)
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+	if(!locate(/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay) in mech.contents) //if no others exist
+		mech.mech_type &= ~EXOSUIT_MODULE_CONCEALED_WEP_BAY
+
+/obj/item/mecha_parts/camera_kit
+	name = "exosuit-mounted camera"
+	desc = "A security camera meant for exosuit-mounted surveillance-on-the-go."
+	icon = 'icons/mob/mecha_equipment.dmi'
+	icon_state = "mecha_camera"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
+	if(mech.chassis_camera)
+		balloon_alert(user, "already has a camera!")
+		return FALSE
+
+	. = ..()
+
+	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
+	mech.chassis_camera.update_c_tag(mech)
+	mech.diag_hud_set_camera()
+

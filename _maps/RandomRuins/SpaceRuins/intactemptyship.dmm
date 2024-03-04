@@ -18,32 +18,12 @@
 	},
 /area/ruin/space/has_grav/powered/authorship)
 "e" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/authorship)
-"f" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/shuttle/engine/heater{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/authorship)
-"g" = (
-/obj/structure/table/wood,
-/obj/item/clothing/under/shorts/black,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "h" = (
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
-"i" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp,
-/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "j" = (
@@ -59,12 +39,13 @@
 /obj/item/clothing/shoes/sandal,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"m" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "n" = (
 /obj/structure/table/wood,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"o" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "p" = (
@@ -102,18 +83,8 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"w" = (
-/obj/structure/table/wood,
-/obj/item/paper,
-/obj/item/pen,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
-"x" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "y" = (
-/mob/living/simple_animal/bot/medbot/derelict,
+/mob/living/basic/bot/medbot/derelict,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "z" = (
@@ -131,14 +102,51 @@
 	icon_state = "diagonalWall3"
 	},
 /area/ruin/space/has_grav/powered/authorship)
-"C" = (
-/obj/machinery/light/directional/south,
-/obj/structure/bed,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "D" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"K" = (
+/obj/structure/bed,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"M" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"N" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"P" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"Q" = (
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"R" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/shorts/black,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"U" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/obj/item/pen,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"W" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/authorship)
 
 (1,1,1) = {"
@@ -169,20 +177,20 @@ a
 "}
 (3,1,1) = {"
 b
-f
-f
+W
+W
 c
 q
+M
 h
-x
 c
-f
-f
+W
+W
 z
 "}
 (4,1,1) = {"
 c
-g
+R
 l
 c
 p
@@ -190,7 +198,7 @@ D
 p
 c
 A
-n
+P
 c
 "}
 (5,1,1) = {"
@@ -202,21 +210,21 @@ h
 h
 y
 c
-h
-n
+Q
+N
 c
 "}
 (6,1,1) = {"
 c
-i
-h
-m
+o
 h
 h
 h
-m
 h
-C
+h
+h
+h
+K
 c
 "}
 (7,1,1) = {"
@@ -225,7 +233,7 @@ j
 h
 h
 h
-h
+M
 h
 h
 h
@@ -262,11 +270,11 @@ B
 a
 a
 c
-m
 h
 h
 h
-m
+h
+h
 c
 a
 a
@@ -290,7 +298,7 @@ a
 c
 j
 r
-w
+U
 n
 j
 c

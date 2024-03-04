@@ -1,13 +1,19 @@
 /obj/structure/billboard
 	name = "blank billboard"
 	desc = "A blank billboard, with space for all kinds of advertising."
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_blank"
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 1000
 	bound_width = 96
-	bound_height = 64
+	bound_height = 32
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/billboard/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_BILLBOARD)
 
 /obj/structure/billboard/donk_n_go
 	name = "\improper Donk-n-Go billboard"
@@ -33,6 +39,21 @@
 	name = "\improper Azik Interstellar billboard"
 	desc = "A billboard advertising Azik Interstellar and their newest model: the Autocrat Solar Sailer. Azik Interstellar: Tiziran Refinement for Galactic Necessities."
 	icon_state = "billboard_azik"
+
+/obj/structure/billboard/cvr
+	name = "\improper Charlemagne von Rheinland billboard"
+	desc = "A billboard advertising Charlemagne von Rheinland's Germania-class superyacht. Charlemagne von Rheinland: Die Werft der Könige."
+	icon_state = "billboard_cvr"
+
+/obj/structure/billboard/twenty_four_seven
+	name = "\improper 24-Seven billboard"
+	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Everyday."
+	icon_state = "billboard_twenty_four_seven"
+
+/obj/structure/billboard/starway
+	name = "\improper Starway Transit billboard"
+	desc = "A billboard advertising Starway Transit's direct flight from New Moscow to New York: only 2000 credits for an economy class berth. Starway: Your Ticket to the Stars."
+	icon_state = "billboard_starway"
 
 /obj/structure/billboard/lizards_gas
 	name = "\improper The Lizard's Gas billboard"
@@ -66,5 +87,20 @@
 
 /obj/structure/billboard/smoothies
 	name = "\improper Spinward Smoothies billboard"
-	desc = "A billboard advertising Spinward Smoothies. "
+	desc = "A billboard advertising Spinward Smoothies."
 	icon_state = "billboard_smoothies"
+
+/obj/structure/billboard/fortune_telling
+	name = "\improper Fortune Teller billboard"
+	desc = "A billboard advertising Fortune Telling. Apparently it's done by real psykers!"
+	icon_state = "billboard_fortune_tell"
+
+/obj/structure/billboard/Phone_booth
+	name = "\improper Holophone Billboard"
+	desc = "A billboard advertising Holophones. Interstellar calls for a affordable 49.99 credits with duty free snacks!"
+	icon_state = "billboard_phone"
+
+/obj/structure/billboard/american_diner
+	name = "\improper All-American Diner billboard"
+	desc = "A billboard advertising an old-school 1950's themed restaurant franchise \"All-American Diner\""
+	icon_state = "billboard_american_diner"

@@ -2,20 +2,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences
 	var/client/parent
-	//doohickeys for savefiles
+	/// The path to the general savefile for this datum
 	var/path
-	var/default_slot = 1 //Holder so it doesn't default to slot 1, rather the last one used
+	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
+	var/load_and_save = TRUE
+	/// Ensures that we always load the last used save, QOL
+	var/default_slot = 1
+	/// The maximum number of slots we're allowed to contain
 	var/max_save_slots = 3
 
-	//non-preference stuff
-	var/muted = 0
+	/// Bitflags for communications that are muted
+	var/muted = NONE
+	/// Last IP that this client has connected from
 	var/last_ip
+	/// Last CID that this client has connected from
 	var/last_id
 
-	//game-preferences
-	var/lastchangelog = "" //Saved changlog filesize to detect if there was a change
+	/// Cached changelog size, to detect new changelogs since last join
+	var/lastchangelog = ""
 
-	//Antag preferences
+	/// List of ROLE_X that the client wants to be eligible for
 	var/list/be_special = list() //Special role selection
 
 	/// Custom keybindings. Map of keybind names to keyboard inputs.
@@ -61,16 +67,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/favorite_outfits = list()
 
 	/// A preview of the current character
-	var/atom/movable/screen/character_preview_view/character_preview_view
+	var/atom/movable/screen/map_view/char_preview/character_preview_view
 
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
 
-	/// The savefile relating to core preferences, PREFERENCE_PLAYER
-	var/savefile/game_savefile
+	/// The json savefile for this datum
+	var/datum/json_savefile/savefile
 
 	/// The savefile relating to character preferences, PREFERENCE_CHARACTER
-	var/savefile/character_savefile
+	var/list/character_data
 
 	/// A list of keys that have been updated since the last save.
 	var/list/recently_updated_keys = list()
@@ -82,24 +88,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
-/datum/preferences/Destroy(force, ...)
+/datum/preferences/Destroy(force)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
 	return ..()
 
-/datum/preferences/New(client/C)
-	parent = C
+/datum/preferences/New(client/parent)
+	src.parent = parent
 
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
 
-	if(istype(C))
-		if(!is_guest_key(C.key))
-			load_path(C.ckey)
-			unlock_content = !!C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
+	if(IS_CLIENT_OR_MOCK(parent))
+		load_and_save = !is_guest_key(parent.key)
+		load_path(parent.ckey)
+		if(load_and_save && !fexists(path))
+			try_savefile_type_migration()
+		unlock_content = !!parent.IsByondMember()
+		if(unlock_content)
+			max_save_slots = 8
+	else
+		CRASH("attempted to create a preferences datum without a client or mock!")
+	load_savefile()
 
 	// give them default keybinds and update their movement keys
 	key_bindings = deep_copy_list(GLOB.default_hotkeys)
@@ -112,28 +123,33 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
-	if(C)
+	if(parent)
 		apply_all_client_preferences()
-		C.set_macros()
+		parent.set_macros()
 
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
 
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
-	// If you leave and come back, re-register the character preview
-	if (!isnull(character_preview_view) && !(character_preview_view in user.client?.screen))
-		user.client?.register_map_obj(character_preview_view)
+	// There used to be code here that readded the preview view if you "rejoined"
+	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
+	// If this isn't the case, kill me and restore the code, thanks
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		character_preview_view = create_character_preview_view(user)
+
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
 		// HACK: Without this the character starts out really tiny because of some BYOND bug.
 		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		addtimer(CALLBACK(character_preview_view, /atom/movable/screen/character_preview_view/proc/update_body), 1 SECONDS)
+		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
+		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
+		// I hate this place
+		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -145,13 +161,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_data(mob/user)
 	var/list/data = list()
-
-	if (isnull(character_preview_view))
-		character_preview_view = create_character_preview_view(user)
-	else if (character_preview_view.client != parent)
-		// The client re-logged, and doing this when they log back in doesn't seem to properly
-		// carry emissives.
-		character_preview_view.register_to_client(parent)
 
 	if (tainted_character_profiles)
 		data["character_profiles"] = create_character_profiles()
@@ -291,9 +300,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return TRUE
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
-	character_preview_view = new(null, src, user.client)
+	character_preview_view = new(null, src)
+	character_preview_view.generate_view("character_preview_[REF(character_preview_view)]")
 	character_preview_view.update_body()
-	character_preview_view.register_to_client(user.client)
+	character_preview_view.display_to(user)
 
 	return character_preview_view
 
@@ -304,12 +314,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (!preference.is_accessible(src))
 			continue
 
-		LAZYINITLIST(preferences[preference.category])
-
 		var/value = read_preference(preference.type)
 		var/data = preference.compile_ui_data(user, value)
 
+		LAZYINITLIST(preferences[preference.category])
 		preferences[preference.category][preference.savefile_key] = data
+
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/list/append_character_preferences = preference_middleware.get_character_preferences(user)
@@ -333,62 +343,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		value_cache -= preference.type
 		preference.apply_to_client(parent, read_preference(preference.type))
 
-// This is necessary because you can open the set preferences menu before
-// the atoms SS is done loading.
-INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
-
 /// A preview of a character for use in the preferences menu
-/atom/movable/screen/character_preview_view
+/atom/movable/screen/map_view/char_preview
 	name = "character_preview"
-	del_on_map_removal = FALSE
-	layer = GAME_PLANE
-	plane = GAME_PLANE
 
 	/// The body that is displayed
 	var/mob/living/carbon/human/dummy/body
-
 	/// The preferences this refers to
 	var/datum/preferences/preferences
 
-	var/list/plane_masters = list()
-
-	/// The client that is watching this view
-	var/client/client
-
-/atom/movable/screen/character_preview_view/Initialize(mapload, datum/preferences/preferences, client/client)
+/atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
-
-	assigned_map = "character_preview_[REF(src)]"
-	set_position(1, 1)
-
 	src.preferences = preferences
 
-/atom/movable/screen/character_preview_view/Destroy()
+/atom/movable/screen/map_view/char_preview/Destroy()
 	QDEL_NULL(body)
-
-	for (var/plane_master in plane_masters)
-		client?.screen -= plane_master
-		qdel(plane_master)
-
-	client?.clear_map(assigned_map)
-
 	preferences?.character_preview_view = null
-
-	client = null
-	plane_masters = null
 	preferences = null
-
 	return ..()
 
 /// Updates the currently displayed body
-/atom/movable/screen/character_preview_view/proc/update_body()
+/atom/movable/screen/map_view/char_preview/proc/update_body()
 	if (isnull(body))
 		create_body()
 	else
 		body.wipe_state()
 	appearance = preferences.render_new_preview_appearance(body)
 
-/atom/movable/screen/character_preview_view/proc/create_body()
+/atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
 
 	body = new
@@ -396,38 +378,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	// Without this, it doesn't show up in the menu
 	body.appearance_flags &= ~KEEP_TOGETHER
 
-/// Registers the relevant map objects to a client
-/atom/movable/screen/character_preview_view/proc/register_to_client(client/client)
-	QDEL_LIST(plane_masters)
-
-	src.client = client
-
-	if (!client)
-		return
-
-	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/plane_master = new plane_master_type()
-		plane_master.screen_loc = "[assigned_map]:CENTER"
-		client?.screen |= plane_master
-
-		plane_masters += plane_master
-
-	client?.register_map_obj(src)
-
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
-	var/savefile/savefile = new(path)
 	for (var/index in 1 to max_save_slots)
 		// It won't be updated in the savefile yet, so just read the name directly
 		if (index == default_slot)
 			profiles += read_preference(/datum/preference/name/real_name)
 			continue
 
-		savefile.cd = "/character[index]"
-
-		var/name
-		READ_FILE(savefile["real_name"], name)
+		var/tree_key = "character[index]"
+		var/save_data = savefile.get_entry(tree_key)
+		var/name = save_data?["real_name"]
 
 		if (isnull(name))
 			profiles += null
@@ -453,7 +415,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 				else
 					job_preferences[other_job] = JP_MEDIUM
 
-	job_preferences[job.title] = level
+	if(level == null)
+		job_preferences -= job.title
+	else
+		job_preferences[job.title] = level
 
 	return TRUE
 
@@ -471,8 +436,59 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			.++
 
 /datum/preferences/proc/validate_quirks()
+	if(CONFIG_GET(flag/disable_quirk_points))
+		return
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
+
+/**
+ * Safely read a given preference datum from a given client.
+ *
+ * Reads the given preference datum from the given client, and guards against null client and null prefs.
+ * The client object is fickle and can go null at times, so use this instead of read_preference() if you
+ * want to ensure no runtimes.
+ *
+ * returns client.prefs.read_preference(prefs_to_read) or FALSE if something went wrong.
+ *
+ * Arguments:
+ * * client/prefs_holder - the client to read the pref from
+ * * datum/preference/pref_to_read - the type of preference datum to read.
+ */
+/proc/safe_read_pref(client/prefs_holder, datum/preference/pref_to_read)
+	if(!prefs_holder)
+		return FALSE
+	if(prefs_holder && !prefs_holder?.prefs)
+		stack_trace("[prefs_holder?.mob] ([prefs_holder?.ckey]) had null prefs, which shouldn't be possible!")
+		return FALSE
+
+	return prefs_holder?.prefs.read_preference(pref_to_read)
+
+/**
+ * Get the given client's chat toggle prefs.
+ *
+ * Getter function for prefs.chat_toggles which guards against null client and null prefs.
+ * The client object is fickle and can go null at times, so use this instead of directly accessing the var
+ * if you want to ensure no runtimes.
+ *
+ * returns client.prefs.chat_toggles or FALSE if something went wrong.
+ *
+ * Arguments:
+ * * client/prefs_holder - the client to get the chat_toggles pref from.
+ */
+/proc/get_chat_toggles(client/target)
+	if(ismob(target))
+		var/mob/target_mob = target
+		target = target_mob.client
+
+	if(isnull(target))
+		return NONE
+
+	var/datum/preferences/preferences = target.prefs
+	if(isnull(preferences))
+		stack_trace("[key_name(target)] preference datum was null")
+		return NONE
+
+	return preferences.chat_toggles
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
 /datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
@@ -495,12 +511,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
 
+	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_APPLIED)
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
 	if(!read_preference(/datum/preference/toggle/random_hardcore))
 		return FALSE
-	if(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //No command staff
+	if(job.job_flags & JOB_HEAD_OF_STAFF) //No heads of staff
 		return FALSE
 	for(var/datum/antagonist/antag as anything in mind.antag_datums)
 		if(antag.get_team()) //No team antags

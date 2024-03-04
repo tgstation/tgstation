@@ -16,6 +16,7 @@
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
+		/obj/item/clothing/gloves/tackler = 5,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
@@ -26,9 +27,9 @@
 		/obj/item/coin/antagtoken = 1,
 		/obj/item/clothing/head/helmet/blueshirt = 1,
 		/obj/item/clothing/suit/armor/vest/blueshirt = 1,
-		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,
+		/obj/item/storage/belt/holster/energy = 4,
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW
@@ -36,13 +37,14 @@
 	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		var/obj/item/grenade/G = I
 		G.arm_grenade()
 	else if(istype(I, /obj/item/flashlight))
 		var/obj/item/flashlight/F = I
-		F.on = TRUE
+		F.set_light_on(TRUE)
 		F.update_brightness()
 
 /obj/item/vending_refill/security
+	machine_name = "SecTech"
 	icon_state = "refill_sec"

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bY" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
@@ -20,13 +20,13 @@
 /area/ruin/space/has_grav)
 "dL" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/template_noop,
 /area/template_noop)
 "dS" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/broken,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "es" = (
@@ -39,12 +39,9 @@
 /turf/template_noop,
 /area/template_noop)
 "hs" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/trash/bin,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "ii" = (
@@ -56,12 +53,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "ki" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/engineering/tank,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "kp" = (
@@ -69,18 +63,17 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "kA" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav)
 "lj" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "mF" = (
@@ -108,24 +101,14 @@
 /area/ruin/space/has_grav)
 "uG" = (
 /obj/effect/spawner/random/trash/mess,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "uV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/portable_atmospherics/pump,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav)
-"vw" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
 /area/ruin/space/has_grav)
 "wM" = (
 /obj/structure/lattice,
@@ -146,28 +129,27 @@
 /area/ruin/space/has_grav)
 "yY" = (
 /obj/effect/spawner/random/trash/hobo_squat,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav)
 "zc" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/template_noop)
 "zh" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/template_noop,
 /area/template_noop)
 "zt" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "zF" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/airlock_painter/decal,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav)
 "zK" = (
@@ -175,15 +157,12 @@
 /turf/template_noop,
 /area/template_noop)
 "BD" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/table,
 /obj/item/gps/spaceruin{
 	pixel_x = -5;
 	pixel_y = 2
 	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "BX" = (
@@ -209,15 +188,14 @@
 /area/ruin/space/has_grav)
 "Gq" = (
 /obj/structure/girder/displaced,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "Jy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "JE" = (
@@ -229,12 +207,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "KW" = (
 /obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav)
 "Li" = (
@@ -242,7 +220,7 @@
 	dir = 5
 	},
 /obj/effect/spawner/random/trash/cigbutt,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Nl" = (
@@ -252,7 +230,7 @@
 /area/ruin/space/has_grav)
 "Nm" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
@@ -271,29 +249,23 @@
 /turf/template_noop,
 /area/template_noop)
 "OM" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/bureaucracy/paper,
 /obj/structure/table,
 /obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "OO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Pu" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/tank_holder/oxygen/red,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "Px" = (
@@ -309,64 +281,50 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Qp" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "Qs" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/spawner/random/trash/caution_sign,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Sp" = (
 /obj/structure/cable,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "SL" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/wallframe/apc,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "SQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "UX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "WI" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"WV" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/ruin/space/has_grav)
-"Xw" = (
-/obj/structure/girder/displaced,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
 /area/ruin/space/has_grav)
 "XC" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
@@ -486,7 +444,7 @@ dS
 Yp
 Nl
 Yp
-WV
+Sp
 Ym
 Yp
 es
@@ -517,7 +475,7 @@ OO
 Jy
 Yp
 Ym
-vw
+Sp
 Nl
 Px
 es
@@ -596,8 +554,8 @@ Yp
 Yp
 Yp
 Yp
-vw
-Xw
+Sp
+Gq
 bY
 dm
 es

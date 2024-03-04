@@ -24,27 +24,7 @@
 	if(.)
 		return
 	feedback_message = ""
-	var/mob/user = usr
 	switch(action)
-		if("create")
-			var/datum/adventure_db_entry/new_entry = new
-			new_entry.name = "New Adventure"
-			new_entry.uploader = user.ckey
-			GLOB.explorer_drone_adventure_db_entries += new_entry
-			return TRUE
-		if("delete")
-			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
-			if(!target)
-				return
-			if(!target.remove())
-				feedback_message = "Failed to remove adventure"
-			return TRUE
-		if("approve")
-			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
-			if(!target)
-				return
-			target.approved = !target.approved
-			return TRUE
 		if("play")
 			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
 			if(!target)
@@ -55,7 +35,7 @@
 			if(!temp_adventure)
 				feedback_message = "Instantiating adventure failed. Check runtime logs for details."
 				return TRUE
-			RegisterSignal(temp_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
+			RegisterSignal(temp_adventure,COMSIG_ADVENTURE_FINISHED, PROC_REF(resolve_adventure))
 			temp_adventure.start_adventure()
 			feedback_message = "Adventure started"
 			return TRUE
@@ -67,43 +47,6 @@
 				QDEL_NULL(temp_adventure)
 			feedback_message = "Adventure stopped"
 			return TRUE
-		if("refresh")
-			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
-			if(!target)
-				return
-			target.refresh()
-			return TRUE
-		if("save")
-			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
-			if(!target)
-				return
-			target.save()
-			return TRUE
-		if("download")
-			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
-			if(!target)
-				return
-			var/temp_file = file("data/AdventureDownloadTempFile")
-			fdel(temp_file)
-			WRITE_FILE(temp_file, target.raw_json)
-			user << ftp(temp_file,"[target.name].json")
-			return TRUE
-		if("upload")
-			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
-			if(!target)
-				return
-			var/source_json = input(user,"Select adventure JSON file.","Adventure Upload") as file|null
-			if(!source_json)
-				return
-			var/raw_json = file2text(source_json)
-			var/json = json_decode(raw_json)
-			if(!json)
-				feedback_message = "Decoding JSON failed."
-				return
-			//do basic validation here
-			target.raw_json = raw_json
-			target.extract_metadata()
-			return TRUE
 
 /datum/adventure_browser/ui_data(mob/user)
 	. = ..()
@@ -111,11 +54,10 @@
 	for(var/datum/adventure_db_entry/db_entry in GLOB.explorer_drone_adventure_db_entries)
 		adventure_data += list(list(
 			"ref" = ref(db_entry),
-			"id" = db_entry.id,
+			"filename" = db_entry.filename,
 			"name" = db_entry.name,
 			"version" = db_entry.version,
 			"uploader" = db_entry.uploader,
-			"timestamp" = db_entry.timestamp,
 			"approved" = db_entry.approved,
 			"json_status" = db_entry.raw_json ? "Valid JSON" : "Empty"
 		))
@@ -137,7 +79,7 @@
 /datum/adventure_browser/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/simple/adventure))
 
-/datum/adventure_browser/Destroy(force, ...)
+/datum/adventure_browser/Destroy(force)
 	. = ..()
 	QDEL_NULL(temp_adventure)
 

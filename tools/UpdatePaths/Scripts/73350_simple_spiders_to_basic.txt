@@ -1,0 +1,4 @@
+# transforms simple spiders to the new basic spiders
+
+/mob/living/simple_animal/hostile/giant_spider/@SUBTYPES : /mob/living/basic/giant_spider/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus : /mob/living/basic/giant_spider/sgt_araneus{@OLD}

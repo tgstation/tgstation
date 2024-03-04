@@ -7,19 +7,19 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = input("Range of total devastation. -1 to none", "Input")  as num|null
 	if(devastation == null)
 		return
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = input("Range of heavy impact. -1 to none", "Input")  as num|null
 	if(heavy == null)
 		return
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = input("Range of light impact. -1 to none", "Input")  as num|null
 	if(light == null)
 		return
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = input("Range of flash. -1 to none", "Input")  as num|null
 	if(flash == null)
 		return
-	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = input("Range of flames. -1 to none", "Input")  as num|null
 	if(flames == null)
 		return
 
@@ -31,7 +31,7 @@
 		explosion(O, devastation, heavy, light, flames, flash, explosion_cause = mob)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Explosion") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("Explosion")
 
 /client/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
 	set category = "Admin.Fun"
@@ -40,10 +40,10 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = input("Range of heavy pulse.", "Input")  as num|null
 	if(heavy == null)
 		return
-	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	var/light = input("Range of light pulse.", "Input")  as num|null
 	if(light == null)
 		return
 
@@ -51,7 +51,7 @@
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(O)]")
 		message_admins("[key_name_admin(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(O)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "EM Pulse") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("EM Pulse")
 
 /client/proc/cmd_admin_gib(mob/victim in GLOB.mob_list)
 	set category = "Admin.Fun"
@@ -60,11 +60,11 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = tgui_alert(usr, "Drop a brain?", "Confirm", list("Yes", "No","Cancel"))
+	var/confirm = tgui_alert(usr, "Drop a brain?", "Confirm", list("Yes", "No","Cancel")) || "Cancel"
 	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
-	if(!victim)
+	if(isnull(victim))
 		return
 
 	log_admin("[key_name(usr)] has gibbed [key_name(victim)]")
@@ -76,26 +76,28 @@
 
 	var/mob/living/living_victim = victim
 	if (istype(living_victim))
+		living_victim.investigate_log("has been gibbed by an admin.", INVESTIGATE_DEATHS)
 		if(confirm == "Yes")
-			living_victim.gib()
+			living_victim.gib(DROP_ALL_REMAINS)
 		else
-			living_victim.gib(TRUE)
+			living_victim.gib(DROP_ORGANS|DROP_BODYPARTS)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Gib")
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
 	set category = "Admin.Fun"
 
 	var/confirm = tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No"))
-	if(confirm == "Yes")
-		log_admin("[key_name(usr)] used gibself.")
-		message_admins(span_adminnotice("[key_name_admin(usr)] used gibself."))
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib Self") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(confirm != "Yes")
+		return
+	log_admin("[key_name(usr)] used gibself.")
+	message_admins(span_adminnotice("[key_name_admin(usr)] used gibself."))
+	BLACKBOX_LOG_ADMIN_VERB("Gib Self")
 
-		var/mob/living/ourself = mob
-		if (istype(ourself))
-			ourself.gib(TRUE, TRUE, TRUE)
+	var/mob/living/ourself = mob
+	if (istype(ourself))
+		ourself.gib()
 
 /client/proc/everyone_random()
 	set category = "Admin.Fun"
@@ -113,7 +115,7 @@
 		to_chat(usr, "Disabled.", confidential = TRUE)
 		return
 
-	var/notifyplayers = tgui_alert(usr, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel"))
+	var/notifyplayers = tgui_alert(usr, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel")) || "Cancel"
 	if(notifyplayers == "Cancel")
 		return
 
@@ -126,7 +128,7 @@
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
 
 	CONFIG_SET(flag/force_random_names, TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Make Everyone Random")
 
 /client/proc/mass_zombie_infection()
 	set category = "Admin.Fun"
@@ -143,11 +145,11 @@
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
-		new /obj/item/organ/zombie_infection/nodamage(H)
+		new /obj/item/organ/internal/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Zombie Infection")
+	BLACKBOX_LOG_ADMIN_VERB("Mass Zombie Infection")
 
 /client/proc/mass_zombie_cure()
 	set category = "Admin.Fun"
@@ -160,12 +162,12 @@
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
+	for(var/obj/item/organ/internal/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")
 	log_admin("[key_name(usr)] cured all zombies.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Zombie Cure")
+	BLACKBOX_LOG_ADMIN_VERB("Mass Zombie Cure")
 
 /client/proc/polymorph_all()
 	set category = "Admin.Fun"
@@ -184,7 +186,7 @@
 
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
 	log_admin("[key_name(usr)] polymorphed all living mobs.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Polymorph All")
+	BLACKBOX_LOG_ADMIN_VERB("Polymorph All")
 
 	for(var/mob/living/M in mobs)
 		CHECK_TICK
@@ -217,9 +219,11 @@
 		return
 	smite.effect(src, target)
 
-/proc/breadify(atom/movable/target)
-	var/obj/item/food/bread/plain/bread = new(get_turf(target))
-	target.forceMove(bread)
+/// "Turns" people into objects. Really, we just add them to the contents of the item.
+/proc/objectify(atom/movable/target, path)
+	var/atom/tomb = new path(get_turf(target))
+	target.forceMove(tomb)
+	target.AddComponent(/datum/component/itembound, tomb)
 
 /**
  * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense

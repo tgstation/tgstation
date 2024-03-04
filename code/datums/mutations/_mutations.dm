@@ -1,5 +1,4 @@
 /datum/mutation
-
 	var/name
 
 /datum/mutation/human
@@ -16,8 +15,8 @@
 	var/text_lose_indication = ""
 	/// Visual indicators upon the character of the owner of this mutation
 	var/static/list/visual_indicators = list()
-	/// The proc holder (ew) o
-	var/obj/effect/proc_holder/spell/power
+	/// The path of action we grant to our user on mutation gain
+	var/datum/action/cooldown/power_path
 	/// Which mutation layer to use
 	var/layer_used = MUTATIONS_LAYER
 	/// To restrict mutation to only certain species
@@ -81,11 +80,17 @@
 	. = ..()
 	src.class = class
 	if(timer)
-		addtimer(CALLBACK(src, .proc/remove), timer)
+		addtimer(CALLBACK(src, PROC_REF(remove)), timer)
 		timeout = timer
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
 	update_valid_chromosome_list()
+
+/datum/mutation/human/Destroy()
+	power_path = null
+	dna = null
+	owner = null
+	return ..()
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
@@ -114,14 +119,14 @@
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-	grant_spell() //we do checks here so nothing about hulk getting magic
+	grant_power() //we do checks here so nothing about hulk getting magic
 	if(!modified)
-		addtimer(CALLBACK(src, .proc/modify, 0.5 SECONDS)) //gonna want children calling ..() to run first
+		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_life(delta_time, times_fired)
+/datum/mutation/human/proc/on_life(seconds_per_tick, times_fired)
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
@@ -138,9 +143,6 @@
 		mut_overlay.Remove(get_visual_indicator())
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-	if(power)
-		owner.RemoveSpell(power)
-		qdel(src)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
@@ -164,12 +166,21 @@
 			overlays_standing[mutation.layer_used] = mut_overlay
 			apply_overlay(mutation.layer_used)
 
-/datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
-	if(modified || !power || !owner)
+/**
+ * Called when a chromosome is applied so we can properly update some stats
+ * without having to remove and reapply the mutation from someone
+ *
+ * Returns `null` if no modification was done, and
+ * returns an instance of a power if modification was complete
+ */
+/datum/mutation/human/proc/modify()
+	if(modified || !power_path || QDELETED(owner))
 		return
-	power.charge_max *= GET_MUTATION_ENERGY(src)
-	power.charge_counter *= GET_MUTATION_ENERGY(src)
-	modified = TRUE
+	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
+	if(!modified_power)
+		CRASH("Genetic mutation [type] called modify(), but could not find a action to modify!")
+	modified_power.cooldown_time *= GET_MUTATION_ENERGY(src) // Doesn't do anything for mutations with energy_coeff unset
+	return modified_power
 
 /datum/mutation/human/proc/copy_mutation(datum/mutation/human/mutation_to_copy)
 	if(!mutation_to_copy)
@@ -198,15 +209,20 @@
 	else
 		qdel(src)
 
-/datum/mutation/human/proc/grant_spell()
-	if(!ispath(power) || !owner)
+/datum/mutation/human/proc/grant_power()
+	if(!ispath(power_path) || !owner)
 		return FALSE
 
-	power = new power()
-	power.action_background_icon_state = "bg_tech_blue_on"
-	power.panel = "Genetic"
-	owner.AddSpell(power)
-	return TRUE
+	var/datum/action/cooldown/new_power = new power_path(src)
+	new_power.background_icon_state = "bg_tech_blue"
+	new_power.base_background_icon_state = new_power.background_icon_state
+	new_power.active_background_icon_state = "[new_power.base_background_icon_state]_active"
+	new_power.overlay_icon_state = "bg_tech_blue_border"
+	new_power.active_overlay_icon_state = null
+	new_power.panel = "Genetic"
+	new_power.Grant(owner)
+
+	return new_power
 
 // Runs through all the coefficients and uses this to determine which chromosomes the
 // mutation can take. Stores these as text strings in a list.

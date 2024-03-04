@@ -68,7 +68,7 @@
 	current_target = target
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="medbeam", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
-	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, .proc/beam_died)//this is a WAY better rangecheck than what was done before (process check)
+	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 
@@ -123,6 +123,13 @@
 				qdel(dummy)
 				return FALSE
 		for(var/obj/effect/ebeam/medical/B in next_step)// Don't cross the str-beams!
+			if(QDELETED(current_beam))
+				break //We shouldn't be processing anymore.
+			if(QDELETED(B))
+				continue
+			if(!B.owner)
+				stack_trace("beam without an owner! [B]")
+				continue
 			if(B.owner.origin != current_beam.origin)
 				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, explosion_cause = src)
 				qdel(dummy)
@@ -136,11 +143,14 @@
 
 /obj/item/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.health != target.maxHealth)
-		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
-	target.adjustBruteLoss(-4)
-	target.adjustFireLoss(-4)
-	target.adjustToxLoss(-1)
-	target.adjustOxyLoss(-1)
+		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
+	var/need_mob_update
+	need_mob_update = target.adjustBruteLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjustFireLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjustToxLoss(-1, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjustOxyLoss(-1, updating_health = FALSE, forced = TRUE)
+	if(need_mob_update)
+		target.updatehealth()
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(mob/living/target)

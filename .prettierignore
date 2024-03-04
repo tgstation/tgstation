@@ -1,0 +1,5 @@
+# We don't want prettier to run on anything outside of the TGUI folder, so we have to do this.
+/*
+
+# We want it to run into the TGUI folder, however.
+!/tgui

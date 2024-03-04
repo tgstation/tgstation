@@ -13,6 +13,9 @@
 /datum/movespeed_modifier/hunger
 	variable = TRUE
 
+/datum/movespeed_modifier/golem_hunger
+	variable = TRUE
+
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 
@@ -78,8 +81,8 @@
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
-/datum/movespeed_modifier/shove
-	multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH
+/datum/movespeed_modifier/staggered
+	multiplicative_slowdown = STAGGERED_SLOWDOWN_STRENGTH
 
 /datum/movespeed_modifier/human_carry
 	multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN
@@ -94,8 +97,26 @@
 	variable = TRUE
 	flags = IGNORE_NOSLOW
 
-/datum/movespeed_modifier/tarantula_web
+/datum/movespeed_modifier/fast_web
+	multiplicative_slowdown = 0.2
+
+/datum/movespeed_modifier/young_web
+	multiplicative_slowdown = 0.5
+
+/datum/movespeed_modifier/spiderling_web
+	multiplicative_slowdown = 0.7
+
+/datum/movespeed_modifier/average_web
+	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/below_average_web
+	multiplicative_slowdown = 2.5
+
+/datum/movespeed_modifier/slow_web
 	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/viper_defensive
+	multiplicative_slowdown = 1.5
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
@@ -127,7 +148,29 @@
 	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/morph_disguised
-	multiplicative_slowdown = 1
+	multiplicative_slowdown = -1
 
 /datum/movespeed_modifier/auto_wash
 	multiplicative_slowdown = 3
+
+/datum/movespeed_modifier/player_spider_modifier
+	variable = TRUE
+
+/datum/movespeed_modifier/health_scaling_speed_buff
+	variable = TRUE
+
+/datum/movespeed_modifier/alien_speed
+	variable = TRUE
+
+/datum/movespeed_modifier/grown_killer_tomato
+	variable = TRUE
+
+/datum/movespeed_modifier/goliath_mount
+	multiplicative_slowdown = -26
+
+/datum/movespeed_modifier/settler
+	multiplicative_slowdown = 0.2
+	blacklisted_movetypes = FLOATING|FLYING
+
+/datum/movespeed_modifier/basilisk_overheat
+	multiplicative_slowdown = -18

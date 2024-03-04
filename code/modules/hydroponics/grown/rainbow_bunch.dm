@@ -14,7 +14,7 @@
 	potency = 20
 	instability = 25
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_dead = "rainbowbunch-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
@@ -33,12 +33,13 @@
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
+	greyscale_colors = "#000000" //only here for unit testing. overriden in initialize()
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
 /obj/item/food/grown/rainbow_flower/Initialize(mapload)
 	. = ..()
-	if(greyscale_colors)
+	if(greyscale_colors != initial(greyscale_colors))
 		return
 
 	var/flower_color = rand(1,8)

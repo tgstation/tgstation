@@ -61,13 +61,13 @@
 /area/ruin/powered/clownplanet)
 "av" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 3
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
 "aw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
@@ -117,16 +117,7 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "bb" = (
@@ -218,16 +209,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "bt" = (
@@ -238,16 +220,7 @@
 /area/ruin/powered/clownplanet)
 "bx" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "bz" = (
@@ -258,16 +231,7 @@
 /turf/open/indestructible/white,
 /area/ruin/powered/clownplanet)
 "bA" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "bB" = (
@@ -300,20 +264,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "bL" = (
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /obj/structure/table/glass,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
@@ -378,7 +333,7 @@
 /area/ruin/powered/clownplanet)
 "bZ" = (
 /obj/machinery/door/airlock/bananium,
-/turf/open/indestructible/honk,
+/turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "ca" = (
 /obj/item/bikehorn,
@@ -422,16 +377,7 @@
 /area/ruin/powered/clownplanet)
 "dI" = (
 /obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "dK" = (
@@ -704,6 +650,7 @@
 /area/ruin/powered/clownplanet)
 "Or" = (
 /obj/machinery/light/directional/east,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "QT" = (
@@ -724,7 +671,7 @@
 /area/ruin/powered/clownplanet)
 "RW" = (
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Tj" = (
@@ -767,7 +714,7 @@
 "YI" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Zg" = (
@@ -1779,7 +1726,7 @@ cc
 cc
 Zg
 QT
-QT
+gX
 QT
 QT
 gX
@@ -1813,7 +1760,7 @@ aa
 aa
 aa
 QT
-gX
+QT
 QT
 QT
 QT

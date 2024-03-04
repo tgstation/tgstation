@@ -1,9 +1,3 @@
-// Flags for [/obj/item/grenade/var/dud_flags]
-/// The grenade cannot detonate at all. It is innately nonfunctional.
-#define GRENADE_DUD (1<<0)
-/// The grenade has been used and as such cannot detonate.
-#define GRENADE_USED (1<<1)
-
 /**
  * Base class for all grenades.
  */
@@ -11,7 +5,7 @@
 	name = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "grenade"
 	inhand_icon_state = "flashbang"
 	worn_icon_state = "grenade"
@@ -19,7 +13,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1 | PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -53,6 +48,11 @@
 	///Did we add the component responsible for spawning sharpnel to this?
 	var/shrapnel_initialized
 
+/obj/item/grenade/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT, type)
+	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
+
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
@@ -66,6 +66,29 @@
 		detonate()
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/item/grenade/apply_fantasy_bonuses(bonus)
+	. = ..()
+	apply_grenade_fantasy_bonuses(bonus)
+
+/obj/item/grenade/remove_fantasy_bonuses(bonus)
+	remove_grenade_fantasy_bonuses(bonus)
+	return ..()
+
+/obj/item/grenade/proc/apply_grenade_fantasy_bonuses(quality)
+	if(ex_dev == 0 && ex_heavy == 0 && ex_light == 0 && ex_flame == 0)
+		return
+	var/devIncrease = round(quality / 10)
+	var/heavyIncrease = round(quality / 5)
+	var/lightIncrease = round(quality / 2)
+	ex_dev = modify_fantasy_variable("ex_dev", ex_dev, devIncrease, 0)
+	ex_heavy = modify_fantasy_variable("ex_heavy", ex_heavy, heavyIncrease, 0)
+	ex_light = modify_fantasy_variable("ex_light", ex_light, lightIncrease, 0)
+
+/obj/item/grenade/proc/remove_grenade_fantasy_bonuses(quality)
+	ex_dev = reset_fantasy_variable("ex_dev", ex_dev)
+	ex_heavy = reset_fantasy_variable("ex_heavy", ex_heavy)
+	ex_light = reset_fantasy_variable("ex_light", ex_light)
 
 /**
  * Checks for various ways to botch priming a grenade.
@@ -129,11 +152,11 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	if(istype(user))
-		user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_OKAY)
+		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
-	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
 
 /**
  * detonate (formerly prime) refers to when the grenade actually delivers its payload (whether or not a boom/bang/detonation is involved)
@@ -163,6 +186,22 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
+///Signal sent by someone putting the grenade in as an ingredient. Registers signals onto what it was put into so it can explode.
+/obj/item/grenade/proc/on_used_as_ingredient(datum/source, atom/used_in)
+	SIGNAL_HANDLER
+
+	RegisterSignal(used_in, COMSIG_FOOD_EATEN, PROC_REF(ingredient_detonation))
+	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_KNIFE), PROC_REF(ingredient_detonation))
+	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ROLLINGPIN), PROC_REF(ingredient_detonation))
+
+///Signal sent by someone eating food this is an ingredient in "used_in". Makes the grenade go kerblooey, destroying the food.
+/obj/item/grenade/proc/ingredient_detonation(atom/used_in, mob/living/target, mob/living/user, bitecount, bitesize)
+	SIGNAL_HANDLER
+
+	detonate()
+	//can't remove it as an ingredient so we need to get rid of the food. deleted ingredients not good
+	return DESTROY_FOOD
+
 /obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		return FALSE
@@ -181,7 +220,7 @@
 	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
 	if (isnull(newtime))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
 	if(newtime == "Instant" && change_det_time(0))
 		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
@@ -209,12 +248,13 @@
 /obj/item/grenade/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/hit_projectile = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
+/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
 		var/turf/source_turf = get_turf(src)
-		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
+		var/logmsg = "held a grenade detonated by a projectile ([hitby]) at [COORD(source_turf)]"
+		owner.log_message(logmsg, LOG_GAME)
+		owner.log_message(logmsg, LOG_VICTIM, log_globally = FALSE)
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
 
@@ -226,3 +266,4 @@
 	. = ..()
 	if(active)
 		user.throw_item(target)
+		return . | AFTERATTACK_PROCESSED_ITEM

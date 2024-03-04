@@ -1,12 +1,16 @@
 /obj/structure/blob/special/resource
 	name = "resource blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_resource"
 	desc = "A thin spire of slightly swaying tendrils."
 	max_integrity = BLOB_RESOURCE_MAX_HP
 	point_return = BLOB_REFUND_RESOURCE_COST
 	resistance_flags = LAVA_PROOF
+	armor_type = /datum/armor/structure_blob/resource
 	var/resource_delay = 0
+
+/datum/armor/structure_blob/resource
+	laser = 25
 
 /obj/structure/blob/special/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."

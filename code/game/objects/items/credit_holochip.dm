@@ -9,10 +9,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/credits = 0
 
-/obj/item/holochip/Initialize(mapload, amount)
+/obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
 	if(amount)
 		credits = amount
+	if(credits <= 0 && !mapload)
+		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
+		return INITIALIZE_HINT_QDEL
 	update_appearance()
 
 /obj/item/holochip/examine(mob/user)
@@ -99,13 +102,13 @@
 		qdel(H)
 
 /obj/item/holochip/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the holochip to continue!"))
 		return FALSE
 	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip? (Max: [credits] cr)", "Holochip", max_value = credits)
-	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)) || loc != user)
+	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH) || loc != user)
 		return
 	var/new_credits = spend(split_amount, TRUE)
 	var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)

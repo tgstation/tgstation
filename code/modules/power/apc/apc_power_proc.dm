@@ -7,16 +7,20 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/proc/make_terminal()
+/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
+	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(dir)
 	terminal.master = src
 
-/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
-	if(last_nightshift_switch > world.time - 100) //~10 seconds between each toggle to prevent spamming
-		to_chat(usr, span_warning("[src]'s night lighting circuit breaker is still cycling!"))
+/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)
+	if(low_power_nightshift_lights)
+		balloon_alert(user, "power is too low!")
+		return
+	if(last_nightshift_switch > world.time - 10 SECONDS) //~10 seconds between each toggle to prevent spamming
+		balloon_alert(user, "night breaker is cycling!")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
@@ -26,18 +30,23 @@
 		area.power_light = (lighting > APC_CHANNEL_AUTO_OFF)
 		area.power_equip = (equipment > APC_CHANNEL_AUTO_OFF)
 		area.power_environ = (environ > APC_CHANNEL_AUTO_OFF)
+		playsound(src.loc, 'sound/machines/terminal_on.ogg', 50, FALSE)
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
+		playsound(src.loc, 'sound/machines/terminal_off.ogg', 50, FALSE)
 	area.power_change()
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	if(!is_operational || failure_timer)
 		return
 	operating = !operating
-	add_hiddenprint(user)
-	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
+	if (user)
+		var/enabled_or_disabled = operating ? "enabled" : "disabled"
+		balloon_alert(user, "power [enabled_or_disabled]")
+		user.log_message("turned [enabled_or_disabled] the [src]", LOG_GAME)
+		add_hiddenprint(user)
 	update()
 	update_appearance()
 
@@ -119,12 +128,20 @@
 			return
 
 	failure_timer = max(failure_timer, round(duration))
+	update()
+	queue_icon_update()
 
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
+	if(low_power_nightshift_lights && !on)
+		return
+	if(nightshift_lights == on)
+		return //no change
 	nightshift_lights = on
-	for(var/obj/machinery/light/night_light in area)
-		if(night_light.nightshift_allowed)
-			night_light.nightshift_enabled = nightshift_lights
-			night_light.update(FALSE)
-		CHECK_TICK
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/light/night_light in area_turf)
+				if(night_light.nightshift_allowed)
+					night_light.nightshift_enabled = nightshift_lights
+					night_light.update(FALSE)
+				CHECK_TICK

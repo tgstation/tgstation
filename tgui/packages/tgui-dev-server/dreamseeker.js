@@ -6,6 +6,7 @@
 
 import { exec } from 'child_process';
 import { promisify } from 'util';
+
 import { createLogger } from './logging.js';
 import { require } from './require.js';
 
@@ -24,10 +25,14 @@ export class DreamSeeker {
   }
 
   topic(params = {}) {
+    // prettier-ignore
     const query = Object.keys(params)
       .map(key => encodeURIComponent(key)
         + '=' + encodeURIComponent(params[key]))
       .join('&');
+    logger.log(
+      `topic call at ${this.client.defaults.baseURL + '/dummy?' + query}`,
+    );
     return this.client.get('/dummy?' + query);
   }
 }
@@ -36,7 +41,7 @@ export class DreamSeeker {
  * @param {number[]} pids
  * @returns {DreamSeeker[]}
  */
-DreamSeeker.getInstancesByPids = async pids => {
+DreamSeeker.getInstancesByPids = async (pids) => {
   if (process.platform !== 'win32') {
     return [];
   }
@@ -46,8 +51,7 @@ DreamSeeker.getInstancesByPids = async pids => {
     const instance = instanceByPid.get(pid);
     if (instance) {
       instances.push(instance);
-    }
-    else {
+    } else {
       pidsToResolve.push(pid);
     }
   }
@@ -83,12 +87,10 @@ DreamSeeker.getInstancesByPids = async pids => {
         instances.push(instance);
         instanceByPid.set(pid, instance);
       }
-    }
-    catch (err) {
+    } catch (err) {
       if (err.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') {
         logger.error(err.message, err.code);
-      }
-      else {
+      } else {
         logger.error(err);
       }
       return [];
@@ -97,4 +99,4 @@ DreamSeeker.getInstancesByPids = async pids => {
   return instances;
 };
 
-const plural = (word, n) => n !== 1 ? word + 's' : word;
+const plural = (word, n) => (n !== 1 ? word + 's' : word);

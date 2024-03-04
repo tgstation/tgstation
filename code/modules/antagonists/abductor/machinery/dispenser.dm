@@ -1,7 +1,7 @@
 /obj/machinery/abductor/gland_dispenser
 	name = "replacement organ storage"
 	desc = "A tank filled with replacement organs."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "dispenser"
 	density = TRUE
 	var/list/gland_types
@@ -14,7 +14,7 @@
 
 /obj/machinery/abductor/gland_dispenser/Initialize(mapload)
 	. = ..()
-	gland_types = subtypesof(/obj/item/organ/heart/gland)
+	gland_types = subtypesof(/obj/item/organ/internal/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -22,7 +22,7 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/ui_status(mob/user)
+/obj/machinery/abductor/gland_dispenser/ui_status(mob/user, datum/ui_state/state)
 	if(!isabductor(user) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
@@ -62,7 +62,7 @@
 			return TRUE
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/organ/heart/gland))
+	if(istype(W, /obj/item/organ/internal/heart/gland))
 		if(!user.transferItemToLoc(W, src))
 			return
 		for(var/i in 1 to gland_colors.len)

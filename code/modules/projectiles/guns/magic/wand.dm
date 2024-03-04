@@ -4,6 +4,8 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	base_icon_state = "nothingwand"
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = FALSE
@@ -32,6 +34,7 @@
 	..()
 
 /obj/item/gun/magic/wand/afterattack(atom/target, mob/living/user)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!charges)
 		shoot_with_empty_chamber(user)
 		return
@@ -45,7 +48,7 @@
 				no_den_usage = 0
 		zap_self(user)
 	else
-		. = ..()
+		. |= ..()
 	update_appearance()
 
 
@@ -78,11 +81,11 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			user.revive(full_heal = TRUE, admin_revive = TRUE)
+			user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 			to_chat(user, span_notice("You feel great!"))
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
-	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 	</span>")
 	user.death(FALSE)
 
@@ -118,11 +121,12 @@
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
-			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 			</span>")
-			user.death(0)
+			user.investigate_log("has been killed by a bolt of resurrection.", INVESTIGATE_DEATHS)
+			user.death(FALSE)
 			return
-	user.revive(full_heal = TRUE, admin_revive = TRUE)
+	user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 	to_chat(user, span_notice("You feel great!"))
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
@@ -147,7 +151,7 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
-	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+	. = ..() //because the user mob ceases to exists by the time wabbajack fully resolves
 
 	user.wabbajack()
 	charges--
@@ -170,7 +174,7 @@
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user)
 	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(3, location = user.loc)
+		smoke.set_up(3, holder = src, location = user.loc)
 		smoke.start()
 		charges--
 	..()
@@ -193,7 +197,7 @@
 	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin, destination))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, location = t)
+			smoke.set_up(0, holder = src, location = t)
 			smoke.start()
 	..()
 

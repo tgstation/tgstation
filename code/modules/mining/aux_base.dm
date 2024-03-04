@@ -5,6 +5,7 @@
 #define BAD_AREA 2
 #define BAD_COORDS 3
 #define BAD_TURF 4
+#define BAD_LAYER 5
 
 /area/shuttle/auxiliary_base
 	name = "Auxiliary Base"
@@ -14,9 +15,10 @@
 	name = "auxiliary base management console"
 	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
 	interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
-	icon = 'icons/obj/terminals.dmi'
-	icon_state = "dorm_available"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "pod_off"
 	icon_keyboard = null
+	icon_screen = "pod_on"
 	req_one_access = list(ACCESS_AUX_BASE, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
@@ -106,7 +108,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		if(!M.check_dock(S, silent = TRUE))
 			continue
 		var/list/location_data = list(
-			id = S.id,
+			id = S.shuttle_id,
 			name = S.name
 		)
 		data["locations"] += list(location_data)
@@ -163,7 +165,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
 				all_mining_turfs += Z_TURFS(z_level)
 			var/turf/LZ = pick(all_mining_turfs) //Pick a random mining Z-level turf
-			if(!ismineralturf(LZ) && !istype(LZ, /turf/open/misc/asteroid))
+			if(!ismineralturf(LZ) && !isasteroidturf(LZ))
 			//Find a suitable mining turf. Reduces chance of landing in a bad area
 				to_chat(usr, span_warning("Landing zone scan failed. Please try again."))
 				return
@@ -224,7 +226,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			var/turf/place = colony_turfs[i]
 			if(!place)
 				return BAD_COORDS
-			if(!istype(place.loc, /area/lavaland/surface))
+			if(istype(place.loc, /area/icemoon/surface))
+				return BAD_LAYER
+			if(!istype(place.loc, /area/lavaland/surface) && !istype(place.loc, /area/icemoon/underground))
 				return BAD_AREA
 			if(disallowed_turf_types[place.type])
 				return BAD_TURF
@@ -233,7 +237,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	var/area/A = get_area(T)
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "colony_drop([REF(src)])"
+	landing_zone.shuttle_id = "colony_drop([REF(src)])"
 	landing_zone.port_destinations = "colony_drop([REF(src)])"
 	landing_zone.name = "Landing Zone ([T.x], [T.y])"
 	landing_zone.dwidth = base_dock.dwidth
@@ -243,7 +247,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	landing_zone.setDir(base_dock.dir)
 	landing_zone.area_type = A.type
 
-	possible_destinations += "[landing_zone.id];"
+	possible_destinations += "[landing_zone.shuttle_id];"
 
 //Serves as a nice mechanic to people get ready for the launch.
 	minor_announce("Auxiliary base landing zone coordinates locked in for [A]. Launch command now available!")
@@ -252,10 +256,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
+	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "gangtool-purple"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Deploy to designate the landing zone of the auxiliary base."
 	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
@@ -276,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	var/turf/T = get_turf(user)
 	var/obj/machinery/computer/auxiliary_base/AB
 
-	for (var/obj/machinery/computer/auxiliary_base/A in GLOB.machines)
+	for (var/obj/machinery/computer/auxiliary_base/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(is_station_level(A.z))
 			AB = A
 			break
@@ -295,6 +300,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			to_chat(user, span_warning("Location is too close to the edge of the station's scanning range. Move several paces away and try again."))
 		if(BAD_TURF)
 			to_chat(user, span_warning("The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone."))
+		if(BAD_LAYER)
+			to_chat(user, span_warning("This area is not hazardous enough to justify an auxiliary base. Try again on a deeper layer."))
 
 /obj/item/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
@@ -304,23 +311,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/docking_port/mobile/auxiliary_base
 	name = "auxiliary base"
-	id = "colony_drop"
-	//Reminder to map-makers to set these values equal to the size of your base.
-	dheight = 4
-	dwidth = 4
-	width = 9
-	height = 9
+	shuttle_id = "colony_drop"
 
 /obj/docking_port/mobile/auxiliary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
 	for(var/i in new_turfs)
 		var/turf/place = i
-		if(istype(place, /turf/closed/mineral))
+		if(ismineralturf(place))
 			place.ScrapeAway()
 	return ..()
 
 /obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
-	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
+	shuttle_id = "disabled" //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
@@ -333,7 +335,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	anchored = FALSE
 	density = FALSE
 	var/shuttle_ID = "landing_zone_dock"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "miningbeacon"
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
 	pressure_resistance = 200 //So it does not get blown into lava.
@@ -353,7 +355,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		return
 
 	anti_spam_cd = 1
-	addtimer(CALLBACK(src, .proc/clear_cooldown), 50)
+	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 50)
 
 	var/turf/landing_spot = get_turf(src)
 
@@ -361,7 +363,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		to_chat(user, span_warning("This device is only to be used in a mining zone."))
 		return
 	var/obj/machinery/computer/auxiliary_base/aux_base_console
-	for(var/obj/machinery/computer/auxiliary_base/ABC in GLOB.machines)
+	for(var/obj/machinery/computer/auxiliary_base/ABC as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(get_dist(landing_spot, ABC) <= console_range)
 			aux_base_console = ABC
 			break
@@ -369,15 +371,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		to_chat(user, span_warning("The auxiliary base's console must be within [console_range] meters in order to interface."))
 		return
 
-//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
+	//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
 	for(var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
-		if(SM.id == "mining_home" || SM.id == "mining_away")
+		if(SM.shuttle_id == "mining_home" || SM.shuttle_id == "mining_away")
 
 			var/area/A = get_area(landing_spot)
 
 			Mport = new(landing_spot)
-			Mport.id = "landing_zone_dock"
+			Mport.shuttle_id = "landing_zone_dock"
 			Mport.port_destinations = "landing_zone_dock"
 			Mport.name = "auxiliary base landing site"
 			Mport.dwidth = SM.dwidth
@@ -394,9 +396,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 	var/obj/docking_port/mobile/mining_shuttle
 	var/list/landing_turfs = list() //List of turfs where the mining shuttle may land.
-	for(var/S in SSshuttle.mobile_docking_ports)
-		var/obj/docking_port/mobile/MS = S
-		if(MS.id != "mining")
+	for(var/obj/docking_port/mobile/MS as anything in SSshuttle.mobile_docking_ports)
+		if(MS.shuttle_id != "mining")
 			continue
 		mining_shuttle = MS
 		landing_turfs = mining_shuttle.return_ordered_turfs(x,y,z,dir)
@@ -444,3 +445,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 #undef BAD_AREA
 #undef BAD_COORDS
 #undef BAD_TURF
+#undef BAD_LAYER

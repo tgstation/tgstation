@@ -1,5 +1,6 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 export const BLOB_MECHANICAL_DESCRIPTION = multiline`
   The blob infests the station and destroys everything in its path, including
@@ -9,11 +10,9 @@ export const BLOB_MECHANICAL_DESCRIPTION = multiline`
 `;
 
 const Blob: Antagonist = {
-  key: "blob",
-  name: "Blob",
-  description: [
-    BLOB_MECHANICAL_DESCRIPTION,
-  ],
+  key: 'blob',
+  name: 'Blob',
+  description: [BLOB_MECHANICAL_DESCRIPTION],
   category: Category.Midround,
 };
 

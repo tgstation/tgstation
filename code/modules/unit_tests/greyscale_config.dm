@@ -3,6 +3,8 @@
 
 /datum/unit_test/greyscale_item_icon_states/Run()
 	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
+		if(isnull(initial(item_path.greyscale_colors)))
+			continue //All configs depend on greyscale_colors being defined.
 		var/held_icon_state = initial(item_path.inhand_icon_state) || initial(item_path.icon_state)
 
 		var/datum/greyscale_config/lefthand = SSgreyscale.configurations["[initial(item_path.greyscale_config_inhand_left)]"]
@@ -36,4 +38,4 @@
 			continue
 		var/number_of_colors = length(colors) - 1
 		if(config.expected_colors != number_of_colors)
-			TEST_FAIL("[thing] has the wrong amount of colors configured for [config.DebugName()]. Expected [config.expected_colors] but only found [number_of_colors].")
+			TEST_FAIL("[thing] has the wrong amount of colors configured for [config.DebugName()]. Expected [config.expected_colors] colors but found [number_of_colors].")

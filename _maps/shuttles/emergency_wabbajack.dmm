@@ -50,20 +50,20 @@
 	id = "shuttle_flasher";
 	pixel_x = -24
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "al" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "am" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "an" = (
 /obj/structure/table/wood,
-/obj/item/candle/infinite,
+/obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "ao" = (
@@ -87,7 +87,7 @@
 /obj/machinery/flasher/directional/west{
 	id = "shuttle_flasher"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "au" = (
 /obj/structure/chair/wood,
@@ -135,7 +135,7 @@
 	name = "Emergency Shuttle Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aC" = (
 /obj/machinery/door/airlock/titanium,
@@ -170,15 +170,6 @@
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aJ" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -221,11 +212,11 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/multiver,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aU" = (
@@ -264,19 +255,12 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"be" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	resistance_flags = 33
-	},
-/turf/open/lava/smooth/airless,
-/area/shuttle/escape)
 "bf" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bi" = (
@@ -286,7 +270,7 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bk" = (
 /obj/structure/chair/wood,
@@ -313,11 +297,31 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"do" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "ji" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ks" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"rT" = (
+/obj/structure/window/reinforced/spawner/directional/north{
+	resistance_flags = 33
+	},
+/turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "sM" = (
 /obj/structure/table,
@@ -329,19 +333,17 @@
 /obj/item/wrench/medical,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"zw" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "Aj" = (
 /obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Ec" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "IH" = (
 /obj/effect/turf_decal/stripes/line{
@@ -423,7 +425,7 @@ aq
 bo
 aW
 ba
-be
+rT
 ab
 ab
 "}
@@ -447,7 +449,7 @@ aq
 aq
 aX
 bb
-be
+rT
 bf
 bg
 "}
@@ -462,16 +464,16 @@ am
 am
 as
 aq
-aJ
-aJ
-aJ
+do
+do
+do
 aq
 aU
 aq
 aq
 aq
 aq
-be
+rT
 bf
 bg
 "}
@@ -493,9 +495,9 @@ aq
 ab
 ji
 ji
+zw
 ji
-ji
-be
+rT
 bf
 bg
 "}
@@ -519,7 +521,7 @@ ab
 ab
 ab
 ab
-be
+rT
 bf
 bg
 "}
@@ -534,16 +536,16 @@ au
 az
 ab
 aF
-Ec
+ks
 aq
-Ec
+ks
 aS
 as
 aI
 aI
+bo
 aI
-aI
-be
+rT
 bf
 bg
 "}
@@ -567,7 +569,7 @@ aq
 aq
 aq
 aq
-be
+rT
 bf
 bg
 "}
@@ -591,7 +593,7 @@ MK
 aq
 Mz
 Wj
-be
+rT
 bf
 bg
 "}
@@ -615,7 +617,7 @@ MK
 bp
 IH
 Aj
-be
+rT
 ab
 ab
 "}

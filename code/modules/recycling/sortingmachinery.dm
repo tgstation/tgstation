@@ -1,5 +1,6 @@
 /obj/item/delivery
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/wrapping.dmi'
+	inhand_icon_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note
@@ -7,14 +8,14 @@
 
 /obj/item/delivery/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
 
 /**
  * Initial check if manually unwrapping
  */
-/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user)
+/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user, time = 1.5 SECONDS)
 	to_chat(user, span_notice("You start to unwrap the package..."))
-	return do_after(user, 15, target = user)
+	return do_after(user, time, target = user)
 
 /**
  * Signals for unwrapping.
@@ -28,11 +29,14 @@
 /**
  * Effects after completing unwrapping
  */
-/obj/item/delivery/proc/post_unwrap_contents(mob/user)
+/obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(turf_loc)
-
+	if(rip_open)
+		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		new /obj/effect/decal/cleanable/wrapping(turf_loc)
+	else
+		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
+		new /obj/item/stack/package_wrap(turf_loc, 1)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -79,7 +83,7 @@
 	if(do_after(user, 50, target = object))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
-		to_chat(user, span_notice("You successfully removed [object]'s wrapping !"))
+		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
 		object.forceMove(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
@@ -114,7 +118,7 @@
 		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.can_perform_action(src))
 			return
 		if(!str || !length(str))
 			to_chat(user, span_warning("Invalid text!"))
@@ -127,7 +131,7 @@
 		if(wrapping_paper.use(3))
 			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
 			giftwrapped = TRUE
-			greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
+			greyscale_config = text2path("/datum/greyscale_config/gift[icon_state]")
 			set_greyscale(colors = wrapping_paper.greyscale_colors)
 			update_appearance()
 		else
@@ -144,8 +148,10 @@
 		note = item
 		update_appearance()
 
-	else if(istype(item, /obj/item/sales_tagger))
-		var/obj/item/sales_tagger/sales_tagger = item
+	else if(istype(item, /obj/item/universal_scanner))
+		var/obj/item/universal_scanner/sales_tagger = item
+		if(sales_tagger.scanning_mode != SCAN_SALES_TAG)
+			return
 		if(sticker)
 			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
@@ -185,6 +191,17 @@
 			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		update_appearance()
 
+	else if(istype(item, /obj/item/boxcutter))
+		var/obj/item/boxcutter/boxcutter_item = item
+		if(HAS_TRAIT(boxcutter_item, TRAIT_TRANSFORM_ACTIVE))
+			if(!attempt_pre_unwrap_contents(user, time = 0.5 SECONDS))
+				return
+			unwrap_contents()
+			balloon_alert(user, "cutting open package...")
+			post_unwrap_contents(user, rip_open = FALSE)
+		else
+			balloon_alert(user, "prime the boxcutter!")
+
 	else
 		return ..()
 
@@ -205,7 +222,7 @@
 	if(!attempt_pre_unwrap_contents(user))
 		return
 	unwrap_contents()
-	post_unwrap_contents(user)
+	post_unwrap_contents()
 
 /**
  * # Wrapped up items small enough to carry.
@@ -241,16 +258,16 @@
 /obj/item/dest_tagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "cargotagger"
+	icon = 'icons/obj/devices/tool.dmi'
+	icon_state = "cargo tagger"
 	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/dest_tagger/borg
@@ -308,12 +325,12 @@
 /obj/item/sales_tagger
 	name = "sales tagger"
 	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "salestagger"
+	icon = 'icons/obj/devices/scanner.dmi'
+	icon_state = "sales tagger"
 	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	///The account which is receiving the split profits.
@@ -336,7 +353,7 @@
 
 /obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
-	if(istype(item, /obj/item/card/id))
+	if(isidcard(item))
 		var/obj/item/card/id/potential_acc = item
 		if(potential_acc.registered_account)
 			if(payments_acc == potential_acc.registered_account)
@@ -391,13 +408,3 @@
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
-
-/obj/item/barcode
-	name = "barcode tag"
-	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "barcode"
-	w_class = WEIGHT_CLASS_TINY
-	///All values inheirited from the sales tagger it came from.
-	var/datum/bank_account/payments_acc = null
-	var/cut_multiplier = 0.5

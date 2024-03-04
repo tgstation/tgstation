@@ -2,6 +2,8 @@
 //corpses that only differentiate themselves by representing a species
 
 /obj/effect/mob_spawn/corpse/human/skeleton
+	//these are also fished in chasms so it wouldn't hurt giving them an apter name than "mob spawner"
+	name = "skeleton"
 	mob_species = /datum/species/skeleton
 
 /obj/effect/mob_spawn/corpse/human/zombie

@@ -12,8 +12,8 @@
  * victim_message uses %ATTACKER for the same.
  */
 /datum/element/chemical_transfer
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///chance for the chemical transfer to proc.
 	var/transfer_prob
 	///message attacker gets when the chemical transfer procs
@@ -28,12 +28,12 @@
 	src.transfer_prob = transfer_prob
 	src.attacker_message = attacker_message
 	src.victim_message = victim_message
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_attack)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/chemical_transfer/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
 
 ///signal called on parent being examined
 /datum/element/chemical_transfer/proc/on_examine(datum/target, mob/user, list/examine_list)
@@ -58,7 +58,7 @@
 		return
 	var/built_attacker_message = replacetext(attacker_message, "%VICTIM", transfer_victim)
 	var/built_victim_message = replacetext(attacker_message, "%ATTACKER", transfer_attacker)
-	transfer_attacker.reagents?.trans_to(transfer_victim, transfer_attacker.reagents.total_volume, multiplier = 1, preserve_data = 1, no_react = 0, transfered_by = transfer_attacker)
+	transfer_attacker.reagents?.trans_to(transfer_victim, transfer_attacker.reagents.total_volume, transferred_by = transfer_attacker)
 	to_chat(transfer_attacker, built_attacker_message)
 	to_chat(transfer_victim, built_victim_message)
 

@@ -1,0 +1,34 @@
+directory = "_maps/safehouses/"
+
+[rooms.abductor]
+modules = ["abductor.dmm"]
+
+[rooms.bathroom]
+modules = ["bathroom.dmm"]
+
+[rooms.den]
+modules = ["den.dmm"]
+
+[rooms.dig]
+modules = ["dig.dmm"]
+
+[rooms.ice]
+modules = ["ice.dmm"]
+
+[rooms.lavaland_boss]
+modules = ["lavaland_boss.dmm"]
+
+[rooms.mine]
+modules = ["mine.dmm"]
+
+[rooms.shuttle]
+modules = ["shuttle.dmm"]
+
+[rooms.shuttle_space]
+modules = ["shuttle_space.dmm"]
+
+[rooms.test_only]
+modules = ["test_only_safehouse.dmm"]
+
+[rooms.wood]
+modules = ["wood.dmm"]

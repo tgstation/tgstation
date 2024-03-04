@@ -44,7 +44,7 @@
 			delay += 0.1 SECONDS
 
 		if(delay)
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/chatter_speak_word, speaker, letter_count, phomeme, length), delay, flags = TIMER_CLIENT_TIME)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(chatter_speak_word), speaker, letter_count, phomeme, length), delay, flags = TIMER_CLIENT_TIME)
 		else
 			chatter_speak_word(speaker, current_context, phomeme, length)
 		break //We use the loop as a handy way of dealing with punctuation, the actual looping operation here happens in timers that call timers

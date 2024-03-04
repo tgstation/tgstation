@@ -37,11 +37,11 @@ SUBSYSTEM_DEF(eigenstates)
 	for(var/atom/target as anything in targets)
 		eigen_targets["[id_counter]"] += target
 		eigen_id[target] = "[id_counter]"
-		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
-		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
-		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
-		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+		RegisterSignal(target, COMSIG_CLOSET_INSERT, PROC_REF(use_eigenlinked_atom))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_eigen_entry))
+		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(tool_interact))
+		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, TYPE_PROC_REF(/obj/structure/closet,bust_open))
+		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 		var/obj/item = target
 		if(item)
 			item.color = COLOR_PERIWINKLEE //Tint the locker slightly.
@@ -71,11 +71,11 @@ SUBSYSTEM_DEF(eigenstates)
 	entry.color = COLOR_WHITE
 	entry.alpha = 255
 	UnregisterSignal(entry, list(
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_CLOSET_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
-	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	entry.UnregisterSignal(entry, COMSIG_EIGENSTATE_ACTIVATE) //This is a signal on the object itself so we have to call it from that
 	///Remove the current entry if we're empty
 	for(var/targets in eigen_targets)
@@ -101,7 +101,11 @@ SUBSYSTEM_DEF(eigenstates)
 	if(!eigen_target)
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
-	thing_to_send.forceMove(get_turf(eigen_target))
+	if(check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_EIGENSTATE))
+		thing_to_send.forceMove(get_turf(eigen_target))
+	else
+		object_sent_from.balloon_alert(thing_to_send, "nothing happens!")
+		return FALSE
 	//Create ONE set of sparks for ALL times in iteration
 	if(spark_time != world.time)
 		do_sparks(5, FALSE, eigen_target)
@@ -115,4 +119,4 @@ SUBSYSTEM_DEF(eigenstates)
 /datum/controller/subsystem/eigenstates/proc/tool_interact(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
 	to_chat(user, span_notice("The unstable nature of [source] makes it impossible to use [item] on [source.p_them()]!"))
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING

@@ -1,10 +1,11 @@
-import { Component, createRef, InfernoNode, RefObject } from "inferno";
-import { Button, Section, Stack } from "../../components";
-import { FlexProps } from "../../components/Flex";
+import { Component, createRef, ReactNode, RefObject } from 'react';
+
+import { Button, Section, Stack } from '../../components';
+import { FlexProps } from '../../components/Flex';
 
 type TabbedMenuProps = {
-  categoryEntries: [string, InfernoNode][],
-  contentProps?: FlexProps,
+  categoryEntries: [string, ReactNode][];
+  contentProps?: FlexProps;
 };
 
 export class TabbedMenu extends Component<TabbedMenuProps> {
@@ -32,8 +33,8 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
                     fontSize="1.2em"
                     fluid
                     onClick={() => {
-                      const offsetTop = this.categoryRefs[category]
-                        .current?.offsetTop;
+                      const offsetTop =
+                        this.categoryRefs[category].current?.offsetTop;
 
                       if (offsetTop === undefined) {
                         return;
@@ -69,23 +70,18 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
           }}
         >
           <Stack vertical fill px={2}>
-            {this.props.categoryEntries.map(
-              ([category, children]) => {
-                return (
-                  <Stack.Item
-                    key={category}
-                    innerRef={this.getCategoryRef(category)}
-                  >
-                    <Section
-                      fill
-                      title={category}
-                    >
-                      {children}
-                    </Section>
-                  </Stack.Item>
-                );
-              }
-            )}
+            {this.props.categoryEntries.map(([category, children]) => {
+              return (
+                <Stack.Item
+                  key={category}
+                  innerRef={this.getCategoryRef(category)}
+                >
+                  <Section fill title={category}>
+                    {children}
+                  </Section>
+                </Stack.Item>
+              );
+            })}
           </Stack>
         </Stack.Item>
       </Stack>

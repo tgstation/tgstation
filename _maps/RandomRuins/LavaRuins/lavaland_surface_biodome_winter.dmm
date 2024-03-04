@@ -3,9 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/machinery/shower{
-	pixel_y = 12
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "ac" = (
@@ -30,16 +28,11 @@
 /area/ruin/powered/snow_biodome)
 "ag" = (
 /obj/structure/displaycase/freezeray,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/snow_biodome)
-"ah" = (
-/obj/machinery/light/cold/directional/west,
-/turf/open/floor/circuit,
-/area/ruin/powered/snow_biodome)
 "ai" = (
-/obj/structure/sink{
-	pixel_y = 26
-	},
+/obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
@@ -54,7 +47,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "am" = (
-/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/cup/glass/mug,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "an" = (
@@ -142,7 +135,7 @@
 /area/ruin/powered/snow_biodome)
 "aF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco,
+/obj/item/reagent_containers/cup/glass/mug/coco,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aG" = (
@@ -152,7 +145,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aH" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aI" = (
@@ -183,7 +176,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aO" = (
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
@@ -262,11 +255,11 @@
 /area/ruin/powered/snow_biodome)
 "gz" = (
 /obj/structure/chair/stool/directional/south,
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "hr" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -331,7 +324,6 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/ruin/powered/snow_biodome)
 "wN" = (
-/obj/machinery/light/cold/directional/east,
 /turf/open/floor/circuit,
 /area/ruin/powered/snow_biodome)
 "xU" = (
@@ -368,7 +360,7 @@
 /area/ruin/powered/snow_biodome)
 "Ez" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "EA" = (
@@ -453,7 +445,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "UM" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
@@ -924,7 +916,7 @@ tb
 "}
 (15,1,1) = {"
 Wg
-ah
+wN
 Wg
 Wg
 hr

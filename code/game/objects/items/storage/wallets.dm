@@ -5,29 +5,30 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
-	component_type = /datum/component/storage/concrete/wallet
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
 
-/obj/item/storage/wallet/ComponentInitialize()
+/obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
-	STR.max_items = 4
-	STR.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 4
+	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
-		/obj/item/flashlight/pen,
-		/obj/item/seeds,
-		/obj/item/stack/medical,
-		/obj/item/toy/crayon,
+		/obj/item/clothing/accessory/dogtag,
 		/obj/item/coin,
+		/obj/item/coupon,
 		/obj/item/dice,
 		/obj/item/disk,
+		/obj/item/flashlight/pen,
+		/obj/item/folder/biscuit,
+		/obj/item/food/chococoin,
 		/obj/item/implanter,
+		/obj/item/laser_pointer,
 		/obj/item/lighter,
 		/obj/item/lipstick,
 		/obj/item/match,
@@ -38,12 +39,16 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
 		/obj/item/screwdriver,
-		/obj/item/stamp),
+		/obj/item/seeds,
+		/obj/item/spess_knife,
+		/obj/item/stack/medical,
+		/obj/item/stamp,
+		/obj/item/toy/crayon),
 		list(/obj/item/screwdriver/power))
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(istype(gone, /obj/item/card/id))
+	if(isidcard(gone))
 		refreshID()
 
 /**
@@ -88,7 +93,7 @@
 
 /obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived, /obj/item/card/id))
+	if(isidcard(arrived))
 		refreshID()
 
 /obj/item/storage/wallet/update_overlays()
@@ -96,7 +101,6 @@
 	cached_flat_icon = null
 	if(!front_id)
 		return
-	COMPILE_OVERLAYS(front_id)
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
 	. += mutable_appearance(icon, "wallet_overlay")
@@ -153,6 +157,7 @@
 
 /obj/item/storage/wallet/random
 	icon_state = "random_wallet" // for mapping purposes
+	worn_icon_state = "wallet"
 
 /obj/item/storage/wallet/random/Initialize(mapload)
 	. = ..()
@@ -161,3 +166,12 @@
 /obj/item/storage/wallet/random/PopulateContents()
 	new /obj/item/holochip(src, rand(5, 30))
 	new /obj/effect/spawner/random/entertainment/wallet_storage(src)
+
+///Used by the toilet fish source.
+/obj/item/storage/wallet/money
+	desc = "It can hold a few small and personal things. This one reeks of toilet water."
+
+/obj/item/storage/wallet/money/PopulateContents()
+	for(var/iteration in 1 to pick(3, 4))
+		new /obj/item/holochip(src, rand(50, 450))
+

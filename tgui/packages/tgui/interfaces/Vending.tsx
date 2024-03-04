@@ -1,12 +1,25 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
-import { Window } from '../layouts';
+import { capitalizeAll } from 'common/string';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type VendingData = {
   onstation: boolean;
   department: string;
   jobDiscount: number;
+  displayed_currency_icon: string;
+  displayed_currency_name: string;
   product_records: ProductRecord[];
   coin_records: CoinRecord[];
   hidden_records: HiddenRecord[];
@@ -15,6 +28,11 @@ type VendingData = {
   extended_inventory: boolean;
   access: boolean;
   vending_machine_input: CustomInput[];
+  categories: Record<string, Category>;
+};
+
+type Category = {
+  icon: string;
 };
 
 type ProductRecord = {
@@ -23,23 +41,14 @@ type ProductRecord = {
   price: number;
   max_amount: number;
   ref: string;
+  category: string;
 };
 
-type CoinRecord = {
-  path: string;
-  name: string;
-  price: number;
-  max_amount: number;
-  ref: string;
+type CoinRecord = ProductRecord & {
   premium: boolean;
 };
 
-type HiddenRecord = {
-  path: string;
-  name: string;
-  price: number;
-  max_amount: number;
-  ref: string;
+type HiddenRecord = ProductRecord & {
   premium: boolean;
 };
 
@@ -52,19 +61,60 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
 
 type CustomInput = {
+  path: string;
   name: string;
   price: number;
   img: string;
 };
 
-export const Vending = (_, context) => {
-  const { data } = useBackend<VendingData>(context);
-  const { onstation } = data;
+export const Vending = (props) => {
+  const { data } = useBackend<VendingData>();
+
+  const {
+    onstation,
+    product_records = [],
+    coin_records = [],
+    hidden_records = [],
+    stock,
+  } = data;
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    Object.keys(data.categories)[0],
+  );
+
+  let inventory: (ProductRecord | CustomInput)[];
+  let custom = false;
+  if (data.vending_machine_input) {
+    inventory = data.vending_machine_input;
+    custom = true;
+  } else {
+    inventory = [...product_records, ...coin_records];
+    if (data.extended_inventory) {
+      inventory = [...inventory, ...hidden_records];
+    }
+  }
+
+  inventory = inventory
+    // Just in case we still have undefined values in the list
+    .filter((item) => !!item);
+
+  const filteredCategories = Object.fromEntries(
+    Object.entries(data.categories).filter(([categoryName]) => {
+      return inventory.find((product) => {
+        if ('category' in product) {
+          return product.category === categoryName;
+        } else {
+          return false;
+        }
+      });
+    }),
+  );
 
   return (
     <Window width={450} height={600}>
@@ -76,8 +126,22 @@ export const Vending = (_, context) => {
             </Stack.Item>
           )}
           <Stack.Item grow>
-            <ProductDisplay />
+            <ProductDisplay
+              custom={custom}
+              inventory={inventory}
+              selectedCategory={selectedCategory}
+            />
           </Stack.Item>
+
+          {Object.keys(filteredCategories).length > 1 && (
+            <Stack.Item>
+              <CategorySelector
+                categories={filteredCategories}
+                selectedCategory={selectedCategory!}
+                onSelect={setSelectedCategory}
+              />
+            </Stack.Item>
+          )}
         </Stack>
       </Window.Content>
     </Window>
@@ -85,8 +149,8 @@ export const Vending = (_, context) => {
 };
 
 /** Displays user details if an ID is present and the user is on the station */
-export const UserDetails = (_, context) => {
-  const { data } = useBackend<VendingData>(context);
+export const UserDetails = (props) => {
+  const { data } = useBackend<VendingData>();
   const { user } = data;
 
   if (!user) {
@@ -115,29 +179,20 @@ export const UserDetails = (_, context) => {
 };
 
 /** Displays  products in a section, with user balance at top */
-const ProductDisplay = (_, context) => {
-  const { data } = useBackend<VendingData>(context);
+const ProductDisplay = (props: {
+  custom: boolean;
+  selectedCategory: string | null;
+  inventory: (ProductRecord | CustomInput)[];
+}) => {
+  const { data } = useBackend<VendingData>();
+  const { custom, inventory, selectedCategory } = props;
   const {
+    stock,
     onstation,
     user,
-    product_records = [],
-    coin_records = [],
-    hidden_records = [],
-    stock,
+    displayed_currency_icon,
+    displayed_currency_name,
   } = data;
-  let inventory;
-  let custom = false;
-  if (data.vending_machine_input) {
-    inventory = data.vending_machine_input;
-    custom = true;
-  } else {
-    inventory = [...product_records, ...coin_records];
-    if (data.extended_inventory) {
-      inventory = [...inventory, ...hidden_records];
-    }
-  }
-  // Just in case we still have undefined values in the list
-  inventory = inventory.filter((item) => !!item);
 
   return (
     <Section
@@ -145,21 +200,33 @@ const ProductDisplay = (_, context) => {
       scrollable
       title="Products"
       buttons={
-        !!onstation
-        && user && (
+        !!onstation &&
+        user && (
           <Box fontSize="16px" color="green">
-            {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
-          </Box>)
-      }>
+            {(user && user.cash) || 0}
+            {displayed_currency_name}{' '}
+            <Icon name={displayed_currency_icon} color="gold" />
+          </Box>
+        )
+      }
+    >
       <Table>
-        {inventory.map((product) => (
-          <VendingRow
-            key={product.name}
-            custom={custom}
-            product={product}
-            productStock={stock[product.name]}
-          />
-        ))}
+        {inventory
+          .filter((product) => {
+            if ('category' in product) {
+              return product.category === selectedCategory;
+            } else {
+              return true;
+            }
+          })
+          .map((product) => (
+            <VendingRow
+              key={product.path}
+              custom={custom}
+              product={product}
+              productStock={stock[product.path]}
+            />
+          ))}
       </Table>
     </Section>
   );
@@ -169,41 +236,34 @@ const ProductDisplay = (_, context) => {
  * Uses a table layout. Labeledlist might be better,
  * but you cannot use item icons as labels currently.
  */
-const VendingRow = (props, context) => {
-  const { data } = useBackend<VendingData>(context);
+const VendingRow = (props) => {
+  const { data } = useBackend<VendingData>();
   const { custom, product, productStock } = props;
   const { access, department, jobDiscount, onstation, user } = data;
-  const free
-    = !onstation
-    || product.price === 0;
+  const free = !onstation || product.price === 0;
   const discount = !product.premium && department === user?.department;
   const remaining = custom ? product.amount : productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
-  const disabled
-    = remaining === 0
-    || (onstation && !user)
-    || (onstation && !access
-    && (discount ? redPrice : product.price) > user?.cash);
+  const disabled =
+    remaining === 0 ||
+    (onstation && !user) ||
+    (onstation &&
+      !access &&
+      (discount ? redPrice : product.price) > user?.cash);
 
   return (
     <Table.Row>
       <Table.Cell collapsing>
         <ProductImage product={product} />
       </Table.Cell>
-      <Table.Cell bold>
-        {product.name.replace(/^\w/, (c) => c.toUpperCase())}
-      </Table.Cell>
+      <Table.Cell bold>{capitalizeAll(product.name)}</Table.Cell>
       <Table.Cell>
         {!!productStock?.colorable && (
           <ProductColorSelect disabled={disabled} product={product} />
         )}
       </Table.Cell>
       <Table.Cell collapsing textAlign="right">
-        <ProductStock
-          custom={custom}
-          product={product}
-          remaining={remaining}
-        />
+        <ProductStock custom={custom} product={product} remaining={remaining} />
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         <ProductButton
@@ -227,16 +287,14 @@ const ProductImage = (props) => {
     <img
       src={`data:image/jpeg;base64,${product.img}`}
       style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   ) : (
     <span
       className={classes(['vending32x32', product.path])}
       style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   );
@@ -245,8 +303,8 @@ const ProductImage = (props) => {
 /** In the case of customizable items, ie: shoes,
  * this displays a color wheel button that opens another window.
  */
-const ProductColorSelect = (props, context) => {
-  const { act } = useBackend<VendingData>(context);
+const ProductColorSelect = (props) => {
+  const { act } = useBackend<VendingData>();
   const { disabled, product } = props;
 
   return (
@@ -266,26 +324,27 @@ const ProductStock = (props) => {
   return (
     <Box
       color={
-        (remaining <= 0 && 'bad')
-        || (!custom && remaining <= product.max_amount / 2 && 'average')
-        || 'good'
-      }>
+        (remaining <= 0 && 'bad') ||
+        (!custom && remaining <= product.max_amount / 2 && 'average') ||
+        'good'
+      }
+    >
       {remaining} left
     </Box>
   );
 };
 
 /** The main button to purchase an item. */
-const ProductButton = (props, context) => {
-  const { act, data } = useBackend<VendingData>(context);
-  const { access } = data;
+const ProductButton = (props) => {
+  const { act, data } = useBackend<VendingData>();
+  const { access, displayed_currency_name } = data;
   const { custom, discount, disabled, free, product, redPrice } = props;
-  const customPrice = access ? 'FREE' : product.price + ' cr';
-  let standardPrice = product.price + ' cr';
+  const customPrice = access ? 'FREE' : product.price;
+  let standardPrice = product.price;
   if (free) {
-    standardPrice = "FREE";
+    standardPrice = 'FREE';
   } else if (discount) {
-    standardPrice = redPrice + ' cr';
+    standardPrice = redPrice;
   }
   return custom ? (
     <Button
@@ -293,9 +352,12 @@ const ProductButton = (props, context) => {
       disabled={disabled}
       onClick={() =>
         act('dispense', {
-          'item': product.name,
-        })}>
+          item: product.path,
+        })
+      }
+    >
       {customPrice}
+      {!access && displayed_currency_name}
     </Button>
   ) : (
     <Button
@@ -303,9 +365,41 @@ const ProductButton = (props, context) => {
       disabled={disabled}
       onClick={() =>
         act('vend', {
-          'ref': product.ref,
-        })}>
+          ref: product.ref,
+        })
+      }
+    >
       {standardPrice}
+      {!free && displayed_currency_name}
     </Button>
+  );
+};
+
+const CATEGORY_COLORS = {
+  Contraband: 'red',
+  Premium: 'yellow',
+};
+
+const CategorySelector = (props: {
+  categories: Record<string, Category>;
+  selectedCategory: string;
+  onSelect: (category: string) => void;
+}) => {
+  const { categories, selectedCategory, onSelect } = props;
+
+  return (
+    <Section>
+      {Object.entries(categories).map(([name, category]) => (
+        <Button
+          key={name}
+          selected={name === selectedCategory}
+          color={CATEGORY_COLORS[name]}
+          icon={category.icon}
+          onClick={() => onSelect(name)}
+        >
+          {name}
+        </Button>
+      ))}
+    </Section>
   );
 };

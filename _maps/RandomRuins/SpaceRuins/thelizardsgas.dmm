@@ -30,14 +30,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
-"bt" = (
-/obj/structure/sign/poster/fluff/lizards_gas_payment{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark/smooth_corner{
-	dir = 8
-	},
-/area/ruin/space/has_grav/thelizardsgas)
 "bO" = (
 /obj/structure/closet/crate/secure/gear,
 /turf/closed/mineral,
@@ -60,12 +52,25 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/thelizardsgas)
+"cv" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/structure/sign/poster/fluff/lizards_gas_payment/directional/west,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
 "de" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/binary/pump/off{
 	dir = 8
 	},
 /turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"eV" = (
+/obj/structure/sign/poster/fluff/lizards_gas_payment/directional/north,
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 8
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "gL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -113,6 +118,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
+"kk" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
 "kS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "lizardgas"
@@ -151,12 +163,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/ruin/space/has_grav/thelizardsgas)
-"qX" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/white/side{
-	dir = 8
-	},
-/area/ruin/space/has_grav/thelizardsgas)
 "rs" = (
 /obj/machinery/button/door/directional/west{
 	desc = "After all, what's more important than making sure you get what you're due?";
@@ -183,6 +189,14 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
+"tq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/structure/sign/poster/fluff/lizards_gas_power/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
 "ua" = (
 /obj/effect/spawner/random/structure/billboard/roadsigns,
 /turf/open/misc/asteroid/airless,
@@ -206,9 +220,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "xb" = (
 /obj/structure/cable,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/fire/directional/north,
 /turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "xy" = (
@@ -220,9 +232,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "yU" = (
-/obj/structure/sign/warning/no_smoking{
-	desc = "An incredibly bad idea.";
-	pixel_y = 32
+/obj/structure/sign/warning/no_smoking/directional/north{
+	desc = "An incredibly bad idea."
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -233,31 +244,11 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "zz" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/area/ruin/space/has_grav/thelizardsgas)
-"AZ" = (
-/obj/machinery/light/directional/west,
-/obj/structure/closet/crate/secure/freezer{
-	desc = "There's a reason why this is behind the counter. Do not sell to minors.";
-	locked = 0;
-	name = "The GOOD Stuff"
-	},
-/obj/machinery/power/apc/auto_name/directional/north{
-	coverlocked = 0;
-	locked = 0;
-	network_id = null;
-	start_charge = 60
-	},
-/obj/structure/cable,
-/obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
-/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
-/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
-/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
-/turf/open/floor/iron/dark/smooth_corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "Bi" = (
 /obj/structure/closet{
@@ -308,15 +299,6 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/thelizardsgas)
-"FJ" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("lizardgas" = "Plasma Supply");
-	dir = 8
-	},
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 4
-	},
-/area/ruin/space/has_grav/thelizardsgas)
 "Gr" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/snack/lizard,
@@ -343,7 +325,6 @@
 "Io" = (
 /obj/machinery/power/smes{
 	charge = 2e+006;
-	network_id = null;
 	output_level = 0
 	},
 /obj/structure/cable,
@@ -368,6 +349,25 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
+"JA" = (
+/obj/structure/closet/crate/secure/freezer{
+	desc = "There's a reason why this is behind the counter. Do not sell to minors.";
+	locked = 0;
+	name = "The GOOD Stuff"
+	},
+/obj/machinery/power/apc/auto_name/directional/north{
+	coverlocked = 0;
+	start_charge = 60
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/structure/cable,
+/obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark/smooth_corner,
+/area/ruin/space/has_grav/thelizardsgas)
 "JP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/west,
@@ -388,22 +388,10 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "LT" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/power/terminal{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/thelizardsgas)
-"Mw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/structure/sign/poster/fluff/lizards_gas_power{
-	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
@@ -426,18 +414,24 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Pb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Pi" = (
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"PF" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("lizardgas"="Plasma Supply");
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Qg" = (
 /turf/closed/mineral,
@@ -450,7 +444,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
 "QQ" = (
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "How the fuck did he get in there?!";
 	name = "Zingo"
 	},
@@ -462,22 +456,13 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
-"Ss" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
-/obj/structure/sign/poster/fluff/lizards_gas_payment{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 4
-	},
-/area/ruin/space/has_grav/thelizardsgas)
 "Tj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ua" = (
-/mob/living/simple_animal/hostile/lizard/space{
+/mob/living/basic/lizard/space{
 	desc = "How are you ALIVE?!";
 	name = "Blarpo"
 	},
@@ -522,14 +507,6 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
-/area/ruin/space/has_grav/thelizardsgas)
-"VV" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "Wh" = (
 /obj/machinery/light/directional/south,
@@ -673,7 +650,7 @@ Qg
 wb
 RB
 Um
-RB
+wb
 CA
 CA
 CA
@@ -690,7 +667,7 @@ CA
 Qg
 Qg
 mR
-AZ
+JA
 rs
 zz
 JY
@@ -744,8 +721,8 @@ Qg
 Qg
 Qg
 mR
-bt
-FJ
+eV
+PF
 VP
 hl
 Gr
@@ -804,7 +781,7 @@ Tj
 na
 sN
 iO
-Ss
+cv
 GM
 Pb
 ss
@@ -988,7 +965,7 @@ Qg
 mR
 Io
 cm
-Mw
+tq
 Cv
 nL
 gL
@@ -1017,10 +994,10 @@ mR
 mR
 mR
 mR
-VV
+kk
 jN
 zn
-UO
+Wh
 mR
 Qg
 Um
@@ -1051,7 +1028,7 @@ UO
 mR
 Qg
 wb
-RB
+wb
 wb
 RB
 CA
@@ -1099,7 +1076,7 @@ Qg
 mR
 mN
 Je
-qX
+Je
 Je
 EH
 mR
@@ -1161,7 +1138,7 @@ wb
 Qg
 RB
 wb
-RB
+wb
 CA
 CA
 CA

@@ -5,7 +5,7 @@
  * also be caught and displayed (if any) above the list of runtimes.
  *
  * How to use:
- * 1) Copy and paste your list of runtimes from Dream Daemon into input.exe
+ * 1) Copy and paste your list of runtimes from Dream Daemon into Input.txt
  * 2) Run RuntimeCondenser.exe
  * 3) Open output.txt for a condensed report of the runtimes
  *
@@ -130,6 +130,10 @@ inline void forward_progress(FILE * inputFile) {
 				nextLine->erase(0, 10);
 			else if (nextLine->length() >= 26 && ((*nextLine)[0] == '[' && (*nextLine)[5] == '-' && (*nextLine)[14] == ':' && (*nextLine)[20] == '.' && (*nextLine)[24] == ']'))
 				nextLine->erase(0, 26);
+		}
+		//strip out log cats
+		if (nextLine->length() >= 9 && safe_substr(nextLine, 0, 9) == "RUNTIME: ") {
+			nextLine->erase(0, 9);
 		}
 	} while (!endofbuffer && nextLine->length() < 1);
 

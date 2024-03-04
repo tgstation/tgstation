@@ -93,6 +93,10 @@ FLOOR SAFES
 			if(3)
 				desc = initial(desc) + "\nThe lock seems to be broken."
 
+		return TRUE
+
+	return FALSE
+
 /obj/structure/safe/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/simple/safe),
@@ -117,9 +121,9 @@ FLOOR SAFES
 	if(open)
 		var/list/contents_names = list()
 		data["contents"] = contents_names
-		for(var/obj/O in contents)
-			contents_names[++contents_names.len] = list("name" = O.name, "sprite" = O.icon_state)
-			user << browse_rsc(icon(O.icon, O.icon_state), "[O.icon_state].png")
+		for(var/obj/jewel in contents)
+			contents_names[++contents_names.len] = list("name" = jewel.name, "sprite" = jewel.icon_state)
+			user << browse_rsc(icon(jewel.icon, jewel.icon_state), "[jewel.icon_state].png")
 
 	return data
 
@@ -131,7 +135,7 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
 
 	var/canhear = FALSE

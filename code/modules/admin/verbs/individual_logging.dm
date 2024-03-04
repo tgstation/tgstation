@@ -9,6 +9,8 @@
 	if(M.ckey)
 		dat += "<center><p>Ckey</p></center>"
 		dat += "<center>"
+		dat += individual_logging_panel_link(M, INDIVIDUAL_GAME_LOG, LOGSRC_CKEY, "Game Log", source, ntype)
+		dat += " | "
 		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CKEY, "Attack Log", source, ntype)
 		dat += " | "
 		dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_CKEY, "Say Log", source, ntype)
@@ -28,6 +30,8 @@
 	dat += "<center><p>Mob</p></center>"
 	//Add the links for the mob specific log
 	dat += "<center>"
+	dat += individual_logging_panel_link(M, INDIVIDUAL_GAME_LOG, LOGSRC_MOB, "Game Log", source, ntype)
+	dat += " | "
 	dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_MOB, "Attack Log", source, ntype)
 	dat += " | "
 	dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_MOB, "Say Log", source, ntype)
@@ -56,7 +60,7 @@
 			for(var/entry in all_the_entrys)
 				concatenated_logs += "<b>[entry]</b><br>[all_the_entrys[entry]]"
 	if(length(concatenated_logs))
-		sortTim(concatenated_logs, cmp = /proc/cmp_text_dsc) //Sort by timestamp.
+		sortTim(concatenated_logs, cmp = GLOBAL_PROC_REF(cmp_text_dsc)) //Sort by timestamp.
 		dat += "<font size=2px>"
 		dat += concatenated_logs.Join("<br>")
 		dat += "</font>"

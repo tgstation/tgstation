@@ -1,6 +1,6 @@
 /datum/unit_test/harm_punch/Run()
-	var/mob/living/carbon/human/puncher = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/puncher = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 
 	// Avoid all randomness in tests
 	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
@@ -11,8 +11,8 @@
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
 
 /datum/unit_test/harm_melee/Run()
-	var/mob/living/carbon/human/tider = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/tider = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/storage/toolbox/toolbox = allocate(/obj/item/storage/toolbox)
 
 	tider.put_in_active_hand(toolbox, forced = TRUE)
@@ -22,8 +22,8 @@
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being hit by a toolbox")
 
 /datum/unit_test/harm_different_damage/Run()
-	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/weldingtool/welding_tool = allocate(/obj/item/weldingtool)
 
 	attacker.put_in_active_hand(welding_tool, forced = TRUE)
@@ -53,13 +53,13 @@
 	pre_attack_hit = TRUE
 
 /datum/unit_test/attack_chain/Run()
-	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/storage/toolbox/toolbox = allocate(/obj/item/storage/toolbox)
 
-	RegisterSignal(toolbox, COMSIG_ITEM_PRE_ATTACK, .proc/pre_attack_hit)
-	RegisterSignal(toolbox, COMSIG_ITEM_ATTACK, .proc/attack_hit)
-	RegisterSignal(toolbox, COMSIG_ITEM_AFTERATTACK, .proc/post_attack_hit)
+	RegisterSignal(toolbox, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_attack_hit))
+	RegisterSignal(toolbox, COMSIG_ITEM_ATTACK, PROC_REF(attack_hit))
+	RegisterSignal(toolbox, COMSIG_ITEM_AFTERATTACK, PROC_REF(post_attack_hit))
 
 	attacker.put_in_active_hand(toolbox, forced = TRUE)
 	attacker.set_combat_mode(TRUE)
@@ -70,8 +70,8 @@
 	TEST_ASSERT(post_attack_hit, "Post-attack signal was not fired")
 
 /datum/unit_test/disarm/Run()
-	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/storage/toolbox/toolbox = allocate(/obj/item/storage/toolbox)
 
 	victim.put_in_active_hand(toolbox, forced = TRUE)
@@ -99,3 +99,42 @@
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim was moved after being pushed against a wall")
 	TEST_ASSERT(victim.has_status_effect(/datum/status_effect/incapacitating/knockdown), "Victim was not knocked down after being pushed against a wall")
 	TEST_ASSERT_EQUAL(victim.get_active_held_item(), null, "Victim didn't drop toolbox after being pushed against a wall")
+
+/// Tests you can punch yourself
+/datum/unit_test/self_punch
+
+/datum/unit_test/self_punch/Run()
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	ADD_TRAIT(dummy, TRAIT_PERFECT_ATTACKER, TRAIT_SOURCE_UNIT_TESTS)
+	dummy.set_combat_mode(TRUE)
+	dummy.ClickOn(dummy)
+	TEST_ASSERT_NOTEQUAL(dummy.getBruteLoss(), 0, "Dummy took no brute damage after self-punching")
+
+/// Tests handcuffed (HANDS_BLOCKED) mobs cannot punch
+/datum/unit_test/handcuff_punch
+
+/datum/unit_test/handcuff_punch/Run()
+	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
+	ADD_TRAIT(attacker, TRAIT_PERFECT_ATTACKER, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(attacker, TRAIT_HANDS_BLOCKED, TRAIT_SOURCE_UNIT_TESTS)
+	attacker.set_combat_mode(TRUE)
+	attacker.ClickOn(victim)
+	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim took brute damage from being punched by a handcuffed attacker")
+	attacker.next_move = -1
+	attacker.next_click = -1
+	attacker.ClickOn(attacker)
+	TEST_ASSERT_EQUAL(attacker.getBruteLoss(), 0, "Attacker took brute damage from self-punching while handcuffed")
+
+/// Tests handcuffed (HANDS_BLOCKED) monkeys can still bite despite being cuffed
+/datum/unit_test/handcuff_bite
+
+/datum/unit_test/handcuff_bite/Run()
+	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
+	ADD_TRAIT(attacker, TRAIT_PERFECT_ATTACKER, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(attacker, TRAIT_HANDS_BLOCKED, TRAIT_SOURCE_UNIT_TESTS)
+	attacker.set_combat_mode(TRUE)
+	attacker.set_species(/datum/species/monkey)
+	attacker.ClickOn(victim)
+	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim took no brute damage from being bit by a handcuffed monkey, which is incorrect, as it's a bite attack")

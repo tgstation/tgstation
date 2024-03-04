@@ -12,12 +12,12 @@
 /datum/computer_file/program/portrait_printer
 	filename = "PortraitPrinter"
 	filedesc = "Marlowe Treeby's Art Galaxy"
-	category = PROGRAM_CATEGORY_CREW
-	program_icon_state = "dummy"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
+	program_open_overlay = "dummy"
 	extended_desc = "This program connects to a Spinward Sector community art site for viewing and printing art."
-	transfer_access = list(ACCESS_LIBRARY)
-	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = TRUE
+	download_access = list(ACCESS_LIBRARY)
+	can_run_on_flags = PROGRAM_CONSOLE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 9
 	tgui_id = "NtosPortraitPrinter"
 	program_icon = "paint-brush"
@@ -43,10 +43,8 @@
 		get_asset_datum(/datum/asset/simple/portraits)
 	)
 
-/datum/computer_file/program/portrait_printer/ui_act(action, params)
+/datum/computer_file/program/portrait_printer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("search")
 			if(search_string != params["to_search"])
@@ -67,17 +65,10 @@
 	matching_paintings = SSpersistent_paintings.painting_ui_data(filter = search_mode, search_text = search_string)
 
 /datum/computer_file/program/portrait_printer/proc/print_painting(selected_painting)
-	//printer check!
-	var/obj/item/computer_hardware/printer/printer
-	if(computer)
-		printer = computer.all_components[MC_PRINT]
-	if(!printer)
-		to_chat(usr, span_notice("Hardware error: A printer is required to print a canvas."))
-		return
-	if(printer.stored_paper < CANVAS_PAPER_COST)
+	if(computer.stored_paper < CANVAS_PAPER_COST)
 		to_chat(usr, span_notice("Printing error: Your printer needs at least [CANVAS_PAPER_COST] paper to print a canvas."))
 		return
-	printer.stored_paper -= CANVAS_PAPER_COST
+	computer.stored_paper -= CANVAS_PAPER_COST
 
 	//canvas printing!
 	var/datum/painting/chosen_portrait = locate(selected_painting) in SSpersistent_paintings.paintings

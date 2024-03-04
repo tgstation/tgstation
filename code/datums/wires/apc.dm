@@ -31,18 +31,18 @@
 		if(WIRE_POWER1, WIRE_POWER2) // Short for a long while.
 			if(!A.shorted)
 				A.shorted = TRUE
-				addtimer(CALLBACK(A, /obj/machinery/power/apc.proc/reset, wire), 2 MINUTES)
+				addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/power/apc, reset), wire), 2 MINUTES)
 		if(WIRE_IDSCAN) // Unlock for a little while.
 			A.locked = FALSE
-			addtimer(CALLBACK(A, /obj/machinery/power/apc.proc/reset, wire), 30 SECONDS)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/power/apc, reset), wire), 30 SECONDS)
 		if(WIRE_AI) // Disable AI control for a very short time.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-				addtimer(CALLBACK(A, /obj/machinery/power/apc.proc/reset, wire), 1 SECONDS)
+				addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/power/apc, reset), wire), 1 SECONDS)
 
-/datum/wires/apc/on_cut(index, mend)
+/datum/wires/apc/on_cut(wire, mend, source)
 	var/obj/machinery/power/apc/A = holder
-	switch(index)
+	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Short out.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
 				A.shorted = FALSE

@@ -1,7 +1,7 @@
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "debug"
 	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
@@ -35,10 +35,16 @@
 	var/normal_desc
 	//--end of love :'(--
 
+/*
+** If you add a new plushie please add it to the lists at both:
+** /obj/effect/spawner/random/entertainment/plushie
+** /obj/effect/spawner/random/entertainment/plushie_delux
+*/
+
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
-	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
+	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -81,12 +87,12 @@
 
 	var/i
 	var/obj/item/toy/plush/P
-	for(i=1, i<=scorned.len, i++)
+	for(i=1, i <= scorned.len, i++)
 		P = scorned[i]
 		P.bad_news(src)
 	scorned = null
 
-	for(i=1, i<=scorned_by.len, i++)
+	for(i=1, i <= scorned_by.len, i++)
 		P = scorned_by[i]
 		P.bad_news(src)
 	scorned_by = null
@@ -102,17 +108,17 @@
 
 	return ..()
 
-/obj/item/toy/plush/handle_atom_del(atom/A)
-	if(A == grenade)
+/obj/item/toy/plush/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == grenade)
 		grenade = null
-	..()
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
 		to_chat(user, span_notice("You pet [src]. D'awww."))
 		if(grenade && !grenade.active)
-			log_game("[key_name(user)] activated a hidden grenade in [src].")
+			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
@@ -142,9 +148,8 @@
 		else
 			to_chat(user, span_notice("You remove the grenade from [src]."))
 			user.put_in_hands(grenade)
-			grenade = null
 		return
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
@@ -156,8 +161,7 @@
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
 		span_danger("You slide [I] into [src]."))
 		grenade = I
-		var/turf/grenade_turf = get_turf(src)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
+		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -381,7 +385,9 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
+	greyscale_config = /datum/greyscale_config/plush_carp
+	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
@@ -403,7 +409,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE //he's a boy, right?
 
-/obj/item/toy/plush/ratplush/Moved()
+/obj/item/toy/plush/ratplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(clash_target)
 		return
@@ -431,7 +437,7 @@
 			P.clashing = FALSE
 			return
 		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
-		sleep(2.4)
+		sleep(0.24 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
 			return
@@ -442,7 +448,7 @@
 			a_winnar_is = src
 			break
 		P.SpinAnimation(5, 0)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
 			return
@@ -450,7 +456,7 @@
 			clash_target = null
 			return
 		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
-		sleep(3.3)
+		sleep(0.33 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
 			return
@@ -462,7 +468,7 @@
 			break
 		SpinAnimation(5, 0)
 		victory_chance += 10
-		sleep(5)
+		sleep(0.5 SECONDS)
 	if(!a_winnar_is)
 		a_winnar_is = pick(src, P)
 	if(a_winnar_is == src)
@@ -490,7 +496,7 @@
 	var/clashing
 	gender = FEMALE //it's canon if the toy is
 
-/obj/item/toy/plush/narplush/Moved()
+/obj/item/toy/plush/narplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
@@ -510,10 +516,10 @@
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
 		var/generated_lizard_color = "#" + random_color()
-		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+		var/list/lizard_hsv = rgb2hsv(generated_lizard_color)
 
 		// If our color is too dark, use the classic green lizard plush color
-		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+		if(lizard_hsv[3] < 50)
 			generated_lizard_color = "#66ff33"
 
 		// Set our greyscale colors to the lizard color we made + black eyes
@@ -524,21 +530,26 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
-/obj/item/toy/plush/space_lizard_plushie
+/obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
-	icon_state = "plushie_spacelizard"
-	inhand_icon_state = "plushie_spacelizard"
+	icon_state = "map_plushie_spacelizard"
+	greyscale_config = /datum/greyscale_config/plush_spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+
+/obj/item/toy/plush/lizard_plushie/space/green
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "plushie_snake"
-	inhand_icon_state = "plushie_snake"
+	icon_state = "map_plushie_snake"
+	greyscale_config = /datum/greyscale_config/plush_snake
+	greyscale_colors = "#99ff99#000000"
+	inhand_icon_state = null
 	attack_verb_continuous = list("bites", "hisses", "tail slaps")
 	attack_verb_simple = list("bite", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
@@ -547,7 +558,7 @@
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
 	icon_state = "plushie_nuke"
-	inhand_icon_state = "plushie_nuke"
+	inhand_icon_state = null
 	attack_verb_continuous = list("shoots", "nukes", "detonates")
 	attack_verb_simple = list("shoot", "nuke", "detonate")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
@@ -556,7 +567,7 @@
 	name = "plasmaman plushie"
 	desc = "A stuffed toy that resembles your purple coworkers. Mmm, yeah, in true plasmaman fashion, it's not cute at all despite the designer's best efforts."
 	icon_state = "plushie_pman"
-	inhand_icon_state = "plushie_pman"
+	inhand_icon_state = null
 	attack_verb_continuous = list("burns", "space beasts", "fwooshes")
 	attack_verb_simple = list("burn", "space beast", "fwoosh")
 	squeak_override = list('sound/effects/extinguish.ogg' = 1)
@@ -564,28 +575,78 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "plushie_slime"
-	inhand_icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
+	greyscale_config = /datum/greyscale_config/plush_slime
+	greyscale_colors = "#aaaaff#000000"
+	inhand_icon_state = null
 	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
 	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE //given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
+// This is supposed to be only in the bus ruin, don't spawn it elsewhere
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
-	inhand_icon_state = "plushie_awake"
+	inhand_icon_state = null
 
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+/obj/item/toy/plush/awakenedplushie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
+
+/obj/item/toy/plush/whiny_plushie
+	name = "whiny plushie"
+	desc = "An ancient plushie that demands constant companionship, after being forgotten for too long."
+	icon_state = "plushie_whiny"
+	inhand_icon_state = null
+	/// static list of cry messages it picks from to speak when it is insecure from no movement
+	var/static/list/cry_still_messages
+	/// static list of cry messages it picks from to speak when it is insecure from no holder
+	var/static/list/cry_alone_messages
+	/// cooldown for it sending messages, it will every 10 seconds
+	COOLDOWN_DECLARE(cry_cooldown)
+
+/obj/item/toy/plush/whiny_plushie/Initialize(mapload)
+	. = ..()
+	if(!cry_still_messages)
+		cry_still_messages = list(
+			"WHY DID WE STOP MOVING?! ARE YOU GOING TO LEAVE ME?!!",
+			"WE COULD GET ATTACKED WE'RE SITTING DUCKS MOVE MOOOOOOOVE!!",
+			"YOU'RE PLANNING ON DROPPING ME AREN'T YOU I KNOW YOU AAAAAAAREE!!",
+			"THE SYNDICATE ARE TRIANGULATING OUR LOCAAAAAAAATIONNN!!",
+			"THIS PLACE IS SCARY I WANNA LEEEEEAAAAAVVVEEEEEE!!",
+			"CHELP, CHELP CCCCHHHHEEEEEEEEEEEEEEELLLLLLLPPPPPP!!",
+		)
+		cry_alone_messages = list(
+			"NOOOOOOOOOOOOOOOOOO DON'T LEAVE MEEEEE!!",
+			"WUH WHERE DID EVERYONE GOOOOOOHHHHHHH WAHHH!!",
+			"SOMEONE, ANYONEEEEEEEEE PICK ME UPP!!",
+			"I DIDN'T DESERVE ITTTTTTTTTT!!",
+			"I WILL DIE TO JUST ONE ATTTTTTAAAAACKKKKKK!!",
+			"I WILLLLLL NOT DROP GOOOD IITITTEEEEEMMMS!!",
+		)
+	AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)) , CALLBACK(src, PROC_REF(unsecured_process)))
+
+/obj/item/toy/plush/whiny_plushie/proc/secured_process(last_move)
+	icon_state = initial(icon_state)
+
+/obj/item/toy/plush/whiny_plushie/proc/unsecured_process(last_move)
+	if(!COOLDOWN_FINISHED(src, cry_cooldown))
+		return
+	COOLDOWN_START(src, cry_cooldown, 10 SECONDS)
+	icon_state = "plushie_whiny_crying"
+	if(isturf(loc))
+		say(pick(cry_alone_messages))
+	else
+		say(pick(cry_still_messages))
+	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
 
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
 	icon_state = "plushie_h"
-	inhand_icon_state = "plushie_h"
+	inhand_icon_state = null
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
 	gender = FEMALE
@@ -604,7 +665,7 @@
 /obj/item/toy/plush/goatplushie/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/splat,
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(splat),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -653,7 +714,7 @@
 	name = "moth plushie"
 	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
 	icon_state = "moffplush"
-	inhand_icon_state = "moffplush"
+	inhand_icon_state = null
 	attack_verb_continuous = list("flutters", "flaps")
 	attack_verb_simple = list("flutter", "flap")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
@@ -681,7 +742,6 @@
 	name = "peacekeeper plushie"
 	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"
 	icon_state = "pkplush"
-	inhand_icon_state = "pkplush"
 	attack_verb_continuous = list("hugs", "squeezes")
 	attack_verb_simple = list("hug", "squeeze")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
@@ -690,7 +750,39 @@
 	name = "runner plushie"
 	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
 	icon_state = "rouny"
-	inhand_icon_state = "rouny"
+	item_flags = XENOMORPH_HOLDABLE
+	inhand_icon_state = null
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
 	squeak_override = list('sound/items/intents/Help.ogg' = 1)
+
+/obj/item/toy/plush/abductor
+	name = "abductor plushie"
+	desc = "A plushie depicting an alien abductor. The tag on it is in an indecipherable language."
+	icon_state = "abductor"
+	inhand_icon_state = null
+	attack_verb_continuous = list("abducts", "probes")
+	attack_verb_continuous = list("abduct", "probe")
+	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
+
+/obj/item/toy/plush/abductor/agent
+	name = "abductor agent plushie"
+	desc = "A plushie depicting an alien abductor agent. The stun baton is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
+	icon_state = "abductor_agent"
+	inhand_icon_state = null
+	attack_verb_continuous = list("abducts", "probes", "stuns")
+	attack_verb_continuous = list("abduct", "probe", "stun")
+	squeak_override = list(
+		'sound/weapons/egloves.ogg' = 2,
+		'sound/weapons/cablecuff.ogg' = 1,
+	)
+
+/obj/item/toy/plush/shark
+	name = "shark plushie"
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia."
+	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
+	icon_state = "blahaj"
+	inhand_icon_state = "blahaj"
+	attack_verb_continuous = list("gnaws", "gnashes", "chews")
+	attack_verb_simple = list("gnaw", "gnash", "chew")

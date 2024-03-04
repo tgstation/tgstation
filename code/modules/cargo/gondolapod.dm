@@ -8,15 +8,12 @@
 	response_disarm_simple = "bop"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("gondola")
+	faction = list(FACTION_GONDOLA)
 	turns_per_move = 10
 	icon = 'icons/obj/supplypods.dmi'
 	icon_state = "gondola"
 	icon_living = "gondola"
-	pixel_x = -16//2x2 sprite
-	base_pixel_x = -16
-	pixel_y = -5
-	base_pixel_y = -5
+	SET_BASE_PIXEL(-16, -5) //2x2 sprite
 	layer = TABLE_LAYER//so that deliveries dont appear underneath it
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 2, /obj/item/food/meat/slab/gondola = 2)
 	//Gondolas aren't affected by cold.
@@ -68,11 +65,13 @@
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
+	layer = initial(layer)
 	update_appearance()
-	addtimer(CALLBACK(src, /atom/.proc/setClosed), 50)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 50)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE
+	layer = LOW_MOB_LAYER
 	update_appearance()
 
 /mob/living/simple_animal/pet/gondola/gondolapod/death()

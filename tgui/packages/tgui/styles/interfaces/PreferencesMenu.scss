@@ -2,6 +2,7 @@
 @use 'sass:map';
 @use '../components/Button.scss';
 @use '../colors.scss';
+@use '../base.scss';
 
 $department_map: (
   'Assistant': colors.$grey,
@@ -15,6 +16,10 @@ $department_map: (
   'Service': colors.$green,
   'Silicon': colors.$pink,
 );
+
+.ChoicedSelection {
+  background-color: base.$color-bg;
+}
 
 .PreferencesMenu {
   &__Antags {
@@ -172,7 +177,7 @@ $department_map: (
         border: 1px solid rgba(0, 0, 0, 0.3);
 
         &--off::after {
-          content: "";
+          content: '';
 
           background: rgba(0, 0, 0, 0.2);
           display: block;
@@ -188,10 +193,7 @@ $department_map: (
 
     &__PriorityHeader {
       font-weight: bold;
-      transform:
-        translateX(-4px)
-        translateY(-8px)
-        rotate(315deg);
+      transform: translateX(-4px) translateY(-8px) rotate(315deg);
       white-space: nowrap;
       width: 19px;
     }
@@ -211,9 +213,9 @@ $department_map: (
         transition: background-color 0.1s ease-in;
 
         $quality_map: (
-          "positive": colors.$green,
-          "neutral": colors.$white,
-          "negative": colors.$red,
+          'positive': colors.$green,
+          'neutral': colors.$white,
+          'negative': colors.$red,
         );
 
         @each $quality, $color-value in $quality_map {

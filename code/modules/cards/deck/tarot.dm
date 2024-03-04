@@ -13,16 +13,19 @@
 	. = ..()
 	for(var/suit in list("Hearts", "Pikes", "Clovers", "Tiles"))
 		for(var/i in 1 to 10)
-			cards += new /obj/item/toy/singlecard(src, "[i] of [suit]", src)
+			initial_cards += "[i] of [suit]"
 		for(var/person in list("Valet", "Chevalier", "Dame", "Roi"))
-			cards += new /obj/item/toy/singlecard(src, "[person] of [suit]", src)
+			initial_cards += "[person] of [suit]"
 	for(var/trump in list("The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lover", "The Chariot", "Justice", "The Hermit", "The Wheel of Fortune", "Strength", "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World", "The Fool"))
-		cards += new /obj/item/toy/singlecard(src, trump, src)
+		initial_cards += trump
 
 /obj/item/toy/cards/deck/tarot/draw(mob/user)
 	. = ..()
 	if(prob(50))
 		var/obj/item/toy/singlecard/card = .
+		if(!card)
+			return FALSE
+
 		var/matrix/M = matrix()
 		M.Turn(180)
 		card.transform = M
@@ -33,8 +36,16 @@
 	/// ghost notification cooldown
 	COOLDOWN_DECLARE(ghost_alert_cooldown)
 
-/obj/item/toy/cards/deck/tarot/haunted/on_wield(obj/item/source, mob/living/carbon/user)
+/obj/item/toy/cards/deck/tarot/haunted/Initialize(mapload)
 	. = ..()
+	AddComponent( \
+		/datum/component/two_handed, \
+		attacksound = 'sound/items/cardflip.ogg', \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
+
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	ADD_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld is opened. You can sense the dead souls calling out..."))
 
@@ -48,11 +59,9 @@
 		header = "Haunted Tarot Deck",
 		ghost_sound = 'sound/effects/ghost2.ogg',
 		notify_volume = 75,
-		action = NOTIFY_ORBIT,
 	)
 
-/obj/item/toy/cards/deck/tarot/haunted/on_unwield(obj/item/source, mob/living/carbon/user)
-	. = ..()
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
 

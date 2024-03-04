@@ -54,7 +54,7 @@
 	icon_state = "briefcase"
 	loot = list(
 		/obj/item/storage/briefcase = 3,
-		/obj/item/storage/secure/briefcase = 1,
+		/obj/item/storage/briefcase/secure = 1,
 	)
 
 /obj/effect/spawner/random/bureaucracy/folder
@@ -67,3 +67,18 @@
 		/obj/item/folder/white,
 		/obj/item/folder,
 	)
+
+/obj/effect/spawner/random/bureaucracy/birthday_wrap
+	name = "additional wrapping paper spawner"
+	icon_state = "wrapping_paper"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/item/stack/wrapping_paper,
+		/obj/item/stack/wrapping_paper,
+		/obj/item/stack/wrapping_paper,
+	)
+
+/obj/effect/spawner/random/bureaucracy/birthday_wrap/Initialize(mapload)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		spawn_loot_chance = 0
+	return ..()

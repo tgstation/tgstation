@@ -1,0 +1,5 @@
+/mob/living/simple_animal/hostile/asteroid/goliath/beast : /mob/living/basic/mining/goliath{@OLD}
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/random : /mob/living/basic/mining/goliath/random{@OLD}
+/mob/living/simple_animal/hostile/asteroid/goliath : /mob/living/basic/mining/goliath/ancient{@OLD}
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient : /mob/living/basic/mining/goliath/ancient/immortal{@OLD}
+/obj/item/saddle : /obj/item/goliath_saddle{@OLD}

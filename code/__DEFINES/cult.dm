@@ -43,3 +43,8 @@ GLOBAL_DATUM(cult_narsie, /obj/narsie)
 #define CULT_VICTORY_MASS_CONVERSION 2
 #define CULT_FAILURE_NARSIE_KILLED 1
 #define CULT_VICTORY_NUKE 0
+
+// Used to determine the roundend report.
+#define CULT_VICTORY 1
+#define CULT_LOSS 0
+#define CULT_NARSIE_KILLED -1

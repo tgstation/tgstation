@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot/grievous //This bot is powerful. If you managed to get 4 eswords somehow, you deserve this horror. Emag him for best results.
 	name = "General Beepsky"
 	desc = "Is that a secbot with four eswords in its arms...?"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
@@ -12,6 +12,9 @@
 
 	var/block_chance = 50
 
+/mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
 
 /mob/living/simple_animal/bot/secbot/grievous/toy //A toy version of general beepsky!
 	name = "Genewul Bweepskee"
@@ -21,21 +24,26 @@
 	baton_type = /obj/item/toy/sword
 	weapon_force = 0
 
-/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
-	visible_message(span_warning("[src] deflects [P] with its energy swords!"))
-	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
-	return BULLET_ACT_BLOCK
+/mob/living/simple_animal/bot/secbot/grievous/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
+	SIGNAL_HANDLER
+
+	if(stat != CONSCIOUS)
+		return NONE
+
+	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
+	playsound(source, 'sound/weapons/blade1.ogg', 50, TRUE)
+	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/simple_animal/bot/secbot/grievous/on_entered(datum/source, atom/movable/AM)
 	. = ..()
 	if(ismob(AM) && AM == target)
 		visible_message(span_warning("[src] flails his swords and cuts [AM]!"))
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
-		INVOKE_ASYNC(src, .proc/stun_attack, AM)
+		INVOKE_ASYNC(src, PROC_REF(stun_attack), AM)
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
+	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack_self), src)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)
@@ -53,7 +61,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 2)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 2)
 		back_to_idle()
 
 
@@ -109,25 +117,21 @@
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threatlevel = C.assess_threat(judgement_criteria)
 
-		if(!threatlevel)
+		if (threatlevel < THREAT_ASSESS_DANGEROUS)
 			continue
-
-		else if(threatlevel >= 4)
-			target = C
-			oldtarget_name = C.name
-			speak("Level [threatlevel] infraction alert!")
-			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
-			visible_message(span_warning("[src] ignites his energy swords!"))
-			icon_state = "grievous-c"
-			visible_message("<b>[src]</b> points at [C.name]!")
-			mode = BOT_HUNT
-			INVOKE_ASYNC(src, .proc/handle_automated_action)
-			break
-		else
-			continue
+		target = C
+		oldtarget_name = C.name
+		speak("Level [threatlevel] infraction alert!")
+		playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+		playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
+		visible_message(span_warning("[src] ignites his energy swords!"))
+		icon_state = "grievous-c"
+		visible_message("<b>[src]</b> points at [C.name]!")
+		mode = BOT_HUNT
+		INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
+		break
 
 /mob/living/simple_animal/bot/secbot/grievous/explode()
 	var/atom/Tsec = drop_location()

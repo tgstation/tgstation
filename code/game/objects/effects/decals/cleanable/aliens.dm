@@ -29,7 +29,7 @@
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
+	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions, mapload=FALSE)
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions)
@@ -40,16 +40,20 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
-			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
+			var/turf/my_turf = get_turf(src)
+			if(!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf))
+				new /obj/effect/decal/cleanable/xenoblood/xsplatter(my_turf)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
 		return
 
-	var/datum/move_loop/loop = SSmove_manager.move_to_dir(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/spread_movement_effects)
+	var/datum/move_loop/loop = SSmove_manager.move(src, direction, delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
+	if(NeverShouldHaveComeHere(loc))
+		return
 	new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/on_pipe_eject(atom/source, direction)

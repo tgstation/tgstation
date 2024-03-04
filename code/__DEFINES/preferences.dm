@@ -3,15 +3,9 @@
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
 // Use `/datum/preference/toggle` instead.
 #define SOUND_ADMINHELP (1<<0)
-#define SOUND_MIDI (1<<1)
-#define SOUND_AMBIENCE (1<<2)
-#define SOUND_LOBBY (1<<3)
 #define MEMBER_PUBLIC (1<<4)
-#define SOUND_INSTRUMENTS (1<<7)
-#define SOUND_SHIP_AMBIENCE (1<<8)
 #define SOUND_PRAYERS (1<<9)
 #define ANNOUNCE_LOGIN (1<<10)
-#define SOUND_ANNOUNCEMENTS (1<<11)
 #define DISABLE_DEATHRATTLE (1<<12)
 #define DISABLE_ARRIVALRATTLE (1<<13)
 #define COMBOHUD_LIGHTING (1<<14)
@@ -20,12 +14,10 @@
 #define DEADMIN_POSITION_HEAD (1<<17)
 #define DEADMIN_POSITION_SECURITY (1<<18)
 #define DEADMIN_POSITION_SILICON (1<<19)
-#define SOUND_ENDOFROUND (1<<20)
 #define ADMIN_IGNORE_CULT_GHOST (1<<21)
-#define SOUND_COMBATMODE (1<<22)
 #define SPLIT_ADMIN_TABS (1<<23)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_ENDOFROUND|MEMBER_PUBLIC|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_COMBATMODE)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS)
 
 // Legacy chat toggles.
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
@@ -39,7 +31,7 @@
 #define CHAT_GHOSTWHISPER (1<<7)
 #define CHAT_GHOSTPDA (1<<8)
 #define CHAT_GHOSTRADIO (1<<9)
-#define CHAT_BANKCARD  (1<<10)
+#define CHAT_BANKCARD (1<<10)
 #define CHAT_GHOSTLAWS (1<<11)
 #define CHAT_LOGIN_LOGOUT (1<<12)
 
@@ -139,8 +131,14 @@
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
 
+/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered. Used for quirks, currently.
+#define PREFERENCE_CATEGORY_MANUALLY_RENDERED "manually_rendered_features"
+
 // Playtime is tracked in minutes
 /// The time needed to unlock hardcore random mode in preferences
 #define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
 /// The time needed to unlock the gamer cloak in preferences
 #define PLAYTIME_VETERAN 300000 // 5,000 hours
+
+/// The key used for sprite accessories that should never actually be applied to the player.
+#define SPRITE_ACCESSORY_NONE "None"

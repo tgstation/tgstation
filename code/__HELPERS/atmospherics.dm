@@ -9,8 +9,8 @@
 
 /** A simple rudimentary gasmix to information list converter. Can be used for UIs.
  * Args:
- * - gasmix: [/datum/gas_mixture]
- * - name: String used to name the list, optional.
+ * * gasmix: [/datum/gas_mixture]
+ * * name: String used to name the list, optional.
  * Returns: A list parsed_gasmixes with the following structure:
  * - parsed_gasmixes    Value: Assoc List     Desc: The thing we return
  * -- Key: name         Value: String         Desc: Gasmix Name
@@ -32,7 +32,7 @@
 	. = list(
 		"gases" = list(),
 		"reactions" = list(),
-		"name" = name,
+		"name" = format_text(name),
 		"total_moles" = null,
 		"temperature" = null,
 		"volume"= null,
@@ -156,3 +156,46 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 /// For UIs, simply do data += return_atmos_handbooks() to use.
 /proc/return_atmos_handbooks()
 	return list("gasInfo" = GLOB.gas_handbook, "reactionInfo" = GLOB.reaction_handbook)
+
+/proc/extract_id_tags(list/objects)
+	var/list/tags = list()
+
+	for (var/obj/object as anything in objects)
+		tags += object.id_tag
+
+	return tags
+
+/proc/find_by_id_tag(list/objects, id_tag)
+	for (var/obj/object as anything in objects)
+		if (object.id_tag == id_tag)
+			return object
+
+	return null
+
+/**
+ * A simple helped proc that checks if the contents of a list of gases are within acceptable terms.
+ *
+ * Arguments:
+ * * gases: The list of gases which contents are being checked
+ * * gases to check: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
+ * * * if the assoc list is null, then it'll be considered a safe gas and won't return FALSE.
+ * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
+ */
+/proc/check_gases(list/gases, list/gases_to_check, extraneous_gas_limit = 0.1)
+	gases_to_check = gases_to_check.Copy()
+	for(var/id in gases)
+		var/gas_moles = gases[id][MOLES]
+		if(!(id in gases_to_check))
+			if(gas_moles > extraneous_gas_limit)
+				return FALSE
+			continue
+		var/list/boundaries = gases_to_check[id]
+		if(boundaries && !ISINRANGE(gas_moles, boundaries[1], boundaries[2]))
+			return FALSE
+		gases_to_check -= id
+	///Check that gases absent from the turf have a lower boundary of zero or none at all, otherwise return FALSE
+	for(var/id in gases_to_check)
+		var/list/boundaries = gases_to_check[id]
+		if(boundaries && boundaries[1] > 0)
+			return FALSE
+	return TRUE

@@ -1,0 +1,2 @@
+/obj/item/clothing/head/hats/hos : /obj/item/clothing/head/hats/hos/cap{@OLD}
+/obj/item/clothing/head/hats/hos/syndicate : /obj/item/clothing/head/hats/hos/cap/syndicate{@OLD}

@@ -23,18 +23,16 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation/solars)
 "n" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation/solars)
 "t" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_x = 3;
 	pixel_y = 4
 	},
@@ -64,9 +62,8 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation/solars)
 "O" = (
 /obj/structure/lattice/catwalk,

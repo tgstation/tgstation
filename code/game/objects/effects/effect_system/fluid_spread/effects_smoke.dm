@@ -17,12 +17,12 @@
 	var/lifetime = 10 SECONDS
 	/// Makes the smoke react to changes on/of its turf.
 	var/static/loc_connections = list(
-		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = .proc/react_to_atmos_adjacency_changes
+		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = PROC_REF(react_to_atmos_adjacency_changes)
 	)
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	setDir(pick(GLOB.cardinals))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	SSsmoke.start_processing(src)
@@ -41,7 +41,7 @@
 	SSsmoke.stop_processing(src)
 	if (spread_bucket)
 		SSsmoke.cancel_spread(src)
-	INVOKE_ASYNC(src, .proc/fade_out)
+	INVOKE_ASYNC(src, PROC_REF(fade_out))
 	QDEL_IN(src, 1 SECONDS)
 
 /**
@@ -64,13 +64,13 @@
 
 	var/time_to_transparency = round(((alpha - 160) / alpha) * frames)
 	if(time_to_transparency >= 1)
-		addtimer(CALLBACK(src, /atom.proc/set_opacity, FALSE), time_to_transparency)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, set_opacity), FALSE), time_to_transparency)
 	else
 		set_opacity(FALSE)
 	animate(src, time = frames, alpha = 0)
 
 
-/obj/effect/particle_effect/fluid/smoke/spread(delta_time = 0.1 SECONDS)
+/obj/effect/particle_effect/fluid/smoke/spread(seconds_per_tick = 0.1 SECONDS)
 	if(group.total_size > group.target_size)
 		return
 	var/turf/t_loc = get_turf(src)
@@ -83,9 +83,9 @@
 		if(locate(type) in spread_turf)
 			continue // Don't spread smoke where there's already smoke!
 		for(var/mob/living/smoker in spread_turf)
-			smoke_mob(smoker, delta_time)
+			smoke_mob(smoker, seconds_per_tick)
 
-		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group)
+		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group, src)
 		reagents.copy_to(spread_smoke, reagents.total_volume)
 		spread_smoke.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_smoke.lifetime = lifetime
@@ -94,13 +94,13 @@
 		SSfoam.queue_spread(spread_smoke)
 
 
-/obj/effect/particle_effect/fluid/smoke/process(delta_time)
-	lifetime -= delta_time SECONDS
+/obj/effect/particle_effect/fluid/smoke/process(seconds_per_tick)
+	lifetime -= seconds_per_tick SECONDS
 	if(lifetime <= 0)
 		kill_smoke()
 		return FALSE
 	for(var/mob/living/smoker in loc) // In case smoke somehow winds up in a locker or something this should still behave sanely.
-		smoke_mob(smoker, delta_time)
+		smoke_mob(smoker, seconds_per_tick)
 	return TRUE
 
 /**
@@ -108,11 +108,11 @@
  *
  * Arguments:
  * - [smoker][/mob/living/carbon]: The mob that is being exposed to this smoke.
- * - delta_time: A scaling factor for the effects this has. Primarily based off of tick rate to normalize effects to units of rate/sec.
+ * - seconds_per_tick: A scaling factor for the effects this has. Primarily based off of tick rate to normalize effects to units of rate/sec.
  *
  * Returns whether the smoke effect was applied to the mob.
  */
-/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob(mob/living/carbon/smoker, delta_time)
+/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	if(!istype(smoker))
 		return FALSE
 	if(lifetime < 1)
@@ -166,11 +166,11 @@
  * - location: Where to produce the smoke cloud.
  * - smoke_type: The smoke typepath to spawn.
  */
-/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke)
+/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.effect_type = smoke_type
-	smoke.set_up(amount = amount, location = location)
-	smoke.start()
+	smoke.set_up(amount = amount, holder = holder, location = location)
+	smoke.start(log = log)
 
 /////////////////////////////////////////////
 // Quick smoke
@@ -196,7 +196,7 @@
 /obj/effect/particle_effect/fluid/smoke/bad/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -318,11 +318,11 @@
 	for(var/obj/item/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
-/datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/location, blast_radius = 0)
+/datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/holder, atom/location, blast_radius = 0)
 	. = ..()
 	blast = blast_radius
 
-/datum/effect_system/fluid_spread/smoke/freezing/start()
+/datum/effect_system/fluid_spread/smoke/freezing/start(log = FALSE)
 	if(blast)
 		for(var/turf/T in RANGE_TURFS(blast, location))
 			Chilled(T)
@@ -330,7 +330,7 @@
 
 /// A variant of the base freezing smoke formerly used by the vent decontamination event.
 /datum/effect_system/fluid_spread/smoke/freezing/decon
-	temperature = 293.15
+	temperature = T20C
 	distcheck = FALSE
 	weldvents = FALSE
 
@@ -344,7 +344,7 @@
 	color = "#9C3636"
 	lifetime = 20 SECONDS
 
-/obj/effect/particle_effect/fluid/smoke/sleeping/smoke_mob(mob/living/carbon/smoker, delta_time)
+/obj/effect/particle_effect/fluid/smoke/sleeping/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	if(..())
 		smoker.Sleeping(20 SECONDS)
 		smoker.emote("cough")
@@ -364,13 +364,13 @@
 /obj/effect/particle_effect/fluid/smoke/chem
 	lifetime = 20 SECONDS
 
-/obj/effect/particle_effect/fluid/smoke/chem/process(delta_time)
+/obj/effect/particle_effect/fluid/smoke/chem/process(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
 
 	var/turf/location = get_turf(src)
-	var/fraction = (delta_time SECONDS) / initial(lifetime)
+	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	for(var/atom/movable/thing as anything in location)
 		if(thing == src)
 			continue
@@ -381,7 +381,7 @@
 	reagents.expose(location, TOUCH, fraction)
 	return TRUE
 
-/obj/effect/particle_effect/fluid/smoke/chem/smoke_mob(mob/living/carbon/smoker, delta_time)
+/obj/effect/particle_effect/fluid/smoke/chem/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	if(lifetime < 1)
 		return FALSE
 	if(!istype(smoker))
@@ -389,11 +389,20 @@
 	if(smoker.internal != null || smoker.has_smoke_protection())
 		return FALSE
 
-	var/fraction = (delta_time SECONDS) / initial(lifetime)
+	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	reagents.copy_to(smoker, reagents.total_volume, fraction)
 	reagents.expose(smoker, INGEST, fraction)
 	return TRUE
 
+/// Helper to quickly create a cloud of reagent smoke
+/proc/do_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE)
+	var/datum/reagents/smoke_reagents = new/datum/reagents(reagent_volume)
+	smoke_reagents.add_reagent(reagent_type, reagent_volume)
+
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.attach(location)
+	smoke.set_up(amount = amount, holder = holder, location = location, carry = smoke_reagents, silent = TRUE)
+	smoke.start(log = log)
 
 /// A factory which produces clouds of chemical bearing smoke.
 /datum/effect_system/fluid_spread/smoke/chem
@@ -410,7 +419,7 @@
 	return ..()
 
 
-/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, silent = FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, silent = FALSE)
 	. = ..()
 	carry?.copy_to(chemholder, carry.total_volume)
 
@@ -436,7 +445,7 @@
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
-/datum/effect_system/fluid_spread/smoke/chem/start()
+/datum/effect_system/fluid_spread/smoke/chem/start(log = FALSE)
 	var/start_loc = holder ? get_turf(holder) : src.location
 	var/mixcolor = mix_color_from_reagents(chemholder.reagent_list)
 	var/obj/effect/particle_effect/fluid/smoke/chem/smoke = new effect_type(start_loc, new /datum/fluid_group(amount))
@@ -444,6 +453,8 @@
 
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
+	if (log)
+		help_out_the_admins(smoke, holder, location)
 	smoke.spread() // Making the smoke spread immediately.
 
 /**

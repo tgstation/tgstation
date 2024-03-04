@@ -20,6 +20,7 @@
 	gender = PLURAL
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
+	item_flags = SKIP_FANTASY_ON_SPAWN
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
@@ -53,6 +54,8 @@
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/tableVariant
+	/// What typepath stairs do we create from this stack
+	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
 	var/use_radial = FALSE
 	/// If use_radial is TRUE, this is the radius of the radial
@@ -97,7 +100,7 @@
 			if(item_stack == src)
 				continue
 			if(can_merge(item_stack))
-				INVOKE_ASYNC(src, .proc/merge_without_del, item_stack)
+				INVOKE_ASYNC(src, PROC_REF(merge_without_del), item_stack)
 				if(is_zero_amount(delete_if_zero = FALSE))
 					return INITIALIZE_HINT_QDEL
 
@@ -114,9 +117,12 @@
 	update_weight()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_movable_entered_occupied_turf,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_occupied_turf),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
+		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -139,17 +145,48 @@
 /obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
 	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
 
-
-/obj/item/stack/on_grind()
-	. = ..()
-	for(var/i in 1 to length(grind_results)) //This should only call if it's ground, so no need to check if grind_results exists
-		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
-
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is electronically synthesized in your chassis and can't be ground up!"))
+		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
 		return
 	return TRUE
+
+/obj/item/stack/grind(datum/reagents/target_holder, mob/user)
+	var/current_amount = get_amount()
+	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
+		return TRUE
+	if(on_grind() == -1)
+		return FALSE
+	if(isnull(target_holder))
+		return TRUE
+
+	if(reagents)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	var/available_volume = target_holder.maximum_volume - target_holder.total_volume
+
+	//compute total volume of reagents that will be occupied by grind_results
+	var/total_volume = 0
+	for(var/reagent in grind_results)
+		total_volume += grind_results[reagent]
+
+	//compute number of pieces(or sheets) from available_volume
+	var/available_amount = min(current_amount, round(available_volume / total_volume))
+	if(available_amount <= 0)
+		return FALSE
+
+	//Now transfer the grind results scaled by available_amount
+	var/list/grind_reagents = grind_results.Copy()
+	for(var/reagent in grind_reagents)
+		grind_reagents[reagent] *= available_amount
+	target_holder.add_reagent_list(grind_reagents)
+
+	/**
+	 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
+	 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
+	 * this stack if grinding was successfull
+	 */
+	use(available_amount, check = FALSE)
+	return available_amount == current_amount
 
 /obj/item/stack/proc/get_main_recipes()
 	RETURN_TYPE(/list)
@@ -180,10 +217,6 @@
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if(is_cyborg)
-		if(singular_name)
-			. += "There is enough energy for [get_amount()] [singular_name]\s."
-		else
-			. += "There is enough energy for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)
@@ -230,7 +263,7 @@
 		"res_amount" = R.res_amount,
 		"max_res_amount" = R.max_res_amount,
 		"req_amount" = R.req_amount,
-		"ref" = "\ref[R]",
+		"ref" = text_ref(R),
 	)
 
 /**
@@ -262,7 +295,7 @@
 /obj/item/stack/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Stack", name)
+		ui = new(user, src, "StackCrafting", name)
 		ui.open()
 
 /obj/item/stack/ui_data(mob/user)
@@ -319,7 +352,7 @@
 		user = builder,
 		anchor = builder,
 		choices = options,
-		custom_check = CALLBACK(src, .proc/radial_check, builder),
+		custom_check = CALLBACK(src, PROC_REF(radial_check), builder),
 		radius = radial_radius,
 		tooltips = TRUE,
 	)
@@ -357,7 +390,8 @@
 		return
 	if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 		return
-	if(!multiplier || (multiplier <= 0)) //href exploit protection
+	if(!multiplier || multiplier < 1 || !IS_FINITE(multiplier)) //href exploit protection
+		stack_trace("Invalid multiplier value in stack creation [multiplier], [usr] is likely attempting an exploit")
 		return
 	if(!building_checks(builder, recipe, multiplier))
 		return
@@ -387,8 +421,10 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		covered_turf.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
+		if(recipe.applies_mats && LAZYLEN(mats_per_unit))
+			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
 		created = new recipe.result_type(builder.drop_location())
@@ -396,10 +432,11 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		on_item_crafted(builder, created)
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
-	builder.investigate_log("[key_name(builder)] crafted [recipe.title]", INVESTIGATE_CRAFTING)
+	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
 	if(recipe.applies_mats && LAZYLEN(mats_per_unit))
@@ -426,6 +463,10 @@
 
 	return TRUE
 
+/// Run special logic on created items after they've been successfully crafted.
+/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
+	return
+
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
 		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
@@ -443,37 +484,28 @@
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
-	// If we're making a window, we have some special snowflake window checks to do.
-	if(ispath(recipe.result_type, /obj/structure/window))
-		var/obj/structure/window/result_path = recipe.result_type
-		if(!valid_window_location(dest_turf, builder.dir, is_fulltile = initial(result_path.fulltile)))
-			builder.balloon_alert(builder, "won't fit here!")
-			return FALSE
-
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
 
-	if(recipe.on_tram)
-		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
-			builder.balloon_alert(builder, "must be made on a tram!")
+	if(recipe.check_direction)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
+			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
-	if(recipe.on_floor)
-		if(!isfloorturf(dest_turf))
-			builder.balloon_alert(builder, "must be made on a floor!")
+	if(recipe.on_solid_ground)
+		if(isclosedturf(dest_turf))
+			builder.balloon_alert(builder, "cannot be made on a wall!")
 			return FALSE
 
+		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
+			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
+				builder.balloon_alert(builder, "must be made on solid ground!")
+				return FALSE
+
+	if(recipe.check_density)
 		for(var/obj/object in dest_turf)
-			if(istype(object, /obj/structure/grille))
-				continue
-			if(istype(object, /obj/structure/table))
-				continue
-			if(istype(object, /obj/structure/window))
-				var/obj/structure/window/window_structure = object
-				if(!window_structure.fulltile)
-					continue
-			if(object.density || NO_BUILD & object.obj_flags)
+			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
 
@@ -489,6 +521,16 @@
 	if(recipe.placement_checks & STACK_CHECK_ADJACENT)
 		if(locate(recipe.result_type) in range(1, dest_turf))
 			builder.balloon_alert(builder, "can't be near another!")
+			return FALSE
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_FORBIDDEN)
+		if(locate(/obj/structure/transport/linear/tram) in dest_turf || locate(/obj/structure/thermoplastic) in dest_turf)
+			builder.balloon_alert(builder, "can't be on tram!")
+			return FALSE
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_EXCLUSIVE)
+		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
+			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 
 	return TRUE
@@ -563,13 +605,20 @@
  * - [inhand][boolean]: Whether or not the stack to check should act like it's in a mob's hand.
  */
 /obj/item/stack/proc/can_merge(obj/item/stack/check, inhand = FALSE)
-	if(!istype(check, merge_type))
+	// We don't only use istype here, since that will match subtypes, and stack things that shouldn't stack
+	if(!istype(check, merge_type) || check.merge_type != merge_type)
 		return FALSE
 	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
 	if(ismob(loc) && !inhand) // no merging with items that are on the mob
+		return FALSE
+	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
+		var/obj/machinery/machine = loc
+		if(!(src in machine.component_parts) || !(check in machine.component_parts))
+			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_STACK_CAN_MERGE, check, inhand) & CANCEL_STACK_MERGE)
 		return FALSE
 	return TRUE
 
@@ -625,7 +674,7 @@
 		return
 
 	if(!arrived.throwing && can_merge(arrived))
-		INVOKE_ASYNC(src, .proc/merge, arrived)
+		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))
@@ -646,13 +695,13 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(is_cyborg || !user.can_perform_action(src, NEED_DEXTERITY))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
-	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, !iscyborg(user)))
+	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
@@ -670,6 +719,7 @@
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
 	. = F
 	F.copy_evidences(src)
+	loc.atom_storage?.refresh_views()
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
 			F.forceMove(user.drop_location())
@@ -692,10 +742,6 @@
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-/obj/item/stack/microwave_act(obj/machinery/microwave/M)
-	if(istype(M) && M.dirty < 100)
-		M.dirty += amount
 
 #undef STACK_CHECK_CARDINALS
 #undef STACK_CHECK_ADJACENT

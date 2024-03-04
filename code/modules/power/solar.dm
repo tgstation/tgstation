@@ -1,12 +1,12 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
-#define PANEL_Y_OFFSET 13
-#define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
+#define PANEL_Z_OFFSET 13
+#define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
 
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
-	icon = 'icons/obj/solar.dmi'
+	icon = 'icons/obj/machines/solar.dmi'
 	icon_state = "sp_base"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -33,25 +33,34 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
-	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
+	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Z_OFFSET)
+	panel = add_panel_overlay("solar_panel", PANEL_Z_OFFSET)
 
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(queue_update_solar_exposure))
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
 
-/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
-	var/obj/effect/overlay/overlay = new()
-	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
-	overlay.appearance_flags = TILE_BOUND
+/obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
+	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
+
+/obj/effect/overlay/solar_panel
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	appearance_flags = TILE_BOUND
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
+/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
+	var/obj/effect/overlay/solar_panel/overlay = new(src)
 	overlay.icon_state = icon_state
-	overlay.layer = FLY_LAYER
-	overlay.plane = ABOVE_GAME_PLANE
-	overlay.pixel_y = y_offset
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
+	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
 
@@ -112,18 +121,16 @@
 		visually_turn(new_angle)
 		azimuth_current = new_angle
 
-/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(machine_stat & BROKEN)
-		else
-			playsound(src, SFX_SHATTER, 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-	qdel(src)
+/obj/machinery/power/solar/on_deconstruction(disassembled)
+	if(disassembled)
+		var/obj/item/solar_assembly/S = locate() in src
+		if(S)
+			S.forceMove(loc)
+			S.give_glass(machine_stat & BROKEN)
+	else
+		playsound(src, SFX_SHATTER, 70, TRUE)
+		new /obj/item/shard(src.loc)
+		new /obj/item/shard(src.loc)
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
@@ -225,6 +232,12 @@
 /obj/machinery/power/solar/process()
 	if(machine_stat & BROKEN)
 		return
+	// space vines block out sunlight
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+		unset_control()
+		return
+
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
 	if(needs_to_turn)
@@ -254,11 +267,11 @@
 /obj/item/solar_assembly
 	name = "solar panel assembly"
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
-	icon = 'icons/obj/solar.dmi'
+	icon = 'icons/obj/machines/solar.dmi'
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
 	var/tracker = 0
@@ -300,7 +313,10 @@
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
 		set_anchored(!anchored)
-		user.visible_message(span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly into place."), span_notice("You [anchored ? null : "un"]wrench the solar assembly into place."))
+		user.visible_message(
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+		)
 		W.play_tool_sound(src, 75)
 		return TRUE
 
@@ -351,7 +367,7 @@
 /obj/machinery/power/solar_control
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 	density = TRUE
 	use_power = IDLE_POWER_USE
@@ -371,13 +387,25 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
+	///History of power supply
+	var/list/history = list()
+	///Size of history, should be equal or bigger than the solar cycle
+	var/record_size = 0
+	///Interval between records
+	var/record_interval = 60 SECONDS
+	///History record timer
+	var/next_record = 0
+
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
-	azimuth_rate = SSsun.base_rotation
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(timed_track))
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
+	azimuth_rate = SSsun.base_rotation
+	record_interval = SSsun.wait
+	history["supply"] = list()
+	history["capacity"] = list()
 
 /obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)
@@ -391,6 +419,11 @@
 	if(powernet)
 		for(var/obj/machinery/power/M in powernet.nodes)
 			if(istype(M, /obj/machinery/power/solar))
+				// space vines block out sunlight
+				var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+				if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+					continue
+
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)
@@ -399,6 +432,26 @@
 					var/obj/machinery/power/tracker/T = M
 					if(!T.control) //i.e unconnected
 						T.set_control(src)
+
+///Record the generated power supply and capacity for history
+/obj/machinery/power/solar_control/proc/record()
+	if(record_size == 0)
+		record_size = 1 + ROUND_UP(360 / (azimuth_rate * abs(SSsun.azimuth_mod))) //History contains full sun cycle
+
+	if(world.time >= next_record)
+		next_record = world.time + record_interval
+
+		var/list/supply = history["supply"]
+		if(powernet)
+			supply += round(lastgen)
+		if(supply.len > record_size)
+			supply.Cut(1, 2)
+
+		var/list/capacity = history["capacity"]
+		if(powernet)
+			capacity += round(max(connected_panels.len, 1) * SOLAR_GEN_RATE)
+		if(capacity.len > record_size)
+			capacity.Cut(1, 2)
 
 /obj/machinery/power/solar_control/update_overlays()
 	. = ..()
@@ -420,14 +473,15 @@
 
 /obj/machinery/power/solar_control/ui_data()
 	var/data = list()
-	data["generated"] = round(lastgen)
-	data["generated_ratio"] = data["generated"] / round(max(connected_panels.len, 1) * SOLAR_GEN_RATE)
+	data["supply"] = round(lastgen)
+	data["capacity"] = connected_panels.len * SOLAR_GEN_RATE
 	data["azimuth_current"] = azimuth_target
 	data["azimuth_rate"] = azimuth_rate
 	data["max_rotation_rate"] = SSsun.base_rotation * 2
 	data["tracking_state"] = track
 	data["connected_panels"] = connected_panels.len
 	data["connected_tracker"] = (connected_tracker ? TRUE : FALSE)
+	data["history"] = history
 	return data
 
 /obj/machinery/power/solar_control/ui_act(action, params)
@@ -515,9 +569,9 @@
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
 	gen = 0
-
 	if(connected_tracker && (!powernet || connected_tracker.powernet != powernet))
 		connected_tracker.unset_control()
+	record()
 
 ///Ran every time the sun updates.
 /obj/machinery/power/solar_control/proc/timed_track()
@@ -545,9 +599,9 @@
 
 /obj/item/paper/guides/jobs/engi/solars
 	name = "paper- 'Going green! Setup your own solar array instructions.'"
-	info = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
+	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
-#undef PANEL_Y_OFFSET
-#undef PANEL_EDGE_Y_OFFSET
+#undef PANEL_Z_OFFSET
+#undef PANEL_EDGE_Z_OFFSET

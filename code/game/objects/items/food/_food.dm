@@ -6,11 +6,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
-	///List of reagents this food gets on creation
+	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
@@ -26,16 +26,10 @@
 	var/list/eatverbs
 	///How much reagents per bite
 	var/bite_consumption
-	///What you get if you microwave the food. Use baking for raw things, use microwaving for already cooked things
-	var/microwaved_type
 	///Type of atom thats spawned after eating this item
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
 	var/junkiness
-	///Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time
-	var/burns_on_grill = FALSE
-	///Will this food turn into badrecipe in an oven? Don't use this for everything; preferably mostly for food that is made in an oven to begin with so it burns after some time
-	var/burns_in_oven = FALSE
 	///Price of this food if sold in a venue
 	var/venue_value
 	///Food that's immune to decomposition.
@@ -48,64 +42,81 @@
 	var/decomp_req_handle = FALSE
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
+	///Used to set decomposition stink particles for food, will have no particles if null
+	var/decomposition_particles = /particles/stink
+	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
+	var/starting_reagent_purity = null
+	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
+	var/crafting_complexity = 0
+	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
+	var/datum/status_effect/food/crafted_food_buff = null
 
 /obj/item/food/Initialize(mapload)
-	. = ..()
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
+	. = ..()
 	if(tastes)
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
 		eatverbs = string_list(eatverbs)
 	if(venue_value)
 		AddElement(/datum/element/venue_price, venue_value)
-	MakeEdible()
-	MakeProcessable()
-	MakeLeaveTrash()
-	MakeGrillable()
-	MakeDecompose(mapload)
-	MakeBakeable()
+	make_edible()
+	make_processable()
+	make_leave_trash()
+	make_grillable()
+	make_germ_sensitive(mapload)
+	make_bakeable()
+	make_microwaveable()
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
-/obj/item/food/proc/MakeEdible()
+/obj/item/food/proc/make_edible()
 	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness)
-
+		initial_reagents = food_reagents,\
+		food_flags = food_flags,\
+		foodtypes = foodtypes,\
+		volume = max_volume,\
+		eat_time = eat_time,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+		bite_consumption = bite_consumption,\
+		junkiness = junkiness,\
+		reagent_purity = starting_reagent_purity,\
+	)
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
-/obj/item/food/proc/MakeProcessable()
+/obj/item/food/proc/make_processable()
 	return
 
 ///This proc handles grillable components, overwrite if you want different grill results etc.
-/obj/item/food/proc/MakeGrillable()
-	if(burns_on_grill)
-		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
+/obj/item/food/proc/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
 ///This proc handles bakeable components, overwrite if you want different bake results etc.
-/obj/item/food/proc/MakeBakeable()
-	if(burns_in_oven)
-		AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
+/obj/item/food/proc/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
+/// This proc handles the microwave component. Overwrite if you want special microwave results.
+/// By default, all food is microwavable. However, they will be microwaved into a bad recipe (burnt mess).
+/obj/item/food/proc/make_microwaveable()
+	AddElement(/datum/element/microwavable)
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
-/obj/item/food/proc/MakeLeaveTrash()
+/obj/item/food/proc/make_leave_trash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type)
 	return
 
-///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+///This proc makes things infective and decomposing when they stay on the floor for too long.
+///Set preserved_food to TRUE to make it never decompose.
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
-/obj/item/food/proc/MakeDecompose(mapload)
+///Requires /datum/component/germ_sensitive to detect exposure
+/obj/item/food/proc/make_germ_sensitive(mapload)
+	if(!isnull(trash_type))
+		return // You don't eat the package and it protects from decomposing
+	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)

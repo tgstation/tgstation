@@ -1,28 +1,28 @@
 /datum/surgery/healing
+	target_mobtypes = list(/mob/living)
+	requires_bodypart_type = NONE
+	replaced_by = /datum/surgery
+	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/heal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
-	target_mobtypes = list(/mob/living)
-	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = FALSE
-	replaced_by = /datum/surgery
-	ignore_clothes = TRUE
 	var/healing_step_type
 	var/antispam = FALSE
 
 /datum/surgery/healing/can_start(mob/user, mob/living/patient)
 	. = ..()
-	if(isanimal(patient))
-		var/mob/living/simple_animal/critter = patient
-		if(!critter.healable)
-			return FALSE
+	if(!.)
+		return .
 	if(!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
 		return FALSE
+	return .
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -30,10 +30,11 @@
 		steps = list(
 			/datum/surgery_step/incise/nobleed,
 			healing_step_type, //hehe cheeky
-			/datum/surgery_step/close)
+			/datum/surgery_step/close,
+		)
 
 /datum/surgery_step/heal
-	name = "repair body"
+	name = "repair body (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 65,
@@ -62,9 +63,13 @@
 	if(istype(surgery,/datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		if(!the_surgery.antispam)
-			display_results(user, target, span_notice("You attempt to patch some of [target]'s [woundtype]."),
-		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
-		span_notice("[user] attempts to patch some of [target]'s [woundtype]."))
+			display_results(
+				user,
+				target,
+				span_notice("You attempt to patch some of [target]'s [woundtype]."),
+				span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
+				span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
+			)
 		display_pain(target, "Your [woundtype] sting like hell!")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
@@ -79,12 +84,15 @@
 	var/target_msg = "[user] fixes some of [target]'s wounds" //see above
 	var/brute_healed = brutehealing
 	var/burn_healed = burnhealing
+	var/dead_patient = FALSE
 	if(target.stat == DEAD) //dead patients get way less additional heal from the damage they have.
 		brute_healed += round((target.getBruteLoss() * (brute_multiplier * 0.2)),0.1)
 		burn_healed += round((target.getFireLoss() * (burn_multiplier * 0.2)),0.1)
+		dead_patient = TRUE
 	else
 		brute_healed += round((target.getBruteLoss() * brute_multiplier),0.1)
 		burn_healed += round((target.getFireLoss() * burn_multiplier),0.1)
+		dead_patient = FALSE
 	if(!get_location_accessible(target, target_zone))
 		brute_healed *= 0.55
 		burn_healed *= 0.55
@@ -94,18 +102,31 @@
 
 	user_msg += get_progress(user, target, brute_healed, burn_healed)
 
-	display_results(user, target, span_notice("[user_msg]."),
-		"[target_msg].",
-		"[target_msg].")
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user) && !dead_patient) //Morbid folk don't care about tending the dead as much as tending the living
+		var/mob/living/carbon/human/morbid_weirdo = user
+		morbid_weirdo.add_mood_event("morbid_tend_wounds", /datum/mood_event/morbid_tend_wounds)
+
+	display_results(
+		user,
+		target,
+		span_notice("[user_msg]."),
+		span_notice("[target_msg]."),
+		span_notice("[target_msg]."),
+	)
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
 	return ..()
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_warning("You screwed up!"),
+	display_results(
+		user,
+		target,
+		span_warning("You screwed up!"),
 		span_warning("[user] screws up!"),
-		span_notice("[user] fixes some of [target]'s wounds."), TRUE)
+		span_notice("[user] fixes some of [target]'s wounds."),
+		target_detailed = TRUE,
+	)
 	var/brute_dealt = brutehealing * 0.8
 	var/burn_dealt = burnhealing * 0.8
 	brute_dealt += round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
@@ -167,7 +188,7 @@
 	return progress_text
 
 /datum/surgery_step/heal/brute/basic
-	name = "tend bruises"
+	name = "tend bruises (hemostat)"
 	brutehealing = 5
 	brute_multiplier = 0.07
 
@@ -232,7 +253,7 @@
 	return progress_text
 
 /datum/surgery_step/heal/burn/basic
-	name = "tend burn wounds"
+	name = "tend burn wounds (hemostat)"
 	burnhealing = 5
 	burn_multiplier = 0.07
 
@@ -303,7 +324,7 @@
 	return progress_text
 
 /datum/surgery_step/heal/combo
-	name = "tend physical wounds"
+	name = "tend physical wounds (hemostat)"
 	brutehealing = 3
 	burnhealing = 3
 	brute_multiplier = 0.07
@@ -323,7 +344,12 @@
 	burn_multiplier = 0.4
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_warning("You screwed up!"),
+	display_results(
+		user,
+		target,
+		span_warning("You screwed up!"),
 		span_warning("[user] screws up!"),
-		span_notice("[user] fixes some of [target]'s wounds."), TRUE)
+		span_notice("[user] fixes some of [target]'s wounds."),
+		target_detailed = TRUE,
+	)
 	target.take_bodypart_damage(5,5)

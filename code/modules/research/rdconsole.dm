@@ -22,7 +22,7 @@ Nothing else in the console has ID requirements.
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdconsole
-	req_access = list(ACCESS_SCIENCE) // Locking and unlocking the console requires science access
+	req_access = list(ACCESS_RESEARCH) // Locking and unlocking the console requires research access
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// The stored technology disk, if present
@@ -45,14 +45,17 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/Initialize(mapload)
+/obj/machinery/computer/rdconsole/LateInitialize()
 	. = ..()
-	stored_research = SSresearch.science_tech
-	stored_research.consoles_accessing[src] = TRUE
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+	if(stored_research)
+		stored_research.consoles_accessing += src
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
 		stored_research.consoles_accessing -= src
+		stored_research = null
 	if(t_disk)
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
@@ -87,9 +90,15 @@ Nothing else in the console has ID requirements.
 		return
 	return ..()
 
+/obj/machinery/computer/rdconsole/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = ..()
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		stored_research = tool.buffer
+	return TRUE
+
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
-	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
-		say("Node unlock failed: Either already researched or not available!")
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
 		return FALSE
 	var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 	if(!istype(TN))
@@ -97,30 +106,33 @@ Nothing else in the console has ID requirements.
 		return FALSE
 	var/list/price = TN.get_price(stored_research)
 	if(stored_research.can_afford(price))
-		investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
-		if(stored_research == SSresearch.science_tech)
+		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
+		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
-				logname = "AI: [user.name]"
+				logname = "AI [user.name]"
 			if(iscyborg(user))
-				logname = "Cyborg: [user.name]"
+				logname = "CYBORG [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
-					logname = "User: [idcard.registered_name]"
+					logname = "[idcard.registered_name]"
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/I = H.wear_id
 				if(istype(I))
 					var/obj/item/card/id/ID = I.GetID()
 					if(istype(ID))
-						logname = "User: [ID.registered_name]"
-			var/i = stored_research.research_logs.len
-			stored_research.research_logs += null
-			stored_research.research_logs[++i] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([src.x],[src.y],[src.z])")
+						logname = "[ID.registered_name]"
+			stored_research.research_logs += list(list(
+				"node_name" = TN.display_name,
+				"node_cost" = price["General Research"],
+				"node_researcher" = logname,
+				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
+			))
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")
@@ -128,13 +140,15 @@ Nothing else in the console has ID requirements.
 	say("Not enough research points...")
 	return FALSE
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		obj_flags |= EMAGGED
-		locked = FALSE
-	return ..()
+/obj/machinery/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if (obj_flags & EMAGGED)
+		return
+	balloon_alert(user, "security protocols disabled")
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	obj_flags |= EMAGGED
+	locked = FALSE
+	return TRUE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
 	. = ..()
@@ -145,12 +159,17 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet/research_designs),
 	)
 
 // heavy data from this proc should be moved to static data when possible
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
-	. = list(
+	var/list/data = list()
+	data["stored_research"] = !!stored_research
+	data["locked"] = locked
+	if(!stored_research) //lack of a research node is all we care about.
+		return data
+	data += list(
 		"nodes" = list(),
 		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
@@ -160,24 +179,16 @@ Nothing else in the console has ID requirements.
 		"sec_protocols" = !(obj_flags & EMAGGED),
 		"t_disk" = null,
 		"d_disk" = null,
-		"locked" = locked
 	)
 
 	if (t_disk)
-		.["t_disk"] = list (
-			"stored_research" = t_disk.stored_research.researched_nodes
+		data["t_disk"] = list (
+			"stored_research" = t_disk.stored_research.researched_nodes,
 		)
 	if (d_disk)
-		.["d_disk"] = list (
-			"max_blueprints" = d_disk.max_blueprints,
-			"blueprints" = list()
-		)
-		for (var/i in 1 to d_disk.max_blueprints)
-			if (d_disk.blueprints[i])
-				var/datum/design/D = d_disk.blueprints[i]
-				.["d_disk"]["blueprints"] += D.id
-			else
-				.["d_disk"]["blueprints"] += null
+		data["d_disk"] = list("blueprints" = list())
+		for (var/datum/design/D in d_disk.blueprints)
+			data["d_disk"]["blueprints"] += D.id
 
 
 	// Serialize all nodes to display
@@ -188,10 +199,10 @@ Nothing else in the console has ID requirements.
 		if (stored_research.hidden_nodes[v])
 			continue
 
-		.["nodes"] += list(list(
+		data["nodes"] += list(list(
 			"id" = n.id,
 			"can_unlock" = stored_research.can_unlock_node(n),
-			"tier" = stored_research.tiers[n.id]
+			"tier" = stored_research.tiers[n.id],
 		))
 
 	// Get experiments and serialize them
@@ -200,14 +211,15 @@ Nothing else in the console has ID requirements.
 		exp_to_process += stored_research.completed_experiments[e]
 	for (var/e in exp_to_process)
 		var/datum/experiment/ex = e
-		.["experiments"][ex.type] = list(
+		data["experiments"][ex.type] = list(
 			"name" = ex.name,
 			"description" = ex.description,
 			"tag" = ex.exp_tag,
 			"progress" = ex.check_progress(),
 			"completed" = ex.completed,
-			"performance_hint" = ex.performance_hint
+			"performance_hint" = ex.performance_hint,
 		)
+	return data
 
 /**
  * Compresses an ID to an integer representation using the id_cache, used for deduplication
@@ -224,7 +236,8 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)
 	. = list(
-		"static_data" = list()
+		"static_data" = list(),
+		"point_types_abbreviations" = SSresearch.point_types,
 	)
 
 	// Build node cache...
@@ -281,7 +294,7 @@ Nothing else in the console has ID requirements.
 	.["static_data"] = list(
 		"node_cache" = node_cache,
 		"design_cache" = design_cache,
-		"id_cache" = flat_id_cache
+		"id_cache" = flat_id_cache,
 	)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)
@@ -307,61 +320,10 @@ Nothing else in the console has ID requirements.
 				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
 		if ("researchNode")
-			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
-				return TRUE
 			research_node(params["node_id"], usr)
 			return TRUE
 		if ("ejectDisk")
 			eject_disk(params["type"])
-			return TRUE
-		if ("writeDesign")
-			if(QDELETED(d_disk))
-				say("No Design Disk Inserted!")
-				return TRUE
-			var/slot = text2num(params["slot"])
-			var/design_id = params["selectedDesign"]
-			if(!stored_research.researched_designs.Find(design_id))
-				stack_trace("ID did not map to a researched datum [design_id]")
-				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-			if(design)
-				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
-					if(design.autolathe_exportable && !design.reagents_list.len)
-						design.build_type |= AUTOLATHE
-					design.category |= "Imported"
-				d_disk.blueprints[slot] = design
-			return TRUE
-		if ("uploadDesignSlot")
-			if(QDELETED(d_disk))
-				say("No design disk found.")
-				return TRUE
-			var/n = text2num(params["slot"])
-			stored_research.add_design(d_disk.blueprints[n], TRUE)
-			return TRUE
-		if ("clearDesignSlot")
-			if(QDELETED(d_disk))
-				say("No design disk inserted!")
-				return TRUE
-			var/n = text2num(params["slot"])
-			var/datum/design/D = d_disk.blueprints[n]
-			say("Wiping design [D.name] from design disk.")
-			d_disk.blueprints[n] = null
-			return TRUE
-		if ("eraseDisk")
-			if (params["type"] == RND_DESIGN_DISK)
-				if(QDELETED(d_disk))
-					say("No design disk inserted!")
-					return TRUE
-				say("Wiping design disk.")
-				for(var/i in 1 to d_disk.max_blueprints)
-					d_disk.blueprints[i] = null
-			if (params["type"] == RND_TECH_DISK)
-				if(QDELETED(t_disk))
-					say("No tech disk inserted!")
-					return TRUE
-				qdel(t_disk.stored_research)
-				t_disk.stored_research = new
-				say("Wiping technology disk.")
 			return TRUE
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
@@ -371,6 +333,9 @@ Nothing else in the console has ID requirements.
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
+				say("Uploading blueprints from disk.")
+				d_disk.on_upload(stored_research)
+				return TRUE
 			if (params["type"] == RND_TECH_DISK)
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
@@ -378,6 +343,7 @@ Nothing else in the console has ID requirements.
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
+		//Tech disk-only action.
 		if ("loadTech")
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")

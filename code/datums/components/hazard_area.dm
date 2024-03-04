@@ -28,10 +28,10 @@
 /datum/component/hazard_area/RegisterWithParent()
 	var/mob/parent_mob = parent
 	parent_mob.become_area_sensitive(type)
-	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
-	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
-	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
-	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, .proc/on_area_creation)
+	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, PROC_REF(handle_parent_area_change))
+	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, PROC_REF(reject_ladder_movement))
+	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, PROC_REF(reject_vehicle))
+	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, PROC_REF(on_area_creation))
 
 /datum/component/hazard_area/UnregisterFromParent()
 	var/mob/parent_mob = parent
@@ -39,7 +39,7 @@
 	UnregisterSignal(SSdcs, COMSIG_AREA_CREATED)
 	parent_mob.lose_area_sensitivity(type)
 
-/datum/component/hazard_area/Destroy(force, silent)
+/datum/component/hazard_area/Destroy(force)
 	. = ..()
 	area_created = null
 
@@ -88,9 +88,9 @@
  * If the created area already exists in the blacklist or whitelist it simply returns,
  * however if it isn't we check for an overwritten area and if non-hazardous setup the area to
  * allow the parent.
- * If there isnt an overwritten area it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
+ * If there aren't any overwritten area's it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
  */
-/datum/component/hazard_area/proc/on_area_creation(datum/source, area/created, area/overwritten, mob/creator)
+/datum/component/hazard_area/proc/on_area_creation(datum/source, area/created, list/area/overwritten, mob/creator)
 	SIGNAL_HANDLER
 
 	if(created.type in area_whitelist)
@@ -99,10 +99,11 @@
 	if(created.type in area_blacklist)
 		return // in blacklist, expanding a blacklisted area doesnt magically give you permission to enter
 
-	if(overwritten)
-		if(check_area_hazardous(overwritten.type))
-			return // Overwrote a hazardous area, still hazardous fool
-		area_created -= overwritten // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
+	if(length(overwritten))
+		for(var/area/overwritten_area in overwritten)
+			if(check_area_hazardous(overwritten_area.type))
+				return // Overwrote a hazardous area, still hazardous fool
+			area_created -= overwritten_area // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
 		area_created += created // Congrats, you are now allowed in this area
 		return
 
@@ -141,7 +142,7 @@
 		return
 	last_parent_area = new_area.type
 
-	INVOKE_ASYNC(src, .proc/update_parent_status_effect)
+	INVOKE_ASYNC(src, PROC_REF(update_parent_status_effect))
 
 /// The dedicated status effect for the hazard_area component - use with caution and know what it does!
 /datum/status_effect/hazard_area
@@ -163,7 +164,7 @@
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, update=TRUE)
 
 /datum/status_effect/hazard_area/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] appear[owner.p_s()] to be largely immobilized through unknown means.")
+	return span_notice("[owner.p_They()] appear[owner.p_s()] to be largely immobilized through unknown means.")
 
 /atom/movable/screen/alert/status_effect/hazard_area
 	name = "Hazardous Area"

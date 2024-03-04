@@ -1,0 +1,1657 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"ao" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"at" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"aw" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"bA" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"cc" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"cw" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"dg" = (
+/obj/structure/stone_tile/block,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"eD" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"eM" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"fj" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"fu" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/block,
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"fT" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"gY" = (
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"hn" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"hZ" = (
+/obj/item/storage/bag/plants/portaseeder,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"ie" = (
+/mob/living/basic/mining/gutlunch/warrior,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"ix" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"iB" = (
+/obj/item/spear,
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"jb" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"jq" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"ku" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"kv" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"ld" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"lh" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"lD" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"lQ" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"mk" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"mW" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"nv" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"oR" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"pV" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"qF" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"ro" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"ru" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"rU" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"sb" = (
+/turf/closed/indestructible/riveted/boss,
+/area/centcom/basketball)
+"sA" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"un" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"uH" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"vo" = (
+/turf/open/floor/fakepit,
+/area/centcom/basketball)
+"vq" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"wN" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"xe" = (
+/obj/item/flashlight/flare/torch,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"xG" = (
+/obj/structure/fence/corner{
+	dir = 5
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"xI" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"yk" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center/cracked,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"yK" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"yO" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"yY" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/spear,
+/obj/item/scythe,
+/turf/open/indestructible/boss,
+/area/centcom/basketball)
+"zk" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"zU" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"zZ" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Aj" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/spear,
+/obj/item/storage/belt/utility,
+/turf/open/indestructible/boss,
+/area/centcom/basketball)
+"Aw" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"AA" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"BD" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"BW" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Ct" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Cv" = (
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
+/turf/open/floor/fakepit,
+/area/centcom/basketball)
+"Cw" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"CI" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Dc" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Di" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"DN" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"DP" = (
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
+/turf/open/floor/fakepit,
+/area/centcom/basketball)
+"DV" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Eb" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"EX" = (
+/obj/structure/fence/corner,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Fh" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Fi" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Fy" = (
+/mob/living/basic/mining/gutlunch/milk,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"FS" = (
+/obj/structure/stone_tile/block/burnt,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Gh" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/basketball)
+"Hx" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Ih" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"IM" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Jb" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"JX" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Kf" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Kh" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Lu" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Lx" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"LV" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/closet/crate/internals,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"MA" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"MN" = (
+/obj/structure/stone_tile/surrounding,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"MR" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Nc" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/burnt,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Nt" = (
+/turf/closed/indestructible/rock,
+/area/centcom/basketball)
+"Nw" = (
+/obj/item/cultivator/rake,
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"NX" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"OB" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"OF" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/spear,
+/turf/open/indestructible/boss,
+/area/centcom/basketball)
+"OG" = (
+/obj/effect/mob_spawn/corpse/human/damaged,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"OS" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Ql" = (
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"QF" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Rc" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Rl" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Ry" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Se" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Tc" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Ue" = (
+/obj/structure/fluff/drake_statue/falling,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Uv" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"UL" = (
+/obj/structure/bonfire/dense,
+/obj/structure/stone_tile/center,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"UT" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Vc" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Vf" = (
+/obj/structure/fence,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Vm" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Vr" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"VI" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/obj/structure/stone_tile,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"VM" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"VY" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/spear,
+/obj/item/clothing/head/helmet/roman/legionnaire,
+/turf/open/indestructible/boss,
+/area/centcom/basketball)
+"WE" = (
+/obj/structure/ore_box,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"WH" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Xq" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"XQ" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"XT" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/basketball,
+/area/centcom/basketball)
+"Yl" = (
+/obj/structure/water_source/puddle{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Yv" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"YI" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"YX" = (
+/obj/structure/lavaland/ash_walker_fake,
+/obj/item/toy/basketball,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+"Zc" = (
+/obj/structure/necropolis_arch,
+/obj/structure/stone_tile/slab,
+/obj/structure/necropolis_gate/locked,
+/turf/open/floor/fakebasalt,
+/area/centcom/basketball)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+gY
+gY
+gY
+gY
+Hu
+"}
+(3,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+Nt
+Cw
+Ql
+Ql
+Nt
+Nt
+WE
+LV
+Nt
+Ql
+Ql
+Nt
+WE
+Nt
+Nt
+gY
+gY
+gY
+gY
+Hu
+"}
+(4,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+Nt
+Cw
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Ql
+Nt
+gY
+gY
+gY
+gY
+Hu
+"}
+(5,1,1) = {"
+Hu
+gY
+sb
+sb
+sb
+sb
+Cw
+Ql
+vq
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+qF
+Ql
+Ql
+sb
+sb
+sb
+sb
+gY
+Hu
+"}
+(6,1,1) = {"
+Hu
+gY
+sb
+eD
+JX
+Eb
+Cw
+Ql
+ku
+sA
+Ql
+vo
+Cv
+vo
+Ql
+sA
+ku
+Ql
+Ql
+ix
+Aj
+yY
+sb
+gY
+Hu
+"}
+(7,1,1) = {"
+Hu
+gY
+sb
+dg
+aw
+Dc
+Cw
+Ql
+ku
+Ql
+yO
+vo
+vo
+vo
+yO
+Ql
+ku
+Fh
+Ql
+XQ
+WH
+OF
+sb
+gY
+Hu
+"}
+(8,1,1) = {"
+Hu
+sb
+sb
+Fi
+DN
+mk
+Cw
+Ql
+ku
+Ct
+zk
+OB
+yO
+Lx
+zk
+Ct
+ku
+Ql
+Aw
+Vr
+MA
+VY
+sb
+sb
+Hu
+"}
+(9,1,1) = {"
+Hu
+sb
+Cw
+Cw
+Cw
+Cw
+Cw
+Uv
+lD
+kv
+kv
+lh
+kv
+ao
+kv
+Lu
+lD
+ao
+ao
+ao
+ao
+Nt
+Nt
+sb
+Hu
+"}
+(10,1,1) = {"
+Hu
+sb
+Cw
+MN
+ro
+AA
+rU
+MN
+ku
+Ql
+OS
+MR
+xI
+VM
+yK
+Ql
+ku
+MN
+Vc
+iB
+Jb
+MN
+Nt
+sb
+Hu
+"}
+(11,1,1) = {"
+Hu
+sb
+Ry
+at
+dg
+zZ
+Dc
+at
+ku
+Ql
+NX
+jb
+cw
+QF
+fT
+Ql
+ku
+XT
+eM
+Kh
+cc
+FS
+Nt
+Nt
+Hu
+"}
+(12,1,1) = {"
+Hu
+Zc
+Se
+Uv
+BW
+YI
+Dc
+Uv
+ku
+Ql
+xI
+Tc
+YX
+Gh
+Kf
+Ql
+ku
+wN
+Tc
+UL
+af
+NX
+Nt
+Nt
+Hu
+"}
+(13,1,1) = {"
+Hu
+sb
+yk
+bA
+dg
+fu
+Dc
+Rl
+ku
+Ql
+pV
+mW
+Ct
+BD
+oR
+un
+ku
+IM
+Di
+Ct
+Xq
+Nc
+Nt
+Nt
+Hu
+"}
+(14,1,1) = {"
+Hu
+sb
+jq
+MN
+Ih
+Vm
+DV
+MN
+ku
+Ql
+Hx
+ld
+Kf
+ao
+uH
+Ql
+ku
+MN
+Lu
+Vc
+lh
+MN
+Nt
+sb
+Hu
+"}
+(15,1,1) = {"
+Hu
+sb
+Cw
+Cw
+Cw
+ru
+Cw
+Uv
+lD
+kv
+lh
+kv
+Lu
+NX
+kv
+ao
+lD
+VM
+VM
+VM
+VM
+Nt
+Nt
+sb
+Hu
+"}
+(16,1,1) = {"
+Hu
+sb
+sb
+CI
+JX
+hn
+Cw
+Ql
+ku
+Kh
+Rc
+VI
+UT
+Yv
+Rc
+Kh
+ku
+Ql
+xe
+nv
+nv
+Nt
+sb
+sb
+Hu
+"}
+(17,1,1) = {"
+Hu
+gY
+sb
+dg
+Ue
+Dc
+Cw
+Ql
+ku
+Ql
+UT
+vo
+vo
+vo
+UT
+Ql
+ku
+Ql
+Yl
+hZ
+Nw
+Nt
+sb
+gY
+Hu
+"}
+(18,1,1) = {"
+Hu
+gY
+sb
+zU
+DN
+lQ
+Cw
+Ql
+ku
+fj
+Ql
+vo
+DP
+vo
+Ql
+fj
+ku
+Ql
+Gh
+nv
+nv
+Nt
+sb
+gY
+Hu
+"}
+(19,1,1) = {"
+Hu
+gY
+sb
+sb
+sb
+sb
+Cw
+Ql
+xG
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+EX
+Ql
+Ql
+sb
+sb
+sb
+sb
+gY
+Hu
+"}
+(20,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+Nt
+Cw
+Ql
+Ql
+Ql
+Ql
+Fy
+Ql
+OG
+Ql
+Ql
+Ql
+Ql
+Nt
+Nt
+gY
+gY
+gY
+gY
+Hu
+"}
+(21,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+Nt
+Cw
+Ql
+OG
+Nt
+Nt
+Ql
+Ql
+Ql
+ie
+Ql
+Nt
+Ql
+Nt
+Nt
+gY
+gY
+gY
+gY
+Hu
+"}
+(22,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+gY
+gY
+gY
+gY
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

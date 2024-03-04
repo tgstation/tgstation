@@ -4,17 +4,23 @@
 	var/mob/living/carbon/human/alice
 	var/mob/living/carbon/human/bob
 	var/mob/living/carbon/human/charlie
+	var/targetz = 5
+	var/datum/turf_reservation/reserved
 
 /datum/unit_test/chain_pull_through_space/New()
 	..()
 
+	//reserve a tile that is always empty for our z destination
+	reserved = SSmapping.request_turf_block_reservation(5, 5, 1)
+
 	// Create a space tile that goes to another z-level
 	claimed_tile = run_loc_floor_bottom_left.type
 
-	space_tile = new(locate(run_loc_floor_bottom_left.x, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	space_tile.destination_x = 100
-	space_tile.destination_y = 100
-	space_tile.destination_z = 5
+	space_tile = run_loc_floor_bottom_left.ChangeTurf(/turf/open/space)
+	var/turf/bottom_left = reserved.bottom_left_turfs[1]
+	space_tile.destination_x = round(bottom_left.x + (reserved.width-1) / 2)
+	space_tile.destination_y = round(bottom_left.y + (reserved.height-1) / 2)
+	space_tile.destination_z = bottom_left.z
 
 	// Create our list of humans, all adjacent to one another
 	alice = new(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -31,6 +37,7 @@
 	qdel(alice)
 	qdel(bob)
 	qdel(charlie)
+	qdel(reserved)
 	return ..()
 
 /datum/unit_test/chain_pull_through_space/Run()

@@ -52,13 +52,13 @@
 
 	if(src.value != value || force)
 		if(isdatum(src.value))
-			UnregisterSignal(src.value, COMSIG_PARENT_QDELETING)
+			UnregisterSignal(src.value, COMSIG_QDELETING)
 		if(datatype_handler.is_extensive)
 			src.value = datatype_handler.convert_value_extensive(src, value, force)
 		else
 			src.value = datatype_handler.convert_value(src, value, force)
 		if(isdatum(value))
-			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
+			RegisterSignal(value, COMSIG_QDELETING, PROC_REF(null_value))
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
 
 /**
@@ -152,7 +152,7 @@
 	if(value == source)
 		value = null
 	else
-		stack_trace("Impossible? [src] should only receive COMSIG_PARENT_QDELETING from an atom currently in the port, not [source].")
+		stack_trace("Impossible? [src] should only receive COMSIG_QDELETING from an atom currently in the port, not [source].")
 
 /**
  * # Input Port
@@ -186,9 +186,9 @@
 	if(output in connected_ports)
 		return
 	connected_ports += output
-	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
-	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/check_type)
-	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
+	RegisterSignal(output, COMSIG_PORT_SET_VALUE, PROC_REF(receive_value))
+	RegisterSignal(output, COMSIG_PORT_SET_TYPE, PROC_REF(check_type))
+	RegisterSignal(output, COMSIG_PORT_DISCONNECT, PROC_REF(disconnect))
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(!(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE))
 		set_input(output.value)
@@ -223,7 +223,7 @@
  */
 /datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	SScircuit_component.add_callback(src, CALLBACK(src, .proc/set_input, value))
+	SScircuit_component.add_callback(src, CALLBACK(src, PROC_REF(set_input), value))
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
 /datum/port/proc/null_value(datum/source)

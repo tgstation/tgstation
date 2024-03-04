@@ -76,6 +76,11 @@
 		forensics = new(src, blood_DNA = blood_DNA_to_add)
 	return TRUE
 
+/obj/item/add_blood_DNA(list/blood_DNA_to_add)
+	if(item_flags & NO_BLOOD_ON_ITEM)
+		return FALSE
+	return ..()
+
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	transfer_blood = rand(2, 4)
 	return ..()
@@ -89,13 +94,16 @@
 		return TRUE //we bloodied the floor
 	return FALSE
 
+/turf/closed/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	return FALSE
+
 /mob/living/carbon/human/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	if(wear_suit)
 		wear_suit.add_blood_DNA(blood_DNA_to_add)
-		update_inv_wear_suit()
+		update_worn_oversuit()
 	else if(w_uniform)
 		w_uniform.add_blood_DNA(blood_DNA_to_add)
-		update_inv_w_uniform()
+		update_worn_undersuit()
 	if(gloves)
 		var/obj/item/clothing/gloves/mob_gloves = gloves
 		mob_gloves.add_blood_DNA(blood_DNA_to_add)
@@ -104,7 +112,7 @@
 			forensics = new(src)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 		blood_in_hands = rand(2, 4)
-	update_inv_gloves()
+	update_worn_gloves()
 	return TRUE
 
 /*

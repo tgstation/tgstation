@@ -1,5 +1,5 @@
-#define TRACKER_Y_OFFSET 13
-#define TRACKER_EDGE_Y_OFFSET (TRACKER_Y_OFFSET - 2)
+#define TRACKER_Z_OFFSET 13
+#define TRACKER_EDGE_Z_OFFSET (TRACKER_Z_OFFSET - 2)
 
 //Solar tracker
 
@@ -9,7 +9,7 @@
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
-	icon = 'icons/obj/solar.dmi'
+	icon = 'icons/obj/machines/solar.dmi'
 	icon_state = "tracker_base"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -25,25 +25,35 @@
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	tracker_dish_edge = add_panel_overlay("tracker_edge", TRACKER_EDGE_Y_OFFSET)
-	tracker_dish = add_panel_overlay("tracker", TRACKER_Y_OFFSET)
+	tracker_dish_edge = add_panel_overlay("tracker_edge", TRACKER_EDGE_Z_OFFSET)
+	tracker_dish = add_panel_overlay("tracker", TRACKER_Z_OFFSET)
 
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/sun_update)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(sun_update))
 
 /obj/machinery/power/tracker/Destroy()
 	unset_control() //remove from control computer
 	return ..()
 
-/obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, y_offset)
-	var/obj/effect/overlay/overlay = new()
-	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
-	overlay.appearance_flags = TILE_BOUND
+/obj/machinery/power/tracker/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(tracker_dish_edge, PLANE_TO_TRUE(tracker_dish_edge.plane), new_turf)
+	SET_PLANE(tracker_dish, PLANE_TO_TRUE(tracker_dish.plane), new_turf)
+
+/obj/effect/overlay/tracker
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	appearance_flags = TILE_BOUND
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	layer = FLY_LAYER
+
+/obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, z_offset)
+	var/obj/effect/overlay/tracker/overlay = new(src)
 	overlay.icon_state = icon_state
-	overlay.layer = FLY_LAYER
-	overlay.plane = ABOVE_GAME_PLANE
-	overlay.pixel_y = y_offset
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
+	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
 
@@ -127,23 +137,21 @@
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
 
-/obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(machine_stat & BROKEN)
-		else
-			playsound(src, SFX_SHATTER, 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-	qdel(src)
+/obj/machinery/power/tracker/on_deconstruction(disassembled)
+	if(disassembled)
+		var/obj/item/solar_assembly/S = locate() in src
+		if(S)
+			S.forceMove(loc)
+			S.give_glass(machine_stat & BROKEN)
+	else
+		playsound(src, SFX_SHATTER, 70, TRUE)
+		new /obj/item/shard(src.loc)
+		new /obj/item/shard(src.loc)
 
 // Tracker Electronic
 
 /obj/item/electronics/tracker
 	name = "tracker electronics"
 
-#undef TRACKER_Y_OFFSET
-#undef TRACKER_EDGE_Y_OFFSET
+#undef TRACKER_Z_OFFSET
+#undef TRACKER_EDGE_Z_OFFSET

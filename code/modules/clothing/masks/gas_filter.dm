@@ -16,6 +16,7 @@
 	desc = "A piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_atmos_filter"
+	w_class = WEIGHT_CLASS_TINY
 	///Amount of filtering points available
 	var/filter_status = 100
 	///strength of the filter against high filtering gases
@@ -38,7 +39,8 @@
 		/datum/gas/nitrium,
 		/datum/gas/freon,
 		/datum/gas/hypernoblium,
-		/datum/gas/bz
+		/datum/gas/bz,
+		/datum/gas/miasma,
 		)
 	///List of gases with low filter priority
 	var/list/low_filtering_gases = list(
@@ -110,3 +112,10 @@
 		/datum/gas/carbon_dioxide,
 		/datum/gas/nitrous_oxide
 		)
+
+#undef HIGH_FILTERING_MOLES
+#undef HIGH_FILTERING_RATIO
+#undef LOW_FILTERING_MOLES
+#undef LOW_FILTERING_RATIO
+#undef MID_FILTERING_MOLES
+#undef FILTERS_CONSTANT_WEAR

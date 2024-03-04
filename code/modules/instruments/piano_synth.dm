@@ -17,8 +17,9 @@
 	name = "headphones"
 	desc = "Unce unce unce unce. Boop!"
 	icon = 'icons/obj/clothing/accessories.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/ears_righthand.dmi'
 	icon_state = "headphones"
 	inhand_icon_state = "headphones"
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
@@ -29,33 +30,27 @@
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
 
-/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+/obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	RegisterSignal(src, COMSIG_INSTRUMENT_START, .proc/start_playing)
-	RegisterSignal(src, COMSIG_INSTRUMENT_END, .proc/stop_playing)
+	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(update_icon_for_playing_music))
+	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(update_icon_for_playing_music))
 
-/**
- * Called by a component signal when our song starts playing.
- */
-/obj/item/instrument/piano_synth/headphones/proc/start_playing()
+// Called by a component signal to update musical note VFX for songs playing while worn.
+/obj/item/instrument/piano_synth/headphones/proc/update_icon_for_playing_music(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
-	icon_state = "[initial(icon_state)]_on"
 	update_appearance()
 
-/**
- * Called by a component signal when our song stops playing.
- */
-/obj/item/instrument/piano_synth/headphones/proc/stop_playing()
-	SIGNAL_HANDLER
-	icon_state = "[initial(icon_state)]"
-	update_appearance()
+/obj/item/instrument/piano_synth/headphones/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][song?.playing ? "_on" : null]"
 
 /obj/item/instrument/piano_synth/headphones/spacepods
 	name = "\improper Nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everyone else says, all at once!"
 	icon_state = "spacepods"
-	inhand_icon_state = "spacepods"
+	worn_icon = 'icons/mob/clothing/ears.dmi'
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
@@ -100,18 +95,18 @@
 	var/obj/item/instrument/piano_synth/synth
 
 /obj/item/circuit_component/synth/populate_ports()
-	song = add_input_port("Song", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = .proc/import_song)
-	play = add_input_port("Play", PORT_TYPE_SIGNAL, trigger = .proc/start_playing)
-	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = .proc/stop_playing)
-	repetitions = add_input_port("Repetitions", PORT_TYPE_NUMBER, trigger = .proc/set_repetitions)
-	beats_per_min = add_input_port("BPM", PORT_TYPE_NUMBER, trigger = .proc/set_bpm)
-	selected_instrument = add_option_port("Selected Instrument", SSinstruments.synthesizer_instrument_ids, trigger = .proc/set_instrument)
-	volume = add_input_port("Volume", PORT_TYPE_NUMBER, trigger = .proc/set_volume)
-	volume_dropoff = add_input_port("Volume Dropoff Threshold", PORT_TYPE_NUMBER, trigger = .proc/set_dropoff)
-	note_shift = add_input_port("Note Shift", PORT_TYPE_NUMBER, trigger = .proc/set_note_shift)
-	sustain_mode = add_option_port("Note Sustain Mode", SSinstruments.note_sustain_modes, trigger = .proc/set_sustain_mode)
-	sustain_value = add_input_port("Note Sustain Value", PORT_TYPE_NUMBER, trigger = .proc/set_sustain_value)
-	note_decay = add_input_port("Held Note Decay", PORT_TYPE_NUMBER, trigger = .proc/set_sustain_decay)
+	song = add_input_port("Song", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = PROC_REF(import_song))
+	play = add_input_port("Play", PORT_TYPE_SIGNAL, trigger = PROC_REF(start_playing))
+	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = PROC_REF(stop_playing))
+	repetitions = add_input_port("Repetitions", PORT_TYPE_NUMBER, trigger = PROC_REF(set_repetitions))
+	beats_per_min = add_input_port("BPM", PORT_TYPE_NUMBER, trigger = PROC_REF(set_bpm))
+	selected_instrument = add_option_port("Selected Instrument", SSinstruments.synthesizer_instrument_ids, trigger = PROC_REF(set_instrument))
+	volume = add_input_port("Volume", PORT_TYPE_NUMBER, trigger = PROC_REF(set_volume))
+	volume_dropoff = add_input_port("Volume Dropoff Threshold", PORT_TYPE_NUMBER, trigger = PROC_REF(set_dropoff))
+	note_shift = add_input_port("Note Shift", PORT_TYPE_NUMBER, trigger = PROC_REF(set_note_shift))
+	sustain_mode = add_option_port("Note Sustain Mode", SSinstruments.note_sustain_modes, trigger = PROC_REF(set_sustain_mode))
+	sustain_value = add_input_port("Note Sustain Value", PORT_TYPE_NUMBER, trigger = PROC_REF(set_sustain_value))
+	note_decay = add_input_port("Held Note Decay", PORT_TYPE_NUMBER, trigger = PROC_REF(set_sustain_decay))
 
 	is_playing = add_output_port("Currently Playing", PORT_TYPE_NUMBER)
 	started_playing = add_output_port("Started Playing", PORT_TYPE_SIGNAL)
@@ -120,21 +115,21 @@
 /obj/item/circuit_component/synth/register_shell(atom/movable/shell)
 	. = ..()
 	synth = shell
-	RegisterSignal(synth, COMSIG_INSTRUMENT_START, .proc/on_song_start)
-	RegisterSignal(synth, COMSIG_INSTRUMENT_END, .proc/on_song_end)
-	RegisterSignal(synth, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING, .proc/continue_if_autoplaying)
+	RegisterSignal(synth, COMSIG_INSTRUMENT_START, PROC_REF(on_song_start))
+	RegisterSignal(synth, COMSIG_INSTRUMENT_END, PROC_REF(on_song_end))
+	RegisterSignal(synth, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING, PROC_REF(continue_if_autoplaying))
 
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
 	if(synth.song.music_player == src)
 		synth.song.stop_playing()
-	synth = null
 	UnregisterSignal(synth, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING))
+	synth = null
 	return ..()
 
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)
 	synth.song.start_playing(src)
 
-/obj/item/circuit_component/synth/proc/on_song_start()
+/obj/item/circuit_component/synth/proc/on_song_start(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
 	is_playing.set_output(TRUE)
 	started_playing.set_output(COMPONENT_SIGNAL)

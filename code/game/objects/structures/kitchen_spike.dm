@@ -2,12 +2,36 @@
 
 /obj/structure/kitchenspike_frame
 	name = "meatspike frame"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "spikeframe"
 	desc = "The frame of a meat spike."
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 200
+
+/obj/structure/kitchenspike_frame/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/kitchenspike_frame/examine(mob/user)
+	. = ..()
+	. += "It can be <b>welded</b> apart."
+	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
+
+/obj/structure/kitchenspike_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	var/message = ""
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		message = "Deconstruct"
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		message = "Bolt Down Frame"
+
+	if(!message)
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = message
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 0))
@@ -33,14 +57,16 @@
 	var/obj/item/stack/rods/used_rods = attacking_item
 	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
 		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		to_chat(user, span_notice("You add spikes to the frame."))
+		balloon_alert(user, "meatspike built")
 		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
 		transfer_fingerprints_to(new_meatspike)
 		qdel(src)
+		return
+	balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
 
 /obj/structure/kitchenspike
 	name = "meat spike"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals."
 	density = TRUE
@@ -48,6 +74,25 @@
 	buckle_lying = FALSE
 	can_buckle = TRUE
 	max_integrity = 250
+
+/obj/structure/kitchenspike/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/kitchenspike/examine(mob/user)
+	. = ..()
+	. += "<b>Drag a mob</b> onto it to hook it in place."
+	. += "A <b>crowbar</b> could remove those spikes."
+
+/obj/structure/kitchenspike/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove Spikes"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/structure/kitchenspike/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -66,7 +111,7 @@
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/target, mob/user, check_loc = TRUE)
 	if(!iscarbon(target) && !isanimal_or_basicmob(target))
 		return
-	if(!do_mob(user, target, 10 SECONDS))
+	if(!do_after(user, 10 SECONDS, target))
 		return
 	return ..()
 
@@ -80,6 +125,7 @@
 	m180.Turn(180)
 	animate(target, transform = m180, time = 3)
 	target.pixel_y = target.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	ADD_TRAIT(target, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
@@ -105,12 +151,13 @@
 
 /obj/structure/kitchenspike/post_unbuckle_mob(mob/living/buckled_mob)
 	buckled_mob.adjustBruteLoss(30)
-	INVOKE_ASYNC(buckled_mob, /mob/proc/emote, "scream")
+	INVOKE_ASYNC(buckled_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	buckled_mob.AdjustParalyzed(20)
 	var/matrix/m180 = matrix(buckled_mob.transform)
 	m180.Turn(180)
 	animate(buckled_mob, transform = m180, time = 3)
 	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)

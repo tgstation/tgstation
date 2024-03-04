@@ -1,8 +1,14 @@
 /// The max amount of options someone can have in a custom vote.
 #define MAX_CUSTOM_VOTE_OPTIONS 10
 
-/datum/vote/custom_vote
-	name = "Custom"
+/datum/vote/custom_vote/single
+	name = "Custom Standard"
+	message = "Click here to start a custom vote (one selection per voter)"
+
+/datum/vote/custom_vote/multi
+	name = "Custom Multi"
+	message = "Click here to start a custom multi vote (multiple selections per voter)"
+	count_method = VOTE_COUNT_METHOD_MULTI
 
 // Custom votes ares always accessible.
 /datum/vote/custom_vote/is_accessible_vote()
@@ -23,6 +29,35 @@
 	return forced
 
 /datum/vote/custom_vote/create_vote(mob/vote_creator)
+	var/custom_win_method = tgui_input_list(
+		vote_creator,
+		"How should the vote winner be determined?",
+		"Winner Method",
+		list("Simple", "Weighted Random", "No Winner"),
+		default = "Simple",
+	)
+	switch(custom_win_method)
+		if("Simple")
+			winner_method = VOTE_WINNER_METHOD_SIMPLE
+		if("Weighted Random")
+			winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
+		if("No Winner")
+			winner_method = VOTE_WINNER_METHOD_NONE
+		else
+			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
+			return FALSE
+
+	var/display_stats = tgui_alert(
+		vote_creator,
+		"Should voting statistics be public?",
+		"Show voting stats?",
+		list("Yes", "No"),
+	)
+
+	if(display_stats == null)
+		return FALSE
+	display_statistics = display_stats == "Yes"
+
 	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
 	if(!override_question)
 		return FALSE
@@ -45,9 +80,5 @@
 /datum/vote/custom_vote/initiate_vote(initiator, duration)
 	. = ..()
 	. += "\n[override_question]"
-
-// There are no winners or losers for custom votes
-/datum/vote/custom_vote/get_winner_text(list/all_winners, real_winner, list/non_voters)
-	return "[span_bold("Did not vote:")] [length(non_voters)]"
 
 #undef MAX_CUSTOM_VOTE_OPTIONS

@@ -6,27 +6,27 @@
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
 	count_against_dynamic_roll_chance = FALSE
+	/// Traits we apply/remove to our target on-demand.
+	var/static/list/applicable_traits = list(
+		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_NOGUNS,
+		TRAIT_SHOCKIMMUNE,
+	)
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	ADD_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
+	var/mob/living/subject = owner.current || mob_override
+	subject.add_traits(applicable_traits, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	REMOVE_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
-	if(L.has_quirk(/datum/quirk/nonviolent))
-		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
+	var/mob/living/subject = owner.current || mob_override
+	subject.remove_traits(applicable_traits, HIGHLANDER_TRAIT)
+	if(subject.has_quirk(/datum/quirk/nonviolent))
+		ADD_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
-/datum/antagonist/highlander/proc/forge_objectives()
+/datum/antagonist/highlander/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
 	steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
@@ -52,11 +52,10 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H)
-		if(!H.dropItemToGround(I))
-			qdel(I)
+	H.drop_everything(del_on_drop = FALSE, force = TRUE, del_if_nodrop = TRUE)
+
 	H.regenerate_icons()
-	H.revive(full_heal = TRUE, admin_revive = TRUE)
+	H.revive(ADMIN_HEAL_ALL)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
@@ -66,7 +65,7 @@
 		P.attack_self(H)
 	var/obj/item/card/id/advanced/highlander/W = new(H)
 	W.registered_name = H.real_name
-	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER_TRAIT)
 	W.update_label()
 	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
@@ -95,7 +94,7 @@
 	var/mob/living/silicon/robot/robotlander = owner.current
 	if(!istype(robotlander))
 		return ..()
-	robotlander.revive(full_heal = TRUE, admin_revive = TRUE)
+	robotlander.revive(ADMIN_HEAL_ALL)
 	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")

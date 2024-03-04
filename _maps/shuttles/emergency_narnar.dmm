@@ -111,7 +111,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "w" = (
-/mob/living/simple_animal/hostile/construct/artificer,
+/mob/living/basic/construct/artificer,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "x" = (
@@ -120,7 +120,7 @@
 /area/shuttle/escape)
 "y" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/item/candle/infinite,
+/obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "z" = (
@@ -128,7 +128,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "A" = (
-/obj/item/candle/infinite,
+/obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "B" = (
@@ -139,7 +139,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "C" = (
-/mob/living/simple_animal/hostile/construct/juggernaut,
+/mob/living/basic/construct/juggernaut,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "D" = (
@@ -166,7 +166,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "H" = (
-/mob/living/simple_animal/hostile/construct/wraith,
+/mob/living/basic/construct/wraith,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "I" = (
@@ -178,14 +178,14 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "J" = (
-/mob/living/simple_animal/hostile/eyeball{
+/mob/living/basic/eyeball{
 	faction = list("cult");
 	name = "left eyeball"
 	},
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "K" = (
-/mob/living/simple_animal/hostile/eyeball{
+/mob/living/basic/eyeball{
 	faction = list("cult");
 	name = "right eyeball"
 	},
@@ -237,14 +237,12 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "U" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "V" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "X" = (

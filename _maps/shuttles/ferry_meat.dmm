@@ -3,8 +3,8 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
@@ -18,6 +18,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "g" = (
@@ -79,10 +80,9 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "m" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+	name = "old sink"
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
@@ -103,12 +103,9 @@
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 12;
-	id = "ferry";
+	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	port_direction = 2;
-	width = 5
+	port_direction = 2
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
@@ -122,15 +119,20 @@
 /area/shuttle/transport)
 "v" = (
 /obj/machinery/door/airlock/freezer{
-	name = "Meat Tradeship Backroom";
-	req_access = list("kitchen")
+	name = "Meat Tradeship Backroom"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "w" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/turf/open/floor/iron/freezer,
+/area/shuttle/transport)
+"x" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 
@@ -192,7 +194,7 @@ c
 "}
 (9,1,1) = {"
 c
-l
+x
 l
 v
 c

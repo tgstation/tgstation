@@ -15,8 +15,8 @@
 	var/list/turfs_that_boost_us
 	/// A list of all shields surrounding us while drawing certain runes (Nar'sie).
 	var/list/obj/structure/emergency_shield/cult/narsie/shields
-	/// An item action associated with our parent, to quick-draw runes.
-	var/datum/action/item_action/linked_action
+	/// Weakref to an action added to our parent item that allows for quick drawing runes
+	var/datum/weakref/linked_action_ref
 
 /datum/component/cult_ritual_item/Initialize(
 	examine_message,
@@ -35,34 +35,35 @@
 		src.turfs_that_boost_us = list(turfs_that_boost_us)
 
 	if(ispath(action))
-		linked_action = new action(parent)
+		var/obj/item/item_parent = parent
+		var/datum/action/added_action = item_parent.add_item_action(action)
+		linked_action_ref = WEAKREF(added_action)
 
-/datum/component/cult_ritual_item/Destroy(force, silent)
+/datum/component/cult_ritual_item/Destroy(force)
 	cleanup_shields()
-	if(linked_action)
-		QDEL_NULL(linked_action)
+	QDEL_NULL(linked_action_ref)
 	return ..()
 
 /datum/component/cult_ritual_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_scribe_rune)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_purge_holywater)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/try_hit_object)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_clear_rune)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(try_scribe_rune))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_purge_holywater))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_hit_object))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_clear_rune))
 
 	if(examine_message)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/cult_ritual_item/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_ITEM_ATTACK,
-		COMSIG_ITEM_ATTACK_OBJ,
+		COMSIG_ITEM_ATTACK_ATOM,
 		COMSIG_ITEM_ATTACK_EFFECT,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		))
 
 /*
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  * Gives the examiner, if they're a cultist, our set examine message.
  * Usually, this will include various instructions on how to use the thing.
  */
@@ -91,7 +92,7 @@
 		to_chat(user, span_warning("You are already drawing a rune."))
 		return
 
-	INVOKE_ASYNC(src, .proc/start_scribe_rune, source, user)
+	INVOKE_ASYNC(src, PROC_REF(start_scribe_rune), source, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -111,10 +112,10 @@
 	if(!target.has_reagent(/datum/reagent/water/holywater))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_purge_holywater, target, user)
+	INVOKE_ASYNC(src, PROC_REF(do_purge_holywater), target, user)
 
 /*
- * Signal proc for [COMSIG_ITEM_ATTACK_OBJ].
+ * Signal proc for [COMSIG_ITEM_ATTACK_ATOM].
  * Allows the ritual items to unanchor cult buildings or destroy rune girders.
  */
 /datum/component/cult_ritual_item/proc/try_hit_object(datum/source, obj/structure/target, mob/cultist)
@@ -124,11 +125,11 @@
 		return
 
 	if(istype(target, /obj/structure/girder/cult))
-		INVOKE_ASYNC(src, .proc/do_destroy_girder, target, cultist)
+		INVOKE_ASYNC(src, PROC_REF(do_destroy_girder), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 	if(istype(target, /obj/structure/destructible/cult))
-		INVOKE_ASYNC(src, .proc/do_unanchor_structure, target, cultist)
+		INVOKE_ASYNC(src, PROC_REF(do_unanchor_structure), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 /*
@@ -142,7 +143,7 @@
 		return
 
 	if(istype(target, /obj/effect/rune))
-		INVOKE_ASYNC(src, .proc/do_scrape_rune, target, cultist)
+		INVOKE_ASYNC(src, PROC_REF(do_scrape_rune), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 
@@ -160,7 +161,7 @@
 	// For carbonss we also want to clear out the stomach of any holywater
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		var/obj/item/organ/stomach/belly = carbon_target.getorganslot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/internal/stomach/belly = carbon_target.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(belly)
 			holy_to_unholy += belly.reagents.get_reagent_amount(/datum/reagent/water/holywater)
 			belly.reagents.del_reagent(/datum/reagent/water/holywater)
@@ -217,14 +218,14 @@
 		return
 
 	if(rune.log_when_erased)
-		log_game("[rune.cultist_name] rune erased by [key_name(cultist)] with [parent].")
+		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
 	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))
 	qdel(rune)
 
 /*
- * Wraps the entire act of [proc/do_scribe_rune] to ensure it properly enables or disables [var/drawing_a_rune].
+ * Wraps the entire act of [/proc/do_scribe_rune] to ensure it properly enables or disables [var/drawing_a_rune].)
  *
  * tool - the parent, source of the signal - the item inscribing the rune, casted to item.
  * cultist - the mob scribing the rune
@@ -303,18 +304,29 @@
 		)
 
 	if(cultist.blood_volume)
-		cultist.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
+		cultist.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(GLOB.arm_zones), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
 
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
 	if(!initial(rune_to_scribe.no_scribe_boost) && (our_turf.type in turfs_that_boost_us))
 		scribe_mod *= 0.5
 
+	var/scribe_started = initial(rune_to_scribe.started_creating)
+	var/scribe_failed = initial(rune_to_scribe.failed_to_create)
+	if(scribe_started)
+		var/datum/callback/startup = CALLBACK(GLOBAL_PROC, scribe_started)
+		startup.Invoke()
+	var/datum/callback/failed
+	if(scribe_failed)
+		failed = CALLBACK(GLOBAL_PROC, scribe_failed)
+
 	SEND_SOUND(cultist, sound('sound/weapons/slice.ogg', 0, 1, 10))
 	if(!do_after(cultist, scribe_mod, target = get_turf(cultist), timed_action_flags = IGNORE_SLOWDOWNS))
 		cleanup_shields()
+		failed?.Invoke()
 		return FALSE
 	if(!can_scribe_rune(tool, cultist))
 		cleanup_shields()
+		failed?.Invoke()
 		return FALSE
 
 	cultist.visible_message(
@@ -327,7 +339,7 @@
 	made_rune.add_mob_blood(cultist)
 
 	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
-	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune at [AREACOORD(made_rune)] using [parent] ([parent.type])", LOG_GAME)
+	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE
@@ -355,9 +367,22 @@
 		return
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
-	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [get_area(cultist)] from an unknown dimension. Disrupt the ritual at all costs!", "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
+	var/area/summon_location = get_area(cultist)
+	priority_announce(
+		text = "Figments from an eldritch god are being summoned by [cultist.real_name] into [summon_location.get_original_area_name()] from an unknown dimension. Disrupt the ritual at all costs!",
+		sound = 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg',
+		sender_override = "[command_name()] Higher Dimensional Affairs",
+		has_important_message = TRUE,
+	)
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
+
+	notify_ghosts(
+		"[cultist] has begun scribing a Nar'Sie rune!",
+		source = cultist,
+		header = "Maranax Infirmux!",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
 
 	return TRUE
 

@@ -273,11 +273,11 @@ rough example of the "cone" made by the 3 dirs checked
 	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
-	if(matches.len==0)
+	if(matches.len == 0)
 		return
 
 	var/chosen
-	if(matches.len==1)
+	if(matches.len == 1)
 		chosen = matches[1]
 	else if(random)
 		chosen = pick(matches) || null
@@ -314,16 +314,14 @@ rough example of the "cone" made by the 3 dirs checked
 /proc/pass(...)
 	return
 
-///Returns a list of the parents of all storage components that contain the target item
-/proc/get_storage_locs(obj/item/target)
-	. = list()
-	if(!istype(target) || !(target.item_flags & IN_STORAGE))
-		return
-	var/datum/component/storage/concrete/storage_datum = target.loc.GetComponent(/datum/component/storage/concrete)
-	if(!storage_datum)
-		return
-	. += storage_datum.parent
-	for(var/datum/component/storage/slave as anything in storage_datum.slaves)
-		if(!isatom(slave.parent))
-			continue
-		. += slave.parent
+/// Returns an x and y value require to reverse the transformations made to center an oversized icon
+/atom/proc/get_oversized_icon_offsets()
+	if (pixel_x == 0 && pixel_y == 0)
+		return list("x" = 0, "y" = 0)
+	var/list/icon_dimensions = get_icon_dimensions(icon)
+	var/icon_width = icon_dimensions["width"]
+	var/icon_height = icon_dimensions["height"]
+	return list(
+		"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
+		"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
+	)

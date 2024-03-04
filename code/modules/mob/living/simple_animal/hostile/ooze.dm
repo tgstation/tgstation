@@ -14,7 +14,7 @@
 	hud_type = /datum/hud/ooze
 	minbodytemp = 250
 	maxbodytemp = INFINITY
-	faction = list("slime")
+	faction = list(FACTION_SLIME)
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	health = 200
@@ -39,6 +39,9 @@
 	create_reagents(300)
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/content_barfer)
+
+	grant_actions_by_list(get_innate_actions())
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!eat_atom(I, TRUE))
@@ -49,7 +52,7 @@
 		return ..()
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 
 	if(!mind && stat != DEAD)//no mind no change
@@ -60,15 +63,19 @@
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
 		var/datum/reagent/reagent = i
-		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * delta_time)
+		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * seconds_per_tick)
 		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = reagent
-			nutrition_change += consumption_amount * consumable.nutriment_factor
+			nutrition_change += consumption_amount * consumable.get_nutriment_factor(src)
 		reagents.remove_reagent(reagent.type, consumption_amount)
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
-		adjustBruteLoss(0.25 * delta_time)
+		adjustBruteLoss(0.25 * seconds_per_tick)
+
+/// Returns an applicable list of actions to grant to the mob. Will return a list or null.
+/mob/living/simple_animal/hostile/ooze/proc/get_innate_actions()
+	return null
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)
@@ -77,6 +84,8 @@
 
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eat_target, silent)
+	if(isnull(eat_target))
+		return
 	if(SEND_SIGNAL(eat_target, COMSIG_OOZE_EAT_ATOM, src, edible_food_types) & COMPONENT_ATOM_EATEN)
 		return
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything
@@ -97,29 +106,26 @@
 	name = "Gelatinous Cube"
 	desc = "A cubic ooze native to Sholus VII.\nSince the advent of space travel this species has established itself in the waste treatment facilities of several space colonies.\nIt is often considered to be the third most infamous invasive species due to its highly aggressive and predatory nature."
 	speed = 1
-	damage_coeff = list(BRUTE = 1, BURN = 0.6, TOX = 0.5, CLONE = 1.5, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 0.6, TOX = 0.5, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	armour_penetration = 15
 	obj_damage = 20
-	deathmessage = "collapses into a pile of goo!"
-	///The ability to give yourself a metabolic speed boost which raises heat
-	var/datum/action/cooldown/metabolicboost/boost
+	death_message = "collapses into a pile of goo!"
 	///The ability to consume mobs
 	var/datum/action/consume/consume
 
 ///Initializes the mobs abilities and gives them to the mob
 /mob/living/simple_animal/hostile/ooze/gelatinous/Initialize(mapload)
 	. = ..()
-	boost = new
-	boost.Grant(src)
 	consume = new
 	consume.Grant(src)
 
-/mob/living/simple_animal/hostile/ooze/gelatinous/Destroy()
-	. = ..()
-	QDEL_NULL(boost)
-	QDEL_NULL(consume)
+/mob/living/simple_animal/hostile/ooze/gelatinous/get_innate_actions()
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/metabolicboost,
+	)
+	return innate_actions
 
 ///If this mob gets resisted by something, its trying to escape consumption.
 /mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
@@ -136,7 +142,8 @@
 	name = "Metabolic boost"
 	desc = "Gain a temporary speed boost. Costs 10 nutrition and slowly raises your temperature"
 	background_icon_state = "bg_hive"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	overlay_icon_state = "bg_hive_border"
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "metabolic_boost"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 24 SECONDS
@@ -145,7 +152,7 @@
 
 
 ///Mob needs to have enough nutrition
-/datum/action/cooldown/metabolicboost/IsAvailable()
+/datum/action/cooldown/metabolicboost/IsAvailable(feedback = FALSE)
 	. = ..()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	if(!.)
@@ -165,8 +172,8 @@
 /datum/action/cooldown/metabolicboost/proc/trigger_boost()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
-	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
-	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
+	var/timerid = addtimer(CALLBACK(src, PROC_REF(HeatUp)), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
+	addtimer(CALLBACK(src, PROC_REF(FinishSpeedup), timerid), 6 SECONDS)
 	to_chat(ooze, span_notice("You start feel a lot quicker."))
 	active = TRUE
 	ooze.adjust_ooze_nutrition(-10)
@@ -191,21 +198,17 @@
 	name = "Consume"
 	desc = "Consume a mob that you are dragging to gain nutrition from them"
 	background_icon_state = "bg_hive"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	overlay_icon_state = "bg_hive_border"
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_owner_death)
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/handle_mob_deletion)
-
-/datum/action/consume/proc/handle_mob_deletion()
-	SIGNAL_HANDLER
-	stop_consuming() //Shit out the vored mob before u go go
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(stop_consuming))
 
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger(trigger_flags)
@@ -233,35 +236,37 @@
 /datum/action/consume/proc/start_consuming(mob/living/target)
 	vored_mob = target
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
-	RegisterSignal(vored_mob, COMSIG_PARENT_QDELETING, .proc/handle_mob_deletion)
+	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
 
 ///Stop consuming the mob; dump them on the floor
 /datum/action/consume/proc/stop_consuming()
+	SIGNAL_HANDLER
 	STOP_PROCESSING(SSprocessing, src)
+	if (isnull(vored_mob))
+		return
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
-	UnregisterSignal(vored_mob, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(vored_mob, COMSIG_QDELETING)
 	vored_mob = null
 
-///Gain health for the consumption and dump some clone loss on the target.
+///Gain health for the consumption and dump some brute loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	vored_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
-	///Dump em at 200 cloneloss.
+	///Dump em at 200 bruteloss.
 	if(vored_mob.getBruteLoss() >= 200)
 		stop_consuming()
 
-///On owner death dump the current vored mob
-/datum/action/consume/proc/on_owner_death()
-	SIGNAL_HANDLER
+/datum/action/consume/Remove(mob/remove_from)
 	stop_consuming()
+	return ..()
 
 
 ///* Gelatinious Grapes code below *\\\\
@@ -276,91 +281,94 @@
 	speed = 1
 	health = 200
 	maxHealth = 200
-	damage_coeff = list(BRUTE = 1, BURN = 0.8, TOX = 0.5, CLONE = 1.5, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 0.8, TOX = 0.5, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	obj_damage = 15
-	deathmessage = "deflates and spills its vital juices!"
+	death_message = "deflates and spills its vital juices!"
 	edible_food_types = MEAT | VEGETABLES
-	///The ability lets you envelop a carbon in a healing cocoon. Useful for saving critical carbons.
-	var/datum/action/cooldown/gel_cocoon/gel_cocoon
-	///The ability to shoot a mending globule, a sticky projectile that heals over time.
-	var/obj/effect/proc_holder/globules/globules
 
-/mob/living/simple_animal/hostile/ooze/grapes/Initialize(mapload)
-	. = ..()
-	globules = new
-	AddAbility(globules)
-	gel_cocoon = new
-	gel_cocoon.Grant(src)
-
-/mob/living/simple_animal/hostile/ooze/grapes/Destroy()
-	. = ..()
-	QDEL_NULL(gel_cocoon)
-	QDEL_NULL(globules)
+/mob/living/simple_animal/hostile/ooze/grapes/get_innate_actions()
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/globules,
+		/datum/action/cooldown/gel_cocoon,
+	)
+	return innate_actions
 
 /mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
-/obj/effect/proc_holder/globules
+///Ability that allows the owner to fire healing globules at mobs, targeting specific limbs.
+/datum/action/cooldown/globules
 	name = "Fire Mending globule"
 	desc = "Fires a mending globule at someone, healing a specific limb of theirs."
-	active = FALSE
-	action_icon = 'icons/mob/actions/actions_slime.dmi'
-	action_icon_state = "globules"
-	action_background_icon_state = "bg_hive"
-	var/cooldown = 5 SECONDS
-	var/current_cooldown = 0
+	background_icon_state = "bg_hive"
+	overlay_icon_state = "bg_hive_border"
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "globules"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+	cooldown_time = 5 SECONDS
+	click_to_activate = TRUE
 
-/obj/effect/proc_holder/globules/Click(location, control, params)
+/datum/action/cooldown/globules/set_click_ability(mob/on_who)
 	. = ..()
-	if(!isliving(usr))
-		return TRUE
-	var/mob/living/user = usr
-	fire(user)
-
-/obj/effect/proc_holder/globules/fire(mob/living/carbon/user)
-	var/message
-	if(current_cooldown > world.time)
-		to_chat(user, span_notice("This ability is still on cooldown."))
+	if(!.)
 		return
-	if(active)
-		message = span_notice("You stop preparing your mending globules.")
-		remove_ranged_ability(message)
-	else
-		message = span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>")
-		add_ranged_ability(user, message, TRUE)
 
-/obj/effect/proc_holder/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
+
+/datum/action/cooldown/globules/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
-	if(.)
-		return
-	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/ooze) || ranged_ability_user.stat)
-		remove_ranged_ability()
+	if(!.)
 		return
 
-	var/mob/living/simple_animal/hostile/ooze/ooze = ranged_ability_user
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("You stop preparing your mending globules."))
 
-	if(ooze.ooze_nutrition < 5)
-		to_chat(ooze, span_warning("You need at least 5 nutrition to launch a mending globule."))
-		remove_ranged_ability()
-		return
+/datum/action/cooldown/globules/Activate(atom/target)
+	. = ..()
+	if(!.)
+		return FALSE
 
-	ooze.visible_message(span_nicegreen("[ooze] launches a mending globule!"), span_notice("You launch a mending globule."))
-	var/modifiers = params2list(params)
-	var/obj/projectile/globule/globule = new (ooze.loc)
-	globule.preparePixelProjectile(target, ooze, modifiers)
-	globule.def_zone = ooze.zone_selected
-	globule.fire()
-	ooze.adjust_ooze_nutrition(-5)
-	remove_ranged_ability()
-	current_cooldown = world.time + cooldown
+	var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
+	if(istype(oozy_owner))
+		if(oozy_owner.ooze_nutrition < 5)
+			to_chat(oozy_owner, span_warning("You need at least 5 nutrition to launch a mending globule."))
+			return FALSE
 
 	return TRUE
 
-/obj/effect/proc_holder/globules/on_lose(mob/living/carbon/user)
-	remove_ranged_ability()
+/datum/action/cooldown/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	// Why is this in InterceptClickOn() and not Activate()?
+	// Well, we need to use the params of the click intercept
+	// for passing into preparePixelProjectile, so we'll handle it here instead.
+	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
+	caller.visible_message(
+		span_nicegreen("[caller] launches a mending globule!"),
+		span_notice("You launch a mending globule."),
+	)
+
+	var/mob/living/simple_animal/hostile/ooze/oozy = caller
+	if(istype(oozy))
+		oozy.adjust_ooze_nutrition(-5)
+
+	var/modifiers = params2list(params)
+	var/obj/projectile/globule/globule = new(caller.loc)
+	globule.preparePixelProjectile(target, caller, modifiers)
+	globule.def_zone = caller.zone_selected
+	globule.fire()
+
+	StartCooldown()
+
+	return TRUE
+
+// Needs to return TRUE otherwise PreActivate() will fail, see above
+/datum/action/cooldown/globules/Activate(atom/target)
+	return TRUE
 
 ///This projectile embeds into mobs and heals them over time.
 /obj/projectile/globule
@@ -368,14 +376,13 @@
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
 	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
-	nodamage = TRUE
 	damage = 0
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules
 /obj/item/mending_globule
 	name = "mending globule"
 	desc = "It somehow heals those who touch it."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
 	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
 	var/obj/item/bodypart/bodypart
@@ -411,9 +418,10 @@
 	name = "Gel Cocoon"
 	desc = "Puts a mob inside of a cocoon, allowing it to slowly heal."
 	background_icon_state = "bg_hive"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	overlay_icon_state = "bg_hive_border"
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "gel_cocoon"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/gel_cocoon/Activate(atom/target)
@@ -435,7 +443,7 @@
 	ooze.adjust_ooze_nutrition(-30)
 
 ///Mob needs to have enough nutrition
-/datum/action/cooldown/gel_cocoon/IsAvailable()
+/datum/action/cooldown/gel_cocoon/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -451,7 +459,7 @@
 /obj/structure/gel_cocoon
 	name = "gel cocoon"
 	desc = "It looks gross, but helpful."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "gel_cocoon"
 	max_integrity = 50
 	var/mob/living/carbon/inhabitant

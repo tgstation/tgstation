@@ -3,7 +3,7 @@
 /obj/structure/tank_dispenser
 	name = "tank dispenser"
 	desc = "A simple yet bulky storage device for gas tanks. Holds up to 10 oxygen tanks and 10 plasma tanks."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "dispenser"
 	density = TRUE
 	anchored = TRUE
@@ -19,10 +19,6 @@
 
 /obj/structure/tank_dispenser/Initialize(mapload)
 	. = ..()
-	for(var/i in 1 to oxygentanks)
-		new /obj/item/tank/internals/oxygen(src)
-	for(var/i in 1 to plasmatanks)
-		new /obj/item/tank/internals/plasma(src)
 	update_appearance()
 
 /obj/structure/tank_dispenser/update_overlays()
@@ -41,7 +37,7 @@
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, params)
 	var/full
@@ -91,26 +87,34 @@
 		return
 	switch(action)
 		if("plasma")
-			var/obj/item/tank/internals/plasma/tank = locate() in src
-			if(tank && Adjacent(usr))
-				usr.put_in_hands(tank)
-				plasmatanks--
-			. = TRUE
+			if (plasmatanks == 0)
+				return TRUE
+
+			dispense(/obj/item/tank/internals/plasma, usr)
+			plasmatanks--
 		if("oxygen")
-			var/obj/item/tank/internals/oxygen/tank = locate() in src
-			if(tank && Adjacent(usr))
-				usr.put_in_hands(tank)
-				oxygentanks--
-			. = TRUE
+			if (oxygentanks == 0)
+				return TRUE
+
+			dispense(/obj/item/tank/internals/oxygen, usr)
+			oxygentanks--
+
 	update_appearance()
+	return TRUE
 
 
 /obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		for(var/X in src)
 			var/obj/item/I = X
 			I.forceMove(loc)
 		new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
+
+/obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
+	var/existing_tank = locate(tank_type) in src
+	if (isnull(existing_tank))
+		existing_tank = new tank_type
+	receiver.put_in_hands(existing_tank)
 
 #undef TANK_DISPENSER_CAPACITY

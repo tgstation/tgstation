@@ -10,6 +10,7 @@
 /datum/symptom/hallucigen
 	name = "Hallucigen"
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
+	illness = "Paranoyance"
 	stealth = 1
 	resistance = -4
 	stage_speed = 1
@@ -61,4 +62,4 @@
 					to_chat(M, span_userdanger("[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]"))
 				else
 					to_chat(M, span_notice("[pick(healthy_messages)]"))
-			M.hallucination += (45 * power)
+			M.adjust_hallucinations(90 SECONDS * power)

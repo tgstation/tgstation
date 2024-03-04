@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/faithless : /mob/living/basic/faithless{@OLD}

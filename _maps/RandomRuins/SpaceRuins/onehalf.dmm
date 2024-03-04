@@ -30,7 +30,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/hallway)
 "al" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/self_control{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -113,16 +113,15 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "ay" = (
 /obj/structure/table_frame,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "az" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aA" = (
-/obj/item/roller,
+/obj/item/emergency_bed,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aB" = (
@@ -166,16 +165,6 @@
 "aH" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/ruin/space/has_grav/onehalf/hallway)
-"aI" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/ruin/space/has_grav/onehalf/hallway)
-"aJ" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aK" = (
 /obj/machinery/iv_drip,
@@ -241,14 +230,12 @@
 /area/template_noop)
 "aT" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aU" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -356,36 +343,24 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bf" = (
 /obj/item/stack/sheet/iron,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bg" = (
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
-/area/ruin/space/has_grav/onehalf/hallway)
-"bi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bj" = (
 /obj/structure/disposalpipe/segment{
@@ -399,9 +374,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bm" = (
 /obj/structure/disposalpipe/junction{
@@ -471,17 +445,15 @@
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bx" = (
 /obj/structure/disposalpipe/segment{
@@ -494,9 +466,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bz" = (
 /obj/structure/disposalpipe/segment{
@@ -505,14 +476,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav/onehalf/hallway)
-"bA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bB" = (
 /obj/structure/disposalpipe/segment,
@@ -532,13 +495,6 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/drone_bay)
-"bE" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bF" = (
@@ -572,21 +528,18 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "bL" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bM" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bN" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bO" = (
 /obj/structure/disposalpipe/trunk{
@@ -607,11 +560,6 @@
 "bR" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/onehalf/hallway)
-"bS" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
-/area/ruin/space/has_grav/onehalf/hallway)
 "bT" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/airless,
@@ -624,16 +572,14 @@
 /turf/template_noop,
 /area/template_noop)
 "bW" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bX" = (
 /obj/structure/disposalpipe/segment,
 /obj/item/stack/rods,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bY" = (
 /obj/structure/grille,
@@ -662,11 +608,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
-"cd" = (
-/obj/machinery/light/directional/north,
-/obj/structure/frame/computer,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
 "ce" = (
 /obj/structure/frame/computer,
 /turf/open/floor/iron,
@@ -679,6 +620,7 @@
 "cg" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/entertainment/money_large,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
@@ -686,9 +628,8 @@
 	dir = 1
 	},
 /obj/item/shard,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "ci" = (
 /obj/structure/lattice,
@@ -781,9 +722,8 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cu" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cv" = (
 /obj/structure/girder/reinforced,
@@ -849,8 +789,8 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/head/helmet/space/eva,
 /obj/item/clothing/suit/space/eva,
-/obj/item/reagent_containers/food/drinks/bottle/rum,
-/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/cup/glass/bottle/rum,
+/obj/item/reagent_containers/cup/glass/bottle/rum,
 /obj/item/folder/syndicate/mining,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -866,13 +806,7 @@
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
-"cL" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/ruin/space/has_grav/onehalf/hallway)
 "cM" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -880,11 +814,6 @@
 /obj/item/stack/sheet/plasteel,
 /turf/template_noop,
 /area/template_noop)
-"cP" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
-/area/ruin/space/has_grav/onehalf/hallway)
 "cQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -916,6 +845,7 @@
 /obj/structure/table/reinforced,
 /obj/item/gps/spaceruin,
 /obj/item/flashlight,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cZ" = (
@@ -930,23 +860,20 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "db" = (
-/obj/machinery/light/directional/south,
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
 /obj/structure/grille/broken,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "dd" = (
 /obj/structure/grille,
 /obj/item/shard,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "dh" = (
 /obj/item/stack/sheet/plasteel,
@@ -989,6 +916,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/dorms_med)
+"Id" = (
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/drone_bay)
 "KC" = (
 /obj/structure/frame/computer,
 /obj/structure/cable,
@@ -1049,7 +983,7 @@ aa
 ae
 ak
 ax
-aI
+bW
 ax
 bg
 bw
@@ -1093,9 +1027,9 @@ ab
 ab
 ak
 az
-aJ
 aU
-bi
+aU
+bh
 bx
 bL
 bK
@@ -1183,7 +1117,7 @@ an
 aB
 aM
 ag
-bi
+bh
 bx
 bP
 aj
@@ -1205,7 +1139,7 @@ ag
 ag
 ag
 ag
-bi
+bh
 bx
 bQ
 aw
@@ -1215,7 +1149,7 @@ aa
 aw
 cA
 aa
-cL
+bW
 dh
 aa
 "}
@@ -1250,15 +1184,15 @@ ap
 ap
 aW
 bj
-bA
-bS
+bw
+aU
 bW
 ax
 ct
 cK
 cK
 cK
-aJ
+aU
 dc
 dj
 aa
@@ -1278,9 +1212,9 @@ bX
 ch
 cu
 cD
-cL
-cP
-aJ
+bW
+aU
+aU
 dd
 ad
 aa
@@ -1382,7 +1316,7 @@ ar
 ar
 ba
 bp
-bE
+bp
 bU
 cb
 cm
@@ -1404,7 +1338,7 @@ aF
 aO
 aZ
 bq
-bD
+Id
 bU
 cc
 cn
@@ -1428,7 +1362,7 @@ bb
 bp
 bp
 bU
-cd
+ce
 co
 cn
 ms
@@ -1470,7 +1404,7 @@ ar
 ar
 bc
 bp
-bE
+bp
 bU
 cf
 Vh

@@ -1,5 +1,7 @@
 /**
- * Run when a client is put in this mob or reconnets to byond and their client was on this mob
+ * Run when a client is put in this mob or reconnets to byond and their client was on this mob.
+ * Anything that sleeps can result in the client reference being dropped, due to byond using that sleep to handle a client disconnect.
+ * You can save a lot of headache if you make Login use SHOULD_NOT_SLEEP, but that would require quite a bit of refactoring how Login code works.
  *
  * Things it does:
  * * Adds player to player_list
@@ -27,20 +29,26 @@
 /mob/Login()
 	if(!client)
 		return FALSE
+
 	canon_client = client
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
-	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	log_access("Mob Login: [key_name(src)] was assigned to a [type] ([tag])")
 	world.update_status()
-	client.screen = list() //remove hud items just in case
+	client.clear_screen() //remove hud items just in case
 	client.images = list()
 	client.set_right_click_menu_mode(shift_to_open_context_menu)
 
 	if(!hud_used)
-		create_mob_hud()
+		create_mob_hud() // creating a hud will add it to the client's screen, which can process a disconnect
+		if(!client)
+			return FALSE
+
 	if(hud_used)
-		hud_used.show_hud(hud_used.hud_version)
+		hud_used.show_hud(hud_used.hud_version) // see above, this can process a disconnect
+		if(!client)
+			return FALSE
 		hud_used.update_ui_style(ui_style2icon(client.prefs?.read_preference(/datum/preference/choiced/ui_style)))
 
 	next_move = 1
@@ -91,6 +99,8 @@
 
 	update_client_colour()
 	update_mouse_pointer()
+	refresh_looping_ambience()
+
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
@@ -104,12 +114,19 @@
 		for(var/foo in client.player_details.post_login_callbacks)
 			var/datum/callback/CB = foo
 			CB.Invoke()
-		log_played_names(client.ckey,name,real_name)
+		log_played_names(
+			client.ckey,
+			list(
+				"[name]" = tag,
+				"[real_name]" = tag,
+			),
+		)
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
-	log_mob_tag("\[[tag]\] NEW OWNER: [key_name(src)]")
+	log_mob_tag("TAG: [tag] NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+	SEND_SIGNAL(client, COMSIG_CLIENT_MOB_LOGIN, src)
 	client.init_verbs()
 
 	AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)

@@ -84,7 +84,7 @@ class DMM:
             self.grid[k] = bad_keys.get(v, v)
 
     def remove_unused_keys(self, modified_keys = None):
-        unused_keys = modified_keys if modified_keys is not None else self.dictionary.keys()
+        unused_keys = list(set(modified_keys)) if modified_keys is not None else self.dictionary.keys()
         for key in self.grid.values():
             if key in unused_keys:
                 unused_keys.remove(key)
@@ -95,7 +95,7 @@ class DMM:
         # last-second handling of bogus keys to help prevent and fix broken maps
         self._ensure_free_keys(0)
         max_key = max_key_for(self.key_length)
-        bad_keys = {key: 0 for key in self.dictionary.keys() if key > max_key}
+        bad_keys = {key: 0 for key in self.dictionary.keys() if key >= max_key}
         if bad_keys:
             print(f"Warning: fixing {len(bad_keys)} overflowing keys")
             for k in bad_keys:

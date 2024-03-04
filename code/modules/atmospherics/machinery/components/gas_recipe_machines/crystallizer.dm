@@ -4,21 +4,19 @@
 #define HIGH_CONDUCTIVITY_RATIO 0.95
 
 /obj/machinery/atmospherics/components/binary/crystallizer
-	icon = 'icons/obj/atmospherics/components/machines.dmi'
+	icon = 'icons/obj/machines/atmospherics/machines.dmi'
 	icon_state = "crystallizer-off"
+	base_icon_state = "crystallizer"
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/binary_crystallizer
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = NONE
 
-	///Base icon state for the machine to be used in update_icon()
-	var/base_icon = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
 	///Var that controls how much gas gets injected in moles per tick
@@ -32,59 +30,51 @@
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
+/datum/armor/binary_crystallizer
+	energy = 100
+	fire = 80
+	acid = 30
+
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()
 	internal = new
+	register_context()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction(disassembled)
+	var/turf/local_turf = get_turf(loc)
+	if(internal.total_moles())
+		local_turf.assume_air(internal)
+	return ..()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon]-open", "[base_icon]-off", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
-	if(default_deconstruction_crowbar(I))
-		return
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return FALSE
-	set_init_directions()
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	var/obj/machinery/atmospherics/node2 = nodes[2]
-	if(node1)
-		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node1.disconnect(src)
-		nodes[1] = null
-	if(node2)
-		if(src in node2.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node2.disconnect(src)
-		nodes[2] = null
-
-	if(parents[1])
-		nullify_pipenet(parents[1])
-	if(parents[2])
-		nullify_pipenet(parents[2])
-
-	atmos_init()
-	node1 = nodes[1]
-	if(node1)
-		node1.atmos_init()
-		node1.add_member(src)
-	node2 = nodes[2]
-	if(node2)
-		node2.atmos_init()
-		node2.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-	return TRUE
+/obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
+	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
 	cut_overlays()
-	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance1.color = COLOR_LIME
-	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[turn(dir, 180)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[REVERSE_DIR(dir)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance2.color = COLOR_MOSTLY_PURE_RED
 	. += pipe_appearance1
 	. += pipe_appearance2
@@ -92,18 +82,23 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/update_icon_state()
 	. = ..()
 	if(panel_open)
-		icon_state = "[base_icon]-open"
+		icon_state = "[base_icon_state]-open"
 	else if(on && is_operational)
-		icon_state = "[base_icon]-on"
+		icon_state = "[base_icon_state]-on"
 	else
-		icon_state = "[base_icon]-off"
+		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(mob/user)
+/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
 	if(!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return
 	on = !on
+	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
+	return ..()
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
@@ -233,8 +228,8 @@
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] [creation.name]"
 			if(selected_recipe.dangerous)
-				investigate_log("has been created in the crystallizer.", INVESTIGATE_ENGINE)
-				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
+				investigate_log("[creation.name] has been created in the crystallizer.", INVESTIGATE_ENGINE)
+				message_admins("[creation.name] has been created in the crystallizer [ADMIN_JMP(src)].")
 
 
 	quality_loss = 0
@@ -270,12 +265,14 @@
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
 			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
+			"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
 			"amount" = round(internal.gases[gasid][MOLES], 0.01),
 			)))
 	else
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
 				"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
+				"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
 				"amount" = 0,
 				)))
 	data["internal_gas_data"] = internal_gas_data

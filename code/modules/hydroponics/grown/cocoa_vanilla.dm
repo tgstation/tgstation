@@ -12,7 +12,7 @@
 	yield = 2
 	instability = 20
 	growthstages = 5
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "cocoapod-grow"
 	icon_dead = "cocoapod-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -55,6 +55,7 @@
 	name = "pack of bungo tree seeds"
 	desc = "These seeds grow into bungo trees. They appear to be heavy and almost perfectly spherical."
 	icon_state = "seed-bungotree"
+	plant_icon_offset = 4
 	species = "bungotree"
 	plantname = "Bungo Tree"
 	product = /obj/item/food/grown/bungofruit
@@ -66,7 +67,7 @@
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "bungotree-grow"
 	icon_dead = "bungotree-dead"
 	rarity = 15
@@ -79,7 +80,7 @@
 	bite_consumption_mod = 2
 	trash_type = /obj/item/food/grown/bungopit
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
+	juice_typepath = /datum/reagent/consumable/bungojuice
 	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
 	distill_reagent = null
 

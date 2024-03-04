@@ -1,13 +1,13 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot. He looks less than thrilled."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
@@ -15,10 +15,20 @@
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
+	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
 	path_image_color = "#FF0000"
+	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
+
+	automated_announcements = list(
+		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/voice/beepsky/criminal.ogg',
+		BEEPSKY_VOICED_FREEZE = 'sound/voice/beepsky/freeze.ogg',
+		BEEPSKY_VOICED_JUSTICE = 'sound/voice/beepsky/justice.ogg',
+		BEEPSKY_VOICED_YOUR_MOVE = 'sound/voice/beepsky/creep.ogg',
+		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/voice/beepsky/iamthelaw.ogg',
+		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
+	)
 
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
@@ -61,10 +71,21 @@
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too."
 	health = 45
 
+/mob/living/simple_animal/bot/secbot/beepsky/officer/Initialize(mapload)
+	. = ..()
+	// Beepsky hates people scanning them
+	RegisterSignal(src, COMSIG_MOVABLE_SPY_STEALING, PROC_REF(retaliate_async))
+
+/mob/living/simple_animal/bot/secbot/beepsky/ofitser
+	name = "Prison Ofitser"
+	desc = "Powered by the tears and sweat of laborers."
+	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
+
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
+	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
-	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
+	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
@@ -74,28 +95,27 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize(mapload)
 	. = ..()
-	resize = 0.8
-	update_transform()
+	update_transform(0.8)
 
 /mob/living/simple_animal/bot/secbot/pingsky
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
-	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
+	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/genesky
 	name = "Officer Genesky"
 	desc = "A beefy variant of the standard securitron model."
 	health = 50
-	faction = list("nanotrasenprivate")
+	faction = list(FACTION_NANOTRASEN_PRIVATE)
 	bot_mode_flags = BOT_MODE_ON
 	bot_cover_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
 	new /obj/item/stock_parts/cell/potato(Tsec)
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/drinking_oil = new(Tsec)
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	return ..()
 
@@ -110,9 +130,10 @@
 	prev_access = access_card.access.Copy()
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddComponent(/datum/component/security_vision, judgement_criteria = NONE, update_judgement_criteria = CALLBACK(src, PROC_REF(judgement_criteria)))
 
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
@@ -143,6 +164,12 @@
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
+/mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == weapon)
+		weapon = null
+		update_appearance()
+
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
@@ -172,20 +199,26 @@
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
 
+/mob/living/simple_animal/bot/secbot/proc/retaliate_async(datum/source, mob/user, ...)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(retaliate), user)
+
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()
-	threatlevel = attacking_human.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+	threatlevel = attacking_human.assess_threat(judgement_criteria)
 	threatlevel += 6
-	if(threatlevel >= 4)
+	if(threatlevel >= THREAT_ASSESS_DANGEROUS)
 		target = attacking_human
 		mode = BOT_HUNT
+	if(threatlevel < 0 && prob(5))
+		manual_emote("salutes.")
+		speak("Thank you sir.")
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
 	var/final = FALSE
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		final |= JUDGE_EMAGGED
-	if(bot_type == ADVANCED_SEC_BOT)
-		final |= JUDGE_IGNOREMONKEYS
 	if(security_mode_flags & SECBOT_CHECK_IDS)
 		final |= JUDGE_IDCHECK
 	if(security_mode_flags & SECBOT_CHECK_RECORDS)
@@ -224,12 +257,12 @@
 		retaliate(user)
 		special_retaliate_after_attack(user)
 
-/mob/living/simple_animal/bot/secbot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/secbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
-		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
+		balloon_alert(user, "target assessment circuits shorted")
 		oldtarget_name = user.name
 
 	if(bot_type == HONK_BOT)
@@ -240,18 +273,22 @@
 
 	security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
 	update_appearance()
+	return TRUE
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
+	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return
+
 	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
+			if(Proj.is_hostile_projectile() && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	return ..()
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	if(!iscarbon(attack_target))
 		return ..()
@@ -265,7 +302,7 @@
 		start_handcuffing(attack_target)
 
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(hitting_atom, /obj/item))
+	if(isitem(hitting_atom))
 		var/obj/item/item_hitby = hitting_atom
 		var/mob/thrown_by = item_hitby.thrownby?.resolve()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
@@ -278,7 +315,7 @@
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
-	addtimer(CALLBACK(src, .proc/handcuff_target, current_target), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
 	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
@@ -297,29 +334,29 @@
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5
 
 	if(harm)
 		weapon.attack(current_target, src)
 	if(ishuman(current_target))
-		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+		current_target.set_stutter(10 SECONDS)
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
-		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+		threat = human_target.assess_threat(judgement_criteria)
 	else
 		current_target.Paralyze(100)
-		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
-		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+		current_target.set_stutter(10 SECONDS)
+		threat = current_target.assess_threat(judgement_criteria)
 
-	log_combat(src, target, "stunned")
+	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
-	target_lastloc = target.loc
+	target_lastloc = current_target.loc
 	mode = BOT_PREP_ARREST
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
@@ -415,13 +452,13 @@
 	target = null
 	last_found = world.time
 	frustration = 0
-	INVOKE_ASYNC(src, .proc/handle_automated_action)
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 
 /mob/living/simple_animal/bot/secbot/proc/back_to_hunt()
 	set_anchored(FALSE)
 	frustration = 0
 	mode = BOT_HUNT
-	INVOKE_ASYNC(src, .proc/handle_automated_action)
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 // look for a criminal in view of the bot
 
 /mob/living/simple_animal/bot/secbot/proc/look_for_perp()
@@ -434,34 +471,23 @@
 		if((nearby_carbons.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = nearby_carbons.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+		threatlevel = nearby_carbons.assess_threat(judgement_criteria)
 
-		if(!threatlevel)
+		if(threatlevel < THREAT_ASSESS_DANGEROUS)
 			continue
 
-		if(threatlevel >= 4)
-			target = nearby_carbons
-			oldtarget_name = nearby_carbons.name
-			switch(bot_type)
-				if(ADVANCED_SEC_BOT)
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
-				if(HONK_BOT)
-					speak("Honk!")
-					playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
-				else
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+		target = nearby_carbons
+		oldtarget_name = nearby_carbons.name
+		threat_react(threatlevel)
+		visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
+		mode = BOT_HUNT
+		INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
+		break
 
-			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
-			mode = BOT_HUNT
-			INVOKE_ASYNC(src, .proc/handle_automated_action)
-			break
-
-/mob/living/simple_animal/bot/secbot/proc/check_for_weapons(obj/item/slot_item)
-	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
-		return TRUE
-	return FALSE
+/// React to detecting criminal scum by making some kind of noise
+/mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
+	speak("Level [threatlevel] infraction alert!")
+	playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()
@@ -476,9 +502,9 @@
 			disabler_gun.cell.charge = 0
 			disabler_gun.update_appearance()
 			if(prob(50))
-				new /obj/item/bodypart/l_leg/robot(Tsec)
+				new /obj/item/bodypart/leg/left/robot(Tsec)
 				if(prob(25))
-					new /obj/item/bodypart/r_leg/robot(Tsec)
+					new /obj/item/bodypart/leg/right/robot(Tsec)
 			if(prob(25))//50% chance for a helmet OR vest
 				if(prob(50))
 					new /obj/item/clothing/head/helmet(Tsec)
@@ -502,7 +528,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	..()
+	. = ..()
 	if(!isalien(target))
 		target = user
 		mode = BOT_HUNT

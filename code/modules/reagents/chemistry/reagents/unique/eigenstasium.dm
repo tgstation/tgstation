@@ -19,10 +19,8 @@
 	ph = 3.7
 	purity = 0.5
 	creation_purity = 0.5
-	impure_chem = /datum/reagent/impurity/eigenswap
-	inverse_chem = null
-	inverse_chem_val = 0
-	failed_chem = /datum/reagent/bluespace //crashes out
+	inverse_chem = /datum/reagent/inverse/eigenswap
+	inverse_chem_val = 0.1
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
 	data = list("location_created" = null, "ingested" = FALSE)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
@@ -45,7 +43,7 @@
 	//This looks rediculous, but expose is usually called from the donor reagents datum - we want to edit the post exposure version present in the mob.
 	var/mob/living/carbon/carby = living_mob
 	//But because carbon mobs have stomachs we have to search in there because we're ingested
-	var/obj/item/organ/stomach/stomach = carby.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/stomach = carby.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/datum/reagent/eigenstate/eigen
 	if(stomach)
 		eigen = stomach.reagents.has_reagent(/datum/reagent/eigenstate)
@@ -79,23 +77,23 @@
 	return ..()
 
 /datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
+	. = ..()
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
 
-	return ..()
-
 /datum/reagent/eigenstate/on_mob_delete(mob/living/living_mob) //returns back to original location
+	. = ..()
 	do_sparks(5,FALSE,living_mob)
 	to_chat(living_mob, span_userdanger("You feel strangely whole again."))
 	if(!living_mob.reagents.has_reagent(/datum/reagent/stabilizing_agent))
 		do_teleport(living_mob, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 		do_sparks(5,FALSE,living_mob)
 	qdel(eigenstate)
-	return ..()
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
+	. = ..()
 	to_chat(living_mob, span_userdanger("You feel like your perspective is being ripped apart as you begin flitting in and out of reality!"))
-	living_mob.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	living_mob.set_jitter_if_lower(40 SECONDS)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 	if(iscarbon(living_mob))
 		var/mob/living/carbon/carbon_mob = living_mob
@@ -103,10 +101,10 @@
 	return ..()
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly
+	. = ..()
 	do_sparks(5, FALSE, living_mob)
 	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5, FALSE, living_mob)
-	return ..()
 
 //FOR ADDICTION-LIKE EFFECTS, SEE datum/status_effect/eigenstasium
 

@@ -27,9 +27,8 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "F" = (
 /obj/structure/disposalpipe/segment,
@@ -52,11 +51,6 @@
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/ruin/space/djstation)
-"O" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "P" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{
@@ -95,7 +89,7 @@ e
 e
 e
 e
-O
+e
 j
 e
 a

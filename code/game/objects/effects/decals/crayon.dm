@@ -1,5 +1,3 @@
-GLOBAL_LIST(gang_tags)
-
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
 	desc = "Graffiti. Damn kids."
@@ -8,6 +6,7 @@ GLOBAL_LIST(gang_tags)
 	gender = NEUTER
 	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	mergeable_decal = FALSE
+	flags_1 = ALLOW_DARK_PAINTS_1
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
 	var/paint_colour = "#FFFFFF"
@@ -30,20 +29,15 @@ GLOBAL_LIST(gang_tags)
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
-/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
-	return isgroundlessturf(T)
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 
-/obj/effect/decal/cleanable/crayon/gang
-	name = "Leet Like Jeff K gang tag"
-	desc = "Looks like someone's claimed this area for Leet Like Jeff K."
-	icon = 'icons/obj/gang/tags.dmi'
-	layer = BELOW_MOB_LAYER
-	var/datum/team/gang/my_gang
+/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf)
 
-/obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
-	. = ..()
-	LAZYADD(GLOB.gang_tags, src)
-
-/obj/effect/decal/cleanable/crayon/gang/Destroy()
-	LAZYREMOVE(GLOB.gang_tags, src)
-	return ..()
+/obj/effect/decal/cleanable/crayon/proc/on_painted(datum/source, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
+	SIGNAL_HANDLER
+	var/cost = spraycan.all_drawables[icon_state] || CRAYON_COST_DEFAULT
+	if (HAS_TRAIT(user, TRAIT_TAGGER))
+		cost *= 0.5
+	spraycan.use_charges(user, cost, requires_full = FALSE)
+	return DONT_USE_SPRAYCAN_CHARGES

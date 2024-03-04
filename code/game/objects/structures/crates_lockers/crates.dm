@@ -1,8 +1,9 @@
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/crates.dmi'
+	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
+	base_icon_state = "crate"
 	req_access = null
 	can_weld_shut = FALSE
 	horizontal = TRUE
@@ -17,17 +18,48 @@
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
-	var/crate_climb_time = 20
+	/// Mobs standing on it are nudged up by this amount.
+	var/elevation = 14
+	/// The same, but when the crate is open
+	var/elevation_open = 14
+	/// The time spent to climb this crate.
+	var/crate_climb_time = 2 SECONDS
+	/// The reference of the manifest paper attached to the cargo crate.
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	/// Where the Icons for lids are located.
+	var/lid_icon = 'icons/obj/storage/crates.dmi'
+	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
+	var/lid_icon_state
+	/// Controls the X value of the lid, allowing left and right pixel movement.
+	var/lid_x = 0
+	/// Controls the Y value of the lid, allowing up and down pixel movement.
+	var/lid_y = 0
 
 /obj/structure/closet/crate/Initialize(mapload)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
+	if(elevation)
+		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
-	if(icon_state == "[initial(icon_state)]open")
-		opened = TRUE
-		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-	else
-		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
-	update_appearance()
+
+	var/static/list/crate_paint_jobs
+	if(isnull(crate_paint_jobs))
+		crate_paint_jobs = list(
+		"Internals" = list("icon_state" = "o2crate"),
+		"Medical" = list("icon_state" = "medical"),
+		"Medical Plus" = list("icon_state" = "medicalcrate"),
+		"Radiation" = list("icon_state" = "radiation"),
+		"Hydrophonics" = list("icon_state" = "hydrocrate"),
+		"Science" = list("icon_state" = "scicrate"),
+		"Robotics" = list("icon_state" = "robo"),
+		"Solar" = list("icon_state" = "engi_e_crate"),
+		"Engineering" = list("icon_state" = "engi_crate"),
+		"Atmospherics" = list("icon_state" = "atmos"),
+		"Cargo" = list("icon_state" = "cargo"),
+		"Mining" = list("icon_state" = "mining"),
+		"Command" = list("icon_state" = "centcom")
+	)
+	if(paint_jobs)
+		paint_jobs = crate_paint_jobs
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -44,19 +76,28 @@
 				return TRUE
 
 /obj/structure/closet/crate/update_icon_state()
-	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
+	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][opened ? "open" : ""]"
 	return ..()
 
 /obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
-	if(broken)
-		. += "securecrateemag"
-	else if(locked)
-		. += "securecrater"
-	else if(secure)
-		. += "securecrateg"
+
+	if(!opened)
+		if(broken)
+			. += "securecrateemag"
+		else if(locked)
+			. += "securecrater"
+		else if(secure)
+			. += "securecrateg"
+
+	if(opened && lid_icon_state)
+		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
+		lid.pixel_x = lid_x
+		lid.pixel_y = lid_y
+		lid.layer = layer
+		. += lid
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -69,22 +110,37 @@
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-
-/obj/structure/closet/crate/after_close(mob/living/user, force)
-	. = ..()
-	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
-
-
-/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(. && !QDELETED(manifest))
-		to_chat(user, span_notice("The manifest is torn off [src]."))
+	if(elevation != elevation_open)
+		if(elevation)
+			RemoveElement(/datum/element/elevation, pixel_shift = elevation)
+		if(elevation_open)
+			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
+	if(!QDELETED(manifest))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_appearance()
 
+/obj/structure/closet/crate/after_close(mob/living/user)
+	. = ..()
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	if(elevation != elevation_open)
+		if(elevation_open)
+			RemoveElement(/datum/element/elevation, pixel_shift = elevation_open)
+		if(elevation)
+			AddElement(/datum/element/elevation, pixel_shift = elevation)
+
+///Spawns two to six maintenance spawners inside the closet
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/random/maintenance(src)
+
+	UnregisterSignal(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+
+///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
@@ -95,10 +151,15 @@
 	manifest = null
 	update_appearance()
 
+/obj/structure/closet/crate/preopen
+	opened = TRUE
+	icon_state = "crateopen"
+
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
+	base_icon_state = "coffin"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
@@ -108,24 +169,36 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
+	paint_jobs = null
+	elevation_open = 0
 
-/obj/structure/closet/crate/maint
+/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
+	desc = "A heavy, metal trashcart with wheels."
+	name = "trash cart"
+	icon_state = "trashcart"
+	base_icon_state = "trashcart"
+	can_install_electronics = FALSE
+	paint_jobs = null
 
-/obj/structure/closet/crate/maint/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_QDEL
-
-/obj/structure/closet/crate/maint/PopulateContents()
-	. = ..()
-	new /obj/effect/spawner/random/structure/crate_empty(loc)
-	for(var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/random/maintenance(src)
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
+	base_icon_state = "laundry"
+	elevation = 14
+	elevation_open = 14
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/closet/crate/trashcart/filled
+
+/obj/structure/closet/crate/trashcart/filled/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		new /obj/effect/spawner/random/trash/grime(loc) //needs to be done before the trashcart is opened because it spawns things in a range outside of the trashcart
 
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
@@ -133,59 +206,48 @@
 		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
 			new /obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/random/trash/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
 	name = "internals crate"
 	icon_state = "o2crate"
-
-/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
-	desc = "A heavy, metal trashcart with wheels."
-	name = "trash cart"
-	icon_state = "trashcart"
-	can_install_electronics = FALSE
-
-/obj/structure/closet/crate/trashcart/Moved()
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
-
-/obj/structure/closet/crate/trashcart/laundry
-	name = "laundry cart"
-	desc = "A large cart for hauling around large amounts of laundry."
-	icon_state = "laundry"
+	base_icon_state = "o2crate"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "medical crate"
 	icon_state = "medicalcrate"
+	base_icon_state = "medicalcrate"
+
+/obj/structure/closet/crate/medical/department
+	icon_state = "medical"
+	base_icon_state = "medical"
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "freezer"
 	icon_state = "freezer"
+	base_icon_state = "freezer"
+	paint_jobs = null
+	sealed = TRUE
+	/// The rate at which the internal air mixture cools
+	var/cooling_rate_per_second = 4
+	/// Minimum temperature of the internal air mixture
+	var/minimum_temperature = T0C - 60
 
-//Snowflake organ freezer code
-//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
-
-/obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
-	recursive_organ_check(src)
-	..()
-
-/obj/structure/closet/crate/freezer/close()
-	..()
-	recursive_organ_check(src)
-
-/obj/structure/closet/crate/freezer/Destroy()
-	recursive_organ_check(src)
-	return ..()
-
-/obj/structure/closet/crate/freezer/Initialize(mapload)
-	. = ..()
-	recursive_organ_check(src)
-
-
+/obj/structure/closet/crate/freezer/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		// The internal air won't cool down the external air when the freezer is opened.
+		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
+		return ..()
+	else
+		if(internal_air.temperature <= minimum_temperature)
+			return
+		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
+		internal_air.temperature -= temperature_decrease_this_tick
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
@@ -211,36 +273,66 @@
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
+
+/obj/structure/closet/crate/freezer/food
+	name = "food icebox"
+	icon_state = "food"
+	base_icon_state = "food"
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
 	icon_state = "radiation"
+	base_icon_state = "radiation"
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
 	icon_state = "hydrocrate"
+	base_icon_state = "hydrocrate"
+
+/obj/structure/closet/crate/centcom
+	name = "centcom crate"
+	icon_state = "centcom"
+	base_icon_state = "centcom"
+
+/obj/structure/closet/crate/cargo
+	name = "cargo crate"
+	icon_state = "cargo"
+	base_icon_state = "cargo"
+
+/obj/structure/closet/crate/cargo/mining
+	name = "mining crate"
+	icon_state = "mining"
+	base_icon_state = "mining"
 
 /obj/structure/closet/crate/engineering
 	name = "engineering crate"
 	icon_state = "engi_crate"
+	base_icon_state = "engi_crate"
 
 /obj/structure/closet/crate/engineering/electrical
 	icon_state = "engi_e_crate"
+	base_icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/engineering/atmos
+	name = "atmospherics crate"
+	icon_state = "atmos"
+	base_icon_state = "atmos"
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
+	base_icon_state = "engi_crate"
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	..()
@@ -252,10 +344,29 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+	base_icon_state = "scicrate"
+
+/obj/structure/closet/crate/science/robo
+	name = "robotics crate"
+	icon_state = "robo"
+	base_icon_state = "robo"
+
+/obj/structure/closet/crate/mod
+	name = "MOD crate"
+	icon_state = "robo"
+	base_icon_state = "robo"
+
+/obj/structure/closet/crate/mod/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/mod/core/standard(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/neck/link_scryer/loaded(src)
 
 /obj/structure/closet/crate/solarpanel_small
 	name = "budget solar panel crate"
 	icon_state = "engi_e_crate"
+	base_icon_state = "engi_e_crate"
 
 /obj/structure/closet/crate/solarpanel_small/PopulateContents()
 	..()
@@ -267,15 +378,23 @@
 
 /obj/structure/closet/crate/goldcrate
 	name = "gold crate"
+	icon_state = "gold"
+	base_icon_state = "gold"
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
+	. = ..()
+
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
-	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"
+	icon_state = "silver"
+	base_icon_state = "silver"
 
 /obj/structure/closet/crate/silvercrate/PopulateContents()
 	..()
@@ -284,8 +403,12 @@
 
 /obj/structure/closet/crate/decorations
 	icon_state = "engi_crate"
+	base_icon_state = "engi_crate"
 
 /obj/structure/closet/crate/decorations/PopulateContents()
 	. = ..()
 	for(var/i in 1 to 4)
 		new /obj/effect/spawner/random/decoration/generic(src)
+
+/obj/structure/closet/crate/add_to_roundstart_list()
+	return

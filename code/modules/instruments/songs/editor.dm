@@ -115,7 +115,7 @@
 		updateDialog(usr) // make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(parent, TRUE, FALSE, FALSE, FALSE))
+	if(!usr.can_perform_action(parent, ALLOW_RESTING))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -130,7 +130,7 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = html_encode(input(usr, "Please paste the entire song, formatted:", name, t) as message)
 			if(!in_range(parent, usr))
 				return
 
@@ -154,7 +154,7 @@
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
 
 	else if(href_list["play"])
-		INVOKE_ASYNC(src, .proc/start_playing, usr)
+		INVOKE_ASYNC(src, PROC_REF(start_playing), usr)
 
 	else if(href_list["newline"])
 		var/newline = tgui_input_text(usr, "Enter your line ", parent.name)

@@ -24,7 +24,7 @@
 	var/respawn_time = 50
 	var/respawn_sound = 'sound/magic/staff_animation.ogg'
 
-/obj/structure/life_candle/ComponentInitialize()
+/obj/structure/life_candle/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
 
@@ -72,7 +72,7 @@
 	for(var/m in linked_minds)
 		var/datum/mind/mind = m
 		if(!mind.current || (mind.current && mind.current.stat == DEAD))
-			addtimer(CALLBACK(src, .proc/respawn, mind), respawn_time, TIMER_UNIQUE)
+			addtimer(CALLBACK(src, PROC_REF(respawn), mind), respawn_time, TIMER_UNIQUE)
 
 /obj/structure/life_candle/proc/respawn(datum/mind/mind)
 	var/turf/T = get_turf(src)
@@ -89,8 +89,7 @@
 		mind.transfer_to(body)
 	else
 		body.forceMove(T)
-		body.revive(full_heal = TRUE, admin_revive = TRUE)
-	mind.grab_ghost(TRUE)
+		body.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 	body.flash_act()
 
 	if(ishuman(body) && istype(outfit))

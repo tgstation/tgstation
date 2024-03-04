@@ -8,3 +8,7 @@
 	var/datum/objective/O = new("Serve [M.real_name].")
 	O.owner = owner
 	objectives |= O
+
+/datum/antagonist/magic_servant/greet()
+	. = ..()
+	owner.announce_objectives()

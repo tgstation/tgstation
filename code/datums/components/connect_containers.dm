@@ -32,13 +32,13 @@
 
 /datum/component/connect_containers/proc/set_tracked(atom/movable/new_tracked)
 	if(tracked)
-		UnregisterSignal(tracked, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(tracked, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		unregister_signals(tracked.loc)
 	tracked = new_tracked
 	if(!tracked)
 		return
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
+	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(tracked, COMSIG_QDELETING, PROC_REF(handle_tracked_qdel))
 	update_signals(tracked)
 
 /datum/component/connect_containers/proc/handle_tracked_qdel()
@@ -50,7 +50,7 @@
 		return
 
 	for(var/atom/movable/container as anything in get_nested_locs(listener))
-		RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+		RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 		for(var/signal in connections)
 			parent.RegisterSignal(container, signal, connections[signal])
 

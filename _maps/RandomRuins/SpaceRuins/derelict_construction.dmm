@@ -1,0 +1,1152 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"aS" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"bY" = (
+/turf/closed/mineral/asteroid,
+/area/ruin/space)
+"dB" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"eu" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"eX" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"fa" = (
+/obj/structure/lattice,
+/mob/living/basic/trooper/pirate/ranged/space,
+/turf/template_noop,
+/area/space/nearstation)
+"gi" = (
+/mob/living/basic/mouse/gray,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"gj" = (
+/mob/living/basic/carp,
+/turf/template_noop,
+/area/template_noop)
+"iy" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"jc" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lamp,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"jv" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"jX" = (
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"jZ" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"kU" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/light/tube,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"kW" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"lw" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/item/stack/rods/two,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"mx" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/item/stack/sheet/glass,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"mD" = (
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"nJ" = (
+/obj/item/stack/sheet/plasteel,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"oj" = (
+/obj/item/clothing/head/cone,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"ow" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/item/clothing/head/cone{
+	pixel_y = 11;
+	pixel_x = -8
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"qM" = (
+/turf/template_noop,
+/area/template_noop)
+"qR" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/has_grav/derelictconstruction)
+"qZ" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/item/stack/tile/catwalk_tile{
+	amount = 5
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"rK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"sd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/large,
+/obj/effect/spawner/random/entertainment/money_medium,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/mod/maint,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"sq" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"sw" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"sA" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"sM" = (
+/obj/item/wallframe/noticeboard,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"uc" = (
+/obj/item/wallframe/light_fixture,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"uo" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"uw" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"vs" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"xT" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"yy" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"zn" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"zC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/light,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"zE" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"zP" = (
+/obj/item/airlock_painter,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Ax" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/derelictconstruction)
+"AH" = (
+/obj/item/storage/backpack/duffelbag/engineering,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"AR" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Bc" = (
+/obj/item/vending_refill/cigarette,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"Cl" = (
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"Dz" = (
+/obj/item/chair,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"DU" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"DY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/template_noop)
+"DZ" = (
+/obj/structure/frame,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"EC" = (
+/obj/item/rcd_ammo{
+	pixel_y = 8;
+	pixel_x = -9
+	},
+/obj/item/rcd_ammo,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"FY" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/wallframe/apc,
+/obj/item/circuitboard/computer/apc_control,
+/obj/item/wallframe/airalarm,
+/obj/item/electronics/airalarm,
+/obj/item/stack/sheet/plasteel,
+/obj/item/airlock_painter/decal,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Gi" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Gx" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"Hn" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"Hq" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Ik" = (
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/foam,
+/area/ruin/space/has_grav/derelictconstruction)
+"IR" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/derelictconstruction)
+"Jj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"JA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"JB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"JV" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"Li" = (
+/obj/structure/door_assembly/door_assembly_sec,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"LL" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"Md" = (
+/turf/open/floor/plating/foam,
+/area/ruin/space/has_grav/derelictconstruction)
+"Ne" = (
+/obj/item/wallframe/intercom,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Oz" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/ruin/space/has_grav/derelictconstruction)
+"OQ" = (
+/obj/item/stack/marker_beacon/ten,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+"Qg" = (
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Rq" = (
+/obj/structure/table_frame,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Sw" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"SK" = (
+/obj/item/airlock_painter/decal/tile,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"SX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"SY" = (
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"Vh" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/caution_sign,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"Vq" = (
+/obj/structure/foamedmetal/iron,
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/foam,
+/area/ruin/space/has_grav/derelictconstruction)
+"Wj" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Xx" = (
+/obj/item/stack/sheet/iron/ten,
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/derelictconstruction)
+"Yh" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
+"Za" = (
+/mob/living/basic/trooper/pirate/melee/space,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/has_grav/derelictconstruction)
+"ZV" = (
+/obj/item/pickaxe/emergency,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictconstruction)
+
+(1,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(2,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+gj
+"}
+(3,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(4,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+bY
+bY
+qM
+qM
+qM
+qM
+"}
+(5,1,1) = {"
+qM
+qM
+uw
+LL
+qM
+LL
+qM
+eu
+qM
+qM
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+"}
+(6,1,1) = {"
+qM
+qM
+uw
+LL
+LL
+fa
+LL
+uw
+Ik
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+"}
+(7,1,1) = {"
+qM
+qM
+Ax
+LL
+qM
+LL
+qM
+Ax
+Vq
+ao
+bY
+bY
+bY
+JA
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+"}
+(8,1,1) = {"
+qM
+qM
+Wj
+Sw
+Sw
+LL
+LL
+Ax
+Md
+ao
+mD
+DZ
+bY
+sd
+Gx
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+"}
+(9,1,1) = {"
+qM
+qM
+uw
+eu
+qM
+LL
+Sw
+Ax
+gi
+ao
+JV
+Bc
+Hn
+dB
+aS
+ZV
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+"}
+(10,1,1) = {"
+qM
+qM
+qM
+Ax
+Li
+eu
+sA
+Ax
+ao
+ao
+vs
+sw
+Cl
+Cl
+xT
+mD
+OQ
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+"}
+(11,1,1) = {"
+qM
+qM
+qM
+uw
+nJ
+zP
+zE
+Ax
+Ax
+ao
+ao
+JV
+mD
+mD
+mD
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+"}
+(12,1,1) = {"
+DY
+DU
+Ax
+Ax
+jX
+Sw
+oj
+nJ
+Ax
+Vh
+Ax
+yy
+Ax
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+"}
+(13,1,1) = {"
+SX
+Wj
+uw
+jv
+jv
+ow
+AR
+jv
+Ax
+Jj
+Ax
+jc
+kU
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+"}
+(14,1,1) = {"
+eX
+JB
+Gi
+JB
+JB
+JB
+rK
+kW
+uo
+ao
+iy
+ao
+zC
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+"}
+(15,1,1) = {"
+Wj
+Wj
+eu
+sq
+Dz
+mx
+qZ
+sq
+Ax
+ao
+Ax
+Ax
+SY
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+"}
+(16,1,1) = {"
+DY
+DU
+Hq
+uc
+FY
+oj
+SK
+Xx
+Ax
+ao
+Yh
+Ax
+Ax
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+"}
+(17,1,1) = {"
+qM
+qM
+Hq
+sM
+EC
+AH
+Ne
+Qg
+Ax
+ao
+jZ
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+"}
+(18,1,1) = {"
+qM
+qM
+Sw
+uw
+lw
+Rq
+zn
+Ax
+Ax
+SX
+Ax
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(19,1,1) = {"
+qM
+qM
+qM
+IR
+Sw
+Wj
+SX
+Ax
+qM
+qM
+qM
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+gj
+qM
+qM
+"}
+(20,1,1) = {"
+qM
+qM
+qM
+Oz
+qR
+Za
+qR
+qR
+LL
+LL
+LL
+LL
+Ax
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(21,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(22,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(23,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(24,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(25,1,1) = {"
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+bY
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}

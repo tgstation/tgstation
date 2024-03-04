@@ -20,8 +20,8 @@
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
+	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 
 /obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
@@ -74,10 +74,10 @@
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
-	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
+	addtimer(CALLBACK(src, PROC_REF(unblock_suit_activation)), 10 SECONDS)
 
 ///Unregisters the modsuit deactivation blocking signal, after dejavu functionality finishes.
 /obj/item/mod/module/rewinder/proc/unblock_suit_activation()
@@ -92,9 +92,9 @@
 	return MOD_CANCEL_ACTIVATE
 
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
-/obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source)
+/obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source, mob/user)
 	SIGNAL_HANDLER
-	balloon_alert(mod.wearer, "not while rewinding!")
+	balloon_alert(user, "not while rewinding!")
 	return MOD_ABORT_USE
 
 ///Timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
@@ -121,16 +121,16 @@
 		return
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
-	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
+	RegisterSignal(timestop, COMSIG_QDELETING, PROC_REF(unblock_suit_activation))
 
 ///Unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
 	SIGNAL_HANDLER
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, COMSIG_QDELETING)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	timestop = null
 
@@ -156,7 +156,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
-	allowed_in_phaseout = TRUE
+	allow_flags = MODULE_ALLOW_PHASEOUT
 	///The dummy for phasing from this module, the wearer is phased out while this exists.
 	var/obj/effect/dummy/phased_mob/chrono/phased_mob
 
@@ -173,13 +173,13 @@
 		//phasing out
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
-		mod.wearer.setStaminaLoss(0, 0)
-		phased_mob = new(get_turf(mod.wearer.loc))
-		mod.wearer.forceMove(phased_mob)
-		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+		mod.wearer.setStaminaLoss(0)
+		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
+		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else
 		//phasing in
-		QDEL_NULL(phased_mob)
+		phased_mob.eject_jaunter()
+		phased_mob = null
 		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
 
@@ -228,7 +228,7 @@
 	chrono_beam.preparePixelProjectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
-	INVOKE_ASYNC(chrono_beam, /obj/projectile.proc/fire)
+	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
 	if(!field)
@@ -294,15 +294,17 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	nodamage = TRUE
 	///Reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
 	var/datum/weakref/tem_weakref
 
-/obj/projectile/energy/chrono_beam/on_hit(atom/target)
+/obj/projectile/energy/chrono_beam/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/item/mod/module/tem/tem = tem_weakref.resolve()
 	if(target && tem && isliving(target))
 		var/obj/structure/chrono_field/field = new(target.loc, target, tem)
 		tem.field_connect(field)
+		return BULLET_ACT_HIT
+
+	return ..()
 
 /obj/structure/chrono_field
 	name = "eradication field"
@@ -364,7 +366,7 @@
 		mob_underlay.icon_state = "frame[RPpos]"
 		underlays += mob_underlay
 
-/obj/structure/chrono_field/process(delta_time)
+/obj/structure/chrono_field/process(seconds_per_tick)
 	if(!captured)
 		qdel(src)
 		return
@@ -388,14 +390,14 @@
 		update_appearance()
 		if(tem)
 			if(tem.field_check(src))
-				timetokill -= delta_time
+				timetokill -= seconds_per_tick
 			else
 				tem = null
 				return
 		else if(!attached)
-			timetokill -= delta_time
+			timetokill -= seconds_per_tick
 		else
-			timetokill += delta_time
+			timetokill += seconds_per_tick
 
 
 /obj/structure/chrono_field/bullet_act(obj/projectile/projectile)
@@ -404,8 +406,9 @@
 		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
 		if(linked_tem && istype(linked_tem))
 			linked_tem.field_connect(src)
-	else
 		return BULLET_ACT_HIT
+
+	return ..()
 
 /obj/structure/chrono_field/assume_air()
 	return FALSE

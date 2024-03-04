@@ -34,7 +34,7 @@ no power level overlay is currently in the overlays list.
 	max_integrity = 500
 	can_atmos_pass = ATMOS_PASS_YES
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
+	armor_type = /datum/armor/field_generator
 	///Amount of energy stored, used for visual overlays (over 9000?)
 	var/power_level = 0
 	///Current power mode of the machine, between FG_OFFLINE, FG_CHARGING, FG_ONLINE
@@ -46,11 +46,20 @@ no power level overlay is currently in the overlays list.
 	///Timer between 0 and 3 before the field gets made
 	var/warming_up = 0
 	///List of every containment fields connected to this generator
-	var/list/obj/machinery/field/containment/fields
+	var/list/obj/machinery/field/containment/fields = list()
 	///List of every field generators connected to this one
-	var/list/obj/machinery/field/generator/connected_gens
+	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
+
+/datum/armor/field_generator
+	melee = 25
+	bullet = 10
+	laser = 100
+	energy = 100
+	fire = 50
+	acid = 70
+	bomb = 100 //Explosive resistance only protects the turfs behind itself from the epicenter.
 
 /obj/machinery/field/generator/update_overlays()
 	. = ..()
@@ -63,18 +72,14 @@ no power level overlay is currently in the overlays list.
 
 
 /obj/machinery/field/generator/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
-	fields = list()
-	connected_gens = list()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
-
-/obj/machinery/field/generator/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -123,7 +128,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
@@ -136,7 +141,7 @@ no power level overlay is currently in the overlays list.
 			to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 
 		if(FG_SECURED)
-			if(!welder.tool_start_check(user, amount=0))
+			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
 				span_notice("[user] starts to weld [src] to the floor."),
@@ -147,7 +152,7 @@ no power level overlay is currently in the overlays list.
 				to_chat(user, span_notice("You weld the field generator to the floor."))
 
 		if(FG_WELDED)
-			if(!welder.tool_start_check(user, amount=0))
+			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
 				span_notice("[user] starts to cut [src] free from the floor."),
@@ -161,7 +166,7 @@ no power level overlay is currently in the overlays list.
 
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
+	if(user.environment_smash == ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		set_anchored(FALSE)
 		user.visible_message(span_warning("[user] rips [src] free from its moorings!"))
 	else
@@ -201,8 +206,8 @@ no power level overlay is currently in the overlays list.
 	active = FG_OFFLINE
 	can_atmos_pass = ATMOS_PASS_YES
 	air_update_turf(TRUE, FALSE)
-	INVOKE_ASYNC(src, .proc/cleanup)
-	addtimer(CALLBACK(src, .proc/cool_down), 5 SECONDS)
+	INVOKE_ASYNC(src, PROC_REF(cleanup))
+	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/cool_down()
 	if(active || warming_up <= 0)
@@ -210,11 +215,11 @@ no power level overlay is currently in the overlays list.
 	warming_up--
 	update_appearance()
 	if(warming_up > 0)
-		addtimer(CALLBACK(src, .proc/cool_down), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
-	addtimer(CALLBACK(src, .proc/warm_up), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/warm_up()
 	if(!active)
@@ -224,7 +229,7 @@ no power level overlay is currently in the overlays list.
 	if(warming_up >= 3)
 		start_fields()
 	else
-		addtimer(CALLBACK(src, .proc/warm_up), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/calc_power(set_power_draw)
 	var/power_draw = 2 + fields.len
@@ -275,12 +280,13 @@ no power level overlay is currently in the overlays list.
 		turn_off()
 		return
 	move_resist = INFINITY
+	set_explosion_block(INFINITY)
 	can_atmos_pass = ATMOS_PASS_NO
 	air_update_turf(TRUE, TRUE)
-	addtimer(CALLBACK(src, .proc/setup_field, 1), 1)
-	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
-	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
-	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 1)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 2), 2)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 4), 3)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 8), 4)
 	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -352,6 +358,7 @@ no power level overlay is currently in the overlays list.
 	update_appearance()
 
 	move_resist = initial(move_resist)
+	set_explosion_block(0)
 
 /obj/machinery/field/generator/proc/shield_floor(create)
 	if(connected_gens.len < 2)
@@ -405,6 +412,14 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/bump_field(atom/movable/AM as mob|obj)
 	if(fields.len)
 		..()
+
+/obj/machinery/field/generator/starts_on
+	anchored = TRUE
+	state = FG_WELDED
+
+/obj/machinery/field/generator/starts_on/Initialize(mapload)
+	. = ..()
+	turn_on()
 
 #undef FG_UNSECURED
 #undef FG_SECURED

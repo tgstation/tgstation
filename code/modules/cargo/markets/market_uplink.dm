@@ -154,16 +154,17 @@
 
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"
-	result = /obj/item/market_uplink
+	result = /obj/item/market_uplink/blackmarket
 	time = 30
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	reqs = list(
-		/obj/item/stock_parts/subspace/amplifier = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/assembly/signaler = 1,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/radio = 1,
 		/obj/item/analyzer = 1
 	)
-	category = CAT_MISC
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/blackmarket_uplink/New()
 	..()

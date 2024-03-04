@@ -18,16 +18,6 @@
 /turf/closed/wall/mineral/cult/devastate_wall()
 	new sheet_type(get_turf(src), sheet_amount)
 
-/turf/closed/wall/mineral/cult/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(istype(gone, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
-		var/mob/living/simple_animal/hostile/construct/harvester/H = gone
-		var/atom/movable/stored_pulling = H.pulling
-		if(stored_pulling)
-			stored_pulling.setDir(direction)
-			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, supress_message = TRUE)
-
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
@@ -38,31 +28,6 @@
 
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
-
-/turf/closed/wall/vault
-	name = "strange wall"
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "rockvault"
-	base_icon_state = "rockvault"
-	turf_flags = IS_SOLID
-	smoothing_flags = NONE
-	canSmoothWith = null
-	smoothing_groups = null
-	rcd_memory = null
-
-/turf/closed/wall/vault/rock
-	name = "rocky wall"
-	desc = "You feel a strange nostalgia from looking at this..."
-
-/turf/closed/wall/vault/alien
-	name = "alien wall"
-	icon_state = "alienvault"
-	base_icon_state = "alienvault"
-
-/turf/closed/wall/vault/sandstone
-	name = "sandstone wall"
-	icon_state = "sandstonevault"
-	base_icon_state = "sandstonevault"
 
 /turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
@@ -80,21 +45,20 @@
 /turf/closed/wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
-	color = COLOR_ORANGE_BROWN
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
 
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
-	color = null
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/r_wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
-	color = COLOR_ORANGE_BROWN
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
+	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
-	color = null
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/mineral/bronze
@@ -125,3 +89,26 @@
 	name = "reinforced porous rock"
 	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
 	decon_type = /turf/closed/mineral/asteroid/porous
+
+/turf/closed/wall/space
+	name = "illusionist wall"
+	icon = 'icons/turf/space.dmi'
+	icon_state = "space"
+	plane = PLANE_SPACE
+	turf_flags = NO_RUST
+	smoothing_flags = NONE
+	canSmoothWith = null
+	smoothing_groups = null
+
+/turf/closed/wall/material/meat
+	name = "living wall"
+	baseturfs = /turf/open/floor/material/meat
+	girder_type = null
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/closed/wall/material/meat/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+
+/turf/closed/wall/material/meat/airless
+	baseturfs = /turf/open/floor/material/meat/airless

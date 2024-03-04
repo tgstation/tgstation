@@ -1,7 +1,9 @@
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 const jauntstyle = {
   color: 'lightblue',
@@ -11,35 +13,18 @@ const injurestyle = {
   color: 'yellow',
 };
 
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-}
-
 type Info = {
   fluff: string;
   explain_attack: BooleanLike;
   objectives: Objective[];
 };
 
-export const AntagInfoDemon = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const {
-    fluff,
-    objectives,
-    explain_attack,
-  } = data;
+export const AntagInfoDemon = (props) => {
+  const { data } = useBackend<Info>();
+  const { fluff, objectives, explain_attack } = data;
   return (
-    <Window
-      width={620}
-      height={356}
-      theme="syndicate">
-      <Window.Content
-        style={{ 'background-image': 'none' }}>
+    <Window width={620} height={356} theme="syndicate">
+      <Window.Content style={{ backgroundImage: 'none' }}>
         <Stack fill>
           <Stack.Item>
             <DemonRunes />
@@ -49,11 +34,19 @@ export const AntagInfoDemon = (props, context) => {
               <Stack.Item grow>
                 <Section fill scrollable={objectives.length > 2}>
                   <Stack vertical>
-                    <Stack.Item textAlign="center" textColor="red" fontSize="20px">
+                    <Stack.Item
+                      textAlign="center"
+                      textColor="red"
+                      fontSize="20px"
+                    >
                       {fluff}
                     </Stack.Item>
                     <Stack.Item>
-                      <ObjectivePrintout />
+                      <ObjectivePrintout
+                        titleMessage="It is in your nature to accomplish these goals:"
+                        objectiveTextSize="20px"
+                        objectives={objectives}
+                      />
                     </Stack.Item>
                   </Stack>
                 </Section>
@@ -63,12 +56,12 @@ export const AntagInfoDemon = (props, context) => {
                   <Section fill title="Demonic Powers">
                     <Stack vertical>
                       <Stack.Item>
-                        <span style={jauntstyle}>Blood Jaunt:</span> You
-                        can dive in and out of blood to travel anywhere
-                        you need to be. You will gain a speed boost upon
-                        leaving the jaunt for surprise attacks. You can
-                        drag victims you have disabled through the blood,
-                        consuming them and restoring health.
+                        <span style={jauntstyle}>Blood Jaunt:</span> You can
+                        dive in and out of blood to travel anywhere you need to
+                        be. You will gain a speed boost upon leaving the jaunt
+                        for surprise attacks. You can drag victims you have
+                        disabled through the blood, consuming them and restoring
+                        health.
                       </Stack.Item>
                       <Stack.Divider />
                       <Stack.Item>
@@ -93,39 +86,14 @@ export const AntagInfoDemon = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const {
-    objectives,
-  } = data;
+const DemonRunes = (props) => {
   return (
-    <Stack vertical>
-      <Stack.Item bold>
-        It is in your nature to accomplish these goals:
-      </Stack.Item>
-      <Stack.Item>
-        {!objectives && "None!"
-        || objectives.map(objective => (
-          <Stack.Item fontSize="20px" key={objective.count}>
-            #{objective.count}: {objective.explanation}
-          </Stack.Item>
-        )) }
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const DemonRunes = (props, context) => {
-  return (
-    <Section
-      height="102%"
-      mt="-6px"
-      fill>
+    <Section height="102%" mt="-6px" fill>
       {/*
       shoutout to my boy Yuktopus from Crash Bandicoot: Crash of the Titans.
       Damn, that was such a good game.
       */}
-      <Box className="HellishRunes__demonrune" >
+      <Box className="HellishRunes__demonrune">
         Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
         Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
         Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />

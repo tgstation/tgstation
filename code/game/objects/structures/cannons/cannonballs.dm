@@ -7,8 +7,8 @@
 	singular_name = "cannonball"
 	merge_type = /obj/item/stack/cannonball
 	throwforce = 10
-	flags_1 = CONDUCT_1
-	custom_materials = list(/datum/material/alloy/plasteel=MINERAL_MATERIAL_AMOUNT)
+	obj_flags = CONDUCTS_ELECTRICITY
+	custom_materials = list(/datum/material/alloy/plasteel=SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FIRE_PROOF
 	throw_speed = 5
 	throw_range = 3
@@ -21,6 +21,9 @@
 
 /obj/item/stack/cannonball/fourteen
 	amount = 14
+
+/obj/item/stack/cannonball/four
+	amount = 4
 
 /obj/item/stack/cannonball/shellball
 	name = "explosive shellballs"

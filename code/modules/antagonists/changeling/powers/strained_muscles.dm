@@ -25,7 +25,7 @@
 			user.Paralyze(60)
 			user.emote("gasp")
 
-	INVOKE_ASYNC(src, .proc/muscle_loop, user)
+	INVOKE_ASYNC(src, PROC_REF(muscle_loop), user)
 
 	return TRUE
 
@@ -53,11 +53,11 @@
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, span_warning("Our legs are really starting to hurt..."))
 
-		sleep(40)
+		sleep(4 SECONDS)
 
 	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
 		if(QDELETED(src) || QDELETED(user))
 			return
 
 		stacks--
-		sleep(20)
+		sleep(2 SECONDS)

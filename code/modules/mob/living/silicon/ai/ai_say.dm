@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		return parent.say(arglist(args))
 	return ..()
@@ -13,8 +13,14 @@
 	//Also includes the </a> for AI hrefs, for convenience.
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
-/mob/living/silicon/ai/IsVocal()
-	return !CONFIG_GET(flag/silent_ai)
+/mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
+	// AIs cannot speak if silent AI is on.
+	// Unless forced is set, as that's probably stating laws or something.
+	if(!forced && CONFIG_GET(flag/silent_ai))
+		to_chat(src, span_danger("The ability for AIs to speak is currently disabled via server config."))
+		return FALSE
+
+	return ..()
 
 /mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
 	if(incapacitated())
@@ -121,15 +127,22 @@
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
+	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
-	say(";[message]", forced = "VOX Announcement")
+
+	var/list/players = list()
+	var/turf/ai_turf = get_turf(src)
+	for(var/mob/player_mob as anything in GLOB.player_list)
+		var/turf/player_turf = get_turf(player_mob)
+		if(is_valid_z_level(ai_turf, player_turf))
+			players += player_mob
+	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = FALSE)
 
 	for(var/word in words)
-		play_vox_word(word, src.z, null)
+		play_vox_word(word, ai_turf, null)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener)
+/proc/play_vox_word(word, ai_turf, mob/only_listener)
 
 	word = lowertext(word)
 
@@ -142,11 +155,15 @@
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
-			for(var/mob/M in GLOB.player_list)
-				if(M.can_hear() && (M.client?.prefs.toggles & SOUND_ANNOUNCEMENTS))
-					var/turf/T = get_turf(M)
-					if(T.z == z_level)
-						SEND_SOUND(M, voice)
+			for(var/mob/player_mob as anything in GLOB.player_list)
+				if(!player_mob.can_hear() || !(safe_read_pref(player_mob.client, /datum/preference/toggle/sound_announcements)))
+					continue
+
+				var/turf/player_turf = get_turf(player_mob)
+				if(!is_valid_z_level(ai_turf, player_turf))
+					continue
+
+				SEND_SOUND(player_mob, voice)
 		else
 			SEND_SOUND(only_listener, voice)
 		return TRUE

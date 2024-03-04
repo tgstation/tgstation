@@ -21,9 +21,14 @@
 		/obj/item/food/cnds = 6,
 		/obj/item/food/cnds/random = 3,
 		/obj/item/food/semki = 6,
-		/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 3,
 		/obj/item/storage/box/gum = 3,
 		/obj/item/food/energybar = 6,
+		/obj/item/food/hot_shots = 6,
+		/obj/item/food/sticko = 6,
+		/obj/item/food/sticko/random = 3,
+		/obj/item/food/shok_roks = 6,
+		/obj/item/food/shok_roks/random = 3,
 	)
 	contraband = list(
 		/obj/item/food/syndicake = 6,
@@ -33,13 +38,13 @@
 	premium = list(
 		/obj/item/food/spacers_sidekick = 3,
 		/obj/item/food/pistachios = 3,
+		/obj/item/food/swirl_lollipop = 3,
 	)
 	refill_canister = /obj/item/vending_refill/snack
-	canload_access_list = list(ACCESS_KITCHEN)
+	req_access = list(ACCESS_KITCHEN)
 	default_price = PAYCHECK_CREW * 0.6
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
-	input_display_header = "Chef's Food Selection"
 
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"

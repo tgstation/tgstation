@@ -23,16 +23,16 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/Initialize(mapload)
-	..()
-	var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible/booze(loc)
-	B.name = "The Holy book of the Geometer"
-	B.deity_name = "Narsie"
-	B.icon_state = "melted"
-	B.inhand_icon_state = "melted"
-	B.lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	B.righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
-	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
-	new /obj/item/pen(B)
+	. = ..()
+	var/obj/item/book/bible/holy_bible = new /obj/item/book/bible/booze(loc)
+	holy_bible.name = "The Holy book of the Geometer"
+	holy_bible.deity_name = "Narsie"
+	holy_bible.icon_state = "melted"
+	holy_bible.inhand_icon_state = "melted"
+	holy_bible.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	holy_bible.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
+	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(holy_bible)
+	new /obj/item/pen(holy_bible)
 	return INITIALIZE_HINT_QDEL
 
 /*
@@ -85,32 +85,32 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	name = "smudged paper"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/Initialize(mapload)
-	. = ..()
-	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
+	default_raw_text = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro
 	name = "shredded paper"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/Initialize(mapload)
-	. = ..()
-	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
+	default_raw_text = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_caf
 	name = "blood-soaked paper"
 	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
-	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
+	default_raw_text = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible
 	name = "hidden paper"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/Initialize(mapload)
-	. = ..()
-	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
+	default_raw_text = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]'
 			"}
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_shuttle
-	info = {"<b>Target:</b> Research-station Epsilon<br>
+	default_raw_text = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
 			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunately he has been captured by security
@@ -122,16 +122,23 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 			Your assigned ship is designed specifically for penetrating the hull of another station or ship with minimal damage to operatives.
 			It is completely fly-by-wire meaning you have just have to enjoy the ride and when the red light comes on... find something to hold onto!
 			"}
+
 /*
  * Captain's safe
  */
-/obj/item/storage/secure/safe/sc_ssafe
+/obj/structure/secure_safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
+/obj/structure/secure_safe/sc_ssafe/Initialize(mapload)
 	. = ..()
-	lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
-	lock_set = TRUE
+	var/lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
+	AddComponent(/datum/component/lockable_storage, \
+		lock_code = lock_code, \
+		can_hack_open = FALSE, \
+	)
+
+/obj/structure/secure_safe/sc_ssafe/PopulateContents()
+	. = ..()
 	new /obj/item/gun/energy/mindflayer(src)
 	new /obj/item/soulstone(src)
 	new /obj/item/clothing/suit/hooded/cultrobes/hardened(src)

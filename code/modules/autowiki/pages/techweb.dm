@@ -4,7 +4,7 @@
 /datum/autowiki/techweb/generate()
 	var/output = ""
 
-	for (var/node_id in sort_list(SSresearch.techweb_nodes, /proc/sort_research_nodes))
+	for (var/node_id in sort_list(SSresearch.techweb_nodes, GLOBAL_PROC_REF(sort_research_nodes)))
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id]
 		if (!node.show_on_wiki)
 			continue

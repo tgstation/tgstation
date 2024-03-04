@@ -7,9 +7,8 @@
 /area/ruin/space/djstation)
 "g" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "h" = (
 /obj/structure/lattice,
@@ -33,27 +32,20 @@
 /area/template_noop)
 "q" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "t" = (
 /turf/open/floor/iron/freezer/airless,
 /area/ruin/space/djstation)
-"w" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/ruin/space/djstation)
 "x" = (
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "A" = (
 /obj/structure/bed,
-/turf/open/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "C" = (
 /obj/structure/lattice,
@@ -64,9 +56,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "J" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "M" = (
 /obj/structure/lattice,
@@ -105,9 +96,8 @@
 	pixel_x = 4;
 	pixel_y = -10
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 
 (1,1,1) = {"
@@ -139,7 +129,7 @@ a
 U
 U
 U
-w
+J
 x
 g
 E

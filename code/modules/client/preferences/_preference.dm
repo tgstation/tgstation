@@ -5,18 +5,24 @@
 /// The priority at which species runs, needed for external organs to apply properly.
 #define PREFERENCE_PRIORITY_SPECIES 2
 
+/**
+ * Some preferences get applied directly to bodyparts (anything head_flags related right now).
+ * These must apply after species, as species gaining might replace the bodyparts of the human.
+ */
+#define PREFERENCE_PRIORITY_BODYPARTS 3
+
 /// The priority at which gender is determined, needed for proper randomization.
-#define PREFERENCE_PRIORITY_GENDER 3
+#define PREFERENCE_PRIORITY_GENDER 4
 
 /// The priority at which body type is decided, applied after gender so we can
 /// support the "use gender" option.
-#define PREFERENCE_PRIORITY_BODY_TYPE 4
+#define PREFERENCE_PRIORITY_BODY_TYPE 5
 
 /// The priority at which names are decided, needed for proper randomization.
-#define PREFERENCE_PRIORITY_NAMES 5
+#define PREFERENCE_PRIORITY_NAMES 6
 
 /// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
-#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 6
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 7
 
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
 #define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
@@ -101,9 +107,17 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// will show the feature as selectable.
 	var/relevant_mutant_bodypart = null
 
-	/// If the selected species has this in its /datum/species/species_traits,
+	/// If the selected species has this in its /datum/species/inherent_traits,
 	/// will show the feature as selectable.
-	var/relevant_species_trait = null
+	var/relevant_inherent_trait = null
+
+	/// If the selected species has this in its /datum/species/var/external_organs,
+	/// will show the feature as selectable.
+	var/relevant_external_organ = null
+
+	/// If the selected species has this head_flag by default,
+	/// will show the feature as selectable.
+	var/relevant_head_flag = null
 
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.
@@ -152,13 +166,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /// This will write to the savefile if a value was not found with the new value.
-/datum/preference/proc/read(savefile/savefile, datum/preferences/preferences)
+/datum/preference/proc/read(list/save_data, datum/preferences/preferences)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/value
 
-	if (!isnull(savefile))
-		READ_FILE(savefile[savefile_key], value)
+	if (!isnull(save_data))
+		value = save_data[savefile_key]
 
 	if (isnull(value))
 		return null
@@ -168,14 +182,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Given a savefile, writes the inputted value.
 /// Returns TRUE for a successful application.
 /// Return FALSE if it is invalid.
-/datum/preference/proc/write(savefile/savefile, value)
+/datum/preference/proc/write(list/save_data, value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (!is_valid(value))
 		return FALSE
 
-	if (!isnull(savefile))
-		WRITE_FILE(savefile[savefile_key], serialize(value))
+	if (!isnull(save_data))
+		save_data[savefile_key] = serialize(value)
 
 	return TRUE
 
@@ -201,31 +215,22 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`apply_to_human()` was not implemented for [type]!")
 
 /// Returns which savefile to use for a given savefile identifier
-/datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)
-	RETURN_TYPE(/savefile)
+/datum/preferences/proc/get_save_data_for_savefile_identifier(savefile_identifier)
+	RETURN_TYPE(/list)
 
 	if (!parent)
 		return null
+	if(!savefile)
+		CRASH("Attempted to get the savedata for [savefile_identifier] of [parent] without a savefile. This should have been handled by load_preferences()")
 
 	// Both of these will cache savefiles, but only for a tick.
 	// This is because storing a savefile will lock it, causing later issues down the line.
 	// Do not change them to addtimer, since the timer SS might not be running at this time.
-
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
-			if (!character_savefile)
-				character_savefile = new /savefile(path)
-				character_savefile.cd = "/character[default_slot]"
-				spawn (1)
-					character_savefile = null
-			return character_savefile
+			return savefile.get_entry("character[default_slot]")
 		if (PREFERENCE_PLAYER)
-			if (!game_savefile)
-				game_savefile = new /savefile(path)
-				game_savefile.cd = "/"
-				spawn (1)
-					game_savefile = null
-			return game_savefile
+			return savefile.get_entry()
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")
 
@@ -248,7 +253,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (preference_type in value_cache)
 		return value_cache[preference_type]
 
-	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier), src)
+	var/value = preference_entry.read(get_save_data_for_savefile_identifier(preference_entry.savefile_identifier), src)
 	if (isnull(value))
 		value = preference_entry.create_informed_default_value(src)
 		if (write_preference(preference_entry, value))
@@ -262,9 +267,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
-	var/savefile = get_savefile_for_savefile_identifier(preference.savefile_identifier)
+	var/save_data = get_save_data_for_savefile_identifier(preference.savefile_identifier)
 	var/new_value = preference.deserialize(preference_value, src)
-	var/success = preference.write(savefile, new_value)
+	var/success = preference.write(save_data, new_value)
 	if (success)
 		value_cache[preference.type] = new_value
 	return success
@@ -318,7 +323,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait))
+	if ( \
+		!isnull(relevant_mutant_bodypart) \
+		|| !isnull(relevant_inherent_trait) \
+		|| !isnull(relevant_external_organ) \
+		|| !isnull(relevant_head_flag) \
+	)
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
 		var/datum/species/species = new species_type
@@ -340,9 +350,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.
 /datum/preference/choiced
-	/// If this is TRUE, icons will be generated.
-	/// This is necessary for if your `init_possible_values()` override
-	/// returns an assoc list of names to atoms/icons.
+	/// If this is TRUE, an icon will be generated for every value.
+	/// If you implement this, you must implement `icon_for(value)` for every possible value.
 	var/should_generate_icons = FALSE
 
 	var/list/cached_values
@@ -369,33 +378,30 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return cached_values
 
 /// Returns a list of every possible value, serialized.
-/// Return value can be in the form of:
-/// - A flat list of serialized values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of serialized values to atoms/icons.
 /datum/preference/choiced/proc/get_choices_serialized()
 	// Override `init_values()` instead.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/list/serialized_choices = list()
-	var/choices = get_choices()
 
-	if (should_generate_icons)
-		for (var/choice in choices)
-			serialized_choices[serialize(choice)] = choices[choice]
-	else
-		for (var/choice in choices)
-			serialized_choices += serialize(choice)
+	for (var/choice in get_choices())
+		serialized_choices += serialize(choice)
 
 	return serialized_choices
 
 /// Returns a list of every possible value.
 /// This must be overriden by `/datum/preference/choiced` subtypes.
-/// Return value can be in the form of:
-/// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of raw values to atoms/icons, in which case
-/// icons will be generated.
+/// If `should_generate_icons` is TRUE, then you will also need to implement `icon_for(value)`
+/// for every possible value.
 /datum/preference/choiced/proc/init_possible_values()
 	CRASH("`init_possible_values()` was not implemented for [type]!")
+
+/// When `should_generate_icons` is TRUE, this proc is called for every value.
+/// It can return either an icon or a typepath to an atom to create.
+/datum/preference/choiced/proc/icon_for(value)
+	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
+	CRASH("`icon_for()` was not implemented for [type], even though should_generate_icons = TRUE!")
 
 /datum/preference/choiced/is_valid(value)
 	return value in get_choices()
@@ -446,49 +452,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)
 
-/// Takes an assoc list of names to /datum/sprite_accessory and returns a value
-/// fit for `/datum/preference/init_possible_values()`
-/proc/possible_values_for_sprite_accessory_list(list/datum/sprite_accessory/sprite_accessories)
-	var/list/possible_values = list()
-	for (var/name in sprite_accessories)
-		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
-		if (istype(sprite_accessory))
-			possible_values[name] = icon(sprite_accessory.icon, sprite_accessory.icon_state)
-		else
-			// This means it didn't have an icon state
-			possible_values[name] = icon('icons/mob/landmarks.dmi', "x")
-	return possible_values
-
-/// Takes an assoc list of names to /datum/sprite_accessory and returns a value
-/// fit for `/datum/preference/init_possible_values()`
-/// Different from `possible_values_for_sprite_accessory_list` in that it takes a list of layers
-/// such as BEHIND, FRONT, and ADJ.
-/// It also takes a "body part name", such as body_markings, moth_wings, etc
-/// They are expected to be in order from lowest to top.
-/proc/possible_values_for_sprite_accessory_list_for_body_part(
-	list/datum/sprite_accessory/sprite_accessories,
-	body_part,
-	list/layers,
-)
-	var/list/possible_values = list()
-
-	for (var/name in sprite_accessories)
-		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
-
-		var/icon/final_icon
-
-		for (var/layer in layers)
-			var/icon/icon = icon(sprite_accessory.icon, "m_[body_part]_[sprite_accessory.icon_state]_[layer]")
-
-			if (isnull(final_icon))
-				final_icon = icon
-			else
-				final_icon.Blend(icon, ICON_OVERLAY)
-
-		possible_values[name] = final_icon
-
-	return possible_values
-
 /// A numeric preference with a minimum and maximum value
 /datum/preference/numeric
 	/// The minimum value
@@ -514,7 +477,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return rand(minimum, maximum)
 
 /datum/preference/numeric/is_valid(value)
-	return isnum(value) && value >= minimum && value <= maximum
+	return isnum(value) && value >= round(minimum, step) && value <= round(maximum, step)
 
 /datum/preference/numeric/compile_constant_data()
 	return list(
@@ -523,7 +486,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		"step" = step,
 	)
 
-/// A prefernece whose value is always TRUE or FALSE
+/// A preference whose value is always TRUE or FALSE
 /datum/preference/toggle
 	abstract_type = /datum/preference/toggle
 
@@ -538,3 +501,27 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/toggle/is_valid(value)
 	return value == TRUE || value == FALSE
+
+
+/// A string-based preference accepting arbitrary string values entered by the user, with a maximum length.
+/datum/preference/text
+	abstract_type = /datum/preference/text
+
+	/// What is the maximum length of the value allowed in this field?
+	var/maximum_value_length = 256
+
+	/// Should we strip HTML the input or simply restrict it to the maximum_value_length?
+	var/should_strip_html = TRUE
+
+
+/datum/preference/text/deserialize(input, datum/preferences/preferences)
+	return should_strip_html ? STRIP_HTML_SIMPLE(input, maximum_value_length) : copytext(input, 1, maximum_value_length)
+
+/datum/preference/text/create_default_value()
+	return ""
+
+/datum/preference/text/is_valid(value)
+	return istext(value) && length(value) < maximum_value_length
+
+/datum/preference/text/compile_constant_data()
+	return list("maximum_length" = maximum_value_length)

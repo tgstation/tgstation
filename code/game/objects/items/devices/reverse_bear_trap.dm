@@ -1,12 +1,13 @@
-#define REVERSE_BEAR_TRAP_COUNTDOWN 60 SECONDS
+#define REVERSE_BEAR_TRAP_COUNTDOWN (60 SECONDS)
 
 /obj/item/reverse_bear_trap
 	name = "reverse bear trap"
 	desc = "A horrifying set of shut metal jaws, rigged to a kitchen timer and secured by padlock to a head-mounted clamp. To apply, hit someone with it."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "reverse_bear_trap"
 	slot_flags = ITEM_SLOT_HEAD
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
@@ -38,7 +39,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/item/reverse_bear_trap/process(delta_time)
+/obj/item/reverse_bear_trap/process(seconds_per_tick)
 	if(!ticking)
 		return
 	soundloop2.mid_length = max(0.5, COOLDOWN_TIMELEFT(src, kill_countdown) - 5) //beepbeepbeepbeepbeep
@@ -50,7 +51,7 @@
 	soundloop.stop()
 	soundloop2.stop()
 	to_chat(loc, span_userdanger("*ding*"))
-	addtimer(CALLBACK(src, .proc/snap), 0.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(snap)), 0.2 SECONDS)
 	COOLDOWN_RESET(src, kill_countdown) // reset the countdown in case it wasn't finished
 
 /obj/item/reverse_bear_trap/attack_hand(mob/user, list/modifiers)
@@ -106,7 +107,14 @@
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD)
 	arm()
-	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/beep.ogg', notify_volume = 75, header = "Reverse bear trap armed")
+	notify_ghosts(
+		"[user] put a reverse bear trap on [target]!",
+		source = src,
+		header = "Reverse bear trap armed",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		ghost_sound = 'sound/machines/beep.ogg',
+		notify_volume = 75,
+	)
 
 /obj/item/reverse_bear_trap/proc/snap()
 	reset()
@@ -121,6 +129,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 		jill.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)
+		jill.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		jill.death() //just in case, for some reason, they're still alive
 		flash_color(jill, flash_color = "#FF0000", flash_time = 100)
 

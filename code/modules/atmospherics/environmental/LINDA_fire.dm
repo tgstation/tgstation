@@ -73,7 +73,7 @@
 	layer = GASFIRE_LAYER
 	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = LIGHT_RANGE_FIRE
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
@@ -106,7 +106,8 @@
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_ABSTRACT_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -303,10 +304,5 @@
 
 /obj/effect/hotspot/singularity_pull()
 	return
-
-/obj/effect/dummy/lighting_obj/moblight/fire
-	name = "fire"
-	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
 
 #undef INSUFFICIENT

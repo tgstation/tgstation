@@ -1,0 +1,166 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+$light-gray: #c3c3c3;
+$dark-gray: #858585;
+$scrollbar-color-multiplier: 1;
+
+@use '../colors.scss' with (
+  $primary: #000000,
+  $good: #007c11,
+  $average: #f0ec11,
+  $bad: #db2828,
+  $label: #000000
+);
+@use '../base.scss' with (
+  $color-bg: #008081,
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0
+);
+
+.theme-ntOS95 {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': #e8e4c9,
+      'color-disabled': #707070,
+      'color-selected': #007c11,
+      'color-caution': #be6209,
+      'color-danger': #9d0808
+    )
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: ('background-color': rgba(0, 0, 0, 0.5))
+  );
+  @include meta.load-css(
+    '../components/Section.scss',
+    $with: ('background-color': rgba(0, 0, 0, 0.4))
+  );
+
+  @include meta.load-css(
+    '../components/Tooltip.scss',
+    $with: ('background-color': #ecee9e)
+  );
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': #000080)
+  );
+
+  .Button {
+    color: #161613;
+    background-color: #c2c2c2;
+    //border: base.em(2px) outset #E8E4C9;
+    outline: base.em(2px) outset #c3c3c3;
+  }
+  .Button:hover {
+    background-color: #002ead;
+    transition: 0.1s;
+  }
+
+  .Section {
+    &__titleText {
+      color: black;
+    }
+    color: black;
+    background-color: #c0c0c0;
+    outline: base.em(2px) outset #c3c3c3;
+  }
+
+  .Input {
+    background-color: white;
+    outline: base.em(2px) inset #c3c3c3;
+    color: black;
+    &__input:-ms-input-placeholder {
+      color: black;
+    }
+  }
+
+  .TextArea {
+    background-color: white;
+    outline: base.em(2px) inset #c3c3c3;
+  }
+
+  .Layout__content {
+    background-image: none;
+  }
+  .Layout,
+  .Layout * {
+    // Fancy scrollbar
+    scrollbar-base-color: color.scale(
+      $light-gray,
+      $lightness: -25% * $scrollbar-color-multiplier
+    );
+    scrollbar-face-color: color.scale(
+      $light-gray,
+      $lightness: 10% * $scrollbar-color-multiplier
+    );
+
+    scrollbar-3dlight-color: color.scale(
+      $light-gray,
+      $lightness: 0% * $scrollbar-color-multiplier
+    );
+    scrollbar-highlight-color: color.scale(
+      $light-gray,
+      $lightness: 0% * $scrollbar-color-multiplier
+    );
+    scrollbar-track-color: color.scale(
+      $light-gray,
+      $lightness: -25% * $scrollbar-color-multiplier
+    );
+    scrollbar-arrow-color: color.scale(
+      $light-gray,
+      $lightness: 50% * $scrollbar-color-multiplier
+    );
+    scrollbar-shadow-color: color.scale(
+      $light-gray,
+      $lightness: 10% * $scrollbar-color-multiplier
+    );
+  }
+
+  .Tab {
+    color: #000000;
+    background-color: #ecee9e;
+  }
+
+  .Tab--selected {
+    color: #9d0808;
+    background-color: #c3c3c3;
+  }
+
+  body {
+    overflow: auto;
+    font-family: ui-sans-serif;
+  }
+  .ProgressBar {
+    color: white;
+  }
+
+  .Table__cell {
+    display: table-cell;
+    padding: 0 0.25em;
+    background-color: #c3c3c3;
+    //outline: base.em(3px) outset #c0c0c0
+  }
+  .Box {
+    outline: base.em(3px) outset #c0c0c0;
+  }
+  .Tooltip {
+    color: black;
+  }
+  .NtosWindow__header {
+    background-color: $dark-gray;
+  }
+}

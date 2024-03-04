@@ -1,7 +1,7 @@
-#define COOLDOWN_STUN 120 SECONDS
-#define COOLDOWN_DAMAGE 60 SECONDS
-#define COOLDOWN_MEME 30 SECONDS
-#define COOLDOWN_NONE 10 SECONDS
+#define COOLDOWN_STUN (120 SECONDS)
+#define COOLDOWN_DAMAGE (60 SECONDS)
+#define COOLDOWN_MEME (30 SECONDS)
+#define COOLDOWN_NONE (10 SECONDS)
 
 /// Used to stop listeners with silly or clown-esque (first) names such as "Honk" or "Flip" from screwing up certain commands.
 GLOBAL_DATUM(all_voice_of_god_triggers, /regex)
@@ -21,22 +21,18 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		separator = "|" // Shouldn't be at the start or end of the regex, or it won't work.
 	GLOB.all_voice_of_god_triggers = regex(all_triggers, "i")
 
-//////////////////////////////////////
-///////////VOICE OF GOD///////////////
-//////////////////////////////////////
-
 /*
  * The main proc for the voice of god power. it makes the user shout a message in an ominous way,
  * The first matching command (from a list of static datums) the listeners must obey,
  * and the return value of this proc the cooldown variable of the command dictates. (only relevant for things with cooldowns i guess)
  */
-/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, forced = null)
+/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, forced = null, ignore_spam = FALSE)
 	var/log_message = uppertext(message)
 	var/is_cultie = IS_CULTIST(user)
 	if(LAZYLEN(span_list) && is_cultie)
 		span_list = list("narsiesmall")
 
-	if(!user.say(message, spans = span_list, sanitize = FALSE))
+	if(!user.say(message, spans = span_list, sanitize = FALSE, ignore_spam = ignore_spam, forced = forced))
 		return
 
 	message = lowertext(message)
@@ -50,7 +46,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/candidate in candidates)
 		if(candidate.stat != DEAD && candidate.can_hear())
 			if(candidate.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0))
-				to_chat(span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
+				to_chat(user, span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
 				continue
 
 			listeners += candidate
@@ -95,8 +91,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 			break
 
 	if(!forced)
-		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("[key_name(user)] has said '[log_message]' with a Voice of God[forced ? " forced by [forced]" : ""], affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] said '[log_message]' with Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	user.log_message("said '[log_message]' with Voice of God[forced ? " forced by [forced]" : ""], affecting [english_list(listeners)], with a power multiplier of [power_multiplier].", LOG_GAME, color="red")
 	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 /// Voice of god command datums that are used in [/proc/voice_of_god()]
@@ -148,7 +144,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/vomit/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/target in listeners)
-		target.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
+		target.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = (power_multiplier * 10), distance = power_multiplier)
 
 /// This command silences the listeners. Thrice as effective is the user is a mime or curator.
 /datum/voice_of_god_command/silence
@@ -158,15 +154,22 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/silence/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	power_multiplier *= user.mind?.assigned_role?.voice_of_god_silence_power || 1
 	for(var/mob/living/carbon/target in listeners)
-		target.silent += (10 * power_multiplier)
+		target.adjust_silence(20 SECONDS * power_multiplier)
 
 /// This command makes the listeners see others as corgis, carps, skellies etcetera etcetera.
 /datum/voice_of_god_command/hallucinate
 	trigger = "see\\s*the\\s*truth|hallucinate"
 
 /datum/voice_of_god_command/hallucinate/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	for(var/mob/living/carbon/target in listeners)
-		new /datum/hallucination/delusion(target, TRUE, null, 150 * power_multiplier, 0)
+	for(var/mob/living/target in listeners)
+		target.cause_hallucination( \
+			get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset), \
+			"voice of god", \
+			duration = 15 SECONDS * power_multiplier, \
+			affects_us = FALSE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+		)
 
 /// This command wakes up the listeners.
 /datum/voice_of_god_command/wake_up
@@ -253,14 +256,38 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		target.throw_at(get_step_towards(user, target), 3 * power_multiplier, 1 * power_multiplier)
 
 /// This command forces the listeners to say their true name (so masks and hoods won't help).
+/// Basic and simple mobs who are forced to state their name and don't have one already will... reveal their actual one!
 /datum/voice_of_god_command/who_are_you
 	trigger = "who\\s*are\\s*you|say\\s*your\\s*name|state\\s*your\\s*name|identify"
 
 /datum/voice_of_god_command/who_are_you/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, target.real_name), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(src, PROC_REF(state_name), target), 0.5 SECONDS * iteration)
 		iteration++
+
+///just states the target's name, but also includes the renaming funny.
+/datum/voice_of_god_command/who_are_you/proc/state_name(mob/living/target)
+	if(QDELETED(target))
+		return
+	var/gold_core_spawnable = NO_SPAWN
+	if(isbasicmob(target))
+		var/mob/living/basic/basic_bandy = target
+		gold_core_spawnable = basic_bandy.gold_core_spawnable
+	else if(isanimal(target))
+		var/mob/living/simple_animal/simple_sandy = target
+		gold_core_spawnable = simple_sandy.gold_core_spawnable
+	if(target.name == initial(target.name) && gold_core_spawnable == FRIENDLY_SPAWN)
+		var/canonical_deep_lore_name
+		switch(target.gender)
+			if(MALE)
+				canonical_deep_lore_name = pick(GLOB.first_names_male)
+			if(FEMALE)
+				canonical_deep_lore_name = pick(GLOB.first_names_female)
+			else
+				canonical_deep_lore_name = pick(GLOB.first_names)
+		target.fully_replace_character_name(target.real_name, canonical_deep_lore_name)
+	target.say(target.real_name)
 
 /// This command forces the listeners to say the user's name
 /datum/voice_of_god_command/say_my_name
@@ -268,8 +295,13 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
+	var/regex/smartass_regex = regex(@"^say my name[.!]*$")
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, user.name), 0.5 SECONDS * iteration)
+		var/to_say = user.name
+		// 0.1% chance to be a smartass
+		if(findtext(lowertext(message), smartass_regex) && prob(0.1))
+			to_say = "My name"
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), to_say), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say "Who's there?".
@@ -279,7 +311,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/knock_knock/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, "Who's there?"), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), "Who's there?"), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces silicon listeners to state all their laws.
@@ -289,7 +321,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/state_laws/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 0
 	for(var/mob/living/silicon/target in listeners)
-		addtimer(CALLBACK(target, /mob/living/silicon/proc/statelaws, TRUE), (3 SECONDS * iteration) + 0.5 SECONDS)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/silicon, statelaws), TRUE), (3 SECONDS * iteration) + 0.5 SECONDS)
 		iteration++
 
 /// This command forces the listeners to take step in a direction chosen by the user, otherwise a random cardinal one.
@@ -312,7 +344,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	else if(findtext(message, right_words))
 		direction = EAST
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, target, direction || pick(GLOB.cardinals)), 1 SECONDS * (iteration - 1))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), target, direction || pick(GLOB.cardinals)), 1 SECONDS * (iteration - 1))
 		iteration++
 
 /// This command forces the listeners to switch to walk intent.
@@ -321,7 +353,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.m_intent != MOVE_INTENT_WALK)
+		if(target.move_intent != MOVE_INTENT_WALK)
 			target.toggle_move_intent()
 
 /// This command forces the listeners to switch to run intent.
@@ -331,7 +363,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.m_intent != MOVE_INTENT_RUN)
+		if(target.move_intent != MOVE_INTENT_RUN)
 			target.toggle_move_intent()
 
 /// This command turns the listeners' throw mode on.
@@ -349,7 +381,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/speak/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to get the fuck up, resetting all stuns.
@@ -390,9 +422,9 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
 		if(prob(25))
-			addtimer(CALLBACK(target, /atom/movable/proc/say, "HOW HIGH?!!"), 0.5 SECONDS * iteration)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), "HOW HIGH?!!"), 0.5 SECONDS * iteration)
 		else
-			addtimer(CALLBACK(target, /mob/living/.proc/emote, "jump"), 0.5 SECONDS * iteration)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/, emote), "jump"), 0.5 SECONDS * iteration)
 		iteration++
 
 ///This command plays a bikehorn sound after 2 seconds and a half have passed, and also slips listeners if the user is a clown.
@@ -400,7 +432,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	trigger = "ho+nk"
 
 /datum/voice_of_god_command/honk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 2.5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 2.5 SECONDS)
 	if(is_clown_job(user.mind?.assigned_role))
 		. = COOLDOWN_STUN //it slips.
 		for(var/mob/living/carbon/target in listeners)
@@ -422,7 +454,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/emote/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /mob/living/.proc/emote, emote_name), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/, emote), emote_name), 0.5 SECONDS * iteration)
 		iteration++
 
 /datum/voice_of_god_command/emote/flip

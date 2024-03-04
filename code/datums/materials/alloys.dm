@@ -6,18 +6,14 @@
 	init_flags = NONE
 	/// The materials this alloy is made from weighted by their ratios.
 	var/list/composition = null
-	/// Breakdown flags required to reduce this alloy to its component materials.
-	var/req_breakdown_flags = BREAKDOWN_ALLOYS
 
-/datum/material/alloy/return_composition(amount=1, breakdown_flags)
-	if(req_breakdown_flags & !(breakdown_flags & req_breakdown_flags))
-		return ..()
-
+/datum/material/alloy/return_composition(amount = 1)
 	. = list()
+
 	var/list/cached_comp = composition
 	for(var/comp_mat in cached_comp)
 		var/datum/material/component_material = GET_MATERIAL_REF(comp_mat)
-		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat], breakdown_flags)
+		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat])
 		for(var/comp_comp_mat in component_composition)
 			.[comp_comp_mat] += component_composition[comp_comp_mat] * amount
 
@@ -46,7 +42,7 @@
 	if(!istype(target_item))
 		return
 
-	target_item.slowdown += MATERIAL_SLOWDOWN_PLASTEEL * amount / MINERAL_MATERIAL_AMOUNT
+	target_item.slowdown += MATERIAL_SLOWDOWN_PLASTEEL * amount / SHEET_MATERIAL_AMOUNT
 
 /datum/material/alloy/plasteel/on_removed_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
@@ -54,7 +50,7 @@
 	if(!istype(target_item))
 		return
 
-	target_item.slowdown -= MATERIAL_SLOWDOWN_PLASTEEL * amount / MINERAL_MATERIAL_AMOUNT
+	target_item.slowdown -= MATERIAL_SLOWDOWN_PLASTEEL * amount / SHEET_MATERIAL_AMOUNT
 
 /** Plastitanium
  *
@@ -84,11 +80,13 @@
 	color = "#ff80f4"
 	greyscale_colors = "#ff80f496"
 	alpha = 150
+	starlight_color = COLOR_STRONG_MAGENTA
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 0.5
 	armor_modifiers = list(MELEE = 0.8, BULLET = 0.8, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma
+	debris_type = /obj/effect/decal/cleanable/glass/plasma
 	value_per_unit = 0.075
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
@@ -103,10 +101,12 @@
 	color = "#cfbee0"
 	greyscale_colors = "#cfbee096"
 	alpha = 150
+	starlight_color = COLOR_COMMAND_BLUE
 	init_flags = MATERIAL_INIT_MAPLOAD
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, FIRE = 0.8, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/titaniumglass
 	shard_type = /obj/item/shard/titanium
+	debris_type = /obj/effect/decal/cleanable/glass/titanium
 	value_per_unit = 0.04
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
@@ -120,12 +120,14 @@
 	desc = "A specialized silicate-plastitanium alloy."
 	color = "#5d3369"
 	greyscale_colors = "#5d336996"
+	starlight_color = COLOR_CENTCOM_BLUE
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 1.1
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1.2, ENERGY = 1.2, BOMB = 0.5, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard/plastitanium
+	debris_type = /obj/effect/decal/cleanable/glass/plastitanium
 	value_per_unit = 0.125
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)
@@ -157,7 +159,7 @@
 	if(!istype(target_item))
 		return
 
-	target_item.slowdown += MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / MINERAL_MATERIAL_AMOUNT
+	target_item.slowdown += MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / SHEET_MATERIAL_AMOUNT
 
 /datum/material/alloy/alien/on_removed_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
@@ -166,4 +168,4 @@
 	if(!istype(target_item))
 		return
 
-	target_item.slowdown -= MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / MINERAL_MATERIAL_AMOUNT
+	target_item.slowdown -= MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / SHEET_MATERIAL_AMOUNT

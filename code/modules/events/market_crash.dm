@@ -7,35 +7,51 @@
 	name = "Market Crash"
 	typepath = /datum/round_event/market_crash
 	weight = 10
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "Temporarily increases the prices of vending machines."
 
 /datum/round_event/market_crash
-	var/market_dip = 0
+	/// This counts the number of ticks that the market crash event has been processing, so that we don't call vendor price updates every tick, but we still iterate for other mechanics that use inflation.
+	var/tick_counter = 1
 
 /datum/round_event/market_crash/setup()
-	startWhen = 1
-	endWhen = rand(25, 50)
-	announceWhen = 2
+	start_when = 1
+	end_when = rand(100, 50)
+	announce_when = 2
 
 /datum/round_event/market_crash/announce(fake)
 	var/list/poss_reasons = list("the alignment of the moon and the sun",\
 		"some risky housing market outcomes",\
-		"The B.E.P.I.S. team's untimely downfall",\
+		"the B.E.P.I.S. team's untimely downfall",\
 		"speculative Terragov grants backfiring",\
-		"greatly exaggerated reports of Nanotrasen accountancy personnel committing mass suicide")
+		"greatly exaggerated reports of Nanotrasen accountancy personnel being \"laid off\"",\
+		"a \"great investment\" into \"non-fungible tokens\" by a \"moron\"",\
+		"a number of raids from Tiger Cooperative agents",\
+		"supply chain shortages",\
+		"the \"Nanotrasen+\" social media network's untimely downfall",\
+		"the \"Nanotrasen+\" social media network's unfortunate success",\
+		"uhh, bad luck, we guess"
+	)
 	var/reason = pick(poss_reasons)
 	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
 
 /datum/round_event/market_crash/start()
 	. = ..()
-	market_dip = rand(1000,10000) * length(SSeconomy.bank_accounts_by_id)
-	SSeconomy.station_target = max(SSeconomy.station_target - market_dip, 1)
+	SSeconomy.update_vending_prices()
 	SSeconomy.price_update()
 	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
 
 /datum/round_event/market_crash/end()
 	. = ..()
-	SSeconomy.station_target += market_dip
 	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
 	SSeconomy.price_update()
+	SSeconomy.update_vending_prices()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
 
+/datum/round_event/market_crash/tick()
+	. = ..()
+	tick_counter = tick_counter++
+	SSeconomy.inflation_value = 5.5*(log(activeFor+1))
+	if(tick_counter == 5)
+		tick_counter = 1
+		SSeconomy.update_vending_prices()

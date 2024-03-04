@@ -14,7 +14,7 @@
 	if (lighting_object)
 		qdel(lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	new/datum/lighting_object(src)
+	new /datum/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -81,41 +81,38 @@
 			reconsider_lights()
 		return
 	directional_opacity = NONE
-	for(var/atom/movable/opacity_source as anything in opacity_sources)
-		if(opacity_source.flags_1 & ON_BORDER_1)
-			directional_opacity |= opacity_source.dir
-		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
-			directional_opacity = ALL_CARDINALS
-			break
+	if(opacity_sources)
+		for(var/atom/movable/opacity_source as anything in opacity_sources)
+			if(opacity_source.flags_1 & ON_BORDER_1)
+				directional_opacity |= opacity_source.dir
+			else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
+				directional_opacity = ALL_CARDINALS
+				break
 	if(. != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
 		reconsider_lights() //The lighting system only cares whether the tile is fully concealed from all directions or not.
 
-
 ///Transfer the lighting of one area to another
 /turf/proc/transfer_area_lighting(area/old_area, area/new_area)
-	if(SSlighting.initialized)
+	if(SSlighting.initialized && !space_lit)
 		if (new_area.static_lighting != old_area.static_lighting)
 			if (new_area.static_lighting)
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
-	//Inherit overlay of new area
-	if(old_area.lighting_effect)
-		cut_overlay(old_area.lighting_effect)
-	if(new_area.lighting_effect)
-		add_overlay(new_area.lighting_effect)
 
-/turf/proc/generate_missing_corners()
-	if (!lighting_corner_NE)
-		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
+	// We will only run this logic on turfs off the prime z layer
+	// Since on the prime z layer, we use an overlay on the area instead, to save time
+	if(SSmapping.z_level_to_plane_offset[z])
+		var/index = SSmapping.z_level_to_plane_offset[z] + 1
+		//Inherit overlay of new area
+		if(old_area.lighting_effects)
+			cut_overlay(old_area.lighting_effects[index])
+		if(new_area.lighting_effects)
+			add_overlay(new_area.lighting_effects[index])
 
-	if (!lighting_corner_SE)
-		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
-
-	if (!lighting_corner_SW)
-		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
-
-	if (!lighting_corner_NW)
-		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
-
-	lighting_corners_initialised = TRUE
+	// Manage removing/adding starlight overlays, we'll inherit from the area so we can drop it if the area has it already
+	if(space_lit)
+		if(!new_area.lighting_effects && old_area.lighting_effects)
+			overlays += GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		else if (new_area.lighting_effects && !old_area.lighting_effects)
+			overlays -= GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1]

@@ -16,12 +16,13 @@
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
-	initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
+	if(!isnull(key_type))
+		initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
 	if(car_traits & CAN_KIDNAP)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.stat != CONSCIOUS || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
+	if(M.incapacitated() || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
 		return FALSE
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/kidnapped = dropping
@@ -29,15 +30,16 @@
 		mob_try_forced_enter(M, kidnapped)
 	return ..()
 
-/obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	if(M != user || !(LAZYACCESS(occupants, M) & VEHICLE_CONTROL_KIDNAPPED))
-		mob_exit(M, silent)
+/obj/vehicle/sealed/car/mob_try_exit(mob/future_pedestrian, mob/user, silent = FALSE)
+	if(future_pedestrian != user || !(LAZYACCESS(occupants, future_pedestrian) & VEHICLE_CONTROL_KIDNAPPED))
+		mob_exit(future_pedestrian, silent)
 		return TRUE
-	to_chat(user, span_notice("You push against the back of \the [src]'s trunk to try and get out."))
-	if(!do_after(user, escape_time, target = src))
-		return FALSE
+	if (escape_time > 0)
+		to_chat(user, span_notice("You push against the back of \the [src]'s trunk to try and get out."))
+		if(!do_after(user, escape_time, target = src))
+			return FALSE
 	to_chat(user,span_danger("[user] gets out of [src]."))
-	mob_exit(M, silent)
+	mob_exit(future_pedestrian, silent)
 	return TRUE
 
 /obj/vehicle/sealed/car/attack_hand(mob/living/user, list/modifiers)
@@ -58,7 +60,8 @@
 	if(occupant_amount() >= max_occupants)
 		return FALSE
 	var/atom/old_loc = loc
-	if(do_mob(forcer, kidnapped, get_enter_delay(kidnapped), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car.proc/is_car_stationary, old_loc)))
+	var/enter_delay = get_enter_delay(kidnapped)
+	if(enter_delay == 0 || do_after(forcer, enter_delay, kidnapped, extra_checks=CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/car, is_car_stationary), old_loc)))
 		mob_forced_enter(kidnapped, silent)
 		return TRUE
 	return FALSE
@@ -95,9 +98,9 @@
 
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
-		var/did_move = step(src, direction)
+		var/did_move = try_step_multiz(direction)
 		if(did_move)
 			step(trailer, dir_to_move)
 		return did_move
 	after_move(direction)
-	return step(src, direction)
+	return try_step_multiz(direction)

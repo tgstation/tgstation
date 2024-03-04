@@ -24,7 +24,7 @@
 
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
+	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
 /datum/admins/proc/announce()
 	set category = "Admin"
@@ -37,9 +37,9 @@
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		to_chat(world, "[span_adminnotice("<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>")]\n \t [message]", confidential = TRUE)
+		send_ooc_announcement(message, "From [usr.client.holder.fakekey ? "Administrator" : usr.key]")
 		log_admin("Announce: [key_name(usr)] : [message]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -50,7 +50,7 @@
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		tgui_alert(usr,"[M.name] is not prisoned.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Unprison")
 
 /client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
 	set category = "Admin"
@@ -64,8 +64,7 @@
 
 	var/list/msg = list()
 	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
-	var/list/clients_list_copy = GLOB.clients.Copy()
-	for(var/client/client in sort_list(clients_list_copy, /proc/cmp_playtime_asc))
+	for(var/client/client in sort_list(GLOB.clients, GLOBAL_PROC_REF(cmp_playtime_asc)))
 		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
@@ -80,7 +79,7 @@
 		return
 
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
-	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
+	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
@@ -129,14 +128,14 @@
 
 	switch(add_or_remove)
 		if("Add")
-			for(var/key in GLOB.traits_by_type)
+			for(var/key in GLOB.admin_visible_traits)
 				if(istype(D,key))
-					available_traits += GLOB.traits_by_type[key]
+					available_traits += GLOB.admin_visible_traits[key]
 		if("Remove")
-			if(!GLOB.trait_name_map)
-				GLOB.trait_name_map = generate_trait_name_map()
-			for(var/trait in D.status_traits)
-				var/name = GLOB.trait_name_map[trait] || trait
+			if(!GLOB.admin_trait_name_map)
+				GLOB.admin_trait_name_map = generate_admin_trait_name_map()
+			for(var/trait in D._status_traits)
+				var/name = GLOB.admin_trait_name_map[trait] || trait
 				available_traits[name] = trait
 
 	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sort_list(available_traits)
@@ -158,7 +157,7 @@
 				if("All")
 					source = null
 				if("Specific")
-					source = input("Source to be removed","Trait Remove/Add") as null|anything in sort_list(D.status_traits[chosen_trait])
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sort_list(GET_TRAIT_SOURCES(D, chosen_trait))
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
@@ -175,16 +174,14 @@
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/W in M)
-		if(!M.dropItemToGround(W))
-			qdel(W)
-			M.regenerate_icons()
+	M.drop_everything(del_on_drop = FALSE, force = TRUE, del_if_nodrop = TRUE)
+	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Everything") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Drop Everything")
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
 	if(!whom)
@@ -209,6 +206,9 @@
 		if(MUTE_DEADCHAT)
 			mute_string = "deadchat and DSAY"
 			feedback_string = "Deadchat"
+		if(MUTE_INTERNET_REQUEST)
+			mute_string = "internet sound requests"
+			feedback_string = "Internet Sound Requests"
 		if(MUTE_ALL)
 			mute_string = "everything"
 			feedback_string = "Everything"
@@ -245,7 +245,7 @@
 		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(whom)] from [mute_string].")
 		if(C)
 			to_chat(C, "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.", confidential = TRUE)
-		SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Auto Mute [feedback_string]", "1")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Auto Mute [feedback_string]", "1")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 		return
 
 	if(P.muted & mute_type)
@@ -259,7 +259,7 @@
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(whom)] from [mute_string].")
 	if(C)
 		to_chat(C, "You have been [muteunmute] from [mute_string] by [key_name(usr, include_name = FALSE)].", confidential = TRUE)
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Mute [feedback_string]", "[P.muted & mute_type]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Mute [feedback_string]", "[P.muted & mute_type]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /proc/immerse_player(mob/living/carbon/target, toggle=TRUE, remove=FALSE)
 	var/list/immersion_components = list(/datum/component/manual_breathing, /datum/component/manual_blinking)

@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	var/obj/item/spear/spear
-	var/obj/item/spear/speartype
+	var/obj/item/spear/speartype = /obj/item/spear
 	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears
@@ -40,37 +40,39 @@
 	return ..()
 
 /obj/structure/headpike/update_name()
-	name = "[victim.real_name] on a [spear]"
+	name = "[victim.real_name] on a [spear.name]"
 	return ..()
 
 /obj/structure/headpike/update_overlays()
 	. = ..()
 	if(!victim)
 		return
-	var/mutable_appearance/MA = new()
-	MA.copy_overlays(victim)
-	MA.pixel_y = 12
-	MA.pixel_x = pixel_x
-	. += victim
+	var/mutable_appearance/appearance = new()
+	appearance.copy_overlays(victim)
+	appearance.pixel_y = 12
+	appearance.layer = layer + 0.1
+	. += appearance
 
-/obj/structure/headpike/handle_atom_del(atom/A)
-	if(A == victim)
+/obj/structure/headpike/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != victim && gone != spear)
+		return
+	if(gone == victim)
 		victim = null
-	if(A == spear)
+	if(gone == spear)
 		spear = null
 	if(!QDELETED(src))
 		deconstruct(TRUE)
-	return ..()
 
 /obj/structure/headpike/deconstruct(disassembled)
+	var/obj/item/bodypart/head/our_head = victim
+	var/obj/item/spear/our_spear = spear
+	victim = null
+	spear = null
+	our_head?.forceMove(drop_location()) //Make sure the head always comes off
 	if(!disassembled)
 		return ..()
-	if(victim)
-		victim.forceMove(drop_location())
-		victim = null
-	if(spear)
-		spear.forceMove(drop_location())
-		spear = null
+	our_spear?.forceMove(drop_location())
 	return ..()
 
 /obj/structure/headpike/attack_hand(mob/user, list/modifiers)

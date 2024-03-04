@@ -1,28 +1,30 @@
 /// Logging for loading and caching assets
-/proc/log_asset(text)
-	if(CONFIG_GET(flag/log_asset))
-		WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
+/proc/log_asset(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_ASSET, text, data)
 
 /// Logging for config errors
 /// Rarely gets called; just here in case the config breaks.
-/proc/log_config(text)
-	WRITE_LOG(GLOB.config_error_log, text)
+/proc/log_config(text, list/data)
+	logger.Log(LOG_CATEGORY_CONFIG, text, data)
 	SEND_TEXT(world.log, text)
 
-/proc/log_filter_raw(text)
-	WRITE_LOG(GLOB.filter_log, "FILTER: [text]")
+/proc/log_filter_raw(text, list/data)
+	logger.Log(LOG_CATEGORY_FILTER, text, data)
 
 /// Logging for job slot changes
-/proc/log_job_debug(text)
-	if (CONFIG_GET(flag/log_job_debug))
-		WRITE_LOG(GLOB.world_job_debug_log, "JOB: [text]")
+/proc/log_job_debug(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_JOB, text, data)
+
+/// Logging for lua scripting
+/proc/log_lua(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data)
 
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
 #ifdef UNIT_TESTS
 	GLOB.unit_test_mapping_logs += text
 #endif
-	WRITE_LOG(GLOB.world_map_error_log, text)
+	logger.Log(LOG_CATEGORY_DEBUG_MAPPING, text)
 	if(skip_world_log)
 		return
 	SEND_TEXT(world.log, text)
@@ -33,28 +35,27 @@
 	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
 
 /// Logging for hard deletes
-/proc/log_qdel(text)
-	WRITE_LOG(GLOB.world_qdel_log, "QDEL: [text]")
-
-/// Logging for SQL errors
-/proc/log_query_debug(text)
-	WRITE_LOG(GLOB.query_debug_log, "SQL: [text]")
-
-/// Logging for DB errors
-/proc/log_sql(text)
-	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")
-
-/// Logging for world/Topic
-/proc/log_topic(text)
-	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
+/proc/log_qdel(text, list/data)
+	logger.Log(LOG_CATEGORY_QDEL, text, data)
 
 /* Log to the logfile only. */
-/proc/log_runtime(text)
-	WRITE_LOG(GLOB.world_runtime_log, text)
+/proc/log_runtime(text, list/data)
+	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
+
+/proc/log_signal(text, list/data)
+	logger.Log(LOG_CATEGORY_SIGNAL, text, data)
+
+/// Logging for DB errors
+/proc/log_sql(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_SQL, text, data)
+
+/// Logging for world/Topic
+/proc/log_topic(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_TOPIC, text, data)
 
 /// Log to both DD and the logfile.
-/proc/log_world(text)
+/proc/log_world(text, list/data)
 #ifdef USE_CUSTOM_ERROR_HANDLER
-	WRITE_LOG(GLOB.world_runtime_log, text)
+	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
 #endif
 	SEND_TEXT(world.log, text)

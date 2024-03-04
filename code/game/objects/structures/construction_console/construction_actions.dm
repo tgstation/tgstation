@@ -3,7 +3,7 @@
 
 ///Generic construction action for base [construction consoles][/obj/machinery/computer/camera_advanced/base_construction].
 /datum/action/innate/construction
-	icon_icon = 'icons/mob/actions/actions_construction.dmi'
+	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
 	var/mob/camera/ai_eye/remote/base_construction/remote_eye
 	///Console itself
@@ -52,49 +52,24 @@
 	var/atom/rcd_target = target_turf
 	//Find airlocks and other shite
 	for(var/obj/S in target_turf)
-		if(LAZYLEN(S.rcd_vals(owner,base_console.internal_rcd)))
+		if(LAZYLEN(S.rcd_vals(owner, base_console.internal_rcd)))
 			rcd_target = S //If we don't break out of this loop we'll get the last placed thing
 	owner.changeNext_move(CLICK_CD_RANGE)
 	check_rcd()
-	base_console.internal_rcd.pre_attack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
+	base_console.internal_rcd.rcd_create(rcd_target, owner) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
 
-/datum/action/innate/construction/switch_mode
-	name = "Switch Mode"
-	button_icon_state = "builder_mode"
+/datum/action/innate/construction/configure_mode
+	name = "Configure RCD"
+	button_icon = 'icons/obj/tools.dmi'
+	button_icon_state = "rcd"
 
-/datum/action/innate/construction/switch_mode/Activate()
-	if(..())
-		return
-	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
-	var/buildmode = tgui_input_list(owner, "Set construction mode", "Base Console", buildlist)
-	if(isnull(buildmode))
-		return
-	if(isnull(buildlist[buildmode]))
-		return
-	check_rcd()
-	base_console.internal_rcd.construction_mode = buildlist[buildmode]
-	to_chat(owner, "Build mode is now [buildmode].")
-
-/datum/action/innate/construction/airlock_type
-	name = "Select Airlock Type"
-	button_icon_state = "airlock_select"
-
-/datum/action/innate/construction/airlock_type/Activate()
+/datum/action/innate/construction/configure_mode/Activate()
 	if(..())
 		return
 	check_rcd()
-	base_console.internal_rcd.change_airlock_setting(owner, remote_eye)
-
-/datum/action/innate/construction/window_type
-	name = "Select Window Glass"
-	button_icon_state = "window_select"
-
-/datum/action/innate/construction/window_type/Activate()
-	if(..())
-		return
-	check_rcd()
-	base_console.internal_rcd.toggle_window_glass(owner)
+	base_console.internal_rcd.owner = base_console
+	base_console.internal_rcd.ui_interact(owner)
 
 ///Generic action used with base construction consoles to build anything that can't be built with an RCD
 /datum/action/innate/construction/place_structure

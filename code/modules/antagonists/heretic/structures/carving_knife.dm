@@ -3,9 +3,9 @@
 	name = "carving knife"
 	desc = "A small knife made of cold steel, pure and perfect. Its sharpness can carve into titanium itself - \
 		but only few can evoke the dangers that lurk beneath reality."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "rune_carver"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	wound_bonus = 20
@@ -59,7 +59,7 @@
 	if(is_type_in_typecache(target, blacklisted_turfs))
 		return
 
-	INVOKE_ASYNC(src, .proc/try_carve_rune, target, user)
+	INVOKE_ASYNC(src, PROC_REF(try_carve_rune), target, user)
 
 /*
  * Begin trying to carve a rune. Go through a few checks, then call do_carve_rune if successful.
@@ -126,9 +126,10 @@
 /datum/action/item_action/rune_shatter
 	name = "Rune Break"
 	desc = "Destroys all runes carved by this blade."
-	background_icon_state = "bg_ecult"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
 	button_icon_state = "rune_break"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 
 /datum/action/item_action/rune_shatter/New(Target)
 	. = ..()
@@ -142,7 +143,7 @@
 
 	return ..()
 
-/datum/action/item_action/rune_shatter/IsAvailable()
+/datum/action/item_action/rune_shatter/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -167,7 +168,7 @@
 /obj/structure/trap/eldritch
 	name = "elder carving"
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	/// A tip displayed to heretics who examine the rune carver. Explains what the rune does.
 	var/carver_tip
 	/// Reference to trap owner mob
@@ -238,11 +239,11 @@
 		return
 	var/mob/living/carbon/carbon_victim = victim
 	carbon_victim.adjustStaminaLoss(80)
-	carbon_victim.silent += 10
-	carbon_victim.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
-	carbon_victim.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
-	carbon_victim.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	carbon_victim.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-	carbon_victim.blind_eyes(2)
-	SEND_SIGNAL(carbon_victim, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	carbon_victim.adjust_silence(20 SECONDS)
+	carbon_victim.adjust_stutter(1 MINUTES)
+	carbon_victim.adjust_confusion(5 SECONDS)
+	carbon_victim.set_jitter_if_lower(20 SECONDS)
+	carbon_victim.set_dizzy_if_lower(40 SECONDS)
+	carbon_victim.adjust_temp_blindness(4 SECONDS)
+	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)

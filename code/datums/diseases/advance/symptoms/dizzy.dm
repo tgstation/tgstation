@@ -8,9 +8,9 @@
  */
 
 /datum/symptom/dizzy // Not the egg
-
 	name = "Dizziness"
 	desc = "The virus causes inflammation of the vestibular system, leading to bouts of dizziness."
+	illness = "Motion Sickness"
 	resistance = -2
 	stage_speed = -3
 	transmittable = -1
@@ -44,6 +44,6 @@
 				to_chat(M, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		else
 			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
-			M.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, max_duration = 140 SECONDS)
+			M.adjust_dizzy_up_to(1 MINUTES, 140 SECONDS)
 			if(power >= 2)
-				M.set_timed_status_effect(80 SECONDS, /datum/status_effect/drugginess)
+				M.set_drugginess(80 SECONDS)

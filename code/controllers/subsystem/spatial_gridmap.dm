@@ -44,7 +44,7 @@
 	client_contents = dummy_list
 	atmos_contents = dummy_list
 
-/datum/spatial_grid_cell/Destroy(force, ...)
+/datum/spatial_grid_cell/Destroy(force)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
 		stack_trace("dont try to destroy spatial grid cells without a good reason. if you need to do it use force")
 		return
@@ -102,11 +102,12 @@ SUBSYSTEM_DEF(spatial_grid)
 	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
 
-/datum/controller/subsystem/spatial_grid/Initialize(start_timeofday)
-	. = ..()
-
+/datum/controller/subsystem/spatial_grid/Initialize()
 	cells_on_x_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxx)
 	cells_on_y_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxy)
+
+	// enter_cell only runs if 'initialized'
+	initialized = TRUE
 
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
 		propogate_spatial_grid_to_new_z(null, z_level)
@@ -119,17 +120,18 @@ SUBSYSTEM_DEF(spatial_grid)
 			if(movable_turf)
 				enter_cell(movable, movable_turf)
 
-			UnregisterSignal(movable, COMSIG_PARENT_QDELETING)
+			UnregisterSignal(movable, COMSIG_QDELETING)
 			waiting_to_add_by_type[channel_type] -= movable
 
 	pregenerate_more_oranges_ears(NUMBER_OF_PREGENERATED_ORANGES_EARS)
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/propogate_spatial_grid_to_new_z)
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, .proc/after_world_bounds_expanded)
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(propogate_spatial_grid_to_new_z))
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, PROC_REF(after_world_bounds_expanded))
+	return SS_INIT_SUCCESS
 
 ///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
-	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, .proc/queued_item_deleted, override = TRUE)
+	RegisterSignal(waiting_movable, COMSIG_QDELETING, PROC_REF(queued_item_deleted), override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	waiting_to_add_by_type[type] += waiting_movable
 
@@ -144,11 +146,11 @@ SUBSYSTEM_DEF(spatial_grid)
 				waiting_movable_is_in_other_queues = TRUE
 
 		if(!waiting_movable_is_in_other_queues)
-			UnregisterSignal(movable_to_remove, COMSIG_PARENT_QDELETING)
+			UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
 
 		return
 
-	UnregisterSignal(movable_to_remove, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
 	for(var/type in waiting_to_add_by_type)
 		waiting_to_add_by_type[type] -= movable_to_remove
 
@@ -170,53 +172,6 @@ SUBSYSTEM_DEF(spatial_grid)
 		for(var/x in 1 to cells_on_x_axis)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
-
-///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears.
-///i really fucking hope this never gets called after init :clueless:
-/datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
-	for(var/new_ear in 1 to number_to_generate)
-		pregenerated_oranges_ears += new/mob/oranges_ear(null)
-
-	number_of_oranges_ears = length(pregenerated_oranges_ears)
-
-///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
-///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
-/datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
-	var/input_length = length(atoms_that_need_ears)
-
-	if(input_length > number_of_oranges_ears)
-		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
-		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
-
-	. = list()
-
-	///the next unallocated /mob/oranges_ear that we try to allocate to assigned_atom's turf
-	var/mob/oranges_ear/current_ear
-	///the next atom in atoms_that_need_ears an ear assigned to it
-	var/atom/assigned_atom
-	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
-	///because allocating more than one oranges_ear to a given loc wastes view iterations
-	var/turf/turf_loc
-
-	for(var/current_ear_index in 1 to input_length)
-		assigned_atom = atoms_that_need_ears[current_ear_index]
-
-		turf_loc = get_turf(assigned_atom)
-		if(!turf_loc)
-			continue
-
-		current_ear = pregenerated_oranges_ears[current_ear_index]
-
-		if(turf_loc.assigned_oranges_ear)
-			turf_loc.assigned_oranges_ear.references += assigned_atom
-			continue //if theres already an oranges_ear mob at assigned_movable's turf we give assigned_movable to it instead and dont allocate ourselves
-
-		current_ear.references += assigned_atom
-
-		current_ear.loc = turf_loc //normally this is bad, but since this is meant to be as fast as possible we literally just need to exist there for view() to see us
-		turf_loc.assigned_oranges_ear = current_ear
-
-		. += current_ear
 
 ///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed.
 ///because i never tested this.
@@ -277,10 +232,6 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/center_y = center_turf.y
 
 	. = list()
-
-	//cache for sanic speeds
-	var/cells_on_y_axis = src.cells_on_y_axis
-	var/cells_on_x_axis = src.cells_on_x_axis
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
 	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
@@ -458,6 +409,8 @@ SUBSYSTEM_DEF(spatial_grid)
 			GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
+	return intersecting_cell
+
 /**
  * find the spatial map cell that target used to belong to, then remove the target (and sometimes it's important_recusive_contents) from it.
  * make sure to provide the turf old_target used to be "in"
@@ -482,18 +435,18 @@ SUBSYSTEM_DEF(spatial_grid)
 	for(var/type in spatial_grid_categories[old_target.spatial_grid_key])
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+				var/list/old_target_contents = old_target.important_recursive_contents?[type] || old_target
+				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target_contents)
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+				var/list/old_target_contents = old_target.important_recursive_contents?[type] || old_target
+				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target_contents)
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 				GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
-				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), old_target)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target)
 
 	return TRUE
 
@@ -514,14 +467,14 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			var/list/old_target_contents = old_target.important_recursive_contents?[exclusive_type] || old_target //cache for sanic speeds (lists are references anyways)
+			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents)
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents)
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			var/list/old_target_contents = old_target.important_recursive_contents
-			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			var/list/old_target_contents = old_target.important_recursive_contents?[exclusive_type] || old_target
+			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents)
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents)
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
@@ -529,21 +482,106 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return TRUE
 
-///find the cell this movable is associated with and removes it from all lists
-/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+/// if for whatever reason this movable is "untracked" e.g. it breaks the assumption that a movable is only inside the contents of any grid cell associated with its loc,
+/// this will error. this checks every grid cell in the world so dont call this on live unless you have to.
+/// returns TRUE if this movable is untracked, FALSE otherwise
+/datum/controller/subsystem/spatial_grid/proc/untracked_movable_error(atom/movable/movable_to_check)
+	if(!movable_to_check?.spatial_grid_key)
+		return FALSE
+
+	if(!initialized)
+		return FALSE
+
+	var/datum/spatial_grid_cell/loc_cell = get_cell_of(movable_to_check)
+	var/list/containing_cells = find_hanging_cell_refs_for_movable(movable_to_check, remove_from_cells=FALSE)
+	//if we're in multiple cells, throw an error.
+	//if we're in 1 cell but it cant be deduced by our location, throw an error.
+	if(length(containing_cells) > 1 || (length(containing_cells) == 1 && loc_cell && containing_cells[1] != loc_cell && containing_cells[1] != null))
+		var/error_data = ""
+
+		var/location_string = "which is in nullspace, and thus not be within the contents of any spatial grid cell"
+		if(loc_cell)
+			location_string = "which is supposed to only be in the contents of a spatial grid cell at coords: ([GRID_INDEX_TO_COORDS(loc_cell.cell_x)], [GRID_INDEX_TO_COORDS(loc_cell.cell_y)], [loc_cell.cell_z])"
+
+		var/error_explanation = "was in the contents of [length(containing_cells)] spatial grid cells when it was only supposed to be in one!"
+		if(length(containing_cells) == 1)
+			error_explanation = "was in the contents of 1 spatial grid cell but it was inside the area handled by another grid cell!"
+			var/datum/spatial_grid_cell/bad_cell = containing_cells[1]
+
+			error_data = "within the contents of a cell at coords: ([GRID_INDEX_TO_COORDS(bad_cell.cell_x)], [GRID_INDEX_TO_COORDS(bad_cell.cell_y)], [bad_cell.cell_z])"
+
+		if(!error_data)
+			for(var/datum/spatial_grid_cell/cell in containing_cells)
+				var/coords = "([GRID_INDEX_TO_COORDS(cell.cell_x)], [GRID_INDEX_TO_COORDS(cell.cell_y)], [cell.cell_z])"
+				var/contents = ""
+
+				if(movable_to_check in cell.hearing_contents)
+					contents = "hearing"
+
+				if(movable_to_check in cell.client_contents)
+					if(length(contents) > 0)
+						contents = "[contents], client"
+					else
+						contents = "client"
+
+				if(movable_to_check in cell.atmos_contents)
+					if(length(contents) > 0)
+						contents = "[contents], atmos"
+					else
+						contents = "atmos"
+
+				if(length(error_data) > 0)
+					error_data = "[error_data], {coords: [coords], within channels: [contents]}"
+				else
+					error_data = "within the contents of the following cells: {coords: [coords], within channels: [contents]}"
+
+		/**
+		 * example:
+		 *
+		 * /mob/living/trolls_the_maintainer instance, which is supposed to only be in the contents of a spatial grid cell at coords: (136, 136, 14),
+		 * was in the contents of 3 spatial grid cells when it was only supposed to be in one! within the contents of the following cells:
+		 * {(68, 153, 2), within channels: hearing},
+		 * {coords: (221, 170, 3), within channels: hearing},
+		 * {coords: (255, 153, 11), within channels: hearing},
+		 * {coords: (136, 136, 14), within channels: hearing}.
+		 */
+		stack_trace("[movable_to_check.type] instance, [location_string], [error_explanation] [error_data].")
+
+		return TRUE
+
+	return FALSE
+
+/**
+ * remove this movable from the grid by finding the grid cell its in and removing it from that.
+ * if it cant infer a grid cell its located in (e.g. if its in nullspace but it can happen if the grid isnt expanded to a z level), search every grid cell.
+ */
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_grid(atom/movable/to_remove)
+	if(!to_remove?.spatial_grid_key)
+		return
+
 	if(!initialized)
 		remove_from_pre_init_queue(to_remove)//the spatial grid doesnt exist yet, so just take it out of the queue
 		return
 
-	if(!input_cell)
-		input_cell = get_cell_of(to_remove)
-		if(!input_cell)
-			find_hanging_cell_refs_for_movable(to_remove, TRUE)
-			return
+#ifdef UNIT_TESTS
+	if(untracked_movable_error(to_remove))
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=FALSE) //dont remove from cells because we should be able to see 2 errors
+		return
+#endif
 
-	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell.atmos_contents, to_remove)
+	var/datum/spatial_grid_cell/loc_cell = get_cell_of(to_remove)
+
+	if(loc_cell)
+		GRID_CELL_REMOVE_ALL(loc_cell, to_remove)
+	else
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
+
+///remove this movable from the given spatial_grid_cell
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+	if(!input_cell)
+		return
+
+	GRID_CELL_REMOVE_ALL(input_cell, to_remove)
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
@@ -573,7 +611,7 @@ SUBSYSTEM_DEF(spatial_grid)
 ///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
-	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE, remove_from_cells)
+	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, remove_from_cells)
 
 	message_admins("[src] is located in the contents of [length(containing_cells)] spatial grid cells")
 
@@ -583,6 +621,53 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	message_admins(cell_coords)
 	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y], [real_cell.cell_z]). but is contained at the cells at [cell_coords]")
+
+///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears.
+///i really fucking hope this never gets called after init :clueless:
+/datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
+	for(var/new_ear in 1 to number_to_generate)
+		pregenerated_oranges_ears += new/mob/oranges_ear(null)
+
+	number_of_oranges_ears = length(pregenerated_oranges_ears)
+
+///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
+///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
+/datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
+	var/input_length = length(atoms_that_need_ears)
+
+	if(input_length > number_of_oranges_ears)
+		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
+		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
+
+	. = list()
+
+	///the next unallocated /mob/oranges_ear that we try to allocate to assigned_atom's turf
+	var/mob/oranges_ear/current_ear
+	///the next atom in atoms_that_need_ears an ear assigned to it
+	var/atom/assigned_atom
+	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
+	///because allocating more than one oranges_ear to a given loc wastes view iterations
+	var/turf/turf_loc
+
+	for(var/current_ear_index in 1 to input_length)
+		assigned_atom = atoms_that_need_ears[current_ear_index]
+
+		turf_loc = get_turf(assigned_atom)
+		if(!turf_loc)
+			continue
+
+		current_ear = pregenerated_oranges_ears[current_ear_index]
+
+		if(turf_loc.assigned_oranges_ear)
+			turf_loc.assigned_oranges_ear.references += assigned_atom
+			continue //if theres already an oranges_ear mob at assigned_movable's turf we give assigned_movable to it instead and dont allocate ourselves
+
+		current_ear.references += assigned_atom
+
+		current_ear.loc = turf_loc //normally this is bad, but since this is meant to be as fast as possible we literally just need to exist there for view() to see us
+		turf_loc.assigned_oranges_ear = current_ear
+
+		. += current_ear
 
 ///debug proc for finding how full the cells of src's z level are
 /atom/proc/find_grid_statistics_for_z_level(insert_clients = 0)
@@ -634,7 +719,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			turfs = GLOB.station_turfs
 
 		else
-			turfs = block(locate(1,1,z), locate(world.maxx, world.maxy, z))
+			turfs = Z_TURFS(z)
 
 		for(var/client_to_insert in 0 to insert_clients)
 			var/turf/random_turf = pick(turfs)
@@ -756,6 +841,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
 
-#undef GRID_CELL_ADD
-#undef GRID_CELL_REMOVE
-#undef GRID_CELL_SET
+#undef BOUNDING_BOX_MAX
+#undef BOUNDING_BOX_MIN
+
+#undef NUMBER_OF_PREGENERATED_ORANGES_EARS

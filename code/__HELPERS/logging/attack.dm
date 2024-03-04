@@ -1,7 +1,6 @@
 /// Generic attack logging
-/proc/log_attack(text)
-	if (CONFIG_GET(flag/log_attack))
-		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
+/proc/log_attack(text, list/data)
+	logger.Log(LOG_CATEGORY_ATTACK, text, data)
 
 /**
  * Log a combat message in the attack log
@@ -29,11 +28,11 @@
 
 	var/postfix = "[sobject][saddition][hp]"
 
-	var/message = "has [what_done] [starget][postfix]"
+	var/message = "[what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
 
 	if(user != target)
-		var/reverse_message = "has been [what_done] by [ssource][postfix]"
+		var/reverse_message = "was [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
@@ -53,7 +52,7 @@
 /proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
 	if(QDELETED(victim) || !suffered_wound)
 		return
-	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
+	var/message = "suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.plaintext_zone]" : null]"// maybe indicate if it's a promote/demote?
 
 	if(dealt_damage)
 		message += " | Damage: [dealt_damage]"
@@ -75,7 +74,7 @@
 
 	if(user)
 		user.log_message(bomb_message, LOG_ATTACK) //let it go to individual logs as well as the game log
-		bomb_message = "[key_name(user)] at [AREACOORD(user)] [bomb_message]"
+		bomb_message = "[key_name(user)] at [AREACOORD(user)] [bomb_message]."
 	else
 		log_game(bomb_message)
 

@@ -63,7 +63,7 @@
 	// Close UIs if mindless.
 	if(!client && !HAS_TRAIT(src, TRAIT_PRESERVE_UI_WITHOUT_CLIENT))
 		return UI_CLOSE
-	// Disable UIs if unconcious.
+	// Disable UIs if unconscious.
 	else if(stat)
 		return UI_DISABLED
 	// Update UIs if incapicitated but concious.
@@ -71,9 +71,9 @@
 		return UI_UPDATE
 	return UI_INTERACTIVE
 
-/mob/living/shared_ui_interaction(src_object)
+/mob/living/shared_ui_interaction(atom/src_object)
 	. = ..()
-	if(!(mobility_flags & MOBILITY_UI) && . == UI_INTERACTIVE)
+	if(!(mobility_flags & MOBILITY_UI) && !(src_object.interaction_flags_atom & INTERACT_ATOM_IGNORE_MOBILITY) && . == UI_INTERACTIVE)
 		return UI_UPDATE
 
 /mob/living/silicon/ai/shared_ui_interaction(src_object)

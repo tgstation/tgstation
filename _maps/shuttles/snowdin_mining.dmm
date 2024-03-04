@@ -5,11 +5,8 @@
 	},
 /obj/docking_port/mobile/elevator{
 	dir = 4;
-	dwidth = 2;
-	height = 5;
-	id = "snowdin_mining";
-	name = "mining elevator";
-	width = 5
+	shuttle_id = "snowdin_mining";
+	name = "mining elevator"
 	},
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator2)

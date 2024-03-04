@@ -1,0 +1,5 @@
+/mob/living/simple_animal/chicken : /mob/living/basic/chicken{@OLD}
+
+## Updated in #75663
+/mob/living/simple_animal/chick : /mob/living/basic/chick{@OLD}
+/mob/living/simple_animal/chick/holo : /mob/living/basic/chick/permanent{@OLD}

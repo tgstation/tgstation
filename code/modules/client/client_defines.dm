@@ -19,8 +19,8 @@
 	 * By default in byond if you define a proc on datums, that proc will exist on nearly every single type
 	 * from icons to images to atoms to mobs to objs to turfs to areas, it won't however, appear on client
 	 *
-	 * instead by default they act like their own independent type so while you can do istype(icon, /datum)
-	 * and have it return true, you can't do istype(client, /datum), it will always return false.
+	 * instead by default they act like their own independent type so while you can do isdatum(icon)
+	 * and have it return true, you can't do isdatum(client), it will always return false.
 	 *
 	 * This makes writing oo code hard, when you have to consider this extra special case
 	 *
@@ -50,6 +50,8 @@
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
+	///If we are currently building this client's ban cache, this var stores the timeofday we started at
+	var/ban_cache_start = 0
 	///Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message = ""
 	///contins a number of how many times a message identical to last_message was sent.
@@ -74,8 +76,6 @@
 	var/move_delay = 0
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
 	var/visual_delay = 0
-	///Current area of the controlled mob
-	var/area = null
 
 		///////////////
 		//SOUND STUFF//
@@ -158,8 +158,6 @@
 
 	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
 	var/list/atom/selected_target[2]
-	///Autoclick variable referencing the associated item.
-	var/obj/item/active_mousedown_item = null
 	///Used in MouseDrag to preserve the original mouse click parameters
 	var/mouseParams = ""
 	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
@@ -170,10 +168,19 @@
 	var/middragtime = 0
 	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
 	var/datum/weakref/middle_drag_atom_ref
+	//When we started the currently active drag
+	var/drag_start = 0
+	//The params we were passed at the start of the drag, in list form
+	var/list/drag_details
 
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	//Hide top bars
+	var/fullscreen = FALSE
+	//Hide status bar (bottom left)
+	var/show_status_bar = TRUE
 
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
@@ -187,6 +194,8 @@
 	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
+	///Our object window datum. It stores info about and handles behavior for the object tab
+	var/datum/object_window_info/obj_window
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
@@ -231,6 +240,9 @@
 	var/list/keys_held = list()
 	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
 	var/list/key_combos_held = list()
+	/// The direction we WANT to move, based off our keybinds
+	/// Will be udpated to be the actual direction later on
+	var/intended_direction = NONE
 	/*
 	** These next two vars are to apply movement for keypresses and releases made while move delayed.
 	** Because discarding that input makes the game less responsive.
@@ -251,3 +263,6 @@
 
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
+
+	/// Does this client have typing indicators enabled?
+	var/typing_indicators = FALSE

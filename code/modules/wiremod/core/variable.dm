@@ -45,9 +45,9 @@
 /// Adds a listener to receive inputs when the variable has a value that is set.
 /datum/circuit_variable/proc/add_listener(obj/item/circuit_component/to_add)
 	listeners += to_add
-	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, .proc/on_listener_qdel)
+	RegisterSignal(to_add, COMSIG_QDELETING, PROC_REF(on_listener_qdel))
 
 /// Removes a listener to receive inputs when the variable has a value that is set. Listener will usually clean themselves up
 /datum/circuit_variable/proc/remove_listener(obj/item/circuit_component/to_remove)
-	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(to_remove, COMSIG_QDELETING)
 	listeners -= to_remove

@@ -3,6 +3,9 @@
 	custom_commands = list()
 	for(var/I in typesof(/datum/tgs_chat_command) - /datum/tgs_chat_command)
 		var/datum/tgs_chat_command/stc = new I
+		if(stc.ignore_type == I)
+			continue
+
 		var/command_name = stc.name
 		if(!command_name || findtext(command_name, " ") || findtext(command_name, "'") || findtext(command_name, "\""))
 			TGS_ERROR_LOG("Custom command [command_name] ([I]) can't be used as it is empty or contains illegal characters!")
@@ -34,8 +37,8 @@
 
 	var/datum/tgs_chat_command/sc = custom_commands[command]
 	if(sc)
-		var/result = sc.Run(u, params)
-		if(result == null)
-			result = ""
-		return result
+		var/datum/tgs_message_content/result = sc.Run(u, params)
+		result = UpgradeDeprecatedCommandResponse(result, command)
+
+		return result ? result.text : TRUE
 	return "Unknown command: [command]!"

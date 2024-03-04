@@ -1,7 +1,7 @@
 /obj/machinery/abductor/pad
 	name = "Alien Telepad"
 	desc = "Use this to transport to and from the humans' habitat."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "alien-pad-idle"
 	var/turf/teleport_target
 	var/obj/machinery/abductor/console/console
@@ -38,7 +38,7 @@
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
 	new /obj/effect/temp_visual/teleport_abductor(place)
-	addtimer(CALLBACK(src, .proc/doMobToLoc, place, target), 80)
+	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 80)
 
 /obj/machinery/abductor/pad/proc/doPadToLoc(place)
 	flick("alien-pad", src)
@@ -48,16 +48,22 @@
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
 	new /obj/effect/temp_visual/teleport_abductor(place)
-	addtimer(CALLBACK(src, .proc/doPadToLoc, place), 80)
+	addtimer(CALLBACK(src, PROC_REF(doPadToLoc), place), 80)
 
 /obj/effect/temp_visual/teleport_abductor
 	name = "Huh"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "teleport"
-	duration = 80
+	duration = 8 SECONDS
 
 /obj/effect/temp_visual/teleport_abductor/Initialize(mapload)
 	. = ..()
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(10,0,loc)
 	S.start()
+
+/obj/effect/temp_visual/teleport_golem
+	name = "bluespace silhouette"
+	icon = 'icons/obj/antags/abductor.dmi'
+	icon_state = "teleport"
+	duration = 6 SECONDS

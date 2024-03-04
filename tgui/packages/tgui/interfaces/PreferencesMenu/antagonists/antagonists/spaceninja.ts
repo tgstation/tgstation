@@ -1,9 +1,10 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 const SpaceNinja: Antagonist = {
-  key: "spaceninja",
-  name: "Space Ninja",
+  key: 'spaceninja',
+  name: 'Space Ninja',
   description: [
     multiline`
       The Spider Clan practice a sort of augmentation of human flesh in order to

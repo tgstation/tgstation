@@ -1,9 +1,10 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 const Cultist: Antagonist = {
-  key: "cultist",
-  name: "Cultist",
+  key: 'cultist',
+  name: 'Cultist',
   description: [
     multiline`
       The Geometer of Blood, Nar-Sie, has sent a number of her followers to

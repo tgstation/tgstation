@@ -4,7 +4,18 @@
  * @license MIT
  */
 
-import { addChatPage, changeChatPage, loadChat, removeChatPage, toggleAcceptedType, updateChatPage, updateMessageCount, changeScrollTracking } from './actions';
+import {
+  addChatPage,
+  changeChatPage,
+  changeScrollTracking,
+  loadChat,
+  moveChatPageLeft,
+  moveChatPageRight,
+  removeChatPage,
+  toggleAcceptedType,
+  updateChatPage,
+  updateMessageCount,
+} from './actions';
 import { canPageAcceptType, createMainPage } from './model';
 
 const mainPage = createMainPage();
@@ -13,9 +24,7 @@ export const initialState = {
   version: 5,
   currentPageId: mainPage.id,
   scrollTracking: true,
-  pages: [
-    mainPage.id,
-  ],
+  pages: [mainPage.id],
   pageById: {
     [mainPage.id]: mainPage,
   },
@@ -74,7 +83,7 @@ export const chatReducer = (state = initialState, action) => {
   }
   if (type === updateMessageCount.type) {
     const countByType = payload;
-    const pages = state.pages.map(id => state.pageById[id]);
+    const pages = state.pages.map((id) => state.pageById[id]);
     const currentPage = state.pageById[state.currentPageId];
     const nextPageById = { ...state.pageById };
     for (let page of pages) {
@@ -170,7 +179,7 @@ export const chatReducer = (state = initialState, action) => {
       },
     };
     delete nextState.pageById[pageId];
-    nextState.pages = nextState.pages.filter(id => id !== pageId);
+    nextState.pages = nextState.pages.filter((id) => id !== pageId);
     if (nextState.pages.length === 0) {
       nextState.pages.push(mainPage.id);
       nextState.pageById[mainPage.id] = mainPage;
@@ -178,6 +187,53 @@ export const chatReducer = (state = initialState, action) => {
     }
     if (!nextState.currentPageId || nextState.currentPageId === pageId) {
       nextState.currentPageId = nextState.pages[0];
+    }
+    return nextState;
+  }
+  if (type === moveChatPageLeft.type) {
+    const { pageId } = payload;
+    const nextState = {
+      ...state,
+      pages: [...state.pages],
+      pageById: {
+        ...state.pageById,
+      },
+    };
+    const tmpPage = nextState.pageById[pageId];
+    const fromIndex = nextState.pages.indexOf(tmpPage.id);
+    const toIndex = fromIndex - 1;
+    // don't ever move leftmost page
+    if (fromIndex > 0) {
+      // don't ever move anything to the leftmost page
+      if (toIndex > 0) {
+        const tmp = nextState.pages[fromIndex];
+        nextState.pages[fromIndex] = nextState.pages[toIndex];
+        nextState.pages[toIndex] = tmp;
+      }
+    }
+    return nextState;
+  }
+
+  if (type === moveChatPageRight.type) {
+    const { pageId } = payload;
+    const nextState = {
+      ...state,
+      pages: [...state.pages],
+      pageById: {
+        ...state.pageById,
+      },
+    };
+    const tmpPage = nextState.pageById[pageId];
+    const fromIndex = nextState.pages.indexOf(tmpPage.id);
+    const toIndex = fromIndex + 1;
+    // don't ever move leftmost page
+    if (fromIndex > 0) {
+      // don't ever move anything out of the array
+      if (toIndex < nextState.pages.length) {
+        const tmp = nextState.pages[fromIndex];
+        nextState.pages[fromIndex] = nextState.pages[toIndex];
+        nextState.pages[toIndex] = tmp;
+      }
     }
     return nextState;
   }

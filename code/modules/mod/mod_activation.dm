@@ -26,6 +26,7 @@
 	var/parts_to_check = mod_parts - part
 	if(part.loc == src)
 		deploy(user, part)
+		on_mod_deployed(user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc != src)
 				continue
@@ -33,6 +34,7 @@
 			break
 	else
 		retract(user, part)
+		on_mod_retracted(user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc == src)
 				continue
@@ -45,11 +47,12 @@
 		balloon_alert(user, "deactivate the suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	var/deploy = FALSE
+	var/deploy = TRUE
 	for(var/obj/item/part as anything in mod_parts)
-		if(part.loc != src)
+		if(part.loc == src)
 			continue
-		deploy = TRUE
+		deploy = FALSE
+		break
 	for(var/obj/item/part as anything in mod_parts)
 		if(deploy && part.loc == src)
 			deploy(null, part)
@@ -59,10 +62,17 @@
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(deploy)
+		on_mod_deployed(user)
+	else
+		on_mod_retracted(user)
 	return TRUE
 
 /// Deploys a part of the suit onto the user.
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part)
+	if(!wearer)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE // pAI is trying to deploy it from your hands
 	if(part.loc != src)
 		if(!user)
 			return FALSE
@@ -73,7 +83,7 @@
 		if(overslot)
 			overslotting_parts[part] = overslot
 			wearer.transferItemToLoc(overslot, part, force = TRUE)
-			RegisterSignal(part, COMSIG_ATOM_EXITED, .proc/on_overslot_exit)
+			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		if(!user)
@@ -145,31 +155,34 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(!module.active || module.allowed_inactive)
+		if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
 			continue
 		module.on_deactivation(display_message = FALSE)
+	mod_link.end_call()
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, .proc/has_wearer)))
+	if (ai_assistant)
+		to_chat(ai_assistant, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(boots, seal = !active)
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, .proc/has_wearer)))
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("[gauntlets] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(gauntlets, seal = !active)
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, .proc/has_wearer)))
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("[chestplate] [active ? "releases your chest" : "cinches tightly against your chest"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(chestplate, seal = !active)
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, .proc/has_wearer)))
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("[helmet] hisses [active ? "open" : "closed"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(helmet, seal = !active)
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, .proc/has_wearer)))
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
-		if(ai)
-			to_chat(ai, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\"</b>"))
+		if(ai_assistant)
+			to_chat(ai_assistant, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai_assistant]\"</b>"))
 		finish_activation(on = !active)
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
@@ -178,11 +191,13 @@
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 	activating = FALSE
+	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
 
 ///Seals or unseals the given part
 /obj/item/mod/control/proc/seal_part(obj/item/clothing/part, seal)
 	if(seal)
+		part.icon_state = "[skin]-[part.base_icon_state]-sealed"
 		part.clothing_flags |= part.visor_flags
 		part.flags_inv |= part.visor_flags_inv
 		part.flags_cover |= part.visor_flags_cover
@@ -190,6 +205,7 @@
 		part.cold_protection = initial(part.cold_protection)
 		part.alternate_worn_layer = null
 	else
+		part.icon_state = "[skin]-[part.base_icon_state]"
 		part.flags_cover &= ~part.visor_flags_cover
 		part.flags_inv &= ~part.visor_flags_inv
 		part.clothing_flags &= ~part.visor_flags
@@ -197,33 +213,30 @@
 		part.cold_protection = NONE
 		part.alternate_worn_layer = mod_parts[part]
 	if(part == boots)
-		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
-		wearer.update_inv_shoes()
+		wearer.update_worn_shoes()
 	if(part == gauntlets)
-		gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
-		wearer.update_inv_gloves()
+		wearer.update_worn_gloves()
 	if(part == chestplate)
-		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
-		wearer.update_inv_wear_suit()
-		wearer.update_inv_w_uniform()
+		wearer.update_worn_oversuit()
+		wearer.update_worn_undersuit()
 	if(part == helmet)
-		helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
-		wearer.update_inv_head()
-		wearer.update_inv_wear_mask()
-		wearer.update_inv_glasses()
-		wearer.update_hair()
+		wearer.update_worn_head()
+		wearer.update_worn_mask()
+		wearer.update_worn_glasses()
+		wearer.update_body_parts()
+		// Close internal air tank if MOD helmet is unsealed and was the only breathing apparatus.
+		if (!seal && wearer?.invalid_internals())
+			wearer.cutoff_internals()
 
-/// Finishes the suit's activation, starts processing
+/// Finishes the suit's activation
 /obj/item/mod/control/proc/finish_activation(on)
 	active = on
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_activation()
-		START_PROCESSING(SSobj, src)
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
-		STOP_PROCESSING(SSobj, src)
 	update_speed()
 	update_icon_state()
 	wearer.update_clothing(slot_flags)
@@ -242,5 +255,11 @@
 
 /obj/item/mod/control/proc/has_wearer()
 	return wearer
+
+/obj/item/mod/control/proc/on_mod_deployed(mob/user)
+	SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
+
+/obj/item/mod/control/proc/on_mod_retracted(mob/user)
+	SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 
 #undef MOD_ACTIVATION_STEP_FLAGS

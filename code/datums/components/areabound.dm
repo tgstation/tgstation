@@ -10,7 +10,7 @@
 		return COMPONENT_INCOMPATIBLE
 	bound_area = get_area(parent)
 	reset_turf = get_turf(parent)
-	move_tracker = new(parent,CALLBACK(src,.proc/check_bounds))
+	move_tracker = new(parent,CALLBACK(src, PROC_REF(check_bounds)))
 
 /datum/component/areabound/proc/check_bounds()
 	var/atom/movable/AM = parent
@@ -26,6 +26,6 @@
 		AM.forceMove(reset_turf)
 		moving = FALSE
 
-/datum/component/areabound/Destroy(force, silent)
+/datum/component/areabound/Destroy(force)
 	QDEL_NULL(move_tracker)
 	. = ..()

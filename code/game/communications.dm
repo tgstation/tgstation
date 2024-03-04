@@ -100,6 +100,7 @@ GLOBAL_LIST_INIT(radiochannels, list(
 	RADIO_CHANNEL_SECURITY = FREQ_SECURITY,
 	RADIO_CHANNEL_CENTCOM = FREQ_CENTCOM,
 	RADIO_CHANNEL_SYNDICATE = FREQ_SYNDICATE,
+	RADIO_CHANNEL_UPLINK = FREQ_UPLINK,
 	RADIO_CHANNEL_SUPPLY = FREQ_SUPPLY,
 	RADIO_CHANNEL_SERVICE = FREQ_SERVICE,
 	RADIO_CHANNEL_AI_PRIVATE = FREQ_AI_PRIVATE,
@@ -118,6 +119,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"[FREQ_SECURITY]" = RADIO_CHANNEL_SECURITY,
 	"[FREQ_CENTCOM]" = RADIO_CHANNEL_CENTCOM,
 	"[FREQ_SYNDICATE]" = RADIO_CHANNEL_SYNDICATE,
+	"[FREQ_UPLINK]" = RADIO_CHANNEL_UPLINK,
 	"[FREQ_SUPPLY]" = RADIO_CHANNEL_SUPPLY,
 	"[FREQ_SERVICE]" = RADIO_CHANNEL_SERVICE,
 	"[FREQ_AI_PRIVATE]" = RADIO_CHANNEL_AI_PRIVATE,
@@ -128,6 +130,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 ))
 
 /datum/radio_frequency
+	/// The frequency of this radio frequency. Of course.
 	var/frequency
 	/// List of filters -> list of devices
 	var/list/list/datum/weakref/devices = list()
@@ -176,16 +179,20 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 			device.receive_signal(signal)
 			CHECK_TICK
 
+/// Handles adding a listener to the radio frequency.
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
 		filter = "_default"
 
+	var/datum/weakref/new_listener = WEAKREF(device)
+	if(isnull(new_listener))
+		return stack_trace("null, non-datum, or qdeleted device")
 	var/list/devices_line = devices[filter]
 	if(!devices_line)
 		devices[filter] = devices_line = list()
-	devices_line += WEAKREF(device)
+	devices_line += new_listener
 
-
+/// Handles removing a listener from this radio frequency.
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
@@ -195,15 +202,27 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		if(!devices_line.len)
 			devices -= devices_filter
 
-
+/**
+ * Proc for reacting to a received `/datum/signal`. To be implemented as needed,
+ * does nothing by default.
+ */
 /obj/proc/receive_signal(datum/signal/signal)
+	set waitfor = FALSE
 	return
 
 /datum/signal
+	/// The source of this signal.
 	var/obj/source
+	/// The frequency on which this signal was emitted.
 	var/frequency = 0
+	/// The method through which this signal was transmitted.
+	/// See all of the `TRANSMISSION_X` in `code/__DEFINES/radio.dm` for
+	/// all of the possible options.
 	var/transmission_method
+	/// The data carried through this signal. Defaults to `null`, otherwise it's
+	/// an associative list of (string, any).
 	var/list/data
+	/// Logging data, used for logging purposes. Makes sense, right?
 	var/logging_data
 
 /datum/signal/New(data, transmission_method = TRANSMISSION_RADIO, logging_data = null)

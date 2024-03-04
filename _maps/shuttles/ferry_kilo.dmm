@@ -31,7 +31,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -40,7 +40,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "i" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -58,7 +58,6 @@
 	},
 /obj/item/storage/medkit/regular,
 /obj/item/crowbar,
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "l" = (
@@ -67,16 +66,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "m" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "n" = (
@@ -91,7 +87,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -110,21 +106,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "r" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "s" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -135,6 +124,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "t" = (
@@ -150,17 +140,14 @@
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 11;
-	id = "ferry";
+	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	preferred_direction = 4;
-	width = 5
+	preferred_direction = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "u" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -171,12 +158,6 @@
 "v" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/item/radio{
 	pixel_x = -6;
 	pixel_y = 6
@@ -188,7 +169,9 @@
 /obj/item/radio{
 	pixel_y = 4
 	},
-/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "w" = (
@@ -198,11 +181,9 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
-"x" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
+"H" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
@@ -244,10 +225,10 @@ e
 "}
 (6,1,1) = {"
 d
-l
+o
 r
 w
-d
+g
 "}
 (7,1,1) = {"
 f
@@ -260,8 +241,8 @@ f
 g
 n
 r
-n
-g
+H
+d
 "}
 (9,1,1) = {"
 e
@@ -272,9 +253,9 @@ e
 "}
 (10,1,1) = {"
 d
-o
+l
 r
-x
+w
 d
 "}
 (11,1,1) = {"

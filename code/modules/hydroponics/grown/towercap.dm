@@ -12,7 +12,7 @@
 	yield = 5
 	potency = 50
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
@@ -28,7 +28,7 @@
 	product = /obj/item/grown/log/steel
 	mutatelist = null
 	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/grown/log
 	seed = /obj/item/seeds/tower
@@ -130,7 +130,7 @@
 /obj/structure/punji_sticks
 	name = "punji sticks"
 	desc = "Don't step on this."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "punji"
 	resistance_flags = FLAMMABLE
 	max_integrity = 30
@@ -143,7 +143,30 @@
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
-	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, plane = GAME_PLANE_FOV_HIDDEN)
+	build_stab_overlay()
+
+/obj/structure/punji_sticks/proc/build_stab_overlay()
+	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER)
+
+/obj/structure/punji_sticks/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	build_stab_overlay()
+	update_appearance()
+
+/obj/structure/punji_sticks/post_buckle_mob(mob/living/M)
+	update_appearance()
+	return ..()
+
+/obj/structure/punji_sticks/post_unbuckle_mob(mob/living/M)
+	update_appearance()
+	return ..()
+
+/obj/structure/punji_sticks/update_overlays()
+	. = ..()
+	if(length(buckled_mobs))
+		. += stab_overlay
 
 /obj/structure/punji_sticks/intercept_zImpact(list/falling_movables, levels)
 	. = ..()
@@ -157,7 +180,6 @@
 				var/mob/living/carbon/fallen_carbon = fallen_mob
 				fallen_carbon.emote("scream")
 				fallen_carbon.bleed(30)
-			add_overlay(stab_overlay)
 	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
 
 /obj/structure/punji_sticks/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
@@ -168,7 +190,6 @@
 	if(!do_after(buckled_mob, 5 SECONDS, target = src))
 		to_chat(buckled_mob, span_userdanger("You fail to detach yourself from [src]."))
 		return
-	cut_overlay(stab_overlay)
 	return ..()
 
 /obj/structure/punji_sticks/spikes

@@ -1,6 +1,6 @@
 /datum/antagonist/ninja
 	name = "\improper Space Ninja"
-	antagpanel_category = "Space Ninja"
+	antagpanel_category = ANTAG_GROUP_NINJAS
 	job_rank = ROLE_NINJA
 	antag_hud_name = "space_ninja"
 	hijack_speed = 1
@@ -8,11 +8,12 @@
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	suicide_cry = "FOR THE SPIDER CLAN!!"
-	preview_outfit = /datum/outfit/ninja
+	preview_outfit = /datum/outfit/ninja_preview
+	can_assign_self_objectives = TRUE
+	ui_name = "AntagInfoNinja"
+	default_custom_objective = "Destroy vital station infrastructure, without being seen."
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
-	///Whether or not this ninja receives the standard equipment
-	var/give_equipment = TRUE
 
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
@@ -32,10 +33,10 @@
  */
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
-	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
+	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing.<br>"
 
 /datum/objective/cyborg_hijack
-	explanation_text = "Use your gloves to convert at least one cyborg to aide you in sabotaging the station."
+	explanation_text = "Use your gloves to convert at least one cyborg to aid you in sabotaging the station."
 
 /datum/objective/door_jack
 	///How many doors that need to be opened using the gloves to pass the objective
@@ -76,7 +77,7 @@
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
 	for(var/sanity in 1 to 100) // 100 checks at most.
-		var/area/selected_area = pick(GLOB.sortedAreas)
+		var/area/selected_area = pick(GLOB.areas)
 		if(!is_station_level(selected_area.z) || !(selected_area.area_flags & VALID_TERRITORY))
 			continue
 		bombobjective.detonation_location = selected_area
@@ -101,17 +102,18 @@
 /datum/antagonist/ninja/greet()
 	. = ..()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
-	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan!")
-	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	to_chat(owner.current, span_danger("I am an elite mercenary of the mighty Spider Clan!"))
+	to_chat(owner.current, span_warning("Surprise is my weapon. Shadows are my armor. Without them, I am nothing."))
+	to_chat(owner.current, span_notice("The station is located to your [dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))]. A thrown ninja star will be a great way to get there."))
 	owner.announce_objectives()
 
 /datum/antagonist/ninja/on_gain()
 	if(give_objectives)
 		addObjectives()
 	addMemories()
-	if(give_equipment)
-		equip_space_ninja(owner.current)
-
+	equip_space_ninja(owner.current)
+	owner.current.add_quirk(/datum/quirk/freerunning)
+	owner.current.add_quirk(/datum/quirk/light_step)
 	owner.current.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_ninja))
 	owner.current.mind.special_role = ROLE_NINJA
 	return ..()

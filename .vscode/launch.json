@@ -15,6 +15,18 @@
 			"preLaunchTask": "Build All",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
 			"dreamDaemon": true
+		},
+		{
+			"name": "Debug External Libraries",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${command:dreammaker.returnDreamDaemonPath}",
+			"cwd": "${workspaceRoot}",
+			"args": [
+				"${command:dreammaker.getFilenameDmb}",
+				"-trusted"
+			],
+			"preLaunchTask": "Build All"
 		}
 	]
 }

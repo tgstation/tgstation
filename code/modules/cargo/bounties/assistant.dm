@@ -1,6 +1,6 @@
 /datum/bounty/item/assistant/strange_object
 	name = "Strange Object"
-	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
+	description = "Nanotrasen has taken an interest in strange objects. Find one in maintenance, and ship it off to CentCom right away."
 	reward = CARGO_CRATE_VALUE * 2.4
 	wanted_types = list(/obj/item/relic = TRUE)
 
@@ -129,12 +129,6 @@
 	wanted_types = list(/obj/item/food/grown/poppy = TRUE)
 	include_subtypes = FALSE
 
-/datum/bounty/item/assistant/shadyjims
-	name = "Shady Jim's"
-	description = "There's an irate officer at CentCom demanding that he receive a box of Shady Jim's cigarettes. Please ship one. He's starting to make threats."
-	reward = CARGO_CRATE_VALUE
-	wanted_types = list(/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = TRUE)
-
 /datum/bounty/item/assistant/potted_plants
 	name = "Potted Plants"
 	description = "Central Command is looking to commission a new BirdBoat-class station. You've been ordered to supply the potted plants."
@@ -158,7 +152,7 @@
 
 /datum/bounty/item/assistant/corgimeat
 	name = "Raw Corgi Meat"
-	description = "The Syndicate recently stole all of CentCom's Corgi meat. Ship out a replacement immediately."
+	description = "The Syndicate recently stole all of CentCom's corgi meat. Ship out a replacement immediately."
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/food/meat/slab/corgi = TRUE)
 
@@ -178,14 +172,14 @@
 
 /datum/bounty/item/assistant/crayons
 	name = "Crayons"
-	description = "Dr Jones' kid ate all our crayons again. Please send us yours."
+	description = "Dr. Jones's kid ate all of our crayons again. Please send us yours."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 24
 	wanted_types = list(/obj/item/toy/crayon = TRUE)
 
 /datum/bounty/item/assistant/pens
 	name = "Pens"
-	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized ball point pens."
+	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized black ballpoint pens."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 10
 	include_subtypes = FALSE
@@ -198,14 +192,14 @@
 	wanted_types = list(/obj/structure/reagent_dispensers/watertank = TRUE)
 
 /datum/bounty/item/assistant/pneumatic_cannon
-	name = "Penumatic Cannon"
+	name = "Pneumatic Cannon"
 	description = "We're figuring out how hard we can launch supermatter shards out of a pneumatic cannon. Send us one as soon as possible."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/item/pneumatic_cannon/ghetto = TRUE)
 
 /datum/bounty/item/assistant/improvised_shells
 	name = "Improvised Shotgun Shells"
-	description = "Budget cuts are hitting our security deparetment pretty hard. Send some improvised shotgun shells when you can."
+	description = "Budget cuts are hitting our security department pretty hard. Send some improvised shotgun shells when you can."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 5
 	wanted_types = list(/obj/item/ammo_casing/shotgun/improvised = TRUE)
@@ -215,3 +209,94 @@
 	description = "We have a moth infestation, send a flamethrower to help deal with the situation."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/item/flamethrower = TRUE)
+
+/datum/bounty/item/assistant/fish
+	name = "Fish"
+	description = "We need fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
+	reward = CARGO_CRATE_VALUE * 9
+	required_count = 4
+	wanted_types = list(/obj/item/fish = TRUE, /obj/item/storage/fish_case = TRUE)
+	///the penalty for shipping dead/bought fish, which can subtract up to half the reward in total.
+	var/shipping_penalty
+
+/datum/bounty/item/assistant/fish/New()
+	..()
+	shipping_penalty = reward * 0.5 / required_count
+
+/datum/bounty/item/assistant/fish/applies_to(obj/shipped)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/fish/fishie = shipped
+	if(istype(shipped, /obj/item/storage/fish_case))
+		fishie = locate() in shipped
+		if(!fishie || !is_type_in_typecache(fishie, wanted_types))
+			return FALSE
+	return can_ship_fish(fishie)
+
+/datum/bounty/item/assistant/fish/proc/can_ship_fish(obj/item/fish/fishie)
+	return TRUE
+
+/datum/bounty/item/assistant/fish/ship(obj/shipped)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/fish/fishie = shipped
+	if(istype(shipped, /obj/item/storage/fish_case))
+		fishie = locate() in shipped
+	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_FROM_CASE))
+		reward -= shipping_penalty
+
+///A subtype of the fish bounty that requires fish with a specific fluid type
+/datum/bounty/item/assistant/fish/fluid
+	reward = CARGO_CRATE_VALUE * 11
+	///The required fluid type of the fish for it to be shipped
+	var/fluid_type
+
+/datum/bounty/item/assistant/fish/fluid/New()
+	..()
+	fluid_type = pick(AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_SULPHWATEVER)
+	name = "[fluid_type] Fish"
+	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
+
+/datum/bounty/item/assistant/fish/fluid/can_ship_fish(obj/item/fish/fishie)
+	return compatible_fluid_type(fishie.required_fluid_type, fluid_type)
+
+///A subtype of the fish bounty that requires specific fish types. The higher their rarity, the better the pay.
+/datum/bounty/item/assistant/fish/specific
+	description = "Our prestigious fish collection is currently lacking a few specific species. Fishes that are dead or bought from cargo will only be paid half as much."
+	reward = CARGO_CRATE_VALUE * 16
+	required_count = 3
+	wanted_types = list(/obj/item/storage/fish_case = TRUE)
+
+/datum/bounty/item/assistant/fish/specific/New()
+	var/static/list/choosable_fishes
+	if(isnull(choosable_fishes))
+		choosable_fishes = list()
+		for(var/obj/item/fish/prototype as anything in subtypesof(/obj/item/fish))
+			if(initial(prototype.experisci_scannable) && initial(prototype.show_in_catalog))
+				choosable_fishes += prototype
+
+	var/list/fishes_copylist = choosable_fishes.Copy()
+	///Used to calculate the extra reward
+	var/total_rarity = 0
+	var/list/name_list = list()
+	var/num_paths = rand(2,3)
+	for(var/i in 1 to num_paths)
+		var/obj/item/fish/chosen_path = pick_n_take(fishes_copylist)
+		wanted_types[chosen_path] = TRUE
+		name_list += initial(chosen_path.name)
+		total_rarity += initial(chosen_path.random_case_rarity) / num_paths
+	name = english_list(name_list)
+
+	switch(total_rarity)
+		if(FISH_RARITY_NOPE to FISH_RARITY_GOOD_LUCK_FINDING_THIS)
+			reward += CARGO_CRATE_VALUE * 14
+		if(FISH_RARITY_GOOD_LUCK_FINDING_THIS to FISH_RARITY_VERY_RARE)
+			reward += CARGO_CRATE_VALUE * 6.5
+		if(FISH_RARITY_VERY_RARE to FISH_RARITY_RARE)
+			reward += CARGO_CRATE_VALUE * 3
+		if(FISH_RARITY_RARE to FISH_RARITY_BASIC-1)
+			reward += CARGO_CRATE_VALUE * 1
+
+	..()

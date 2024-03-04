@@ -7,7 +7,7 @@
 	suit = /obj/item/clothing/suit/armor/riot/knight/red
 	gloves = /obj/item/clothing/gloves/plate/red
 	head = /obj/item/clothing/head/helmet/knight/red
-	r_hand = /obj/item/claymore
+	l_hand = /obj/item/claymore
 
 	ears = null
 	id = null
@@ -28,7 +28,7 @@
 
 	belt = /obj/item/storage/bag/quiver
 	suit = /obj/item/clothing/suit/armor/vest/cuirass
-	r_hand = /obj/item/gun/ballistic/bow
+	l_hand = /obj/item/gun/ballistic/bow
 
 	class_description = "Ranged class. Armed with a bow and arrows."
 

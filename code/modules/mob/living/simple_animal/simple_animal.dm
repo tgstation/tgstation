@@ -1,7 +1,7 @@
 /// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
@@ -51,17 +51,15 @@
 	///Harm-intent verb in present simple tense.
 	var/response_harm_simple = "hit"
 	var/harm_intent_damage = 3
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
 	var/max_staminaloss = 200
 	///How much stamina the mob recovers per second
 	var/stamina_recovery = 5
 
 	///Minimal body temperature without receiving damage
-	var/minbodytemp = 250
+	var/minbodytemp = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
-	var/maxbodytemp = 350
+	var/maxbodytemp = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold.
 	var/unsuitable_cold_damage
 	///This damage is taken when the body temp is too hot.
@@ -70,14 +68,14 @@
 	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
 	var/list/weather_immunities
 
-	///Healable by medical stacks? Defaults to yes.
-	var/healable = 1
-
 	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	///Leaving something at 0 means it's off - has no maximum.
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
+
+	///How fast the mob's temperature normalizes. The greater the value, the slower their temperature normalizes. Should always be greater than 0.
+	var/temperature_normalization_speed = 5
 
 	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
 	melee_damage_lower = 0
@@ -89,7 +87,7 @@
 	///Damage type of a simple mob's melee attack, should it do damage.
 	var/melee_damage_type = BRUTE
 	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///Attacking verb in present continuous tense.
 	var/attack_verb_continuous = "attacks"
 	///Attacking verb in present simple tense.
@@ -120,8 +118,6 @@
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
-	var/datum/component/spawner/nest
-
 	///Sentience type, for slime potions.
 	var/sentience_type = SENTIENCE_ORGANIC
 
@@ -129,16 +125,11 @@
 	var/list/loot = list()
 	///Causes mob to be deleted on death, useful for mobs that spawn lootable corpses.
 	var/del_on_death = 0
-	var/deathmessage = ""
 
 	var/allow_movement_on_non_turfs = FALSE
 
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH
-
-	///If the creature has, and can use, hands.
-	var/dextrous = FALSE
-	var/dextrous_hud_type = /datum/hud/dextrous
 
 	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
 	var/AIStatus = AI_ON
@@ -180,13 +171,11 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
-	if(dextrous)
-		AddComponent(/datum/component/personal_crafting)
-		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
-	for(var/trait in weather_immunities)
-		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
+	if(length(weather_immunities))
+		add_traits(weather_immunities, ROUNDSTART_TRAIT)
+	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
+		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
 
 	if(speak)
 		speak = string_list(speak)
@@ -207,19 +196,15 @@
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-/mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
+	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
-	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
-		SSnpcpool.currentrun -= src
-
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
+	SSnpcpool.currentrun -= src
 
 	var/turf/T = get_turf(src)
 	if (T && AIStatus == AI_Z_OFF)
@@ -230,7 +215,7 @@
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		if(HAS_TRAIT(user, TRAIT_NAIVE))
+		if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
 		else
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
@@ -254,6 +239,8 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/update_stamina()
+	if(damage_coeff[STAMINA] <= 0) //we shouldn't reset our speed to its initial value if we don't need to, as that can mess with things like mulebot motor wires
+		return
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
@@ -293,7 +280,7 @@
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
-						say(pick(speak), forced = "poly")
+						say(pick(speak), forced = "automated speech")
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
@@ -301,7 +288,7 @@
 						else
 							manual_emote(pick(emote_hear))
 				else
-					say(pick(speak), forced = "poly")
+					say(pick(speak), forced = "automated speech")
 			else
 				if(!(emote_hear?.len) && (emote_see?.len))
 					manual_emote(pick(emote_see))
@@ -325,10 +312,10 @@
 		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
+			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 			var/plas = ST_gases[/datum/gas/plasma][MOLES]
-			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
+			var/oxy = ST_gases[/datum/gas/oxygen][MOLES] + (ST_gases[/datum/gas/pluoxium][MOLES] * PLUOXIUM_PROPORTION)
 			var/n2 = ST_gases[/datum/gas/nitrogen][MOLES]
 			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
 
@@ -360,7 +347,7 @@
 	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
 		. = FALSE
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
@@ -368,23 +355,23 @@
 		if(abs(temp_delta) > 5)
 			if(temp_delta < 0)
 				if(!on_fire)
-					adjust_bodytemperature(clamp(temp_delta * delta_time / 10, temp_delta, 0))
+					adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
 			else
-				adjust_bodytemperature(clamp(temp_delta * delta_time / 10, 0, temp_delta))
+				adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
 
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
-		adjustHealth(unsuitable_atmos_damage * delta_time)
+		adjustHealth(unsuitable_atmos_damage * seconds_per_tick)
 		if(unsuitable_atmos_damage > 0)
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 	else
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
-	handle_temperature_damage(delta_time, times_fired)
+	handle_temperature_damage(seconds_per_tick, times_fired)
 
-/mob/living/simple_animal/proc/handle_temperature_damage(delta_time, times_fired)
+/mob/living/simple_animal/proc/handle_temperature_damage(seconds_per_tick, times_fired)
 	. = FALSE
 	if((bodytemperature < minbodytemp) && unsuitable_cold_damage)
-		adjustHealth(unsuitable_cold_damage * delta_time)
+		adjustHealth(unsuitable_cold_damage * seconds_per_tick)
 		switch(unsuitable_cold_damage)
 			if(1 to 5)
 				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
@@ -395,7 +382,7 @@
 		. = TRUE
 
 	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
-		adjustHealth(unsuitable_heat_damage * delta_time)
+		adjustHealth(unsuitable_heat_damage * seconds_per_tick)
 		switch(unsuitable_heat_damage)
 			if(1 to 5)
 				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
@@ -426,16 +413,8 @@
 		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
 
-/mob/living/simple_animal/say_mod(input, list/message_mods = list())
-	if(length(speak_emote))
-		verb_say = pick(speak_emote)
-	return ..()
-
-
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
-	if(stat)
-		return FALSE
-	return ..()
+/mob/living/simple_animal/get_default_say_verb()
+	return length(speak_emote) ? pick(speak_emote) : ..()
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
@@ -448,8 +427,8 @@
 
 /mob/living/simple_animal/get_status_tab_items()
 	. = ..()
-	. += ""
 	. += "Health: [round((health / maxHealth) * 100)]%"
+	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/proc/drop_loot()
 	if(loot.len)
@@ -457,30 +436,26 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
 	drop_loot()
-	if(dextrous)
-		drop_all_held_items()
-	if(!gibbed)
-		if(deathsound || deathmessage || !del_on_death)
-			emote("deathgasp")
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
 		qdel(src)
-	else
-		health = 0
-		icon_state = icon_dead
-		if(flip_on_death)
-			transform = transform.Turn(180)
-		set_density(FALSE)
-		..()
+		return
+
+	health = 0
+	icon_state = icon_dead
+	if(flip_on_death)
+		transform = transform.Turn(180)
+	ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
+	return ..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
+	if(!isatom(the_target)) // no
+		stack_trace("Invalid target in CanAttack(): [the_target]")
+		return FALSE
 	if(see_invisible < the_target.invisibility)
 		return FALSE
 	if(ismob(the_target))
@@ -497,18 +472,12 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/ignite_mob()
-	return FALSE
-
-/mob/living/simple_animal/extinguish_mob()
-	return
-
-/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return
 	icon_state = icon_living
-	set_density(initial(density))
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -529,7 +498,7 @@
 			else if(!is_child && M.gender == MALE && !(M.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_atom(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -554,79 +523,44 @@
 		return
 	if(stat == DEAD)
 		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-			sight = null
+			set_sight(null)
 		else if(is_secret_level(z))
-			sight = initial(sight)
+			set_sight(initial(sight))
 		else
-			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = NIGHTVISION_FOV_RANGE
-		see_invisible = SEE_INVISIBLE_OBSERVER
+			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
-	see_invisible = initial(see_invisible)
-	see_in_dark = initial(see_in_dark)
-	sight = initial(sight)
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	set_invis_see(initial(see_invisible))
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		sight = null
+		set_sight(null)
+	else
+		set_sight(initial(sight))
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
-	sync_lighting_plane_alpha()
+	return ..()
 
 //Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
 /mob/living/simple_animal/get_idcard(hand_first)
 	return (..() || access_card)
 
-/mob/living/simple_animal/can_hold_items(obj/item/I)
-	return dextrous && ..()
-
-/mob/living/simple_animal/activate_hand(selhand)
-	if(!dextrous)
-		return ..()
-	if(!selhand)
-		selhand = (active_hand_index % held_items.len)+1
-	if(istext(selhand))
-		selhand = lowertext(selhand)
-		if(selhand == "right" || selhand == "r")
-			selhand = 2
-		if(selhand == "left" || selhand == "l")
-			selhand = 1
-	if(selhand != active_hand_index)
-		swap_hand(selhand)
-	else
-		mode()
-
-/mob/living/simple_animal/swap_hand(hand_index)
+/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
-	if(!.)
-		return
-	if(!dextrous)
-		return
-	if(!hand_index)
-		hand_index = (active_hand_index % held_items.len)+1
-	var/oindex = active_hand_index
-	active_hand_index = hand_index
-	if(hud_used)
-		var/atom/movable/screen/inventory/hand/H
-		H = hud_used.hand_slots["[hand_index]"]
-		if(H)
-			H.update_appearance()
-		H = hud_used.hand_slots["[oindex]"]
-		if(H)
-			H.update_appearance()
+	update_held_items()
 
-/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
-	. = ..(I, del_on_fail, merge_stacks)
-	update_inv_hands()
-
-/mob/living/simple_animal/update_inv_hands()
-	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in held_items)
-			var/index = get_held_index_of_item(I)
-			I.plane = ABOVE_HUD_PLANE
-			I.screen_loc = ui_hand_position(index)
-			client.screen |= I
+/mob/living/simple_animal/update_held_items()
+	. = ..()
+	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
+		return
+	var/turf/our_turf = get_turf(src)
+	for(var/obj/item/I in held_items)
+		var/index = get_held_index_of_item(I)
+		SET_PLANE(I, ABOVE_HUD_PLANE, our_turf)
+		I.screen_loc = ui_hand_position(index)
+		client.screen |= I
 
 //ANIMAL RIDING
 
@@ -663,7 +597,7 @@
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
 
-/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf)
+/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	if (old_turf && AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[old_turf.z] -= src
@@ -679,7 +613,7 @@
 	return relaydrive(user, direction)
 
 /mob/living/simple_animal/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
-	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -730,3 +664,6 @@
 		hunted = null
 		COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 		return
+
+/mob/living/simple_animal/compare_sentience_type(compare_type)
+	return sentience_type == compare_type

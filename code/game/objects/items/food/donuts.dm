@@ -1,20 +1,22 @@
-////////////////////////////////////////////DONUTS////////////////////////////////////////////
 #define DONUT_SPRINKLE_CHANCE 30
 
 /obj/item/food/donut
 	name = "donut"
 	desc = "Goes great with robust coffee."
 	icon = 'icons/obj/food/donuts.dmi'
+	inhand_icon_state = "donut1"
 	bite_consumption = 5
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
-	foodtypes = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
+	foodtypes = JUNKFOOD | GRAIN | SUGAR | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 	var/decorated_icon = "donut_homer"
 	var/is_decorated = FALSE
 	var/extra_reagent = null
 	var/decorated_adjective = "sprinkled"
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/donut/Initialize(mapload)
 	. = ..()
@@ -23,19 +25,9 @@
 		decorate_donut()
 
 ///Override for checkliked callback
-/obj/item/food/donut/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness,\
-				check_liked = CALLBACK(src, .proc/check_liked))
+/obj/item/food/donut/make_edible()
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)
@@ -43,6 +35,7 @@
 	is_decorated = TRUE
 	name = "[decorated_adjective] [name]"
 	icon_state = decorated_icon //delish~!
+	inhand_icon_state = "donut2"
 	reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
 	return TRUE
 
@@ -51,8 +44,9 @@
 	return "[icon_state]_inbox"
 
 ///Override for checkliked in edible component, because all cops LOVE donuts
-/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/consumer)
-	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && consumer.mind && HAS_TRAIT(consumer.mind, TRAIT_DONUT_LOVER))
+/obj/item/food/donut/proc/check_liked(mob/living/carbon/human/consumer)
+	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		return FOOD_LIKED
 
 //Use this donut ingame
@@ -66,41 +60,73 @@
 	bite_consumption = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/chaos/Initialize(mapload)
 	. = ..()
-	extra_reagent = pick(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/drug/krokodil, /datum/reagent/toxin/plasma, /datum/reagent/consumable/coco, /datum/reagent/toxin/slimejelly, /datum/reagent/consumable/banana, /datum/reagent/consumable/berryjuice, /datum/reagent/medicine/omnizine)
+	extra_reagent = pick(
+		/datum/reagent/consumable/nutriment,
+		/datum/reagent/consumable/capsaicin,
+		/datum/reagent/consumable/frostoil,
+		/datum/reagent/drug/krokodil,
+		/datum/reagent/toxin/plasma,
+		/datum/reagent/consumable/coco,
+		/datum/reagent/toxin/slimejelly,
+		/datum/reagent/consumable/banana,
+		/datum/reagent/consumable/berryjuice,
+		/datum/reagent/medicine/omnizine,
+	)
 	reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/food/donut/meat
 	name = "Meat Donut"
 	desc = "Tastes as gross as it looks."
 	icon_state = "donut_meat"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/ketchup = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/ketchup = 3,
+	)
 	tastes = list("meat" = 1)
-	foodtypes = JUNKFOOD | MEAT | GROSS | FRIED | BREAKFAST
+	foodtypes = JUNKFOOD | MEAT | GORE | FRIED | BREAKFAST
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/berry
 	name = "pink donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "donut_pink"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1) //Extra sprinkles to reward frosting
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/berryjuice = 3,
+		/datum/reagent/consumable/sprinkles = 1, //Extra sprinkles to reward frosting
+	)
 	decorated_icon = "donut_homer"
 
 /obj/item/food/donut/trumpet
 	name = "spaceman's donut"
 	desc = "Goes great with a cold beaker of malk."
 	icon_state = "donut_purple"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sprinkles = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	)
 	tastes = list("donut" = 3, "violets" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/apple
 	name = "apple donut"
 	desc = "Goes great with a shot of cinnamon schnapps."
 	icon_state = "donut_green"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/applejuice = 3, /datum/reagent/consumable/sprinkles = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/applejuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	)
 	tastes = list("donut" = 3, "green apples" = 1)
 	is_decorated = TRUE
 
@@ -108,7 +134,12 @@
 	name = "caramel donut"
 	desc = "Goes great with a mug of hot coco."
 	icon_state = "donut_beige"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/caramel = 3, /datum/reagent/consumable/sprinkles = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/caramel = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	)
 	tastes = list("donut" = 3, "buttery sweetness" = 1)
 	is_decorated = TRUE
 
@@ -116,23 +147,40 @@
 	name = "chocolate donut"
 	desc = "Goes great with a glass of warm milk."
 	icon_state = "donut_choc"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1) //the coco reagent is just bitter.
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/hot_coco = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	) //the coco reagent is just bitter.
 	tastes = list("donut" = 4, "bitterness" = 1)
 	decorated_icon = "donut_choc_sprinkles"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/blumpkin
 	name = "blumpkin donut"
 	desc = "Goes great with a mug of soothing drunken blumpkin."
 	icon_state = "donut_blue"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/blumpkinjuice = 3, /datum/reagent/consumable/sprinkles = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/blumpkinjuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	)
 	tastes = list("donut" = 2, "blumpkin" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/bungo
 	name = "bungo donut"
 	desc = "Goes great with a mason jar of hippie's delight."
 	icon_state = "donut_yellow"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/bungojuice = 3, /datum/reagent/consumable/sprinkles = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/bungojuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	)
 	tastes = list("donut" = 3, "tropical sweetness" = 1)
 	is_decorated = TRUE
 
@@ -140,7 +188,12 @@
 	name = "matcha donut"
 	desc = "Goes great with a cup of tea."
 	icon_state = "donut_olive"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/toxin/teapowder = 3, /datum/reagent/consumable/sprinkles = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/toxin/teapowder = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+	)
 	tastes = list("donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 
@@ -148,9 +201,14 @@
 	name = "sweet pea donut"
 	desc = "Goes great with a bottle of Bastion Burbon!"
 	icon_state = "donut_laugh"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/laughter = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/laughter = 3,
+	)
 	tastes = list("donut" = 3, "fizzy tutti frutti" = 1,)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //////////////////////JELLY DONUTS/////////////////////////
 
@@ -158,7 +216,12 @@
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jelly"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/sugar = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
 	foodtypes = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR | BREAKFAST
@@ -186,15 +249,27 @@
 	name = "spaceman's jelly donut"
 	desc = "Goes great with a cold beaker of malk."
 	icon_state = "jelly_purple"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "violets" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/jelly/apple
 	name = "apple jelly donut"
 	desc = "Goes great with a shot of cinnamon schnapps."
 	icon_state = "jelly_green"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/applejuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/applejuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "green apples" = 1)
 	is_decorated = TRUE
 
@@ -202,7 +277,13 @@
 	name = "caramel jelly donut"
 	desc = "Goes great with a mug of hot coco."
 	icon_state = "jelly_beige"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/caramel = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/caramel = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "buttery sweetness" = 1)
 	is_decorated = TRUE
 
@@ -210,23 +291,43 @@
 	name = "chocolate jelly donut"
 	desc = "Goes great with a glass of warm milk."
 	icon_state = "jelly_choc"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/hot_coco = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
 	decorated_icon = "jelly_choc_sprinkles"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/jelly/blumpkin
 	name = "blumpkin jelly donut"
 	desc = "Goes great with a mug of soothing drunken blumpkin."
 	icon_state = "jelly_blue"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/blumpkinjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/blumpkinjuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 2, "blumpkin" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/jelly/bungo
 	name = "bungo jelly donut"
 	desc = "Goes great with a mason jar of hippie's delight."
 	icon_state = "jelly_yellow"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/bungojuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/bungojuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "tropical sweetness" = 1)
 	is_decorated = TRUE
 
@@ -234,7 +335,13 @@
 	name = "matcha jelly donut"
 	desc = "Goes great with a cup of tea."
 	icon_state = "jelly_olive"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/toxin/teapowder = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/toxin/teapowder = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 
@@ -242,9 +349,14 @@
 	name = "sweet pea jelly donut"
 	desc = "Goes great with a bottle of Bastion Burbon!"
 	icon_state = "jelly_laugh"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/laughter = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/laughter = 3,
+	)
 	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //////////////////////////SLIME DONUTS/////////////////////////
 
@@ -261,21 +373,39 @@
 	name = "pink jelly donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "jelly_pink"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/berryjuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) //Extra sprinkles to reward frosting
 
 /obj/item/food/donut/jelly/slimejelly/trumpet
 	name = "spaceman's jelly donut"
 	desc = "Goes great with a cold beaker of malk."
 	icon_state = "jelly_purple"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "violets" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/jelly/slimejelly/apple
 	name = "apple jelly donut"
 	desc = "Goes great with a shot of cinnamon schnapps."
 	icon_state = "jelly_green"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/applejuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/applejuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "green apples" = 1)
 	is_decorated = TRUE
 
@@ -283,7 +413,13 @@
 	name = "caramel jelly donut"
 	desc = "Goes great with a mug of hot coco."
 	icon_state = "jelly_beige"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/caramel = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/caramel = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "buttery sweetness" = 1)
 	is_decorated = TRUE
 
@@ -291,23 +427,43 @@
 	name = "chocolate jelly donut"
 	desc = "Goes great with a glass of warm milk."
 	icon_state = "jelly_choc"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/hot_coco = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
 	decorated_icon = "jelly_choc_sprinkles"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/jelly/slimejelly/blumpkin
 	name = "blumpkin jelly donut"
 	desc = "Goes great with a mug of soothing drunken blumpkin."
 	icon_state = "jelly_blue"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/blumpkinjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/blumpkinjuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 2, "blumpkin" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donut/jelly/slimejelly/bungo
 	name = "bungo jelly donut"
 	desc = "Goes great with a mason jar of hippie's delight."
 	icon_state = "jelly_yellow"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/bungojuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/bungojuice = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "tropical sweetness" = 1)
 	is_decorated = TRUE
 
@@ -315,7 +471,13 @@
 	name = "matcha jelly donut"
 	desc = "Goes great with a cup of tea."
 	icon_state = "jelly_olive"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/toxin/teapowder = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/toxin/teapowder = 3,
+		/datum/reagent/consumable/sprinkles = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 
@@ -323,8 +485,13 @@
 	name = "sweet pea jelly donut"
 	desc = "Goes great with a bottle of Bastion Burbon!"
 	icon_state = "jelly_laugh"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/laughter = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/laughter = 3,
+	)
 	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
 	is_decorated = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 #undef DONUT_SPRINKLE_CHANCE

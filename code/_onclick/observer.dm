@@ -2,11 +2,6 @@
 	if(check_click_intercept(params, A))
 		return
 
-	if(can_reenter_corpse && mind?.current)
-		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
-			reenter_corpse() // (body bag, closet, mech, etc)
-			return // seems legit.
-
 	// Things you might plausibly want to follow
 	if(ismovable(A))
 		ManualFollow(A)
@@ -54,7 +49,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(user.client)
-		if(user.gas_scan && atmos_scan(user=user, target=src, tool=null, silent=TRUE))
+		if(user.gas_scan && atmos_scan(user=user, target=src, silent=TRUE))
 			return TRUE
 		else if(isAdminGhostAI(user))
 			attack_ai(user)
@@ -72,11 +67,6 @@
 // ---------------------------------------
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
-
-/obj/effect/gateway_portal_bumper/attack_ghost(mob/user)
-	if(gateway)
-		gateway.Transfer(user)
-	return ..()
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
 	if(!power_station?.engaged || !power_station.teleporter_console || !power_station.teleporter_console.target_ref)

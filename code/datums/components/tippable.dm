@@ -54,23 +54,19 @@
 	src.roleplay_callback = roleplay_callback
 
 /datum/component/tippable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/interact_with_tippable)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(interact_with_tippable))
 	if (roleplay_friendly)
-		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/accept_roleplay)
+		RegisterSignal(parent, COMSIG_MOB_EMOTE, PROC_REF(accept_roleplay))
 
 
 /datum/component/tippable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /datum/component/tippable/Destroy()
-	if(pre_tipped_callback)
-		QDEL_NULL(pre_tipped_callback)
-	if(post_tipped_callback)
-		QDEL_NULL(post_tipped_callback)
-	if(post_untipped_callback)
-		QDEL_NULL(post_untipped_callback)
-	if(roleplay_callback)
-		QDEL_NULL(roleplay_callback)
+	pre_tipped_callback = null
+	post_tipped_callback = null
+	post_untipped_callback = null
+	roleplay_callback = null
 	return ..()
 
 /**
@@ -89,9 +85,9 @@
 		return
 
 	if(is_tipped)
-		INVOKE_ASYNC(src, .proc/try_untip, source, user)
+		INVOKE_ASYNC(src, PROC_REF(try_untip), source, user)
 	else
-		INVOKE_ASYNC(src, .proc/try_tip, source, user)
+		INVOKE_ASYNC(src, PROC_REF(try_tip), source, user)
 
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
@@ -104,7 +100,7 @@
  * tipper - the mob tipping the tipped_mob
  */
 /datum/component/tippable/proc/try_tip(mob/living/tipped_mob, mob/tipper)
-	if(tipped_mob.stat != CONSCIOUS)
+	if(tipped_mob.stat != CONSCIOUS && !HAS_TRAIT(tipped_mob, TRAIT_FORCED_STANDING))
 		return
 
 	if(pre_tipped_callback?.Invoke(tipper))
@@ -119,6 +115,9 @@
 		)
 
 		if(!do_after(tipper, tip_time, target = tipped_mob))
+			if(!isnull(tipped_mob.client))
+				tipped_mob.log_message("was attempted to tip over by [key_name(tipper)]", LOG_VICTIM, log_globally = FALSE)
+				tipper.log_message("failed to tip over [key_name(tipped_mob)]", LOG_ATTACK)
 			to_chat(tipper, span_danger("You fail to tip over [tipped_mob]."))
 			return
 	do_tip(tipped_mob, tipper)
@@ -134,11 +133,13 @@
 /datum/component/tippable/proc/do_tip(mob/living/tipped_mob, mob/tipper)
 	if(QDELETED(tipped_mob))
 		CRASH("Tippable component: do_tip() called with QDELETED tipped_mob!")
+	if (is_tipped) // sanity check in case multiple people try to tip at the same time
+		return
 
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
 	if (!isnull(tipped_mob.client))
-		tipped_mob.log_message("[key_name(tipped_mob)] has been tipped over by [key_name(tipper)].", LOG_ATTACK)
-		tipper.log_message("[key_name(tipper)] has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
+		tipped_mob.log_message("has been tipped over by [key_name(tipper)].", LOG_ATTACK)
+		tipper.log_message("has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
 	tipped_mob.visible_message(
 		span_warning("[tipper] tips over [tipped_mob]."),
 		span_userdanger("You are tipped over by [tipper]!"),
@@ -152,7 +153,7 @@
 	else if(self_right_time <= 0)
 		right_self(tipped_mob)
 	else
-		self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time, TIMER_UNIQUE | TIMER_STOPPABLE)
+		self_untip_timer = addtimer(CALLBACK(src, PROC_REF(right_self), tipped_mob), self_right_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /**
  * Try to untip a mob that has been tipped.
@@ -185,6 +186,8 @@
  */
 /datum/component/tippable/proc/do_untip(mob/living/tipped_mob, mob/untipper)
 	if(QDELETED(tipped_mob))
+		return
+	if (!is_tipped) // sanity check in case multiple people try to untip at the same time
 		return
 
 	to_chat(untipper, span_notice("You right [tipped_mob]."))
@@ -228,10 +231,11 @@
 	is_tipped = new_status
 	if(is_tipped)
 		tipped_mob.transform = turn(tipped_mob.transform, 180)
-		ADD_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
-	else
-		tipped_mob.transform = turn(tipped_mob.transform, -180)
-		REMOVE_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
+		tipped_mob.add_traits(list(TRAIT_MOB_TIPPED, TRAIT_IMMOBILIZED), TIPPED_OVER)
+		return
+
+	tipped_mob.transform = turn(tipped_mob.transform, -180)
+	tipped_mob.remove_traits(list(TRAIT_MOB_TIPPED, TRAIT_IMMOBILIZED), TIPPED_OVER)
 
 /**
  * Accepts "roleplay" in the form of emotes, which removes a quarter of the remaining time left to untip ourself.
@@ -251,6 +255,6 @@
 		return
 	var/time_left = timeleft(self_untip_timer)
 	deltimer(self_untip_timer)
-	self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, user), time_left * 0.75, TIMER_UNIQUE | TIMER_STOPPABLE)
+	self_untip_timer = addtimer(CALLBACK(src, PROC_REF(right_self), user), time_left * 0.75, TIMER_UNIQUE | TIMER_STOPPABLE)
 	roleplayed = TRUE
 	roleplay_callback?.Invoke(user)

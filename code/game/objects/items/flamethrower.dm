@@ -1,21 +1,21 @@
 /obj/item/flamethrower
 	name = "flamethrower"
 	desc = "You are a firestarter!"
-	icon = 'icons/obj/flamethrower.dmi'
+	icon = 'icons/obj/weapons/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	inhand_icon_state = "flamethrower_0"
 	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 3
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 0.5)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 	var/status = FALSE
 	var/lit = FALSE //on or off
@@ -31,9 +31,15 @@
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 
-/obj/item/flamethrower/ComponentInitialize()
+/obj/item/flamethrower/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flamethrower)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
@@ -46,10 +52,9 @@
 
 /obj/item/flamethrower/process()
 	if(!lit || !igniter)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	var/turf/location = loc
-	if(istype(location, /mob/))
+	if(ismob(location))
 		var/mob/M = location
 		if(M.is_holding(src))
 			location = M.loc
@@ -72,11 +77,9 @@
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag)
 		return // too close
-	if(ishuman(user))
-		if(!can_trigger_gun(user))
-			return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
 		return
@@ -152,7 +155,7 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, span_notice("You remove the plasma tank from [src]!"))
@@ -209,7 +212,7 @@
 			igniter.ignite_turf(src,T)
 		else
 			default_ignite(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
 	for(var/mob/M in viewers(1, loc))
@@ -226,7 +229,7 @@
 	if(air_transfer.gases[/datum/gas/plasma])
 		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5 //Suffering
 	target.assume_air(air_transfer)
-	//Burn it based on transfered gas
+	//Burn it based on transferred gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
 
@@ -243,7 +246,7 @@
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_refill)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_refill))
 
 /obj/item/flamethrower/full
 	create_full = TRUE
@@ -251,12 +254,11 @@
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/P = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
+/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("\The [attack_text] hits the fuel tank on [owner]'s [name], rupturing it! What a shot!"))
 		var/turf/target_turf = get_turf(owner)
-		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
+		owner.log_message("held a flamethrower tank detonated by a projectile ([hitby])", LOG_GAME)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them

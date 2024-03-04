@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 "Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
-"Yellow" = LIGHT_COLOR_YELLOW,
+"Yellow" = LIGHT_COLOR_DIM_YELLOW,
 "Lime" = LIGHT_COLOR_SLIME_LAMP,
 "Olive" = LIGHT_COLOR_GREEN,
 "Jade" = LIGHT_COLOR_BLUEGREEN,
@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	name = "marker beacon"
 	singular_name = "marker beacon"
 	desc = "Prism-brand path illumination devices. Used by miners to mark paths and warn of danger."
-	icon = 'icons/obj/marker.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "marker"
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
@@ -60,12 +60,12 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		transfer_fingerprints_to(M)
 
 /obj/item/stack/marker_beacon/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(isnull(input_color))
 		return
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	picked_color = input_color
 	update_appearance()
@@ -73,10 +73,10 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/structure/marker_beacon
 	name = "marker beacon"
 	desc = "A Prism-brand path illumination device. It is anchored in place and glowing steadily."
-	icon = 'icons/obj/marker.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
-	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 0, FIRE = 25, ACID = 0)
+	armor_type = /datum/armor/structure_marker_beacon
 	max_integrity = 50
 	anchored = TRUE
 	light_range = 2
@@ -85,6 +85,14 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	var/remove_speed = 15
 	var/picked_color
 
+/datum/armor/structure_marker_beacon
+	melee = 50
+	bullet = 75
+	laser = 75
+	energy = 75
+	bomb = 25
+	fire = 25
+
 /obj/structure/marker_beacon/Initialize(mapload, set_color)
 	. = ..()
 	if(set_color)
@@ -92,7 +100,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	update_appearance()
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
 		M.update_appearance()
@@ -150,12 +158,12 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 
 /obj/structure/marker_beacon/AltClick(mob/living/user)
 	..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(isnull(input_color))
 		return
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	picked_color = input_color
 	update_appearance()

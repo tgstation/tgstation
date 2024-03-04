@@ -6,7 +6,7 @@
 	icon_state = "stasis"
 	base_icon_state = "stasis"
 	density = FALSE
-	obj_flags = NO_BUILD
+	obj_flags = BLOCKS_CONSTRUCTION
 	can_buckle = TRUE
 	buckle_lying = 90
 	circuit = /obj/item/circuitboard/machine/stasis
@@ -17,6 +17,10 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
+
+/obj/machinery/stasis/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/elevation, pixel_shift = 6)
 
 /obj/machinery/stasis/Destroy()
 	. = ..()
@@ -39,7 +43,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(world.time >= stasis_can_toggle && user.canUseTopic(src, !issilicon(user)))
+	if(world.time >= stasis_can_toggle && user.can_perform_action(src, ALLOW_SILICON_REACH))
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
@@ -52,7 +56,7 @@
 /obj/machinery/stasis/Exited(atom/movable/gone, direction)
 	if(gone == occupant)
 		var/mob/living/L = gone
-		if(IS_IN_STASIS(L))
+		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	return ..()
 
@@ -88,6 +92,11 @@
 		var/easing_direction = _running ? EASE_OUT : EASE_IN
 		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
+/obj/machinery/stasis/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	SET_PLANE(mattress_on, PLANE_TO_TRUE(mattress_on.plane), new_turf)
+	return ..()
 
 /obj/machinery/stasis/atom_break(damage_flag)
 	. = ..()
@@ -134,9 +143,9 @@
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
-		if(!IS_IN_STASIS(L_occupant))
+		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
 			chill_out(L_occupant)
-	else if(IS_IN_STASIS(L_occupant))
+	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)

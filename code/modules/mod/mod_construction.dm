@@ -46,9 +46,36 @@
 
 /obj/item/mod/construction/broken_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
+	balloon_alert(user, "repairing...")
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 30))
+		balloon_alert(user, "interrupted!")
 		return
 	new /obj/item/mod/core/standard(drop_location())
+	qdel(src)
+
+/obj/item/mod/construction/lavalandcore
+	name = "plasma flower"
+	icon_state = "plasma-flower"
+	desc = "A strange flower from the desolate wastes of lavaland. It pulses with a bright purple glow.  \
+		Its shape is remarkably similar to that of a MOD core."
+	light_system = OVERLAY_LIGHT
+	light_color = "#cc00cc"
+	light_range = 2
+
+/obj/item/mod/construction/lavalandcore/examine(mob/user)
+	. = ..()
+	. += span_notice("You could probably attach some <b>wires</b> to it...")
+
+/obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, params)
+	if(!istype(weapon, /obj/item/stack/cable_coil))
+		return ..()
+	if(!weapon.tool_start_check(user, amount=2))
+		return
+	balloon_alert(user, "installing wires...")
+	if(!weapon.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
+		balloon_alert(user, "interrupted!")
+		return
+	new /obj/item/mod/core/plasma/lavaland(drop_location())
 	qdel(src)
 
 /obj/item/mod/construction/plating
@@ -196,7 +223,7 @@
 					balloon_alert(user, "boots added")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "You fit [part] onto [src].")
+				balloon_alert(user, "fit [part.name]")
 				boots = part
 				step = BOOTS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
@@ -231,11 +258,11 @@
 				if(!user.transferItemToLoc(part, src))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "suit finished")
 				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)
+				mod.balloon_alert(user, "suit finished")
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
 					balloon_alert(user, "assembly unscrewed")
@@ -254,18 +281,18 @@
 	QDEL_NULL(boots)
 	return ..()
 
-/obj/item/mod/construction/shell/handle_atom_del(atom/deleted_atom)
-	if(deleted_atom == core)
+/obj/item/mod/construction/shell/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == core)
 		core = null
-	if(deleted_atom == helmet)
+	if(gone == helmet)
 		helmet = null
-	if(deleted_atom == chestplate)
+	if(gone == chestplate)
 		chestplate = null
-	if(deleted_atom == gauntlets)
+	if(gone == gauntlets)
 		gauntlets = null
-	if(deleted_atom == boots)
+	if(gone == boots)
 		boots = null
-	return ..()
 
 #undef START_STEP
 #undef CORE_STEP

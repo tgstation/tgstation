@@ -2,28 +2,29 @@
 /datum/status_effect/drugginess
 	id = "drugged"
 	alert_type = /atom/movable/screen/alert/status_effect/high
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/drugginess/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/drugginess/on_apply()
-	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_drugginess)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(remove_drugginess))
 
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/high)
+	owner.add_mood_event(id, /datum/mood_event/high)
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/high)
 	owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
-	owner.grant_language(/datum/language/beachbum, TRUE, TRUE, id)
+	owner.grant_language(/datum/language/beachbum, source = id)
 	return TRUE
 
 /datum/status_effect/drugginess/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
+	owner.clear_mood_event(id)
 	owner.clear_fullscreen(id)
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_DRUGGED)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
-	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, id)
+	owner.remove_language(/datum/language/beachbum, source = id)
 
 /// Removes all of our drugginess (self delete) on signal
 /datum/status_effect/drugginess/proc/remove_drugginess(datum/source, admin_revive)

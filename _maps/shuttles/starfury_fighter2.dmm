@@ -6,10 +6,15 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc_fighter2)
+"h" = (
+/obj/machinery/camera/directional/west{
+	network = list("SBC_Fighter2");
+	c_tag = "Fighter 2 - Starboard"
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/template_noop,
 /area/shuttle/sbc_fighter2)
 "j" = (
 /obj/machinery/button/door{
@@ -19,7 +24,7 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "k" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -35,10 +40,10 @@
 /area/shuttle/sbc_fighter2)
 "o" = (
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_two,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "q" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
 "r" = (
@@ -56,22 +61,25 @@
 	dir = 1;
 	name = "tactical chair"
 	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
 "t" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_two{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "u" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_fighter2_bolt";
-	name = "Syndicate Fighter Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Fighter Airlock"
 	},
 /obj/docking_port/mobile/syndicate_fighter/fighter_two,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/sbc_fighter2)
 "v" = (
@@ -79,7 +87,7 @@
 	dir = 8;
 	network = list("SBC_Fighter2")
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "x" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
@@ -87,25 +95,31 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
+"Q" = (
+/obj/machinery/camera/directional/east{
+	network = list("SBC_Fighter2");
+	c_tag = "Fighter 2 - Port"
+	},
+/turf/template_noop,
+/area/shuttle/sbc_fighter2)
 "S" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "V" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
 "W" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
 
 (1,1,1) = {"
 a
-a
+Q
 l
 V
 V
@@ -141,7 +155,7 @@ q
 "}
 (5,1,1) = {"
 a
-a
+h
 k
 V
 V

@@ -2,29 +2,47 @@
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "gas analyzer"
 	custom_price = PAYCHECK_LOWER * 0.9
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "analyzer"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	tool_behaviour = TOOL_ANALYZER
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/cooldown = FALSE
 	var/cooldown_time = 250
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
+	var/ranged_scan_distance = 1
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), PROC_REF(on_analyze))
+
+	if(type != /obj/item/analyzer)
+		return
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/material_sniffer)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
+/obj/item/analyzer/equipped(mob/user, slot, initial)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_DETECT_STORM, CLOTHING_TRAIT)
+
+/obj/item/analyzer/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_DETECT_STORM, CLOTHING_TRAIT)
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
@@ -38,7 +56,7 @@
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src))
+	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT))
 		return
 
 	if(cooldown)
@@ -79,7 +97,7 @@
 		else
 			to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
 	cooldown = TRUE
-	addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/analyzer, ping)), cooldown_time)
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
@@ -116,7 +134,7 @@
 /obj/item/analyzer/attack_self(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
-	atmos_scan(user=user, target=get_turf(src), tool=src, silent=FALSE)
+	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
 	on_analyze(source=src, target=get_turf(src))
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
@@ -125,8 +143,16 @@
 
 	ui_interact(user)
 
+/obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!can_see(user, target, ranged_scan_distance))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
+
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	SIGNAL_HANDLER
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -145,7 +171,7 @@
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
-/proc/atmos_scan(mob/user, atom/target, obj/tool, silent=FALSE)
+/proc/atmos_scan(mob/user, atom/target, silent=FALSE)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -188,5 +214,15 @@
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
 
 	// we let the join apply newlines so we do need handholding
-	to_chat(user, jointext(message, "\n"), type = MESSAGE_TYPE_INFO)
+	to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	return TRUE
+
+/obj/item/analyzer/ranged
+	desc = "A hand-held long-range environmental scanner which reports current gas levels."
+	name = "long-range gas analyzer"
+	icon_state = "analyzerranged"
+	worn_icon_state = "analyzer"
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT*3, /datum/material/bluespace=SMALL_MATERIAL_AMOUNT*2)
+	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+	ranged_scan_distance = 15

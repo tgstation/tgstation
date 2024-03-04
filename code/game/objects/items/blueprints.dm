@@ -1,16 +1,14 @@
-#define AREA_ERRNONE 0
-#define AREA_STATION 1
-#define AREA_SPACE 2
-#define AREA_SPECIAL 3
-
 /obj/item/areaeditor
 	name = "area modification item"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "blueprints"
+	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
 	var/in_use = FALSE
+	///When using it to create a new area, this will be its type.
+	var/new_area_type = /area
 
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
@@ -28,7 +26,7 @@
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
 		return TRUE
-	if(!usr.canUseTopic(src) || usr != loc)
+	if(!usr.can_perform_action(src) || usr != loc)
 		usr << browse(null, "window=blueprints")
 		return TRUE
 	if(href_list["create_area"])
@@ -39,7 +37,7 @@
 			to_chat(usr, span_warning("You cannot edit restricted areas."))
 			return
 		in_use = TRUE
-		create_area(usr)
+		create_area(usr, new_area_type)
 		in_use = FALSE
 	updateUsrDialog()
 
@@ -47,7 +45,7 @@
 /obj/item/areaeditor/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -92,7 +90,7 @@
 	if(..())
 		return
 	if(href_list["edit_area"])
-		if(get_area_type()!=AREA_STATION)
+		if(get_area_type() != AREA_STATION)
 			return
 		if(in_use)
 			return
@@ -191,7 +189,7 @@
 	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
 	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
-	if(!str || !length(str) || str==prevname) //cancel
+	if(!str || !length(str) || str == prevname) //cancel
 		return
 	if(length(str) > 50)
 		to_chat(usr, span_warning("The given name is too long. The area's name is unchanged."))
@@ -200,7 +198,7 @@
 	rename_area(A, str)
 
 	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
-	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	usr.log_message("has renamed [prevname] to [str]", LOG_GAME)
 	A.update_areasize()
 	interact()
 	return TRUE
@@ -210,15 +208,23 @@
 /obj/item/areaeditor/blueprints/cyborg
 	name = "station schematics"
 	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
+
+/obj/item/areaeditor/blueprints/golem
+	name = "land claim"
+	desc = "Use it to build new structures in the wastes."
+	fluffnotice = "In memory of the Liberator's brother, Delaminator, and his Scarlet Macaw-iathan, from which this artifact was stolen."
+	new_area_type = /area/golem
 
 /proc/rename_area(a, new_name)
 	var/area/A = get_area(a)
 	var/prevname = "[A.name]"
 	set_area_machinery_title(A, new_name, prevname)
 	A.name = new_name
+	require_area_resort() //area renamed so resort the names
+
 	if(A.firedoors)
 		for(var/D in A.firedoors)
 			var/obj/machinery/door/firedoor/FD = D
@@ -230,16 +236,19 @@
 /proc/set_area_machinery_title(area/area, title, oldtitle)
 	if(!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/obj/machinery/airalarm/airpanel in area)
-		airpanel.name = replacetext(airpanel.name,oldtitle,title)
-	for(var/obj/machinery/power/apc/apcpanel in area)
-		apcpanel.name = replacetext(apcpanel.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in area)
-		scrubber.name = replacetext(scrubber.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in area)
-		vent.name = replacetext(vent.name,oldtitle,title)
-	for(var/obj/machinery/door/door in area)
-		door.name = replacetext(door.name,oldtitle,title)
-	for(var/obj/machinery/firealarm/firepanel in area)
-		firepanel.name = replacetext(firepanel.name,oldtitle,title)
+
+	//stuff tied to the area to rename
+	var/static/list/to_rename = typecacheof(list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+	))
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for (var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

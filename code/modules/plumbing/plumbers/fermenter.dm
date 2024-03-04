@@ -4,10 +4,10 @@
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
 	///input dir
 	var/eat_dir = SOUTH
 
@@ -15,7 +15,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

@@ -103,6 +103,28 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
+/// Returns a list(x, y), being the change in position required to step in the passed in direction
+/proc/dir2offset(dir)
+	switch(dir)
+		if(NORTH)
+			return list(0, 1)
+		if(SOUTH)
+			return list(0, -1)
+		if(EAST)
+			return list(1, 0)
+		if(WEST)
+			return list(-1, 0)
+		if(NORTHEAST)
+			return list(1, 1)
+		if(SOUTHEAST)
+			return list(1, -1)
+		if(NORTHWEST)
+			return list(-1, 1)
+		if(SOUTHWEST)
+			return list(-1, -1)
+		else
+			return list(0, 0)
+
 //Converts a blend_mode constant to one acceptable to icon.Blend()
 /proc/blendMode2iconMode(blend_mode)
 	switch(blend_mode)
@@ -156,17 +178,17 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/body_zone2cover_flags(def_zone)
 	switch(def_zone)
 		if(BODY_ZONE_CHEST)
-			return list(CHEST, GROIN)
+			return CHEST|GROIN
 		if(BODY_ZONE_HEAD)
-			return list(HEAD)
+			return HEAD
 		if(BODY_ZONE_L_ARM)
-			return list(ARM_LEFT, HAND_LEFT)
+			return ARM_LEFT|HAND_LEFT
 		if(BODY_ZONE_R_ARM)
-			return list(ARM_RIGHT, HAND_RIGHT)
+			return ARM_RIGHT|HAND_RIGHT
 		if(BODY_ZONE_L_LEG)
-			return list(LEG_LEFT, FOOT_LEFT)
+			return LEG_LEFT|FOOT_LEFT
 		if(BODY_ZONE_R_LEG)
-			return list(LEG_RIGHT, FOOT_RIGHT)
+			return LEG_RIGHT|FOOT_RIGHT
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this) -I found a use for it!! | So did I!.
@@ -315,15 +337,16 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/color_hex2color_matrix(string)
 	var/length = length(string)
 	if((length != 7 && length != 9) || length != length_char(string))
-		return color_matrix_identity()
-	var/r = hex2num(copytext(string, 2, 4))/255
-	var/g = hex2num(copytext(string, 4, 6))/255
-	var/b = hex2num(copytext(string, 6, 8))/255
+		return COLOR_MATRIX_IDENTITY
+	// For runtime safety
+	. = COLOR_MATRIX_IDENTITY
+	var/list/color = rgb2num(string)
+	var/r = color[1] / 255
+	var/g = color[2] / 255
+	var/b = color[3] / 255
 	var/a = 1
-	if(length == 9)
-		a = hex2num(copytext(string, 8, 10))/255
-	if(!isnum(r) || !isnum(g) || !isnum(b) || !isnum(a))
-		return color_matrix_identity()
+	if(length(color) == 4)
+		a = color[4] / 255
 	return list(r,0,0,0, 0,g,0,0, 0,0,b,0, 0,0,0,a, 0,0,0,0)
 
 //will drop all values not on the diagonal

@@ -5,6 +5,7 @@
  * Also fireproof for some reason.
  */
 /obj/item/pitchfork
+	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "pitchfork0"
 	base_icon_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -19,11 +20,16 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/item_pitchfork
 	resistance_flags = FIRE_PROOF
 
-/obj/item/pitchfork/ComponentInitialize()
+/datum/armor/item_pitchfork
+	fire = 100
+	acid = 30
+
+/obj/item/pitchfork/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/jousting)
 	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="[base_icon_state]1")
 
 /obj/item/pitchfork/update_icon_state()

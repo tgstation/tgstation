@@ -1,31 +1,49 @@
 /datum/surgery
+	///The name of the surgery operation
 	var/name = "surgery"
-	var/desc = "surgery description"
+	///The description of the surgery, what it does.
+	var/desc
+
+	///From __DEFINES/surgery.dm
+	///Selection: SURGERY_IGNORE_CLOTHES | SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
+	var/surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	///The surgery step we're currently on, increases each time we do a step.
 	var/status = 1
-	var/list/steps = list() //Steps in a surgery
-	var/step_in_progress = FALSE //Actively performing a Surgery
-	var/can_cancel = TRUE //Can cancel this surgery after step 1 with cautery
-	var/list/target_mobtypes = list(/mob/living/carbon/human) //Acceptable Species
-	var/location = BODY_ZONE_CHEST //Surgery location
-	var/requires_bodypart_type = BODYTYPE_ORGANIC //Prevents you from performing an operation on incorrect limbs. 0 for any limb type
-	var/list/possible_locs = list() //Multiple locations
-	var/ignore_clothes = FALSE //This surgery ignores clothes
-	var/mob/living/carbon/target //Operation target mob
-	var/obj/item/bodypart/operated_bodypart //Operable body part
-	var/datum/wound/operated_wound //The actual wound datum instance we're targeting
-	var/datum/wound/targetable_wound //The wound type this surgery targets
-	var/requires_bodypart = TRUE //Surgery available only when a bodypart is present, or only when it is missing.
-	var/speed_modifier = 0 //Step speed modifier
-	var/requires_real_bodypart = FALSE //Some surgeries don't work on limbs that don't really exist
-	var/lying_required = TRUE //Does the vicitm needs to be lying down.
-	var/self_operable = FALSE //Can the surgery be performed on yourself.
-	var/requires_tech = FALSE //handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
-	var/replaced_by //type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
+	///All steps the surgery has to do to complete.
+	var/list/steps = list()
+	///Boolean on whether a surgery step is currently being done, to prevent multi-surgery.
+	var/step_in_progress = FALSE
+
+	///The bodypart this specific surgery is being performed on.
+	var/location = BODY_ZONE_CHEST
+	///The possible bodyparts that the surgery can be started on.
+	var/list/possible_locs = list()
+	///Mobs that are valid to have surgery performed on them.
+	var/list/target_mobtypes = list(/mob/living/carbon/human)
+
+	///The person the surgery is being performed on. Funnily enough, it isn't always a carbon.
+	VAR_FINAL/mob/living/carbon/target
+	///The specific bodypart being operated on.
+	VAR_FINAL/obj/item/bodypart/operated_bodypart
+	///The wound datum that is being operated on.
+	VAR_FINAL/datum/wound/operated_wound
+
+	///Types of wounds this surgery can target.
+	var/targetable_wound
+	///The types of bodyparts that this surgery can have performed on it. Used for augmented surgeries.
+	var/requires_bodypart_type = BODYTYPE_ORGANIC
+
+	///The speed modifier given to the surgery through external means.
+	var/speed_modifier = 0
+	///Whether the surgery requires research to do. You need to add a design if using this!
+	var/requires_tech = FALSE
+	///typepath of a surgery that will, once researched, replace this surgery in the operating menu.
+	var/replaced_by
 	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
 	var/organ_to_manipulate
 
 /datum/surgery/New(atom/surgery_target, surgery_location, surgery_bodypart)
-	..()
+	. = ..()
 	if(!surgery_target)
 		return
 	target = surgery_target
@@ -53,12 +71,14 @@
 
 
 /datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
+	SHOULD_CALL_PARENT(TRUE)
+
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
+	if(HAS_MIND_TRAIT(user, TRAIT_SURGEON))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
@@ -70,14 +90,11 @@
 	if(requires_tech)
 		. = FALSE
 
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/robo_surgeon = user
-		var/obj/item/surgical_processor/surgical_processor = locate() in robo_surgeon.model.modules
-		if(surgical_processor) //no early return for !surgical_processor since we want to check optable should this not exist.
-			if(replaced_by in surgical_processor.advanced_surgeries)
-				return FALSE
-			if(type in surgical_processor.advanced_surgeries)
-				return TRUE
+	var/surgery_signal = SEND_SIGNAL(user, COMSIG_SURGERY_STARTING, src, patient)
+	if(surgery_signal & COMPONENT_FORCE_SURGERY)
+		return TRUE
+	if(surgery_signal & COMPONENT_CANCEL_SURGERY)
+		return FALSE
 
 	var/turf/patient_turf = get_turf(patient)
 
@@ -89,9 +106,12 @@
 		return FALSE
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
+	return .
 
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
+		return FALSE
+	if(user.combat_mode)
 		return FALSE
 	if(step_in_progress)
 		return TRUE
@@ -101,13 +121,15 @@
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/step = get_surgery_step()
-	if(step)
-		var/obj/item/tool = user.get_active_held_item()
-		if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
-			return TRUE
-		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
-			to_chat(user, span_warning("This step requires a different tool!"))
-			return TRUE
+	if(isnull(step))
+		return FALSE
+	var/obj/item/tool = user.get_active_held_item()
+	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		return TRUE
+	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+		to_chat(user, span_warning("This step requires a different tool!"))
+		return TRUE
+
 	return FALSE
 
 /datum/surgery/proc/get_surgery_step()
@@ -118,20 +140,11 @@
 	if(status < steps.len)
 		var/step_type = steps[status + 1]
 		return new step_type
-	else
-		return null
+	return null
 
 /datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-	surgeon.mind.add_memory(
-		MEMORY_SUCCESSFUL_SURGERY,
-		list(
-			DETAIL_PROTAGONIST = surgeon,
-			DETAIL_DEUTERAGONIST = target,
-			DETAIL_SURGERY_TYPE = src,
-		),
-		story_value = STORY_VALUE_OKAY
-	)
+	surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
 	qdel(src)
 
 /// Returns a nearby operating computer linked to an operating table
@@ -158,14 +171,14 @@
 	name = "Surgery Procedure Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
 	name = "Debug Surgery Disk"
 	desc = "A disk that contains all existing surgery procedures."
 	icon_state = "datadisk1"
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
 
 /obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()
@@ -178,7 +191,7 @@
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
 //As of Feb 21 2013 they are in code/modules/mob/living/carbon/carbon.dm, lines 459 and 51 respectively.
-//Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
+//Other important variables are var/list/surgeries (/mob/living) and var/list/organs (/mob/living/carbon)
 // var/list/bodyparts (/mob/living/carbon/human) is the LIMBS of a Mob.
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
 
