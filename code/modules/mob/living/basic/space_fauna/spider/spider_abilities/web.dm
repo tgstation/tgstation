@@ -3,7 +3,7 @@
 	name = "Spin Web"
 	desc = "Spin a web to slow down potential prey."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
-	button_icon_state = "lay_web"
+	button_icon_state = "spider_web"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	cooldown_time = 0 SECONDS
@@ -96,7 +96,7 @@
 /datum/action/cooldown/mob_cooldown/lay_web/solid_web
 	name = "Spin Solid Web"
 	desc = "Spin a web to obstruct potential prey."
-	button_icon_state = "lay_solid_web"
+	button_icon_state = "spider_wall"
 	cooldown_time = 0 SECONDS
 	webbing_time = 5 SECONDS
 
@@ -109,7 +109,7 @@
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage
 	name = "Spin Web Passage"
 	desc = "Spin a web passage to hide the nest from prey view."
-	button_icon_state = "lay_web_passage"
+	button_icon_state = "spider_roof"
 	cooldown_time = 0 SECONDS
 	webbing_time = 4 SECONDS
 
@@ -122,7 +122,7 @@
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web
 	name = "Spin Sticky Web"
 	desc = "Spin a sticky web to trap intruders."
-	button_icon_state = "lay_sticky_web"
+	button_icon_state = "spider_ropes"
 	cooldown_time = 20 SECONDS
 	webbing_time = 3 SECONDS
 
@@ -135,7 +135,7 @@
 /datum/action/cooldown/mob_cooldown/lay_web/web_spikes
 	name = "Spin Web Spikes"
 	desc = "Extrude silk spikes to dissuade invaders."
-	button_icon_state = "lay_web_spikes"
+	button_icon_state = "spider_spikes"
 	cooldown_time = 40 SECONDS
 	webbing_time = 3 SECONDS
 
@@ -176,7 +176,7 @@
 /datum/action/cooldown/mob_cooldown/lay_web/web_reflector
 	name = "Spin reflective silk screen"
 	desc = "Spin a web to reflect missiles from the nest."
-	button_icon_state = "lay_web_reflector"
+	button_icon_state = "spider_mirror"
 	cooldown_time = 30 SECONDS
 	webbing_time = 4 SECONDS
 
