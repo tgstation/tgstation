@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/slime
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_RABID = FALSE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
