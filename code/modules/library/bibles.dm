@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
-	bullet_catcher = AddComponent(\
+	AddComponent(\
 		/datum/component/bullet_intercepting,\
 		active_slots = ITEM_SLOT_SUITSTORE,\
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
