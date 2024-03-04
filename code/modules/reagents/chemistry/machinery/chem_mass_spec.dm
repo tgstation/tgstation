@@ -370,8 +370,8 @@
 			//adjust timer for purification
 			progress_time = 0
 			estimate_time()
-			if(eta <= 0)
-				say("No work can be done!")
+			if(delay_time <= 0)
+				say("No work to be done!")
 				return
 
 			//start the purification process
