@@ -7,7 +7,7 @@
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "ninja_cloak"
+	button_icon_state = "caretaker"
 	sound = 'sound/effects/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
