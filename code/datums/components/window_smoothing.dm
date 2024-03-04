@@ -82,12 +82,12 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	paired_turf = get_step(our_turf, NORTH)
 	// We only display an above state if there's a wall, OR if we're smoothing with nothing up there
 	if(isclosedturf(paired_turf) && (!ignored_turf || !istype(paired_turf, ignored_turf)))
-		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", FALSE, pixel_y = 32)
+		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", TRUE, pixel_y = 32)
 		UnregisterSignal(paired_turf, COMSIG_QDELETING)
 	else if(!(NORTH & junction))
 		// Draw to the turf above you so this can be seen without seeing the window's turf. Oh and draw this as a frill
 		// We use the parent's pixel y as a part of this to ensure everything lines up proper when the parent is all shifted around
-		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", TRUE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
+		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", FALSE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
 		paired_turf.overlays += appearance_above
 		RegisterSignal(paired_turf, COMSIG_QDELETING, PROC_REF(tied_turf_deleted), override = TRUE) // Override because this could be called multiple times
 	else

@@ -975,6 +975,7 @@ GLOBAL_LIST_INIT(default_connectables, typecacheof(list(
 	)))
 ///What to connect with at a lower priority by default. Used for stuff that we want to consider, but only if we don't find anything else
 GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
+		/obj/machinery/door/firedoor,
 		/obj/machinery/door/window,
 		/obj/structure/table,
 		/obj/structure/window,
