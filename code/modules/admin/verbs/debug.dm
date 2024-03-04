@@ -680,7 +680,7 @@
 
 		names[name] = ruin_landmark
 
-	var/ruinname = tgui_input_list(usr, "Select ruin", "Jump to Ruin", names)
+	var/ruinname = tgui_input_list(usr, "Select ruin", "Jump to Ruin", sort_list(names))
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
 
@@ -714,7 +714,7 @@
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = tgui_input_list(usr, "Select ruin", "Spawn Ruin", names)
+	var/ruinname = tgui_input_list(usr, "Select ruin", "Spawn Ruin", sort_list(names))
 	var/data = names[ruinname]
 	if (!data)
 		return
