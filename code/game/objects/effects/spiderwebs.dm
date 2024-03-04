@@ -22,7 +22,7 @@
 				damage_amount *= 1.25
 			if(BRUTE)
 				damage_amount *= 0.25
-	. = ..()
+	return ..()
 
 /obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 350
@@ -35,7 +35,20 @@
 	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
-	icon_state = "stickyweb1"
+	plane = FLOOR_PLANE
+	layer = MID_TURF_LAYER
+	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
+	base_icon_state = "stickyweb"
+	icon_state = "stickyweb-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB
+
+/obj/structure/spider/stickyweb/Initialize(mapload)
+	// Offset on init so that they look nice in the map editor
+	pixel_x = -9
+	pixel_y = -9
+	return ..()
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
 	.= ..()
@@ -50,11 +63,6 @@
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
 	user.put_in_hands(woven_cloth)
-
-/obj/structure/spider/stickyweb/Initialize(mapload)
-	if(!sealed && prob(50))
-		icon_state = "stickyweb2"
-	. = ..()
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
