@@ -76,10 +76,15 @@
 		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 			return TRUE
 		if(prob(50))
-			loc.balloon_alert(mover, "stuck in web!")
+			stuck_react(mover)
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
+
+/// Show some feedback when you can't pass through something
+/obj/structure/spider/stickyweb/proc/stuck_react(stuck_guy)
+	loc.balloon_alert(mover, "stuck in web!")
+	mover.Shake(duration = 0.1 SECONDS)
 
 /obj/structure/spider/stickyweb/sealed
 	name = "sealed web"
@@ -108,7 +113,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			loc.balloon_alert(mover, "stuck in web!")
+			stuck_react(mover)
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -189,6 +194,7 @@
 	if(!isnull(mover.pulledby) && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
+	mover.Shake(duration = 0.1 SECONDS)
 	return FALSE
 
 /obj/structure/spider/spikes
