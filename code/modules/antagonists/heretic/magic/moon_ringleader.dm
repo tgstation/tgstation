@@ -1,7 +1,8 @@
 /datum/action/cooldown/spell/aoe/moon_ringleader
 	name = "Ringleaders Rise"
-	desc = "Big AoE spell that deals more brain damage the lower the sanity of everyone in the AoE and it also causes hallucinations with those who have less sanity getting more. \
-			If their sanity is low enough they snap and go insane, the spell then halves their sanity."
+	desc = "Big AoE spell that deals brain damage and causes hallucinations to everyone in the AoE. \
+			The worse their sanity, the stronger this spell becomes. \
+			If their sanity is low enough, they even snap and go insane, and the spell then further halves their sanity."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
