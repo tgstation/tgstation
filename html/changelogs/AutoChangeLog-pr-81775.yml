@@ -1,4 +1,0 @@
-author: "Nerev4r"
-delete-after: True
-changes:
-  - qol: "Ethereal charging now loops when they're charging (from) APCs or from power cells!"

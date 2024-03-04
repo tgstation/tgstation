@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed spy stolen machines not dumping everything that needed to be dumped"

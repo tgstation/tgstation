@@ -68,3 +68,22 @@
   xXPawnStarrXx:
   - bugfix: makes custom pizzas dairy and vegetable free, unless you choose to add
       them.
+2024-03-04:
+  LT3:
+  - image: Tram frame is now tram girder, because it acts like one
+  Melbert:
+  - bugfix: Fixed spy stolen machines not dumping everything that needed to be dumped
+  Nerev4r:
+  - qol: Ethereal charging now loops when they're charging (from) APCs or from power
+      cells!
+  Singul0:
+  - rscadd: Adds a new changeling ability, "Darkness Adaptation". Making you more
+      translucent, especially in darkness and allowing you to see slightly better
+      in the dark
+  - balance: The changeling power "Chameleon Skin" has been buffed, Reduces the cost
+      to 1 and sped up the time it takes to turn invisible
+  ViktorKoL:
+  - bugfix: made some heretic descriptions more accurate
+  - spellcheck: improved english of the heretical eldritch patrons
+  starrm4nn:
+  - bugfix: Makes Metastation surgery access more consistent with other maps
