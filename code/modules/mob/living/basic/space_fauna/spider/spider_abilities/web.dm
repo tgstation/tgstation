@@ -74,7 +74,7 @@
 /// Variant for genetics, created webs only allow the creator passage
 /datum/action/cooldown/mob_cooldown/lay_web/genetic
 	desc = "Spin a web. Only you will be able to traverse your web easily."
-	cooldown_time = 4 SECONDS //the same time to lay a web
+	cooldown_time = 4 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/genetic/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/stickyweb/genetic(target_turf, owner)
@@ -181,7 +181,7 @@
 	webbing_time = 4 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_reflector/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/reflector) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/stickyweb/sealed/reflector) in get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_reflector/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-	new /obj/structure/spider/reflector(target_turf)
+	new /obj/structure/spider/stickyweb/sealed/reflector(target_turf)

@@ -1,4 +1,5 @@
-//generic procs copied from obj/effect/alien
+#define SPIDER_WEB_TINT	"web_colour_tint"
+
 /obj/structure/spider
 	name = "web"
 	icon = 'icons/effects/web.dmi'
@@ -95,10 +96,60 @@
 	loc.balloon_alert(stuck_guy, "stuck in web!")
 	stuck_guy.Shake(duration = 0.1 SECONDS)
 
+
+/// Web made by geneticists, needs special handling to allow them to pass through their own webs
+/obj/structure/spider/stickyweb/genetic
+	/// Mob with special permission to cross this web
+	var/mob/living/allowed_mob
+	genetic = TRUE
+	desc = "It's stringy, sticky, and came out of your coworker."
+
+/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
+	. = ..()
+	// Tint it purple so that spiders don't get confused about why they can't cross this one
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffaaf8ff", "size" = 0.1))
+
+/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
+	allowed_mob = allowedmob
+	return ..()
+
+/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(mover == allowed_mob)
+		return TRUE
+	else if(isliving(mover)) //we change the spider to not be able to go through here
+		if(mover.pulledby == allowed_mob)
+			return TRUE
+		if(prob(50))
+			stuck_react(mover)
+			return FALSE
+	else if(isprojectile(mover))
+		return prob(30)
+	return .
+
+/// Web with a 100% chance to intercept movement
+/obj/structure/spider/stickyweb/very_sticky
+	max_integrity = 20
+	desc = "Extremely sticky silk, you're not easily getting through there."
+	stuck_chance = 100
+	projectile_stuck_chance = 100
+
+/obj/structure/spider/stickyweb/very_sticky/Initialize(mapload)
+	. = ..()
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffffaaff", "size" = 0.1))
+
+/obj/structure/spider/stickyweb/very_sticky/update_overlays()
+	. = ..()
+	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
+	web_overlay.pixel_x -= pixel_x
+	web_overlay.pixel_y -= pixel_y
+	. += web_overlay
+
+
 /// Web 'wall'
 /obj/structure/spider/stickyweb/sealed
 	name = "sealed web"
-	desc = "A solid thick wall of web, airtight enough to block air flow."
+	desc = "A solid wall of web, dense enough to block air flow."
 	icon = 'icons/obj/smooth_structures/webwall.dmi'
 	base_icon_state = "webwall"
 	icon_state = "webwall-0"
@@ -114,8 +165,20 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
+/// Walls which reflect lasers
+/obj/structure/spider/stickyweb/sealed/reflector
+	name = "reflective silk screen"
+	desc = "Hardened webbing treated with special chemicals which cause it to repel projectiles."
+	icon_state = "reflector"
+	max_integrity = 30
+	opacity = TRUE
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
+
 /// Opaque and durable web 'wall'
 /obj/structure/spider/stickyweb/sealed/tough
+	name = "hardened web"
+	desc = "Webbing hardened through a chemical process into a durable barrier."
 	icon = 'icons/obj/smooth_structures/webwall_dark.dmi'
 	base_icon_state = "webwall_dark"
 	icon_state = "webwall_dark-0"
@@ -126,43 +189,6 @@
 	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
-/obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
-	genetic = TRUE
-	var/mob/living/allowed_mob
-
-/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
-	allowed_mob = allowedmob
-	. = ..()
-
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..() //this is the normal spider web return aka a spider would make this TRUE
-	if(mover == allowed_mob)
-		return TRUE
-	else if(isliving(mover)) //we change the spider to not be able to go through here
-		if(mover.pulledby == allowed_mob)
-			return TRUE
-		if(prob(50))
-			stuck_react(mover)
-			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
-
-/obj/structure/spider/stickyweb/very_sticky
-	max_integrity = 20
-	desc = "Extremely sticky silk, you're not easily getting through there."
-	stuck_chance = 100
-	projectile_stuck_chance = 100
-
-/obj/structure/spider/stickyweb/very_sticky/Initialize(mapload)
-	. = ..()
-	add_filter("coloured_tinge", 10, list("type" = "outline", "color" = "#ffffaaff", "size" = 0.1))
-
-/obj/structure/spider/stickyweb/very_sticky/update_overlays()
-	. = ..()
-	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
-	web_overlay.pixel_x -= pixel_x
-	web_overlay.pixel_y -= pixel_y
-	. += web_overlay
 
 /obj/structure/spider/passage
 	name = "web passage"
@@ -207,30 +233,26 @@
 		A.forceMove(T)
 	return ..()
 
+/// Web caltrops
 /obj/structure/spider/spikes
 	name = "web spikes"
 	desc = "Silk hardened into small yet deadly spikes."
-	icon_state = "webspikes1"
+	plane = FLOOR_PLANE
+	layer = MID_TURF_LAYER
+	icon = 'icons/obj/smooth_structures/stickyweb_spikes.dmi'
+	base_icon_state = "stickyweb_spikes"
+	icon_state = "stickyweb_spikes-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	max_integrity = 40
 
 /obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
+	pixel_x = -9
+	pixel_y = -9
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ac0000ff", "size" = 0.1))
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
-
-/obj/structure/spider/reflector
-	name = "Reflective silk screen"
-	desc = "Made up of an extremly reflective silk material looking at it hurts."
-	icon_state = "reflector"
-	max_integrity = 30
-	density = TRUE
-	opacity = TRUE
-	anchored = TRUE
-	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
-	receive_ricochet_chance_mod = INFINITY
-
-/obj/structure/spider/reflector/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
 
 /obj/structure/spider/effigy
 	name = "web effigy"
@@ -243,3 +265,5 @@
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+
+#undef SPIDER_WEB_TINT
