@@ -1504,10 +1504,20 @@
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	nutrition = max(0, nutrition + change)
+	hud_used?.hunger?.update_appearance()
+
+/mob/living/adjust_nutrition(change)
+	. = ..()
+	mob_mood?.update_nutrition_moodlets()
 
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
 	nutrition = max(0, change)
+	hud_used?.hunger?.update_appearance()
+
+/mob/living/set_nutrition(change)
+	. = ..()
+	mob_mood?.update_nutrition_moodlets()
 
 ///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
