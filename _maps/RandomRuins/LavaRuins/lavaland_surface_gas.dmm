@@ -35,7 +35,20 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/lizard_gaslava)
 "fy" = (
+/obj/machinery/light/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/machinery/light/directional/north,
+/turf/open/misc/ashplanet/rocky,
+/area/ruin/lizard_gaslava)
+"fF" = (
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
 /turf/open/misc/ashplanet/rocky,
 /area/ruin/lizard_gaslava)
 "fH" = (
@@ -56,6 +69,9 @@
 /area/ruin/lizard_gaslava)
 "ia" = (
 /obj/effect/spawner/random/structure/billboard/lizardsgas,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
 /turf/open/misc/ashplanet/rocky,
 /area/ruin/lizard_gaslava)
 "iK" = (
@@ -103,6 +119,19 @@
 /obj/structure/sign/poster/contraband/hacking_guide/directional/north,
 /turf/open/floor/iron,
 /area/ruin/lizard_gaslava)
+"mG" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/misc/ashplanet/rocky,
+/area/ruin/lizard_gaslava)
+"mY" = (
+/obj/effect/spawner/random/structure/billboard/lizardsgas,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/misc/ashplanet/rocky,
+/area/ruin/lizard_gaslava)
 "nc" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
@@ -115,6 +144,12 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/ruin/lizard_gaslava)
+"om" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/turf/open/misc/ashplanet/rocky,
 /area/ruin/lizard_gaslava)
 "pp" = (
 /obj/structure/sign/poster/contraband/jumbo_bar/directional/east,
@@ -167,6 +202,12 @@
 	pixel_x = -5
 	},
 /turf/open/floor/iron,
+/area/ruin/lizard_gaslava)
+"ub" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/misc/ashplanet/rocky,
 /area/ruin/lizard_gaslava)
 "uV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -326,6 +367,12 @@
 /obj/item/storage/fancy/pickles_jar,
 /turf/open/floor/iron/freezer,
 /area/ruin/lizard_gaslava)
+"FA" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/ashplanet/rocky,
+/area/ruin/lizard_gaslava)
 "FC" = (
 /obj/structure/sign/poster/fluff/lizards_gas_power/directional/west,
 /turf/open/floor/iron/smooth,
@@ -347,6 +394,12 @@
 	pixel_y = 1
 	},
 /turf/open/floor/iron,
+/area/ruin/lizard_gaslava)
+"GK" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/ashplanet/rocky,
 /area/ruin/lizard_gaslava)
 "HI" = (
 /obj/structure/table/reinforced,
@@ -404,6 +457,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron,
 /area/ruin/lizard_gaslava)
+"JX" = (
+/obj/structure/railing,
+/turf/open/misc/ashplanet/rocky,
+/area/ruin/lizard_gaslava)
 "Kl" = (
 /obj/structure/rack,
 /obj/item/food/cornchips/random,
@@ -418,6 +475,12 @@
 "Km" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
+/area/ruin/lizard_gaslava)
+"KJ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/ashplanet/rocky,
 /area/ruin/lizard_gaslava)
 "Mv" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -522,9 +585,9 @@
 DI
 DI
 DI
-fH
-fH
-ia
+fF
+fF
+mY
 DI
 DI
 DI
@@ -540,8 +603,8 @@ DI
 DI
 DI
 ia
-fH
-fH
+mG
+mG
 DI
 DI
 "}
@@ -581,16 +644,16 @@ fH
 fH
 DI
 DI
-fH
-fH
-fH
-fH
-fH
-fH
-fH
-fH
-fH
-fH
+ub
+FA
+FA
+FA
+FA
+FA
+FA
+FA
+FA
+GK
 DI
 DI
 fH
@@ -608,8 +671,8 @@ fH
 fH
 DI
 DI
+KJ
 fH
-fH
 SL
 SL
 SL
@@ -617,7 +680,7 @@ SL
 SL
 SL
 SL
-fH
+JX
 DI
 DI
 fH
@@ -633,7 +696,7 @@ DI
 fH
 fH
 fH
-fH
+om
 fH
 fH
 fH
@@ -646,7 +709,7 @@ wl
 SL
 fH
 fH
-fH
+om
 fH
 fH
 fH
@@ -660,12 +723,12 @@ DI
 fH
 fH
 fH
-fH
+om
 fH
 fH
 xH
 RA
-xH
+fy
 RA
 RA
 fy
@@ -673,7 +736,7 @@ RA
 Uk
 fH
 fH
-fH
+om
 fH
 fH
 fH
@@ -687,7 +750,7 @@ DI
 fH
 fH
 fH
-fH
+om
 fH
 fH
 fH
@@ -700,7 +763,7 @@ fX
 SL
 fH
 fH
-fH
+om
 fH
 fH
 fH
