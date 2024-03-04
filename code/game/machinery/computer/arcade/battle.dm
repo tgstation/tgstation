@@ -44,6 +44,8 @@
 	icon_screen = "battle"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
 
+	///List of all battle arcade gear that is available in the shop in game.
+	var/static/list/battle_arcade_gear_list
 	///List of all worlds in the game.
 	var/static/list/all_worlds = list(
 		BATTLE_WORLD_ONE = 1,
@@ -106,6 +108,14 @@
 	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
 	var/bomb_cooldown = 19
 
+/obj/machinery/computer/arcade/battle/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	if(isnull(battle_arcade_gear_list))
+		var/list/all_gear = list()
+		for(var/datum/battle_arcade_gear/template as anything in subtypesof(/datum/battle_arcade_gear))
+			all_gear[template::name] = new template
+		battle_arcade_gear_list = all_gear
+
 /obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -114,9 +124,9 @@
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	setup_new_opponent()
 	feedback_message = "If you die in the game, you die for real!"
+	return TRUE
 
 /obj/machinery/computer/arcade/battle/reset_cabinet(mob/living/user)
-	. = ..()
 	enemy_name = null
 	player_turn = initial(player_turn)
 	feedback_message = initial(feedback_message)
@@ -129,6 +139,7 @@
 	ui_panel = initial(ui_panel)
 	bomb_cooldown = initial(bomb_cooldown)
 	equipped_gear = list(WEAPON_SLOT = null, ARMOR_SLOT = null)
+	return ..()
 
 ///Sets up a new opponent depending on what stage they are at.
 /obj/machinery/computer/arcade/battle/proc/setup_new_opponent(enemy_gets_first_move = FALSE)
@@ -160,7 +171,7 @@
 		name_adjective = "Big Boss"
 
 	enemy_icon_id = rand(1,6)
-	enemy_name = ("The " + name_adjective + " " + new_name)
+	enemy_name = "The [name_adjective] [new_name]"
 	feedback_message = "New game started against [enemy_name]"
 
 	if(obj_flags & EMAGGED)
@@ -342,8 +353,8 @@
 
 	data["feedback_message"] = feedback_message
 	data["shop_items"] = list()
-	for(var/gear_name in GLOB.battle_arcade_gear_list)
-		var/datum/battle_arcade_gear/gear = GLOB.battle_arcade_gear_list[gear_name]
+	for(var/gear_name in battle_arcade_gear_list)
+		var/datum/battle_arcade_gear/gear = battle_arcade_gear_list[gear_name]
 		if(latest_unlocked_world != gear.world_available)
 			continue
 		data["shop_items"] += list(gear_name)
@@ -376,10 +387,10 @@
 
 	data["all_worlds"] = list()
 	for(var/individual_world in all_worlds)
-		data["all_worlds"] += list(individual_world)
+		UNTYPED_LIST_ADD(data["all_worlds"], individual_world)
 	data["attack_types"] = list()
 	for(var/individual_attack_type in all_attack_types)
-		data["attack_types"] += list(list("name" = individual_attack_type, "tooltip" = all_attack_types[individual_attack_type]))
+		UNTYPED_LIST_ADD(data["attack_types"], list("name" = individual_attack_type, "tooltip" = all_attack_types[individual_attack_type]))
 	data["cost_of_items"] = DEFAULT_ITEM_PRICE
 	data["max_hp"] = PLAYER_MAX_HP
 	data["max_mp"] = PLAYER_MAX_MP
@@ -425,7 +436,7 @@
 					player_current_mp = PLAYER_MAX_MP
 					return TRUE
 				if("buy_item")
-					var/datum/battle_arcade_gear/gear = GLOB.battle_arcade_gear_list[params["purchasing_item"]]
+					var/datum/battle_arcade_gear/gear = battle_arcade_gear_list[params["purchasing_item"]]
 					if(latest_unlocked_world != gear.world_available || equipped_gear[gear.slot] == gear)
 						say("That item is not in stock.")
 						return TRUE
@@ -467,10 +478,11 @@
 						if(prob(40))
 							//You got robbed, and now have to go to your next fight.
 							player_gold /= 2
-							setup_new_opponent()
 						else
 							//You got ambushed, the enemy gets the first hit.
 							setup_new_opponent(enemy_gets_first_move = TRUE)
+							return TRUE
+					setup_new_opponent()
 					return TRUE
 				if("abandon_quest")
 					if(player_current_world == latest_unlocked_world)

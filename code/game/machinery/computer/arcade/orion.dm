@@ -5,6 +5,9 @@
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
+
+	///List of all orion events, created on Initialize.
+	var/static/list/orion_events
 	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0
@@ -31,12 +34,18 @@
 
 /obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
+	if(isnull(orion_events))
+		var/list/events = list()
+		for(var/path in subtypesof(/datum/orion_event))
+			var/datum/orion_event/new_event = new path(src)
+			events[new_event] = new_event.weight
+		orion_events = events
 	radio = new /obj/item/radio(src)
 	radio.set_listening(FALSE)
 	setup_events()
 
 /obj/machinery/computer/arcade/orion_trail/proc/setup_events()
-	events = GLOB.orion_events
+	events = orion_events.Copy()
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
 	QDEL_NULL(radio)
@@ -68,7 +77,7 @@
 	settlers = list("Kirk","Worf","Gene")
 
 /obj/machinery/computer/arcade/orion_trail/kobayashi/setup_events()
-	events = GLOB.orion_events.Copy()
+	events = orion_events.Copy()
 	for(var/datum/orion_event/event as anything in events)
 		if(!(event.type in event_whitelist))
 			events.Remove(event)

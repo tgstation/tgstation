@@ -71,22 +71,3 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	/obj/item/clothing/mask/party_horn = 2,
 	/obj/item/storage/box/party_poppers = 2,
 ))
-
-///assoc list, ([datum singleton] = weight), of events that can run during orion trail.
-GLOBAL_LIST_INIT(orion_events, generate_orion_events())
-
-/proc/generate_orion_events()
-	var/list/events = list()
-	for(var/path in subtypesof(/datum/orion_event))
-		var/datum/orion_event/new_event = new path(src)
-		events[new_event] = new_event.weight
-	return events
-
-///asoc list ([gear name] = gear datum) of all equipment that can be bought in battle arcade.
-GLOBAL_LIST_INIT(battle_arcade_gear_list, generate_battle_arcade_gear_list())
-
-/proc/generate_battle_arcade_gear_list()
-	var/list/gear = list()
-	for(var/datum/battle_arcade_gear/template as anything in subtypesof(/datum/battle_arcade_gear))
-		gear[template::name] = new template
-	return gear
