@@ -3,7 +3,7 @@
 	set category = "IC"
 
 	if(zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move upwards."))
+		to_chat(src, span_notice("You move downwards."))
 
 /mob/dead/observer/up()
 	set name = "Move Upwards"
