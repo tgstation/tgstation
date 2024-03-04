@@ -141,7 +141,15 @@
 	if(isitem(stealing) && ((stealing.resistance_flags & INDESTRUCTIBLE) || prob(black_market_prob)))
 		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing), 0.5 SECONDS)
 	else
-		QDEL_IN(stealing, 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(finish_cleanup), stealing), 0.5 SECONDS)
+
+/**
+ * Called when cleaning up a stolen atom that was NOT sent to the black market.
+ *
+ * * stealing - The item that was stolen.
+ */
+/datum/spy_bounty/proc/finish_cleanup(atom/movable/stealing)
+	qdel(stealing)
 
 /**
  * Handles putting the passed movable up on the black market.
@@ -310,6 +318,10 @@
 		qdel(part)
 
 	return TRUE
+
+/datum/spy_bounty/machine/finish_cleanup(obj/machinery/stealing)
+	stealing.dump_inventory_contents()
+	return ..()
 
 /datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
 	if(isnull(target_type))
@@ -625,6 +637,13 @@
 
 /datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
 	return bot_type
+
+/datum/spy_bounty/some_bot/finish_cleanup(mob/living/simple_animal/bot/stealing)
+	if(stealing.client)
+		to_chat(stealing, span_deadsay("You've been stolen! You are shipped off to the black market and taken apart for spare parts..."))
+		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
+		stealing.ghostize()
+	return ..()
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
