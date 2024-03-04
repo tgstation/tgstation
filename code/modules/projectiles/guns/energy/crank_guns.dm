@@ -98,9 +98,9 @@
 		charging_cell = get_cell(), \
 		spin_to_win = TRUE, \
 		charge_amount = 125, \
-		cooldown_time = 0.5 SECONDS, \
+		cooldown_time = 0.8 SECONDS, \
 		charge_sound = 'sound/weapons/kinetic_reload.ogg', \
-		charge_sound_cooldown_time = 0.5 SECONDS, \
+		charge_sound_cooldown_time = 0.8 SECONDS, \
 	)
 
 /obj/item/gun/energy/laser/thermal/add_seclight_point()
