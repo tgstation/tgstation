@@ -822,20 +822,22 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		SetInvisibility(INVISIBILITY_ABSTRACT, name)
 		return
 
-	RemoveInvisibility(name)
+	else if(invisibility)
+		RemoveInvisibility(name)
 
 	if(state == HUNGER_STATE_STARVING)
-		add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 200, "size" = 2))
-		animate(get_filter("hunger_outline"), alpha = 0, time = 1.5 SECONDS, loop = -1)
-		animate(alpha = 200, time = 1.5 SECONDS)
+		if(!get_filter("hunger_outline"))
+			add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 200, "size" = 2))
+			animate(get_filter("hunger_outline"), alpha = 0, time = 1.5 SECONDS, loop = -1)
+			animate(alpha = 200, time = 1.5 SECONDS)
 
-	else if(old_state == HUNGER_STATE_STARVING)
+	else if(get_filter("hunger_outline"))
 		remove_filter("hunger_outline")
 
-	if(state == HUNGER_STATE_FAT || old_state == HUNGER_STATE_FAT)
-		underlays -= food_image
-		food_image.color = state == HUNGER_STATE_FAT ? COLOR_GRAY : null
-		underlays += food_image
+	// Update color of the food
+	underlays -= food_image
+	food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
+	underlays += food_image
 
 /atom/movable/screen/hunger/update_icon_state()
 	. = ..()
