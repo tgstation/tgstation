@@ -9,7 +9,7 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(. && !(movement_type & FLOATING)) //floating is easy
-		if(stat != DEAD)
+		if(nutrition > 0 && stat != DEAD)
 			var/hunger_loss = HUNGER_FACTOR / 10
 			if(move_intent == MOVE_INTENT_RUN)
 				hunger_loss *= 2
