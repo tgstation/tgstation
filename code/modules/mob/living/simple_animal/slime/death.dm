@@ -13,8 +13,8 @@
 		update_name()
 		return
 
-	if(buckled)
-		stop_feeding(silent = TRUE) //releases ourselves from the mob we fed on.
+	//if(buckled)
+	//	stop_feeding(silent = TRUE) //releases ourselves from the mob we fed on.
 
 	cut_overlays()
 

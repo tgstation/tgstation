@@ -86,8 +86,8 @@
 /mob/living/simple_animal/slime/proc/handle_feeding(seconds_per_tick, times_fired)
 	var/mob/living/prey = buckled
 
-	if(stat)
-		stop_feeding(silent = TRUE)
+	//if(stat)
+	//	stop_feeding(silent = TRUE)
 
 	if(prey.stat == DEAD) // our victim died
 		if(!client)
@@ -103,7 +103,7 @@
 			if(SPT_PROB(61, seconds_per_tick))
 				rabid = TRUE //we go rabid after finishing to feed on a human with a client.
 
-		stop_feeding()
+		//stop_feeding()
 		return
 
 	if(iscarbon(prey))
@@ -130,11 +130,11 @@
 			animal_victim.updatehealth()
 
 		if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on succesful damage adjustment
-			stop_feeding(FALSE, FALSE)
+			//stop_feeding(FALSE, FALSE)
 			return
 
 	else
-		stop_feeding(FALSE, FALSE)
+		//stop_feeding(FALSE, FALSE)
 		return
 
 	add_nutrition((rand(7, 15) * 0.5 * seconds_per_tick * CONFIG_GET(number/damage_multiplier)))
@@ -142,7 +142,7 @@
 	//Heal yourself.
 	adjustBruteLoss(-1.5 * seconds_per_tick)
 
-///Handles the slime's nutirion level
+///Handles the slime's nutrition level
 /mob/living/simple_animal/slime/proc/handle_nutrition(seconds_per_tick, times_fired)
 
 	if(docile) //God as my witness, I will never go hungry again
@@ -162,11 +162,12 @@
 		amount_grown++
 		update_mob_action_buttons()
 
-	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
+/*	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(life_stage == SLIME_LIFE_STAGE_ADULT && loc.AllowDrop())
 			Reproduce()
 		else
 			Evolve()
+*/
 
 ///Adds nutrition to the slime's nutrition level. Has a chance to increase its electric levels.
 /mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)

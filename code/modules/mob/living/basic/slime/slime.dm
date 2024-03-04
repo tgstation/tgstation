@@ -1,3 +1,8 @@
+#define SLIME_EXTRA_SHOCK_COST 3
+#define SLIME_EXTRA_SHOCK_THRESHOLD 8
+#define SLIME_BASE_SHOCK_PERCENTAGE 10
+#define SLIME_SHOCK_PERCENTAGE_PER_LEVEL 7
+
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/simple/slimes.dmi'
@@ -66,6 +71,8 @@
 	var/hunger_nutrition = 500
 	/// Below this, we feel starving
 	var/starve_nutrition = 200
+	/// No hunger
+	var/hunger_disabled = FALSE
 
 	///Has a mutator been used on the slime? Only one is allowed
 	var/mutator_used = FALSE
@@ -88,13 +95,20 @@
 	var/current_mood
 
 /mob/living/basic/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_life_stage=SLIME_LIFE_STAGE_BABY)
-	. = ..()
+	var/datum/action/innate/slime/feed/feeding_action = new
+	feeding_action.Grant(src)
 
-	set_life_stage(new_life_stage)
 	set_slime_type(new_type)
+	set_life_stage(new_life_stage)
+	update_name()
+	regenerate_icons()
+
 	. = ..()
 	set_nutrition(700)
 
+	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
+
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SLIME)
 	AddElement(/datum/element/soft_landing)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -105,12 +119,13 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(slime_pre_attack))
 
 /mob/living/simple_animal/slime/Destroy()
+
+	UnregisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+
 	for (var/A in actions)
 		var/datum/action/AC = A
 		AC.Remove(src)
-	set_target(null)
-	set_leader(null)
-	clear_friends()
+
 	return ..()
 
 ///Random slime subtype
@@ -120,6 +135,7 @@
 ///Friendly docile subtype
 /mob/living/basic/slime/pet
 	ai_controller = /datum/ai_controller/basic_controller/slime/docile
+	hunger_disabled = TRUE
 
 /mob/living/basic/slime/update_name()
 	///Checks if the slime has a generic name, in the format of baby/adult slime (123)
@@ -142,13 +158,84 @@
 		icon_state = icon_dead
 	..()
 
+/mob/living/basic/slime/get_status_tab_items()
+	. = ..()
+	if(hunger_disabled)
+		. += "Nutrition: [nutrition]/[max_nutrition]"
+
+	switch(stat)
+		if(HARD_CRIT, UNCONSCIOUS)
+			. += "You are knocked out by high levels of BZ!"
+		else
+			. += "Power Level: [powerlevel]"
+
+/mob/living/basic/slime/MouseDrop(atom/movable/target_atom as mob|obj)
+	if(isliving(target_atom) && target_atom != src && usr == src)
+		var/mob/living/food = target_atom
+		if(can_feed_on(food))
+			start_feeding(food)
+	return ..()
+
+//slimes can not pull
+/mob/living/basic/slime/start_pulling(atom/movable/moveable_atom, state, force = move_force, supress_message = FALSE)
+	return
+
+/mob/living/basic/slime/get_mob_buckling_height(mob/seat)
+	if(..())
+		return 3
+
+/mob/living/basic/slime/examine(mob/user)
+//todo: make prettier
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	if (stat == DEAD)
+		. += span_deadsay("It is limp and unresponsive.")
+	else
+		if (stat == UNCONSCIOUS || stat == HARD_CRIT) // Slime stasis
+			. += span_deadsay("It appears to be alive but unresponsive.")
+		if (getBruteLoss())
+			. += "<span class='warning'>"
+			if (getBruteLoss() < 40)
+				. += "It has some punctures in its flesh!"
+			else
+				. += "<B>It has severe punctures and tears in its flesh!</B>"
+			. += "</span>\n"
+
+		switch(powerlevel)
+			if(2 to 3)
+				. += "It is flickering gently with a little electrical activity."
+
+			if(4 to 5)
+				. += "It is glowing gently with moderate levels of electrical activity."
+
+			if(6 to 9)
+				. += span_warning("It is glowing brightly with high levels of electrical activity.")
+
+			if(10)
+				. += span_warning("<B>It is radiating with massive levels of electrical activity!</B>")
+
+	. += "</span>"
+
+///Handles the adverse effects of water on slimes
+/mob/living/basic/slime/proc/apply_water()
+	adjustBruteLoss(rand(15,20))
+/*	if(client)
+		return
+
+
+	if(Target) // Like cats
+		set_target(null)
+		++discipline_stacks
+	return
+	*/
+
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
+	life_stage = new_life_stage
 
 	switch(life_stage)
 		if(SLIME_LIFE_STAGE_BABY)
-			//for(var/datum/action/innate/slime/reproduce/reproduce_action in actions)
-			//	reproduce_action.Remove(src)
+			for(var/datum/action/innate/slime/reproduce/reproduce_action in actions)
+				reproduce_action.Remove(src)
 
 			GRANT_ACTION(/datum/action/innate/slime/evolve)
 
@@ -167,8 +254,8 @@
 
 		if(SLIME_LIFE_STAGE_ADULT)
 
-			//for(var/datum/action/innate/slime/evolve/evolve_action in actions)
-			//	evolve_action.Remove(src)
+			for(var/datum/action/innate/slime/evolve/evolve_action in actions)
+				evolve_action.Remove(src)
 
 			GRANT_ACTION(/datum/action/innate/slime/reproduce)
 
@@ -188,12 +275,12 @@
 ///Sets the slime's type, name and its icons
 /mob/living/basic/slime/proc/set_slime_type(new_type)
 	slime_type = new new_type
-	update_name()
-	regenerate_icons()
 
 ///randomizes the colour of a slime
 /mob/living/basic/slime/proc/random_colour()
 	set_slime_type(pick(subtypesof(/datum/slime_type)))
+	update_name()
+	regenerate_icons()
 
 ///Handles slime attacking restrictions, and any extra effects that would trigger
 /mob/living/basic/slime/proc/slime_pre_attack(mob/living/basic/slime/our_slime, atom/target, proximity, modifiers)
@@ -201,3 +288,61 @@
 	if(isAI(target)) //The aI is not tasty!
 		target.balloon_alert(our_slime, "not tasty!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
+		our_slime.stop_feeding()
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/borg_target = target
+		borg_target.flash_act()
+		do_sparks(5, TRUE, borg_target)
+		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE
+		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
+			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
+			borg_target.apply_damage(our_slime.powerlevel * rand(6, 10), BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+			borg_target.visible_message(span_danger("The [our_slime.name] shocks [borg_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+		else
+			borg_target.visible_message(span_danger("The [our_slime.name] fails to hurt [borg_target]!"), span_userdanger("The [our_slime.name] failed to hurt you!"))
+
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(iscarbon(target) && our_slime.powerlevel > SLIME_MIN_POWER)
+		var/mob/living/carbon/carbon_target = target
+		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE  // 17 at level 1, 80 at level 10
+		if(!prob(stunprob))
+			return NONE // normal attack
+
+		carbon_target.visible_message(span_danger("The [our_slime.name] shocks [carbon_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+
+		do_sparks(5, TRUE, carbon_target)
+		var/power = our_slime.powerlevel + rand(0,3)
+		carbon_target.Paralyze(power * 2 SECONDS)
+		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
+		if (prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
+			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
+			carbon_target.apply_damage(our_slime.powerlevel * rand(6, 10), BURN, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+
+	if(isslime(target))
+		if(target == our_slime)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		var/mob/living/basic/slime/target_slime = target
+		if(target_slime.buckled)
+			target_slime.stop_feeding(silent = TRUE)
+			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
+				span_danger("You pull [target_slime] off!"))
+			return NONE // normal attack
+		//todo: make the targeted slime retaliate
+		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
+		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
+			var/stolen_nutrition = is_adult_slime ? 90 : 50
+			target_slime.adjust_nutrition(-stolen_nutrition)
+	    //todo: handle nutrition addition
+		//	our_slime.add_nutrition(stolen_nutrition)
+		if(target_slime.health > 0)
+			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
+
+#undef SLIME_EXTRA_SHOCK_COST
+#undef SLIME_EXTRA_SHOCK_THRESHOLD
+#undef SLIME_BASE_SHOCK_PERCENTAGE
+#undef SLIME_SHOCK_PERCENTAGE_PER_LEVEL

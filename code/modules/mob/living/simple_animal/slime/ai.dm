@@ -75,7 +75,7 @@
 			else if (findtext(phrase, "stop"))
 				if (buckled) // We are asked to stop feeding
 					if (Friends[who] >= SLIME_FRIENDSHIP_STOPEAT)
-						stop_feeding()
+					//	stop_feeding()
 						set_target(null)
 						if (Friends[who] < SLIME_FRIENDSHIP_STOPEAT_NOANGRY)
 							add_friendship(who, -1)
@@ -443,7 +443,7 @@
 			if(!slime_ai_processing)
 				break
 
-			if(Target in view(1,src))
+			/*if(Target in view(1,src))
 				if(!can_feed_on(Target)) //If they're not able to be fed upon, ignore them.
 					if(!is_attack_on_cooldown)
 						is_attack_on_cooldown = TRUE
@@ -478,6 +478,7 @@
 				set_target(null)
 				slime_ai_processing = FALSE
 				break
+			*/
 
 		var/sleeptime = cached_multiplicative_slowdown
 		if(sleeptime <= 0)

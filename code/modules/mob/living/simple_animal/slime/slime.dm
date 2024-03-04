@@ -177,6 +177,9 @@
 		icon_state = icon_dead
 	..()
 
+/datum/movespeed_modifier/slime_healthmod
+	variable = TRUE
+
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
 	var/mod = 0
@@ -247,14 +250,6 @@
 			. += "You are knocked out by high levels of BZ!"
 		else
 			. += "Power Level: [powerlevel]"
-
-
-/mob/living/simple_animal/slime/MouseDrop(atom/movable/target_atom as mob|obj)
-	if(isliving(target_atom) && target_atom != src && usr == src)
-		var/mob/living/Food = target_atom
-		if(can_feed_on(Food))
-			start_feeding(Food)
-	return ..()
 
 /mob/living/simple_animal/slime/doUnEquip(obj/item/unequipped_item, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	return
@@ -375,8 +370,8 @@
 			attacked_stacks = 0
 
 	set_target(null)
-	if(buckled)
-		stop_feeding(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
+	//if(buckled)
+	//	stop_feeding(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
 	stunned_until = world.time + rand(2 SECONDS, 6 SECONDS)
 
@@ -415,10 +410,10 @@
 		target.balloon_alert(our_slime, "not tasty!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
+	/*if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
 		our_slime.stop_feeding()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-
+*/
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/borg_target = target
 		borg_target.flash_act()
@@ -454,7 +449,7 @@
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 		var/mob/living/simple_animal/slime/target_slime = target
 		if(target_slime.buckled)
-			target_slime.stop_feeding(silent = TRUE)
+//			target_slime.stop_feeding(silent = TRUE)
 			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
 				span_danger("You pull [target_slime] off!"))
 			return NONE // normal attack
