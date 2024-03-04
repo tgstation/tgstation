@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	clothing_flags = INEDIBLE_CLOTHING
 	clothing_traits = list(TRAIT_NODROP)
-	armor = /datum/armor/collar_bomb
+	armor_type = /datum/armor/collar_bomb
 	equip_delay_self = 5 SECONDS
 	equip_delay_other = 8 SECONDS
 	var/obj/item/collar_bomb_button/button

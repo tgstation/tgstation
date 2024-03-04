@@ -345,7 +345,8 @@
 			continue
 		var/list/hidden_mobs = list()
 		var/skip_movable = FALSE
-		for(var/atom/movable/thing in reverseList(item_on_pad.get_all_contents()))
+		var/list/item_contents = item_on_pad.get_all_contents()
+		for(var/atom/movable/thing in reverse_range(item_contents))
 			///Don't destroy/sell stuff like the captain's laser gun, or borgs.
 			if(thing.resistance_flags & INDESTRUCTIBLE || is_type_in_typecache(thing, nosell_typecache))
 				skip_movable = TRUE
