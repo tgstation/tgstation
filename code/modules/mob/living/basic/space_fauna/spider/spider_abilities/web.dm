@@ -17,10 +17,12 @@
 	. = ..()
 	if (!owner)
 		return
+	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, REF(src))
 	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/lay_web/Remove(mob/removed_from)
 	. = ..()
+	REMOVE_TRAIT(removed_from, TRAIT_WEB_WEAVER, REF(src))
 	UnregisterSignal(removed_from, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
 
 /datum/action/cooldown/mob_cooldown/lay_web/IsAvailable(feedback = FALSE)
@@ -99,10 +101,10 @@
 	webbing_time = 5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/solid_web/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/stickyweb/sealed/tough) in get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/lay_web/solid_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-	new /obj/structure/spider/solid(target_turf)
+	new /obj/structure/spider/stickyweb/sealed/tough(target_turf)
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage
 	name = "Spin Web Passage"
@@ -125,10 +127,10 @@
 	webbing_time = 3 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/stickyweb/very_sticky) in get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-	new /obj/structure/spider/sticky(target_turf)
+	new /obj/structure/spider/stickyweb/very_sticky(target_turf)
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_spikes
 	name = "Spin Web Spikes"
