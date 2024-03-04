@@ -41,7 +41,7 @@
 	name = "battle arcade"
 	desc = "Explore vast worlds and conquer."
 	icon_state = "arcade"
-	icon_screen = "battle"
+	icon_screen = "fighters"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
 
 	///List of all battle arcade gear that is available in the shop in game.
@@ -159,8 +159,8 @@
 		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective")
 		new_name = pick_list(ARCADE_FILE, "rpg_enemy")
 
-	enemy_hp = rand(90, 125) * all_worlds[player_current_world]
-	enemy_mp = rand(20, 30) * all_worlds[player_current_world]
+	enemy_hp = round(rand(90, 125) * all_worlds[player_current_world], 1)
+	enemy_mp = round(rand(20, 30) * all_worlds[player_current_world], 1)
 	enemy_gold_reward = rand((DEFAULT_ITEM_PRICE / 2), DEFAULT_ITEM_PRICE)
 
 	// there's only one boss in each stage (except the last)
@@ -323,19 +323,19 @@
 /obj/machinery/computer/arcade/battle/proc/perform_enemy_turn(mob/user, defending_flags = NONE)
 	player_turn = TRUE
 	var/chance_to_magic = round(max((-(enemy_hp - enemy_max_hp) / 2), 75), 1)
-	if(prob(chance_to_magic))
+	if((enemy_hp != enemy_max_hp) && prob(chance_to_magic))
 		if(enemy_mp >= 10)
 			var/healed_amount = rand(10, 20)
 			enemy_hp = round(min(enemy_max_hp, enemy_hp + healed_amount), 1)
 			enemy_mp -= round(max(0, 10), 1)
-			feedback_message = "[enemy_name] healed for [healed_amount] damage!"
+			feedback_message = "[enemy_name] healed for [healed_amount] health points!"
 			playsound(loc, 'sound/arcade/heal.ogg', 40, TRUE, extrarange = -3)
 			SStgui.update_uis(src)
 			return
 		if(player_current_mp >= 5) //minimum to steal
 			var/healed_amount = rand(5, 10)
 			player_current_mp -= round(max(0, healed_amount), 1)
-			enemy_mp = round(min(enemy_max_hp, enemy_hp + healed_amount), 1)
+			enemy_mp += healed_amount
 			feedback_message = "[enemy_name] stole [healed_amount] MP from you!"
 			playsound(loc, 'sound/arcade/steal.ogg', 40, TRUE)
 			SStgui.update_uis(src)
@@ -360,6 +360,7 @@
 		data["shop_items"] += list(gear_name)
 	data["ui_panel"] = ui_panel
 	data["player_current_world"] = player_current_world
+	data["unlocked_world_modifier"] = all_worlds[latest_unlocked_world]
 	data["latest_unlocked_world_position"] = all_worlds.Find(latest_unlocked_world)
 	data["player_gold"] = player_gold
 	data["player_current_hp"] = player_current_hp

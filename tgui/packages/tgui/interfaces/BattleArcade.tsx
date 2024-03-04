@@ -11,6 +11,7 @@ type Data = {
   ui_panel: string;
   feedback_message: string;
   player_current_world: string;
+  unlocked_world_modifier: number;
   latest_unlocked_world_position: number;
   player_gold: number;
   player_current_hp: number;
@@ -84,7 +85,7 @@ export const BattleArcade = (props) => {
 
 export const ShopPanel = (props) => {
   const { act, data } = useBackend<Data>();
-  const { shop_items, cost_of_items } = data;
+  const { shop_items, cost_of_items, unlocked_world_modifier } = data;
   return (
     <Section align="center">
       <Box>Welcome to the Inn!</Box>
@@ -101,7 +102,7 @@ export const ShopPanel = (props) => {
           width="100%"
           onClick={() => act('buy_item', { purchasing_item: item })}
         >
-          {item}: {cost_of_items}G
+          {item}: {cost_of_items * unlocked_world_modifier}G
         </Button>
       ))}
       <Button icon="bed" width="100%" onClick={() => act('sleep')}>
