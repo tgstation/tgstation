@@ -88,7 +88,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		active_slots = ITEM_SLOT_SUITSTORE,\
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
 	)
-	carve_out()
 
 /obj/item/book/bible/Destroy(force)
 	QDEL_NULL(bullet_catcher)
@@ -345,6 +344,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 /obj/item/book/bible/booze/Initialize(mapload)
 	. = ..()
+	carve_out()
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/book/bible/syndicate
