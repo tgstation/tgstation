@@ -3789,7 +3789,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/light/cold/no_nightlight/directional/north,
 /obj/machinery/door/airlock/science/glass{
 	name = "Applied Mechanics"
 	},
@@ -9453,6 +9452,7 @@
 "cpQ" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
 "cpW" = (
@@ -11194,6 +11194,7 @@
 /area/station/hallway/floor1/aft)
 "cNm" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
 "cNx" = (
@@ -24407,7 +24408,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/turf/open/space/basic,
 /area/station/maintenance/floor2/starboard/fore)
 "grD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27966,14 +27967,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 10
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 10
-	},
 /obj/item/healthanalyzer{
 	pixel_x = -9;
 	pixel_y = 9
@@ -27981,6 +27974,14 @@
 /obj/item/healthanalyzer{
 	pixel_x = -9;
 	pixel_y = 9
+	},
+/obj/item/storage/medkit{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/storage/medkit{
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
@@ -76995,6 +76996,7 @@
 "tPg" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/augments)
 "tPj" = (
@@ -82410,11 +82412,10 @@
 /turf/open/floor/iron/freezer,
 /area/station/hallway/secondary/service)
 "vlm" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "workshop-sci";
-	name = "Workshop Shutters"
+	name = "Mech Bay Shutters"
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
