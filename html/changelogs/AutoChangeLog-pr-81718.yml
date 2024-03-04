@@ -1,0 +1,5 @@
+author: "DaliIsTaken"
+delete-after: True
+changes:
+  - rscadd: "added the lightbearer moth set, available in the character setup."
+  - image: "added icons for the lightbearer set; new moth wings, antennae and markings."
