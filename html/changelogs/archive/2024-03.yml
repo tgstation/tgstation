@@ -1,0 +1,89 @@
+2024-03-01:
+  Ben10Omintrix:
+  - rscadd: new virtual pet app on the pda
+  Cheshify:
+  - spellcheck: changed the fitness skill title to powerlifter
+  Echriser:
+  - qol: Allows dragging from boxes into All-In-One Grinders
+  Ghommie:
+  - bugfix: Fixed (cross)bows' strings not loosening once fired.
+  - bugfix: the multi-dimensional bomb payload now works as intended and doesn't break
+      once you select a theme.
+  - bugfix: Meat and other bloody things will not spread blood forever.
+  Higgin:
+  - balance: the shadow eyes of nightmares and shadowpeople more broadly are now sensitive
+      to light, requiring additional protection.
+  Melbert:
+  - bugfix: Fixes grabbing yourself when you tackle someone.
+  Momo8289:
+  - qol: HUD implants will now notify you when toggled on or off
+  Pickle-Coding:
+  - admin: Logs holosign swatting.
+  TheSmallBlue:
+  - qol: added an HUD button to go up and down floors
+  bigfatbananacyclops:
+  - rscadd: box with a set of floortile camo, which can be ordered in black market
+      uplink
+  - rscadd: also adds a backpack to camouflage
+  - bugfix: i had the crate under emagged console, should be fixed now.
+  mc-oofert:
+  - rscadd: Pipebombs
+  - rscdel: Improvised Firebombs
+  necromanceranne:
+  - bugfix: The M-90GL now correctly states that it accepts .223 toploader magazines.
+  vinylspiders:
+  - bugfix: fixes an issue where being gibbed while under the HARS mutation can sometimes
+      lead to the brain being deleted when it's not supposed to be
+2024-03-02:
+  13spacemen:
+  - refactor: Butt sprites are based on the chest bodypart for humans, instead of
+      the species
+  - image: Moths have their own special butt sprites
+  DrDiasyl:
+  - rscadd: Adds 2 new shields to the game! Ballistic Shield - researched by Science,
+      and Improvised Shield - made out of iron and sticky tape
+  - image: Riot, Strobe, Telescopic, Energy shields got new less flat sprites!
+  Ghommie:
+  - rscadd: Fishes love kronkaine.
+  - qol: Examining a fishing spot twice with sufficiently high fishing skill (or the
+      skillchip) will get you a list of fishes that can be caught.
+  Jacquerel:
+  - image: Bubblegum Hallucination Surround Charge, Wendigo Shockwave Scream, and
+      Ice Demon Floor Freeze all have more appropriate action icons.
+  - qol: Adds a tooltip to Ice Demon Afterimages ability.
+  - image: Cyborg view items now use the same sprites as their corresponding goggles
+      instead of old versions of those sprites.
+  JohnFulpWillard:
+  - bugfix: Buying the advanced plastic surgery disk from the uplink now gives you
+      advanced plastic surgery instead of brainwashing.
+  Melbert:
+  - rscadd: Spies may now roam the halls of Space Station 13. Watch your belongings
+      closely.
+  Rhials:
+  - bugfix: Pete can no longer eat vines while dead.
+2024-03-03:
+  Rhials:
+  - bugfix: Fixes some tiles outside the Icebox AI satellite not getting hit by storms.
+  - code_imp: Splits up the nuclear operative antagonist datum folder.
+  xXPawnStarrXx:
+  - bugfix: makes custom pizzas dairy and vegetable free, unless you choose to add
+      them.
+2024-03-04:
+  LT3:
+  - image: Tram frame is now tram girder, because it acts like one
+  Melbert:
+  - bugfix: Fixed spy stolen machines not dumping everything that needed to be dumped
+  Nerev4r:
+  - qol: Ethereal charging now loops when they're charging (from) APCs or from power
+      cells!
+  Singul0:
+  - rscadd: Adds a new changeling ability, "Darkness Adaptation". Making you more
+      translucent, especially in darkness and allowing you to see slightly better
+      in the dark
+  - balance: The changeling power "Chameleon Skin" has been buffed, Reduces the cost
+      to 1 and sped up the time it takes to turn invisible
+  ViktorKoL:
+  - bugfix: made some heretic descriptions more accurate
+  - spellcheck: improved english of the heretical eldritch patrons
+  starrm4nn:
+  - bugfix: Makes Metastation surgery access more consistent with other maps

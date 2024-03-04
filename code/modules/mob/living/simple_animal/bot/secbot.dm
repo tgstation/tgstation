@@ -73,6 +73,11 @@
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too."
 	health = 75
 
+/mob/living/simple_animal/bot/secbot/beepsky/officer/Initialize(mapload)
+	. = ..()
+	// Beepsky hates people scanning them
+	RegisterSignal(src, COMSIG_MOVABLE_SPY_STEALING, PROC_REF(retaliate_async))
+
 /mob/living/simple_animal/bot/secbot/beepsky/ofitser
 	name = "Prison Ofitser"
 	desc = "Powered by the tears and sweat of laborers."
@@ -195,6 +200,11 @@
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
+
+/mob/living/simple_animal/bot/secbot/proc/retaliate_async(datum/source, mob/user, ...)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(retaliate), user)
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()
