@@ -361,15 +361,18 @@
 	switch(action)
 		if("activate")
 			if(QDELETED(beaker1))
-				say("This [src] is missing an input beaker!")
+				say("Missing input beaker!")
 				return
 			if(QDELETED(beaker2))
-				say("This [src] is missing an output beaker!")
+				say("Missing output beaker!")
 				return
 
 			//adjust timer for purification
 			progress_time = 0
 			estimate_time()
+			if(eta <= 0)
+				say("No work can be done!")
+				return
 
 			//start the purification process
 			processing_reagents = TRUE
