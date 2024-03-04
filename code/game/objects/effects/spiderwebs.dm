@@ -96,7 +96,6 @@
 	loc.balloon_alert(stuck_guy, "stuck in web!")
 	stuck_guy.Shake(duration = 0.1 SECONDS)
 
-
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
 	/// Mob with special permission to cross this web
@@ -165,11 +164,15 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
-/// Walls which reflect lasers
+/// Walls which reflects lasers
 /obj/structure/spider/stickyweb/sealed/reflector
 	name = "reflective silk screen"
 	desc = "Hardened webbing treated with special chemicals which cause it to repel projectiles."
-	icon_state = "reflector"
+	icon = 'icons/obj/smooth_structures/webwall_reflector.dmi'
+	base_icon_state = "webwall_reflector"
+	icon_state = "webwall_reflector-0"
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR
 	max_integrity = 30
 	opacity = TRUE
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
@@ -189,15 +192,15 @@
 	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
-
+/// Web 'door', blocks atmos but not movement
 /obj/structure/spider/passage
 	name = "web passage"
-	desc = "A messy connection of webs blocking the other side, but not solid enough to prevent passage."
+	desc = "An opaque curtain of web which seals in air but doesn't impede passage."
 	icon_state = "webpassage"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	max_integrity = 60
-	alpha = 200
+	alpha = 180
 	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
