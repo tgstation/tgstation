@@ -32,11 +32,11 @@
 
 /// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
 /datum/market/proc/purchase(identifier, category, method, obj/item/market_uplink/uplink, user)
-	if(!istype(uplink) || (!(method in shipping) && (method in item.shipping_override)))
-		return FALSE
-
 	var/datum/market_item/item = available_items[category][identifier]
 	if(isnull(item))
+		return FALSE
+
+	if(!istype(uplink) || !((method in shipping) || (method in item.shipping_override)))
 		return FALSE
 
 	var/shipment_fee = item.shipping_override?[method]

@@ -271,6 +271,10 @@
 			. = TRUE
 		if("send")
 			start_sending()
+			//We ensure that the holding facility is loaded in time in case we're selling mobs.
+			//This isn't the prettiest place to put it, but 'start_sending()' is also used by civilian bounty computers
+			//And we don't need them to also load the holding facility.
+			SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 			. = TRUE
 		if("stop")
 			stop_sending()
@@ -422,10 +426,10 @@
 	. = ..()
 	if(. == EXPORT_NOT_SOLD)
 		return
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	sold_item.forceMove(picked_turf)
-	sold_item.process_capture(get_cost(sold_item))
+	var/mob_cost = get_cost(sold_item)
+	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)
 	playsound(picked_turf, 'sound/weapons/emitter2.ogg', 25, TRUE)
 	sold_item.flash_act()
