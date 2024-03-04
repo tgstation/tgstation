@@ -205,7 +205,7 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	max_integrity = 60
-	alpha = 180
+	alpha = 200
 	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
