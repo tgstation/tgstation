@@ -124,6 +124,7 @@
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	setup_new_opponent()
 	feedback_message = "If you die in the game, you die for real!"
+	SStgui.update_uis(src)
 	return TRUE
 
 /obj/machinery/computer/arcade/battle/reset_cabinet(mob/living/user)
