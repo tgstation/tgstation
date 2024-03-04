@@ -150,6 +150,7 @@
 /obj/machinery/power/shuttle_engine/heater
 	name = "engine heater"
 	desc = "Directs energy into compressed particles in order to power engines."
+	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "heater"
 	circuit = /obj/item/circuitboard/machine/engine/heater
 	engine_power = 0 // todo make these into 2x1 parts
