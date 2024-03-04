@@ -54,11 +54,12 @@
 
 /mob/living/carbon/human/proc/on_nohunger(datum/source)
 	SIGNAL_HANDLER
-	hud_used?.hunger?.update_appearance()
-	mob_mood?.update_nutrition_moodlets()
 	// When gaining NOHUNGER, we restore nutrition to normal levels, since we no longer interact with the hunger system
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		set_nutrition(NUTRITION_LEVEL_FED)
+		set_nutrition(NUTRITION_LEVEL_FED, forced = TRUE)
 		satiety = 0
 		overeatduration = 0
 		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+	else
+		hud_used?.hunger?.update_appearance()
+		mob_mood?.update_nutrition_moodlets()
