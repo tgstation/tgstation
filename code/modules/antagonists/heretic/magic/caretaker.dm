@@ -6,7 +6,7 @@
 		and you can be removed from it upon contact with antimagical artifacts."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "caretaker"
 	sound = 'sound/effects/curse2.ogg'
 
