@@ -119,6 +119,28 @@
 
 	return TRUE
 
+///The slime consumes the mob's lifeforce
+/mob/living/basic/slime/proc/feed_process(seconds_per_tick = SSMOBS_DT)
+
+	if(isanimal_or_basicmob(buckled))
+		var/mob/living/animal_victim = buckled
+
+		var/totaldamage = 0 //total damage done to this unfortunate animal
+		var/need_mob_update
+		need_mob_update = totaldamage += animal_victim.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += totaldamage += animal_victim.adjustToxLoss(rand(1, 2) * 0.5 * seconds_per_tick, updating_health = FALSE)
+		if(need_mob_update)
+			animal_victim.updatehealth()
+
+		if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on succesful damage adjustment
+			stop_feeding(FALSE, FALSE)
+			return
+
+	adjust_nutrition((rand(7, 15) * 0.5 * seconds_per_tick))
+
+	//Heal yourself.
+	adjustBruteLoss(-1.5 * seconds_per_tick)
+
 ///The slime will start feeding on the target
 /mob/living/basic/slime/proc/start_feeding(mob/living/target_mob)
 	target_mob.unbuckle_all_mobs(force=TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())

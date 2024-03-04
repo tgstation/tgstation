@@ -107,6 +107,7 @@
 	set_nutrition(700)
 
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
+	AddComponent(/datum/component/buckle_mob_effect,  mob_effect_callback = CALLBACK(src, PROC_REF(feed_process)))
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SLIME)
@@ -166,7 +167,7 @@
 
 /mob/living/basic/slime/get_status_tab_items()
 	. = ..()
-	if(hunger_disabled)
+	if(!hunger_disabled)
 		. += "Nutrition: [nutrition]/[max_nutrition]"
 
 	switch(stat)
