@@ -83,8 +83,10 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	if(!COOLDOWN_FINISHED(src, recharge_cooldown))
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown) && isnull(receiving) && isnull(transmitting))
 		return
+
+	COOLDOWN_START(src, recharge_cooldown, recharge_time)
 
 	var/turf/turf = get_turf(src)
 	if(receiving)
@@ -103,16 +105,10 @@
 		recharge_cooldown = recharge_time
 		return
 	if(transmitting)
-		if(!transmitting.item)
-			QDEL_NULL(transmitting)
-		if(!(transmitting.item in turf.contents))
-			QDEL_NULL(transmitting)
-			return
-		do_teleport(transmitting.item, get_turf(transmitting.uplink))
-		use_power(power_usage_per_teleport / power_efficiency)
+		if(transmitting.item.loc == turf)
+			do_teleport(transmitting.item, get_turf(transmitting.uplink))
+			use_power(power_usage_per_teleport / power_efficiency)
 		QDEL_NULL(transmitting)
-
-		COOLDOWN_START(src, recharge_cooldown, recharge_time)
 		return
 
 	if(queue.len)

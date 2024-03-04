@@ -25,7 +25,7 @@
 	button?.collar = src
 
 /obj/item/clothing/neck/collar_bomb/Destroy()
-	button.collar = null
+	button?.collar = null
 	button = null
 	return ..()
 
@@ -81,6 +81,6 @@
 		collar.explosive_countdown(5)
 
 /obj/item/collar_bomb_button/Destroy()
+	collar?.button = null
 	collar = null
-	collar.button = null
 	return ..()

@@ -66,7 +66,7 @@
 		if(length(target_item?.shipping_override))
 			shipping_list = target_item.shipping_override
 		for(var/delivery in shipping_list)
-			data["delivery_methods"] += list(list("name" = delivery, "price" = shipping_list[delivery]))
+			UNTYPED_LIST_ADD(data["delivery_methods"], list("name" = delivery, "price" = shipping_list[delivery]))
 	data["items"] = list()
 	data["viewing_category"] = market.categories[viewing_category] ? viewing_category : null
 	data["viewing_market"] = viewing_market
