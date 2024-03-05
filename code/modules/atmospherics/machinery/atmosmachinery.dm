@@ -134,7 +134,7 @@
 /**
  * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
  */
-/obj/machinery/atmospherics/proc/on_hide(datum/_source, _underfloor_accessibility)
+/obj/machinery/atmospherics/proc/on_hide(datum/source, underfloor_accessibility)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 

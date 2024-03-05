@@ -40,7 +40,7 @@
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/components/on_hide(datum/_source, underfloor_accessibility)
+/obj/machinery/atmospherics/components/on_hide(datum/source, underfloor_accessibility)
 	hide_pipe(underfloor_accessibility)
 	return ..()
 

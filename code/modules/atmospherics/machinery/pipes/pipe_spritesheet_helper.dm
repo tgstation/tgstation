@@ -92,9 +92,9 @@
 		outputs[damaged] = "[icon_state_dirs]_[layer]"
 	return outputs
 
-/datum/pipe_icon_generator/proc/GenerateCapped(icon/working, layer, dirs, x_offset=1, y_offset=1)
-	var/outputs = list()
-	var/completed = list()
+/datum/pipe_icon_generator/proc/generate_capped(icon/working, layer, dirs, x_offset=1, y_offset=1)
+	var/list/outputs = list()
+	var/list/completed = list()
 	for(var/combined_dirs in 1 to 15)
 		combined_dirs &= dirs
 
@@ -132,10 +132,10 @@
 	switch(combined_dirs)
 		if(NORTH | SOUTH)
 			output += GenerateDamaged(working, layer, combined_dirs, y_offset=offset)
-			output += GenerateCapped(working, layer, combined_dirs, y_offset=offset)
+			output += generate_capped(working, layer, combined_dirs, y_offset=offset)
 		if(EAST | WEST)
 			output += GenerateDamaged(working, layer, combined_dirs, x_offset=offset)
-			output += GenerateCapped(working, layer, combined_dirs, x_offset=offset)
+			output += generate_capped(working, layer, combined_dirs, x_offset=offset)
 
 	return output
 
@@ -154,7 +154,7 @@
 
 	output[working] = "[combined_dirs]_[layer]"
 	output += GenerateDamaged(working, layer, combined_dirs)
-	output += GenerateCapped(working, layer, combined_dirs)
+	output += generate_capped(working, layer, combined_dirs)
 
 	return output
 
@@ -173,7 +173,7 @@
 
 	output[working] = "[combined_dirs]_[layer]"
 	output += GenerateDamaged(working, layer, combined_dirs)
-	output += GenerateCapped(working, layer, combined_dirs)
+	output += generate_capped(working, layer, combined_dirs)
 
 	return output
 
@@ -183,6 +183,6 @@
 
 	output[working] = "[combined_dirs]_[layer]"
 	output += GenerateDamaged(working, layer, combined_dirs)
-	output += GenerateCapped(working, layer, combined_dirs)
+	output += generate_capped(working, layer, combined_dirs)
 
 	return output
