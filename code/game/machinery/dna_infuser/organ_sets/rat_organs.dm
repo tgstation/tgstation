@@ -65,26 +65,22 @@
 
 /obj/item/organ/internal/heart/rat/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
-	if(!. || !ishuman(receiver))
+	if(!ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
-	if(!human_receiver.can_mutate())
-		return
-	human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
+	if(human_receiver.can_mutate())
+		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
 	//but 1.5 damage
-	if(human_receiver.physiology)
-		human_receiver.physiology.damage_resistance -= 50
+	human_receiver.physiology?.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/on_mob_remove(mob/living/carbon/heartless, special)
 	. = ..()
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	if(!human_heartless.can_mutate())
-		return
-	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	if(human_heartless.physiology)
-		human_heartless.physiology.damage_resistance += 50
+	if(human_heartless.can_mutate())
+		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+	human_heartless.physiology?.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat

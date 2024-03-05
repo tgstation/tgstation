@@ -254,7 +254,7 @@
 		ui = new(user, src, "ElevatorPanel", name)
 		ui.open()
 
-/obj/machinery/elevator_control_panel/ui_status(mob/user)
+/obj/machinery/elevator_control_panel/ui_status(mob/user, datum/ui_state/state)
 	// We moved up a z-level, probably via the elevator itself, so don't preserve the UI.
 	if(user.z != z)
 		return UI_CLOSE

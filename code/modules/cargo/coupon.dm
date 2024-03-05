@@ -84,7 +84,7 @@
 	to_chat(cursed, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
 
 	if(!cursed.GetComponent(/datum/component/omen))
-		cursed.AddComponent(/datum/component/omen)
+		cursed.AddComponent(/datum/component/omen, 1)
 		return TRUE
 	if(HAS_TRAIT(cursed, TRAIT_CURSED))
 		to_chat(cursed, span_warning("What a horrible night... To have a curse!"))

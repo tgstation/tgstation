@@ -136,8 +136,6 @@
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	/// For storing and overriding ui id
-	var/tgui_id // ID of TGUI interface
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
 	/// world.time of last use by [/mob/living]

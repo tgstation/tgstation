@@ -25,10 +25,6 @@
 	response_harm_continuous = "squashes"
 	response_harm_simple = "squash"
 
-	mob_size = MOB_SIZE_LARGE
-	pixel_x = -16
-	base_pixel_x = -16
-
 	speed = 1
 	maxHealth = 10
 	health = 10
@@ -110,8 +106,12 @@
 	beegent = null
 	if(flags_1 & HOLOGRAM_1 || gibbed)
 		return ..()
-	new /obj/item/trash/bee(loc, src)
+	spawn_corpse()
 	return ..()
+
+/// Leave something to remember us by
+/mob/living/basic/bee/proc/spawn_corpse()
+	new /obj/item/trash/bee(loc, src)
 
 /mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
@@ -217,12 +217,20 @@
 	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[toxin])
 
-/mob/living/basic/bee/short
-	desc = "These bees seem unstable and won't survive for long."
+/// A bee which despawns after a short amount of time (beespawns?)
+/mob/living/basic/bee/timed
+	/// How long do we live?
+	var/lifespan = 50 SECONDS
 
-/mob/living/basic/bee/short/Initialize(mapload, timetolive=50 SECONDS)
+/mob/living/basic/bee/timed/short
+	lifespan = 25 SECONDS
+
+/mob/living/basic/bee/timed/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(death)), timetolive)
+	addtimer(CALLBACK(src, PROC_REF(death)), lifespan)
+
+/mob/living/basic/bee/timed/spawn_corpse()
+	new /obj/effect/temp_visual/despawn_effect(get_turf(src), /* copy_from = */ src)
 
 /obj/item/queen_bee
 	name = "queen bee"
