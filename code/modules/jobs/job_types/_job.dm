@@ -118,7 +118,7 @@
 	var/rpg_title
 
 	/// Alternate titles to register as pointing to this job. 
-	var/list/alternate_titles = list()
+	var/list/alternate_titles
 
 	/// Does this job ignore human authority?
 	var/ignore_human_authority = FALSE
