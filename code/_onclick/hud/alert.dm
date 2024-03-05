@@ -68,8 +68,8 @@
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
 	if(!no_anim)
-		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+		thealert.transform = matrix(32, 0, MATRIX_TRANSLATE)
+		animate(thealert, transform = matrix(), time = 1 SECONDS, easing = ELASTIC_EASING)
 	if(timeout_override)
 		thealert.timeout = timeout_override
 	if(thealert.timeout)
