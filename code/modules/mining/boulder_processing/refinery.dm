@@ -86,7 +86,7 @@
 	set_light_on(TRUE)
 
 /obj/machinery/bouldertech/refinery/smelter/maim_golem(mob/living/carbon/human/rockman)
-	rockman.visible_message(span_warning("[rockman] is proccessed by [src]!"), span_userdanger("You get melted into rock by [src]!"))
+	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get melted into rock by [src]!"))
 	rockman.investigate_log("was melted by [src] for being a golem", INVESTIGATE_DEATHS)
 	rockman.dust()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/machines/ding.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE), 2.5 SECONDS)
