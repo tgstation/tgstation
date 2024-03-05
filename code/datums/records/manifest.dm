@@ -103,12 +103,8 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		return
 
 	// Attempt to get assignment from ID, otherwise default to mind.
-	var/assignment
 	var/obj/item/card/id/id_card = person.get_idcard(hand_first = FALSE)
-	if(!isnull(id_card))
-		assignment = id_card.get_trim_assignment()
-	if(isnull(assignment))
-		assignment = person.mind.assigned_role.title
+	var/assignment = id_card?.get_trim_assignment() || person.mind.assigned_role.title
 
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/person_gender = "Other"
