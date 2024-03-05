@@ -43,12 +43,11 @@
 /mob/living/basic/migo/proc/update_dodge_chance(health_ratio)
 	dodge_prob = LERP(50, 10, health_ratio)
 
-/mob/living/basic/migo/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	..()
-	if(stat)
+/mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
+	. = ..()
+	if(stat != CONSCIOUS)
 		return
-	var/chosen_sound = pick(migo_sounds)
-	playsound(src, chosen_sound, 50, TRUE)
+	playsound(src, pick(migo_sounds), 50, TRUE)
 
 /mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()

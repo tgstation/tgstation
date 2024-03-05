@@ -276,8 +276,8 @@
 	QDEL_NULL(sec_radio)
 	return ..()
 
-/obj/machinery/vending/can_speak()
-	return !shut_up
+/obj/machinery/vending/can_speak(allow_mimes)
+	return ..() && is_operational && !shut_up
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()

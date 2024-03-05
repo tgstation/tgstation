@@ -1479,6 +1479,7 @@
 #include "code\datums\elements\tenacious.dm"
 #include "code\datums\elements\tiny_mob_hunter.dm"
 #include "code\datums\elements\tool_flash.dm"
+#include "code\datums\elements\toy_talk.dm"
 #include "code\datums\elements\turf_transparency.dm"
 #include "code\datums\elements\undertile.dm"
 #include "code\datums\elements\unfriend_attacker.dm"

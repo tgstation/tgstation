@@ -308,9 +308,11 @@
 
 // /obj/item/radio signals
 
+///called from base of /obj/item/proc/talk_into(): (atom/movable/speaker, message, channel, list/spans, language, list/message_mods)
+#define COMSIG_ITEM_TALK_INTO "item_talk_into"
 ///called from base of /obj/item/radio/proc/set_frequency(): (list/args)
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
-///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
+///called from base of /obj/item/radio/talk_into(): (atom/movable/M, message, channel)
 #define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
 ///called from base of /obj/item/radio/proc/on_receive_messgae(): (list/data)
 #define COMSIG_RADIO_RECEIVE_MESSAGE "radio_receive_message"
