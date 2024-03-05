@@ -196,3 +196,18 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer(src)
 	new /obj/item/clothing/gloves/divine_archer(src)
 	new /obj/item/clothing/shoes/divine_archer(src)
+
+/obj/item/storage/box/floor_camo
+	name = "floor tile camo box"
+	desc = "Thank you for shopping from Camo-J's, our uniquely designed \
+		floor-tile 'NT scum' styled camouflage fatigues is the ultimate \
+		espionage uniform used by the very best. Providing the best \
+		flexibility, with our latest Camo-tech threads. Perfect for \
+		risky-espionage hallway operations. Enjoy our product!"
+
+/obj/item/storage/box/floor_camo/PopulateContents()
+	new /obj/item/clothing/under/syndicate/floortilecamo(src)
+	new /obj/item/clothing/mask/floortilebalaclava(src)
+	new /obj/item/clothing/gloves/combat/floortile(src)
+	new /obj/item/clothing/shoes/jackboots/floortile(src)
+	new /obj/item/storage/backpack/floortile(src)

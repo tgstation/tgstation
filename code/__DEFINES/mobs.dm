@@ -78,28 +78,30 @@
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 
-//Bodytype defines for how things can be worn, surgery, and other misc things.
+//Bodytype defines for surgery, and other misc things.
 ///The limb is organic.
 #define BODYTYPE_ORGANIC (1<<0)
 ///The limb is robotic.
 #define BODYTYPE_ROBOTIC (1<<1)
-///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
-#define BODYTYPE_HUMANOID (1<<2)
-///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<3)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<4)
-///The limb is snouted.
-#define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
-#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
+#define BODYTYPE_LARVA_PLACEHOLDER (1<<2)
 ///The limb is from a xenomorph.
-#define BODYTYPE_ALIEN (1<<7)
+#define BODYTYPE_ALIEN (1<<3)
 ///The limb is from a golem
-#define BODYTYPE_GOLEM (1<<8)
+#define BODYTYPE_GOLEM (1<<4)
 
-#define BODYTYPE_BIOSCRAMBLE_COMPATIBLE (BODYTYPE_HUMANOID | BODYTYPE_MONKEY | BODYTYPE_ALIEN)
-#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_ROBOTIC) && (bodytype & BODYTYPE_BIOSCRAMBLE_COMPATIBLE))
+// Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
+///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
+#define BODYSHAPE_HUMANOID (1<<0)
+///The limb fits the monkey mold.
+#define BODYSHAPE_MONKEY (1<<1)
+///The limb is digitigrade.
+#define BODYSHAPE_DIGITIGRADE (1<<2)
+///The limb is snouted.
+#define BODYSHAPE_SNOUTED (1<<3)
+
+#define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM)
+#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
@@ -967,3 +969,17 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+
+// Sprites for photocopying butts
+#define BUTT_SPRITE_HUMAN_MALE "human_male"
+#define BUTT_SPRITE_HUMAN_FEMALE "human_female"
+#define BUTT_SPRITE_LIZARD "lizard"
+#define BUTT_SPRITE_QR_CODE "qr_code"
+#define BUTT_SPRITE_XENOMORPH "xeno"
+#define BUTT_SPRITE_DRONE "drone"
+#define BUTT_SPRITE_CAT "cat"
+#define BUTT_SPRITE_FLOWERPOT "flowerpot"
+#define BUTT_SPRITE_GREY "grey"
+#define BUTT_SPRITE_PLASMA "plasma"
+#define BUTT_SPRITE_FUZZY "fuzzy"
+#define BUTT_SPRITE_SLIME "slime"

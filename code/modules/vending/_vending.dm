@@ -821,7 +821,7 @@
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(is_type_in_typecache(atom_target, GLOB.WALLITEMS_INTERIOR) || is_type_in_typecache(atom_target, GLOB.WALLITEMS_EXTERIOR)))
+			else if(check_atom_crushable(atom_target))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
@@ -860,6 +860,21 @@
  */
 /atom/movable/proc/post_tilt()
 	return
+
+/proc/check_atom_crushable(atom/atom_target)
+	/// Contains structures and items that vendors shouldn't crush when we land on them.
+	var/static/list/vendor_uncrushable_objects = list(
+		/obj/structure/chair,
+		/obj/machinery/conveyor,
+	) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR
+
+	if(is_type_in_list(atom_target, vendor_uncrushable_objects)) //make sure its not in the list of "uncrushable" stuff
+		return FALSE
+
+	if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING)) //check if it has integrity + allow ninjas, etc to be crushed in cloak
+		return TRUE //SMUSH IT
+
+	return FALSE
 
 /obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
 
