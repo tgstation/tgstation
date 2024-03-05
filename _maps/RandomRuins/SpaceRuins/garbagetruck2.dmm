@@ -485,7 +485,6 @@
 /obj/effect/decal/cleanable/plastic,
 /obj/item/clothing/mask/surgical,
 /obj/item/extinguisher/empty,
-/obj/item/sticker/assistant,
 /obj/item/reagent_containers/cup/coffeepot,
 /obj/item/coffee_cartridge/decaf,
 /obj/structure/closet/crate/trashcart,

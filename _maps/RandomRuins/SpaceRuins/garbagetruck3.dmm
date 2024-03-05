@@ -196,7 +196,6 @@
 /obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/spawner/random/maintenance,
-/obj/item/sticker/toolbox,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "la" = (

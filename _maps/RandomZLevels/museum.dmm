@@ -226,7 +226,6 @@
 "cf" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/item/storage/box/stickers/googly,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "cm" = (

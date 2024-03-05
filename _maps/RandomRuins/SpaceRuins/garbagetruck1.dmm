@@ -26,7 +26,6 @@
 /obj/structure/closet/crate/trashcart/filled,
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/item/food/deadmouse,
-/obj/item/sticker/syndicate/larva,
 /mob/living/basic/mouse/rat,
 /mob/living/basic/mouse/rat,
 /turf/open/floor/plating/dumpsterair,

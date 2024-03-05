@@ -756,9 +756,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
 
-///if the atom has a sticker attached to it
-#define TRAIT_STICKERED "stickered"
-
 // Debug traits
 /// This object has light debugging tools attached to it
 #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"

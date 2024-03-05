@@ -234,9 +234,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/cardboard_cutout,
 /obj/item/clothing/neck/tie/horrible,
-/obj/item/sticker/clown{
-	pixel_y = 8
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "sA" = (
@@ -679,7 +676,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/mail/junkmail,
 /obj/item/healthanalyzer/simple/disease,
-/obj/item/sticker/smile,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "OZ" = (
