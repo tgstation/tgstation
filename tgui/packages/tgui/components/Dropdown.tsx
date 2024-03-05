@@ -97,9 +97,9 @@ export function Dropdown(props: Props) {
 
       let newIndex = selectedIndex;
       if (direction === 'next') {
-        newIndex = selectedIndex === endIndex ? startIndex : selectedIndex++;
+        newIndex = selectedIndex === endIndex ? startIndex : ++selectedIndex;
       } else {
-        newIndex = selectedIndex === startIndex ? endIndex : selectedIndex--;
+        newIndex = selectedIndex === startIndex ? endIndex : --selectedIndex;
       }
 
       onSelected?.(getOptionValue(options[newIndex]));
