@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Moving \"down\" as an observer is no longer janky."
