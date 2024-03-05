@@ -90,7 +90,7 @@
 
 /obj/item/food/xenoflora/pyrite_peach
 	name = "pyrite peach"
-	desc = "Do not let the damn indians take our peaches how they took our jobs!" //TODO: racist, need to think up something better
+	desc = "Pyrite Peaches are known for their combustable flavor which makes them popular at Discos for unknown reasons."
 	icon_state = "bluespace_limon"
 	food_reagents = list(/datum/reagent/consumable/peachjuice = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/nutriment = 2, /datum/reagent/clf3 = 5)
 	tastes = list("flames" = 1, "peaches" = 1)
@@ -99,7 +99,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	seed_type = /obj/item/xeno_seeds/pyrite_peaches
 
-/obj/item/food/xenoflora/pyrite_peach/pickup(mob/living/carbon/user)
+/obj/item/food/xenoflora/pyrite_peach/pickup(mob/living/carbon/user) //someones gonna have a bad time touching these without gloves
 	. = ..()
 	if(!istype(user) || HAS_TRAIT(user, TRAIT_PLANT_SAFE) || !reagents)
 		return

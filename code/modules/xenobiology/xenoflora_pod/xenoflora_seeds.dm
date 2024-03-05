@@ -27,3 +27,6 @@
 
 /obj/item/xeno_seeds/pyrite_peaches
 	plant_type = /datum/xenoflora_plant/pyrite_peaches
+
+/obj/item/xeno_seeds/hyperlattice
+	plant_type = /datum/xenoflora_plant/hyperlattice
