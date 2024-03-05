@@ -1,5 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes:
-  - admin: "renames ruin names to have an identifier in front of it"
-  - refactor: "converts map plate and jump to ruin to tguilist"
