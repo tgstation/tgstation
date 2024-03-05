@@ -1,0 +1,4 @@
+author: "Seven"
+delete-after: True
+changes:
+  - rscadd: "Lockers and crates now shake when someone is attempting to resist out of them."
