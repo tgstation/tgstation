@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - bugfix: "The cursed coupon now only triggers a cursed event once, rather than infinite times."
