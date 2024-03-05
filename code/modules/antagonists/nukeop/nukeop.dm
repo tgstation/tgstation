@@ -265,6 +265,9 @@
 	..()
 	if(!CONFIG_GET(flag/disable_warops))
 		return FALSE
+	/var/minimum_war_threat = CONFIG_GET(number/minimum_war_threat)
+	if(SSdynamic.threat_level < minimum_war_threat)
+ 		return FALSE
 	var/minimum_war_threat = CONFIG_GET(number/minimum_war_threat)
 	if (SSdynamic.threat_level < minimum_war_threat)
 		return FALSE
