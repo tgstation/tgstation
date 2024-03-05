@@ -87,3 +87,29 @@
   - spellcheck: improved english of the heretical eldritch patrons
   starrm4nn:
   - bugfix: Makes Metastation surgery access more consistent with other maps
+2024-03-05:
+  DaliIsTaken:
+  - rscadd: added the lightbearer moth set, available in the character setup.
+  - image: added icons for the lightbearer set; new moth wings, antennae and markings.
+  LT3:
+  - bugfix: Tram floor tiles constructed inhand provides 4 instead of 1
+  - bugfix: Tram floor tiles provide correct stack item when pulled up
+  - image: Tram floor tiles have their own inhand icons
+  - qol: Tram floor tiles available in the engineering protolathe
+  - bugfix: You can reconstruct deconstructed tram benches
+  - image: medical and improvised gauze are visibly different from cloth
+  Rerik007:
+  - bugfix: fixed the chances of living flesh actions
+  Rhials:
+  - bugfix: Some tiny tiny changes to the smoking room ruin to make it a little less
+      ugly.
+  ValuedEmployee:
+  - rscadd: Added new clown shoes "moffers"
+  - rscadd: Added moffers to the contraband list of the autodrobe
+  ViktorKoL:
+  - bugfix: fixed some issues when calculating the duration of moon smile's effects
+  Zergspower:
+  - admin: renames ruin names to have an identifier in front of it
+  - refactor: converts map plate and jump to ruin to tguilist
+  mc-oofert:
+  - bugfix: fixes deathmatch baseturfs (you cant crowbar the floor to breach to space)

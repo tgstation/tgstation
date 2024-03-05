@@ -1,8 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram floor tiles constructed inhand provides 4 instead of 1"
-  - bugfix: "Tram floor tiles provide correct stack item when pulled up"
-  - image: "Tram floor tiles have their own inhand icons"
-  - qol: "Tram floor tiles available in the engineering protolathe"
-  - bugfix: "You can reconstruct deconstructed tram benches"

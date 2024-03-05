@@ -232,7 +232,7 @@ GLOBAL_PROTECT(href_token)
 		return VALID_2FA_CONNECTION
 
 	if (!SSdbcore.Connect())
-		if (verify_backup_data(client))
+		if (verify_backup_data(client) || (client.ckey in GLOB.protected_admins))
 			return VALID_2FA_CONNECTION
 		else
 			return list(FALSE, null)
