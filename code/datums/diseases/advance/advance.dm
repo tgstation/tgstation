@@ -134,9 +134,10 @@
 				if(bypasses_immunity) //viruses with bypasses_immunity get a free pass on beating normal advanced diseases
 					competition.cure(FALSE)
 				if(totalTransmittable() > competition.totalResistance())
-					competition.cure(FALSE)
-				else
-					return FALSE //we are not strong enough to bully our way in
+					if(istype(competition, /datum/disease/advance/sentient_disease))
+						continue
+					else
+						return FALSE
 	infect(infectee, make_copy)
 	return TRUE
 
