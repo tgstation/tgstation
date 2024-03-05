@@ -290,6 +290,11 @@
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+
 	update_appearance()
 	update_slot_icon()
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_INSERTED_ID, inserting_id, user)
@@ -319,6 +324,11 @@
 		to_chat(user, span_notice("You remove the card from the card slot."))
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		balloon_alert(user, "removed ID")
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
 
 	update_slot_icon()
 	update_appearance()
