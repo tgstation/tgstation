@@ -210,7 +210,7 @@
 
 // UI Stuff
 
-/obj/machinery/atmospherics/components/ui_status(mob/user)
+/obj/machinery/atmospherics/components/ui_status(mob/user, datum/ui_state/state)
 	if(allowed(user))
 		return ..()
 	to_chat(user, span_danger("Access denied."))

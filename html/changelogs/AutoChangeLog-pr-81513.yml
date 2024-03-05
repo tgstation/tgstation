@@ -1,6 +1,0 @@
-author: "Cheshify"
-delete-after: True
-changes:
-  - bugfix: "The North Star's disposals are now functional!"
-  - qol: "The North Star has had a staggering amount of quality of life changes."
-  - rscadd: "Nanotrasen has now supplied North Star security outposts with a disposals line leading directly to the drunk tank."

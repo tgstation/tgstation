@@ -164,8 +164,6 @@
 		neutral_outcome(user, target, tackle_word) //Forces a neutral outcome so you're not screwed too much from being blocked while tackling
 		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
-
-
 	switch(roll)
 		if(-INFINITY to -1)
 			negative_outcome(user, target, roll, tackle_word) //OOF
@@ -177,6 +175,15 @@
 			positive_outcome(user, target, roll, tackle_word)
 
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
+
+/// Helper to do a grab and then adjust the grab state if necessary
+/datum/component/tackler/proc/do_grab(mob/living/carbon/tackler, mob/living/carbon/tackled, skip_to_state = GRAB_PASSIVE)
+	set waitfor = FALSE
+
+	if(!tackler.grab(tackled) || tackler.pulling != tackled)
+		return
+	if(tackler.grab_state != skip_to_state)
+		tackler.setGrabState(skip_to_state)
 
 /**
  * Our positive tackling outcomes.
@@ -198,14 +205,9 @@
 	var/potential_outcome = (roll * 10)
 
 	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		var/target_armor = human_target.run_armor_check(BODY_ZONE_CHEST, MELEE)
-		potential_outcome *= ((100 - target_armor) /100)
+		potential_outcome *= ((100 - target.run_armor_check(BODY_ZONE_CHEST, MELEE)) /100)
 	else
 		potential_outcome *= 0.9
-
-	var/mob/living/carbon/human/human_target = target
-	var/mob/living/carbon/human/human_sacker = user
 
 	switch(potential_outcome)
 		if(-INFINITY to 0) //I don't want to know how this has happened, okay?
@@ -233,9 +235,7 @@
 			target.Paralyze(0.5 SECONDS)
 			target.Knockdown(3 SECONDS)
 			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
-			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
-				human_sacker.setGrabState(GRAB_PASSIVE)
+			do_grab(user, target)
 
 		if(50 to INFINITY) // absolutely BODIED
 			var/stamcritted_user = HAS_TRAIT_FROM(user, TRAIT_INCAPACITATED, STAMINA)
@@ -259,9 +259,7 @@
 				target.Paralyze(0.5 SECONDS)
 				target.Knockdown(3 SECONDS)
 				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
-				if(ishuman(target) && ishuman(user))
-					INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
-					human_sacker.setGrabState(GRAB_AGGRESSIVE)
+				do_grab(user, target, GRAB_AGGRESSIVE)
 
 /**
  * Our neutral tackling outcome.
@@ -300,9 +298,7 @@
 	var/potential_roll_outcome = (roll * -10)
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/human_sacker = target
-		var/attacker_armor = human_sacker.run_armor_check(BODY_ZONE_CHEST, MELEE)
-		potential_roll_outcome *= ((100 - attacker_armor) /100)
+		potential_roll_outcome *= ((100 - target.run_armor_check(BODY_ZONE_CHEST, MELEE)) /100)
 	else
 		potential_roll_outcome *= 0.9
 
@@ -400,7 +396,7 @@
 			defense_mod += 2
 		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
-		if(HAS_TRAIT(tackle_target, TRAIT_SHOVE_KNOCKDOWN_BLOCKED)) // riot armor and such
+		if(HAS_TRAIT(tackle_target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)) // riot armor and such
 			defense_mod += 5
 
 		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -451,7 +447,7 @@
 			attack_mod += 15
 			human_sacker.adjustStaminaLoss(100) //AHAHAHAHAHAHAHAHA
 
-		if(HAS_TRAIT(human_sacker, TRAIT_SHOVE_KNOCKDOWN_BLOCKED)) // tackling with riot specialized armor, like riot armor, is effective but tiring
+		if(HAS_TRAIT(human_sacker, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)) // tackling with riot specialized armor, like riot armor, is effective but tiring
 			attack_mod += 2
 			human_sacker.adjustStaminaLoss(20)
 
@@ -499,14 +495,10 @@
 	var/danger_zone = (speed - 1) * 13 // for every extra speed we have over 1, take away 13 of the safest chance
 	danger_zone = max(min(danger_zone, 100), 1)
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/S = user
-		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
-		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
-			oopsie_mod -= 6
-		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
-			oopsie_mod -= 6
+	if(HAS_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+		oopsie_mod -= 6
+	if(HAS_TRAIT(user, TRAIT_HEAD_INJURY_BLOCKED))
+		oopsie_mod -= 6
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!

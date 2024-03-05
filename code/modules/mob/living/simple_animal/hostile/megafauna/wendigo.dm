@@ -88,8 +88,8 @@ Difficulty: Hard
 
 /datum/action/innate/megafauna_attack/shockwave_scream
 	name = "Shockwave Scream"
-	button_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall-0"
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "expand"
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
 

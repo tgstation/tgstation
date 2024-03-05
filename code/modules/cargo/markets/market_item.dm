@@ -14,7 +14,7 @@
 	var/stock
 
 	/// Path to or the item itself what this entry is for, this should be set even if you override spawn_item to spawn your item.
-	var/item
+	var/obj/item/item
 
 	/// Minimum price for the item if generated randomly.
 	var/price_min = 0
@@ -33,9 +33,18 @@
 	if(isnull(stock))
 		stock = rand(stock_min, stock_max)
 
+/datum/market_item/Destroy()
+	item = null
+	return ..()
+
 /// Used for spawning the wanted item, override if you need to do something special with the item.
 /datum/market_item/proc/spawn_item(loc)
-	return new item(loc)
+	if(ismovable(item))
+		item.forceMove(loc)
+		return item
+	if(ispath(item))
+		return new item(loc)
+	CRASH("Invalid item type for market item [item || "null"]")
 
 /// Buys the item and makes SSblackmarket handle it.
 /datum/market_item/proc/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method)
