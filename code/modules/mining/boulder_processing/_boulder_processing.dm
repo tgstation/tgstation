@@ -198,7 +198,7 @@
 /// What effects actually happens to a golem when it is "processed"
 /obj/machinery/bouldertech/proc/maim_golem(mob/living/carbon/human/rockman)
 	Shake(duration = 1 SECONDS)
-	rockman.visible_message(span_warning("[rockman] is proccessed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
+	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
 	rockman.investigate_log("was gibbed by [src] for being a golem", INVESTIGATE_DEATHS)
 	rockman.gib(DROP_ALL_REMAINS)
 	return TRUE
