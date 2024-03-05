@@ -1,0 +1,4 @@
+author: "SpaceLove"
+delete-after: True
+changes:
+  - bugfix: "Central Command Logistics department noticed the missing items on their listings for robotics assembly crate. They have updated it!"
