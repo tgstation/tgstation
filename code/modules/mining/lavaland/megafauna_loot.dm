@@ -429,7 +429,7 @@
 		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
 		alert_pic = src,
 		role_name_text = "soulscythe soul",
-		chat_text_border_icon = src
+		chat_text_border_icon = src,
 	)
 	on_poll_concluded(user, chosen_one)
 

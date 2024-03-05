@@ -87,7 +87,7 @@
 		alert_pic = parent,
 		role_name_text = role_name,
 		chat_text_border_icon = poll_chat_border_icon,
-		announce_chosen = poll_announce_chosen
+		announce_chosen = poll_announce_chosen,
 	)
 	awaiting_ghosts = FALSE
 	if(isnull(chosen_one))

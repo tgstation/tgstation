@@ -183,8 +183,22 @@ SUBSYSTEM_DEF(polling)
 		return chosen_one
 	return new_poll.chosen_candidates
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flashwindow = TRUE, alert_pic, jump_target, role_name_text, list/custom_response_messages,\
-	start_signed_up = FALSE, amount_to_pick = 0, chat_text_border_icon, announce_chosen = TRUE)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	ignore_category = null,
+	flashwindow = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	amount_to_pick = 0,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
+)
 	var/list/candidates = list()
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return
@@ -192,8 +206,22 @@ SUBSYSTEM_DEF(polling)
 		candidates += ghost_player
 	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen)
 
-/datum/controller/subsystem/polling/proc/poll_ghosts_for_target(question, role, check_jobban, poll_time = 30 SECONDS, atom/movable/checked_target, ignore_category = null, flashwindow = TRUE, alert_pic, jump_target, role_name_text, list/custom_response_messages,\
-	start_signed_up = FALSE, chat_text_border_icon, announce_chosen = TRUE)
+/datum/controller/subsystem/polling/proc/poll_ghosts_for_target(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	atom/movable/checked_target,
+	ignore_category = null,
+	flashwindow = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
+)
 	var/static/list/atom/movable/currently_polling_targets = list()
 	if(currently_polling_targets.Find(checked_target))
 		return
@@ -204,8 +232,21 @@ SUBSYSTEM_DEF(polling)
 		return null
 	return chosen_one
 
-/datum/controller/subsystem/polling/proc/poll_ghosts_for_targets(question, role, check_jobban, poll_time = 30 SECONDS, list/checked_targets, ignore_category = null, flashwindow = TRUE, alert_pic, jump_target, role_name_text, list/custom_response_messages,\
-	start_signed_up = FALSE, chat_text_border_icon)
+/datum/controller/subsystem/polling/proc/poll_ghosts_for_targets(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	list/checked_targets,
+	ignore_category = null,
+	flashwindow = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	chat_text_border_icon,
+)
 	var/list/candidate_list = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, chat_text_border_icon = chat_text_border_icon)
 	for(var/atom/movable/potential_target as anything in checked_targets)
 		if(QDELETED(potential_target) || !potential_target.loc)

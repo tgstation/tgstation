@@ -320,7 +320,7 @@
 		alert_pic = /mob/living/basic/shade,
 		jump_target = src,
 		role_name_text = "a shade",
-		chat_text_border_icon = /mob/living/basic/shade
+		chat_text_border_icon = /mob/living/basic/shade,
 	)
 	on_poll_concluded(user, victim, chosen_one)
 	return TRUE //it'll probably get someone ;)

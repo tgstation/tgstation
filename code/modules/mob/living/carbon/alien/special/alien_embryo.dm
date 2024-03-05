@@ -99,7 +99,7 @@
 		ignore_category = POLL_IGNORE_ALIEN_LARVA,
 		alert_pic = owner,
 		role_name_text = "alien larva",
-		chat_text_border_icon = /mob/living/carbon/alien/larva
+		chat_text_border_icon = /mob/living/carbon/alien/larva,
 	)
 	on_poll_concluded(gib_on_success, chosen_one)
 

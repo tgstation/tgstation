@@ -716,7 +716,7 @@
 		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
 		alert_pic = dumb_mob,
 		role_name_text = "intelligence potion",
-		chat_text_border_icon = src
+		chat_text_border_icon = src,
 	)
 	on_poll_concluded(user, dumb_mob, chosen_one)
 

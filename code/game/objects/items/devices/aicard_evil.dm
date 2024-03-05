@@ -41,7 +41,7 @@
 		ignore_category = POLL_IGNORE_SYNDICATE,
 		alert_pic = src,
 		role_name_text = "Nuclear Operative Modsuit AI",
-		chat_text_border_icon = mutable_appearance(icon, "syndicard-full")
+		chat_text_border_icon = mutable_appearance(icon, "syndicard-full"),
 	)
 	on_poll_concluded(user, op_datum, chosen_one)
 

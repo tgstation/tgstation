@@ -58,7 +58,7 @@
 		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
 		alert_pic = thing,
 		role_name_text = "possessed blade",
-		chat_text_border_icon = thing
+		chat_text_border_icon = thing,
 	)
 	affix_spirit(user, chosen_one)
 

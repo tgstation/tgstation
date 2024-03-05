@@ -204,7 +204,7 @@
 		alert_pic = blobbernaut_image,
 		jump_target = factory,
 		role_name_text = "blobbernaut",
-		chat_text_border_icon = blobbernaut_image
+		chat_text_border_icon = blobbernaut_image,
 	)
 	on_poll_concluded(factory, chosen_one)
 

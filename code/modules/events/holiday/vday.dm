@@ -74,7 +74,7 @@
 		candidates += player
 
 	var/list/mob/living/candidates_pruned = SSpolling.poll_candidates(
-		question = "Do you prefer being single?",
+		question = "Do you want a Valentine?",
 		group = candidates,
 		poll_time = 30 SECONDS,
 		flash_window = FALSE,
