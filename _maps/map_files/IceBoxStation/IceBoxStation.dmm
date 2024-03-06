@@ -51927,12 +51927,6 @@
 "pOL" = (
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
-"pOU" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6
-	},
-/turf/closed/wall,
-/area/station/medical/treatment_center)
 "pOV" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
@@ -246023,7 +246017,7 @@ cXu
 frP
 oIJ
 nRd
-pOU
+lwQ
 tHr
 tHr
 bxU
