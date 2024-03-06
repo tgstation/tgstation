@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "The roundend message on discord is now a \"silent\" ping."
+  - server: "Renamed the `?status-old` webhook world topic back to `?status`, and renamed the `?status` to `?status-webhook\""
