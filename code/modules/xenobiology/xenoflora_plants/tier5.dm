@@ -27,7 +27,7 @@
 	icon_state = "bluespace_limon"
 	food_reagents = list(/datum/reagent/consumable/limonjuice = 5, /datum/reagent/consumable/nutriment = 2) //No bluespace dust here because we want a custom effect upon being squashed instead of random teleportation
 	tastes = list("...lemons? Limes?" = 1, "teleportation" = 1, "lost virginity" = 1) //Reference to one of eigenstasium lines
-	juice_results = list(/datum/reagent/bluespace = 2,/datum/reagent/consumable/limonjuice = 5, /datum/reagent/consumable/nutriment = 2)
+	juice_typepath = list(/datum/reagent/bluespace = 2,/datum/reagent/consumable/limonjuice = 5, /datum/reagent/consumable/nutriment = 2)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL

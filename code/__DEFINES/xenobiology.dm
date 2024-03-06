@@ -14,3 +14,9 @@
 
 /// Determines how much light the jelly species emit
 #define LUMINESCENT_DEFAULT_GLOW 2
+
+/// How much gases and chemicals can xenoflora pod contain
+#define XENOFLORA_MAX_MOLES 3000
+#define XENOFLORA_MAX_CHEMS 500
+/// How much gases our pod injects per tick(so if plant needs 3 moles of CO2 per tick, pod will inject CO2 until there's 3 * XENOFLORA_POD_INPUT_MULTIPLIER moles)
+#define XENOFLORA_POD_INPUT_MULTIPLIER 10

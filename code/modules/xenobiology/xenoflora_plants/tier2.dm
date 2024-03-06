@@ -66,7 +66,7 @@
 	seed_type = /obj/item/xeno_seeds/cubomelon
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/food/xenoflora/cubomelon/MakeProcessable()
+/obj/item/food/xenoflora/cubomelon/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/xenoflora/cubomelon_slice, 5, 20)
 
 /obj/item/food/xenoflora/cubomelon_slice
@@ -75,7 +75,7 @@
 	icon_state = "cubomelonslice"
 	food_reagents = list(/datum/reagent/consumable/frostoil = 1, /datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 1)
 	tastes = list("cubomelon" = 1, "cold" = 1)
-	juice_results = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/consumable/nutriment = 1)
+	juice_typepath = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/consumable/nutriment = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL

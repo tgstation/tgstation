@@ -196,10 +196,10 @@
 		. += dome_front
 		. += dome_behind
 
-	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_2_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_2_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance1.color = COLOR_LIME
 
-	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_8_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_8_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance2.color = COLOR_MOSTLY_PURE_RED
 
 	. += pipe_appearance1
@@ -210,7 +210,7 @@
 		. += ground_overlay
 		. += plant_overlay
 		if(on)
-			var/mutable_appearance/screen_overlay = mutable_appearance(icon, (internal_gases.return_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 70) ? "pod-screen-fire" : "pod-screen", layer = ABOVE_ALL_MOB_LAYER + 0.1, plane = GAME_PLANE_UPPER)
+			var/mutable_appearance/screen_overlay = mutable_appearance(icon, (internal_gases.return_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 70) ? "pod-screen-fire" : "pod-screen", layer = ABOVE_ALL_MOB_LAYER + 0.1, plane = ABOVE_GAME_PLANE)
 			. += screen_overlay
 
 	if(internal_gases.return_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 70 && dome_extended)

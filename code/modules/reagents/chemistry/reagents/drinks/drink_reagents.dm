@@ -1250,3 +1250,47 @@
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 3)
+
+
+/datum/reagent/consumable/limonjuice
+	name = "Limon Juice"
+	description = "This juice is VERY sour."
+	color = "#EBEBEB" // rgb: 235, 235, 235
+	taste_description = "sourness and teleportation"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/limonjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR)))
+		return
+
+	var/x_offset = 0
+	var/y_offset = 0
+	var/distance = min(round(reac_volume / 5, 1) + 1, 5)
+
+	if(exposed_mob.dir == NORTH)
+		y_offset = distance
+	else if(exposed_mob.dir == SOUTH)
+		y_offset = -distance
+	if(exposed_mob.dir == WEST)
+		x_offset = distance
+	else if(exposed_mob.dir == EAST)
+		x_offset = -distance
+
+	var/turf/tele_center = locate(clamp(exposed_mob.x + x_offset, 1, world.maxx), clamp(exposed_mob.y + y_offset, 1, world.maxy), exposed_mob.z)
+	for(var/turf/open/space/space_turf in circle_range_turfs(tele_center, distance - 1))
+		if(!istype(space_turf))
+			continue
+
+		do_teleport(exposed_mob, space_turf, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //YEET
+		return
+
+	do_teleport(exposed_mob, tele_center, distance, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/datum/reagent/consumable/limonjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(current_cycle > 10 && SPT_PROB(7.5, delta_time))
+		to_chat(M, span_warning("You feel unstable..."))
+		M.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		current_cycle = 1
+		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
+	return ..()
