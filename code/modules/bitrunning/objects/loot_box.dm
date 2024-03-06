@@ -31,11 +31,12 @@
 	)
 
 	if(isnull(completed_domain))
-		return
+		log_runtime("Decrypted curiosity was created with no source domain.")
+		return INITIALIZE_HINT_QDEL
 
 	if(!istype(completed_domain, /datum/lazy_template/virtual_domain)) // Check if this is a proper virtual domain before doing anything with it
-		CRASH("Decrypted curiosity was created with an invalid source domain [completed_domain.name] ([completed_domain.type]).")
-		return
+		log_runtime("Decrypted curiosity was created with an invalid source domain. [completed_domain.name] ([completed_domain.type]).")
+		return INITIALIZE_HINT_QDEL
 
 	source_domain = completed_domain
 
