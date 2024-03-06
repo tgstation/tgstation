@@ -35646,7 +35646,7 @@
 	},
 /obj/machinery/button/door/directional/east{
 	id = "engsm";
-	name = s;
+	name = "s";
 	req_access = list("engineering")
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
