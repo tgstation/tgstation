@@ -115,3 +115,4 @@
 	icon = 'icons/obj/xenobiology/xenoflora_harvest.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/seed_type = /obj/item/xeno_seeds
+	

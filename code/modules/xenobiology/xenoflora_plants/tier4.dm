@@ -27,3 +27,4 @@
 	foodtypes = GROSS | VEGETABLES
 	grind_results = list(/datum/reagent/drug/saturnx = 4, /datum/reagent/consumable/nutriment = 5)
 	seed_type = /obj/item/xeno_seeds/hyperlattice
+

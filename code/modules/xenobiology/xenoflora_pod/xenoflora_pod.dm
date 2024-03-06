@@ -191,8 +191,8 @@
 	cut_overlays()
 
 	if(dome_extended)
-		var/mutable_appearance/dome_behind = mutable_appearance(icon, "glass_behind", layer = ABOVE_ALL_MOB_LAYER + 0.1, plane = GAME_PLANE_UPPER)
-		var/mutable_appearance/dome_front = mutable_appearance(icon, "glass_front", layer = ABOVE_ALL_MOB_LAYER + 0.3, plane = GAME_PLANE_UPPER)
+		var/mutable_appearance/dome_behind = mutable_appearance(icon, "glass_behind", layer = ABOVE_ALL_MOB_LAYER + 0.1, plane = ABOVE_GAME_PLANE)
+		var/mutable_appearance/dome_front = mutable_appearance(icon, "glass_front", layer = ABOVE_ALL_MOB_LAYER + 0.3, plane = ABOVE_GAME_PLANE)
 		. += dome_front
 		. += dome_behind
 
@@ -205,8 +205,8 @@
 	. += pipe_appearance1
 	. += pipe_appearance2
 	if(plant)
-		var/mutable_appearance/ground_overlay = mutable_appearance(plant.icon, "[plant.ground_icon_state]", layer = ABOVE_ALL_MOB_LAYER + 0.15, plane = GAME_PLANE_UPPER)
-		var/mutable_appearance/plant_overlay = mutable_appearance(plant.icon, "[plant.icon_state]-[plant.stage]", layer = ABOVE_ALL_MOB_LAYER + 0.2, plane = GAME_PLANE_UPPER)
+		var/mutable_appearance/ground_overlay = mutable_appearance(plant.icon, "[plant.ground_icon_state]", layer = ABOVE_ALL_MOB_LAYER + 0.15, plane = ABOVE_GAME_PLANE)
+		var/mutable_appearance/plant_overlay = mutable_appearance(plant.icon, "[plant.icon_state]-[plant.stage]", layer = ABOVE_ALL_MOB_LAYER + 0.2, plane = ABOVE_GAME_PLANE)
 		. += ground_overlay
 		. += plant_overlay
 		if(on)
@@ -214,7 +214,7 @@
 			. += screen_overlay
 
 	if(internal_gases.return_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 70 && dome_extended)
-		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "fire", layer = ABOVE_ALL_MOB_LAYER + 0.25, plane = GAME_PLANE_UPPER)
+		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "fire", layer = ABOVE_ALL_MOB_LAYER + 0.25, plane = ABOVE_GAME_PLANE)
 		. += fire_overlay
 
 
