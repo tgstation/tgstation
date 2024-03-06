@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Made it easier for admins to adjust blood brother teams using admin tools."
+  - bugfix: "Correct blood brother conversion logging."
