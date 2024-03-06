@@ -3,6 +3,7 @@
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" //Emergency shuttle only.
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
+#define DISCORD_SUPPRESS_NOTIFICATIONS (1 << 12) // monke edit: discord flag for silent messages
 
 GLOBAL_LIST_INIT(achievements_unlocked, list())
 
@@ -347,6 +348,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		webhook_info["username"] = CONFIG_GET(string/roundend_webhook_name)
 	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
 		webhook_info["avatar_url"] = CONFIG_GET(string/roundend_webhook_pfp)
+	webhook_info["flags"] = DISCORD_SUPPRESS_NOTIFICATIONS // monke edit: @silent roundend pings
 	// Uncomment when servers are moved to TGS4
 	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
 	var/list/headers = list()
@@ -890,3 +892,5 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/winner_key
 	///The name of the area we earned this cheevo in
 	var/award_location
+
+#undef DISCORD_SUPPRESS_NOTIFICATIONS

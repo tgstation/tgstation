@@ -1,5 +1,5 @@
 /datum/world_topic/status_webhook
-	keyword = "status"
+	keyword = "status-webhook"
 	require_comms_key = TRUE
 
 
