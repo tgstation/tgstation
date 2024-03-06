@@ -1,7 +1,0 @@
-author: "KingkumaArt"
-delete-after: True
-changes:
-  - rscadd: "Shiny joke mi-go variant (not xenobio spawnable)"
-  - rscdel: "Removed unused mi-go static sprites"
-  - image: "Resprited mi-gos to not use plagarized art from CDDA"
-  - image: "Also allowed mi-gos to have directional facing instead of always facing east"

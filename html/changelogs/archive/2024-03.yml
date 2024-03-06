@@ -113,3 +113,30 @@
   - refactor: converts map plate and jump to ruin to tguilist
   mc-oofert:
   - bugfix: fixes deathmatch baseturfs (you cant crowbar the floor to breach to space)
+2024-03-06:
+  KingkumaArt:
+  - rscadd: Shiny joke mi-go variant (not xenobio spawnable)
+  - rscdel: Removed unused mi-go static sprites
+  - image: Resprited mi-gos to not use plagarized art from CDDA
+  - image: Also allowed mi-gos to have directional facing instead of always facing
+      east
+  Melbert:
+  - rscadd: The animation that plays when an alert pops up on your screen is different.
+  - bugfix: Moving "down" as an observer is no longer janky.
+  - bugfix: All bibles are no longer suspiciously hollow
+  - bugfix: Extremely Minor Delta Morgue Fixes. See if you can spot them.
+  Seven:
+  - rscadd: Lockers and crates now shake when someone is attempting to resist out
+      of them.
+  SpaceLove:
+  - bugfix: Central Command Logistics department noticed the missing items on their
+      listings for robotics assembly crate. They have updated it!
+  Wallem:
+  - bugfix: The cursed coupon now only triggers a cursed event once, rather than infinite
+      times.
+  intercepti0n:
+  - bugfix: Pipe connector no longer appears on a hidden connector.
+  - bugfix: Re-wrenched atmospherics pipes no longer get extra offset.
+  - bugfix: All unary devices like injectors, passive vents etc. are centered while
+      hidden.
+  - image: Added smooth transition between hidden and visible pipes.

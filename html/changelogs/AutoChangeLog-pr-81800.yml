@@ -1,7 +1,0 @@
-author: "intercepti0n"
-delete-after: True
-changes:
-  - bugfix: "Pipe connector no longer appears on a hidden connector."
-  - bugfix: "Re-wrenched atmospherics pipes no longer get extra offset."
-  - bugfix: "All unary devices like injectors, passive vents etc. are centered while hidden."
-  - image: "Added smooth transition between hidden and visible pipes."
