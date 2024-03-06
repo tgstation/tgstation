@@ -24,6 +24,11 @@
 	wound_bonus = -45
 	can_buckle_to = FALSE
 
+	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, STAMINA = 0, OXY = 1) //Healed by fire
+	unsuitable_cold_damage = 15
+	unsuitable_heat_damage = 0
+	maximum_survivable_temperature = INFINITY
+
 	//Messages
 
 	attack_verb_simple = "glomp"
@@ -76,8 +81,6 @@
 
 	///Has a mutator been used on the slime? Only one is allowed
 	var/mutator_used = FALSE
-	///Is the slime forced into being immobile, despite the gases present?
-	var/force_stasis = FALSE
 
 	//The datum that handles the slime colour's core and possible mutations
 	var/datum/slime_type/slime_type

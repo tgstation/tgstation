@@ -191,6 +191,9 @@
 			mod += 2
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
 
+/datum/movespeed_modifier/slime_tempmod
+	variable = TRUE
+
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()
 	var/mod = 0
