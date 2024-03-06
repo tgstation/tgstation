@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "fixes deathmatch baseturfs (you cant crowbar the floor to breach to space)"

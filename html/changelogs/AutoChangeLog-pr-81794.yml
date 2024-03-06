@@ -1,4 +1,0 @@
-author: "ViktorKoL"
-delete-after: True
-changes:
-  - bugfix: "fixed some issues when calculating the duration of moon smile's effects"
