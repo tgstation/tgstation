@@ -78,7 +78,7 @@
 	if(!.)//Can't dodge there so we just carry on
 		. = Move(moving_to, move_direction)
 
-/// Admin-spawnable variant of the miku mi-go.
+/// The special hatsune miku themed mi-go.
 /mob/living/basic/migo/hatsune
 	name = "hatsune mi-go"
 	desc = "A pinkish, fungoid crustacean-like creature with clawed appendages and a head covered with waving antennae. This one is wearing a bright blue wig."
