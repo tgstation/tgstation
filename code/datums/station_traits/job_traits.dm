@@ -216,7 +216,7 @@
 	if(isnull(sat_area))
 		return
 	var/list/fax_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax)
-	for(var/obj/machinery/fax_machine as anything in fax_machines) //don't spawn a coffeemaker if there is already one on the bridge
+	for(var/obj/machinery/fax_machine as anything in fax_machines) //don't spawn a fax machine if one exists already.
 		if(is_type_in_list(get_area(fax_machine), sat_area))
 			return
 	var/list/tables = list()
@@ -231,16 +231,17 @@
 		return
 	var/picked_table = pick_n_take(tables)
 	var/picked_turf = get_turf(picked_table)
-	if(length(tables))
-		var/another_table = pick(tables)
-		for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
-			if(thing_on_table == picked_table)
-				continue
-			if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)
-				continue
-			if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
-				continue
-			thing_on_table.forceMove(get_turf(another_table))
+	for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
+		if(thing_on_table == picked_table)
+			continue
+		if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)
+			continue
+		if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
+			continue
+		if(length(tables))
+			thing_on_table.forceMove(get_turf(pick(tables)))
+		else
+			qdel(thing_on_table)
 	new /obj/machinery/fax/auto_name(picked_turf)
 
 #undef CAN_ROLL_ALWAYS

@@ -131,7 +131,7 @@
 	desc = "Where da bug goin?"
 	icon_state = "fly"
 	obj_flags = CAN_BE_HIT
-	max_integrity = 100
+	max_integrity = 20
 	uses_integrity = TRUE
 	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER

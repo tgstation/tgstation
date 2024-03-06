@@ -44,7 +44,7 @@
 
 /obj/machinery/computer/upload/ai/Initialize(mapload)
 	. = ..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
 		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/computer/upload/ai/interact(mob/user)
