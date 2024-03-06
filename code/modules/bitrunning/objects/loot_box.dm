@@ -30,6 +30,9 @@
 	datum/lazy_template/virtual_domain/completed_domain,
 	)
 
+	if(isnull(completed_domain))
+		return
+
 	if(!istype(completed_domain, /datum/lazy_template/virtual_domain)) // Check if this is a proper virtual domain before doing anything with it
 		CRASH("Decrypted curiosity was created with an invalid source domain [completed_domain.name] ([completed_domain.type]).")
 
