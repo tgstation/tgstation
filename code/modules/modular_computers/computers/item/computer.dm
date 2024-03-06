@@ -280,7 +280,7 @@
 		inserting_id.forceMove(src)
 
 	if(!isnull(computer_id_slot))
-		RemoveID(user, TRUE)
+		RemoveID(user, silent = TRUE)
 
 	computer_id_slot = inserting_id
 
