@@ -45367,6 +45367,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "nRm" = (
@@ -51930,7 +51931,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/machinery/airalarm/directional/south,
 /turf/closed/wall,
 /area/station/medical/treatment_center)
 "pOV" = (
@@ -52889,6 +52889,7 @@
 	},
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "qfj" = (
@@ -67741,10 +67742,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"uMz" = (
-/obj/item/radio/intercom/directional/west,
-/turf/closed/wall,
-/area/station/medical/treatment_center)
 "uMD" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -246283,7 +246280,7 @@ fNA
 eqp
 cTV
 fHz
-uMz
+lwQ
 qfi
 sEK
 eHg
