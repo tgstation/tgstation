@@ -60464,7 +60464,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "vxa" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "vxi" = (

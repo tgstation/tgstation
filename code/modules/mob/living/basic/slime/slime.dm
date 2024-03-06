@@ -138,6 +138,11 @@
 	ai_controller = /datum/ai_controller/basic_controller/slime/docile
 	hunger_disabled = TRUE
 
+///Hilbert subtype
+/mob/living/basic/slime/hilbert/Initialize(mapload, new_colour, new_life_stage)
+	. = ..(mapload, /datum/slime_type/bluespace)
+	ai_controller?.set_blackboard_key(BB_RABID, TRUE)
+
 //Overriden base procs
 
 /mob/living/basic/slime/adjust_nutrition(change)

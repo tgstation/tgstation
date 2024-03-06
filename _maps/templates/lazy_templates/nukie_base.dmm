@@ -2132,7 +2132,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "zR" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/circuit/red/off,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "zS" = (

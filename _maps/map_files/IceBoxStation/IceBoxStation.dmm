@@ -32034,7 +32034,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central/greater)
 "jSW" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "jTf" = (

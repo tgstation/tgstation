@@ -46219,7 +46219,7 @@
 /area/station/science/ordnance/office)
 "lvX" = (
 /obj/structure/cable,
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/circuit/green,
 /area/station/science/xenobiology)
 "lvZ" = (
