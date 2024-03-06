@@ -152,6 +152,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_price = PAYCHECK_CREW * 0.7
 
 // Used for unit tests, do not delete
 /obj/item/food/hotdog/debug
@@ -174,6 +175,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_price = PAYCHECK_CREW
 
 /obj/item/food/sandwich/blt
 	name = "\improper BLT"
