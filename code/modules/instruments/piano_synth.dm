@@ -148,7 +148,7 @@
 	stopped_playing.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/synth/proc/import_song()
-	synth.song.ParseSong(song.value)
+	synth.song.ParseSong(new_song = song.value)
 
 /obj/item/circuit_component/synth/proc/set_repetitions()
 	synth.song.set_repeats(repetitions.value)
