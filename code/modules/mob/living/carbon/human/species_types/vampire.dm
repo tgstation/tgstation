@@ -39,7 +39,6 @@
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
-	new_vampire.set_safe_hunger_level()
 	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
