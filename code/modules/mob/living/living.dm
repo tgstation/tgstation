@@ -497,7 +497,7 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb(whispered as num|null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
@@ -929,6 +929,8 @@
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
+	overeatduration = 0
+	satiety = 0
 
 	// These should be tracked by status effects
 	losebreath = 0
@@ -2327,27 +2329,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/carbon/human/will_escape_storage()
 	return TRUE
 
-/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
-/mob/living/proc/set_safe_hunger_level()
-	// Nutrition reset and alert clearing.
-	nutrition = NUTRITION_LEVEL_FED
-	clear_alert(ALERT_NUTRITION)
-	satiety = 0
-
-	// Trait removal if obese
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
-		if(overeatduration >= (200 SECONDS))
-			to_chat(src, span_notice("Your transformation restores your body's natural fitness!"))
-
-		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
-		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		update_worn_undersuit()
-		update_worn_oversuit()
-
-	// Reset overeat duration.
-	overeatduration = 0
-
-
 /// Changes the value of the [living/body_position] variable. Call this before set_lying_angle()
 /mob/living/proc/set_body_position(new_value)
 	if(body_position == new_value)
@@ -2598,10 +2579,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
-		var/list/candidates = SSpolling.poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, pic_source = src, role_name_text = "guardian spirit")
-		if(LAZYLEN(candidates))
-			var/mob/dead/observer/candidate = pick(candidates)
-			guardian_client = candidate.client
+		var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as an admin created [span_notice("Guardian Spirit")] of [span_danger(real_name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, alert_pic = mutable_appearance('icons/mob/nonhuman-player/guardian.dmi', "magicexample"), jump_target = src, role_name_text = "guardian spirit", amount_to_pick = 1)
+		if(chosen_one)
+			guardian_client = chosen_one.client
 		else
 			tgui_alert(admin, "No ghost candidates.", "Guardian Controller")
 			return
