@@ -389,7 +389,7 @@
 	icon_state = "sharkcursed"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "labcoat"
+	inhand_icon_state = "sharkcursed"
 	body_parts_covered = CHEST|GROIN|ARMS
 	clothing_flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/shork_hood
