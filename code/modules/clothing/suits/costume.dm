@@ -385,7 +385,7 @@
 
 /obj/item/clothing/suit/hooded/shork_costume // Oh God Why
 	name = "shork costume"
-	desc = "How did you manage to mess this up so bad?"
+	desc = "Why would you ever do this?"
 	icon_state = "sharkcursed"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
