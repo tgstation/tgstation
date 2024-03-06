@@ -172,6 +172,18 @@
 /datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
 	return GLOB.tails_list_monkey
 
+/obj/item/organ/external/tail/monkey/saiyan
+	name = "saiyan tail"
+	desc = "The severed tail of a mighty Saiyan warrior, the ultimate humiliation."
+	preference = "feature_saiyan_tail"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey/saiyan
+
+/datum/bodypart_overlay/mutant/tail/monkey/saiyan
+	feature_key = "tail_saiyan"
+
+/datum/bodypart_overlay/mutant/tail/monkey/saiyan/get_global_feature_list()
+	return GLOB.tails_list_saiyan
+
 /obj/item/organ/external/tail/lizard
 	name = "lizard tail"
 	desc = "A severed lizard tail. Somewhere, no doubt, a lizard hater is very pleased with themselves."

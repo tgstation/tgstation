@@ -55,6 +55,7 @@
 	icon_state_builder += mutant_bodyparts_layertext(image_layer)
 
 	var/finished_icon_state = icon_state_builder.Join("_")
+	to_chat(world, "icon state [finished_icon_state]")
 
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = image_layer)
 

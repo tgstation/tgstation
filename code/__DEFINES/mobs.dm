@@ -127,6 +127,7 @@
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
+#define SPECIES_SAIYAN "saiyan"
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
