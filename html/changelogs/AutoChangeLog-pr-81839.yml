@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "AI-controlled spiders can correctly recognise where they can place webs."
+  - image: "New sprites for most kinds of spider web"
