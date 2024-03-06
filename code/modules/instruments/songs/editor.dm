@@ -13,13 +13,17 @@
 	data["note_shift"] = note_shift
 	data["octaves"] = round(note_shift / 12, 0.01)
 	data["sustain_mode"] = sustain_mode
-	data["sustain_mode_text"] = (SUSTAIN_LINEAR ? "Linear Sustain Duration: [sustain_linear_duration / 10] seconds" : "Exponential Falloff Factor: [sustain_exponential_dropoff]% per decisecond")
+	switch(sustain_mode)
+		if(SUSTAIN_LINEAR)
+			data["sustain_mode_button"] = "Linear Sustain Duration"
+			data["sustain_mode_text"] = "[sustain_linear_duration / 10] seconds"
+		if(SUSTAIN_EXPONENTIAL)
+			data["sustain_mode_button"] = "Exponential Falloff Factor"
+			data["sustain_mode_text"] = "[sustain_exponential_dropoff]% per decisecond"
 	data["instrument_ready"] = using_instrument?.ready()
-	data["legacy_mode"] = legacy
 	data["volume"] = volume
 	data["volume_dropoff_threshold"] = sustain_dropoff_volume
 	data["sustain_indefinitely"] = full_sustain_held_note
-	data["has_lines"] = lines.len
 	data["playing"] = playing
 	data["repeat"] = repeat
 	data["bpm"] = round(600 / tempo)
@@ -48,7 +52,7 @@
 		return FALSE
 
 	switch(action)
-		//SETTINGS & IMPORTING
+		//SETTINGS
 		if("play_music")
 			if(!playing)
 				INVOKE_ASYNC(src, PROC_REF(start_playing), user)
@@ -61,7 +65,7 @@
 			if(length(allowed_instrument_ids) == 1)
 				set_instrument(allowed_instrument_ids[1])
 				return TRUE
-			var/list/categories
+			var/list/categories = list()
 			for(var/i in allowed_instrument_ids)
 				var/datum/instrument/instrument_type = SSinstruments.get_instrument(i)
 				if(instrument_type)
@@ -78,10 +82,21 @@
 				return FALSE
 			set_instrument(instrument_selection)
 			return TRUE
+		if("tempo")
+			var/move_direction = params["tempo_change"]
+			var/tempo_diff
+			if(move_direction == "increase_speed")
+				tempo_diff = world.tick_lag
+			else
+				tempo_diff = -world.tick_lag
+			tempo = sanitize_tempo(tempo + tempo_diff)
+			return TRUE
+
+		//SONG MAKING
 		if("import_song")
 			var/song_text = ""
 			do
-				song_text = tgui_input_text(user, "Please paste the entire song, formatted:", name)
+				song_text = tgui_input_text(user, "Please paste the entire song, formatted:", name, max_length = (MUSIC_MAXLINES * MUSIC_MAXLINECHARS))
 				if(!in_range(parent, user))
 					return
 				if(length_char(song_text) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
@@ -96,17 +111,6 @@
 			lines = new()
 			tempo = sanitize_tempo(5) // default 120 BPM
 			return TRUE
-		if("tempo")
-			var/moving_up = params["going_up"]
-			var/tempo_diff
-			if(moving_up)
-				tempo_diff = world.tick_lag
-			else
-				tempo_diff = -world.tick_lag
-			tempo = sanitize_tempo(tempo + tempo_diff)
-			return TRUE
-
-		//LINE EDITING
 		if("add_new_line")
 			var/newline = tgui_input_text(user, "Enter your line", parent.name)
 			if(!newline || !in_range(parent, user))
@@ -132,53 +136,54 @@
 			lines[line_to_edit] = new_line_text
 			return TRUE
 
-		//MODE TOGGLE STUFF
+		//MODE STUFF
 		if("set_sustain_mode")
 			var/choice = tgui_input_list(user, "Choose a sustain mode", "Sustain Mode", SSinstruments.note_sustain_modes)
-			if(!choice)
+			if(isnull(choice) || !(choice in SSinstruments.note_sustain_modes))
 				return FALSE
-			sustain_mode = SSinstruments.note_sustain_modes[choice]
+			sustain_mode = choice
 			return TRUE
 		if("set_note_shift")
 			var/amount = tgui_input_number(user, "Set note shift", "Note Shift", max_value = note_shift_max, min_value = note_shift_min)
-			if(isnum(amount))
+			if(!isnum(amount))
 				return FALSE
 			note_shift = clamp(amount, note_shift_min, note_shift_max)
 			return TRUE
 		if("set_volume")
 			var/amount = tgui_input_number(user, "Set volume", "Volume", default = 1, max_value = 75, min_value = 1)
-			if(isnum(amount))
+			if(!isnum(amount))
 				return FALSE
 			set_volume(amount)
 			return TRUE
 		if("set_dropoff_volume")
 			var/amount = tgui_input_number(user, "Set dropoff threshold", "Dropoff Volume", max_value = 100)
-			if(isnum(amount))
+			if(!isnum(amount))
 				return FALSE
 			set_dropoff_volume(amount)
 			return TRUE
 		if("toggle_sustain_hold_indefinitely")
 			full_sustain_held_note = !full_sustain_held_note
 			return TRUE
-		if("set_repeat") //Changing this from a toggle to a number of repeats to avoid infinite loops.
+		if("set_repeat")
+			if(playing)
+				return
 			var/amount = tgui_input_number(user, "How many times will the song repeat", "Repeat Song", max_value = max_repeats)
-			if(isnum(amount))
+			if(!isnum(amount))
 				return FALSE
 			set_repeats(amount)
 			return TRUE
-
-		//SUSTAIN MODE STUFF
-		if("set_linear_falloff")
-			var/amount = tgui_input_number(user, "Set linear sustain duration in seconds", "Linear Sustain Duration", 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN, 0.1, round_value = FALSE)
-			if(isnull(amount))
-				return FALSE
-			set_linear_falloff_duration(amount)
-
-		if("set_exponential_falloff")
-			var/amount = tgui_input_number(user, "Set exponential sustain factor", "Exponential sustain factor", INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX,  INSTRUMENT_EXP_FALLOFF_MIN, round_value = FALSE)
-			if(isnull(amount))
-				return FALSE
-			set_exponential_drop_rate(amount)
+		if("edit_sustain_mode")
+			switch(sustain_mode)
+				if(SUSTAIN_LINEAR)
+					var/amount = tgui_input_number(user, "Set linear sustain duration in seconds", "Linear Sustain Duration", 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN, 0.1, round_value = FALSE)
+					if(isnull(amount))
+						return FALSE
+					set_linear_falloff_duration(amount)
+				if(SUSTAIN_EXPONENTIAL)
+					var/amount = tgui_input_number(user, "Set exponential sustain factor", "Exponential sustain factor", INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX,  INSTRUMENT_EXP_FALLOFF_MIN, round_value = FALSE)
+					if(isnull(amount))
+						return FALSE
+					set_exponential_drop_rate(amount)
 
 /**
  * Parses a song the user has input into lines and stores them.

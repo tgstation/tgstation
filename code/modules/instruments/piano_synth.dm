@@ -169,7 +169,9 @@
 	synth.song.note_shift = clamp(note_shift.value, synth.song.note_shift_min, synth.song.note_shift_max)
 
 /obj/item/circuit_component/synth/proc/set_sustain_mode()
-	synth.song.sustain_mode = SSinstruments.note_sustain_modes[sustain_mode.value]
+	if(!(sustain_mode.value in SSinstruments.note_sustain_modes))
+		return
+	synth.song.sustain_mode = sustain_mode.value
 
 /obj/item/circuit_component/synth/proc/set_sustain_value()
 	switch(synth.song.sustain_mode)
