@@ -497,7 +497,7 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb(whispered as num|null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
@@ -2257,6 +2257,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/is_face_visible()
 	return TRUE
 
+/// Sprite to show for photocopying mob butts
+/mob/living/proc/get_butt_sprite()
+	return null
 
 ///Proc to modify the value of num_legs and hook behavior associated to this event.
 /mob/living/proc/set_num_legs(new_value)

@@ -1,4 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "The say TGUI would recognize :g (changeling hivemind) prefix. and give a visual indicator in it that you are talking in the right channel"

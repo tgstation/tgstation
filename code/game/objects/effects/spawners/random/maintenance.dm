@@ -9,7 +9,7 @@
 /obj/effect/spawner/random/maintenance/no_decals
 
 /obj/effect/spawner/random/maintenance/no_decals/can_spawn(atom/loot)
-	return !istype(loot, /obj/effect/decal)
+	return !ispath(loot, /obj/effect/decal)
 
 /obj/effect/spawner/random/maintenance/examine(mob/user)
 	. = ..()

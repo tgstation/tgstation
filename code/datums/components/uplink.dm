@@ -375,18 +375,18 @@
 
 // PDA signal responses
 
-/datum/component/uplink/proc/new_ringtone(datum/source, atom/source, new_ring_text)
+/datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
-			failsafe(source)
+			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
-	if(ismob(source))
-		interact(null, source)
-		to_chat(source, span_hear("The computer softly beeps."))
+	if(ismob(user))
+		interact(null, user)
+		to_chat(user, span_hear("The computer softly beeps."))
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
