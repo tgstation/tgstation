@@ -39,8 +39,7 @@
 
 	if(!istype(src, /mob/living/basic/migo/hatsune) && prob(0.1)) // chance on-load mi-gos will spawn with a miku wig on (shiny variant)
 		var/mob/living/basic/migo/hatsune/wow_very_blue = new(get_turf(loc), mapload)
-		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = -1.5, additional_status_callback = CALLBACK(src, PROC_REF(update_dodge_chance)))
