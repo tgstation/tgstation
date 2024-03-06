@@ -1024,7 +1024,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(index > 5)
 		return ""
 
-	return "EAST-1:28,CENTER+[6 - index]:[29 - index * 2]"
+	return "EAST-1:28,CENTER+[6 - index]:[29 - (index * 2)]"
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts(mob/viewmob)

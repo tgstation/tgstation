@@ -8,12 +8,14 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-	if(. && !(movement_type & FLOATING)) //floating is easy
-		if(nutrition > 0 && stat != DEAD)
-			var/hunger_loss = HUNGER_FACTOR / 10
-			if(move_intent == MOVE_INTENT_RUN)
-				hunger_loss *= 2
-			adjust_nutrition(-1 * hunger_loss)
+	if(!. || (movement_type & FLOATING)) //floating is easy
+		return
+	if(nutrition <= 0 || stat == DEAD)
+		return
+	var/hunger_loss = HUNGER_FACTOR / 10
+	if(move_intent == MOVE_INTENT_RUN)
+		hunger_loss *= 2
+	adjust_nutrition(-1 * hunger_loss)
 
 /mob/living/carbon/set_usable_legs(new_value)
 	. = ..()
