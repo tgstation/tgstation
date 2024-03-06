@@ -60,6 +60,9 @@
 	should_draw_greyscale = FALSE
 	wing_types = NONE
 
+/obj/item/bodypart/chest/abductor/get_butt_sprite()
+	return BUTT_SPRITE_GREY
+
 /obj/item/bodypart/arm/left/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
@@ -94,6 +97,9 @@
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 	wing_types = list(/obj/item/organ/external/wings/functional/slime)
+
+/obj/item/bodypart/chest/jelly/get_butt_sprite()
+	return BUTT_SPRITE_SLIME
 
 /obj/item/bodypart/arm/left/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -229,6 +235,9 @@
 	is_dimorphic = TRUE
 	burn_modifier = 1.25
 	wing_types = NONE
+
+/obj/item/bodypart/chest/pod/get_butt_sprite()
+	return BUTT_SPRITE_FLOWERPOT
 
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON

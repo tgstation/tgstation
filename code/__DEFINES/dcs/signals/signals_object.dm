@@ -158,6 +158,9 @@
 	/// Return to prevent the default behavior (attack_selfing) from ocurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
 
+/// Sent from /obj/item/attack_atom(): (atom/attacked_atom, mob/living/user)
+#define COMSIG_ITEM_POST_ATTACK_ATOM "item_post_attack_atom"
+
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
 ///from base of obj/item/hit_reaction(): (owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
@@ -409,6 +412,11 @@
 #define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
 ///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
 #define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
+
+///from /datum/computer_file/program/messenger/proc/receive_message
+#define COMSIG_COMPUTER_RECIEVED_MESSAGE "computer_recieved_message"
+///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
+#define COMSIG_VIRTUAL_PET_LEVEL_UP "virtual_pet_level_up"
 
 // /obj/vehicle/sealed/mecha signals
 

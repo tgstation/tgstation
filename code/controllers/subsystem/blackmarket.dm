@@ -21,17 +21,20 @@ SUBSYSTEM_DEF(blackmarket)
 	for(var/market in subtypesof(/datum/market))
 		markets[market] += new market
 
-	for(var/item in subtypesof(/datum/market_item))
-		var/datum/market_item/I = new item()
-		if(!I.item)
+	for(var/datum/market_item/item as anything in subtypesof(/datum/market_item))
+		if(!initial(item.item))
+			continue
+		if(!prob(initial(item.availability_prob)))
 			continue
 
-		for(var/M in I.markets)
-			if(!markets[M])
-				stack_trace("SSblackmarket: Item [I] available in market that does not exist.")
+		var/datum/market_item/item_instance = new item()
+		for(var/potential_market in item_instance.markets)
+			if(!markets[potential_market])
+				stack_trace("SSblackmarket: Item [item_instance] available in market that does not exist.")
 				continue
-			markets[M].add_item(item)
-		qdel(I)
+			// If this fails the market item will just be GC'd
+			markets[potential_market].add_item(item_instance)
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)

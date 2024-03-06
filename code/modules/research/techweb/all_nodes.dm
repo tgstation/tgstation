@@ -121,6 +121,8 @@
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
+		"tram_floor_dark",
+		"tram_floor_light",
 		"trapdoor_electronics",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
@@ -1625,6 +1627,7 @@
 	description = "Our researchers have found new ways to weaponize just about everything now."
 	prereq_ids = list("engineering")
 	design_ids = list(
+		"ballistic_shield",
 		"pin_testing",
 		"tele_shield",
 		"lasershell",
