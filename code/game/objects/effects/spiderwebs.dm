@@ -32,6 +32,14 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	plane = FLOOR_PLANE
+	layer = MID_TURF_LAYER
+	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
+	base_icon_state = "stickyweb"
+	icon_state = "stickyweb-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	///Whether or not the web is from the genetics power
 	var/genetic = FALSE
 	///Whether or not the web is a sealed web
@@ -42,14 +50,6 @@
 	var/stuck_chance = 50
 	/// Chance that a bullet will hit this instead of flying through it
 	var/projectile_stuck_chance = 30
-	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
-	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
-	base_icon_state = "stickyweb"
-	icon_state = "stickyweb-0"
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
-	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 
 /obj/structure/spider/stickyweb/Initialize(mapload)
 	// Offset on init so that they look nice in the map editor
@@ -98,10 +98,10 @@
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
-	/// Mob with special permission to cross this web
-	var/mob/living/allowed_mob
 	genetic = TRUE
 	desc = "It's stringy, sticky, and came out of your coworker."
+	/// Mob with special permission to cross this web
+	var/mob/living/allowed_mob
 
 /obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
 	. = ..()
