@@ -13,13 +13,13 @@ import {
   Stack,
   Tabs,
   Tooltip,
+  VirtualList,
 } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { Material } from './Fabrication/Types';
 
 type Machine = {
-  ref: string;
   name: string;
   icon: string;
   onHold: boolean;
@@ -36,71 +36,55 @@ type Log = {
   noun: string;
 };
 
-type OreSiloData = {
+enum Tab {
+  Machines,
+  Logs,
+}
+
+type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
   machines: Machine[];
   logs: Log[];
 };
 
-export const OreSilo = (props: any, context: any) => {
-  const { act, data } = useBackend<OreSiloData>();
+export const OreSilo = (props: any) => {
+  const { act, data } = useBackend<Data>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
 
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState<Tab>(Tab.Logs);
 
   return (
-    <Window title="Ore Silo" width={380} height={600}>
+    <Window title="Ore Silo" width={620} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>
               <Tabs.Tab
                 icon="plug"
-                selected={currentTab === 0}
-                onClick={() => setCurrentTab(0)}
+                selected={currentTab === Tab.Machines}
+                onClick={() => setCurrentTab(Tab.Machines)}
               >
                 Connections
               </Tabs.Tab>
               <Tabs.Tab
                 icon="book-bookmark"
-                selected={currentTab === 1}
-                onClick={() => setCurrentTab(1)}
+                selected={currentTab === Tab.Logs}
+                onClick={() => setCurrentTab(Tab.Logs)}
               >
                 Logs
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {currentTab === 0 ? (
-              !!machines && machines.length > 0 ? (
-                <Section fill scrollable>
-                  {machines.map((machine, index) => (
-                    <MachineDisplay
-                      key={machine.name}
-                      machine={machine}
-                      onPause={(machine) => act('hold', { ref: machine.ref })}
-                      onRemove={(machine) =>
-                        act('remove', { ref: machine.ref })
-                      }
-                    />
-                  ))}
-                </Section>
-              ) : (
-                <NoticeBox>No machines connected!</NoticeBox>
-              )
+            {currentTab === Tab.Machines ? (
+              <MachineList
+                machines={machines!}
+                onPause={(index) => act('hold', { id: index })}
+                onRemove={(index) => act('remove', { id: index })}
+              />
             ) : null}
-            {currentTab === 1 ? (
-              !!logs && logs.length > 0 ? (
-                <Box pr={1} height="100%" overflowY="scroll">
-                  {logs.map((log, index) => (
-                    <LogEntry key={index} log={log} />
-                  ))}
-                </Box>
-              ) : (
-                <NoticeBox>No log entries currently present!</NoticeBox>
-              )
-            ) : null}
+            {currentTab === Tab.Logs ? <LogsList logs={logs!} /> : null}
           </Stack.Item>
           <Stack.Item>
             <Section fill>
@@ -119,18 +103,59 @@ export const OreSilo = (props: any, context: any) => {
   );
 };
 
+type MachineListProps = {
+  machines: Machine[];
+  onPause: (index: number) => void;
+  onRemove: (index: number) => void;
+};
+
+const MachineList = (props: MachineListProps) => {
+  const { machines, onPause, onRemove } = props;
+
+  return machines.length > 0 ? (
+    <Section fill scrollable>
+      {machines.map((machine, index) => (
+        <MachineDisplay
+          key={index}
+          machine={machine}
+          onPause={() => onPause(index + 1)}
+          onRemove={() => onRemove(index + 1)}
+        />
+      ))}
+    </Section>
+  ) : (
+    <NoticeBox>No machines connected!</NoticeBox>
+  );
+};
+
 type MachineProps = {
   machine: Machine;
-  onPause: (machine: Machine) => void;
-  onRemove: (machine: Machine) => void;
+  onPause: () => void;
+  onRemove: () => void;
 };
 
 const MachineDisplay = (props: MachineProps) => {
   const { machine, onPause, onRemove } = props;
 
+  let machineName = machine.name;
+  const index = machineName.indexOf('('); // some techfabs have their location attached to their name
+  if (index >= 0) {
+    machineName = machineName.substring(0, index);
+  }
+  machineName = `${machineName.trimEnd()} (${machine.location})`;
+
   return (
     <Box className="FabricatorRecipe">
-      <Box className="FabricatorRecipe__Title">
+      <Box
+        className={
+          machine.onHold
+            ? classes([
+                'FabricatorRecipe__Title',
+                'FabricatorRecipe__Title--disabled',
+              ])
+            : 'FabricatorRecipe__Title'
+        }
+      >
         <Box className="FabricatorRecipe__Icon">
           <Image
             width={'32px'}
@@ -138,7 +163,7 @@ const MachineDisplay = (props: MachineProps) => {
             src={`data:image/jpeg;base64,${machine.icon}`}
           />
         </Box>
-        <Box className="FabricatorRecipe__Label">{machine.name}</Box>
+        <Box className="FabricatorRecipe__Label">{machineName}</Box>
       </Box>
 
       <Tooltip
@@ -154,7 +179,7 @@ const MachineDisplay = (props: MachineProps) => {
             'FabricatorRecipe__Button--icon',
           ])}
           onClick={(_) => {
-            onPause(machine);
+            onPause();
           }}
         >
           <Icon name={machine.onHold ? 'circle-play' : 'circle-pause'} />
@@ -167,13 +192,33 @@ const MachineDisplay = (props: MachineProps) => {
             'FabricatorRecipe__Button--icon',
           ])}
           onClick={(_) => {
-            onRemove(machine);
+            onRemove();
           }}
         >
           <Icon name="trash-can" />
         </Box>
       </Tooltip>
     </Box>
+  );
+};
+
+type LogsListProps = {
+  logs: Log[];
+};
+
+const LogsList = (props: LogsListProps) => {
+  const { logs } = props;
+
+  return logs.length > 0 ? (
+    <Box pr={1} height="100%" overflowY="scroll">
+      <VirtualList>
+        {logs.map((log, index) => (
+          <LogEntry key={index} log={log} />
+        ))}
+      </VirtualList>
+    </Box>
+  ) : (
+    <NoticeBox>No log entries currently present!</NoticeBox>
   );
 };
 

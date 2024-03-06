@@ -79,7 +79,7 @@
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
@@ -198,7 +198,7 @@
 
 /obj/structure/table/wood/shuttle_bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -378,15 +378,13 @@
 		var/change = FALSE
 		if(payees[AM] > 0)
 			change = TRUE
-			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
-			HC.credits = payees[AM]
-			HC.name = "[HC.credits] credit holochip"
+			var/obj/item/holochip/holocred = new /obj/item/holochip(AM.loc, payees[AM]) //Change is made in holocredits exclusively.
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
-				if(!H.put_in_hands(HC))
-					AM.pulling = HC
+				if(!H.put_in_hands(holocred))
+					AM.pulling = holocred
 			else
-				AM.pulling = HC
+				AM.pulling = holocred
 			payees[AM] -= payees[AM]
 
 		say("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]")

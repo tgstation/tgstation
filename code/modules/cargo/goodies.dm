@@ -152,7 +152,7 @@
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/valentine, /obj/item/food/candyheart)
+	contains = list(/obj/item/paper/valentine, /obj/item/food/candyheart)
 
 /datum/supply_pack/goody/beeplush
 	name = "Bee Plushie"
@@ -248,6 +248,12 @@
 	desc = "When the standard variety is not good enough for you."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
+
+/datum/supply_pack/goody/naturalbait
+	name = "Freshness Jars full of Natural Bait"
+	desc = "Homemade in the Spinward Sector."
+	cost = PAYCHECK_CREW * 4 //rock on
+	contains = list(/obj/item/storage/pill_bottle/naturalbait)
 
 /datum/supply_pack/goody/telescopic_fishing_rod
 	name = "Telescopic Fishing Rod"

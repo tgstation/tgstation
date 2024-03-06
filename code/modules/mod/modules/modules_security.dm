@@ -579,7 +579,7 @@
 #undef STORMTROOPER_MODE
 #undef SHARPSHOOTER_MODE
 
-/obj/item/mod/module/anti_stagger
+/obj/item/mod/module/shove_blocker
 	name = "MOD bulwark module"
 	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob."
 	icon_state = "bulwark"
@@ -587,13 +587,27 @@
 	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
 
 /obj/item/mod/module/shove_blocker/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/locked
 	name = "superglued MOD bulwark module"
 	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob. Good luck removing this one."
 	removable = FALSE
 	complexity = 0
+
+/obj/item/mod/module/quick_cuff
+	name = "MOD restraint assist module"
+	desc = "Enhanced gauntlent grip pads that help with placing individuals in restraints more quickly. Doesn't look like they'll come off."
+	removable = FALSE
+	complexity = 0
+
+/obj/item/mod/module/quick_cuff/on_suit_activation()
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)
+
+/obj/item/mod/module/quick_cuff/on_suit_deactivation(deleting = FALSE)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)

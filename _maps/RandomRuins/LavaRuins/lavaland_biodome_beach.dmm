@@ -286,7 +286,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/bed{
@@ -524,8 +524,8 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "qK" = (
-/obj/structure/closet/secure_closet/bar/lavaland_bartender_clothes,
 /obj/machinery/light/small/directional/east,
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_clothes,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "qT" = (

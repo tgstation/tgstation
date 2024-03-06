@@ -402,9 +402,6 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
 
-/obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
-	qdel(src)
-
 /obj/machinery/porta_turret/atom_break(damage_flag)
 	. = ..()
 	if(.)
@@ -1171,7 +1168,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(properties["team_color"])
 		team_color = properties["team_color"]
 
-/obj/machinery/porta_turret/lasertag/ui_status(mob/user)
+/obj/machinery/porta_turret/lasertag/ui_status(mob/user, datum/ui_state/state)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(team_color == "blue" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))

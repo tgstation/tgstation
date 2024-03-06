@@ -20,13 +20,6 @@
 		/datum/surgery_step/close,
 	)
 
-/datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
-	. = ..()
-	if(.)
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		return(targeted_bodypart.get_wound_type(targetable_wound))
-
-
 ///// Repair Compound Fracture (Critical)
 /datum/surgery/repair_bone_compound
 	name = "Repair Compound Fracture"
@@ -48,12 +41,6 @@
 		/datum/surgery_step/repair_bone_compound,
 		/datum/surgery_step/close,
 	)
-
-/datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)
-	. = ..()
-	if(.)
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		return(targeted_bodypart.get_wound_type(targetable_wound))
 
 //SURGERY STEPS
 
@@ -216,14 +203,6 @@
 		/datum/surgery_step/clamp_bleeders/discard_skull_debris,
 		/datum/surgery_step/repair_skull
 	)
-
-/datum/surgery/cranial_reconstruction/can_start(mob/living/user, mob/living/carbon/target)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-	return !isnull(targeted_bodypart.get_wound_type(targetable_wound))
 
 /datum/surgery_step/clamp_bleeders/discard_skull_debris
 	name = "discard skull debris (hemostat)"

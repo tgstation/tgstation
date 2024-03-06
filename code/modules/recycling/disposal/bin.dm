@@ -276,38 +276,44 @@
 	H.vent_gas(loc)
 	qdel(H)
 
-/obj/machinery/disposal/deconstruct(disassembled = TRUE)
+/obj/machinery/disposal/on_deconstruction(disassembled)
 	var/turf/T = loc
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(stored)
-			var/obj/structure/disposalconstruct/construct = stored
-			stored = null
-			construct.forceMove(T)
-			transfer_fingerprints_to(construct)
-			construct.set_anchored(FALSE)
-			construct.set_density(TRUE)
-			construct.update_appearance()
+	if(stored)
+		var/obj/structure/disposalconstruct/construct = stored
+		stored = null
+		construct.forceMove(T)
+		transfer_fingerprints_to(construct)
+		construct.set_anchored(FALSE)
+		construct.set_density(TRUE)
+		construct.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
-	..()
 
 ///How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/proc/on_storage_dump(datum/source, obj/item/storage_source, mob/user)
+/obj/machinery/disposal/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
 	SIGNAL_HANDLER
 
 	. = STORAGE_DUMP_HANDLED
 
-	to_chat(user, span_notice("You dump out [storage_source] into [src]."))
+	to_chat(user, span_notice("You dump out [storage.parent] into [src]."))
 
-	for(var/obj/item/to_dump in storage_source)
-		if(to_dump.loc != storage_source)
-			continue
-		if(user.active_storage != storage_source && to_dump.on_found(user))
+	for(var/obj/item/to_dump in storage.real_location)
+		if(user.active_storage != storage && to_dump.on_found(user))
 			return
-		if(!storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE))
+		if(!storage.attempt_remove(to_dump, src, silent = TRUE))
 			continue
 		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
+
+/obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	visible_message(span_warning("[src] is ripped free from the floor!"))
+	deconstruct()
+
+/obj/machinery/disposal/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	visible_message(span_warning("[src] is ripped free from the floor!"))
+	deconstruct()
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -320,6 +326,7 @@
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)

@@ -22,6 +22,7 @@
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
+	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
@@ -41,9 +42,7 @@
 	ai_controlled_species = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
-	var/randname = "monkey ([rand(1,999)])"
-
-	return randname
+	return "monkey ([rand(1, 999)])"
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -169,7 +168,7 @@
 
 /obj/item/organ/internal/brain/primate/on_mob_insert(mob/living/carbon/primate)
 	. = ..()
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
+	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed))
 
 /obj/item/organ/internal/brain/primate/on_mob_remove(mob/living/carbon/primate)
 	. = ..()
@@ -184,30 +183,13 @@
 	var/mob/living/in_the_way_mob = crossed
 	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
 		return
-	if(in_the_way_mob.pass_flags & PASSTABLE)
+	if(in_the_way_mob.pass_flags & PASSMOB)
 		return
 	in_the_way_mob.knockOver(owner)
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
-	return owner.get_bodypart(BODY_ZONE_HEAD)
-
-/// Virtual monkeys that crave virtual bananas. Everything about them is ephemeral (except that bite).
-/datum/species/monkey/holodeck
-	id = SPECIES_MONKEY_HOLODECK
-	knife_butcher_results = list()
-	meat = null
-	skinned_type = null
-	inherent_traits = list(
-		TRAIT_GENELESS,
-		TRAIT_GUN_NATURAL,
-		TRAIT_NO_AUGMENTS,
-		TRAIT_NO_BLOOD_OVERLAY,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_UNDERWEAR,
-		TRAIT_NO_ZOMBIFY,
-		TRAIT_NOBLOOD,
-		TRAIT_NOHUNGER,
-		TRAIT_VENTCRAWLER_NUDE,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
+		return owner.get_bodypart(BODY_ZONE_HEAD)
+	return ..()
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

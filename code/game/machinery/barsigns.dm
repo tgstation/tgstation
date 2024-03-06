@@ -91,15 +91,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if((machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
-/obj/machinery/barsign/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new disassemble_result(drop_location())
-		else
-			new /obj/item/stack/sheet/iron(drop_location(), 2)
-			new /obj/item/stack/cable_coil(drop_location(), 2)
-
-	qdel(src)
+/obj/machinery/barsign/on_deconstruction(disassembled)
+	if(disassembled)
+		new disassemble_result(drop_location())
+	else
+		new /obj/item/stack/sheet/iron(drop_location(), 2)
+		new /obj/item/stack/cable_coil(drop_location(), 2)
 
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -476,6 +473,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	name = "Slowdive"
 	icon_state = "slowdive"
 	desc = "First stop out of hell, last stop before heaven."
+	neon_color = COLOR_RED
+
+/datum/barsign/the_red_mons
+	name = "The Red Mons"
+	icon_state = "the-red-mons"
+	desc = "Drinks from the Red Planet."
+	neon_color = COLOR_RED
+
+/datum/barsign/the_rune
+	name = "The Rune"
+	icon_state = "therune"
+	desc = "Reality Shifting drinks."
+	neon_color = COLOR_RED
+
+/datum/barsign/the_wizard
+	name = "The Wizard"
+	icon_state = "the-wizard"
+	desc = "Magical mixes."
+	neon_color = COLOR_RED
+
+/datum/barsign/months_moths_moths
+	name = "Moths Moths Moths"
+	icon_state = "moths-moths-moths"
+	desc = "LIVE MOTHS!"
 	neon_color = COLOR_RED
 
 // Hidden signs list below this point

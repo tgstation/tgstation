@@ -10,7 +10,7 @@
 	worn_icon_state = "camera"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_system = OVERLAY_LIGHT //Used as a flash here.
 	light_range = 8
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
@@ -229,7 +229,7 @@
 
 	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
-	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
 	return picture
 

@@ -63,6 +63,8 @@
 
 /obj/item/taperecorder/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	play()
 
 /obj/item/taperecorder/proc/update_available_icons()

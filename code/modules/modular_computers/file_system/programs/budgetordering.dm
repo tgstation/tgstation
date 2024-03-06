@@ -166,7 +166,7 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	return data
 
-/datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/tgui/ui, datum/ui_state/state)
+/datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
 		if("send")

@@ -78,7 +78,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "hH" = (
-/obj/structure/spider/solid,
+/obj/structure/spider/stickyweb/sealed/tough,
 /obj/item/book/manual/wiki/cytology,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/plating,
@@ -122,7 +122,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lm" = (
 /obj/structure/spider/stickyweb,
-/obj/structure/spider/sticky,
+/obj/structure/spider/stickyweb/very_sticky,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "mf" = (
@@ -182,7 +182,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "qX" = (
-/obj/structure/spider/sticky,
+/obj/structure/spider/stickyweb/very_sticky,
 /obj/item/food/badrecipe/moldy,
 /obj/structure/spider/stickyweb,
 /obj/item/food/spidereggs{
@@ -255,7 +255,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "ts" = (
-/obj/structure/spider/solid,
+/obj/structure/spider/stickyweb/sealed/tough,
 /obj/structure/spider/stickyweb,
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/plating,
@@ -841,7 +841,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "XI" = (
-/obj/structure/spider/solid,
+/obj/structure/spider/stickyweb/sealed/tough,
 /obj/item/food/badrecipe/moldy/bacteria,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
