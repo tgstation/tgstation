@@ -184,7 +184,7 @@
 
 	parent.cell.give(amount)
 
-/obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, siemens_coefficient, flags)
+/obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coefficient, flags)
 	SIGNAL_HANDLER
 
 	if (isnull(parent.cell))

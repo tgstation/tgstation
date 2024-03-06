@@ -35,6 +35,10 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	sound_environment = SOUND_ENVIRONMENT_PLAIN
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/ambiodd.ogg','sound/ambience/ambinice.ogg')
 
+/area/awaymission/museum/cafeteria
+	name = "Nanotrasen Museum Cafeteria"
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+
 /area/awaymission/errorroom
 	name = "Super Secret Room"
 	static_lighting = FALSE
