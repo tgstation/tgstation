@@ -1,5 +1,6 @@
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
+	icon = 'icons/effects/effects.dmi'
 	desc = "There's something alive in there, and sooner or later it's going to find its way out."
 	icon_state = "eggs"
 	/// Mob spawner handling the actual spawn of the spider
