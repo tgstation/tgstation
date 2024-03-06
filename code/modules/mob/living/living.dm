@@ -497,7 +497,7 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb(whispered as num|null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
@@ -2598,10 +2598,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
-		var/list/candidates = SSpolling.poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, pic_source = src, role_name_text = "guardian spirit")
-		if(LAZYLEN(candidates))
-			var/mob/dead/observer/candidate = pick(candidates)
-			guardian_client = candidate.client
+		var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as an admin created [span_notice("Guardian Spirit")] of [span_danger(real_name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, alert_pic = mutable_appearance('icons/mob/nonhuman-player/guardian.dmi', "magicexample"), jump_target = src, role_name_text = "guardian spirit", amount_to_pick = 1)
+		if(chosen_one)
+			guardian_client = chosen_one.client
 		else
 			tgui_alert(admin, "No ghost candidates.", "Guardian Controller")
 			return

@@ -312,15 +312,17 @@
 		return TRUE
 
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, victim)
-	AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SHADE, \
-		job_bans = ROLE_CULTIST, \
-		to_call = to_call, \
-		title = "A shade" \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_CULTIST,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_SHADE,
+		alert_pic = /mob/living/basic/shade,
+		jump_target = src,
+		role_name_text = "a shade",
+		chat_text_border_icon = /mob/living/basic/shade,
 	)
-
+	on_poll_concluded(user, victim, chosen_one)
 	return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
