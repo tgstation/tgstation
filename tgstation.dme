@@ -1128,7 +1128,6 @@
 #include "code\datums\components\omen.dm"
 #include "code\datums\components\on_hit_effect.dm"
 #include "code\datums\components\onwear_mood.dm"
-#include "code\datums\components\orbit_poll.dm"
 #include "code\datums\components\orbiter.dm"
 #include "code\datums\components\overlay_lighting.dm"
 #include "code\datums\components\palette.dm"

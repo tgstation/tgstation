@@ -104,7 +104,10 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
 
-	var/assignment = person.mind.assigned_role.title
+	// Attempt to get assignment from ID, otherwise default to mind.
+	var/obj/item/card/id/id_card = person.get_idcard(hand_first = FALSE)
+	var/assignment = id_card?.get_trim_assignment() || person.mind.assigned_role.title
+
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
