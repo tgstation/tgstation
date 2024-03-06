@@ -17,13 +17,13 @@
 	mood_change = 5
 	timeout = 3 MINUTES
 
-/datum/mood_event/eldritch_painting/weeping_withdrawl
+/datum/mood_event/eldritch_painting/weeping_withdrawal
 	description = "My mind is clear from his influence."
 	mood_change = 1
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/desire_heretic
-	description = "A part gained, the manus takes and gives. What did it take from me?"
+	description = "A part gained, the mansus takes and gives. What did it take from me?"
 	mood_change = -2
 	timeout = 3 MINUTES
 
