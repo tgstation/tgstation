@@ -35,7 +35,7 @@
 	name = "chief engineer's turtleneck"
 	desc = "A yellow turtleneck and white khakis, for a chief engineer with a superior sense of style."
 	icon_state = "ceturtle"
-	inhand_icon_state = "b_suit"
+	inhand_icon_state = "y_suit"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
@@ -44,7 +44,7 @@
 	name = "chief engineer's turtleneck skirt"
 	desc = "A yellow turtleneck and white khaki skirt, for a chief engineer with a superior sense of style."
 	icon_state = "ceturtle_skirt"
-	inhand_icon_state = "b_suit"
+	inhand_icon_state = "y_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
