@@ -17,7 +17,13 @@
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
-	var/crate_climb_time = 20
+	/// Mobs standing on it are nudged up by this amount.
+	var/elevation = 14
+	/// The same, but when the crate is open
+	var/elevation_open = 14
+	/// The time spent to climb this crate.
+	var/crate_climb_time = 2 SECONDS
+	/// The reference of the manifest paper attached to the cargo crate.
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
@@ -35,6 +41,8 @@
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 	else
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	if(elevation)
+		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	update_appearance()
 
 /obj/structure/closet/crate/Destroy()
@@ -77,11 +85,21 @@
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	if(elevation != elevation_open)
+		if(elevation)
+			RemoveElement(/datum/element/elevation, pixel_shift = elevation)
+		if(elevation_open)
+			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
 
 /obj/structure/closet/crate/after_close(mob/living/user, force)
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	if(elevation != elevation_open)
+		if(elevation_open)
+			RemoveElement(/datum/element/elevation, pixel_shift = elevation_open)
+		if(elevation)
+			AddElement(/datum/element/elevation, pixel_shift = elevation)
 
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
@@ -188,6 +206,8 @@
 	name = "laundry cart"
 	desc = "A large cart for hauling around large amounts of laundry."
 	icon_state = "laundry"
+	elevation = 14
+	elevation_open = 14
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

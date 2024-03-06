@@ -1328,6 +1328,7 @@
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\easily_fragmented.dm"
 #include "code\datums\elements\effect_trail.dm"
+#include "code\datums\elements\elevation.dm"
 #include "code\datums\elements\embed.dm"
 #include "code\datums\elements\empprotection.dm"
 #include "code\datums\elements\eyestab.dm"

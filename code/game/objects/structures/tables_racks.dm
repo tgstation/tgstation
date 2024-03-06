@@ -43,7 +43,7 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 	AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(

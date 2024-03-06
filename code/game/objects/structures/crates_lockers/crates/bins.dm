@@ -8,6 +8,8 @@
 	horizontal = FALSE
 	delivery_icon = null
 	can_install_electronics = FALSE
+	elevation = 17
+	elevation_open = 17
 
 /obj/structure/closet/crate/bin/Initialize(mapload)
 	. = ..()

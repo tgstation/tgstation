@@ -131,6 +131,10 @@
 	/// Prevents popup spam.
 	var/disloyalty_offered = FALSE
 
+/obj/structure/bloodsucker/vassalrack/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/elevation, pixel_shift = 14)
+
 /obj/structure/bloodsucker/vassalrack/deconstruct(disassembled = TRUE)
 	. = ..()
 	new /obj/item/stack/sheet/iron(src.loc, 4)

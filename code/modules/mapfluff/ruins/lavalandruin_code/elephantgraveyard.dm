@@ -142,9 +142,14 @@
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
-	var/lead_tomb = FALSE
-	var/first_open = FALSE
 	can_install_electronics = FALSE
+	elevation = 4 //It's a small mound.
+	elevation_open = 0
+
+	/// will this grave give you nightmares when opened
+	var/lead_tomb = FALSE
+	/// was this grave opened for the first time
+	var/first_open = FALSE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()

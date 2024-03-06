@@ -21,10 +21,14 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 2
 	var/bolts = TRUE
+	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
+	var/elevation = 8
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
+	if(elevation)
+		AddElement(/datum/element/elevation, pixel_shift = elevation)
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
@@ -107,6 +111,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
+	. = ..()
 	set_density(TRUE)
 	icon_state = "up"
 	//Push them up from the normal lying position
@@ -119,6 +124,7 @@
 
 
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
+	. = ..()
 	set_density(FALSE)
 	icon_state = "down"
 	//Set them back down to the normal lying position
@@ -190,6 +196,7 @@
 	anchored = FALSE
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
+	elevation = 0
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
@@ -238,6 +245,7 @@
 	name = "dirty mattress"
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
 	icon_state = "dirty_mattress"
+	elevation = 7
 
 /obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
@@ -250,15 +258,17 @@
 	icon_state = "bed_double"
 	buildstackamount = 4
 	max_buckled_mobs = 2
-	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
+	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before they unbuckle.
 	var/mob/living/goldilocks
 
 /obj/structure/bed/double/post_buckle_mob(mob/living/target)
-	if(buckled_mobs.len > 1 && !goldilocks) //Push the second buckled mob a bit higher from the normal lying position
-		target.pixel_y = target.base_pixel_y + 6
+	. = ..()
+	if(length(buckled_mobs) > 1 && !goldilocks) // Push the second buckled mob a bit higher from the normal lying position
+		target.pixel_y += 14
 		goldilocks = target
 
 /obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
-	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	. = ..()
 	if(target == goldilocks)
+		target.pixel_y -= 14
 		goldilocks = null
