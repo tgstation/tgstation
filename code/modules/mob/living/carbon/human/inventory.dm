@@ -107,37 +107,11 @@
 		s_store,
 		)
 
-/// Returns items which are currently visible on the mob
-/mob/living/carbon/human/proc/get_visible_items()
-	var/static/list/visible_slots = list(
-		ITEM_SLOT_OCLOTHING,
-		ITEM_SLOT_ICLOTHING,
-		ITEM_SLOT_GLOVES,
-		ITEM_SLOT_EYES,
-		ITEM_SLOT_EARS,
-		ITEM_SLOT_MASK,
-		ITEM_SLOT_HEAD,
-		ITEM_SLOT_FEET,
-		ITEM_SLOT_ID,
-		ITEM_SLOT_BELT,
-		ITEM_SLOT_BACK,
-		ITEM_SLOT_NECK,
-		ITEM_SLOT_HANDS,
-		ITEM_SLOT_BACKPACK,
-		ITEM_SLOT_SUITSTORE,
-		ITEM_SLOT_HANDCUFFED,
-		ITEM_SLOT_LEGCUFFED,
-	)
-	var/list/obscured = check_obscured_slots()
-	var/list/visible_items = list()
-	for (var/slot in visible_slots)
-		if (obscured & slot)
-			continue
-		var/obj/item/equipped = get_item_by_slot(slot)
-		if (equipped)
-			visible_items += equipped
-	for (var/obj/item/held in held_items)
-		visible_items += held
+/mob/living/carbon/human/get_visible_items()
+	var/list/visible_items = ..()
+	var/obj/item/clothing/under/under = w_uniform
+	if(istype(under) && length(under.attached_accessories) && (under in visible_items))
+		visible_items += under.attached_accessories
 	return visible_items
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
@@ -228,11 +202,8 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/equipped_speed_mods()
-	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
-		var/obj/item/thing = sloties
-		. += thing?.slowdown
+/mob/living/carbon/human/get_equipped_speed_mod_items()
+	return ..() - list(l_store, r_store, s_store)
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
@@ -438,11 +409,10 @@
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	var/atom/real_location = storage.real_location?.resolve()
-	if(!real_location.contents.len) // nothing to take out
+	if(!storage.real_location.contents.len) // nothing to take out
 		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return
-	var/obj/item/stored = real_location.contents[real_location.contents.len]
+	var/obj/item/stored = storage.real_location.contents[storage.real_location.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot

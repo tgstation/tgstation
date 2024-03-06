@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "fixes contractor abduction RRing people in the offmap hideout without any feedback. You might not like how it turns out, but your body will get back to the station now."

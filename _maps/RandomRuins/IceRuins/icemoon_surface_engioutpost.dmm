@@ -88,7 +88,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "aA" = (
-/obj/machinery/rnd/production/protolathe/department/engineering/no_tax,
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 9
 	},

@@ -293,4 +293,5 @@
 /obj/structure/door_assembly/door_assembly_material/finish_door()
 	var/obj/machinery/door/airlock/door = ..()
 	door.set_custom_materials(custom_materials)
+	door.update_appearance()
 	return door

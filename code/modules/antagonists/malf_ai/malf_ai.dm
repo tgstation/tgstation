@@ -60,8 +60,6 @@
 
 /// Generates a complete set of malf AI objectives up to the traitor objective limit.
 /datum/antagonist/malf_ai/proc/forge_ai_objectives()
-	objectives.Cut()
-
 	if(prob(PROB_SPECIAL))
 		forge_special_objective()
 

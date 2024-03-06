@@ -13,7 +13,6 @@ import {
   ColorBox,
   Divider,
   Dropdown,
-  Flex,
   Input,
   LabeledList,
   NumberInput,
@@ -24,7 +23,7 @@ import {
 } from 'tgui/components';
 
 import { ChatPageSettings } from '../chat';
-import { rebuildChat, saveChatToDisk } from '../chat/actions';
+import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import {
   addHighlightSetting,
@@ -130,7 +129,6 @@ export const SettingsGeneral = (props) => {
                 content="Custom font"
                 icon={freeFont ? 'lock-open' : 'lock'}
                 color={freeFont ? 'good' : 'bad'}
-                ml={1}
                 onClick={() => {
                   setFreeFont(!freeFont);
                 }}
@@ -140,7 +138,7 @@ export const SettingsGeneral = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Font size">
           <NumberInput
-            width="4em"
+            width="4.2em"
             step={1}
             stepPixelSize={10}
             minValue={8}
@@ -159,7 +157,7 @@ export const SettingsGeneral = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Line height">
           <NumberInput
-            width="4em"
+            width="4.2em"
             step={0.01}
             stepPixelSize={2}
             minValue={0.8}
@@ -177,9 +175,24 @@ export const SettingsGeneral = (props) => {
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
-        Save chat log
-      </Button>
+      <Stack fill>
+        <Stack.Item grow mt={0.15}>
+          <Button
+            content="Save chat log"
+            icon="save"
+            tooltip="Export current tab history into HTML file"
+            onClick={() => dispatch(saveChatToDisk())}
+          />
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.Confirm
+            content="Clear chat"
+            icon="trash"
+            tooltip="Erase current tab history"
+            onClick={() => dispatch(clearChat())}
+          />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
@@ -188,30 +201,28 @@ const TextHighlightSettings = (props) => {
   const highlightSettings = useSelector(selectHighlightSettings);
   const dispatch = useDispatch();
   return (
-    <Section fill scrollable height="200px">
-      <Section p={0}>
-        <Flex direction="column">
-          {highlightSettings.map((id, i) => (
-            <TextHighlightSetting
-              key={i}
-              id={id}
-              mb={i + 1 === highlightSettings.length ? 0 : '10px'}
+    <Section fill scrollable height="250px">
+      <Stack vertical>
+        {highlightSettings.map((id, i) => (
+          <TextHighlightSetting
+            key={i}
+            id={id}
+            mb={i + 1 === highlightSettings.length ? 0 : '10px'}
+          />
+        ))}
+        {highlightSettings.length < MAX_HIGHLIGHT_SETTINGS && (
+          <Stack.Item>
+            <Button
+              color="transparent"
+              icon="plus"
+              content="Add Highlight Setting"
+              onClick={() => {
+                dispatch(addHighlightSetting());
+              }}
             />
-          ))}
-          {highlightSettings.length < MAX_HIGHLIGHT_SETTINGS && (
-            <Flex.Item>
-              <Button
-                color="transparent"
-                icon="plus"
-                content="Add Highlight Setting"
-                onClick={() => {
-                  dispatch(addHighlightSetting());
-                }}
-              />
-            </Flex.Item>
-          )}
-        </Flex>
-      </Section>
+          </Stack.Item>
+        )}
+      </Stack>
       <Divider />
       <Box>
         <Button icon="check" onClick={() => dispatch(rebuildChat())}>
@@ -237,9 +248,9 @@ const TextHighlightSetting = (props) => {
     matchCase,
   } = highlightSettingById[id];
   return (
-    <Flex.Item {...rest}>
-      <Flex mb={1} color="label" align="baseline">
-        <Flex.Item grow>
+    <Stack.Item {...rest}>
+      <Stack mb={1} color="label" align="baseline">
+        <Stack.Item grow>
           <Button
             content="Delete"
             color="transparent"
@@ -252,13 +263,12 @@ const TextHighlightSetting = (props) => {
               )
             }
           />
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           <Button.Checkbox
             checked={highlightWholeMessage}
             content="Whole Message"
             tooltip="If this option is selected, the entire message will be highlighted in yellow."
-            mr="5px"
             onClick={() =>
               dispatch(
                 updateHighlightSetting({
@@ -268,8 +278,8 @@ const TextHighlightSetting = (props) => {
               )
             }
           />
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           <Button.Checkbox
             content="Exact"
             checked={matchWord}
@@ -284,8 +294,8 @@ const TextHighlightSetting = (props) => {
               )
             }
           />
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           <Button.Checkbox
             content="Case"
             tooltip="If this option is selected, the highlight will be case-sensitive."
@@ -299,8 +309,8 @@ const TextHighlightSetting = (props) => {
               )
             }
           />
-        </Flex.Item>
-        <Flex.Item shrink={0}>
+        </Stack.Item>
+        <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />
           <Input
             width="5em"
@@ -316,8 +326,8 @@ const TextHighlightSetting = (props) => {
               )
             }
           />
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
       <TextArea
         height="3em"
         value={highlightText}
@@ -331,6 +341,6 @@ const TextHighlightSetting = (props) => {
           )
         }
       />
-    </Flex.Item>
+    </Stack.Item>
   );
 };

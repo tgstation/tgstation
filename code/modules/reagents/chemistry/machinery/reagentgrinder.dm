@@ -27,6 +27,7 @@
 	holdingitems = list()
 	beaker = new /obj/item/reagent_containers/cup/beaker/large(src)
 	warn_of_dust()
+	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 
 /// Add a description to the current beaker warning of blended dust, if it doesn't already have that warning.
 /obj/machinery/reagentgrinder/proc/warn_of_dust()
@@ -42,11 +43,10 @@
 	QDEL_NULL(beaker)
 	update_appearance()
 
-/obj/machinery/reagentgrinder/deconstruct()
+/obj/machinery/reagentgrinder/on_deconstruction(disassmbled)
 	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
-	return ..()
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
@@ -205,6 +205,24 @@
 		to_chat(user, span_notice("You add [weapon] to [src]."))
 		holdingitems[weapon] = TRUE
 		return FALSE
+
+/obj/machinery/reagentgrinder/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
+	SIGNAL_HANDLER
+
+	for(var/obj/item/to_dump in storage.real_location)
+		if(holdingitems.len >= limit)
+			break
+
+		if(!to_dump.grind_results && !to_dump.juice_typepath)
+			continue
+
+		if(!storage.attempt_remove(to_dump, src, silent = TRUE))
+			continue
+
+		holdingitems[to_dump] = TRUE
+
+	to_chat(user, span_notice("You dump [storage.parent] into [src]."))
+	return STORAGE_DUMP_HANDLED
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
