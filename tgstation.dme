@@ -4998,7 +4998,6 @@
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\curse_blob.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\mining_mobs.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\polarbear.dm"
-#include "code\modules\mob\living\simple_animal\hostile\mining_mobs\wolf.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\elites\elite.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\elites\goliath_broodmother.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\elites\herald.dm"
