@@ -108,7 +108,7 @@
 	implants = list(/obj/item/implant/weapons_auth)
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
+	LAZYOR(H.faction, ROLE_SYNDICATE)
 
 //For ghost bar.
 /obj/effect/mob_spawn/ghost_role/human/space_bar_patron
@@ -304,7 +304,7 @@
 	implants = list(/obj/item/implant/weapons_auth)
 
 /datum/outfit/syndicatespace/post_equip(mob/living/carbon/human/syndie_scum)
-	syndie_scum.faction |= ROLE_SYNDICATE
+	LAZYOR(syndie_scum.faction, ROLE_SYNDICATE)
 
 /datum/outfit/syndicatespace/syndicrew
 	name = "Syndicate Ship Crew Member"

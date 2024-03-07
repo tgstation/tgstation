@@ -36,7 +36,7 @@
 		return
 	if(FACTION_MONKEY in cast_mob.faction)
 		return
-	cast_mob.faction |= FACTION_MONKEY
+	LAZYOR(cast_mob.faction, FACTION_MONKEY)
 	addtimer(CALLBACK(src, PROC_REF(remove_monky_faction), cast_mob), 1 MINUTES)
 
 /datum/action/cooldown/spell/conjure/simian/proc/remove_monky_faction(mob/cast_mob)
@@ -44,7 +44,7 @@
 
 /datum/action/cooldown/spell/conjure/simian/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/alive_dude = summoned_object
-	alive_dude.faction |= list(FACTION_MONKEY)
+	LAZYOR(alive_dude.faction, list(FACTION_MONKEY))
 	if(ismonkey(alive_dude))
 		equip_monky(alive_dude)
 		return

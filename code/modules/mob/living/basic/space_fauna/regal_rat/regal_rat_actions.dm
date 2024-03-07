@@ -234,7 +234,7 @@
 	var/mob/living/carbon/victim = affected_mob
 	if (istype(victim) && !(FACTION_RAT in victim.faction))
 		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
-		victim.faction |= FACTION_RAT
+		LAZYOR(victim.faction, FACTION_RAT)
 		victim.vomit(VOMIT_CATEGORY_DEFAULT)
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 

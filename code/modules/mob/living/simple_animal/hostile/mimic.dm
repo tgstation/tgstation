@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return
 	LoseTarget()
 	creator = owner
-	faction |= REF(owner)
+	LAZYOR(faction, REF(owner))
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/check_object(obj/target)
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		maxHealth = health
 		if(user)
 			creator = user
-			faction += list("[REF(creator)]") // very unique
+			LAZYADD(faction, list("[REF(creator)]")) // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1

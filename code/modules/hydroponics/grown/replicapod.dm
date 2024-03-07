@@ -193,7 +193,7 @@
 	else
 		podman.ckey = ckey_holder
 	podman.gender = blood_gender
-	podman.faction |= factions
+	LAZYOR(podman.faction, factions)
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	if(!features["pod_hair"])

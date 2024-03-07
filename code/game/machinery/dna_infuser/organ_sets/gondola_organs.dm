@@ -39,7 +39,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 		factions_to_remove += FACTION_HOSTILE
 	if(!(FACTION_MINING in receiver.faction))
 		factions_to_remove += FACTION_MINING
-	receiver.faction |= list(FACTION_HOSTILE, FACTION_MINING)
+	LAZYOR(receiver.faction, list(FACTION_HOSTILE, FACTION_MINING))
 
 /obj/item/organ/internal/heart/gondola/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()

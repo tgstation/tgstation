@@ -856,7 +856,7 @@
 
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = FACTION_PINK_EXTRACT(owner)
-	owner.faction |= faction_name
+	LAZYOR(owner.faction, faction_name)
 	to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
 	return ..()
 
@@ -875,7 +875,7 @@
 			to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
 	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
 		to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
-		owner.faction |= faction_name
+		LAZYOR(owner.faction, faction_name)
 	return ..()
 
 /// Pacifies mobs you can see and unpacifies mobs you no longer can
@@ -907,7 +907,7 @@
 			continue
 		mobs += weak_mob
 		beast.apply_status_effect(/datum/status_effect/pinkdamagetracker)
-		beast.faction |= faction_name
+		LAZYOR(beast.faction, faction_name)
 
 /datum/status_effect/stabilized/pink/on_remove()
 	for(var/datum/weakref/weak_mob as anything in mobs)

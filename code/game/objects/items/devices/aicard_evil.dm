@@ -58,7 +58,7 @@
 	nuke_datum.send_to_spawnpoint = FALSE
 	new_ai.mind.add_antag_datum(nuke_datum, op_datum.nuke_team)
 	new_ai.mind.special_role = "Syndicate AI"
-	new_ai.faction |= ROLE_SYNDICATE
+	LAZYOR(new_ai.faction, ROLE_SYNDICATE)
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 	new_ai.icon_state = resolve_ai_icon("hades")

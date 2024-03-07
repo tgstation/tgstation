@@ -69,7 +69,7 @@
 /mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 	if (. && isliving(target))
-		faction |= REF(target) // Anyone we heal will treat us as a friend
+		LAZYOR(faction, REF(target)) // Anyone we heal will treat us as a friend
 
 /mob/living/basic/lightgeist/ghost()
 	. = ..()

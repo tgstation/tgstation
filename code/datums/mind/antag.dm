@@ -217,8 +217,8 @@
 
 	enslaved_to = WEAKREF(creator)
 
-	current.faction |= creator.faction
-	creator.faction |= "[REF(current)]"
+	LAZYOR(current.faction, creator.faction)
+	LAZYOR(creator.faction, "[REF(current)]")
 
 	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
 	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")

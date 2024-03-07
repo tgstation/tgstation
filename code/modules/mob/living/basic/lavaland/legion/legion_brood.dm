@@ -82,7 +82,7 @@
 	if (copy_full_faction)
 		faction = creator.faction.Copy()
 	else
-		faction |= REF(creator)
+		LAZYOR(faction, REF(creator))
 	created_by = WEAKREF(creator)
 	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))

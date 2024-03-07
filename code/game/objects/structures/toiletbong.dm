@@ -57,7 +57,7 @@
 				user.adjust_disgust(50)
 				user.vomit(VOMIT_CATEGORY_DEFAULT)
 			var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
-			spawned_mob.faction |= "[REF(user)]"
+			LAZYOR(spawned_mob.faction, "[REF(user)]")
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))

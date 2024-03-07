@@ -46,6 +46,6 @@
 
 	var/turf/cast_turf = get_turf(cast_on)
 	cast_on.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
-	cast_on.faction |= FACTION_CULT
+	LAZYOR(cast_on.faction, FACTION_CULT)
 	playsound(cast_turf, 'sound/effects/ghost.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/cult/sac(cast_turf)

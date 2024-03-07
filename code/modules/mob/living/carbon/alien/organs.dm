@@ -102,7 +102,7 @@
 
 /obj/item/organ/internal/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	organ_owner.faction |= ROLE_ALIEN
+	LAZYOR(organ_owner.faction, ROLE_ALIEN)
 
 /obj/item/organ/internal/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	if(organ_owner)

@@ -122,4 +122,4 @@
 /mob/living/basic/eyeball/proc/on_tame(mob/tamer)
 	spin(spintime = 2 SECONDS, speed = 1)
 	//become passive to the humens
-	faction |= tamer.faction
+	LAZYOR(faction, tamer.faction)

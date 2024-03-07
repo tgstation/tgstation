@@ -51,5 +51,5 @@
 		return
 
 	to_chat(user, grant_message)
-	user.faction |= faction_to_grant
+	LAZYOR(user.faction, faction_to_grant)
 	used = TRUE

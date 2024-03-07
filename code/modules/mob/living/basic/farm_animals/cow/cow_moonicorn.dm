@@ -40,7 +40,7 @@
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer)
 	. = ..()
 	///stop killing my FRIENDS
-	faction |= tamer.faction
+	LAZYOR(faction, tamer.faction)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(

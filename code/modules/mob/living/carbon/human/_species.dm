@@ -499,7 +499,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(inherent_factions)
 		for(var/faction_to_gain in inherent_factions)
-			human_who_gained_species.faction += list(faction_to_gain) //Using +=/-= for this in case you also gain the faction from a different source.
+			LAZYADD(human_who_gained_species.faction, list(faction_to_gain)) //Using +=/-= for this in case you also gain the faction from a different source.
 
 	// All languages associated with this language holder are added with source [LANGUAGE_SPECIES]
 	// rather than source [LANGUAGE_ATOM], so we can track what to remove if our species changes again

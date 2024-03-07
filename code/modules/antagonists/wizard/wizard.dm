@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.faction |= ROLE_WIZARD
+	LAZYOR(current_mob.faction, ROLE_WIZARD)
 	add_team_hud(current_mob)
 
 /datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
-	wizard_mob.faction |= ROLE_WIZARD
+	LAZYOR(wizard_mob.faction, ROLE_WIZARD)
 	add_team_hud(wizard_mob)
 	ritual?.Grant(owner.current)
 

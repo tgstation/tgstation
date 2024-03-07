@@ -26,7 +26,7 @@
 		L.visible_message(span_warning("[L]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
 		L.forceMove(src)
 		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
-		L.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
+		LAZYOR(L.faction, FACTION_MIMIC) //Stops mimics from instaqdeling people in statues
 		L.status_flags |= GODMODE
 		atom_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		max_integrity = atom_integrity

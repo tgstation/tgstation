@@ -26,7 +26,7 @@
 	var/mob/living/player = parent
 
 	previous_factions.Add(player.faction)
-	player.faction |= npc_factions
+	LAZYOR(player.faction, npc_factions)
 
 /datum/component/npc_friendly/Destroy(force)
 	. = ..()

@@ -10,7 +10,7 @@
 	medhud.add_atom_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
-	faction += list("[REF(src)]")
+	LAZYADD(faction, list("[REF(src)]"))
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
@@ -2520,7 +2520,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/friend_ref = REF(new_friend)
 	if (faction.Find(friend_ref))
 		return FALSE
-	faction |= friend_ref
+	LAZYOR(faction, friend_ref)
 	ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, new_friend)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)

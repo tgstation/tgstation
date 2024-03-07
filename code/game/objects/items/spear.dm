@@ -206,7 +206,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	user.faction |= "greytide([REF(user)])"
+	LAZYOR(user.faction, "greytide([REF(user)])")
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))

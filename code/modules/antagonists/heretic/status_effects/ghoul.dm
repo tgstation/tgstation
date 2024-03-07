@@ -62,7 +62,7 @@
 	on_made_callback?.Invoke(human_target)
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, REF(src))
 	human_target.become_husk(MAGIC_TRAIT)
-	human_target.faction |= FACTION_HERETIC
+	LAZYOR(human_target.faction, FACTION_HERETIC)
 
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)

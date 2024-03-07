@@ -229,7 +229,7 @@
 				spawned_mob = create_random_mob(get_turf(holder.my_atom), mob_class)
 			else
 				spawned_mob = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
-			spawned_mob.faction |= mob_faction
+			LAZYOR(spawned_mob.faction, mob_faction)
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))

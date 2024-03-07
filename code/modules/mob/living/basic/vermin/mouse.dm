@@ -61,7 +61,7 @@
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
-		faction |= FACTION_NEUTRAL
+		LAZYOR(faction, FACTION_NEUTRAL)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
@@ -150,7 +150,7 @@
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
 /mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
-	faction |= FACTION_NEUTRAL
+	LAZYOR(faction, FACTION_NEUTRAL)
 	tame = TRUE
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing

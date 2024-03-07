@@ -16,7 +16,7 @@
 	new_holder.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
-	new_holder.faction |= FACTION_CARP //:D
+	LAZYOR(new_holder.faction, FACTION_CARP) //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
