@@ -410,7 +410,7 @@
 	icon_state = "lingspacesuit"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "sharkcursed"
+	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	allowed = list()
 	actions_types = list(/datum/action/item_action/toggle_human_head)
