@@ -80,8 +80,13 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     open: false,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selected: props.selected,
+      open: props.open,
+    };
 
     this.handleClick = () => {
       if (this.state.open) {
