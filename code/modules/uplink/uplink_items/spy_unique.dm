@@ -127,7 +127,7 @@
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_stun/single_use
 
-/datum/uplink_item/implants/spy_unique/reviverplus
+/datum/uplink_item/implants/spy_unique/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/reviver/single_use
