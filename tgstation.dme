@@ -5103,6 +5103,7 @@
 #include "code\modules\modular_computers\file_system\programs\powermonitor.dm"
 #include "code\modules\modular_computers\file_system\programs\radar.dm"
 #include "code\modules\modular_computers\file_system\programs\records.dm"
+#include "code\modules\modular_computers\file_system\programs\restock_tracker.dm"
 #include "code\modules\modular_computers\file_system\programs\robocontrol.dm"
 #include "code\modules\modular_computers\file_system\programs\robotact.dm"
 #include "code\modules\modular_computers\file_system\programs\secureye.dm"

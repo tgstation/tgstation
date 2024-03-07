@@ -21,6 +21,7 @@
 		/obj/item/assembly/timer = 2,
 		/obj/item/assembly/voice = 2,
 		/obj/item/stock_parts/cell/high = 1,
+		/obj/item/market_uplink/blackmarket = 1,
 	)
 	premium = list(
 		/obj/item/assembly/igniter/condenser = 2,
