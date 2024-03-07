@@ -54,8 +54,7 @@
 
 /mob/living/basic/statue/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_MUTE, INNATE_TRAIT)
+	add_traits(list(TRAIT_MUTE, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 
 	var/static/list/innate_actions = list(

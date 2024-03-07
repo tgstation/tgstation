@@ -78,7 +78,7 @@
 #define SPAN_HELIUM "small"
 
 //bitflag #defines for return value of the radio() proc.
-/// Makes the use italics
+/// Makes the message use italics
 #define ITALICS (1<<0)
 /// Reduces the range of the message to 1
 #define REDUCE_RANGE (1<<1)

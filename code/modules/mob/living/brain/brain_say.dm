@@ -12,14 +12,14 @@
 	list/message_mods = list(),
 )
 	if(prob(emp_damage * 4))
-		if(prob(10))//10% chane to drop the message entirely
+		if(prob(10)) //10% chance to drop the message entirely
 			return
 		message = Gibberish(message, emp_damage >= 12)//scrambles the message, gets worse when emp_damage is higher
 
 	return ..()
 
 /mob/living/brain/can_speak(allow_mimes)
-	return ..() && istype(container, /obj/item/mmi)
+	return istype(container, /obj/item/mmi) && ..()
 
 /mob/living/brain/radio(message, list/message_mods = list(), list/spans, language)
 	if(message_mods[MODE_HEADSET] && istype(container, /obj/item/mmi))

@@ -277,7 +277,7 @@
 	return ..()
 
 /obj/machinery/vending/can_speak(allow_mimes)
-	return ..() && is_operational && !shut_up
+	return is_operational && !shut_up && ..()
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()
