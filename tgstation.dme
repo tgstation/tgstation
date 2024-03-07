@@ -5680,6 +5680,7 @@
 #include "code\modules\spells\spell_types\shapeshift\_shape_status.dm"
 #include "code\modules\spells\spell_types\shapeshift\_shapeshift.dm"
 #include "code\modules\spells\spell_types\shapeshift\dragon.dm"
+#include "code\modules\spells\spell_types\shapeshift\gorilla.dm"
 #include "code\modules\spells\spell_types\shapeshift\polar_bear.dm"
 #include "code\modules\spells\spell_types\shapeshift\shapechange.dm"
 #include "code\modules\spells\spell_types\teleport\_teleport.dm"
