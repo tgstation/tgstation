@@ -46,7 +46,6 @@
 		return
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_act))
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_qdeleted))
 
 	src.parent = parent
 	src.fingerprints = fingerprints
@@ -69,7 +68,6 @@
 
 /datum/forensics/Destroy(force)
 	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
-	UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = null
 	return ..()
 
@@ -98,12 +96,6 @@
 		wipe_blood_DNA()
 	if(clean_types & CLEAN_TYPE_FIBERS)
 		wipe_fibers()
-
-/// When parent atom goes poof, so should the forensics datum
-/datum/forensics/proc/on_parent_qdeleted(datum/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /// Adds the given list into fingerprints
 /datum/forensics/proc/add_fingerprint_list(list/fingerprints)
