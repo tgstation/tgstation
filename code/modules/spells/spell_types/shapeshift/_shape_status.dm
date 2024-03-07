@@ -30,6 +30,7 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/on_apply()
+	ADD_TRAIT(caster_mob, TRAIT_SHAPESHIFTED, REF(src))
 	caster_mob.mind?.transfer_to(owner)
 	caster_mob.forceMove(owner)
 	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
@@ -87,6 +88,7 @@
 	UnregisterSignal(caster_mob, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
 	REMOVE_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
+	REMOVE_TRAIT(caster_mob, TRAIT_SHAPESHIFTED, REF(src))
 	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
 	var/atom/former_loc = owner.loc

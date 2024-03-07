@@ -178,6 +178,64 @@
 	preference = "feature_saiyan_tail"
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey/saiyan
 
+/obj/item/organ/external/tail/monkey/saiyan/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_MOVED = PROC_REF(on_moved),
+	)
+	AddComponent(/datum/component/connect_containers, src, loc_connections)
+
+/obj/item/organ/external/tail/monkey/saiyan/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	qdel(GetComponent(/datum/component/connect_containers))
+
+/// When we move check if we are exposed to space
+/obj/item/organ/external/tail/monkey/saiyan/proc/on_moved()
+	SIGNAL_HANDLER
+	if (isnull(owner))
+		return
+	if (is_space_exposed_turf(get_turf(src)))
+		go_ape(owner)
+	else
+		escape_ape(owner)
+
+/// Check if the passed turf can see space
+/obj/item/organ/external/tail/monkey/saiyan/proc/is_space_exposed_turf(turf/turf_to_check)
+	if (isnull(turf_to_check))
+		return FALSE
+	var/area/area_to_check = get_area(turf_to_check)
+	if (isspaceturf(turf_to_check) || area_to_check.outdoors)
+		return TRUE
+	var/turf/turf_above = GET_TURF_ABOVE(turf_to_check)
+	if (!isnull(turf_above) && istransparentturf(turf_above))
+		return is_space_exposed_turf(turf_above)
+	if (!istransparentturf(turf_to_check))
+		return FALSE
+	while (!isnull(turf_to_check) && istransparentturf(turf_to_check))
+		turf_to_check = GET_TURF_BELOW(turf_to_check)
+	return isnull(turf_to_check) || isspaceturf(turf_to_check)
+
+/// Start being an ape
+/obj/item/organ/external/tail/monkey/saiyan/proc/go_ape()
+	if (HAS_TRAIT(owner, TRAIT_SHAPESHIFTED))
+		return
+	owner.visible_message(span_warning("[owner] transforms into a huge, ape-like creature!"))
+	var/mob/living/basic/gorilla/saiyan/monkie = new(owner.loc)
+	monkie.dir = owner.dir
+	monkie.name = owner.real_name
+	monkie.real_name = owner.real_name
+	monkie.apply_status_effect(/datum/status_effect/shapechange_mob, owner)
+
+/// Stop being an ape
+/obj/item/organ/external/tail/monkey/saiyan/proc/escape_ape()
+	if (!HAS_TRAIT(owner, TRAIT_SHAPESHIFTED))
+		return
+	var/mob/living/ape_form = owner.loc
+	if (!istype(ape_form))
+		return // Uh oh
+	owner.visible_message(span_warning("[owner] returns to [owner.p_their()] normal form."))
+	ape_form.remove_status_effect(/datum/status_effect/shapechange_mob)
+
 /datum/bodypart_overlay/mutant/tail/monkey/saiyan
 	feature_key = "tail_saiyan"
 

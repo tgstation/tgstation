@@ -159,4 +159,22 @@
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
 
+/// A terrifyingly powerful ape from space
+/mob/living/basic/gorilla/saiyan
+	name = "Saiyan Great Ape"
+	desc = "A large and destructive ape-like creature, capable of surviving the depths of space and discharging energy beams."
+	ai_controller = null
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+
+/mob/living/basic/gorilla/saiyan/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		projectile_type = /obj/projectile/beam/emitter/hitscan,\
+		projectile_sound = 'sound/weapons/emitter.ogg',\
+		cooldown_time = 0.5 SECONDS, \
+	)
+
 #undef GORILLA_HANDS_LAYER
