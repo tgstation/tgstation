@@ -411,6 +411,10 @@
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(computer_id_slot && isidcard(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Swap ID"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Cell"
 		. = CONTEXTUAL_SCREENTIP_SET
