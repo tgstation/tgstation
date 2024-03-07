@@ -1,7 +1,9 @@
 /datum/species/saiyan
 	name = "\improper Saiyan"
 	id = SPECIES_SAIYAN
+	mutantbrain = /obj/item/organ/internal/brain/saiyan
 	mutantheart = /obj/item/organ/internal/heart/saiyan
+	mutantstomach = /obj/item/organ/internal/stomach/saiyan
 	payday_modifier = 2.0
 	inherent_traits = list(
 		TRAIT_CATLIKE_GRACE,
@@ -9,11 +11,15 @@
 		TRAIT_USES_SKINTONES,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	species_language_holder = /datum/language_holder/monkey
+	species_language_holder = /datum/language_holder/clown
 
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey/saiyan = "Monkey",
 	)
+
+/datum/species/saiyan/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.set_haircolor("#292929", update = FALSE)
+	human.set_hairstyle("Spiky 2", update = TRUE)
 
 /datum/species/saiyan/check_roundstart_eligible()
 	return TRUE
@@ -52,6 +58,12 @@
 			SPECIES_PERK_DESC = "Mastery of martial arts grants Saiyans many useful abilities such as the ability to fire Ki Blasts, and flight.",
 		),
 		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "first-aid",
+			SPECIES_PERK_NAME = "Full Throttle",
+			SPECIES_PERK_DESC = "A Saiyan who recovers from grievous injury (but not death) often becomes more powerful.",
+		),
+		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "moon",
 			SPECIES_PERK_NAME = "Going Ape",
@@ -62,6 +74,12 @@
 			SPECIES_PERK_ICON = "warning",
 			SPECIES_PERK_NAME = "Achilles' Tail",
 			SPECIES_PERK_DESC = "Saiyans are significantly weakened if their tail is harmed or removed.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "bowl-rice",
+			SPECIES_PERK_NAME = "Warrior's Appetite",
+			SPECIES_PERK_DESC = "Maintaining fighting fitness sure makes you awfully hungry.",
 		),
 	)
 

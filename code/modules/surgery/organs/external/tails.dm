@@ -175,7 +175,6 @@
 /obj/item/organ/external/tail/monkey/saiyan
 	name = "saiyan tail"
 	desc = "The severed tail of a mighty Saiyan warrior, the ultimate humiliation."
-	preference = "feature_saiyan_tail"
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey/saiyan
 
 /obj/item/organ/external/tail/monkey/saiyan/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
