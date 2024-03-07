@@ -136,11 +136,11 @@
 
 	SSdynamic.log_dynamic_and_announce("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	candidates = SSpolling.poll_ghost_candidates(
-		question = "Looking for volunteers to become [antag_flag] for [name]",
+		question = "Looking for volunteers to become [span_notice(antag_flag)] for [span_danger(name)]",
 		check_jobban = antag_flag_override,
 		role = antag_flag || antag_flag_override,
 		poll_time = 30 SECONDS,
-		pic_source = signup_item_path,
+		alert_pic = signup_item_path,
 		role_name_text = antag_flag,
 	)
 
