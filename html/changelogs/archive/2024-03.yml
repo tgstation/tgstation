@@ -61,3 +61,139 @@
       closely.
   Rhials:
   - bugfix: Pete can no longer eat vines while dead.
+2024-03-03:
+  Rhials:
+  - bugfix: Fixes some tiles outside the Icebox AI satellite not getting hit by storms.
+  - code_imp: Splits up the nuclear operative antagonist datum folder.
+  xXPawnStarrXx:
+  - bugfix: makes custom pizzas dairy and vegetable free, unless you choose to add
+      them.
+2024-03-04:
+  LT3:
+  - image: Tram frame is now tram girder, because it acts like one
+  Melbert:
+  - bugfix: Fixed spy stolen machines not dumping everything that needed to be dumped
+  Nerev4r:
+  - qol: Ethereal charging now loops when they're charging (from) APCs or from power
+      cells!
+  Singul0:
+  - rscadd: Adds a new changeling ability, "Darkness Adaptation". Making you more
+      translucent, especially in darkness and allowing you to see slightly better
+      in the dark
+  - balance: The changeling power "Chameleon Skin" has been buffed, Reduces the cost
+      to 1 and sped up the time it takes to turn invisible
+  ViktorKoL:
+  - bugfix: made some heretic descriptions more accurate
+  - spellcheck: improved english of the heretical eldritch patrons
+  starrm4nn:
+  - bugfix: Makes Metastation surgery access more consistent with other maps
+2024-03-05:
+  DaliIsTaken:
+  - rscadd: added the lightbearer moth set, available in the character setup.
+  - image: added icons for the lightbearer set; new moth wings, antennae and markings.
+  LT3:
+  - bugfix: Tram floor tiles constructed inhand provides 4 instead of 1
+  - bugfix: Tram floor tiles provide correct stack item when pulled up
+  - image: Tram floor tiles have their own inhand icons
+  - qol: Tram floor tiles available in the engineering protolathe
+  - bugfix: You can reconstruct deconstructed tram benches
+  - image: medical and improvised gauze are visibly different from cloth
+  Rerik007:
+  - bugfix: fixed the chances of living flesh actions
+  Rhials:
+  - bugfix: Some tiny tiny changes to the smoking room ruin to make it a little less
+      ugly.
+  ValuedEmployee:
+  - rscadd: Added new clown shoes "moffers"
+  - rscadd: Added moffers to the contraband list of the autodrobe
+  ViktorKoL:
+  - bugfix: fixed some issues when calculating the duration of moon smile's effects
+  Zergspower:
+  - admin: renames ruin names to have an identifier in front of it
+  - refactor: converts map plate and jump to ruin to tguilist
+  mc-oofert:
+  - bugfix: fixes deathmatch baseturfs (you cant crowbar the floor to breach to space)
+2024-03-06:
+  KingkumaArt:
+  - rscadd: Shiny joke mi-go variant (not xenobio spawnable)
+  - rscdel: Removed unused mi-go static sprites
+  - image: Resprited mi-gos to not use plagarized art from CDDA
+  - image: Also allowed mi-gos to have directional facing instead of always facing
+      east
+  Melbert:
+  - rscadd: The animation that plays when an alert pops up on your screen is different.
+  - bugfix: Moving "down" as an observer is no longer janky.
+  - bugfix: All bibles are no longer suspiciously hollow
+  - bugfix: Extremely Minor Delta Morgue Fixes. See if you can spot them.
+  Seven:
+  - rscadd: Lockers and crates now shake when someone is attempting to resist out
+      of them.
+  SpaceLove:
+  - bugfix: Central Command Logistics department noticed the missing items on their
+      listings for robotics assembly crate. They have updated it!
+  Wallem:
+  - bugfix: The cursed coupon now only triggers a cursed event once, rather than infinite
+      times.
+  intercepti0n:
+  - bugfix: Pipe connector no longer appears on a hidden connector.
+  - bugfix: Re-wrenched atmospherics pipes no longer get extra offset.
+  - bugfix: All unary devices like injectors, passive vents etc. are centered while
+      hidden.
+  - image: Added smooth transition between hidden and visible pipes.
+2024-03-07:
+  00-Steven:
+  - bugfix: Alternate job titles such as chef and department security actually get
+      injected to the manifest as their respective ID trims, instead of being assigned
+      the job they're based off.
+  - bugfix: Alternate job titles such as chef and department security actually show
+      up under the right department on the manifest, instead of no department.
+  13spacemen:
+  - rscdel: Removed Orbit Polling component, all orbit polls now use the Poll Alerts
+      system
+  - code_imp: Poll alerts support small border pictures in the chat message
+  - code_imp: Poll alert alert picture and jump target do not have to be the same
+  - qol: Slime intelligence potions ask the user for a reason, this will be shown
+      to ghosts
+  ArcaneMusic:
+  - balance: The stock market now fires slower, has stock market events occur more
+      often, and the stock market has fewer minerals that are available to buy in
+      a single purchase before restocking.
+  - balance: Materials sold on the stock market may be protected from being bought
+      if their prices drop too low, so make sure you watch your prices before they
+      run the risk of getting shut out!
+  - balance: Stock blocks now freeze the price of materials for 3 minutes, down from
+      5.
+  - qol: Tweaks to the Galactic Material Market UI, with materials sorted based on
+      their rarity and a timer to show how long until it updates.
+  - rscadd: New Stock market events, one locks a material from being purchased, the
+      other maximizes the value and quantity of a material for sale.
+  Hatterhat:
+  - bugfix: Basic mobs no longer have the (unintended) ability to shoot out of containers,
+      like bluespace body bags.
+  Higgin:
+  - balance: personal flashes now Knockdown rather than Paralyze direct targets.
+  Jacquerel:
+  - admin: Made it easier for admins to adjust blood brother teams using admin tools.
+  - bugfix: Correct blood brother conversion logging.
+  - bugfix: AI-controlled spiders can correctly recognise where they can place webs.
+  - image: New sprites for most kinds of spider web
+  Majkl-J:
+  - bugfix: Prevents polymorphing deleting items by consuming them when transformed
+      then leaving the polymorph
+  Melbert:
+  - refactor: Food hunger bar has been refactored, and moved. Now it sits next to
+      the moodlet face.
+  - refactor: Food moodlets now update a lot more snappily. There is now a moodlet
+      tier between "being fat" and "being normal", to reduce accidentally gorging
+      yourself to "fatness" tier.
+  - rscdel: You can't hallucinate being hungry... for now.
+  - rscadd: Boulder refineries and smelters can refine Golems.
+  ViktorKoL:
+  - image: 'added unique icons for spells: caretaker''s refuge, apetra vulnera and
+      ascended shapechange'
+  aaaa1023:
+  - bugfix: Revenants can now again emag Medibots, Cleanbots, and Hygienebots.
+  san7890:
+  - qol: If your OOC message gets eaten due to some weird circumstance in how your
+      message is handled, it will feed the applicable message back to you so you can
+      copy-paste and try to send it again.
