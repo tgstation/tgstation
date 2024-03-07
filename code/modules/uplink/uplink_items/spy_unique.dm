@@ -123,16 +123,16 @@
 	item = /obj/item/storage/medkit/tactical_lite
 
 /datum/uplink_item/implants/spy_unique/antistun
-	name = "CNS Rebooter Implant"
-	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
+	name = /datum/uplink_item/implants/nuclear/antistun::name
+  	desc = /datum/uplink_item/implants/nuclear/antistun::desc
 	item = /obj/item/autosurgeon/syndicate/anti_stun/single_use
 
 /datum/uplink_item/implants/spy_unique/reviver
-	name = "Reviver Implant"
-	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
+	name = /datum/uplink_item/implants/nuclear/reviver::name
+  	desc = /datum/uplink_item/implants/nuclear/reviver::desc
 	item = /obj/item/autosurgeon/syndicate/reviver/single_use
 
 /datum/uplink_item/implants/spy_unique/thermals
-	name = "Thermal Eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
+	name = /datum/uplink_item/implants/nuclear/thermals::name
+  	desc = /datum/uplink_item/implants/nuclear/thermals::desc
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes/single_use
