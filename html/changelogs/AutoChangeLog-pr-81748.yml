@@ -1,7 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - rscdel: "Removed Orbit Polling component, all orbit polls now use the Poll Alerts system"
-  - code_imp: "Poll alerts support small border pictures in the chat message"
-  - code_imp: "Poll alert alert picture and jump target do not have to be the same"
-  - qol: "Slime intelligence potions ask the user for a reason, this will be shown to ghosts"

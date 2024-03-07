@@ -1,8 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - balance: "The stock market now fires slower, has stock market events occur more often, and the stock market has fewer minerals that are available to buy in a single purchase before restocking."
-  - balance: "Materials sold on the stock market may be protected from being bought if their prices drop too low, so make sure you watch your prices before they run the risk of getting shut out!"
-  - balance: "Stock blocks now freeze the price of materials for 3 minutes, down from 5."
-  - qol: "Tweaks to the Galactic Material Market UI, with materials sorted based on their rarity and a timer to show how long until it updates."
-  - rscadd: "New Stock market events, one locks a material from being purchased, the other maximizes the value and quantity of a material for sale."

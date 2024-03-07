@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Food hunger bar has been refactored, and moved. Now it sits next to the moodlet face."
-  - refactor: "Food moodlets now update a lot more snappily. There is now a moodlet tier between \"being fat\" and \"being normal\", to reduce accidentally gorging yourself to \"fatness\" tier."
-  - rscdel: "You can't hallucinate being hungry... for now."
