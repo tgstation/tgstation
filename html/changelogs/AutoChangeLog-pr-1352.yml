@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Curators, chaplains, and monster hunters can now all actually properly USE the Archive of the Kindred, as they're meant to."
