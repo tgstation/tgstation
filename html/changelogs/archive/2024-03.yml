@@ -79,3 +79,14 @@
       by default)
   NicoDeLuna:
   - rscadd: Added Helldiver uniform
+2024-03-07:
+  Absolucy:
+  - qol: The roundend message on discord is now a "silent" ping.
+  - server: Renamed the `?status-old` webhook world topic back to `?status`, and renamed
+      the `?status` to `?status-webhook"
+  Absolucy, Ghommie:
+  - rscadd: Standing on structures such as crates, tables and bed will now look like
+      it.
+  DimWhat:
+  - rscadd: Added Quilark's donator items. Thank you.
+  - rscadd: Added zergking's pill name. Thank you.
