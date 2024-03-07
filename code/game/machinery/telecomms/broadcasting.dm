@@ -177,6 +177,8 @@
 					radios += independent_radio
 
 	for(var/obj/item/radio/called_radio as anything in radios)
+		if(QDELETED(called_radio))
+			return
 		called_radio.on_recieve_message()
 
 	// From the list of radios, find all mobs who can hear those.
@@ -198,10 +200,9 @@
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 
 	for(var/atom/movable/hearer as anything in receive)
-		if(!hearer)
+		if(QDELETED(hearer))
 			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
 			continue
-
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels

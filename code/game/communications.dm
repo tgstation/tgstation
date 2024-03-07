@@ -66,26 +66,27 @@
 GLOBAL_LIST_EMPTY(all_radios)
 
 /proc/add_radio(obj/item/radio, freq)
-	if(!freq || !radio)
+	if(!freq || QDELETED(radio))
 		return
 	if(!GLOB.all_radios["[freq]"])
 		GLOB.all_radios["[freq]"] = list(radio)
 		return freq
 
 	GLOB.all_radios["[freq]"] |= radio
+	list_clear_nulls(GLOB.all_radios["[freq]"]) // sanity check, because oh god how does this happen
 	return freq
 
 /proc/remove_radio(obj/item/radio, freq)
-	if(!freq || !radio)
+	if(!freq || QDELETED(radio))
 		return
 	if(!GLOB.all_radios["[freq]"])
 		return
-
 	GLOB.all_radios["[freq]"] -= radio
 
 /proc/remove_radio_all(obj/item/radio)
 	for(var/freq in GLOB.all_radios)
 		GLOB.all_radios["[freq]"] -= radio
+		list_clear_nulls(GLOB.all_radios["[freq]"])
 
 // For information on what objects or departments use what frequencies,
 // see __DEFINES/radio.dm. Mappers may also select additional frequencies for
