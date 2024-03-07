@@ -41240,7 +41240,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /turf/open/floor/iron,
 /area/mine/production)
 "mHu" = (
@@ -47339,7 +47339,7 @@
 	start_active = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/station/ai_monitored/turret_protected/aisat/maint)
+/area/icemoon/surface/outdoors/nospawn)
 "oxB" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -56034,7 +56034,7 @@
 	start_active = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/station/ai_monitored/turret_protected/aisat/maint)
+/area/icemoon/surface/outdoors/nospawn)
 "rbs" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/light/directional/east,

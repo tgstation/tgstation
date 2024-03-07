@@ -111,6 +111,15 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 
+/obj/item/clothing/under/syndicate/floortilecamo
+	name = "floortile camouflage fatigues"
+	desc = "The newest floortile camouflage fatigues used for hallway warfare. \
+		The best breathability, flexibility and comfort. Designed by Camo-J's."
+	icon_state = "camofloortile"
+	inhand_icon_state = "gy_suit"
+	can_adjust = FALSE
+	supports_variations_flags = NONE
+
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."

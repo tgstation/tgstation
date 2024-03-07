@@ -32,11 +32,16 @@
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 
-/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
-	// Check if we can even use the equipment to begin with.
+/obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
+	// Check if we can still use the equipment & use power for every iteration of do after
 	if(!action_checks(target))
-		return
+		return FALSE
+	return ..()
 
+/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// We can only drill non-space turfs, living mobs and objects.
 	if(isspaceturf(target) || !(isliving(target) || isobj(target) || isturf(target)))
 		return
@@ -50,17 +55,23 @@
 
 	// You can't drill harder by clicking more.
 	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
-
 		target.visible_message(span_warning("[chassis] starts to drill [target]."), \
 					span_userdanger("[chassis] starts to drill [target]..."), \
 					span_hear("You hear drilling."))
 
 		log_message("Started drilling [target]", LOG_MECHA)
+
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
+			// Check if we can even use the equipment to begin with.
+			if(!action_checks(target))
+				return
+
 			var/turf/T = target
 			T.drill_act(src, source)
+
 			return ..()
+
 		// Drilling objects and mobs is a repeating procedure.
 		while(do_after_mecha(target, source, drill_delay))
 			if(isliving(target))
