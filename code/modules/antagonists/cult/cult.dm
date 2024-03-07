@@ -80,7 +80,7 @@
 	. = ..()
 	var/mob/living/current = owner.current || mob_override
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= FACTION_CULT
+	LAZYREMOVE(current.faction, FACTION_CULT)
 	current.remove_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
 	current.clear_alert("bloodsense")

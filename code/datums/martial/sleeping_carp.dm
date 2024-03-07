@@ -21,7 +21,7 @@
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
-	remove_from.faction -= FACTION_CARP //:(
+	LAZYREMOVE(remove_from.faction, FACTION_CARP) //:(
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)

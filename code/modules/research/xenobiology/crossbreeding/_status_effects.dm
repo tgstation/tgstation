@@ -871,7 +871,7 @@
 
 	if(has_faction)
 		if(owner.has_status_effect(/datum/status_effect/brokenpeace))
-			owner.faction -= faction_name
+			LAZYREMOVE(owner.faction, faction_name)
 			to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
 	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
 		to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
@@ -894,7 +894,7 @@
 			return // No point continuing from here if we're going to end the effect
 		if(beast in visible_things)
 			continue
-		beast.faction -= faction_name
+		LAZYREMOVE(beast.faction, faction_name)
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
 		mobs -= weak_mob
 
@@ -914,9 +914,9 @@
 		var/mob/living/beast = weak_mob.resolve()
 		if(isnull(beast))
 			continue
-		beast.faction -= faction_name
+		LAZYREMOVE(beast.faction, faction_name)
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-	owner.faction -= faction_name
+	LAZYREMOVE(owner.faction, faction_name)
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"

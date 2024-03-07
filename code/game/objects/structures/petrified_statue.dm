@@ -69,7 +69,7 @@
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
 		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLOOD, MAGIC_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
-		petrified_mob.faction -= FACTION_MIMIC
+		LAZYREMOVE(petrified_mob.faction, FACTION_MIMIC)
 		petrified_mob.forceMove(loc)
 	return ..()
 

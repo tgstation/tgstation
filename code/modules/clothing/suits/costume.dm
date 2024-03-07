@@ -261,7 +261,7 @@
 /obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
 	..()
 	if (user.head == src)
-		LAZYOR(user.faction -= "carp")
+		LAZYREMOVE(user.factionm "carp")
 
 /obj/item/clothing/suit/hooded/carp_costume/spaceproof
 	name = "carp space suit"

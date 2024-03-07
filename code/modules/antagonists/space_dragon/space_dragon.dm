@@ -96,7 +96,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	UnregisterSignal(antag, COMSIG_LIVING_LIFE)
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
-	antag.faction -= FACTION_CARP
+	LAZYREMOVE(antag.faction, FACTION_CARP)
 	rift_ability?.Remove(antag)
 	QDEL_NULL(wavespeak)
 

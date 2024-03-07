@@ -65,7 +65,7 @@
 		overmind.blob_mobs -= parent
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags &= ~PASSBLOB
-	living_parent.faction -= ROLE_BLOB
+	LAZYREMOVE(living_parent.faction, ROLE_BLOB)
 	REMOVE_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	add_verb(parent, /mob/living/verb/pulled)
 	UnregisterSignal(parent, list(

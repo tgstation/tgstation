@@ -2532,7 +2532,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/friend_ref = REF(old_friend)
 	if (!faction.Find(friend_ref))
 		return FALSE
-	faction -= friend_ref
+	LAZYREMOVE(faction, friend_ref)
 	ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, old_friend)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)

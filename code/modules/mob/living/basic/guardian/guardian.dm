@@ -251,8 +251,8 @@
 	unleash()
 	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if (different_person)
-		summoner.faction -= "[REF(src)]"
-		faction -= summoner.faction
+		LAZYREMOVE(summoner.faction, "[REF(src)]")
+		LAZYREMOVE(faction, summoner.faction)
 		mind?.remove_all_antag_datums()
 	if (!length(summoner.get_all_linked_holoparasites() - src))
 		for (var/action_type in control_actions)

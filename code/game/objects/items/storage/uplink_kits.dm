@@ -732,7 +732,7 @@
 		return FALSE
 	var/mob/living/living_target = target
 	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
-	living_target.faction -= ROLE_SYNDICATE
+	LAZYREMOVE(living_target.faction, ROLE_SYNDICATE)
 	to_chat(target, span_notice("You feel a little less nuclear."))
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE

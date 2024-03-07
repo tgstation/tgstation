@@ -44,7 +44,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/internal/heart/gondola/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	for(var/faction in factions_to_remove)
-		heartless.faction -= faction
+		LAZYREMOVE(heartless.faction, faction)
 	//reset this for a different target
 	factions_to_remove = list()
 
