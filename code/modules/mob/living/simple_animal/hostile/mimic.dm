@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		maxHealth = health
 		if(user)
 			creator = user
-			faction += "[REF(creator)]" // very unique
+			faction += list("[REF(creator)]") // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1

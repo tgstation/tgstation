@@ -225,8 +225,8 @@
 		if (mind)
 			mind.enslave_mind_to_creator(to_who)
 		else //mindless guardian, manually give them factions
-			faction += summoner.faction
-			summoner.faction += "[REF(src)]"
+			faction += list(summoner.faction)
+			summoner.faction += list("[REF(src)]")
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
