@@ -188,7 +188,6 @@
 
 /obj/machinery/atmospherics/components/binary/xenoflora_pod/update_overlays()
 	. = ..()
-	cut_overlays()
 
 	if(dome_extended)
 		var/mutable_appearance/dome_behind = mutable_appearance(icon, "glass_behind", layer = ABOVE_ALL_MOB_LAYER + 0.1, plane = ABOVE_GAME_PLANE)
