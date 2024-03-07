@@ -124,15 +124,15 @@
 
 /datum/uplink_item/implants/spy_unique/antistun
 	name = /datum/uplink_item/implants/nuclear/antistun::name
-  	desc = /datum/uplink_item/implants/nuclear/antistun::desc
+	desc = /datum/uplink_item/implants/nuclear/antistun::desc
 	item = /obj/item/autosurgeon/syndicate/anti_stun/single_use
 
 /datum/uplink_item/implants/spy_unique/reviver
 	name = /datum/uplink_item/implants/nuclear/reviver::name
-  	desc = /datum/uplink_item/implants/nuclear/reviver::desc
+	desc = /datum/uplink_item/implants/nuclear/reviver::desc
 	item = /obj/item/autosurgeon/syndicate/reviver/single_use
 
 /datum/uplink_item/implants/spy_unique/thermals
 	name = /datum/uplink_item/implants/nuclear/thermals::name
-  	desc = /datum/uplink_item/implants/nuclear/thermals::desc
+	desc = /datum/uplink_item/implants/nuclear/thermals::desc
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes/single_use
