@@ -125,7 +125,7 @@ jobs:
     steps:
       - uses: robinraju/release-downloader@v1.9
         with:
-          owner: "OpenDreamProject/OpenDream"
+          repository: "OpenDreamProject/OpenDream"
           tag: "latest"
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
