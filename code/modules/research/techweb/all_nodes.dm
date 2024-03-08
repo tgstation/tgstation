@@ -75,6 +75,7 @@
 		"oven_tray",
 		"packagewrap",
 		"pet_carrier",
+		"photocopier",
 		"plasmaglass",
 		"plasmaman_gas_filter",
 		"plasmareinforcedglass",

@@ -994,6 +994,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/board/photocopier
+	name = "Photocopier Board"
+	desc = "The circuit board for a photocopier."
+	id = "photocopier"
+	build_path = /obj/item/circuitboard/machine/photocopier
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
+
 //Hypertorus fusion reactor designs
 
 /datum/design/board/HFR_core
