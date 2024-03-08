@@ -8,7 +8,7 @@
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 1.5 MINUTES
-	cooldown_reduction_per_rank = 10 SECONDS
+	cooldown_reduction_per_rank = 15 SECONDS
 
 	invocation = "OOGA OOGA OOGA!!!!"
 	invocation_type = INVOCATION_SHOUT
