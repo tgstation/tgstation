@@ -2567,9 +2567,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
 	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.
-	var/datum/market_item/slave/market_item = new(src, black_market_price || ransom_price)
+	var/datum/market_item/hostage/market_item = new(src, black_market_price || ransom_price)
 	SSblackmarket.markets[/datum/market/blackmarket].add_item(market_item)
 
+	if(mind)
+		ADD_TRAIT(mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
 	return market_item
 
 /// Admin only proc for making the mob hallucinate a certain thing

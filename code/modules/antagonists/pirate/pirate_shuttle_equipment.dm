@@ -414,7 +414,7 @@
 
 /datum/export/pirate/ransom/get_cost(atom/movable/exported_item)
 	var/mob/living/carbon/human/ransomee = exported_item
-	if(ransomee.stat != CONSCIOUS || !ransomee.mind) //mint condition only
+	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
 	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
 		return 0

@@ -227,9 +227,6 @@
 
 	var/mob/living/carbon/human/sent_mob = entered_atom
 
-	if(sent_mob.mind)
-		ADD_TRAIT(sent_mob.mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
-
 	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
@@ -239,7 +236,7 @@
 			continue
 		target_belongings.Add(WEAKREF(belonging))
 
-	var/datum/market_item/slave/market_item = sent_mob.process_capture(rand(1000, 3000))
+	var/datum/market_item/hostage/market_item = sent_mob.process_capture(rand(1000, 3000))
 	RegisterSignal(market_item, COMSIG_MARKET_ITEM_SPAWNED, PROC_REF(on_victim_shipped))
 
 	addtimer(CALLBACK(src, PROC_REF(handle_target), sent_mob), 1.5 SECONDS)
