@@ -71,9 +71,6 @@
 	SIGNAL_HANDLER
 	var/obj/hanging_parent = parent
 
-	if(hanging_parent.obj_flags & NO_DECONSTRUCTION)
-		return
-
 	if(on_drop)
 		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls off the wall!"), vision_distance = 5)
 		on_drop.Invoke(hanging_parent)

@@ -255,6 +255,5 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
-	/obj/structure/camera_assembly,
 	/obj/structure/light_construct,
 )))

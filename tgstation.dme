@@ -1988,7 +1988,7 @@
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
 #include "code\game\machinery\camera\camera.dm"
-#include "code\game\machinery\camera\camera_assembly.dm"
+#include "code\game\machinery\camera\camera_construction.dm"
 #include "code\game\machinery\camera\motion.dm"
 #include "code\game\machinery\camera\presets.dm"
 #include "code\game\machinery\camera\trackable.dm"

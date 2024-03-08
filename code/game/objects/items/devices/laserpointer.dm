@@ -251,7 +251,7 @@
 	//cameras: chance to EMP the camera
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/target_camera = target
-		if(!target_camera.status && !target_camera.emped)
+		if(!target_camera.camera_enabled && !target_camera.emped)
 			outmsg = span_notice("You point [src] at [target_camera], but it seems to be disabled.")
 		else if(prob(effectchance * diode.rating))
 			target_camera.emp_act(EMP_HEAVY)

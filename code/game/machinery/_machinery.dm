@@ -193,7 +193,7 @@
 	update_current_power_usage()
 	setup_area_power_relationship()
 
-/obj/machinery/Destroy()
+/obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
 	end_processing()
 
