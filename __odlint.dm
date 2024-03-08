@@ -11,6 +11,6 @@
 	1. I can codeown that file
 	2. You need to do it with an include as a hack to avoid SpacemanDMM evaluating the #pragma lines, even if its outside a block it cares about
 */
-#include "tools/ci/od_lints.dm"
+#include "od_lints.dm"
 #endif
 #endif
