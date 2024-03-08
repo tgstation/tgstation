@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - qol: "If your OOC message gets eaten due to some weird circumstance in how your message is handled, it will feed the applicable message back to you so you can copy-paste and try to send it again."
