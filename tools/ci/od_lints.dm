@@ -1,6 +1,6 @@
 //1000-1999
 #pragma FileAlreadyIncluded error
-#pragma MissingIncludedFile disabled
+#pragma MissingIncludedFile error
 #pragma MisplacedDirective error
 #pragma UndefineMissingDirective error
 #pragma DefinedMissingParen error
