@@ -528,8 +528,22 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
+/obj/machinery/photocopier/dump_contents()
+	if(payment_component)
+		var/obj/item/spawned_obj = new /obj/item/stock_parts/card_reader(loc)
+		give_pixel_offset(spawned_obj)
+		QDEL_NULL(payment_component)
+	. = ..()
+
 /obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if(panel_open && payment_component)
+		var/obj/item/spawned_obj = new /obj/item/stock_parts/card_reader(loc)
+		shock(user, 100)
+		give_pixel_offset(spawned_obj)
+		tool.play_tool_sound(src, 50)
+		QDEL_NULL(payment_component)
+		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
@@ -580,6 +594,22 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			balloon_alert(user, "another card reader inside!")
 			return
 		insert_card_reader(object, user)
+
+/**
+ * Attempts to shock the passed user, returns true if they are shocked.
+ *
+ * Arguments:
+ * * user - the user to shock
+ * * chance - probability the shock happens
+ */
+/obj/machinery/photocopier/proc/shock(mob/living/user, chance)
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))
+		return FALSE
+	if(!prob(chance))
+		return FALSE
+	do_sparks(5, TRUE, src)
+	var/check_range = TRUE
+	return electrocute_mob(user, get_area(src), src, 0.7, check_range)
 
 /// Proc that handles insertion of card reader, for sanity's sake.
 /obj/machinery/photocopier/proc/insert_card_reader(obj/item/object, mob/user)
