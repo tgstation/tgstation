@@ -132,7 +132,7 @@ jobs:
           extract: true
       - name: Run OpenDream
         run: |
-          ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented tgstation.dme
+          ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING
 
   compile_all_maps:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
