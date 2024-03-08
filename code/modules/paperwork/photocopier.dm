@@ -84,14 +84,16 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	/// Variable for the UI telling us how many copies are in the queue.
 	var/copies_left = 0
 	/// The amount of paper this photocoper starts with.
-	var/starting_paper = 30
+	var/starting_paper = 0
 	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	toner_cartridge = new(src)
-	setup_components()
+	if(mapload)
+		toner_cartridge = new(src)
+		starting_paper = 30
+		setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
 /// Simply adds the necessary components for this to function.
