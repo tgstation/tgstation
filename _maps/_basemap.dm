@@ -14,8 +14,8 @@
 		#include "map_files\NorthStar\north_star.dmm"
 		#include "map_files\tramstation\tramstation.dmm"
 
-		#ifdef CIBUILDING
-			#include "templates.dm"
-		#endif
+		// #ifdef CIBUILDING
+		// 	#include "templates.dm"
+		// #endif
 	#endif
 #endif
