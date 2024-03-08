@@ -90,15 +90,18 @@
 		return
 
 	bursting = TRUE
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), gib_on_success)
-	owner.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_ALIEN_LARVA, \
-		job_bans = ROLE_ALIEN, \
-		to_call = to_call, \
-		custom_message = "An alien is bursting out of [owner.real_name]", \
-		title = "alien larva" \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "An [span_notice("alien")] is bursting out of [span_danger(owner.real_name)]!",
+		role = ROLE_ALIEN,
+		check_jobban = ROLE_ALIEN,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_ALIEN_LARVA,
+		alert_pic = owner,
+		role_name_text = "alien larva",
+		chat_text_border_icon = /mob/living/carbon/alien/larva,
 	)
+	on_poll_concluded(gib_on_success, chosen_one)
 
 /// Poll has concluded with a suitor
 /obj/item/organ/internal/body_egg/alien_embryo/proc/on_poll_concluded(gib_on_success, mob/dead/observer/ghost)
