@@ -63,15 +63,18 @@
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
 
-/obj/item/shield/attackby(obj/item/attackby_item, mob/user, params)
+/obj/item/shield/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
-	if(istype(attackby_item, /obj/item/melee/baton) && is_bashable)
-		if(!COOLDOWN_FINISHED(src, baton_bash))
-			return
-		user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
-		COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
-		return
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return . 
+	if(!istype(tool, /obj/item/melee/baton) || !is_bashable)
+		return . 
+	if(!COOLDOWN_FINISHED(src, baton_bash))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
+	playsound(src, 'sound/effects/shieldbash.ogg', 50, TRUE)
+	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
