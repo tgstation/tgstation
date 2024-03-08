@@ -13,7 +13,6 @@
 	equip_delay_other = 8 SECONDS
 	var/obj/item/collar_bomb_button/button
 	var/active = FALSE
-	var/panel_open = FALSE
 
 /datum/armor/collar_bomb
 	fire = 97
@@ -35,19 +34,7 @@
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
 		return
-	. += span_notice("The wire panel is currently [EXAMINE_HINT(panel_open ? "open" : "closed")], and can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
-
-/obj/item/clothing/neck/collar_bomb/screwdriver_act(mob/living/user, obj/item/tool)
-	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
-		balloon_alert(user, "cannot reach panel!")
-	panel_open = !panel_open
-	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/clothing/neck/collar_bomb/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
-	if(slot == ITEM_SLOT_NECK)
-		panel_open = FALSE
+	. += span_tinynotice("It has a [EXAMINE_HINT("wire")] panel that could be interacted with...")
 
 /obj/item/clothing/neck/collar_bomb/proc/explosive_countdown(ticks_left)
 	if(ticks_left > 0)

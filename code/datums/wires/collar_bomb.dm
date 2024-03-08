@@ -7,7 +7,7 @@
 /datum/wires/collar_bomb/interactable(mob/user)
 	. = ..()
 	var/obj/item/clothing/neck/collar_bomb/collar = holder
-	if(!collar.panel_open)
+	if(user.get_item_by_slot(ITEM_SLOT_NECK) == holder)
 		return FALSE
 
 /datum/wires/collar_bomb/on_pulse(wire)
