@@ -127,31 +127,31 @@
 
 /datum/sprite_accessory/hair/bedhead
 	name = "Bedhead"
-	icon_state = "hair_bedhead"
+	icon_state = null
 
 /datum/sprite_accessory/hair/bedhead2
 	name = "Bedhead 2"
-	icon_state = "hair_bedheadv2"
+	icon_state = null
 
 /datum/sprite_accessory/hair/bedhead3
 	name = "Bedhead 3"
-	icon_state = "hair_bedheadv3"
+	icon_state = null
 
 /datum/sprite_accessory/hair/bedheadv4
 	name = "Bedhead 4x"
-	icon_state = "hair_bedheadv4"
+	icon_state = null
 
 /datum/sprite_accessory/hair/bedheadlong
 	name = "Long Bedhead"
-	icon_state = "hair_long_bedhead"
+	icon_state = null
 
 /datum/sprite_accessory/hair/bedheadfloorlength
 	name = "Floorlength Bedhead"
-	icon_state = "hair_floorlength_bedhead"
+	icon_state = null
 
 /datum/sprite_accessory/hair/badlycut
 	name = "Shorter Long Bedhead"
-	icon_state = "hair_verybadlycut"
+	icon_state = null
 
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
