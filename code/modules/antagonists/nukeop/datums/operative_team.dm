@@ -159,8 +159,9 @@
 		role = ROLE_OPERATIVE,
 		poll_time = 30 SECONDS,
 		ignore_category = POLL_IGNORE_SYNDICATE,
-		pic_source = /obj/structure/sign/poster/contraband/gorlex_recruitment,
-		role_name_text = "syndicate reinforcement",
+		alert_pic = /obj/structure/sign/poster/contraband/gorlex_recruitment,
+		role_name_text = "emergency syndicate reinforcement",
+		amount_to_pick = 1,
 	)
 
 	if(isnull(chosen_one))
