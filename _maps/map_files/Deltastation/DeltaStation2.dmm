@@ -32251,7 +32251,6 @@
 /obj/structure/tank_holder/extinguisher,
 /obj/machinery/camera/directional/south{
 	c_tag = "Library - Art Gallery";
-	default_camera_icon = "Service - Cafeteria Aft";
 	name = "library camera"
 	},
 /turf/open/floor/wood/tile,
