@@ -5716,7 +5716,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
+	preset_destination_names = list("2"="Lower                                                                                                                                Deck","3"="Upper                                                                                                                                Deck")
 	},
 /turf/closed/wall,
 /area/station/science/xenobiology)
@@ -7647,7 +7647,7 @@
 "bmO" = (
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_cargo_lift"
@@ -7721,8 +7721,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "boZ" = (
-/turf/open/misc/asteroid/airless,
-/area/station/maintenance/department/cargo)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "bpa" = (
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high{
@@ -9514,7 +9515,7 @@
 "bSs" = (
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /obj/structure/industrial_lift/public,
 /obj/effect/turf_decal/trimline/dark_red/warning{
@@ -10896,7 +10897,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 1
@@ -10933,7 +10934,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
@@ -17516,7 +17517,7 @@
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "eui" = (
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/station/asteroid)
 "euu" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -21229,7 +21230,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "fGj" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen    Supply")
+	atmos_chambers = list("o2ordance"="Oxygen        Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -43660,7 +43661,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
+	preset_destination_names = list("2"="Lower                                                                                                                                Deck","3"="Upper                                                                                                                                Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -57373,7 +57374,7 @@
 "rqg" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/asteroid)
 "rqi" = (
 /obj/structure/table/wood,
@@ -58767,7 +58768,7 @@
 "rPj" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/directional/north,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/station/engineering/atmos)
 "rPm" = (
 /obj/structure/table,
@@ -61148,7 +61149,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -74219,7 +74220,7 @@
 	default_raw_text = "Please leave on-site equipment alone as they are on loan from Nanotrasen Mining Co and need returned soon.";
 	name = "NOTICE"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/asteroid)
 "wCn" = (
 /obj/structure/cable,
@@ -76467,7 +76468,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/dark_red/warning{
@@ -77087,7 +77088,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
+	preset_destination_names = list("2"="Lower                                                                                                                                Deck","3"="Upper                                                                                                                                Deck")
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
@@ -81435,7 +81436,7 @@ vXM
 nPb
 pkp
 nPb
-cdf
+pkp
 nPb
 pkp
 pjA
@@ -81692,7 +81693,7 @@ nPb
 nPb
 pkp
 nPb
-cdf
+pkp
 nPb
 pkp
 nPb
@@ -169453,7 +169454,7 @@ jhd
 aac
 aac
 aaa
-aac
+abM
 abM
 aaa
 omm
@@ -173311,7 +173312,7 @@ aac
 aac
 aac
 aaa
-boZ
+yeD
 apj
 yeD
 yeD
@@ -173568,7 +173569,7 @@ jhd
 aac
 aac
 aaa
-boZ
+yeD
 yeD
 yeD
 hrg
@@ -174033,7 +174034,7 @@ aaS
 aaS
 aaS
 aaS
-gPW
+boZ
 aap
 aaS
 jhd
@@ -174803,8 +174804,8 @@ jhd
 aaa
 aaa
 aaa
-bXk
-abM
+aak
+aac
 aap
 aaa
 aaa
@@ -175061,7 +175062,7 @@ aaa
 aaa
 aaa
 aaS
-bXk
+aak
 kCA
 aaa
 aaa
@@ -175318,8 +175319,8 @@ aaa
 aaa
 aaa
 kCA
-bXk
-bXk
+aak
+aak
 aaa
 aaa
 aaa
@@ -175574,8 +175575,8 @@ jhd
 jhd
 aaa
 aaa
-bXk
-abM
+aak
+aac
 aap
 aaa
 aaa
@@ -175832,7 +175833,7 @@ jhd
 aaa
 aaa
 aaa
-abM
+aac
 aaa
 aaa
 aaa
@@ -176089,7 +176090,7 @@ jhd
 jhd
 aaa
 aaa
-bXk
+aak
 aaS
 aaa
 aaa
@@ -176345,13 +176346,13 @@ jhd
 jhd
 jhd
 jhd
-abM
-abM
+aac
+aac
 aaa
 aaa
 aaa
 aaa
-rvV
+aaE
 aaa
 aaa
 jhd

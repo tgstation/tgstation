@@ -1446,7 +1446,7 @@
 /area/centcom/central_command_areas/ghost_spawn)
 "dP" = (
 /obj/machinery/dna_scannernew,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "dQ" = (
 /obj/machinery/light/floor/has_bulb,
@@ -2240,7 +2240,7 @@
 /area/centcom/syndicate_mothership/control)
 "go" = (
 /obj/structure/closet,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "gp" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -2993,7 +2993,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "ir" = (
 /obj/machinery/shower/directional/south,
@@ -5473,7 +5473,7 @@
 "pt" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "pu" = (
 /obj/item/food/spaghetti/copypasta{
@@ -8195,7 +8195,7 @@
 /area/centcom/syndicate_mothership)
 "wV" = (
 /obj/machinery/computer/security/wooden_tv,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "wW" = (
 /obj/item/kirbyplants{
@@ -8843,7 +8843,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/syndicate_mothership/control)
 "yC" = (
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "yD" = (
 /turf/closed/indestructible/rock/snow,
@@ -9350,7 +9350,7 @@
 /area/centcom/central_command_areas/admin)
 "zY" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "zZ" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
@@ -9661,7 +9661,7 @@
 "AR" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/dice/d20,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "AS" = (
 /obj/machinery/light/floor/has_bulb,
@@ -11418,7 +11418,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "FT" = (
 /obj/structure/table/wood,
@@ -11474,7 +11474,7 @@
 /obj/machinery/modular_computer/console/preset/id/centcom{
 	dir = 4
 	},
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "Gc" = (
 /obj/structure/sign/poster/contraband/random/directional/south,
@@ -11856,7 +11856,7 @@
 	},
 /obj/item/dice/d6,
 /obj/item/dice/d6,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "Hd" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -12272,7 +12272,7 @@
 /area/centcom/wizard_station)
 "In" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "Io" = (
 /obj/docking_port/stationary{
@@ -13884,7 +13884,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "MF" = (
 /obj/structure/curtain/cloth/fancy,
@@ -14562,7 +14562,7 @@
 	name = "First Success";
 	desc = "A little known fact is that clones requires souls, the men and woman who worked on the first success of what would come to be known as the Iden Project did not know that."
 	},
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "OF" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -14777,7 +14777,7 @@
 "Pl" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/dice/d10,
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "Pm" = (
 /obj/effect/turf_decal/delivery,
@@ -17401,7 +17401,7 @@
 /obj/machinery/door/window/brigdoor/security{
 	dir = 1
 	},
-/turf/open/floor/circuit/telecomms,
+/turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "WI" = (
 /obj/effect/turf_decal/siding/dark/end{
@@ -18178,7 +18178,7 @@
 /area/centcom/central_command_areas/hall)
 "YY" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase"="Burn                Chamber");
+	atmos_chambers = list("nukiebase"="Burn                                Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;
 	name = "Ordnance Chamber Monitor"
