@@ -1,5 +1,7 @@
 /// Name of the blanks file
 #define BLANKS_FILE_NAME "config/blanks.json"
+/// Name of the syndicate blanks file
+#define BLANKS_SYND_FILE_NAME "config/blanks_syndicate.json"
 
 /// For use with the `color_mode` var. Photos will be printed in greyscale while the var has this value.
 #define PHOTO_GREYSCALE "Greyscale"
@@ -42,12 +44,13 @@
 
 /// Paper blanks (form templates, basically). Loaded from `config/blanks.json`.
 /// If invalid or not found, set to null.
-GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
+GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks(BLANKS_FILE_NAME))
+GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 
-/proc/init_paper_blanks()
-	if(!fexists(BLANKS_FILE_NAME))
+/proc/init_paper_blanks(filename)
+	if(!fexists(filename))
 		return null
-	var/list/blanks_json = json_decode(file2text(BLANKS_FILE_NAME))
+	var/list/blanks_json = json_decode(file2text(filename))
 	if(!length(blanks_json))
 		return null
 
@@ -150,9 +153,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	var/list/blank_infos = list()
 	var/list/category_names = list()
-	if(GLOB.paper_blanks)
-		for(var/blank_id in GLOB.paper_blanks)
-			var/list/paper_blank = GLOB.paper_blanks[blank_id]
+	var/list/active_blanks = get_forms()
+	if(active_blanks)
+		for(var/blank_id in active_blanks)
+			var/list/paper_blank = active_blanks[blank_id]
 			blank_infos += list(list(
 				name = paper_blank["name"],
 				category = paper_blank["category"],
@@ -286,11 +290,16 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if("print_blank")
 			if(check_busy(usr))
 				return FALSE
-			if(!(params["code"] in GLOB.paper_blanks))
+			var/list/active_blanks = get_forms()
+			if(!(params["code"] in active_blanks))
 				return FALSE
-			var/list/blank = GLOB.paper_blanks[params["code"]]
+			var/list/blank = active_blanks[params["code"]]
 			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, 1)
 			return TRUE
+
+/// Returns the list of forms currently used by the photocopier. If emagged, uses syndicate forms instead.
+/obj/machinery/photocopier/proc/get_forms()
+	return (obj_flags & EMAGGED) ? GLOB.paper_blanks_synd : GLOB.paper_blanks
 
 /// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
 /obj/machinery/photocopier/proc/get_toner_color()
@@ -548,6 +557,23 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		QDEL_NULL(payment_component)
 	. = ..()
 
+/***
+ * Emag the device if the panel is open.
+ * Emagging a photocopier replaces all forms with syndicate forms.
+ */
+/obj/machinery/photocopier/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
+		return FALSE
+	if(!(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
+		playsound(src, 'sound/creatures/dog/growl2.ogg', 50, FALSE)
+		balloon_alert(user, "migrated to syndienet 2.0")
+		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
+		return TRUE
+	balloon_alert(user, "already emagged!")
+	return FALSE
+
 /obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(panel_open && payment_component)
@@ -797,6 +823,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 #undef PHOTOCOPIER_FEE
 #undef BLANKS_FILE_NAME
+#undef BLANKS_SYND_FILE_NAME
 #undef PAPER_PAPER_USE
 #undef PHOTO_PAPER_USE
 #undef DOCUMENT_PAPER_USE
