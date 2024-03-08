@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed the tgui text input trimming the last character of the input if it hits the maximum length."
+  - bugfix: "This also fixes the PIN pad leading to the right wing of the museum away mission."

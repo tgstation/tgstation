@@ -1,7 +1,8 @@
 /**
  * When attached to something, will make that thing shatter into shards on throw impact or z level falling
+ * Or even when used as a weapon if the 'shatters_as_weapon' arg is TRUE
  */
-/datum/element/shatters_when_thrown
+/datum/element/can_shatter
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 
@@ -12,7 +13,12 @@
 	/// What sound plays when the thing we're attached to shatters
 	var/shattering_sound
 
-/datum/element/shatters_when_thrown/Attach(datum/target, shard_type = /obj/item/plate_shard, number_of_shards = 5, shattering_sound = 'sound/items/ceramic_break.ogg')
+/datum/element/can_shatter/Attach(datum/target,
+	shard_type = /obj/item/plate_shard,
+	number_of_shards = 5,
+	shattering_sound = 'sound/items/ceramic_break.ogg',
+	shatters_as_weapon = FALSE,
+	)
 	. = ..()
 
 	if(!ismovable(target))
@@ -24,26 +30,28 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 	RegisterSignal(target, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact))
+	if(shatters_as_weapon)
+		RegisterSignal(target, COMSIG_ITEM_POST_ATTACK_ATOM, PROC_REF(on_post_attack_atom))
 
-/datum/element/shatters_when_thrown/Detach(datum/target)
+/datum/element/can_shatter/Detach(datum/target)
 	. = ..()
 
 	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT, COMSIG_ATOM_ON_Z_IMPACT))
 
 /// Tells the parent to shatter if we impact a lower zlevel
-/datum/element/shatters_when_thrown/proc/on_z_impact(datum/source, turf/impacted_turf, levels)
+/datum/element/can_shatter/proc/on_z_impact(datum/source, turf/impacted_turf, levels)
 	SIGNAL_HANDLER
 
 	shatter(source, impacted_turf)
 
 /// Tells the parent to shatter if we are thrown and impact something
-/datum/element/shatters_when_thrown/proc/on_throw_impact(datum/source, atom/hit_atom)
+/datum/element/can_shatter/proc/on_throw_impact(datum/source, atom/hit_atom)
 	SIGNAL_HANDLER
 
 	shatter(source, hit_atom)
 
 /// Handles the actual shattering part, throwing shards of whatever is defined on the component everywhere
-/datum/element/shatters_when_thrown/proc/shatter(atom/movable/source, atom/hit_atom)
+/datum/element/can_shatter/proc/shatter(atom/movable/source, atom/hit_atom)
 	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
 	var/scatter_turf = get_turf(hit_atom)
 
@@ -64,3 +72,7 @@
 		return
 	else
 		qdel(source)
+
+/datum/element/can_shatter/proc/on_post_attack_atom(obj/item/source, atom/attacked_atom, mob/living/user)
+	SIGNAL_HANDLER
+	shatter(source, attacked_atom)
