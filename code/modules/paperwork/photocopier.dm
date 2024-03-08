@@ -528,10 +528,24 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
+/obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Open and close the wire panel.
+ */
+/obj/machinery/photocopier/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	. = ..()
+	default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver)
+	update_appearance()
+	return TRUE
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
