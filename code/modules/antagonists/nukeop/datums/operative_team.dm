@@ -154,8 +154,7 @@
 
 	var/tc_to_spawn = tgui_input_number(admin, "How much TC to spawn with?", "TC", 0, 100)
 
-	var/list/nuke_candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as an emergency syndicate reinforcement?",
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
 		check_jobban = ROLE_OPERATIVE,
 		role = ROLE_OPERATIVE,
 		poll_time = 30 SECONDS,
@@ -164,9 +163,7 @@
 		role_name_text = "syndicate reinforcement",
 	)
 
-	nuke_candidates -= admin // may be easy to fat-finger say yes. so just don't
-
-	if(!length(nuke_candidates))
+	if(isnull(chosen_one))
 		tgui_alert(admin, "No candidates found.", "Recruitment Shortage", list("OK"))
 		return
 
@@ -194,10 +191,9 @@
 	if(infil_or_nukebase == SPAWN_AT_BASE)
 		spawn_loc = pick(GLOB.nukeop_start)
 
-	var/mob/dead/observer/picked = pick(nuke_candidates)
 	var/mob/living/carbon/human/nukie = new(spawn_loc)
-	picked.client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
-	nukie.key = picked.key
+	chosen_one.client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
+	nukie.key = chosen_one.key
 
 	var/datum/antagonist/nukeop/antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE

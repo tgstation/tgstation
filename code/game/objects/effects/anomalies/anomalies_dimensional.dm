@@ -21,6 +21,11 @@
 	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
 	animate(transform = matrix(), time = 3, loop = -1)
 
+/obj/effect/anomaly/dimensional/Destroy()
+	theme = null
+	target_turfs = null
+	return ..()
+
 /obj/effect/anomaly/dimensional/anomalyEffect(seconds_per_tick)
 	. = ..()
 	transmute_area()
@@ -36,8 +41,7 @@
 		return
 
 	var/turf/affected_turf = target_turfs[1]
-	new /obj/effect/temp_visual/transmute_tile_flash(affected_turf)
-	theme.apply_theme(affected_turf)
+	theme.apply_theme(affected_turf, show_effect = TRUE)
 	target_turfs -= affected_turf
 
 /**
@@ -47,7 +51,7 @@
 /obj/effect/anomaly/dimensional/proc/prepare_area(new_theme_path)
 	if (!new_theme_path)
 		new_theme_path = pick(subtypesof(/datum/dimension_theme))
-	theme = new new_theme_path()
+	theme = SSmaterials.dimensional_themes[new_theme_path]
 	apply_theme_icon()
 
 	target_turfs = list()
