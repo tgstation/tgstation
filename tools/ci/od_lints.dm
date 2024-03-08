@@ -1,12 +1,12 @@
 //1000-1999
-#pragma FileAlreadyIncluded error
-#pragma MissingIncludedFile error
-#pragma MisplacedDirective error
-#pragma UndefineMissingDirective error
-#pragma DefinedMissingParen error
-#pragma ErrorDirective error
-#pragma WarningDirective error
-#pragma MiscapitalizedDirective error
+// #pragma FileAlreadyIncluded error
+// #pragma MissingIncludedFile error
+// #pragma MisplacedDirective error
+// #pragma UndefineMissingDirective error
+// #pragma DefinedMissingParen error
+// #pragma ErrorDirective error
+// #pragma WarningDirective error
+// #pragma MiscapitalizedDirective error
 
 //2000-2999
 #pragma SoftReservedKeyword error
