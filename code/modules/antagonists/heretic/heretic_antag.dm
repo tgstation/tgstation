@@ -235,7 +235,7 @@
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
-	LAZYREMOVE(our_mob.faction, FACTION_HERETIC)
+	our_mob.faction -= FACTION_HERETIC
 
 	if (owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)

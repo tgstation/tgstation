@@ -106,7 +106,7 @@
 
 /obj/item/organ/internal/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	if(organ_owner)
-		LAZYREMOVE(organ_owner.faction, ROLE_ALIEN)
+		organ_owner.faction -= ROLE_ALIEN
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

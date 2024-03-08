@@ -32,7 +32,7 @@
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
-	LAZYREMOVE(faction, FACTION_NEUTRAL)
+	faction -= FACTION_NEUTRAL
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y

@@ -46,7 +46,7 @@
 /datum/antagonist/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
-	LAZYREMOVE(our_mob.faction, FACTION_HERETIC)
+	our_mob.faction -= FACTION_HERETIC
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic

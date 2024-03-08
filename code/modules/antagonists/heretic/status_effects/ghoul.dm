@@ -90,7 +90,7 @@
 	on_lost_callback?.Invoke(human_target)
 	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, REF(src))
 	human_target.cure_husk(MAGIC_TRAIT)
-	LAZYREMOVE(human_target.faction, FACTION_HERETIC)
+	human_target.faction -= FACTION_HERETIC
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
 
 	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)

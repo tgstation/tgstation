@@ -547,8 +547,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
-		for(var/faction_to_remove in inherent_factions)
-			LAZYREMOVE(C.faction, faction_to_remove)
+		for(var/i in inherent_factions)
+			C.faction -= i
 
 	clear_tail_moodlets(C)
 

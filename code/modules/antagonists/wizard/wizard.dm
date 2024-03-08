@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/last_mob = mob_override || owner.current
-	LAZYREMOVE(last_mob.faction, ROLE_WIZARD)
+	last_mob.faction -= ROLE_WIZARD
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
-	LAZYREMOVE(wizard_mob.faction, ROLE_WIZARD)
+	wizard_mob.faction -= ROLE_WIZARD
 	if (ritual)
 		ritual.Remove(wizard_mob)
 		UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)

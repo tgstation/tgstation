@@ -1162,7 +1162,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	update_appearance()
 
 /mob/living/simple_animal/bot/sentience_act()
-	LAZYREMOVE(faction, FACTION_SILICON)
+	faction -= FACTION_SILICON
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)
 	path = newpath ? newpath : list()
