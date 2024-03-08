@@ -23,7 +23,7 @@
 	))
 	desc += " DISCLAIMER: The offer will expire once the creature is returned to the station."
 	if(humie_mob)
-		desc += "[mob.p_they(TRUE) may be delivered handcuffed, for safety of course."
+		desc += "[mob.p_they(TRUE)] may be delivered handcuffed, for safety of course."
 
 	price = new_price
 	RegisterSignal(mob, COMSIG_LIVING_RETURN_FROM_CAPTURE, PROC_REF(on_return_from_capture))
