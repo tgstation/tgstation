@@ -16,16 +16,16 @@
 	display_cameras(viewer)
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/display_cameras(mob/viewer)
+	RegisterSignal(viewer, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
 	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
 		display_camera(viewer, our_bug)
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/display_camera(mob/viewer, obj/item/clothing/accessory/spy_bug/our_bug)
 	viewer.client?.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
 	our_bug.cam_screen.display_to(viewer)
-	RegisterSignal(viewer, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
 	our_bug.update_view()
 
-/obj/item/clothing/glasses/sunglasses/spy/on_screen_clear(client/source, window)
+/obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
 	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
 		our_bug.cam_screen.hide_from(source.mob)
