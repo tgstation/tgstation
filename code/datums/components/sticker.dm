@@ -21,6 +21,7 @@
 	parent_atom.add_overlay(sticker_overlay)
 
 	our_sticker.moveToNullspace()
+	ADD_TRAIT(parent, TRAIT_STICKERED, our_sticker)
 
 /datum/component/sticker/Destroy(force)
 	remove()
@@ -42,7 +43,6 @@
 		UnregisterSignal(parent, COMSIG_TURF_EXPOSE)
 	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
 
-
 /datum/component/sticker/proc/remove()
 	var/atom/parent_atom = parent
 	parent_atom.cut_overlay(sticker_overlay)
@@ -57,6 +57,8 @@
 
 	our_sticker.forceMove(parent)
 	our_sticker = null
+
+	REMOVE_TRAIT(parent, TRAIT_STICKERED, our_sticker)
 
 	qdel(src)
 
