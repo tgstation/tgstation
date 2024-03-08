@@ -89,7 +89,7 @@
 	playsound(user, 'sound/machines/click.ogg', 25, TRUE)
 	balloon_alert_to_viewers("button pushed")
 	if(collar && !collar.active)
-		collar.explosive_countdown(5)
+		collar.explosive_countdown(ticks_left = 5)
 
 /obj/item/collar_bomb_button/Destroy()
 	collar?.button = null

@@ -13,5 +13,5 @@
 /datum/wires/collar_bomb/on_pulse(wire)
 	var/obj/item/clothing/neck/collar_bomb/collar = holder
 	if(!collar.active)
-		collar.explosive_countdown(5)
+		collar.explosive_countdown(ticks_left = 5)
 	return ..()
