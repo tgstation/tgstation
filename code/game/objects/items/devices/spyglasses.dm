@@ -73,6 +73,9 @@
 	. = ..()
 	AddComponent(/datum/component/pinnable_accessory)
 	tracker = new /datum/movement_detector(src, CALLBACK(src, PROC_REF(update_view)))
+	create_view()
+
+/obj/item/clothing/accessory/spy_bug/proc/create_view()
 	cam_screen = new
 	cam_screen.generate_view("spypopup_map")
 

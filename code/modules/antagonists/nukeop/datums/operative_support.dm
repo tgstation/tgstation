@@ -30,11 +30,12 @@
 	var/obj/item/clothing/glasses/sunglasses/spy/overwatch/newglasses = new(src)
 	owner.current.put_in_hands(newglasses)
 
+	var/camera_count = 0
 	for(var/datum/mind/teammate_mind in nuke_team.members)
 		if(teammate_mind == owner)
 			return
 		var/mob/living/carbon/teammate = teammate_mind.current
-		var/obj/item/clothing/accessory/spy_bug/overwatch/new_camera = new(get_turf(teammate))
+		var/obj/item/clothing/accessory/spy_bug/overwatch/new_camera = new(get_turf(teammate), camera_count)
 		if(istype(teammate) && teammate.put_in_hands(new_camera))
 			to_chat(teammate, span_boldnotice("[new_camera] materializes into your hands!"))
 		else
@@ -43,6 +44,7 @@
 		to_chat(teammate, span_nicegreen("You have been sent an Overwatch Support Camera. Keep this on your person, so your support agent can watch over you!"))
 		new_camera.linked_glasses = newglasses
 		newglasses.linked_bugs += new_camera
+		camera_count++
 
 /datum/antagonist/nukeop/support/give_uplink()
 	return

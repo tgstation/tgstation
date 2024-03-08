@@ -24,8 +24,8 @@
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.hide_from(user)
 
-/obj/item/clothing/glasses/sunglasses/spy/overwatch/display_camera(mob/viewer, obj/item/clothing/accessory/spy_bug/our_bug)
-	viewer.client?.setup_popup("spypopup", 5, 5, 1, "OVERWATCH")
+/obj/item/clothing/glasses/sunglasses/spy/overwatch/display_camera(mob/viewer, obj/item/clothing/accessory/spy_bug/overwatch/our_bug)
+	viewer.client?.setup_popup("overwatch_popup_[our_bug.camera_id]", 5, 5, 1, "OVERWATCH")
 	our_bug.cam_screen.display_to(viewer)
 	our_bug.update_view()
 
@@ -36,3 +36,13 @@
 	desc = "A camera streaming a live feed of YOU back to the Syndicate Overwatch agent back at base. \
 		Particularly impressive footage will be edited with fitting music and posted to Syndicate propaganda outlets."
 	cam_range = 3 //Make sure to change the window size here too!
+	///The camera number of this particular bug. May be deleted in the future.
+	var/camera_id
+
+/obj/item/clothing/accessory/spy_bug/overwatch/Initialize(mapload, cam_number)
+	camera_id = cam_number
+	..()
+
+/obj/item/clothing/accessory/spy_bug/overwatch/create_view()
+	cam_screen = new
+	cam_screen.generate_view("overwatch_map_0[camera_id]")
