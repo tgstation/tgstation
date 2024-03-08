@@ -87,6 +87,19 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/starting_paper = 0
 	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
+	/// Reference to the payment component, for changing/removing it later
+	var/datum/component/payment/payment_component
+	///
+	var/list/account_options = list(
+		"Personal Account" = null,
+		ACCOUNT_CIV_NAME = ACCOUNT_CIV,
+		ACCOUNT_ENG_NAME = ACCOUNT_ENG,
+		ACCOUNT_SCI_NAME = ACCOUNT_SCI,
+		ACCOUNT_MED_NAME = ACCOUNT_MED,
+		ACCOUNT_SRV_NAME = ACCOUNT_SRV,
+		ACCOUNT_CAR_NAME = ACCOUNT_CAR,
+		ACCOUNT_SEC_NAME = ACCOUNT_SEC,
+	)
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
@@ -96,9 +109,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
-/// Simply adds the necessary components for this to function.
+/// Simply adds the necessary components for this to function on mapload.
 /obj/machinery/photocopier/proc/setup_components()
-	AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
+	payment_component = AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
 /obj/machinery/photocopier/Exited(atom/movable/gone, direction)
 	. = ..()
