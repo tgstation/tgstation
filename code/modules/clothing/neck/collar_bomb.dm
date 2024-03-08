@@ -1,3 +1,4 @@
+///Special neckwear that kills its wearer if triggered, by either its specific remote or assemblies.
 /obj/item/clothing/neck/collar_bomb
 	name = "collar bomb"
 	desc = "A cumbersome collar of some sort, filled with just enough explosive to rip one's head off... at least that's what it reads on the front tag."
@@ -11,7 +12,9 @@
 	armor_type = /datum/armor/collar_bomb
 	equip_delay_self = 6 SECONDS
 	equip_delay_other = 8 SECONDS
+	///The button it's associated with
 	var/obj/item/collar_bomb_button/button
+	///Whether the collar countdown has been triggered.
 	var/active = FALSE
 
 /datum/armor/collar_bomb
@@ -73,6 +76,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	///The collar bomb it's associated with.
 	var/obj/item/clothing/neck/collar_bomb/collar
 
 /obj/item/collar_bomb_button/attack_self(mob/user)

@@ -1,6 +1,6 @@
 /datum/wires/collar_bomb
 	proper_name = "Collar Bomb"
-	randomize = TRUE // Only one, no need for blueprints
+	randomize = TRUE // Only one wire, no need for blueprints
 	holder_type = /obj/item/clothing/neck/collar_bomb
 	wires = list(WIRE_ACTIVATE)
 
