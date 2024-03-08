@@ -1,0 +1,4 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - bugfix: "Fixed some turf atmos diffs on tram and CC"
