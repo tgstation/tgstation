@@ -3,7 +3,7 @@
 /obj/structure/disposalpipe
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	anchored = TRUE
 	density = FALSE
 	obj_flags = CAN_BE_HIT
@@ -16,8 +16,11 @@
 	var/dpdir = NONE // bitmask of pipe directions
 	var/initialize_dirs = NONE // bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
 	var/flip_type // If set, the pipe is flippable and becomes this type when flipped
+	/// The pipe used to create us, if it exists
+	/// (I like it when c4 carries over)
 	var/obj/structure/disposalconstruct/stored
-
+	/// Should we create a pipe on destroy?
+	var/spawn_pipe = TRUE
 
 /datum/armor/structure_disposalpipe
 	melee = 25
@@ -34,8 +37,6 @@
 		setDir(make_from.dir)
 		make_from.forceMove(src)
 		stored = make_from
-	else
-		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
 	if(ISDIAGONALDIR(dir)) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
@@ -48,7 +49,7 @@
 		if(initialize_dirs & DISP_DIR_RIGHT)
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
-			dpdir |= turn(dir, 180)
+			dpdir |= REVERSE_DIR(dir)
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	if(isturf(loc))
@@ -56,7 +57,8 @@
 		turf_loc.add_blueprints_preround(src)
 
 /obj/structure/disposalpipe/Destroy()
-	qdel(stored)
+	spawn_pipe = FALSE
+	QDEL_NULL(stored)
 	return ..()
 
 /**
@@ -72,17 +74,21 @@
 			continue
 		holdplease.active = FALSE
 		expel(holdplease, get_turf(src), 0)
-	stored = null //The qdel is handled in expel()
+	stored = null // It gets dumped out in expel()
 
-/obj/structure/disposalpipe/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
-		stored = null
+/obj/structure/disposalpipe/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != stored || QDELETED(src))
+		return
+	spawn_pipe = FALSE
+	stored = null
+	if(QDELETED(gone))
 		deconstruct(FALSE) //pipe has broken.
 
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
 /obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
-	return dpdir & (~turn(H.dir, 180))
+	return dpdir & (~REVERSE_DIR(H.dir))
 
 // transfer the holder through this pipe segment
 // overridden for special behaviour
@@ -150,7 +156,7 @@
 	if(!can_be_deconstructed(user))
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 
 	to_chat(user, span_notice("You start slicing [src]..."))
@@ -165,13 +171,17 @@
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
-			if(stored)
-				stored.forceMove(loc)
-				transfer_fingerprints_to(stored)
-				stored.setDir(dir)
+			if(spawn_pipe)
+				var/obj/structure/disposalconstruct/construct = stored
+				if(!construct) // Don't have something? Make one now
+					construct = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 				stored = null
+				construct.forceMove(loc)
+				transfer_fingerprints_to(construct)
+				construct.setDir(dir)
+				spawn_pipe = FALSE
 		else
 			var/turf/T = get_turf(src)
 			for(var/D in GLOB.cardinals)
@@ -204,7 +214,7 @@
 // if coming in from secondary dirs, then next is primary dir
 // if coming in from primary dir, then next is equal chance of other dirs
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
-	var/flipdir = turn(H.dir, 180)
+	var/flipdir = REVERSE_DIR(H.dir)
 	if(flipdir != dir) // came from secondary dir, so exit through primary
 		return dir
 
@@ -310,6 +320,23 @@
 	initialize_dirs = DISP_DIR_NONE
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
+	spawn_pipe = FALSE
+	anchored = FALSE
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
+
+/obj/structure/disposalpipe/rotator
+	icon_state = "pipe-r1"
+	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_RIGHT | DISP_DIR_FLIP
+	flip_type = /obj/structure/disposalpipe/rotator/flip
+	/// In what direction the atom travels.
+	var/direction_angle = -90
+
+/obj/structure/disposalpipe/rotator/nextdir(obj/structure/disposalholder/holder)
+	return turn(holder.dir, direction_angle)
+
+/obj/structure/disposalpipe/rotator/flip
+	icon_state = "pipe-r2"
+	flip_type = /obj/structure/disposalpipe/rotator
+	direction_angle = 90

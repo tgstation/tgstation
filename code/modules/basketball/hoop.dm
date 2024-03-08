@@ -12,7 +12,7 @@
 /obj/structure/hoop
 	name = "basketball hoop"
 	desc = "Boom, shakalaka!"
-	icon = 'icons/obj/toys/basketball_hoop.dmi'
+	icon = 'icons/obj/fluff/basketball_hoop.dmi'
 	icon_state = "hoop"
 	anchored = TRUE
 	density = TRUE
@@ -24,7 +24,7 @@
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, AfterRotation = CALLBACK(src, PROC_REF(reset_appearance)))
+	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation = CALLBACK(src, PROC_REF(reset_appearance)))
 	update_appearance()
 	register_context()
 
@@ -53,11 +53,6 @@
 /obj/structure/hoop/update_overlays()
 	. = ..()
 
-	if(dir & NORTH)
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-
-	cut_overlays()
-
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
@@ -74,7 +69,6 @@
 	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
 	scoreboard.pixel_x = dir_offset_x
 	scoreboard.pixel_y = dir_offset_y
-	SET_PLANE_EXPLICIT(scoreboard, GAME_PLANE, src)
 	. += scoreboard
 
 	var/ones = total_score % 10
@@ -108,6 +102,7 @@
 
 	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
+	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
@@ -138,7 +133,6 @@
 	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
-
 /obj/structure/hoop/CtrlClick(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))
 		return
@@ -158,7 +152,7 @@
 	var/score_chance = throw_range_success[distance]
 	var/obj/structure/hoop/backboard = throwingdatum.initial_target?.resolve()
 	var/click_on_hoop = TRUE
-	var/mob/living/thrower = throwingdatum.thrower
+	var/mob/living/thrower = throwingdatum?.get_thrower()
 
 	// aim penalty for not clicking directly on the hoop when shooting
 	if(!istype(backboard) || backboard != src)
@@ -166,13 +160,14 @@
 		score_chance *= 0.5
 
 	// aim penalty for spinning while shooting
-	if(istype(thrower) && thrower.flags_1 & IS_SPINNING_1)
+	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_SPINNING))
 		score_chance *= 0.5
 
 	if(prob(score_chance))
 		AM.forceMove(get_turf(src))
 		// is it a 3 pointer shot
 		var/points = (distance > 2) ? 3 : 2
+		thrower.add_mood_event("basketball", /datum/mood_event/basketball_score)
 		score(AM, thrower, points)
 		visible_message(span_warning("[click_on_hoop ? "Swish!" : ""] [AM] lands in [src]."))
 	else

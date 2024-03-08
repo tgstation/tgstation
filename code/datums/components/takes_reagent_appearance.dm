@@ -43,9 +43,9 @@
 
 	src.base_container_type = base_container_type || parent.type
 
-/datum/component/takes_reagent_appearance/Destroy()
-	QDEL_NULL(on_icon_changed)
-	QDEL_NULL(on_icon_reset)
+/datum/component/takes_reagent_appearance/Destroy(force)
+	on_icon_changed = null
+	on_icon_reset = null
 	return ..()
 
 /datum/component/takes_reagent_appearance/RegisterWithParent()
@@ -89,16 +89,16 @@
  * * Returns [NONE] if the name was reset to initial state
  */
 /datum/component/takes_reagent_appearance/proc/update_name(datum/glass_style/style)
-	var/obj/item/item_parent = parent
-	if(item_parent.renamedByPlayer)
+	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
+	var/obj/item/item_parent = parent
 	if(isnull(style))
 		// no style (reset)
 		item_parent.name = initial(item_parent.name)
 	else if(style.name)
 		// style
-		item_parent.name = style.name
+		style.set_name(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_NAME
 
 	return NONE
@@ -111,16 +111,16 @@
  * * Returns [NONE] if the description was reset to initial state
  */
 /datum/component/takes_reagent_appearance/proc/update_desc(datum/glass_style/style)
-	var/obj/item/item_parent = parent
-	if(item_parent.renamedByPlayer)
+	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
+	var/obj/item/item_parent = parent
 	if(isnull(style))
 		// no style (reset)
 		item_parent.desc = initial(item_parent.desc)
 	else if(style.desc)
 		// style
-		item_parent.desc = style.desc
+		style.set_desc(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_DESC
 
 	return NONE
@@ -139,8 +139,7 @@
 		item_parent.icon_state = icon_state_pre_change
 	else if(style.icon && style.icon_state)
 		// style
-		item_parent.icon = style.icon
-		item_parent.icon_state = style.icon_state
+		style.set_appearance(item_parent)
 		on_icon_changed?.InvokeAsync(style)
 		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 

@@ -20,7 +20,7 @@
 	/// Significant figures to round cooldown to
 	var/cooldown_rounding = 0.1
 	/// Shares cooldowns with other abiliies, bitflag
-	var/shared_cooldown
+	var/shared_cooldown = NONE
 	/// List of prerequisite actions that are used in this sequenced ability, you cannot put other sequenced abilities in this
 	var/list/sequence_actions
 	/// List of prerequisite actions that have been initialized
@@ -66,10 +66,10 @@
 /datum/action/cooldown/create_button()
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
-	button.maptext_x = 6
+	button.maptext_x = 4
 	button.maptext_y = 2
-	button.maptext_width = 24
-	button.maptext_height = 12
+	button.maptext_width = 32
+	button.maptext_height = 16
 	return button
 
 /datum/action/cooldown/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
@@ -79,9 +79,9 @@
 		button.maptext = ""
 	else
 		if (cooldown_rounding > 0)
-			button.maptext = MAPTEXT("<b>[round(time_left/10, cooldown_rounding)]</b>")
+			button.maptext = MAPTEXT_TINY_UNICODE("[round(time_left/10, cooldown_rounding)]")
 		else
-			button.maptext = MAPTEXT("<b>[round(time_left/10)]</b>")
+			button.maptext = MAPTEXT_TINY_UNICODE("[round(time_left/10)]")
 
 	if(!IsAvailable() || !is_action_active(button))
 		return
@@ -154,7 +154,7 @@
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
 	// "Shared cooldowns" covers actions which are not the same type,
 	// but have the same cooldown group and are on the same mob
-	if(shared_cooldown)
+	if(shared_cooldown != NONE)
 		StartCooldownOthers(override_cooldown_time)
 
 	StartCooldownSelf(override_cooldown_time)
@@ -177,6 +177,8 @@
 /// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownOthers(override_cooldown_time)
+	if(!length(owner?.actions))
+		return // Possible if they have an action they don't control
 	for(var/datum/action/cooldown/shared_ability in owner.actions - src)
 		if(!(shared_cooldown & shared_ability.shared_cooldown))
 			continue
@@ -184,6 +186,31 @@
 			shared_ability.StartCooldownSelf(override_cooldown_time)
 		else
 			shared_ability.StartCooldownSelf(cooldown_time)
+
+/// Resets the cooldown of this ability
+/datum/action/cooldown/proc/ResetCooldown()
+	next_use_time = world.time
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables this cooldown action
+/datum/action/cooldown/proc/enable()
+	action_disabled = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Disables this cooldown action
+/datum/action/cooldown/proc/disable()
+	action_disabled = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables all cooldown actions
+/datum/action/cooldown/proc/enable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.enable()
+
+/// Disables all cooldown actions
+/datum/action/cooldown/proc/disable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.disable()
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -238,7 +265,7 @@
 
 /// For signal calling
 /datum/action/cooldown/proc/PreActivate(atom/target)
-	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src, target) & COMPONENT_BLOCK_ABILITY_START)
 		return
 	// Note, that PreActivate handles no cooldowns at all by default.
 	// Be sure to call StartCooldown() in Activate() where necessary.

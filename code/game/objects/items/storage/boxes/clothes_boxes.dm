@@ -104,11 +104,11 @@
 	new /obj/item/storage/box/papersack/meat(src)
 
 /obj/item/storage/box/hero/mothpioneer
-	name = "Mothic Fleet Pioneer - 2100's."
+	name = "Mothic Fleet Pioneer - 2429."
 	desc = "Some claim that the fleet engineers are directly responsible for most modern advancements in spacefaring designs. Although the exact details of their past contributions are somewhat fuzzy, their ingenuity remains unmatched and unquestioned to this day."
 
 /obj/item/storage/box/hero/mothpioneer/PopulateContents()
-	new /obj/item/clothing/head/mothcap(src)
+	new /obj/item/clothing/head/mothcap/original(src)
 	new /obj/item/clothing/suit/mothcoat/original(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/flashlight/lantern(src)
@@ -186,3 +186,28 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+
+/obj/item/storage/box/holy/divine_archer
+	name = "Divine Archer Kit"
+	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer
+
+/obj/item/storage/box/holy/divine_archer/PopulateContents()
+	new /obj/item/clothing/under/rank/civilian/chaplain/divine_archer(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer(src)
+	new /obj/item/clothing/gloves/divine_archer(src)
+	new /obj/item/clothing/shoes/divine_archer(src)
+
+/obj/item/storage/box/floor_camo
+	name = "floor tile camo box"
+	desc = "Thank you for shopping from Camo-J's, our uniquely designed \
+		floor-tile 'NT scum' styled camouflage fatigues is the ultimate \
+		espionage uniform used by the very best. Providing the best \
+		flexibility, with our latest Camo-tech threads. Perfect for \
+		risky-espionage hallway operations. Enjoy our product!"
+
+/obj/item/storage/box/floor_camo/PopulateContents()
+	new /obj/item/clothing/under/syndicate/floortilecamo(src)
+	new /obj/item/clothing/mask/floortilebalaclava(src)
+	new /obj/item/clothing/gloves/combat/floortile(src)
+	new /obj/item/clothing/shoes/jackboots/floortile(src)
+	new /obj/item/storage/backpack/floortile(src)

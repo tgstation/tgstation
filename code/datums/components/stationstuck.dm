@@ -49,7 +49,7 @@ It has a punishment variable that is what happens to the parent when they leave 
 			escapee.death()
 		if(PUNISHMENT_GIB)
 			escapee.investigate_log("has been gibbed by stationstuck component.", INVESTIGATE_DEATHS)
-			escapee.gib()
+			escapee.gib(DROP_ALL_REMAINS)
 		if(PUNISHMENT_TELEPORT)
 			var/targetturf = find_safe_turf(stuck_zlevel)
 			if(!targetturf)

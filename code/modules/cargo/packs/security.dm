@@ -140,6 +140,7 @@
 					/obj/item/clothing/mask/gas/sechailer,
 				)
 	crate_name = "security clothing crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
@@ -168,6 +169,7 @@
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit,
 				)
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs
 
@@ -223,6 +225,22 @@
 	cost = CARGO_CRATE_VALUE * 18
 	contains = list(/obj/item/gun/energy/e_gun = 2)
 	crate_name = "energy gun crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/armory/laser_carbine
+	name = "Laser Carbine Crate"
+	desc = "Contains three laser carbines, capable of rapidly firing weak lasers."
+	cost = CARGO_CRATE_VALUE * 9
+	contains = list(/obj/item/gun/energy/laser/carbine = 3)
+	crate_name = "laser carbine crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/armory/disabler_smg
+	name = "Disabler SMG Crate"
+	desc = "Contains three disabler SMGs, capable of rapidly firing weak disabler beams."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/gun/energy/disabler/smg = 3)
+	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/exileimp
@@ -295,40 +313,11 @@
 	contains = list(/obj/item/shield/riot = 3)
 	crate_name = "riot shields crate"
 
-/datum/supply_pack/security/armory/russian
-	name = "Russian Surplus Crate"
-	desc = "Hello Comrade, we have the most modern russian military equipment the \
-		black market can offer, for the right price of course. Sadly we couldn't remove \
-		the lock, so it"
-	cost = CARGO_CRATE_VALUE * 12
-	contraband = TRUE
-	contains = list(/obj/item/food/rationpack,
-					/obj/item/ammo_box/a762,
-					/obj/item/storage/toolbox/ammo,
-					/obj/item/storage/toolbox/maint_kit,
-					/obj/item/clothing/suit/armor/vest/russian,
-					/obj/item/clothing/head/helmet/rus_helmet,
-					/obj/item/clothing/shoes/russian,
-					/obj/item/clothing/gloves/tackler/combat,
-					/obj/item/clothing/under/syndicate/rus_army,
-					/obj/item/clothing/under/costume/soviet,
-					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/head/helmet/rus_ushanka,
-					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/rifle/boltaction = 2,
-				)
-	crate_name = "surplus military crate"
-
-/datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 10)
-		var/item = pick(contains)
-		new item(C)
-
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
 	desc = "Contains two fullbody sets of tough, fireproof suits designed in a joint \
 		effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, \
-		and combat gloves."
+		and gorilla gloves."
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen = 2,
 					/obj/item/clothing/suit/armor/swat = 2,
@@ -346,25 +335,10 @@
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
 
-/datum/supply_pack/security/armory/wt550
-	name = "Recalled Weapon Pack"
-	desc = "Contains a set of old Nanotrasen brand autorifles recalled due to choking hazard."
-	cost = CARGO_CRATE_VALUE * 7
-	hidden = TRUE
-	contains = list(
-		/obj/item/gun/ballistic/automatic/wt550 = 2,
-		/obj/item/ammo_box/magazine/wt550m9 = 2,
-	)
-	crate_name = "Recalled rifle crate"
-
-/datum/supply_pack/security/armory/wt550ammo
-	name = "Recalled Ammo Pack"
-	desc = "Contains four 20-round magazine for the Recalled WT-550 Auto Rifle. \
-	Each magazine is designed to facilitate rapid tactical reloads. Recalled due to Security demands."
-	cost = CARGO_CRATE_VALUE * 4
-	hidden = TRUE
-	contains = list(
-		/obj/item/ammo_box/magazine/wt550m9 = 4,
-	)
-	crate_name = "Ammo box"
-
+/datum/supply_pack/security/sunglasses
+	name = "Sunglasses Crate"
+	desc = "A single pair of flash-proof sunglasses."
+	cost = CARGO_CRATE_VALUE * 2
+	access_view = ACCESS_SECURITY
+	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
+	crate_name = "sunglasses crate"

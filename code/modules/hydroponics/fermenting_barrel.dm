@@ -1,8 +1,11 @@
 /obj/structure/fermenting_barrel
 	name = "wooden barrel"
 	desc = "A large wooden barrel. You can ferment fruits and such inside it, or just use it to hold reagents."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "barrel"
+	base_icon_state = "barrel"
+	resistance_flags = FLAMMABLE
+	obj_flags = UNIQUE_RENAME
 	density = TRUE
 	anchored = FALSE
 	pressure_resistance = 2 * ONE_ATMOSPHERE
@@ -79,6 +82,11 @@
 	icon_state = open ? "barrel_open" : "barrel"
 	return ..()
 
+/obj/structure/fermenting_barrel/update_overlays()
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED) || HAS_TRAIT(src, TRAIT_HAS_LABEL))
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_label")
+
 /// Adds the fruit to the barrel to queue the fermentation
 /obj/structure/fermenting_barrel/proc/insert_fruit(mob/user, obj/item/food/grown/fruit, obj/item/storage/bag/plants/bag = null)
 	if(reagents.total_volume + potential_volume > reagents.maximum_volume)
@@ -132,7 +140,7 @@
 	soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/fermenting_barrel/process(delta_time)
+/obj/structure/fermenting_barrel/process(seconds_per_tick)
 	process_fermentation()
 
 /// Lil gunpowder barrel fer pirates since it's a nice reagent holder

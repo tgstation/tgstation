@@ -1,79 +1,45 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	base_icon_state = "freezer"
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
+	paint_jobs = null
+	sealed = TRUE
 
-/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
-	. = ..()
-	register_context()
+	/// The rate at which the internal air mixture cools
+	var/cooling_rate_per_second = 4
+	/// Minimum temperature of the internal air mixture
+	var/minimum_temperature = T0C - 60
 
-/obj/structure/closet/secure_closet/freezer/Destroy()
-	toggle_organ_decay(src)
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
-	. = ..()
-	toggle_organ_decay(src)
-
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
-	if(opened || !can_open(user, force)) //dupe check just so we don't let the organs decay when someone fails to open the locker
-		return FALSE
-	toggle_organ_decay(src)
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/close(mob/living/user)
-	if(..()) //if we actually closed the locker
-		toggle_organ_decay(src)
-		return TRUE
+/obj/structure/closet/secure_closet/freezer/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		// The internal air won't cool down the external air when the freezer is opened.
+		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
+		return ..()
+	else
+		if(internal_air.temperature <= minimum_temperature)
+			return
+		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
+		internal_air.temperature -= temperature_decrease_this_tick
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
 		return ..()
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+	return FALSE
 
-/obj/structure/closet/secure_closet/freezer/add_context(
-	atom/source,
-	list/context,
-	obj/item/held_item,
-	mob/living/user,
-)
-
-	if(isnull(held_item) || !opened)
-		return NONE
-
-	if(held_item.tool_behaviour == TOOL_WELDER)
-		context[SCREENTIP_CONTEXT_LMB] = "Unweld"
-		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/structure/closet/secure_closet/freezer/examine(mob/user)
+/obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
+	if (!(obj_flags & NO_DECONSTRUCTION))
+		new /obj/item/assembly/igniter/condenser(drop_location())
 	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
-
-/obj/structure/closet/secure_closet/freezer/atom_destruction(damage_flag)
-	new /obj/item/stack/sheet/iron(drop_location(), 1)
-	new /obj/item/assembly/igniter/condenser(drop_location())
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(!opened)
-		balloon_alert(user, "open it first!")
-		return TRUE
-
-	if(!tool.use_tool(src, user, 40, volume=50))
-		return TRUE
-
-	new /obj/item/stack/sheet/iron(drop_location(), 2)
-	new /obj/item/assembly/igniter/condenser(drop_location())
-	qdel(src)
-
-	return TRUE
 
 /obj/structure/closet/secure_closet/freezer/empty
 	name = "freezer"
@@ -93,10 +59,13 @@
 	new /obj/item/reagent_containers/condiment/rice(src)
 	new /obj/item/reagent_containers/condiment/sugar(src)
 
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access
+	req_access = null
+
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance
 	name = "maintenance refrigerator"
 	desc = "This refrigerator looks quite dusty, is there anything edible still inside?"
-	req_access = list()
+	req_access = null
 
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance/PopulateContents()
 	..()
@@ -107,7 +76,7 @@
 		new /obj/item/storage/fancy/egg_box(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
-	req_access = list()
+	req_access = null
 
 /obj/structure/closet/secure_closet/freezer/meat
 	name = "meat fridge"
@@ -119,8 +88,11 @@
 		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
-	req_access = list()
 	locked = FALSE
+	req_access = null
+
+/obj/structure/closet/secure_closet/freezer/meat/all_access
+	req_access = null
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge
 	name = "refrigerator"
@@ -142,9 +114,17 @@
 	for(var/i in 1 to 2)
 		new /obj/item/storage/fancy/egg_box(src)
 
+/obj/structure/closet/secure_closet/freezer/fridge/all_access
+	req_access = null
+
 /obj/structure/closet/secure_closet/freezer/fridge/open
 	req_access = null
 	locked = FALSE
+
+/obj/structure/closet/secure_closet/freezer/fridge/preopen
+	req_access = null
+	locked = FALSE
+	opened = TRUE
 
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"

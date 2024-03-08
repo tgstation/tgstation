@@ -2,7 +2,7 @@
 	name = "health sensor"
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
-	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*8, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 2)
 	attachable = TRUE
 
 	var/scanning = FALSE
@@ -38,6 +38,9 @@
 	return secured
 
 /obj/item/assembly/health/AltClick(mob/living/user)
+	if(!can_interact(user))
+		return
+
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
 		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))
@@ -46,25 +49,30 @@
 		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
 
 /obj/item/assembly/health/process()
+	//not ready yet
 	if(!scanning || !secured)
 		return
 
-	var/atom/A = src
+	//look for a mob in either our location or in the connected holder
+	var/atom/object = src
 	if(connected?.holder)
-		A = connected.holder
-	for(A, A && !ismob(A), A=A.loc);
-	// like get_turf(), but for mobs.
-	var/mob/living/M = A
+		object = connected.holder
+	while(!ismob(object))
+		object = object.loc
+		if(isnull(object)) //we went too far
+			return
 
-	if(M)
-		health_scan = M.health
-		if(health_scan <= alarm_health)
-			pulse()
-			audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
-			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-			toggle_scan()
+	//only do the pulse if we are within alarm thresholds
+	var/mob/living/target_mob = object
+	health_scan = target_mob.health
+	if(health_scan > alarm_health)
 		return
-	return
+
+	//do the pulse & the scan
+	pulse()
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
+	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	toggle_scan()
 
 /obj/item/assembly/health/proc/toggle_scan()
 	if(!secured)

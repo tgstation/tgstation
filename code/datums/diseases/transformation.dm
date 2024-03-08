@@ -10,6 +10,7 @@
 	stage_prob = 5
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 	disease_flags = CURABLE
+	bypasses_immunity = TRUE
 	var/list/stage1 = list("You feel unremarkable.")
 	var/list/stage2 = list("You feel boring.")
 	var/list/stage3 = list("You feel utterly plain.")
@@ -30,23 +31,23 @@
 	return D
 
 
-/datum/disease/transformation/stage_act(delta_time, times_fired)
+/datum/disease/transformation/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(1)
-			if (length(stage1) && DT_PROB(stage_prob, delta_time))
+			if (length(stage1) && SPT_PROB(stage_prob, seconds_per_tick))
 				to_chat(affected_mob, pick(stage1))
 		if(2)
-			if (length(stage2) && DT_PROB(stage_prob, delta_time))
+			if (length(stage2) && SPT_PROB(stage_prob, seconds_per_tick))
 				to_chat(affected_mob, pick(stage2))
 		if(3)
-			if (length(stage3) && DT_PROB(stage_prob * 2, delta_time))
+			if (length(stage3) && SPT_PROB(stage_prob * 2, seconds_per_tick))
 				to_chat(affected_mob, pick(stage3))
 		if(4)
-			if (length(stage4) && DT_PROB(stage_prob * 2, delta_time))
+			if (length(stage4) && SPT_PROB(stage_prob * 2, seconds_per_tick))
 				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
@@ -58,10 +59,10 @@
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
 			return
-		if(affected_mob.notransform)
+		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
-		affected_mob.notransform = 1
-		for(var/obj/item/W in affected_mob.get_equipped_items(TRUE))
+		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
+		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
 			affected_mob.dropItemToGround(I)
@@ -83,13 +84,12 @@
 /datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 5 SECONDS, affected_mob)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(affected_mob.real_name)]?", check_jobban = bantype, role = bantype, poll_time = 5 SECONDS, checked_target = affected_mob, alert_pic = affected_mob, role_name_text = "transformation victim")
+	if(chosen_one)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(FALSE)
-		affected_mob.key = C.key
+		affected_mob.key = chosen_one.key
 	else
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
 		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
@@ -130,21 +130,21 @@
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
 	affected_mob.monkeyize()
 
-/datum/disease/transformation/jungle_flu/stage_act(delta_time, times_fired)
+/datum/disease/transformation/jungle_flu/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_notice("Your [pick("arm", "back", "elbow", "head", "leg")] itches."))
 		if(3)
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
@@ -171,20 +171,20 @@
 	bantype = JOB_CYBORG
 
 
-/datum/disease/transformation/robot/stage_act(delta_time, times_fired)
+/datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(3)
-			if (DT_PROB(4, delta_time))
+			if (SPT_PROB(4, seconds_per_tick))
 				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
-			if (DT_PROB(2, delta_time))
+			if (SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
-			if (DT_PROB(10, delta_time))
+			if (SPT_PROB(10, seconds_per_tick))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
 
 
@@ -215,18 +215,18 @@
 	bantype = ROLE_ALIEN
 
 
-/datum/disease/transformation/xeno/stage_act(delta_time, times_fired)
+/datum/disease/transformation/xeno/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(3)
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
 
 
@@ -247,7 +247,7 @@
 	new_form = /mob/living/simple_animal/slime
 
 
-/datum/disease/transformation/slime/stage_act(delta_time, times_fired)
+/datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -257,7 +257,7 @@
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
 				if(isjellyperson(human))
-					stage = 5
+					update_stage(5)
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
@@ -287,16 +287,16 @@
 	new_form = /mob/living/basic/pet/dog/corgi
 
 
-/datum/disease/transformation/corgi/stage_act(delta_time, times_fired)
+/datum/disease/transformation/corgi/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 	switch(stage)
 		if(3)
-			if (DT_PROB(4, delta_time))
+			if (SPT_PROB(4, seconds_per_tick))
 				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
 		if(4)
-			if (DT_PROB(10, delta_time))
+			if (SPT_PROB(10, seconds_per_tick))
 				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
 
 
@@ -314,7 +314,7 @@
 	stage3 = list(span_danger("Your appendages are melting away."), span_danger("Your limbs begin to lose their shape."))
 	stage4 = list(span_danger("You're ravenous."))
 	stage5 = list(span_danger("You have become a morph."))
-	new_form = /mob/living/simple_animal/hostile/morph
+	new_form = /mob/living/basic/morph
 	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
 	transformed_antag_datum = /datum/antagonist/morph
 
@@ -340,28 +340,28 @@
 	new_form = /mob/living/simple_animal/pet/gondola
 
 
-/datum/disease/transformation/gondola/stage_act(delta_time, times_fired)
+/datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("smile")
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 		if(3)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("smile")
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 		if(4)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("smile")
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				var/obj/item/held_item = affected_mob.get_active_held_item()
 				if(held_item)
 					to_chat(affected_mob, span_danger("You let go of what you were holding."))

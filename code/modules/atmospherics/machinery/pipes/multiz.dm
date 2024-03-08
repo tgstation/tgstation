@@ -3,17 +3,19 @@
 	name = "multi deck pipe adapter"
 	desc = "An adapter which allows pipes to connect to other pipenets on different decks."
 	icon_state = "adapter-3"
-	icon = 'icons/obj/atmospherics/pipes/multiz.dmi'
+	icon = 'icons/obj/pipes_n_cables/multiz.dmi'
 
 	dir = SOUTH
 	initialize_directions = SOUTH
 
 	layer = HIGH_OBJ_LAYER
-	device_type = UNARY
+	device_type = TRINARY
 	paintable = FALSE
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "multiz"
+
+	has_gas_visuals = FALSE
 
 	///Our central icon
 	var/mutable_appearance/center = null
@@ -49,12 +51,12 @@
 ///Attempts to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet
 /obj/machinery/atmospherics/pipe/multiz/pipeline_expansion()
 	var/turf/local_turf = get_turf(src)
-	for(var/obj/machinery/atmospherics/pipe/multiz/above in SSmapping.get_turf_above(local_turf))
+	for(var/obj/machinery/atmospherics/pipe/multiz/above in GET_TURF_ABOVE(local_turf))
 		if(!is_connectable(above, piping_layer))
 			continue
-		nodes += above
-		above.nodes += src //Two way travel :)
-	for(var/obj/machinery/atmospherics/pipe/multiz/below in SSmapping.get_turf_below(local_turf))
+		nodes[2] = above
+		above.nodes[3] = src //Two way travel :)
+	for(var/obj/machinery/atmospherics/pipe/multiz/below in GET_TURF_BELOW(local_turf))
 		if(!is_connectable(below, piping_layer))
 			continue
 		below.pipeline_expansion() //If we've got one below us, force it to add us on facebook

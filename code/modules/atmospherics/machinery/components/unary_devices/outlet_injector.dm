@@ -10,6 +10,7 @@
 	hide = TRUE
 	layer = GAS_SCRUBBER_LAYER
 	pipe_state = "injector"
+	has_cap_visuals = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
@@ -17,16 +18,18 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
-	///id of air sensor its connected to
-	var/chamber_id
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/Initialize(mapload)
+	if(isnull(id_tag))
+		id_tag = assign_random_name()
 	. = ..()
-	var/static/list/tool_screentips = list(
-		TOOL_MULTITOOL = list(
-			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
-		)
-	)
+
+	var/static/list/tool_screentips
+	if(!tool_screentips)
+		tool_screentips = string_assoc_nested_list(list(
+			TOOL_MULTITOOL = list(
+				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+			)
+		))
 	AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	register_context()
 
@@ -41,28 +44,15 @@
 	. += span_notice("You can link it with an air sensor using a multitool.")
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = ..()
-	if (!istype(multi_tool))
-		return .
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		multi_tool.set_buffer(src)
+		sensor.multitool_act(user, multi_tool)
+		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "saved in buffer")
-	multi_tool.buffer = src
-	return TRUE
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(.)
-		disconnect_chamber()
-
-///called when its either unwrenched or destroyed
-/obj/machinery/atmospherics/components/unary/outlet_injector/proc/disconnect_chamber()
-	if(chamber_id != null)
-		GLOB.objects_by_id_tag -= CHAMBER_INPUT_FROM_ID(chamber_id)
-		chamber_id = null
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
-	disconnect_chamber()
-	return ..()
+	balloon_alert(user, "injector saved in buffer")
+	multi_tool.set_buffer(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -85,6 +75,8 @@
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
 		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"

@@ -66,7 +66,7 @@
 		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
 			if(LAZYLEN(launchpads) < maximum_pads)
 				launchpads |= M.buffer
-				M.buffer = null
+				M.set_buffer(null)
 				to_chat(user, span_notice("You upload the data from the [W.name]'s buffer."))
 			else
 				to_chat(user, span_warning("[src] cannot handle any more connections!"))
@@ -78,20 +78,6 @@
 	if(QDELETED(pad))
 		return FALSE
 	return TRUE
-
-/// Performs checks on whether or not the launch pad can be used.
-/// Returns `null` if there are no errors, otherwise will return the error string.
-/obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
-	if(QDELETED(pad))
-		return "ERROR: Launchpad not responding. Check launchpad integrity."
-	if(!pad.isAvailable())
-		return "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
-	if(pad.teleporting)
-		return "ERROR: Launchpad busy."
-	var/turf/pad_turf = get_turf(pad)
-	if(pad_turf && is_centcom_level(pad_turf.z))
-		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
-	return null
 
 /obj/machinery/computer/launchpad/proc/get_pad(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -168,7 +154,7 @@
 				selected_id = null
 			. = TRUE
 		if("launch")
-			var/checks = teleport_checks(current_pad)
+			var/checks = current_pad.teleport_checks()
 			if(isnull(checks))
 				current_pad.doteleport(usr, TRUE)
 			else
@@ -176,7 +162,7 @@
 			. = TRUE
 
 		if("pull")
-			var/checks = teleport_checks(current_pad)
+			var/checks = current_pad.teleport_checks()
 			if(isnull(checks))
 				current_pad.doteleport(usr, FALSE)
 			else

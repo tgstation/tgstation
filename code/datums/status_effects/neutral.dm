@@ -30,7 +30,7 @@
 	if(!QDELETED(reward_target))
 		reward_target.get_kill(owner)
 
-/datum/status_effect/syphon_mark/tick()
+/datum/status_effect/syphon_mark/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		get_kill()
 		qdel(src)
@@ -61,6 +61,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		null,
 		new_owner,
 	))
 
@@ -96,7 +97,7 @@
 	playsound(owner, 'sound/weapons/gun/shotgun/rack.ogg', 75, FALSE)
 	return ..()
 
-/datum/status_effect/bounty/tick()
+/datum/status_effect/bounty/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		rewards()
 		qdel(src)
@@ -109,11 +110,13 @@
 		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
 			spell.reset_spell_cooldown()
 
-		rewarded.adjustBruteLoss(-25)
-		rewarded.adjustFireLoss(-25)
-		rewarded.adjustToxLoss(-25)
-		rewarded.adjustOxyLoss(-25)
-		rewarded.adjustCloneLoss(-25)
+		var/need_mob_update = FALSE
+		need_mob_update += rewarded.adjustBruteLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
+		if(need_mob_update)
+			rewarded.updatehealth()
 
 // heldup is for the person being aimed at
 /datum/status_effect/grouped/heldup
@@ -146,8 +149,15 @@
 
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
-	desc = "You're currently pointing a gun at someone."
+	desc = "You're currently pointing a gun at someone. Click to cancel."
 	icon_state = "aimed"
+
+/atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	var/datum/component/gunpoint/gunpoint = owner.GetComponent(/datum/component/gunpoint)
+	gunpoint?.cancel()
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
@@ -185,14 +195,13 @@
 		return
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_owner_in_range))
-	RegisterSignals(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
-	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
+	RegisterSignals(offered_item, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
 
 /datum/status_effect/offering/Destroy()
-	for(var/i in possible_takers)
-		var/mob/living/carbon/removed_taker = i
+	for(var/mob/living/carbon/removed_taker as anything in possible_takers)
 		remove_candidate(removed_taker)
 	LAZYCLEARLIST(possible_takers)
+	offered_item = null
 	return ..()
 
 /// Hook up the specified carbon mob to be offered the item in question, give them the alert and signals and all
@@ -202,7 +211,7 @@
 		return
 	LAZYADD(possible_takers, possible_candidate)
 	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
-	G.setup(possible_candidate, owner, offered_item)
+	G.setup(possible_candidate, src)
 
 /// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
 /datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
@@ -225,8 +234,7 @@
 /datum/status_effect/offering/proc/check_owner_in_range(mob/living/carbon/source)
 	SIGNAL_HANDLER
 
-	for(var/i in possible_takers)
-		var/mob/living/carbon/checking_taker = i
+	for(var/mob/living/carbon/checking_taker as anything in possible_takers)
 		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
@@ -244,7 +252,6 @@
 /datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker)
 	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
 
-
 /**
  * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
  * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
@@ -256,17 +263,14 @@
 /datum/status_effect/offering/proc/additional_taker_check(mob/living/carbon/taker)
 	return taker.can_hold_items()
 
-
 /**
  * This status effect is meant only for items that you don't actually receive
  * when offered, mostly useful for `/obj/item/hand_item` subtypes.
  */
 /datum/status_effect/offering/no_item_received
 
-
 /datum/status_effect/offering/no_item_received/additional_taker_check(mob/living/carbon/taker)
-	return TRUE
-
+	return taker.usable_hands > 0
 
 /**
  * This status effect is meant only to be used for offerings that require the target to
@@ -276,25 +280,20 @@
  */
 /datum/status_effect/offering/no_item_received/needs_resting
 
-
 /datum/status_effect/offering/no_item_received/needs_resting/additional_taker_check(mob/living/carbon/taker)
 	return taker.body_position == LYING_DOWN
-
 
 /datum/status_effect/offering/no_item_received/needs_resting/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_owner_standing))
 
-
 /datum/status_effect/offering/no_item_received/needs_resting/register_candidate(mob/living/carbon/possible_candidate)
 	. = ..()
 	RegisterSignal(possible_candidate, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_candidate_resting))
 
-
 /datum/status_effect/offering/no_item_received/needs_resting/remove_candidate(mob/living/carbon/removed_candidate)
 	UnregisterSignal(removed_candidate, COMSIG_LIVING_SET_BODY_POSITION)
 	return ..()
-
 
 /// Simple signal handler that ensures that, if the owner stops standing, the offer no longer stands either!
 /datum/status_effect/offering/no_item_received/needs_resting/proc/check_owner_standing(mob/living/carbon/owner)
@@ -303,7 +302,6 @@
 
 	// This doesn't work anymore if the owner is no longer standing up, sorry!
 	qdel(src)
-
 
 /// Simple signal handler that ensures that, should a candidate now be standing up, the offer won't be standing for them anymore!
 /datum/status_effect/offering/no_item_received/needs_resting/proc/check_candidate_resting(mob/living/carbon/candidate)
@@ -315,10 +313,13 @@
 	// No longer lying down? You're no longer eligible to take the offer, sorry!
 	remove_candidate(candidate)
 
+/// Subtype for high fives, so we can fake out people
+/datum/status_effect/offering/no_item_received/high_five
+	id = "offer_high_five"
 
-/datum/status_effect/offering/secret_handshake
-	id = "secret_handshake"
-	give_alert_type = /atom/movable/screen/alert/give/secret_handshake
+/datum/status_effect/offering/no_item_received/high_five/dropped_item(obj/item/source)
+	// Lets us "too slow" people, instead of qdeling we just handle the ref
+	offered_item = null
 
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender
@@ -340,10 +341,26 @@
 
 	owner.emote("surrender")
 
+///For when you need to make someone be prompted for surrender, but not forever
+/datum/status_effect/surrender_timed
+	id = "surrender_timed"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/surrender_timed/on_apply()
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+/datum/status_effect/surrender_timed/on_remove()
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+
 /*
  * A status effect used for preventing caltrop message spam
  *
- * While a mob has this status effect, they won't recieve any messages about
+ * While a mob has this status effect, they won't receive any messages about
  * stepping on caltrops. But they will be stunned and damaged regardless.
  *
  * The status effect itself has no effect, other than to disappear after
@@ -352,11 +369,11 @@
 /datum/status_effect/caltropped
 	id = "caltropped"
 	duration = 1 SECONDS
-	tick_interval = INFINITY
+	tick_interval = -1
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
-#define EIGENSTASIUM_MAX_BUFFER -250
+#define EIGENSTASIUM_MAX_BUFFER -251
 #define EIGENSTASIUM_STABILISATION_RATE 5
 #define EIGENSTASIUM_PHASE_1_END 50
 #define EIGENSTASIUM_PHASE_2_END 80
@@ -379,11 +396,11 @@
 
 /datum/status_effect/eigenstasium/Destroy()
 	if(alt_clone)
-		UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(alt_clone, COMSIG_QDELETING)
 		QDEL_NULL(alt_clone)
 	return ..()
 
-/datum/status_effect/eigenstasium/tick()
+/datum/status_effect/eigenstasium/tick(seconds_between_ticks)
 	. = ..()
 	//This stuff runs every cycle
 	if(prob(5))
@@ -416,6 +433,10 @@
 			stable_message = TRUE
 		return
 	stable_message = FALSE
+
+
+	//Increment cycle
+	current_cycle++ //needs to be done here because phase 2 can early return
 
 	//These run on specific cycles
 	switch(current_cycle)
@@ -466,7 +487,7 @@
 					alt_clone = new typepath(owner.loc)
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
-					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, PROC_REF(remove_clone_from_var))
+					RegisterSignal(alt_clone, COMSIG_QDELETING, PROC_REF(remove_clone_from_var))
 					owner.visible_message("[owner] splits into seemingly two versions of themselves!")
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
@@ -502,20 +523,17 @@
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
 				var/obj/item/organ/external/tail/monkey/monkey_tail = new ()
-				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
+				monkey_tail.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_features(human_mob)
+				human_species.randomize_active_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)
 
-	//Finally increment cycle
-	current_cycle++
-
 /datum/status_effect/eigenstasium/proc/remove_clone_from_var()
 	SIGNAL_HANDLER
-	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(alt_clone, COMSIG_QDELETING)
 
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers
@@ -530,3 +548,39 @@
 #undef EIGENSTASIUM_PHASE_2_END
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
+
+///Makes the mob luminescent for the duration of the effect.
+/datum/status_effect/tinlux_light
+	id = "tinea_luxor_light"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/tinlux_light/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/tinlux_light/on_apply()
+	mob_light_obj = owner.mob_light(2)
+	return TRUE
+
+/datum/status_effect/tinlux_light/on_remove()
+	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/gutted
+	id = "gutted"
+	alert_type = null
+	duration = -1
+	tick_interval = -1
+
+/datum/status_effect/gutted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(stop_gutting))
+	return TRUE
+
+/datum/status_effect/gutted/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/status_effect/gutted/proc/stop_gutting()
+	SIGNAL_HANDLER
+	qdel(src)

@@ -17,7 +17,7 @@
 
 /datum/element/skittish/proc/Bump(mob/living/scooby, atom/target)
 	SIGNAL_HANDLER
-	if(scooby.stat != CONSCIOUS || scooby.m_intent != MOVE_INTENT_RUN)
+	if(scooby.stat != CONSCIOUS || scooby.move_intent != MOVE_INTENT_RUN)
 		return
 
 	if(!istype(target, /obj/structure/closet))

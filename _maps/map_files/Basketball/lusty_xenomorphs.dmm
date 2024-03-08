@@ -52,8 +52,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "dM" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
@@ -66,7 +65,7 @@
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "eU" = (
@@ -168,8 +167,7 @@
 "lD" = (
 /obj/structure/alien/weeds,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /turf/open/floor/iron/white,
@@ -235,10 +233,7 @@
 /area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Containment Pen"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -292,19 +287,18 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "zZ" = (
-/obj/structure/window/reinforced/fulltile/damaged,
 /obj/effect/particle_effect/water/extinguisher/stomach_acid,
 /obj/machinery/door/poddoor/preopen{
 	id = null;
 	name = "Xenobiology Blast Door"
 	},
-/turf/open/floor/engine,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Ax" = (
 /obj/structure/alien/weeds,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -317,10 +311,7 @@
 /area/centcom/basketball)
 "AI" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Containment Pen"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -369,7 +360,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "DP" = (
@@ -391,8 +382,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Gi" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
@@ -455,10 +445,8 @@
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Nt" = (
@@ -469,9 +457,7 @@
 /obj/machinery/button/door{
 	name = "Containment Control"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -490,17 +476,24 @@
 /obj/effect/landmark/basketball/team_spawn/home,
 /turf/open/floor/engine,
 /area/centcom/basketball)
-"PU" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/engine,
-/area/centcom/basketball)
-"PW" = (
-/obj/structure/window/reinforced/fulltile/damaged,
+"PN" = (
 /obj/machinery/door/poddoor/preopen{
 	id = null;
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/engine,
+/area/centcom/basketball)
+"PU" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"PW" = (
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/obj/effect/mapping_helpers/damaged_window,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Qh" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -510,9 +503,7 @@
 /obj/machinery/button/door{
 	name = "Containment Control"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -534,7 +525,7 @@
 	},
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Se" = (
@@ -557,10 +548,8 @@
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Vr" = (
@@ -874,7 +863,7 @@ uH
 Cw
 Vr
 Vr
-PW
+PN
 kT
 dr
 IA

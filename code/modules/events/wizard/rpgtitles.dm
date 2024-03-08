@@ -42,8 +42,8 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 
 	//we must prepare for the mother of all strings
 	new_crewmember.maptext_height = max(new_crewmember.maptext_height, 32)
-	new_crewmember.maptext_width = max(new_crewmember.maptext_width, 80)
-	new_crewmember.maptext_x = -24 - new_crewmember.base_pixel_x
+	new_crewmember.maptext_width = max(new_crewmember.maptext_width, 112)
+	new_crewmember.maptext_x = -38 - new_crewmember.base_pixel_x
 	new_crewmember.maptext_y = -32
 
 	//list of lists involving strings related to a biotype flag, their position in the list equal to the position they were defined as bitflags.
@@ -90,7 +90,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 			maptext_title += "[applicable_biotypes[iteration][1]] "
 
 	//mother of all strings...
-	new_crewmember.maptext = "<span class='maptext' style='text-align: center; vertical-align: top'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [maptext_title]</span></span>"
+	new_crewmember.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center; vertical-align: top; -dm-text-outline: 1px #0005'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [maptext_title]</span></span>")
 
 	if(!(job.job_flags & JOB_CREW_MEMBER))
 		return

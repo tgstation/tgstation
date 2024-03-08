@@ -1,12 +1,12 @@
 /obj/machinery/computer
 	name = "computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 	density = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
 	armor_type = /datum/armor/machinery_computer
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// How bright we are when turned on.
 	var/brightness_on = 1
 	/// Icon_state of the keyboard overlay.
@@ -26,7 +26,6 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-
 	power_change()
 
 /obj/machinery/computer/process()
@@ -64,10 +63,10 @@
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	if(circuit && !(flags_1&NODECONSTRUCT_1))
-		to_chat(user, span_notice("You start to disconnect the monitor..."))
+	if(circuit && !(obj_flags & NO_DECONSTRUCTION))
+		balloon_alert(user, "disconnecting monitor...")
 		if(I.use_tool(src, user, time_to_unscrew, volume=50))
-			deconstruct(TRUE, user)
+			deconstruct(TRUE)
 	return TRUE
 
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -99,33 +98,25 @@
 				if(prob(10))
 					atom_break(ENERGY)
 
-/obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
-	on_deconstruction()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(circuit) //no circuit, no computer frame
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.setDir(dir)
-			A.circuit = circuit
-			// Circuit removal code is handled in /obj/machinery/Exited()
-			circuit.forceMove(A)
-			A.set_anchored(TRUE)
-			if(machine_stat & BROKEN)
-				if(user)
-					to_chat(user, span_notice("The broken glass falls out."))
-				else
-					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
-				new /obj/item/shard(drop_location())
-				new /obj/item/shard(drop_location())
-				A.state = 3
-				A.icon_state = "3"
-			else
-				if(user)
-					to_chat(user, span_notice("You disconnect the monitor."))
-				A.state = 4
-				A.icon_state = "4"
-		for(var/obj/C in src)
-			C.forceMove(loc)
-	qdel(src)
+/obj/machinery/computer/spawn_frame(disassembled)
+	if(QDELETED(circuit)) //no circuit, no computer frame
+		return
+
+	var/obj/structure/frame/computer/new_frame = new(loc)
+	new_frame.setDir(dir)
+	new_frame.set_anchored(TRUE)
+	new_frame.circuit = circuit
+	// Circuit removal code is handled in /obj/machinery/Exited()
+	circuit.forceMove(new_frame)
+	if((machine_stat & BROKEN) || !disassembled)
+		var/atom/drop_loc = drop_location()
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+		new /obj/item/shard(drop_loc)
+		new /obj/item/shard(drop_loc)
+		new_frame.state = FRAME_COMPUTER_STATE_WIRED
+	else
+		new_frame.state = FRAME_COMPUTER_STATE_GLASSED
+	new_frame.update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()

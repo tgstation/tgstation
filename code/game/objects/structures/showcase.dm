@@ -4,7 +4,7 @@
 /*Completely generic structures for use by mappers to create fake objects, i.e. display rooms*/
 /obj/structure/showcase
 	name = "showcase"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = TRUE
@@ -14,7 +14,7 @@
 /obj/structure/showcase/fakeid
 	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize(mapload)
@@ -25,7 +25,7 @@
 /obj/structure/showcase/fakesec
 	name = "\improper CentCom security records"
 	desc = "Used to view and edit personnel's security records."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/update_overlays()
@@ -64,26 +64,32 @@
 /obj/structure/showcase/mecha/marauder
 	name = "combat mech exhibit"
 	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/mecha.dmi'
 	icon_state = "marauder"
 
 /obj/structure/showcase/mecha/ripley
 	name = "construction mech exhibit"
 	desc = "A stand with a retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/mecha.dmi'
 	icon_state = "firefighter"
 
 /obj/structure/showcase/machinery/implanter
 	name = "\improper Nanotrasen automated mindshield implanter exhibit"
 	desc = "A flimsy model of a standard Nanotrasen automated mindshield implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!"
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 
 /obj/structure/showcase/machinery/microwave
 	name = "\improper Nanotrasen-brand microwave"
 	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box."
 	icon = 'icons/obj/machines/microwave.dmi'
-	icon_state = "map_icon"
+	icon_state = "mw_complete"
+
+/obj/structure/showcase/machinery/microwave_engineering
+	name = "\improper Nanotrasen Wave(tm) microwave"
+	desc = "Just when everyone thought Nanotrasen couldn't improve on their famous microwave, this 2563 model features Wave™! A Nanotrasen exclusive, Wave™ allows your PDA to be charged wirelessly through microwave frequencies. Because nothing says 'future' like charging your PDA while overcooking your leftovers. Nanotrasen Wave™ - Multitasking, redefined."
+	icon = 'icons/obj/machines/microwave.dmi'
+	icon_state = "engi_mw_complete"
 
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
@@ -98,7 +104,7 @@
 /obj/structure/showcase/machinery/tv
 	name = "\improper Nanotrasen corporate newsfeed"
 	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "television"
 
 /obj/structure/showcase/machinery/signal_decrypter
@@ -123,7 +129,7 @@
 	name = "seppuku katana"
 	density = 0
 	desc = "Welp, only one way to recover your honour."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
 
 //Deconstructing
@@ -141,7 +147,7 @@
 		to_chat(user, span_notice("You unscrew the screws."))
 		tool.play_tool_sound(src, 100)
 		deconstruction_state = SHOWCASE_SCREWDRIVERED
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/showcase/crowbar_act(mob/living/user, obj/item/tool)
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
@@ -149,13 +155,13 @@
 	to_chat(user, span_notice("You start to crowbar the showcase apart..."))
 	new /obj/item/stack/sheet/iron(drop_location(), 4)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
 	if(deconstruction_state != SHOWCASE_CONSTRUCTED)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 

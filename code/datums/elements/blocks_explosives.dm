@@ -1,6 +1,7 @@
 /// Apply this element to a movable atom when you want it to block explosions
 /// It will mirror the blocking down to that movable's turf, keeping explosion work cheap
 /datum/element/blocks_explosives
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/blocks_explosives/Attach(datum/target)
 	if(!ismovable(target))
@@ -18,8 +19,13 @@
 	else if(moving_target.loc)
 		block_loc(moving_target.loc, moving_target.explosion_block)
 
-/datum/element/blocks_explosives/Detach(datum/source)
+/datum/element/blocks_explosives/Detach(atom/movable/source)
 	. = ..()
+	if(length(source.locs) > 1)
+		for(var/atom/location as anything in source.locs)
+			unblock_loc(location, source.explosion_block)
+	else if(source.loc)
+		unblock_loc(source.loc, source.explosion_block)
 	REMOVE_TRAIT(source, TRAIT_BLOCKING_EXPLOSIVES, TRAIT_GENERIC)
 
 /// Call this when our blocking well, changes. we'll update our turf(s) with the details

@@ -9,12 +9,12 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter
 	name = "labor camp teleporter"
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
@@ -43,6 +43,7 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/Destroy()
 	if(linked_reclaimer)
 		linked_reclaimer.linked_teleporter = null
+	linked_reclaimer = null
 	return ..()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
@@ -176,7 +177,7 @@ The console is located at computer/gulag_teleporter.dm
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/datum/stock_part/scanning_module = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 

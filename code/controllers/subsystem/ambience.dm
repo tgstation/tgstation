@@ -69,8 +69,8 @@ SUBSYSTEM_DEF(ambience)
 	var/static/list/minecraft_cave_noises = list(
 		'sound/machines/airlock.ogg',
 		'sound/effects/snap.ogg',
-		'sound/effects/clownstep1.ogg',
-		'sound/effects/clownstep2.ogg',
+		'sound/effects/footstep/clownstep1.ogg',
+		'sound/effects/footstep/clownstep2.ogg',
 		'sound/items/welder.ogg',
 		'sound/items/welder2.ogg',
 		'sound/items/crowbar.ogg',

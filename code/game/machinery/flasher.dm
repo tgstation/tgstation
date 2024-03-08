@@ -3,7 +3,7 @@
 /obj/machinery/flasher
 	name = "mounted flash"
 	desc = "A wall-mounted flashbulb device."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "mflash1"
 	base_icon_state = "mflash"
 	max_integrity = 250
@@ -28,6 +28,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(!built)
 		bulb = new(src)
+	find_and_hang_on_wall()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()
@@ -143,22 +144,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		bulb.burn_out()
 		power_change()
 
-/obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(bulb)
-			bulb.forceMove(loc)
-		if(disassembled)
-			var/obj/item/wallframe/flasher/flasher_obj = new(get_turf(src))
-			transfer_fingerprints_to(flasher_obj)
-			flasher_obj.id = id
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		else
-			new /obj/item/stack/sheet/iron (loc, 2)
-	qdel(src)
+/obj/machinery/flasher/on_deconstruction(disassembled)
+	if(bulb)
+		bulb.forceMove(loc)
+	if(disassembled)
+		var/obj/item/wallframe/flasher/flasher_obj = new(get_turf(src))
+		transfer_fingerprints_to(flasher_obj)
+		flasher_obj.id = id
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	else
+		new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
+	icon = 'icons/obj/machines/sec.dmi'
 	icon_state = "pflash1-p"
 	base_icon_state = "pflash"
 	strength = 8 SECONDS
@@ -177,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 	if(iscarbon(proximity_check_mob))
 		var/mob/living/carbon/proximity_carbon = proximity_check_mob
-		if (proximity_carbon.m_intent != MOVE_INTENT_WALK && anchored)
+		if (proximity_carbon.move_intent != MOVE_INTENT_WALK && anchored)
 			flash()
 
 /obj/machinery/flasher/portable/vv_edit_var(vname, vval)
@@ -208,7 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"
 	desc = "Used for building wall-mounted flashers."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null

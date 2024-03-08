@@ -6,6 +6,8 @@
 #define JOB_UNAVAILABLE_SLOTFULL 5
 /// Job unavailable due to incompatibility with an antag role.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
+/// Checks for character age.
+#define JOB_UNAVAILABLE_AGE 7
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
@@ -17,6 +19,12 @@
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
 
+// Keys for jobconfig.toml
+#define JOB_CONFIG_PLAYTIME_REQUIREMENTS "Playtime Requirements"
+#define JOB_CONFIG_REQUIRED_ACCOUNT_AGE "Required Account Age"
+#define JOB_CONFIG_REQUIRED_CHARACTER_AGE "Required Character Age"
+#define JOB_CONFIG_SPAWN_POSITIONS "Spawn Positions"
+#define JOB_CONFIG_TOTAL_POSITIONS "Total Positions"
 
 /**
  * =======================
@@ -40,6 +48,8 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
+#define JOB_VETERAN_ADVISOR "Veteran Security Advisor"
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -56,6 +66,7 @@
 #define JOB_STATION_ENGINEER "Station Engineer"
 #define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
 //Medical
+#define JOB_CORONER "Coroner"
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
@@ -67,11 +78,14 @@
 //Supply
 #define JOB_QUARTERMASTER "Quartermaster"
 #define JOB_CARGO_TECHNICIAN "Cargo Technician"
+#define JOB_CARGO_GORILLA "Cargo Gorilla"
 #define JOB_SHAFT_MINER "Shaft Miner"
+#define JOB_BITRUNNER "Bitrunner"
 //Service
 #define JOB_BARTENDER "Bartender"
 #define JOB_BOTANIST "Botanist"
 #define JOB_COOK "Cook"
+#define JOB_CHEF "Chef" // Alternate cook title.
 #define JOB_JANITOR "Janitor"
 #define JOB_CLOWN "Clown"
 #define JOB_MIME "Mime"
@@ -102,43 +116,52 @@
 #define JOB_CENTCOM_SPECIAL_OFFICER "Special Ops Officer"
 #define JOB_CENTCOM_PRIVATE_SECURITY "Private Security Force"
 
+#define JOB_GROUP_ENGINEERS list( \
+	JOB_STATION_ENGINEER, \
+	JOB_ATMOSPHERIC_TECHNICIAN, \
+)
+
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
-#define JOB_DISPLAY_ORDER_BARTENDER 4
-#define JOB_DISPLAY_ORDER_BOTANIST 5
-#define JOB_DISPLAY_ORDER_COOK 6
-#define JOB_DISPLAY_ORDER_JANITOR 7
-#define JOB_DISPLAY_ORDER_CLOWN 8
-#define JOB_DISPLAY_ORDER_MIME 9
-#define JOB_DISPLAY_ORDER_CURATOR 10
-#define JOB_DISPLAY_ORDER_LAWYER 11
-#define JOB_DISPLAY_ORDER_CHAPLAIN 12
-#define JOB_DISPLAY_ORDER_PSYCHOLOGIST 13
-#define JOB_DISPLAY_ORDER_AI 14
-#define JOB_DISPLAY_ORDER_CYBORG 15
-#define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 16
-#define JOB_DISPLAY_ORDER_STATION_ENGINEER 17
-#define JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN 18
-#define JOB_DISPLAY_ORDER_QUARTERMASTER 19
-#define JOB_DISPLAY_ORDER_CARGO_TECHNICIAN 20
-#define JOB_DISPLAY_ORDER_SHAFT_MINER 21
-#define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 22
-#define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 23
-#define JOB_DISPLAY_ORDER_PARAMEDIC 24
-#define JOB_DISPLAY_ORDER_CHEMIST 25
-#define JOB_DISPLAY_ORDER_VIROLOGIST 26
-#define JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR 27
-#define JOB_DISPLAY_ORDER_SCIENTIST 28
-#define JOB_DISPLAY_ORDER_ROBOTICIST 29
-#define JOB_DISPLAY_ORDER_GENETICIST 30
-#define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 31
-#define JOB_DISPLAY_ORDER_WARDEN 32
-#define JOB_DISPLAY_ORDER_DETECTIVE 33
-#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 34
-#define JOB_DISPLAY_ORDER_PRISONER 35
-
+#define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 4
+#define JOB_DISPLAY_ORDER_BARTENDER 5
+#define JOB_DISPLAY_ORDER_BOTANIST 6
+#define JOB_DISPLAY_ORDER_COOK 7
+#define JOB_DISPLAY_ORDER_JANITOR 8
+#define JOB_DISPLAY_ORDER_CLOWN 9
+#define JOB_DISPLAY_ORDER_MIME 10
+#define JOB_DISPLAY_ORDER_CURATOR 11
+#define JOB_DISPLAY_ORDER_LAWYER 12
+#define JOB_DISPLAY_ORDER_CHAPLAIN 13
+#define JOB_DISPLAY_ORDER_PSYCHOLOGIST 14
+#define JOB_DISPLAY_ORDER_AI 15
+#define JOB_DISPLAY_ORDER_CYBORG 16
+#define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 17
+#define JOB_DISPLAY_ORDER_STATION_ENGINEER 18
+#define JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN 19
+#define JOB_DISPLAY_ORDER_QUARTERMASTER 20
+#define JOB_DISPLAY_ORDER_CARGO_TECHNICIAN 21
+#define JOB_DISPLAY_ORDER_SHAFT_MINER 22
+#define JOB_DISPLAY_ORDER_BITRUNNER 23
+#define JOB_DISPLAY_ORDER_CARGO_GORILLA 24
+#define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 25
+#define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 26
+#define JOB_DISPLAY_ORDER_PARAMEDIC 27
+#define JOB_DISPLAY_ORDER_CHEMIST 28
+#define JOB_DISPLAY_ORDER_VIROLOGIST 29
+#define JOB_DISPLAY_ORDER_CORONER 30
+#define JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR 31
+#define JOB_DISPLAY_ORDER_SCIENTIST 32
+#define JOB_DISPLAY_ORDER_ROBOTICIST 33
+#define JOB_DISPLAY_ORDER_GENETICIST 34
+#define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 35
+#define JOB_DISPLAY_ORDER_VETERAN_ADVISOR 36
+#define JOB_DISPLAY_ORDER_WARDEN 37
+#define JOB_DISPLAY_ORDER_DETECTIVE 38
+#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 39
+#define JOB_DISPLAY_ORDER_PRISONER 40
 
 #define DEPARTMENT_UNASSIGNED "No Department"
 
@@ -182,6 +205,21 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
+/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+#define JOB_CANNOT_OPEN_SLOTS (1<<9)
+/// This job will not display on the job menu when there are no slots available, instead of appearing greyed out
+#define JOB_HIDE_WHEN_EMPTY (1<<10)
+/// This job cannot be signed up for at round start or recorded in your preferences
+#define JOB_LATEJOIN_ONLY (1<<11)
+/// This job is a head of staff.
+#define JOB_HEAD_OF_STAFF (1<<12)
+
+/// Combination flag for jobs which are considered regular crew members of the station.
+#define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
+/// Combination flag for jobs which are considered heads of staff.
+#define HEAD_OF_STAFF_JOB_FLAGS (JOB_BOLD_SELECT_TEXT|JOB_CANNOT_OPEN_SLOTS|JOB_HEAD_OF_STAFF)
+/// Combination flag for jobs which are enabled by station traits.
+#define STATION_TRAIT_JOB_FLAGS (JOB_CANNOT_OPEN_SLOTS|JOB_HIDE_WHEN_EMPTY|JOB_LATEJOIN_ONLY&~JOB_REOPEN_ON_ROUNDSTART_LOSS)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"
@@ -194,3 +232,6 @@
 #define SUPERVISOR_HOS "the Head of Security"
 #define SUPERVISOR_QM "the Quartermaster"
 #define SUPERVISOR_RD "the Research Director"
+
+/// Mind traits that should be shared by every head of staff. has to be this way cause byond lists lol
+#define HEAD_OF_STAFF_MIND_TRAITS TRAIT_FAST_TYING, TRAIT_HIGH_VALUE_RANSOM

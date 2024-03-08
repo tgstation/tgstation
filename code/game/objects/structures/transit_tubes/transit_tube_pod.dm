@@ -2,7 +2,7 @@
 #define MOVE_ANIMATION_STAGE_TWO 2
 
 /obj/structure/transit_tube_pod
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
@@ -40,7 +40,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/atom/location = get_turf(src)
 		if(user)
 			location = user.loc
@@ -54,8 +54,11 @@
 
 /obj/structure/transit_tube_pod/ex_act(severity, target)
 	. = ..()
-	if(!QDELETED(src))
-		empty_pod()
+	if(QDELETED(src))
+		return TRUE
+
+	empty_pod()
+	return TRUE
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
 	switch(severity)
@@ -100,7 +103,7 @@
 	var/datum/move_loop/engine = SSmove_manager.force_move_dir(src, dir, 0, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(engine, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(before_pipe_transfer))
 	RegisterSignal(engine, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_pipe_transfer))
-	RegisterSignal(engine, COMSIG_PARENT_QDELETING, PROC_REF(engine_finish))
+	RegisterSignal(engine, COMSIG_QDELETING, PROC_REF(engine_finish))
 	calibrate_engine(engine)
 
 /obj/structure/transit_tube_pod/proc/before_pipe_transfer(datum/move_loop/move/source)
@@ -151,7 +154,7 @@
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	//landed on a turf without transit tube or not in our direction
-	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))
+	if(!TT || (!(dir in TT.tube_dirs) && !(REVERSE_DIR(dir) in TT.tube_dirs)))
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
@@ -184,7 +187,7 @@
 	for(var/obj/structure/transit_tube/station/station in loc)
 		if(station.pod_moving)
 			return
-		if(direction == turn(station.boarding_dir,180))
+		if(direction == REVERSE_DIR(station.boarding_dir))
 			if(station.open_status == STATION_TUBE_OPEN)
 				user.forceMove(loc)
 				update_appearance()

@@ -12,3 +12,5 @@
 #define QUIRK_CHANGES_APPEARANCE (1<<2)
 /// The only thing this quirk effects is mood so it should be disabled if mood is
 #define QUIRK_MOODLET_BASED (1<<3)
+/// This quirk shouldn't be shown by health analyzers and hud, perhaps as considering it medical condition is a far stretch.
+#define QUIRK_HIDE_FROM_SCAN (1<<4)

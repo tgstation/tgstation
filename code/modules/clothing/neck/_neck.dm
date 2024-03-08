@@ -17,6 +17,27 @@
 		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
+/obj/item/clothing/neck/bowtie
+	name = "bow tie"
+	desc = "A small neosilk bowtie."
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "bowtie_greyscale"
+	inhand_icon_state = "" //no inhands
+	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_CREW
+	greyscale_config = /datum/greyscale_config/ties
+	greyscale_config_worn = /datum/greyscale_config/ties/worn
+	greyscale_colors = "#151516ff"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/neck/bowtie/rainbow
+	name = "rainbow bow tie"
+	desc = "An extremely large neosilk rainbow-colored bowtie."
+	icon_state = "bowtie_rainbow"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+
 /obj/item/clothing/neck/tie
 	name = "slick tie"
 	desc = "A neosilk tie."
@@ -26,7 +47,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/ties
-	greyscale_config_worn = /datum/greyscale_config/ties_worn
+	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#4d4e4e"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	/// All ties start untied unless otherwise specified
@@ -60,10 +81,10 @@
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
-		tie_timer_actual /= 1.25
+		tie_timer_actual *= 0.8
 	// Heads of staff are experts at tying their ties.
-	if(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-		tie_timer_actual /= 2
+	if(HAS_TRAIT(user, TRAIT_FAST_TYING))
+		tie_timer_actual *= 0.5
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
@@ -185,26 +206,114 @@
 
 	var/mob/living/carbon/carbon_patient = M
 	var/body_part = parse_zone(user.zone_selected)
+	var/oxy_loss = carbon_patient.getOxyLoss()
 
-	var/heart_strength = span_danger("no")
-	var/lung_strength = span_danger("no")
+	var/heart_strength
+	var/pulse_pressure
 
 	var/obj/item/organ/internal/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/internal/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/liver/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/appendix/appendix = carbon_patient.get_organ_slot(ORGAN_SLOT_APPENDIX)
 
-	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
-		if(istype(heart))
-			heart_strength = (heart.beating ? "a healthy" : span_danger("an unstable"))
-		if(istype(lungs))
-			lung_strength = ((carbon_patient.failed_last_breath || carbon_patient.losebreath) ? span_danger("strained") : "healthy")
+	var/render_list = list()//information will be packaged in a list for clean display to the user
 
-	user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+	//determine what specific action we're taking
+	switch (body_part)
+		if(BODY_ZONE_CHEST)//Listening to the chest
+			user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+			if(!user.can_hear())
+				to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear."))
+				return
+			else
+				render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
 
-	var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration" : "You faintly hear [heart_strength] pulse")
-	if(!user.can_hear())
-		diagnosis = "Fat load of good it does you though, since you can't hear"
+			//assess breathing
+			if(isnull(lungs) \
+				|| carbon_patient.stat == DEAD \
+				|| (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) \
+				|| (HAS_TRAIT(carbon_patient, TRAIT_NOBREATH))\
+				|| carbon_patient.failed_last_breath \
+				|| carbon_patient.losebreath)//If pt is dead or otherwise not breathing
+				render_list += "<span class='danger ml-1'>[M.p_Theyre()] not breathing!</span>\n"
+			else if(lungs.damage > 10)//if breathing, check for lung damage
+				render_list += "<span class='danger ml-1'>You hear fluid in [M.p_their()] lungs!</span>\n"
+			else if(oxy_loss > 10)//if they have suffocation damage
+				render_list += "<span class='danger ml-1'>[M.p_Theyre()] breathing heavily!</span>\n"
+			else
+				render_list += "<span class='notice ml-1'>[M.p_Theyre()] breathing normally.</span>\n"//they're okay :D
 
-	to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. [diagnosis]."))
+			//assess heart
+			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
+				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
+					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
+				else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
+					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
+				else
+					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
+
+		if(BODY_ZONE_PRECISE_GROIN)//If we're targeting the groin
+			render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")
+			user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
+
+			//assess abdominal organs
+			if(body_part == BODY_ZONE_PRECISE_GROIN)
+				var/appendix_okay = TRUE
+				var/liver_okay = TRUE
+				if(!liver)//sanity check, ensure the patient actually has a liver
+					render_list += "<span class='danger ml-1'>You can't feel anything where [M.p_their()] liver would be.</span>\n"
+					liver_okay = FALSE
+				else
+					if(liver.damage > 10)
+						render_list += "<span class='danger ml-1'>[M.p_Their()] liver feels firm.</span>\n"//their liver is damaged
+						liver_okay = FALSE
+
+				if(!appendix)//sanity check, ensure the patient actually has an appendix
+					render_list += "<span class='danger ml-1'>You can't feel anything where [M.p_their()] appendix would be.</span>\n"
+					appendix_okay = FALSE
+				else
+					if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
+						render_list += "<span class='danger ml-1'>[M] screams when you lift your hand from [M.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
+						M.emote("scream")
+						appendix_okay = FALSE
+
+				if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
+					render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
+
+		if(BODY_ZONE_PRECISE_EYES)
+			balloon_alert(user, "can't do that!")
+			return
+
+		if(BODY_ZONE_PRECISE_MOUTH)
+			balloon_alert(user, "can't do that!")
+			return
+
+		else//targeting an extremity or the head
+			if(body_part ==  BODY_ZONE_HEAD)
+				render_list += span_info("You carefully press your fingers to [carbon_patient]'s neck:\n")
+				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s neck."), ignored_mobs = user)
+			else
+				render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
+				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
+
+			//assess pulse (heart & blood level)
+			if(isnull(heart) || !heart.is_beating() || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
+				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
+			else
+				if(heart.damage > 10)
+					heart_strength = span_danger("irregular")//their heart is damaged
+				else
+					heart_strength = span_notice("regular")//they're okay :D
+
+				if(carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY)
+					pulse_pressure = span_danger("thready")//low blood
+				else
+					pulse_pressure = span_notice("strong")//they're okay :D
+
+				render_list += "<span class='notice ml-1'>[M.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
+
+	//display our packaged information in an examine block for easy reading
+	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 ///////////
 //SCARVES//
@@ -213,14 +322,14 @@
 /obj/item/clothing/neck/scarf
 	name = "scarf"
 	icon_state = "scarf"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "scarf_cloth"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/scarf
-	greyscale_config_worn = /datum/greyscale_config/scarf_worn
+	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/scarf/black
@@ -273,8 +382,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
-	greyscale_config = /datum/greyscale_config/large_scarf
-	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
+	greyscale_config = /datum/greyscale_config/scarf
+	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/large_scarf/red
@@ -302,7 +411,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE"
 	greyscale_config = /datum/greyscale_config/infinity_scarf
-	greyscale_config_worn = /datum/greyscale_config/infinity_scarf_worn
+	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/petcollar
@@ -315,7 +424,7 @@
 	fire = 50
 	acid = 40
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	if(!ismonkey(M))
 		return FALSE
 	return ..()
@@ -360,7 +469,7 @@
 		var/true_price = round(price*profit_scaling)
 		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
-			new /obj/item/holochip(get_turf(user),true_price)
+			new /obj/item/holochip(get_turf(user), true_price)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
 
@@ -373,7 +482,7 @@
 	icon_state = "beads"
 	color = "#ffffff"
 	custom_price = PAYCHECK_CREW * 0.2
-	custom_materials = (list(/datum/material/plastic = 500))
+	custom_materials = (list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*5))
 
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()

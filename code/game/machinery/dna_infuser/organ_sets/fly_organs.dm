@@ -37,6 +37,9 @@
 	icon = 'icons/obj/medical/organs/fly_organs.dmi'
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
+	liked_foodtypes = GROSS | GORE // nasty ass
+	disliked_foodtypes = NONE
+	toxic_foodtypes = NONE // these fucks eat vomit, i am sure they can handle drinking bleach or whatever too
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/buzzwords)
 
@@ -66,10 +69,7 @@
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
-
-/obj/item/organ/internal/heart/fly/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return //don't set icon thank you
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/internal/lungs/fly
 	desc = FLY_INFUSED_ORGAN_DESC
@@ -103,7 +103,7 @@
 	var/mob/living/carbon/body = owner
 	ASSERT(istype(body))
 	// we do not lose any nutrition as a fly when vomiting out food
-	body.vomit(lost_nutrition = 0, stun = FALSE, distance = 2, force = TRUE, purge_ratio = 0.67)
+	body.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE | MOB_VOMIT_HARM), lost_nutrition = 0, distance = 2, purge_ratio = 0.67)
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	body.visible_message(
 		span_danger("[body] vomits on the floor!"),

@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import { basename } from 'path';
+
 import { createLogger } from '../logging.js';
 import { require } from '../require.js';
 import { resolveGlob } from '../util.js';
@@ -30,7 +31,7 @@ export const loadSourceMaps = async (bundleDir) => {
     try {
       const file = basename(path).replace('.map', '');
       const consumer = await new SourceMapConsumer(
-        JSON.parse(fs.readFileSync(path, 'utf8'))
+        JSON.parse(fs.readFileSync(path, 'utf8')),
       );
       sourceMaps.push({ file, consumer });
     } catch (err) {

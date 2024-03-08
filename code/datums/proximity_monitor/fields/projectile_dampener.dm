@@ -18,7 +18,7 @@
 
 /datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
-	RegisterSignal(projector, COMSIG_PARENT_QDELETING, PROC_REF(on_projector_del))
+	RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -35,7 +35,6 @@
 	for(var/obj/projectile/projectile in tracked)
 		if(!(projectile in ranged) || !projectile.loc)
 			release_projectile(projectile)
-	..()
 
 /datum/proximity_monitor/advanced/projectile_dampener/setup_edge_turf(turf/target)
 	. = ..()
@@ -103,7 +102,7 @@
 	if(isprojectile(movable) && !(movable in tracked))
 		capture_projectile(movable)
 
-/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(delta_time)
+/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(seconds_per_tick)
 	for(var/mob/living/silicon/robot/borg in range(current_range, get_turf(host)))
 		if(!borg.has_buckled_mobs())
 			continue

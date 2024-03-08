@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
@@ -29,6 +29,17 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 
+/obj/item/gun/magic/apply_fantasy_bonuses(bonus)
+	. = ..()
+	recharge_rate = modify_fantasy_variable("recharge_rate", recharge_rate, -bonus, minimum = 1)
+	max_charges = modify_fantasy_variable("max_charges", max_charges, bonus)
+	charges = modify_fantasy_variable("charges", charges, bonus)
+
+/obj/item/gun/magic/remove_fantasy_bonuses(bonus)
+	recharge_rate = reset_fantasy_variable("recharge_rate", recharge_rate)
+	max_charges = reset_fantasy_variable("max_charges", max_charges)
+	charges = reset_fantasy_variable("charges", charges)
+	return ..()
 
 /obj/item/gun/magic/fire_sounds()
 	var/frequency_to_use = sin((90/max_charges) * charges)
@@ -103,11 +114,11 @@
 	return ..()
 
 
-/obj/item/gun/magic/process(delta_time)
+/obj/item/gun/magic/process(seconds_per_tick)
 	if (charges >= max_charges)
 		charge_timer = 0
 		return
-	charge_timer += delta_time
+	charge_timer += seconds_per_tick
 	if(charge_timer < recharge_rate)
 		return 0
 	charge_timer = 0

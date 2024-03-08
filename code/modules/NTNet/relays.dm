@@ -1,9 +1,7 @@
-GLOBAL_LIST_EMPTY(ntnet_relays)
-
 ///Checks whether NTNet is available by ensuring at least one relay exists and is operational.
 /proc/find_functional_ntnet_relay()
 	// Check all relays. If we have at least one working relay, ntos is up.
-	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+	for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 		if(!relays.is_operational)
 			continue
 		return TRUE
@@ -33,6 +31,19 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 	var/dos_capacity = 500 // Amount of DoS "packets" in buffer required to crash the relay
 	var/dos_dissipate = 0.5 // Amount of DoS "packets" dissipated over time.
 
+/obj/machinery/ntnet_relay/Initialize(mapload)
+	. = ..()
+	uid = gl_uid++
+	var/list/current_machines = SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay)
+	SSmodular_computers.add_log("New quantum relay activated. Current amount of linked relays: [current_machines.len]")
+
+/obj/machinery/ntnet_relay/Destroy()
+	. = ..()
+	var/list/machines_left = SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay)
+	SSmodular_computers.add_log("Quantum relay connection severed. Current amount of linked relays: [machines_left.len]")
+	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
+		D.target = null
+		D.error = "Connection to quantum relay severed"
 
 ///Proc called to change the value of the `relay_enabled` variable and append behavior related to its change.
 /obj/machinery/ntnet_relay/proc/set_relay_enabled(new_value)
@@ -68,13 +79,13 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 	icon_state = "bus[is_operational ? null : "_off"]"
 	return ..()
 
-/obj/machinery/ntnet_relay/process(delta_time)
+/obj/machinery/ntnet_relay/process(seconds_per_tick)
 	update_use_power(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
 	update_appearance()
 
 	if(dos_overload > 0)
-		dos_overload = max(0, dos_overload - dos_dissipate * delta_time)
+		dos_overload = max(0, dos_overload - dos_dissipate * seconds_per_tick)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)
@@ -86,7 +97,7 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 		set_dos_failure(FALSE)
 		update_appearance()
 		SSmodular_computers.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
-	return ..()
+	return TRUE
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -118,21 +129,3 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 			SSmodular_computers.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
 			update_appearance()
 			return TRUE
-
-/obj/machinery/ntnet_relay/Initialize(mapload)
-	uid = gl_uid++
-	component_parts = list()
-
-	GLOB.ntnet_relays += src
-	SSmodular_computers.add_log("New quantum relay activated. Current amount of linked relays: [GLOB.ntnet_relays.len]")
-	return ..()
-
-/obj/machinery/ntnet_relay/Destroy()
-	GLOB.ntnet_relays -= src
-	SSmodular_computers.add_log("Quantum relay connection severed. Current amount of linked relays: [GLOB.ntnet_relays.len]")
-
-	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
-		D.target = null
-		D.error = "Connection to quantum relay severed"
-
-	return ..()

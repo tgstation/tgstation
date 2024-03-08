@@ -2,7 +2,7 @@
 #define BUTTON_DELAY 50 //five seconds
 
 /obj/machinery/syndicatebomb
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	name = "syndicate bomb"
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
@@ -61,7 +61,7 @@
 		..()
 
 /obj/machinery/syndicatebomb/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -99,7 +99,7 @@
 
 /obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/syndicatebomb(src)
+	set_wires(new /datum/wires/syndicatebomb(src))
 	if(payload)
 		payload = new payload(src)
 	update_appearance()
@@ -183,11 +183,11 @@
 	if(payload || !wires.is_all_cut() || !open_panel)
 		return FALSE
 
-	if(!tool.tool_start_check(user, amount=5))  //uses up 5 fuel
+	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
 
 	to_chat(user, span_notice("You start to cut [src] apart..."))
-	if(tool.use_tool(src, user, 20, volume=50, amount=5)) // uses up 5 fuel
+	if(tool.use_tool(src, user, 20, volume=50))
 		to_chat(user, span_notice("You cut [src] apart."))
 		new /obj/item/stack/sheet/plasteel(loc, 5)
 		qdel(src)
@@ -251,7 +251,11 @@
 	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
 		return
 
-	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	notify_ghosts(
+		"\A [src] has been activated at [get_area(src)]!",
+		source = src,
+		header = "Bomb Planted",
+	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
@@ -305,7 +309,7 @@
 /obj/item/bombcore
 	name = "bomb payload"
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bombcore"
 	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -321,6 +325,7 @@
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
+	return TRUE
 
 /obj/item/bombcore/burn()
 	detonate()
@@ -346,7 +351,7 @@
 	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
 
 /obj/item/bombcore/syndicate/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/item/bombcore/syndicate/burn()
 	return ..()
@@ -391,9 +396,7 @@
 		attempts++
 		defusals++
 		holder.loc.visible_message(span_notice("[icon2html(holder, viewers(holder))] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds..."))
-		sleep(5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
-		if(istype(holder))
-			reset()
+		addtimer(CALLBACK(src, PROC_REF(reset)), 5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 
 /obj/item/bombcore/badmin
 	name = "badmin payload"
@@ -410,12 +413,14 @@
 
 /obj/item/bombcore/badmin/summon/detonate()
 	var/obj/machinery/syndicatebomb/B = loc
-	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE)
+	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE, cardinals_only = FALSE)
 	qdel(B)
 	qdel(src)
 
 /obj/item/bombcore/badmin/summon/clown
-	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
+	name = "bananium payload"
+	desc = "Clowns delivered fast and cheap!"
+	summon_path = /mob/living/basic/clown
 	amt_summon = 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
@@ -475,7 +480,7 @@
 		var/datum/reagents/reactants = new(time_release)
 		reactants.my_atom = src
 		for(var/obj/item/reagent_containers/RC in beakers)
-			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
+			RC.reagents.trans_to(reactants, RC.reagents.total_volume * fraction, no_react = TRUE)
 		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
@@ -489,7 +494,7 @@
 		reactants += G.reagents
 
 	for(var/obj/item/slime_extract/S in beakers)
-		if(S.Uses)
+		if(S.extract_uses)
 			for(var/obj/item/reagent_containers/cup/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
@@ -579,12 +584,76 @@
 
 	qdel(src)
 
+#define DIMENSION_CHOICE_RANDOM "None/Randomized"
+
+/obj/item/bombcore/dimensional
+	name = "multi-dimensional payload"
+	desc = "A wicked payload meant to wildly transmutate terrain over a wide area, a power no mere human should wield."
+	range_heavy = 17
+	var/datum/dimension_theme/chosen_theme
+
+/obj/item/bombcore/dimensional/Destroy()
+	chosen_theme = null
+	return ..()
+
+/obj/item/bombcore/dimensional/examine(mob/user)
+	. = ..()
+	. += span_notice("Use in hand to change the linked dimension. Current dimension: [chosen_theme?.name || "None, output will be random"].")
+
+/obj/item/bombcore/dimensional/attack_self(mob/user)
+	. = ..()
+	var/list/choosable_dimensions = list()
+	var/datum/radial_menu_choice/null_choice = new
+	null_choice.name = DIMENSION_CHOICE_RANDOM
+	choosable_dimensions[DIMENSION_CHOICE_RANDOM] = null_choice
+	for(var/datum/dimension_theme/theme as anything in SSmaterials.dimensional_themes)
+		var/datum/radial_menu_choice/theme_choice = new
+		theme_choice.image = image(initial(theme.icon), initial(theme.icon_state))
+		theme_choice.name = initial(theme.name)
+		choosable_dimensions[theme] = theme_choice
+
+	var/datum/dimension_theme/picked = show_radial_menu(user, src, choosable_dimensions, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 38, require_near = TRUE)
+	if(isnull(picked))
+		return
+	if(picked == DIMENSION_CHOICE_RANDOM)
+		chosen_theme = null
+	else
+		chosen_theme = picked
+	balloon_alert(user, "set to [chosen_theme?.name || DIMENSION_CHOICE_RANDOM]")
+
+/obj/item/bombcore/dimensional/proc/check_menu(mob/user)
+	if(!user.is_holding(src) || user.incapacitated())
+		return FALSE
+	return TRUE
+
+/obj/item/bombcore/dimensional/detonate()
+	var/list/affected_turfs = circle_range_turfs(src, range_heavy)
+	var/theme_count = length(SSmaterials.dimensional_themes)
+	var/num_affected = 0
+	for(var/turf/affected as anything in affected_turfs)
+		var/datum/dimension_theme/theme_to_use
+		if(isnull(chosen_theme))
+			theme_to_use = SSmaterials.dimensional_themes[SSmaterials.dimensional_themes[rand(1, theme_count)]]
+		else
+			theme_to_use = SSmaterials.dimensional_themes[chosen_theme]
+		if(!theme_to_use.can_convert(affected))
+			continue
+		num_affected++
+		var/skip_sound = TRUE
+		if(num_affected % 5) //makes it play the sound more sparingly
+			skip_sound = FALSE
+		var/time_mult = round(get_dist_euclidian(get_turf(src), affected)) + 1
+		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, skip_sound, TRUE), 0.1 SECONDS * time_mult)
+	qdel(src)
+
+#undef DIMENSION_CHOICE_RANDOM
+
 ///Syndicate Detonator (aka the big red button)///
 
 /obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -596,7 +665,7 @@
 
 /obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
-		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
+		for(var/obj/machinery/syndicatebomb/B as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/syndicatebomb))
 			if(B.active)
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++

@@ -5,7 +5,7 @@
 	var/desc
 
 	///From __DEFINES/surgery.dm
-	///Selection: SURGERY_IGNORE_CLOTHES | SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	///Selection: SURGERY_IGNORE_CLOTHES | SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
 	var/surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	///The surgery step we're currently on, increases each time we do a step.
 	var/status = 1
@@ -20,17 +20,19 @@
 	var/list/possible_locs = list()
 	///Mobs that are valid to have surgery performed on them.
 	var/list/target_mobtypes = list(/mob/living/carbon/human)
-	///The person the surgery is being performed on. Funnily enough, it isn't always a carbon.
-	var/mob/living/carbon/target
-	///The specific bodypart being operated on.
-	var/obj/item/bodypart/operated_bodypart
-	///The wound datum that is being operated on.
-	var/datum/wound/operated_wound
-	///Types of wounds this surgery can target.
-	var/datum/wound/targetable_wound
 
+	///The person the surgery is being performed on. Funnily enough, it isn't always a carbon.
+	VAR_FINAL/mob/living/carbon/target
+	///The specific bodypart being operated on.
+	VAR_FINAL/obj/item/bodypart/operated_bodypart
+	///The wound datum that is being operated on.
+	VAR_FINAL/datum/wound/operated_wound
+
+	///Types of wounds this surgery can target.
+	var/targetable_wound
 	///The types of bodyparts that this surgery can have performed on it. Used for augmented surgeries.
 	var/requires_bodypart_type = BODYTYPE_ORGANIC
+
 	///The speed modifier given to the surgery through external means.
 	var/speed_modifier = 0
 	///Whether the surgery requires research to do. You need to add a design if using this!
@@ -69,12 +71,14 @@
 
 
 /datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
+	SHOULD_CALL_PARENT(TRUE)
+
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
+	if(HAS_MIND_TRAIT(user, TRAIT_SURGEON))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
@@ -102,6 +106,7 @@
 		return FALSE
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
+	return .
 
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
@@ -124,7 +129,7 @@
 	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
-		
+
 	return FALSE
 
 /datum/surgery/proc/get_surgery_step()
@@ -166,14 +171,14 @@
 	name = "Surgery Procedure Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
 	name = "Debug Surgery Disk"
 	desc = "A disk that contains all existing surgery procedures."
 	icon_state = "datadisk1"
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
 
 /obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()

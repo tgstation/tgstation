@@ -13,18 +13,18 @@
 /obj/item/locator
 	name = "bluespace locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=400)
-	var/tracking_range = 20
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
+	var/tracking_range = 35
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -72,22 +72,22 @@
 
 		var/list/track_implants = list()
 
-		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-			if (!W.imp_in || !isliving(W.loc))
+		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
+			if (!tracking_beacon.imp_in || !isliving(tracking_beacon.loc))
 				continue
 			else
-				var/mob/living/M = W.loc
-				if (M.stat == DEAD)
-					if (M.timeofdeath + W.lifespan_postmortem < world.time)
+				var/mob/living/living_mob = tracking_beacon.loc
+				if (living_mob.stat == DEAD)
+					if (living_mob.timeofdeath + tracking_beacon.lifespan_postmortem < world.time)
 						continue
-			var/turf/tr = get_turf(W)
+			var/turf/tr = get_turf(tracking_beacon)
 			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 
 			if(distance > tracking_range)
 				continue
 
 			var/D = dir2text(get_dir(sr, tr))
-			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
+			track_implants += list(list(name = tracking_beacon.imp_in.name, direction = D, distance = distance))
 		data["trackimplants"] = track_implants
 	return data
 
@@ -100,7 +100,7 @@
 /obj/item/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology. One of the buttons opens a portal, the other re-opens your last destination."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "hand_tele"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -110,7 +110,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
@@ -170,7 +170,7 @@
 		return
 
 	var/list/locations = list()
-	for(var/obj/machinery/computer/teleporter/computer in GLOB.machines)
+	for(var/obj/machinery/computer/teleporter/computer as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/teleporter))
 		var/atom/target = computer.target_ref?.resolve()
 		if(!target)
 			computer.target_ref = null
@@ -256,8 +256,8 @@
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
-	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
-	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal1, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2
@@ -316,14 +316,14 @@
 
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
-	desc = "A reverse-engineered version of the Nanotrasen portable handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
-	icon = 'icons/obj/device.dmi'
+	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -357,8 +357,8 @@
 	attempt_teleport(user = user, triggered_by_emp = FALSE)
 	return TRUE
 
-/obj/item/syndicate_teleporter/process(delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && charges < max_charges)
+/obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
+	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
@@ -424,6 +424,7 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
+		make_bloods(current_location, destination, user)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -459,6 +460,8 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
+		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
+			make_bloods(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -481,7 +484,7 @@
 	destination.ex_act(EXPLODE_HEAVY)
 	victim.unequip_everything()
 	victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 
 ///Damage and stun all mobs in fragging_location turf, called after a teleport
 /obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.
@@ -489,6 +492,16 @@
 		victim.apply_damage(20, BRUTE)
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
+
+///Bleed and make blood splatters at tele start and end points
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	user.add_splatter_floor(old_location)
+	user.add_splatter_floor(new_location)
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/carbon_user = user
+	carbon_user.bleed(10)
+
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
@@ -502,6 +515,8 @@
 		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
 		<br>
 		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
+		<br>
+		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
 
 /obj/item/storage/box/syndie_kit/syndicate_teleporter

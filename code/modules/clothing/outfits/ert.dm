@@ -150,9 +150,9 @@
 	id_trim = /datum/id_trim/centcom/official
 	uniform = /obj/item/clothing/under/rank/centcom/official
 	back = /obj/item/storage/backpack/satchel
+	box = /obj/item/storage/box/survival
 	backpack_contents = list(
 		/obj/item/stamp/centcom = 1,
-		/obj/item/storage/box/survival = 1,
 	)
 	belt = /obj/item/gun/energy/e_gun
 	ears = /obj/item/radio/headset/headset_cent
@@ -168,8 +168,7 @@
 		return
 
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.saved_identification = H.real_name
-	pda.saved_job = "CentCom Official"
+	pda.imprint_id(H.real_name, "CentCom Official")
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -181,10 +180,8 @@
 	name = "Inquisition Commander"
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/scythe/talking/chainsword
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
+	r_hand = /obj/item/nullrod/vibro/talking/chainsword
+	backpack_contents = null
 
 /datum/outfit/centcom/ert/security/inquisitor
 	name = "Inquisition Security"
@@ -284,7 +281,7 @@
 	..()
 	if(visualsOnly)
 		return
-	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
+	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
@@ -296,17 +293,15 @@
 	id_trim = /datum/id_trim/centcom/intern
 	uniform = /obj/item/clothing/under/rank/centcom/intern
 	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
+	box = /obj/item/storage/box/survival
 	belt = /obj/item/melee/baton
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	l_pocket = /obj/item/ammo_box/a762
-	r_pocket = /obj/item/ammo_box/a762
-	l_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	l_pocket = /obj/item/ammo_box/strilka310
+	r_pocket = /obj/item/ammo_box/strilka310
+	l_hand = /obj/item/gun/ballistic/rifle/boltaction
 
 /datum/outfit/centcom/centcom_intern/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -330,7 +325,7 @@
 	name = "CentCom Head Intern"
 
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction
 	belt = /obj/item/melee/baton/security/loaded
 	head = /obj/item/clothing/head/hats/intern
 	l_hand = /obj/item/megaphone
@@ -447,30 +442,40 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/melee/energy/sword/saber
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
 
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
 	)
 
-/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = RADIO_FREQENCY_LOCKED
-	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
-	..()
+	var/obj/item/radio/radio = squaddie.ears
+	radio.set_frequency(FREQ_CENTCOM)
+	radio.freqlock = RADIO_FREQENCY_LOCKED
+	var/obj/item/card/id/id = squaddie.wear_id
+	id.registered_name = squaddie.real_name
+	id.update_label()
+	id.update_icon()
+	return ..()
 
 /datum/outfit/centcom/death_commando/officer
 	name = "Death Commando Officer"
 
-	head = /obj/item/clothing/head/helmet/space/beret
+	back = /obj/item/mod/control/pre_equipped/apocryphal/officer
+
+/datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
+	. = ..()
+	var/obj/item/mod/control/mod = squaddie.back
+	if(!istype(mod))
+		return
+	var/obj/item/mod/module/hat_stabilizer/hat_holder = locate() in mod.modules
+	var/obj/item/clothing/head/helmet/space/beret/beret = new(hat_holder)
+	hat_holder.attached_hat = beret
+	squaddie.update_clothing(mod.slot_flags)
 
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"
@@ -527,3 +532,34 @@
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+/datum/outfit/centcom/militia
+	name = "Militia Man"
+
+	id = /obj/item/card/id/advanced/centcom/ert/militia
+	belt = /obj/item/storage/belt/holster/energy/smoothbore
+	suit = /obj/item/clothing/suit/armor/militia
+	suit_store = /obj/item/gun/energy/laser/musket
+	head = /obj/item/clothing/head/cowboy/black
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	shoes = /obj/item/clothing/shoes/cowboy
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack/satchel/leather
+	box = /obj/item/storage/box/survival
+	l_pocket = /obj/item/switchblade
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
+	ears = /obj/item/radio/headset
+	backpack_contents = list(
+			/obj/item/storage/medkit/emergency = 1,
+			/obj/item/crowbar = 1,
+			/obj/item/restraints/handcuffs = 1,
+	)
+
+/datum/outfit/centcom/militia/general
+	name = "Militia General"
+
+	id = /obj/item/card/id/advanced/centcom/ert/militia/general
+	belt = /obj/item/gun/energy/disabler/smoothbore/prime
+	head = /obj/item/clothing/head/beret/militia
+	l_hand = /obj/item/megaphone
+	suit_store = /obj/item/gun/energy/laser/musket/prime

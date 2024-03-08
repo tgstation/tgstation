@@ -2,7 +2,8 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-
+/// Starting purity of reagents made in biogenerator
+#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
 	name = "biogenerator"
@@ -44,6 +45,8 @@
 	var/selected_cat
 	/// The sound loop that can be heard when the generator is processing.
 	var/datum/looping_sound/generator/soundloop
+	/// Whether the biogen is welded down to the floor disabling unwrenching
+	var/welded_down = FALSE
 
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
@@ -51,6 +54,51 @@
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] = new /datum/techweb/autounlocking/biogenerator
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator]
 	soundloop = new(src, processing)
+	if(mapload)
+		welded_down = TRUE
+
+/obj/machinery/biogenerator/can_be_unfasten_wrench(mob/user, silent)
+	if(welded_down)
+		to_chat(user, span_warning("[src] is welded to the floor!"))
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/biogenerator/set_anchored(anchorvalue)
+	. = ..()
+	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
+		welded_down = FALSE
+
+/obj/machinery/biogenerator/welder_act(mob/living/user, obj/item/tool)
+	..()
+	if(welded_down)
+		if(!tool.tool_start_check(user, amount=2))
+			return TRUE
+		user.visible_message(
+			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("You start to cut [src] free from the floor..."),
+			span_hear("You hear welding."),
+		)
+		if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
+			return FALSE
+		welded_down = FALSE
+		to_chat(user, span_notice("You cut [src] free from the floor."))
+		return TRUE
+	if(!anchored)
+		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		return TRUE
+	if(!tool.tool_start_check(user, amount=2))
+		return TRUE
+	user.visible_message(
+		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("You start to weld [src] to the floor..."),
+		span_hear("You hear welding."),
+	)
+	if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
+		balloon_alert(user, "cancelled!")
+		return FALSE
+	welded_down = TRUE
+	to_chat(user, span_notice("You weld [src] to the floor."))
+	return TRUE
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
@@ -70,13 +118,11 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/biogenerator/handle_atom_del(atom/deleting_atom)
+/obj/machinery/biogenerator/Exited(atom/movable/gone, direction)
 	. = ..()
-
-	if(deleting_atom == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-
 
 /obj/machinery/biogenerator/RefreshParts()
 	. = ..()
@@ -89,10 +135,10 @@
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		new_max_items += MAX_ITEMS_PER_RATING * bin.tier
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		new_productivity += manipulator.tier
-		new_efficiency += manipulator.tier
-		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		new_productivity += servo.tier
+		new_efficiency += servo.tier
+		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * servo.tier
 
 	max_items = new_max_items
 	efficiency = new_efficiency
@@ -112,6 +158,8 @@
 		. += span_notice(" - Matter consumption at <b>[1 / efficiency * 100]</b>%.")
 		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[current_item_count]</b>.")
 
+	if(welded_down)
+		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
 
 /obj/machinery/biogenerator/update_appearance()
 	. = ..()
@@ -147,6 +195,10 @@
 	. += mutable_appearance(icon, "[icon_state]_o_screen")
 	. += emissive_appearance(icon, "[icon_state]_o_screen", src)
 
+/obj/machinery/biogenerator/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode)
@@ -245,7 +297,7 @@
 	update_appearance()
 
 
-/obj/machinery/biogenerator/process(delta_time)
+/obj/machinery/biogenerator/process(seconds_per_tick)
 	if(!processing)
 		return
 
@@ -263,9 +315,14 @@
 		if(!food_to_convert)
 			break
 
+		if(food_to_convert.flags_1 & HOLOGRAM_1)
+			qdel(food_to_convert)
+			current_item_count = max(current_item_count - 1, 0)
+			continue
+
 		convert_to_biomass(food_to_convert)
 
-	use_power(active_power_usage * delta_time)
+	use_power(active_power_usage * seconds_per_tick)
 
 	if(!current_item_count)
 		stop_process(FALSE)
@@ -283,10 +340,7 @@
  * subsequently be deleted.
  */
 /obj/machinery/biogenerator/proc/convert_to_biomass(obj/item/food/food_to_convert)
-	var/static/list/nutrient_subtypes = typesof(/datum/reagent/consumable/nutriment)
-	var/nutriments = 0
-
-	nutriments += ROUND_UP(food_to_convert.reagents.get_multiple_reagent_amounts(nutrient_subtypes))
+	var/nutriments = ROUND_UP(food_to_convert.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE))
 	qdel(food_to_convert)
 	current_item_count = max(current_item_count - 1, 0)
 	biomass += nutriments * productivity
@@ -336,7 +390,7 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
-		beaker.reagents.add_reagent(design.make_reagent, amount)
+		beaker.reagents.add_reagent(design.make_reagent, amount, added_purity = BIOGEN_REAGENT_PURITY)
 
 	if(design.build_path)
 		if(!use_biomass(design.materials, amount))
@@ -404,7 +458,7 @@
 	update_appearance(UPDATE_ICON)
 
 
-/obj/machinery/biogenerator/ui_status(mob/user)
+/obj/machinery/biogenerator/ui_status(mob/user, datum/ui_state/state)
 	if(machine_stat & BROKEN || panel_open)
 		return UI_CLOSE
 
@@ -517,3 +571,4 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
+#undef BIOGEN_REAGENT_PURITY

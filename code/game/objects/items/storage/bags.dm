@@ -34,9 +34,10 @@
 /obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	inhand_icon_state = "trashbag"
+	worn_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/trash
@@ -48,7 +49,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 30
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
+	atom_storage.set_holdable(cant_hold_list = /obj/item/disk/nuclear)
 	atom_storage.supports_smart_equip = FALSE
 	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
 
@@ -136,7 +137,7 @@
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(list(/obj/item/stack/ore))
+	atom_storage.set_holdable(/obj/item/stack/ore)
 	atom_storage.silent_for_user = TRUE
 
 /obj/item/storage/bag/ore/equipped(mob/user)
@@ -153,6 +154,12 @@
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
+
+/obj/item/storage/bag/ore/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit \the [attacking_item] into \the [src]. Perhaps you should break it down first, or find an ore box."))
+		return TRUE
+	return ..()
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -222,7 +229,7 @@
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
@@ -236,10 +243,9 @@
 		/obj/item/food/grown,
 		/obj/item/graft,
 		/obj/item/grown,
-		/obj/item/reagent_containers/honeycomb,
+		/obj/item/food/honeycomb,
 		/obj/item/seeds,
-		))
-////////
+	))
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
@@ -283,20 +289,22 @@
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
 
-	var/capacity = 300; //the number of sheets it can carry.
+	var/capacity = 300 //the number of sheets it can carry.
 
 /obj/item/storage/bag/sheetsnatcher/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.set_holdable(list(
+	atom_storage.set_holdable(
+		can_hold_list = list(
 			/obj/item/stack/sheet
-			),
-		list(
+		),
+		cant_hold_list = list(
 			/obj/item/stack/sheet/mineral/sandstone,
 			/obj/item/stack/sheet/mineral/wood,
-			))
+		),
+	)
 	atom_storage.max_total_storage = capacity / 2
 
 // -----------------------------
@@ -315,7 +323,7 @@
 /obj/item/storage/bag/books
 	name = "book bag"
 	desc = "A bag for books."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bookbag"
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
@@ -328,8 +336,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/book,
 		/obj/item/spellbook,
-		/obj/item/storage/book,
-		))
+		/obj/item/poster,
+	))
 
 /*
  * Trays - Agouri
@@ -344,9 +352,9 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/storage/bag/tray/Initialize(mapload)
@@ -366,7 +374,7 @@
 		/obj/item/storage/box/matches,
 		/obj/item/storage/fancy,
 		/obj/item/trash,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
+	)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	atom_storage.insert_preposition = "on"
 	atom_storage.max_slots = 7
 
@@ -446,10 +454,11 @@
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		))
+	))
 
 /*
  *  Biowaste bag (mostly for virologists)
@@ -476,9 +485,10 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
-		))
+	))
 
 /*
  *  Science bag (mostly for xenobiologists)
@@ -505,10 +515,11 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
 		/obj/item/swab,
-		))
+	))
 
 /*
  *  Construction bag (for engineering, holds stock parts and electronics)
@@ -537,11 +548,12 @@
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
-		))
+	))
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
@@ -551,12 +563,10 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/caseless/harpoon
-		))
+	atom_storage.set_holdable(/obj/item/ammo_casing/harpoon)
 
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
-		new /obj/item/ammo_casing/caseless/harpoon(src)
+		new /obj/item/ammo_casing/harpoon(src)
 
 #undef ORE_BAG_BALOON_COOLDOWN

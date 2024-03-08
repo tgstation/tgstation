@@ -1,22 +1,33 @@
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { BlockQuote, Box, Button, Icon, LabeledList, Section, Tabs, TextArea, Tooltip } from 'tgui/components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Section,
+  Tabs,
+  TextArea,
+  Tooltip,
+} from 'tgui/components';
+
 import { getMedicalRecord } from './helpers';
 import { MedicalNote, MedicalRecordData } from './types';
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
-export const NoteKeeper = (props, context) => {
-  const foundRecord = getMedicalRecord(context);
+export const NoteKeeper = (props) => {
+  const foundRecord = getMedicalRecord();
   if (!foundRecord) return <> </>;
 
-  const { act } = useBackend<MedicalRecordData>(context);
+  const { act } = useBackend<MedicalRecordData>();
   const { crew_ref } = foundRecord;
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
-  >(context, 'selectedNote', undefined);
+  >('selectedNote', undefined);
 
-  const [writing, setWriting] = useLocalState(context, 'note', false);
+  const [writing, setWriting] = useLocalState('note', false);
 
   const addNote = (event, value: string) => {
     act('add_note', {
@@ -51,9 +62,8 @@ export const NoteKeeper = (props, context) => {
           <LabeledList>
             <LabeledList.Item
               label="Author"
-              buttons={
-                <Button color="bad" icon="trash" onClick={deleteNote} />
-              }>
+              buttons={<Button color="bad" icon="trash" onClick={deleteNote} />}
+            >
               {selectedNote.author}
             </LabeledList.Item>
             <LabeledList.Item label="Time">
@@ -63,7 +73,7 @@ export const NoteKeeper = (props, context) => {
           <Box color="label" mb={1} mt={1}>
             Content:
           </Box>
-          <BlockQuote wrap>{selectedNote.content}</BlockQuote>
+          <BlockQuote>{selectedNote.content}</BlockQuote>
         </>
       )}
     </Section>
@@ -71,15 +81,15 @@ export const NoteKeeper = (props, context) => {
 };
 
 /** Displays the notes with an add tab next to. */
-const NoteTabs = (props, context) => {
-  const foundRecord = getMedicalRecord(context);
+const NoteTabs = (props) => {
+  const foundRecord = getMedicalRecord();
   if (!foundRecord) return <> </>;
   const { notes } = foundRecord;
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
-  >(context, 'selectedNote', undefined);
-  const [writing, setWriting] = useLocalState(context, 'note', false);
+  >('selectedNote', undefined);
+  const [writing, setWriting] = useLocalState('note', false);
 
   /** Selects or deselects a note. */
   const setNote = (note: MedicalNote) => {
@@ -101,15 +111,16 @@ const NoteTabs = (props, context) => {
       {notes.map((note, index) => (
         <Tabs.Tab
           key={index}
-          label={index + 1}
           onClick={() => setNote(note)}
-          selected={selectedNote?.note_ref === note.note_ref}>
+          selected={selectedNote?.note_ref === note.note_ref}
+        >
           {index + 1}
         </Tabs.Tab>
       ))}
       <Tooltip
         content={multiline`Add a new note. Press enter or escape to exit view.`}
-        position="bottom">
+        position="bottom"
+      >
         <Tabs.Tab onClick={composeNew} selected={writing}>
           <Icon name="plus" /> New
         </Tabs.Tab>

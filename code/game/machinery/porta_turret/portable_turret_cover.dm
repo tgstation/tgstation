@@ -16,7 +16,7 @@
 /obj/machinery/porta_turret_cover/Destroy()
 	if(parent_turret)
 		parent_turret.cover = null
-		parent_turret.invisibility = 0
+		parent_turret.RemoveInvisibility(type)
 		parent_turret = null
 	return ..()
 
@@ -43,12 +43,12 @@
 		if(!parent_turret.anchored)
 			parent_turret.set_anchored(TRUE)
 			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
-			parent_turret.invisibility = 0
+			parent_turret.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_TURRET_COVER)
 			parent_turret.update_appearance()
 		else
 			parent_turret.set_anchored(FALSE)
 			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
-			parent_turret.invisibility = INVISIBILITY_MAXIMUM
+			parent_turret.SetInvisibility(INVISIBILITY_MAXIMUM, id=type, priority=INVISIBILITY_PRIORITY_TURRET_COVER)
 			parent_turret.update_appearance()
 			qdel(src)
 		return
@@ -65,8 +65,8 @@
 		if(!multitool_check_buffer(user, I))
 			return
 		var/obj/item/multitool/M = I
-		M.buffer = parent_turret
-		to_chat(user, span_notice("You add [parent_turret] to multitool buffer."))
+		M.set_buffer(parent_turret)
+		balloon_alert(user, "saved to multitool buffer")
 		return
 	return ..()
 
@@ -85,10 +85,14 @@
 /obj/machinery/porta_turret_cover/can_be_overridden()
 	. = 0
 
-/obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!(parent_turret.obj_flags & EMAGGED))
-		to_chat(user, span_notice("You short out [parent_turret]'s threat assessment circuits."))
-		audible_message(span_hear("[parent_turret] hums oddly..."))
-		parent_turret.obj_flags |= EMAGGED
-		parent_turret.on = FALSE
-		addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)
+/obj/machinery/porta_turret_cover/emag_act(mob/user, obj/item/card/emag/emag_card)
+
+	if((parent_turret.obj_flags & EMAGGED))
+		return FALSE
+
+	balloon_alert(user, "threat assessment circuits shorted")
+	audible_message(span_hear("[parent_turret] hums oddly..."))
+	parent_turret.obj_flags |= EMAGGED
+	parent_turret.on = FALSE
+	addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)
+	return TRUE

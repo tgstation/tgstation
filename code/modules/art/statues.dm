@@ -26,19 +26,20 @@
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/marionette)
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=1))
 				return FALSE
 			user.balloon_alert(user, "slicing apart...")
 			if(W.use_tool(src, user, 40, volume=50))
@@ -50,11 +51,11 @@
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
-			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
+			var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
 				new custom_material.sheet_type(drop_location(), amount)
 	qdel(src)
@@ -64,8 +65,11 @@
 
 /obj/structure/statue/uranium
 	max_integrity = 300
-	light_range = 2
-	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT*5)
+	// largish, dim green glow
+	light_range = 3
+	light_power = 0.7
+	light_color = LIGHT_COLOR_NUCLEAR
+	custom_materials = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium
 
@@ -85,7 +89,7 @@
 	max_integrity = 200
 	impressiveness = 20
 	desc = "This statue is suitably made from plasma."
-	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/plasma
 
 /obj/structure/statue/plasma/scientist
@@ -102,7 +106,7 @@
 	max_integrity = 300
 	impressiveness = 25
 	desc = "This is a highly valuable statue made from gold."
-	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/gold
 
 /obj/structure/statue/gold/hos
@@ -135,7 +139,7 @@
 	max_integrity = 300
 	impressiveness = 25
 	desc = "This is a valuable statue made from silver."
-	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/silver
 
 /obj/structure/statue/silver/md
@@ -164,7 +168,7 @@
 	max_integrity = 1000
 	impressiveness = 50
 	desc = "This is a very expensive diamond statue."
-	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/diamond
 
 /obj/structure/statue/diamond/captain
@@ -185,7 +189,7 @@
 	max_integrity = 300
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bananium
 
 /obj/structure/statue/bananium/clown
@@ -197,7 +201,7 @@
 /obj/structure/statue/sandstone
 	max_integrity = 50
 	impressiveness = 15
-	custom_materials = list(/datum/material/sandstone=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/sandstone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/sandstone
 
 /obj/structure/statue/sandstone/assistant
@@ -216,7 +220,7 @@
 
 /obj/structure/statue/snow
 	max_integrity = 50
-	custom_materials = list(/datum/material/snow=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/snow=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/snow
 
 /obj/structure/statue/snow/snowman
@@ -232,7 +236,7 @@
 ///////////////////////////////bronze///////////////////////////////////
 
 /obj/structure/statue/bronze
-	custom_materials = list(/datum/material/bronze=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bronze=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bronze
 
 /obj/structure/statue/bronze/marx
@@ -247,7 +251,7 @@
 	name = "Elder Atmosian"
 	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
 	icon_state = "eng"
-	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
+	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
@@ -255,8 +259,10 @@
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
 	desc = "A lifelike statue of a horrifying monster."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
 	icon_state = "goliath"
+	pixel_x = -12
+	base_pixel_x = -12
 	name = "goliath"
 
 ///////////Other Stuff//////////////////////////////////////////////
@@ -268,14 +274,14 @@
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=75)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75)
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -473,8 +479,8 @@ Moving interrupts
 		user.balloon_alert(user, "no sculpt target!")
 		return FALSE
 	//No big icon things
-	var/icon/thing_icon = icon(target.icon, target.icon_state)
-	if(thing_icon.Height() != world.icon_size || thing_icon.Width() != world.icon_size)
+	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	if(icon_dimensions["width"] != world.icon_size || icon_dimensions["height"] != world.icon_size)
 		user.balloon_alert(user, "sculpt target is too big!")
 		return FALSE
 	return TRUE
@@ -564,26 +570,24 @@ Moving interrupts
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
 
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
-	var/list/overlays_to_remove = list()
+	var/list/overlays_to_keep = list()
 	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
 		var/mutable_appearance/real = new()
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		overlays_to_remove += real
-	content_ma.overlays -= overlays_to_remove
+			overlays_to_keep += real
+	content_ma.overlays = overlays_to_keep
 
-	var/list/underlays_to_remove = list()
+	var/list/underlays_to_keep = list()
 	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
 		var/mutable_appearance/real = new()
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		underlays_to_remove += real
-	content_ma.underlays -= underlays_to_remove
+			underlays_to_keep += real
+	content_ma.underlays = underlays_to_keep
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)

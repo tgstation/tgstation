@@ -6,25 +6,58 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 	var/base_name = "Airlock"
+	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
-	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
+	/// Do we perform the extra checks required for multi-tile (large) airlocks
+	var/multi_tile = FALSE
+	/// The type path of the airlock once completed (solid version)
+	var/airlock_type = /obj/machinery/door/airlock
+	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
-	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
-	var/created_name = null
-	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
+	/// FALSE = glass can be installed. TRUE = glass is already installed.
+	var/glass = FALSE
+	/// Whether to heat-proof the finished airlock
+	var/heat_proof_finished = FALSE
+	/// If you're changing the airlock material, what is the previous type
 	var/previous_assembly = /obj/structure/door_assembly
-	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
-	var/nomineral = FALSE //airlock with glass version, but cannot be modified with sheets
+	/// Airlocks with no glass version, also cannot be modified with sheets
+	var/noglass = FALSE
+	/// Airlock with glass version, but cannot be modified with sheets
+	var/nomineral = FALSE
+	/// What type of material the airlock drops when deconstructed
 	var/material_type = /obj/item/stack/sheet/iron
+	/// Amount of material the airlock drops when deconstructed
 	var/material_amt = 4
+
+/obj/structure/door_assembly/multi_tile
+	name = "large airlock assembly"
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	base_name = "large airlock"
+	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	dir = EAST
+	multi_tile = TRUE
+	glass = TRUE
+	nomineral = TRUE
 
 /obj/structure/door_assembly/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	update_name()
+
+/obj/structure/door_assembly/multi_tile/Initialize(mapload)
+	. = ..()
+	set_bounds()
+	update_overlays()
+
+/obj/structure/door_assembly/multi_tile/Move()
+	. = ..()
+	set_bounds()
 
 /obj/structure/door_assembly/examine(mob/user)
 	. = ..()
@@ -60,7 +93,7 @@
 		created_name = t
 
 	else if((W.tool_behaviour == TOOL_WELDER) && (mineral || glass || !anchored ))
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=1))
 			return
 
 		if(mineral)
@@ -78,7 +111,7 @@
 				to_chat(user, span_notice("You weld the glass panel out."))
 				if(heat_proof_finished)
 					new /obj/item/stack/sheet/rglass(get_turf(src))
-					heat_proof_finished = 0
+					heat_proof_finished = FALSE
 				else
 					new /obj/item/stack/sheet/glass(get_turf(src))
 				glass = 0
@@ -260,7 +293,6 @@
 		door = new airlock_type( loc )
 	door.setDir(dir)
 	door.unres_sides = electronics.unres_sides
-	//door.req_access = req_access
 	door.electronics = electronics
 	door.heat_proof = heat_proof_finished
 	door.security_level = 0
@@ -288,7 +320,10 @@
 		door.unres_sensor = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
+	door.autoclose = TRUE
+	door.close()
 	door.update_appearance()
+
 	qdel(src)
 	return door
 
@@ -329,7 +364,7 @@
 	qdel(source)
 
 /obj/structure/door_assembly/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/turf/T = get_turf(src)
 		if(!disassembled)
 			material_amt = rand(2,4)
@@ -350,13 +385,11 @@
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+		return list("delay" = 5 SECONDS, "cost" = 16)
 	return FALSE
 
-/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct [src]."))
-			qdel(src)
-			return TRUE
+/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+		qdel(src)
+		return TRUE
 	return FALSE

@@ -11,15 +11,16 @@
 	..()
 
 	//reserve a tile that is always empty for our z destination
-	reserved = SSmapping.RequestBlockReservation(5,5)
+	reserved = SSmapping.request_turf_block_reservation(5, 5, 1)
 
 	// Create a space tile that goes to another z-level
 	claimed_tile = run_loc_floor_bottom_left.type
 
 	space_tile = run_loc_floor_bottom_left.ChangeTurf(/turf/open/space)
-	space_tile.destination_x = round(reserved.bottom_left_coords[1] + (reserved.width-1) / 2)
-	space_tile.destination_y = round(reserved.bottom_left_coords[2] + (reserved.height-1) / 2)
-	space_tile.destination_z = reserved.bottom_left_coords[3]
+	var/turf/bottom_left = reserved.bottom_left_turfs[1]
+	space_tile.destination_x = round(bottom_left.x + (reserved.width-1) / 2)
+	space_tile.destination_y = round(bottom_left.y + (reserved.height-1) / 2)
+	space_tile.destination_z = bottom_left.z
 
 	// Create our list of humans, all adjacent to one another
 	alice = new(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))

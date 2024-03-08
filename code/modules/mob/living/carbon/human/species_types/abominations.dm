@@ -2,6 +2,8 @@
 /datum/species/human/tallboy
 	name = "\improper Tall Boy"
 	id = SPECIES_TALLBOY
+	examine_limb_id = SPECIES_HUMAN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
@@ -12,7 +14,10 @@
 	)
 
 /datum/species/monkey/human_legged
+	name = "human-legged monkey"
 	id = SPECIES_MONKEY_HUMAN_LEGGED
+	examine_limb_id = SPECIES_MONKEY
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
@@ -23,7 +28,10 @@
 	)
 
 /datum/species/monkey/monkey_freak
+	name = "human-armed monkey"
 	id = SPECIES_MONKEY_FREAK
+	examine_limb_id = SPECIES_MONKEY
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,

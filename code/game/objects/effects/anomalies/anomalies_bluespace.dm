@@ -10,6 +10,10 @@
 	///Distance we can teleport someone passively
 	var/teleport_distance = 4
 
+/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
 	for(var/mob/living/M in range(teleport_range,src))
@@ -71,6 +75,11 @@
 	make_sparkle.overlay_fullscreen("bluespace_flash", /atom/movable/screen/fullscreen/bluespace_sparkle, 1)
 	addtimer(CALLBACK(make_sparkle, TYPE_PROC_REF(/mob/, clear_fullscreen), "bluespace_flash"), 2 SECONDS)
 
+/obj/effect/anomaly/bluespace/stabilize(anchor, has_core)
+	. = ..()
+
+	teleport_range = 0 //bumping already teleports, so this just prevents people from being teleported when they don't expect it when interacting with stable bsanoms
+
 ///Bigger, meaner, immortal bluespace anomaly
 /obj/effect/anomaly/bluespace/big
 	immortal = TRUE
@@ -93,4 +102,3 @@
 
 	var/mob/living/living = bumpee
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
-

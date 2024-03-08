@@ -1,30 +1,26 @@
-// Modular Computer - device that runs various programs and operates with hardware
-// DO NOT SPAWN THIS TYPE. Use /laptop/ or /console/ instead.
+#define CPU_INTERACTABLE(user) (cpu && !HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)))
+
+// Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
 /obj/machinery/modular_computer
 	name = "modular computer"
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
-
-	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
-	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
-	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
-	icon = 'icons/obj/modular_console.dmi'
-	icon_state = null
-
+	icon = 'icons/obj/machines/modular_console.dmi'
+	icon_state = "console"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	///The power cell, null by default as we use the APC we're in
-	var/internal_cell = null
+	density = TRUE
+	max_integrity = 300
+	integrity_failure = 0.5
+
 	///A flag that describes this device type
-	var/hardware_flag = NONE
-	///Power usage during last tick
-	var/last_power_usage = 0
+	var/hardware_flag = PROGRAM_CONSOLE
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 4
 
 
 	///Icon state when the computer is turned off.
-	var/icon_state_unpowered = null
+	var/icon_state_unpowered = "console-off"
 	///Icon state when the computer is turned on.
-	var/icon_state_powered = null
+	var/icon_state_powered = "console"
 	///Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/screen_icon_state_menu = "menu"
 	///Icon state overlay when the computer is powered, but not 'switched on'.
@@ -32,11 +28,11 @@
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 10
 	///Light luminosity when turned on
-	var/light_strength = 0
+	var/light_strength = 2
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 100
+	var/base_active_power_usage = 500
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
-	var/base_idle_power_usage = 10
+	var/base_idle_power_usage = 100
 
 	///CPU that handles most logic while this type only handles power and other specific things.
 	var/obj/item/modular_computer/processor/cpu
@@ -44,27 +40,48 @@
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
 	cpu = new(src)
-	cpu.physical = src
+	cpu.screen_on = TRUE
+	cpu.add_shell_component(SHELL_CAPACITY_LARGE, SHELL_FLAG_USB_PORT)
+	update_appearance()
+	register_context()
 
 /obj/machinery/modular_computer/Destroy()
 	QDEL_NULL(cpu)
 	return ..()
 
+/obj/machinery/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Toggle processor interaction"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/modular_computer/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)))
+		REMOVE_TRAIT(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user))
+		balloon_alert(user, "now interacting with computer")
+	else
+		ADD_TRAIT(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user))
+		balloon_alert(user, "now interacting with frame")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/modular_computer/examine(mob/user)
-	if(cpu)
-		return cpu.examine(user)
-	return ..()
+	. = cpu?.examine(user) || ..()
+	. += span_info("You can toggle interaction between computer and its machinery frame with [EXAMINE_HINT("Right-Click")] while empty-handed.")
+	var/frame_or_pc = HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)) ? "frame" : "computer"
+	. += span_info("Currently interacting with [EXAMINE_HINT(frame_or_pc)].")
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
 		return
-	if(cpu)
-		cpu.attack_ghost(user)
+	cpu?.attack_ghost(user)
 
-/obj/machinery/modular_computer/emag_act(mob/user)
+/obj/machinery/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!cpu)
-		to_chat(user, span_warning("You'd need to turn the [src] on first."))
+		balloon_alert(user, "turn it on first!")
 		return FALSE
 	return cpu.emag_act(user)
 
@@ -73,7 +90,7 @@
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER))
+	if(!cpu || !cpu.enabled || (machine_stat & NOPOWER))
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
@@ -84,8 +101,8 @@
 	if(!cpu)
 		return .
 
-	if(cpu.enabled && cpu.use_power())
-		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+	if(cpu.enabled)
+		. += cpu.active_program?.program_open_overlay || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 
@@ -101,17 +118,14 @@
 
 /obj/machinery/modular_computer/AltClick(mob/user)
 	. = ..()
-	if(!can_interact(user))
+	if(CPU_INTERACTABLE(user) || !can_interact(user))
 		return
-	if(cpu)
-		cpu.AltClick(user)
+	cpu.AltClick(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/machinery/modular_computer/interact(mob/user)
-	if(cpu)
-		return cpu.interact(user)
-	return ..()
+	return CPU_INTERACTABLE(user) ? cpu.interact(user) : ..()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
@@ -121,30 +135,33 @@
 		return
 	return ..()
 
-/obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	if(cpu)
-		return cpu.screwdriver_act(user, tool)
-	return ..()
+///Try to recharge our internal cell if it isn't fully charged.
+/obj/machinery/modular_computer/process(seconds_per_tick)
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(isnull(cell) || cell.percent() >= 100)
+		return
+	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5
+	if(!use_power_from_net(power_to_draw))
+		return
+	cell.give(power_to_draw)
 
-/obj/machinery/modular_computer/wrench_act(mob/user, obj/item/tool)
-	if(cpu)
-		return cpu.wrench_act(user, tool)
-	return ..()
+/obj/machinery/modular_computer/get_cell()
+	return cpu?.internal_cell
+
+/obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	return CPU_INTERACTABLE(user) ? cpu.screwdriver_act(user, tool) : ..()
+
+/obj/machinery/modular_computer/wrench_act_secondary(mob/user, obj/item/tool)
+	return CPU_INTERACTABLE(user) ? cpu.wrench_act_secondary(user, tool) : ..()
 
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
-	if(cpu)
-		return cpu.welder_act(user, tool)
-	return ..()
+	return CPU_INTERACTABLE(user) ? cpu.welder_act(user, tool) : ..()
 
-/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
-	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
-		return cpu.attackby(W, user)
-	return ..()
+/obj/machinery/modular_computer/attackby(obj/item/weapon, mob/living/user)
+	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.attackby(weapon, user) : ..()
 
 /obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user)
-	if (cpu)
-		return cpu.attacked_by(attacking_item, user)
-	return ..()
+	return CPU_INTERACTABLE(user) ? cpu.attacked_by(attacking_item, user) : ..()
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
@@ -173,6 +190,6 @@
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/projectile/Proj)
-	if(cpu)
-		return cpu.bullet_act(Proj)
-	return ..()
+	return cpu?.bullet_act(Proj) || ..()
+
+#undef CPU_INTERACTABLE

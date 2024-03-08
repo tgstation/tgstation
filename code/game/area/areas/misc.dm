@@ -17,13 +17,15 @@
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
+	min_ambience_cooldown = 195 SECONDS //length of ambispace.ogg
+	max_ambience_cooldown = 200 SECONDS
 
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = UNIQUE_AREA
 	static_lighting = TRUE
 	base_lighting_alpha = 0
-	base_lighting_color = COLOR_WHITE
+	base_lighting_color = null
 
 /area/misc/start
 	name = "start area"
@@ -32,6 +34,7 @@
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
+	ambient_buzz = null
 
 /area/misc/testroom
 	requires_power = FALSE
@@ -41,3 +44,8 @@
 	base_lighting_alpha = 255
 	name = "Test Room"
 	icon_state = "test_room"
+
+/area/misc/testroom/gateway_room
+	name = "Gateway Room"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "gateway"

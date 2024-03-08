@@ -33,24 +33,17 @@
 /obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(start_playing))
-	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(stop_playing))
+	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(update_icon_for_playing_music))
+	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(update_icon_for_playing_music))
 
-/**
- * Called by a component signal when our song starts playing.
- */
-/obj/item/instrument/piano_synth/headphones/proc/start_playing()
+// Called by a component signal to update musical note VFX for songs playing while worn.
+/obj/item/instrument/piano_synth/headphones/proc/update_icon_for_playing_music(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
-	icon_state = "[initial(icon_state)]_on"
 	update_appearance()
 
-/**
- * Called by a component signal when our song stops playing.
- */
-/obj/item/instrument/piano_synth/headphones/proc/stop_playing()
-	SIGNAL_HANDLER
-	icon_state = "[initial(icon_state)]"
-	update_appearance()
+/obj/item/instrument/piano_synth/headphones/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][song?.playing ? "_on" : null]"
 
 /obj/item/instrument/piano_synth/headphones/spacepods
 	name = "\improper Nanotrasen space pods"
@@ -136,7 +129,7 @@
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)
 	synth.song.start_playing(src)
 
-/obj/item/circuit_component/synth/proc/on_song_start()
+/obj/item/circuit_component/synth/proc/on_song_start(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
 	is_playing.set_output(TRUE)
 	started_playing.set_output(COMPONENT_SIGNAL)

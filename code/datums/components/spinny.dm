@@ -18,11 +18,11 @@
 	turn_degrees = (reverse ? -90 : 90)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/spinny/Destroy(force, silent)
+/datum/component/spinny/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/datum/component/spinny/process(delta_time)
+/datum/component/spinny/process(seconds_per_tick)
 	steps_left--
 	var/atom/spinny_boy = parent
 	if(!istype(spinny_boy) || steps_left <= 0)

@@ -14,7 +14,7 @@ Buildable meters
 	var/pipename
 	force = 7
 	throwforce = 7
-	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipe_item.dmi'
 	icon_state = "simple"
 	icon_state_preview = "manifold4w"
 	inhand_icon_state = "buildpipe"
@@ -85,6 +85,16 @@ Buildable meters
 /obj/item/pipe/quaternary/pipe
 	icon_state_preview = "manifold4w"
 	pipe_type = /obj/machinery/atmospherics/pipe/smart
+/obj/item/pipe/quaternary/pipe/crafted
+
+/obj/item/pipe/quaternary/pipe/crafted/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
+	. = ..()
+	pipe_type = /obj/machinery/atmospherics/pipe/smart
+	pipe_color = COLOR_VERY_LIGHT_GRAY
+	p_init_dir = ALL_CARDINALS
+	setDir(SOUTH)
+	update()
+
 /obj/item/pipe/quaternary/he_pipe
 	icon_state_preview = "he_manifold4w"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
@@ -104,6 +114,17 @@ Buildable meters
 
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
+
+	// Only 'normal' pipes
+	if(type != /obj/item/pipe/quaternary)
+		return ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack, /datum/crafting_recipe/pipegun, /datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/improvised_pneumatic_cannon)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
@@ -154,7 +175,7 @@ Buildable meters
 	do_a_flip()
 
 /obj/item/pipe/proc/do_a_flip()
-	setDir(turn(dir, -180))
+	setDir(REVERSE_DIR(dir))
 
 /obj/item/pipe/trinary/flippable/do_a_flip()
 	setDir(turn(dir, flipped ? 45 : -45))
@@ -227,7 +248,7 @@ Buildable meters
 				return TRUE
 	// no conflicts found
 
-	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc, , , p_init_dir)
+	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc, null, fixed_dir(), p_init_dir)
 	build_pipe(built_machine)
 	built_machine.on_construction(user, pipe_color, piping_layer)
 	transfer_fingerprints_to(built_machine)
@@ -239,6 +260,23 @@ Buildable meters
 		span_hear("You hear ratcheting."))
 
 	qdel(src)
+
+/obj/item/pipe/welder_act(mob/living/user, obj/item/welder)
+	. = ..()
+	if(istype(pipe_type, /obj/machinery/atmospherics/components))
+		return TRUE
+	if(!welder.tool_start_check(user, amount=2))
+		return TRUE
+	add_fingerprint(user)
+
+	if(welder.use_tool(src, user, 2 SECONDS, volume=2))
+		new /obj/item/sliced_pipe(drop_location())
+		user.visible_message( \
+			"[user] welds \the [src] in two.", \
+			span_notice("You weld \the [src] in two."), \
+			span_hear("You hear welding."))
+
+		qdel(src)
 
 /**
  * Attempt to automatically resolve a pipe conflict by reconfiguring any smart pipes involved.
@@ -318,9 +356,6 @@ Buildable meters
 	return FALSE
 
 /obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)
-	A.setDir(fixed_dir())
-	A.set_init_directions(p_init_dir)
-
 	if(pipename)
 		A.name = pipename
 	if(A.on)
@@ -338,7 +373,7 @@ Buildable meters
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		for(var/i in 1 to 20)
-			C.vomit(0, TRUE, FALSE, 4, FALSE)
+			C.vomit(vomit_flags = (MOB_VOMIT_BLOOD | MOB_VOMIT_HARM), lost_nutrition = 0, distance = 4)
 			if(prob(20))
 				C.spew_organ()
 			sleep(0.5 SECONDS)
@@ -377,7 +412,7 @@ Buildable meters
 /obj/item/pipe_meter
 	name = "meter"
 	desc = "A meter that can be wrenched on pipes, or attached to the floor with screws."
-	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipe_item.dmi'
 	icon_state = "meter"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_BULKY

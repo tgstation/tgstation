@@ -232,7 +232,7 @@
 	var/hornsound = 'sound/items/carhorn.ogg'
 
 /datum/action/vehicle/sealed/horn/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CAR_HONK))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
 	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
@@ -301,22 +301,24 @@
 		return
 	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
 	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
-	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
-	if(!clown)
+	var/list/mob/drivers = clown_car.return_drivers()
+	if(!length(drivers))
+		to_chat(owner, span_danger("You prepare to thank the driver, only to realize that they don't exist."))
 		return
+	var/mob/clown = pick(drivers)
 	owner.say("Thank you for the fun ride, [clown.name]!")
 	clown_car.increment_thanks_counter()
 
 /datum/action/vehicle/ridden/wheelchair/bell
 	name = "Bell Ring"
 	desc = "Ring the bell."
-	button_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon = 'icons/obj/service/bureaucracy.dmi'
 	button_icon_state = "desk_bell"
 	check_flags = AB_CHECK_CONSCIOUS
 	var/bell_cooldown
 
 /datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, bell_cooldown))
+	if(TIMER_COOLDOWN_RUNNING(src, bell_cooldown))
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
 	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
@@ -359,10 +361,10 @@
 	animate(vehicle, pixel_y = -6, time = 3)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 	passtable_on(rider, VEHICLE_TRAIT)
-	vehicle.pass_flags |= PASSTABLE
+	passtable_on(vehicle, VEHICLE_TRAIT)
 	rider.Move(landing_turf, vehicle_target.dir)
 	passtable_off(rider, VEHICLE_TRAIT)
-	vehicle.pass_flags &= ~PASSTABLE
+	passtable_off(vehicle, VEHICLE_TRAIT)
 
 /datum/action/vehicle/ridden/scooter/skateboard/kickflip
 	name = "Kickflip"

@@ -1,7 +1,3 @@
-///used whenever the drake generates a hotspot
-#define DRAKE_FIRE_TEMP 500
-///used whenever the drake generates a hotspot
-#define DRAKE_FIRE_EXPOSURE 50
 ///used to see if the drake is enraged or not
 #define DRAKE_ENRAGED (health < maxHealth*0.5)
 
@@ -42,7 +38,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
@@ -56,8 +52,8 @@
 	speed = 5
 	move_to_delay = 5
 	ranged = TRUE
-	pixel_x = -16
-	base_pixel_x = -16
+	pixel_x = -32
+	base_pixel_x = -32
 	maptext_height = 64
 	maptext_width = 64
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
@@ -73,7 +69,7 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	small_sprite_type = /datum/action/small_sprite/megafauna/drake
+	summon_line = "ROOOOOOOOAAAAAAAAAAAR!"
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -85,10 +81,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	. = ..()
-	fire_cone = new /datum/action/cooldown/mob_cooldown/fire_breath/cone()
-	meteors = new /datum/action/cooldown/mob_cooldown/meteors()
-	mass_fire = new /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire()
-	lava_swoop = new /datum/action/cooldown/mob_cooldown/lava_swoop()
+	fire_cone = new(src)
+	meteors = new(src)
+	mass_fire = new(src)
+	lava_swoop = new(src)
 	fire_cone.Grant(src)
 	meteors.Grant(src)
 	mass_fire.Grant(src)
@@ -97,22 +93,13 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(finished_attack))
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, PROC_REF(swoop_invulnerability_started))
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, PROC_REF(on_arena_fail))
+	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	QDEL_NULL(fire_cone)
-	QDEL_NULL(meteors)
-	QDEL_NULL(mass_fire)
-	QDEL_NULL(lava_swoop)
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
-	. = ..()
-	if(!.)
-		return
-	pull_force = MOVE_FORCE_OVERPOWERING
-
-/mob/living/simple_animal/hostile/megafauna/dragon/death(gibbed)
-	move_force = MOVE_FORCE_DEFAULT
+	fire_cone = null
+	meteors = null
+	mass_fire = null
+	lava_swoop = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
@@ -145,7 +132,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
 	if(activated == lava_swoop)
-		icon_state = "shadow"
+		icon_state = "dragon_shadow"
 		swooping = SWOOP_DAMAGEABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_invulnerability_started()
@@ -176,36 +163,6 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	set_light_range(initial(light_range))
 
-//fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
-	var/list/hit_list = list()
-	for(var/turf/T in turfs)
-		if(isclosedturf(T))
-			break
-		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
-		if(frozen)
-			drake_fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY)
-		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
-		for(var/mob/living/L in T.contents)
-			if(L in hit_list || istype(L, source.type))
-				continue
-			hit_list += L
-			if(!frozen)
-				L.adjustFireLoss(20)
-				to_chat(L, span_userdanger("You're hit by [source]'s fire breath!"))
-				continue
-			L.adjustFireLoss(10)
-			L.apply_status_effect(/datum/status_effect/ice_block_talisman, 20)
-			to_chat(L, span_userdanger("You're hit by [source]'s freezing breath!"))
-
-		// deals damage to mechs
-		for(var/obj/vehicle/sealed/mecha/M in T.contents)
-			if(M in hit_list)
-				continue
-			hit_list += M
-			M.take_damage(45, BRUTE, MELEE, 1)
-		sleep(0.15 SECONDS)
-
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)
 		return FALSE
@@ -223,7 +180,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget(atom/attacked_target)
 	if(!swooping)
 		return ..()
 
@@ -273,7 +230,7 @@
 	if(!isclosedturf(T) && !islava(T))
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
-		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
+		T.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
 		addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall
@@ -289,14 +246,14 @@
 	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/lava_safe
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 13
 
 /obj/effect/temp_visual/fireball
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"
@@ -352,7 +309,7 @@
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	mouse_opacity = MOUSE_OPACITY_ICON
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
@@ -366,14 +323,11 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	lava_swoop.enraged = FALSE
+	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
 
 #undef DRAKE_ENRAGED
-#undef DRAKE_FIRE_EXPOSURE
-#undef DRAKE_FIRE_TEMP
-
 #undef SWOOP_DAMAGEABLE
 #undef SWOOP_INVULNERABLE

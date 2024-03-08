@@ -13,7 +13,7 @@
 /obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -22,7 +22,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=10)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "#000000" //what colour the ink is!
@@ -31,6 +31,38 @@
 	var/requires_gravity = TRUE // can you use this to write in zero-g
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
+	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
+	var/dart_insert_casing_icon_state = "overlay_pen"
+	var/dart_insert_projectile_icon_state = "overlay_pen_proj"
+
+/obj/item/pen/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/dart_insert, \
+		dart_insert_icon, \
+		dart_insert_casing_icon_state, \
+		dart_insert_icon, \
+		dart_insert_projectile_icon_state, \
+		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
+	)
+	RegisterSignal(src, COMSIG_DART_INSERT_ADDED, PROC_REF(on_inserted_into_dart))
+	RegisterSignal(src, COMSIG_DART_INSERT_REMOVED, PROC_REF(on_removed_from_dart))
+
+/obj/item/pen/proc/on_inserted_into_dart(datum/source, obj/projectile/dart, mob/user, embedded = FALSE)
+	SIGNAL_HANDLER
+
+/obj/item/pen/proc/get_dart_var_modifiers()
+	return list(
+		"damage" = max(5, throwforce),
+		"speed" = max(0, throw_speed - 3),
+		"embedding" = embedding,
+		"armour_penetration" = armour_penetration,
+		"wound_bonus" = wound_bonus,
+		"bare_wound_bonus" = bare_wound_bonus,
+		"demolition_mod" = demolition_mod,
+	)
+
+/obj/item/pen/proc/on_removed_from_dart(datum/source, obj/projectile/dart, mob/user)
+	SIGNAL_HANDLER
 
 /obj/item/pen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
@@ -69,7 +101,7 @@
 		if("#FF0000")
 			colour = "#00FF00"
 			chosen_color = "green"
-			throw_speed = initial(throw_speed)
+			throw_speed--
 		if("#00FF00")
 			colour = "#0000FF"
 			chosen_color = "blue"
@@ -84,6 +116,8 @@
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 	requires_gravity = FALSE // fancy spess pens
+	dart_insert_casing_icon_state = "overlay_fountainpen"
+	dart_insert_projectile_icon_state = "overlay_fountainpen_proj"
 
 /obj/item/pen/charcoal
 	name = "charcoal stylus"
@@ -110,16 +144,26 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "#DC143C"
-	custom_materials = list(/datum/material/gold = 750)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
-	unique_reskin = list("Oak" = "pen-fountain-o",
-						"Gold" = "pen-fountain-g",
-						"Rosewood" = "pen-fountain-r",
-						"Black and Silver" = "pen-fountain-b",
-						"Command Blue" = "pen-fountain-cb"
-						)
+	unique_reskin = list(
+		"Oak" = "pen-fountain-o",
+		"Gold" = "pen-fountain-g",
+		"Rosewood" = "pen-fountain-r",
+		"Black and Silver" = "pen-fountain-b",
+		"Command Blue" = "pen-fountain-cb"
+	)
 	embedding = list("embed_chance" = 75)
+	dart_insert_casing_icon_state = "overlay_fountainpen_gold"
+	dart_insert_projectile_icon_state = "overlay_fountainpen_gold_proj"
+	var/list/overlay_reskin = list(
+		"Oak" = "overlay_fountainpen_gold",
+		"Gold" = "overlay_fountainpen_gold",
+		"Rosewood" = "overlay_fountainpen_gold",
+		"Black and Silver" = "overlay_fountainpen",
+		"Command Blue" = "overlay_fountainpen_gold"
+	)
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
@@ -128,11 +172,18 @@
 	effectiveness = 115, \
 	)
 	//the pen is mightier than the sword
+	RegisterSignal(src, COMSIG_DART_INSERT_PARENT_RESKINNED, PROC_REF(reskin_dart_insert))
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
+
+/obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
+	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
+		return
+	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
+	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
 
 /obj/item/pen/attack_self(mob/living/carbon/user)
 	. = ..()
@@ -185,10 +236,11 @@
 					label.remove_label()
 					label.apply_label()
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
-				O.renamedByPlayer = TRUE
+				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
+				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Description")
-			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
+			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 280)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.can_perform_action(O))
 				return
@@ -197,7 +249,8 @@
 			else
 				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, span_notice("You have successfully changed [O]'s description."))
-				O.renamedByPlayer = TRUE
+				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
+				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.can_perform_action(O))
@@ -212,7 +265,8 @@
 				label.apply_label()
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
-			O.renamedByPlayer = FALSE
+			REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
+			O.update_appearance(UPDATE_ICON)
 
 /obj/item/pen/get_writing_implement_details()
 	return list(
@@ -234,7 +288,7 @@
 		return
 	if(!M.reagents)
 		return
-	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
+	reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize(mapload)
@@ -244,6 +298,23 @@
 	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 15)
 	reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 
+/obj/item/pen/sleepy/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
+	. = ..()
+	var/obj/projectile/proj = dart.loaded_projectile
+	RegisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_dart_hit))
+
+/obj/item/pen/sleepy/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
+	. = ..()
+	if(istype(proj))
+		UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
+
+/obj/item/pen/sleepy/proc/on_dart_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb, blocked)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/carbon_target = target
+	if(!istype(carbon_target) || blocked == 100)
+		return
+	if(carbon_target.can_inject(target_zone = hit_limb))
+		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = firer, methods = INJECT)
 /*
  * (Alan) Edaggers
  */
@@ -254,19 +325,18 @@
 	armour_penetration = 20
 	bare_wound_bonus = 10
 	item_flags = NO_BLOOD_ON_ITEM
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1.5
 	light_power = 0.75
 	light_color = COLOR_SOFT_RED
 	light_on = FALSE
+	dart_insert_projectile_icon_state = "overlay_edagger"
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
 	/// The real desc of our item when extended.
 	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
-	/// Whether or pen is extended
-	var/extended = FALSE
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
@@ -274,7 +344,8 @@
 	speed = 6 SECONDS, \
 	butcher_sound = 'sound/weapons/blade1.ogg', \
 	)
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = 18, \
 		throwforce_on = 35, \
 		throw_speed_on = 4, \
@@ -285,8 +356,64 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
+/obj/item/pen/edagger/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
+	. = ..()
+	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		transform_comp.do_transform(src, user)
+	RegisterSignal(dart.loaded_projectile, COMSIG_PROJECTILE_FIRE, PROC_REF(on_containing_dart_fired))
+	RegisterSignal(dart.loaded_projectile, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(on_containing_dart_drop))
+	RegisterSignal(dart.loaded_projectile, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, PROC_REF(on_containing_dart_embedded))
+
+/obj/item/pen/edagger/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/projectile, mob/user)
+	. = ..()
+	if(istype(dart))
+		UnregisterSignal(dart, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
+	if(istype(projectile))
+		UnregisterSignal(projectile, list(COMSIG_PROJECTILE_FIRE, COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED))
+
+/obj/item/pen/edagger/get_dart_var_modifiers()
+	. = ..()
+	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
+	.["damage"] = max(5, transform_comp.throwforce_on)
+	.["speed"] = max(0, transform_comp.throw_speed_on - 3)
+	var/list/embed_params = .["embedding"]
+	embed_params["embed_chance"] = 100
+
+/obj/item/pen/edagger/proc/on_containing_dart_fired(obj/projectile/source)
+	SIGNAL_HANDLER
+	playsound(source, 'sound/weapons/saberon.ogg', 5, TRUE)
+	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
+	source.hitsound = transform_comp.hitsound_on
+	source.set_light(light_range, light_power, light_color, l_on = TRUE)
+
+/obj/item/pen/edagger/proc/on_containing_dart_drop(datum/source, obj/item/ammo_casing/new_casing)
+	SIGNAL_HANDLER
+	playsound(new_casing, 'sound/weapons/saberoff.ogg', 5, TRUE)
+
+/obj/item/pen/edagger/proc/on_containing_dart_embedded(datum/source, obj/item/ammo_casing/new_casing)
+	SIGNAL_HANDLER
+	RegisterSignal(new_casing, COMSIG_ITEM_UNEMBEDDED, PROC_REF(on_embedded_removed))
+	RegisterSignal(new_casing, COMSIG_ITEM_FAILED_EMBED, PROC_REF(on_containing_dart_failed_embed))
+
+/obj/item/pen/edagger/proc/on_containing_dart_failed_embed(obj/item/ammo_casing/source)
+	SIGNAL_HANDLER
+	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
+
+/obj/item/pen/edagger/proc/on_embedded_removed(obj/item/ammo_casing/source, mob/living/carbon/victim)
+	SIGNAL_HANDLER
+	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
+	victim.visible_message(
+		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
+		self_message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from you!"),
+		blind_message = span_warning("You hear an energy blade retract!"),
+		vision_distance = 1
+	)
+
 /obj/item/pen/edagger/suicide_act(mob/living/user)
-	if(extended)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
 	else
 		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -302,7 +429,6 @@
 /obj/item/pen/edagger/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	extended = active
 	if(active)
 		name = hidden_name
 		desc = hidden_desc
@@ -321,8 +447,9 @@
 		embedding = list(embed_chance = EMBED_CHANCE)
 
 	updateEmbedding()
-	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	if(user)
+		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -333,19 +460,38 @@
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/diamond=SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
 	colour = "#0000FF"
+	dart_insert_casing_icon_state = "overlay_survivalpen"
+	dart_insert_projectile_icon_state = "overlay_survivalpen_proj"
+
+/obj/item/pen/survival/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
+	. = ..()
+	RegisterSignal(dart.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_dart_hit))
+
+/obj/item/pen/survival/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
+	. = ..()
+	if(istype(proj))
+		UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
+
+/obj/item/pen/survival/proc/on_dart_hit(obj/projectile/source, atom/movable/firer, atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		target_turf = get_turf(src)
+	if(ismineralturf(target_turf))
+		var/turf/closed/mineral/mineral_turf = target_turf
+		mineral_turf.gets_drilled(firer, TRUE)
 
 /obj/item/pen/destroyer
 	name = "Fine Tipped Pen"
@@ -360,12 +506,15 @@
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
-	/// whether the pen is extended
-	var/extended = FALSE
+	dart_insert_projectile_icon_state = "overlay_pendriver"
+
+/obj/item/pen/screwdriver/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		throwforce_on = 5, \
 		w_class_on = WEIGHT_CLASS_SMALL, \
 		sharpness_on = TRUE, \
@@ -375,24 +524,14 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-
-/obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, extended))
-		if(var_value != extended)
-			var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
-			transforming_comp.on_attack_self(src)
-			datum_flags |= DF_VAR_EDITED
-			return
-	return ..()
-
 /obj/item/pen/screwdriver/proc/toggle_screwdriver(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-	extended = active
+
 	if(user)
-		balloon_alert(user, "[extended ? "extended" : "retracted"]")
+		balloon_alert(user, active ? "extended" : "retracted")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
-	if(!extended)
+	if(!active)
 		tool_behaviour = initial(tool_behaviour)
 		RemoveElement(/datum/element/eyestab)
 	else
@@ -404,5 +543,46 @@
 
 /obj/item/pen/screwdriver/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][extended ? "_out":null]"
+	icon_state = "[initial(icon_state)][HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_out" : null]"
 	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.
+
+//The Security holopen
+/obj/item/pen/red/security
+	name = "security pen"
+	desc = "This is a red ink pen exclusively provided to members of the Security Department. Its opposite end features a built-in holographic projector designed for issuing arrest prompts to individuals."
+	icon_state = "pen_sec"
+	COOLDOWN_DECLARE(holosign_cooldown)
+
+/obj/item/pen/red/security/examine(mob/user)
+	. = ..()
+	. += span_notice("To initiate the surrender prompt, simply click on an individual within your proximity.")
+
+//Code from the medical penlight
+/obj/item/pen/red/security/afterattack(atom/target, mob/living/user, proximity)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
+		balloon_alert(user, "not ready!")
+		return
+
+	var/target_turf = get_turf(target)
+	var/mob/living/living_target = locate(/mob/living) in target_turf
+
+	if(!living_target || (living_target == user))
+		return
+
+	living_target.apply_status_effect(/datum/status_effect/surrender_timed)
+	to_chat(living_target, span_userdanger("[user] requests your immediate surrender! You are given 30 seconds to comply!"))
+	new /obj/effect/temp_visual/security_holosign(target_turf, user) //produce a holographic glow
+	COOLDOWN_START(src, holosign_cooldown, 30 SECONDS)
+
+/obj/effect/temp_visual/security_holosign
+	name = "security holosign"
+	desc = "A small holographic glow that indicates you're under arrest."
+	icon_state = "sec_holo"
+	duration = 60
+
+/obj/effect/temp_visual/security_holosign/Initialize(mapload, creator)
+	. = ..()
+	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
+	if(creator)
+		visible_message(span_danger("[creator] created a security hologram!"))

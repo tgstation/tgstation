@@ -51,7 +51,7 @@
 	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
 	var/key = dictionary_key ? dictionary_key : holder_type
 
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdel))
+	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_qdel))
 	if(randomize)
 		randomize()
 	else
@@ -64,7 +64,12 @@
 
 /datum/wires/Destroy()
 	holder = null
-	assemblies = list()
+	//properly clear refs to avoid harddels & other problems
+	for(var/color in assemblies)
+		var/obj/item/assembly/assembly = assemblies[color]
+		assembly.holder = null
+		assembly.connected = null
+	LAZYCLEARLIST(assemblies)
 	return ..()
 
 /datum/wires/proc/add_duds(duds)
@@ -111,7 +116,8 @@
 	randomize()
 
 /datum/wires/proc/repair()
-	cut_wires.Cut()//a negative times a negative equals a positive
+	for(var/wire in cut_wires)
+		cut(wire) // I KNOW I KNOW OK
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
@@ -147,23 +153,25 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire)
+/datum/wires/proc/cut(wire, source)
 	if(is_cut(wire))
 		cut_wires -= wire
-		on_cut(wire, mend = TRUE)
+		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
+		on_cut(wire, mend = TRUE, source = source)
 	else
 		cut_wires += wire
-		on_cut(wire, mend = FALSE)
+		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
+		on_cut(wire, mend = FALSE, source = source)
 
-/datum/wires/proc/cut_color(color)
-	cut(get_wire(color))
+/datum/wires/proc/cut_color(color, source)
+	cut(get_wire(color), source)
 
-/datum/wires/proc/cut_random()
-	cut(wires[rand(1, wires.len)])
+/datum/wires/proc/cut_random(source)
+	cut(wires[rand(1, wires.len)], source)
 
-/datum/wires/proc/cut_all()
+/datum/wires/proc/cut_all(source)
 	for(var/wire in wires)
-		cut(wire)
+		cut(wire, source)
 
 /datum/wires/proc/pulse(wire, user, force=FALSE)
 	if(!force && is_cut(wire))
@@ -192,7 +200,6 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
-		S.forceMove(holder.drop_location())
 		return S
 
 /// Called from [/atom/proc/emp_act]
@@ -217,7 +224,7 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE)
+/datum/wires/proc/on_cut(wire, mend = FALSE, source = null)
 	return
 
 /datum/wires/proc/on_pulse(wire, user)
@@ -270,7 +277,7 @@
 /datum/wires/ui_host()
 	return holder
 
-/datum/wires/ui_status(mob/user)
+/datum/wires/ui_status(mob/user, datum/ui_state/state)
 	if(interactable(user))
 		return ..()
 	return UI_CLOSE
@@ -314,7 +321,7 @@
 			if(I || isAdminGhostAI(usr))
 				if(I && holder)
 					I.play_tool_sound(holder, 20)
-				cut_color(target_wire)
+				cut_color(target_wire, source = L)
 				. = TRUE
 			else
 				to_chat(L, span_warning("You need wirecutters!"))

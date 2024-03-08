@@ -67,7 +67,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
 "aw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
@@ -333,7 +333,7 @@
 /area/ruin/powered/clownplanet)
 "bZ" = (
 /obj/machinery/door/airlock/bananium,
-/turf/open/indestructible/honk,
+/turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "ca" = (
 /obj/item/bikehorn,
@@ -671,7 +671,7 @@
 /area/ruin/powered/clownplanet)
 "RW" = (
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Tj" = (
@@ -714,7 +714,7 @@
 "YI" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Zg" = (

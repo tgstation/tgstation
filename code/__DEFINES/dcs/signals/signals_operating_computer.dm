@@ -1,5 +1,5 @@
 // /obj/machinery/computer/operating signals
 
-/// Fired when a dissection surgery completes.
+/// Fired when a autopsy surgery completes.
 /// (mob/living/target)
-#define COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE "operating_computer_dissection_complete"
+#define COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE "operating_computer_autopsy_complete"

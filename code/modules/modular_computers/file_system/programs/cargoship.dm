@@ -1,8 +1,8 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
 	filedesc = "GrandArk Exporter"
-	category = PROGRAM_CATEGORY_SUPL
-	program_icon_state = "shipping"
+	downloader_category = PROGRAM_CATEGORY_SUPPLY
+	program_open_overlay = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	size = 6
 	tgui_id = "NtosShipping"
@@ -26,10 +26,8 @@
 	data["barcode_split"] = cut_multiplier * 100
 	return data
 
-/datum/computer_file/program/shipping/ui_act(action, list/params)
+/datum/computer_file/program/shipping/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
 	if(!computer.computer_id_slot) //We need an ID to successfully run
 		return FALSE
 

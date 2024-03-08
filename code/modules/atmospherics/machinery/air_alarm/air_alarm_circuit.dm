@@ -134,7 +134,7 @@
 	if(action == "add_new_component")
 		var/obj/item/circuit_component/air_alarm/component = new /obj/item/circuit_component/air_alarm/duplicate(parent)
 		parent.add_component(component)
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
+		RegisterSignal(component, COMSIG_QDELETING, PROC_REF(on_duplicate_removed))
 		component.connected_alarm = connected_alarm
 		alarm_duplicates += component
 
@@ -226,8 +226,7 @@
 
 	var/current_option = air_alarm_options.value
 
-	var/turf/alarm_turf = get_turf(connected_alarm)
-	var/datum/gas_mixture/environment = alarm_turf.return_air()
+	var/datum/gas_mixture/environment = connected_alarm.get_enviroment()
 	pressure.set_output(round(environment.return_pressure()))
 	temperature.set_output(round(environment.temperature))
 	if(ispath(options_map[current_option]))
@@ -289,7 +288,7 @@
 	if(action == "add_new_component")
 		var/obj/item/circuit_component/air_alarm_scrubbers/component = new /obj/item/circuit_component/air_alarm_scrubbers/duplicate(parent)
 		parent.add_component(component)
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
+		RegisterSignal(component, COMSIG_QDELETING, PROC_REF(on_duplicate_removed))
 		component.connected_alarm = connected_alarm
 		component.scrubbers.possible_options = extract_id_tags(connected_alarm.my_area.air_scrubbers)
 		scrubber_duplicates += component
@@ -508,7 +507,7 @@
 	if(action == "add_new_component")
 		var/obj/item/circuit_component/air_alarm_vents/component = new /obj/item/circuit_component/air_alarm_vents/duplicate(parent)
 		parent.add_component(component)
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
+		RegisterSignal(component, COMSIG_QDELETING, PROC_REF(on_duplicate_removed))
 		vent_duplicates += component
 		component.connected_alarm = connected_alarm
 		component.vents.possible_options = extract_id_tags(connected_alarm.my_area.air_vents)

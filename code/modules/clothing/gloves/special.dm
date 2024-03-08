@@ -88,6 +88,7 @@
 	strip_delay = 60
 	armor_type = /datum/armor/captain_gloves
 	resistance_flags = NONE
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /datum/armor/captain_gloves
 	bio = 90
@@ -102,7 +103,7 @@
 	greyscale_colors = null
 	siemens_coefficient = 0.3
 	armor_type = /datum/armor/latex_gloves
-	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
+	clothing_traits = list(TRAIT_QUICK_CARRY)
 	resistance_flags = NONE
 
 /datum/armor/latex_gloves
@@ -116,6 +117,17 @@
 	greyscale_colors = "#99eeff"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 
+/obj/item/clothing/gloves/latex/coroner
+	name = "coroner's gloves"
+	desc = "Black gloves made from latex with a superhydrophobic coating. Useful for picking bodies up instead of dragging blood behind."
+	icon_state = "latex_black"
+	inhand_icon_state = "greyscale_gloves"
+	greyscale_colors = "#15191a"
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
+
+/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add)
+	return FALSE
+
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
@@ -125,7 +137,7 @@
 	siemens_coefficient = 0.8
 	armor_type = /datum/armor/tinker_gloves
 	clothing_traits = list(TRAIT_QUICK_BUILD)
-	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT, /datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT)
 	resistance_flags = NONE
 
 /datum/armor/tinker_gloves

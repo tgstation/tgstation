@@ -1,6 +1,6 @@
 /obj/structure/displaycase
 	name = "display case"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -47,13 +47,13 @@
 	if(vname in list(NAMEOF(src, open), NAMEOF(src, showpiece), NAMEOF(src, custom_glass_overlay)))
 		update_appearance()
 
-/obj/structure/displaycase/handle_atom_del(atom/A)
-	if(A == electronics)
+/obj/structure/displaycase/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == electronics)
 		electronics = null
-	if(A == showpiece)
+	if(gone == showpiece)
 		showpiece = null
 		update_appearance()
-	return ..()
 
 /obj/structure/displaycase/Destroy()
 	QDEL_NULL(electronics)
@@ -73,8 +73,6 @@
 	if(QDELETED(showpiece))
 		return
 	showpiece.forceMove(drop_location())
-	showpiece = null
-	update_appearance()
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -84,7 +82,7 @@
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		dump()
 		if(!disassembled)
 			new /obj/item/shard(drop_location())
@@ -93,7 +91,7 @@
 
 /obj/structure/displaycase/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
@@ -129,27 +127,27 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/tool, mob/living/user, params)
-	if(tool.GetID() && !broken)
+/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(attacking_item.GetID() && !broken)
 		if(allowed(user))
 			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
-			if(!tool.tool_start_check(user, amount=5))
+			if(!attacking_item.tool_start_check(user, amount=1))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(tool.use_tool(src, user, 40, amount=5, volume=50))
+			if(attacking_item.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))
 		else
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
-	else if(!alert && tool.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
+	else if(!alert && attacking_item.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, span_warning("Remove the displayed object first!"))
@@ -158,14 +156,14 @@
 				qdel(src)
 		else
 			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
-			if(tool.use_tool(src, user, 20))
+			if(attacking_item.use_tool(src, user, 20))
 				to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
 				toggle_lock(user)
 	else if(open && !showpiece)
-		insert_showpiece(tool, user)
+		insert_showpiece(attacking_item, user)
 		return TRUE //cancel the attack chain, wether we successfully placed an item or not
-	else if(glass_fix && broken && istype(tool, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/glass_sheet = tool
+	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
 		if(glass_sheet.get_amount() < 2)
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
@@ -224,65 +222,97 @@
 		take_damage(2)
 
 /obj/structure/displaycase_chassis
-	anchored = TRUE
-	density = FALSE
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox_chassis"
+	resistance_flags = FLAMMABLE
+	anchored = TRUE
+	density = FALSE
+	///The airlock electronics inserted into the chassis, to be moved to the finished product.
 	var/obj/item/electronics/airlock/electronics
 
+/obj/structure/displaycase_chassis/Initialize(mapload)
+	. = ..()
+	register_context()
 
-/obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
-		to_chat(user, span_notice("You start disassembling [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
-			qdel(src)
+/obj/structure/displaycase_chassis/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		return .
 
-	else if(istype(I, /obj/item/electronics/airlock))
-		to_chat(user, span_notice("You start installing the electronics into [src]..."))
-		I.play_tool_sound(src)
-		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
-			electronics = I
-			to_chat(user, span_notice("You install the airlock electronics."))
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/electronics/airlock) && !electronics)
+		context[SCREENTIP_CONTEXT_LMB] = "Add electronics"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/stock_parts/card_reader))
+		context[SCREENTIP_CONTEXT_LMB] = "Construct Vend-A-Tray"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/stack/sheet/glass))
+		context[SCREENTIP_CONTEXT_LMB] = "Finalize display case"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
-	else if(istype(I, /obj/item/stock_parts/card_reader))
-		var/obj/item/stock_parts/card_reader/C = I
-		to_chat(user, span_notice("You start adding [C] to [src]..."))
-		if(do_after(user, 20, target = src))
-			var/obj/structure/displaycase/forsale/sale = new(src.loc)
-			if(electronics)
-				electronics.forceMove(sale)
-				sale.electronics = electronics
-				if(electronics.one_access)
-					sale.req_one_access = electronics.accesses
-				else
-					sale.req_access = electronics.accesses
-			qdel(src)
-			qdel(C)
+/obj/structure/displaycase_chassis/examine(mob/user)
+	. = ..()
+	if(!electronics)
+		. += span_notice("You can attach [EXAMINE_HINT("airlock electronics")] to give it access restrictions.")
+	. += span_notice("[src] can be finalized using [EXAMINE_HINT("10 glass sheets")], or turned into a Vend-A-Tray using a [EXAMINE_HINT("card reader")].")
 
-	else if(istype(I, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = I
-		if(G.get_amount() < 10)
-			to_chat(user, span_warning("You need ten glass sheets to do this!"))
+/obj/structure/displaycase_chassis/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	balloon_alert(user, "disassembling...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 3 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
+		if(electronics)
+			electronics.forceMove(drop_location())
+			electronics = null
+		qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/electronics/airlock))
+		balloon_alert(user, "installing electronics...")
+		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item, src))
+			electronics = attacking_item
+			balloon_alert(user, "electronics installed")
+		return
+
+	if(istype(attacking_item, /obj/item/stock_parts/card_reader))
+		var/obj/item/stock_parts/card_reader/card_reader = attacking_item
+		balloon_alert(user, "adding [card_reader]...")
+		if(do_after(user, 2 SECONDS, target = src))
+			qdel(card_reader)
+			make_final_result(display_type = /obj/structure/displaycase/forsale)
+		return
+
+	if(istype(attacking_item, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_sheets = attacking_item
+		if(glass_sheets.get_amount() < 10)
+			balloon_alert(user, "need 10 sheets!")
 			return
-		to_chat(user, span_notice("You start adding [G] to [src]..."))
-		if(do_after(user, 20, target = src))
-			G.use(10)
-			var/obj/structure/displaycase/noalert/display = new(src.loc)
-			if(electronics)
-				electronics.forceMove(display)
-				display.electronics = electronics
-				if(electronics.one_access)
-					display.req_one_access = electronics.accesses
-				else
-					display.req_access = electronics.accesses
-			qdel(src)
-	else
-		return ..()
+		balloon_alert(user, "adding glass...")
+		if(do_after(user, 2 SECONDS, target = src))
+			glass_sheets.use(10)
+			make_final_result(display_type = /obj/structure/displaycase/noalert)
+		return
+	return ..()
+
+///Makes the final result of the chassis, then deletes itself.
+/obj/structure/displaycase_chassis/proc/make_final_result(obj/structure/displaycase/display_type)
+	var/obj/structure/displaycase/display = new display_type(loc)
+	if(electronics)
+		electronics.forceMove(display)
+		display.electronics = electronics
+		if(electronics.one_access)
+			display.req_one_access = electronics.accesses
+		else
+			display.req_access = electronics.accesses
+	qdel(src)
 
 //The lab cage and captain's display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
@@ -331,8 +361,8 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/key/displaycase))
+/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
 	return ..()
@@ -439,6 +469,7 @@
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
+	icon = 'icons/obj/machines/display.dmi'
 	icon_state = "laserbox"
 	custom_glass_overlay = TRUE
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
@@ -580,17 +611,17 @@
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
-	if(isidcard(I))
+/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, params)
+	if(isidcard(attacking_item))
 		//Card Registration
-		var/obj/item/card/id/potential_acc = I
+		var/obj/item/card/id/potential_acc = attacking_item
 		if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 		if(payments_acc == potential_acc.registered_account)
 			toggle_lock()
 			return
-	if(istype(I, /obj/item/modular_computer))
+	if(istype(attacking_item, /obj/item/modular_computer))
 		return TRUE
 	SStgui.update_uis(src)
 	return ..()
@@ -625,11 +656,13 @@
 		to_chat(user, span_notice("[src] must be open to move it."))
 		return
 
-/obj/structure/displaycase/forsale/emag_act(mob/user)
+/obj/structure/displaycase/forsale/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	to_chat(user, span_warning("[src]'s card reader fizzles and smokes, and the account owner is reset."))
+	balloon_alert(user, "account owner reset")
+	to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
+	return TRUE
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
@@ -640,7 +673,7 @@
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		broken = TRUE
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()

@@ -145,7 +145,6 @@
 	var/obj/item/master = comp.parent
 	master.RemoveElement(/datum/element/venomous)
 
-
 /datum/fantasy_affix/soul_stealer
 	name = "soul-stealing"
 	placement = AFFIX_PREFIX

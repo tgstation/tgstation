@@ -133,7 +133,7 @@
 /obj/machinery/rnd/server/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!do_after(ninja, 30 SECONDS, target = src))
 		return
-	SSresearch.science_tech.modify_points_all(0)
+	stored_research.modify_points_all(0)
 	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
@@ -158,6 +158,8 @@
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		target.wanted_status = WANTED_ARREST
+	update_all_security_huds()
+
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return
@@ -202,7 +204,7 @@
 /obj/machinery/door/airlock/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
@@ -316,7 +318,151 @@
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		spark_system.start()
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
-		Knockdown(3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(ninja_knockdown)), 0.3 SECONDS)
 	return NONE
+
+/mob/living/carbon/proc/ninja_knockdown()
+	Knockdown(3 SECONDS)
+	set_jitter_if_lower(3 SECONDS)
+
+//CAMERAS//
+/obj/machinery/camera/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(isEmpProof(TRUE))
+		balloon_alert(ninja, "camera is shielded!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
+		return
+
+	emp_act(EMP_HEAVY)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//BOTS//
+/mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	to_chat(src, span_boldwarning("Your circutry suddenly begins heating up!"))
+	if(!do_after(ninja, 1.5 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 7))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(number = 3, cardinal_only = FALSE, source = src)
+	playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 35, TRUE)
+	balloon_alert(ninja, "stand back!")
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 0, 1, 2, 3), 2.5 SECONDS)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/mob/living/basic/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	var/static/list/death_cry = list(
+		MEDIBOT_VOICED_NO_SAD,
+		MEDIBOT_VOICED_OH_FUCK,
+	)
+	speak(pick(death_cry))
+	return ..()
+
+//ENERGY WEAPONS//
+/obj/item/gun/energy/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(cell.charge == 0)
+		balloon_alert(ninja, "no energy!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(ninja, 1.5 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	hacking_module.mod.add_charge(cell.charge)
+	hacking_module.charge_message(src, cell.charge)
+	cell.charge = 0
+	update_appearance()
+	visible_message(span_warning("[ninja] drains the energy from the [src]!"))
+	do_sparks(number = 3, cardinal_only = FALSE, source = src)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//VENDING MACHINES//
+/obj/machinery/vending/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(shoot_inventory)
+		balloon_alert(ninja, "already hacked!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(ninja, 2 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(number = 3, cardinal_only = FALSE, source = src)
+	balloon_alert(ninja, "system overloaded!")
+	wires.on_pulse(WIRE_THROW)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//RECYCLER//
+/obj/machinery/recycler/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(obj_flags & EMAGGED)
+		balloon_alert(ninja, "already hacked!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	AI_notify_hack()
+	if(!do_after(ninja, 30 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(3, cardinal_only = FALSE, source = src)
+	emag_act(ninja)
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//ELEVATOR CONTROLS//
+/obj/machinery/elevator_control_panel/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(obj_flags & EMAGGED)
+		balloon_alert(ninja, "already hacked!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(ninja, 2 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(3, cardinal_only = FALSE, source = src)
+	emag_act(ninja)
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//TRAM CONTROLS//
+/obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
+	if(malfunction_event)
+		balloon_alert(ninja, "tram is already malfunctioning!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(specific_transport_id != TRAMSTATION_LINE_1)
+		balloon_alert(ninja, "cannot hack this tram!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	AI_notify_hack()
+
+	if(!do_after(ninja, 20 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
+	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
+	malfunction_event.end_when *= 2
+	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
+		// Since faults are now used instead of straight event end_when var, we make a few of them malfunction
+		if(prob(rand(15, 30)))
+			sensor.local_fault()
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//WINDOOR//
+/obj/machinery/door/window/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//BUTTONS//
+/obj/machinery/button/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(is_operational && !(obj_flags & EMAGGED))
+		emag_act(ninja)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//FIRELOCKS//
+/obj/machinery/door/firedoor/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	crack_open()

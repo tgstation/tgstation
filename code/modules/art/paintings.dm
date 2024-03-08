@@ -1,3 +1,4 @@
+#define MAX_PAINTING_ZOOM_OUT 3
 
 ///////////
 // EASEL //
@@ -50,6 +51,8 @@
 	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay
 	var/used = FALSE
 	var/finalized = FALSE //Blocks edits
+	/// Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.
+	var/show_grid = TRUE
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
@@ -65,10 +68,13 @@
 	var/framed_offset_y = 10
 
 	/**
-	 * How big the grid cells that compose the painting are in the UI.
+	 * How big the grid cells that compose the painting are in the UI (multiplied by zoom).
 	 * This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa
 	 */
-	var/pixels_per_unit = 24
+	var/pixels_per_unit = 9
+
+	///A list that keeps track of the current zoom value for each current viewer.
+	var/list/zoom_by_observer
 
 	SET_BASE_PIXEL(11, 10)
 
@@ -83,6 +89,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -115,10 +122,12 @@
 /obj/item/canvas/ui_static_data(mob/user)
 	. = ..()
 	.["px_per_unit"] = pixels_per_unit
+	.["max_zoom"] = MAX_PAINTING_ZOOM_OUT
 
 /obj/item/canvas/ui_data(mob/user)
 	. = ..()
 	.["grid"] = grid
+	.["zoom"] = LAZYACCESS(zoom_by_observer, user.key) || (finalized ? 1 : MAX_PAINTING_ZOOM_OUT)
 	.["name"] = painting_metadata.title
 	.["author"] = painting_metadata.creator_name
 	.["patron"] = painting_metadata.patron_name
@@ -127,12 +136,13 @@
 	.["finalized"] = finalized
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
-	var/obj/item/painting_implement = user.get_active_held_item()
-	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
-	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
+	.["show_grid"] = show_grid
 	.["paint_tool_palette"] = null
+	var/obj/item/painting_implement = user.get_active_held_item()
 	if(!painting_implement)
+		.["paint_tool_color"] = null
 		return
+	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
 	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
@@ -169,12 +179,53 @@
 		if("select_color")
 			var/obj/item/painting_implement = user.get_active_held_item()
 			painting_implement?.set_painting_tool_color(params["selected_color"])
+			. = TRUE
+		if("select_color_from_coords")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			var/x = text2num(params["px"])
+			var/y = text2num(params["py"])
+			painting_implement.set_painting_tool_color(grid[x][y])
+			. = TRUE
+		if("change_palette")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			//I'd have this done inside the signal, but that'd have to be asynced,
+			//while we want the UI to be updated after the color is chosen, not before.
+			var/chosen_color = input(user, "Pick new color", painting_implement, params["old_color"]) as color|null
+			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
+				return FALSE
+			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
+			. = TRUE
+		if("toggle_grid")
+			. = TRUE
+			show_grid = !show_grid
 		if("finalize")
 			. = TRUE
 			finalize(user)
 		if("patronage")
 			. = TRUE
 			patron(user)
+		if("zoom_in")
+			. = TRUE
+			LAZYINITLIST(zoom_by_observer)
+			if(!zoom_by_observer[user.key])
+				zoom_by_observer[user.key] = 2
+			else
+				zoom_by_observer[user.key] = min(zoom_by_observer[user.key] + 1, MAX_PAINTING_ZOOM_OUT)
+		if("zoom_out")
+			. = TRUE
+			LAZYINITLIST(zoom_by_observer)
+			if(!zoom_by_observer[user.key])
+				zoom_by_observer[user.key] = MAX_PAINTING_ZOOM_OUT - 1
+			else
+				zoom_by_observer[user.key] = max(zoom_by_observer[user.key] - 1, 1)
+
+/obj/item/canvas/ui_close(mob/user)
+	. = ..()
+	LAZYREMOVE(zoom_by_observer, user.key)
 
 /obj/item/canvas/proc/finalize(mob/user)
 	if(painting_metadata.loaded_from_json || finalized)
@@ -190,6 +241,9 @@
 	finalized = TRUE
 
 	SStgui.update_uis(src)
+
+#define CURATOR_PERCENTILE_CUT 0.225
+#define SERVICE_PERCENTILE_CUT 0.125
 
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
@@ -218,11 +272,24 @@
 	if(!account.adjust_money(-offer_amount, "Painting: Patron of [painting_metadata.title]"))
 		to_chat(user, span_warning("Transaction failure. Please try again."))
 		return
+
+	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
+	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
+	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
+	var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
+	var/curators_length = length(curator_accounts)
+	if(curators_length)
+		var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
+		if(curator_cut)
+			for(var/datum/bank_account/curator as anything in curator_accounts)
+				curator.adjust_money(curator_cut, "Painting: Patronage cut")
+				curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	last_patron = WEAKREF(user.mind)
-	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
+	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return
@@ -232,6 +299,9 @@
 		return
 	SStgui.close_uis(src) // Close the examine ui so that the radial menu doesn't end up covered by it and people don't get confused.
 	select_new_frame(user, possible_frames)
+
+#undef CURATOR_PERCENTILE_CUT
+#undef SERVICE_PERCENTILE_CUT
 
 /obj/item/canvas/proc/select_new_frame(mob/user, list/candidates)
 	var/possible_frames = candidates || SSpersistent_paintings.get_available_frames(painting_metadata.credit_value)
@@ -327,7 +397,8 @@
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return TRUE
-	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
+	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", null, MAX_NAME_LEN)
+	new_name = reject_bad_name(new_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 	if(isnull(new_name))
 		return FALSE
 	if(new_name != painting_metadata.title && user.can_perform_action(src))
@@ -358,6 +429,7 @@
 	SET_BASE_PIXEL(5, 7)
 	framed_offset_x = 5
 	framed_offset_y = 7
+	pixels_per_unit = 8
 
 /obj/item/canvas/twentythree_twentythree
 	name = "canvas (23x23)"
@@ -367,6 +439,7 @@
 	SET_BASE_PIXEL(5, 5)
 	framed_offset_x = 5
 	framed_offset_y = 5
+	pixels_per_unit = 8
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (24x24) (AI Universal Standard)"
@@ -377,6 +450,7 @@
 	SET_BASE_PIXEL(4, 4)
 	framed_offset_x = 4
 	framed_offset_y = 4
+	pixels_per_unit = 8
 
 /obj/item/canvas/thirtysix_twentyfour
 	name = "canvas (36x24)"
@@ -387,7 +461,7 @@
 	SET_BASE_PIXEL(-4, 4)
 	framed_offset_x = 14
 	framed_offset_y = 4
-	pixels_per_unit = 20
+	pixels_per_unit = 7
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.25
@@ -407,7 +481,7 @@
 	SET_BASE_PIXEL(-8, 2)
 	framed_offset_x = 9
 	framed_offset_y = 4
-	pixels_per_unit = 18
+	pixels_per_unit = 6
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.75
@@ -422,7 +496,8 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -434,7 +509,8 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas
@@ -614,7 +690,7 @@
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
@@ -641,7 +717,7 @@
 
 /obj/structure/sign/painting/large
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
@@ -768,3 +844,4 @@
 	current_color = chosen_color
 
 #undef AVAILABLE_PALETTE_SPACE
+#undef MAX_PAINTING_ZOOM_OUT

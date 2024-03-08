@@ -7,15 +7,15 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-   $primary: #1596b6,
-   $fg-map-keys: (),
-   $bg-map-keys: (),
- );
+  $primary: #1596b6,
+  $fg-map-keys: (),
+  $bg-map-keys: ()
+);
 @use '../base.scss' with (
-   $color-bg: #29333a,
-   $color-bg-grad-spread: 6%,
-   $border-radius: 2px,
- );
+  $color-bg: #29333a,
+  $color-bg-grad-spread: 6%,
+  $border-radius: 2px
+);
 
 .theme-admin {
   // Atomic classes
@@ -27,5 +27,12 @@
 
   .Layout__content {
     background-image: url('../../assets/bg-admin.svg');
+  }
+
+  .candystripe:nth-child(odd) {
+    background-color: rgba(12, 49, 71, 0.25);
+  }
+  .candystripe:nth-child(even) {
+    background-color: rgba(33, 114, 206, 0.25);
   }
 }

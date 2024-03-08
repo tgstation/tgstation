@@ -9,7 +9,6 @@
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
@@ -19,14 +18,17 @@
 	. = ..()
 	// as a wise man once wrote: "pull over that ass too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	// that'd be a too cheeky shield bashing strat
+	ADD_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, INNATE_TRAIT)
+	AddComponent(/datum/component/seethrough_mob)
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
 	. = ..()
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN) //So it won't hide smaller mobs.
+	layer = LYING_MOB_LAYER
 
 /mob/living/carbon/alien/adult/royal/on_standing_up(new_lying_angle)
 	. = ..()
-	SET_PLANE_IMPLICIT(src, initial(plane))
+	layer = initial(layer)
 
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
@@ -34,9 +36,12 @@
 /mob/living/carbon/alien/adult/royal/queen
 	name = "alien queen"
 	caste = "q"
-	maxHealth = 400
-	health = 400
+	maxHealth = 500
+	health = 500
 	icon_state = "alienq"
+	melee_damage_lower = 50
+	melee_damage_upper = 50
+	alien_speed = 2
 
 /mob/living/carbon/alien/adult/royal/queen/Initialize(mapload)
 	//there should only be one queen
@@ -51,14 +56,11 @@
 
 	real_name = src.name
 
-	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
-	tail_whip.Grant(src)
-
-	var/datum/action/small_sprite/queen/smallsprite = new(src)
-	smallsprite.Grant(src)
-
-	var/datum/action/cooldown/alien/promote/promotion = new(src)
-	promotion.Grant(src)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/alien/promote,
+		/datum/action/cooldown/spell/aoe/repulse/xeno,
+	)
+	grant_actions_by_list(innate_actions)
 
 	return ..()
 

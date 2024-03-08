@@ -2,6 +2,7 @@
 //they are the easiest to cure, which means that if you want
 //to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
+	abstract_type = /datum/brain_trauma/special
 
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
@@ -10,9 +11,9 @@
 	gain_text = span_notice("You feel a higher power inside your mind...")
 	lose_text = span_warning("The divine presence leaves your head, no longer interested.")
 
-/datum/brain_trauma/special/godwoken/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/godwoken/on_life(seconds_per_tick, times_fired)
 	..()
-	if(DT_PROB(2, delta_time))
+	if(SPT_PROB(2, seconds_per_tick))
 		if(prob(33) && (owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
 			speak("unstun", TRUE)
 		else if(prob(60) && owner.health <= owner.crit_threshold)
@@ -45,7 +46,7 @@
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
-	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name)
+	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name, TRUE)
 
 /datum/brain_trauma/special/bluespace_prophet
 	name = "Bluespace Prophecy"
@@ -56,7 +57,7 @@
 	/// Cooldown so we can't teleport literally everywhere on a whim
 	COOLDOWN_DECLARE(portal_cooldown)
 
-/datum/brain_trauma/special/bluespace_prophet/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/bluespace_prophet/on_life(seconds_per_tick, times_fired)
 	if(!COOLDOWN_FINISHED(src, portal_cooldown))
 		return
 
@@ -99,12 +100,15 @@
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
-	image_plane = GAME_PLANE_UPPER
 	var/obj/effect/client_image_holder/bluespace_stream/linked_to
 
 /obj/effect/client_image_holder/bluespace_stream/Initialize(mapload, list/mobs_which_see_us)
 	. = ..()
 	QDEL_IN(src, 30 SECONDS)
+
+/obj/effect/client_image_holder/bluespace_stream/generate_image()
+	. = ..()
+	apply_wibbly_filters(.)
 
 /obj/effect/client_image_holder/bluespace_stream/Destroy()
 	if(!QDELETED(linked_to))
@@ -160,7 +164,7 @@
 	/// Cooldown for snapbacks
 	COOLDOWN_DECLARE(snapback_cooldown)
 
-/datum/brain_trauma/special/quantum_alignment/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/quantum_alignment/on_life(seconds_per_tick, times_fired)
 	if(linked)
 		if(QDELETED(linked_target))
 			linked_target = null
@@ -169,7 +173,7 @@
 		if(!returning && COOLDOWN_FINISHED(src, snapback_cooldown))
 			start_snapback()
 		return
-	if(DT_PROB(2, delta_time))
+	if(SPT_PROB(2, seconds_per_tick))
 		try_entangle()
 
 /datum/brain_trauma/special/quantum_alignment/proc/try_entangle()
@@ -241,14 +245,15 @@
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
 	..()
-	psychotic_brawling = new(null)
+	psychotic_brawling = new()
+	psychotic_brawling.allow_temp_override = FALSE
 	if(!psychotic_brawling.teach(owner, TRUE))
 		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
 		qdel(src)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
 	..()
-	psychotic_brawling.remove(owner)
+	psychotic_brawling.fully_remove(owner)
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
@@ -262,11 +267,11 @@
 	lose_text = span_warning("You realize you can feel pain again.")
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/death_whispers
@@ -306,9 +311,9 @@
 	/// A cooldown to prevent constantly erratic dolphining through the fabric of reality
 	COOLDOWN_DECLARE(crisis_cooldown)
 
-/datum/brain_trauma/special/existential_crisis/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/existential_crisis/on_life(seconds_per_tick, times_fired)
 	..()
-	if(!veil && COOLDOWN_FINISHED(src, crisis_cooldown) && DT_PROB(1.5, delta_time))
+	if(!veil && COOLDOWN_FINISHED(src, crisis_cooldown) && SPT_PROB(1.5, seconds_per_tick))
 		if(isturf(owner.loc))
 			fade_out()
 
@@ -421,3 +426,49 @@
 		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))
+
+// Used by Veteran Security Advisor job.
+/datum/brain_trauma/special/ptsd
+	name = "Combat PTSD"
+	desc = "The patient is experiencing PTSD stemming from past combat exposure, resulting in a lack of emotions. Additionally, they are experiencing mild hallucinations."
+	scan_desc = "PTSD"
+	gain_text = span_warning("You're thrust back into the chaos of past! Explosions! Gunfire! Emotions, gone AWOL!")
+	lose_text = span_notice("You feel flashbacks of past fade, as your emotions return and mind clear.")
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	can_gain = TRUE
+	random_gain = FALSE
+	/// Our cooldown declare for causing hallucinations
+	COOLDOWN_DECLARE(ptsd_hallucinations)
+	var/list/ptsd_hallucinations_list = list(
+		/datum/hallucination/fake_sound/normal/boom,
+		/datum/hallucination/fake_sound/normal/distant_boom,
+		/datum/hallucination/stray_bullet,
+		/datum/hallucination/battle/gun/disabler,
+		/datum/hallucination/battle/gun/laser,
+		/datum/hallucination/battle/bomb,
+		/datum/hallucination/battle/e_sword,
+		/datum/hallucination/battle/harm_baton,
+		/datum/hallucination/battle/stun_prod,
+	)
+
+/datum/brain_trauma/special/ptsd/on_life(seconds_per_tick, times_fired)
+	if(owner.stat != CONSCIOUS)
+		return
+
+	if(!COOLDOWN_FINISHED(src, ptsd_hallucinations))
+		return
+
+	owner.cause_hallucination(pick(ptsd_hallucinations_list), "Caused by The Combat PTSD brain trauma")
+	COOLDOWN_START(src, ptsd_hallucinations, rand(10 SECONDS, 10 MINUTES))
+
+/datum/brain_trauma/special/ptsd/on_gain()
+	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
+	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
+	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
+	..()
+
+/datum/brain_trauma/special/ptsd/on_lose()
+	owner.clear_mood_event("combat_ptsd")
+	owner.mob_mood?.mood_modifier += 1
+	owner.mob_mood?.sanity_level = SANITY_GREAT
+	return ..()

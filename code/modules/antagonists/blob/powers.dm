@@ -176,7 +176,7 @@
 	if(!factory)
 		to_chat(src, span_warning("You must be on a factory blob!"))
 		return FALSE
-	if(factory.naut) //if it already made a blobbernaut, it can't do it again
+	if(factory.blobbernaut || factory.is_creating_blobbernaut) //if it already made or making a blobbernaut, it can't do it again
 		to_chat(src, span_warning("This factory blob is already sustaining a blobbernaut."))
 		return FALSE
 	if(factory.get_integrity() < factory.max_integrity * 0.5)
@@ -185,47 +185,49 @@
 	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return FALSE
 
-	factory.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
+	factory.is_creating_blobbernaut = TRUE
 	to_chat(src, span_notice("You attempt to produce a blobbernaut."))
 	pick_blobbernaut_candidate(factory)
 
-/** Polls ghosts to get a blobbernaut candidate. */
+/// Polls ghosts to get a blobbernaut candidate.
 /mob/camera/blob/proc/pick_blobbernaut_candidate(obj/structure/blob/special/factory/factory)
-	if(!factory)
+	if(isnull(factory))
 		return
+	var/icon/blobbernaut_icon = icon(icon, "blobbernaut")
+	blobbernaut_icon.Blend(blobstrain.color, ICON_MULTIPLY)
+	var/image/blobbernaut_image = image(blobbernaut_icon)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_BLOB,
+		poll_time = 20 SECONDS,
+		checked_target = factory,
+		ignore_category = POLL_IGNORE_BLOB,
+		alert_pic = blobbernaut_image,
+		jump_target = factory,
+		role_name_text = "blobbernaut",
+		chat_text_border_icon = blobbernaut_image,
+	)
+	on_poll_concluded(factory, chosen_one)
 
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
-
-	if(!length(candidates))
+/// Called when the ghost poll concludes
+/mob/camera/blob/proc/on_poll_concluded(obj/structure/blob/special/factory/factory, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
-		factory.naut = null //players must answer rapidly
+		factory.assign_blobbernaut(null)
 		return FALSE
 
-	factory.modify_max_integrity(initial(factory.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
-	factory.update_appearance()
-	factory.visible_message(span_warning("<b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b>"))
-	playsound(factory.loc, 'sound/effects/splat.ogg', 50, TRUE)
+	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
+	assume_direct_control(blobber)
+	factory.assign_blobbernaut(blobber)
+	blobber.assign_key(ghost.key, blobstrain)
+	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(factory))
-	flick("blobbernaut_produce", blobber)
-
-	factory.naut = blobber
-	blobber.factory = factory
-	blobber.overmind = src
-	blobber.update_icons()
-	blobber.adjustHealth(blobber.maxHealth * 0.5)
-	blob_mobs += blobber
-
-	var/mob/dead/observer/player = pick(candidates)
-	blobber.key = player.key
-
-	SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
-	SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
-	to_chat(blobber, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
-	to_chat(blobber, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
-	to_chat(blobber, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
-	to_chat(blobber, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
+/// When one of our boys attacked something, we sometimes want to perform extra effects
+/mob/camera/blob/proc/on_blobbernaut_attacked(mob/living/basic/blobbynaut, atom/target, success)
+	SIGNAL_HANDLER
+	if (!success)
+		return
+	blobstrain.blobbernaut_attack(target, blobbynaut)
 
 /** Moves the core */
 /mob/camera/blob/proc/relocate_core()
@@ -356,10 +358,11 @@
 	var/list/surrounding_turfs = TURF_NEIGHBORS(tile)
 	if(!length(surrounding_turfs))
 		return FALSE
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in blob_mobs)
-		if(isturf(spore.loc) && get_dist(spore, tile) <= 35 && !spore.key)
-			spore.LoseTarget()
-			spore.Goto(pick(surrounding_turfs), spore.move_to_delay)
+	for(var/mob/living/basic/blob_mob as anything in blob_mobs)
+		if(!isturf(blob_mob.loc) || get_dist(blob_mob, tile) > 35 || blob_mob.key)
+			continue
+		blob_mob.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		blob_mob.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, pick(surrounding_turfs))
 
 /** Opens the reroll menu to change strains */
 /mob/camera/blob/proc/strain_reroll()

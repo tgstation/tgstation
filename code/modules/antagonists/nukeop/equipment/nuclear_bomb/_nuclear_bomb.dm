@@ -57,7 +57,6 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
-	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
@@ -69,7 +68,6 @@ GLOBAL_VAR(station_nuke_source)
 	if(!exploding)
 		// If we're not exploding, set the alert level back to normal
 		toggle_nuke_safety()
-	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
 	return ..()
@@ -116,7 +114,7 @@ GLOBAL_VAR(station_nuke_source)
 				if(!weapon.tool_start_check(user, amount = 1))
 					return TRUE
 				to_chat(user, span_notice("You start cutting [src]'s inner plate..."))
-				if(weapon.use_tool(src, user, 8 SECONDS, volume=100, amount=1))
+				if(weapon.use_tool(src, user, 8 SECONDS, volume=100))
 					to_chat(user, span_notice("You cut [src]'s inner plate."))
 					deconstruction_state = NUKESTATE_WELDED
 					update_appearance()
@@ -461,6 +459,11 @@ GLOBAL_VAR(station_nuke_source)
 
 	countdown.start()
 	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	notify_ghosts(
+		"A nuclear device has been armed in [get_area_name(src)]!",
+		source = src,
+		header = "Nuke Armed",
+	)
 	update_appearance()
 
 /// Disarms the nuke, reverting all pinpointers and the security level
@@ -518,7 +521,9 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 
-	if(SSticker?.mode)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
+
+	if(SSticker.HasRoundStarted())
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, PROC_REF(actually_explode)), 10 SECONDS)
 	return TRUE
@@ -569,20 +574,39 @@ GLOBAL_VAR(station_nuke_source)
 	return detonation_status
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
-	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
+	var/cinematic = get_cinematic_type(detonation_status)
+	if(!isnull(cinematic))
+		play_cinematic(cinematic, world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
 
-	var/turf/bomb_location = get_turf(src)
-	var/list/z_levels_to_blow = list()
-	if(detonation_status == DETONATION_HIT_STATION)
-		z_levels_to_blow |= SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/drop_level = TRUE
+	switch(detonation_status)
+		if(DETONATION_HIT_STATION)
+			nuke_effects(SSmapping.levels_by_trait(ZTRAIT_STATION))
+			drop_level = FALSE
 
-	// Don't kill people in the station if the nuke missed, even if we are technically on the same z-level
-	else if(detonation_status != DETONATION_NEAR_MISSED_STATION)
-		z_levels_to_blow |= bomb_location.z
+		if(DETONATION_HIT_SYNDIE_BASE)
+			priority_announce(
+				"Long Range Scanners indicate that the nuclear device has detonated on a previously unknown base, we assume \
+				the base to be of Syndicate Origin. Good work crew.",
+				"Nuclear Operations Command",
+			)
 
-	if(length(z_levels_to_blow))
-		nuke_effects(z_levels_to_blow)
+			var/datum/turf_reservation/syndicate_base = SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+			ASYNC
+				for(var/turf/turf as anything in syndicate_base.reserved_turfs)
+					for(var/mob/living/about_to_explode in turf)
+						nuke_gib(about_to_explode, src)
+					CHECK_TICK
 
+		else
+			priority_announce(
+				"Long Range Scanners indicate that the nuclear device has detonated; however seismic activity on the station \
+				is minimal. We anticipate that the device has not detonated on the station itself.",
+				"Nuclear Operations Command",
+			)
+
+	if(drop_level)
+		SSsecurity_level.set_level(SEC_LEVEL_RED)
 	return TRUE
 
 /// Cause nuke effects to the passed z-levels.
@@ -602,6 +626,9 @@ GLOBAL_VAR(station_nuke_source)
  * Helper proc that handles gibbing someone who has been nuked.
  */
 /proc/nuke_gib(mob/living/gibbed, atom/source)
+	if(HAS_TRAIT(gibbed, TRAIT_NUKEIMMUNE))
+		return FALSE
+
 	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
 		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
 		if(!freezer.jones)
@@ -615,7 +642,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
 	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
-	gibbed.gib()
+	gibbed.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /**

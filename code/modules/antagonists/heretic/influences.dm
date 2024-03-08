@@ -21,7 +21,7 @@
 	/// List of minds with the ability to see influences
 	var/list/datum/mind/tracked_heretics = list()
 
-/datum/reality_smash_tracker/Destroy(force, ...)
+/datum/reality_smash_tracker/Destroy(force)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
@@ -115,7 +115,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
@@ -174,7 +174,7 @@
 		head.dismember()
 		qdel(head)
 	else
-		human_user.gib()
+		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
 	var/datum/effect_system/reagents_explosion/explosion = new()
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
@@ -194,7 +194,7 @@
 	name = "reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
 	/// Whether we're currently being drained or not.
@@ -205,12 +205,28 @@
 	var/list/datum/mind/minds = list()
 	/// The image shown to heretics
 	var/image/heretic_image
+	/// We hold the turf we're on so we can remove and add the 'no prints' flag.
+	var/turf/on_turf
 
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
 	heretic_image = image(icon, src, real_icon_state, OBJ_LAYER)
 	generate_name()
+	on_turf = get_turf(src)
+	if(!istype(on_turf))
+		return
+	on_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	RegisterSignal(on_turf, COMSIG_TURF_CHANGE, PROC_REF(replace_our_turf))
+
+/obj/effect/heretic_influence/proc/replace_our_turf(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+	SIGNAL_HANDLER
+	post_change_callbacks += CALLBACK(src, PROC_REF(replace_our_turf_two))
+	on_turf = null //hard del ref?
+
+/obj/effect/heretic_influence/proc/replace_our_turf_two(turf/new_turf)
+	new_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	on_turf = new_turf
 
 /obj/effect/heretic_influence/Destroy()
 	GLOB.reality_smash_track.smashes -= src
@@ -218,6 +234,8 @@
 		remove_mind(heretic)
 
 	heretic_image = null
+	on_turf?.interaction_flags_atom &= ~INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	on_turf = null
 	return ..()
 
 /obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)
@@ -239,7 +257,8 @@
 	// Using a codex will give you two knowledge points for draining.
 	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
 		var/obj/item/codex_cicatrix/codex = weapon
-		codex.open_animation()
+		if(!codex.book_open)
+			codex.attack_self(user) // open booke
 		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
 		return TRUE
 
@@ -254,16 +273,13 @@
 
 	being_drained = TRUE
 	balloon_alert(user, "draining influence...")
-	RegisterSignal(user, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 	if(!do_after(user, 10 SECONDS, src))
 		being_drained = FALSE
 		balloon_alert(user, "interrupted!")
-		UnregisterSignal(user, COMSIG_PARENT_EXAMINE)
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)
 	balloon_alert(user, "influence drained")
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
@@ -285,19 +301,6 @@
 
 	GLOB.reality_smash_track.num_drained++
 	qdel(src)
-
-/*
- * Signal proc for [COMSIG_PARENT_EXAMINE], registered on the user draining the influence.
- *
- * Gives a chance for examiners to see that the heretic is interacting with an infuence.
- */
-/obj/effect/heretic_influence/proc/on_examine(atom/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(prob(50))
-		return
-
-	examine_list += span_warning("[source]'s hand seems to be glowing a [span_hypnophrase("strange purple")]...")
 
 /*
  * Add a mind to the list of tracked minds,

@@ -58,14 +58,13 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.tier
 
-/obj/machinery/chem_mass_spec/deconstruct(disassembled)
+/obj/machinery/chem_mass_spec/on_deconstruction(disassembled)
 	if(beaker1)
 		beaker1.forceMove(drop_location())
 		beaker1 = null
 	if(beaker2)
 		beaker2.forceMove(drop_location())
 		beaker2 = null
-	. = ..()
 
 /obj/machinery/chem_mass_spec/update_overlays()
 	. = ..()
@@ -75,7 +74,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /*			beaker swapping/attack code			*/
 /obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
@@ -298,7 +297,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /*				processing procs				*/
 
 ///Increments time if it's progressing - if it's past time then it purifies and stops processing
-/obj/machinery/chem_mass_spec/process(delta_time)
+/obj/machinery/chem_mass_spec/process(seconds_per_tick)
 	. = ..()
 	if(!is_operational)
 		return FALSE
@@ -312,7 +311,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		end_processing()
 		update_appearance()
 		return TRUE
-	progress_time += delta_time
+	progress_time += seconds_per_tick
 	return FALSE
 
 /*

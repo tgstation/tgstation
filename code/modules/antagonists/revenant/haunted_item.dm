@@ -34,7 +34,7 @@
 	if(istype(haunted_item.ai_controller, /datum/ai_controller/haunted)) // already spooky
 		return COMPONENT_INCOMPATIBLE
 
-	haunted_item.AddElement(/datum/element/haunted, haunt_color)
+	haunted_item.make_haunted(MAGIC_TRAIT, haunt_color)
 	if(isnull(haunted_item.ai_controller)) // failed to make spooky! don't go on
 		return COMPONENT_INCOMPATIBLE
 
@@ -55,30 +55,30 @@
 				continue
 			// This gives all mobs in view "5" haunt level
 			// For reference picking one up gives "2"
-			haunted_item.ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
+			haunted_item.ai_controller.add_blackboard_key_assoc(BB_TO_HAUNT_LIST, victim, 5)
 
 	if(haunted_item.throwforce < throw_force_max)
 		pre_haunt_throwforce = haunted_item.throwforce
 		haunted_item.throwforce = min(haunted_item.throwforce + throw_force_bonus, throw_force_max)
 
-	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/storage/book/bible)
+	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/book/bible)
 	src.types_which_dispell_us = types_which_dispell_us || default_dispell_types
 	src.despawn_message = despawn_message
 
-/datum/component/haunted_item/Destroy(force, silent)
+/datum/component/haunted_item/Destroy(force)
 	var/obj/item/haunted_item = parent
 	// Handle these two specifically in Destroy() instead of clear_haunting(),
 	// because we want to make sure they always get dealt with no matter how the component is removed
 	if(!isnull(pre_haunt_throwforce))
 		haunted_item.throwforce = pre_haunt_throwforce
-	haunted_item.RemoveElement(/datum/element/haunted)
+	haunted_item.remove_haunted(MAGIC_TRAIT)
 	return ..()
 
 /datum/component/haunted_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_hit_by_holy_tool))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_hit_by_holy_tool))
 
 /datum/component/haunted_item/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
 /// Removes the haunting, showing any despawn message we have and qdeling our component
 /datum/component/haunted_item/proc/clear_haunting()
@@ -89,7 +89,7 @@
 
 	qdel(src)
 
-/// Signal proc for [COMSIG_PARENT_ATTACKBY], when we get smacked by holy stuff we should stop being ghostly.
+/// Signal proc for [COMSIG_ATOM_ATTACKBY], when we get smacked by holy stuff we should stop being ghostly.
 /datum/component/haunted_item/proc/on_hit_by_holy_tool(obj/item/source, obj/item/attacking_item, mob/living/attacker, params)
 	SIGNAL_HANDLER
 
@@ -113,8 +113,7 @@
  */
 
 /proc/haunt_outburst(epicenter, range, haunt_chance, duration = 1 MINUTES)
-	var/effect_area = range(range, epicenter)
-	for(var/obj/item/object_to_possess in effect_area)
+	for(var/obj/item/object_to_possess in range(range, epicenter))
 		if(!prob(haunt_chance))
 			continue
 		object_to_possess.AddComponent(/datum/component/haunted_item, \

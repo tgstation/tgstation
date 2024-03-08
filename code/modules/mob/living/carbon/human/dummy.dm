@@ -12,7 +12,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
 
 /mob/living/carbon/human/dummy/attach_rot(mapload)
@@ -75,29 +75,43 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	cut_overlays(TRUE)
 
 /mob/living/carbon/human/dummy/setup_human_dna()
-	create_dna()
-	randomize_human(src)
-	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
+	randomize_human(src, randomize_mutations = FALSE)
 
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
+/// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
+/proc/get_consistent_feature_entry(list/accessory_feature_list)
+	var/consistent_entry = (accessory_feature_list- SPRITE_ACCESSORY_NONE)[1]
+	ASSERT(!isnull(consistent_entry))
+	return consistent_entry
+
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
-	target.dna.initialize_dna(skip_index = TRUE)
-	target.dna.features["body_markings"] = "None"
-	target.dna.features["ears"] = "None"
-	target.dna.features["ethcolor"] = COLOR_WHITE
-	target.dna.features["frills"] = "None"
-	target.dna.features["horns"] = "None"
 	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
-	target.dna.features["moth_antennae"] = "Plain"
-	target.dna.features["moth_markings"] = "None"
-	target.dna.features["moth_wings"] = "Plain"
-	target.dna.features["snout"] = "Round"
-	target.dna.features["spines"] = "None"
-	target.dna.features["tail_cat"] = "None"
-	target.dna.features["tail_lizard"] = "Smooth"
-	target.dna.features["pod_hair"] = "Ivy"
+	target.dna.features["ethcolor"] = COLOR_WHITE
+	target.dna.features["body_markings"] = get_consistent_feature_entry(GLOB.body_markings_list)
+	target.dna.features["ears"] = get_consistent_feature_entry(GLOB.ears_list)
+	target.dna.features["frills"] = get_consistent_feature_entry(GLOB.frills_list)
+	target.dna.features["horns"] = get_consistent_feature_entry(GLOB.horns_list)
+	target.dna.features["moth_antennae"] = get_consistent_feature_entry(GLOB.moth_antennae_list)
+	target.dna.features["moth_markings"] = get_consistent_feature_entry(GLOB.moth_markings_list)
+	target.dna.features["moth_wings"] = get_consistent_feature_entry(GLOB.moth_wings_list)
+	target.dna.features["snout"] = get_consistent_feature_entry(GLOB.snouts_list)
+	target.dna.features["spines"] = get_consistent_feature_entry(GLOB.spines_list)
+	target.dna.features["tail_cat"] = get_consistent_feature_entry(GLOB.tails_list_human) // it's a lie
+	target.dna.features["tail_lizard"] = get_consistent_feature_entry(GLOB.tails_list_lizard)
+	target.dna.features["pod_hair"] = get_consistent_feature_entry(GLOB.pod_hair_list)
+	target.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
+	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
+	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency
+	var/static/consistent_UF
+	var/static/consistent_UI
+	if(isnull(consistent_UF) || isnull(consistent_UI))
+		consistent_UF = target.dna.unique_features
+		consistent_UI = target.dna.unique_identity
+	else
+		target.dna.unique_features = consistent_UF
+		target.dna.unique_identity = consistent_UI
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
@@ -111,11 +125,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/consistent/setup_human_dna()
 	create_consistent_human_dna(src)
-
-/mob/living/carbon/human/consistent/update_body(is_creating)
-	..()
-	if(is_creating)
-		fully_replace_character_name(real_name, "John Doe")
+	fully_replace_character_name(real_name, "John Doe")
 
 /mob/living/carbon/human/consistent/domutcheck()
 	return // We skipped adding any mutations so this runtimes

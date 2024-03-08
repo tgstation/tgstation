@@ -29,7 +29,7 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/lua_editor/Destroy(force, ...)
+/datum/lua_editor/Destroy(force)
 	. = ..()
 	if(current_state)
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
@@ -40,10 +40,15 @@
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
 	data["documentation"] = file2text('code/modules/admin/verbs/lua/README.md')
+	data["auxtools_enabled"] = CONFIG_GET(flag/auxtools_enabled)
+	data["ss_lua_init"] = SSlua.initialized
 	return data
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
+	if(!CONFIG_GET(flag/auxtools_enabled) || !SSlua.initialized)
+		return data
+
 	data["noStateYet"] = !current_state
 	data["showGlobalTable"] = show_global_table
 	if(current_state)
@@ -121,6 +126,7 @@
 			return TRUE
 		if("runCode")
 			var/code = params["code"]
+			current_state.ckey_last_runner = usr.ckey
 			var/result = current_state.load_script(code)
 			var/index_with_result = current_state.log_result(result)
 			message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")
@@ -226,9 +232,6 @@
 	set name = "Open Lua Editor"
 	set category = "Debug"
 	if(!check_rights_for(src, R_DEBUG))
-		return
-	if(SSlua.initialized != TRUE)
-		to_chat(usr, span_warning("SSlua is not initialized!"))
 		return
 	var/datum/lua_editor/editor = new()
 	editor.ui_interact(usr)

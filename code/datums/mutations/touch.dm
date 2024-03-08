@@ -60,7 +60,7 @@
 				span_userdanger("[caster] electrocutes you!"),
 			)
 			if(chain)
-				tesla_zap(victim, zap_range, zap_power, zap_flags)
+				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 				carbon_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
@@ -72,7 +72,7 @@
 				span_userdanger("[caster] electrocutes you!"),
 			)
 			if(chain)
-				tesla_zap(victim, zap_range, zap_power, zap_flags)
+				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 				living_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
@@ -82,5 +82,6 @@
 /obj/item/melee/touch_attack/shock
 	name = "\improper shock touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"

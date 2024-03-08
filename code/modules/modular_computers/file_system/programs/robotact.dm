@@ -1,14 +1,13 @@
 /datum/computer_file/program/robotact
 	filename = "robotact"
 	filedesc = "RoboTact"
-	category = PROGRAM_CATEGORY_SCI
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
-	program_icon_state = "command"
-	requires_ntnet = FALSE
-	available_on_ntnet = FALSE
+	program_open_overlay = "command"
+	program_flags = NONE
 	undeletable = TRUE
-	usage_flags = PROGRAM_TABLET
+	can_run_on_flags = PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"
@@ -21,7 +20,7 @@
 	if(.)
 		var/obj/item/modular_computer/pda/silicon/tablet = computer
 		if(tablet.device_theme == PDA_THEME_SYNDICATE)
-			program_icon_state = "command-syndicate"
+			program_open_overlay = "command-syndicate"
 		return TRUE
 	return FALSE
 
@@ -84,10 +83,8 @@
 	data["borgUpgrades"] = cyborg.upgrades
 	return data
 
-/datum/computer_file/program/robotact/ui_act(action, params)
+/datum/computer_file/program/robotact/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
 	//Implied type, memes
 	var/obj/item/modular_computer/pda/silicon/tablet = computer
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
@@ -140,17 +137,3 @@
 				return
 			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
 				cyborg.self_destruct(cyborg)
-
-/**
- * Forces a full update of the UI, if currently open.
- *
- * Forces an update that includes refreshing ui_static_data. Called by
- * law changes and borg log additions.
- */
-/datum/computer_file/program/robotact/proc/force_full_update()
-	if(!istype(computer, /obj/item/modular_computer/pda/silicon))
-		return
-	var/obj/item/modular_computer/pda/silicon/tablet = computer
-	var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.silicon_owner, src)
-	if(active_ui)
-		active_ui.send_full_update()

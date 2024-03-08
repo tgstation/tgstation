@@ -2,7 +2,7 @@
  * # Custom Atom Component
  *
  * When added to an atom, item ingredients can be put into that.
- * The sprite is updated and reagents are transfered.
+ * The sprite is updated and reagents are transferred.
  *
  * If the component is added to something that is processed, creating new objects (being cut, for example),
  * the replacement type needs to also have the component. The ingredients will be copied over. Reagents are not
@@ -55,15 +55,17 @@
 			handle_fill(ingredient)
 
 
-/datum/component/customizable_reagent_holder/Destroy(force, silent)
+/datum/component/customizable_reagent_holder/Destroy(force)
 	QDEL_NULL(top_overlay)
+	LAZYCLEARLIST(ingredients)
 	return ..()
 
 
 /datum/component/customizable_reagent_holder/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(customizable_attack))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(customizable_attack))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(food_exited))
 	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, PROC_REF(on_processed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	ADD_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
@@ -72,8 +74,9 @@
 /datum/component/customizable_reagent_holder/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_ATTACKBY,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_PROCESSED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
@@ -91,20 +94,13 @@
 	SIGNAL_HANDLER
 
 	var/atom/atom_parent = parent
-	var/ingredients_listed = ""
-	if (LAZYLEN(ingredients))
-		for (var/i in 1 to ingredients.len)
-			var/obj/item/ingredient = ingredients[i]
-			var/ending = ", "
-			switch(length(ingredients))
-				if (2)
-					if (i == 1)
-						ending = " and "
-				if (3 to INFINITY)
-					if (i == ingredients.len - 1)
-						ending = ", and "
-			ingredients_listed += "\a [ingredient.name][ending]"
-	examine_list += "It [LAZYLEN(ingredients) ? "contains [ingredients_listed]making a [custom_adjective()]-sized [initial(atom_parent.name)]" : "does not contain any ingredients"]."
+	var/list/ingredients_listed = list()
+	for(var/obj/item/ingredient as anything in ingredients)
+		ingredients_listed += "\a [ingredient.name]"
+
+	examine_list += "It [LAZYLEN(ingredients) \
+		? "contains [english_list(ingredients_listed)] making a [custom_adjective()]-sized [initial(atom_parent.name)]" \
+		: "does not contain any ingredients"]."
 
 //// Proc that checks if an ingredient is valid or not, returning false if it isnt and true if it is.
 /datum/component/customizable_reagent_holder/proc/valid_ingredient(obj/ingredient)
@@ -289,3 +285,8 @@
 	context[SCREENTIP_CONTEXT_LMB] = "[screentip_verb] [held_item]"
 
 	return CONTEXTUAL_SCREENTIP_SET
+
+/// Clear refs if our food "goes away" somehow
+/datum/component/customizable_reagent_holder/proc/food_exited(datum/source, atom/movable/gone)
+	SIGNAL_HANDLER
+	LAZYREMOVE(ingredients, gone)

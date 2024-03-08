@@ -102,6 +102,16 @@
 	name = "handgun magazine (.50ae)"
 	icon_state = "50ae"
 	ammo_type = /obj/item/ammo_casing/a50ae
-	caliber = CALIBER_50
+	caliber = CALIBER_50AE
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET
+
+/obj/item/ammo_box/magazine/r10mm
+	name = "regal condor magazine (10mm Reaper)"
+	icon_state = "r10mm-8"
+	base_icon_state = "r10mm"
+	ammo_type = /obj/item/ammo_casing/c10mm/reaper
+	caliber = CALIBER_10MM
+	max_ammo = 8
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	multiple_sprite_use_base = TRUE

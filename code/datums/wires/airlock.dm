@@ -38,6 +38,10 @@
 	dictionary_key = /datum/wires/airlock/ai
 	proper_name = "AI Airlock"
 
+/datum/wires/airlock/cargo
+	dictionary_key = /datum/wires/airlock/cargo
+	proper_name = "Cargo Airlock"
+
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
 		WIRE_AI,
@@ -45,7 +49,7 @@
 		WIRE_BACKUP2,
 		WIRE_BOLTS,
 		WIRE_IDSCAN,
-		WIRE_LIGHT,
+		WIRE_BOLTLIGHT,
 		WIRE_OPEN,
 		WIRE_POWER1,
 		WIRE_POWER2,
@@ -69,14 +73,14 @@
 /datum/wires/airlock/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified())
+	var/obj/machinery/door/airlock/airlock = holder
+	if(!issilicon(user) && !isdrone(user) && airlock.isElectrified())
 		var/mob/living/carbon/carbon_user = user
 		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
 			return FALSE
-	if(A.is_secure())
+	if(airlock.is_secure())
 		return FALSE
-	if(A.panel_open)
+	if(airlock.panel_open)
 		return TRUE
 
 /datum/wires/airlock/get_status()
@@ -142,13 +146,13 @@
 				A.close()
 		if(WIRE_TIMING)
 			A.normalspeed = !A.normalspeed
-		if(WIRE_LIGHT)
+		if(WIRE_BOLTLIGHT)
 			A.lights = !A.lights
 			A.update_appearance()
 		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
 			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
 				return
-			A.unres_sides = DIRFLIP(A.unres_sides)
+			A.unres_sides = REVERSE_DIR(A.unres_sides)
 			A.update_appearance()
 
 /obj/machinery/door/airlock/proc/reset_ai_wire()
@@ -157,7 +161,7 @@
 	else if(aiControlDisabled == AI_WIRE_HACKED)
 		aiControlDisabled = AI_WIRE_DISABLED_HACKED
 
-/datum/wires/airlock/on_cut(wire, mend)
+/datum/wires/airlock/on_cut(wire, mend, source)
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to lose power, repair all to gain power.
@@ -189,6 +193,8 @@
 				else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
 					A.aiControlDisabled = AI_WIRE_HACKED
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
+			if (!isnull(source))
+				log_combat(source, A, "[mend ? "disabled" : "enabled"] shocking for")
 			if(mend)
 				if(A.secondsElectrified)
 					A.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
@@ -198,11 +204,13 @@
 				A.shock(usr, 100)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
+			if (!isnull(source))
+				log_combat(source, A, "[mend ? "enabled" : "disabled"] door safeties for")
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.
 			A.autoclose = mend
 			if(A.autoclose && !A.density)
-				A.close()
-		if(WIRE_LIGHT) // Cut to disable lights, mend to re-enable.
+				INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, close))
+		if(WIRE_BOLTLIGHT) // Cut to disable lights, mend to re-enable.
 			A.lights = mend
 			A.update_appearance()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.

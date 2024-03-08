@@ -1,0 +1,1 @@
+/obj/effect/spawner/structure/window/reinforced/damaged : /obj/effect/spawner/structure/window/reinforced{@OLD}, /obj/effect/mapping_helpers/damaged_window

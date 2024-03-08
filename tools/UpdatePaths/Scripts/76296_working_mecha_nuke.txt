@@ -1,0 +1,3 @@
+# In this PR, the working mecha subtype was removed.
+
+/obj/vehicle/sealed/mecha/working/@SUBTYPES : /obj/vehicle/sealed/mecha/@SUBTYPES{@OLD}

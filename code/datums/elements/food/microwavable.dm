@@ -6,21 +6,25 @@
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.
 	var/atom/result_typepath
+	/// Reagents that should be added to the result
+	var/list/added_reagents
 
-/datum/element/microwavable/Attach(datum/target, microwave_type)
+/datum/element/microwavable/Attach(datum/target, microwave_type, list/reagents)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	result_typepath = microwave_type || default_typepath
 
+	added_reagents = reagents
+
 	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
 	if(!ispath(result_typepath, default_typepath))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/microwavable/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_ATOM_EXAMINE))
 	return ..()
 
 /**
@@ -35,21 +39,21 @@
 	if(isstack(source))
 		var/obj/item/stack/stack_source = source
 		result = new result_typepath(result_loc, stack_source.amount)
-
 	else
 		result = new result_typepath(result_loc)
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)
 
-	if(IS_EDIBLE(result))
+	if(IS_EDIBLE(result) && (result_typepath != default_typepath))
+		BLACKBOX_LOG_FOOD_MADE(result.type)
+		result.reagents.clear_reagents()
+		source.reagents?.trans_to(result, source.reagents.total_volume)
+		if(added_reagents) // Add any new reagents that should be added
+			result.reagents.add_reagent_list(added_reagents)
+
 		if(microwaver && microwaver.mind)
 			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
-
-		result.reagents?.multiply_reagents(efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
-		source.reagents?.trans_to(result, source.reagents.total_volume)
-
-		BLACKBOX_LOG_FOOD_MADE(result.type)
 
 	qdel(source)
 
@@ -66,7 +70,7 @@
 	return recipe_result
 
 /**
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  * Lets examiners know we can be microwaved if we're not the default mess type
  */
 /datum/element/microwavable/proc/on_examine(atom/source, mob/user, list/examine_list)

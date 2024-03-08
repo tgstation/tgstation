@@ -7,6 +7,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7
 
+/obj/item/grenade/hypnotic/apply_grenade_fantasy_bonuses(quality)
+	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
+
+/obj/item/grenade/hypnotic/remove_grenade_fantasy_bonuses(quality)
+	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+
 /obj/item/grenade/hypnotic/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)

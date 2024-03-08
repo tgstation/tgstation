@@ -57,8 +57,11 @@
 
 /datum/mood_event/exercise
 	description = "Working out releases those endorphins!"
-	mood_change = 2
-	timeout = 5 MINUTES
+	mood_change = 1
+
+/datum/mood_event/exercise/add_effects(fitness_level)
+	mood_change = fitness_level // the more fit you are, the more you like to work out
+	return ..()
 
 /datum/mood_event/pet_animal
 	description = "Animals are adorable! I can't stop petting them!"
@@ -182,20 +185,14 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
-/datum/mood_event/pet_borg
-	description = "I just love my robotic friends!"
-	mood_change = 3
-	timeout = 5 MINUTES
-	required_job = list(/datum/job/research_director, /datum/job/scientist, /datum/job/roboticist, /datum/job/geneticist)
-
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."
 	mood_change = 2
 	timeout = 3 MINUTES
 
 /datum/mood_event/hope_lavaland
-	description = "What a peculiar emblem.  It makes me feel hopeful for my future."
-	mood_change = 10
+	description = "What a peculiar emblem. It makes me feel hopeful for my future."
+	mood_change = 6
 
 /datum/mood_event/confident_mane
 	description = "I'm feeling confident with a head full of hair."
@@ -310,10 +307,6 @@
 	mood_change = 2
 	timeout = 3 MINUTES
 
-/datum/mood_event/garland
-	description = "These flowers are rather soothing."
-	mood_change = 1
-
 /datum/mood_event/playing_cards/add_effects(param)
 	var/card_players = 1
 	for(var/mob/living/carbon/player in viewers(COMBAT_MESSAGE_RANGE, owner))
@@ -325,6 +318,10 @@
 
 	mood_change *= card_players
 	return ..()
+
+/datum/mood_event/garland
+	description = "These flowers are rather soothing."
+	mood_change = 1
 
 /datum/mood_event/russian_roulette_win
 	description = "I gambled my life and won! I'm lucky to be alive..."
@@ -359,3 +356,27 @@
 	mood_change = 2
 	special_screen_obj = "birthday"
 	special_screen_replace = FALSE
+
+/datum/mood_event/basketball_score
+	description = "Swish! Nothing but net."
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/basketball_dunk
+	description = "Slam dunk! Boom, shakalaka!"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/moon_smile
+	description = "THE MOON SHOWS ME THE TRUTH AND ITS SMILE IS FACED TOWARDS ME!!!"
+	mood_change = 10
+	timeout = 2 MINUTES
+
+///Wizard cheesy grand finale - what the wizard gets
+/datum/mood_event/madness_elation
+	description = "Madness truly is the greatest of blessings..."
+	mood_change = 200
+
+/datum/mood_event/prophat
+	description = "This hat fills me with whimsical joy!"
+	mood_change = 2

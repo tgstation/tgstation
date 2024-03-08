@@ -41,6 +41,22 @@
 /// Air alarm has all components but isn't completed
 #define AIR_ALARM_BUILD_COMPLETE 2
 
+// Fire alarm buildstage [/obj/machinery/firealarm/buildstage]
+/// Fire alarm missing circuit
+#define FIRE_ALARM_BUILD_NO_CIRCUIT 0
+/// Fire alarm has circuit but is missing wires
+#define FIRE_ALARM_BUILD_NO_WIRES 1
+/// Fire alarm has all components but isn't completed
+#define FIRE_ALARM_BUILD_SECURED 2
+
+// Fault levels for air alarm display
+/// Area faults clear
+#define AREA_FAULT_NONE 0
+/// Fault triggered by manual intervention (ie: fire alarm pull)
+#define AREA_FAULT_MANUAL 1
+/// Fault triggered automatically (ie: firedoor detection)
+#define AREA_FAULT_AUTOMATIC 2
+
 // threshold_type values for [/datum/tlv/proc/set_value]  and [/datum/tlv/proc/reset_value]
 /// [/datum/tlv/var/warning_min]
 #define TLV_VAR_WARNING_MIN (1 << 0)
@@ -68,3 +84,8 @@
 ///What direction is the machine pumping (into pump/port or out to the tank/area)?
 #define PUMP_IN TRUE
 #define PUMP_OUT FALSE
+
+///Max allowed pressure for canisters to release air per tick
+#define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE * 25)
+///Min allowed pressure for canisters to release air per tick
+#define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE * 0.1)

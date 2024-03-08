@@ -19,17 +19,19 @@
 	health = 50
 	maxHealth = 50
 	speed = 3
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = TRUE //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
+	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
+	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
@@ -68,7 +70,7 @@
 	if(prob(0.666) && mapload)
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
-	wires = new /datum/wires/mulebot(src)
+	set_wires(new /datum/wires/mulebot(src))
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/cargo_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/cargo_technician]
@@ -77,21 +79,23 @@
 
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
-	var/static/mulebot_count = 0
-	mulebot_count += 1
-	set_id(suffix || id || "#[mulebot_count]")
-	suffix = null
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
 
-/mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
-	if(A == load)
+	set_id(suffix || assign_random_name())
+	suffix = null
+	if(name == "\improper MULEbot")
+		name = "\improper MULEbot [id]"
+	set_home(loc)
+
+/mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == load)
 		unload(0)
-	if(A == cell)
+	if(gone == cell)
 		turn_off()
 		cell = null
 		diag_hud_set_mulebotcell()
-	return ..()
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
@@ -135,8 +139,18 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
-	if(!paicard)
-		name = "[initial(name)] ([new_id])"
+
+/mob/living/simple_animal/bot/mulebot/proc/set_home(turf/home_loc)
+	if(!istype(home_loc))
+		CRASH("MULEbot [id] was requested to set a home location to [home_loc ? "an invalid home loc ([home_loc.type])" : "null"]")
+
+	var/obj/machinery/navbeacon/home_beacon = locate() in home_loc
+	if(!isnull(home_beacon))
+		home_destination = home_beacon.location
+		log_transport("[id]: MULEbot successfuly set home location to ID [home_destination] at [home_beacon.x], [home_beacon.y], [home_beacon.z]")
+		return
+
+	log_transport("[id]: MULEbot failed to set home at [home_loc.x], [home_loc.y], [home_loc.z]")
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -151,17 +165,19 @@
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	cell.add_fingerprint(user)
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(cell)
 	else
 		cell.forceMove(drop_location())
-	visible_message(span_notice("[user] crowbars [cell] out from [src]."),
-					span_notice("You pry [cell] out of [src]."))
+	user.visible_message(
+		span_notice("[user] crowbars [cell] out from [src]."),
+		span_notice("You pry [cell] out of [src]."),
+	)
 	cell = null
 	diag_hud_set_mulebotcell()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
@@ -172,8 +188,10 @@
 			return TRUE
 		cell = I
 		diag_hud_set_mulebotcell()
-		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
-						span_notice("You insert [cell] into [src]."))
+		user.visible_message(
+			span_notice("[user] inserts \a [cell] into [src]."),
+			span_notice("You insert [cell] into [src]."),
+		)
 		return TRUE
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
@@ -188,14 +206,15 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
+/mob/living/simple_animal/bot/mulebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		bot_cover_flags |= BOT_COVER_EMAGGED
 	if(!(bot_cover_flags & BOT_COVER_OPEN))
 		bot_cover_flags ^= BOT_COVER_LOCKED
-		to_chat(user, span_notice("You [bot_cover_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] [src]'s controls!"))
+	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
 	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
@@ -208,7 +227,7 @@
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
-	load_overlay.pixel_y = initial(load.pixel_y) + 9
+	load_overlay.pixel_y = initial(load.pixel_y) + 11
 	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -222,6 +241,8 @@
 		if(EXPLODE_LIGHT)
 			wires.cut_random()
 
+	return TRUE
+
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
 	. = ..()
@@ -230,7 +251,7 @@
 			unload(0)
 		if(prob(25))
 			visible_message(span_danger("Something shorts out inside [src]!"))
-			wires.cut_random()
+			wires.cut_random(source = Proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -261,8 +282,10 @@
 	data["autoReturn"] = auto_return
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
-	data["haspai"] = paicard ? TRUE : FALSE
 	data["id"] = id
+	data["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
+	data["possession_enabled"] = can_be_possessed
+	data["pai_inserted"] = !!paicard
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
@@ -274,7 +297,7 @@
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
-				. = TRUE
+				return TRUE
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
@@ -285,10 +308,10 @@
 				if(!turn_on())
 					to_chat(usr, span_warning("You can't switch on [src]!"))
 					return
-			. = TRUE
+			return TRUE
 		else
 			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
-			. = TRUE
+			return TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
@@ -313,19 +336,12 @@
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id
-			if(pda)
-				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
-			else
-				new_id = params["value"]
+			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
 			if(new_id)
 				set_id(new_id)
+				name = "\improper MULEbot [new_id]"
 		if("sethome")
-			var/new_home
-			if(pda)
-				new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
-			else
-				new_home = params["value"]
+			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			if(new_home)
 				home_destination = new_home
 		if("unload")
@@ -340,8 +356,6 @@
 			auto_pickup = !auto_pickup
 		if("report")
 			report_delivery = !report_delivery
-		if("ejectpai")
-			ejectpairemote(user)
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -460,7 +474,7 @@
 	if(cell)
 		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
 	else
-		. += text("No Cell Inserted!")
+		. += "No Cell Inserted!"
 	if(load)
 		. += "Current Load: [get_load_name()]"
 
@@ -581,7 +595,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, max_distance=250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, max_distance=250, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL)
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -656,7 +670,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
-	if(paicard || !isliving(M)) //if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
+	if(mind || !isliving(M)) //if there's a sentience controlling the bot, they aren't allowed to harm folks.
 		return ..()
 	var/mob/living/L = M
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
@@ -669,6 +683,12 @@
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
+	if (!(bot_cover_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
+		if (!has_status_effect(/datum/status_effect/careful_driving))
+			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
+		apply_status_effect(/datum/status_effect/careful_driving)
+		return // Player mules must be emagged before they can trample
+
 	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
 	crushed.visible_message(
 		span_danger("[src] drives over [crushed]!"),
@@ -714,7 +734,9 @@
 									// the we will navigate there
 			destination = new_destination
 			target = NB.loc
-			var/direction = NB.dir // this will be the load/unload dir
+			var/direction = NB.codes[NAVBEACON_DELIVERY_DIRECTION] // this will be the load/unload dir
+			if(!direction)
+				direction = NB.dir // fallback
 			if(direction)
 				loaddir = text2num(direction)
 			else
@@ -754,17 +776,12 @@
 		unload()
 
 /mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
 		unload(get_dir(loc, A))
 	else
 		return ..()
-
-/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/pai_card/card)
-	. = ..()
-	if(.)
-		visible_message(span_notice("[src]'s safeties are locked on."))
 
 /// Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.
 /mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
@@ -782,6 +799,10 @@
 	SIGNAL_HANDLER
 
 	cell?.use(cell_move_power_usage)
+
+/mob/living/simple_animal/bot/mulebot/post_possession()
+	. = ..()
+	visible_message(span_notice("[src]'s safeties are locked on."))
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
@@ -801,39 +822,37 @@
 
 	load(AM)
 
-/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/AM)
-	if(load || AM.anchored)
+/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/movable_atom)
+	if(load || movable_atom.anchored)
 		return
 
-	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+	if(!isturf(movable_atom.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	if(isobserver(AM))
+	if(isobserver(movable_atom))
 		visible_message(span_warning("A ghostly figure appears on [src]!"))
-		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
-		AM.forceMove(src)
+		movable_atom.forceMove(src)
+		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
 		buzz(SIGH)
 		return // if not hacked, only allow ghosts to be loaded
 
-	else if(isobj(AM))
-		var/obj/O = AM
-		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+	else if(isobj(movable_atom))
+		if(movable_atom.has_buckled_mobs() || (locate(/mob) in movable_atom)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
-		if(istype(O, /obj/structure/closet/crate))
-			var/obj/structure/closet/crate/crate = O
+		if(istype(movable_atom, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = movable_atom
 			crate.close() //make sure it's closed
 
-		O.forceMove(src)
+		movable_atom.forceMove(src)
 
-	else if(isliving(AM))
-		if(!load_mob(AM)) //buckling is handled in forceMove()
-			return
+	else if(isliving(movable_atom) && !load_mob(movable_atom))
+		return
 
-	load = AM
+	load = movable_atom
 	mode = BOT_IDLE
 	update_appearance()
 

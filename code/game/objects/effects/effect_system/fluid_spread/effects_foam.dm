@@ -17,7 +17,6 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = NO_STEPS
 	/// The types of turfs that this foam cannot spread to.
@@ -76,61 +75,73 @@
 	transfer_fingerprints_to(result)
 	return result
 
-/obj/effect/particle_effect/fluid/foam/process(delta_time)
-	var/ds_delta_time = delta_time SECONDS
-	lifetime -= ds_delta_time
+/obj/effect/particle_effect/fluid/foam/process(seconds_per_tick)
+	var/ds_seconds_per_tick = seconds_per_tick SECONDS
+	lifetime -= ds_seconds_per_tick
 	if(lifetime <= 0)
 		kill_foam()
 		return
 
-	var/fraction = (ds_delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
-	var/turf/location = loc
-	for(var/obj/object in location)
-		if(object == src)
-			continue
-		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
-			continue
-		reagents.expose(object, VAPOR, fraction)
+	if(ismob(loc))
+		stack_trace("A foam effect ([type]) was created within a mob! (Actual location: [loc] ([loc.type]))")
+		qdel(src)
+		return
+
+	var/fraction = (ds_seconds_per_tick * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
+
+	if(isturf(loc))
+		var/turf/turf_location = loc
+		for(var/obj/object in turf_location)
+			if(object == src)
+				continue
+			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+				continue
+			reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
-	for(var/mob/living/foamer in location)
-		hit += foam_mob(foamer, delta_time)
+	for(var/mob/living/foamer in loc)
+		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
-		lifetime += ds_delta_time //this is so the decrease from mobs hit and the natural decrease don't cumulate.
+		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
-	reagents.expose(location, VAPOR, fraction)
+	reagents.expose(loc, VAPOR, fraction)
 
 /**
  * Applies the effect of this foam to a mob.
  *
  * Arguments:
  * - [foaming][/mob/living]: The mob that this foam is acting on.
- * - delta_time: The amount of time that this foam is acting on them over.
+ * - seconds_per_tick: The amount of time that this foam is acting on them over.
  *
  * Returns:
  * - [TRUE]: If the foam was successfully applied to the mob. Used to scale how quickly foam dissipates according to the number of mobs it is applied to.
  * - [FALSE]: Otherwise.
  */
-/obj/effect/particle_effect/fluid/foam/proc/foam_mob(mob/living/foaming, delta_time)
+/obj/effect/particle_effect/fluid/foam/proc/foam_mob(mob/living/foaming, seconds_per_tick)
 	if(lifetime <= 0)
 		return FALSE
 	if(!istype(foaming))
 		return FALSE
 
-	delta_time = min(delta_time SECONDS, lifetime)
-	var/fraction = (delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
+	seconds_per_tick = min(seconds_per_tick SECONDS, lifetime)
+	var/fraction = (seconds_per_tick * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	reagents.expose(foaming, VAPOR, fraction)
-	lifetime -= delta_time
+	lifetime -= seconds_per_tick
 	return TRUE
 
-/obj/effect/particle_effect/fluid/foam/spread(delta_time = 0.2 SECONDS)
+/obj/effect/particle_effect/fluid/foam/spread(seconds_per_tick = 0.2 SECONDS)
 	if(group.total_size > group.target_size)
 		return
 	var/turf/location = get_turf(src)
 	if(!istype(location))
 		return FALSE
 
-	for(var/turf/spread_turf as anything in location.reachableAdjacentTurfs(no_id = TRUE))
+	var/datum/can_pass_info/info = new(no_id = TRUE)
+	for(var/iter_dir in GLOB.cardinals)
+		var/turf/spread_turf = get_step(src, iter_dir)
+		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
+			continue
+
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue
@@ -138,7 +149,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			foam_mob(foaming, delta_time)
+			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))
@@ -172,9 +183,9 @@
 	QDEL_NULL(chemholder)
 	return ..()
 
-/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null)
+/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE)
 	. = ..()
-	carry?.copy_to(chemholder, carry.total_volume)
+	carry?.copy_to(chemholder, carry.total_volume, no_react = stop_reactions)
 	if(!isnull(result_type))
 		src.result_type = result_type
 
@@ -256,7 +267,7 @@
 		absorbed_plasma = 0
 	return deposit
 
-/obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, delta_time)
+/obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, seconds_per_tick)
 	if(!istype(foaming))
 		return
 	foaming.adjust_wet_stacks(2)
@@ -286,7 +297,6 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
@@ -349,7 +359,7 @@
 				return
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
+			T.place_on_top(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return
@@ -381,7 +391,7 @@
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
 	if(isspaceturf(location))
-		location.PlaceOnTop(/turf/open/floor/plating/foam)
+		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)
 		var/turf/cardinal_turf = get_step(location, cardinal)
@@ -416,7 +426,7 @@
 	location.ClearWet()
 	if(location.air)
 		var/datum/gas_mixture/air = location.air
-		air.temperature = 293.15
+		air.temperature = T20C
 		for(var/obj/effect/hotspot/fire in location)
 			qdel(fire)
 
@@ -439,6 +449,28 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/dirty
+	effect_type = /obj/effect/particle_effect/fluid/foam/dirty
+
+/obj/effect/particle_effect/fluid/foam/dirty
+	name = "dirty foam"
+	allow_duplicate_results = FALSE
+	result_type = /obj/effect/decal/cleanable/dirt
+
+/obj/effect/spawner/foam_starter
+	var/datum/effect_system/fluid_spread/foam/foam_type = /datum/effect_system/fluid_spread/foam
+	var/foam_size = 4
+
+/obj/effect/spawner/foam_starter/Initialize(mapload)
+	. = ..()
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type()
+	foam.set_up(foam_size, holder = src, location = loc)
+	foam.start()
+
+/obj/effect/spawner/foam_starter/small
+	foam_size = 2
 
 #undef MINIMUM_FOAM_DILUTION_RANGE
 #undef MINIMUM_FOAM_DILUTION

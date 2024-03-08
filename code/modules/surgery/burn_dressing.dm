@@ -5,7 +5,7 @@
 /datum/surgery/debride
 	name = "Debride burnt flesh"
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
-	targetable_wound = /datum/wound/burn
+	targetable_wound = /datum/wound/burn/flesh
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
 		BODY_ZONE_L_ARM,
@@ -20,12 +20,14 @@
 	)
 
 /datum/surgery/debride/can_start(mob/living/user, mob/living/carbon/target)
-	if(!istype(target))
-		return FALSE
-	if(..())
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
-		return(burn_wound && burn_wound.infestation > 0)
+	. = ..()
+	if(!.)
+		return .
+
+	var/datum/wound/burn/flesh/burn_wound = target.get_bodypart(user.zone_selected).get_wound_type(targetable_wound)
+	// Should be guaranteed to have the wound by this point
+	ASSERT(burn_wound, "[type] on [target] has no burn wound when it should have been guaranteed to have one by can_start")
+	return burn_wound.infestation > 0
 
 //SURGERY STEPS
 
@@ -48,7 +50,7 @@
 	var/infestation_removed = 4
 
 /// To give the surgeon a heads up how much work they have ahead of them
-/datum/surgery_step/debride/proc/get_progress(mob/user, mob/living/carbon/target, datum/wound/burn/burn_wound)
+/datum/surgery_step/debride/proc/get_progress(mob/user, mob/living/carbon/target, datum/wound/burn/flesh/burn_wound)
 	if(!burn_wound?.infestation || !infestation_removed)
 		return
 	var/estimated_remaining_steps = burn_wound.infestation / infestation_removed
@@ -68,7 +70,7 @@
 
 /datum/surgery_step/debride/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)
-		var/datum/wound/burn/burn_wound = surgery.operated_wound
+		var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
 		if(burn_wound.infestation <= 0)
 			to_chat(user, span_notice("[target]'s [parse_zone(user.zone_selected)] has no infected flesh to remove!"))
 			surgery.status++
@@ -86,7 +88,7 @@
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
 
 /datum/surgery_step/debride/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/datum/wound/burn/burn_wound = surgery.operated_wound
+	var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
 	if(burn_wound)
 		var/progress_text = get_progress(user, target, burn_wound)
 		display_results(
@@ -120,7 +122,7 @@
 /datum/surgery_step/debride/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())
 		return
-	var/datum/wound/burn/burn_wound = surgery.operated_wound
+	var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
 	while(burn_wound && burn_wound.infestation > 0.25)
 		if(!..())
 			break
@@ -139,7 +141,7 @@
 
 
 /datum/surgery_step/dress/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/datum/wound/burn/burn_wound = surgery.operated_wound
+	var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
 	if(burn_wound)
 		display_results(
 			user,
@@ -153,7 +155,7 @@
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
 
 /datum/surgery_step/dress/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/datum/wound/burn/burn_wound = surgery.operated_wound
+	var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
 	if(burn_wound)
 		display_results(
 			user,

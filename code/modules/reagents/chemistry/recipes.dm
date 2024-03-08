@@ -13,11 +13,12 @@
 	///Required chemicals that must be present in the container but are not USED.
 	var/list/required_catalysts = new/list()
 
-	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
-	/// the exact container path required for the reaction to happen
-	var/required_container
-	/// an integer required for the reaction to happen
-	var/required_other = 0
+	/// If required_container will check for the exact type, or will also accept subtypes
+	var/required_container_accepts_subtypes = FALSE
+	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in. Otherwise, what type including subtypes are acceptable.
+	var/atom/required_container
+	/// Set this to true to call pre_reaction_other_checks() on react and do some more interesting reaction logic
+	var/required_other = FALSE
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
@@ -45,7 +46,7 @@
 	var/temp_exponent_factor = 2
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
-	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
+	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
 	var/thermic_constant = 50
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
@@ -59,21 +60,13 @@
 	///A bitflag var for tagging reagents for the reagent loopup functon
 	var/reaction_tags = NONE
 
-/datum/chemical_reaction/New()
-	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
+///REACTION PROCS
 
 /**
- * Updates information during the roundstart
- *
- * This proc is mainly used by explosives but can be used anywhere else
- * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
- * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
+ * Checks if this reaction can occur. Only is ran if required_other is set to TRUE.
  */
-/datum/chemical_reaction/proc/update_info()
-	return
-
-///REACTION PROCS
+/datum/chemical_reaction/proc/pre_reaction_other_checks(datum/reagents/holder)
+	return TRUE
 
 /**
  * Shit that happens on reaction
@@ -153,7 +146,7 @@
 		var/cached_purity = reagent.purity
 		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
 			if(reagent.inverse_chem_val > reagent.purity)
-				holder.remove_reagent(reagent.type, cached_volume, FALSE)
+				holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
 				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
 				return
 
@@ -171,10 +164,11 @@
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	for(var/id in results)
-		var/datum/reagent/reagent = holder.get_reagent(id)
+		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume = round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume *= 0.98 //Slowly lower yield per tick
+	holder.update_total()
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -191,7 +185,7 @@
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	var/affected_list = results + required_reagents
 	for(var/_reagent in affected_list)
-		var/datum/reagent/reagent = holder.get_reagent(_reagent)
+		var/datum/reagent/reagent = holder.has_reagent(_reagent)
 		if(!reagent)
 			continue
 		reagent.purity = clamp((reagent.purity-0.01), 0, 1) //slowly reduce purity of reagents

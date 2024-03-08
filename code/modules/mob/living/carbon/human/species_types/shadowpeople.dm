@@ -3,16 +3,15 @@
 	name = "Shadow"
 	plural_form = "Shadowpeople"
 	id = SPECIES_SHADOW
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
-	species_traits = list(
-		NOEYESPRITES,
-	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NODISMEMBER,
+		TRAIT_NEVER_WOUNDED
 	)
 	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -37,6 +36,9 @@
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
+
+/datum/species/shadow/get_physical_attributes()
+	return "These cursed creatures heal in the dark, but suffer in the light much more heavily. Their eyes let them see in the dark as though it were day."
 
 /datum/species/shadow/get_species_description()
 	return "Victims of a long extinct space alien. Their flesh is a sickly \
@@ -87,27 +89,57 @@
 
 	return to_add
 
-/// the key to some of their powers
-/obj/item/organ/internal/brain/shadow
-	name = "shadowling tumor"
-	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
-	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
-
-/obj/item/organ/internal/brain/shadow/on_life(delta_time, times_fired)
-	. = ..()
-	var/turf/owner_turf = owner.loc
-	if(!isturf(owner_turf))
-		return
-	var/light_amount = owner_turf.get_lumcount()
-
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-		owner.take_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
-	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		owner.heal_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
-
 /obj/item/organ/internal/eyes/shadow
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 	color_cutoffs = list(20, 10, 40)
 	pepperspray_protect = TRUE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/// the key to some of their powers
+/obj/item/organ/internal/brain/shadow
+	name = "shadowling tumor"
+	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	/// What status effect do we gain while in darkness?
+	var/applied_status = /datum/status_effect/shadow_regeneration
+
+/obj/item/organ/internal/brain/shadow/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	var/turf/owner_turf = owner.loc
+	if(!isturf(owner_turf))
+		return
+	var/light_amount = owner_turf.get_lumcount()
+
+	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+		owner.apply_status_effect(applied_status)
+	if (!owner.has_status_effect(applied_status))
+		owner.take_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+
+/// Heal in darkness and potentially trigger other effects, persists for a short duration after leaving
+/datum/status_effect/shadow_regeneration
+	id = "shadow_regeneration"
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration
+
+/datum/status_effect/shadow_regeneration/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	heal_owner()
+	return TRUE
+
+/datum/status_effect/shadow_regeneration/refresh(effect)
+	. = ..()
+	heal_owner()
+
+/// Regenerate health whenever this status effect is applied or reapplied
+/datum/status_effect/shadow_regeneration/proc/heal_owner()
+	owner.heal_overall_damage(brute = 1, burn = 1, required_bodytype = BODYTYPE_ORGANIC)
+
+/atom/movable/screen/alert/status_effect/shadow_regeneration
+	name = "Shadow Regeneration"
+	desc = "Bathed in soothing darkness, you will slowly heal yourself."
+	icon_state = "lightless"

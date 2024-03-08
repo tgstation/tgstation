@@ -50,17 +50,17 @@
 		active_sound_loop.start()
 
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_touched))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine))
 	if (defuse_tool)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(defuse_tool), PROC_REF(on_defused))
 	if (length(additional_triggers))
 		RegisterSignals(parent, additional_triggers, PROC_REF(trigger_explosive))
 
-/datum/component/interaction_booby_trap/Destroy(force, silent)
-	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_TOOL_ACT(defuse_tool), COMSIG_PARENT_EXAMINE_MORE) + additional_triggers)
+/datum/component/interaction_booby_trap/Destroy(force)
+	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_TOOL_ACT(defuse_tool), COMSIG_ATOM_EXAMINE_MORE) + additional_triggers)
 	QDEL_NULL(active_sound_loop)
-	QDEL_NULL(on_triggered_callback)
-	QDEL_NULL(on_defused_callback)
+	on_triggered_callback = null
+	on_defused_callback = null
 	return ..()
 
 /// Called when someone touches the parent atom with their hands, we want to blow up
@@ -93,7 +93,7 @@
 	SIGNAL_HANDLER
 	on_defused_callback?.Invoke(source, user, tool)
 	qdel(src)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Give people a little hint
 /datum/component/interaction_booby_trap/proc/on_examine(atom/source, mob/examiner, list/examine_list)

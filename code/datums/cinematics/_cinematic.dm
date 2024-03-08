@@ -1,3 +1,5 @@
+#define CINEMATIC_SOURCE "cinematic"
+
 /**
  * Plays a cinematic, duh. Can be to a select few people, or everyone.
  *
@@ -30,7 +32,7 @@
 /datum/cinematic
 	/// A list of all clients watching the cinematic
 	var/list/client/watching = list()
-	/// A list of all mobs who have notransform set while watching the cinematic
+	/// A list of all mobs who have TRAIT_NO_TRANSFORM set while watching the cinematic
 	var/list/datum/weakref/locked = list()
 	/// Whether the cinematic is a global cinematic or not
 	var/is_global = FALSE
@@ -52,7 +54,7 @@
 
 /datum/cinematic/Destroy()
 	QDEL_NULL(screen)
-	QDEL_NULL(special_callback)
+	special_callback = null
 	watching.Cut()
 	locked.Cut()
 	return ..()
@@ -106,13 +108,8 @@
 /datum/cinematic/proc/show_to(mob/watching_mob, client/watching_client)
 	SIGNAL_HANDLER
 
-	// We could technically rip people out of notransform who shouldn't be,
-	// so we'll only lock down all viewing mobs who don't have it already set.
-	// This does potentially mean some mobs could lose their notrasnform and
-	// not be locked down by cinematics, but that should be very unlikely.
-	if(!watching_mob.notransform)
-		locked += WEAKREF(watching_mob)
-		watching_mob.notransform = TRUE
+	if(!HAS_TRAIT_FROM(watching_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE))
+		lock_mob(watching_mob)
 
 	// Only show the actual cinematic to cliented mobs.
 	if(!watching_client || (watching_client in watching))
@@ -121,7 +118,7 @@
 	watching += watching_client
 	watching_mob.overlay_fullscreen("cinematic", /atom/movable/screen/fullscreen/cinematic_backdrop)
 	watching_client.screen += screen
-	RegisterSignal(watching_client, COMSIG_PARENT_QDELETING, PROC_REF(remove_watcher))
+	RegisterSignal(watching_client, COMSIG_QDELETING, PROC_REF(remove_watcher))
 
 /// Simple helper for playing sounds from the cinematic.
 /datum/cinematic/proc/play_cinematic_sound(sound_to_play)
@@ -146,13 +143,22 @@
 		remove_watcher(viewing_client)
 
 	for(var/datum/weakref/locked_ref as anything in locked)
-		var/mob/locked_mob = locked_ref.resolve()
-		if(QDELETED(locked_mob))
-			continue
-		locked_mob.notransform = FALSE
-		UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
+		unlock_mob(locked_ref)
 
 	qdel(src)
+
+/// Locks a mob, preventing them from moving, being hurt, or acting
+/datum/cinematic/proc/lock_mob(mob/to_lock)
+	locked += WEAKREF(to_lock)
+	ADD_TRAIT(to_lock, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
+
+/// Unlocks a previously locked weakref
+/datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
+	var/mob/locked_mob = mob_ref.resolve()
+	if(isnull(locked_mob))
+		return
+	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
+	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
 /// Removes the passed client from our watching list.
 /datum/cinematic/proc/remove_watcher(client/no_longer_watching)
@@ -161,10 +167,12 @@
 	if(!(no_longer_watching in watching))
 		CRASH("cinematic remove_watcher was passed a client which wasn't watching.")
 
-	UnregisterSignal(no_longer_watching, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(no_longer_watching, COMSIG_QDELETING)
 	// We'll clear the cinematic if they have a mob which has one,
-	// but we won't remove notransform. Wait for the cinematic end to do that.
+	// but we won't remove TRAIT_NO_TRANSFORM. Wait for the cinematic end to do that.
 	no_longer_watching.mob?.clear_fullscreen("cinematic")
 	no_longer_watching.screen -= screen
 
 	watching -= no_longer_watching
+
+#undef CINEMATIC_SOURCE

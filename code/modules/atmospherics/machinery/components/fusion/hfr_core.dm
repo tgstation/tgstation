@@ -4,7 +4,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core
 	name = "HFR core"
 	desc = "This is the Hypertorus Fusion Reactor core, an advanced piece of technology to finely tune the reaction inside of the machine. It has I/O for cooling gases."
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	use_power = IDLE_POWER_USE
@@ -176,7 +176,8 @@
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
 
 	// Our center is unreachable, so prevent stuff from getting stuck in there
-	AddElement(/datum/element/trait_loc, TRAIT_SECLUDED_LOCATION)
+	var/static/list/turf_traits = list(TRAIT_SECLUDED_LOCATION)
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)
@@ -198,3 +199,18 @@
 	QDEL_NULL(soundloop)
 	machine_parts = null
 	return..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction(disassembled)
+	var/turf/local_turf = get_turf(loc)
+	var/datum/gas_mixture/to_release = moderator_internal || internal_fusion
+	if(to_release == moderator_internal)
+		to_release.merge(internal_fusion)
+	if(to_release)
+		local_turf.assume_air(to_release)
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)
+	internal_pressure = max(internal_fusion.return_pressure(), moderator_internal.return_pressure())
+	if(internal_pressure)
+		say("WARNING - Core can contain hazardous gases, deconstruct with caution!")
+	return ..(user, tool, internal_pressure)

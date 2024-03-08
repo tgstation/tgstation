@@ -52,14 +52,18 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
 	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
+	/// The glasses that you can use to see what this can see
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
+	/// Our camera display popup
 	var/atom/movable/screen/map_view/cam_screen
-	// Ranges higher than one can be used to see through walls.
+	/// How far can we actually see? Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
+	/// Detects when we move to update the camera view
 	var/datum/movement_detector/tracker
 
 /obj/item/clothing/accessory/spy_bug/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/pinnable_accessory)
 	tracker = new /datum/movement_detector(src, CALLBACK(src, PROC_REF(update_view)))
 	cam_screen = new
 	cam_screen.generate_view("spypopup_map")

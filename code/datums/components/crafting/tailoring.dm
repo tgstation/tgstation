@@ -268,7 +268,7 @@
 	time = 1 SECONDS
 	tool_paths = list(
 		/obj/item/clothing/suit/hooded/chaplain_hoodie,
-		/obj/item/storage/book/bible,
+		/obj/item/book/bible,
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
@@ -281,6 +281,46 @@
 		/obj/item/food/grown/poppy = 4,
 		/obj/item/food/grown/harebell = 4,
 		/obj/item/food/grown/rose = 4,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/poppy_crown
+	name = "Poppy Crown"
+	result = /obj/item/clothing/head/costume/garland/poppy
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/poppy = 5,
+		/obj/item/stack/cable_coil = 3,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/lily_crown
+	name = "Lily Crown"
+	result = /obj/item/clothing/head/costume/garland/lily
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/poppy/lily = 5,
+		/obj/item/stack/cable_coil = 3,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/sunflower_crown
+	name = "Sunflower Crown"
+	result = /obj/item/clothing/head/costume/garland/sunflower
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/sunflower = 5,
+		/obj/item/stack/cable_coil = 3,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/rainbow_bunch_crown
+	name = "Rainbow Flower Crown"
+	result = /obj/item/clothing/head/costume/garland/rainbowbunch
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/rainbow_flower = 5,
+		/obj/item/stack/cable_coil = 3,
 	)
 	category = CAT_CLOTHING
 
@@ -316,4 +356,45 @@
 		/obj/item/stack/sheet/mineral/gold = 2,
 	)
 
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/atmospherics_gas_mask
+	name = "atmospherics gas mask"
+	result = /obj/item/clothing/mask/gas/atmos
+	tool_behaviors = list(TOOL_WELDER)
+	time = 8 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/metal_hydrogen = 1,
+		/obj/item/stack/sheet/mineral/zaukerite = 1,
+	)
+
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/paper_hat
+	name = "Paper Hat"
+	result = /obj/item/clothing/head/costume/paper_hat
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/paper = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/biohood_sec
+	name = "security biohood"
+	result = /obj/item/clothing/head/bio_hood/security
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/clothing/head/bio_hood/general = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/biosuit_sec
+	name = "security biosuit"
+	result = /obj/item/clothing/suit/bio_suit/security
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/clothing/suit/bio_suit/general = 1,
+		/obj/item/clothing/suit/armor/vest = 1,
+	)
 	category = CAT_CLOTHING

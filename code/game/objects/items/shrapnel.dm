@@ -1,8 +1,8 @@
 /obj/item/shrapnel // frag grenades
 	name = "shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = DROPDEL
@@ -44,6 +44,15 @@
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
 
+/obj/projectile/bullet/shrapnel/ied
+	name = "flying glass shrapnel"
+	damage = 15
+	range = 6
+	ricochets_max = 1
+	ricochet_chance = 40
+	shrapnel_type = /obj/item/shard
+	ricochet_incidence_leeway = 60
+
 /obj/projectile/bullet/pellet/stingball
 	name = "stingball pellet"
 	damage = 3
@@ -84,6 +93,6 @@
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
 

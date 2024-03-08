@@ -3,22 +3,22 @@
 
 /obj/item/camera
 	name = "camera"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	inhand_icon_state = "camera"
 	worn_icon_state = "camera"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_system = OVERLAY_LIGHT //Used as a flash here.
 	light_range = 8
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_NECK
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
@@ -121,6 +121,9 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
+	else if(isliving(loc))
+		if(!(get_turf(target) in view(world.view, loc)))
+			return FALSE
 	else //user is an atom or null
 		if(!(get_turf(target) in view(world.view, user || src)))
 			return FALSE
@@ -187,13 +190,15 @@
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
-	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
+	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
+	///list of human names taken on picture
+	var/list/names = list()
 
-	var/width = size_x * 2
-	var/height = size_y * 2
+	var/width = size_x * 2 + 1
+	var/height = size_y * 2 + 1
 	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
-			placeholder = SSmapping.get_turf_below(placeholder)
+			placeholder = GET_TURF_BELOW(placeholder)
 			if(!placeholder)
 				break
 
@@ -203,6 +208,9 @@
 				mobs += M
 			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
+
+	// do this before picture is taken so we can reveal revenants for the photo
+	steal_souls(mobs)
 
 	for(var/mob/mob as anything in mobs)
 		mobs_spotted += mob
@@ -215,43 +223,51 @@
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
+	for(var/mob/living/carbon/human/person in mobs)
+		if(person.is_face_visible())
+			names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
-	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
 	return picture
 
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
+/obj/item/camera/proc/steal_souls(list/victims)
+	return
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)
 		printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	if(!user)
-		return
 	pictures_left--
 	var/obj/item/photo/new_photo = new(get_turf(src), picture)
-	if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
-		to_chat(user, span_notice("[pictures_left] photos left."))
+	if(user)
+		if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
+			to_chat(user, span_notice("[pictures_left] photos left."))
 
-	if(can_customise)
-		var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
-		if(customise == "Yes")
-			var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-			var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-			var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
-			if(name1)
-				picture.picture_name = name1
-			if(desc1)
-				picture.picture_desc = "[desc1] - [picture.picture_desc]"
-			if(caption)
-				picture.caption = caption
-		else if(default_picture_name)
-			picture.picture_name = default_picture_name
+		if(can_customise)
+			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			if(customise == "Yes")
+				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				if(name1)
+					picture.picture_name = name1
+				if(desc1)
+					picture.picture_desc = "[desc1] - [picture.picture_desc]"
+				if(caption)
+					picture.caption = caption
+			else if(default_picture_name)
+				picture.picture_name = default_picture_name
+	else if(isliving(loc))
+		var/mob/living/holder = loc
+		if(holder.put_in_hands(new_photo))
+			to_chat(holder, span_notice("[pictures_left] photos left."))
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
@@ -317,6 +333,6 @@
 			return
 	if(!camera.can_target(target))
 		return
-	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_y  - 1, camera.picture_size_y - 1)
+	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_x  - 1, camera.picture_size_y - 1)
 
 #undef CAMERA_PICTURE_SIZE_HARD_LIMIT

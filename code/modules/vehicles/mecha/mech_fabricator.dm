@@ -1,5 +1,5 @@
 /obj/machinery/mecha_part_fabricator
-	icon = 'icons/obj/robotics.dmi'
+	icon = 'icons/obj/machines/robotics.dmi'
 	icon_state = "fab-idle"
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
@@ -28,9 +28,6 @@
 	/// The job ID of the part currently being processed. This is used for ordering list items for the client UI.
 	var/top_job_id = 0
 
-	/// Reference to all materials used in the creation of the item being_built.
-	var/list/build_materials
-
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
@@ -53,25 +50,32 @@
 	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		connect_techweb(SSresearch.science_tech)
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
+	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
-	if(stored_research)
-		update_menu_tech()
 	return ..()
+
+/obj/machinery/mecha_part_fabricator/LateInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+	if(stored_research)
+		on_connected_techweb()
 
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
-
 	stored_research = new_techweb
+	if(!isnull(stored_research))
+		on_connected_techweb()
+
+/obj/machinery/mecha_part_fabricator/proc/on_connected_techweb()
 	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)
 	)
+	update_menu_tech()
 
 /obj/machinery/mecha_part_fabricator/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
@@ -92,7 +96,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		T += matter_bin.tier
-	rmat.set_local_size((200000 + (T * 50000)))
+	rmat.set_local_size(((100 * SHEET_MATERIAL_AMOUNT) + (T * (25 * SHEET_MATERIAL_AMOUNT))))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
@@ -102,8 +106,8 @@
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		T += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		T += servo.tier
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 	// Adjust the build time of any item currently being built.
@@ -174,34 +178,6 @@
 	process_queue = FALSE
 
 /**
- * Calculates resource/material costs for printing an item based on the machine's resource coefficient.
- *
- * Returns a list of k,v resources with their amounts.
- * * D - Design datum to calculate the modified resource cost of.
- */
-/obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
-	var/list/resources = list()
-	for(var/R in D.materials)
-		var/datum/material/M = R
-		resources[M] = get_resource_cost_w_coeff(D, M)
-	return resources
-
-/**
- * Checks if the Exofab has enough resources to print a given item.
- *
- * Returns FALSE if the design has no reagents used in its construction (?) or if there are insufficient resources.
- * Returns TRUE if there are sufficient resources to print the item.
- * * D - Design datum to calculate the modified resource cost of.
- */
-/obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(length(D.reagents_list)) // No reagents storage - no reagent designs.
-		return FALSE
-	var/datum/component/material_container/materials = rmat.mat_container
-	if(materials.has_materials(get_resources_w_coeff(D)))
-		return TRUE
-	return FALSE
-
-/**
  * Attempts to build the next item in the build queue.
  *
  * Returns FALSE if either there are no more parts to build or the next part is not buildable.
@@ -228,7 +204,7 @@
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
  */
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE)
-	if(!D)
+	if(!D || length(D.reagents_list))
 		return FALSE
 
 	var/datum/component/material_container/materials = rmat.mat_container
@@ -240,20 +216,16 @@
 		if(verbose)
 			say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
-	if(!check_resources(D))
+	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	build_materials = get_resources_w_coeff(D)
-
-	materials.use_materials(build_materials)
+	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]")
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
 	desc = "It's building \a [D.name]."
-
-	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
 
 	return TRUE
 
@@ -340,17 +312,6 @@
 	return TRUE
 
 /**
- * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
- *
- * Returns coefficient-modified resource cost for the given material component.
- * * D - Design datum to pull the resource cost from.
- * * resource - Material datum reference to the resource to calculate the cost of.
- * * roundto - Rounding value for round() proc
- */
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
-	return round(D.materials[resource]*component_coeff, roundto)
-
-/**
  * Calculates the coefficient-modified build time of a design.
  *
  * Returns coefficient-modified build time of a given design.
@@ -373,7 +334,8 @@
 		ui.open()
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = rmat.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
@@ -381,12 +343,11 @@
 
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-
-		for(var/datum/material/material in design.materials)
-			cost[material.name] = get_resource_cost_w_coeff(design, material)
+		var/list/materials = design["materials"]
+		for(var/datum/material/mat in materials)
+			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
-
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
@@ -404,7 +365,7 @@
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = rmat.mat_container?.ui_data()
+	data["materials"] = rmat.mat_container.ui_data()
 	data["queue"] = list()
 	data["processing"] = process_queue
 
@@ -437,9 +398,6 @@
 		return
 
 	. = TRUE
-
-	add_fingerprint(usr)
-	usr.set_machine(src)
 
 	switch(action)
 		if("build")
@@ -507,10 +465,6 @@
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return
-
 			// SAFETY: eject_sheets checks for valid mats
 			rmat.eject_sheets(material, amount)
 			return
@@ -537,16 +491,6 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
-
-/obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
-	if(panel_open)
-		to_chat(user, span_warning("You can't load [src] while it's opened!"))
-		return FALSE
-	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
-		return FALSE
-
-	return TRUE
 
 /obj/machinery/mecha_part_fabricator/maint
 	link_on_init = FALSE

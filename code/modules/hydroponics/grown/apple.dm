@@ -9,7 +9,7 @@
 	lifespan = 55
 	endurance = 35
 	yield = 5
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "apple-grow"
 	icon_dead = "apple-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/one_bite)
@@ -22,9 +22,12 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/applejuice = 0)
+	juice_typepath = /datum/reagent/consumable/applejuice
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
+
+/obj/item/food/grown/apple/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice")
 
 // Gold Apple
 /obj/item/seeds/apple/gold
@@ -40,6 +43,9 @@
 	mutatelist = null
 	reagents_add = list(/datum/reagent/gold = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 40 // Alchemy!
+
+/obj/item/food/grown/apple/gold/make_processable()
+	return // You're going to break your knife!
 
 /obj/item/food/grown/apple/gold
 	seed = /obj/item/seeds/apple/gold

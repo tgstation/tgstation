@@ -26,10 +26,10 @@
 	make_edible(T, amount, material_flags)
 
 /datum/material/pizza/proc/make_edible(atom/source, amount, material_flags)
-	var/nutriment_count = 3 * (amount / MINERAL_MATERIAL_AMOUNT)
-	var/oil_count = 2 * (amount / MINERAL_MATERIAL_AMOUNT)
+	var/nutriment_count = 3 * (amount / SHEET_MATERIAL_AMOUNT)
+	var/oil_count = 2 * (amount / SHEET_MATERIAL_AMOUNT)
 	source.AddComponent(/datum/component/edible, \
-		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), \
+		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/nutriment/fat/oil = oil_count), \
 		foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES, \
 		eat_time = 3 SECONDS, \
 		tastes = list("crust", "tomato", "cheese", "meat"))

@@ -16,6 +16,18 @@
 	cant_discount = TRUE
 	illegal_tech = FALSE
 
+/datum/uplink_item/badass/balloon/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	. = ..()
+
+	if(!.)
+		return
+
+	notify_ghosts(
+		"[user] has purchased a BADASS Syndicate Balloon!",
+		source = .,
+		header = "What are they THINKING?",
+	)
+
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, \
@@ -38,9 +50,8 @@
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
-	item = /obj/item/storage/secure/briefcase/syndie
+	item = /obj/item/storage/briefcase/secure/syndie
 	cost = 3
-	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
 
@@ -81,4 +92,17 @@
 	name = "Syndicate Sticker Pack"
 	desc = "Contains 8 random stickers precisely engineered to resemble suspicious objects, which may or may not be useful for fooling crew."
 	item = /obj/item/storage/box/syndie_kit/stickers
+	cost = 1
+
+/datum/uplink_item/badass/demotivational_posters
+	name = "Syndicate Demotivational Poster Pack"
+	desc = "Contains a selection of demotivational posters to minimise productivity and maximise apathy in the workplace."
+	item = /obj/item/storage/box/syndie_kit/poster_box
+	cost = 1
+
+/datum/uplink_item/badass/syndie_spraycan
+	name = "Syndicate Spraycan"
+	desc = "A stylish Syndicate spraycan. \
+		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
+	item = /obj/item/traitor_spraycan
 	cost = 1

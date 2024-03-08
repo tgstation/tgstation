@@ -13,7 +13,7 @@
 	if(!ishuman(user))
 		return
 	if(slot & ITEM_SLOT_HEAD)
-		user.grant_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
+		user.grant_language(/datum/language/piratespeak/, source = LANGUAGE_HAT)
 		to_chat(user, span_boldnotice("You suddenly know how to speak like a pirate!"))
 
 /obj/item/clothing/head/costume/pirate/dropped(mob/user)
@@ -22,7 +22,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(ITEM_SLOT_HEAD) == src && !QDELETED(src)) //This can be called as a part of destroy
-		user.remove_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
+		user.remove_language(/datum/language/piratespeak/, source = LANGUAGE_HAT)
 		to_chat(user, span_boldnotice("You can no longer speak like a pirate."))
 
 /obj/item/clothing/head/costume/pirate/armored

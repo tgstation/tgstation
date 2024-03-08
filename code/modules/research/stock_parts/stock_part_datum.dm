@@ -101,22 +101,22 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/capacitor/quadratic
 
-/datum/stock_part/manipulator
+/datum/stock_part/servo
 	tier = 1
-	physical_object_type = /obj/item/stock_parts/manipulator
-	physical_object_base_type = /obj/item/stock_parts/manipulator
+	physical_object_type = /obj/item/stock_parts/servo
+	physical_object_base_type = /obj/item/stock_parts/servo
 
-/datum/stock_part/manipulator/tier2
+/datum/stock_part/servo/tier2
 	tier = 2
-	physical_object_type = /obj/item/stock_parts/manipulator/nano
+	physical_object_type = /obj/item/stock_parts/servo/nano
 
-/datum/stock_part/manipulator/tier3
+/datum/stock_part/servo/tier3
 	tier = 3
-	physical_object_type = /obj/item/stock_parts/manipulator/pico
+	physical_object_type = /obj/item/stock_parts/servo/pico
 
-/datum/stock_part/manipulator/tier4
+/datum/stock_part/servo/tier4
 	tier = 4
-	physical_object_type = /obj/item/stock_parts/manipulator/femto
+	physical_object_type = /obj/item/stock_parts/servo/femto
 
 /datum/stock_part/micro_laser
 	tier = 1

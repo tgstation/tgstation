@@ -26,7 +26,7 @@
 
 	screens -= category
 
-	if(animated)
+	if(!QDELETED(src) && animated)
 		animate(screen, alpha = 0, time = animated)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen_after_animate), screen), animated, TIMER_CLIENT_TIME)
 	else
@@ -117,6 +117,9 @@
 /atom/movable/screen/fullscreen/crit/vision
 	icon_state = "oxydamageoverlay"
 	layer = BLIND_LAYER
+
+/atom/movable/screen/fullscreen/crit/projectile_parry
+	layer = PARRY_LAYER
 
 /atom/movable/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
@@ -213,3 +216,10 @@
 	layer = LIGHTING_ABOVE_ALL
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
+
+/atom/movable/screen/fullscreen/static_vision
+	icon = 'icons/hud/screen_gen.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "noise"
+	color = "#04a8d1"
+	alpha = 80

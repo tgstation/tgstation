@@ -39,7 +39,7 @@
 	UnregisterSignal(SSdcs, COMSIG_AREA_CREATED)
 	parent_mob.lose_area_sensitivity(type)
 
-/datum/component/hazard_area/Destroy(force, silent)
+/datum/component/hazard_area/Destroy(force)
 	. = ..()
 	area_created = null
 
@@ -164,7 +164,7 @@
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, update=TRUE)
 
 /datum/status_effect/hazard_area/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] appear[owner.p_s()] to be largely immobilized through unknown means.")
+	return span_notice("[owner.p_They()] appear[owner.p_s()] to be largely immobilized through unknown means.")
 
 /atom/movable/screen/alert/status_effect/hazard_area
 	name = "Hazardous Area"

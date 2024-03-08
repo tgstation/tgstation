@@ -144,7 +144,8 @@
 	name = "Maid in the Mirror"
 	desc = "Allows you to transmute five sheets of titanium, a flash, a suit of armor, and a pair of lungs \
 		to create a Maid in the Mirror. Maid in the Mirrors are decent combatants that can become incorporeal by \
-		phasing in and out of the mirror realm, serving as powerful scouts and ambushers."
+		phasing in and out of the mirror realm, serving as powerful scouts and ambushers. \
+		However, they are weak to mortal gaze and take damage by being examined."
 	gain_text = "Within each reflection, lies a gateway into an unimaginable world of colors never seen and \
 		people never met. The ascent is glass, and the walls are knives. Each step is blood, if you do not have a guide."
 	next_knowledge = list(
@@ -159,4 +160,5 @@
 	)
 	cost = 1
 	route = PATH_SIDE
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror
+	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
+	poll_ignore_define = POLL_IGNORE_MAID_IN_MIRROR

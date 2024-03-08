@@ -217,7 +217,7 @@
 /turf/open/floor/carpet/blue,
 /area/centcom/ctf)
 "oy" = (
-/obj/machinery/control_point,
+/obj/machinery/ctf/control_point,
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "oK" = (
@@ -308,7 +308,7 @@
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "rm" = (
-/obj/machinery/capture_the_flag/blue,
+/obj/machinery/ctf/spawner/blue,
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "rB" = (
@@ -671,7 +671,7 @@
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "LX" = (
-/obj/machinery/capture_the_flag/yellow,
+/obj/machinery/ctf/spawner/yellow,
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "Mc" = (

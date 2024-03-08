@@ -6,9 +6,8 @@
 	slowdown = SHOES_SLOWDOWN+1
 	var/enabled_waddle = TRUE
 	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
-	var/list/squeak_sound = list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1)
+	var/list/squeak_sound = list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
-	species_exception = list(/datum/species/golem/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
@@ -21,13 +20,13 @@
 	. = ..()
 	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			user.AddElement(/datum/element/waddling)
+			user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
 			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)
 	if(is_clown_job(user.mind?.assigned_role))
 		user.clear_mood_event("clownshoes")
 
@@ -53,11 +52,10 @@
 	name = "meown shoes"
 	desc = "The adorable sound they make when you walk will mean making friends is more likely."
 	icon_state = "meown_shoes"
-	squeak_sound = list('sound/effects/meowstep1.ogg'=1) //mew mew mew mew
+	squeak_sound = list('sound/effects/footstep/meowstep1.ogg'=1) //mew mew mew mew
 
-/obj/item/clothing/shoes/clown_shoes/ducky_shoes
-	name = "ducky shoes"
-	desc = "I got boots, that go *quack quack quack quack quack."
-	icon_state = "ducky_shoes"
-	inhand_icon_state = "ducky_shoes"
-	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
+/obj/item/clothing/shoes/clown_shoes/moffers
+	name = "moffers"
+	desc = "No moths were harmed in the making of these slippers."
+	icon_state = "moffers"
+	squeak_sound = list('sound/effects/footstep/moffstep01.ogg'=1) //like sweet music to my ears

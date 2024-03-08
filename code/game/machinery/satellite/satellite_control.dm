@@ -23,7 +23,7 @@
 
 /obj/machinery/computer/sat_control/proc/toggle(toggled_id)
 	var/turf/current_turf = get_turf(src)
-	for(var/obj/machinery/satellite/satellite in GLOB.machines)
+	for(var/obj/machinery/satellite/satellite as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/satellite))
 		if(satellite.id != toggled_id)
 			continue
 		if(satellite.obj_flags & EMAGGED)
@@ -36,7 +36,7 @@
 	var/list/data = list()
 
 	data["satellites"] = list()
-	for(var/obj/machinery/satellite/sat in GLOB.machines)
+	for(var/obj/machinery/satellite/sat as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/satellite))
 		data["satellites"] += list(list(
 			"id" = sat.id,
 			"active" = sat.active,
@@ -44,10 +44,9 @@
 		))
 	data["notice"] = notice
 
-
-	var/datum/station_goal/station_shield/goal = locate() in GLOB.station_goals
-	if(goal)
-		data["meteor_shield"] = 1
+	var/datum/station_goal/station_shield/goal = SSstation.get_station_goal(/datum/station_goal/station_shield)
+	if(!isnull(goal))
+		data["meteor_shield"] = TRUE
 		data["meteor_shield_coverage"] = goal.get_coverage()
 		data["meteor_shield_coverage_max"] = goal.coverage_goal
 	return data

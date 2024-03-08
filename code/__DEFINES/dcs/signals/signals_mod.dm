@@ -25,6 +25,8 @@
 	#define MOD_ABORT_USE (1<<0)
 /// Called when a module activates, after all checks have passed and cooldown started.
 #define COMSIG_MODULE_ACTIVATED "mod_module_activated"
+/// Called when a module starts a cooldown until its next activation. Passed the cooldown time.
+#define COMSIG_MODULE_COOLDOWN_STARTED "mod_module_cooldown_started"
 /// Called when a module deactivates, after all checks have passed.
 #define COMSIG_MODULE_DEACTIVATED "mod_module_deactivated"
 /// Called when a module is used, after all checks have passed and cooldown started.

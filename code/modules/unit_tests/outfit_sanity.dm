@@ -5,7 +5,9 @@
 	if (!outfit_item) { \
 		TEST_FAIL("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
-	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
+	else { \
+		outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
+	} \
 }
 
 /// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.
@@ -18,6 +20,26 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/stack/spacecash/c1000
 	r_hand = /obj/item/stack/spacecash/c1000
+
+/// outfit_sanity needs to cover insertions into duffelbags
+/datum/outfit/duffel_user
+	name = "Mr. Runtime"
+	back = /obj/item/storage/backpack/duffelbag
+	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
+
+/// Satchels too
+/datum/outfit/stachel_user
+	name = "Mr. Runtime"
+	back = /obj/item/storage/backpack/satchel
+	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
+
+/// And just in case we'll check backpacks
+/datum/outfit/backpack_user
+	name = "Mr. Runtime"
+	back = /obj/item/storage/backpack
+	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
+
+
 
 /datum/unit_test/outfit_sanity/Run()
 	var/datum/outfit/prototype_outfit = /datum/outfit
@@ -61,7 +83,7 @@
 			for (var/path in backpack_contents)
 				var/number = backpack_contents[path] || 1
 				for (var/_ in 1 to number)
-					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE))
+					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE, indirect_action = TRUE))
 						TEST_FAIL("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
 #undef CHECK_OUTFIT_SLOT

@@ -39,7 +39,14 @@
 	description = "We need to see how the body functions from the earliest moments. Some cytology experiments will help us gain this understanding."
 	total_requirement = 3
 	max_requirement_per_type = 2
-	possible_types = list(/mob/living/basic/carp, /mob/living/simple_animal/hostile/retaliate/snake, /mob/living/simple_animal/pet/cat, /mob/living/basic/pet/dog/corgi, /mob/living/basic/cow, /mob/living/simple_animal/chicken)
+	possible_types = list(
+		/mob/living/basic/pet/cat,
+		/mob/living/basic/carp,
+		/mob/living/basic/chicken,
+		/mob/living/basic/cow,
+		/mob/living/basic/pet/dog/corgi,
+		/mob/living/basic/snake,
+	)
 
 /datum/experiment/scanning/random/cytology/medium/one
 	name = "Advanced Cytology Scanning Experiment One"
@@ -219,7 +226,7 @@
 		/obj/machinery/biogenerator = 3,
 		/obj/machinery/gibber = 3,
 		/obj/machinery/chem_master = 3,
-		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
+		/obj/machinery/cryo_cell = 3,
 		/obj/machinery/harvester = 5,
 		/obj/machinery/quantumpad = 5
 	)
@@ -276,7 +283,6 @@
 		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/medical_kiosk = 2,
 		/obj/machinery/piratepad/civilian = 2,
-		/obj/machinery/rnd/bepis = 3
 	)
 	required_stock_part = /obj/item/stock_parts/scanning_module/adv
 
@@ -313,11 +319,11 @@
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 2
+	total_requirement = 1
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
-/datum/experiment/scanning/random/mecha_damage_scan/New()
+/datum/experiment/scanning/random/mecha_damage_scan/New(datum/techweb/techweb)
 	. = ..()
 	damage_percent = rand(15, 95)
 	//updating the description with the damage_percent var set
@@ -325,10 +331,60 @@
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
 	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
-	return ..() && (found_percent <= (damage_percent + 2) && found_percent >= (damage_percent - 2))
+	return ..() && ISINRANGE(found_percent, damage_percent - 5, damage_percent + 5)
 
-/datum/experiment/scanning/random/mecha_destroyed_scan
-	name = "Exosuit Materials 2: Excessive Damage Test"
-	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
-	possible_types = list(/obj/structure/mecha_wreckage)
+/datum/experiment/scanning/random/mecha_equipped_scan
+	name = "Exosuit Materials 2: Load Strain Test"
+	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
+	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 2
+
+/datum/experiment/scanning/random/mecha_equipped_scan/final_contributing_index_checks(atom/target, typepath)
+	var/obj/vehicle/sealed/mecha/stompy = target
+	if(!istype(stompy))
+		return FALSE //Not a mech
+	if(!HAS_TRAIT(stompy,TRAIT_MECHA_CREATED_NORMALLY))
+		return FALSE //Not hand-crafted
+	if(!(stompy.equip_by_category[MECHA_L_ARM] && stompy.equip_by_category[MECHA_R_ARM]))
+		return FALSE //Both arms need be filled
+	return ..()
+
+/// Scan for organs you didn't start the round with
+/datum/experiment/scanning/people/novel_organs
+	name = "Human Field Research: Divergent Biology"
+	description = "We need data on organic compatibility between species. Scan some samples of humanoid organisms with organs they don't usually have. \
+		Data on mechanical organs isn't of any use to us."
+	performance_hint = "Unusual organs can be introduced manually by transplant, genetic infusion, or very rapidly via a Bioscrambler anomaly effect."
+	required_traits_desc = "non-synthetic organs not typical for their species"
+	/// Disallow prosthetic organs
+	var/organic_only = TRUE
+
+/datum/experiment/scanning/people/novel_organs/is_valid_scan_target(mob/living/carbon/human/check)
+	. = ..()
+	if (!.)
+		return
+	// Organs which are valid for get_mutant_organ_type_for_slot
+	var/static/list/vital_organ_slots = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+
+	for (var/obj/item/organ/organ as anything in check.organs)
+		if (organic_only && !IS_ORGANIC_ORGAN(organ))
+			continue
+		var/datum/species/target_species = check.dna.species
+		if (organ.slot in vital_organ_slots)
+			if (organ.type == target_species.get_mutant_organ_type_for_slot(organ.slot))
+				continue
+		else
+			if ((organ.type in target_species.mutant_organs) || (organ.type in target_species.external_organs))
+				continue
+		return TRUE
+	return FALSE

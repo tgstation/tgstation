@@ -4,8 +4,8 @@
 	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/extract_organ,
 		/datum/surgery_step/gland_insert,
@@ -14,10 +14,12 @@
 /datum/surgery/organ_extraction/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(user))
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id == SPECIES_ABDUCTOR)
+	if(!..())
+		return FALSE
+	if(isabductor(user))
 		return TRUE
-	for(var/obj/item/implant/abductor/A in H.implants)
+	var/mob/living/non_abductor = user
+	if(locate(/obj/item/implant/abductor) in non_abductor.implants)
 		return TRUE
 	return FALSE
 

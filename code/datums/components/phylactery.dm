@@ -43,7 +43,7 @@
 	src.stun_per_resurrection = stun_per_resurrection
 	src.phylactery_color = phylactery_color
 
-	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, PROC_REF(on_lich_mind_lost))
+	RegisterSignal(lich_mind, COMSIG_QDELETING, PROC_REF(on_lich_mind_lost))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(check_if_lich_died))
 
 	var/obj/obj_parent = parent
@@ -51,7 +51,7 @@
 	obj_parent.add_atom_colour(phylactery_color, ADMIN_COLOUR_PRIORITY)
 	obj_parent.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
-	RegisterSignal(obj_parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(obj_parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	SSpoints_of_interest.make_point_of_interest(obj_parent)
 
@@ -62,7 +62,7 @@
 	// Stationloving items should really never be made a phylactery so I feel safe in doing this
 	qdel(obj_parent.GetComponent(/datum/component/stationloving))
 
-	UnregisterSignal(obj_parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(obj_parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
 	// Sweep up any revive signals left on the mind's current
 	UnregisterSignal(lich_mind.current, COMSIG_LIVING_REVIVE)
@@ -71,7 +71,7 @@
 	return ..()
 
 /**
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  *
  * Gives some flavor for the phylactery on examine.
  */
@@ -93,7 +93,7 @@
 		examine_list += span_green("A terrible aura surrounds this item. Its very existence is offensive to life itself...")
 
 /**
- * Signal proc for [COMSIG_PARENT_QDELETING] registered on the lich's mind.
+ * Signal proc for [COMSIG_QDELETING] registered on the lich's mind.
  *
  * Minds shouldn't be getting deleted but if for some ungodly reason
  * the lich'd mind is deleted our component should go with it, as

@@ -12,6 +12,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	ui_name = "AntagInfoWizard"
 	suicide_cry = "FOR THE FEDERATION!!"
 	preview_outfit = /datum/outfit/wizard
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
+	hardcore_random_bonus = TRUE
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -25,7 +28,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
-	antagpanel_category = "Wizard Federation"
+	antagpanel_category = ANTAG_GROUP_WIZARDS
 	antag_hud_name = "apprentice"
 	show_in_roundend = FALSE
 	show_name_in_check_antagonists = TRUE
@@ -50,6 +53,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/wizard_minion/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard_minion/proc/create_objectives()
@@ -69,6 +77,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		CRASH("Wizard datum with no owner.")
 	assign_ritual()
 	equip_wizard()
+	owner.current.add_quirk(/datum/quirk/introvert)
 	if(give_objectives)
 		create_objectives()
 	if(move_to_lair)
@@ -76,6 +85,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	. = ..()
 	if(allow_rename)
 		rename_wizard()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/wizard/Destroy()
+	QDEL_NULL(ritual)
+	return ..()
 
 /datum/antagonist/wizard/create_team(datum/team/wizard/new_team)
 	if(!new_team)
@@ -98,7 +112,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /// Initialises the grand ritual action for this mob
 /datum/antagonist/wizard/proc/assign_ritual()
-	ritual = new(owner.current)
+	ritual = new(src)
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/proc/send_to_lair()
@@ -165,6 +179,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			qdel(spell)
 			owner.current.actions -= spell
 
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
@@ -180,9 +195,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	H.equipOutfit(outfit_type)
 
 /datum/antagonist/wizard/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 /datum/antagonist/wizard/ui_data(mob/user)
@@ -241,6 +256,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
 	antag_hud_name = "apprentice"
+	can_assign_self_objectives = FALSE
+	move_to_lair = FALSE
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice
@@ -358,6 +375,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
+	can_assign_self_objectives = FALSE
 
 /datum/antagonist/wizard/academy/assign_ritual()
 	return // Has other duties to be getting on with
@@ -392,13 +410,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		parts += "<br><B>Grand Rituals completed:</B> [ritual.times_completed]<br>"
 
 	var/count = 1
-	var/wizardwin = 1
+	var/wizardwin = TRUE
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
-			wizardwin = 0
+		if(!objective.check_completion())
+			wizardwin = FALSE
+		parts += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 		count++
 
 	if(wizardwin)

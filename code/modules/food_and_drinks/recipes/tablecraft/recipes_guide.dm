@@ -37,13 +37,26 @@
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/reaction/New()
-	..()
-	if(!reaction)
+	. = ..()
+	if(!ispath(reaction, /datum/chemical_reaction))
 		return
-	var/datum/chemical_reaction/chemical_reaction = new reaction // This could use GLOB.chemical_reactions_list if it was initialized by now
-	reqs = chemical_reaction.required_reagents
-	chem_catalysts = chemical_reaction.required_catalysts
-	if (chemical_reaction.results.len)
+
+	if(length(GLOB.chemical_reactions_list))
+		setup_chemical_reaction_details(GLOB.chemical_reactions_list[reaction])
+	else
+		// May be called before chemical reactions list is instantiated
+		var/datum/chemical_reaction/chemical_reaction = new reaction()
+		setup_chemical_reaction_details(chemical_reaction)
+		qdel(chemical_reaction)
+	..()
+
+/**
+ * Sets up information for our recipe based on the chemical reaction we have set.
+ */
+/datum/crafting_recipe/food/reaction/proc/setup_chemical_reaction_details(datum/chemical_reaction/chemical_reaction)
+	reqs = chemical_reaction.required_reagents?.Copy()
+	chem_catalysts = chemical_reaction.required_catalysts?.Copy()
+	if(isnull(result) && length(chemical_reaction.results))
 		result = chemical_reaction.results[1]
 		result_amount = chemical_reaction.results[result]
 
@@ -167,15 +180,22 @@
 	result = /datum/reagent/consumable/yoghurt
 	reaction = /datum/chemical_reaction/food/yoghurt
 
-/datum/crafting_recipe/food/reaction/quality_oil
-	result = /datum/reagent/consumable/quality_oil
-	reaction = /datum/chemical_reaction/food/quality_oil
+/datum/crafting_recipe/food/reaction/olive_oil
+	result = /datum/reagent/consumable/nutriment/fat/oil/olive
+	reaction = /datum/chemical_reaction/food/olive_oil
 
-/datum/crafting_recipe/food/reaction/quality_oil/upconvert
-	reaction = /datum/chemical_reaction/food/quality_oil_upconvert
+/datum/crafting_recipe/food/reaction/olive_oil/upconvert
+	reaction = /datum/chemical_reaction/food/olive_oil_upconvert
 
 /datum/crafting_recipe/food/reaction/moonshine
 	reaction = /datum/chemical_reaction/drink/moonshine
+
+/datum/crafting_recipe/food/reaction/martian_batter
+	reaction = /datum/chemical_reaction/food/martian_batter
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/reaction/grounding_neutralise
+	reaction = /datum/chemical_reaction/food/grounding_neutralise
 
 // Tools: Rolling pin
 
@@ -208,6 +228,7 @@
 /datum/crafting_recipe/food/rollingpin/pizza_sheet
 	reqs = list(/obj/item/food/pizzaslice/margherita = 1)
 	result = /obj/item/stack/sheet/pizza
+	category = CAT_PIZZA
 
 // Tools: Knife
 
@@ -229,7 +250,7 @@
 /datum/crafting_recipe/food/knife/cakeslice
 	reqs = list(/obj/item/food/cake/plain = 1)
 	result = /obj/item/food/cakeslice/plain
-	category = CAT_PASTRY
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/knife/pizzaslice
 	reqs = list(/obj/item/food/pizza/margherita = 1)
@@ -246,10 +267,14 @@
 	result = /obj/item/food/rootdoughslice
 	category = CAT_BREAD
 
-/datum/crafting_recipe/food/knife/pastrybase
+/datum/crafting_recipe/food/knife/rawpastrybase
 	reqs = list(/obj/item/food/piedough = 1)
-	result = /obj/item/food/pastrybase
+	result = /obj/item/food/rawpastrybase
 	category = CAT_BREAD
+
+/datum/crafting_recipe/food/knife/butterslice
+	reqs = list(/obj/item/food/butter = 1)
+	result = /obj/item/food/butterslice
 
 /datum/crafting_recipe/food/knife/doughball
 	reqs = list(/obj/item/food/doughslice = 1)
@@ -333,12 +358,32 @@
 /datum/crafting_recipe/food/knife/lil_baked_rice
 	reqs = list(/obj/item/food/big_baked_rice = 1)
 	result = /obj/item/food/lil_baked_rice
-	category = CAT_SALAD
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/knife/watermelonslice
 	reqs = list(/obj/item/food/grown/watermelon = 1)
 	result = /obj/item/food/watermelonslice
 	category = CAT_SALAD
+
+/datum/crafting_recipe/food/knife/appleslice
+	reqs = list(/obj/item/food/grown/apple = 1)
+	result = /obj/item/food/appleslice
+	category = CAT_SALAD
+
+/datum/crafting_recipe/food/knife/kamaboko_slice
+	reqs = list(/obj/item/food/kamaboko = 1)
+	result = /obj/item/food/kamaboko_slice
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/knife/raw_noodles
+	reqs = list(/obj/item/food/rice_dough = 1)
+	result = /obj/item/food/spaghetti/rawnoodles
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/knife/chapslice
+	reqs = list(/obj/item/food/canned/chap = 1)
+	result = /obj/item/food/chapslice
+	category = CAT_MEAT
 
 // Machinery: Grill
 
@@ -406,14 +451,29 @@
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
-	reqs = list(/obj/item/food/cheese_sandwich = 1)
-	result = /obj/item/food/grilled_cheese_sandwich
-	category = CAT_BREAD
+	reqs = list(/obj/item/food/sandwich/cheese = 1)
+	result = /obj/item/food/sandwich/cheese/grilled
+	category = CAT_SANDWICH
 
-/datum/crafting_recipe/food/grill/moonfish
+/datum/crafting_recipe/food/grill/grilled_cheese
 	reqs = list(/obj/item/food/cheese/firm_cheese_slice = 1)
 	result = /obj/item/food/grilled_cheese
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/grill/ballpark_pretzel
+	reqs = list(/obj/item/food/raw_ballpark_pretzel = 1)
+	result = /obj/item/food/ballpark_pretzel
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/grill/ballpark_tsukune
+	reqs = list(/obj/item/food/kebab/raw_ballpark_tsukune = 1)
+	result = /obj/item/food/kebab/ballpark_tsukune
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/grill/chapslice
+	reqs = list(/obj/item/food/chapslice = 1)
+	result = /obj/item/food/grilled_chapslice
+	category = CAT_MEAT
 
 /datum/crafting_recipe/food/grill/friedegg
 	reqs = list(/obj/item/food/egg = 1)
@@ -456,6 +516,11 @@
 		"Add chocolate",
 		"Bake until ready"
 	)
+
+/datum/crafting_recipe/food/grill/hard_taco_shell
+	reqs = list(/obj/item/food/tortilla = 1)
+	result = /obj/item/food/hard_taco_shell
+	category = CAT_MEXICAN
 
 // Machinery: Grinder
 /datum/crafting_recipe/food/grinder
@@ -503,7 +568,7 @@
 	result = /datum/reagent/consumable/flour
 
 /datum/crafting_recipe/food/grinder/butter
-	reqs = list(/datum/reagent/consumable/milk = 15)
+	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
 	result = /obj/item/food/butter
 	steps = list("Put into grinder and mix")
 
@@ -590,15 +655,11 @@
 /datum/crafting_recipe/food/processor/tortilla
 	reqs = list(/obj/item/food/grown/corn = 1)
 	result = /obj/item/food/tortilla
-	category = CAT_BREAD
+	category = CAT_MEXICAN
 
 /datum/crafting_recipe/food/processor/tempeh
 	reqs = list(/obj/item/food/tempehstarter = 1)
 	result = /obj/item/food/tempeh
-
-/datum/crafting_recipe/food/processor/yakiimo
-	reqs = list(/obj/item/food/grown/potato/sweet = 1)
-	result = /obj/item/food/yakiimo
 
 /datum/crafting_recipe/food/processor/popsicle_stick
 	reqs = list(/obj/item/grown/log = 1)
@@ -698,12 +759,12 @@
 /datum/crafting_recipe/food/oven/pie
 	reqs = list(/obj/item/food/piedough = 1)
 	result = /obj/item/food/pie/plain
-	category = CAT_PASTRY
+	category = CAT_PIE
 
 /datum/crafting_recipe/food/oven/cake
 	reqs = list(/obj/item/food/cakebatter = 1)
 	result = /obj/item/food/cake/plain
-	category = CAT_PASTRY
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/oven/breadstick
 	reqs = list(/obj/item/food/raw_breadstick = 1)
@@ -727,7 +788,7 @@
 /datum/crafting_recipe/food/oven/big_baked_rice
 	reqs = list(/obj/item/food/raw_baked_rice = 1)
 	result = /obj/item/food/big_baked_rice
-	category = CAT_SALAD
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/oven/ratatouille
 	reqs = list(/obj/item/food/raw_ratatouille = 1)
@@ -737,7 +798,7 @@
 /datum/crafting_recipe/food/oven/stuffed_peppers
 	reqs = list(/obj/item/food/raw_stuffed_peppers = 1)
 	result = /obj/item/food/stuffed_peppers
-	category = CAT_SALAD
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/oven/roasted_bell_pepper
 	reqs = list(/obj/item/food/grown/bell_pepper = 1)
@@ -752,7 +813,17 @@
 /datum/crafting_recipe/food/oven/yakiimo
 	reqs = list(/obj/item/food/grown/potato/sweet = 1)
 	result = /obj/item/food/yakiimo
-	category = CAT_SALAD
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/oven/reispan
+	reqs = list(/obj/item/food/rice_dough = 1)
+	result = /obj/item/food/bread/reispan
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/oven/ballpark_pretzel
+	reqs = list(/obj/item/food/raw_ballpark_pretzel = 1)
+	result = /obj/item/food/ballpark_pretzel
+	category = CAT_MARTIAN
 
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
@@ -787,3 +858,8 @@
 /datum/crafting_recipe/food/drying/semki
 	reqs = list(/obj/item/food/grown/sunflower = 1)
 	result = /obj/item/food/semki/healthy
+
+/datum/crafting_recipe/food/drying/kamaboko
+	reqs = list(/obj/item/food/surimi = 1)
+	result = /obj/item/food/kamaboko
+	category = CAT_MARTIAN

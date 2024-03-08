@@ -43,6 +43,7 @@ Difficulty: Extremely Hard
 	death_message = "falls to the ground, decaying into plasma particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
+	summon_line = "I'M WIDE AWAKE! AND YOU'RE WIIIIIIIDE OPEN!"
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state
@@ -62,12 +63,12 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
-	frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel()
-	hard_frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/strong()
-	snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire()
-	hard_snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/direct_and_aoe()
-	ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern()
-	hard_ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular()
+	frost_orbs = new(src)
+	hard_frost_orbs = new(src)
+	snowball_machine_gun = new(src)
+	hard_snowball_machine_gun = new(src)
+	ice_shotgun = new(src)
+	hard_ice_shotgun = new(src)
 	frost_orbs.Grant(src)
 	hard_frost_orbs.Grant(src)
 	snowball_machine_gun.Grant(src)
@@ -80,18 +81,22 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
-	QDEL_NULL(frost_orbs)
-	QDEL_NULL(hard_frost_orbs)
-	QDEL_NULL(snowball_machine_gun)
-	QDEL_NULL(hard_snowball_machine_gun)
-	QDEL_NULL(ice_shotgun)
-	QDEL_NULL(hard_ice_shotgun)
+	frost_orbs = null
+	hard_frost_orbs = null
+	snowball_machine_gun = null
+	hard_snowball_machine_gun = null
+	ice_shotgun = null
+	hard_ice_shotgun = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
+		return
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD) //don't go out of our way to fire our disintegrating attacks at corpses
 		return
 
 	var/easy_attack = prob(80 - enraged * 40)
@@ -155,6 +160,7 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
 	adjustBruteLoss(-30 * severity)
 	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
 	if(enraging)
@@ -198,7 +204,7 @@ Difficulty: Extremely Hard
 	homing_turn_speed = 3
 	damage_type = BURN
 
-/obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		EX_ACT(target, EXPLODE_HEAVY)
@@ -224,7 +230,7 @@ Difficulty: Extremely Hard
 	range = 150
 	damage_type = BRUTE
 
-/obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		EX_ACT(target, EXPLODE_HEAVY)
@@ -232,7 +238,7 @@ Difficulty: Extremely Hard
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
 	desc = "When used by anything holding it, this crystal gives them a second chance at life if they die."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "demonic_crystal"
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)
@@ -315,7 +321,7 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
 	var/turf/T = get_turf(target)
-	mineral_scan_pulse(T, world.view + 1)
+	mineral_scan_pulse(T, world.view + 1, src)
 	. = ..()
 
 /obj/item/crusher_trophy/ice_block_talisman
@@ -353,8 +359,8 @@ Difficulty: Extremely Hard
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
-	var/icon/size_check = icon(owner.icon, owner.icon_state)
-	cube.Scale(size_check.Width(), size_check.Height())
+	var/list/icon_dimensions = get_icon_dimensions(owner.icon)
+	cube.Scale(icon_dimensions["width"], icon_dimensions["height"])
 	owner.add_overlay(cube)
 	return ..()
 
@@ -377,7 +383,7 @@ Difficulty: Extremely Hard
 /obj/item/ice_energy_crystal
 	name = "ice energy crystal"
 	desc = "Remnants of the demonic frost miners ice energy."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "ice_crystal"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -385,7 +391,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

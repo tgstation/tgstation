@@ -26,7 +26,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 			continue
 		if(AI.deployed_shell)
 			AI.deployed_shell.undeploy()
-		AI.change_mob_type(/mob/living/silicon/robot , null, null)
+		AI.change_mob_type_unchecked(/mob/living/silicon/robot)
 		AI.gib()
 
 	for(var/mob/living/silicon/robot/robot in GLOB.player_list)
@@ -38,7 +38,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 		robot.make_scottish()
 	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)
 
-/datum/highlander_controller/Destroy(force, ...)
+/datum/highlander_controller/Destroy(force)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 

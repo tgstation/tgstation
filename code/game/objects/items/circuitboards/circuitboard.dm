@@ -7,12 +7,12 @@
 	name = "circuit board"
 	/// extension that is applied after the initial name AKA (Computer/Machine Board)
 	var/name_extension = null
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	custom_materials = list(/datum/material/glass = 1000)
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
@@ -34,9 +34,9 @@
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
 		stack_trace("apply_defauly_parts called on machine that already had component_parts: [machine]")
 
-		// Move to nullspace so you don't trigger handle_atom_del logic and remove existing parts.
+		// Remove references of components so it doesn't trigger Exited logic and remove existing parts.
 		for(var/obj/item/part as anything in machine.component_parts)
-			part.moveToNullspace(loc)
+			machine.component_parts -= part
 			qdel(part)
 
 	// List of components always contains the circuit board used to build it.
@@ -47,9 +47,7 @@
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
 		stack_trace("apply_default_parts called from a circuit board that does not belong to machine: [machine]")
 
-		// Move to nullspace so you don't trigger handle_atom_del logic, remove old circuit, add new circuit.
-		machine.circuit.moveToNullspace()
-		qdel(machine.circuit)
+		QDEL_NULL(machine.circuit)
 		machine.circuit = src
 
 	return
@@ -110,7 +108,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	. = ..()
 	if(!LAZYLEN(req_components))
 		. += span_info("It requires no components.")
-		return .
+		return
 
 	var/list/nice_list = list()
 	for(var/component_path in req_components)
@@ -120,27 +118,33 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		var/component_name
 		var/component_amount = req_components[component_path]
 
+		//e.g. "glass sheet" vs. "glass"
 		if(ispath(component_path, /obj/item/stack))
 			var/obj/item/stack/stack_path = component_path
-			if(initial(stack_path.singular_name))
-				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
-		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
-			var/obj/item/stock_parts/stock_part = component_path
-			component_name = initial(stock_part.base_name) || initial(stock_part.name)
-		else if(ispath(component_path, /obj/item/stock_parts))
-			var/obj/item/stock_parts/stock_part = component_path
-			component_name = initial(stock_part.name)
-		else if(ispath(component_path, /datum/stock_part))
-			var/datum/stock_part/stock_part = component_path
-			var/obj/item/stock_parts/physical_object_type = initial(stock_part.physical_object_type)
-			component_name = initial(physical_object_type.base_name) || initial(physical_object_type.name)
+			component_name = initial(stack_path.singular_name)
+
+		//stock parts in datum or obj form
+		else if(ispath(component_path, /obj/item/stock_parts) || ispath(component_path, /datum/stock_part))
+			var/obj/item/stock_parts/stock_part
+			if(ispath(component_path, /obj/item/stock_parts))
+				stock_part = component_path
+			else
+				var/datum/stock_part/datum_part = component_path
+				stock_part = initial(datum_part.physical_object_type)
+
+			if(!specific_parts)
+				component_name = initial(stock_part.base_name)
+			if(!component_name)
+				component_name = initial(stock_part.name)
+
+		//beakers, any non conventional part
 		else if(ispath(component_path, /atom))
 			var/atom/stock_part = component_path
 			component_name = initial(stock_part.name)
 
+		//append decoded name to final result
 		if (isnull(component_name))
 			stack_trace("[component_path] was an invalid component")
-
 		nice_list += list("[component_amount] [component_name]\s")
 
 	. += span_info("It requires [english_list(nice_list)].")

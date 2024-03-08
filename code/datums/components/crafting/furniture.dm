@@ -36,3 +36,14 @@
 		/obj/item/stack/sheet/mineral/silver = 2,
 	)
 	category = CAT_FURNITURE
+
+/datum/crafting_recipe/surgery_tray
+	name = "Surgery Tray"
+	reqs = list(
+		/obj/item/stack/sheet/mineral/silver = 1,
+		/obj/item/stack/rods = 2
+	)
+	result = /obj/item/surgery_tray
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+	time = 5 SECONDS

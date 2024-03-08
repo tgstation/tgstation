@@ -12,6 +12,7 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "scrubber"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	processing_flags = NONE
 
@@ -25,9 +26,6 @@
 	var/widenet = FALSE
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
-
-	///Enables the use of plunger_act for ending the vent clog random event
-	var/clogged = FALSE
 	///The area this scrubber is assigned to
 	var/area/assigned_area
 
@@ -98,16 +96,7 @@
 			filter_types |= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 ///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
@@ -122,16 +111,7 @@
 			filter_types -= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas
-
-	if(isopenturf(our_turf))
-		turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 // WARNING: This proc takes untrusted user input from toggle_filter in air alarm's ui_act
@@ -148,17 +128,7 @@
 			else
 				filter_types |= translated_gas
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
@@ -185,17 +155,6 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/try_update_atmos_process()
-	var/turf/open/turf = get_turf(src)
-	if (!istype(turf))
-		return
-
-	var/datum/gas_mixture/turf_gas = turf.air
-	if (isnull(turf_gas))
-		return
-
-	check_atmos_process(turf, turf_gas, turf_gas.temperature)
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_power_usage()
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(idle_power_usage)
@@ -218,14 +177,14 @@
 		investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
 
 	src.scrubbing = scrubbing
-	update_appearance(UPDATE_ICON)
-	try_update_atmos_process()
+	atmos_conditions_changed()
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
 	src.widenet = widenet
-	update_appearance(UPDATE_ICON)
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
@@ -303,10 +262,10 @@
 			for(var/gas in filter_types & env_gases)
 				filtered_out.add_gas(gas)
 				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-				var/transfered_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
+				var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
 
-				filtered_gases[gas][MOLES] = transfered_moles
-				env_gases[gas][MOLES] -= transfered_moles
+				filtered_gases[gas][MOLES] = transferred_moles
+				env_gases[gas][MOLES] -= transferred_moles
 
 			environment.garbage_collect()
 
@@ -340,7 +299,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!welder.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("Now welding the scrubber."))
 	if(welder.use_tool(src, user, 20, volume=50))
@@ -398,58 +357,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/plunger, mob/living/user, reinforced)
-	if(!clogged)
-		return
-
-	if(welded)
-		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
-		return
-
-	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
-	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping [src]."))
-		clogged = FALSE
-
-/**
- * Sets "clogged" to TRUE.
- *
- * Sets the clogged value to be true. Called during the scrubber clog event to begin the production of mobs, and allows for the plunger_act to run.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog()
-	clogged = TRUE
-
-/**
- * Sets "clogged" to FALSE.
- *
- * Changes the clogged value to be false. Called during the scrubber clog event to stop the production of mobs and prevent further plunger use.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
-	clogged = FALSE
-
-/**
- * Produces a mob based on the input given by scrubber clog event.
- *
- * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
- * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
- * new mob is created on the scrubber's turf, then added to the living_mobs list.
- *
- * Arguments:
- * * spawned_mob - Stores which mob will be spawned and added to the living_mobs list.
- * * living_mobs - Used to add the spawned mob to the list of currently living mobs produced by this vent.
- * Relevant code for how the list is handled is in the scrubber_clog.dm file.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(spawned_mob, list/living_mobs)
-	if(welded)
-		return
-
-	var/mob/new_mob = new spawned_mob(get_turf(src))
-	living_mobs += WEAKREF(new_mob)
-	visible_message(span_warning("[new_mob] crawls out of [src]!"))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()

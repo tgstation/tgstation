@@ -42,8 +42,20 @@
 	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
 
 /datum/outfit/syndicatecommandocorpse/lessenedgear
-	name = "Syndicate Commando Corpse"
+	name = "Syndicate Commando Corpse (Less Antag Gear)"
 	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
+
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit
+	outfit = /datum/outfit/syndicatecommandocorpse/soft_suit
+
+/datum/outfit/syndicatecommandocorpse/soft_suit
+	name = "Syndicate Commando Corpse (Softsuit)"
+	suit = /obj/item/clothing/suit/space/syndicate/black
+	head = /obj/item/clothing/head/helmet/space/syndicate/black
+	gloves = /obj/item/clothing/gloves/color/black
 	back = null
 	id = null
 	id_trim = null
@@ -209,12 +221,48 @@
 	facial_haircolor = COLOR_WHITE
 	skin_tone = "caucasian1"
 
+/obj/effect/mob_spawn/corpse/human/wizard/red
+	outfit = /datum/outfit/wizardcorpse/red
+
+/obj/effect/mob_spawn/corpse/human/wizard/yellow
+	outfit = /datum/outfit/wizardcorpse/yellow
+
+/obj/effect/mob_spawn/corpse/human/wizard/black
+	outfit = /datum/outfit/wizardcorpse/black
+
+/obj/effect/mob_spawn/corpse/human/wizard/marisa
+	outfit = /datum/outfit/wizardcorpse/marisa
+
+/obj/effect/mob_spawn/corpse/human/wizard/tape
+	outfit = /datum/outfit/wizardcorpse/tape
+
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	head = /obj/item/clothing/head/wizard
+
+/datum/outfit/wizardcorpse/red
+	suit = /obj/item/clothing/suit/wizrobe/red
+	head = /obj/item/clothing/head/wizard/red
+
+/datum/outfit/wizardcorpse/yellow
+	suit = /obj/item/clothing/suit/wizrobe/yellow
+	head = /obj/item/clothing/head/wizard/yellow
+
+/datum/outfit/wizardcorpse/black
+	suit = /obj/item/clothing/suit/wizrobe/black
+	head = /obj/item/clothing/head/wizard/black
+
+/datum/outfit/wizardcorpse/marisa
+	suit = /obj/item/clothing/suit/wizrobe/marisa
+	head = /obj/item/clothing/head/wizard/marisa
+	shoes = /obj/item/clothing/shoes/sneakers/marisa
+
+/datum/outfit/wizardcorpse/tape
+	suit = /obj/item/clothing/suit/wizrobe/tape
+	head = /obj/item/clothing/head/wizard/tape
 
 /obj/effect/mob_spawn/corpse/human/wizard/dark
 	name = "Dark Wizard Corpse"
@@ -338,3 +386,7 @@
 /datum/outfit/prey_pod_victim
 	name = "Prey Pod Victim"
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
+
+/obj/effect/mob_spawn/corpse/human/cyber_police
+	name = "Dead Cyber Police"
+	outfit = /datum/outfit/cyber_police

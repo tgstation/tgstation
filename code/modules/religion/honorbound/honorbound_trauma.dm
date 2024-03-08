@@ -1,3 +1,6 @@
+/// one reason for declaring guilty is specifically checked for, keeping it as a define to avoid future mistakes
+#define GUILT_REASON_DECLARATION "from your declaration."
+
 ///Honorbound prevents you from attacking the unready, the just, or the innocent
 /datum/brain_trauma/special/honorbound
 	name = "Dogmatic Compulsions"
@@ -15,13 +18,10 @@
 	//checking spells cast by honorbound
 	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, PROC_REF(spell_check))
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(staff_check))
-	//signals that check for guilt
-	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_guilt))
-	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_guilt))
-	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_guilt))
-	RegisterSignal(owner, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_guilt))
-	RegisterSignal(owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(bullet_guilt))
-	RegisterSignal(owner, COMSIG_ATOM_HITBY, PROC_REF(thrown_guilt))
+
+	//adds the relay_attackers element to the owner so whoever attacks him becomes guilty.
+	owner.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 	//signal that checks for dishonorable attacks
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(attack_honor))
@@ -32,12 +32,7 @@
 /datum/brain_trauma/special/honorbound/on_lose(silent)
 	owner.clear_mood_event("honorbound")
 	UnregisterSignal(owner, list(
-		COMSIG_PARENT_ATTACKBY,
-		COMSIG_ATOM_HULK_ATTACK,
-		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ATOM_ATTACK_PAW,
-		COMSIG_ATOM_BULLET_ACT,
-		COMSIG_ATOM_HITBY,
+		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_MOB_CLICKON,
 		COMSIG_MOB_CAST_SPELL,
 		COMSIG_MOB_FIRED_GUN,
@@ -53,17 +48,41 @@
 	if(!isliving(clickingon))
 		return
 
-	var/mob/living/clickedmob = clickingon
+	var/mob/living/clicked_mob = clickingon
 	var/obj/item/weapon = honorbound.get_active_held_item()
 
-	if(!honorbound.DirectAccess(clickedmob) && !isgun(weapon))
+	if(!honorbound.DirectAccess(clicked_mob) && !isgun(weapon))
 		return
 	if(weapon?.item_flags & NOBLUDGEON)
 		return
-	if(!honorbound.combat_mode && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+	if(!honorbound.combat_mode && (HAS_TRAIT(clicked_mob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
 		return
-	if(!is_honorable(honorbound, clickedmob))
+	if(!(clicked_mob in guilty))
+		check_visible_guilt(clicked_mob)
+	if(!is_honorable(honorbound, clicked_mob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
+
+/// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
+/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
+	//will most likely just hit nuke ops but good catch-all. WON'T hit traitors
+	if(ROLE_SYNDICATE in attacked_mob.faction)
+		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
+	//not an antag datum check so it applies to wizard minions as well
+	if(ROLE_WIZARD in attacked_mob.faction)
+		guilty(attacked_mob, "for blasphemous magicks!")
+	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
+		guilty(attacked_mob, "for blasphemous worship!")
+	if(attacked_mob.mind)
+		var/datum/mind/guilty_conscience = attacked_mob.mind
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))
+			guilty(attacked_mob, "for their blatant surgical malice...")
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/nightmare))
+			guilty(attacked_mob, "for being a light-consuming nightmare!")
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/ninja))
+			guilty(attacked_mob, "for their misaligned association with the Spider Clan!")
+		var/datum/antagonist/heretic/heretic_datum = guilty_conscience.has_antag_datum(/datum/antagonist/heretic)
+		if(heretic_datum?.ascended)
+			guilty(attacked_mob, "for blasphemous, heretical, out of control worship!")
 
 /**
  * Called by hooked signals whenever someone attacks the person with this trauma
@@ -71,22 +90,25 @@
  *
  * Arguments:
  * * user: person who attacked the honorbound
- * * declaration: if this wasn't an attack, but instead the honorbound spending favor on declaring this person guilty
+ * * reason: why this person is now guilty (future pr idea: letting honorbound print a receipt for why someone is guilty? lol)
  */
-/datum/brain_trauma/special/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
+/datum/brain_trauma/special/honorbound/proc/guilty(mob/living/user, reason = "for no particular reason!")
 	if(user in guilty)
 		return
 	var/datum/mind/guilty_conscience = user.mind
-	if(guilty_conscience) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
+	if(guilty_conscience && reason != GUILT_REASON_DECLARATION) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
 		var/datum/job/job = guilty_conscience.assigned_role
 		if(job.departments_bitflags & (DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY))
 			return
-	if(declaration)
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] from your declaration."))
-	else
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] for attacking you first."))
+	to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] [reason]"))
 	to_chat(user, span_danger("[GLOB.deity] no longer considers you innocent!"))
 	guilty += user
+
+///Signal sent by the relay_attackers element. It makes the attacker guilty unless the damage was stamina or it was a shove.
+/datum/brain_trauma/special/honorbound/proc/on_attacked(mob/source, mob/attacker, attack_flags)
+	SIGNAL_HANDLER
+	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
+		guilty(attacker, "for attacking [source] first.")
 
 /**
  * Called by attack_honor signal to check whether an attack should be allowed or not
@@ -97,6 +119,7 @@
  */
 /datum/brain_trauma/special/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
 	var/is_guilty = (target_creature in guilty)
+	var/is_human = ishuman(target_creature)
 	//THE UNREADY (Applies over ANYTHING else!)
 	if(honorbound_human == target_creature)
 		return TRUE //oh come on now
@@ -104,71 +127,28 @@
 		to_chat(honorbound_human, span_warning("There is no honor in attacking the <b>unready</b>."))
 		return FALSE
 	//THE JUST (Applies over guilt except for med, so you best be careful!)
-	if(ishuman(target_creature))
+	if(is_human)
 		var/mob/living/carbon/human/target_human = target_creature
 		var/datum/job/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
 		if(is_holy || (job?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
 			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>just</b>."))
 			return FALSE
-		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)
+		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL && !is_guilty)
 			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
 			return FALSE
-	//THE INNOCENT
-	if(!is_guilty)
-		to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
+	//THE INNOCENT (human and borg exclusive)
+	if(!is_guilty && (is_human || issilicon(target_creature)))
+		to_chat(target_creature, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
 		return FALSE
 	return TRUE
-
-// SIGNALS THAT ARE FOR BEING ATTACKED FIRST (GUILTY)
-/datum/brain_trauma/special/honorbound/proc/attackby_guilt(datum/source, obj/item/I, mob/attacker)
-	SIGNAL_HANDLER
-	if(I.force && I.damtype != STAMINA)
-		guilty(attacker)
-
-/datum/brain_trauma/special/honorbound/proc/hulk_guilt(datum/source, mob/attacker)
-	SIGNAL_HANDLER
-	guilty(attacker)
-
-/datum/brain_trauma/special/honorbound/proc/hand_guilt(datum/source, mob/living/attacker)
-	SIGNAL_HANDLER
-	if(attacker.combat_mode)
-		guilty(attacker)
-
-/datum/brain_trauma/special/honorbound/proc/paw_guilt(datum/source, mob/living/attacker)
-	SIGNAL_HANDLER
-	guilty(attacker)
-
-/datum/brain_trauma/special/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
-	SIGNAL_HANDLER
-	var/mob/living/shot_honorbound = source
-	var/static/list/guilty_projectiles = typecacheof(list(
-		/obj/projectile/beam,
-		/obj/projectile/bullet,
-		/obj/projectile/magic,
-	))
-	if(!is_type_in_typecache(proj, guilty_projectiles))
-		return
-	if(proj.damage_type == STAMINA || !proj.is_hostile_projectile())
-		return
-	if(proj.damage > 0 && proj.damage < shot_honorbound.health && isliving(proj.firer))
-		guilty(proj.firer)
-
-/datum/brain_trauma/special/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	SIGNAL_HANDLER
-	if(isitem(thrown_movable))
-		var/mob/living/honorbound = source
-		var/obj/item/thrown_item = thrown_movable
-		var/mob/thrown_by = thrown_item.thrownby?.resolve()
-		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
-			guilty(thrown_by)
 
 //spell checking
 /datum/brain_trauma/special/honorbound/proc/spell_check(mob/user, datum/action/cooldown/spell/spell_cast)
 	SIGNAL_HANDLER
 	punishment(user, spell_cast.school)
 
-/datum/brain_trauma/special/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override)
+/datum/brain_trauma/special/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
 	SIGNAL_HANDLER
 	if(!istype(gun_fired, /obj/item/gun/magic))
 		return
@@ -234,13 +214,13 @@
 	if(QDELETED(honorbound))
 		return FALSE
 
-	RegisterSignal(honorbound, COMSIG_PARENT_QDELETING, PROC_REF(on_honor_trauma_lost))
+	RegisterSignal(honorbound, COMSIG_QDELETING, PROC_REF(on_honor_trauma_lost))
 	honor_trauma = honorbound
 	return ..()
 
 /datum/action/cooldown/spell/pointed/declare_evil/Remove(mob/living/remove_from)
 	. = ..()
-	UnregisterSignal(honor_trauma, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(honor_trauma, COMSIG_QDELETING)
 	honor_trauma = null
 
 /// If we lose our honor trauma somehow, self-delete (and clear references)
@@ -307,4 +287,6 @@
 /datum/action/cooldown/spell/pointed/declare_evil/cast(mob/living/cast_on)
 	. = ..()
 	GLOB.religious_sect.adjust_favor(-required_favor, owner)
-	honor_trauma.guilty(cast_on, declaration = TRUE)
+	honor_trauma.guilty(cast_on, GUILT_REASON_DECLARATION)
+
+#undef GUILT_REASON_DECLARATION

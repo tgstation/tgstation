@@ -1,7 +1,14 @@
+/// The damage healed per tick while sleeping without any modifiers
+#define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep healing multipler for organ passive healing (since organs heal slowly)
+#define HEALING_SLEEP_ORGAN_MULTIPLIER 5
+/// The sleep multipler for fitness xp conversion
+#define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
-	tick_interval = 0
+	tick_interval = -1
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	remove_on_fullheal = TRUE
@@ -113,7 +120,7 @@
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-/datum/status_effect/incapacitating/unconscious/tick()
+/datum/status_effect/incapacitating/unconscious/tick(seconds_between_ticks)
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
@@ -129,9 +136,10 @@
 	. = ..()
 	if(!.)
 		return
-	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
 		tick_interval = -1
+	else
+		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_insomniac))
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_sleepy))
 
@@ -154,59 +162,80 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
-#define HEALING_SLEEP_DEFAULT 0.2
-
-/datum/status_effect/incapacitating/sleeping/tick()
+/datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
-		var/healing = HEALING_SLEEP_DEFAULT
+		var/sleep_quality = HEALING_SLEEP_DEFAULT
 
 		// having high spirits helps us recover
 		if(owner.mob_mood)
 			switch(owner.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT)
-					healing = 0.2
+					sleep_quality = 0.2
 				if(SANITY_LEVEL_NEUTRAL)
-					healing = 0.1
+					sleep_quality = 0.1
 				if(SANITY_LEVEL_DISTURBED)
-					healing = 0
+					sleep_quality = 0
 				if(SANITY_LEVEL_UNSTABLE)
-					healing = 0
+					sleep_quality = 0
 				if(SANITY_LEVEL_CRAZY)
-					healing = -0.1
+					sleep_quality = -0.1
 				if(SANITY_LEVEL_INSANE)
-					healing = -0.2
+					sleep_quality = -0.2
 
 		var/turf/rest_turf = get_turf(owner)
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
 		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// sleeping in silence is always better
 		if(HAS_TRAIT(owner, TRAIT_DEAF))
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// check for beds
 		if((locate(/obj/structure/bed) in owner.loc))
-			healing += 0.2
+			sleep_quality += 0.2
 		else if((locate(/obj/structure/table) in owner.loc))
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// don't forget the bedsheet
 		if(locate(/obj/item/bedsheet) in owner.loc)
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// you forgot the pillow
 		if(locate(/obj/item/pillow) in owner.loc)
-			healing += 0.1
+			sleep_quality += 0.1
 
-		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
-		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
+		var/need_mob_update = FALSE
+		if(sleep_quality > 0)
+			if(iscarbon(owner))
+				var/mob/living/carbon/carbon_owner = owner
+				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
+					// no healing boost for robotic or dying organs
+					if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+						continue
+
+					// organ regeneration is very low so we crank up the healing rate to give a good bonus
+					var/healing_bonus = target_organ.healing_factor * sleep_quality * HEALING_SLEEP_ORGAN_MULTIPLIER
+					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+
+				var/datum/status_effect/exercised/exercised = carbon_owner.has_status_effect(/datum/status_effect/exercised)
+				if(exercised && carbon_owner.mind)
+					// the better you sleep, the more xp you gain
+					carbon_owner.mind.adjust_experience(/datum/skill/fitness, seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER)
+					carbon_owner.adjust_timed_status_effect(-1 * seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER, /datum/status_effect/exercised)
+					if(prob(2))
+						to_chat(carbon_owner, span_notice("You feel your fitness improving!"))
+
+			if(health_ratio > 0.8) // only heals minor physical damage
+				need_mob_update += owner.adjustBruteLoss(-0.4 * sleep_quality * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+				need_mob_update += owner.adjustFireLoss(-0.4 * sleep_quality * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+				need_mob_update += owner.adjustToxLoss(-0.2 * sleep_quality * seconds_between_ticks, updating_health = FALSE, forced = TRUE, required_biotype = MOB_ORGANIC)
+		need_mob_update += owner.adjustStaminaLoss(min(-0.4 * sleep_quality * seconds_between_ticks, -0.4 * HEALING_SLEEP_DEFAULT * seconds_between_ticks), updating_stamina = FALSE)
+		if(need_mob_update)
+			owner.updatehealth()
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
 
@@ -216,8 +245,6 @@
 
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
-
-#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -236,7 +263,7 @@
 		var/delta = world.time - last_dead_time
 		var/new_timeofdeath = owner.timeofdeath + delta
 		owner.timeofdeath = new_timeofdeath
-		owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+		owner.station_timestamp_timeofdeath = station_time_timestamp(wtime=new_timeofdeath)
 		last_dead_time = null
 	if(owner.stat == DEAD)
 		last_dead_time = world.time
@@ -251,7 +278,7 @@
 	. = ..()
 	if(!.)
 		return
-	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -260,11 +287,11 @@
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.update_bodypart_bleed_overlays()
 
-/datum/status_effect/grouped/stasis/tick()
+/datum/status_effect/grouped/stasis/tick(seconds_between_ticks)
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	if(iscarbon(owner))
@@ -280,7 +307,7 @@
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1
-	tick_interval = 4
+	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
 
 /atom/movable/screen/alert/status_effect/his_wrath
@@ -289,13 +316,16 @@
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/datum/status_effect/his_wrath/tick()
+/datum/status_effect/his_wrath/tick(seconds_between_ticks)
 	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
-	owner.adjustBruteLoss(0.1)
-	owner.adjustFireLoss(0.1)
-	owner.adjustToxLoss(0.2, TRUE, TRUE)
+	var/need_mob_update
+	need_mob_update = owner.adjustBruteLoss(0.04 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(0.04 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustToxLoss(0.08 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	if(need_mob_update)
+		owner.updatehealth()
 
 /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 	id = "cult_ghost"
@@ -306,7 +336,7 @@
 	owner.set_invis_see(SEE_INVISIBLE_OBSERVER)
 	return TRUE
 
-/datum/status_effect/cultghost/tick()
+/datum/status_effect/cultghost/tick(seconds_between_ticks)
 	if(owner.reagents)
 		owner.reagents.del_reagent(/datum/reagent/water/holywater) //can't be deconverted
 
@@ -346,7 +376,7 @@
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
-	tick_interval = 6
+	tick_interval = 0.6 SECONDS
 	delay_before_decay = 5
 	stack_threshold = 10
 	max_stacks = 10
@@ -386,7 +416,7 @@
 		return FALSE
 	return TRUE
 
-/datum/status_effect/neck_slice/tick()
+/datum/status_effect/neck_slice/tick(seconds_between_ticks)
 	var/obj/item/bodypart/throat = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(owner.stat == DEAD || !throat) // they can lose their head while it's going.
 		qdel(src)
@@ -394,7 +424,9 @@
 
 	var/still_bleeding = FALSE
 	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
-		if(bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[bleeding_thing.type]
+
+		if(pregen_data.wounding_types_valid(list(WOUND_SLASH)) && bleeding_thing.severity > WOUND_SEVERITY_MODERATE && bleeding_thing.blood_flow > 0)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
@@ -405,7 +437,7 @@
 		owner.emote(pick("gasp", "gag", "choke"))
 
 /datum/status_effect/neck_slice/get_examine_text()
-	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
+	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
@@ -420,8 +452,8 @@
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 6000 //you're cursed for 10 minutes have fun
-	tick_interval = 50
+	duration = 10 MINUTES //you're cursed for 10 minutes have fun
+	tick_interval = 5 SECONDS
 	alert_type = null
 	var/curse_flags = NONE
 	var/effect_last_activation = 0
@@ -452,7 +484,7 @@
 		owner.clear_fullscreen("curse", 50)
 	curse_flags &= ~remove_curse
 
-/datum/status_effect/necropolis_curse/tick()
+/datum/status_effect/necropolis_curse/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
 	if(curse_flags & CURSE_WASTING)
@@ -518,7 +550,7 @@
 	id = "trance"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
-	tick_interval = 10
+	tick_interval = 1 SECONDS
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
@@ -527,7 +559,7 @@
 	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
 	icon_state = "high"
 
-/datum/status_effect/trance/tick()
+/datum/status_effect/trance/tick(seconds_between_ticks)
 	if(stun)
 		owner.Stun(6 SECONDS, TRUE)
 	owner.set_dizzy(40 SECONDS)
@@ -555,7 +587,7 @@
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -578,8 +610,8 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 
-/datum/status_effect/spasms/tick()
-	if(owner.stat >= UNCONSCIOUS)
+/datum/status_effect/spasms/tick(seconds_between_ticks)
+	if(owner.stat >= UNCONSCIOUS || owner.incapacitated() || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return
 	if(!prob(15))
 		return
@@ -589,8 +621,6 @@
 				to_chat(owner, span_warning("Your leg spasms!"))
 				step(owner, pick(GLOB.cardinals))
 		if(2)
-			if(owner.incapacitated())
-				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			if(!held_item)
 				return
@@ -619,8 +649,6 @@
 			owner.ClickOn(owner)
 			owner.set_combat_mode(FALSE)
 		if(5)
-			if(owner.incapacitated())
-				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			var/list/turf/targets = list()
 			for(var/turf/nearby_turfs in oview(owner, 3))
@@ -640,7 +668,7 @@
 	. = ..()
 	to_chat(zappy_boy, span_boldwarning("You feel a shock moving through your body! Your hands start shaking!"))
 
-/datum/status_effect/convulsing/tick()
+/datum/status_effect/convulsing/tick(seconds_between_ticks)
 	var/mob/living/carbon/H = owner
 	if(prob(40))
 		var/obj/item/I = H.get_active_held_item()
@@ -669,10 +697,10 @@
 
 /datum/status_effect/dna_melt/on_remove()
 	if(!ishuman(owner))
-		owner.gib() //fuck you in particular
+		owner.gib(DROP_ALL_REMAINS) //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
-	H.something_horrible(kill_either_way)
+	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
 
 /atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
@@ -683,7 +711,7 @@
 	id = "go_away"
 	duration = 100
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
 	var/direction
 
@@ -692,7 +720,7 @@
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
 
-/datum/status_effect/go_away/tick()
+/datum/status_effect/go_away/tick(seconds_between_ticks)
 	owner.AdjustStun(1, ignore_canstun = TRUE)
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
@@ -704,13 +732,20 @@
 
 /datum/status_effect/fake_virus
 	id = "fake_virus"
-	duration = 1800//3 minutes
+	duration = 3 MINUTES //3 minutes
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 0.2 SECONDS
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
-/datum/status_effect/fake_virus/tick()
+/datum/status_effect/fake_virus/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	return TRUE
+
+/datum/status_effect/fake_virus/tick(seconds_between_ticks)
 	var/fake_msg = ""
 	var/fake_emote = ""
 	switch(msg_stage)
@@ -757,6 +792,8 @@
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
+	/// Amount of damage done per ant on the victim
+	var/damage_per_ant = 0.0016
 	/// Common phrases people covered in ants scream
 	var/static/list/ant_debuff_speech = list(
 		"GET THEM OFF ME!!",
@@ -798,11 +835,12 @@
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
+	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
-/datum/status_effect/ants/tick()
+/datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
-	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	var/need_mob_update
+	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * damage_per_ant) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -815,22 +853,24 @@
 				if (1 to 8) //16% Chance
 					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
 					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
-					hed.receive_damage(1,0)
+					need_mob_update += hed.receive_damage(brute = 0.4 * seconds_between_ticks, burn = 0, updating_health = FALSE)
 				if (9 to 29) //40% chance
 					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
 					to_chat(victim, span_danger("You scratch at the ants on your arms!"))
-					arm.receive_damage(3,0)
+					need_mob_update += arm.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
 				if (30 to 49) //38% chance
 					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
 					to_chat(victim, span_danger("You scratch at the ants on your leg!"))
-					leg.receive_damage(3,0)
+					need_mob_update += leg.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
 				if(50) // 2% chance
 					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
 					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
+	if(need_mob_update)
+		victim.updatehealth()
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
-		victim.remove_status_effect(/datum/status_effect/ants) //If this person has no more ants on them or are dead, they are no longer affected.
+		victim.remove_status_effect(type) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"
@@ -847,6 +887,15 @@
 	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
 		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
+
+/datum/status_effect/ants/fire
+	id = "fire_ants"
+	alert_type = /atom/movable/screen/alert/status_effect/ants/fire
+	damage_per_ant = 0.0064
+
+/atom/movable/screen/alert/status_effect/ants/fire
+	name = "Fire Ants!"
+	desc = span_warning("JESUS FUCKING CHRIST IT BURNS! CLICK TO GET THOSE THINGS OFF!")
 
 /datum/status_effect/stagger
 	id = "stagger"
@@ -915,7 +964,99 @@
 	id = "teleport_madness"
 	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 
-/datum/status_effect/teleport_madness/tick()
+/datum/status_effect/teleport_madness/tick(seconds_between_ticks)
 	dump_in_space(owner)
+
+/datum/status_effect/careful_driving
+	id = "careful_driving"
+	alert_type = /atom/movable/screen/alert/status_effect/careful_driving
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/careful_driving/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/datum/status_effect/careful_driving/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/atom/movable/screen/alert/status_effect/careful_driving
+	name = "Careful Driving"
+	desc = "That was close! You almost ran that one over!"
+	icon_state = "paralysis"
+
+/datum/movespeed_modifier/careful_driving
+	multiplicative_slowdown = 3
+
+/datum/status_effect/midas_blight
+	id = "midas_blight"
+	alert_type = /atom/movable/screen/alert/status_effect/midas_blight
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 0.2 SECONDS
+	remove_on_fullheal = TRUE
+
+	/// The visual overlay state, helps tell both you and enemies how much gold is in your system
+	var/midas_state = "midas_1"
+	/// How fast the gold in a person's system scales.
+	var/goldscale = 30 // x2.8 - Gives ~ 15u for 1 second
+
+/datum/status_effect/midas_blight/on_creation(mob/living/new_owner, duration = 1)
+	// Duration is already input in SECONDS
+	src.duration = duration
+	RegisterSignal(new_owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	return ..()
+
+/atom/movable/screen/alert/status_effect/midas_blight
+	name = "Midas Blight"
+	desc = "Your blood is being turned to gold, slowing your movements!"
+	icon_state = "midas_blight"
+
+/datum/status_effect/midas_blight/tick(seconds_between_ticks)
+	var/mob/living/carbon/human/victim = owner
+	// We're transmuting blood, time to lose some.
+	if(victim.blood_volume > BLOOD_VOLUME_SURVIVE + 50 && !HAS_TRAIT(victim, TRAIT_NOBLOOD))
+		victim.blood_volume -= 5 * seconds_between_ticks
+	// This has been hell to try and balance so that you'll actually get anything out of it
+	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
+	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
+	switch(current_gold_amount)
+		if(-INFINITY to 50)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/soft, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/soft, update = TRUE)
+			midas_state = "midas_1"
+		if(50 to 100)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/medium, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/medium, update = TRUE)
+			midas_state = "midas_2"
+		if(100 to 200)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/hard, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/hard, update = TRUE)
+			midas_state = "midas_3"
+		if(200 to INFINITY)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/gold, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/gold, update = TRUE)
+			midas_state = "midas_4"
+	victim.update_icon()
+	if(victim.stat == DEAD)
+		qdel(src) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
+
+/datum/status_effect/midas_blight/proc/on_update_overlays(atom/parent_atom, list/overlays)
+	SIGNAL_HANDLER
+
+	if(midas_state)
+		var/mutable_appearance/midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', midas_state)
+		midas_overlay.blend_mode = BLEND_MULTIPLY
+		overlays += midas_overlay
+
+/datum/status_effect/midas_blight/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_MIDAS_BLIGHT, update = TRUE)
+	owner.remove_actionspeed_modifier(ACTIONSPEED_ID_MIDAS_BLIGHT, update = TRUE)
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon()
+
+#undef HEALING_SLEEP_DEFAULT
+#undef HEALING_SLEEP_ORGAN_MULTIPLIER
+#undef SLEEP_QUALITY_WORKOUT_MULTIPLER

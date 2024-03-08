@@ -24,6 +24,8 @@
 	var/species
 	/// The character's ID trim
 	var/trim
+	/// The character's voice, if they have one.
+	var/voice
 
 /datum/record/New(
 	age = 18,
@@ -37,6 +39,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	voice = "?????",
 )
 	src.age = age
 	src.blood_type = blood_type
@@ -124,9 +127,9 @@
  */
 /datum/record/locked
 	/// Mob's dna
-	var/datum/dna/dna_ref
+	var/datum/dna/locked_dna
 	/// Mind datum
-	var/datum/mind/mind_ref
+	var/datum/weakref/mind_ref
 	/// Typepath of species used by player, for usage in respawning via records
 	var/species_type
 
@@ -143,13 +146,13 @@
 	species = "Human",
 	trim = "Unassigned",
 	/// Locked specific
-	datum/dna/dna_ref,
+	datum/dna/locked_dna,
 	datum/mind/mind_ref,
 )
 	. = ..()
-	src.dna_ref = dna_ref
-	src.mind_ref = mind_ref
-	species_type = dna_ref.species.type
+	src.locked_dna = locked_dna
+	src.mind_ref = WEAKREF(mind_ref)
+	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
 
@@ -214,15 +217,15 @@
 /datum/record/crew/proc/get_rapsheet(alias, header = "Rapsheet", description = "No further details.")
 	var/print_count = ++GLOB.manifest.print_count
 	var/obj/item/paper/printed_paper = new
-	var/final_paper_text = text("<center><b>SR-[print_count]: [header]</b></center><br>")
+	var/final_paper_text = "<center><b>SR-[print_count]: [header]</b></center><br>"
 
-	final_paper_text += text("Name: []<br>Gender: []<br>Age: []<br>", name, gender, age)
+	final_paper_text += "Name: [name]<br>Gender: [gender]<br>Age: [age]<br>"
 	if(alias != name)
-		final_paper_text += text("Alias: []<br>", alias)
+		final_paper_text += "Alias: [alias]<br>"
 
-	final_paper_text += text("Species: []<br>Fingerprint: []<br>Wanted Status: []<br><br>", species, fingerprint, wanted_status)
+	final_paper_text += "Species: [species]<br>Fingerprint: [fingerprint]<br>Wanted Status: [wanted_status]<br><br>"
 
-	final_paper_text += text("<center><B>Security Data</B></center><br><br>")
+	final_paper_text += "<center><B>Security Data</B></center><br><br>"
 
 	final_paper_text += "Crimes:<br>"
 	final_paper_text += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
@@ -262,13 +265,13 @@
 		final_paper_text += "</tr>"
 	final_paper_text += "</table><br><br>"
 
-	final_paper_text += text("<center>Important Notes:</center><br>")
+	final_paper_text += "<center>Important Notes:</center><br>"
 	if(security_note)
-		final_paper_text += text("- [security_note]<br>")
+		final_paper_text += "- [security_note]<br>"
 	if(description)
-		final_paper_text += text("- [description]<br>")
+		final_paper_text += "- [description]<br>"
 
-	printed_paper.name = text("SR-[] '[]'", print_count, name)
+	printed_paper.name = "SR-[print_count] '[name]'"
 	printed_paper.add_raw_text(final_paper_text)
 	printed_paper.update_appearance()
 

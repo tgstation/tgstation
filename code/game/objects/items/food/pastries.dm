@@ -14,6 +14,7 @@
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/muffin/berry
 	name = "berry muffin"
@@ -22,6 +23,7 @@
 	tastes = list("muffin" = 3, "berry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/muffin/booberry
 	name = "booberry muffin"
@@ -30,6 +32,11 @@
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/muffin/booberry/Initialize(mapload, starting_reagent_purity, no_base_reagents)
+	. = ..()
+	AddComponent(/datum/component/ghost_edible, bite_consumption = bite_consumption)
 
 /obj/item/food/muffin/moffin
 	name = "moffin"
@@ -38,6 +45,7 @@
 	desc = "A delicious and spongy little cake."
 	tastes = list("muffin" = 3, "dust" = 1, "lint" = 1)
 	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/muffin/moffin/Initialize(mapload)
 	. = ..()
@@ -45,10 +53,10 @@
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
-	if(!ishuman(user))
+	if(!isliving(user))
 		return
-	var/mob/living/carbon/human/moffin_observer = user
-	if(moffin_observer.dna.species.liked_food & CLOTH)
+	var/mob/living/moffin_observer = user
+	if(moffin_observer.get_liked_foodtypes() & CLOTH)
 		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
 	else
 		. += span_warning("You're not too sure what's on top though...")
@@ -67,6 +75,7 @@
 	tastes = list("waffles" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/soylentgreen
 	name = "\improper Soylent Green"
@@ -81,6 +90,7 @@
 	tastes = list("waffles" = 7, "people" = 1)
 	foodtypes = GRAIN | MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/soylenviridians
 	name = "\improper Soylent Virdians"
@@ -95,6 +105,7 @@
 	tastes = list("waffles" = 7, "the colour green" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/rofflewaffles
 	name = "roffle waffles"
@@ -110,6 +121,7 @@
 	tastes = list("waffles" = 1, "mushrooms" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -123,6 +135,7 @@
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cookie/Initialize(mapload)
 	. = ..()
@@ -135,12 +148,13 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
-	trash_type = /obj/item/paper/paperslip
+	trash_type = /obj/item/paper/paperslip/fortune
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/fortunecookie/proc/get_fortune()
 	var/atom/drop_location = drop_location()
@@ -152,11 +166,8 @@
 		return fortune
 
 	// Otherwise, use a generic one
-	var/obj/item/paper/paperslip/fortune_slip = new trash_type(drop_location)
-	fortune_slip.name = "fortune slip"
+	var/obj/item/paper/paperslip/fortune/fortune_slip = new trash_type(drop_location)
 	// if someone adds lottery tickets in the future, be sure to add random numbers to this
-	fortune_slip.default_raw_text = pick(GLOB.wisdoms)
-
 	return fortune_slip
 
 /obj/item/food/fortunecookie/make_leave_trash()
@@ -173,10 +184,11 @@
 	)
 	tastes = list("sweetness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/cookie/sugar/Initialize(mapload)
+/obj/item/food/cookie/sugar/Initialize(mapload, seasonal_changes = TRUE)
 	. = ..()
-	if(check_holidays(FESTIVE_SEASON))
+	if(seasonal_changes && check_holidays(FESTIVE_SEASON))
 		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
 		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
 		icon_state = "sugarcookie_[shape]"
@@ -192,6 +204,7 @@
 	tastes = list("biscuit" = 3, "chocolate" = 1)
 	foodtypes = GRAIN | JUNKFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/oatmeal
 	name = "oatmeal cookie"
@@ -203,6 +216,7 @@
 	)
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtypes = GRAIN
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/raisin
 	name = "raisin cookie"
@@ -214,6 +228,7 @@
 	)
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtypes = GRAIN | FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"
@@ -227,6 +242,7 @@
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/plumphelmetbiscuit
 	name = "plump helmet biscuit"
@@ -240,6 +256,7 @@
 	foodtypes = GRAIN | VEGETABLES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/plumphelmetbiscuit/Initialize(mapload)
 	var/fey = prob(10)
@@ -265,6 +282,7 @@
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/khachapuri
 	name = "khachapuri"
@@ -278,6 +296,7 @@
 	tastes = list("bread" = 1, "egg" = 1, "cheese" = 1)
 	foodtypes = GRAIN | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cherrycupcake
 	name = "cherry cupcake"
@@ -291,12 +310,14 @@
 	foodtypes = GRAIN | FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cherrycupcake/blue
 	name = "blue cherry cupcake"
 	desc = "Blue cherries inside a delicious cupcake."
 	icon_state = "bluecherrycupcake"
 	tastes = list("cake" = 3, "blue cherry" = 1)
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/honeybun
 	name = "honey bun"
@@ -309,6 +330,7 @@
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtypes = GRAIN | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cannoli
 	name = "cannoli"
@@ -322,17 +344,19 @@
 	foodtypes = GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP // Pastry base, 3u of sugar and a single. fucking. unit. of. milk. really?
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/icecream
 	name = "waffle cone"
 	desc = "Delicious waffle cone, but no ice cream."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "icecream_cone_waffle"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cream" = 2, "waffle" = 1)
 	bite_consumption = 4
 	foodtypes = DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
+	crafting_complexity = FOOD_COMPLEXITY_3
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
 	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
 	var/list/ingredients = list(
@@ -346,6 +370,11 @@
 	 * assoc is the list of args that is going to be used in [flavour/add_flavour()]. Can as well be null for simple flavours.
 	 */
 	var/list/prefill_flavours
+
+/obj/item/food/icecream/New(loc, list/prefill_flavours)
+	if(ingredients)
+		ingredients_text = "Requires: [reagent_paths_list_to_text(ingredients)]"
+	return ..()
 
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
 	if(prefill_flavours)
@@ -369,6 +398,16 @@
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/consumable/coco,
 	)
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/icecream/korta
+	name = "korta cone"
+	desc = "Delicious lizard-friendly cone, but no ice cream."
+	foodtypes = NUTS | SUGAR
+	ingredients = list(
+		/datum/reagent/consumable/korta_flour,
+		/datum/reagent/consumable/sugar,
+	)
 
 /obj/item/food/cookie/peanut_butter
 	name = "peanut butter cookie"
@@ -380,6 +419,7 @@
 	)
 	tastes = list("peanut butter" = 2, "cookie" = 1)
 	foodtypes = GRAIN | JUNKFOOD | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_brownie_batter
 	name = "raw brownie batter"
@@ -392,6 +432,7 @@
 	)
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | BREAKFAST
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/raw_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -408,7 +449,7 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/brownie_sheet/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -425,6 +466,7 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/peanut_butter_brownie_batter
 	name = "raw peanut butter brownie batter"
@@ -438,6 +480,7 @@
 	)
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/peanut_butter_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/peanut_butter_brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -455,7 +498,7 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1, "peanut butter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/peanut_butter_brownie_sheet/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/peanut_butter_brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -473,6 +516,7 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/crunchy_peanut_butter_tart
 	name = "crunchy peanut butter tart"
@@ -487,3 +531,53 @@
 	tastes = list("peanut butter" = 1, "peanuts" = 1, "cream" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cookie/chocolate_chip_cookie
+	name = "chocolate chip cookie"
+	desc = "A delightful-smelling chocolate chip cookie. Where's the milk?"
+	icon_state = "COOKIE!!!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("soft cookie" = 2, "chocolate" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cookie/snickerdoodle
+	name = "snickerdoodle"
+	desc = "A soft cookie made from vanilla and cinnamon."
+	icon_state = "snickerdoodle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("soft cookie" = 2, "vanilla" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cookie/macaron
+	name = "macaron"
+	desc = "A sandwich-like confectionary with a soft cookie shell and a creamy meringue center."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	icon_state = "macaron_1"
+	base_icon_state = "macaron"
+	tastes = list("wafer" = 2, "creamy meringue" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cookie/macaron/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 4)]"
+
+/obj/item/food/cookie/thumbprint_cookie
+	name = "thumbprint cookie"
+	desc = "A cookie with a thumb-sized indent in the middle made for fillings. This one is filled with cherry jelly"
+	icon_state = "thumbprint_cookie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	tastes = list("cookie" = 2, "cherry jelly" = 3)
+	foodtypes = GRAIN | SUGAR | FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

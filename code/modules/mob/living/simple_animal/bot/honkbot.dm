@@ -2,14 +2,14 @@
 	name = "\improper Honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = FALSE
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE | BOT_MODE_AUTOPATROL
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_AUTOPATROL | BOT_MODE_ROUNDSTART_POSSESSION
 	hackables = "sound control systems"
 	path_image_color = "#FF69B4"
 	data_hud_type = DATA_HUD_SECURITY_BASIC //show jobs
@@ -17,6 +17,12 @@
 	baton_type = /obj/item/bikehorn
 	cuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake/used
 	security_mode_flags = SECBOT_CHECK_WEAPONS | SECBOT_HANDCUFF_TARGET
+	possessed_message = "You are a honkbot! Make sure the crew are having a great time!"
+
+	automated_announcements = list(
+		HONKBOT_VOICED_HONK_HAPPY = 'sound/items/bikehorn.ogg',
+		HONKBOT_VOICED_HONK_SAD = 'sound/misc/sadtrombone.ogg',
+	)
 
 	///Keeping track of how much we honk to prevent spamming it
 	var/limiting_spam = FALSE
@@ -43,10 +49,12 @@
 
 /mob/living/simple_animal/bot/secbot/honkbot/knockOver(mob/living/carbon/tripped_target)
 	. = ..()
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), "Honk!")
-	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), HONKBOT_VOICED_HONK_SAD)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+
+/mob/living/simple_animal/bot/secbot/honkbot/threat_react(threatlevel)
+	speak(HONKBOT_VOICED_HONK_HAPPY)
 
 /mob/living/simple_animal/bot/secbot/honkbot/bot_reset()
 	..()

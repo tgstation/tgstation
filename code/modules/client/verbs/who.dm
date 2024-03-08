@@ -1,4 +1,5 @@
 #define DEFAULT_WHO_CELLS_PER_ROW 4
+#define NO_ADMINS_ONLINE_MESSAGE "Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to."
 
 /client/verb/who()
 	set name = "Who"
@@ -72,45 +73,100 @@
 	set category = "Admin"
 	set name = "Adminwho"
 
-	var/msg = "<b>Current Admins:</b>\n"
-	var/display_name
-	if(holder)
-		for(var/client/client in GLOB.admins)
-			var/feedback_link = client.holder.feedback_link()
-			display_name = feedback_link ? "<a href=[feedback_link]>[client]</a>" : client
+	var/list/lines = list()
+	var/payload_string = generate_adminwho_string()
+	var/header
 
-			msg += "\t[display_name] is a [client.holder.rank_names()]"
-
-			if(client.holder.fakekey)
-				msg += " <i>(as [client.holder.fakekey])</i>"
-
-			if(isobserver(client.mob))
-				msg += " - Observing"
-			else if(isnewplayer(client.mob))
-				if(SSticker.current_state <= GAME_STATE_PREGAME)
-					var/mob/dead/new_player/lobbied_admin = client.mob
-					if(lobbied_admin.ready == PLAYER_READY_TO_PLAY)
-						msg += " - Lobby (Readied)"
-					else
-						msg += " - Lobby (Not readied)"
-				else
-					msg += " - Lobby"
-			else
-				msg += " - Playing"
-
-			if(client.is_afk())
-				msg += " (AFK)"
-			msg += "\n"
+	if(payload_string == NO_ADMINS_ONLINE_MESSAGE)
+		header = "No Admins Currently Online"
 	else
-		for(var/client/client in GLOB.admins)
-			var/feedback_link = client.holder.feedback_link()
-			display_name = feedback_link ? "<a href=[feedback_link]>[client]</a>" : client
+		header = "Current Admins:"
 
-			if(client.is_afk())
-				continue //Don't show afk admins to adminwho
-			if(!client.holder.fakekey)
-				msg += "\t[display_name] is a [client.holder.rank_names()]\n"
-		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to.")
-	to_chat(src, msg)
+	lines += span_bold(header)
+	lines += payload_string
+
+	var/finalized_string = examine_block(jointext(lines, "\n"))
+	to_chat(src, finalized_string)
+
+/// Proc that generates the applicable string to dispatch to the client for adminwho.
+/client/proc/generate_adminwho_string()
+	var/list/list_of_admins = get_list_of_admins()
+	if(isnull(list_of_admins))
+		return NO_ADMINS_ONLINE_MESSAGE
+
+	var/list/message_strings = list()
+	if(isnull(holder))
+		message_strings += get_general_adminwho_information(list_of_admins)
+		message_strings += NO_ADMINS_ONLINE_MESSAGE
+	else
+		message_strings += get_sensitive_adminwho_information(list_of_admins)
+
+	return jointext(message_strings, "\n")
+
+/// Proc that returns a list of cliented admins. Remember that this list can contain nulls!
+/// Also, will return null if we don't have any admins.
+/proc/get_list_of_admins()
+	var/returnable_list = list()
+
+	for(var/client/admin in GLOB.admins)
+		returnable_list += admin
+
+	if(length(returnable_list) == 0)
+		return null
+
+	return returnable_list
+
+/// Proc that will return the applicable display name, linkified or not, based on the input client reference.
+/proc/get_linked_admin_name(client/admin)
+	var/feedback_link = admin.holder.feedback_link()
+	return isnull(feedback_link) ? admin : "<a href=[feedback_link]>[admin]</a>"
+
+/// Proc that gathers adminwho information for a general player, which will only give information if an admin isn't AFK, and handles potential fakekeying.
+/// Will return a list of strings.
+/proc/get_general_adminwho_information(list/checkable_admins)
+	var/returnable_list = list()
+
+	for(var/client/admin in checkable_admins)
+		if(admin.is_afk() || !isnull(admin.holder.fakekey))
+			continue //Don't show afk or fakekeyed admins to adminwho
+
+		returnable_list += "• [get_linked_admin_name(admin)] is a [admin.holder.rank_names()]"
+
+	return returnable_list
+
+/// Proc that gathers adminwho information for admins, which will contain information on if the admin is AFK, readied to join, etc. Only arg is a list of clients to use.
+/// Will return a list of strings.
+/proc/get_sensitive_adminwho_information(list/checkable_admins)
+	var/returnable_list = list()
+
+	for(var/client/admin in checkable_admins)
+		var/list/admin_strings = list()
+
+		admin_strings += "• [get_linked_admin_name(admin)] is a [admin.holder.rank_names()]"
+
+		if(admin.holder.fakekey)
+			admin_strings += "<i>(as [admin.holder.fakekey])</i>"
+
+		if(isobserver(admin.mob))
+			admin_strings += "- Observing"
+		else if(isnewplayer(admin.mob))
+			if(SSticker.current_state <= GAME_STATE_PREGAME)
+				var/mob/dead/new_player/lobbied_admin = admin.mob
+				if(lobbied_admin.ready == PLAYER_READY_TO_PLAY)
+					admin_strings += "- Lobby (Readied)"
+				else
+					admin_strings += "- Lobby (Not Readied)"
+			else
+				admin_strings += "- Lobby"
+		else
+			admin_strings += "- Playing"
+
+		if(admin.is_afk())
+			admin_strings += "(AFK)"
+
+		returnable_list += jointext(admin_strings, " ")
+
+	return returnable_list
 
 #undef DEFAULT_WHO_CELLS_PER_ROW
+#undef NO_ADMINS_ONLINE_MESSAGE

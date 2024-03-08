@@ -22,6 +22,7 @@
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
+	UnregisterSignal(loc, COMSIG_AREA_POWER_CHANGE)
 	return ..()
 
 /turf/open/floor/circuit/update_appearance(updates)
@@ -145,40 +146,22 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
-/turf/open/floor/noslip/tram_plate
-	name = "linear induction plate"
-	desc = "The linear induction plate that powers the tram."
-	icon_state = "tram_plate"
-	base_icon_state = "tram_plate"
-	slowdown = 0
-
-/turf/open/floor/noslip/tram_platform
-	name = "tram platform"
-	desc = "A sturdy looking tram platform."
-	icon_state = "tram_platform"
-	base_icon_state = "tram_platform"
-	slowdown = 0
-
 /turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
 /turf/open/floor/noslip/burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
 
-/turf/open/floor/noslip/tram_plate/broken_states()
-	return list("tram_plate-damaged1","tram_plate-damaged2")
-
-/turf/open/floor/noslip/tram_plate/burnt_states()
-	return list("tram_plate-scorched1","tram_plate-scorched2")
-
-/turf/open/floor/noslip/tram_platform/broken_states()
-	return list("tram_platform-damaged1","tram_platform-damaged2")
-
-/turf/open/floor/noslip/tram_platform/burnt_states()
-	return list("tram_platform-scorched1","tram_platform-scorched2")
-
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
+
+/turf/open/floor/noslip/tram/Initialize(mapload)
+	. = ..()
+	var/current_holiday_color = request_station_colors(src, PATTERN_VERTICAL_STRIPE) || request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	if(current_holiday_color)
+		color = current_holiday_color
+	else
+		color = "#EFB341"
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
@@ -236,7 +219,7 @@
 	icon_state = "plastic"
 	thermal_conductivity = 0.1
 	heat_capacity = 900
-	custom_materials = list(/datum/material/plastic=500)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	floor_tile = /obj/item/stack/tile/plastic
 
 /turf/open/floor/plastic/broken_states()
@@ -331,7 +314,7 @@
 
 /turf/open/floor/material/meat/Initialize(mapload)
 	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
 /turf/open/floor/material/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS

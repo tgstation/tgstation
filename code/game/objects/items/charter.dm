@@ -1,9 +1,7 @@
-#define STATION_RENAME_TIME_LIMIT 3000
-
 /obj/item/station_charter
 	name = "station charter"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "charter"
 	desc = "An official document entrusting the governance of the station \
 		and surrounding space to the Captain."
 	var/used = FALSE
@@ -116,42 +114,6 @@
 	log_game("[ukey] has renamed the [name_type] as [station_name()].")
 	name = "banner of [station_name()]"
 	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
-	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
-	if(!unlimited_uses)
-		used = TRUE
-
-#undef STATION_RENAME_TIME_LIMIT
-
-/obj/item/station_charter/revolution
-	name = "revolutionary banner"
-	desc = "A banner symbolizing a bloody victory over treacherous tyrants."
-	icon = 'icons/obj/banner.dmi'
-	icon_state = "banner_revolution"
-	inhand_icon_state = "banner-red"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	w_class = 5
-	force = 15
-	ignores_timeout = TRUE //non roundstart!
-	//A cooldown, once it's over you can't declare a new name anymore
-	COOLDOWN_DECLARE(cutoff)
-
-/obj/item/station_charter/revolution/Initialize(mapload)
-	. = ..()
-	COOLDOWN_START(src, cutoff, 5 MINUTES)
-
-/obj/item/station_charter/revolution/attack_self(mob/living/user)
-	if(COOLDOWN_FINISHED(src, cutoff) && !used)
-		to_chat(user, span_warning("You have lost the victorious fervor to declare a new name."))
-		return
-	. = ..()
-
-/obj/item/station_charter/revolution/rename_station(designation, uname, ureal_name, ukey)
-	set_station_name(designation)
-	minor_announce("Head Revolutionary [ureal_name] has declared the station's new name as [html_decode(station_name())]!", "Revolution Banner") //decode station_name to avoid minor_announce double encode
-	log_game("[ukey] has renamed the station as [station_name()].")
-	name = "banner of [station_name()]"
-	desc = "A banner symbolizing a bloody victory over treacherous tyrants. The revolutionary leader [uname] has named the station [station_name()] to make clear that this station shall never be shackled by oppressors again."
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE

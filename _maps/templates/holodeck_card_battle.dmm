@@ -34,9 +34,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "dS" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/trading_card_holder{
 	pixel_y = 5;
 	pixel_x = 8;
@@ -52,7 +50,7 @@
 /area/template_noop)
 "hk" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/trading_card_holder/red{
 	pixel_y = 9;
 	pixel_x = 8;
@@ -66,9 +64,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "iq" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
@@ -88,9 +84,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "iB" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/trading_card_holder{
 	pixel_y = 8
 	},
@@ -130,9 +124,7 @@
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "kT" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/trading_card_holder{
 	pixel_y = 5;
 	pixel_x = -8;
@@ -202,9 +194,7 @@
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "pc" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 10
 	},
@@ -272,9 +262,7 @@
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "vu" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
@@ -287,9 +275,7 @@
 /turf/open/floor/holofloor/hyperspace,
 /area/template_noop)
 "wk" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/trimline/dark_red/end{
 	dir = 1
 	},
@@ -309,9 +295,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "xi" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
@@ -330,7 +314,7 @@
 /area/template_noop)
 "Aj" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/trading_card_holder/red{
 	pixel_y = 9;
 	pixel_x = -8;
@@ -389,9 +373,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "IK" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
@@ -419,9 +401,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "NW" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
@@ -434,7 +414,7 @@
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "Op" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 5
 	},
@@ -444,7 +424,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "OG" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 8
 	},
@@ -455,7 +435,7 @@
 /area/template_noop)
 "Sn" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/trading_card_holder/red{
 	pixel_y = 6
 	},
@@ -498,7 +478,7 @@
 /turf/open/floor/holofloor/stairs/medium,
 /area/template_noop)
 "Wa" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/dark_red/end,
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -566,7 +546,7 @@
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "YY" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 4
 	},

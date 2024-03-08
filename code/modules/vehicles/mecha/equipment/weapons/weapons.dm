@@ -43,7 +43,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return FALSE
-	var/newtonian_target = turn(chassis.dir,180)
+	var/newtonian_target = REVERSE_DIR(chassis.dir)
 	. = ..()//start the cooldown early because of sleeps
 	for(var/i in 1 to projectiles_per_shot)
 		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
@@ -78,7 +78,7 @@
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
-	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
@@ -100,6 +100,7 @@
 	variance = 25
 	projectiles_per_shot = 5
 	fire_sound = 'sound/weapons/taser2.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -161,7 +162,7 @@
 	icon_state = "mecha_kineticgun"
 	energy_drain = 30
 	projectile = /obj/projectile/kinetic/mech
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/kinetic_accel.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
@@ -173,6 +174,7 @@
 	equip_cooldown = 8
 	projectile = /obj/projectile/energy/electrode
 	fire_sound = 'sound/weapons/taser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -227,6 +229,17 @@
 	var/disabledreload //For weapons with no cache (like the rockets) which are reloaded by hand
 	var/ammo_type
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC,
+		"projectiles" = projectiles,
+		"max_magazine" = initial(projectiles),
+		"projectiles_cache" = projectiles_cache,
+		"projectiles_cache_max" = projectiles_cache_max,
+		"disabledreload" = disabledreload,
+		"ammo_type" = ammo_type,
+	)
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())
 		return FALSE
@@ -234,8 +247,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action == "reload")
 		rearm()
 		return TRUE
@@ -357,12 +369,18 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
+	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
+	chassis.use_power(energy_drain)
+	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O, source)
 	O.throw_at(target, missile_range, missile_speed, source, FALSE, diagonals_first = diags_first)
+	sleep(max(0, projectile_delay))
+	if(kickback)
+		chassis.newtonian_move(newtonian_target)
 	return TRUE
 
 //used for projectile initilisation (priming flashbang) and additional logging
@@ -411,8 +429,10 @@
 	projectiles = 15
 	missile_speed = 1.5
 	projectiles_cache = 999
+	projectiles_cache_max = 999
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+	ammo_type = MECHA_AMMO_BANANA_PEEL
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -423,12 +443,13 @@
 	projectiles = 15
 	missile_speed = 1.5
 	projectiles_cache = 999
+	projectiles_cache_max = 999
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
+	ammo_type = MECHA_AMMO_MOUSETRAP
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
-
 
 //Classic extending punching glove, but weaponised!
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
@@ -443,21 +464,22 @@
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 10
 	projectiles_cache = 999
+	projectiles_cache_max = 999
 	harmful = TRUE
 	diags_first = TRUE
 	/// Damage done by the glove on contact. Also used to determine throw distance (damage / 5)
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
+	ammo_type = MECHA_AMMO_PUNCHING_GLOVE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_snowflake_data()
-	return list(
-		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"mode" = harmful ? "LETHAL FISTING" : "Cuddles",
-	)
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
 	. = ..()
-	if(action == "toggle")
+	.["mode"] = harmful ? "LETHAL FISTING" : "Cuddles"
+	.["mode_label"] = "Honk Severity"
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/handle_ui_act(action, list/params)
+	. = ..()
+	if(action == "change_mode")
 		harmful = !harmful
 		if(harmful)
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Enabled.")]")
@@ -485,6 +507,7 @@
 	name = "punching glove"
 	desc = "INCOMING HONKS"
 	throwforce = 35
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "punching_glove"
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -517,3 +540,81 @@
 	equip_cooldown = 60
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+
+///long claw of the law
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw
+	name = "hydraulic claw"
+	desc = "A modified hydraulic clamp, for use exclusively with the Paddy exosuit. Non-lethally apprehends suspects."
+	icon_state = "paddy_claw"
+	equip_cooldown = 15
+	energy_drain = 10
+	tool_behaviour = TOOL_RETRACTOR
+	range = MECHA_MELEE
+	toolspeed = 0.8
+	mech_flags = EXOSUIT_MODULE_PADDY
+	projectiles_per_shot = 0
+	///Chassis but typed for the cargo_hold var
+	var/obj/vehicle/sealed/mecha/ripley/secmech
+	///Audio for using the hydraulic clamp
+	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	///Var for the cuff type. Basically stole how cuffing works from secbots
+	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/used
+	///Var for autocuff, can be toggled in the mech interface.
+	var/autocuff = TRUE
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/attach(obj/vehicle/sealed/mecha/new_mecha)
+	. = ..()
+	secmech = chassis
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/detach(atom/moveto)
+	secmech = null
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/source, atom/target, list/modifiers)
+	if(!secmech.cargo_hold) //We did try
+		CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
+	if(!action_checks(target))
+		return
+	if(isliving(target))
+		. = ..()
+		var/mob/living/mobtarget = target
+		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
+			to_chat(source, "[span_warning("[src] is unable to lift [mobtarget].")]")
+			return
+		if(secmech.cargo_hold.contents.len >= secmech.cargo_hold.cargo_capacity)
+			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
+			return
+
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
+		if(!do_after_cooldown(mobtarget, source))
+			return
+		mobtarget.forceMove(secmech.cargo_hold)
+		log_message("Loaded [mobtarget]. Cargo compartment capacity: [secmech.cargo_hold.cargo_capacity - secmech.cargo_hold.contents.len]", LOG_MECHA)
+		to_chat(source, "[icon2html(src, source)][span_notice("[mobtarget] successfully loaded.")]")
+		to_chat(mobtarget, "[span_warning("You have been moved into [secmech.cargo_hold]. You can attempt to resist out if you wish.")]")
+		if(autocuff && iscarbon(target))
+			var/mob/living/carbon/carbontarget = target
+			carbontarget.set_handcuffed(new cuff_type(carbontarget))
+			carbontarget.update_handcuffed()
+		return
+
+	if(istype(target, /obj/machinery/door))
+		. = ..()
+		var/obj/machinery/door/target_door = target
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		target_door.try_to_crowbar(src, source)
+		return
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_CLAW,
+		"autocuff" = autocuff,
+	)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/handle_ui_act(action, list/params)
+	switch(action)
+		if("togglecuff")
+			autocuff = !autocuff
+			return TRUE

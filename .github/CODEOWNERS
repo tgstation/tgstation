@@ -6,26 +6,29 @@
 
 # MAINTAINERS
 
-# Cyberboss
+# Dominion/Cyberboss
 
+/.github/workflows/update_tgs_dmapi.yml @Cyberboss
 /.tgs.yml @Cyberboss
+/code/world.dm @Cyberboss
+/code/__DEFINES/tgs.config.dm @Cyberboss
+/code/__DEFINES/tgs.dm @Cyberboss
+/code/__DEFINES/_globals.dm @Cyberboss
+/code/__HELPERS/chat.dm @Cyberboss
 /code/__HELPERS/jatum.dm @Cyberboss
+/code/game/world.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
-/code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
 /code/datums/helper_datums/getrev.dm @Cyberboss
-/code/datums/map_config.dm @Cyberboss
-/code/datums/forced_movement.dm @Cyberboss
-/code/datums/holocall.dm @Cyberboss
-/code/modules/admin/verbs/adminhelp.dm @Cyberboss
-/code/modules/admin/verbs/adminpm.dm @Cyberboss
-/code/modules/mapping/ @Cyberboss
-/tools/tgs_scripts/ @Cyberboss
+/code/modules/tgs/ @Cyberboss
+/code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
 
-# Dragomagol/Tattle
+# Cobby
 
-/code/__HELPERS/logging/ @dragomagol
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Fikou
 
@@ -60,6 +63,7 @@
 /code/modules/client/preferences/ @Mothblocks
 /code/modules/client/preferences_menu.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/ezdb/ @Mothblocks
 /tools/maplint/source/ @Mothblocks
 /tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
@@ -71,12 +75,13 @@
 
 # ninjanomnom
 
-/code/__DEFINES/dcs/ @ninjanomnom
 /code/controllers/subsystem/dcs.dm @ninjanomnom
-/code/controllers/subsystem/shuttle.dm @ninjanomnom
-/code/datums/components/ @ninjanomnom
-/code/datums/elements/ @ninjanomnom
-/code/modules/shuttle/ @ninjanomnom
+/code/datums/signals.dm @ninjanomnom
+/code/datums/components/_component.dm @ninjanomnom
+/code/datums/elements/_element.dm @ninjanomnom
+/code/datums/greyscale/_greyscale_config.dm @ninjanomnom
+/code/datums/greyscale/json_reader.dm @ninjanomnom
+/code/datums/greyscale/layer.dm @ninjanomnom
 
 # Ryll-Ryll/Shaps
 
@@ -120,25 +125,30 @@
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
-/code/datums/ai @tralezab
-/code/modules/mob/living/basic/ @tralezab
+/code/datums/ai/ @tralezab
+/code/modules/religion/ @tralezab
 
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914
 /code/modules/antagonists/traitor/ @Watermelon914
+/code/controllers/subsystem/tts.dm @Watermelon914
+
+# ZephyrTFA
+
+/code/__HELPERS/admin_verb.dm @ZephyrTFA
+/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
+/code/modules/admin/verbs/ @ZephyrTFA
+/code/modules/logging/ @ZephyrTFA
+/tools/ci/check_grep.sh @ZephyrTFA
+
 
 # CONTRIBUTORS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Jordie0608
 
-/SQL/ @Jordie0608
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
 
@@ -151,7 +161,6 @@
 
 # MrStonedOne
 
-/SQL/database_changelog.txt @MrStonedOne
 /code/__DEFINES/MC.dm @MrStonedOne
 /code/controllers/admin.dm @MrStonedOne
 /code/controllers/master.dm @MrStonedOne
@@ -173,34 +182,42 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
-# ZephyrTFA
-
-/code/__HELPERS/admin_verb.dm @ZephyrTFA
-/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
-/code/datums/json_savefile.dm @ZephyrTFA
-/code/datums/armor/ @ZephyrTFA
-/code/modules/admin/verbs/ @ZephyrTFA
-
 # MULTIPLE OWNERS
 
+/SQL/ @Jordie0608 @MrStonedOne
+
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
-/icons/ @Imaginos16 @Krysonism @Twaticus
+
+/icons/ @Imaginos16 @Krysonism @Twaticus @Wallemations
 /icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
+
+/code/__HELPERS/logging/ @dragomagol @ZephyrTFA
+
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
 /code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
+
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+
+/code/modules/mob/living/basic/ @Jacquerel @san7890 @tralezab
+
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
+
 /tools/build/ @MrStonedOne @stylemistake
-/tools/LinuxOneShot/ @Cyberboss @MrStonedOne
-/tools/tgs4_scripts/ @Cyberboss @MrStonedOne
+/tools/tgs_scripts/ @Cyberboss @MrStonedOne
 
 /tools/WebhookProcessor/ @BraveMole @TiviPlus
+
+# Expensive files that touching basically always cause performance problems
+## Init times
+**/*_EXPENSIVE.dm @Mothblocks @LemonInTheDark
 
 # SIC SEMPER TYRANNIS
 

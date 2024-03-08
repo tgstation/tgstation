@@ -1,0 +1,10 @@
+# This is really only useful for the "Atmos Asteroid" space ruin.
+
+/turf/open/floor/iron{initial_gas_mix="o2=22;n2=82;co2=500;TEMP=293.15"} : /turf/open/floor/iron/co2_pressurized{@OLD;initial_gas_mix=@SKIP}
+/turf/open/floor/iron/dark{initial_gas_mix="o2=22;n2=82;co2=500;TEMP=293.15"} : /turf/open/floor/iron/dark/co2_pressurized{@OLD;initial_gas_mix=@SKIP}
+/turf/open/floor/iron/dark/corner{initial_gas_mix="o2=22;n2=82;co2=500;TEMP=293.15"} : /turf/open/floor/iron/dark/corner/co2_pressurized{@OLD;initial_gas_mix=@SKIP}
+/turf/open/floor/iron/dark/side{initial_gas_mix="o2=22;n2=82;co2=500;TEMP=293.15"} : /turf/open/floor/iron/dark/side/co2_pressurized{@OLD;initial_gas_mix=@SKIP}
+
+/turf/open/floor/plating{initial_gas_mix="o2=22;n2=82;co2=500;TEMP=293.15"} : /turf/open/floor/plating/co2_pressurized{@OLD;initial_gas_mix=@SKIP}
+
+/turf/open/floor/engine{initial_gas_mix="o2=22;n2=82;co2=500;TEMP=293.15"} : /turf/open/floor/engine/co2/equalized_with_regular_air{@OLD;initial_gas_mix=@SKIP}

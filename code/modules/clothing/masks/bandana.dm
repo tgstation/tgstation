@@ -14,12 +14,22 @@
 	icon_state = "bandana"
 	icon_state_preview = "bandana_cloth"
 	inhand_icon_state = "greyscale_bandana"
-	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
-	greyscale_config_worn = /datum/greyscale_config/bandana_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/bandana_inhands_left
-	greyscale_config_inhand_right = /datum/greyscale_config/bandana_inhands_right
+	greyscale_config_worn = /datum/greyscale_config/bandana/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/bandana/inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/bandana/inhands_right
 	greyscale_colors = "#2e2e2e"
+
+/obj/item/clothing/mask/bandana/examine(mob/user)
+	. = ..()
+	if(mask_adjusted)
+		. += "Use in-hand to untie it to wear as a mask!"
+		return
+	if(slot_flags & ITEM_SLOT_NECK)
+		. += "Alt-click to untie it to wear as a mask!"
+	else
+		. += "Use in-hand to tie it up to wear as a hat!"
+		. += "Alt-click to tie it up to wear on your neck!"
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	if(slot_flags & ITEM_SLOT_NECK)
@@ -30,7 +40,6 @@
 /obj/item/clothing/mask/bandana/adjustmask(mob/living/user)
 	. = ..()
 	if(mask_adjusted)
-		worn_icon_state += "_up"
 		undyeable = TRUE
 	else
 		inhand_icon_state = initial(inhand_icon_state)
@@ -40,17 +49,18 @@
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
 	. = ..()
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
+		var/mob/living/carbon/char = user
 		var/matrix/widen = matrix()
-		if(!user.is_holding(src))
-			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
-			return
-		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
+		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_MASK) == src) || (char.get_item_by_slot(ITEM_SLOT_HEAD) == src))
 			to_chat(user, span_warning("You can't tie [src] while wearing it!"))
 			return
-		if(slot_flags & ITEM_SLOT_HEAD)
+		else if(slot_flags & ITEM_SLOT_HEAD)
 			to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
 			return
+		else if(!user.is_holding(src))
+			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
+			return
+
 		if(slot_flags & ITEM_SLOT_MASK)
 			undyeable = TRUE
 			slot_flags = ITEM_SLOT_NECK
@@ -119,18 +129,17 @@
 	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	greyscale_colors = "#5c6d80"
 	flags_1 = NONE
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "bandana_durathread"
 
 /obj/item/clothing/mask/bandana/striped
 	name = "striped bandana"
 	desc = "A fine bandana with nanotech lining and a stripe across."
 	icon_state = "bandstriped"
-	worn_icon_state = "bandstriped_worn"
-	greyscale_config = /datum/greyscale_config/bandstriped
-	greyscale_config_worn = /datum/greyscale_config/bandstriped_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/bandana_striped_inhands_left
-	greyscale_config_inhand_right = /datum/greyscale_config/bandana_striped_inhands_right
+	greyscale_config = /datum/greyscale_config/bandana/striped
+	greyscale_config_worn = /datum/greyscale_config/bandana/striped/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/bandana/striped/inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/bandana/striped/inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	undyeable = TRUE
 
@@ -180,11 +189,10 @@
 	name = "skull bandana"
 	desc = "A fine bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
-	worn_icon_state = "bandskull_worn"
-	greyscale_config = /datum/greyscale_config/bandskull
-	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/bandana_skull_inhands_left
-	greyscale_config_inhand_right = /datum/greyscale_config/bandana_skull_inhands_right
+	greyscale_config = /datum/greyscale_config/bandana/skull
+	greyscale_config_worn = /datum/greyscale_config/bandana/skull/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/bandana/skull/inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/bandana/skull/inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	undyeable = TRUE
 
@@ -192,3 +200,34 @@
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	flags_1 = NONE
+
+/obj/item/clothing/mask/facescarf
+	name = "facescarf"
+	desc = "Cover your face like in the cowboy movies. It also has breathtube so you can wear it everywhere!"
+	actions_types = /datum/action/item_action/adjust
+	icon_state = "facescarf"
+	inhand_icon_state = "greyscale_facescarf"
+	alternate_worn_layer = BACK_LAYER
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
+	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#eeeeee"
+	greyscale_config = /datum/greyscale_config/facescarf
+	greyscale_config_worn = /datum/greyscale_config/facescarf/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/facescarf/inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/facescarf/inhands_right
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/mask/facescarf/AltClick(mob/user)
+	..()
+	if(user.can_perform_action(src, NEED_DEXTERITY))
+		adjustmask(user)
+
+/obj/item/clothing/mask/facescarf/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click [src] to adjust it.")

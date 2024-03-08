@@ -4,7 +4,7 @@
 	desc = "<i>Various scrawled out drawings and sketches reside on the paper, apparently he didn't much care for these drawings.</i>"
 
 /obj/item/paper/pamphlet/ruin/originalcontent
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "painting1"
 
 /obj/item/paper/pamphlet/ruin/originalcontent/stickman

@@ -1,12 +1,12 @@
 //Added by Jack Rost
 /obj/item/trash
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	item_flags = NOBLUDGEON
+	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)
@@ -79,6 +79,11 @@
 /obj/item/trash/energybar
 	name = "energybar wrapper"
 	icon_state = "energybar"
+
+/obj/item/trash/fleet_ration
+	name = "surplus fleet wrapper"
+	desc = "In the Mothic Fleet every individual wrapper is carefully recycled and repurposed into fresh material. Over here they are more commonly dropped directly onto the floor."
+	icon_state = "moth_ration"
 
 /obj/item/trash/waffles
 	name = "waffles tray"
@@ -180,3 +185,46 @@
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
 
+/obj/item/trash/can/food/squid_ink
+	name = "canned squid ink"
+	icon_state = "squidinkcan_empty"
+
+/obj/item/trash/can/food/chap
+	name = "can of CHAP"
+	icon_state = "chapcan_empty"
+
+/obj/item/trash/hot_shots
+	name = "\improper Hot Shots box"
+	icon_state = "hot_shots"
+
+/obj/item/trash/sticko
+	name = "\improper Sticko box"
+	icon_state = "sticko"
+
+/obj/item/trash/sticko/matcha
+	icon_state = "sticko_matcha"
+
+/obj/item/trash/sticko/nutty
+	icon_state = "sticko_nutty"
+
+/obj/item/trash/sticko/pineapple
+	icon_state = "sticko_pineapple"
+
+/obj/item/trash/sticko/yuyake
+	icon_state = "sticko_yuyake"
+
+/obj/item/trash/shok_roks
+	name = "\improper Shok-Roks packet"
+	icon_state = "shok_roks"
+
+/obj/item/trash/shok_roks/citrus
+	icon_state = "shok_roks_citrus"
+
+/obj/item/trash/shok_roks/berry
+	icon_state = "shok_roks_berry"
+
+/obj/item/trash/shok_roks/tropical
+	icon_state = "shok_roks_tropical"
+
+/obj/item/trash/shok_roks/lanternfruit
+	icon_state = "shok_roks_lanternfruit"

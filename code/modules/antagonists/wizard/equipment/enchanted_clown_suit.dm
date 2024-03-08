@@ -9,6 +9,7 @@
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
 	delete_old = FALSE
+	delete_on_failure = FALSE
 	/// Amount of time it takes you to rummage around in there
 	var/cast_time = 3 SECONDS
 	/// True while currently casting the spell
@@ -56,7 +57,7 @@
 		return . | SPELL_CANCEL_CAST
 	casting = FALSE
 
-/datum/action/cooldown/spell/conjure_item/clown_pockets/make_item()
+/datum/action/cooldown/spell/conjure_item/clown_pockets/make_item(atom/caster)
 	item_type = pick_weight(clown_items)
 	return ..()
 

@@ -1,0 +1,2 @@
+/obj/machinery/navbeacon/@SUBTYPES : /obj/machinery/navbeacon/@SUBTYPES{@OLD;freq=@SKIP;dir=@SKIP}
+/mob/living/simple_animal/bot/mulebot/@SUBTYPES : /mob/living/simple_animal/bot/mulebot/@SUBTYPES{@OLD;beacon_freq=@SKIP}

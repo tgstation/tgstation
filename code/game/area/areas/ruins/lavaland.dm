@@ -3,6 +3,9 @@
 
 /area/ruin/powered/beach
 
+/area/ruin/powered/lavaland_phone_booth
+	name = "\improper Phone Booth"
+
 /area/ruin/powered/clownplanet
 	name = "\improper Clown Biodome"
 	ambientsounds = list('sound/ambience/clown.ogg')

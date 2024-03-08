@@ -1,8 +1,25 @@
 import { classes } from 'common/react';
+
 import { useBackend } from '../../backend';
-import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from '../../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from './data';
+import {
+  createSetPreference,
+  Food,
+  Perk,
+  PreferencesMenuData,
+  ServerData,
+  Species,
+} from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const FOOD_ICONS = {
@@ -19,6 +36,7 @@ const FOOD_ICONS = {
   [Food.Nuts]: 'seedling',
   [Food.Raw]: 'drumstick-bite',
   [Food.Seafood]: 'fish',
+  [Food.Stone]: 'gem',
   [Food.Sugar]: 'candy-cane',
   [Food.Toxic]: 'biohazard',
   [Food.Vegetables]: 'carrot',
@@ -38,6 +56,7 @@ const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
   [Food.Nuts]: 'Nuts',
   [Food.Raw]: 'Raw',
   [Food.Seafood]: 'Seafood',
+  [Food.Stone]: 'Rocks',
   [Food.Sugar]: 'Sugar',
   [Food.Toxic]: 'Toxic food',
   [Food.Vegetables]: 'Vegetables',
@@ -82,7 +101,8 @@ const FoodList = (props: {
               .join(', ')}
           </Box>
         </Box>
-      }>
+      }
+    >
       <Stack ml={2}>
         {props.food.map((food) => {
           return (
@@ -154,15 +174,16 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           <Divider />
           <Box>{perk.description}</Box>
         </Box>
-      }>
-      <Box class={className} width="32px" height="32px">
+      }
+    >
+      <Box className={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
           size={1.5}
           ml={0}
           mt={1}
           style={{
-            'text-align': 'center',
+            textAlign: 'center',
             height: '100%',
             width: '100%',
           }}
@@ -189,7 +210,7 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
         </Stack>
       </Stack.Item>
 
-      <Stack grow>
+      <Stack>
         {neutral.map((perk) => {
           return (
             <Stack.Item key={perk.name}>
@@ -212,20 +233,17 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
   );
 };
 
-const SpeciesPageInner = (
-  props: {
-    handleClose: () => void;
-    species: ServerData['species'];
-  },
-  context
-) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const SpeciesPageInner = (props: {
+  handleClose: () => void;
+  species: ServerData['species'];
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const setSpecies = createSetPreference(act, 'species');
 
   let species: [string, Species][] = Object.entries(props.species).map(
     ([species, data]) => {
       return [species, data];
-    }
+    },
   );
 
   // Humans are always the top of the list
@@ -265,7 +283,8 @@ const SpeciesPageInner = (
                       display: 'block',
                       height: '64px',
                       width: '64px',
-                    }}>
+                    }}
+                  >
                     <Box
                       className={classes(['species64x64', species.icon])}
                       ml={-1}
@@ -277,7 +296,7 @@ const SpeciesPageInner = (
           </Stack.Item>
 
           <Stack.Item grow>
-            <Box fill>
+            <Box>
               <Box>
                 <Stack fill>
                   <Stack.Item width="70%">
@@ -289,7 +308,8 @@ const SpeciesPageInner = (
                         currentSpecies.diet && (
                           <Diet diet={currentSpecies.diet} />
                         )
-                      }>
+                      }
+                    >
                       <Section title="Description">
                         {currentSpecies.desc}
                       </Section>

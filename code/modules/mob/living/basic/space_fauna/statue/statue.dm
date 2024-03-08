@@ -27,6 +27,7 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	melee_attack_cooldown = 1 SECONDS
 
 	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
@@ -50,27 +51,17 @@
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/statue
-	/// Loot this mob drops on death.
-	var/loot
-	/// Stores the creator in here if it has one.
-	var/mob/living/creator = null
 
-/mob/living/basic/statue/Initialize(mapload, mob/living/creator)
+/mob/living/basic/statue/Initialize(mapload)
 	. = ..()
-	if(LAZYLEN(loot))
-		AddElement(/datum/element/death_drops, loot)
+	add_traits(list(TRAIT_MUTE, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
-	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
 
-	// Give spells
-	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker = new(src)
-	flicker.Grant(src)
-	var/datum/action/cooldown/spell/aoe/blindness/blind = new(src)
-	blind.Grant(src)
-
-	// Set creator
-	if(creator)
-		src.creator = creator
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/spell/aoe/blindness,
+		/datum/action/cooldown/spell/aoe/flicker_lights,
+	)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -78,13 +69,7 @@
 /mob/living/basic/statue/med_hud_set_status()
 	return //we're a statue we're invincible
 
-/mob/living/basic/statue/can_speak(allow_mimes = FALSE)
-	return FALSE // We're a statue, of course we can't talk.
-
 // Cannot talk
-
-/mob/living/basic/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	return
 
 // Turn to dust when gibbed
 
@@ -144,19 +129,29 @@
 
 /datum/ai_controller/basic_controller/statue
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/statue,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
 	)
 
-/datum/ai_planning_subtree/basic_melee_attack_subtree/statue
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/statue
+/mob/living/basic/statue/frosty
+	name = "Frosty"
+	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman."
+	icon_dead = "snowman"
+	icon_living = "snowman"
+	icon_state = "snowman"
+	health = 5000
+	maxHealth = 5000
+	melee_damage_lower = 65
+	melee_damage_upper = 65
+	faction = list(FACTION_STATUE,FACTION_MINING)
 
-/datum/ai_behavior/basic_melee_attack/statue
-	action_cooldown = 1 SECONDS
+/mob/living/basic/statue/frosty/Initialize(mapload)
+	. = ..()
+	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
+	AddElement(/datum/element/death_drops, death_loot)

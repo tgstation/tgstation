@@ -92,7 +92,7 @@
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
 	), PROC_REF(consume_attack))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(consume_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(consume_attackby))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
@@ -101,16 +101,16 @@
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(consume_bullets))
+	RegisterSignal(parent, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(consume_bullets))
 
 	if (notify_admins)
 		admin_investigate_setup()
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
-	QDEL_NULL(consume_callback)
+	consume_callback = null
 	target = null
 
 	return ..()
@@ -127,15 +127,15 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
-		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_PRE_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 	))
 
-/datum/component/singularity/process(delta_time)
+/datum/component/singularity/process(seconds_per_tick)
 	// We want to move and eat once a second, but want to process our turf consume queue the rest of the time
-	time_since_last_eat += delta_time
+	time_since_last_eat += seconds_per_tick
 	digest()
 	if(TICK_CHECK)
 		return
@@ -180,6 +180,7 @@
 	SIGNAL_HANDLER
 
 	qdel(projectile)
+	return COMPONENT_BULLET_BLOCKED
 
 /// Calls singularity_act on the thing passed, usually destroying the object
 /datum/component/singularity/proc/default_singularity_act(atom/thing)
@@ -386,9 +387,8 @@
 		return
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-	var/has_no_blood = HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)
 	if(head)
-		if(has_no_blood)
+		if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD))
 			to_chat(carbon_target, span_notice("You get a headache."))
 			return
 		head.adjustBleedStacks(5)

@@ -7,6 +7,12 @@
 	var/spawner_type = null // must be an object path
 	var/deliveryamt = 1 // amount of type to deliver
 
+/obj/item/grenade/spawnergrenade/apply_grenade_fantasy_bonuses(quality)
+	deliveryamt = modify_fantasy_variable("deliveryamt", deliveryamt, quality)
+
+/obj/item/grenade/spawnergrenade/remove_grenade_fantasy_bonuses(quality)
+	deliveryamt = reset_fantasy_variable("deliveryamt", deliveryamt)
+
 /obj/item/grenade/spawnergrenade/detonate(mob/living/lanced_by) // Prime now just handles the two loops that query for people in lockers and people who can see it.
 	. = ..()
 	if(!.)
@@ -47,7 +53,7 @@
 	name = "Buzzkill grenade"
 	desc = "The label reads: \"WARNING: DEVICE WILL RELEASE LIVE SPECIMENS UPON ACTIVATION. SEAL SUIT BEFORE USE.\" It is warm to the touch and vibrates faintly."
 	icon_state = "holy_grenade"
-	spawner_type = /mob/living/simple_animal/hostile/bee/toxin
+	spawner_type = /mob/living/basic/bee/toxin
 	deliveryamt = 10
 
 /obj/item/grenade/spawnergrenade/clown
@@ -55,7 +61,7 @@
 	desc = "A sleek device often given to clowns on their 10th birthdays for protection. You can hear faint scratching coming from within."
 	icon_state = "clown_ball"
 	inhand_icon_state = null
-	spawner_type = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
+	spawner_type = list(/mob/living/basic/clown/fleshclown, /mob/living/basic/clown/clownhulk, /mob/living/basic/clown/longface, /mob/living/basic/clown/clownhulk/chlown, /mob/living/basic/clown/clownhulk/honkmunculus, /mob/living/basic/clown/mutant/glutton, /mob/living/basic/clown/banana, /mob/living/basic/clown/honkling, /mob/living/basic/clown/lube)
 	deliveryamt = 1
 
 /obj/item/grenade/spawnergrenade/clown_broken
@@ -63,5 +69,11 @@
 	desc = "A sleek device often given to clowns on their 10th birthdays for protection. While a typical C.L.U.W.N.E only holds one creature, sometimes foolish young clowns try to cram more in, often to disasterous effect."
 	icon_state = "clown_broken"
 	inhand_icon_state = null
-	spawner_type = /mob/living/simple_animal/hostile/retaliate/clown/mutant
+	spawner_type = /mob/living/basic/clown/mutant
+	deliveryamt = 5
+
+/obj/item/grenade/spawnergrenade/cat
+	name = "Catnade"
+	desc = "You can hear faint meowing and the sounds of claws on metal coming from within."
+	spawner_type = /mob/living/basic/pet/cat/feral
 	deliveryamt = 5

@@ -42,7 +42,7 @@
 	visual = FALSE
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
-	organ_flags = NONE
+	organ_flags = ORGAN_ORGANIC
 	force = 0
 	/// Set to true if this organ has decayed into uselessness.
 	var/inert = FALSE
@@ -65,11 +65,11 @@
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
 
-/obj/item/organ/internal/monster_core/Destroy(force, silent)
+/obj/item/organ/internal/monster_core/Destroy(force)
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -83,7 +83,7 @@
 	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
-/obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special = 0)
+/obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()
@@ -143,7 +143,7 @@
 	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)
-	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	try_apply(user, user)
 
@@ -183,9 +183,9 @@
  * Utility proc to find the associated monster organ action and trigger it.
  * Call this instead of on_triggered_internal() if the action needs to trigger automatically, or the cooldown won't happen.
  */
-/obj/item/organ/internal/monster_core/proc/trigger_organ_action()
+/obj/item/organ/internal/monster_core/proc/trigger_organ_action(trigger_flags)
 	var/datum/action/cooldown/monster_core_action/action = locate() in actions
-	action?.Trigger()
+	action?.Trigger(trigger_flags = trigger_flags)
 
 /**
  * Called when activated while implanted inside someone.

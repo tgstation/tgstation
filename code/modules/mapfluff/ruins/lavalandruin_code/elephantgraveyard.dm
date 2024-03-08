@@ -6,7 +6,7 @@
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/Initialize(mapload)
@@ -17,27 +17,27 @@
 /obj/structure/statue/bone/rib
 	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "colossal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "halfskull"
 
 //***Wasteland floor and rock turfs here.
@@ -60,6 +60,12 @@
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,6)]"
 
+/turf/open/misc/asteroid/basalt/wasteland/basin
+	icon_state = "wasteland_dug"
+	base_icon_state = "wasteland_dug"
+	floor_variance = 0
+	dug = TRUE
+
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"
@@ -73,7 +79,7 @@
 	if(prob(10))
 		new /obj/item/stack/ore/iron(src, 1)
 		new /obj/item/stack/ore/glass(src, 1)
-		new /obj/effect/decal/remains/human/grave(src, 1)
+		new /obj/effect/decal/remains/human(src, 1)
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
 
@@ -90,6 +96,9 @@
 	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
+	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
+	//Thankfully, the user can cast the line from a distance.
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/oil_well)
 
 /obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
@@ -98,7 +107,7 @@
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
-	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1 & NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
+	if(O.tool_behaviour == TOOL_SHOVEL && !(obj_flags & NO_DECONSTRUCTION)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()
@@ -128,24 +137,52 @@
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
-	dense_when_open = TRUE
+	base_icon_state = "grave"
+	density = FALSE
 	material_drop = /obj/item/stack/ore/glass/basalt
 	material_drop_amount = 5
 	anchorable = FALSE
 	anchored = TRUE
-	locked = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
-	breakout_time = 90 SECONDS
+	breakout_time = 2 MINUTES
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
-	cutting_tool = /obj/item/shovel
-	var/lead_tomb = FALSE
-	var/first_open = FALSE
 	can_install_electronics = FALSE
+	can_weld_shut = FALSE
+	cutting_tool = null
+	paint_jobs = null
+	elevation = 4 //It's a small mound.
+	elevation_open = 0
+
+	/// will this grave give you nightmares when opened
+	var/lead_tomb = FALSE
+	/// was this grave opened for the first time
+	var/first_open = FALSE
+	/// was a shovel used to close this grave
+	var/dug_closed = FALSE
+
+/obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SHOVEL)
+		context[SCREENTIP_CONTEXT_RMB] = opened ? "Cover up" : "Dig open"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/obj/structure/closet/crate/grave/close(mob/living/user)
+	. = ..()
+	// So that graves stay undense
+	set_density(FALSE)
+
+/obj/structure/closet/crate/grave/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
-	new /obj/effect/decal/remains/human/grave(src)
+	new /obj/effect/decal/remains/human(src)
 	switch(rand(1,8))
 		if(1)
 			new /obj/item/coin/gold(src)
@@ -156,7 +193,7 @@
 			new /obj/item/coin/silver(src)
 			new /obj/item/shovel/spade(src)
 		if(4)
-			new /obj/item/storage/book/bible/booze(src)
+			new /obj/item/book/bible/booze(src)
 		if(5)
 			new /obj/item/clothing/neck/stethoscope(src)
 			new /obj/item/scalpel(src)
@@ -166,61 +203,109 @@
 			new /obj/item/reagent_containers/cup/beaker(src)
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
-			new /obj/item/clothing/glasses/sunglasses(src)
+			new /obj/item/clothing/glasses/sunglasses/big(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 		else
 			//empty grave
 			return
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
-	if(!opened)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
-	else
-		to_chat(user, span_notice("The grave has already been dug up."))
-
 /obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
 	return
 
-/obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
-		if(!opened)
-			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
-				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
-				if (do_after(user,20, target = src))
-					opened = TRUE
-					locked = TRUE
-					dump_contents()
-					update_appearance()
-					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
-					if(lead_tomb == TRUE && first_open == TRUE)
-						user.gain_trauma(/datum/brain_trauma/magic/stalker)
-						to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
-						first_open = FALSE
-					return 1
-				return 1
+/obj/structure/closet/crate/grave/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!force)
+		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/grave/before_close(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!dug_closed)
+		to_chat(user, span_notice("You'll need a shovel to cover it up."))
+		return FALSE
+
+	dug_closed = FALSE
+	return TRUE
+
+/obj/structure/closet/crate/grave/tool_interact(obj/item/weapon, mob/living/carbon/user)
+	//anything that isn't a shovel does normal stuff to the grave[like putting stuff in]
+	if(weapon.tool_behaviour != TOOL_SHOVEL)
+		return ..()
+
+	//player is attempting to open/close the grave with a shovel
+	if(!user.combat_mode)
+		user.visible_message(
+			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
+			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+		)
+		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
+			return TRUE
+
+		if(opened)
+			dug_closed = TRUE
+			close(user)
+		else if(open(user, force = TRUE))
+			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
-				to_chat(user, span_notice("You can't dig up a grave with \the [S.name]."))
-				return 1
-		else
-			to_chat(user, span_notice("The grave has already been dug up."))
-			return 1
-
-	else if((user.combat_mode) && opened) //checks to attempt to remove the grave entirely.
-		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
-			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
-			if (do_after(user,15, target = src))
-				to_chat(user, span_notice("You remove \the [src]  completely."))
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
-				deconstruct(TRUE)
-				return 1
-	return
+			if(lead_tomb && first_open)
+				if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+				else
+					user.gain_trauma(/datum/brain_trauma/magic/stalker)
+					to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+				first_open = FALSE
 
-/obj/structure/closet/crate/grave/bust_open()
-	..()
-	opened = TRUE
-	update_appearance()
-	dump_contents()
-	return
+		return TRUE
+
+	//player is attempting to destroy the open grave with a shovel
+	else
+		if(!opened)
+			return TRUE
+
+		user.visible_message(
+			span_notice("[user] Is attempting to remove [src]."),
+			span_notice("You start removing [src]."),
+		)
+		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
+			return TRUE
+
+		to_chat(user, span_notice("You remove \the [src] completely."))
+		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
+		deconstruct(TRUE)
+		return TRUE
+
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+	if(opened)
+		return
+	// The player is trying to dig themselves out of an early grave
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message(
+		span_warning("[src]'s dirt begins to shift and rumble!"),
+		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),
+		span_hear("You hear the sound of shifting dirt from [src]."),
+	)
+	if(do_after(user, breakout_time, target = src))
+		if(opened)
+			return
+		user.visible_message(
+			span_danger("[user] emerges from [src], scattering dirt everywhere!"),
+			span_notice("You triumphantly surface out of [src], scattering dirt all around the grave!"),
+		)
+		bust_open()
+	else
+		if(user.loc == src)
+			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
@@ -234,9 +319,6 @@
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
-
-/obj/effect/decal/remains/human/grave
-	turf_loc_check = FALSE
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard

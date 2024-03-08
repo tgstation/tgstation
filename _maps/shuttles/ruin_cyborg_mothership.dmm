@@ -1,9 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"az" = (
-/obj/structure/lattice,
-/obj/structure/marker_beacon/cerulean,
-/turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
 "aB" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -17,13 +12,12 @@
 	id = "mothership_main"
 	},
 /obj/machinery/recycler{
-	dir = 1;
-	eat_dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "bE" = (
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "cU" = (
@@ -49,11 +43,14 @@
 /area/shuttle/ruin/cyborg_mothership)
 "dI" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/template_noop,
+/area/shuttle/ruin/cyborg_mothership)
+"dO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "ey" = (
 /obj/structure/table,
@@ -79,15 +76,6 @@
 /obj/structure/closet/emcloset/anchored,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
-/area/shuttle/ruin/cyborg_mothership)
-"fV" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/shieldgen{
-	anchored = 1;
-	req_access = null
-	},
-/obj/structure/marker_beacon/violet,
-/turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "gG" = (
 /obj/machinery/light/small/directional/west,
@@ -129,10 +117,24 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"ir" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
+/area/shuttle/ruin/cyborg_mothership)
 "iv" = (
 /obj/structure/lattice,
 /obj/structure/spacevine,
 /turf/template_noop,
+/area/shuttle/ruin/cyborg_mothership)
+"iN" = (
+/obj/structure/table,
+/obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/razor,
+/obj/structure/mirror/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/ruin/cyborg_mothership)
 "iO" = (
 /obj/machinery/rnd/production/protolathe/offstation,
@@ -148,12 +150,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"jH" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "jJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -188,17 +184,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"lZ" = (
-/obj/machinery/camera/directional/south,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	environ = 0;
-	equipment = 0;
-	locked = 0;
-	lighting = 0
-	},
-/turf/open/floor/circuit/airless,
-/area/shuttle/ruin/cyborg_mothership)
 "mc" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
@@ -216,8 +201,15 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"ms" = (
+/obj/item/stack/rods,
+/obj/machinery/button/door/directional/east{
+	id = "mothership_right"
+	},
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "mC" = (
-/obj/machinery/mineral/ore_redemption{
+/obj/machinery/mineral/ore_redemption/offstation{
 	input_dir = 4
 	},
 /obj/structure/lattice/catwalk,
@@ -240,13 +232,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "nM" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
@@ -337,6 +326,18 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"qz" = (
+/obj/machinery/camera/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
+	environ = 0;
+	equipment = 0;
+	lighting = 0
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "qV" = (
 /obj/structure/spacevine,
 /obj/machinery/conveyor{
@@ -357,14 +358,8 @@
 	},
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"rE" = (
-/obj/structure/lattice,
-/obj/structure/spacevine,
-/obj/structure/marker_beacon/violet,
-/turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
 "rJ" = (
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/basic/hivebot,
 /obj/structure/spacevine,
 /obj/machinery/conveyor{
 	id = "mothership_main"
@@ -426,12 +421,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"wk" = (
-/obj/structure/table/optable,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/cold/no_nightlight/directional/east,
-/turf/open/floor/iron/dark,
-/area/shuttle/ruin/cyborg_mothership)
 "wo" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "mothership_main"
@@ -457,18 +446,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"xz" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
-	},
-/obj/machinery/power/port_gen/pacman,
-/turf/open/floor/plating/airless,
-/area/shuttle/ruin/cyborg_mothership)
 "yd" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -483,6 +460,13 @@
 	},
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"yw" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/machinery/light/floor/broken,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/ruin/cyborg_mothership)
 "yA" = (
 /obj/structure/spacevine,
 /obj/machinery/conveyor{
@@ -496,18 +480,13 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/ruin/cyborg_mothership)
 "yG" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/basic/hivebot/range,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "yQ" = (
 /obj/item/organ/internal/brain,
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"zh" = (
-/obj/structure/lattice,
-/obj/structure/marker_beacon/violet,
-/turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "zn" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -561,16 +540,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"Cq" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/spacevine,
-/obj/machinery/shieldgen{
-	anchored = 1;
-	req_access = null
-	},
-/obj/structure/marker_beacon/violet,
-/turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
 "Dv" = (
 /obj/structure/cable,
 /obj/structure/table_frame,
@@ -605,13 +574,13 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "Fe" = (
-/mob/living/simple_animal/bot/hygienebot,
+/mob/living/basic/bot/hygienebot,
 /obj/machinery/camera/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "FQ" = (
 /obj/structure/lattice,
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/basic/hivebot/range,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ge" = (
@@ -623,13 +592,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"Gf" = (
-/obj/item/stack/rods,
-/obj/machinery/light/broken/directional/east,
-/obj/machinery/button/door/directional/east{
-	id = "mothership_right"
+"GF" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/spacevine,
+/obj/machinery/shieldgen{
+	anchored = 1;
+	req_access = null
 	},
-/turf/open/floor/circuit/airless,
+/turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Hg" = (
 /obj/machinery/conveyor{
@@ -639,7 +609,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "HK" = (
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/basic/hivebot,
 /obj/item/circuitboard/aicore,
 /obj/structure/cable,
 /turf/open/floor/circuit/green/airless,
@@ -650,10 +620,8 @@
 	},
 /obj/machinery/camera/directional/west,
 /obj/item/pipe_dispenser,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
@@ -672,7 +640,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "JJ" = (
 /obj/structure/lattice,
-/mob/living/simple_animal/hostile/hivebot/mechanic,
+/mob/living/basic/hivebot/mechanic,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ks" = (
@@ -712,14 +680,6 @@
 	},
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"MK" = (
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/obj/machinery/button/door/directional/west{
-	id = "mothership_left"
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit/airless,
-/area/shuttle/ruin/cyborg_mothership)
 "MZ" = (
 /obj/structure/cable,
 /obj/machinery/conveyor{
@@ -744,9 +704,16 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
+"Nz" = (
+/obj/machinery/button/door/directional/west{
+	id = "mothership_left"
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "Oq" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /obj/effect/turf_decal/bot,
 /obj/structure/sink/directional/east,
 /obj/item/toy/figure/borg{
@@ -766,17 +733,14 @@
 /area/shuttle/ruin/cyborg_mothership)
 "OY" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Pf" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/crate/solarpanel_small,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -787,23 +751,13 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"PP" = (
-/obj/structure/table,
-/obj/effect/turf_decal/bot,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/razor,
-/obj/structure/mirror/directional/west,
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/turf/open/floor/iron/dark,
-/area/shuttle/ruin/cyborg_mothership)
 "QE" = (
 /obj/structure/lattice,
 /obj/machinery/camera/directional/east,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Rv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/ore_box,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -833,26 +787,36 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"Sy" = (
-/obj/machinery/light/cold/no_nightlight/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/airless,
+"Sd" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "SV" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ty" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/mineral/titanium,
 /turf/template_noop,
+/area/shuttle/ruin/cyborg_mothership)
+"TH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "TZ" = (
 /obj/item/radio/intercom/directional/south,
@@ -953,18 +917,16 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"ZB" = (
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/turf/open/floor/circuit/airless,
-/area/shuttle/ruin/cyborg_mothership)
 "ZD" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
-"ZI" = (
-/obj/structure/lattice,
-/obj/structure/spacevine,
-/obj/structure/marker_beacon/cerulean,
+"ZO" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/shieldgen{
+	anchored = 1;
+	req_access = null
+	},
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 
@@ -1028,7 +990,7 @@ hR
 hR
 hR
 hR
-xz
+TH
 RD
 wA
 jx
@@ -1048,7 +1010,7 @@ hR
 hR
 hR
 hR
-Cq
+GF
 oe
 oe
 oe
@@ -1087,7 +1049,7 @@ of
 oe
 BD
 oe
-fV
+ZO
 hR
 hR
 hR
@@ -1100,13 +1062,13 @@ hR
 hR
 oe
 UU
-zh
+so
 so
 hR
 hR
-az
+so
 aB
-az
+so
 hR
 BS
 oy
@@ -1135,7 +1097,7 @@ so
 hR
 hR
 so
-zh
+so
 MZ
 oe
 hR
@@ -1198,16 +1160,16 @@ kz
 zZ
 zZ
 mN
-PP
+iN
 Oq
 zZ
 kz
 kz
 zZ
-MK
+Nz
 ww
 UL
-ZB
+Uq
 zZ
 kz
 hR
@@ -1223,7 +1185,7 @@ yF
 fB
 zZ
 Ey
-jH
+Sd
 Fe
 yF
 HM
@@ -1236,7 +1198,7 @@ Ln
 Uq
 yF
 so
-az
+so
 ss
 of
 dC
@@ -1258,7 +1220,7 @@ ks
 TZ
 zZ
 uK
-lZ
+qz
 zZ
 VU
 tr
@@ -1273,7 +1235,7 @@ yF
 pY
 zZ
 Ey
-jH
+yw
 bE
 yF
 hB
@@ -1286,7 +1248,7 @@ yG
 Uq
 yF
 so
-az
+so
 KN
 Hg
 qn
@@ -1298,16 +1260,16 @@ kz
 zZ
 zZ
 mN
-wk
+ir
 hs
 zZ
 kz
 Em
 no
-Gf
+ms
 pz
 Uq
-Sy
+dO
 zZ
 kz
 hR
@@ -1385,7 +1347,7 @@ iv
 hR
 hR
 so
-zh
+so
 of
 oe
 hR
@@ -1400,13 +1362,13 @@ hR
 hR
 BD
 qV
-rE
+iv
 iv
 hR
 hR
-ZI
+iv
 yA
-ZI
+iv
 hR
 VC
 tW
@@ -1437,7 +1399,7 @@ MZ
 BD
 oe
 oe
-Cq
+GF
 hR
 hR
 hR
@@ -1448,7 +1410,7 @@ hR
 hR
 hR
 hR
-fV
+ZO
 oe
 oe
 oe

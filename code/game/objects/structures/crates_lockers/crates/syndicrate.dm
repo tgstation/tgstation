@@ -1,11 +1,13 @@
-/obj/structure/closet/crate/syndicrate
+/obj/structure/closet/crate/secure/syndicrate
 	name = "surplus syndicrate"
 	desc = "A conspicuous crate with the Syndicate logo on it. You don't know how to open it."
 	icon_state = "syndicrate"
+	base_icon_state = "syndicrate"
 	max_integrity = 500
 	armor_type = /datum/armor/crate_syndicrate
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	integrity_failure = 0 //prevents bust_open from activating
+	paint_jobs = null
 	/// variable that only lets the crate open if opened by a key from the uplink
 	var/created_items = FALSE
 	/// this is what will spawn when it is opened with a syndicrate key
@@ -18,7 +20,18 @@
 	laser = 50
 	energy = 100
 
-/obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/closet/crate/secure/syndicrate/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!broken && !force && !created_items)
+		balloon_alert(user, "locked!")
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/secure/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(created_items)
 		return ..()
 	if(damage_amount < DAMAGE_PRECISION)
@@ -30,7 +43,7 @@
 	qdel(src)
 
 ///ensures that the syndicrate can only be unlocked by opening it with a syndicrate_key
-/obj/structure/closet/crate/syndicrate/attackby(obj/item/item, mob/user, params)
+/obj/structure/closet/crate/secure/syndicrate/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/syndicrate_key) || created_items)
 		return ..()
 	created_items = TRUE
@@ -40,24 +53,22 @@
 	qdel(item)
 	to_chat(user, span_notice("You twist the key into both locks at once, opening the crate."))
 	playsound(src, 'sound/machines/boltsup.ogg', 50, vary = FALSE)
-	update_appearance(updates = UPDATE_OVERLAYS)
 	togglelock(user)
 
-/obj/structure/closet/crate/syndicrate/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/closet/crate/secure/syndicrate/togglelock(mob/living/user, silent)
+	if(broken || !created_items)
+		return
+	if(iscarbon(user))
+		add_fingerprint(user)
+	locked = !locked
+	user.visible_message(
+		span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
+		span_notice("You [locked ? "locked" : "unlocked"] [src]."),
+	)
+	update_appearance()
+
+/obj/structure/closet/crate/secure/syndicrate/attackby_secondary(obj/item/weapon, mob/user, params)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-///overwrites default opening behavior until it is unlocked via the syndicrate key
-/obj/structure/closet/crate/syndicrate/can_open(mob/living/user, force = FALSE)
-	if(!created_items)
-		balloon_alert(user, "locked!")
-		return FALSE
-	return ..()
-
-///syndicrate has a unique overlay for being unlocked
-/obj/structure/closet/crate/syndicrate/closet_update_overlays(list/new_overlays)
-	. = new_overlays
-	if(created_items)
-		. += "syndicrate_unlocked"
 
 /obj/item/syndicrate_key
 	name = "syndicrate key"
@@ -70,10 +81,10 @@
 	. = ..()
 	register_item_context()
 
-/obj/item/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+/obj/item/syndicrate_key/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
 
-	var/obj/structure/closet/crate/syndicrate/target_structure = target
+	var/obj/structure/closet/crate/secure/syndicrate/target_structure = target
 	if(!istype(target_structure))
 		return NONE
 	if(target_structure.created_items)

@@ -2,15 +2,16 @@
 /obj/effect/mob_spawn/ghost_role/venus_human_trap
 	name = "flower bud"
 	desc = "A large pulsating plant..."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "bud0"
-	mob_type = /mob/living/simple_animal/hostile/venus_human_trap
+	mob_type = /mob/living/basic/venus_human_trap
 	density = FALSE
 	prompt_name = "venus human trap"
 	you_are_text = "You are a venus human trap."
 	flavour_text = "You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"
 	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
 	spawner_job_path = /datum/job/venus_human_trap
+	invisibility = INVISIBILITY_ABSTRACT //The flower bud structure is our visible component, we just handle logic.
 	/// Physical structure housing the spawner
 	var/obj/structure/alien/resin/flower_bud/flower_bud
 	/// Used to determine when to notify ghosts
@@ -23,27 +24,27 @@
 		flower_bud = null
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap)
+/obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/basic/venus_human_trap/spawned_human_trap)
 	if(spawned_human_trap && flower_bud)
 		if(flower_bud.trait_flags & SPACEVINE_HEAT_RESISTANT)
 			spawned_human_trap.unsuitable_heat_damage = 0
 		if(flower_bud.trait_flags & SPACEVINE_COLD_RESISTANT)
 			spawned_human_trap.unsuitable_cold_damage = 0
 
+/obj/effect/mob_spawn/ghost_role/venus_human_trap/special(mob/living/spawned_mob, mob/mob_possessor)
+	. = ..()
+	spawned_mob.mind.add_antag_datum(/datum/antagonist/venus_human_trap)
+
 /// Called when the attached flower bud has borne fruit (ie. is ready)
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/proc/bear_fruit()
 	ready = TRUE
-	notify_ghosts("[src] has borne fruit!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ATTACK, ignore_key = POLL_IGNORE_VENUSHUMANTRAP)
-
-/obj/effect/mob_spawn/ghost_role/venus_human_trap/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-	if(href_list["activate"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.ManualFollow(src)
-			attack_ghost(ghost)
+	notify_ghosts(
+		"[src] has borne fruit!",
+		source = src,
+		header = "Venus Human Trap",
+		click_interact = TRUE,
+		ignore_key = POLL_IGNORE_VENUSHUMANTRAP,
+	)
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/allow_spawn(mob/user, silent = FALSE)
 	. = ..()

@@ -11,7 +11,6 @@
 "e" = (
 /obj/structure/table/wood/poker,
 /obj/item/gun/ballistic/revolver/russian/soul,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "f" = (
@@ -21,12 +20,12 @@
 "g" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/mythril,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "h" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/diamond,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "i" = (
@@ -35,6 +34,7 @@
 "j" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/adamantine,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "k" = (
@@ -95,12 +95,11 @@
 /area/ruin/powered/greed)
 "v" = (
 /obj/item/coin/gold,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "w" = (
-/obj/item/storage/bag/money,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "J" = (
@@ -301,9 +300,9 @@ l
 m
 m
 m
-l
-m
 v
+m
+l
 W
 W
 a
@@ -345,9 +344,9 @@ l
 m
 m
 l
-m
-l
 w
+l
+o
 W
 W
 a

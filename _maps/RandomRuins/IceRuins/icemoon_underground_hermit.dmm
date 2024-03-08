@@ -20,12 +20,6 @@
 /obj/structure/sink/directional/south,
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
-"ec" = (
-/obj/structure/chair/comfy/beige,
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood,
-/area/ruin/powered/hermit)
 "gr" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/grass/fairy,
@@ -56,18 +50,16 @@
 "jG" = (
 /turf/closed/wall/mineral/wood,
 /area/icemoon/underground/explored)
-"mN" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/wood,
-/area/ruin/powered/hermit)
 "oJ" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
-"sj" = (
-/obj/machinery/hydroponics/soil,
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass/fairy,
+"ph" = (
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable,
+/area/icemoon/underground/explored)
+"pA" = (
+/obj/structure/chair/comfy/beige,
+/turf/open/floor/wood,
 /area/ruin/powered/hermit)
 "sC" = (
 /obj/item/chair/wood/wings,
@@ -82,10 +74,6 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood,
-/area/ruin/powered/hermit)
-"wH" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
 "zd" = (
 /obj/item/pickaxe/improvised,
@@ -150,9 +138,6 @@
 /obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
-"YN" = (
-/turf/closed/mineral/snowmountain/icemoon,
-/area/icemoon/underground/explored)
 
 (1,1,1) = {"
 QD
@@ -177,15 +162,15 @@ QD
 QD
 QD
 QD
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 aM
 QD
 QD
@@ -194,48 +179,48 @@ QD
 QD
 QD
 QD
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 "}
 (4,1,1) = {"
 QD
 QD
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 "}
 (5,1,1) = {"
 QD
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 aM
 aM
 il
@@ -245,10 +230,10 @@ aM
 aM
 "}
 (6,1,1) = {"
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
 Xl
 Xl
 TL
@@ -263,17 +248,17 @@ Rr
 aM
 "}
 (7,1,1) = {"
-YN
-YN
-YN
+ph
+ph
+ph
 uw
 Yi
 Lf
 TL
-ec
+pA
 ii
 ha
-mN
+JI
 TL
 aM
 aM
@@ -281,8 +266,8 @@ aM
 il
 "}
 (8,1,1) = {"
-YN
-YN
+ph
+ph
 uw
 bp
 GU
@@ -299,9 +284,9 @@ Rr
 aM
 "}
 (9,1,1) = {"
-YN
+ph
 jG
-sj
+uw
 bp
 Si
 oJ
@@ -317,8 +302,8 @@ aM
 CR
 "}
 (10,1,1) = {"
-YN
-YN
+ph
+ph
 uw
 Rd
 bp
@@ -335,54 +320,54 @@ aM
 aM
 "}
 (11,1,1) = {"
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
 uw
 bp
 bp
-wH
+bp
 WK
 gr
 bp
-YN
-YN
+ph
+ph
 aM
 aM
 Rr
 "}
 (12,1,1) = {"
 QD
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
 zd
 io
 jG
-YN
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
+ph
 aM
 aM
 aM
 "}
 (13,1,1) = {"
 QD
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 aM
 aM
 Rr
@@ -391,16 +376,16 @@ aM
 (14,1,1) = {"
 QD
 QD
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-YN
-aM
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 Rr
 aM
 aM
@@ -411,10 +396,10 @@ QD
 QD
 QD
 QD
-YN
-YN
-YN
-YN
+ph
+ph
+ph
+ph
 aM
 aM
 aM

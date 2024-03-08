@@ -37,7 +37,6 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
-
 	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
@@ -68,10 +67,6 @@
 	var/datum/client_colour/rave_screen
 	/// The current element in the rainbow_order list we are on.
 	var/rave_number = 1
-	/// The track we selected to play.
-	var/datum/track/selection
-	/// A list of all the songs we can play.
-	var/list/songs = list()
 	/// A list of the colors the module can take.
 	var/static/list/rainbow_order = list(
 		list(1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
@@ -81,23 +76,18 @@
 		list(0,0,0,0, 0,0.5,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
 		list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
 	)
+	/// What actually plays music to us
+	var/datum/jukebox/single_mob/music_player
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
-	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-	for(var/sound in tracks)
-		var/datum/track/track = new()
-		track.song_path = file("[global.config.directory]/jukebox_music/sounds/[sound]")
-		var/list/sound_params = splittext(sound,"+")
-		if(length(sound_params) != 3)
-			continue
-		track.song_name = sound_params[1]
-		track.song_length = text2num(sound_params[2])
-		track.song_beat = text2num(sound_params[3])
-		songs[track.song_name] = track
-	if(length(songs))
-		var/song_name = pick(songs)
-		selection = songs[song_name]
+	music_player = new(src)
+	music_player.sound_loops = TRUE
+
+/obj/item/mod/module/visor/rave/Destroy()
+	QDEL_NULL(music_player)
+	QDEL_NULL(rave_screen)
+	return ..()
 
 /obj/item/mod/module/visor/rave/on_activation()
 	. = ..()
@@ -105,26 +95,28 @@
 		return
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
-	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
+	music_player.start_music(mod.wearer)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
 	QDEL_NULL(rave_screen)
-	if(selection)
-		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
-		if(deleting)
-			return
-		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
+	if(isnull(music_player.active_song_sound))
+		return
+
+	music_player.unlisten_all()
+	QDEL_NULL(music_player)
+	if(deleting)
+		return
+	SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)
-		appearance.color = active ? rainbow_order[rave_number] : null
+		appearance.color = isnull(music_player.active_song_sound) ? null : rainbow_order[rave_number]
 
-/obj/item/mod/module/visor/rave/on_active_process(delta_time)
+/obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
@@ -133,20 +125,20 @@
 
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
-	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, clean_songs())
+	if(length(music_player.songs))
+		.["selection"] = add_ui_configuration("Song", "list", music_player.selection.song_name, music_player.songs)
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
 		if("selection")
-			if(active)
+			if(!isnull(music_player.active_song_sound))
 				return
-			selection = songs[value]
 
-/obj/item/mod/module/visor/rave/proc/clean_songs()
-	. = list()
-	for(var/track in songs)
-		. += track
+			var/datum/track/new_song = music_player.songs[value]
+			if(QDELETED(src) || !istype(new_song, /datum/track))
+				return
+
+			music_player.selection = new_song
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
@@ -287,7 +279,9 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
+	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	passtable_on(mod.wearer, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -301,8 +295,10 @@
 		playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	passtable_off(mod.wearer, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)
@@ -310,7 +306,7 @@
 /obj/item/mod/module/atrocinator/proc/check_upstairs()
 	SIGNAL_HANDLER
 
-	if(you_fucked_up || mod.wearer.has_gravity() != NEGATIVE_GRAVITY)
+	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
@@ -334,3 +330,20 @@
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME
+
+/obj/item/mod/module/atrocinator/proc/on_talk(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= "upside_down"
+
+/obj/item/mod/module/recycler/donk/safe
+	name = "MOD foam dart recycler module"
+	desc = "A mod module that collects and repackages fired foam darts into half-sized ammo boxes. \
+		Activate on a nearby turf or storage to unload stored ammo boxes."
+	icon_state = "donk_safe_recycler"
+	overlay_state_inactive = "module_donk_safe_recycler"
+	overlay_state_active = "module_donk_safe_recycler"
+	complexity = 1
+	efficiency = 1
+	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
+	ammobox_type = /obj/item/ammo_box/foambox/mini
+	required_amount = SMALL_MATERIAL_AMOUNT*2.5

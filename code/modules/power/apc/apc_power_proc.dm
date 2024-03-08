@@ -7,10 +7,11 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/proc/make_terminal()
+/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
+	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(dir)
 	terminal.master = src
 
@@ -41,8 +42,11 @@
 	if(!is_operational || failure_timer)
 		return
 	operating = !operating
-	add_hiddenprint(user)
-	user.log_message("turned [operating ? "on" : "off"] the [src]", LOG_GAME)
+	if (user)
+		var/enabled_or_disabled = operating ? "enabled" : "disabled"
+		balloon_alert(user, "power [enabled_or_disabled]")
+		user.log_message("turned [enabled_or_disabled] the [src]", LOG_GAME)
+		add_hiddenprint(user)
 	update()
 	update_appearance()
 
@@ -134,8 +138,10 @@
 	if(nightshift_lights == on)
 		return //no change
 	nightshift_lights = on
-	for(var/obj/machinery/light/night_light in area)
-		if(night_light.nightshift_allowed)
-			night_light.nightshift_enabled = nightshift_lights
-			night_light.update(FALSE)
-		CHECK_TICK
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/light/night_light in area_turf)
+				if(night_light.nightshift_allowed)
+					night_light.nightshift_enabled = nightshift_lights
+					night_light.update(FALSE)
+				CHECK_TICK

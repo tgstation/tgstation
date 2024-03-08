@@ -49,6 +49,7 @@
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	belt = /obj/item/modular_computer/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/waystation/qm
 	name = "Waystation Quartermaster"

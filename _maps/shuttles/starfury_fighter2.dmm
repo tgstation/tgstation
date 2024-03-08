@@ -9,6 +9,13 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
+"h" = (
+/obj/machinery/camera/directional/west{
+	network = list("SBC_Fighter2");
+	c_tag = "Fighter 2 - Starboard"
+	},
+/turf/template_noop,
+/area/shuttle/sbc_fighter2)
 "j" = (
 /obj/machinery/button/door{
 	id = "SBC_fighter2_bolt";
@@ -88,6 +95,13 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
+"Q" = (
+/obj/machinery/camera/directional/east{
+	network = list("SBC_Fighter2");
+	c_tag = "Fighter 2 - Port"
+	},
+/turf/template_noop,
+/area/shuttle/sbc_fighter2)
 "S" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/syndicate,
@@ -105,7 +119,7 @@
 
 (1,1,1) = {"
 a
-a
+Q
 l
 V
 V
@@ -141,7 +155,7 @@ q
 "}
 (5,1,1) = {"
 a
-a
+h
 k
 V
 V

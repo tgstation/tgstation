@@ -18,7 +18,7 @@
 	var/obj/item/computer_disk/inserted_disk
 
 	// Lighting system to better communicate the directions.
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 1
 	light_color = COLOR_RED
@@ -62,7 +62,7 @@
 
 /obj/machinery/doppler_array/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))
@@ -237,7 +237,7 @@
 	else if (machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[base_icon_state]_screen-off")
 
-/obj/machinery/doppler_array/on_deconstruction()
+/obj/machinery/doppler_array/on_deconstruction(disassembled)
 	eject_disk()
 	. = ..()
 

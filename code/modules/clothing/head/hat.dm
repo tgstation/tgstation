@@ -55,7 +55,7 @@
 	name = "plague doctor's hat"
 	desc = "These were once used by plague doctors. Will protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
 
@@ -90,15 +90,33 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/head/cowboy
-	name = "bounty hunting hat"
+	name = "cowboy hat"
 	desc = "Ain't nobody gonna cheat the hangman in my town."
 	icon = 'icons/obj/clothing/head/cowboy.dmi'
 	worn_icon = 'icons/mob/clothing/head/cowboy.dmi'
-	icon_state = "cowboy"
+	icon_state = "cowboy_hat_brown"
 	worn_icon_state = "hunter"
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	/// Chance that the hat will catch a bullet for you
+	var/deflect_chance = 2
+
+/obj/item/clothing/head/cowboy/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/bullet_intercepting,\
+		block_chance = deflect_chance,\
+		active_slots = ITEM_SLOT_HEAD,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
+
+/// When we catch a bullet, fling away
+/obj/item/clothing/head/cowboy/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
+	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
 
 /datum/armor/head_cowboy
 	melee = 5
@@ -106,12 +124,24 @@
 	laser = 5
 	energy = 15
 
+/// Bounty hunter's hat, very likely to intercept bullets
+/obj/item/clothing/head/cowboy/bounty
+	name = "bounty hunting hat"
+	desc = "Reach for the skies, pardner."
+	icon_state = "bounty_hunter"
+	worn_icon_state = "hunter"
+	deflect_chance = 50
+
 /obj/item/clothing/head/cowboy/black
 	name = "desperado hat"
 	desc = "People with ropes around their necks don't always hang."
 	icon_state = "cowboy_hat_black"
 	worn_icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
+
+/// More likely to intercept bullets, since you're likely to not be wearing your modsuit with this on
+/obj/item/clothing/head/cowboy/black/syndicate
+	deflect_chance = 25
 
 /obj/item/clothing/head/cowboy/white
 	name = "ten-gallon hat"
@@ -149,6 +179,15 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
+
+/obj/item/clothing/head/costume/santa/gags
+	name = "santa hat"
+	desc = "On the first day of christmas my employer gave to me!"
+	icon_state = "santa_hat"
+	greyscale_colors = "#cc0000#f8f8f8"
+	greyscale_config = /datum/greyscale_config/santa_hat
+	greyscale_config_worn = /datum/greyscale_config/santa_hat/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
@@ -282,3 +321,10 @@
 	name = "red nightcap"
 	desc = "A red nightcap for all the sleepyheads and dozers out there."
 	icon_state = "sleep_red"
+
+/obj/item/clothing/head/costume/paper_hat
+	name = "paper hat"
+	desc = "A flimsy hat made of paper."
+	icon_state = "paper"
+	worn_icon_state = "paper"
+	dog_fashion = /datum/dog_fashion/head

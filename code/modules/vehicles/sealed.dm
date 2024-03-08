@@ -3,6 +3,8 @@
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
+	///Determines which occupants provide access when bumping into doors
+	var/access_provider_flags = VEHICLE_CONTROL_DRIVE
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -31,7 +33,7 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/mob/occupant as anything in return_drivers())
+		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
 			if(conditionalwall.try_safety_unlock(occupant))
 				return
 			conditionalwall.bumpopen(occupant)
@@ -46,11 +48,17 @@
 	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, VEHICLE_TRAIT)
 
 
-/obj/vehicle/sealed/proc/mob_try_enter(mob/M)
-	if(!istype(M))
+/obj/vehicle/sealed/proc/mob_try_enter(mob/rider)
+	if(!istype(rider))
 		return FALSE
-	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(enter_checks), M)))
-		mob_enter(M)
+	var/enter_delay = get_enter_delay(rider)
+	if (enter_delay == 0)
+		if (enter_checks(rider))
+			mob_enter(rider)
+			return TRUE
+		return FALSE
+	if (do_after(rider, enter_delay, src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(enter_checks), rider)))
+		mob_enter(rider)
 		return TRUE
 	return FALSE
 

@@ -5,12 +5,12 @@
  */
 /mob/living/circuit_drone
 	name = "drone"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_medium_med"
 	maxHealth = 300
 	health = 300
 	living_flags = 0
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 /mob/living/circuit_drone/Initialize(mapload)
@@ -32,7 +32,7 @@
 /mob/living/circuit_drone/updatehealth()
 	. = ..()
 	if(health < 0)
-		gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE)
+		gib()
 
 /mob/living/circuit_drone/welder_act(mob/living/user, obj/item/tool)
 	. = ..()

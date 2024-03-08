@@ -3,9 +3,9 @@
 // All signals send the source datum of the signal as the first argument
 
 ///from base of atom/attackby(): (/obj/item, /mob/living, params)
-#define COMSIG_PARENT_ATTACKBY "atom_attackby"
+#define COMSIG_ATOM_ATTACKBY "atom_attackby"
 /// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, params)
-#define COMSIG_PARENT_ATTACKBY_SECONDARY "atom_attackby_secondary"
+#define COMSIG_ATOM_ATTACKBY_SECONDARY "atom_attackby_secondary"
 ///from [/item/afterattack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, proximity_flag, click_parameters)
 #define COMSIG_ATOM_AFTER_ATTACKEDBY "atom_after_attackby"
 /// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
@@ -24,6 +24,8 @@
 #define COMSIG_ATOM_FIX "atom_fix"
 /// from base of [/atom/proc/atom_destruction]: (damage_flag)
 #define COMSIG_ATOM_DESTRUCTION "atom_destruction"
+/// from base of [/atom/proc/extinguish]
+#define COMSIG_ATOM_EXTINGUISH "atom_extinguish"
 ///from base of [/atom/proc/update_integrity]: (old_value, new_value)
 #define COMSIG_ATOM_INTEGRITY_CHANGED "atom_integrity_changed"
 ///from base of [/atom/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
@@ -48,5 +50,22 @@
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
-///from relay_attackers element: (atom/attacker)
+///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
+///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)
+#define COMSIG_PRE_TILT_AND_CRUSH "atom_pre_tilt_and_crush"
+	#define COMPONENT_IMMUNE_TO_TILT_AND_CRUSH (1<<0)
+///Called when a atom gets something tilted on them: (atom/target, atom/source)
+#define COMSIG_POST_TILT_AND_CRUSH "atom_post_tilt_and_crush"
+/// Called when an atom is splashed with something: (atom/source)
+#define COMSIG_ATOM_SPLASHED "atom_splashed"
+
+	///The damage type of the weapon projectile is non-lethal stamina
+	#define ATTACKER_STAMINA_ATTACK (1<<0)
+	///the attacker is shoving the source
+	#define ATTACKER_SHOVING (1<<1)
+	/// The attack is a damaging-type attack
+	#define ATTACKER_DAMAGING_ATTACK (1<<2)
+
+/// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
+#define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"

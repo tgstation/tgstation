@@ -34,7 +34,7 @@
 	/// T-ray scan range.
 	var/range = 4
 
-/obj/item/mod/module/t_ray/on_active_process(delta_time)
+/obj/item/mod/module/t_ray/on_active_process(seconds_per_tick)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
 
 ///Magnetic Stability - Gives the user a slowdown but makes them negate gravity and be immune to slips.
@@ -85,7 +85,7 @@
 		these are only capable of working in zero-gravity environments, a blessing to some Engineers."
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
-	complexity = 3
+	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
@@ -124,9 +124,9 @@
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
 		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE)
-	..()
+	return ..()
 
-/obj/projectile/tether/on_hit(atom/target)
+/obj/projectile/tether/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(firer)
 		firer.throw_at(target, 10, 1, firer, FALSE, FALSE, null, MOVE_FORCE_NORMAL, TRUE)
@@ -165,10 +165,10 @@
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
-	.["usertoxins"] = mod.wearer?.getToxLoss() || 0
-	.["usermaxtoxins"] = mod.wearer?.getMaxHealth() || 0
-	.["threatlevel"] = perceived_threat_level
+	.["is_user_irradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
+	.["background_radiation_level"] = perceived_threat_level
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	.["loss_tox"] = mod.wearer?.getToxLoss() || 0
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER
@@ -203,6 +203,24 @@
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
+
+///Safety-First Head Protection - Protects your brain matter from sudden impacts.
+/obj/item/mod/module/headprotector
+	name = "MOD Safety-First Head Protection module"
+	desc = "A series of dampening plates are installed along the back and upper areas of \
+		the helmet. These plates absorb abrupt kinetic shocks delivered to the skull. \
+		The bulk of this module prevents it from being installed in any suit that is capable \
+		of combat armor adjustments. However, the rudimentry nature of the module makes it \
+		relatively easy to install into most other suits."
+	icon_state = "welding"
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
+
+/obj/item/mod/module/constructor/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+
+/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
 ///Mister - Sprays water over an area.
 /obj/item/mod/module/mister

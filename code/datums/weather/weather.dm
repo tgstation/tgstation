@@ -115,7 +115,8 @@
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
-	send_alert(telegraph_message, telegraph_sound)
+	if(telegraph_duration)
+		send_alert(telegraph_message, telegraph_sound)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /**
@@ -134,6 +135,8 @@
 	send_alert(weather_message, weather_sound)
 	if(!perpetual)
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
+	for(var/area/impacted_area as anything in impacted_areas)
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type))
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -165,6 +168,8 @@
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
+	for(var/area/impacted_area as anything in impacted_areas)
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type))
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx)
@@ -177,7 +182,7 @@
 			if(alert_sfx)
 				SEND_SOUND(player, sound(alert_sfx))
 
-// the checks for if a mob should recieve alerts, returns TRUE if can
+// the checks for if a mob should receive alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
 	return !isnull(mob_turf)

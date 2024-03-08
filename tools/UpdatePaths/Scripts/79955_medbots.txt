@@ -1,0 +1,6 @@
+/mob/living/simple_animal/bot/medbot : /mob/living/basic/bot/medbot{@OLD}
+/mob/living/simple_animal/bot/medbot/autopatrol : /mob/living/basic/bot/medbot/autopatrol{@OLD}
+/mob/living/simple_animal/bot/medbot/stationary : /mob/living/basic/bot/medbot/stationary{@OLD}
+/mob/living/simple_animal/bot/medbot/mysterious : /mob/living/basic/bot/medbot/mysterious{@OLD}
+/mob/living/simple_animal/bot/medbot/derelict : /mob/living/basic/bot/medbot/derelict{@OLD}
+/mob/living/simple_animal/bot/medbot/nukie : /mob/living/basic/bot/medbot/nukie{@OLD}

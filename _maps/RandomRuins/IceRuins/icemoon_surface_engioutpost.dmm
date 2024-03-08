@@ -37,16 +37,15 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/planetengi)
 "as" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "au" = (
@@ -65,7 +64,7 @@
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "ax" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -89,7 +88,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "aA" = (
-/obj/machinery/rnd/production/protolathe/department/engineering/no_tax,
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 9
 	},
@@ -108,7 +107,7 @@
 /turf/open/floor/engine/o2,
 /area/ruin/planetengi)
 "aE" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -163,7 +162,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "aT" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -239,9 +238,7 @@
 /area/ruin/planetengi)
 "br" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/structure/sign/poster/official/build{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/build/directional/west,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "bs" = (
@@ -272,18 +269,18 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "bA" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8
 	},
 /turf/open/floor/engine,
 /area/ruin/planetengi)
 "bB" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
 	},
@@ -488,7 +485,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "ct" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/planetengi)
@@ -635,9 +632,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/pda_ad/directional/south,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "dg" = (
@@ -753,9 +748,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/grey_tide{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/grey_tide/directional/north,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "dC" = (
@@ -819,7 +812,7 @@
 /turf/open/floor/engine/vacuum,
 /area/ruin/planetengi)
 "yF" = (
-/mob/living/simple_animal/hostile/construct/proteon,
+/mob/living/basic/construct/proteon,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "Ai" = (
@@ -830,7 +823,7 @@
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "Iy" = (
-/mob/living/simple_animal/hostile/construct/proteon,
+/mob/living/basic/construct/proteon,
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)

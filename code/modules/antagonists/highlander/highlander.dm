@@ -52,9 +52,8 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H)
-		if(!H.dropItemToGround(I))
-			qdel(I)
+	H.drop_everything(del_on_drop = FALSE, force = TRUE, del_if_nodrop = TRUE)
+
 	H.regenerate_icons()
 	H.revive(ADMIN_HEAL_ALL)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
@@ -66,7 +65,7 @@
 		P.attack_self(H)
 	var/obj/item/card/id/advanced/highlander/W = new(H)
 	W.registered_name = H.real_name
-	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER_TRAIT)
 	W.update_label()
 	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)

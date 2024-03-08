@@ -62,7 +62,7 @@
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
 				SSair.planetary[initial_gas_mix] = mix
-	. = ..()
+	return ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -130,9 +130,9 @@
 	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
 		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
-		burn()
+		burn_turf()
 
-/turf/proc/burn()
+/turf/proc/burn_turf()
 	burn_tile()
 	var/chance_of_deletion
 	if (heat_capacity) //beware of division by zero

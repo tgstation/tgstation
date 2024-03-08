@@ -8,9 +8,9 @@ permissions:
 
 jobs:
   title_and_changelog:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-    - uses: Wayland-Smithy/emoji-stripper-action@8f4c2fe9748bb9b02f105be4e72a1a42b0f34d84
+    - uses: Wayland-Smithy/emoji-stripper-action@de0c1d158edee50700583d6454aa5f5117337599
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         title: true

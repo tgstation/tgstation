@@ -10,7 +10,7 @@
 	// This is not "remove on fullheal" as in practice,
 	// fullheal should instead remove all the sources and in turn cure this
 
-	/// Static list of signals that, when recieved, we force an update to our nearsighted overlay
+	/// Static list of signals that, when received, we force an update to our nearsighted overlay
 	var/static/list/update_signals = list(SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED))
 	/// How severe is our nearsightedness right now
 	var/overlay_severity = 1
@@ -100,7 +100,7 @@
 /datum/status_effect/temporary_blindness/on_remove()
 	owner.cure_blind(id)
 
-/datum/status_effect/temporary_blindness/tick(delta_time, times_fired)
+/datum/status_effect/temporary_blindness/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
 
@@ -116,7 +116,7 @@
 		return
 
 	// Otherwise add a chance to let them know that it's working
-	else if(DT_PROB(5, delta_time))
+	else if(SPT_PROB(5, seconds_between_ticks))
 		var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
 		// "Your blindfold soothes your eyes", for example
 		to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))

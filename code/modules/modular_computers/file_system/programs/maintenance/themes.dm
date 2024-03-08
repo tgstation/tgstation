@@ -26,13 +26,13 @@
 
 ///Called post-installation of an application in a computer, after 'computer' var is set.
 /datum/computer_file/program/maintenance/theme/on_install()
+	SHOULD_CALL_PARENT(FALSE)
 	//add the theme to the computer and increase its size to match
 	var/datum/computer_file/program/themeify/theme_app = locate() in computer.stored_files
 	if(theme_app)
 		theme_app.imported_themes += theme_name
 		theme_app.size += size
 		qdel(src)
-	return ..()
 
 /datum/computer_file/program/maintenance/theme/cat
 	theme_name = CAT_THEME_NAME

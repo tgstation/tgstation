@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 /datum/glass_style
 	/// Required - What EXACT type of reagent is needed for this style to be used
 	/// If not supplied, will be assumed to be an abstract type and will not be instantiated
-	var/required_drink_type
+	var/datum/reagent/required_drink_type
 	/// Required - What EXACT type of atom is needed for this style to be used
 	/// If not supplied, will be assumed to be an abstract type and will not be instantiated
 	var/required_container_type
@@ -64,6 +64,25 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	/// Suggested - What icon state is used for this glass style
 	var/icon_state
 
+/// Helper to apply the entire style to something.
+/datum/glass_style/proc/set_all(obj/item/thing)
+	set_name(thing)
+	set_desc(thing)
+	set_appearance(thing)
+
+/// Sets the passed item to our name.
+/datum/glass_style/proc/set_name(obj/item/thing)
+	thing.name = name
+
+/// Sets the passed item to our description.
+/datum/glass_style/proc/set_desc(obj/item/thing)
+	thing.desc = desc
+
+/// Sets the passed item to our icon and icon state.
+/datum/glass_style/proc/set_appearance(obj/item/thing)
+	thing.icon = icon
+	thing.icon_state = icon_state
+
 /datum/glass_style/drinking_glass
 	required_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass
 	icon = 'icons/obj/drinks/drinks.dmi'
@@ -72,8 +91,26 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	required_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	icon = 'icons/obj/drinks/shot_glasses.dmi'
 
-/datum/glass_style/juicebox
-	required_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton
-	icon = 'icons/obj/drinks/boxes.dmi'
+/datum/glass_style/has_foodtype
 	/// This style changes the "drink type" of the container it's placed it as well, it's like food types
 	var/drink_type = NONE
+
+/datum/glass_style/has_foodtype/drinking_glass
+	required_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass
+	icon = 'icons/obj/drinks/drinks.dmi'
+
+/datum/glass_style/has_foodtype/juicebox
+	required_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton
+	icon = 'icons/obj/drinks/boxes.dmi'
+
+/datum/glass_style/has_foodtype/soup
+	required_container_type = /obj/item/reagent_containers/cup/bowl
+	icon = 'icons/obj/food/soupsalad.dmi'
+
+/datum/glass_style/has_foodtype/soup/New()
+	. = ..()
+	// By default: If name or description is unset, it will inherent from the soup reagent set
+	if(!name)
+		name = initial(required_drink_type.name)
+	if(!desc)
+		desc = initial(required_drink_type.description)

@@ -12,7 +12,8 @@
 	// If we're moving to/from nullspace, refresh
 	// Easier then adding nullchecks to all this shit, and technically right since a null turf means nograv
 	if(isnull(old_turf) || isnull(new_turf))
-		refresh_gravity()
+		if(!QDELING(src))
+			refresh_gravity()
 		return
 	// If the turf gravity has changed, then it's possible that our state has changed, so update
 	if(HAS_TRAIT(old_turf, TRAIT_FORCED_GRAVITY) != HAS_TRAIT(new_turf, TRAIT_FORCED_GRAVITY) || new_turf.force_no_gravity != old_turf.force_no_gravity)
@@ -59,33 +60,29 @@
 	if(.)
 		return
 	if(mover.throwing)
-		return (!density || (body_position == LYING_DOWN) || (mover.throwing.thrower == src && !ismob(mover)))
+		var/mob/thrower = mover.throwing.get_thrower()
+		return (!density || (body_position == LYING_DOWN) || (thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
 		return TRUE
 	return !mover.density || body_position == LYING_DOWN
 
-/mob/living/toggle_move_intent()
-	. = ..()
-	update_move_intent_slowdown()
-
 /mob/living/update_config_movespeed()
 	update_move_intent_slowdown()
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
+	add_movespeed_modifier((move_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
 
-/mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T) && !is_type_on_turf(T, /obj/structure/lattice/catwalk))
-		if(T.slowdown != current_turf_slowdown)
-			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
-			current_turf_slowdown = T.slowdown
+/mob/living/proc/update_turf_movespeed(turf/open/turf)
+	if(isopenturf(turf) && !HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLOWDOWN))
+		if(turf.slowdown != current_turf_slowdown)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = turf.slowdown)
+			current_turf_slowdown = turf.slowdown
 	else if(current_turf_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
 		current_turf_slowdown = 0
-
 
 /mob/living/proc/update_pull_movespeed()
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATING_PULL_MOVESPEED)

@@ -6,6 +6,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
+/obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
+	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
+
+/obj/item/grenade/flashbang/remove_grenade_fantasy_bonuses(quality)
+	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+
 /obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)
@@ -34,7 +40,7 @@
 		living_mob.Knockdown(max(200/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc) //Stop allahu akbarring rooms with this.
+	if(!distance || loc == living_mob || loc == living_mob.loc)
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 15)
@@ -105,7 +111,7 @@
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 15)
-		if(living_mob.apply_damages(10, 10))
+		if(living_mob.apply_damages(brute = 10, burn = 10))
 			to_chat(living_mob, span_userdanger("The blast from \the [src] bruises and burns you!"))
 
 	// only checking if they're on top of the tile, cause being one tile over will be its own punishment

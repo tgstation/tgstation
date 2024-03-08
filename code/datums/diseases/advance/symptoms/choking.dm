@@ -20,6 +20,7 @@
 	base_message_chance = 15
 	symptom_delay_min = 10
 	symptom_delay_max = 30
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Stage Speed 8" = "Causes choking more frequently.",
 		"Stealth 4" = "The symptom remains hidden until active."
@@ -35,26 +36,28 @@
 	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
 
-/datum/symptom/choking/Activate(datum/disease/advance/A)
+/datum/symptom/choking/Activate(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	switch(A.stage)
+
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+
+	switch(advanced_disease.stage)
 		if(1, 2)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
+				to_chat(infected_mob, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
 		if(3, 4)
 			if(!suppress_warning)
-				to_chat(M, span_warning("[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]"))
+				to_chat(infected_mob, span_warning("[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]"))
 			else
-				to_chat(M, span_warning("You feel very [pick("dizzy","woozy","faint")].")) //fake bloodloss messages
-			Choke_stage_3_4(M, A)
-			M.emote("gasp")
+				to_chat(infected_mob, span_warning("You feel very [pick("dizzy","woozy","faint")].")) //fake bloodloss messages
+			Choke_stage_3_4(infected_mob, advanced_disease)
+			infected_mob.emote("gasp")
 		else
-			to_chat(M, span_userdanger("[pick("You're choking!", "You can't breathe!")]"))
-			Choke(M, A)
-			M.emote("gasp")
+			to_chat(infected_mob, span_userdanger("[pick("You're choking!", "You can't breathe!")]"))
+			Choke(infected_mob, advanced_disease)
+			infected_mob.emote("gasp")
 
 /datum/symptom/choking/proc/Choke_stage_3_4(mob/living/M, datum/disease/advance/A)
 	M.adjustOxyLoss(rand(6,13))
@@ -82,7 +85,6 @@ Bonus
 */
 
 /datum/symptom/asphyxiation
-
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
 	illness = "Iron Lungs"
@@ -95,11 +97,12 @@ Bonus
 	base_message_chance = 15
 	symptom_delay_min = 14
 	symptom_delay_max = 30
-	var/paralysis = FALSE
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Stage Speed 8" = "Additionally synthesizes pancuronium and sodium thiopental inside the host.",
 		"Transmission 8" = "Doubles the damage caused by the symptom."
 	)
+	var/paralysis = FALSE
 
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
@@ -125,7 +128,7 @@ Bonus
 			to_chat(M, span_userdanger("[pick("Your lungs hurt!", "It hurts to breathe!")]"))
 			Asphyxiate(M, A)
 			M.emote("gasp")
-			if(M.getOxyLoss() >= 120)
+			if(M.getOxyLoss() >= (M.maxHealth / (200/120)))
 				M.visible_message(span_warning("[M] stops breathing, as if their lungs have totally collapsed!"))
 				Asphyxiate_death(M, A)
 	return

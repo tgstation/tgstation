@@ -23,7 +23,7 @@
 	location = null
 
 /datum/status_effect/crucible_soul/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] [owner.p_do()]n't seem to be all here.")
+	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
 
 // DUSK AND DAWN
 /datum/status_effect/duskndawn
@@ -56,7 +56,7 @@
 /datum/status_effect/marshal/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
-/datum/status_effect/marshal/tick()
+/datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner
@@ -74,7 +74,8 @@
 					heal_amt = 3
 				if(WOUND_SEVERITY_CRITICAL)
 					heal_amt = 6
-			if(wound.wound_type == WOUND_BURN)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound.type]
+			if (pregen_data.wounding_types_valid(list(WOUND_BURN)))
 				carbie.adjustFireLoss(-heal_amt)
 			else
 				carbie.adjustBruteLoss(-heal_amt)
@@ -132,7 +133,7 @@
 	return ..()
 
 /datum/status_effect/protective_blades/on_apply()
-	RegisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
+	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 	for(var/blade_num in 1 to max_num_blades)
 		var/time_until_created = (blade_num - 1) * time_between_initial_blades
 		if(time_until_created <= 0)
@@ -143,7 +144,7 @@
 	return TRUE
 
 /datum/status_effect/protective_blades/on_remove()
-	UnregisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
 	QDEL_LIST(blades)
 
 	return ..()
@@ -156,10 +157,10 @@
 	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
-	RegisterSignal(blade, COMSIG_PARENT_QDELETING, PROC_REF(remove_blade))
+	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
 	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
-/// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
+/// Signal proc for [COMSIG_LIVING_CHECK_BLOCK].
 /// If we have a blade in our list, consume it and block the incoming attack (shield it)
 /datum/status_effect/protective_blades/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
@@ -168,6 +169,7 @@
 	attack_text = "the attack",
 	attack_type = MELEE_ATTACK,
 	armour_penetration = 0,
+	damage_type = BRUTE,
 )
 	SIGNAL_HANDLER
 
@@ -192,7 +194,7 @@
 
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
 
-	return SHIELD_BLOCK
+	return SUCCESSFUL_BLOCK
 
 /// Remove deleted blades from our blades list properly.
 /datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)
@@ -234,3 +236,79 @@
 		return
 
 	addtimer(CALLBACK(src, PROC_REF(create_blade)), blade_recharge_time)
+
+
+/datum/status_effect/caretaker_refuge
+	id = "Caretaker’s Last Refuge"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = -1
+	alert_type = null
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
+
+/datum/status_effect/caretaker_refuge/on_apply()
+	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
+	owner.status_flags |= GODMODE
+	animate(owner, alpha = 45,time = 0.5 SECONDS)
+	owner.density = FALSE
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
+	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
+	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
+	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
+	return TRUE
+
+/datum/status_effect/caretaker_refuge/on_remove()
+	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
+	owner.status_flags &= ~GODMODE
+	owner.alpha = initial(owner.alpha)
+	owner.density = initial(owner.density)
+	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
+	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
+	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
+	UnregisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED)
+	owner.visible_message(
+		span_warning("The haze around [owner] disappears, leaving them materialized!"),
+		span_notice("You exit the refuge."),
+	)
+
+/datum/status_effect/caretaker_refuge/get_examine_text()
+	return span_warning("[owner.p_Theyre()] enveloped in an unholy haze!")
+
+/datum/status_effect/caretaker_refuge/proc/nullrod_handler(datum/source, obj/item/weapon)
+	SIGNAL_HANDLER
+	playsound(get_turf(owner), 'sound/effects/curse1.ogg', 80, TRUE)
+	owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
+	owner.remove_status_effect(type)
+
+/datum/status_effect/caretaker_refuge/proc/on_focus_lost()
+	SIGNAL_HANDLER
+	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
+	owner.remove_status_effect(type)
+
+/datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
+	SIGNAL_HANDLER
+	if(!istype(spell, /datum/action/cooldown/spell/caretaker))
+		owner.balloon_alert(owner, "may not cast spells in refuge!")
+		return SPELL_CANCEL_CAST
+
+/datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_CUFF_PREVENT
+
+// Path Of Moon status effect which hides the identity of the heretic
+/datum/status_effect/moon_grasp_hide
+	id = "Moon Grasp Hide Identity"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 15 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
+
+/datum/status_effect/moon_grasp_hide/on_apply()
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+	return TRUE
+
+/datum/status_effect/moon_grasp_hide/on_remove()
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+
+/atom/movable/screen/alert/status_effect/moon_grasp_hide
+	name = "Blessing of The Moon"
+	desc = "The Moon clouds their vision, as the sun always has yours."
+	icon_state = "moon_hide"

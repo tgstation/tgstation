@@ -1,5 +1,5 @@
 /obj/item/disk
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -26,7 +26,7 @@
 
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
+	AddElement(/datum/element/bed_tuckable, mapload, 6, -6, 0)
 	AddComponent(/datum/component/stationloving, !fake)
 
 	if(!fake)
@@ -69,7 +69,7 @@
 	if(!fake)
 		return
 
-	if(isobserver(user) || HAS_TRAIT(user, TRAIT_DISK_VERIFIER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER)))
+	if(isobserver(user) || HAS_MIND_TRAIT(user, TRAIT_DISK_VERIFIER))
 		. += span_warning("The serial numbers on [src] are incorrect.")
 
 /*

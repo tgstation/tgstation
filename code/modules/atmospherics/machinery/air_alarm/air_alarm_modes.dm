@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -59,6 +60,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	var/list/filtered = subtypesof(/datum/gas)
@@ -79,6 +81,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE * 2
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -96,6 +99,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE * 3
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -131,6 +135,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -194,6 +199,26 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_INTERNAL_BOUND
 		vent.internal_pressure_bound = 0
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
+		vent.update_appearance(UPDATE_ICON)
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+		scrubber.on = FALSE
+		scrubber.update_appearance(UPDATE_ICON)
+
+/datum/air_alarm_mode/vent_siphon
+	name = "Vent siphon"
+	desc = "Disables scrubbers and turns vents to siphon"
+	danger = TRUE
+	emag = TRUE // siphoning things with vents can horribly fuck up distro, even if its surprisingly fast
+
+/datum/air_alarm_mode/vent_siphon/apply(area/applied)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+		vent.on = TRUE
+		vent.pressure_checks = NONE
+		vent.internal_pressure_bound = 0
+		vent.external_pressure_bound = 0
+		vent.pump_direction = ATMOS_DIRECTION_SIPHONING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)

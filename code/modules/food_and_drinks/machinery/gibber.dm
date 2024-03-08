@@ -1,7 +1,7 @@
 /obj/machinery/gibber
 	name = "gibber"
 	desc = "The name isn't descriptive enough?"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/gibber
@@ -29,17 +29,17 @@
 	meat_produced = initial(meat_produced)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		meat_produced += matter_bin.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		gibtime -= 5 * manipulator.tier
-		if(manipulator.tier >= 2)
+	for(var/datum/stock_part/servo/servo in component_parts)
+		gibtime -= 5 * servo.tier
+		if(servo.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
-		for(var/datum/stock_part/manipulator/manipulator in component_parts)
-			if(manipulator.tier >= 2)
+		for(var/datum/stock_part/servo/servo in component_parts)
+			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()
@@ -111,7 +111,7 @@
 /obj/machinery/gibber/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
@@ -147,6 +147,12 @@
 	if(!occupant)
 		audible_message(span_hear("You hear a loud metallic grinding sound."))
 		return
+	if(occupant.flags_1 & HOLOGRAM_1)
+		audible_message(span_hear("You hear a very short metallic grinding sound."))
+		playsound(loc, 'sound/machines/hiss.ogg', 20, TRUE)
+		qdel(occupant)
+		set_occupant(null)
+		return
 
 	use_power(active_power_usage)
 	audible_message(span_hear("You hear a loud squelchy grinding sound."))
@@ -173,7 +179,9 @@
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
-		if(gibee.dna && gibee.dna.species)
+		if(prob(40) && (sourcejob in list(JOB_SECURITY_OFFICER,JOB_WARDEN,JOB_HEAD_OF_SECURITY)))
+			typeofmeat = /obj/item/food/meat/slab/pig
+		else if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
 			typeofskin = gibee.dna.species.skinned_type
 
@@ -190,7 +198,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
@@ -198,6 +206,7 @@
 				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
+
 		allmeat[i] = newmeat
 
 	if(typeofskin)
@@ -221,12 +230,24 @@
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 	for (var/i=1 to meat_produced)
 		var/obj/item/meatslab = allmeat[i]
+
+		if(LAZYLEN(diseases))
+			var/list/datum/disease/diseases_to_add = list()
+			for(var/datum/disease/disease as anything in diseases)
+				// admin or special viruses that should not be reproduced
+				if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+					continue
+
+				diseases_to_add += disease
+			if(LAZYLEN(diseases_to_add))
+				meatslab.AddComponent(/datum/component/infective, diseases_to_add)
+
 		meatslab.forceMove(loc)
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
 			if (!gibturf.density && (src in view(gibturf)))
-				new gibtype(gibturf,i,diseases)
+				new gibtype(gibturf, i, diseases)
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
@@ -243,4 +264,4 @@
 
 		if(victim.loc == input)
 			victim.forceMove(src)
-			victim.gib()
+			victim.gib(DROP_ALL_REMAINS)

@@ -1,0 +1,103 @@
+### Config Flags for logging, compatibility flags are at the top
+
+## Whether or not admin/adminprivate logging is also sent to LOG_CATEGORY_GAME for legacy log parsers
+LOGGING_COMPAT_ADMINPRIVATE
+
+## Should we also log entries as human readable
+LOG_AS_HUMAN_READABLE
+
+### Actual logging flags
+
+## log client access (logon/logoff)
+LOG_ACCESS
+
+## log admin actions
+LOG_ADMIN
+
+## log admin chat
+LOG_ADMINCHAT
+
+## log asset debug logs
+# LOG_ASSET
+
+## log attack messages
+LOG_ATTACK
+
+## log economy actions
+LOG_ECON
+
+## log emotes
+LOG_EMOTE
+
+## log game actions (start of round, results, etc.)
+LOG_GAME
+
+## log job divide debugging information
+# LOG_JOB_DEBUG
+
+## log crew manifest to separate file
+LOG_MANIFEST
+
+## log mecha actions
+# LOG_MECHA
+
+## log OOC channel
+LOG_OOC
+
+## log pda messages
+LOG_PDA
+
+## Enable logging pictures
+LOG_PICTURES
+
+## log prayers
+LOG_PRAYER
+
+## log client Say
+LOG_SAY
+
+## log shuttle actions
+LOG_SHUTTLE
+
+## log silicons
+LOG_SILICON
+
+## log speech indicators
+LOG_SPEECH_INDICATORS
+
+## Enables log entries for logins that failed due to suspicious circumstances (banned player, CID randomiser, spoofed BYOND version, etc.) to a dedicated file.
+LOG_SUSPICIOUS_LOGIN
+
+## log telecomms messages
+LOG_TELECOMMS
+
+## Log all timers on timer auto reset
+# LOG_TIMERS_ON_BUCKET_RESET
+
+## log tool interactions [/atom/proc/tool_act]
+LOG_TOOLS
+
+## log traitor objectives
+LOG_TRAITOR
+
+## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
+## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
+# LOG_TWITTER
+
+## log uplink purchases
+LOG_UPLINK
+
+## log virus and actions
+LOG_VIRUS
+
+## log player votes
+LOG_VOTE
+
+## log client Whisper
+LOG_WHISPER
+
+## log all world.Topic() calls
+# LOG_WORLD_TOPIC
+
+## log manual target zone switching
+LOG_ZONE_SWITCH

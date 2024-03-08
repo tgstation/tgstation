@@ -6,6 +6,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 8
+	casing_phrasing = "shell"
 
 /obj/item/ammo_box/magazine/m12g/update_icon_state()
 	. = ..()

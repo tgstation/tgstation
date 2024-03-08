@@ -12,6 +12,8 @@
 	antagpanel_category = ANTAG_GROUP_ERT
 	suicide_cry = "FOR NANOTRASEN!!"
 	count_against_dynamic_roll_chance = FALSE
+	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
+	antag_flags = FLAG_FAKE_ANTAG
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
@@ -273,3 +275,13 @@
 	name = "Marine Medic"
 	outfit = /datum/outfit/centcom/ert/marine/medic
 	role = "Medical Officer"
+
+/datum/antagonist/ert/militia
+	name = "Frontier Militia"
+	outfit = /datum/outfit/centcom/militia
+	role = "Volunteer"
+
+/datum/antagonist/ert/militia/general
+	name = "Frontier Militia General"
+	outfit = /datum/outfit/centcom/militia/general
+	role = "General"

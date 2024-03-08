@@ -14,6 +14,7 @@
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
+	register_context()
 	update_appearance()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 	GLOB.janitor_devices += src
@@ -42,7 +43,7 @@
 			return
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
 		trash_bag = I
-		RegisterSignal(trash_bag, COMSIG_PARENT_QDELETING, PROC_REF(bag_deleted))
+		RegisterSignal(trash_bag, COMSIG_QDELETING, PROC_REF(bag_deleted))
 		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
 		update_appearance()
 	else if(istype(I, /obj/item/janicart_upgrade))
@@ -85,6 +86,44 @@
 	if (!.)
 		try_remove_bag(user)
 
+/obj/vehicle/ridden/janicart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!held_item)
+		if(occupant_amount() > 0)
+			context[SCREENTIP_CONTEXT_LMB] = "Dismount"
+			context[SCREENTIP_CONTEXT_RMB] = "Dismount"
+			if(trash_bag)
+				context[SCREENTIP_CONTEXT_RMB] = "Remove trash bag"
+			if(is_key(inserted_key) && occupants.Find(user))
+				context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(trash_bag)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove trash bag"
+			context[SCREENTIP_CONTEXT_RMB] = "Remove trash bag"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/storage/bag/trash) && !trash_bag)
+		context[SCREENTIP_CONTEXT_LMB] = "Add trash bag"
+		context[SCREENTIP_CONTEXT_RMB] = "Add trash bag"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/janicart_upgrade) && !installed_upgrade)
+		context[SCREENTIP_CONTEXT_LMB] = "Install upgrade"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/screwdriver) && installed_upgrade)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove upgrade"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(is_key(held_item) && !is_key(inserted_key))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert key"
+		context[SCREENTIP_CONTEXT_RMB] = "Insert key"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if (trash_bag)
+		context[SCREENTIP_CONTEXT_LMB] = "Insert into trash bag"
+		context[SCREENTIP_CONTEXT_RMB] = "Insert into trash bag"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Called if the attached bag is being qdeleted, ensures appearance is maintained properly
@@ -105,7 +144,7 @@
 	if (remover)
 		trash_bag.forceMove(get_turf(remover))
 		remover.put_in_hands(trash_bag)
-	UnregisterSignal(trash_bag, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(trash_bag, COMSIG_QDELETING)
 	trash_bag = null
 	SEND_SIGNAL(src, COMSIG_VACUUM_BAG_DETACH)
 	update_appearance()
@@ -126,7 +165,7 @@
 /obj/item/janicart_upgrade
 	name = "base upgrade"
 	desc = "An abstract upgrade for mobile janicarts."
-	icon = 'icons/obj/janicart_upgrade.dmi'
+	icon = 'icons/obj/service/janicart_upgrade.dmi'
 	icon_state = "janicart_upgrade"
 	greyscale_config = /datum/greyscale_config/janicart_upgrade
 	/// The greyscale config for the on-cart installed upgrade overlay

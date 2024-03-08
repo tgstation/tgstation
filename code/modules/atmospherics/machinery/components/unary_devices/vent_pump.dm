@@ -14,7 +14,10 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "uvent"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
+	// vents are more complex machinery and so are less resistant to damage
+	max_integrity = 100
 
 	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
@@ -34,50 +37,106 @@
 	///area this vent is assigned to
 	var/area/assigned_area
 
+	/// Is this vent currently overclocked, removing pressure limits but damaging the fan?
+	var/fan_overclocked = FALSE
+
+	/// Rate of damage per atmos process to the fan when overclocked. Set to 0 to disable damage.
+	var/fan_damage_rate = 0.5
+
+	/// The cached string we show for examine that lets you know how fucked up the fan is.
+	var/examine_condition
+
+	/// Datum for managing the overclock sound loop
+	var/datum/looping_sound/vent_pump_overclock/sound_loop
+
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
 		id_tag = assign_random_name()
-		var/static/list/tool_screentips = list(
-			TOOL_MULTITOOL = list(
-				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
-			)
-		)
+		var/static/list/tool_screentips
+		if(!tool_screentips)
+			tool_screentips = string_assoc_nested_list(list(
+				TOOL_MULTITOOL = list(
+					SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+				),
+				TOOL_SCREWDRIVER = list(
+					SCREENTIP_CONTEXT_LMB = "Repair",
+				),
+			))
 		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
+	sound_loop = new(src)
 	assign_to_area()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on_update_integrity(old_value, new_value)
+	. = ..()
+	var/condition_string
+	switch(get_integrity_percentage())
+		if(1)
+			condition_string = "perfect"
+		if(0.75 to 0.99)
+			condition_string = "good"
+		if(0.50 to 0.74)
+			condition_string = "okay"
+		if(0.25 to 0.49)
+			condition_string = "bad"
+		else
+			condition_string = "terrible"
+	examine_condition = "The fan is in [condition_string] condition."
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
 	. += span_notice("You can link it with an air sensor using a multitool.")
 
+	if(fan_overclocked)
+		. += span_warning("It is currently overclocked causing it to take damage over time.")
+
+	if(get_integrity() > 0)
+		. += span_notice(examine_condition)
+	else
+		. += span_warning("The fan is broken.")
+
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = ..()
-	if (!istype(multi_tool))
-		return .
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		multi_tool.set_buffer(src)
+		sensor.multitool_act(user, multi_tool)
+		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "saved in buffer")
-	multi_tool.buffer = src
-	return TRUE
+	balloon_alert(user, "vent saved in buffer")
+	multi_tool.set_buffer(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/wrench)
-	. = ..()
-	if(.)
-		disconnect_chamber()
+/obj/machinery/atmospherics/components/unary/vent_pump/screwdriver_act(mob/living/user, obj/item/tool)
+	var/time_to_repair = (10 SECONDS) * (1 - get_integrity_percentage())
+	if(!time_to_repair)
+		return FALSE
 
-///called when its either unwrenched or destroyed
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_chamber()
-	if(chamber_id != null)
-		GLOB.objects_by_id_tag -= CHAMBER_OUTPUT_FROM_ID(chamber_id)
-		chamber_id = null
+	balloon_alert(user, "repairing vent...")
+	if(do_after(user, time_to_repair, src))
+		balloon_alert(user, "vent repaired")
+		repair_damage(max_integrity)
+
+	else
+		balloon_alert(user, "interrupted!")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
+	set_is_operational(TRUE)
+	update_appearance()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_break(damage_flag)
+	set_is_operational(FALSE)
+	update_appearance()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
+	QDEL_NULL(sound_loop)
 
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
-
-	disconnect_chamber()
 
 	return ..()
 
@@ -116,6 +175,17 @@
 	. = ..()
 	disconnect_from_area(area_to_unregister)
 
+/obj/machinery/atmospherics/components/unary/vent_pump/update_overlays()
+	. = ..()
+	if(!powered())
+		return
+
+	if(get_integrity() <= 0)
+		. += mutable_appearance(icon, "broken")
+
+	else if(fan_overclocked)
+		. += mutable_appearance(icon, "overclocked")
+
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
@@ -134,12 +204,14 @@
 			return
 
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
-			icon_state = "vent_out-off"
+			icon_state = "vent_off"
+			flick("vent_out-shutdown", src)
 		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
+			icon_state = "vent_off"
+			flick("vent_in-shutdown", src)
 		return
 
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+	if(icon_state == "vent_off")
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)
@@ -153,6 +225,22 @@
 	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
 
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(source, from_break = FALSE)
+	fan_overclocked = !fan_overclocked
+
+	if(from_break)
+		playsound(src, 'sound/machines/fan_break.ogg', 100)
+		fan_overclocked = FALSE
+
+	if(fan_overclocked)
+		sound_loop.start()
+	else
+		sound_loop.stop()
+
+	investigate_log("had its overlock setting [fan_overclocked ? "enabled" : "disabled"] by [source]", INVESTIGATE_ATMOS)
+
+	update_appearance()
+
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	if(!is_operational)
 		return
@@ -163,6 +251,14 @@
 	var/turf/open/us = loc
 	if(!istype(us))
 		return
+
+	if(fan_overclocked)
+		take_damage(fan_damage_rate, sound_effect=FALSE)
+		if(get_integrity() == 0)
+			investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
+			return
+
+	var/percent_integrity = get_integrity_percentage()
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -177,7 +273,13 @@
 
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
+				if(!fan_overclocked && (environment_pressure >= 50 * ONE_ATMOSPHERE))
+					return FALSE
+
 				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				if(!fan_overclocked && (percent_integrity < 1))
+					transfer_moles *= percent_integrity
+
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				if(!removed || !removed.total_moles())
@@ -194,7 +296,12 @@
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
 		if(pressure_delta > 0 && environment.temperature > 0)
+			if(!fan_overclocked && (air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE))
+				return FALSE
+
 			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
+			if(!fan_overclocked && (percent_integrity < 1))
+				transfer_moles *= percent_integrity
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -212,7 +319,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!welder.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("You begin welding the vent..."))
 	if(welder.use_tool(src, user, 20, volume=50))

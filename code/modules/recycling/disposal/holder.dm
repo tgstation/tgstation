@@ -42,7 +42,7 @@
 		if(M.client)
 			M.reset_perspective(src)
 		hasmob = TRUE
-		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep), M)
+		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep))
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -82,7 +82,7 @@
 	if(our_loop)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))
-		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stop))
+		RegisterSignal(our_loop, COMSIG_QDELETING, PROC_REF(movement_stop))
 		current_pipe = loc
 
 /// Handles the preprocess check signal, sets the current pipe as the last pipe
@@ -168,7 +168,7 @@
 	if(!T)
 		return null
 
-	var/fdir = turn(dir, 180) // flip the movement direction
+	var/fdir = REVERSE_DIR(dir) // flip the movement direction
 	for(var/obj/structure/disposalpipe/P in T)
 		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
 			if(QDELING(P))
@@ -179,12 +179,12 @@
 
 /// Merge two holder objects, used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
-	for(var/A in other)
-		var/atom/movable/AM = A
-		AM.forceMove(src) // move everything in other holder to this one
-		if(ismob(AM))
-			var/mob/M = AM
-			M.reset_perspective(src) // if a client mob, update eye to follow this holder
+	for(var/atom/movable/movable as anything in other)
+		movable.forceMove(src) // move everything in other holder to this one
+		if(ismob(movable))
+			var/mob/mob = movable
+			mob.reset_perspective(src) // if a client mob, update eye to follow this holder
+			RegisterSignal(mob, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep))
 			hasmob = TRUE
 	if(destinationTag == 0 && other.destinationTag != 0)
 		destinationTag = other.destinationTag

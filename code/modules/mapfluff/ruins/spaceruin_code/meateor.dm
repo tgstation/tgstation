@@ -13,8 +13,12 @@
 
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	var/datum/wound/pierce/critical/exit_hole = new()
-	exit_hole.apply_wound(spawned_human.get_bodypart(BODY_ZONE_CHEST))
+
+	var/obj/item/bodypart/chest/their_chest = spawned_human.get_bodypart(BODY_ZONE_CHEST)
+	if (!their_chest)
+		return
+
+	spawned_human.cause_wound_of_type_and_severity(WOUND_PIERCE, their_chest, WOUND_SEVERITY_CRITICAL)
 
 /// A fun drink enjoyed by the tiger cooperative, might corrode your brain if you drink the whole bottle
 /obj/item/reagent_containers/cup/glass/bottle/ritual_wine
@@ -39,6 +43,14 @@
 /obj/structure/meateor_fluff
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	anchored = TRUE
+
+/obj/structure/meateor_fluff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
 
 /obj/structure/meateor_fluff/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
@@ -127,5 +139,5 @@
 
 /obj/structure/meateor_fluff/abandoned_headcrab_egg/atom_destruction(damage_flag)
 	new /obj/effect/decal/cleanable/xenoblood(loc)
-	playsound(loc, 'sound/effects/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+	playsound(loc, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 	return ..()

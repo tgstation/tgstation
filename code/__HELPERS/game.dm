@@ -11,43 +11,6 @@
 		return null
 	return format_text ? format_text(checked_area.name) : checked_area.name
 
-/** toggle_organ_decay
- * inputs: first_object (object to start with)
- * outputs:
- * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
- *  within 'first_object', toggling their frozen flag. This check excludes items held within other safe organ
- *  storage units, so that only the lowest level of container dictates whether we do or don't decompose
- */
-/proc/toggle_organ_decay(atom/first_object)
-
-	var/list/processing_list = list(first_object)
-	var/list/processed_list = list()
-	var/index = 1
-	var/obj/item/organ/found_organ
-
-	while(index <= length(processing_list))
-
-		var/atom/object_to_check = processing_list[index]
-
-		if(isorgan(object_to_check))
-			found_organ = object_to_check
-			found_organ.organ_flags ^= ORGAN_FROZEN
-
-		else if(iscarbon(object_to_check))
-			var/mob/living/carbon/mob_to_check = object_to_check
-			for(var/organ in mob_to_check.organs)
-				found_organ = organ
-				found_organ.organ_flags ^= ORGAN_FROZEN
-
-		for(var/atom/contained_to_check in object_to_check) //objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
-			if(!processed_list[contained_to_check] && !istype(contained_to_check, /obj/structure/closet/crate/freezer) && !istype(contained_to_check, /obj/structure/closet/secure_closet/freezer))
-				processing_list+= contained_to_check
-
-		index++
-		processed_list[object_to_check] = object_to_check
-
-	return
-
 ///Tries to move an atom to an adjacent turf, return TRUE if successful
 /proc/try_move_adjacent(atom/movable/atom_to_move, trydir)
 	var/turf/atom_turf = get_turf(atom_to_move)
@@ -139,8 +102,7 @@
 	for(var/client/remove_from in hide_from)
 		remove_from.images -= image_to_remove
 
-
-///Add an image to a list of clients and calls a proc to remove it after a duration
+/// Add an image to a list of clients and calls a proc to remove it after a duration
 /proc/flick_overlay_global(image/image_to_show, list/show_to, duration)
 	if(!show_to || !length(show_to) || !image_to_show)
 		return
@@ -148,7 +110,7 @@
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-/// Flicks a certain overlay onto an atom, handling icon_state strings
+///Flicks a certain overlay onto an atom, handling icon_state strings
 /atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
 	var/image/passed_image = \
 		istext(image_to_show) \
@@ -157,13 +119,38 @@
 
 	flick_overlay_global(passed_image, show_to, duration)
 
-/// flicks an overlay to anyone who can view this atom
-/atom/proc/flick_overlay_view(image_to_show, duration)
-	var/list/viewing = list()
-	for(var/mob/viewer as anything in viewers(src))
-		if(viewer.client)
-			viewing += viewer.client
-	flick_overlay(image_to_show, viewing, duration)
+/**
+ * Helper atom that copies an appearance and exists for a period
+*/
+/atom/movable/flick_visual
+
+/// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
+/// Returns the displayed object, you can animate it and all, but you don't own it, we'll delete it after the duration
+/atom/proc/flick_overlay_view(mutable_appearance/display, duration)
+	if(!display)
+		return null
+
+	var/mutable_appearance/passed_appearance = \
+		istext(display) \
+			? mutable_appearance(icon, display, layer) \
+			: display
+
+	// If you don't give it a layer, we assume you want it to layer on top of this atom
+	// Because this is vis_contents, we need to set the layer manually (you can just set it as you want on return if this is a problem)
+	if(passed_appearance.layer == FLOAT_LAYER)
+		passed_appearance.layer = layer + 0.1
+	// This is faster then pooling. I promise
+	var/atom/movable/flick_visual/visual = new()
+	visual.appearance = passed_appearance
+	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	// I hate /area
+	var/atom/movable/lies_to_children = src
+	lies_to_children.vis_contents += visual
+	QDEL_IN_CLIENT_TIME(visual, duration)
+	return visual
+
+/area/flick_overlay_view(mutable_appearance/display, duration)
+	return
 
 ///Get active players who are playing in the round
 /proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
@@ -186,137 +173,6 @@
 				continue
 		active_players++
 	return active_players
-
-///Show the poll window to the candidate mobs
-/proc/show_candidate_poll_window(mob/candidate_mob, poll_time, question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
-	set waitfor = 0
-
-	// Universal opt-out for all players.
-	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
-		return
-
-	// Opt-out for admins whom are currently adminned.
-	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
-		return
-
-	SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg') //Alerting them to their consideration
-	if(flashwindow)
-		window_flash(candidate_mob.client)
-	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
-	switch(tgui_alert(candidate_mob, question, "A limited-time offer!", answers, poll_time, autofocus = FALSE))
-		if("Yes")
-			to_chat(candidate_mob, span_notice("Choice registered: Yes."))
-			if(time_passed + poll_time <= world.time)
-				to_chat(candidate_mob, span_danger("Sorry, you answered too late to be considered!"))
-				SEND_SOUND(candidate_mob, 'sound/machines/buzz-sigh.ogg')
-				candidates -= candidate_mob
-			else
-				candidates += candidate_mob
-		if("No")
-			to_chat(candidate_mob, span_danger("Choice registered: No."))
-			candidates -= candidate_mob
-		if("Never for this round")
-			var/list/ignore_list = GLOB.poll_ignore[ignore_category]
-			if(!ignore_list)
-				GLOB.poll_ignore[ignore_category] = list()
-			GLOB.poll_ignore[ignore_category] += candidate_mob.ckey
-			to_chat(candidate_mob, span_danger("Choice registered: Never for this round."))
-			candidates -= candidate_mob
-		else
-			candidates -= candidate_mob
-
-///Wrapper to send all ghosts the poll to ask them if they want to be considered for a mob.
-/proc/poll_ghost_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/list/candidates = list()
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		return candidates
-
-	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
-		candidates += ghost_player
-
-	return poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
-
-///Calls the show_candidate_poll_window() to all eligible ghosts
-/proc/poll_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
-	var/time_passed = world.time
-	if (!question)
-		question = "Would you like to be a special role?"
-	var/list/result = list()
-	for(var/mob/candidate_mob as anything in group)
-		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
-			continue
-		if(be_special_flag)
-			if(!(candidate_mob.client.prefs) || !(be_special_flag in candidate_mob.client.prefs.be_special))
-				continue
-
-			var/required_time = GLOB.special_roles[be_special_flag] || 0
-			if (candidate_mob.client && candidate_mob.client.get_remaining_days(required_time) > 0)
-				continue
-		if(jobban_type)
-			if(is_banned_from(candidate_mob.ckey, list(jobban_type, ROLE_SYNDICATE)) || QDELETED(candidate_mob))
-				continue
-
-		show_candidate_poll_window(candidate_mob, poll_time, question, result, ignore_category, time_passed, flashwindow)
-	sleep(poll_time)
-
-	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
-	for(var/mob/asking_mob in result)
-		if(!asking_mob.key || !asking_mob.client)
-			result -= asking_mob
-
-	list_clear_nulls(result)
-
-	return result
-
-/**
- * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
- *
- * Arguments:
- * * question - question to show players as part of poll
- * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - The required role that the player has to have enabled to see the prompt.
- * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
- * * target_mob - The mob that is being polled for.
- * * ignore_category -  The notification preference that hides the prompt.
- */
-/proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
-	var/static/list/mob/currently_polling_mobs = list()
-
-	if(currently_polling_mobs.Find(target_mob))
-		return list()
-
-	currently_polling_mobs += target_mob
-
-	var/list/possible_candidates = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
-
-	currently_polling_mobs -= target_mob
-	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
-		return list()
-
-	return possible_candidates
-
-/**
- * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
- *
- * Arguments:
- * * question - question to show players as part of poll
- * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - The required role that the player has to have enabled to see the prompt.
- * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
- * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
- * * ignore_category - The notification preference that hides the prompt.
- */
-/proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
-	var/list/candidate_list = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
-
-	for(var/mob/potential_mob as anything in mobs)
-		if(QDELETED(potential_mob) || !potential_mob.loc)
-			mobs -= potential_mob
-
-	if(!length(mobs))
-		return list()
-
-	return candidate_list
 
 ///Uses stripped down and bastardized code from respawn character
 /proc/make_body(mob/dead/observer/ghost_player)
@@ -411,11 +267,11 @@
 
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
-	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area
-		if(GLOB.typecache_powerfailure_safe_areas[apc_area.type])
+		if(is_type_in_typecache(apc_area, GLOB.typecache_powerfailure_safe_areas))
 			continue
 
 		var/duration = rand(duration_min,duration_max)

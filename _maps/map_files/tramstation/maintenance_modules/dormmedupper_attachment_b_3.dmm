@@ -70,7 +70,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "w" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/closet/mini_fridge/grimy,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "y" = (

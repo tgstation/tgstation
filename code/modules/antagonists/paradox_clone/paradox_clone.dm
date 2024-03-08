@@ -2,7 +2,9 @@
 	name = "\improper Paradox Clone"
 	roundend_category = "Paradox Clone"
 	job_rank = ROLE_PARADOX_CLONE
+	antagpanel_category = ANTAG_GROUP_PARADOX
 	antag_hud_name = "paradox_clone"
+	show_to_ghosts = TRUE
 	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
 
@@ -50,24 +52,17 @@
 	kill.update_explanation_text()
 	objectives += kill
 
-	var/mob/living/carbon/human/clone_human = owner.current
-	var/mob/living/carbon/human/original_human = original_mind.current
-
-	//equip them in the original's clothes
-	if(!isplasmaman(original_human))
-		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
-	else
-		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
-		clone_human.internal = clone_human.get_item_for_held_index(2)
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 
 	//clone doesnt show up on message lists
-	var/obj/item/modular_computer/pda/messenger = locate() in clone_human
+	var/obj/item/modular_computer/pda/messenger = locate() in owner.current
 	if(messenger)
 		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
 		if(message_app)
 			message_app.invisible = TRUE
 
 	//dont want anyone noticing there's two now
+	var/mob/living/carbon/human/clone_human = owner.current
 	var/obj/item/clothing/under/sensor_clothes = clone_human.w_uniform
 	if(sensor_clothes)
 		sensor_clothes.sensor_mode = SENSOR_OFF
@@ -100,3 +95,9 @@
 		explanation_text = "Free Objective"
 		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
 	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
+
+///Static bluespace stream used in its ghost poll icon.
+/obj/effect/bluespace_stream
+	name = "bluespace stream"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bluestream"

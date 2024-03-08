@@ -46,7 +46,7 @@
 		rotation = SIMPLIFY_DEGREES(rotation)
 
 	if(!movement_direction)
-		movement_direction = turn(preferred_direction, 180)
+		movement_direction = REVERSE_DIR(preferred_direction)
 
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved

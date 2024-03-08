@@ -5,7 +5,6 @@
 	icon_state = "bileworm"
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"
-	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_BUG
 	maxHealth = 100
 	health = 100
@@ -13,6 +12,8 @@
 	verb_ask = "spittles questioningly"
 	verb_exclaim = "splutters and gurgles"
 	verb_yell = "splutters and gurgles"
+	crusher_loot = /obj/item/crusher_trophy/bileworm_spewlet
+	crusher_drop_chance = 15
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 4)
 	guaranteed_butcher_results = list(
 		/obj/effect/gibspawner/generic = 1,
@@ -20,6 +21,7 @@
 		/obj/item/stack/ore/gold = 2,
 	)
 	death_message = "seizes up and falls limp, slowly receeding into its burrow with a dying gurgle..."
+	throw_blocked_message = "is absorbed by the spongy hide of"
 
 	//it can't be dragged, just butcher it
 	move_resist = INFINITY
@@ -35,27 +37,23 @@
 
 /mob/living/basic/mining/bileworm/Initialize(mapload)
 	. = ..()
-	//traits and elements
-
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
 
 	if(ispath(evolve_path))
 		AddComponent(/datum/component/evolutionary_leap, 30 MINUTES, evolve_path)
-	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/bileworm_spewlet, 15)
 	AddElement(/datum/element/content_barfer)
 
 	//setup mob abilities
 
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new attack_action_path(src)
-	spew_bile.Grant(src)
 	//well, one of them has to start on infinite cooldown
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new(src)
+	spew_bile.Grant(src)
 	spew_bile.StartCooldownSelf(INFINITY)
-	var/datum/action/cooldown/mob_cooldown/resurface/resurface = new(src)
-	resurface.Grant(src)
-	var/datum/action/cooldown/mob_cooldown/devour/devour = new(src)
-	devour.Grant(src)
-	var/datum/action/adjust_vision/bileworm/adjust_vision = new(src)
-	adjust_vision.Grant(src)
-	ai_controller.blackboard[BB_BILEWORM_SPEW_BILE] = WEAKREF(spew_bile)
-	ai_controller.blackboard[BB_BILEWORM_RESURFACE] = WEAKREF(resurface)
-	ai_controller.blackboard[BB_BILEWORM_DEVOUR] = WEAKREF(devour)
+	ai_controller?.set_blackboard_key(BB_BILEWORM_SPEW_BILE, spew_bile)
+
+	var/static/list/other_innate_actions = list(
+		/datum/action/adjust_vision/bileworm = null,
+		/datum/action/cooldown/mob_cooldown/devour = BB_BILEWORM_DEVOUR,
+		/datum/action/cooldown/mob_cooldown/resurface = BB_BILEWORM_RESURFACE,
+	)
+	grant_actions_by_list(other_innate_actions)

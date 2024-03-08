@@ -58,7 +58,6 @@
 	},
 /obj/item/storage/medkit/regular,
 /obj/item/crowbar,
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "l" = (
@@ -170,7 +169,6 @@
 /obj/item/radio{
 	pixel_y = 4
 	},
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -183,11 +181,9 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
-"x" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
+"H" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
@@ -229,10 +225,10 @@ e
 "}
 (6,1,1) = {"
 d
-l
+o
 r
 w
-d
+g
 "}
 (7,1,1) = {"
 f
@@ -245,8 +241,8 @@ f
 g
 n
 r
-n
-g
+H
+d
 "}
 (9,1,1) = {"
 e
@@ -257,9 +253,9 @@ e
 "}
 (10,1,1) = {"
 d
-o
+l
 r
-x
+w
 d
 "}
 (11,1,1) = {"

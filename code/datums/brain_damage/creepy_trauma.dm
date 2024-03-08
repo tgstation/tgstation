@@ -17,7 +17,6 @@
 	var/obsession_hug_count = 0
 
 /datum/brain_trauma/special/obsessed/on_gain()
-
 	//setup, linking, etc//
 	if(!obsession)//admins didn't set one
 		obsession = find_obsession()
@@ -34,9 +33,10 @@
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
+	log_game("[key_name(antagonist)] has developed an obsession with [key_name(obsession)].")
 	RegisterSignal(owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 
-/datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick, times_fired)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -50,10 +50,10 @@
 		viewing = FALSE
 	if(viewing)
 		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
-		total_time_creeping += delta_time SECONDS
+		total_time_creeping += seconds_per_tick SECONDS
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
-			attachedobsessedobj.timer -= delta_time SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
+			attachedobsessedobj.timer -= seconds_per_tick SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
@@ -67,7 +67,9 @@
 /datum/brain_trauma/special/obsessed/on_lose()
 	..()
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
+	owner.clear_mood_event("creeping")
 	if(obsession)
+		log_game("[key_name(owner)] is no longer obsessed with [key_name(obsession)].")
 		UnregisterSignal(obsession, COMSIG_MOB_EYECONTACT)
 
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)

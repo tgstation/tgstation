@@ -7,6 +7,7 @@
 	)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 // Why are you putting cooked spaghetti in your pockets?
 /obj/item/food/spaghetti/make_microwaveable()
@@ -22,6 +23,7 @@
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spaghetti/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
@@ -37,6 +39,7 @@
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
@@ -54,6 +57,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/pastatomato/soulful
 	name = "soul food"
@@ -82,6 +86,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -94,6 +99,7 @@
 	)
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/spesslaw
 	name = "spesslaw"
@@ -106,6 +112,7 @@
 	)
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/chowmein
 	name = "chow mein"
@@ -118,6 +125,7 @@
 	)
 	tastes = list("noodle" = 1, "meat" = 1, "fried vegetables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -132,6 +140,7 @@
 	)
 	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spaghetti/butternoodles
 	name = "butter noodles"
@@ -143,6 +152,7 @@
 	)
 	tastes = list("noodles" = 1, "butter" = 1)
 	foodtypes = GRAIN | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/mac_n_cheese
 	name = "mac n' cheese"
@@ -154,3 +164,88 @@
 	)
 	tastes = list("cheese" = 1, "breadcrumbs" = 1, "pasta" = 1)
 	foodtypes = GRAIN | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/shoyu_tonkotsu_ramen
+	name = "shoyu tonkotsu ramen"
+	desc = "A simple ramen made of meat, egg, onion, and a sheet of seaweed."
+	icon_state = "shoyu_tonkotsu_ramen"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	tastes = list("noodles" = 5, "meat" = 3, "egg" = 4, "dried seaweed" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/kitakata_ramen
+	name = "kitakata ramen"
+	desc = "A hearty ramen composed of meat, mushrooms, onion, and garlic. Often given to the sick to comfort them"
+	icon_state = "kitakata_ramen"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	tastes = list("noodles" = 5, "meat" = 4, "mushrooms" = 3, "onion" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/kitsune_udon
+	name = "kitsune udon"
+	desc = "A vegetarian udon made of fried tofu and onions, made sweet and savory with sugar and soy sauce. The name comes from an old folktale about a fox enjoying fried tofu."
+	icon_state = "kitsune_udon"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("noodles" = 5, "tofu" = 4, "sugar" = 3, "soy sauce" = 2)
+	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/nikujaga
+	name = "nikujaga"
+	desc = "A delightful Japanese stew of noodles, onions, potatoes, and meat with mixed vegetables."
+	icon_state = "nikujaga"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 16,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	tastes = list("noodles" = 5, "meat" = 4, "potato" = 3, "onion" = 2, "mixed veggies" = 2)
+	foodtypes = GRAIN | VEGETABLES | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/pho
+	name = "pho"
+	desc = "A Vietnamese dish made of noodles, vegetables, herbs, and meat. Makes for a very popular street food."
+	icon_state = "pho"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	tastes = list("noodles" = 5, "meat" = 4, "cabbage" = 3, "onion" = 2, "herbs" = 2)
+	foodtypes = GRAIN | VEGETABLES | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/pad_thai
+	name = "pad thai"
+	desc = "A stir-fried noodle dish popular in Thailand made of peanuts, tofu, lime, and onions."
+	icon_state = "pad_thai"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("noodles" = 5, "fried tofu" = 4, "lime" = 2, "peanut" = 3, "onion" = 2)
+	foodtypes = GRAIN | VEGETABLES | NUTS | FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_4

@@ -39,8 +39,8 @@
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
 	update_appearance()
 
-/obj/item/sparkler/process(delta_time)
-	burntime -= delta_time
+/obj/item/sparkler/process(seconds_per_tick)
+	burntime -= seconds_per_tick
 	if(burntime <= 0)
 		new /obj/item/stack/rods(drop_location())
 		qdel(src)

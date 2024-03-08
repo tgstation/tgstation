@@ -26,13 +26,13 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
  * The first matching command (from a list of static datums) the listeners must obey,
  * and the return value of this proc the cooldown variable of the command dictates. (only relevant for things with cooldowns i guess)
  */
-/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, forced = null)
+/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, forced = null, ignore_spam = FALSE)
 	var/log_message = uppertext(message)
 	var/is_cultie = IS_CULTIST(user)
 	if(LAZYLEN(span_list) && is_cultie)
 		span_list = list("narsiesmall")
 
-	if(!user.say(message, spans = span_list, sanitize = FALSE))
+	if(!user.say(message, spans = span_list, sanitize = FALSE, ignore_spam = ignore_spam, forced = forced))
 		return
 
 	message = lowertext(message)
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/vomit/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/target in listeners)
-		target.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
+		target.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = (power_multiplier * 10), distance = power_multiplier)
 
 /// This command silences the listeners. Thrice as effective is the user is a mime or curator.
 /datum/voice_of_god_command/silence
@@ -295,8 +295,13 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
+	var/regex/smartass_regex = regex(@"^say my name[.!]*$")
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), user.name), 0.5 SECONDS * iteration)
+		var/to_say = user.name
+		// 0.1% chance to be a smartass
+		if(findtext(lowertext(message), smartass_regex) && prob(0.1))
+			to_say = "My name"
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), to_say), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say "Who's there?".
@@ -348,7 +353,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.m_intent != MOVE_INTENT_WALK)
+		if(target.move_intent != MOVE_INTENT_WALK)
 			target.toggle_move_intent()
 
 /// This command forces the listeners to switch to run intent.
@@ -358,7 +363,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.m_intent != MOVE_INTENT_RUN)
+		if(target.move_intent != MOVE_INTENT_RUN)
 			target.toggle_move_intent()
 
 /// This command turns the listeners' throw mode on.

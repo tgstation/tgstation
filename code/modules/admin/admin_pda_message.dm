@@ -13,7 +13,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(!length(GLOB.TabletMessengers))
+	if(!length(GLOB.pda_messengers))
 		to_chat(usr, span_warning("ERROR: There are no users you can send a message to"))
 		return
 
@@ -22,15 +22,6 @@
 
 /// Panel
 /datum/admin_pda_panel
-	/// PDA which have players(and we can send them message)
-	var/available_pdas = list()
-
-/datum/admin_pda_panel/New()
-	for(var/obj/item/modular_computer/computer in GLOB.TabletMessengers)
-		for(var/datum/computer_file/program/messenger/app in computer.stored_files)
-			if(!computer.saved_identification || !computer.saved_job || app.monitor_hidden || app.invisible)
-				continue
-			available_pdas += list(list("tablet" = computer, "name" = computer.saved_identification))
 
 /datum/admin_pda_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -43,10 +34,15 @@
 
 /datum/admin_pda_panel/ui_static_data(mob/user)
 	var/list/data = list()
-	data["users"] = list()
-
-	for(var/username in available_pdas)
-		data["users"] += username["name"]
+	var/list/available_messengers = list()
+	for(var/messenger_ref in get_messengers_sorted_by_name())
+		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+		available_messengers[REF(messenger)] = list(
+			ref = REF(messenger),
+			username = get_messenger_name(messenger),
+			invisible = messenger.invisible,
+		)
+	data["users"] = available_messengers
 	return data
 
 /datum/admin_pda_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -60,27 +56,45 @@
 		if("sendMessage")
 			var/targets = list()
 			var/spam = params["spam"]
-			for(var/target in available_pdas)
-				if(!spam && target["name"] != params["user"])
-					continue
-				targets += target["tablet"]
+			var/ref = params["ref"]
+			var/force = params["force"]
+			if(!spam && (ref in GLOB.pda_messengers))
+				targets += GLOB.pda_messengers[ref]
+			else
+				for(var/messenger_ref in get_messengers_sorted_by_name())
+					var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+					if(messenger.invisible && !params["include_invisible"])
+						continue
+					targets += messenger
 
 			if(!length(targets))
-				to_chat(usr, span_warning("ERROR: Target is unavaiable(or not choosed)."))
-				return
+				to_chat(usr, span_warning("ERROR: Target is unavailable."))
+				return FALSE
 
-			var/datum/signal/subspace/messaging/tablet_msg/signal = new(targets[1], list(
-				"name" = params["name"],
-				"job" = params["job"],
-				"message" = html_decode(params["message"]),
-				"ref" = FALSE,
+			var/datum/signal/subspace/messaging/tablet_message/signal = new(null, list(
+				"fakename" = params["name"],
+				"fakejob" = params["job"],
+				"message" = params["message"],
+				"everyone" = spam,
+				"ref" = null,
 				"targets" = targets,
-				"emojis" = FALSE,
 				"rigged" = FALSE,
-				"photo" = FALSE,
 				"automated" = FALSE,
 			))
 
-			signal.send_to_receivers()
-			message_admins("[key_name_admin(usr)] has send custom PDA message to [spam ? "everyone" : params["user"]].")
-			log_admin("[key_name(usr)] has send custom PDA message to [spam ? "everyone" : params["user"]]. Message: [params["message"]].")
+			if(force)
+				signal.broadcast()
+			else
+				signal.levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+				signal.send_to_receivers()
+
+			if(!(force || signal.data["reject"]))
+				to_chat(usr, span_warning("ERROR: PDA message was rejected by the telecomms setup."))
+				return FALSE
+
+			var/recipient = spam ? "everyone" : get_messenger_name(targets[1])
+
+			message_admins("[key_name_admin(usr)] sent a custom PDA message to [recipient].")
+			log_admin("[key_name(usr)] sent a custom PDA message to [recipient]. Message: [params["message"]].")
+			log_pda("[key_name(usr)] sent an admin custom PDA message to [recipient]. Message: [params["message"]]")
+			return TRUE

@@ -19,7 +19,7 @@
 	var/atom/food = parent
 	var/icon/grill_marks = icon(food.icon, food.icon_state)
 	grill_marks.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	grill_marks.Blend(icon('icons/obj/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparent
+	grill_marks.Blend(icon('icons/obj/machines/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparent
 	sizzling = new(grill_marks)
 	sizzling.alpha = sizzlealpha
 	food.add_overlay(sizzling)

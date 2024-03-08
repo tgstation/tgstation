@@ -56,8 +56,8 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/carp,
-		/datum/pet_command/point_targetting/use_ability/magicarp,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/use_ability/magicarp,
 	)
 	/// List of all projectiles we can fire.
 	/// Non-static, because subtypes can have their own lists.
@@ -88,18 +88,18 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	spell.projectile_type = spell_type
 	spell.button_icon_state = initial(spell_type.icon_state)
 	spell.Grant(src)
-	ai_controller.blackboard[BB_MAGICARP_SPELL] = WEAKREF(spell)
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL, spell)
 	assign_spell_ai(spell_type)
 
-/// If you have certain spells, use a different targetting datum
+/// If you have certain spells, use a different targeting strategy
 /mob/living/basic/carp/magic/proc/assign_spell_ai(spell_type)
-	var/static/list/spell_special_targetting = list(
+	var/static/list/spell_special_targeting = list(
 		/obj/projectile/magic/animate = MAGICARP_SPELL_OBJECTS,
 		/obj/projectile/magic/door = MAGICARP_SPELL_WALLS,
 		/obj/projectile/magic/resurrection = MAGICARP_SPELL_CORPSES,
 	)
 
-	ai_controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING] = spell_special_targetting[spell_type]
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL_SPECIAL_TARGETING, spell_special_targeting[spell_type])
 
 /// Shoot when you click away from you
 /mob/living/basic/carp/magic/RangedAttack(atom/atom_target, modifiers)
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	chaos_bolt.permitted_projectiles = allowed_projectile_types
 	chaos_bolt.Grant(src)
 	spell = chaos_bolt
-	ai_controller.blackboard[BB_MAGICARP_SPELL] = spell
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL, spell)
 	RegisterSignal(spell, COMSIG_ACTION_TRIGGER, PROC_REF(apply_colour))
 
 /// Has a more limited spell pool but can appear from gold slime cores

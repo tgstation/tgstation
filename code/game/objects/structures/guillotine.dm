@@ -33,7 +33,7 @@
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "guilliotine"
 	can_buckle = TRUE
 	anchored = TRUE
@@ -42,7 +42,6 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	/// The sound the guillotine makes when it successfully cuts off a head
 	var/drop_sound = 'sound/weapons/guillotine.ogg'
 	/// The current state of the blade
@@ -130,7 +129,7 @@
 			else
 				blade_status = GUILLOTINE_BLADE_MOVING
 				icon_state = "guillotine_drop"
-				addtimer(CALLBACK(src, PROC_REF(drop_blade)), GUILLOTINE_ANIMATION_LENGTH)
+				addtimer(CALLBACK(src, PROC_REF(drop_blade), user), GUILLOTINE_ANIMATION_LENGTH)
 
 /// Sets the guillotine blade in a raised position
 /obj/structure/guillotine/proc/raise_blade()
@@ -174,7 +173,7 @@
 					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
 			else
-				victim.apply_damage(15 * blade_sharpness, BRUTE, head)
+				victim.apply_damage(15 * blade_sharpness, BRUTE, head, attacking_item = src)
 				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
 				victim.emote("scream")
 
@@ -277,7 +276,7 @@
 	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
 		current_action = GUILLOTINE_ACTION_IDLE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	current_action = GUILLOTINE_ACTION_IDLE
 	return FALSE
 

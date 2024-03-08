@@ -6,7 +6,7 @@
 /obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
@@ -60,6 +60,7 @@
 	spawn_amt_left--
 	if(spawn_amt_left <= 0)
 		qdel(src)
+		return PROCESS_KILL
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/nullrod))
@@ -86,7 +87,7 @@
 /obj/item/veilrender/honkrender
 	name = "honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
+	spawn_type = /mob/living/basic/clown
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
@@ -97,7 +98,7 @@
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus. This one gleams with a special light."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
+	spawn_type = /mob/living/basic/clown/clownhulk
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
@@ -150,7 +151,7 @@
 /obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
 		return
-	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
 	C.spew_organ(3, 2)
 	C.investigate_log("has died from using telekinesis on a tear in reality.", INVESTIGATE_DEATHS)
 	C.death()
@@ -210,7 +211,7 @@
 /obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "necrostone"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -258,7 +259,7 @@
 	target.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= target
 	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
-	to_chat(target, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
+	to_chat(target, span_userdanger("[user.p_Theyre()] your master now, assist [user.p_them()] even if it costs you your new life!"))
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(antag_datum)
 		if(!antag_datum.wiz_team)
@@ -311,7 +312,7 @@
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
-	pump_delay = 60
+	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
@@ -320,7 +321,7 @@
 /obj/item/warp_whistle
 	name = "warp whistle"
 	desc = "Calls a cloud to come pick you up and drop you at a random location on the station."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/art/musician.dmi'
 	icon_state = "whistle"
 
 	/// Person using the warp whistle
@@ -341,7 +342,7 @@
 /obj/effect/temp_visual/teleporting_tornado
 	name = "tornado"
 	desc = "This thing sucks!"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "tornado"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -390,3 +391,126 @@
 		whistle.whistler = null
 		whistle = null
 	return ..()
+
+/////////////////////////////////////////Scepter of Vendormancy///////////////////
+#define RUNIC_SCEPTER_MAX_CHARGES 3
+#define RUNIC_SCEPTER_MAX_RANGE 7
+
+/obj/item/runic_vendor_scepter
+	name = "scepter of runic vendormancy"
+	desc = "This scepter allows you to conjure, force push and detonate Runic Vendors. It can hold up to 3 charges that can be recovered with a simple magical channeling. A modern spin on the old Geomancy spells."
+	icon_state = "vendor_staff"
+	inhand_icon_state = "vendor_staff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 10
+	damtype = BRUTE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	attack_verb_continuous = list("smacks", "clubs", "wacks")
+	attack_verb_simple = list("smack", "club", "wacks")
+
+	/// Range cap on where you can summon vendors.
+	var/max_summon_range = RUNIC_SCEPTER_MAX_RANGE
+	/// Channeling time to summon a vendor.
+	var/summoning_time = 1 SECONDS
+	/// Checks if the scepter is channeling a vendor already.
+	var/scepter_is_busy_summoning = FALSE
+	/// Checks if the scepter is busy channeling recharges
+	var/scepter_is_busy_recharging = FALSE
+	///Number of summoning charges left.
+	var/summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
+
+/obj/item/runic_vendor_scepter/Initialize(mapload)
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
+	var/static/list/loc_connections = list(
+		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
+	)
+
+/obj/item/runic_vendor_scepter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(scepter_is_busy_recharging)
+		user.balloon_alert(user, "busy!")
+		return
+	if(!check_allowed_items(target, not_inside = TRUE))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	var/turf/afterattack_turf = get_turf(target)
+	if(istype(target, /obj/machinery/vending/runic_vendor))
+		var/obj/machinery/vending/runic_vendor/runic_explosion_target = target
+		runic_explosion_target.runic_explosion()
+		return
+	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in afterattack_turf
+	if(vendor_on_turf)
+		vendor_on_turf.runic_explosion()
+		return
+	if(!summon_vendor_charges)
+		user.balloon_alert(user, "no charges!")
+		return
+	if(get_dist(afterattack_turf,src) > max_summon_range)
+		user.balloon_alert(user, "too far!")
+		return
+	if(get_turf(src) == afterattack_turf)
+		user.balloon_alert(user, "too close!")
+		return
+	if(scepter_is_busy_summoning)
+		user.balloon_alert(user, "already summoning!")
+		return
+	if(afterattack_turf.is_blocked_turf(TRUE))
+		user.balloon_alert(user, "blocked!")
+		return
+	if(summoning_time)
+		scepter_is_busy_summoning = TRUE
+		user.balloon_alert(user, "summoning...")
+		if(!do_after(user, summoning_time, target = target))
+			scepter_is_busy_summoning = FALSE
+			return
+		scepter_is_busy_summoning = FALSE
+	if(summon_vendor_charges)
+		playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+		user.visible_message(span_warning("[user] summons a runic vendor!"))
+		new /obj/machinery/vending/runic_vendor(afterattack_turf)
+		summon_vendor_charges--
+		user.changeNext_move(CLICK_CD_MELEE)
+		return
+	return ..()
+
+/obj/item/runic_vendor_scepter/attack_self(mob/user, modifiers)
+	. = ..()
+	user.balloon_alert(user, "recharging...")
+	scepter_is_busy_recharging = TRUE
+	if(!do_after(user, 5 SECONDS))
+		scepter_is_busy_recharging = FALSE
+		return
+	user.balloon_alert(user, "fully charged")
+	scepter_is_busy_recharging = FALSE
+	summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
+
+/obj/item/runic_vendor_scepter/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	var/turf/afterattack_secondary_turf = get_turf(target)
+	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in afterattack_secondary_turf
+	if(istype(target, /obj/machinery/vending/runic_vendor))
+		var/obj/machinery/vending/runic_vendor/vendor_being_throw = target
+		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 20, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(vendor_on_turf)
+		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 20, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/runic_vendor_scepter/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	if(!ismovable(loc))
+		return
+
+	. = COMPONENT_ITEM_CHARGED
+
+	summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
+	return .
+
+#undef RUNIC_SCEPTER_MAX_CHARGES
+#undef RUNIC_SCEPTER_MAX_RANGE

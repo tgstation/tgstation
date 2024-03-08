@@ -4,7 +4,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	inhand_icon_state = "pickaxe"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
 	throwforce = 10
@@ -12,7 +12,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
@@ -43,7 +43,7 @@
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -113,7 +113,7 @@
 	toolspeed = 3 //3 times slower than a normal pickaxe
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=12050) //metal needed for a crowbar and for a knife, why the FUCK does a knife cost 6 metal sheets while a crowbar costs 0.025 sheets? shit makes no sense fuck this
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6) //This number used to be insane and I'm just going to save your sanity and not tell you what it was.
 
 /obj/item/shovel
 	name = "shovel"
@@ -123,7 +123,7 @@
 	inhand_icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
 	throwforce = 4
@@ -131,7 +131,7 @@
 	toolspeed = 1
 	usesound = 'sound/effects/shovel_dig.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
@@ -164,18 +164,39 @@
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
-	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
+	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs. \
+		It seems less capable of harming inorganic creatures. Who knows why."
 	icon_state = "shovel_bone"
 	worn_icon_state = "shovel_serr"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	force = 15
+	force = 10
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
-	toolspeed = 0.7
+	tool_behaviour = TOOL_SHOVEL // hey, it's serrated.
+	toolspeed = 0.3
 	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
+	item_flags = CRUEL_IMPLEMENT
+
+/obj/item/shovel/serrated/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_ORGANIC, damage_multiplier = 1) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
+
+/obj/item/shovel/serrated/examine(mob/user)
+	. = ..()
+	if( !(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)) )
+		return
+	. += span_deadsay("You feel an intense, strange craving to 'dig' straight through living flesh with this shovel. Why else would it be serrated? The thought is mesmerizing...")
+
+// Coroner mail version
+/obj/item/shovel/serrated/dull
+	name = "dull bone shovel"
+	desc = "An ancient, dull bone shovel with a strange design and markings. Visually, it seems pretty weak, but you get the feeling there's more to it than meets the eye..."
+	force = 8
+	throwforce = 10
+	toolspeed = 0.8
 
 /obj/item/trench_tool
 	name = "entrenching tool"
@@ -185,7 +206,7 @@
 	inhand_icon_state = "trench_tool"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
@@ -195,6 +216,9 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
+
+/obj/item/trench_tool/get_all_tool_behaviours()
+	return list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)
 
 /obj/item/trench_tool/Initialize(mapload)
 	. = ..()
@@ -262,3 +286,94 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
+
+/obj/item/shovel/giant_wrench
+	name = "Big Slappy"
+	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
+	icon_state = "giant_wrench"
+	icon = 'icons/obj/weapons/giant_wrench.dmi'
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	toolspeed = 0.1
+	force = 30
+	throwforce = 20
+	block_chance = 30
+	throw_range = 2
+	demolition_mod = 2
+	armor_type = /datum/armor/giant_wrench
+	resistance_flags = FIRE_PROOF
+	wound_bonus = -10
+	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
+	attack_verb_simple = list("bonk", "bludgeon", "pound")
+	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	obj_flags = IMMUTABLE_SLOW
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 3
+	attack_speed = 1.2 SECONDS
+	/// The factor at which the recoil becomes less.
+	var/recoil_factor = 3
+	/// Wether we knock down and launch away out enemies when we attack.
+	var/do_launch = TRUE
+
+/obj/item/shovel/giant_wrench/get_all_tool_behaviours()
+	return list(TOOL_SHOVEL, TOOL_WRENCH)
+
+/datum/armor/giant_wrench
+	acid = 30
+	bomb = 100
+	bullet = 30
+	fire = 100
+	laser = 30
+	melee = 30
+
+/obj/item/shovel/giant_wrench/Initialize(mapload)
+	. = ..()
+	transform = transform.Translate(-16, -16)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent( \
+		/datum/component/transforming, \
+		force_on = 40, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		sharpness_on = SHARP_POINTY, \
+		clumsy_check = TRUE, \
+		inhand_icon_change = TRUE, \
+	)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+
+/// Used when the tool is transformed through the transforming component.
+/obj/item/shovel/giant_wrench/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	usesound = (active ? 'sound/items/ratchet.ogg' : initial(usesound))
+	block_chance = (active ? 0 : initial(block_chance))
+	recoil_factor = (active ? 2 : initial(recoil_factor))
+	do_launch = (active ? FALSE : initial(do_launch))
+	tool_behaviour = (active ? TOOL_WRENCH : initial(tool_behaviour))
+	armour_penetration = (active ? 30 : initial(armour_penetration))
+	if(user)
+		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
+	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)
+	..()
+	if(QDELETED(target_mob))
+		return
+	if(do_launch)
+		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
+		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
+		target_mob.Knockdown(2 SECONDS)
+	var/body_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	user.apply_damage(force / recoil_factor, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
+	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
+	log_combat(user, user, "recoiled Big Slappy into")

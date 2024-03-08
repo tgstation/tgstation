@@ -5,7 +5,7 @@
 	icon_state = "eth_raincoat"
 	worn_icon = 'icons/mob/clothing/suits/ethereal.dmi'
 	greyscale_config = /datum/greyscale_config/eth_raincoat
-	greyscale_config_worn = /datum/greyscale_config/eth_raincoat_worn
+	greyscale_config_worn = /datum/greyscale_config/eth_raincoat/worn
 	greyscale_colors = "#4e7cc7"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|ARMS

@@ -1,3 +1,13 @@
+/// The number of entries to store per category, don't make this too large or you'll start to see performance issues
+#define CONFIG_MAX_CACHED_LOG_ENTRIES 1000
+
+/// The number of *minimum* ticks between each log re-render, making this small will cause performance issues
+/// Admins can still manually request a re-render
+#define LOG_UPDATE_TIMEOUT 5 SECONDS
+
+// The maximum number of entries allowed in the signaler investigate log, keep this relatively small to prevent performance issues when an admin tries to query it
+#define INVESTIGATE_SIGNALER_LOG_MAX_LENGTH 500
+
 //Investigate logging defines
 #define INVESTIGATE_ACCESSCHANGES "id_card_changes"
 #define INVESTIGATE_ATMOS "atmos"
@@ -15,6 +25,7 @@
 #define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_RECORDS "records"
 #define INVESTIGATE_RESEARCH "research"
+#define INVESTIGATE_TRANSPORT "transport"
 #define INVESTIGATE_WIRES "wires"
 
 // Logging types for log_message()
@@ -40,6 +51,7 @@
 #define LOG_VICTIM (1 << 19)
 #define LOG_RADIO_EMOTE (1 << 20)
 #define LOG_SPEECH_INDICATORS (1 << 21)
+#define LOG_TRANSPORT (1 << 22)
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
@@ -55,23 +67,117 @@
 #define LOGSRC_MOB "Mob"
 
 // Log header keys
-#define LOG_HEADER_CATEGORY "category"
-#define LOG_HEADER_INIT_TIMESTAMP "timestamp"
-#define LOG_HEADER_ROUND_ID "round_id"
-
-// Log data keys
-#define LOG_ENTRY_MESSAGE "message"
-#define LOG_ENTRY_TIMESTAMP "timestamp"
-#define LOG_ENTRY_DATA "data"
+#define LOG_HEADER_CATEGORY "cat"
+#define LOG_HEADER_CATEGORY_LIST "cat-list"
+#define LOG_HEADER_INIT_TIMESTAMP "ts"
+#define LOG_HEADER_ROUND_ID "round-id"
+#define LOG_HEADER_SECRET "secret"
 
 // Log json keys
-#define LOG_JSON_CATEGORY "category"
+#define LOG_JSON_CATEGORY "cat"
 #define LOG_JSON_ENTRIES "entries"
-#define LOG_JSON_LOGGING_START "log_start"
+#define LOG_JSON_LOGGING_START "log-start"
 
-// Log categories
-#define LOG_CATEGORY_NOT_FOUND "invalid_category"
-#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target_zone_switch"
+// Log entry keys
+#define LOG_ENTRY_KEY_TIMESTAMP "ts"
+#define LOG_ENTRY_KEY_CATEGORY "cat"
+#define LOG_ENTRY_KEY_MESSAGE "msg"
+#define LOG_ENTRY_KEY_DATA "data"
+#define LOG_ENTRY_KEY_WORLD_STATE "w-state"
+#define LOG_ENTRY_KEY_SEMVER_STORE "s-store"
+#define LOG_ENTRY_KEY_ID "id"
+#define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
+
+// Internal categories
+#define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"
+#define LOG_CATEGORY_INTERNAL_ERROR "internal-error"
+
+// Misc categories
+#define LOG_CATEGORY_ATTACK "attack"
+#define LOG_CATEGORY_CONFIG "config"
+#define LOG_CATEGORY_DYNAMIC "dynamic"
+#define LOG_CATEGORY_ECONOMY "economy"
+#define LOG_CATEGORY_FILTER "filter"
+#define LOG_CATEGORY_MANIFEST "manifest"
+#define LOG_CATEGORY_MECHA "mecha"
+#define LOG_CATEGORY_PAPER "paper"
+#define LOG_CATEGORY_QDEL "qdel"
+#define LOG_CATEGORY_RUNTIME "runtime"
+#define LOG_CATEGORY_SHUTTLE "shuttle"
+#define LOG_CATEGORY_SILICON "silicon"
+#define LOG_CATEGORY_SILO "silo"
+#define LOG_CATEGORY_SIGNAL "signal"
+#define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
+// Leave the underscore, it's there for backwards compatibility reasons
+#define LOG_CATEGORY_SUSPICIOUS_LOGIN "suspicious_logins"
+#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
+#define LOG_CATEGORY_TELECOMMS "telecomms"
+#define LOG_CATEGORY_TOOL "tool"
+#define LOG_CATEGORY_TRANSPORT "transport"
+#define LOG_CATEGORY_VIRUS "virus"
+
+// Admin categories
+#define LOG_CATEGORY_ADMIN "admin"
+#define LOG_CATEGORY_ADMIN_CIRCUIT "admin-circuit"
+#define LOG_CATEGORY_ADMIN_DSAY "admin-dsay"
+
+// Admin private categories
+#define LOG_CATEGORY_ADMIN_PRIVATE "adminprivate"
+#define LOG_CATEGORY_ADMIN_PRIVATE_ASAY "adminprivate-asay"
+
+// Debug categories
+#define LOG_CATEGORY_DEBUG "debug"
+#define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
+#define LOG_CATEGORY_DEBUG_JOB "debug-job"
+#define LOG_CATEGORY_DEBUG_LUA "debug-lua"
+#define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
+#define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
+#define LOG_CATEGORY_DEBUG_SQL "debug-sql"
+
+// Compatibility categories, for when stuff is changed and you need existing functionality to work
+#define LOG_CATEGORY_COMPAT_GAME "game-compat"
+
+// Game categories
+#define LOG_CATEGORY_GAME "game"
+#define LOG_CATEGORY_GAME_ACCESS "game-access"
+#define LOG_CATEGORY_GAME_EMOTE "game-emote"
+#define LOG_CATEGORY_GAME_INTERNET_REQUEST "game-internet-request"
+#define LOG_CATEGORY_GAME_OOC "game-ooc"
+#define LOG_CATEGORY_GAME_PRAYER "game-prayer"
+#define LOG_CATEGORY_GAME_RADIO_EMOTE "game-radio-emote"
+#define LOG_CATEGORY_GAME_SAY "game-say"
+#define LOG_CATEGORY_GAME_TOPIC "game-topic"
+#define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
+#define LOG_CATEGORY_GAME_VOTE "game-vote"
+#define LOG_CATEGORY_GAME_WHISPER "game-whisper"
+
+// HREF categories
+#define LOG_CATEGORY_HREF "href"
+#define LOG_CATEGORY_HREF_TGUI "href-tgui"
+
+// Uplink categories
+#define LOG_CATEGORY_UPLINK "uplink"
+#define LOG_CATEGORY_UPLINK_CHANGELING "uplink-changeling"
+#define LOG_CATEGORY_UPLINK_HERETIC "uplink-heretic"
+#define LOG_CATEGORY_UPLINK_MALF "uplink-malf"
+#define LOG_CATEGORY_UPLINK_SPELL "uplink-spell"
+#define LOG_CATEGORY_UPLINK_SPY "uplink-spy"
+
+// PDA categories
+#define LOG_CATEGORY_PDA "pda"
+#define LOG_CATEGORY_PDA_CHAT "pda-chat"
+#define LOG_CATEGORY_PDA_COMMENT "pda-comment"
+
+// Flags that apply to the entry_flags var on logging categories
+// These effect how entry datums process the inputs passed into them
+/// Enables data list usage for readable log entries
+/// You'll likely want to disable internal formatting to make this work properly
+#define ENTRY_USE_DATA_W_READABLE (1<<0)
+
+#define SCHEMA_VERSION "schema-version"
+
+// Default log schema version
+#define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0.1"
 
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B

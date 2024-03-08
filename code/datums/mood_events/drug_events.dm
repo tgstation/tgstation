@@ -6,6 +6,24 @@
 	mood_change = 6
 	description = "I'm sooooo stooooooooooooned..."
 
+/datum/mood_event/maintenance_high
+	mood_change = 6
+	description = "I'm on top of the world, baby! Tide worldwide!"
+	timeout = 2 MINUTES
+
+/datum/mood_event/maintenance_high/add_effects(param)
+	var/value = rand(-1, 6) // chance for it to suck
+	mood_change = value
+	if(value < 0)
+		description = "No! Don't! My gloves! Auuuuurgh!"
+	else
+		description = initial(description)
+
+/datum/mood_event/hang_over
+	mood_change = -4
+	description = "I have a killer hang over!"
+	timeout = 1 MINUTES
+
 /datum/mood_event/smoked
 	description = "I have had a smoke recently."
 	mood_change = 2
@@ -107,3 +125,8 @@
 /datum/mood_event/nicotine_withdrawal_severe
 	description = "Head pounding. Cold sweating. Feeling anxious. Need a smoke to calm down!"
 	mood_change = -8
+
+/datum/mood_event/hauntium_spirits
+	description = "I feel my soul degrading!"
+	mood_change = -8
+	timeout = 8 MINUTES

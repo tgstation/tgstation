@@ -27,7 +27,8 @@
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 
-	SSpoints_of_interest.make_point_of_interest(src)
+	if(!mapload)
+		SSpoints_of_interest.make_point_of_interest(src)
 
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
@@ -41,10 +42,7 @@
 		aSignal.code = rand(1,100)
 		aSignal.anomaly_type = type
 
-		var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
-		if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
-			frequency++
-		aSignal.set_frequency(frequency)
+		aSignal.set_frequency(sanitize_frequency(rand(MIN_FREE_FREQ, MAX_FREE_FREQ), free = TRUE))
 
 	if(new_lifespan)
 		lifespan = new_lifespan
@@ -64,8 +62,8 @@
 		else
 			countdown.start()
 
-/obj/effect/anomaly/process(delta_time)
-	anomalyEffect(delta_time)
+/obj/effect/anomaly/process(seconds_per_tick)
+	anomalyEffect(seconds_per_tick)
 	if(death_time < world.time && !immortal)
 		if(loc)
 			detonate()
@@ -74,12 +72,11 @@
 /obj/effect/anomaly/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(countdown)
-	if(aSignal)
-		QDEL_NULL(aSignal)
+	QDEL_NULL(aSignal)
 	return ..()
 
-/obj/effect/anomaly/proc/anomalyEffect(delta_time)
-	if(!immobile && DT_PROB(ANOMALY_MOVECHANCE, delta_time))
+/obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
+	if(!immobile && SPT_PROB(ANOMALY_MOVECHANCE, seconds_per_tick))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
@@ -88,13 +85,19 @@
 /obj/effect/anomaly/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
 	if(drops_core)
-		aSignal.forceMove(drop_location())
-		aSignal = null
+		if(isnull(aSignal))
+			stack_trace("An anomaly ([src]) exists that drops a core, yet has no core!")
+		else
+			aSignal.forceMove(drop_location())
+			aSignal = null
 	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
@@ -109,7 +112,8 @@
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
 	immortal = TRUE
-	name = has_core ? "stable " : "hollow " + name
-	aSignal = has_core ? aSignal : null
+	name = (has_core ? "stable " : "hollow ") + name
+	if(!has_core)
+		drops_core = FALSE
+		QDEL_NULL(aSignal)
 	immobile = anchor
-

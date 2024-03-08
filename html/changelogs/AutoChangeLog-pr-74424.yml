@@ -1,4 +1,0 @@
-author: "Ical92"
-delete-after: True
-changes:
-  - bugfix: "fixes telescreens showing static when reopening a camera"

@@ -63,7 +63,7 @@
 
 /obj/item/storage/box/snappops/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/toy/snappop))
+	atom_storage.set_holdable(/obj/item/toy/snappop)
 	atom_storage.max_slots = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
@@ -90,7 +90,7 @@
 /obj/item/storage/box/matches/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 10
-	atom_storage.set_holdable(list(/obj/item/match))
+	atom_storage.set_holdable(/obj/item/match)
 
 /obj/item/storage/box/matches/PopulateContents()
 	for(var/i in 1 to 10)
@@ -170,7 +170,7 @@
 		/obj/item/stack/cable_coil/five = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/sheet/iron/five = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/wrench = 1,
 	)

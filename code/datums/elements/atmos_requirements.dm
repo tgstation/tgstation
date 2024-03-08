@@ -26,12 +26,12 @@
 	UnregisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING)
 
 ///signal called by the living mob's life() while non stasis
-/datum/element/atmos_requirements/proc/on_non_stasis_life(mob/living/target, delta_time = SSMOBS_DT)
+/datum/element/atmos_requirements/proc/on_non_stasis_life(mob/living/target, seconds_per_tick = SSMOBS_DT)
 	SIGNAL_HANDLER
 	if(is_breathable_atmos(target))
 		target.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return
-	target.adjustBruteLoss(unsuitable_atmos_damage * delta_time)
+	target.adjustBruteLoss(unsuitable_atmos_damage * seconds_per_tick)
 	target.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 
 /datum/element/atmos_requirements/proc/is_breathable_atmos(mob/living/target)
@@ -46,10 +46,10 @@
 		return FALSE
 
 	var/open_turf_gases = open_turf.air.gases
-	open_turf.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
+	open_turf.air.assert_gases(/datum/gas/oxygen, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
-	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]
+	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES] + (open_turf_gases[/datum/gas/pluoxium][MOLES] * PLUOXIUM_PROPORTION)
 	var/n2 = open_turf_gases[/datum/gas/nitrogen][MOLES]
 	var/co2 = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
 

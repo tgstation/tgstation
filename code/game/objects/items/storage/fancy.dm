@@ -16,7 +16,7 @@
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	/// Used by examine to report what this thing is holding.
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
@@ -106,7 +106,7 @@
 
 /obj/item/storage/fancy/donut_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/donut))
+	atom_storage.set_holdable(/obj/item/food/donut)
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -153,7 +153,17 @@
 
 /obj/item/storage/fancy/egg_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/egg))
+	atom_storage.set_holdable(/obj/item/food/egg)
+
+/*
+ * Fertile Egg Box
+ */
+
+/obj/item/storage/fancy/egg_box/fertile
+	name = "fertile egg box"
+	desc = "Only one thing here is fertile, and it's not the eggs."
+	spawn_type = /obj/item/food/egg/fertile
+	spawn_count = 6
 
 /*
  * Candle Box
@@ -174,6 +184,9 @@
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
 
+/obj/item/storage/fancy/candle_box/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(/obj/item/flashlight/flare/candle)
 
 ////////////
 //CIG PACK//
@@ -210,7 +223,7 @@
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
-	attached_coupon.generate(rigged_omen)
+	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null)
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
@@ -392,7 +405,7 @@
 
 /obj/item/storage/fancy/rollingpapers/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/rollingpaper))
+	atom_storage.set_holdable(/obj/item/rollingpaper)
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -418,7 +431,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
+	atom_storage.set_holdable(/obj/item/clothing/mask/cigarette/cigar)
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -473,7 +486,7 @@
 
 /obj/item/storage/fancy/heart_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/bonbon))
+	atom_storage.set_holdable(/obj/item/food/bonbon)
 
 
 /obj/item/storage/fancy/nugget_box
@@ -488,7 +501,7 @@
 
 /obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/nugget))
+	atom_storage.set_holdable(/obj/item/food/nugget)
 
 /*
  * Jar of pickles
@@ -503,14 +516,14 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable_result = null
-	custom_materials = list(/datum/material/glass = 2000)
+	foldable_result = /obj/item/reagent_containers/cup/beaker/large
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/pickle))
+	atom_storage.set_holdable(/obj/item/food/pickle)
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()
@@ -533,7 +546,8 @@
 	name = "coffee condiments display"
 	desc = "A neat small wooden box, holding all your favorite coffee condiments."
 	contents_tag = "coffee condiment"
-	custom_materials = list(/datum/material/wood = 1000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT/2)
+	resistance_flags = FLAMMABLE
 	foldable_result = /obj/item/stack/sheet/mineral/wood
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE

@@ -2,7 +2,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
-	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_portable_atmospherics
@@ -43,6 +43,8 @@
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
+	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
@@ -188,11 +190,11 @@
 			user.put_in_hands(holding)
 		else
 			holding.forceMove(get_turf(src))
-		UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
 	if(new_tank)
 		holding = new_tank
-		RegisterSignal(holding, COMSIG_PARENT_QDELETING, PROC_REF(unregister_holding))
+		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)
 	update_appearance()
@@ -253,7 +255,7 @@
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
 	SIGNAL_HANDLER
 
-	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(holding, COMSIG_QDELETING)
 	holding = null
 
 #undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT

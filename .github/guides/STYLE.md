@@ -211,6 +211,9 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Use descriptive and obvious names
 Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
+#### Any variable or argument that holds time and uses a unit of time other than decisecond must include the unit of time in the name.
+For example, a proc argument named `delta_time` that marks the seconds between fires could confuse somebody who assumes it stores deciseconds. Naming it `delta_time_seconds` makes this clearer, naming it `seconds_per_tick` makes its purpose even clearer.
+
 ### Don't use abbreviations
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
 
@@ -299,6 +302,47 @@ world.log << "[apples--] apples left, taking one."
 world.log << "[apples] apples left, taking one."
 apples--
 ```
+
+### initial() versus ::
+`::` is a compile time scope operator which we use as an alternative to `initial()`.
+It's used within the definition of a datum as opposed to `Initialize` or other procs.
+
+```dm
+// Bad
+/atom/thing/better
+	name = "Thing"
+
+/atom/thing/better/Initialize()
+	var/atom/thing/parent = /atom/thing
+	desc = inital(parent)
+
+// Good
+/atom/thing/better
+	name = "Thing"
+	desc = /atom/thing::desc
+```
+
+Another good use for it easy access of the parent's variables.
+```dm
+/obj/item/fork/dangerous
+	damage = parent_type::damage * 2
+```
+
+```dm
+/obj/item/fork
+	flags_1 = parent_type::flags_1 | FLAG_COOLER
+```
+
+
+It's important to note that `::` does not apply to every application of `initial()`.
+Primarily in cases where the type you're using for the initial value is not static.
+
+For example,
+```dm
+/proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
+	return initial(b.init_order) - initial(a.init_order)
+```
+could not use `::` as the provided types are not static.
 
 ## Procs
 

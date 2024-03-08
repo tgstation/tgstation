@@ -16,7 +16,7 @@
 	make_friend()
 	get_ghost()
 
-/datum/brain_trauma/special/imaginary_friend/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick, times_fired)
 	if(get_dist(owner, friend) > 9)
 		friend.recall()
 	if(!friend)
@@ -45,15 +45,29 @@
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(owner), owner)
 
+/// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
-		friend_initialized = TRUE
-	else
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("imaginary friend")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		alert_pic = owner,
+		role_name_text = "imaginary friend",
+	)
+	add_friend(chosen_one)
+
+/// Yay more friends!
+/datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
+	if(isnull(ghost))
 		qdel(src)
+		return
+
+	friend.key = ghost.key
+	friend_initialized = TRUE
+	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
 /mob/camera/imaginary_friend
 	name = "imaginary friend"
@@ -72,8 +86,7 @@
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
-	var/datum/action/innate/imaginary_join/join
-	var/datum/action/innate/imaginary_hide/hide
+
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -92,30 +105,35 @@
  * * imaginary_friend_owner - The living mob that owns the imaginary friend.
  * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on these prefs.
  */
-/mob/camera/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
+/mob/camera/imaginary_friend/Initialize(mapload)
 	. = ..()
+	var/static/list/grantable_actions = list(
+		/datum/action/innate/imaginary_join,
+		/datum/action/innate/imaginary_hide,
+	)
+	grant_actions_by_list(grantable_actions)
 
+/// Links this imaginary friend to the provided mob
+/mob/camera/imaginary_friend/proc/attach_to_owner(mob/living/imaginary_friend_owner)
 	owner = imaginary_friend_owner
+	if(!owner.imaginary_group)
+		owner.imaginary_group = list(owner)
+	owner.imaginary_group += src
 
+/// Copies appearance from passed player prefs, or randomises them if none are provided
+/mob/camera/imaginary_friend/proc/setup_appearance(datum/preferences/appearance_from_prefs = null)
 	if(appearance_from_prefs)
 		INVOKE_ASYNC(src, PROC_REF(setup_friend_from_prefs), appearance_from_prefs)
 	else
 		INVOKE_ASYNC(src, PROC_REF(setup_friend))
 
-	join = new
-	join.Grant(src)
-	hide = new
-	hide.Grant(src)
-
-	if(!owner.imaginary_group)
-		owner.imaginary_group = list(owner)
-	owner.imaginary_group += src
-
+/// Randomise friend name and appearance
 /mob/camera/imaginary_friend/proc/setup_friend()
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
+	Show()
 
 /**
  * Sets up the imaginary friend's name and look using a set of datum preferences.
@@ -146,13 +164,11 @@
 
 	if(istype(appearance_job, /datum/job/ai))
 		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
-		return
-
-	if(istype(appearance_job, /datum/job/cyborg))
+	else if(istype(appearance_job, /datum/job/cyborg))
 		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
-		return
-
-	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+	else
+		human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+	Show()
 
 /// Returns all member clients of the imaginary_group
 /mob/camera/imaginary_friend/proc/group_clients()
@@ -163,7 +179,7 @@
 	return group_clients
 
 /mob/camera/imaginary_friend/proc/Show()
-	if(!client) //nobody home
+	if(!client || !owner) //nobody home
 		return
 
 	var/list/friend_clients = group_clients() - src.client
@@ -192,7 +208,7 @@
 	return ..()
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
+	if (safe_read_pref(client, /datum/preference/toggle/enable_runechat) && (safe_read_pref(client, /datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
@@ -237,11 +253,11 @@
 	var/rendered = "[span_name("[name]")] [quoted_message]"
 	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 
-	var/language = message_language || owner.language_holder.get_selected_language()
+	var/language = message_language || owner.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
-		if(eavesdrop_range && get_dist(src, person) > 1 + eavesdrop_range)
+		if(eavesdrop_range && get_dist(src, person) > WHISPER_RANGE + eavesdrop_range && !HAS_TRAIT(person, TRAIT_GOOD_HEARING))
 			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
 			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
 		else
@@ -250,7 +266,7 @@
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/user as anything in (group + src)) // Add ourselves back in
-		if(user.client && (!user.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+		if((safe_read_pref(user.client, /datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(user.client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
@@ -267,9 +283,9 @@
 	for(var/mob/dead_player in GLOB.dead_mob_list)
 		if(dead_player.z != z || get_dist(src, dead_player) > 7)
 			if(eavesdrop_range)
-				if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER))
+				if(!(get_chat_toggles(dead_player.client) & CHAT_GHOSTWHISPER))
 					continue
-			else if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTEARS))
+			else if(!(get_chat_toggles(dead_player.client) & CHAT_GHOSTEARS))
 				continue
 		var/link = FOLLOW_LINK(dead_player, owner)
 		to_chat(dead_player, "[link] [dead_rendered]")
@@ -309,12 +325,12 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("[FOLLOW_LINK(ghost, user)] [dchatmsg]")
 
 	for(var/mob/person in friend.owner.imaginary_group)
 		to_chat(person, message)
-		if(person.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+		if(safe_read_pref(person.client, /datum/preference/toggle/enable_runechat))
 			person.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 	return TRUE
 
@@ -377,7 +393,7 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_image_to_clients(active_thinking_indicator, group_clients())
@@ -389,7 +405,7 @@
 	active_thinking_indicator = null
 
 /mob/camera/imaginary_friend/create_typing_indicator()
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+	if(active_typing_indicator || active_thinking_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_image_to_clients(active_typing_indicator, group_clients())
@@ -401,7 +417,7 @@
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
-	thinking_IC = FALSE
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 

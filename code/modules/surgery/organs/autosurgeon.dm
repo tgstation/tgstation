@@ -2,7 +2,7 @@
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
 		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "autosurgeon"
 	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
@@ -74,15 +74,21 @@
 		return
 
 	if(implant_time)
-		user.visible_message( "[user] prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
-		if(!do_after(user, (8 SECONDS * surgery_speed), target))
+		user.visible_message(
+			span_notice("[user] prepares to use [src] on [target]."),
+			span_notice("You begin to prepare to use [src] on [target]."),
+		)
+		if(!do_after(user, (implant_time * surgery_speed), target))
 			return
 
 	if(target != user)
 		log_combat(user, target, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
 		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	else
-		user.visible_message(span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."), "You press a button on [src] as it plunges into your body.")
+		user.visible_message(
+			span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."),
+			span_notice("You press a button on [src] as it plunges into your body."),
+		)
 
 	stored_organ.Insert(target)//insert stored organ into the user
 	stored_organ = null
@@ -171,3 +177,8 @@
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged
+
+/obj/item/autosurgeon/syndicate/contraband_sechud
+	desc = "Contains a contraband SecHUD implant, undetectable by health scanners."
+	uses = 1
+	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate

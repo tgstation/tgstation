@@ -3,6 +3,13 @@
 	access = NONE
 	group = "Goodies"
 	goody = TRUE
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
+
+/datum/supply_pack/goody/clear_pda
+	name = "Mint Condition Nanotrasen Clear PDA"
+	desc = "Mint condition, freshly repackaged! A valuable collector's item normally valued at over 2.5 million credits, now available for a steal!"
+	cost = 100000
+	contains = list(/obj/item/modular_computer/pda/clear)
 
 /datum/supply_pack/goody/dumdum38
 	name = ".38 DumDum Speedloader"
@@ -93,11 +100,11 @@
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/clothing/gloves/color/yellow)
 
-/datum/supply_pack/goody/gripper_single
-	name = "Gripper Gloves Single-Pack"
-	desc = "A spare pair of gripper gloves. Perfect for when the security vendor is empty (or when you're not actually a security officer)."
+/datum/supply_pack/goody/gorilla_single
+	name = "Gorilla Gloves Single-Pack"
+	desc = "A spare pair of gorilla gloves. Better for tackles than grippers from the security vendor."
 	cost = PAYCHECK_COMMAND * 6
-	contains = list(/obj/item/clothing/gloves/tackler)
+	contains = list(/obj/item/clothing/gloves/tackler/combat)
 
 /datum/supply_pack/goody/firstaidbruises_single
 	name = "Bruise Treatment Kit Single-Pack"
@@ -129,6 +136,12 @@
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/storage/medkit/toxin)
 
+/datum/supply_pack/goody/bandagebox_singlepack
+	name = "Box of Bandages Single-Pack"
+	desc = "A single box of DeForest brand bandages. For when you don't want to see your doctor."
+	cost = PAYCHECK_CREW * 3
+	contains = list(/obj/item/storage/box/bandages)
+
 /datum/supply_pack/goody/toolbox // mostly just to water down coupon probability
 	name = "Mechanical Toolbox"
 	desc = "A fully stocked mechanical toolbox, for when you're too lazy to just print them out."
@@ -139,13 +152,19 @@
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/valentine, /obj/item/food/candyheart)
+	contains = list(/obj/item/paper/valentine, /obj/item/food/candyheart)
 
 /datum/supply_pack/goody/beeplush
 	name = "Bee Plushie"
 	desc = "The most important thing you could possibly spend your hard-earned money on."
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/toy/plush/beeplushie)
+
+/datum/supply_pack/goody/blahaj
+	name = "Shark plushie"
+	desc = "A soft, warm companion for midday naps."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/toy/plush/shark)
 
 /datum/supply_pack/goody/dog_bone
 	name = "Jumbo Dog Bone"
@@ -200,36 +219,6 @@
 	cost = PAYCHECK_CREW * 10
 	contains = list(/obj/item/construction/rld)
 
-/datum/supply_pack/goody/moth_encryption_key
-	name = "Moffic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand moffic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/moth)
-
-/datum/supply_pack/goody/lizard_encryption_key
-	name = "Draconic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand draconic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/tiziran)
-
-/datum/supply_pack/goody/plasmaman_encryption_key
-	name = "Calcic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand calcic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/plasmaman)
-
-/datum/supply_pack/goody/ethereal_encryption_key
-	name = "Voltaic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand voltaic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/ethereal)
-
-/datum/supply_pack/goody/felinid_encryption_key
-	name = "Felinid radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/felinid)
-
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
 	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
@@ -260,6 +249,30 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
 
+/datum/supply_pack/goody/naturalbait
+	name = "Freshness Jars full of Natural Bait"
+	desc = "Homemade in the Spinward Sector."
+	cost = PAYCHECK_CREW * 4 //rock on
+	contains = list(/obj/item/storage/pill_bottle/naturalbait)
+
+/datum/supply_pack/goody/telescopic_fishing_rod
+	name = "Telescopic Fishing Rod"
+	desc = "A collapsible fishing rod that can fit within a backpack."
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/fishing_rod/telescopic)
+
+/datum/supply_pack/goody/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
+	cost = PAYCHECK_CREW * 2.5
+	contains = list(/obj/item/fish_analyzer)
+
+/datum/supply_pack/goody/fish_catalog
+	name = "Fishing Catalog"
+	desc = "A catalog containing all the fishy info you'll ever need."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/book/manual/fish_catalog)
+
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug"
 	desc = "A bog standard coffee mug, for drinking coffee."
@@ -289,3 +302,9 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
+
+/datum/supply_pack/goody/climbing_hook
+	name = "Climbing hook"
+	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/climbing_hook)

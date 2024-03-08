@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	is_position_sensitive = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -18,9 +18,9 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
+	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
 
-/obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
+/obj/item/assembly/infra/proc/post_rotation(mob/user, degrees)
 	refreshBeam()
 
 /obj/item/assembly/infra/AltClick(mob/user)
@@ -75,7 +75,7 @@
 	if(holder)
 		holder_movement() //sync the dir of the device as well if it's contained in a TTV or an assembly holder
 	else
-		refreshBeam()
+		INVOKE_ASYNC(src, PROC_REF(refreshBeam))
 
 /obj/item/assembly/infra/process()
 	if(!on || !secured)
@@ -113,7 +113,8 @@
 			beams += I
 			I.master = src
 			I.setDir(_dir)
-			I.invisibility = visible? 0 : INVISIBILITY_ABSTRACT
+			if(!visible)
+				I.SetInvisibility(INVISIBILITY_ABSTRACT)
 			T = _T
 			_T = get_step(_T, _dir)
 			CHECK_TICK
@@ -180,7 +181,7 @@
 	. = ..()
 	refreshBeam()
 
-/obj/item/assembly/infra/ui_status(mob/user)
+/obj/item/assembly/infra/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE

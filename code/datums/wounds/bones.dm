@@ -4,11 +4,19 @@
 */
 // TODO: well, a lot really, but i'd kill to get overlays and a bonebreaking effect like Blitz: The League, similar to electric shock skeletons
 
-/datum/wound/blunt
+/datum/wound_pregen_data/bone
+	abstract = TRUE
+	required_limb_biostate = BIO_BONE
+
+	required_wounding_types = list(WOUND_BLUNT)
+
+	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
+
+/datum/wound/blunt/bone
 	name = "Blunt (Bone) Wound"
-	sound_effect = 'sound/effects/wounds/crack1.ogg'
-	wound_type = WOUND_BLUNT
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE)
+
+	default_scar_file = BONE_SCAR_FILE
 
 	/// Have we been bone gel'd?
 	var/gelled
@@ -32,16 +40,13 @@
 /*
 	Overwriting of base procs
 */
-/datum/wound/blunt/wound_injury(datum/wound/old_wound = null, attack_direction = null)
+/datum/wound/blunt/bone/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	// hook into gaining/losing gauze so crit bone wounds can re-enable/disable depending if they're slung or not
-	RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
-
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
 		processes = TRUE
 		active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	RegisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
 	if(limb.held_index && victim.get_item_for_held_index(limb.held_index) && (disabling || prob(30 * severity)))
 		var/obj/item/I = victim.get_item_for_held_index(limb.held_index)
 		if(istype(I, /obj/item/offhand))
@@ -51,19 +56,29 @@
 			victim.visible_message(span_danger("[victim] drops [I] in shock!"), span_warning("<b>The force on your [limb.plaintext_zone] causes you to drop [I]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	update_inefficiencies()
+	return ..()
 
-/datum/wound/blunt/remove_wound(ignore_limb, replaced)
+/datum/wound/blunt/bone/set_victim(new_victim)
+
+	if (victim)
+		UnregisterSignal(victim, COMSIG_LIVING_UNARMED_ATTACK)
+	if (new_victim)
+		RegisterSignal(new_victim, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
+
+	return ..()
+
+/datum/wound/blunt/bone/remove_wound(ignore_limb, replaced)
 	limp_slowdown = 0
 	limp_chance = 0
 	QDEL_NULL(active_trauma)
-	if(limb)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
-	if(victim)
-		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
 
-/datum/wound/blunt/handle_process(delta_time, times_fired)
+/datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
 	. = ..()
+
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+		return
+
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
 			QDEL_NULL(active_trauma)
@@ -77,12 +92,12 @@
 
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
-		if(DT_PROB(30, delta_time))
+		if(SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
-		if(victim.IsSleeping() && DT_PROB(30, delta_time))
+		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
 
-	if(!is_bone_limb && DT_PROB(severity * 1.5, delta_time))
+	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
 		victim.adjustStaminaLoss(rand(2, severity * 2.5))
 		if(prob(33))
@@ -96,11 +111,11 @@
 		remove_wound()
 
 /// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
-/datum/wound/blunt/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
+/datum/wound/blunt/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if(victim.get_active_hand() != limb || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
-		return
+	if(victim.get_active_hand() != limb || !proximity || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
+		return NONE
 
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
 	if(prob((severity - 1) * 15))
@@ -116,8 +131,9 @@
 			limb.receive_damage(brute=rand(3,7))
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	return NONE
 
-/datum/wound/blunt/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+/datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
 		return
 	if(ishuman(victim))
@@ -143,99 +159,81 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
+/datum/wound/blunt/bone/modify_desc_before_span(desc)
+	. = ..()
 
-/datum/wound/blunt/get_examine_description(mob/user)
-	if(!limb.current_gauze && !gelled && !taped)
-		return ..()
+	if (!limb.current_gauze)
+		if(taped)
+			. += ", [span_notice("and appears to be reforming itself under some surgical tape!")]"
+		else if(gelled)
+			. += ", [span_notice("with fizzing flecks of blue bone gel sparking off the bone!")]"
 
-	var/list/msg = list()
-	if(!limb.current_gauze)
-		msg += "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
-	else
-		var/sling_condition = ""
-		// how much life we have left in these bandages
-		switch(limb.current_gauze.absorption_capacity)
-			if(0 to 1.25)
-				sling_condition = "just barely"
-			if(1.25 to 2.75)
-				sling_condition = "loosely"
-			if(2.75 to 4)
-				sling_condition = "mostly"
-			if(4 to INFINITY)
-				sling_condition = "tightly"
-
-		msg += "[victim.p_their(TRUE)] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
-
-	if(taped)
-		msg += ", [span_notice("and appears to be reforming itself under some surgical tape!")]"
-	else if(gelled)
-		msg += ", [span_notice("with fizzing flecks of blue bone gel sparking off the bone!")]"
-	else
-		msg += "!"
-	return "<B>[msg.Join()]</B>"
+/datum/wound/blunt/get_limb_examine_description()
+	return span_warning("The bones in this limb appear badly cracked.")
 
 /*
-	New common procs for /datum/wound/blunt/
+	New common procs for /datum/wound/blunt/bone/
 */
 
-/datum/wound/blunt/proc/update_inefficiencies()
-	SIGNAL_HANDLER
+/datum/wound/blunt/bone/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
+	if (scarred_limb.biological_state & BIO_BONE && (!(scarred_limb.biological_state & BIO_FLESH))) // only bone
+		return BONE_SCAR_FILE
+	else if (scarred_limb.biological_state & BIO_FLESH && (!(scarred_limb.biological_state & BIO_BONE)))
+		return FLESH_SCAR_FILE
 
-	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(limb.current_gauze?.splint_factor)
-			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
-			limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
-		else
-			limp_slowdown = initial(limp_slowdown)
-			limp_chance = initial(limp_chance)
-		victim.apply_status_effect(/datum/status_effect/limp)
-	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(limb.current_gauze?.splint_factor)
-			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)
-		else
-			interaction_efficiency_penalty = initial(interaction_efficiency_penalty)
-
-	if(initial(disabling))
-		set_disabling(!limb.current_gauze)
-
-	limb.update_wounds()
+	return ..()
 
 /// Joint Dislocation (Moderate Blunt)
-/datum/wound/blunt/moderate
+/datum/wound/blunt/bone/moderate
 	name = "Joint Dislocation"
-	desc = "Patient's bone has been unset from socket, causing pain and reduced motor function."
+	desc = "Patient's limb has been unset from socket, causing pain and reduced motor function."
 	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation by applying an aggressive grab to the patient and helpfully interacting with afflicted limb may suffice."
 	examine_desc = "is awkwardly janked out of place"
 	occur_text = "janks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
-	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
-	threshold_minimum = 35
 	threshold_penalty = 15
-	treatable_tool = TOOL_BONESET
-	wound_flags = (BONE_WOUND)
-	status_effect_type = /datum/status_effect/wound/blunt/moderate
-	scar_keyword = "bluntmoderate"
+	treatable_tools = list(TOOL_BONESET)
+	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
+	scar_keyword = "dislocate"
 
-/datum/wound/blunt/moderate/Destroy()
+	simple_desc = "Patient's bone has been dislocated, causing limping or reduced dexterity."
+	simple_treat_text = "<b>Bandaging</b> the wound will reduce its impact until treated with a bonesetter. Most commonly, it is treated by aggressively grabbing someone and helpfully wrenching the limb in place, though there's room for malfeasance when doing this."
+	homemade_treat_text = "Besides bandaging and wrenching, <b>bone setters</b> can be printed in lathes and utilized on oneself at the cost of great pain. As a last resort, <b>crushing</b> the patient with a <b>firelock</b> has sometimes been noted to fix their dislocated limb."
+
+/datum/wound_pregen_data/bone/dislocate
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/bone/moderate
+
+	required_limb_biostate = BIO_JOINTED
+
+	threshold_minimum = 35
+
+/datum/wound/blunt/bone/moderate/Destroy()
 	if(victim)
 		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
 	return ..()
 
-/datum/wound/blunt/moderate/wound_injury(datum/wound/old_wound, attack_direction = null)
-	. = ..()
-	RegisterSignal(victim, COMSIG_LIVING_DOORCRUSHED, PROC_REF(door_crush))
+/datum/wound/blunt/bone/moderate/set_victim(new_victim)
+
+	if (victim)
+		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
+	if (new_victim)
+		RegisterSignal(new_victim, COMSIG_LIVING_DOORCRUSHED, PROC_REF(door_crush))
+
+	return ..()
 
 /// Getting smushed in an airlock/firelock is a last-ditch attempt to try relocating your limb
-/datum/wound/blunt/moderate/proc/door_crush()
+/datum/wound/blunt/bone/moderate/proc/door_crush()
 	SIGNAL_HANDLER
 	if(prob(40))
 		victim.visible_message(span_danger("[victim]'s dislocated [limb.plaintext_zone] pops back into place!"), span_userdanger("Your dislocated [limb.plaintext_zone] pops back into place! Ow!"))
 		remove_wound()
 
-/datum/wound/blunt/moderate/try_handling(mob/living/carbon/human/user)
+/datum/wound/blunt/bone/moderate/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone)
 		return FALSE
 
@@ -253,7 +251,7 @@
 		return TRUE
 
 /// If someone is snapping our dislocated joint back into place by hand with an aggro grab and help intent
-/datum/wound/blunt/moderate/proc/chiropractice(mob/living/carbon/human/user)
+/datum/wound/blunt/bone/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
@@ -272,7 +270,7 @@
 		chiropractice(user)
 
 /// If someone is snapping our dislocated joint into a fracture by hand with an aggro grab and harm or disarm intent
-/datum/wound/blunt/moderate/proc/malpractice(mob/living/carbon/human/user)
+/datum/wound/blunt/bone/moderate/proc/malpractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
@@ -290,13 +288,18 @@
 		malpractice(user)
 
 
-/datum/wound/blunt/moderate/treat(obj/item/I, mob/user)
-	if(victim == user)
-		victim.visible_message(span_danger("[user] begins resetting [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin resetting your [limb.plaintext_zone] with [I]..."))
-	else
-		user.visible_message(span_danger("[user] begins resetting [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [I]..."))
+/datum/wound/blunt/bone/moderate/treat(obj/item/I, mob/user)
+	var/scanned = HAS_TRAIT(src, TRAIT_WOUND_SCANNED)
+	var/self_penalty_mult = user == victim ? 1.5 : 1
+	var/scanned_mult = scanned ? 0.5 : 1
+	var/treatment_delay = base_treat_time * self_penalty_mult * scanned_mult
 
-	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
+	if(victim == user)
+		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin resetting your [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+	else
+		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+
+	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)
@@ -314,7 +317,7 @@
 	Severe (Hairline Fracture)
 */
 
-/datum/wound/blunt/severe
+/datum/wound/blunt/bone/severe
 	name = "Hairline Fracture"
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
 	treat_text = "Recommended light surgical application of bone gel, though a sling of medical gauze will prevent worsening situation."
@@ -325,19 +328,30 @@
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	limp_chance = 60
-	threshold_minimum = 60
 	threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
-	status_effect_type = /datum/status_effect/wound/blunt/severe
+	status_effect_type = /datum/status_effect/wound/blunt/bone/severe
 	scar_keyword = "bluntsevere"
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
+	simple_desc = "Patient's bone has cracked in the middle, drastically reducing limb functionality."
+	simple_treat_text = "<b>Bandaging</b> the wound will reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
+	homemade_treat_text = "<b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is quite difficult for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
+
+
+/datum/wound_pregen_data/bone/hairline
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/bone/severe
+
+	threshold_minimum = 60
+
 /// Compound Fracture (Critical Blunt)
-/datum/wound/blunt/critical
+/datum/wound/blunt/bone/critical
 	name = "Compound Fracture"
 	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
 	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
@@ -349,40 +363,49 @@
 	limp_slowdown = 7
 	limp_chance = 70
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	threshold_minimum = 115
 	threshold_penalty = 50
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
-	status_effect_type = /datum/status_effect/wound/blunt/critical
+	status_effect_type = /datum/status_effect/wound/blunt/bone/critical
 	scar_keyword = "bluntcritical"
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
+	simple_desc = "Patient's bones have effectively shattered completely, causing total immobilization of the limb."
+	simple_treat_text = "<b>Bandaging</b> the wound will slightly reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
+	homemade_treat_text = "Although this is extremely difficult and slow to function, <b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is nigh-impossible for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
+
+/datum/wound_pregen_data/bone/compound
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/bone/critical
+
+	threshold_minimum = 115
+
 // doesn't make much sense for "a" bone to stick out of your head
-/datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
+/datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
 	if(L.body_zone == BODY_ZONE_HEAD)
 		occur_text = "splits open, exposing a bare, cracked skull through the flesh and blood"
 		examine_desc = "has an unsettling indent, with bits of skull poking out"
 	. = ..()
 
 /// if someone is using bone gel on our wound
-/datum/wound/blunt/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
+/datum/wound/blunt/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
 	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
-		skelly_gel(I, user)
-		return
+		return skelly_gel(I, user)
 
 	if(gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already coated with bone gel!"))
-		return
+		return TRUE
 
 	user.visible_message(span_danger("[user] begins hastily applying [I] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin hastily applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone], disregarding the warning label..."))
 
 	if(!do_after(user, base_treat_time * 1.5 * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return TRUE
 
 	I.use(1)
 	victim.emote("scream")
@@ -390,30 +413,20 @@
 		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] finishes applying [I] to your [limb.plaintext_zone], and you can feel the bones exploding with pain as they begin melting and reforming!"))
 	else
-		var/painkiller_bonus = 0
-		if(victim.get_drunk_amount() > 10)
-			painkiller_bonus += 10
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
-			painkiller_bonus += 20
-		if(victim.reagents.has_reagent(/datum/reagent/determination))
-			painkiller_bonus += 10
-		if(victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/painkiller))
-			painkiller_bonus += 15
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
-			painkiller_bonus += 20
-
-		if(prob(25 + (20 * (severity - 2)) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers
-			victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
-			victim.AdjustUnconscious(5 SECONDS)
-			return
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunk_amount(), 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
+				victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
+				victim.AdjustUnconscious(5 SECONDS)
+				return TRUE
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
 
 	limb.receive_damage(25, wound_bonus=CANT_WOUND)
 	victim.adjustStaminaLoss(100)
 	gelled = TRUE
+	return TRUE
 
 /// skellies are less averse to bone gel, since they're literally all bone
-/datum/wound/blunt/proc/skelly_gel(obj/item/stack/medical/bone_gel/I, mob/user)
+/datum/wound/blunt/bone/proc/skelly_gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	if(gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already coated with bone gel!"))
 		return
@@ -432,20 +445,21 @@
 
 	gelled = TRUE
 	processes = TRUE
+	return TRUE
 
 /// if someone is using surgical tape on our wound
-/datum/wound/blunt/proc/tape(obj/item/stack/sticky_tape/surgical/I, mob/user)
+/datum/wound/blunt/bone/proc/tape(obj/item/stack/sticky_tape/surgical/I, mob/user)
 	if(!gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] must be coated with bone gel to perform this emergency operation!"))
-		return
+		return TRUE
 	if(taped)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already wrapped in [I.name] and reforming!"))
-		return
+		return TRUE
 
 	user.visible_message(span_danger("[user] begins applying [I] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
 
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return TRUE
 
 	if(victim == user)
 		regen_ticks_needed *= 1.5
@@ -459,14 +473,15 @@
 
 	taped = TRUE
 	processes = TRUE
+	return TRUE
 
-/datum/wound/blunt/treat(obj/item/I, mob/user)
+/datum/wound/blunt/bone/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/bone_gel))
-		gel(I, user)
+		return gel(I, user)
 	else if(istype(I, /obj/item/stack/sticky_tape/surgical))
-		tape(I, user)
+		return tape(I, user)
 
-/datum/wound/blunt/get_scanner_description(mob/user)
+/datum/wound/blunt/bone/get_scanner_description(mob/user)
 	. = ..()
 
 	. += "<div class='ml-3'>"

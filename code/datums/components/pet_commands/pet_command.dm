@@ -30,10 +30,18 @@
 /// Register a new guy we want to listen to
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(respond_to_command))
+	RegisterSignal(tamer, COMSIG_MOB_AUTOMUTE_CHECK, PROC_REF(waive_automute))
 
 /// Stop listening to a guy
 /datum/pet_command/proc/remove_friend(mob/living/unfriended)
-	UnregisterSignal(unfriended, COMSIG_MOB_SAY)
+	UnregisterSignal(unfriended, list(COMSIG_MOB_SAY, COMSIG_MOB_AUTOMUTE_CHECK))
+
+/// Stop the automute from triggering for commands (unless the spoken text is suspiciously longer than the command)
+/datum/pet_command/proc/waive_automute(mob/living/speaker, client/client, last_message, mute_type)
+	SIGNAL_HANDLER
+	if(mute_type == MUTE_IC && find_command_in_text(last_message, check_verbosity = TRUE))
+		return WAIVE_AUTOMUTE_CHECK
+	return NONE
 
 /// Respond to something that one of our friends has asked us to do
 /datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
@@ -51,10 +59,15 @@
 
 	try_activate_command(speaker)
 
-/// Returns true if we find any of our spoken commands in the text
-/datum/pet_command/proc/find_command_in_text(spoken_text)
+/**
+ * Returns true if we find any of our spoken commands in the text.
+ * if check_verbosity is true, skip the match if there spoken_text is way longer than the match
+ */
+/datum/pet_command/proc/find_command_in_text(spoken_text, check_verbosity = FALSE)
 	for (var/command as anything in speech_commands)
 		if (!findtext(spoken_text, command))
+			continue
+		if(check_verbosity && length(spoken_text) > length(command) + MAX_NAME_LEN)
 			continue
 		return TRUE
 	return FALSE
@@ -68,7 +81,7 @@
 		return
 	if (IS_DEAD_OR_INCAP(parent)) // Probably can't hear them if we're dead
 		return
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == WEAKREF(src)) // We're already doing it
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == src) // We're already doing it
 		return
 	set_command_active(parent, commander)
 
@@ -77,13 +90,13 @@
 	set_command_target(parent, null)
 
 	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
-	parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = WEAKREF(src)
+	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
 
 /// Store the target for the AI blackboard
 /datum/pet_command/proc/set_command_target(mob/living/parent, atom/target)
-	parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] = WEAKREF(target)
+	parent.ai_controller.set_blackboard_key(BB_CURRENT_PET_TARGET, target)
 
 /// Provide information about how to display this command in a radial menu
 /datum/pet_command/proc/provide_radial_data()
@@ -109,25 +122,25 @@
 	CRASH("Pet command execute action not implemented.")
 
 /**
- * # Point Targetting Pet Command
+ * # Point Targeting Pet Command
  * As above but also listens for you pointing at something and marks it as a target
  */
-/datum/pet_command/point_targetting
+/datum/pet_command/point_targeting
 	/// Text describing an action we perform upon receiving a new target
 	var/pointed_reaction
-	/// Blackboard key for targetting datum, this is likely going to need it
-	var/targetting_datum_key = BB_PET_TARGETTING_DATUM
+	/// Blackboard key for targeting strategy, this is likely going to need it
+	var/targeting_strategy_key = BB_PET_TARGETING_STRATEGY
 
-/datum/pet_command/point_targetting/add_new_friend(mob/living/tamer)
+/datum/pet_command/point_targeting/add_new_friend(mob/living/tamer)
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(look_for_target))
 
-/datum/pet_command/point_targetting/remove_friend(mob/living/unfriended)
+/datum/pet_command/point_targeting/remove_friend(mob/living/unfriended)
 	. = ..()
 	UnregisterSignal(unfriended, COMSIG_MOB_POINTED)
 
 /// Target the pointed atom for actions
-/datum/pet_command/point_targetting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
+/datum/pet_command/point_targeting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
 	SIGNAL_HANDLER
 
 	var/mob/living/parent = weak_parent.resolve()
@@ -137,9 +150,9 @@
 		return FALSE
 	if (IS_DEAD_OR_INCAP(parent))
 		return FALSE
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != WEAKREF(src)) // We're not listening right now
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != src) // We're not listening right now
 		return FALSE
-	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == WEAKREF(pointed_atom)) // That's already our target
+	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == pointed_atom) // That's already our target
 		return FALSE
 	if (!can_see(parent, pointed_atom, sense_radius))
 		return FALSE

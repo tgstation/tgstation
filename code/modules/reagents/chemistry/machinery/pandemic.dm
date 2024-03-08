@@ -73,11 +73,11 @@
 /obj/machinery/computer/pandemic/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
-	if(A == beaker)
+/obj/machinery/computer/pandemic/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-	return ..()
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
 	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
@@ -108,7 +108,7 @@
 	update_appearance()
 	SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/on_deconstruction()
+/obj/machinery/computer/pandemic/on_deconstruction(disassembled)
 	eject_beaker()
 	. = ..()
 
@@ -201,14 +201,14 @@
 	use_power(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[adv_disease.name] culture bottle"
-	bottle.desc = "A small bottle. Contains [adv_disease.agent] culture in synthblood medium."
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[adv_disease.name] culture tube"
+	bottle.desc = "A small test tube containing [adv_disease.agent] culture in synthblood medium."
 	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
 	wait = TRUE
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
-	log_virus("A culture bottle was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
+	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
@@ -223,8 +223,8 @@
 	use_power(active_power_usage)
 	var/id = index
 	var/datum/disease/disease = SSdisease.archive_diseases[id]
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[disease.name] vaccine bottle"
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[disease.name] vaccine tube"
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE
 	update_appearance()

@@ -90,11 +90,11 @@
 			if(!event)
 				return
 			if(length(event.admin_setup))
-				for(var/datum/event_admin_setup/admin_setup_datum in event.admin_setup)
+				for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
 					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
 						return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0
-			event.runEvent(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
+			event.run_event(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
 			message_admins("[key_name_admin(usr)] has triggered an event. ([event.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([event.name])")

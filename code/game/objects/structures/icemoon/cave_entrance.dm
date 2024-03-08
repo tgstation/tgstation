@@ -17,25 +17,28 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	faction = list(FACTION_MINING)
 	max_mobs = 3
 	max_integrity = 250
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)
+	mob_types = list(/mob/living/basic/mining/wolf)
 	move_resist = INFINITY
 	anchored = TRUE
+	scanner_taggable = TRUE
+	mob_gps_id = "WF" // wolf
+	spawner_gps_id = "Animal Den"
 
 /obj/structure/spawner/ice_moon/Initialize(mapload)
 	. = ..()
 	clear_rock()
 
 /**
- * Clears rocks around the spawner when it is created
+ * Clears rocks around the spawner when it is created. Ignore any rocks that explicitly do not want to be cleared.
  *
  */
 /obj/structure/spawner/ice_moon/proc/clear_rock()
-	for(var/turf/F in RANGE_TURFS(2, src))
-		if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
+	for(var/turf/potential in RANGE_TURFS(2, src))
+		if(abs(src.x - potential.x) + abs(src.y - potential.y) > 3)
 			continue
-		if(ismineralturf(F))
-			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+		if(ismineralturf(potential) && !(potential.turf_flags & NO_CLEARING))
+			var/turf/closed/mineral/clearable = potential
+			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/deconstruct(disassembled)
 	destroy_effect()
@@ -65,32 +68,35 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	max_mobs = 1
 	spawn_time = 60 SECONDS
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/polarbear)
+	mob_gps_id = "BR" // bear
 
 /obj/structure/spawner/ice_moon/polarbear/clear_rock()
-	for(var/turf/F in RANGE_TURFS(1, src))
-		if(ismineralturf(F))
-			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+	for(var/turf/potential in RANGE_TURFS(1, src))
+		if(ismineralturf(potential) && !(potential.turf_flags & NO_CLEARING))
+			var/turf/closed/mineral/clearable = potential
+			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/demonic_portal
 	name = "demonic portal"
 	desc = "A portal that goes to another world, normal creatures couldn't survive there."
 	icon_state = "nether"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
+	mob_types = list(/mob/living/basic/mining/ice_demon)
 	light_range = 1
 	light_color = COLOR_SOFT_RED
+	mob_gps_id = "WT|B" // watcher | bluespace
+	spawner_gps_id = "Netheric Distortion"
 
 /obj/structure/spawner/ice_moon/demonic_portal/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Netheric Signal")
 
 /obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
-	for(var/turf/F in RANGE_TURFS(3, src))
-		if(abs(src.x - F.x) + abs(src.y - F.y) > 5)
+	for(var/turf/potential in RANGE_TURFS(3, src))
+		if(abs(src.x - potential.x) + abs(src.y - potential.y) > 5)
 			continue
-		if(ismineralturf(F))
-			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+		if(ismineralturf(potential) && !(potential.turf_flags & NO_CLEARING))
+			var/turf/closed/mineral/clearable = potential
+			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/demonic_portal/destroy_effect()
 	new /obj/effect/collapsing_demonic_portal(loc)
@@ -99,10 +105,12 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	return
 
 /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_whelp)
+	mob_types = list(/mob/living/basic/mining/ice_whelp)
+	mob_gps_id = "ID|W" // ice drake | whelp
 
 /obj/structure/spawner/ice_moon/demonic_portal/snowlegion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)
+	mob_types = list(/mob/living/basic/mining/legion/snow/spawner_made)
+	mob_gps_id = "LG|S" // legion | snow
 
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"
@@ -187,7 +195,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(24)
 			new /obj/structure/elite_tumor(loc)
 		if(25)
-			new /mob/living/simple_animal/hostile/retaliate/clown/clownhulk(loc)
+			new /mob/living/basic/clown/clownhulk(loc)
 		if(26)
 			new /obj/item/clothing/shoes/winterboots/ice_boots(loc)
 		if(27)

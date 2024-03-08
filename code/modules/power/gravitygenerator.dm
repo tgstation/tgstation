@@ -36,6 +36,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE) // Very sturdy.
 		set_broken()
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
@@ -145,6 +148,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	/// Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
+	///Amount of shielding we offer against a radioactive nebula
+	var/radioactive_nebula_shielding = 4
+
 ///Station generator that spawns with gravity turned off.
 /obj/machinery/gravity_generator/main/off
 	on = FALSE
@@ -158,6 +164,8 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	if(on)
 		enable()
 		center_part.add_overlay("activated")
+
+	add_to_nebula_shielding(src, /datum/station_trait/nebula/hostile/radiation, PROC_REF(get_radioactive_nebula_shielding))
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
@@ -182,7 +190,6 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		if(count <= 3) // Their sprite is the top part of the generator
 			part.set_density(FALSE)
 			part.layer = WALL_OBJ_LAYER
-			SET_PLANE(part, GAME_PLANE_UPPER, our_turf)
 		part.sprite_number = count
 		part.main_part = src
 		generator_parts += part
@@ -212,6 +219,20 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 
 // Interaction
 
+/obj/machinery/gravity_generator/main/examine(mob/user)
+	. = ..()
+	if(!(machine_stat & BROKEN))
+		return
+	switch(broken_state)
+		if(GRAV_NEEDS_SCREWDRIVER)
+			. += span_notice("The entire frame is barely holding together, the <b>screws</b> need to be refastened.")
+		if(GRAV_NEEDS_WELDING)
+			. += span_notice("There's lots of broken seals on the framework, it could use some <b>welding</b>.")
+		if(GRAV_NEEDS_PLASTEEL)
+			. += span_notice("Some of this damaged plating needs full replacement. <b>10 plasteel</> should be enough.")
+		if(GRAV_NEEDS_WRENCH)
+			. += span_notice("The new plating just needs to be <b>bolted</b> into place now.")
+
 // Fixing the gravity generator.
 /obj/machinery/gravity_generator/main/attackby(obj/item/weapon, mob/user, params)
 	if(machine_stat & BROKEN)
@@ -225,7 +246,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 					return
 			if(GRAV_NEEDS_WELDING)
 				if(weapon.tool_behaviour == TOOL_WELDER)
-					if(weapon.use_tool(src, user, 0, volume=50, amount=1))
+					if(weapon.use_tool(src, user, 0, volume=50))
 						to_chat(user, span_notice("You mend the damaged framework."))
 						broken_state++
 						update_appearance()
@@ -449,6 +470,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		return
 	for(var/obj/machinery/gravity_generator/part as anything in generator_parts)
 		SET_PLANE(part, PLANE_TO_TRUE(part.plane), new_turf)
+
+/// Returns the radioactive shielding (if there's a radioactive nebula). Called from a callback set in add_to_nebula_shielding()
+/obj/machinery/gravity_generator/main/proc/get_radioactive_nebula_shielding()
+	return on ? radioactive_nebula_shielding : 0
 
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)

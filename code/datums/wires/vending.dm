@@ -66,7 +66,7 @@
 		if(WIRE_AGELIMIT)
 			vending_machine.age_restrictions = !vending_machine.age_restrictions
 
-/datum/wires/vending/on_cut(wire, mend)
+/datum/wires/vending/on_cut(wire, mend, source)
 	var/obj/machinery/vending/vending_machine = holder
 	switch(wire)
 		if(WIRE_THROW)

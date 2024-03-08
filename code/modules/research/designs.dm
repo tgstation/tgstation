@@ -6,13 +6,13 @@
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
-The currently supporting non-reagent materials. All material amounts are set as the define MINERAL_MATERIAL_AMOUNT, which defaults to 2000
+The currently supporting non-reagent materials. All material amounts are set as the define SHEET_MATERIAL_AMOUNT, which defaults to 100
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from iron). Only add raw materials.
 
 Design Guidelines
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
-- A single sheet of anything is 2000 units of material. Materials besides iron/glass require help from other jobs (mining for
+- A single sheet of anything is 100 units of material. Materials besides iron/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
@@ -32,14 +32,14 @@ other types of metals and chemistry for reagents).
 	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
 	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
-	var/construction_time
+	var/construction_time = 3.2 SECONDS
 	/// The typepath of the object produced by this design
 	var/build_path = null
 	/// Reagent produced by this design. Currently only supported by the biogenerator.
 	var/make_reagent
 	/// What categories this design falls under. Used for sorting in production machines.
 	var/list/category = list()
-	/// List of reagents required to create one unit of the product.
+	/// List of reagents required to create one unit of the product. Currently only supported by the limb grower.
 	var/list/reagents_list = list()
 	/// The maximum number of units of whatever is produced by this can be produced in one go.
 	var/maxstack = 1
@@ -99,7 +99,7 @@ other types of metals and chemistry for reagents).
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 
 	///List of all `/datum/design` stored on the disk.
 	var/list/blueprints = list()

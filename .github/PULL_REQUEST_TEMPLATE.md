@@ -20,10 +20,8 @@ del: Removed old things
 qol: made something easier to use
 balance: rebalanced something
 fix: fixed a few things
-soundadd: added a new sound thingy
-sounddel: removed an old sound thingy
-imageadd: added some icons and images
-imagedel: deleted some icons and images
+sound: added/modified/removed audio or sound effects
+image: added/modified/removed some icons or images
 spellcheck: fixed a few typos
 code: changed some code
 refactor: refactored some code

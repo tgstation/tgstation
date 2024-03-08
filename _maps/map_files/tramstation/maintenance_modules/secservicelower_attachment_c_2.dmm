@@ -30,7 +30,7 @@
 /area/station/maintenance/port/central)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,

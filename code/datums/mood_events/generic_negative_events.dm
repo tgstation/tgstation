@@ -4,7 +4,8 @@
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
 	description = "I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow..."
-	mood_change = -8
+	mood_change = -4
+	timeout = 3 MINUTES
 
 /datum/mood_event/on_fire
 	description = "I'M ON FIRE!!!"
@@ -48,7 +49,7 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/cascade // Big boi delamination
-	description = "The engineers have finally done it, we are all going to die..."
+	description = "I never thought I'd see a resonance cascade, let alone experience one..."
 	mood_change = -8
 	timeout = 5 MINUTES
 
@@ -78,9 +79,28 @@
 	timeout = 60 SECONDS
 
 /datum/mood_event/dismembered
-	description = "AHH! I WAS USING THAT LIMB!"
+	description = "AHH! MY LIMB! I WAS USING THAT!"
 	mood_change = -10
 	timeout = 8 MINUTES
+
+/datum/mood_event/dismembered/add_effects(obj/item/bodypart/limb)
+	if(limb)
+		description = "AHH! MY [uppertext(limb.plaintext_zone)]! I WAS USING THAT!"
+
+/datum/mood_event/reattachment
+	description = "Ouch! My limb feels like I fell asleep on it."
+	mood_change = -3
+	timeout = 2 MINUTES
+
+/datum/mood_event/reattachment/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
+
+/datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
+	if(limb)
+		description = "Ouch! My [limb.plaintext_zone] feels like I fell asleep on it."
 
 /datum/mood_event/tased
 	description = "There's no \"z\" in \"taser\". It's in the zap."
@@ -98,8 +118,8 @@
 
 /datum/mood_event/table/add_effects()
 	if(isfelinid(owner)) //Holy snowflake batman!
-		var/mob/living/carbon/human/H = owner
-		SEND_SIGNAL(H, COMSIG_ORGAN_WAG_TAIL, TRUE, 3 SECONDS)
+		var/mob/living/carbon/human/feline = owner
+		feline.wag_tail(3 SECONDS)
 		description = "They want to play on the table!"
 		mood_change = 2
 
@@ -107,6 +127,12 @@
 	description = "That fucking table, man that hurts..."
 	mood_change = -3
 	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
 
 /datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
 	if(banged_limb)
@@ -127,6 +153,10 @@
 	description = "I should have paid attention to the epilepsy warning."
 	mood_change = -3
 	timeout = 5 MINUTES
+
+/datum/mood_event/photophobia
+	description = "The lights are too bright..."
+	mood_change = -3
 
 /datum/mood_event/nyctophobia
 	description = "It sure is dark around here..."
@@ -150,6 +180,9 @@
 	mood_change = -4
 	timeout = 2 MINUTES
 
+/datum/mood_event/healsbadman/long_term
+	timeout = 10 MINUTES
+
 /datum/mood_event/jittery
 	description = "I'm nervous and on edge and I can't stand still!!"
 	mood_change = -2
@@ -172,6 +205,12 @@
 	description = "Medicine may be good for me but right now it stings like hell."
 	mood_change = -5
 	timeout = 60 SECONDS
+
+/datum/mood_event/painful_medicine/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
 
 /datum/mood_event/spooked
 	description = "The rattling of those bones... It still haunts me."
@@ -209,6 +248,12 @@
 /datum/mood_event/back_pain
 	description = "Bags never sit right on my back, this hurts like hell!"
 	mood_change = -15
+
+/datum/mood_event/back_pain/New(mob/M, ...)
+	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
+		qdel(src)
+		return
+	return ..()
 
 /datum/mood_event/sad_empath
 	description = "Someone seems upset..."
@@ -295,6 +340,11 @@
 /datum/mood_event/bald
 	description = "I need something to cover my head..."
 	mood_change = -3
+
+/datum/mood_event/bald_reminder
+	description = "I was reminded that I can't grow my hair back at all! This is awful!"
+	mood_change = -5
+	timeout = 4 MINUTES
 
 /datum/mood_event/bad_touch
 	description = "I don't like when people touch me."
@@ -413,3 +463,29 @@
 /datum/mood_event/unsatisfied_nomad
 	description = "I've been here too long! I want to go out and explore space!"
 	mood_change = -3
+
+/datum/mood_event/moon_insanity
+	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
+	mood_change = -3
+	timeout = 5 MINUTES
+
+/datum/mood_event/amulette_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
+	mood_change = -6
+	timeout = 5 MINUTES
+
+///Wizard cheesy grand finale - what everyone but the wizard gets
+/datum/mood_event/madness_despair
+	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
+	mood_change = -200
+	special_screen_obj = "mood_despair"
+
+/datum/mood_event/all_nighter
+	description = "I didn't sleep at all last night. I'm exhausted."
+	mood_change = -5
+
+//Used by the Veteran Advisor trait job
+/datum/mood_event/desentized
+	description = "Nothing will ever rival with what I seen in the past..."
+	mood_change = -3
+	special_screen_obj = "mood_desentized"

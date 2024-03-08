@@ -10,54 +10,42 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
+/obj/item/organ/internal/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
+/obj/item/organ/internal/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/internal/brain/psyker/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/psyker/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
 		return
-	if(!DT_PROB(2, delta_time))
+	if(!SPT_PROB(2, seconds_per_tick))
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
-	owner.adjust_disgust(33 * delta_time)
-	apply_organ_damage(5 * delta_time, 199)
+	owner.adjust_disgust(33 * seconds_per_tick)
+	apply_organ_damage(5 * seconds_per_tick, 199)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
+	head_flags = HEAD_DEBRAIN
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
 	if(!.)
 		return
-	new_head_owner.become_blind(limb_id)
-	if(!new_head_owner.dna?.species)
-		return
-
-	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
-	new_head_owner.update_body()
+	new_head_owner.become_blind(bodypart_trait_source)
 
 /obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(limb_id)
-	if(!owner.dna?.species)
-		return ..()
-
-	if(initial(owner.dna.species.species_traits) & NOEYESPRITES)
-		return ..()
-
-	owner.dna.species.species_traits &= ~NOEYESPRITES
-	owner.update_body()
+	owner.cure_blind(bodypart_trait_source)
 	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
@@ -94,9 +82,9 @@
 	qdel(old_head)
 	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
-	old_brain.Remove(src, special = TRUE, no_id_transfer = TRUE)
+	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
-	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
+	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(old_eyes)
 		qdel(old_eyes)
 	return TRUE
@@ -138,13 +126,14 @@
 /obj/item/gun/ballistic/revolver/chaplain
 	name = "chaplain's revolver"
 	desc = "Holy smokes."
-	icon_state = "chaplain"
+	icon_state = "lucky"
 	force = 10
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev77
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)
+	projectile_damage_multiplier = 0.72 //it's exactly 18 force for normal bullets
 	/// Needs burden level nine to refill.
 	var/needs_burden = TRUE
 	/// List of all possible names and descriptions.
@@ -181,13 +170,32 @@
 		"Daredevil" = "Hey now, you won't be reckless with this, will you?",
 		"Lacytanga" = "Rules are written by the strong.",
 		"A10" = "The fist of God. Keep away from the terrible.",
+		"Lucky" = "Ain't that a kick in the head?",
 	)
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		tip_text = "Clear rune", \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
+
+/obj/item/gun/ballistic/revolver/chaplain/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()
@@ -196,6 +204,13 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
 	pray_refill(user)
+
+/obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, params)
+	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
+		user.balloon_alert(user, "no manual reloads!")
+		return
+
+	return ..()
 
 /obj/item/gun/ballistic/revolver/chaplain/proc/pray_refill(mob/living/carbon/human/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, src) || !istype(user))
@@ -217,28 +232,35 @@
 	name = "Refill"
 	desc = "Perform a prayer, to refill your weapon."
 
-/obj/item/ammo_box/magazine/internal/cylinder/rev77
+/obj/item/ammo_box/magazine/internal/cylinder/revchap
 	name = "chaplain revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/c77
-	caliber = CALIBER_77
+	ammo_type = /obj/item/ammo_casing/c38/holy
+	caliber = CALIBER_38
 	max_ammo = 5
 
-/obj/item/ammo_casing/c77
-	name = ".77 bullet casing"
-	desc = "A .77 bullet casing."
-	caliber = CALIBER_77
-	projectile_type = /obj/projectile/bullet/c77
+/obj/item/ammo_casing/c38/holy
+	name = "lucky .38 bullet casing"
+	desc = "A lucky .38 bullet casing. You feel lucky just holding it."
+	caliber = CALIBER_38
+	projectile_type = /obj/projectile/bullet/c38/holy
 	custom_materials = null
 
-/obj/projectile/bullet/c77
-	name = ".77 bullet"
-	damage = 18
+/obj/projectile/bullet/c38/holy
+	name = "lucky .38 bullet"
 	ricochets_max = 2
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -10
 	embedding = null
+
+/obj/projectile/bullet/c38/holy/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/roll_them_bones = rand(1,38)
+	if(roll_them_bones == 1 && isliving(target))
+		playsound(target, 'sound/machines/synth_yes.ogg', 50, TRUE)
+		playsound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
+		new /obj/effect/temp_visual/crit(get_turf(target))
 
 /datum/action/cooldown/spell/pointed/psychic_projection
 	name = "Psychic Projection"
@@ -281,7 +303,7 @@
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	/// Times the target has dry fired a weapon.
 	var/times_dry_fired = 0
 	/// Needs to reach times_dry_fired for the next dry fire to happen.
@@ -295,8 +317,8 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!game_plane_master_controller)
 		return FALSE
-	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS))
 	game_plane_master_controller.add_filter("psychic_blur", 10, angular_blur_filter(0, 0, 3))
+	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS))
 	return TRUE
 
 /datum/status_effect/psychic_projection/on_remove()
@@ -306,7 +328,7 @@
 	game_plane_master_controller.remove_filter("psychic_blur")
 	game_plane_master_controller.remove_filter("psychic_wave")
 
-/datum/status_effect/psychic_projection/tick(delta_time, times_fired)
+/datum/status_effect/psychic_projection/tick(seconds_between_ticks)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
 	if(!held_gun)
 		return

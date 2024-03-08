@@ -13,7 +13,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1 | PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -65,6 +66,29 @@
 		detonate()
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/item/grenade/apply_fantasy_bonuses(bonus)
+	. = ..()
+	apply_grenade_fantasy_bonuses(bonus)
+
+/obj/item/grenade/remove_fantasy_bonuses(bonus)
+	remove_grenade_fantasy_bonuses(bonus)
+	return ..()
+
+/obj/item/grenade/proc/apply_grenade_fantasy_bonuses(quality)
+	if(ex_dev == 0 && ex_heavy == 0 && ex_light == 0 && ex_flame == 0)
+		return
+	var/devIncrease = round(quality / 10)
+	var/heavyIncrease = round(quality / 5)
+	var/lightIncrease = round(quality / 2)
+	ex_dev = modify_fantasy_variable("ex_dev", ex_dev, devIncrease, 0)
+	ex_heavy = modify_fantasy_variable("ex_heavy", ex_heavy, heavyIncrease, 0)
+	ex_light = modify_fantasy_variable("ex_light", ex_light, lightIncrease, 0)
+
+/obj/item/grenade/proc/remove_grenade_fantasy_bonuses(quality)
+	ex_dev = reset_fantasy_variable("ex_dev", ex_dev)
+	ex_heavy = reset_fantasy_variable("ex_heavy", ex_heavy)
+	ex_light = reset_fantasy_variable("ex_light", ex_light)
 
 /**
  * Checks for various ways to botch priming a grenade.
@@ -224,9 +248,8 @@
 /obj/item/grenade/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/hit_projectile = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
+/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
 		var/turf/source_turf = get_turf(src)
 		var/logmsg = "held a grenade detonated by a projectile ([hitby]) at [COORD(source_turf)]"

@@ -53,6 +53,7 @@ GLOBAL_VAR(antag_prototypes)
 				<br>"
 			obj_count++
 	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
+	result += "<a href='?src=[REF(owner)];obj_prompt_custom=1;target_antag=[REF(src)]'>Prompt custom objective entry</a><br>"
 	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
 	return result
 
@@ -98,6 +99,7 @@ GLOBAL_VAR(antag_prototypes)
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role.title]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
+	out += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Show Teams</a><br><br>"
 
 	var/special_statuses = get_special_statuses()
 	if(length(special_statuses))

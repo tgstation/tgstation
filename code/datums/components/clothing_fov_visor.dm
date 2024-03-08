@@ -26,7 +26,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_VISOR_TOGGLE))
 	if(wearer)
 		wearer.remove_fov_trait(src, fov_angle)
-		UnregisterSignal(wearer, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(wearer, COMSIG_QDELETING)
 		wearer = null
 	return ..()
 
@@ -35,7 +35,7 @@
 	SIGNAL_HANDLER
 	is_worn = FALSE
 	if(wearer) // Prevent any edge cases where on_drop is called with a different dropper to the one who equipped the visor.
-		UnregisterSignal(wearer, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(wearer, COMSIG_QDELETING)
 		wearer.remove_fov_trait(src, fov_angle)
 		wearer = null
 	if(visor_up)
@@ -50,10 +50,10 @@
 		return
 	is_worn = TRUE
 	if(wearer && wearer != equipper)
-		UnregisterSignal(wearer, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(wearer, COMSIG_QDELETING)
 		wearer.remove_fov_trait(src, fov_angle)
 	wearer = equipper
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, PROC_REF(on_wearer_deleted))
+	RegisterSignal(wearer, COMSIG_QDELETING, PROC_REF(on_wearer_deleted))
 	if(visor_up)
 		return
 	equipper.add_fov_trait(src, fov_angle)

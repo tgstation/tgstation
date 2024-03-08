@@ -11,7 +11,7 @@
 	shuttleId = "syndicate"
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/computer/shuttle/syndicate/launch_check(mob/user)
 	. = ..()
@@ -32,10 +32,10 @@
 /obj/machinery/computer/shuttle/syndicate/drop_pod
 	name = "syndicate assault pod control"
 	desc = "Controls the drop pod's launch system."
-	icon = 'icons/obj/terminals.dmi'
-	icon_state = "dorm_available"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "pod_off"
 	icon_keyboard = null
-	icon_screen = null
+	icon_screen = "pod_on"
 	light_color = LIGHT_COLOR_BLUE
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"

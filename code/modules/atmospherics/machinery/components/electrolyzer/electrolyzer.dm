@@ -5,7 +5,7 @@
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
-	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "electrolyzer-off"
 	name = "space electrolyzer"
 	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
@@ -57,7 +57,7 @@
 		QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/electrolyzer/on_deconstruction()
+/obj/machinery/electrolyzer/on_deconstruction(disassembled)
 	if(cell)
 		LAZYADD(component_parts, cell)
 		cell = null
@@ -144,8 +144,8 @@
 	. = ..()
 	var/power = 0
 	var/cap = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		power += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		power += servo.tier
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		cap += capacitor.tier
 
@@ -163,7 +163,7 @@
 /obj/machinery/electrolyzer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
@@ -196,7 +196,7 @@
 		return
 	toggle_power(user)
 
-/obj/machinery/electrolyzer/proc/toggle_power(user)
+/obj/machinery/electrolyzer/proc/toggle_power(mob/user)
 	if(!anchored && !cell)
 		balloon_alert(user, "insert cell or anchor!")
 		return
@@ -226,13 +226,13 @@
 		data["powerLevel"] = round(cell.percent(), 1)
 	return data
 
-/obj/machinery/electrolyzer/ui_act(action, params)
+/obj/machinery/electrolyzer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			toggle_power()
+			toggle_power(ui.user)
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)

@@ -29,9 +29,9 @@
 	var/unconscious_amount_victim = 40 SECONDS
 	/// List of mobs we cannot mindswap into.
 	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
+		/mob/living/basic/demon/slaughter,
 		/mob/living/brain,
 		/mob/living/silicon/pai,
-		/mob/living/simple_animal/hostile/imp/slaughter,
 		/mob/living/simple_animal/hostile/megafauna,
 	))
 
@@ -55,11 +55,21 @@
 	if(!isliving(cast_on))
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_MIND_TEMPORARILY_GONE))
+		to_chat(owner, span_warning("This creature's mind is somewhere else entirely!"))
+		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_NO_MINDSWAP))
+		to_chat(owner, span_warning("This type of magic can't operate on [cast_on.p_their()] mind!"))
+		return FALSE
+
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
 		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
+
 	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
 			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
 			return FALSE
@@ -69,10 +79,10 @@
 		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
 	if(!living_target.mind && target_requires_mind)
-		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a mind to swap into!"))
+		to_chat(owner, span_warning("[living_target.p_They()] [living_target.p_do()]n't appear to have a mind to swap into!"))
 		return FALSE
 	if(!living_target.key && target_requires_key)
-		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
+		to_chat(owner, span_warning("[living_target.p_They()] appear[living_target.p_s()] to be catatonic! \
 			Not even magic can affect [living_target.p_their()] vacant mind."))
 		return FALSE
 
@@ -86,7 +96,7 @@
 
 	var/mob/living/to_swap = cast_on
 	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner)
 			to_swap = stand.summoner
 
@@ -102,7 +112,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key?[1] == "@" \
 	)
-		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
+		to_chat(caster, span_warning("[to_swap.p_Their()] mind is resisting your spell!"))
 		return FALSE
 
 	// MIND TRANSFER BEGIN

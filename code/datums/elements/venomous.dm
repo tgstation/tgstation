@@ -8,52 +8,32 @@
 	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/poison_type
+	///Details of how we inject our venom
+	var/injection_flags
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
 	var/list/amount_added
 
-/datum/element/venomous/Attach(datum/target, poison_type, amount_added)
+/datum/element/venomous/Attach(datum/target, poison_type, amount_added, injection_flags = NONE, thrown_effect = FALSE)
 	. = ..()
-
-	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
-	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
-	else if(ishostile(target) || isbasicmob(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
-	else
-		return ELEMENT_INCOMPATIBLE
-
 	src.poison_type = poison_type
 	src.amount_added = amount_added
+	src.injection_flags = injection_flags
+	target.AddComponent(\
+		/datum/component/on_hit_effect,\
+		on_hit_callback = CALLBACK(src, PROC_REF(do_venom)),\
+		thrown_effect = thrown_effect,\
+	)
 
 /datum/element/venomous/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
+	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/venomous/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
-	SIGNAL_HANDLER
-
-	add_reagent(target)
-
-/datum/element/venomous/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-	add_reagent(target)
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
-
-/datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
-	SIGNAL_HANDLER
-
-	if(!success)
-		return
-	add_reagent(target)
-
-/datum/element/venomous/proc/add_reagent(mob/living/target)
+/datum/element/venomous/proc/do_venom(datum/element_owner, atom/venom_source, mob/living/target, hit_zone)
 	if(!istype(target))
 		return
 	if(target.stat == DEAD)
+		return
+	if(isliving(element_owner) && !target.try_inject(element_owner, hit_zone, injection_flags))
 		return
 	var/final_amount_added
 	if(islist(amount_added))

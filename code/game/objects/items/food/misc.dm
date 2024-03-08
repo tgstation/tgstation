@@ -3,6 +3,7 @@
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "watermelonslice"
 	food_reagents = list(
 		/datum/reagent/water = 1,
@@ -12,7 +13,23 @@
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
+	juice_typepath = /datum/reagent/consumable/watermelonjuice
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/appleslice
+	name = "apple slice"
+	desc = "The perfect after-school snack."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "appleslice"
+	food_reagents = list(
+		/datum/reagent/consumable/applejuice = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("apple" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/applejuice
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/hugemushroomslice
@@ -54,10 +71,11 @@
 	)
 	tastes = list("salt" = 2, "popcorn" = 1)
 	trash_type = /obj/item/trash/popcorn/salty
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/popcorn/caramel
 	name = "caramel popcorn"
-	icon_state = "сaramel_popcorn"
+	icon_state = "caramel_popcorn"
 	desc = "Caramel-covered popcorn. Sweet!"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
@@ -65,7 +83,8 @@
 	)
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	trash_type = /obj/item/trash/popcorn/caramel
+	trash_type = /obj/item/trash/popcorn
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/soydope
 	name = "soy dope"
@@ -78,6 +97,7 @@
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/badrecipe
 	name = "burned mess"
@@ -87,10 +107,20 @@
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE //Can't decompose any more than this
+	/// Variable that holds the reference to the stink lines we get when we're moldy, yucky yuck
+	var/stink_particles
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
+	if(stink_particles)
+		particles = new stink_particles
+
+// We override the parent procs here to prevent burned messes from cooking into burned messes.
+/obj/item/food/badrecipe/make_grillable()
+	return
+/obj/item/food/badrecipe/make_bakeable()
+	return
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -100,6 +130,7 @@
 	ant_attracting = TRUE
 	decomp_type = null
 	decomposition_time = 30 SECONDS
+	stink_particles = /particles/stink
 
 /obj/item/food/badrecipe/moldy/bacteria
 	name = "bacteria rich moldy mess"
@@ -129,19 +160,20 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spidereggs/processed
-	name = "spider eggs"
+	name = "processed spider eggs"
 	desc = "A cluster of juicy spider eggs. Pops in your mouth without making you sick."
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("cobwebs" = 1)
 	foodtypes = MEAT | BUGS
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
-	icon = 'icons/obj/food/meat.dmi'
-	icon_state = "spiderling"
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "spiderling_dead"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/toxin = 4,
@@ -162,6 +194,7 @@
 	tastes = list("melon" = 1)
 	foodtypes = FRUIT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/melonkeg
 	name = "melon keg"
@@ -176,6 +209,7 @@
 	bite_consumption = 5
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtypes = FRUIT | ALCOHOL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/honeybar
 	name = "honey nut bar"
@@ -189,6 +223,7 @@
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/powercrepe
 	name = "Powercrepe"
@@ -204,12 +239,15 @@
 	throwforce = 15
 	block_chance = 55
 	armour_penetration = 80
+	block_sound = 'sound/weapons/parry.ogg'
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests
 	name = "Bran Requests Cereal"
@@ -223,15 +261,17 @@
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
 	foodtypes = GRAIN | FRUIT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/butter
 	name = "stick of butter"
 	desc = "A stick of delicious, golden, fatty goodness."
 	icon_state = "butter"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 6)
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	dog_fashion = /datum/dog_fashion/head/butter
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
@@ -258,6 +298,19 @@
 	icon_state = "butteronastick"
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
+	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/butter/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+
+/obj/item/food/butterslice
+	name = "butter slice"
+	desc = "A slice of butter, for your buttering needs."
+	icon_state = "butterslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("butter" = 1)
+	foodtypes = DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/onionrings
 	name = "onion rings"
@@ -268,12 +321,13 @@
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pineappleslice
 	name = "pineapple slice"
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
-	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
+	juice_typepath = /datum/reagent/consumable/pineapplejuice
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
@@ -292,6 +346,7 @@
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pesto
 	name = "pesto"
@@ -301,6 +356,7 @@
 	tastes = list("pesto" = 1)
 	foodtypes = VEGETABLES | DAIRY | NUTS
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/tomato_sauce
 	name = "tomato sauce"
@@ -310,6 +366,7 @@
 	tastes = list("tomato" = 1, "herbs" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/bechamel_sauce
 	name = "béchamel sauce"
@@ -319,6 +376,7 @@
 	tastes = list("cream" = 1)
 	foodtypes = DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/roasted_bell_pepper
 	name = "roasted bell pepper"
@@ -331,7 +389,7 @@
 	)
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
-	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pierogi
 	name = "pierogi"
@@ -344,6 +402,7 @@
 	tastes = list("potato" = 1, "onions" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/stuffed_cabbage
 	name = "stuffed cabbage"
@@ -356,6 +415,7 @@
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/seaweedsheet
 	name = "seaweed sheet"
@@ -373,6 +433,18 @@
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 
+/obj/item/food/seaweedsheet/saltcane
+	name = "dried saltcane sheathe"
+	desc = "A dried sheet of saltcane sheathe can used for making sushi. Use an ingredient on it to start making custom sushi!"
+	icon_state = "seaweedsheet"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/granola_bar
 	name = "granola bar"
 	desc = "A dried mixture of oats, nuts, fruits, and chocolate condensed into a chewy bar. Makes a great snack while space-hiking."
@@ -386,6 +458,7 @@
 	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
 	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/onigiri
 	name = "onigiri"
@@ -399,6 +472,7 @@
 	tastes = list("rice" = 1, "dried seaweed" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/onigiri/Initialize(mapload)
 	. = ..()
@@ -425,6 +499,7 @@
 	tastes = list("peanuts" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pickle
 	name = "pickle"
@@ -434,11 +509,22 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/pickle = 1,
 		/datum/reagent/medicine/antihol = 2,
 	)
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
+	juice_typepath = /datum/reagent/consumable/pickle
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pickle/make_edible()
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+
+/obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
+	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
+		return FOOD_LIKED
 
 /obj/item/food/springroll
 	name = "spring roll"
@@ -453,6 +539,7 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cheese_pierogi
 	name = "cheese pierogi"
@@ -465,6 +552,7 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/meat_pierogi
 	name = "meat pierogi"
@@ -478,3 +566,153 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/stuffed_eggplant
+	name = "stuffed eggplant"
+	desc = "A cooked half of an eggplant, with the insides scooped out and mixed with meat, cheese, and veggies."
+	icon_state = "stuffed_eggplant"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("cooked eggplant" = 5, "cheese" = 4, "ground meat" = 3, "veggies" = 2)
+	foodtypes = VEGETABLES | MEAT | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/moussaka
+	name = "moussaka"
+	desc = "A layered Mediterranean dish made of eggplants, mixed veggies, and meat with a topping of bechamel sauce. Sliceable"
+	icon_state = "moussaka"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/protein = 20,
+	)
+	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/moussaka/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/moussaka_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/moussaka_slice
+	name = "moussaka slice"
+	desc = "A layered Mediterranean dish made of eggplants, mixed veggies, and meat with a topping of bechamel sauce. Delish!"
+	icon_state = "moussaka_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/nutriment/protein = 5,
+	)
+	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/candied_pineapple
+	name = "candied pineapple"
+	desc = "A chunk of pineapple coated in sugar and dried into a chewy treat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	icon_state = "candied_pineapple_1"
+	base_icon_state = "candied_pineapple"
+	tastes = list("sugar" = 2, "chewy pineapple" = 4)
+	foodtypes = FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_1
+
+/obj/item/food/candied_pineapple/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 3)]"
+
+/obj/item/food/raw_pita_bread
+	name = "raw pita bread"
+	desc = "a sticky disk of raw pita bread."
+	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon_state = "raw_pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("dough" = 2)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_1
+
+/obj/item/food/raw_pita_bread/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/raw_pita_bread/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/pita_bread
+	name = "pita bread"
+	desc = "a multi-purposed sweet flatbread of Mediterranean origins."
+	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon_state = "pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("pita bread" = 2)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/tzatziki_sauce
+	name = "tzatziki sauce"
+	desc = "A garlic-based sauce or dip widely used in Mediterranean and Middle Eastern cuisine. Delicious on its own when dipped with pita bread or vegetables."
+	icon_state = "tzatziki_sauce"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes = list("garlic" = 4, "cucumber" = 2, "olive oil" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/tzatziki_and_pita_bread
+	name = "tzatziki and pita bread"
+	desc = "Tzatziki sauce, now with pita bread for dipping. Very healthy and delicious all in one."
+	icon_state = "tzatziki_and_pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
+	tastes = list("pita bread" = 4, "tzatziki sauce" = 2, "olive oil" = 2)
+	foodtypes = VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/grilled_beef_gyro
+	name = "grilled beef gyro"
+	desc = "A traditional Greek dish of meat wrapped in pita bread with tomato, cabbage, onion, and tzatziki sauce."
+	icon_state = "grilled_beef_gyro"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	tastes = list("pita bread" = 4, "tender meat" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
+	foodtypes = VEGETABLES | GRAIN | MEAT
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/vegetarian_gyro
+	name = "vegetarian gyro"
+	desc = "A traditional Greek gyro with cucumbers substituted for meat. Still full of intense flavor and very nourishing."
+	icon_state = "vegetarian_gyro"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+	)
+	tastes = list("pita bread" = 4, "cucumber" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
+	foodtypes = VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_4

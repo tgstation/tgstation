@@ -48,7 +48,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#CC2102"
 	greyscale_config = /datum/greyscale_config/plaidskirt
-	greyscale_config_worn = /datum/greyscale_config/plaidskirt_worn
+	greyscale_config_worn = /datum/greyscale_config/plaidskirt/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/dress/skirt/turtleskirt
@@ -58,7 +58,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#cc0000#5f5f5f"
 	greyscale_config = /datum/greyscale_config/turtleskirt
-	greyscale_config_worn = /datum/greyscale_config/turtleskirt_worn
+	greyscale_config_worn = /datum/greyscale_config/turtleskirt/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/dress/tango
@@ -68,7 +68,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#ff0000#1c1c1c"
 	greyscale_config = /datum/greyscale_config/tango
-	greyscale_config_worn = /datum/greyscale_config/tango_worn
+	greyscale_config_worn = /datum/greyscale_config/tango/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/dress/sundress
@@ -78,5 +78,5 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#FFE60F#9194A5#1F243C"
 	greyscale_config = /datum/greyscale_config/sundress
-	greyscale_config_worn = /datum/greyscale_config/sundress_worn
+	greyscale_config_worn = /datum/greyscale_config/sundress/worn
 	flags_1 = IS_PLAYER_COLORABLE_1

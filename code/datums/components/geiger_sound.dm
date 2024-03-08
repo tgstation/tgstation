@@ -8,7 +8,7 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/geiger_sound/Destroy(force, silent)
+/datum/component/geiger_sound/Destroy(force)
 	QDEL_NULL(sound)
 
 	if (!isnull(last_parent))
@@ -86,7 +86,7 @@
 
 	return ..(mid_sounds[get_perceived_radiation_danger(last_radiation_pulse, last_insulation_to_target)])
 
-/datum/looping_sound/geiger/stop()
+/datum/looping_sound/geiger/stop(null_parent = FALSE)
 	. = ..()
 
 	last_radiation_pulse = null

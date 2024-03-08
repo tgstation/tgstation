@@ -1,7 +1,7 @@
 import { Flex } from '../../components';
-import { Design, MaterialMap } from './Types';
-import { MaterialIcon } from './MaterialIcon';
 import { formatSiUnit } from '../../format';
+import { MaterialIcon } from './MaterialIcon';
+import { Design, MaterialMap } from './Types';
 
 export type MaterialCostSequenceProps = {
   /**
@@ -34,6 +34,11 @@ export type MaterialCostSequenceProps = {
    * The `justify-content` flex property provided to the generated list.
    */
   justify?: string;
+
+  /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 /**
@@ -47,11 +52,9 @@ export type MaterialCostSequenceProps = {
  *
  * Otherwise, the labels are white.
  */
-export const MaterialCostSequence = (
-  props: MaterialCostSequenceProps,
-  context
-) => {
-  const { design, amount, available, align, justify } = props;
+export const MaterialCostSequence = (props: MaterialCostSequenceProps) => {
+  const { design, amount, available, align, justify, SHEET_MATERIAL_AMOUNT } =
+    props;
   let { costMap } = props;
 
   if (!costMap && !design) {
@@ -69,12 +72,12 @@ export const MaterialCostSequence = (
   return (
     <Flex wrap justify={justify ?? 'space-around'} align={align ?? 'center'}>
       {Object.entries(costMap).map(([material, quantity]) => (
-        <Flex.Item key={material} style={{ 'padding': '0.25em' }}>
+        <Flex.Item key={material} style={{ padding: '0.25em' }}>
           <Flex direction={'column'} align="center">
             <Flex.Item>
               <MaterialIcon
                 materialName={material}
-                amount={(amount || 1) * quantity}
+                sheets={((amount || 1) * quantity) / SHEET_MATERIAL_AMOUNT}
               />
             </Flex.Item>
             <Flex.Item
@@ -87,8 +90,12 @@ export const MaterialCostSequence = (
                         ? '#f08f11'
                         : '#db2828',
                 }
-              }>
-              {formatSiUnit((amount || 1) * quantity, 0)}
+              }
+            >
+              {formatSiUnit(
+                ((amount || 1) * quantity) / SHEET_MATERIAL_AMOUNT,
+                0,
+              )}
             </Flex.Item>
           </Flex>
         </Flex.Item>

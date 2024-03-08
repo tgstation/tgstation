@@ -9,8 +9,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/epilepsy/on_life(delta_time, times_fired)
-	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+/datum/mutation/human/epilepsy/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		trigger_seizure()
 
 /datum/mutation/human/epilepsy/proc/trigger_seizure()
@@ -84,13 +84,13 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/cough/on_life(delta_time, times_fired)
-	if(DT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS)
+/datum/mutation/human/cough/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
 			var/cough_range = GET_MUTATION_POWER(src) * 4
-			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
+			var/turf/target = get_ranged_target_turf(owner, REVERSE_DIR(owner.dir), cough_range)
 			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
 /datum/mutation/human/paranoia
@@ -100,8 +100,8 @@
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
 
-/datum/mutation/human/paranoia/on_life(delta_time, times_fired)
-	if(DT_PROB(2.5, delta_time) && owner.stat == CONSCIOUS)
+/datum/mutation/human/paranoia/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(2.5, seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
 			owner.adjust_hallucinations(40 SECONDS)
@@ -154,8 +154,8 @@
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
 
-/datum/mutation/human/tourettes/on_life(delta_time, times_fired)
-	if(DT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS && !owner.IsStun())
+/datum/mutation/human/tourettes/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun())
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
@@ -208,7 +208,7 @@
 	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
+	if(!QDELETED(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
 		owner.fully_replace_character_name(null, original_name)
 		. = owner.humanize(original_species)
 
@@ -218,48 +218,48 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
 	instability = 5
-	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
-	var/glow = 2.5
-	var/range = 2.5
-	var/glow_color
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
+	var/glow_power = 2.5
+	var/glow_range = 2.5
+	var/glow_color
+	var/obj/effect/dummy/lighting_obj/moblight/glow
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-	glow_color = glow_color()
-	glowth = new(owner)
+	glow_color = get_glow_color()
+	glow = owner.mob_light()
 	modify()
 
 // Override modify here without a parent call, because we don't actually give an action.
 /datum/mutation/human/glow/modify()
-	if(!glowth)
+	if(!glow)
 		return
 
-	glowth.set_light_range_power_color(range * GET_MUTATION_POWER(src), glow, glow_color)
-
-/// Returns the color for the glow effect
-/datum/mutation/human/glow/proc/glow_color()
-	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
+	glow.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-	QDEL_NULL(glowth)
+	QDEL_NULL(glow)
+
+/// Returns a color for the glow effect
+/datum/mutation/human/glow/proc/get_glow_color()
+	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 
 /datum/mutation/human/glow/anti
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
-	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
-	glow = -1.5
+	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
+	glow_power = -1.5
 
-/datum/mutation/human/glow/anti/glow_color()
-	return COLOR_VERY_LIGHT_GRAY
+/datum/mutation/human/glow/anti/get_glow_color()
+	return COLOR_BLACK
 
 /datum/mutation/human/strong
 	name = "Strength"
@@ -304,8 +304,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/fire/on_life(delta_time, times_fired)
-	if(DT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+/datum/mutation/human/fire/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.ignite_mob()
 
@@ -332,8 +332,8 @@
 	power_coeff = 1
 	var/warpchance = 0
 
-/datum/mutation/human/badblink/on_life(delta_time, times_fired)
-	if(DT_PROB(warpchance, delta_time))
+/datum/mutation/human/badblink/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(warpchance, seconds_per_tick))
 		var/warpmessage = pick(
 		span_warning("With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air."),
 		span_warning("[owner] does some sort of strange backflip into another dimension. It looks pretty painful."),
@@ -347,7 +347,7 @@
 		warpchance = 0
 		owner.visible_message(span_danger("[owner] appears out of nowhere!"))
 	else
-		warpchance += 0.0625 * GET_MUTATION_ENERGY(src) * delta_time
+		warpchance += 0.0625 * seconds_per_tick / GET_MUTATION_ENERGY(src)
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
@@ -359,8 +359,8 @@
 	/// The cooldown for the warning message
 	COOLDOWN_DECLARE(msgcooldown)
 
-/datum/mutation/human/acidflesh/on_life(delta_time, times_fired)
-	if(DT_PROB(13, delta_time))
+/datum/mutation/human/acidflesh/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(13, seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, span_danger("Your acid flesh bubbles..."))
 			COOLDOWN_START(src, msgcooldown, 20 SECONDS)
@@ -380,16 +380,14 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	owner.resize = 1.25
-	owner.update_transform()
+	owner.update_transform(1.25)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	owner.resize = 0.8
-	owner.update_transform()
+	owner.update_transform(0.8)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/spastic
@@ -486,7 +484,7 @@
 		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		borgo.Paralyze(6 SECONDS)
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
-	owner.gib()
+	owner.gib(DROP_ALL_REMAINS)
 
 /datum/mutation/human/headless
 	name = "H.A.R.S."
@@ -499,39 +497,44 @@
 	. = ..()
 	if(.)//cant add
 		return TRUE
+
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
+		brain.Remove(owner, special = TRUE)
 		brain.zone = BODY_ZONE_CHEST
+		brain.Insert(owner, special = TRUE)
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
-		head.dismember(BRUTE)
 		head.drop_organs()
+		head.dismember(dam_type = BRUTE, silent = TRUE)
 		qdel(head)
-		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abortattachment))
+	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abort_attachment))
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
 	if(.)
 		return TRUE
-	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
-		brain.zone = BODY_ZONE_HEAD
+
 	UnregisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD)
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
 		return TRUE
+	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.Remove(owner, special = TRUE)
+		brain.zone = initial(brain.zone)
+		brain.Insert(owner, special = TRUE)
+
 	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
 	owner.visible_message(span_warning("[owner]'s head returns with a sickening crunch!"), span_warning("Your head regrows with a sickening crack! Ouch."))
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
-
-/datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+/datum/mutation/human/headless/proc/abort_attachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
 	SIGNAL_HANDLER
 
 	if(istype(new_limb, /obj/item/bodypart/head))
