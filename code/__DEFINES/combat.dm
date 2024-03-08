@@ -167,7 +167,6 @@ DEFINE_BITFIELD(status_flags, list(
 #define SHOVE_KNOCKDOWN_HUMAN 20
 #define SHOVE_KNOCKDOWN_TABLE 20
 #define SHOVE_KNOCKDOWN_COLLATERAL 1
-#define SHOVE_CHAIN_PARALYZE 30
 //Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
 #define STAGGERED_SLOWDOWN_LENGTH 30
 #define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
@@ -377,11 +376,9 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define SHOVE_CAN_HIT_SOMETHING (1<<1)
 ///Keeps knockdowns at bay for the target
 #define SHOVE_KNOCKDOWN_BLOCKED (1<<2)
-///If the target can be briefly paralized by shoving them once again after knocking them down.
-#define SHOVE_CAN_KICK_SIDE (1<<3)
 ///Whether the staggered status effect can be applied on the target
-#define SHOVE_CAN_STAGGER (1<<4)
+#define SHOVE_CAN_STAGGER (1<<3)
 ///If the target could move, but didn't because there's an obstacle in the path.
-#define SHOVE_BLOCKED (1<<5)
+#define SHOVE_BLOCKED (1<<4)
 ///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
-#define SHOVE_DIRECTIONAL_BLOCKED (1<<6)
+#define SHOVE_DIRECTIONAL_BLOCKED (1<<5)
