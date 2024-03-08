@@ -709,7 +709,6 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 /obj/machinery/photocopier/proc/insert_card_reader(obj/item/object, mob/user)
 	var/option = tgui_input_list(user, "Select Budget To Assign","Available Accounts", account_options)
 	var/picked_id = account_options[option]
-	message_admins("option: [option] picked_id: [picked_id] department: [SSeconomy.get_dep_account(option)]")
 	// Everything still where it should be after the UI closed?
 	if(QDELETED(src) || QDELETED(object) || QDELETED(user) || !user.is_holding(object) || !user.Adjacent(src))
 		return FALSE
