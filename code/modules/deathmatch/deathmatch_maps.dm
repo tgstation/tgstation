@@ -1,6 +1,8 @@
 /datum/lazy_template/deathmatch //deathmatch maps that have any possibility of the walls being destroyed should use indestructible walls, because baseturf moment
-	var/name
 	map_dir = "_maps/map_files/Deathmatch"
+	place_on_top = TRUE
+	/// Map UI Name
+	var/name
 	/// Map Description
 	var/desc = ""
 	var/min_players = 2

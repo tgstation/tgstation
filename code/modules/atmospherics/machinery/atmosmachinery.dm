@@ -54,6 +54,10 @@
 
 	///Whether it can be painted
 	var/paintable = TRUE
+	///Whether it will generate cap sprites when hidden
+	var/has_cap_visuals = FALSE
+	///Cap overlay that is being added to turf's `vis_contents`, `null` if pipe was never hidden or has no valid connections
+	var/obj/effect/overlay/cap_visual/cap_overlay
 
 	///Is the thing being rebuilt by SSair or not. Prevents list bloat
 	var/rebuilding = FALSE
@@ -106,6 +110,10 @@
 	if(isturf(loc))
 		turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
+
+	if(hide)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	if(init_processing)
@@ -119,11 +127,22 @@
 	SSair.stop_processing_machine(src)
 	SSair.rebuild_queue -= src
 
-	if(pipe_vision_img)
-		qdel(pipe_vision_img)
+	QDEL_NULL(pipe_vision_img)
+	QDEL_NULL(cap_overlay)
 
 	return ..()
-	//return QDEL_HINT_FINDREFERENCE
+
+/**
+ * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
+ */
+/obj/machinery/atmospherics/proc/on_hide(datum/source, underfloor_accessibility)
+	SHOULD_CALL_PARENT(TRUE)
+	SIGNAL_HANDLER
+
+	for(var/obj/machinery/atmospherics/node in nodes)
+		node.update_cap_visuals()
+
+	update_cap_visuals()
 
 /**
  * Run when you update the conditions in which an /atom might want to start reacting to its turf's air
@@ -205,8 +224,9 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/update_icon()
-	. = ..()
 	update_layer()
+	update_cap_visuals()
+	return ..()
 
 /**
  * Find a connecting /obj/machinery/atmospherics in specified direction, called by relaymove()
@@ -615,6 +635,49 @@
  */
 /obj/machinery/atmospherics/proc/update_layer()
 	return
+
+/**
+ * Handles cap overlay addition and removal, won't do anything if `has_cap_visuals` is set to `FALSE`
+ */
+/obj/machinery/atmospherics/proc/update_cap_visuals()
+	if(!has_cap_visuals)
+		return
+
+	var/turf/our_turf = get_turf(src)
+	our_turf.vis_contents -= cap_overlay
+
+	var/connections = NONE
+	for(var/obj/machinery/atmospherics/node in nodes)
+		if(HAS_TRAIT(node, TRAIT_UNDERFLOOR))
+			continue
+
+		if(isplatingturf(get_turf(node)))
+			continue
+
+		var/connected_dir = get_dir(src, node)
+		connections |= connected_dir
+
+	if(connections == NONE)
+		return
+
+	var/bitfield = CARDINAL_TO_PIPECAPS(connections)
+	bitfield |= ((~connections) & ALL_CARDINALS)
+
+	if(isnull(cap_overlay))
+		cap_overlay = new
+
+	SET_PLANE_EXPLICIT(cap_overlay, initial(plane), our_turf)
+
+	cap_overlay.color = pipe_color
+	cap_overlay.layer = layer
+	cap_overlay.icon_state = "[bitfield]_[piping_layer]"
+
+	our_turf.vis_contents += cap_overlay
+
+/obj/effect/overlay/cap_visual
+	appearance_flags = KEEP_APART
+	vis_flags = VIS_INHERIT_ID
+	icon = 'icons/obj/pipes_n_cables/!pipes_bitmask.dmi'
 
 /**
  * Called by the RPD.dm pre_attack()

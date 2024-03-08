@@ -1,5 +1,0 @@
-author: "KingkumaArt"
-delete-after: True
-changes:
-  - rscadd: "a list of items called vendor_nocrush that vendors dont deal integrity damage to upon hitting them."
-  - bugfix: "Makes vending machines no longer crush chairs and conveyors."
