@@ -90,3 +90,13 @@
   DimWhat:
   - rscadd: Added Quilark's donator items. Thank you.
   - rscadd: Added zergking's pill name. Thank you.
+2024-03-08:
+  Absolucy:
+  - qol: Constructs now reuse the victim's mind instead of just moving their client
+  - bugfix: Fix a weird runtime that broke telecomms
+  - bugfix: Curators, chaplains, and monster hunters can now all actually properly
+      USE the Archive of the Kindred, as they're meant to.
+  - bugfix: Fix broken dropdown buttons in the tgui chat settings.
+  Absolucy, JupiterJaeden, FlufflesTheDog:
+  - qol: people now lie down when buckled to surgery tables, and you no longer need
+      cuffs to buckle someone to a surgery table
