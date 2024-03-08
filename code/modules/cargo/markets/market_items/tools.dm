@@ -105,3 +105,12 @@
 	price_max = CARGO_CRATE_VALUE * 2
 	stock_max = 3
 	availability_prob = 40
+
+/datum/market_item/tool/collar_bomb
+	name = "Collar Bomb Kit"
+	desc = "An unpatented and questionably ethical kit consisting of a low-yield explosive collar and a remote to trigger it."
+	item = /obj/item/storage/box/collar_bomb
+	price_min = CARGO_CRATE_VALUE * 2.25
+	price_max = CARGO_CRATE_VALUE * 3.75
+	stock_max = 3
+	availability_prob = 60
