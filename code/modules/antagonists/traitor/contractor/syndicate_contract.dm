@@ -124,7 +124,7 @@
 	//we'll start the effects in a few seconds since it takes a moment for the pod to leave.
 	addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), person_sent), 3 SECONDS)
 
-	var/datum/market_item/hostage/market_item = sent_mob.process_capture(ransom * (rand(11, 13)/10))
+	var/datum/market_item/hostage/market_item = person_sent.process_capture(ransom * (rand(11, 13)/10))
 	RegisterSignal(market_item, COMSIG_MARKET_ITEM_SPAWNED, PROC_REF(on_victim_shipped))
 
 	addtimer(CALLBACK(src, PROC_REF(finish_enter)), 3 SECONDS)
