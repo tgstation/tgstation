@@ -80649,7 +80649,6 @@
 /obj/structure/cable,
 /obj/machinery/status_display/ai/directional/west,
 /obj/structure/table/reinforced/titaniumglass,
-/obj/structure/table/reinforced/titaniumglass,
 /obj/item/maneki_neko{
 	pixel_y = 4
 	},
