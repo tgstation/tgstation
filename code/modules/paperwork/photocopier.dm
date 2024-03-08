@@ -573,6 +573,12 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 			return CONTEXTUAL_SCREENTIP_SET
 		return .
 
+	if(istype(held_item, /obj/item/stock_parts/card_reader))
+		if(panel_open && isnull(payment_component))
+			context[SCREENTIP_CONTEXT_LMB] = "Add Fees"
+			return CONTEXTUAL_SCREENTIP_SET
+		return .
+
 	if(istype(held_item, /obj/item/toner))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Toner"
 		return CONTEXTUAL_SCREENTIP_SET
