@@ -24,6 +24,11 @@
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.hide_from(user)
 
+/obj/item/clothing/glasses/sunglasses/spy/overwatch/display_camera(mob/viewer, obj/item/clothing/accessory/spy_bug/our_bug)
+	viewer.client?.setup_popup("spypopup", 5, 5, 1, "OVERWATCH")
+	our_bug.cam_screen.display_to(viewer)
+	our_bug.update_view()
+
 /obj/item/clothing/accessory/spy_bug/overwatch
 	name = "overwatch camera"
 	icon = 'icons/obj/clothing/accessories.dmi'

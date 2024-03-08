@@ -5,21 +5,27 @@
 	///A list of our associated bugs.
 	var/list/obj/item/clothing/accessory/spy_bug/linked_bugs = list()
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
-	var/client/cool_guy = user?.client
+/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/viewer)
+	var/client/cool_guy = viewer?.client
 	if(!cool_guy)
 		return
 	if(!length(linked_bugs))
-		user.audible_message(span_warning("[src] lets off a shrill beep!"))
+		viewer.audible_message(span_warning("[src] lets off a shrill beep!"))
 	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
-	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
-		cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
-		our_bug.cam_screen.display_to(user)
-		RegisterSignal(cool_guy, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
-		our_bug.update_view()
+	display_cameras(viewer)
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
+/obj/item/clothing/glasses/sunglasses/spy/proc/display_cameras(mob/viewer)
+	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
+		display_camera(viewer, our_bug)
+
+/obj/item/clothing/glasses/sunglasses/spy/proc/display_camera(mob/viewer, obj/item/clothing/accessory/spy_bug/our_bug)
+	viewer.client?.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
+	our_bug.cam_screen.display_to(viewer)
+	RegisterSignal(viewer, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
+	our_bug.update_view()
+
+/obj/item/clothing/glasses/sunglasses/spy/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
 	for(var/obj/item/clothing/accessory/spy_bug/our_bug in linked_bugs)
 		our_bug.cam_screen.hide_from(source.mob)

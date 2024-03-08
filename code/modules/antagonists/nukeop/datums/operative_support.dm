@@ -31,6 +31,8 @@
 	owner.current.put_in_hands(newglasses)
 
 	for(var/datum/mind/teammate_mind in nuke_team.members)
+		if(teammate_mind == owner)
+			return
 		var/mob/living/carbon/teammate = teammate_mind.current
 		var/obj/item/clothing/accessory/spy_bug/overwatch/new_camera = new(get_turf(teammate))
 		if(istype(teammate) && teammate.put_in_hands(new_camera))
@@ -38,6 +40,7 @@
 		else
 			to_chat(teammate, span_boldnotice("[new_camera] materializes onto the floor!"))
 		teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
+		to_chat(teammate, span_nicegreen("You have been sent an Overwatch Support Camera. Keep this on your person, so your support agent can watch over you!"))
 		new_camera.linked_glasses = newglasses
 		newglasses.linked_bugs += new_camera
 
