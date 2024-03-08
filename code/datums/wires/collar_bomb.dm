@@ -1,7 +1,7 @@
 /datum/wires/collar_bomb
 	proper_name = "Collar Bomb"
 	randomize = TRUE // Only one, no need for blueprints
-	holder_type = /obj/machinery/ecto_sniffer
+	holder_type = /obj/item/clothing/neck/collar_bomb
 	wires = list(WIRE_ACTIVATE)
 
 /datum/wires/collar_bomb/interactable(mob/user)
