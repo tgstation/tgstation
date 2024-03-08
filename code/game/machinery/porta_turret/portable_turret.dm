@@ -1168,7 +1168,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(properties["team_color"])
 		team_color = properties["team_color"]
 
-/obj/machinery/porta_turret/lasertag/ui_status(mob/user, datum/ui_state/state)
+/obj/machinery/porta_turret/lasertag/ui_status(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(team_color == "blue" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))

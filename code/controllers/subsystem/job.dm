@@ -160,10 +160,7 @@ SUBSYSTEM_DEF(job)
 			continue
 		new_all_occupations += job
 		name_occupations[job.title] = job
-		for(var/alt_title in job.alternate_titles)
-			name_occupations[alt_title] = job
 		type_occupations[job_type] = job
-
 		if(job.job_flags & JOB_NEW_PLAYER_JOINABLE)
 			new_joinable_occupations += job
 			if(!LAZYLEN(job.departments_list))

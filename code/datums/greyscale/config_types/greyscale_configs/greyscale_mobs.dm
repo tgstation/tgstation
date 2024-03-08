@@ -44,3 +44,4 @@
 	name = "Gutlunch"
 	icon_file = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/gutlunch.json'
+

@@ -122,7 +122,6 @@
 
 /obj/machinery/light/LateInitialize()
 	. = ..()
-#ifndef MAP_TEST
 	switch(fitting)
 		if("tube")
 			if(prob(2))
@@ -130,7 +129,6 @@
 		if("bulb")
 			if(prob(5))
 				break_light_tube(TRUE)
-#endif
 	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()

@@ -470,17 +470,3 @@
 			continue
 		return possible_turf
 	return get_turf(user)
-
-//wolf trophy
-
-/obj/item/crusher_trophy/wolf_ear
-	name = "wolf ear"
-	desc = "It's a wolf ear."
-	icon_state = "wolf_ear"
-	denied_type = /obj/item/crusher_trophy/wolf_ear
-
-/obj/item/crusher_trophy/wolf_ear/effect_desc()
-	return "mark detonation to gain a slight speed boost temporarily"
-
-/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
-	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)

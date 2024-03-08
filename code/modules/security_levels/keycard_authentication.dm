@@ -52,7 +52,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
 
-/obj/machinery/keycard_auth/ui_status(mob/user, datum/ui_state/state)
+/obj/machinery/keycard_auth/ui_status(mob/user)
 	if(isdrone(user))
 		return UI_CLOSE
 	if(!isanimal_or_basicmob(user))

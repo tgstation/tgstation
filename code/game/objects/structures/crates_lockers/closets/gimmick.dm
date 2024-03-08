@@ -39,6 +39,7 @@
 /obj/structure/closet/gimmick/tacticool/PopulateContents()
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
@@ -52,8 +53,6 @@
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 
-/obj/structure/closet/gimmick/tacticool/populate_contents_immediate()
-	new /obj/item/clothing/glasses/sunglasses(src)
 
 /obj/structure/closet/thunderdome
 	name = "\improper Thunderdome closet"
@@ -71,15 +70,13 @@
 	for(var/i in 1 to 3)
 		new /obj/item/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser(src)
+	for(var/i in 1 to 3)
 		new /obj/item/melee/baton/security/loaded(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
-
-/obj/structure/closet/thunderdome/tdred/populate_contents_immediate()
-	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser(src)
 
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
@@ -92,15 +89,13 @@
 	for(var/i in 1 to 3)
 		new /obj/item/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser(src)
+	for(var/i in 1 to 3)
 		new /obj/item/melee/baton/security/loaded(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
-
-/obj/structure/closet/thunderdome/tdgreen/populate_contents_immediate()
-	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser(src)
 
 /obj/structure/closet/malf/suits
 	desc = "It's a storage unit for operational gear."

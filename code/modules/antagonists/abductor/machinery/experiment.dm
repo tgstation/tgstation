@@ -59,7 +59,7 @@
 			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
-/obj/machinery/abductor/experiment/ui_status(mob/user, datum/ui_state/state)
+/obj/machinery/abductor/experiment/ui_status(mob/user)
 	if(user == occupant)
 		return UI_CLOSE
 	return ..()

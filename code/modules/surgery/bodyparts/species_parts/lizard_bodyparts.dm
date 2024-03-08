@@ -10,9 +10,6 @@
 	is_dimorphic = TRUE
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
 
-/obj/item/bodypart/chest/lizard/get_butt_sprite()
-	return BUTT_SPRITE_LIZARD
-
 /obj/item/bodypart/arm/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
@@ -48,7 +45,7 @@
 /obj/item/bodypart/leg/left/digitigrade
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
-	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/leg/left/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
@@ -74,7 +71,7 @@
 /obj/item/bodypart/leg/right/digitigrade
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
-	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/leg/right/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()

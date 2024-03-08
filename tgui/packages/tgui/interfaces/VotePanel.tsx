@@ -35,7 +35,6 @@ type ActiveVote = {
   vote: Vote;
   question: string | null;
   timeRemaining: number;
-  displayStatistics: boolean;
   choices: Option[];
   countMethod: number;
 };
@@ -210,9 +209,7 @@ const ChoicesPanel = (props) => {
                         name="vote-yea"
                       />
                     )}
-                  {currentVote.displayStatistics
-                    ? choice.votes + ' Votes'
-                    : null}
+                  {choice.votes} Votes
                 </LabeledList.Item>
                 <LabeledList.Divider />
               </Box>

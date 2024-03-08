@@ -87,18 +87,17 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	used = TRUE
 	to_chat(user, use_message)
 	var/guardian_type_name = random ? "Random" : capitalize(initial(guardian_path.creator_name))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
-		"Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("[guardian_type_name] [mob_name]")]?",
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_HOLOPARASITE,
-		alert_pic = guardian_path,
-		jump_target = src,
-		role_name_text = guardian_type_name,
-		amount_to_pick = 1,
+		pic_source = src,
+		role_name_text = "guardian spirit",
 	)
-	if(chosen_one)
-		spawn_guardian(user, chosen_one, guardian_path)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/candidate = pick(candidates)
+		spawn_guardian(user, candidate, guardian_path)
 		used = TRUE
 		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(type))
 	else

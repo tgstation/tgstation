@@ -22,7 +22,7 @@
 	. = ..()
 
 	if(fragile)
-		AddElement(/datum/element/can_shatter)
+		AddElement(/datum/element/shatters_when_thrown)
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))

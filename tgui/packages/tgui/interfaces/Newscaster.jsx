@@ -326,11 +326,9 @@ const NewscasterWantedScreen = (props) => {
         </>
       ) : (
         <Box>
-          {wanted.map((activeWanted) =>
-            activeWanted.active
-              ? 'Please contact your local security officer if spotted.'
-              : 'No wanted issue posted. Have a secure day.',
-          )}
+          {wanted.active
+            ? 'Please contact your local security officer if spotted.'
+            : 'No wanted issue posted. Have a secure day.'}
         </Box>
       )}
     </Modal>

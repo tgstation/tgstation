@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Frames have been refactored, you know the things you use to build computers and machines, report any oddities"
+  - bugfix: "You can now smack (de)constructed computer and machine frames to break them, rather than doing nothing."
+  - rscadd: "Machine frames can now be deconstructed with screwdrivers, and computer frames can now be deconstructed with welding torches. Welders are faster."

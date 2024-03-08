@@ -333,7 +333,7 @@
 		return
 	. += span_warning("You cannot read it!")
 
-/obj/item/paper/ui_status(mob/user, datum/ui_state/state)
+/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE

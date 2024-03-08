@@ -7,15 +7,13 @@ SUBSYSTEM_DEF(minor_mapping)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize()
-// This whole subsystem just introduces a lot of odd confounding variables into unit test situations,
-// so let's just not bother with doing an initialize here.
-#if defined(MAP_TEST) || defined(UNIT_TESTS)
+	#ifdef UNIT_TESTS // This whole subsystem just introduces a lot of odd confounding variables into unit test situations, so let's just not bother with doing an initialize here.
 	return SS_INIT_NO_NEED
-#else
+	#else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels(satchel_amount = 2)
 	return SS_INIT_SUCCESS
-#endif
+	#endif // the mice are easily the bigger problem, but let's just avoid anything that could cause some bullshit.
 
 /// Spawns some critters on exposed wires, usually but not always mice
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(to_spawn=10)

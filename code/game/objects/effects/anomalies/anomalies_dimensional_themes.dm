@@ -1,3 +1,4 @@
+
 /**
  * Datum which describes a theme and replaces turfs and objects in specified locations to match that theme
  */
@@ -43,16 +44,12 @@
  *
  * Arguments
  * * affected_turf - Turf to transform.
- * * skip_sound - If the sound shouldn't be played.
- * * show_effect - if the temp visual effect should be shown.
  */
-/datum/dimension_theme/proc/apply_theme(turf/affected_turf, skip_sound = FALSE, show_effect = FALSE)
+/datum/dimension_theme/proc/apply_theme(turf/affected_turf, skip_sound = FALSE)
 	if (!replace_turf(affected_turf))
 		return
 	if (!skip_sound)
 		playsound(affected_turf, sound, 100, TRUE)
-	if(show_effect)
-		new /obj/effect/temp_visual/transmute_tile_flash(affected_turf)
 	for (var/obj/object in affected_turf)
 		replace_object(object)
 	if (length(random_spawns) && prob(random_spawn_chance) && !affected_turf.is_blocked_turf(exclude_mobs = TRUE))
@@ -253,7 +250,7 @@
 /datum/dimension_theme/radioactive
 	name = "Radioactive"
 	icon = 'icons/obj/ore.dmi'
-	icon_state = "uranium"
+	icon_state = "Uranium ore"
 	material = /datum/material/uranium
 	sound = 'sound/items/welder.ogg'
 
@@ -356,14 +353,7 @@
 	name = "Fancy"
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "fancycrown"
-	replace_floors = null
 	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
-	replace_objs = list(
-		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
-		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
-	)
-	///cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
-	COOLDOWN_DECLARE(carpet_switch_cd)
 
 #define FANCY_CARPETS list(\
 	/turf/open/floor/eighties, \
@@ -379,12 +369,14 @@
 	/turf/open/floor/carpet/royalblack, \
 	/turf/open/floor/carpet/royalblue,)
 
-/datum/dimension_theme/fancy/apply_theme(turf/affected_turf, skip_sound = FALSE, show_effect = FALSE)
-	if(COOLDOWN_FINISHED(src, carpet_switch_cd))
-		replace_floors = list(pick(FANCY_CARPETS) = 1)
-		replace_objs[/obj/structure/table/wood] = list(pick(subtypesof(/obj/structure/table/wood/fancy)) = 1)
-		COOLDOWN_START(src, carpet_switch_cd, 90 SECONDS)
-	return ..()
+/datum/dimension_theme/fancy/New()
+	. = ..()
+	replace_floors = list(pick(FANCY_CARPETS) = 1)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
+		/obj/structure/table/wood = list(pick(subtypesof(/obj/structure/table/wood/fancy)) = 1),
+	)
 
 #undef FANCY_CARPETS
 

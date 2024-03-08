@@ -456,8 +456,8 @@
 /datum/holiday/france/greet()
 	return "Do you hear the people sing?"
 
-/datum/holiday/hotdogday
-	name = HOTDOG_DAY
+/datum/holiday/hotdogday //I have plans for this.
+	name = "National Hot Dog Day"
 	begin_day = 17
 	begin_month = JULY
 

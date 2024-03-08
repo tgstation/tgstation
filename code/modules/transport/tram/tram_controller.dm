@@ -17,15 +17,17 @@
 	var/travel_remaining = 0
 	///how far in total we'll be travelling
 	var/travel_trip_length = 0
+
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
-	/// reference to the navigation landmark associated with this tram. since we potentially span multiple z levels we dont actually
+	var/obj/effect/landmark/transport/nav_beacon/tram/nav/nav_beacon
+	/// reference to the destination landmarks we consider ourselves "at" or travelling towards. since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
-	var/obj/effect/landmark/transport/nav_beacon/tram/nav/nav_beacon
-	/// reference to the landmark we consider ourself stationary at.
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/idle_platform
-	/// reference to the destination landmark we consider ourselves travelling towards.
+	/// reference to the destination landmarks we consider ourselves travelling towards. since we potentially span multiple z levels we dont actually
+	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
+	/// and the destination landmark.
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform
 
 	var/current_speed = 0
@@ -282,11 +284,7 @@
 			degraded_stop()
 			return PROCESS_KILL
 
-		if((controller_status & COMM_ERROR) && prob(5)) // malfunctioning tram has a small chance to e-stop
-			degraded_stop()
-		else
-			normal_stop()
-
+		normal_stop()
 		return PROCESS_KILL
 
 	else if(world.time >= scheduled_move)
@@ -540,8 +538,7 @@
 	set_status_code(COMM_ERROR, TRUE)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	paired_cabinet.generate_repair_signals()
-	collision_lethality *= 1.25
-	throw_chance *= 1.25
+	collision_lethality = 1.25
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
 /**
@@ -556,7 +553,6 @@
 	set_status_code(COMM_ERROR, FALSE)
 	paired_cabinet.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
-	throw_chance = initial(throw_chance)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 

@@ -63,9 +63,10 @@
 	if (target_mob.mob_biotypes & (MOB_HUMANOID|MOB_ROBOTIC|MOB_SPECIAL|MOB_SPIRIT|MOB_UNDEAD))
 		balloon_alert(user, "incompatible!")
 		return TRUE
-	if (!target_mob.compare_sentience_type(SENTIENCE_ORGANIC))
-		balloon_alert(user, "target too intelligent!")
-		return TRUE
+	if (isanimal_or_basicmob(target_mob))
+		if (!target_mob.compare_sentience_type(SENTIENCE_ORGANIC))
+			balloon_alert(user, "target too intelligent!")
+			return TRUE
 	if (stored_mob_type == target_mob.type)
 		balloon_alert(user, "already scanned!")
 		return TRUE

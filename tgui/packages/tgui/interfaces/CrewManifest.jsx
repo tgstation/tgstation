@@ -57,7 +57,7 @@ export const CrewManifest = (props) => {
                         <Icon className="CrewManifest__Icon" name="infinity" />
                       </Tooltip>
                     )}
-                    {crewMember.trim === 'Captain' && (
+                    {crewMember.rank === 'Captain' && (
                       <Tooltip content="Captain" position="bottom">
                         <Icon
                           className={classes([
@@ -68,7 +68,7 @@ export const CrewManifest = (props) => {
                         />
                       </Tooltip>
                     )}
-                    {commandJobs.includes(crewMember.trim) && (
+                    {commandJobs.includes(crewMember.rank) && (
                       <Tooltip content="Member of command" position="bottom">
                         <Icon
                           className={classes([

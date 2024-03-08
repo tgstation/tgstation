@@ -65,7 +65,7 @@
 /datum/deathmatch_lobby/proc/find_spawns_and_start_delay(datum/lazy_template/source, list/atoms)
 	SIGNAL_HANDLER
 	for(var/thing in atoms)
-		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn))
+		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn)) 
 			player_spawns += thing
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
@@ -147,10 +147,10 @@
 	if(players.len)
 		var/list/winner_info = players[pick(players)]
 		if(!isnull(winner_info["mob"]))
-			winner = winner_info["mob"] //only one should remain anyway but incase of a draw
-
+			winner = winner_info["mob"] //only one should remain anyway but incase of a draw 
+	
 	announce(span_reallybig("THE GAME HAS ENDED.<BR>THE WINNER IS: [winner ? winner.real_name : "no one"]."))
-
+	
 	for(var/ckey in players)
 		var/mob/loser = players[ckey]["mob"]
 		UnregisterSignal(loser, list(COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING))
@@ -174,7 +174,7 @@
 			if(player_info["mob"] && player_info["mob"] == player)
 				ckey = potential_ckey
 				break
-
+	
 	if(!islist(players[ckey])) // if we STILL didnt find a good ckey
 		return
 
@@ -183,7 +183,7 @@
 	var/mob/dead/observer/ghost = !player.client ? player.get_ghost() : player.ghostize() //this doesnt work on those who used the ghost verb
 	if(!isnull(ghost))
 		add_observer(ghost, (host == ckey))
-
+	
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
 	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
@@ -239,7 +239,7 @@
 					players[key]["host"] = TRUE
 					break
 			GLOB.deathmatch_game.passoff_lobby(ckey, host)
-
+	
 	remove_ckey_from_play(ckey)
 
 /datum/deathmatch_lobby/proc/join(mob/player)
@@ -295,11 +295,6 @@
 /datum/deathmatch_lobby/ui_state(mob/user)
 	return GLOB.observer_state
 
-/// fills the lobby with fake players for the sake of UI debug, can only be called via VV
-/datum/deathmatch_lobby/proc/fakefill(count)
-	for(var/i = 1 to count)
-		players["[rand(1,999)]"] = list("mob" = usr, "host" = FALSE, "ready" = FALSE, "loadout" = pick(loadouts))
-
 /datum/deathmatch_lobby/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, null)
 	if(!ui)
@@ -319,7 +314,7 @@
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
 	.["global_chat"] = global_chat
 	.["playing"] = playing
-	.["loadouts"] = list("Randomize")
+	.["loadouts"] = list()
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
 		.["loadouts"] += initial(loadout.display_name)
 	.["map"] = list()
@@ -376,9 +371,6 @@
 				return FALSE
 			if (params["player"] != usr.ckey && host != usr.ckey)
 				return FALSE
-			if (params["loadout"] == "Randomize")
-				players[params["player"]]["loadout"] = pick(loadouts)
-				return TRUE
 			for (var/datum/outfit/deathmatch_loadout/possible_loadout as anything in loadouts)
 				if (params["loadout"] != initial(possible_loadout.display_name))
 					continue

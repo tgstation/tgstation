@@ -47,18 +47,19 @@
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, PROC_REF(make_fall_off))
 	polling = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_MONKEY_HELMET, poll_time = 5 SECONDS, checked_target = magnification, ignore_category = POLL_IGNORE_MONKEY_HELMET, alert_pic = magnification, role_name_text = "mind-magnified monkey")
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a mind magnified monkey?", check_jobban = ROLE_MONKEY_HELMET, poll_time = 5 SECONDS, target_mob = magnification, ignore_category = POLL_IGNORE_MONKEY_HELMET, pic_source = magnification, role_name_text = "mind-magnified monkey")
 	polling = FALSE
 	if(!magnification)
 		return
-	if(isnull(chosen_one))
+	if(!candidates.len)
 		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		user.dropItemToGround(src)
 		return
-	magnification.key = chosen_one.key
+	var/mob/picked = pick(candidates)
+	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
 	var/policy = get_policy(ROLE_MONKEY_HELMET)

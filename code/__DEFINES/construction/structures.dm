@@ -62,7 +62,7 @@
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2
 
-//Stationary gas tanks
+// Stationary gas tanks
 #define TANK_FRAME 0
 #define TANK_PLATING_UNSECURED 1
 

@@ -28,7 +28,7 @@
 /datum/uplink_item/role_restricted/bureaucratic_error
 	name = "Organic Capital Disturbance Virus"
 	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
-	item = ABSTRACT_UPLINK_ITEM
+	item = /obj/effect/gibspawner/generic
 	surplus = 0
 	limited_stock = 1
 	cost = 2
@@ -156,17 +156,16 @@
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
-			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas. \
-			Now also contains regenerative chemicals to keep users healthy as they exercise their newfound muscles."
+			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
-/datum/uplink_item/role_restricted/gorillacube
-	name = "Gorilla Cube"
-	desc = "A Waffle Co. brand gorilla cube. Eat big to get big. \
+/datum/uplink_item/role_restricted/gorillacubes
+	name = "Box of Gorilla Cubes"
+	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
 			Caution: Product may rehydrate when exposed to water."
-	item = /obj/item/food/monkeycube/gorilla
+	item = /obj/item/storage/box/gorillacubes
 	cost = 6
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
@@ -184,7 +183,7 @@
 	desc = "A bootleg copy of an collector item, this disk contains the procedure to perform advanced plastic surgery, allowing you to model someone's face and voice based on a picture taken by a camera on your offhand. \
 	All changes are superficial and does not change ones genetic makeup. \
 	Insert into an Operating Console to enable the procedure."
-	item = /obj/item/disk/surgery/advanced_plastic_surgery
+	item = /obj/item/disk/surgery/brainwashing
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
 	cost = 1
 	surplus = 50
@@ -286,13 +285,6 @@
 	restricted_roles = list(JOB_CLOWN)
 	surplus = 10
 
-/datum/uplink_item/role_restricted/clowncar/spawn_item_for_generic_use(mob/user)
-	var/obj/vehicle/sealed/car/clowncar/car = ..()
-	car.enforce_clown_role = FALSE
-	var/obj/item/key = new car.key_type(user.loc)
-	car.visible_message(span_notice("[key] drops out of [car] onto the floor."))
-	return car
-
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
@@ -305,7 +297,6 @@
 	cost = 20
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
-	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -389,4 +380,3 @@
 	restricted_roles = list(JOB_MIME)
 	restricted = TRUE
 	refundable = FALSE
-	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY

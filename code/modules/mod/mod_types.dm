@@ -55,7 +55,6 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/tether,
 		/obj/item/mod/module/magboot,
-		/obj/item/mod/module/headprotector,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
@@ -73,7 +72,6 @@
 		/obj/item/mod/module/magboot,
 		/obj/item/mod/module/t_ray,
 		/obj/item/mod/module/quick_carry,
-		/obj/item/mod/module/headprotector,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
@@ -89,7 +87,6 @@
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/headprotector,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot/advanced,
@@ -156,7 +153,6 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/circuit,
 		/obj/item/mod/module/t_ray,
-		/obj/item/mod/module/headprotector,
 	)
 
 /obj/item/mod/control/pre_equipped/security
@@ -169,7 +165,6 @@
 		/obj/item/mod/module/criminalcapture,
 		/obj/item/mod/module/dispenser/mirage,
 		/obj/item/mod/module/quick_cuff,
-		/obj/item/mod/module/headprotector,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -184,7 +179,6 @@
 		/obj/item/mod/module/projectile_dampener,
 		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/quick_cuff,
-		/obj/item/mod/module/headprotector,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack,
@@ -200,7 +194,6 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/quick_cuff,
-		/obj/item/mod/module/headprotector,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack/advanced,

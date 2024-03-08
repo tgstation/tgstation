@@ -326,7 +326,6 @@
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
-	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)

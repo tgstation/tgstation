@@ -16,11 +16,8 @@
 /datum/component/ghost_direct_control/Initialize(
 	ban_type = ROLE_SENTIENCE,
 	role_name = null,
-	poll_question = null,
 	poll_candidates = TRUE,
-	poll_announce_chosen = TRUE,
 	poll_length = 10 SECONDS,
-	poll_chat_border_icon = null,
 	poll_ignore_key = POLL_IGNORE_SENTIENCE_POTION,
 	assumed_control_message = null,
 	datum/callback/extra_control_checks,
@@ -39,7 +36,7 @@
 	LAZYADD(GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")], mob_parent)
 
 	if (poll_candidates)
-		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), poll_question, role_name || "[parent]", poll_length, poll_ignore_key, poll_announce_chosen, poll_chat_border_icon)
+		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), role_name || "[parent]", poll_length, poll_ignore_key)
 
 /datum/component/ghost_direct_control/RegisterWithParent()
 	. = ..()
@@ -73,26 +70,23 @@
 	examine_text += span_boldnotice("You could take control of this mob by clicking on it.")
 
 /// Send out a request for a brain
-/datum/component/ghost_direct_control/proc/request_ghost_control(poll_question, role_name, poll_length, poll_ignore_key, poll_announce_chosen, poll_chat_border_icon)
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+/datum/component/ghost_direct_control/proc/request_ghost_control(role_name, poll_length, poll_ignore_key)
+	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	awaiting_ghosts = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = poll_question,
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		question = "Do you want to play as [role_name]?",
 		check_jobban = ban_type,
 		role = ban_type,
 		poll_time = poll_length,
-		checked_target = parent,
 		ignore_category = poll_ignore_key,
-		alert_pic = parent,
+		pic_source = parent,
 		role_name_text = role_name,
-		chat_text_border_icon = poll_chat_border_icon,
-		announce_chosen = poll_announce_chosen,
 	)
 	awaiting_ghosts = FALSE
-	if(isnull(chosen_one))
+	if (!LAZYLEN(candidates))
 		return
-	assume_direct_control(chosen_one)
+	assume_direct_control(pick(candidates))
 
 /// A ghost clicked on us, they want to get in this body
 /datum/component/ghost_direct_control/proc/on_ghost_clicked(mob/our_mob, mob/dead/observer/hopeful_ghost)

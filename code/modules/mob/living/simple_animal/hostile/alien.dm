@@ -110,9 +110,6 @@
 			egg_cooldown = initial(egg_cooldown)
 			LayEggs()
 
-/mob/living/simple_animal/hostile/alien/get_butt_sprite()
-	return BUTT_SPRITE_XENOMORPH
-
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
 	if(!isturf(loc) || isspaceturf(loc))
 		return

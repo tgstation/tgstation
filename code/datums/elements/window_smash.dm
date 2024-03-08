@@ -24,9 +24,6 @@
 	for(var/obj/structure/window/window in target_turf)
 		window.smash_and_injure(flying_mob, old_loc, direction)
 
-	for(var/obj/structure/grille/grille in target_turf)
-		grille.smash_and_injure(flying_mob, old_loc, direction)
-
 /datum/element/window_smashing/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	passwindow_off(source, TRAM_PASSENGER_TRAIT)

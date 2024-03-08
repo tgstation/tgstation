@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	name = "Lunar parade"
-	desc = "This unleashes the parade, making everyone in its way join it and suffer hallucinations."
+	desc = "This unleashes the parade towards a target."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

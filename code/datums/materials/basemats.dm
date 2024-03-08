@@ -47,12 +47,12 @@
 /datum/material/glass/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(!isstack(source))
-		source.AddElement(/datum/element/can_shatter, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
+		source.AddElement(/datum/element/shatters_when_thrown, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
 
 /datum/material/glass/on_removed(atom/source, amount, material_flags)
 	. = ..()
 
-	source.RemoveElement(/datum/element/can_shatter, shard_type)
+	source.RemoveElement(/datum/element/shatters_when_thrown, shard_type)
 
 /*
 Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.

@@ -13,62 +13,62 @@
 // above ground only
 
 /datum/map_template/ruin/icemoon/gas
-	name = "Ice-Ruin Lizard Gas Station"
+	name = "Lizard Gas Station"
 	id = "lizgasruin"
 	description = "A gas station. It appears to have been recently open and is in mint condition."
 	suffix = "icemoon_surface_gas.dmm"
 
 /datum/map_template/ruin/icemoon/lust
-	name = "Ice-Ruin Ruin of Lust"
+	name = "Ruin of Lust"
 	id = "lust"
 	description = "Not exactly what you expected."
 	suffix = "icemoon_surface_lust.dmm"
 
 /datum/map_template/ruin/icemoon/asteroid
-	name = "Ice-Ruin Asteroid Site"
+	name = "Asteroid Site"
 	id = "asteroidsite"
 	description = "Surprised to see us here?"
 	suffix = "icemoon_surface_asteroid.dmm"
 
 /datum/map_template/ruin/icemoon/engioutpost
-	name = "Ice-Ruin Engineer Outpost"
+	name = "Engineer Outpost"
 	id = "engioutpost"
 	description = "Blown up by an unfortunate accident."
 	suffix = "icemoon_surface_engioutpost.dmm"
 
 /datum/map_template/ruin/icemoon/fountain
-	name = "Ice-Ruin Fountain Hall"
+	name = "Fountain Hall"
 	id = "ice_fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
 
 /datum/map_template/ruin/icemoon/abandoned_homestead
-	name = "Ice-Ruin Abandoned Homestead"
+	name = "Abandoned Homestead"
 	id = "abandoned_homestead"
 	description = "This homestead was once host to a happy homesteading family. It's now host to hungry bears."
 	suffix = "icemoon_underground_abandoned_homestead.dmm"
 
 /datum/map_template/ruin/icemoon/entemology
-	name = "Ice-Ruin Insect Research Station"
+	name = "Insect Research Station"
 	id = "bug_habitat"
 	description = "An independently funded research outpost, long abandoned. Their mission, to boldly go where no insect life would ever live, ever, and look for bugs."
 	suffix = "icemoon_surface_bughabitat.dmm"
 
 /datum/map_template/ruin/icemoon/pizza
-	name = "Ice-Ruin Moffuchi's Pizzeria"
+	name = "Moffuchi's Pizzeria"
 	id = "pizzeria"
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
 /datum/map_template/ruin/icemoon/frozen_phonebooth
-	name = "Ice-Ruin Frozen Phonebooth"
+	name = "Frozen Phonebooth"
 	id = "frozen_phonebooth"
 	description = "A venture by nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
 	suffix = "icemoon_surface_phonebooth.dmm"
 
 /datum/map_template/ruin/icemoon/smoking_room
-	name = "Ice-Ruin Smoking Room"
+	name = "Smoking Room"
 	id = "smoking_room"
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
@@ -76,7 +76,7 @@
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
-	name = "Ice-Ruin Mining Site"
+	name = "Mining Site"
 	id = "miningsite"
 	description = "Ruins of a site where people once mined with primitive tools for ore."
 	suffix = "icemoon_surface_mining_site.dmm"
@@ -84,7 +84,7 @@
 	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/mining_site_below = PLACE_BELOW)
 
 /datum/map_template/ruin/icemoon/underground/mining_site_below
-	name = "Ice-Ruin Mining Site Underground"
+	name = "Mining Site Underground"
 	id = "miningsite-underground"
 	description = "Who knew ladders could be so useful?"
 	suffix = "icemoon_underground_mining_site.dmm"
@@ -94,60 +94,60 @@
 // below ground only
 
 /datum/map_template/ruin/icemoon/underground
-	name = "Ice-Ruin underground ruin"
+	name = "underground ruin"
 	ruin_type = ZTRAIT_ICE_RUINS_UNDERGROUND
 	default_area = /area/icemoon/underground/unexplored
 
 /datum/map_template/ruin/icemoon/underground/abandonedvillage
-	name = "Ice-Ruin Abandoned Village"
+	name = "Abandoned Village"
 	id = "abandonedvillage"
 	description = "Who knows what lies within?"
 	suffix = "icemoon_underground_abandoned_village.dmm"
 
 /datum/map_template/ruin/icemoon/underground/library
-	name = "Ice-Ruin Buried Library"
+	name = "Buried Library"
 	id = "buriedlibrary"
 	description = "A once grand library, now lost to the confines of the Ice Moon."
 	suffix = "icemoon_underground_library.dmm"
 
 /datum/map_template/ruin/icemoon/underground/wrath
-	name = "Ice-Ruin Ruin of Wrath"
+	name = "Ruin of Wrath"
 	id = "wrath"
 	description = "You'll fight and fight and just keep fighting."
 	suffix = "icemoon_underground_wrath.dmm"
 
 /datum/map_template/ruin/icemoon/underground/hermit
-	name = "Ice-Ruin Frozen Shack"
+	name = "Frozen Shack"
 	id = "hermitshack"
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "icemoon_underground_hermit.dmm"
 
 /datum/map_template/ruin/icemoon/underground/lavaland
-	name = "Ice-Ruin Lavaland Site"
+	name = "Lavaland Site"
 	id = "lavalandsite"
 	description = "I guess we never really left you huh?"
 	suffix = "icemoon_underground_lavaland.dmm"
 
 /datum/map_template/ruin/icemoon/underground/puzzle
-	name = "Ice-Ruin Ancient Puzzle"
+	name = "Ancient Puzzle"
 	id = "puzzle"
 	description = "Mystery to be solved."
 	suffix = "icemoon_underground_puzzle.dmm"
 
 /datum/map_template/ruin/icemoon/underground/bathhouse
-	name = "Ice-Ruin Bath House"
+	name = "Bath House"
 	id = "bathhouse"
 	description = "A warm, safe place."
 	suffix = "icemoon_underground_bathhouse.dmm"
 
 /datum/map_template/ruin/icemoon/underground/wendigo_cave
-	name = "Ice-Ruin Wendigo Cave"
+	name = "Wendigo Cave"
 	id = "wendigocave"
 	description = "Into the jaws of the beast."
 	suffix = "icemoon_underground_wendigo_cave.dmm"
 
 /datum/map_template/ruin/icemoon/underground/free_golem
-	name = "Ice-Ruin Free Golem Ship"
+	name = "Free Golem Ship"
 	id = "golem-ship"
 	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
 	Seem very intent on research and individual liberty, and also geology-based naming?"
@@ -155,33 +155,33 @@
 	suffix = "golem_ship.dmm"
 
 /datum/map_template/ruin/icemoon/underground/mailroom
-	name = "Ice-Ruin Frozen-over Post Office"
+	name = "Frozen-over Post Office"
 	id = "mailroom"
 	description = "This is where all of your paychecks went. Signed, the management."
 	suffix = "icemoon_underground_mailroom.dmm"
 
 /datum/map_template/ruin/icemoon/underground/frozen_comms
-	name = "Ice-Ruin Frozen Communicatons Outpost"
+	name = "Frozen Communicatons Outpost"
 	id = "frozen_comms"
 	description = "3 Peaks Radio, where the 2000's live forever."
 	suffix = "icemoon_underground_frozen_comms.dmm"
 
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility
-	name = "Ice-Ruin Abandoned Plasma Facility"
+	name = "Abandoned Plasma Facility"
 	id = "plasma_facility"
 	description = "Rumors have developed over the many years of Freyja plasma mining. These rumors suggest that the ghosts of dead mistreated excavation staff have returned to \
 	exact revenge on their (now former) employers. Coorperate reminds all staff that rumors are just that: Old Housewife tales meant to scare misbehaving kids to bed."
 	suffix = "icemoon_underground_abandoned_plasma_facility.dmm"
 
 /datum/map_template/ruin/icemoon/underground/hotsprings
-	name = "Ice-Ruin Hot Springs"
+	name = "Hot Springs"
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
 
 /datum/map_template/ruin/icemoon/underground/vent
-	name = "Ice-Ruin Icemoon Ore Vent"
+	name = "Icemoon Ore Vent"
 	id = "ore_vent_i"
 	description = "A vent that spews out ore. Seems to be a natural phenomenon." //Make this a subtype that only spawns medium and large vents. Some smalls will go to the top level.
 	suffix = "icemoon_underground_ore_vent.dmm"
@@ -191,7 +191,7 @@
 	always_place = TRUE
 
 /datum/map_template/ruin/icemoon/ruin/vent
-	name = "Ice-Ruin Surface Icemoon Ore Vent"
+	name = "Surface Icemoon Ore Vent"
 	id = "ore_vent_i"
 	description = "A vent that spews out ore. Seems to be a natural phenomenon. Smaller than the underground ones."
 	suffix = "icemoon_surface_ore_vent.dmm"

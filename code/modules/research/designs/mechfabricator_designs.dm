@@ -2049,17 +2049,6 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
-/datum/design/module/mod_head_protection
-	name = "Safety-First Head Protection Module"
-	id = "mod_safety"
-	materials = list(
-		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
-		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/mod/module/headprotector
-	category = list(
-		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
-	)
 /datum/design/module/mod_t_ray
 	name = "T-Ray Scanner Module"
 	id = "mod_t_ray"

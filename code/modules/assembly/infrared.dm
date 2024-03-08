@@ -181,7 +181,7 @@
 	. = ..()
 	refreshBeam()
 
-/obj/item/assembly/infra/ui_status(mob/user, datum/ui_state/state)
+/obj/item/assembly/infra/ui_status(mob/user)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE

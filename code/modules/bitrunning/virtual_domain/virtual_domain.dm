@@ -6,7 +6,6 @@
 	map_dir = "_maps/virtual_domains"
 	map_name = "None"
 	key = "Virtual Domain"
-	place_on_top = TRUE
 
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE

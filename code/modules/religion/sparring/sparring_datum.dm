@@ -301,4 +301,4 @@
 				return
 			to_chat(loser, span_userdanger("You've lost ownership over your soul to [winner]!"))
 			var/obj/item/soulstone/anybody/chaplain/sparring/shard = new(shard_turf)
-			INVOKE_ASYNC(shard, TYPE_PROC_REF(/obj/item/soulstone, capture_soul), loser, winner, forced = TRUE)
+			shard.capture_soul(loser, winner, forced = TRUE)

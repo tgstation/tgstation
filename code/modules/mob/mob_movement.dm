@@ -537,9 +537,7 @@
 		else
 			to_chat(src, span_warning("You are not Superman."))
 		return
-	balloon_alert(src, "moving up...")
-	if(!do_after(src, 1 SECONDS))
-		return
+
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
 
@@ -563,9 +561,7 @@
 		return loc_atom.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
-	balloon_alert(src, "moving down...")
-	if(!do_after(src, 1 SECONDS))
-		return
+
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
 	return FALSE

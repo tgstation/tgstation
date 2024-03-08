@@ -21,8 +21,6 @@
 	/// The world.time when we last picked up blood
 	var/last_pickup
 
-	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-
 /datum/component/bloodysoles/Initialize()
 	if(!isclothing(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -115,9 +113,9 @@
 /**
  * Find a blood decal on a turf that matches our last_blood_state
  */
-/datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null, footprint_sprite)
+/datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null)
 	for(var/obj/effect/decal/cleanable/blood/pool in turfLoc)
-		if(pool.blood_state == last_blood_state && pool.footprint_sprite == footprint_sprite && (!typeFilter || istype(pool, typeFilter)))
+		if(pool.blood_state == last_blood_state && (!typeFilter || istype(pool, typeFilter)))
 			return pool
 
 /**
@@ -173,23 +171,23 @@
 		return
 
 	var/half_our_blood = bloody_shoes[last_blood_state] / 2
-	var/footprint_sprite = wielder.get_footprint_sprite()
+
 	// Add footprints in old loc if we have enough cream
 	if(half_our_blood >= BLOOD_FOOTPRINTS_MIN)
 		var/turf/oldLocTurf = get_turf(OldLoc)
-		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints, footprint_sprite)
+		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints)
 		if(oldLocFP)
 			// Footprints found in the tile we left, add us to it
 			add_parent_to_footprint(oldLocFP)
 			if (!(oldLocFP.exited_dirs & wielder.dir))
 				oldLocFP.exited_dirs |= wielder.dir
 				oldLocFP.update_appearance()
-		else if(find_pool_by_blood_state(oldLocTurf, footprint_sprite = footprint_sprite))
+		else if(find_pool_by_blood_state(oldLocTurf))
 			// No footprints in the tile we left, but there was some other blood pool there. Add exit footprints on it
 			adjust_bloody_shoes(last_blood_state, half_our_blood)
 			update_icon()
 
-			oldLocFP = new(oldLocTurf, footprint_sprite)
+			oldLocFP = new(oldLocTurf)
 			if(!QDELETED(oldLocFP)) ///prints merged
 				oldLocFP.blood_state = last_blood_state
 				oldLocFP.exited_dirs |= wielder.dir
@@ -209,7 +207,7 @@
 		adjust_bloody_shoes(last_blood_state, half_our_blood)
 		update_icon()
 
-		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
+		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom))
 		if(!QDELETED(FP)) ///prints merged
 			FP.blood_state = last_blood_state
 			FP.entered_dirs |= wielder.dir
@@ -268,8 +266,7 @@
 		return COMPONENT_INCOMPATIBLE
 	parent_atom = parent
 	wielder = parent
-	if(footprint_sprite)
-		src.footprint_sprite = footprint_sprite
+
 	if(!bloody_feet)
 		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER)
 

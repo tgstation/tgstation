@@ -125,10 +125,8 @@
 	if(!anchored)
 		return FALSE
 	if(istype(mover, /obj/item/boulder))
-		return can_process_boulder(mover)
-	if(isgolem(mover))
-		var/mob/living/carbon/human/rockman = mover
-		return rockman.body_position == LYING_DOWN
+		var/obj/item/boulder/boulder = mover
+		return can_process_boulder(boulder)
 	return ..()
 
 /**
@@ -142,7 +140,7 @@
 	SHOULD_BE_PURE(TRUE)
 
 	//machine not operational
-	if(!anchored || panel_open || !is_operational)
+	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
 		return FALSE
 
 	//not a valid boulder
@@ -179,40 +177,13 @@
 
 	return TRUE
 
-/**
- * Accepts a golem to be processed, mainly for memes
- */
-/obj/machinery/bouldertech/proc/accept_golem(mob/living/carbon/human/rockman)
-	if(!is_operational || !anchored)
-		return FALSE
-	if(!COOLDOWN_FINISHED(src, accept_cooldown))
-		return FALSE
-	if(rockman.body_position != LYING_DOWN)
-		return FALSE
-	if(!maim_golem(rockman))
-		return FALSE
-	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	COOLDOWN_START(src, accept_cooldown, 3 SECONDS)
-	return TRUE
-
-/// What effects actually happens to a golem when it is "processed"
-/obj/machinery/bouldertech/proc/maim_golem(mob/living/carbon/human/rockman)
-	Shake(duration = 1 SECONDS)
-	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
-	rockman.investigate_log("was gibbed by [src] for being a golem", INVESTIGATE_DEATHS)
-	rockman.gib(DROP_ALL_REMAINS)
-	return TRUE
-
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
 	SIGNAL_HANDLER
 
-	if(istype(atom_movable, /obj/item/boulder))
-		INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
+	if(!can_process_boulder(atom_movable))
 		return
 
-	if(isgolem(atom_movable))
-		INVOKE_ASYNC(src, PROC_REF(accept_golem), atom_movable)
-		return
+	INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
 
 /**
  * Looks for a boost to the machine's efficiency, and applies it if found.

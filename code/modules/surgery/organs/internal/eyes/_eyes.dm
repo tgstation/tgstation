@@ -446,7 +446,7 @@
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
 	return GLOB.default_state
 
-/obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user, datum/ui_state/state)
+/obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user)
 	if(!QDELETED(owner))
 		if(owner == user)
 			return min(

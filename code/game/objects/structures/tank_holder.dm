@@ -142,7 +142,3 @@
 /obj/structure/tank_holder/extinguisher/advanced
 	icon_state = "holder_foam_extinguisher"
 	tank = /obj/item/extinguisher/advanced
-
-/obj/structure/tank_holder/extinguisher/anti
-	icon_state = "holder_extinguisher"
-	tank = /obj/item/extinguisher/anti

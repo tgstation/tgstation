@@ -219,7 +219,7 @@
 				if(ears.damage)
 					render_list += "<span class='alert ml-2'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.\n</span>"
 				if(ears.deaf)
-					render_list += "<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently": "temporarily"] deaf.\n</span>"
+					render_list += "<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.\n</span>"
 
 		// Eye status
 		var/obj/item/organ/internal/eyes/eyes = carbontarget.get_organ_slot(ORGAN_SLOT_EYES)

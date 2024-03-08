@@ -117,7 +117,7 @@
 			return FALSE
 	return TRUE
 
-/atom/ui_status(mob/user, datum/ui_state/state)
+/atom/ui_status(mob/user)
 	. = ..()
 	//Check if both user and atom are at the same location
 	if(!can_interact(user))

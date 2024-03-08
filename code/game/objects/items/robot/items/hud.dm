@@ -1,10 +1,10 @@
 /obj/item/borg/sight
 	var/sight_mode = null
-	icon = 'icons/obj/clothing/glasses.dmi'
 
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"
-	icon_state = "securityhudnight"
+	icon = 'icons/obj/signs.dmi'
+	icon_state = "securearea"
 	sight_mode = BORGXRAY
 
 /obj/item/borg/sight/thermal

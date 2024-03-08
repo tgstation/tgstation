@@ -4,7 +4,7 @@
 
 /datum/uplink_item/species_restricted
 	category = /datum/uplink_category/species
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/species_restricted/moth_lantern
 	name = "Extra-Bright Lantern"

@@ -55,15 +55,16 @@
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, "contacting apprentice...")
 	polling = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a wizard's [apprentice_school] apprentice?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, target_mob = src, pic_source = teacher, role_name_text = "wizard apprentice")
 	polling = FALSE
-	if(isnull(chosen_one))
+	if(!LAZYLEN(candidates))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
 		return
 	if(QDELETED(src) || used)
 		return
 	used = TRUE
-	spawn_antag(chosen_one.client, get_turf(src), apprentice_school, teacher.mind)
+	var/mob/dead/observer/student = pick(candidates)
+	spawn_antag(student.client, get_turf(src), apprentice_school, teacher.mind)
 
 /obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	new /obj/effect/particle_effect/fluid/smoke(T)
@@ -133,12 +134,13 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = "syndicate [borg_to_spawn ? "[borg_to_spawn] cyborg":"operative"]", amount_to_pick = 1)
-	if(chosen_one)
+	var/list/nuke_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, pic_source = src, role_name_text = "syndicate [borg_to_spawn ? "[borg_to_spawn] cyborg":"operative"]")
+	if(LAZYLEN(nuke_candidates))
 		if(QDELETED(src) || !check_usability(user))
 			return
 		used = TRUE
-		spawn_antag(chosen_one.client, get_turf(src), "nukeop", user.mind)
+		var/mob/dead/observer/G = pick(nuke_candidates)
+		spawn_antag(G.client, get_turf(src), "nukeop", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -250,13 +252,14 @@
 		return
 	if(used)
 		return
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, poll_time = 5 SECONDS, checked_target = src, alert_pic = demon_type, jump_target = src, role_name_text = initial(demon_type.name))
-	if(chosen_one)
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a [initial(demon_type.name)]?", check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, poll_time = 5 SECONDS, target_mob = src, pic_source = src, role_name_text = initial(demon_type.name))
+	if(LAZYLEN(candidates))
 		if(used || QDELETED(src))
 			return
 		used = TRUE
-		user.log_message("has summoned forth the [initial(demon_type.name)] (played by [key_name(chosen_one)]) using a [name].", LOG_GAME) // has to be here before we create antag otherwise we can't get the ckey of the demon
-		spawn_antag(chosen_one.client, get_turf(src), initial(demon_type.name), user.mind)
+		var/mob/dead/observer/summoned = pick(candidates)
+		user.log_message("has summoned forth the [initial(demon_type.name)] (played by [key_name(summoned)]) using a [name].", LOG_GAME) // has to be here before we create antag otherwise we can't get the ckey of the demon
+		spawn_antag(summoned.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
@@ -329,22 +332,23 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
+	var/list/baddie_candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as a [role_to_play]?",
 		check_jobban = poll_role_check,
 		role = poll_role_check,
 		poll_time = 10 SECONDS,
 		ignore_category = poll_ignore_category,
-		alert_pic = src,
+		pic_source = src,
 		role_name_text = role_to_play,
-		amount_to_pick = 1
 	)
-	if(isnull(chosen_one))
+	if(!LAZYLEN(baddie_candidates))
 		to_chat(user, span_warning(fail_text))
 		return
 	if(QDELETED(src) || !check_usability(user))
 		return
 	used = TRUE
-	spawn_antag(chosen_one.client, get_turf(src), user)
+	var/mob/dead/observer/ghostie = pick(baddie_candidates)
+	spawn_antag(ghostie.client, get_turf(src), user)
 	do_sparks(4, TRUE, src)
 	qdel(src)
 

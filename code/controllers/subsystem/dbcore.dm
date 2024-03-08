@@ -1,4 +1,3 @@
-#define SHUTDOWN_QUERY_TIMELIMIT (1 MINUTES)
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_TICKER
@@ -7,17 +6,12 @@ SUBSYSTEM_DEF(dbcore)
 	init_order = INIT_ORDER_DBCORE
 	priority = FIRE_PRIORITY_DATABASE
 
+	var/failed_connection_timeout = 0
+
 	var/schema_mismatch = 0
 	var/db_minor = 0
 	var/db_major = 0
-	/// Number of failed connection attempts this try. Resets after the timeout or successful connection
 	var/failed_connections = 0
-	/// Max number of consecutive failures before a timeout (here and not a define so it can be vv'ed mid round if needed)
-	var/max_connection_failures = 5
-	/// world.time that connection attempts can resume
-	var/failed_connection_timeout = 0
-	/// Total number of times connections have had to be timed out.
-	var/failed_connection_timeout_count = 0
 
 	var/last_error
 
@@ -180,27 +174,18 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/Shutdown()
 	shutting_down = TRUE
-	var/msg = "Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"
-	to_chat(world, span_boldannounce(msg))
-	log_world(msg)
+	to_chat(world, span_boldannounce("Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
-	var/endtime = REALTIMEOFDAY + SHUTDOWN_QUERY_TIMELIMIT
 	if(SSdbcore.Connect())
-		//Take over control of all active queries
-		var/queries_to_check = queries_active.Copy()
-		queries_active.Cut()
-		
-		//Start all waiting queries
+		//Execute all waiting queries
 		for(var/datum/db_query/query in queries_standby)
-			run_query(query)
-			queries_to_check += query
+			run_query_sync(query)
 			queries_standby -= query
-		
-		//wait for them all to finish
-		for(var/datum/db_query/query in queries_to_check)
-			UNTIL(query.process() || REALTIMEOFDAY > endtime)
-		
-		//log shutdown to the db
+		for(var/datum/db_query/query in queries_active)
+			//Finish any remaining active qeries
+			UNTIL(query.process())
+			queries_active -= query
+
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
 			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id),
@@ -209,9 +194,7 @@ SUBSYSTEM_DEF(dbcore)
 		query_round_shutdown.Execute(FALSE)
 		qdel(query_round_shutdown)
 
-	msg = "Done clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"
-	to_chat(world, span_boldannounce(msg))
-	log_world(msg)
+	to_chat(world, span_boldannounce("Done clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	if(IsConnected())
 		Disconnect()
 	stop_db_daemon()
@@ -247,16 +230,12 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/Connect()
 	if(IsConnected())
 		return TRUE
-	
-	if(connection)
-		Disconnect() //clear the current connection handle so isconnected() calls stop invoking rustg
-		connection = null //make sure its cleared even if runtimes happened
 
-	if(failed_connection_timeout <= world.time) //it's been long enough since we failed to connect, reset the counter
+	if(failed_connection_timeout <= world.time) //it's been more than 5 seconds since we failed to connect, reset the counter
 		failed_connections = 0
-		failed_connection_timeout = 0
 
-	if(failed_connection_timeout > 0)
+	if(failed_connections > 5) //If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for 5 seconds.
+		failed_connection_timeout = world.time + 50
 		return FALSE
 
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -292,11 +271,6 @@ SUBSYSTEM_DEF(dbcore)
 		last_error = result["data"]
 		log_sql("Connect() failed | [last_error]")
 		++failed_connections
-		//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for a time.
-		if(failed_connections > max_connection_failures) 
-			failed_connection_timeout_count++
-			//basic exponential backoff algorithm
-			failed_connection_timeout = world.time + ((2 ** failed_connection_timeout_count) SECONDS)
 
 /datum/controller/subsystem/dbcore/proc/CheckSchemaVersion()
 	if(CONFIG_GET(flag/sql_enabled))
@@ -676,4 +650,3 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 /datum/db_query/proc/Close()
 	rows = null
 	item = null
-#undef SHUTDOWN_QUERY_TIMELIMIT

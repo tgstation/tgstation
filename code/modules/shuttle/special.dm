@@ -378,13 +378,15 @@
 		var/change = FALSE
 		if(payees[AM] > 0)
 			change = TRUE
-			var/obj/item/holochip/holocred = new /obj/item/holochip(AM.loc, payees[AM]) //Change is made in holocredits exclusively.
+			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
+			HC.credits = payees[AM]
+			HC.name = "[HC.credits] credit holochip"
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
-				if(!H.put_in_hands(holocred))
-					AM.pulling = holocred
+				if(!H.put_in_hands(HC))
+					AM.pulling = HC
 			else
-				AM.pulling = holocred
+				AM.pulling = HC
 			payees[AM] -= payees[AM]
 
 		say("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]")

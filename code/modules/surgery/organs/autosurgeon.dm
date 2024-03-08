@@ -177,8 +177,3 @@
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged
-
-/obj/item/autosurgeon/syndicate/contraband_sechud
-	desc = "Contains a contraband SecHUD implant, undetectable by health scanners."
-	uses = 1
-	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate

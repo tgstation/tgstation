@@ -8,8 +8,8 @@
  * * List of clothing fibers on the atom
  */
 /datum/forensics
-	/// Ref to the parent owning this datum
-	var/atom/parent
+	/// Weakref to the parent owning this datum
+	var/datum/weakref/parent
 	/**
 	 * List of fingerprints on this atom
 	 *
@@ -39,7 +39,7 @@
 	 */
 	var/list/fibers
 
-/datum/forensics/New(atom/parent, list/fingerprints, list/hiddenprints, list/blood_DNA, list/fibers)
+/datum/forensics/New(atom/parent, fingerprints, hiddenprints, blood_DNA, fibers)
 	if(!isatom(parent))
 		stack_trace("We tried adding a forensics datum to something that isnt an atom. What the hell are you doing?")
 		qdel(src)
@@ -47,7 +47,7 @@
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_act))
 
-	src.parent = parent
+	src.parent = WEAKREF(parent)
 	src.fingerprints = fingerprints
 	src.hiddenprints = hiddenprints
 	src.blood_DNA = blood_DNA
@@ -67,8 +67,9 @@
 	check_blood()
 
 /datum/forensics/Destroy(force)
-	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
-	parent = null
+	var/atom/parent_atom = parent.resolve()
+	if (!isnull(parent_atom))
+		UnregisterSignal(parent_atom, list(COMSIG_COMPONENT_CLEAN_ACT))
 	return ..()
 
 /// Empties the fingerprints list
@@ -146,7 +147,8 @@
 /// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/fibertext
-	var/item_multiplier = isitem(parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
+	var/atom/actual_parent = parent.resolve()
+	var/item_multiplier = isitem(actual_parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
 	if(suspect.wear_suit)
 		fibertext = "Material from \a [suspect.wear_suit]."
 		if(prob(10 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
@@ -212,7 +214,8 @@
 		if(last_stamp_pos)
 			LAZYSET(hiddenprints, suspect.key, copytext(hiddenprints[suspect.key], 1, last_stamp_pos))
 		hiddenprints[suspect.key] += "\nLast: \[[current_time]\] \"[suspect.real_name]\"[has_gloves]. Ckey: [suspect.ckey]" //made sure to be existing by if(!LAZYACCESS);else
-	parent.fingerprintslast = suspect.ckey
+	var/atom/parent_atom = parent.resolve()
+	parent_atom.fingerprintslast = suspect.ckey
 	return TRUE
 
 /// Adds the given list into blood_DNA
@@ -227,8 +230,9 @@
 
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	if(!isitem(parent) || isorgan(parent)) // organs don't spawn with blood decals by default
+	var/obj/item/the_thing = parent.resolve()
+	if(!istype(the_thing) || isorgan(the_thing)) // organs don't spawn with blood decals by default
 		return
 	if(!length(blood_DNA))
 		return
-	parent.AddElement(/datum/element/decal/blood)
+	the_thing.AddElement(/datum/element/decal/blood)

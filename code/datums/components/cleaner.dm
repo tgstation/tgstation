@@ -89,8 +89,9 @@
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
 	//make sure we don't attempt to clean something while it's already being cleaned
-	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING) || (SEND_SIGNAL(target, COMSIG_ATOM_PRE_CLEAN, user) & COMSIG_ATOM_CANCEL_CLEAN))
+	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING))
 		return
+
 	//add the trait and overlay
 	ADD_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
 	// We need to update our planes on overlay changes
