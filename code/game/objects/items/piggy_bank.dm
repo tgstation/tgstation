@@ -127,3 +127,15 @@
 /obj/item/piggy_bank/museum/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/areabound) //do not steal.
+
+/obj/item/piggy_bank/vault
+	name = "vault piggy bank"
+	desc = "A pig-shaped money container made of porkelain, and containing the station's emergency savings, carried between shifts, oink. <i> Do not throw.</i>"
+	persistence_id = "vault_piggy"
+	greyscale_colors = COLOR_LIGHT_ORANGE
+	initial_value = PAYCHECK_CREW //it takes about 40 shifts for it to hit its max value on its own.
+
+/obj/item/piggy_bank/vault/Initialize(mapload)
+	. = ..()
+	//one piggy bank should exist, preferibly inside the vault's safe.
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
