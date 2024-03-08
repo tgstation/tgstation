@@ -123,6 +123,7 @@ jobs:
       group: odlint-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
+      - uses: actions/checkout@v4
       - uses: robinraju/release-downloader@v1.9
         with:
           repository: "OpenDreamProject/OpenDream"
