@@ -42,7 +42,7 @@
 
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
-	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."
+	desc = "Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision."
 	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
 		Their lantern, expired to ash - their watch, absent."
 	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
@@ -70,7 +70,7 @@
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a silent but short range jaunt."
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
@@ -181,6 +181,7 @@
 		When completed, you become a harbinger of flames, gaining two abilites. \
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
+		Some ashen spells you already knew will be empowered as well. \
 		You will also become immune to flames, space, and similar environmental hazards."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \

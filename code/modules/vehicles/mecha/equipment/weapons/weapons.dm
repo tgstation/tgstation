@@ -552,6 +552,7 @@
 	range = MECHA_MELEE
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
+	projectiles_per_shot = 0
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp
@@ -570,10 +571,13 @@
 	secmech = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/living/source, atom/target, list/modifiers)
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/source, atom/target, list/modifiers)
 	if(!secmech.cargo_hold) //We did try
 		CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
-	if(ismob(target))
+	if(!action_checks(target))
+		return
+	if(isliving(target))
+		. = ..()
 		var/mob/living/mobtarget = target
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
 			to_chat(source, "[span_warning("[src] is unable to lift [mobtarget].")]")
@@ -596,11 +600,12 @@
 			carbontarget.update_handcuffed()
 		return
 
-	if(!istype(target, /obj/machinery/door))
+	if(istype(target, /obj/machinery/door))
+		. = ..()
+		var/obj/machinery/door/target_door = target
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		target_door.try_to_crowbar(src, source)
 		return
-	var/obj/machinery/door/target_door = target
-	playsound(chassis, clampsound, 50, FALSE, -6)
-	target_door.try_to_crowbar(src, source)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/get_snowflake_data()
 	return list(
