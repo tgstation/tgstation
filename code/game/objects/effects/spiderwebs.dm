@@ -1,7 +1,8 @@
-//generic procs copied from obj/effect/alien
+#define SPIDER_WEB_TINT	"web_colour_tint"
+
 /obj/structure/spider
 	name = "web"
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/effects/web.dmi'
 	desc = "It's stringy and sticky."
 	anchored = TRUE
 	density = FALSE
@@ -22,7 +23,7 @@
 				damage_amount *= 1.25
 			if(BRUTE)
 				damage_amount *= 0.25
-	. = ..()
+	return ..()
 
 /obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 350
@@ -31,17 +32,37 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	plane = FLOOR_PLANE
+	layer = MID_TURF_LAYER
+	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
+	base_icon_state = "stickyweb"
+	icon_state = "stickyweb-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	///Whether or not the web is from the genetics power
 	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
-	icon_state = "stickyweb1"
+	///Do we need to offset this based on a sprite frill?
+	var/has_frill = TRUE
+	/// Chance that someone will get stuck when trying to cross this tile
+	var/stuck_chance = 50
+	/// Chance that a bullet will hit this instead of flying through it
+	var/projectile_stuck_chance = 30
+
+/obj/structure/spider/stickyweb/Initialize(mapload)
+	// Offset on init so that they look nice in the map editor
+	if (has_frill)
+		pixel_x = -9
+		pixel_y = -9
+	return ..()
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
 	.= ..()
 	if(.)
 		return
-	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
+	if(!HAS_TRAIT(user, TRAIT_WEB_WEAVER))
 		return
 	loc.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
@@ -50,11 +71,6 @@
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
 	user.put_in_hands(woven_cloth)
-
-/obj/structure/spider/stickyweb/Initialize(mapload)
-	if(!sealed && prob(50))
-		icon_state = "stickyweb2"
-	. = ..()
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -67,65 +83,125 @@
 			return TRUE
 		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 			return TRUE
-		if(prob(50))
-			loc.balloon_alert(mover, "stuck in web!")
+		if(prob(stuck_chance))
+			stuck_react(mover)
 			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
+		return .
+	if(isprojectile(mover))
+		return prob(projectile_stuck_chance)
+	return .
 
-/obj/structure/spider/stickyweb/sealed
-	name = "sealed web"
-	desc = "A solid thick wall of web, airtight enough to block air flow."
-	icon_state = "sealedweb"
-	sealed = TRUE
-	can_atmos_pass = ATMOS_PASS_NO
+/// Show some feedback when you can't pass through something
+/obj/structure/spider/stickyweb/proc/stuck_react(atom/movable/stuck_guy)
+	loc.balloon_alert(stuck_guy, "stuck in web!")
+	stuck_guy.Shake(duration = 0.1 SECONDS)
 
-/obj/structure/spider/stickyweb/sealed/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
-
-/obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
+/// Web made by geneticists, needs special handling to allow them to pass through their own webs
+/obj/structure/spider/stickyweb/genetic
 	genetic = TRUE
+	desc = "It's stringy, sticky, and came out of your coworker."
+	/// Mob with special permission to cross this web
 	var/mob/living/allowed_mob
 
 /obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
-	allowed_mob = allowedmob
 	. = ..()
+	// Tint it purple so that spiders don't get confused about why they can't cross this one
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffaaf8ff", "size" = 0.1))
+
+/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
+	allowed_mob = allowedmob
+	return ..()
 
 /obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..() //this is the normal spider web return aka a spider would make this TRUE
+	. = ..()
 	if(mover == allowed_mob)
 		return TRUE
 	else if(isliving(mover)) //we change the spider to not be able to go through here
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			loc.balloon_alert(mover, "stuck in web!")
+			stuck_react(mover)
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
+	return .
 
-/obj/structure/spider/solid
-	name = "solid web"
-	icon = 'icons/effects/effects.dmi'
-	desc = "A solid wall of web, thick enough to block air flow."
-	icon_state = "solidweb"
+/// Web with a 100% chance to intercept movement
+/obj/structure/spider/stickyweb/very_sticky
+	max_integrity = 20
+	desc = "Extremely sticky silk, you're not easily getting through there."
+	stuck_chance = 100
+	projectile_stuck_chance = 100
+
+/obj/structure/spider/stickyweb/very_sticky/Initialize(mapload)
+	. = ..()
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffffaaff", "size" = 0.1))
+
+/obj/structure/spider/stickyweb/very_sticky/update_overlays()
+	. = ..()
+	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
+	web_overlay.pixel_x -= pixel_x
+	web_overlay.pixel_y -= pixel_y
+	. += web_overlay
+
+
+/// Web 'wall'
+/obj/structure/spider/stickyweb/sealed
+	name = "sealed web"
+	desc = "A solid wall of web, dense enough to block air flow."
+	icon = 'icons/obj/smooth_structures/webwall.dmi'
+	base_icon_state = "webwall"
+	icon_state = "webwall-0"
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB_WALL
+	plane = GAME_PLANE
+	layer = OBJ_LAYER
+	sealed = TRUE
+	has_frill = FALSE
 	can_atmos_pass = ATMOS_PASS_NO
+
+/obj/structure/spider/stickyweb/sealed/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
+/// Walls which reflects lasers
+/obj/structure/spider/stickyweb/sealed/reflector
+	name = "reflective silk screen"
+	desc = "Hardened webbing treated with special chemicals which cause it to repel projectiles."
+	icon = 'icons/obj/smooth_structures/webwall_reflector.dmi'
+	base_icon_state = "webwall_reflector"
+	icon_state = "webwall_reflector-0"
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR
+	max_integrity = 30
 	opacity = TRUE
-	density = TRUE
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
+
+/// Opaque and durable web 'wall'
+/obj/structure/spider/stickyweb/sealed/tough
+	name = "hardened web"
+	desc = "Webbing hardened through a chemical process into a durable barrier."
+	icon = 'icons/obj/smooth_structures/webwall_dark.dmi'
+	base_icon_state = "webwall_dark"
+	icon_state = "webwall_dark-0"
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH
+	opacity = TRUE
 	max_integrity = 90
 	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
-/obj/structure/spider/solid/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
-
+/// Web 'door', blocks atmos but not movement
 /obj/structure/spider/passage
 	name = "web passage"
-	icon = 'icons/effects/effects.dmi'
-	desc = "A messy connection of webs blocking the other side, but not solid enough to prevent passage."
-	icon_state = "webpassage"
+	desc = "An opaque curtain of web which seals in air but doesn't impede passage."
+	icon = 'icons/obj/smooth_structures/stickyweb_rotated.dmi'
+	base_icon_state = "stickyweb_rotated"
+	icon_state = "stickyweb_rotated-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_ROOF
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB_ROOF + SMOOTH_GROUP_WALLS
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	max_integrity = 60
@@ -135,7 +211,10 @@
 
 /obj/structure/spider/passage/Initialize(mapload)
 	. = ..()
+	pixel_x = -9
+	pixel_y = -9
 	air_update_turf(TRUE, TRUE)
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffffffff", "alpha" = 0.8, "size" = 0.1))
 
 /obj/structure/spider/cocoon
 	name = "cocoon"
@@ -165,56 +244,31 @@
 		A.forceMove(T)
 	return ..()
 
-/obj/structure/spider/sticky
-	name = "sticky web"
-	icon = 'icons/effects/effects.dmi'
-	desc = "Extremely soft and sticky silk."
-	icon_state = "verystickyweb"
-	max_integrity = 20
-
-/obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
-		return TRUE
-	if(!isliving(mover))
-		return
-	if(!isnull(mover.pulledby) && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
-		return TRUE
-	loc.balloon_alert(mover, "stuck in web!")
-	return FALSE
-
+/// Web caltrops
 /obj/structure/spider/spikes
 	name = "web spikes"
-	icon = 'icons/effects/effects.dmi'
 	desc = "Silk hardened into small yet deadly spikes."
-	icon_state = "webspikes1"
+	plane = FLOOR_PLANE
+	layer = MID_TURF_LAYER
+	icon = 'icons/obj/smooth_structures/stickyweb_spikes.dmi'
+	base_icon_state = "stickyweb_spikes"
+	icon_state = "stickyweb_spikes-0"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
+	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	max_integrity = 40
 
 /obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
+	pixel_x = -9
+	pixel_y = -9
+	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ac0000ff", "size" = 0.1))
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
-
-/obj/structure/spider/reflector
-	name = "Reflective silk screen"
-	icon = 'icons/effects/effects.dmi'
-	desc = "Made up of an extremly reflective silk material looking at it hurts."
-	icon_state = "reflector"
-	max_integrity = 30
-	density = TRUE
-	opacity = TRUE
-	anchored = TRUE
-	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
-	receive_ricochet_chance_mod = INFINITY
-
-/obj/structure/spider/reflector/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
 
 /obj/structure/spider/effigy
 	name = "web effigy"
-	icon = 'icons/effects/effects.dmi'
 	desc = "A giant spider! Fortunately, this one is just a statue of hardened webbing."
-	icon_state = "webcarcass"
+	icon_state = "effigy"
 	max_integrity = 125
 	density = TRUE
 	anchored = FALSE
@@ -222,3 +276,5 @@
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+
+#undef SPIDER_WEB_TINT

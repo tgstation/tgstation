@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Plexagon Access Management actually updates the shown template list on authentication, avoiding needing to refresh/reopen/somesuch the program manually."

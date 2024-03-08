@@ -1,0 +1,4 @@
+author: "starrm4nn"
+delete-after: True
+changes:
+  - qol: "EVA can be given now in common access slots for non-command crewmembers."
