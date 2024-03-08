@@ -416,6 +416,7 @@
 	alpha = 120
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
+	var/list/ignored_gases = list(/datum/gas/nitrogen, /datum/gas/oxygen, /datum/gas/pluoxium, /datum/gas/halon)
 
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
@@ -432,11 +433,8 @@
 
 		var/list/gases = air.gases
 		for(var/gas_type in gases)
-			switch(gas_type)
-				if(/datum/gas/oxygen, /datum/gas/nitrogen)
-					continue
-				else
-					gases[gas_type][MOLES] = 0
+			if(!(gas_type in ignored_gases))
+				gases[gas_type][MOLES] = 0
 		air.garbage_collect()
 
 	for(var/obj/machinery/atmospherics/components/unary/comp in location)
@@ -449,6 +447,15 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/metal/resin/halon
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return // Doesn't dissolve in heat.
 
 /datum/effect_system/fluid_spread/foam/dirty
 	effect_type = /obj/effect/particle_effect/fluid/foam/dirty

@@ -181,6 +181,12 @@
 
 /// How much energy a mole of halon combusting consumes.
 #define HALON_COMBUSTION_ENERGY 2500
+/// The minimum temperature required for halon to combust.
+#define HALON_COMBUSTION_MIN_TEMPERATURE (T0C + 70)
+/// The number of moles combusted required to release resin.
+#define HALON_COMBUSTION_MINIMUM_RESIN_MOLES 0.09
+/// The volume of the resin foam fluid when halon combusts, in turfs.
+#define HALON_COMBUSTION_RESIN_VOLUME 1
 
 // Healium:
 /// The minimum temperature healium can form from BZ and freon at.
