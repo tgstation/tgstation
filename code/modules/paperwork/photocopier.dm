@@ -573,6 +573,53 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		else
 			insert_copy_object(object, user)
 
+	else if(istype(object, /obj/item/stock_parts/card_reader))
+		if(!panel_open)
+			return
+		if(payment_component)
+			balloon_alert(user, "another card reader inside!")
+			return
+		insert_card_reader(object, user)
+
+/// Proc that handles insertion of card reader, for sanity's sake.
+/obj/machinery/photocopier/proc/insert_card_reader(obj/item/object, mob/user)
+	var/option = tgui_input_list(user, "Select Budget To Assign","Available Accounts", account_options)
+	var/picked_id = account_options[option]
+	message_admins("option: [option] picked_id: [picked_id] department: [SSeconomy.get_dep_account(option)]")
+	// Everything still where it should be after the UI closed?
+	if(QDELETED(src) || QDELETED(object) || QDELETED(user) || !user.is_holding(object) || !user.Adjacent(src))
+		return FALSE
+	if(payment_component)
+		to_chat(user, span_warning("The photocopier was already assigned an account."))
+		return FALSE
+
+	if(picked_id)
+		to_chat(user, span_notice("The provided budget has been linked to this photocopier. It will take [PHOTOCOPIER_FEE] credits per use."))
+		payment_component = AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(picked_id), PAYMENT_CLINICAL)
+		qdel(object)
+		return TRUE
+
+	var/list/user_memories = user.mind.memories
+	var/datum/memory/key/account/user_key = user_memories[/datum/memory/key/account]
+	var/default_account = (istype(user_key) && user_key.remembered_id) || 11111
+	var/new_bank_id = tgui_input_number(user, "Enter the account ID to associate with this card.", "Link Bank Account", default_account, 999999, 111111)
+	// Everything still where it should be after the UI closed?
+	if(!new_bank_id || QDELETED(src) || QDELETED(object) || QDELETED(user) || !user.is_holding(object) || !user.Adjacent(src))
+		return FALSE
+	if(payment_component)
+		to_chat(user, span_warning("The photocopier was already assigned an account."))
+		return FALSE
+
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
+	if(isnull(account))
+		to_chat(user, span_warning("The account ID number provided is invalid."))
+		return FALSE
+
+	to_chat(user, span_notice("The provided account has been linked to this photocopier. It will take [PHOTOCOPIER_FEE] credits per use."))
+	payment_component = AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, account, PAYMENT_CLINICAL)
+	qdel(object)
+	return TRUE
+
 /// Proc that handles insertion of empty paper, useful for copying later.
 /obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
 	if(istype(paper, /obj/item/paper/paperslip))
