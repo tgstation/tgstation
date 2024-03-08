@@ -111,6 +111,7 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 		starting_paper = 30
 		setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
+	register_context()
 
 /// Simply adds the necessary components for this to function on mapload.
 /obj/machinery/photocopier/proc/setup_components()
@@ -556,6 +557,54 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 		give_pixel_offset(spawned_obj)
 		QDEL_NULL(payment_component)
 	. = ..()
+
+/obj/machinery/photocopier/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!held_item)
+		if(!panel_open)
+			context[SCREENTIP_CONTEXT_LMB] = "Open Interface"
+			return CONTEXTUAL_SCREENTIP_SET
+		return .
+
+	if(istype(held_item, /obj/item/card/emag))
+		if(panel_open)
+			context[SCREENTIP_CONTEXT_LMB] = "Replace Form Database"
+			return CONTEXTUAL_SCREENTIP_SET
+		return .
+
+	if(istype(held_item, /obj/item/toner))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Toner"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/paper) || istype(held_item, /obj/item/photo) || istype(held_item, /obj/item/documents) || istype(held_item, /obj/item/paperwork))
+		if(istype(held_item, /obj/item/paper))
+			var/obj/item/paper/paper = held_item
+			if(paper.is_empty())
+				context[SCREENTIP_CONTEXT_LMB] = "Insert Empty Paper"
+				return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Document"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Maintenance Panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(TOOL_WRENCH)
+			if(anchored)
+				context[SCREENTIP_CONTEXT_LMB] = "Unsecure"
+				return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "Secure"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(TOOL_CROWBAR)
+			if(!panel_open)
+				return .
+			if(payment_component)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove Card Reader"
+				return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /***
  * Emag the device if the panel is open.
