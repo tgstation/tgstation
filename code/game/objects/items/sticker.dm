@@ -1,9 +1,20 @@
+#define MAX_STICKER_COUNT 15
+
 /obj/item/sticker
 	name = "sticker"
 	desc = "it sticks to objects"
 
 	icon = 'icons/obj/toys/stickers.dmi'
 	icon_state = "plizard"
+
+	w_class = WEIGHT_CLASS_TINY
+
+	throw_range = 3
+
+	pressure_resistance = 0
+
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
 
 /**
  * What stickers can do?
@@ -18,23 +29,18 @@
  *
  */
 
-/obj/item/sticker/Initialize(mapload)
-	. = ..()
-
-	AddElement(/datum/element/atmos_sensitive)
-
 /obj/item/sticker/Bump(atom/bumped_atom)
 	if(prob(100))
-		attach(bumped_atom)
+		attempt_attach(bumped_atom)
 
 /obj/item/sticker/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 
 	if(!proximity_flag)
-		return
+		return FALSE
 
-	if(!(ismob(target) || isobj(target) || isturf(target)))
-		return
+	if(!isatom(target))
+		return FALSE
 
 	var/params = params2list(click_parameters)
 
@@ -44,35 +50,21 @@
 	if(isnull(cursor_x) || isnull(cursor_y))
 		return FALSE
 
-	attach(target, user, cursor_x, cursor_y)
-	return TRUE
+	return attempt_attach(target, user, cursor_x, cursor_y)
 
-/obj/item/sticker/proc/attach(atom/target, mob/user, x, y)
-	if(!(ismob(target) || isobj(target) || isturf(target)))
-		return
+/obj/item/sticker/proc/attempt_attach(atom/target, mob/user, px, py)
+	if(COUNT_TRAIT_SOURCES(src, TRAIT_STICKERED) >= MAX_STICKER_COUNT)
+		return FALSE
 
-	if(isnull(x))
-		x = rand(0, world.icon_size)
+	if(isnull(px))
+		px = rand(1, world.icon_size)
 
-	if(isnull(y))
-		y = rand(0, world.icon_size)
-
-	var/icon/sticker_icon = icon(icon, icon_state)
-
-	var/pos_x = x - sticker_icon.Width() / 2
-	var/pos_y = y - sticker_icon.Height() / 2
+	if(isnull(py))
+		py = rand(1, world.icon_size)
 
 	if(!isnull(user))
 		user.do_attack_animation(target, used_item = src)
 
-	target.AddComponent(/datum/component/sticker, src, pos_x, pos_y)
+	target.AddComponent(/datum/component/sticker, src, px, py)
 
-/obj/item/sticker/proc/remove(atom/our_atom)
-	forceMove(get_turf(our_atom))
-
-/obj/item/sticker/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature >= 373
-
-/obj/item/sticker/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	new /obj/effect/decal/cleanable/ash(get_turf(src))
-	qdel(src)
+#undef MAX_STICKER_COUNT
