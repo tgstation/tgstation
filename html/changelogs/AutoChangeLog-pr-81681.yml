@@ -1,0 +1,4 @@
+author: "JohnFulpWillard, Tattax"
+delete-after: True
+changes:
+  - rscadd: "Adds a new station trait job: The Human AI."
