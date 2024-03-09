@@ -57,7 +57,7 @@
 	button_icon_state = "cuff"
 	cooldown_time = 10 SECONDS
 	///cuffing delay
-	var/cuff_duration = 6 SECONDS
+	var/cuff_duration = 4 SECONDS
 	///type of cuffs we will be using
 	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake
 	///is our owner a honkbot?

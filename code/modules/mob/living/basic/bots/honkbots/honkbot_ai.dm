@@ -1,15 +1,12 @@
-#define BOT_TROLL_PATH_LIMIT 10
-
 /datum/ai_controller/basic_controller/bot/honkbot
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bot,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 	)
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
-		/datum/ai_planning_subtree/simple_find_target/honkbot,
+		/datum/ai_planning_subtree/find_wanted_targets,
 		/datum/ai_planning_subtree/troll_target,
 		/datum/ai_planning_subtree/slip_victims,
 		/datum/ai_planning_subtree/play_with_clowns,
@@ -42,27 +39,48 @@
 		return
 
 	var/atom/slip_target = blackboard[BB_SLIP_TARGET]
-	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(slip_target), TRUE)
+	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, slip_target, TRUE)
 	clear_blackboard_key(BB_SLIP_TARGET)
 
-//only seek out targets to troll if we are emagged
-/datum/ai_planning_subtree/simple_find_target/honkbot
+/datum/ai_planning_subtree/find_wanted_targets
 
-/datum/ai_planning_subtree/simple_find_target/honkbot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
-		return
-	return ..()
+/datum/ai_planning_subtree/find_wanted_targets/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/static/list/can_arrest = typecacheof(list(/mob/living/carbon/human))
+	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/bot_search/wanted_targets, BB_BASIC_MOB_CURRENT_TARGET, can_arrest)
+
+/datum/ai_behavior/bot_search/wanted_targets
+
+/datum/ai_behavior/bot_search/wanted_targets/valid_target(datum/ai_controller/basic_controller/bot/controller, mob/living/my_target)
+	if(!ishuman(my_target))
+		return FALSE
+	var/mob/living/carbon/human/human_target = my_target
+	if(human_target.handcuffed)
+		return FALSE
+	if(locate(human_target) in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		return TRUE
+	var/mob/living/basic/bot/honkbot/my_bot = controller.pawn
+	var/honkbot_flags = my_bot.honkbot_flags
+	var/assess_flags = NONE
+	if(my_bot.bot_access_flags & BOT_COVER_EMAGGED)
+		assess_flags |= JUDGE_EMAGGED
+	if(honkbot_flags & HONKBOT_CHECK_IDS)
+		assess_flags |= JUDGE_IDCHECK
+	if(honkbot_flags & HONKBOT_CHECK_RECORDS)
+		assess_flags |= JUDGE_RECORDCHECK
+	return (human_target.assess_threat(assess_flags) > 0)
 
 /datum/ai_planning_subtree/troll_target
 
 /datum/ai_planning_subtree/troll_target/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/carbon/my_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(!istype(my_target) || my_target.handcuffed) //theyre already trolled
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(my_target), TRUE)
+	if(QDELETED(my_target) || !istype(my_target))
+		return
+	if(my_target.handcuffed) //theyre already trolled
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
-	if(my_target.IsParalyzed())
+	var/mob/living/basic/bot/honkbot/my_bot = controller.pawn
+	if(my_target.IsParalyzed() && (my_bot.honkbot_flags & HONKBOT_HANDCUFF_TARGET))
 		var/datum/action/cuff_ability = controller.blackboard[BB_HONK_CUFF]
 		if(cuff_ability?.IsAvailable())
 			controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot, BB_HONK_CUFF, BB_BASIC_MOB_CURRENT_TARGET)
@@ -87,8 +105,8 @@
 
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	var/mob/living/carbon/human/human_target = controller.blackboard[target_key]
-	if(human_target?.handcuffed)
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(human_target), TRUE)
+	if(!isnull(human_target))
+		controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, human_target, lazylist = TRUE)
 	return ..()
 
 /datum/ai_planning_subtree/play_with_clowns/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
@@ -138,7 +156,7 @@
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return
-	controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(living_target), TRUE)
+	controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_planning_subtree/slip_victims/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
@@ -202,9 +220,12 @@
 
 /datum/ai_behavior/drag_to_slip/finish_action(datum/ai_controller/controller, success, slip_target, slippery_target)
 	. = ..()
+	if(success)
+		var/mob/living/living_pawn = controller.pawn
+		living_pawn.emote("flip")
 	var/atom/slipped_victim = controller.blackboard[slip_target]
 	if(!isnull(slipped_victim))
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(slipped_victim), TRUE)
+		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, slipped_victim, TRUE)
 	controller.clear_blackboard_key(slip_target)
 	controller.clear_blackboard_key(slippery_target)
 
@@ -220,7 +241,6 @@
 
 /datum/ai_behavior/drag_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
-
 	var/atom/movable/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.anchored || target.pulledby)
 		finish_action(controller, FALSE, target_key)

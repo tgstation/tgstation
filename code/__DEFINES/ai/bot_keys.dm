@@ -1,3 +1,22 @@
+//bitfield defines
+
+///can honkbots slip people?
+#define HONKBOT_MODE_SLIP (1<<0)
+///can honkbots check IDs?
+#define HONKBOT_CHECK_IDS (1<<1)
+///can honkbots check records?
+#define HONKBOT_CHECK_RECORDS (1<<2)
+///can honkbots handcuff people?
+#define HONKBOT_HANDCUFF_TARGET (1<<3)
+
+DEFINE_BITFIELD(honkbot_flags, list(
+	"CAN_SLIP" = HONKBOT_MODE_SLIP,
+	"CHECK_IDS" = HONKBOT_CHECK_IDS,
+	"CHECK_RECORDS" = HONKBOT_CHECK_RECORDS,
+	"CAN_FAKE_CUFF" = HONKBOT_HANDCUFF_TARGET,
+))
+
+
 // bot keys
 ///The first beacon we find
 #define BB_BEACON_TARGET "beacon_target"

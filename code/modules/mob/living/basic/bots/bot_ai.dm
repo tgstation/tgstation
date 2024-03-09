@@ -29,7 +29,7 @@
 	var/datum/ai_controller/my_controller = living_mob.ai_controller
 	if(isnull(my_controller))
 		return FALSE
-	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(the_target)))
+	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], the_target))
 		return FALSE
 	var/mob/living/living_target = the_target
 	if(isnull(living_target.mind))
@@ -38,7 +38,7 @@
 		return ..()
 	var/list/path = get_path_to(living_mob, living_target, max_distance = 10, access = my_controller.get_access())
 	if(!length(path) || QDELETED(living_mob))
-		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(living_target), TRUE)
+		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
 		return FALSE
 	return ..()
 
@@ -72,7 +72,7 @@
 		set_blackboard_key(key, target)
 		return TRUE
 	if(!bypass_add_to_blacklist)
-		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
+		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 	return FALSE
 
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
@@ -272,7 +272,7 @@
 			return
 		if(!is_type_in_typecache(potential_target, looking_for))
 			continue
-		if(LAZYACCESS(ignore_list, REF(potential_target)))
+		if(LAZYACCESS(ignore_list, potential_target))
 			continue
 		if(!valid_target(controller, potential_target))
 			continue

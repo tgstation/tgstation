@@ -4,7 +4,7 @@
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	ai_controller = /datum/ai_controller/basic_controller/bot/honkbot
 	radio_channel = RADIO_CHANNEL_SERVICE
@@ -23,6 +23,8 @@
 	COOLDOWN_DECLARE(honk_cooldown)
 	///Sound played when HONKing someone
 	var/honksound = 'sound/items/bikehorn.ogg'
+	///Honkbot's flags
+	var/honkbot_flags = HONKBOT_CHECK_RECORDS | HONKBOT_HANDCUFF_TARGET | HONKBOT_MODE_SLIP
 
 /mob/living/basic/bot/honkbot/Initialize(mapload)
 	. = ..()
@@ -79,3 +81,26 @@
 	playsound(loc, honksound, 50, TRUE, -1)
 	set_attacking_state()
 	COOLDOWN_START(src, honk_cooldown, 5 SECONDS)
+
+/mob/living/basic/bot/honkbot/ui_data(mob/user)
+	var/list/data = ..()
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
+		data["custom_controls"]["slip_people"] = honkbot_flags & HONKBOT_MODE_SLIP
+		data["custom_controls"]["fake_cuff"] = honkbot_flags & HONKBOT_HANDCUFF_TARGET
+		data["custom_controls"]["check_ids"] = honkbot_flags & HONKBOT_CHECK_IDS
+		data["custom_controls"]["check_records"] = honkbot_flags & HONKBOT_CHECK_RECORDS
+	return data
+
+/mob/living/basic/bot/honkbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(. || !isliving(ui.user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !(ui.user.has_unlimited_silicon_privilege))
+		return
+	switch(action)
+		if("slip_people")
+			honkbot_flags ^= HONKBOT_MODE_SLIP
+		if("fake_cuff")
+			honkbot_flags ^= HONKBOT_HANDCUFF_TARGET
+		if("check_ids")
+			honkbot_flags ^= HONKBOT_CHECK_IDS
+		if("check_records")
+			honkbot_flags ^= HONKBOT_CHECK_RECORDS
