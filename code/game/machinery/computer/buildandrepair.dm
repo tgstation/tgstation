@@ -10,7 +10,6 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
-	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NO_DECONSTRUCTION))
