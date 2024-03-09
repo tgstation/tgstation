@@ -53,6 +53,15 @@
 	)
 	spying = TRUE
 
+/datum/computer_file/program/secureye/human_ai
+	filename = "Overseer"
+	filedesc = "OverSeer"
+	run_access = list(ACCESS_MINISAT)
+	can_run_on_flags = PROGRAM_PDA
+	program_flags = PROGRAM_UNIQUE_COPY
+	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	spying = TRUE
+
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
@@ -95,7 +104,7 @@
 	cam_screen.display_to(user)
 	user.client.register_map_obj(cam_background)
 
-/datum/computer_file/program/secureye/ui_status(mob/user)
+/datum/computer_file/program/secureye/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE

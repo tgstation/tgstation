@@ -326,7 +326,7 @@
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = HAS_SILICON_ACCESS(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
@@ -393,7 +393,7 @@
 	update_appearance()
 	remote_control_user = null
 
-/obj/machinery/power/apc/ui_status(mob/user)
+/obj/machinery/power/apc/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(!QDELETED(remote_control_user) && user == remote_control_user)
 		. = UI_INTERACTIVE
@@ -401,11 +401,11 @@
 /obj/machinery/power/apc/ui_act(action, params)
 	. = ..()
 
-	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
+	if(. || !can_use(usr, 1) || (locked && !HAS_SILICON_ACCESS(usr) && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
 					to_chat(usr, span_warning("The APC does not respond to the command!"))
 				else
@@ -442,7 +442,7 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr))
 				overload_lighting()
 				. = TRUE
 		if("hack")

@@ -211,14 +211,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
-/// Prevents shovies against a dense object from knocking them down.
-#define TRAIT_SHOVE_KNOCKDOWN_BLOCKED "shove_knockdown_blocked"
+/// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
+#define TRAIT_BRAWLING_KNOCKDOWN_BLOCKED "brawling_knockdown_blocked"
+/// Prevents some severe head injuries being sustained from heavy collisions or blunt force injuries.
+#define TRAIT_HEAD_INJURY_BLOCKED "head_injury_blocked"
 /// Prevents staggering.
 #define TRAIT_NO_STAGGER "no_stagger"
 /// Getting hit by thrown movables won't push you away
 #define TRAIT_NO_THROW_HITPUSH "no_throw_hitpush"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
+///This trait gets you a list of fishes that can be caught when examining a fishing spot.
+#define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
 
 /// Added to a mob, allows that mob to experience flavour-based moodlets when examining food
 #define TRAIT_REMOTE_TASTING "remote_tasting"
@@ -518,6 +522,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the user handcuff others faster
 #define TRAIT_FAST_CUFFING "fast_cuffing"
 
+///Makes the player appear as their respective job in Binary Talk rather than being a 'Default Cyborg'.
+#define DISPLAYS_JOB_IN_BINARY "display_job_in_binary"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -535,6 +542,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
 #define TRAIT_CORONER_METABOLISM "coroner_metabolism"
+#define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism"
 
 //LUNG TRAITS
 /// Lungs always breathe normally when in vacuum/space.
@@ -880,6 +888,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
+/// Whether bots will salute this mob.
+#define TRAIT_COMMISSIONED "commissioned"
+
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
@@ -924,6 +935,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_FORESTED "station_trait_forested"
 #define STATION_TRAIT_HANGOVER "station_trait_hangover"
+#define STATION_TRAIT_HUMAN_AI "station_trait_human_ai"
 #define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
 #define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
 #define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
@@ -953,7 +965,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// ID cards with this trait have special appraisal text.
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
-/// things with this trait are treated as having no access in /obj/proc/check_access(obj/item)
+/// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
 #define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
 
 /// This human wants to see the color of their glasses, for some reason
