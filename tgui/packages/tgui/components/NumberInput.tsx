@@ -16,7 +16,7 @@ import { Box } from './Box';
 const DEFAULT_UPDATE_RATE = 400;
 
 type NumberInputProps = {
-  value: number;
+  value: number | string;
   minValue: number;
   maxValue: number;
   step?: number;
@@ -107,7 +107,7 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
     this.setState({
       dragging: false,
       origin: event.screenY,
-      internalValue: value,
+      internalValue: parseFloat(value.toString()),
     });
     this.dragTimeout = setTimeout(() => {
       this.setState({
@@ -285,7 +285,7 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
       format,
     } = this.props;
 
-    let displayValue = value;
+    let displayValue = parseFloat(value.toString());
     if (dragging || suppressingFlicker) {
       displayValue = intermediateValue;
     }
