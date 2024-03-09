@@ -68,7 +68,7 @@
 
 /datum/uplink_item/weapon_kits/low_cost/shotgun
 	name = "Bulldog Shotgun Case (Moderate)"
-	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
+	desc = "A fully-loaded 2-round burst fire drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
 		Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/bulldog
 
