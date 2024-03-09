@@ -25,11 +25,7 @@
 
 	switch(result)
 		if (INITIALIZE_HINT_NORMAL)
-			// This is to appease OpenDream Pragma 3100 - EmptyBlock
-			// We do nothing, but if we had pass() here, it would add needless proc-call overhead
-#ifdef OPENDREAM
-			pass()
-#endif
+			EMPTY_BLOCK_GUARD // Pass
 		if(INITIALIZE_HINT_LATELOAD)
 			if(arguments[1]) //mapload
 				late_loaders += A
