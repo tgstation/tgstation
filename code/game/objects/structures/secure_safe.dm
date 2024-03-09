@@ -79,9 +79,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	base_icon_state = "safe"
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
-	color = "#ffdd33"
 	density = TRUE
 	anchored_tabletop_offset = 4
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 
 /datum/armor/safe_caps_spare
 	melee = 100
