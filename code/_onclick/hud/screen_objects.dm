@@ -799,9 +799,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		state = HUNGER_STATE_FINE
 		return
 
+	/*
 	if(HAS_TRAIT(hungry, TRAIT_FAT))
 		state = HUNGER_STATE_FAT
 		return
+	*/
 
 	switch(hungry.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)

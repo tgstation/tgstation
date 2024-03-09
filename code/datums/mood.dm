@@ -116,10 +116,12 @@
 		clear_mood_event(MOOD_CATEGORY_NUTRITION)
 		return FALSE
 
+	/*
 	if(HAS_TRAIT(mob_parent, TRAIT_FAT) && !HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
 		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
 		return TRUE
-
+	*/
+	
 	switch(mob_parent.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, HAS_TRAIT(mob_parent, TRAIT_VORACIOUS) ? /datum/mood_event/wellfed : /datum/mood_event/too_wellfed)
