@@ -136,15 +136,26 @@
 			balloon_alert(user, "anchor first!")
 			return ITEM_INTERACT_BLOCKING
 
+		//required for amount subtypes
+		var/target_type
+		if(istype(weapon, /obj/item/stack/sheet/mineral/coal))
+			target_type = /obj/item/stack/sheet/mineral/coal
+		else
+			target_type = /obj/item/stack/sheet/mineral/wood
+
 		//transfer or merge stacks if we have enough space
-		var/obj/item/stack/stored = locate(weapon.type) in contents
-		if(!QDELETED(stored))
-			var/obj/item/stack/target = weapon
-			if(target.amount == MAX_STACK_SIZE)
+		var/merged = FALSE
+		var/obj/item/stack/target = weapon
+		for(var/obj/item/stack/stored in contents)
+			if(!istype(stored, target_type))
+				continue
+			if(stored.amount == MAX_STACK_SIZE)
 				to_chat(user, span_warning("No space for [weapon]"))
 				return ITEM_INTERACT_BLOCKING
-			target.merge(stored, target.amount)
-		else
+			target.merge(stored)
+			merged = TRUE
+			break
+		if(!merged)
 			weapon.forceMove(src)
 
 		to_chat(user, span_notice("You add [src] to the fuel stack"))
