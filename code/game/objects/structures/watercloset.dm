@@ -167,7 +167,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
-	hidden_item = new /obj/item/food/urinalcake
+	if(mapload)
+		hidden_item = new /obj/item/food/urinalcake(src)
 	find_and_hang_on_wall()
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
@@ -227,8 +228,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		exposed = !exposed
 	return TRUE
 
+/obj/structure/urinal/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(user)
+	deconstruct(TRUE)
+	to_chat(user, span_notice("You remove [src] from the wall."))
+	return TRUE
+
 /obj/structure/urinal/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NO_DECONSTRUCTION))
+		for(var/obj/urinal_item in contents)
+			urinal_item.forceMove(drop_location())
 		new /obj/item/wallframe/urinal(loc)
 	qdel(src)
 
