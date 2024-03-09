@@ -172,9 +172,8 @@
 			balloon_alert(user, "anchor first!")
 			return ITEM_INTERACT_BLOCKING
 
-		var/datum/reagents/target_holder = weapon.reagents
-		var/target_amount = container.amount_per_transfer_from_this
-		if(target_holder.trans_to(src, target_amount))
+		var/transfered_amount = weapon.reagents.trans_to(src, container.amount_per_transfer_from_this)
+		if(transfered_amount)
 			//reagents & their effects on fuel
 			var/static/list/fuel_map = list(
 				/datum/reagent/consumable/monkey_energy = 4,
@@ -203,7 +202,7 @@
 			update_appearance(UPDATE_ICON_STATE)
 
 			//feedback
-			to_chat(user, span_notice("You transfer [target_amount]u to the fuel source"))
+			to_chat(user, span_notice("You transfer [transfered_amount]u to the fuel source"))
 			return ITEM_INTERACT_SUCCESS
 		else
 			to_chat(user, span_warning("No fuel was transfered"))
