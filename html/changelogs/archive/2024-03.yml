@@ -100,3 +100,6 @@
   Absolucy, JupiterJaeden, FlufflesTheDog:
   - qol: people now lie down when buckled to surgery tables, and you no longer need
       cuffs to buckle someone to a surgery table
+2024-03-09:
+  wraith-54321:
+  - bugfix: Fixed some turf atmos diffs on tram and CC
