@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
-	maints_access_required = list(ACCESS_SECURITY)
+	req_one_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
@@ -30,6 +30,8 @@
 		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
 	)
 
+	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
+	var/commissioned = FALSE
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
 	///The type of cuffs we use on criminals after making arrests
@@ -123,6 +125,8 @@
 	. = ..()
 	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)
+	if(commissioned)
+		ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/det_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/detective]
@@ -173,7 +177,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["check_id"] = security_mode_flags & SECBOT_CHECK_IDS
 		data["custom_controls"]["check_weapons"] = security_mode_flags & SECBOT_CHECK_WEAPONS
 		data["custom_controls"]["check_warrants"] = security_mode_flags & SECBOT_CHECK_RECORDS
@@ -184,7 +188,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
