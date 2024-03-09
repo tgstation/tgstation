@@ -24,7 +24,7 @@
 
 /obj/machinery/grill/Initialize(mapload)
 	. = ..()
-	create_reagents(100, NO_REACT)
+	create_reagents(30, NO_REACT)
 	grill_loop = new(src, FALSE)
 	register_context()
 
@@ -110,47 +110,21 @@
 /obj/machinery/grill/attack_ai(mob/user)
 	return //the ai can't physically flip the lid for the grill
 
-/**
- * Makes grill fuel from a unit of stack or reagent
- * Arguments
- *
- * * ignore_stacks - don't burn stacks. Only used when reagents are poured
- * * volume - how much of reagent fuel to convert into fuel
- */
-/obj/machinery/grill/proc/make_fuel(ignore_stacks = FALSE, volume = 1)
+
+/// Makes grill fuel from a unit of stack
+/obj/machinery/grill/proc/burn_stack()
 	PRIVATE_PROC(TRUE)
 
-	var/boost
-
 	//compute boost from wood or coal
-	if(!ignore_stacks)
-		for(var/obj/item/stack in contents)
-			boost = 5 * (GRILL_FUELUSAGE_IDLE + GRILL_FUELUSAGE_ACTIVE)
-			if(istype(stack, /obj/item/stack/sheet/mineral/coal))
-				boost *= 2
-			if(stack.use(1))
-				grill_fuel += boost
-
-	//compute boost from reagents
-	var/min
-	var/static/list/fuel_map = list(
-		/datum/reagent/consumable/monkey_energy = 4,
-		/datum/reagent/fuel/oil = 3,
-		/datum/reagent/fuel = 2,
-		/datum/reagent/consumable/ethanol = 1
-	)
-	for(var/datum/reagent/stored as anything in reagents.reagent_list)
-		min = min(stored.volume, volume)
-		boost = fuel_map[stored.type]
-		if(!boost) //anything we don't recognize as fuel has inverse effects
-			boost = -1
-		boost = boost * min * (GRILL_FUELUSAGE_IDLE + GRILL_FUELUSAGE_ACTIVE)
-		if(reagents.remove_reagent(stored.type, min))
+	var/boost
+	for(var/obj/item/stack in contents)
+		boost = 5 * (GRILL_FUELUSAGE_IDLE + GRILL_FUELUSAGE_ACTIVE)
+		if(istype(stack, /obj/item/stack/sheet/mineral/coal))
+			boost *= 2
+		if(stack.use(1))
 			grill_fuel += boost
-
-	if(grill_fuel < 0) //can happen if you put water or something
-		grill_fuel = 0
 	update_appearance(UPDATE_ICON_STATE)
+
 	return grill_fuel >= 0
 
 /obj/machinery/grill/item_interaction(mob/living/user, obj/item/weapon, list/modifiers, is_right_clicking)
@@ -176,7 +150,7 @@
 			weapon.forceMove(src)
 
 		to_chat(user, "You add [src] to the fuel stack")
-		if(!grill_fuel && make_fuel())
+		if(!grill_fuel && burn_stack())
 			begin_processing()
 		return ITEM_INTERACT_SUCCESS
 
@@ -191,13 +165,35 @@
 		var/datum/reagents/holder = weapon.reagents
 		var/target_amount = container.amount_per_transfer_from_this
 		if(holder.trans_to(src, target_amount))
-			to_chat(user, "You transfer [target_amount]u to the fuel source")
-			if(make_fuel(TRUE, volume = target_amount))
-				begin_processing()
-			return ITEM_INTERACT_SUCCESS
+			//reagents & their effects on fuel
+			var/static/list/fuel_map = list(
+				/datum/reagent/consumable/monkey_energy = 4,
+				/datum/reagent/fuel/oil = 3,
+				/datum/reagent/fuel = 2,
+				/datum/reagent/consumable/ethanol = 1
+			)
 
-		to_chat(user, "No fuel was transfered")
-		return ITEM_INTERACT_BLOCKING
+			//compute extra fuel to be obtained from everything transfered
+			var/boost
+			var/additional_fuel = 0
+			for(var/datum/reagent/stored as anything in reagents.reagent_list)
+				boost = fuel_map[stored.type]
+				if(!boost) //anything we don't recognize as fuel has inverse effects
+					boost = -1
+				boost = boost * stored.volume * (GRILL_FUELUSAGE_IDLE + GRILL_FUELUSAGE_ACTIVE)
+				additional_fuel += boost
+
+			//add to fuel source
+			holder.clear_reagents()
+			grill_fuel += additional_fuel
+			if(grill_fuel < 0) //can happen if you put water or something
+				grill_fuel = 0
+			update_appearance(UPDATE_ICON_STATE)
+			to_chat(user, "You transfer [target_amount]u to the fuel source")
+			return ITEM_INTERACT_SUCCESS
+		else
+			to_chat(user, "No space for more fuel")
+			return ITEM_INTERACT_BLOCKING
 
 	if(IS_EDIBLE(weapon))
 		//sanity checks
@@ -257,9 +253,8 @@
 	var/fuel_usage = GRILL_FUELUSAGE_IDLE * seconds_per_tick
 	if(grill_fuel < fuel_usage)
 		grill_fuel = 0
-		make_fuel()
-		update_appearance(UPDATE_ICON_STATE)
-		if(!grill_fuel) //could not make any fuel
+		burn_stack()
+		if(grill_fuel < fuel_usage) //could not make any fuel
 			return PROCESS_KILL
 
 	//use fuel, create smoke puffs for immersion
@@ -271,8 +266,9 @@
 
 	fuel_usage = GRILL_FUELUSAGE_ACTIVE * seconds_per_tick
 	if(!QDELETED(grilled_item))
+		//check to see if we need to burn more fuel
 		if(grill_fuel < fuel_usage)
-			make_fuel()
+			burn_stack()
 			if(grill_fuel < fuel_usage) //could not make any fuel
 				return
 
