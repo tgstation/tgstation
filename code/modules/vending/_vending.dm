@@ -280,6 +280,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(onstation && !onstation_override)
 		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
+	register_context()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -1101,6 +1102,14 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vending_machine_input[inserted_item.type] = 1
 	loaded_items++
 
+/obj/machinery/vending/proc/can_be_loaded_stock(obj/item/inserted_item)
+	if(!inserted_item)
+		return FALSE
+	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
+		if(inserted_item.type == product_datum.product_path)
+			return TRUE
+	return FALSE
+
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!force)
 		return
@@ -1610,6 +1619,32 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
+
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(ishuman(user) && tilted && !held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Right the vending machine"
+		return TRUE
+
+	if(istype(held_item) && held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		return TRUE
+
+	if(panel_open && held_item && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return TRUE
+
+	if(istype(held_item) && (vending_machine_input[held_item.type] || can_be_loaded_stock(held_item)))
+		context[SCREENTIP_CONTEXT_LMB] = "Load item into vending machine"
+		return TRUE
+
+	if(istype(held_item, refill_canister) && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine [credits_contained ? "and collect credits" : null ]"
+		return TRUE
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
