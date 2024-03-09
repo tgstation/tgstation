@@ -4972,7 +4972,6 @@
 #include "code\modules\mob\living\simple_animal\bot\ed209bot.dm"
 #include "code\modules\mob\living\simple_animal\bot\firebot.dm"
 #include "code\modules\mob\living\simple_animal\bot\floorbot.dm"
-#include "code\modules\mob\living\simple_animal\bot\honkbot.dm"
 #include "code\modules\mob\living\simple_animal\bot\mulebot.dm"
 #include "code\modules\mob\living\simple_animal\bot\secbot.dm"
 #include "code\modules\mob\living\simple_animal\bot\SuperBeepsky.dm"

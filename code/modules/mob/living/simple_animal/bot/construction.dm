@@ -323,7 +323,7 @@
 				if(!can_finish_build(attacking_item, user))
 					return
 				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/secbot/honkbot/new_honkbot = new(drop_location())
+				var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
 				new_honkbot.name = created_name
 				new_honkbot.limiting_spam = TRUE // only long enough to hear the first ping.
 				playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
