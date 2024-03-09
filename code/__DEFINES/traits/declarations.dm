@@ -1084,4 +1084,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
+/// Trait given to mobs wearing the clown mask
+#define TRAIT_PERCIEVED_AS_CLOWN "percieved_as_clown"
+
 // END TRAIT DEFINES

@@ -24,10 +24,23 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	///how many times we tried to reach the target
-	var/current_pathing_attempts = 0
-	///if we cant reach it after this many attempts, add it to our ignore list
-	var/max_pathing_attempts = 25
+
+/datum/targeting_strategy/basic/bot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	var/datum/ai_controller/my_controller = living_mob.ai_controller
+	if(isnull(my_controller))
+		return FALSE
+	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(the_target)))
+		return FALSE
+	var/mob/living/living_target = the_target
+	if(isnull(living_target.mind))
+		return FALSE
+	if(get_turf(living_mob) == get_turf(living_target))
+		return ..()
+	var/list/path = get_path_to(living_mob, living_target, max_distance = 10, access = my_controller.get_access())
+	if(!length(path) || QDELETED(living_mob))
+		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(living_target), TRUE)
+		return FALSE
+	return ..()
 
 /datum/ai_controller/basic_controller/bot/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -242,3 +255,31 @@
 /datum/ai_behavior/salute_authority/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/bot_search
+
+/datum/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE)
+	. = ..()
+	if(!istype(controller))
+		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
+		finish_action(controller, FALSE)
+		return
+	var/mob/living/living_pawn = controller.pawn
+	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
+	for(var/atom/potential_target as anything in oview(radius, controller.pawn))
+		if(QDELETED(living_pawn))
+			finish_action(controller, FALSE)
+			return
+		if(!is_type_in_typecache(potential_target, looking_for))
+			continue
+		if(LAZYACCESS(ignore_list, REF(potential_target)))
+			continue
+		if(!valid_target(controller, potential_target))
+			continue
+		if(controller.set_if_can_reach(target_key, potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist))
+			finish_action(controller, TRUE)
+			return
+	finish_action(controller, FALSE)
+
+/datum/ai_behavior/bot_search/proc/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
+	return TRUE

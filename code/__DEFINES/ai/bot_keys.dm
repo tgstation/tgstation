@@ -75,3 +75,22 @@
 #define BB_WASH_FRUSTRATION "wash_frustration"
 ///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
 #define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
+
+//Honkbots
+///key that holds our honk ability
+#define BB_HONK_STUN "honk_stun"
+///key that holds our cuff ablity
+#define BB_HONK_CUFF "honk_cuff"
+///key that holds all possible clown friends
+#define BB_CLOWNS_LIST "clowns_list"
+///key that holds the clown we play with
+#define BB_CLOWN_FRIEND "clown_friend"
+///key that holds the list of slippery items
+#define BB_SLIPPERY_ITEMS "slippery_items"
+///key that holds list of types we will attempt to slip
+#define BB_SLIP_LIST "slip_list"
+///key that holds the slippery item we will drag people too
+#define BB_SLIPPERY_TARGET "slippery_target"
+///key that holds the victim we will slip
+#define BB_SLIP_TARGET "slip_target"
+

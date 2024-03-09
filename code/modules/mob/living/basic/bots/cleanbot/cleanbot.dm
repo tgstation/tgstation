@@ -5,7 +5,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "cleanbot0"
-	pass_flags = PASSMOB | PASSFLAPS
 	density = FALSE
 	anchored = FALSE
 	health = 25

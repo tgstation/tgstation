@@ -5,7 +5,6 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_UNREACHABLE_LIST_COOLDOWN = 3 MINUTES,
 		BB_SALUTE_MESSAGES = list(
 			"salutes",
@@ -79,6 +78,8 @@
 			break
 		if(LAZYACCESS(ignore_list, REF(found_item)))
 			continue
+		if(get_turf(found_item) == get_turf(controller.pawn))
+			return found_item
 		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
 		if(!length(path))
 			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(found_item), TRUE)
