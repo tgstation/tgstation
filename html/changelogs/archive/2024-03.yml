@@ -233,3 +233,23 @@
   starrm4nn:
   - bugfix: MetaStation Pharmacy is no longer accessible with general medical access,
       Also changes the Chemistry and Pharmacy airlocks into medical ones.
+2024-03-09:
+  00-Steven:
+  - bugfix: Plexagon Access Management actually updates the shown template list on
+      authentication, avoiding needing to refresh/reopen/somesuch the program manually.
+  Drag:
+  - rscadd: Adds the Shark and Shork costume. Blahaj lovers rejoice!
+  Ghommie:
+  - bugfix: Fixed the tgui text input trimming the last character of the input if
+      it hits the maximum length.
+  - bugfix: This also fixes the PIN pad leading to the right wing of the museum away
+      mission.
+  Pickle-Coding:
+  - qol: Extended the metric prefixes.
+  mc-oofert:
+  - rscdel: Removed a nanomachine pizza from the deathmatch meat tower map that allowed
+      you to become a borg
+  necromanceranne:
+  - bugfix: Spies no longer have access to infinite use autosurgeons.
+  starrm4nn:
+  - qol: EVA can be given now in common access slots for non-command crewmembers.
