@@ -5,7 +5,7 @@
 			"type": "process",
 			"command": "tools/build/build",
 			"windows": {
-				"command": ".\\tools\\build\\build.bat"
+				"command": ".\\tools\\build\\build.bat",
 			},
 			"options": {
 				"env": {
@@ -23,6 +23,30 @@
 			},
 			"dependsOn": "dm: reparse",
 			"label": "Build All"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": ["-DLOWMEMORYMODE"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": ["-DLOWMEMORYMODE"]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": [
+				"$dreammaker",
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (low memory mode)"
 		},
 		{
 			"type": "dreammaker",
