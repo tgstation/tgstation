@@ -5,6 +5,9 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_DWARF), SIGNAL_REMOVETRAIT(TRAIT_DWARF)), PROC_REF(on_dwarf_trait))
 	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(get_name_part))
 
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER)), PROC_REF(on_nohunger))
+
 /// Gaining or losing [TRAIT_UNKNOWN] updates our name and our sechud
 /mob/living/carbon/human/proc/on_unknown_trait(datum/source)
 	SIGNAL_HANDLER
@@ -38,3 +41,25 @@
 	if(name != voice_name)
 		voice_name += " (as [get_id_name("Unknown")])"
 	stored_name[NAME_PART_INDEX] = voice_name
+
+/mob/living/carbon/human/proc/on_fat(datum/source)
+	SIGNAL_HANDLER
+	hud_used?.hunger?.update_appearance()
+	mob_mood?.update_nutrition_moodlets()
+
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		add_movespeed_modifier(/datum/movespeed_modifier/obesity)
+	else
+		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
+
+/mob/living/carbon/human/proc/on_nohunger(datum/source)
+	SIGNAL_HANDLER
+	// When gaining NOHUNGER, we restore nutrition to normal levels, since we no longer interact with the hunger system
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		set_nutrition(NUTRITION_LEVEL_FED, forced = TRUE)
+		satiety = 0
+		overeatduration = 0
+		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+	else
+		hud_used?.hunger?.update_appearance()
+		mob_mood?.update_nutrition_moodlets()

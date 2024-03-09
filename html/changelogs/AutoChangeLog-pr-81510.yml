@@ -1,0 +1,4 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - rscadd: "Adds 3 new kits into the syndie-kit spawn pool, 2 for special and another for tactical"

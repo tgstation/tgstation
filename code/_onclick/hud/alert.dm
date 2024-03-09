@@ -185,22 +185,6 @@
 
 //End gas alerts
 
-
-/atom/movable/screen/alert/fat
-	name = "Fat"
-	desc = "You ate too much food, lardass. Run around the station and lose some weight."
-	icon_state = "fat"
-
-/atom/movable/screen/alert/hungry
-	name = "Hungry"
-	desc = "Some food would be good right about now."
-	icon_state = "hungry"
-
-/atom/movable/screen/alert/starving
-	name = "Starving"
-	desc = "You're severely malnourished. The hunger pains make moving around a chore."
-	icon_state = "starving"
-
 /atom/movable/screen/alert/gross
 	name = "Grossed out."
 	desc = "That was kind of gross..."
@@ -1034,39 +1018,34 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
+/// Gets the placement for the alert based on its index
+/datum/hud/proc/get_ui_alert_placement(index)
+	// Only has support for 5 slots currently
+	if(index > 5)
+		return ""
+
+	return "EAST-1:28,CENTER+[6 - index]:[29 - (index * 2)]"
+
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
-		return
+		return FALSE
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i in 1 to alerts.len)
 			screenmob.client.screen -= alerts[alerts[i]]
-		return 1
-	for(var/i in 1 to alerts.len)
+		return TRUE
+	for(var/i in 1 to length(alerts))
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
 			alert.icon = ui_style
-		switch(i)
-			if(1)
-				. = ui_alert1
-			if(2)
-				. = ui_alert2
-			if(3)
-				. = ui_alert3
-			if(4)
-				. = ui_alert4
-			if(5)
-				. = ui_alert5 // Right now there's 5 slots
-			else
-				. = ""
-		alert.screen_loc = .
+		alert.screen_loc = get_ui_alert_placement(i)
 		screenmob.client.screen |= alert
 	if(!viewmob)
-		for(var/M in mymob.observers)
-			reorganize_alerts(M)
-	return 1
+		for(var/viewer in mymob.observers)
+			reorganize_alerts(viewer)
+	return TRUE
 
 /atom/movable/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)
