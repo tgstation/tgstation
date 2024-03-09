@@ -1102,13 +1102,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vending_machine_input[inserted_item.type] = 1
 	loaded_items++
 
-/obj/machinery/vending/proc/can_be_loaded_stock(obj/item/inserted_item)
-	if(!inserted_item)
-		return FALSE
-	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(inserted_item.type == product_datum.product_path)
-			return TRUE
-	return FALSE
 
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!force)
@@ -1587,11 +1580,13 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Arguments:
  * * loaded_item - the item being loaded
  * * user - the user doing the loading
+ * * send_message - should we send a message to the user if the item can't be loaded? Either a to_chat or a speak depending on vending type.
  */
-/obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user)
+/obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	if(!length(loaded_item.contents) && ((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband)))
 		return TRUE
-	to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
+	if(send_message)
+		to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
 	return FALSE
 
 /obj/machinery/vending/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -1638,7 +1633,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return TRUE
 
-	if(istype(held_item) && (vending_machine_input[held_item.type] || can_be_loaded_stock(held_item)))
+	if(istype(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, FALSE)))
 		context[SCREENTIP_CONTEXT_LMB] = "Load item into vending machine"
 		return TRUE
 
@@ -1671,16 +1666,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(id_card?.registered_account && id_card.registered_account == linked_account)
 		return TRUE
 
-/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user)
+/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	. = FALSE
 	if(loaded_item.flags_1 & HOLOGRAM_1)
-		speak("This vendor cannot accept nonexistent items.")
+		if(send_message)
+			speak("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)
-		speak("There are too many items in stock.")
+		if(send_message)
+			speak("There are too many items in stock.")
 		return
 	if(isstack(loaded_item))
-		speak("Loose items may cause problems, try to use it inside wrapping paper.")
+		if(send_message)
+			speak("Loose items may cause problems, try to use it inside wrapping paper.")
 		return
 	if(loaded_item.custom_price)
 		return TRUE
