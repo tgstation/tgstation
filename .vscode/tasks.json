@@ -5,7 +5,7 @@
 			"type": "process",
 			"command": "tools/build/build",
 			"windows": {
-				"command": ".\\tools\\build\\build.bat",
+				"command": ".\\tools\\build\\build.bat"
 			},
 			"options": {
 				"env": {
