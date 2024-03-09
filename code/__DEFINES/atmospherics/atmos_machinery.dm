@@ -49,6 +49,13 @@
 /// Fire alarm has all components but isn't completed
 #define FIRE_ALARM_BUILD_SECURED 2
 
+// Fault levels for air alarm display
+/// Area faults clear
+#define AREA_FAULT_NONE 0
+/// Fault triggered by manual intervention (ie: fire alarm pull)
+#define AREA_FAULT_MANUAL 1
+/// Fault triggered automatically (ie: firedoor detection)
+#define AREA_FAULT_AUTOMATIC 2
 
 // threshold_type values for [/datum/tlv/proc/set_value]  and [/datum/tlv/proc/reset_value]
 /// [/datum/tlv/var/warning_min]

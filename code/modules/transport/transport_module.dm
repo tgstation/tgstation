@@ -844,7 +844,6 @@
 	transport_id = TRANSPORT_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE
-	obj_flags = NONE
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 
@@ -934,9 +933,11 @@
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
 	for(var/mob/living/passenger in transport_contents)
 		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
+		var/mob_throw_chance = transport_controller_datum.throw_chance
+		if(prob(mob_throw_chance || 17.5) || HAS_TRAIT(passenger, TRAIT_CURSED)) // sometimes you go through a window, especially with bad luck
+			passenger.AddElement(/datum/element/window_smashing, duration = 1.5 SECONDS)
 		var/throw_target = get_edge_target_turf(src, throw_direction)
-		var/datum/callback/land_slam = new(passenger, TYPE_PROC_REF(/mob/living/, tram_slam_land))
-		passenger.throw_at(throw_target, 400, 4, force = MOVE_FORCE_OVERPOWERING, callback = land_slam)
+		passenger.throw_at(throw_target, 30, 7, force = MOVE_FORCE_OVERPOWERING)
 
 /obj/structure/transport/linear/tram/slow
 	transport_controller_type = /datum/transport_controller/linear/tram/slow

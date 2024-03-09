@@ -9,7 +9,19 @@
 		mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
 	return message
 
-/mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/dead/observer/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	message = trim(message) //trim now and sanitize after checking for special admin radio keys
 
 	var/list/filter_result = CAN_BYPASS_FILTER(src) ? null : is_ooc_filtered(message)
@@ -27,7 +39,6 @@
 
 	if(!message)
 		return
-	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
 	if(client?.holder && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN || (message_mods[RADIO_EXTENSION] == MODE_PUPPET && mind?.current)))
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))

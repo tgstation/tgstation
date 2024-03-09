@@ -102,6 +102,8 @@
 /datum/martial_art/krav_maga/proc/leg_sweep(mob/living/attacker, mob/living/defender)
 	if(defender.stat != CONSCIOUS || defender.IsParalyzed())
 		return MARTIAL_ATTACK_INVALID
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+		return MARTIAL_ATTACK_INVALID // Does 5 damage, so we can't let pacifists leg sweep.
 	defender.visible_message(
 		span_warning("[attacker] leg sweeps [defender]!"),
 		span_userdanger("Your legs are sweeped by [attacker]!"),
@@ -134,6 +136,8 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/krav_maga/proc/neck_chop(mob/living/attacker, mob/living/defender)
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+		return MARTIAL_ATTACK_INVALID // Does 10 damage, so we can't let pacifists neck chop.
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
 		span_warning("[attacker] karate chops [defender]'s neck!"),

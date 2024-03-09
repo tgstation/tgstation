@@ -2076,19 +2076,11 @@
 	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
 
-/datum/sprite_accessory/spines_animated
-	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
-	em_block = TRUE
-
 /datum/sprite_accessory/tail_spines
 	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/spines/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/spines_animated/none
 	name = "None"
 	icon_state = "none"
 
@@ -2100,19 +2092,11 @@
 	name = "Short"
 	icon_state = "short"
 
-/datum/sprite_accessory/spines_animated/short
-	name = "Short"
-	icon_state = "short"
-
 /datum/sprite_accessory/tail_spines/short
 	name = "Short"
 	icon_state = "short"
 
 /datum/sprite_accessory/spines/shortmeme
-	name = "Short + Membrane"
-	icon_state = "shortmeme"
-
-/datum/sprite_accessory/spines_animated/shortmeme
 	name = "Short + Membrane"
 	icon_state = "shortmeme"
 
@@ -2124,10 +2108,6 @@
 	name = "Long"
 	icon_state = "long"
 
-/datum/sprite_accessory/spines_animated/long
-	name = "Long"
-	icon_state = "long"
-
 /datum/sprite_accessory/tail_spines/long
 	name = "Long"
 	icon_state = "long"
@@ -2136,19 +2116,11 @@
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
-/datum/sprite_accessory/spines_animated/longmeme
-	name = "Long + Membrane"
-	icon_state = "longmeme"
-
 /datum/sprite_accessory/tail_spines/longmeme
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
 /datum/sprite_accessory/spines/aquatic
-	name = "Aquatic"
-	icon_state = "aqua"
-
-/datum/sprite_accessory/spines_animated/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
@@ -2277,6 +2249,10 @@
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_wings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -2364,6 +2340,10 @@
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_antennae/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
@@ -2427,3 +2407,7 @@
 /datum/sprite_accessory/moth_markings/witchwing
 	name = "Witch Wing"
 	icon_state = "witchwing"
+
+/datum/sprite_accessory/moth_markings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"

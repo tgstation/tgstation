@@ -45,10 +45,9 @@
 		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
 		cartridge = new /obj/item/coffee_cartridge(src)
 
-/obj/machinery/coffeemaker/deconstruct()
+/obj/machinery/coffeemaker/on_deconstruction(disassembled)
 	coffeepot?.forceMove(drop_location())
 	cartridge?.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
@@ -322,7 +321,7 @@
 	if(length(options) == 1)
 		choice = options[1]
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
 	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))

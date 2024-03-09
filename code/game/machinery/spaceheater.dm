@@ -81,7 +81,7 @@
 	set_panel_open(TRUE)
 	QDEL_NULL(cell)
 
-/obj/machinery/space_heater/on_deconstruction()
+/obj/machinery/space_heater/on_deconstruction(disassembled)
 	if(cell)
 		LAZYADD(component_parts, cell)
 		cell = null

@@ -264,6 +264,7 @@
 	user.changeNext_move(attack_speed)
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
+	SEND_SIGNAL(src, COMSIG_ITEM_POST_ATTACK_ATOM, attacked_atom, user)
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
@@ -390,7 +391,7 @@
 					glasses.add_mob_blood(src)
 					update_worn_glasses()
 
-			if(!attacking_item.get_sharpness() && armor_block < 50)
+			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED))
 				if(prob(damage_done))
 					adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 					if(stat == CONSCIOUS)
@@ -420,7 +421,7 @@
 					w_uniform.add_mob_blood(src)
 					update_worn_undersuit()
 
-			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && armor_block < 50)
+			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 				if(prob(damage_done))
 					visible_message(
 						span_danger("[src] is knocked down!"),

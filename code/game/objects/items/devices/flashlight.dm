@@ -19,7 +19,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
@@ -75,7 +75,7 @@
 
 /obj/item/flashlight/proc/update_brightness()
 	update_appearance(UPDATE_ICON)
-	if(light_system == STATIC_LIGHT)
+	if(light_system == COMPLEX_LIGHT)
 		update_light()
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
@@ -363,7 +363,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
 	light_range = 3.5
-	light_system = STATIC_LIGHT
+	light_system = COMPLEX_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -396,7 +396,7 @@
 	actions_types = list()
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	grind_results = list(/datum/reagent/sulfur = 15)
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
@@ -654,7 +654,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
 	light_range = 6 // luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 
 /obj/item/flashlight/lantern/heirloom_moth
 	name = "old lantern"
@@ -685,7 +685,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
 	light_range = 7 //luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -749,7 +749,7 @@
 	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
 	light_range = 4
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	base_icon_state = "glowstick"
@@ -856,7 +856,7 @@
 	name = "disco light"
 	desc = "Groovy..."
 	icon_state = null
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 4
 	light_power = 10
 	alpha = 0
@@ -884,7 +884,7 @@
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
-	light_system = STATIC_LIGHT //The overlay light component is not yet ready to produce darkness.
+	light_system = COMPLEX_LIGHT //The overlay light component is not yet ready to produce darkness.
 	light_range = 0
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_range = 2.5
@@ -903,23 +903,15 @@
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 15
 	light_power = 1
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
 
-/obj/item/flashlight/eyelight/adapted
-	name = "adaptedlight"
-	desc = "There is no possible way for a player to see this, so I can safely talk at length about why this exists. Adapted eyes come \
-	with icons that go above the lighting layer so to make sure the red eyes that pierce the darkness are always visible we make the \
-	human emit the smallest amount of light possible. Thanks for reading :)"
-	light_range = 1
-	light_power = 0.07
-
 /obj/item/flashlight/eyelight/glow
-	light_system = MOVABLE_LIGHT_BEAM
+	light_system = OVERLAY_LIGHT_BEAM
 	light_range = 4
 	light_power = 2
 

@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
@@ -257,6 +257,13 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
+"sy" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 8;
+	pixel_x = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
 "ZS" = (
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/wood,
@@ -299,7 +306,7 @@ ac
 aa
 "}
 (3,1,1) = {"
-ab
+sy
 af
 ag
 ag

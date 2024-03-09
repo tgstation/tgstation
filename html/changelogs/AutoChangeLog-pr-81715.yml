@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Bulldog Shotguns now have a 2-round burst fire."
+  - balance: "Lone Operatives now come with some additional Bulldog Shotgun magazines."
