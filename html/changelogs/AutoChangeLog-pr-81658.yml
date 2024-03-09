@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - qol: "Blood Brother convert objective now explains who you can convert and what to do if you mess up with your flash."
