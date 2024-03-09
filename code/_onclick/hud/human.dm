@@ -272,6 +272,9 @@
 	healths = new /atom/movable/screen/healths(null, src)
 	infodisplay += healths
 
+	hunger = new /atom/movable/screen/hunger(null, src)
+	infodisplay += hunger
+
 	healthdoll = new /atom/movable/screen/healthdoll(null, src)
 	infodisplay += healthdoll
 

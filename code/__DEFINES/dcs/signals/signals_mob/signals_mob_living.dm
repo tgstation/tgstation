@@ -26,6 +26,8 @@
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"
 ///from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"
+	/// Block the electrocute_act() proc from proceeding
+	#define COMPONENT_LIVING_BLOCK_SHOCK (1<<0)
 ///sent when items with siemen coeff. of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
 #define COMSIG_LIVING_SHOCK_PREVENTED "living_shock_prevented"
 ///sent by stuff like stunbatons and tasers: ()
@@ -153,9 +155,9 @@
 	#define ZIMPACT_NO_SPIN (1<<2)
 
 /// From mob/living/try_speak(): (message, ignore_spam, forced)
-#define COMSIG_LIVING_TRY_SPEECH "living_vocal_speech"
-	/// Return if the mob can speak the message, regardless of any other signal returns or checks.
-	#define COMPONENT_CAN_ALWAYS_SPEAK (1<<0)
+#define COMSIG_MOB_TRY_SPEECH "living_vocal_speech"
+	/// Return to skip can_speak check, IE, forcing success. Overrides below.
+	#define COMPONENT_IGNORE_CAN_SPEAK (1<<0)
 	/// Return if the mob cannot speak.
 	#define COMPONENT_CANNOT_SPEAK (1<<1)
 

@@ -88,11 +88,8 @@
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustStun(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustKnockdown(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustUnconscious(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustImmobilized(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustParalyzed(-20 * REM * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick)
+
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * seconds_per_tick)
 	affected_mob.adjust_hallucinations(-20 SECONDS * REM * seconds_per_tick)
