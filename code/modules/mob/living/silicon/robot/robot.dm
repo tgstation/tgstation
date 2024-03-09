@@ -955,13 +955,18 @@
 	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
 	return ..()
 
+/mob/living/silicon/robot/can_resist()
+	if(lockcharge)
+		balloon_alert(src, "locked down!")
+		return FALSE
+	. = ..()
+
 /mob/living/silicon/robot/execute_resist()
 	. = ..()
 	if(!has_buckled_mobs())
 		return
 	for(var/mob/unbuckle_me_now as anything in buckled_mobs)
 		unbuckle_mob(unbuckle_me_now, FALSE)
-
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
 	set_connected_ai(select_active_ai_with_fewest_borgs(z))
