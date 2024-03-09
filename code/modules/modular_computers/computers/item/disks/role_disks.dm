@@ -98,6 +98,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/restock_tracker,
 	)
 
 /**
@@ -123,6 +124,6 @@
 		/datum/computer_file/program/alarm_monitor,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/supermatter_monitor,
-		
+
 	)
 

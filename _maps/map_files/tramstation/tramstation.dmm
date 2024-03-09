@@ -10478,6 +10478,7 @@
 	c_tag = "Service - Hydroponics"
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/item/storage/box/syringes,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "cAd" = (
@@ -33756,6 +33757,7 @@
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
 /obj/machinery/newscaster/directional/south,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "kUm" = (
@@ -62927,6 +62929,7 @@
 	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen")
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "vcv" = (
