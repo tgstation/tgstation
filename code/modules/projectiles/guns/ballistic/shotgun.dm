@@ -161,12 +161,11 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
+	burst_fire_selection = TRUE
 	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type
 	///the secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
-	///Whether or not we're in burst mode. If true, we burst fire. If false, we are semi-automatic.
-	var/burst_fire_on = TRUE
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
 	. = ..()
@@ -189,26 +188,6 @@
 	. += "You can load a secondary magazine by right-clicking [src] with the magazine you want to load."
 	. += "You can remove a secondary magazine by alt-right-clicking [src]."
 	. += "Right-click to swap the magazine to the secondary position, and vice versa."
-
-/obj/item/gun/ballistic/shotgun/bulldog/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
-		burst_select()
-	else
-		..()
-
-/obj/item/gun/ballistic/shotgun/bulldog/proc/burst_select()
-	var/mob/living/carbon/human/user = usr
-	burst_fire_on = !burst_fire_on
-	if(!burst_fire_on)
-		burst_size = 1
-		fire_delay = 0
-		balloon_alert(user, "switched to semi-automatic")
-	else
-		burst_size = initial(burst_size)
-		fire_delay = initial(fire_delay)
-		balloon_alert(user, "switched to [burst_size]-round burst")
-
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
