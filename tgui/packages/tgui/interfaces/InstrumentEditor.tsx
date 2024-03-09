@@ -1,7 +1,14 @@
 import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Section } from '../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Divider,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -92,49 +99,58 @@ export const InstrumentSettings = (props) => {
         </Button>
         : {using_instrument}
       </Box>
-      <Box m={1}>Playback Settings:</Box>
-      <Box>
-        <Button onClick={() => act('set_note_shift')}>
-          Note Shift/Note Transpose
-        </Button>
-        : {note_shift} keys / {octaves} octaves
-      </Box>
-      <Box>
-        <Button onClick={() => act('set_sustain_mode')}>Sustain Mode</Button>:{' '}
-        {sustain_mode}
-      </Box>
-      <Box>
-        <Button onClick={() => act('edit_sustain_mode')}>
-          {sustain_mode_button}
-        </Button>
-        : {sustain_mode_text}
-      </Box>
-      <Box m={1}>
-        Status:
-        {instrument_ready ? (
-          <span style={{ color: '#5EFB6E' }}> Ready</span>
-        ) : (
-          <span style={{ color: '#FF0000' }}>
-            {' '}
-            Instrument Definition Error!
-          </span>
-        )}
-      </Box>
-      <Box>
-        <Button onClick={() => act('set_volume')}>Volume</Button>: {volume}
-      </Box>
-      <Box>
-        <Button onClick={() => act('set_dropoff_volume')}>
-          Volume Dropoff Threshold
-        </Button>
-        : {volume_dropoff_threshold}
-      </Box>
-      <Box>
-        <Button onClick={() => act('toggle_sustain_hold_indefinitely')}>
-          Sustain indefinitely last held note
-        </Button>
-        : {sustain_indefinitely ? 'Enabled' : 'Disabled'}
-      </Box>
+      <Stack>
+        <Stack.Item>
+          Playback Settings:
+          <Box>
+            <Button onClick={() => act('set_note_shift')}>
+              Note Shift/Note Transpose
+            </Button>
+            : {note_shift} keys / {octaves} octaves
+          </Box>
+          <Box>
+            <Button onClick={() => act('set_sustain_mode')}>
+              Sustain Mode
+            </Button>
+            : {sustain_mode}
+          </Box>
+          <Box>
+            <Button onClick={() => act('edit_sustain_mode')}>
+              {sustain_mode_button}
+            </Button>
+            : {sustain_mode_text}
+          </Box>
+        </Stack.Item>
+        <Divider vertical />
+        <Stack.Item>
+          <Box>
+            Status:
+            {instrument_ready ? (
+              <span style={{ color: '#5EFB6E' }}> Ready</span>
+            ) : (
+              <span style={{ color: '#FF0000' }}>
+                {' '}
+                Instrument Definition Error!
+              </span>
+            )}
+          </Box>
+          <Box>
+            <Button onClick={() => act('set_volume')}>Volume</Button>: {volume}
+          </Box>
+          <Box>
+            <Button onClick={() => act('set_dropoff_volume')}>
+              Volume Dropoff Threshold
+            </Button>
+            : {volume_dropoff_threshold}
+          </Box>
+          <Box>
+            <Button onClick={() => act('toggle_sustain_hold_indefinitely')}>
+              Sustain indefinitely last held note
+            </Button>
+            : {sustain_indefinitely ? 'Enabled' : 'Disabled'}
+          </Box>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
