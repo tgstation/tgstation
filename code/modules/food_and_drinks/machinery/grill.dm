@@ -125,8 +125,6 @@
 			grill_fuel += boost
 	update_appearance(UPDATE_ICON_STATE)
 
-	return grill_fuel >= 0
-
 /obj/machinery/grill/item_interaction(mob/living/user, obj/item/weapon, list/modifiers, is_right_clicking)
 	if(user.combat_mode || (weapon.item_flags & ABSTRACT) || (weapon.flags_1 & HOLOGRAM_1) || (weapon.resistance_flags & INDESTRUCTIBLE))
 		return ..()
@@ -150,7 +148,8 @@
 			weapon.forceMove(src)
 
 		to_chat(user, "You add [src] to the fuel stack")
-		if(!grill_fuel && burn_stack())
+		if(!grill_fuel)
+			burn_stack()
 			begin_processing()
 		return ITEM_INTERACT_SUCCESS
 
@@ -186,9 +185,13 @@
 			//add to fuel source
 			holder.clear_reagents()
 			grill_fuel += additional_fuel
-			if(grill_fuel < 0) //can happen if you put water or something
+			if(grill_fuel <= 0) //can happen if you put water or something
 				grill_fuel = 0
+			else
+				begin_processing()
 			update_appearance(UPDATE_ICON_STATE)
+
+			//feedback
 			to_chat(user, "You transfer [target_amount]u to the fuel source")
 			return ITEM_INTERACT_SUCCESS
 		else
@@ -221,7 +224,6 @@
 		to_chat(user, span_notice("You put the [grilled_item] on [src]."))
 		update_appearance(UPDATE_ICON_STATE)
 		grill_loop.start()
-		begin_processing()
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()
