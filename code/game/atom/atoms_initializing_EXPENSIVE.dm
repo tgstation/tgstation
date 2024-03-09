@@ -1,5 +1,6 @@
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
+
 	var/the_type = A.type
 
 	if(QDELING(A))
@@ -24,7 +25,11 @@
 
 	switch(result)
 		if (INITIALIZE_HINT_NORMAL)
-			// pass
+			// This is to appease OpenDream Pragma 3100 - EmptyBlock
+			// We do nothing, but if we had pass() here, it would add needless proc-call overhead
+#ifdef OPENDREAM
+			pass()
+#endif
 		if(INITIALIZE_HINT_LATELOAD)
 			if(arguments[1]) //mapload
 				late_loaders += A
