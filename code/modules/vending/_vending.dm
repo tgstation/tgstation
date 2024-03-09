@@ -289,8 +289,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	GLOB.vending_machines_to_restock -= src
 	return ..()
 
-/obj/machinery/vending/can_speak()
-	return !shut_up
+/obj/machinery/vending/can_speak(allow_mimes)
+	return is_operational && !shut_up && ..()
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()
