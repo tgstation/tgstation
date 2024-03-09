@@ -39,8 +39,6 @@
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	abductor_hud.show_to(C)
 
-	C.set_safe_hunger_level()
-
 /datum/species/abductor/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]

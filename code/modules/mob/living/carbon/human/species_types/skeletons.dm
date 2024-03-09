@@ -44,10 +44,6 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/skeleton,
 	)
 
-/datum/species/skeleton/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	. = ..()
-	C.set_safe_hunger_level()
-
 /datum/species/skeleton/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE

@@ -16,8 +16,6 @@
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
-	hide = TRUE
-
 	move_resist = MOVE_RESIST_DEFAULT
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF

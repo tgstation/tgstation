@@ -445,7 +445,7 @@
 	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
 	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
-	if(!registered_account.replaceable || registered_account.account_balance > 0)
+	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
 	return CONTEXTUAL_SCREENTIP_SET
 
