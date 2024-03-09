@@ -141,13 +141,13 @@
 		if(!QDELETED(stored))
 			var/obj/item/stack/target = weapon
 			if(target.amount == MAX_STACK_SIZE)
-				to_chat(user, "No space for [weapon]")
+				to_chat(user, span_warning("No space for [weapon]"))
 				return ITEM_INTERACT_BLOCKING
 			target.merge(stored, target.amount)
 		else
 			weapon.forceMove(src)
 
-		to_chat(user, "You add [src] to the fuel stack")
+		to_chat(user, span_notice("You add [src] to the fuel stack"))
 		if(!grill_fuel)
 			burn_stack()
 			begin_processing()
@@ -161,9 +161,9 @@
 			balloon_alert(user, "anchor first!")
 			return ITEM_INTERACT_BLOCKING
 
-		var/datum/reagents/holder = weapon.reagents
+		var/datum/reagents/target_holder = weapon.reagents
 		var/target_amount = container.amount_per_transfer_from_this
-		if(holder.trans_to(src, target_amount))
+		if(target_holder.trans_to(src, target_amount))
 			//reagents & their effects on fuel
 			var/static/list/fuel_map = list(
 				/datum/reagent/consumable/monkey_energy = 4,
@@ -183,7 +183,7 @@
 				additional_fuel += boost
 
 			//add to fuel source
-			holder.clear_reagents()
+			reagents.clear_reagents()
 			grill_fuel += additional_fuel
 			if(grill_fuel <= 0) //can happen if you put water or something
 				grill_fuel = 0
@@ -192,10 +192,10 @@
 			update_appearance(UPDATE_ICON_STATE)
 
 			//feedback
-			to_chat(user, "You transfer [target_amount]u to the fuel source")
+			to_chat(user, span_notice("You transfer [target_amount]u to the fuel source"))
 			return ITEM_INTERACT_SUCCESS
 		else
-			to_chat(user, "No space for more fuel")
+			to_chat(user, span_warning("No fuel was transfered"))
 			return ITEM_INTERACT_BLOCKING
 
 	if(IS_EDIBLE(weapon))
