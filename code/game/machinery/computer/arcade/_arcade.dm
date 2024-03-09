@@ -31,10 +31,10 @@
 		var/static/list/radial_menu_options
 		if(!radial_menu_options)
 			radial_menu_options = list(
-				"Reset Cabinet" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use"),
-				"Cancel" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
+				"Reset Cabinet" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_reset"),
+				"Cancel" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_close"),
 			)
-		var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options)
+		var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE)
 		if(radial_reset_menu != "Reset Cabinet")
 			return ITEM_INTERACT_BLOCKING
 		playsound(loc, 'sound/items/rattling_keys.ogg', 25, TRUE)
