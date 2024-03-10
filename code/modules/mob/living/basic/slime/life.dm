@@ -20,9 +20,9 @@
 		apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
 		powerlevel = 0
 		ai_controller?.clear_blackboard_key(BB_RABID)
-	else
-		remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
+	else if(has_status_effect(/datum/status_effect/grouped/stasis))
 		to_chat(src, span_notice("You wake up from the stasis."))
+		remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
 
 	handle_nutrition(seconds_per_tick)
 
