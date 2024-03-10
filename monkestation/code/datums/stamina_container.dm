@@ -82,3 +82,7 @@
 	if((amt < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
 	return amt
+
+/// Revitalize the stamina to the maximum this container can have.
+/datum/stamina_container/proc/revitalize(forced = FALSE)
+	return adjust(maximum, forced)

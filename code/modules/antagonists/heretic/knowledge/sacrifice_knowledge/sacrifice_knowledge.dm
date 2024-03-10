@@ -72,7 +72,8 @@
 	// Let's remove any humans in our atoms list that aren't a sac target
 	for(var/mob/living/carbon/human/sacrifice in atoms)
 		// If the mob's not in soft crit or worse, or isn't one of the sacrifices, remove it from the list
-		if(sacrifice.stat < SOFT_CRIT || !(sacrifice in heretic_datum.sac_targets))
+		// monke edit: allow stamcrit targets to be sacrificed (bc they're incapable of putting up resistance)
+		if(!(sacrifice in heretic_datum.sac_targets) || (sacrifice.stat < SOFT_CRIT && !HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA)))
 			atoms -= sacrifice
 
 	// Finally, return TRUE if we have a target in the list
@@ -245,6 +246,7 @@
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.grab_ghost() // monke edit: try to grab their ghost
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -274,6 +276,8 @@
 	if(QDELETED(sac_target))
 		return
 
+	sac_target.grab_ghost() // monke edit: try to grab their ghost
+
 	// The target disconnected or something, we shouldn't bother sending them along.
 	if(!sac_target.client || !sac_target.mind)
 		disembowel_target(sac_target)
@@ -288,6 +292,7 @@
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.grab_ghost() // monke edit: try to grab their ghost again before revival
 	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return
@@ -377,7 +382,7 @@
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.knowledge_points -= 3
 	else
-		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
+		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_LOBOTOMY) // monke edit: allow lobotomy to cure the phobia
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)

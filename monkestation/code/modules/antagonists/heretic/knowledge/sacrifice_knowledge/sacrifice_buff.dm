@@ -1,0 +1,12 @@
+/datum/status_effect/unholy_determination/on_apply()
+	. = ..()
+	owner.add_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_FEARLESS, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_ANTICONVULSANT, TRAIT_TUMOR_SUPPRESSED), type)
+	owner.stamina.revitalize(forced = TRUE)
+	owner.SetSleeping(0)
+	owner.SetUnconscious(0)
+	owner.SetAllImmobility(0)
+	owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
+
+/datum/status_effect/unholy_determination/on_remove()
+	. = ..()
+	REMOVE_TRAITS_IN(owner, type)

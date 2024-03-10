@@ -121,7 +121,9 @@
 
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(show_presence)), 15 SECONDS)
+	// monke edit: make influences only show up after a minute or so, and disappear after about 10 minutes
+	addtimer(CALLBACK(src, PROC_REF(show_presence)), 1 MINUTES)
+	QDEL_IN(src, 10 MINUTES)
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
 	silicon_image.override = TRUE
@@ -147,9 +149,15 @@
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
 	if(prob(25))
-		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-		their_poor_arm.dismember()
-		qdel(their_poor_arm)
+		// monke edit: TRAIT_NODISMEMBER means you just get your arm fucked the hell up instead
+		// while in theory it should atomize your arm anyways, a dismemberment fail and then qdeling the still-attached limb causes Weird Things to happen.
+		if(HAS_TRAIT(human_user, TRAIT_NODISMEMBER))
+			to_chat(human_user, span_userdanger("An otherwordly presence lashes out and violently mangles your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
+			their_poor_arm.receive_damage(brute = 50, wound_bonus = 100) // guaranteed to wound
+		else
+			to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
+			their_poor_arm.dismember()
+			qdel(their_poor_arm)
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existance itself!"))
 	return TRUE
