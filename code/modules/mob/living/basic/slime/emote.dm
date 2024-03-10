@@ -1,5 +1,5 @@
 /datum/emote/slime
-	mob_type_allowed_typecache = /mob/living/simple_animal/slime
+	mob_type_allowed_typecache = /mob/living/basic/slime
 	mob_type_blacklist_typecache = list()
 
 /datum/emote/slime/bounce
@@ -31,7 +31,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/simple_animal/slime/slime_user = user
+	var/mob/living/basic/slime/slime_user = user
 	slime_user.current_mood = mood_key
 	slime_user.regenerate_icons()
 
