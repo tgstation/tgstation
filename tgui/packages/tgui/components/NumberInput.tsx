@@ -15,30 +15,32 @@ import { Box } from './Box';
 
 const DEFAULT_UPDATE_RATE = 400;
 
-type NumberInputProps = {
+type Props = Required<{
   value: number | string;
   minValue: number;
   maxValue: number;
-  step?: number;
-  stepPixelSize?: number;
-  suppressFlicker?: number;
-  disabled?: BooleanLike;
+}> &
+  Partial<{
+    step: number;
+    stepPixelSize: number;
+    suppressFlicker: number;
+    disabled: BooleanLike;
 
-  className?: string;
-  fluid?: BooleanLike;
-  animated?: BooleanLike;
-  unit?: string;
-  height?: string;
-  width?: string;
-  lineHeight?: string;
-  fontSize?: string;
-  updateRate?: number;
-  format?: (value: number) => string;
-  onChange?: (e: any, value: number) => void;
-  onDrag?: (e: any, value: number) => void;
-};
+    className: string;
+    fluid: BooleanLike;
+    animated: BooleanLike;
+    unit: string;
+    height: string;
+    width: string;
+    lineHeight: string;
+    fontSize: string;
+    updateRate: number;
+    format: (value: number) => string;
+    onChange: (e: any, value: number) => void;
+    onDrag: (e: any, value: number) => void;
+  }>;
 
-type NumberInputState = {
+type State = {
   value: number;
   dragging: BooleanLike;
   editing: BooleanLike;
@@ -47,7 +49,7 @@ type NumberInputState = {
   suppressingFlicker: BooleanLike;
 };
 
-export class NumberInput extends Component<NumberInputProps, NumberInputState> {
+export class NumberInput extends Component<Props, State> {
   // Ref to the input field to set focus & highlight
   inputRef: RefObject<HTMLInputElement> = createRef();
 
@@ -61,7 +63,7 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
   dragInterval: NodeJS.Timeout;
 
   // default values for the number input state
-  state: NumberInputState = {
+  state: State = {
     value: 0,
     dragging: false,
     editing: false,
@@ -71,13 +73,13 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
   };
 
   // default values for the number input props
-  public static defaultProps = {
+  static defaultProps = {
     step: 1,
     stepPixelSize: 1,
     suppressFlicker: 50,
   };
 
-  constructor(props: NumberInputProps) {
+  constructor(props: Props) {
     super(props);
   }
 
@@ -118,8 +120,8 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
     this.dragInterval = setInterval(() => {
       const { dragging, value } = this.state;
       const { onDrag } = this.props;
-      if (dragging && onDrag) {
-        onDrag(event, value);
+      if (dragging) {
+        onDrag?.(event, value);
       }
     }, updateRate || DEFAULT_UPDATE_RATE);
   };
@@ -135,7 +137,7 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
       const state = { ...prevState };
       const offset = state.origin - event.screenY;
       if (prevState.dragging && step) {
-        const stepOffset = Number.isFinite(minValue) ? minValue % step : 0;
+        const stepOffset = isFinite(minValue) ? minValue % step : 0;
         // Translate mouse movement to value
         // Give it some headroom (by increasing clamp range by 1 step)
         state.internalValue = clamp(
@@ -173,23 +175,15 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
 
     if (dragging) {
       this.suppressFlicker();
-      if (onChange) {
-        onChange(event, value);
-      }
-      if (onDrag) {
-        onDrag(event, value);
-      }
+      onChange?.(event, value);
+      onDrag?.(event, value);
     } else if (this.inputRef) {
       const input = this.inputRef.current;
       if (input) {
         input.value = `${internalValue}`;
-        // IE8: Dies when trying to focus a hidden element
-        // (Error: Object does not support this action)
         setTimeout(() => {
-          try {
-            input.focus();
-            input.select();
-          } catch {}
+          input.focus();
+          input.select();
         }, 1);
       }
     }
@@ -208,7 +202,7 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
       minValue,
       maxValue,
     );
-    if (Number.isNaN(targetValue)) {
+    if (isNaN(targetValue)) {
       this.setState({
         editing: false,
       });
@@ -218,12 +212,8 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
       editing: false,
     });
     this.suppressFlicker();
-    if (onChange) {
-      onChange(event, targetValue);
-    }
-    if (onDrag) {
-      onDrag(event, targetValue);
-    }
+    onChange?.(event, targetValue);
+    onDrag?.(event, targetValue);
   };
 
   handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -238,7 +228,7 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
         minValue,
         maxValue,
       );
-      if (Number.isNaN(targetValue)) {
+      if (isNaN(targetValue)) {
         this.setState({
           editing: false,
         });
@@ -249,12 +239,8 @@ export class NumberInput extends Component<NumberInputProps, NumberInputState> {
         value: targetValue,
       });
       this.suppressFlicker();
-      if (onChange) {
-        onChange(event, targetValue);
-      }
-      if (onDrag) {
-        onDrag(event, targetValue);
-      }
+      onChange?.(event, targetValue);
+      onDrag?.(event, targetValue);
     } else if (event.key === KEY.Escape) {
       this.setState({
         editing: false,
