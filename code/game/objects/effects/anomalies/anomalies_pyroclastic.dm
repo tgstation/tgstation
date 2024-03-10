@@ -32,10 +32,8 @@
 		tile.atmos_spawn_air("[GAS_O2]=500;[GAS_PLASMA]=500;[TURF_TEMPERATURE(1000)]") //Make it hot and burny for the new slime
 
 	var/new_colour = pick(/datum/slime_type/red, /datum/slime_type/orange)
-	var/mob/living/simple_animal/slime/pyro = new(tile, new_colour, SLIME_LIFE_STAGE_ADULT)
-	pyro.rabid = TRUE
-	var/datum/action/innate/slime/reproduce/repro_action = new
-	repro_action.Grant(pyro)
+	var/mob/living/basic/slime/pyro = new(tile, new_colour, SLIME_LIFE_STAGE_ADULT)
+	pyro.set_enraged_behaviour()
 
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a pyroclastic anomaly slime?", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, target_mob = pyro, ignore_category = POLL_IGNORE_PYROSLIME, pic_source = pyro, role_name_text = "pyroclastic anomaly slime")
 	if(!LAZYLEN(candidates))

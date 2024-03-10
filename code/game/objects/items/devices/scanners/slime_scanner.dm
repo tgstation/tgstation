@@ -21,11 +21,11 @@
 	if (!isslime(interacting_with))
 		to_chat(user, span_warning("This device can only scan slimes!"))
 		return ITEM_INTERACT_BLOCKING
-	var/mob/living/simple_animal/slime/scanned_slime = interacting_with
+	var/mob/living/basic/slime/scanned_slime = interacting_with
 	slime_scan(scanned_slime, user)
 	return ITEM_INTERACT_SUCCESS
 
-/proc/slime_scan(mob/living/simple_animal/slime/scanned_slime, mob/living/user)
+/proc/slime_scan(mob/living/basic/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\
 					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.life_stage] slime")]\
 					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.max_nutrition]"

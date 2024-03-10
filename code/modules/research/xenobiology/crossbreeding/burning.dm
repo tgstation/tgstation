@@ -32,9 +32,9 @@ Burning extracts:
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
-	var/mob/living/simple_animal/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
+	var/mob/living/basic/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
 	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
-	new_slime.set_friendship(user, 20) //Gas, gas, gas
+	new_slime.befriend(user) //Gas, gas, gas
 	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
 	new_slime.set_nutrition(new_slime.hunger_nutrition) //Tonight, we fight!
 	..()
@@ -198,15 +198,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
-	for(var/mob/living/simple_animal/slime/slimes_in_view in view(7, get_turf(user)))
-		if(user in slimes_in_view.Friends)
-			var/friendliness = slimes_in_view.Friends[user]
-			slimes_in_view.clear_friends()
-			slimes_in_view.set_friendship(user, friendliness)
+	for(var/mob/living/basic/slime/slime_in_view in view(7, get_turf(user)))
+		if(REF(user) in slime_in_view.faction)
+			slime_in_view.ai_controller?.clear_blackboard_key(BB_FRIENDS_LIST)
+			slime_in_view.faction = initial(faction)
+			slime_in_view.befriend(src)
 		else
-			slimes_in_view.clear_friends()
-		slimes_in_view.rabid = TRUE
-		slimes_in_view.visible_message(span_danger("The [slimes_in_view] is driven into a dangerous frenzy!"))
+			slime_in_view.ai_controller?.clear_blackboard_key(BB_FRIENDS_LIST)
+			slime_in_view.faction = initial(faction)
+		slime_in_view.set_enraged_behaviour()
+		slime_in_view.visible_message(span_danger("The [slime_in_view] is driven into a dangerous frenzy!"))
 	..()
 
 /obj/item/slimecross/burning/green

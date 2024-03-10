@@ -208,8 +208,8 @@
 /obj/machinery/processor/slime/process()
 	if(processing)
 		return
-	var/mob/living/simple_animal/slime/picked_slime
-	for(var/mob/living/simple_animal/slime/slime in range(1,src))
+	var/mob/living/basic/slime/picked_slime
+	for(var/mob/living/basic/slime/slime in range(1,src))
 		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
 		if(slime.stat)
@@ -226,7 +226,7 @@
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/processed_slime = what
+	var/mob/living/basic/slime/processed_slime = what
 	if (!istype(processed_slime))
 		return
 

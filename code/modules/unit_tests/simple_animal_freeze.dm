@@ -86,10 +86,6 @@
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/pet/gondola/gondolapod,
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
-		/mob/living/simple_animal/slime,
-		/mob/living/simple_animal/slime/pet,
-		/mob/living/simple_animal/slime/random,
-		/mob/living/simple_animal/slime/transformed_slime,
 		/mob/living/simple_animal/soulscythe,
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
 		// READ THE COMMENT ABOVE

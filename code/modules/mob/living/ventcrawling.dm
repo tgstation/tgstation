@@ -88,7 +88,7 @@
 		else
 			to_chat(src, span_warning("This ventilation duct is not connected to anything!"))
 
-/mob/living/simple_animal/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
+/mob/living/basic/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
 	if(buckled)
 		if(provide_feedback)
 			to_chat(src, span_warning("You can't vent crawl while feeding!"))
