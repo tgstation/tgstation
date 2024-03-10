@@ -96,7 +96,7 @@
 /datum/crafting_recipe/mk58_flashlight
 	name = "MK58 Flashlight Attachment"
 	tool_behaviors = list(TOOL_WELDER)
-	result = /obj/item/attachment/mag/mk58/m50
+	result = /obj/item/attachment/underbarrel/flashlight/mk58
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/flashlight/seclite = 1,
