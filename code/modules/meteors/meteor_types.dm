@@ -265,8 +265,8 @@
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flash_range = 6, adminlog = FALSE)
-	for(var/turf/surviving_ground in range(2, get_turf(src)))
-		if(isfloorturf(surviving_ground) && prob(70))
+	for(var/turf/open/floor/surviving_ground in range(2, get_turf(src)))
+		if(prob(70))
 			new /obj/effect/decal/cleanable/greenglow/radioactive(get_turf(surviving_ground))
 
 //Cluster meteor
