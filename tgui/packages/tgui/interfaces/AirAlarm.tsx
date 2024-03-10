@@ -43,6 +43,13 @@ type AirAlarmData = {
     danger: BooleanLike;
   }[];
   thresholdTypeMap: Record<string, number>;
+  ac: {
+    enabled: BooleanLike;
+    active: BooleanLike;
+    target: number;
+    min: number;
+    max: number;
+  };
 };
 
 export const AirAlarm = (props, context) => {
@@ -118,6 +125,17 @@ const AirAlarmStatus = (props, context) => {
                 (data.fireAlarm && 'Fire Alarm') ||
                 'Nominal'}
             </LabeledList.Item>
+            <LabeledList.Item
+              label="Air Conditioning Status"
+              color={
+                data.ac.enabled ? (data.ac.active ? 'average' : 'good') : 'gray'
+              }>
+              {data.ac.enabled
+                ? data.ac.active
+                  ? 'Active'
+                  : 'Idle'
+                : 'Disabled'}
+            </LabeledList.Item>
             <LabeledList.Item label="Fault Status" color={areaFault.color}>
               {areaFault.areaFaultText}
             </LabeledList.Item>
@@ -154,6 +172,10 @@ const AIR_ALARM_ROUTES = {
   scrubbers: {
     title: 'Scrubber Controls',
     component: () => AirAlarmControlScrubbers,
+  },
+  ac: {
+    title: 'Air Conditioning Controls',
+    component: () => AirAlarmAirConditioningControls,
   },
   modes: {
     title: 'Operating Mode',
@@ -226,6 +248,12 @@ const AirAlarmControlHome = (props, context) => {
         icon="filter"
         content="Scrubber Controls"
         onClick={() => setScreen('scrubbers')}
+      />
+      <Box mt={1} />
+      <Button
+        icon="fan"
+        content="Air Conditioning Controls"
+        onClick={() => setScreen('ac')}
       />
       <Box mt={1} />
       <Button
@@ -521,6 +549,52 @@ const AirAlarmControlThresholds = (props, context) => {
           {...activeModal}
         />
       )}
+    </>
+  );
+};
+
+// Air Conditioning
+// --------------------------------------------------------
+
+const AirAlarmAirConditioningControls = (_props, context) => {
+  const {
+    act,
+    data: {
+      ac: { enabled, target, min, max },
+    },
+  } = useBackend<AirAlarmData>(context);
+  return (
+    <>
+      <Button
+        icon="fire"
+        content="Toggle Air Conditioning"
+        color={enabled && 'good'}
+        onClick={() => act('air_conditioning', { value: !!enabled })}
+      />
+      <Box mt={1} />
+      <LabeledList>
+        <LabeledList.Item label={'Target Temperature'}>
+          <>
+            <NumberInput
+              value={target}
+              minValue={min}
+              maxValue={max}
+              onChange={(_e, target: number) =>
+                act('set_ac_target', { target })
+              }
+              unit="K"
+              tooltip="Change the target temperature of the heater"
+              disabled={!enabled}
+            />
+            <Button
+              icon="thermometer-quarter"
+              content="Default"
+              color={enabled && 'good'}
+              onClick={() => act('default_ac_target')}
+            />
+          </>
+        </LabeledList.Item>
+      </LabeledList>
     </>
   );
 };

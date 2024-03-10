@@ -5963,6 +5963,7 @@
 #include "monkestation\code\modules\art_sci_overrides\faults\warps.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\whispers.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\zap.dm"
+#include "monkestation\code\modules\atmospherics\machinery\air_alarm\air_alarm_ac.dm"
 #include "monkestation\code\modules\ballpit\ballbit_sink.dm"
 #include "monkestation\code\modules\ballpit\ballpit.dm"
 #include "monkestation\code\modules\bitrunners\code\ability_disks.dm"

@@ -402,6 +402,30 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			if (alarm_manager.clear_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_NONE
 
+		/* monke start: air conditioning: */
+		if("air_conditioning")
+			if(!isnum(params["value"]))
+				return
+			if(params["value"])
+				stop_ac()
+			else
+				start_ac()
+			investigate_log("has had its air conditioning turned [air_conditioning ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
+
+		if("set_ac_target")
+			if(!isnum(params["target"]))
+				return
+			set_ac_target(params["target"])
+			investigate_log("has had its air conditioning target set to [params["target"]] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
+
+		if("default_ac_target")
+			set_ac_target(initial(ac_temp_target))
+			investigate_log("has had its air conditioning target reset to default by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
+		/* monke end */
+
 	update_appearance()
 
 	return TRUE
