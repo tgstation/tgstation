@@ -114,6 +114,7 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
+		/datum/computer_file/program/restock_tracker,
 	)
 
 /**
@@ -264,6 +265,7 @@
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/restock_tracker,
 	)
 
 /obj/item/modular_computer/pda/shaftminer
@@ -414,7 +416,6 @@
 /**
  * No Department/Station Trait
  */
-
 /obj/item/modular_computer/pda/assistant
 	name = "assistant PDA"
 	starting_programs = list(
@@ -440,10 +441,29 @@
 		/datum/computer_file/program/skill_tracker,
 	)
 
+/obj/item/modular_computer/pda/human_ai
+	name = "modular interface"
+	icon_state = "pda-silicon-human"
+	base_icon_state = "pda-silicon-human"
+	greyscale_config = null
+	greyscale_colors = null
+
+	has_light = FALSE //parity with borg PDAs
+	comp_light_luminosity = 0
+	inserted_item = null
+	has_pda_programs = FALSE
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/secureye/human_ai,
+		/datum/computer_file/program/alarm_monitor,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/borg_monitor,
+	)
+
 /**
  * Non-roles
  */
-
 /obj/item/modular_computer/pda/syndicate
 	name = "military PDA"
 	greyscale_colors = "#891417#80FF80"

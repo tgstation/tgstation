@@ -58,4 +58,4 @@
 	name = "moffers"
 	desc = "No moths were harmed in the making of these slippers."
 	icon_state = "moffers"
-	squeak_sound = list('sound/voice/moth/scream_moth.ogg'=1) //like sweet music to my ears
+	squeak_sound = list('sound/effects/footstep/moffstep01.ogg'=1) //like sweet music to my ears
