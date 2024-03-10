@@ -163,6 +163,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define LETPASSCLICKS (1<<13)
 /// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include airlocks with glass in them.
 #define PASSWINDOW (1<<14)
+/// Allows you to pass over humans specifically, allowing you to still hit all other mobs.
+#define PASS_HUMAN (1<<15)
+/// Allows you to pass over minebots specifically.
+#define PASS_MINEBOT (1<<16)
 
 //Movement Types
 #define GROUND (1<<0)
