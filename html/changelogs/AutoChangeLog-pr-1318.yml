@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added built-in air conditioning (temperature regulation) to air alarms! While certainly not as powerful as a proper dedicated space heater, it can still help greatly with stabilizing the temperature of an area."
+  - bugfix: "walls built next to firelocks no longer hold onto their alarms. (Deadgebert)"
