@@ -1,5 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - bugfix: "Sprinting now correctly checks the sprinter for the frerunning trait."
-  - bugfix: "Freeruning trait now accelerates climbing onto objects when sprinting into it."

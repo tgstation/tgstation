@@ -103,3 +103,8 @@
 2024-03-09:
   wraith-54321:
   - bugfix: Fixed some turf atmos diffs on tram and CC
+2024-03-10:
+  AlbertNanotracen:
+  - bugfix: Sprinting now correctly checks the sprinter for the frerunning trait.
+  - bugfix: Freeruning trait now accelerates climbing onto objects when sprinting
+      into it.
