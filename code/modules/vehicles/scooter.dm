@@ -225,6 +225,7 @@
 	name = "improvised skateboard"
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	board_item_type = /obj/item/melee/skateboard/improvised
+	instability = 12
 
 //CONSTRUCTION
 /obj/item/scooter_frame
