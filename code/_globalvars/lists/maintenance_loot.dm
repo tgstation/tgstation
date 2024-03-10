@@ -302,6 +302,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/pen/survival = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/shield/buckler = 1,
+		/obj/item/shield/improvised = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/telescopic/master = 1,

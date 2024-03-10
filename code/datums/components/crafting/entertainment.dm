@@ -8,6 +8,16 @@
 	)
 	category = CAT_ENTERTAINMENT
 
+/datum/crafting_recipe/sharkplush
+	name = "Shark Plushie"
+	result = /obj/item/toy/plush/shark
+	reqs = list(
+		/obj/item/clothing/suit/hooded/shark_costume = 1,
+		/obj/item/grown/cotton = 10,
+		/obj/item/stack/sheet/cloth = 5,
+	)
+	category = CAT_ENTERTAINMENT
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet

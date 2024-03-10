@@ -191,7 +191,7 @@
 	if(difficulty > FISHING_EASY_DIFFICULTY)
 		completion -= round(MAX_FISH_COMPLETION_MALUS * (difficulty/100), 1)
 
-	if(HAS_TRAIT(user, TRAIT_REVEAL_FISH) || (user.mind && HAS_TRAIT(user.mind, TRAIT_REVEAL_FISH)))
+	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
 
 	/**
@@ -332,7 +332,7 @@
 	phase = BITING_PHASE
 	// Trashing animation
 	playsound(lure, 'sound/effects/fish_splash.ogg', 100)
-	if(HAS_TRAIT(user, TRAIT_REVEAL_FISH) || (user.mind && HAS_TRAIT(user.mind, TRAIT_REVEAL_FISH)))
+	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		switch(fish_icon)
 			if(FISH_ICON_DEF)
 				send_alert("fish!!!")

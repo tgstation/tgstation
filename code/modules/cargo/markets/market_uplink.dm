@@ -150,6 +150,7 @@
 	icon_state = "uplink"
 	//The original black market uplink
 	accessible_markets = list(/datum/market/blackmarket)
+	custom_premium_price = PAYCHECK_CREW * 2.5
 
 
 /datum/crafting_recipe/blackmarket_uplink

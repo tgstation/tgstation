@@ -44,7 +44,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)
+	check_access(null)
 
 	if(length(req_access) || length(req_one_access))
 		board = new(src)
@@ -184,7 +184,7 @@
 		id = "[port.shuttle_id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user, list/modifiers)
+/obj/machinery/button/interact(mob/user)
 	. = ..()
 	if(.)
 		return
