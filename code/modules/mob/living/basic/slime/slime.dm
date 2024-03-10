@@ -122,7 +122,7 @@
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(slime_pre_attack))
 
-/mob/living/simple_animal/slime/Destroy()
+/mob/living/basic/slime/Destroy()
 
 	UnregisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 
