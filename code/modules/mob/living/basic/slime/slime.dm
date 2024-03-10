@@ -350,6 +350,24 @@
 		if(target_slime.health > 0)
 			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
 
+
+///Spawns a crossed slimecore item
+/mob/living/basic/slime/proc/spawn_corecross()
+	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
+	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
+	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
+	var/selected_crossbreed_path
+	for(var/crossbreed_path in crossbreeds)
+		var/obj/item/slimecross/cross_item = crossbreed_path
+		if(initial(cross_item.colour) == slime_type.colour && initial(cross_item.effect) == crossbreed_modification)
+			selected_crossbreed_path = cross_item
+			break
+	if(selected_crossbreed_path)
+		new selected_crossbreed_path(loc)
+	else
+		visible_message(span_warning("The mutated core shudders, and collapses into a puddle, unable to maintain its form."))
+	qdel(src)
+
 #undef SLIME_EXTRA_SHOCK_COST
 #undef SLIME_EXTRA_SHOCK_THRESHOLD
 #undef SLIME_BASE_SHOCK_PERCENTAGE

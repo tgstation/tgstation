@@ -284,6 +284,13 @@
 	var/new_powerlevel = round(powerlevel / 4)
 	var/turf/drop_loc = drop_location()
 
+	var/list/slime_friends = list()
+	for(var/faction_member in faction)
+		var/mob/living/possible_friend = locate(faction_member) in GLOB.mob_living_list
+		if(QDELETED(possible_friend))
+			continue
+		slime_friends += possible_friend
+
 	for(var/i in 1 to 4)
 		var/child_colour
 
@@ -304,8 +311,9 @@
 		if(i != 1)
 			step_away(baby, src)
 
-		//todo: set friends
-		//baby.set_friends(Friends)
+		for(var/slime_friend in slime_friends)
+			baby.befriend(slime_friend)
+
 		babies += baby
 		baby.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
 		SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.slime_type.colour)

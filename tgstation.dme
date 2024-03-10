@@ -4706,6 +4706,7 @@
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard_ai.dm"
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard_spells.dm"
 #include "code\modules\mob\living\basic\slime\death.dm"
+#include "code\modules\mob\living\basic\slime\defense.dm"
 #include "code\modules\mob\living\basic\slime\life.dm"
 #include "code\modules\mob\living\basic\slime\powers.dm"
 #include "code\modules\mob\living\basic\slime\slime.dm"
