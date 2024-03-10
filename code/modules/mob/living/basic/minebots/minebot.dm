@@ -28,7 +28,6 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
-	pass_flags_self = parent_type::pass_flags_self | PASS_MINEBOT
 	///the access card we use to access mining
 	var/obj/item/card/id/access_card
 	///the gun we use to kill

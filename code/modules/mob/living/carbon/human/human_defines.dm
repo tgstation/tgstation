@@ -14,7 +14,6 @@
 	can_be_shoved_into = TRUE
 	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	pass_flags_self = parent_type::pass_flags_self | PASS_HUMAN
 
 	//Hair colour and style
 	var/hair_color = "#000000"

@@ -12,6 +12,8 @@
 	knife_x_offset = 20
 	knife_y_offset = 12
 	gun_flags = NOT_A_REAL_GUN
+	///List of all mobs that projectiles fired from this gun will ignore.
+	var/list/ignored_mob_types
 	///List of all modkits currently in the kinetic accelerator.
 	var/list/obj/item/borg/upgrade/modkit/modkits = list()
 	///The max capacity of modkits the PKA can have installed at once.
@@ -189,6 +191,8 @@
 	return ..()
 
 /obj/projectile/kinetic/prehit_pierce(atom/target)
+	if(LAZYLEN(kinetic_gun.ignored_mob_types) && is_type_in_typecache(target, kinetic_gun.ignored_mob_types))
+		return PROJECTILE_PIERCE_PHASE
 	. = ..()
 	if(. == PROJECTILE_PIERCE_PHASE)
 		return
@@ -431,9 +435,13 @@
 	denied_type = /obj/item/borg/upgrade/modkit/human_passthrough
 	cost = 0
 
-/obj/item/borg/upgrade/modkit/minebot_passthrough/modify_projectile(obj/projectile/kinetic/K)
+/obj/item/borg/upgrade/modkit/minebot_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
 	. = ..()
-	K.pass_flags |= PASS_MINEBOT
+	LAZYADD(KA.ignored_mob_types, typecacheof(/mob/living/basic/mining_drone))
+
+/obj/item/borg/upgrade/modkit/minebot_passthrough/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	. = ..()
+	LAZYREMOVE(KA.ignored_mob_types, typecacheof(/mob/living/basic/mining_drone))
 
 /obj/item/borg/upgrade/modkit/human_passthrough
 	name = "human passthrough"
@@ -441,9 +449,13 @@
 	denied_type = /obj/item/borg/upgrade/modkit/minebot_passthrough
 	cost = 10
 
-/obj/item/borg/upgrade/modkit/human_passthrough/modify_projectile(obj/projectile/kinetic/K)
+/obj/item/borg/upgrade/modkit/human_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
 	. = ..()
-	K.pass_flags |= PASS_HUMAN
+	LAZYADD(KA.ignored_mob_types, typecacheof(/mob/living/carbon/human))
+
+/obj/item/borg/upgrade/modkit/human_passthrough/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	. = ..()
+	LAZYREMOVE(KA.ignored_mob_types, typecacheof(/mob/living/carbon/human))
 
 //Tendril-unique modules
 /obj/item/borg/upgrade/modkit/cooldown/repeater
