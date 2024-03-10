@@ -1,4 +1,8 @@
 #define EXPLOSION_THROW_SPEED 4
+#define EXPLOSION_BLOCK_LIGHT 2.5
+#define EXPLOSION_BLOCK_HEAVY 1.5
+#define EXPLOSION_BLOCK_DEV 1
+
 GLOBAL_LIST_EMPTY(explosions)
 
 SUBSYSTEM_DEF(explosions)
@@ -132,15 +136,15 @@ SUBSYSTEM_DEF(explosions)
 				cached_exp_block[explode] = explode.explosive_resistance
 
 		dist = round(dist, 0.01)
-		if(dist + block < dev)
+		if(dist + (block * EXPLOSION_BLOCK_DEV) < dev)
 			explode.color = "red"
 			explode.maptext = MAPTEXT("[dist]")
-		else if (dist + block * 1.5 < heavy)
+		else if (dist + (block * EXPLOSION_BLOCK_HEAVY) < heavy)
 			explode.color = "yellow"
-			explode.maptext = MAPTEXT("[dist + block * 1.5]")
-		else if (dist + block * 2.5 < light)
+			explode.maptext = MAPTEXT("[dist + (block * EXPLOSION_BLOCK_HEAVY)]")
+		else if (dist + (block * EXPLOSION_BLOCK_LIGHT) < light)
 			explode.color = "blue"
-			explode.maptext = MAPTEXT("[dist + block * 2.5]")
+			explode.maptext = MAPTEXT("[dist + (block * EXPLOSION_BLOCK_LIGHT)]")
 		else
 			continue
 
@@ -406,11 +410,11 @@ SUBSYSTEM_DEF(explosions)
 
 
 		var/severity = EXPLODE_NONE
-		if(dist + block < devastation_range)
+		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
 			severity = EXPLODE_DEVASTATE
-		else if(dist + block * 1.5 < heavy_impact_range)
+		else if(dist + (block * EXPLOSION_BLOCK_HEAVY) < heavy_impact_range)
 			severity = EXPLODE_HEAVY
-		else if(dist + block * 2.5 < light_impact_range)
+		else if(dist + (block * EXPLOSION_BLOCK_LIGHT) < light_impact_range)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
@@ -715,3 +719,6 @@ SUBSYSTEM_DEF(explosions)
 	currentpart = SSEXPLOSIONS_TURFS
 
 #undef EXPLOSION_THROW_SPEED
+#undef EXPLOSION_BLOCK_LIGHT
+#undef EXPLOSION_BLOCK_HEAVY
+#undef EXPLOSION_BLOCK_DEV
