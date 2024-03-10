@@ -123,30 +123,12 @@
 /obj/machinery/computer/records/proc/expunge_record_info(datum/record/crew/target)
 	return
 
-/// Detects whether a user can use buttons on the machine
-/obj/machinery/computer/records/proc/has_auth(mob/user)
-	if(issilicon(user) || isAdminGhostAI(user)) // Silicons don't need to authenticate
-		return TRUE
-
-	if(!isliving(user))
-		return FALSE
-	var/mob/living/player = user
-
-	var/obj/item/card/auth = player.get_idcard(TRUE)
-	if(!auth)
-		return FALSE
-	var/list/access = auth.GetAccess()
-	if(!check_access_list(access))
-		return FALSE
-
-	return TRUE
-
 /// Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.
 /obj/machinery/computer/records/proc/insert_new_record(mob/user, obj/item/photo/mugshot)
 	if(!mugshot || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return FALSE
 
-	if(!authenticated && !has_auth(user))
+	if(!authenticated && !allowed(user))
 		balloon_alert(user, "access denied")
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
@@ -175,7 +157,7 @@
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
 		return FALSE
 
-	if(!has_auth(user))
+	if(!allowed(user))
 		balloon_alert(user, "access denied")
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE

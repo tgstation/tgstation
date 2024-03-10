@@ -711,6 +711,7 @@
 
 //Damage from emp
 /obj/structure/emergency_shield/modular/emp_act(severity)
+	. = ..()
 	if(isnull(shield_generator))
 		qdel(src)
 		return

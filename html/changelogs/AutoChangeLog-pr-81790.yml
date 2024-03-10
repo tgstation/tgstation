@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "Use a common list for acceptable silo materials for some stuff. Renamed ore category into silo category."
