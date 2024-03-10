@@ -1,0 +1,8 @@
+author: "Pickle-Coding and Rhials"
+delete-after: True
+changes:
+  - admin: "RCD construction and deconstruction are logged."
+  - admin: "Hallucinated projectiles no longer log."
+  - admin: "Gives more detail to flamethrower logging."
+  - admin: "More actions are logged for records consoles usage."
+  - admin: "Frozen object shattering is logged."
