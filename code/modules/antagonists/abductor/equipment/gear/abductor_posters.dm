@@ -17,6 +17,12 @@
 		return
 	return ..()
 
+/obj/structure/sign/poster/abductor/attackby(obj/item/tool, mob/user, params)
+	if(tool.toolspeed >= 0.2)
+		to_chat(user, span_warning("Your [tool.name] is too weak to cut through the superior adhesive on the [name]!"))
+		return FALSE
+	return ..()
+
 /obj/structure/sign/poster/abductor/random
 	name = "random abductor poster"
 	icon_state = "random_abductor"
