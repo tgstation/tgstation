@@ -47,7 +47,8 @@
 		return
 	var/obj/item/reagent_containers/syringe/I = attacking_item
 	var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
-	data["viruses"] |= diseases
+	if(diseases)
+		data["viruses"] |= diseases
 	data["immunity"] = immune_system.GetImmunity()
 	I.reagents.add_reagent(/datum/reagent/blood, I.volume, data)
 
