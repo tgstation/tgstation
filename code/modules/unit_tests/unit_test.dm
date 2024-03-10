@@ -245,6 +245,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		//Not meant to spawn without the machine wand
+		/obj/effect/bug_moving,
 	)
 
 	// Everything that follows is a typesof() check.
