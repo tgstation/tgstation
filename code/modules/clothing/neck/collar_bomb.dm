@@ -8,7 +8,6 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	clothing_flags = INEDIBLE_CLOTHING
-	clothing_traits = list(TRAIT_NODROP)
 	armor_type = /datum/armor/collar_bomb
 	equip_delay_self = 6 SECONDS
 	equip_delay_other = 8 SECONDS
@@ -39,7 +38,23 @@
 		return
 	. += span_tinynotice("It has a [EXAMINE_HINT("wire")] panel that could be interacted with...")
 
+/obj/item/clothing/neck/collar_bomb/attackby(obj/item/item, mob/user, params)
+	if(is_wire_tool(item))
+		wires.interact(user)
+	else
+		return ..()
+
+/obj/item/clothing/neck/collar_bomb/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	if(slot == ITEM_SLOT_NECK)
+		ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
+/obj/item/clothing/neck/collar_bomb/dropped(mob/user, silent = FALSE)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
 /obj/item/clothing/neck/collar_bomb/proc/explosive_countdown(ticks_left)
+	active = TRUE
 	if(ticks_left > 0)
 		playsound(src, 'sound/items/timer.ogg', 30, FALSE)
 		balloon_alert_to_viewers("[ticks_left]")
@@ -67,6 +82,7 @@
 	flash_color(brian, flash_color = "#FF0000", flash_time = 1 SECONDS)
 	qdel(src)
 
+///The button that detonates the collar.
 /obj/item/collar_bomb_button
 	name = "big yellow button"
 	desc = "It looks like a big red button, except it's yellow. It comes with a heavy trigger, to avoid accidents."
