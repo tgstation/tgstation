@@ -6,7 +6,6 @@
 
 /datum/wires/collar_bomb/interactable(mob/user)
 	. = ..()
-	var/obj/item/clothing/neck/collar_bomb/collar = holder
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == holder)
 		return FALSE
 
