@@ -366,6 +366,7 @@
 		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/syndicate_teleporter/emp_act(severity)
+	. = ..()
 	if(!prob(50/severity))
 		return
 	var/teleported_something = FALSE

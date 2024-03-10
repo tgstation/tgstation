@@ -20,8 +20,6 @@
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
 	var/glitch_chance = 0.05
-	/// List of available domains
-	var/list/available_domains = list()
 	/// Current plugged in users
 	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
@@ -63,13 +61,9 @@
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 
-	// This further gets sorted in the client by cost so it's random and grouped
-	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
-
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 
-	available_domains.Cut()
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()

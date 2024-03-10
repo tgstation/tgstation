@@ -704,7 +704,6 @@
 		else
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
-
 		if (isAI(messaged_mob))
 			sender_title = "<a href='?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 

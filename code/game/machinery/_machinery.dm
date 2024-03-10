@@ -593,10 +593,10 @@
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
-	if(!issilicon(user) && !user.can_hold_items())
+	if(!HAS_SILICON_ACCESS(user) && !user.can_hold_items())
 		return FALSE //spiders gtfo
 
-	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
+	if(HAS_SILICON_ACCESS(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
 
@@ -656,7 +656,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
-/obj/machinery/interact(mob/user, special_state)
+/obj/machinery/interact(mob/user)
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
 	update_last_used(user)
@@ -665,7 +665,7 @@
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	update_last_used(usr)
-	if(isAI(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
+	if(HAS_AI_ACCESS(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
 		to_chat(usr, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()
