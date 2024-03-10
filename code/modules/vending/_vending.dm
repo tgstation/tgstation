@@ -1616,31 +1616,30 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
 /obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
 	if(ishuman(user) && tilted && !held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Right the vending machine"
 		return TRUE
 
-	if(istype(held_item) && held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
-		return TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(panel_open && held_item && held_item?.tool_behaviour == TOOL_WRENCH)
+	if(panel_open && held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
-		return TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+	if(panel_open && held_item?.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		return TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, FALSE)))
-		context[SCREENTIP_CONTEXT_LMB] = "Load item into vending machine"
-		return TRUE
+	if(!isnull(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE)))
+		context[SCREENTIP_CONTEXT_LMB] = "Load item"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, refill_canister) && panel_open)
 		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine [credits_contained ? "and collect credits" : null ]"
 		return TRUE
-
+	return NONE
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
 	icon_state = "custom"
