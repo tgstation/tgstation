@@ -343,6 +343,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(light_mask && !(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask, src)
 
+/obj/machinery/vending/examine(mob/user)
+	. = ..()
+	if(refill_canister)
+		if((total_loaded_stock() / total_max_stock()) < 1)
+			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [refill_canister]")] with the panel open.")
+		else
+			. += span_warning("\The [src] is fully stocked.")
+
+
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(!.)
@@ -1616,9 +1625,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
 /obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(ishuman(user) && tilted && !held_item)
-		context[SCREENTIP_CONTEXT_LMB] = "Right the vending machine"
-		return TRUE
+	. = ..()
+	if(tilted && !held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
@@ -1636,10 +1646,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		context[SCREENTIP_CONTEXT_LMB] = "Load item"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, refill_canister) && panel_open)
+	if(panel_open && istype(held_item, refill_canister))
 		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine [credits_contained ? "and collect credits" : null ]"
 		return TRUE
 	return NONE
+
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
 	icon_state = "custom"
