@@ -1,11 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"as" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/ruin/lizard_gaslava)
 "aK" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/entertainment/cigarette_pack,
@@ -98,6 +91,7 @@
 /obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/iron/smooth,
 /area/ruin/lizard_gaslava)
 "mn" = (
@@ -140,8 +134,8 @@
 /area/ruin/lizard_gaslava)
 "ng" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	id = "lizgas_AAAA"
 	},
 /turf/open/floor/plating,
 /area/ruin/lizard_gaslava)
@@ -177,11 +171,11 @@
 /area/ruin/lizard_gaslava)
 "sY" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	id = "lizgas_AAAA"
+	},
 /turf/open/floor/plating,
 /area/ruin/lizard_gaslava)
 "tD" = (
@@ -226,6 +220,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/light/small/dim/directional/south,
 /turf/open/floor/iron/smooth,
 /area/ruin/lizard_gaslava)
 "wl" = (
@@ -445,10 +440,10 @@
 /area/ruin/lizard_gaslava)
 "HW" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/machinery/duct,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	id = "lizgas_AAAA"
+	},
 /turf/open/floor/plating,
 /area/ruin/lizard_gaslava)
 "IU" = (
@@ -922,7 +917,7 @@ bT
 Zf
 RA
 sY
-as
+ng
 RA
 DI
 DI
