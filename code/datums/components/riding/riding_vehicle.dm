@@ -169,6 +169,41 @@
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
 	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER
+	///If TRUE, the vehicle will be slower (but safer) to ride on walk intent.
+	var/can_slow_down = TRUE
+
+/datum/component/riding/vehicle/scooter/skateboard/RegisterWithParent()
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/riding/vehicle/scooter/skateboard/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("Going slow and nice at [EXAMINE_HINT("walk")] speed will prevent crashing into things.")
+
+/datum/component/riding/vehicle/scooter/skateboard/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+	. = ..()
+	if(can_slow_down)
+		RegisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED, PROC_REF(toggle_move_delay))
+		toggle_move_delay(rider)
+
+/datum/component/riding/vehicle/scooter/skateboard/handle_unbuckle(mob/living/rider)
+	. = ..()
+	if(can_slow_down)
+		toggle_move_delay(rider)
+		UnregisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED)
+
+/datum/component/riding/vehicle/scooter/skateboard/proc/toggle_move_delay(mob/living/rider)
+	SIGNAL_HANDLER
+	vehicle_move_delay = initial(vehicle_move_delay)
+	if(rider.move_intent == MOVE_INTENT_WALK)
+		vehicle_move_delay += 0.6
+
+/datum/component/riding/vehicle/scooter/skateboard/pro
+	vehicle_move_delay = 1
+
+/datum/component/riding/vehicle/scooter/skateboard/hover
+	vehicle_move_delay = 1
+	override_allow_spacemove = TRUE
 
 /datum/component/riding/vehicle/scooter/skateboard/handle_specials()
 	. = ..()
@@ -179,6 +214,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys
 	vehicle_move_delay = 0
+	can_slow_down = FALSE
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/handle_specials()
 	. = ..()

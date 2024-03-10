@@ -87,9 +87,11 @@
 	. = ..()
 	if(!bumped_thing.density || !has_buckled_mobs() || world.time < next_crash)
 		return
+	var/mob/living/rider = buckled_mobs[1]
+	if(rider.move_intent == MOVE_INTENT_WALK) //Going slow prevents you from crashing.
+		return
 
 	next_crash = world.time + 10
-	var/mob/living/rider = buckled_mobs[1]
 	rider.adjustStaminaLoss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
@@ -181,12 +183,36 @@
 	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/
+/obj/vehicle/ridden/scooter/skateboard/pro/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/pro)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"
 	board_item_type = /obj/item/melee/skateboard/hoverboard
 	instability = 3
 	icon_state = "hoverboard_red"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/forced_gravity, 0)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
+	. = ..()
+	if(!.)
+		return
+	if(rider && (z_move_flags & ZMOVE_CAN_FLY_CHECKS) && direction == UP)
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, span_warning("[src] [p_are()] not powerful enough to fly upwards."))
+		return FALSE
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+	if(length(buckled_mobs))
+		return TRUE //stop floating while someone's riding it.
+	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
