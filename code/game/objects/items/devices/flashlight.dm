@@ -95,7 +95,7 @@
 	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
 
 /obj/item/flashlight/attack_self(mob/user)
-	toggle_light(user)
+	return toggle_light(user)
 
 /obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
 	attack_self(user)
