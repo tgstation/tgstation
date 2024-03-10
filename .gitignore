@@ -237,3 +237,7 @@ define_sanity_output.txt
 #This file contains developer-specific config overrides. These shouldn't be committed.
 config/_config_nogit.txt
 config/dbconfig.txt
+
+# ezdb
+/db/
+/config/ezdb.txt

@@ -4,9 +4,14 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 
 The latest database version is 5.23; The query to update the schema revision table is:
 
+```sql
 INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 23);
+```
 or
+
+```sql
 INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 23);
+```
 
 In any query remember to add a prefix to the table names if you use one.
 
@@ -14,7 +19,7 @@ In any query remember to add a prefix to the table names if you use one.
 Version 5.23, 28 December 2022, by Mothblocks
 Added `tutorial_completions` to mark what ckeys have completed contextual tutorials.
 
-```
+```sql
 CREATE TABLE `tutorial_completions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ckey` VARCHAR(32) NOT NULL,
@@ -27,7 +32,7 @@ CREATE TABLE `tutorial_completions` (
 Version 5.22, 22 December 2021, by Mothblocks
 Fixes a bug in `telemetry_connections` that limited the range of IPs.
 
-```
+```sql
 ALTER TABLE `telemetry_connections` MODIFY COLUMN `address` INT(10) UNSIGNED NOT NULL;
 ```
 -----------------------------------------------------
@@ -35,7 +40,7 @@ ALTER TABLE `telemetry_connections` MODIFY COLUMN `address` INT(10) UNSIGNED NOT
 Version 5.21, 15 December 2021, by Mothblocks
 Adds `telemetry_connections` table for tracking tgui telemetry.
 
-```
+```sql
 CREATE TABLE `telemetry_connections` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `ckey` VARCHAR(32) NOT NULL,
@@ -53,7 +58,7 @@ CREATE TABLE `telemetry_connections` (
 Version 5.20, 11 November 2021, by Mothblocks
 Adds `admin_ckey` field to the `known_alts` table to track who added what.
 
-```
+```sql
 ALTER TABLE `known_alts`
 ADD COLUMN `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*' AFTER `ckey2`;
 ```
@@ -62,7 +67,7 @@ ADD COLUMN `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*' AFTER `ckey2`;
 Version 5.19, 10 November 2021, by WalterMeldron
 Adds an urgent column to tickets for ahelps marked as urgent.
 
-```
+```sql
 ALTER TABLE `ticket` ADD COLUMN `urgent` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `sender`;
 ```
 
@@ -70,7 +75,7 @@ ALTER TABLE `ticket` ADD COLUMN `urgent` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0
 Version 5.18, 1 November 2021, by Mothblocks
 Added `known_alts` table for tracking who not to create suspicious logins for.
 
-```
+```sql
 CREATE TABLE `known_alts` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `ckey1` VARCHAR(32) NOT NULL,
@@ -84,7 +89,7 @@ CREATE TABLE `known_alts` (
 Version 5.17, 8 October 2021, by MrStonedOne + Mothblocks
 Changes any table that requrired a NOT NULL round ID to now accept NULL. In the BSQL past, these were handled as 0, but in the move to rust-g this behavior was lost.
 
-```
+```sql
 ALTER TABLE `admin_log` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `ban` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `citation` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
@@ -103,7 +108,7 @@ ALTER TABLE `ticket` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 Version 5.16, 31 July 2021, by Atlanta-Ned
 Added `library_action` table for tracking reported library books and actions taken on them.
 
-```
+```sql
 DROP TABLE IF EXISTS `library_action`;
 CREATE TABLE `library_action` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -122,7 +127,7 @@ CREATE TABLE `library_action` (
 Version 5.15, 2 June 2021, by Mothblocks
 Added verified admin connection log used for 2FA
 
-```
+```sql
 DROP TABLE IF EXISTS `admin_connections`;
 CREATE TABLE `admin_connections` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -139,7 +144,7 @@ CREATE TABLE `admin_connections` (
 Version 5.14, xx May 2021, by Anturke
 Added exploration drone adventure table
 
-```
+```sql
 DROP TABLE IF EXISTS `text_adventures`;
 CREATE TABLE `text_adventures` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -156,7 +161,7 @@ CREATE TABLE `text_adventures` (
 Version 5.13, 30 April 2021, by Atlanta Ned
 Added the `citation` table for tracking security citations in the database.
 
-```
+```sql
 CREATE TABLE `citation` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`round_id` INT(11) UNSIGNED NOT NULL,
@@ -193,11 +198,13 @@ Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608 (Upd
 
 Adds indices to support search operations on the adminhelp ticket tables. This is to support improved performance on Atlanta Ned's Statbus.
 
+```sql
 ALTER TABLE `ticket`
 	ADD INDEX `idx_ticket_act_recip` (`action`, `recipient`),
 	ADD INDEX `idx_ticket_act_send` (`action`, `sender`),
 	ADD INDEX `idx_ticket_tic_rid` (`ticket`, `round_id`),
 	ADD INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`);
+```
 
 -----------------------------------------------------
 
@@ -207,6 +214,7 @@ Changes how the discord verification process works.
 Adds the discord_links table, and migrates discord id entries from player table to the discord links table in a once off operation and then removes the discord id
 on the player table
 
+```sql
 START TRANSACTION;
 
 DROP TABLE IF EXISTS `discord_links`;
@@ -225,6 +233,7 @@ INSERT INTO `discord_links` (`ckey`, `discord_id`, `one_time_token`, `valid`) SE
 ALTER TABLE `player` DROP COLUMN `discord_id`;
 
 COMMIT;
+```
 
 -----------------------------------------------------
 
@@ -234,6 +243,7 @@ Added the `deleted` column to tables 'poll_option', 'poll_textreply' and 'poll_v
 Changes table 'poll_question' column `createdby_ckey` to be NOT NULL and index `idx_pquest_time_admin` to be `idx_pquest_time_deleted_id` and 'poll_textreply' column `adminrank` to have no default.
 Added procedure `set_poll_deleted` that's called when deleting a poll to set deleted to true on each poll table where rows matching a poll_id argument.
 
+```sql
 ALTER TABLE `poll_option`
 	ADD COLUMN `deleted` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `default_percentage_calc`;
 
@@ -266,19 +276,23 @@ UPDATE `poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
 END
 $$
 DELIMITER ;
+```
 
 -----------------------------------------------------
 
 Version 5.8, 7 April 2020, by Jordie0608
 Modified table `messages`, adding column `deleted_ckey` to record who deleted a message.
 
+```sql
 ALTER TABLE `messages` ADD COLUMN `deleted_ckey` VARCHAR(32) NULL DEFAULT NULL AFTER `deleted`;
+```
 
 -----------------------------------------------------
 
 Version 5.7, 10 January 2020 by Atlanta-Ned
 Added ticket table for tracking ahelp tickets in the database.
 
+```sql
 DROP TABLE IF EXISTS `ticket`;
 CREATE TABLE `ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -293,20 +307,23 @@ CREATE TABLE `ticket` (
   `sender` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
 -----------------------------------------------------
 
 Version 5.6, 6 December 2019 by Anturke
 Added achievement_name and achievement_description columns to achievement_metadata table.
 
-
+```sql
 ALTER TABLE `achievement_metadata` ADD COLUMN (`achievement_name` VARCHAR(64) NULL DEFAULT NULL, `achievement_description` VARCHAR(512) NULL DEFAULT NULL);
+```
 
 -----------------------------------------------------
 
 Version 5.5, 26 October 2019 by Anturke
 Added achievement_metadata table.
 
+```sql
 DROP TABLE IF EXISTS `achievement_metadata`;
 CREATE TABLE `achievement_metadata` (
 	`achievement_key` VARCHAR(32) NOT NULL,
@@ -314,7 +331,7 @@ CREATE TABLE `achievement_metadata` (
 	`achievement_type` enum('achievement','score','award') NULL DEFAULT NULL,
 	PRIMARY KEY (`achievement_key`)
 ) ENGINE=InnoDB;
-
+```
 
 -----------------------------------------------------
 
@@ -322,6 +339,7 @@ Version 5.4, 5 October 2019 by Anturke
 Added achievements table.
 See hub migration verb in _achievement_data.dm for details on migrating.
 
+```sql
 CREATE TABLE `achievements` (
 	`ckey` VARCHAR(32) NOT NULL,
 	`achievement_key` VARCHAR(32) NOT NULL,
@@ -329,26 +347,32 @@ CREATE TABLE `achievements` (
 	`last_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`ckey`,`achievement_key`)
 ) ENGINE=InnoDB;
+```
 
 ----------------------------------------------------
 
 Version 5.3, 6 July 2019, by Atlanta-Ned
 Added a `feedback` column to the admin table, used for linking to individual admin feedback threads. Currently this is only used for statistics tracking tools such as Statbus and isn't used by the game.
 
+```sql
 ALTER TABLE `admin` ADD `feedback` VARCHAR(255) NULL DEFAULT NULL AFTER `rank`;
+```
 
 ----------------------------------------------------
 
 Version 5.2, 30 May 2019, by AffectedArc07
 Added a field to the `player` table to track ckey and discord ID relationships
 
+```sql
 ALTER TABLE `player`
 	ADD COLUMN `discord_id` BIGINT NULL DEFAULT NULL AFTER `flags`;
+```
 ----------------------------------------------------
 
 Version 5.1, 25 Feb 2018, by MrStonedOne
 Added four tables to enable storing of stickybans in the database since byond can lose them, and to enable disabling stickybans for a round without depending on a crash free round. Existing stickybans are automagically imported to the tables.
 
+```sql
 CREATE TABLE `stickyban` (
 	`ckey` VARCHAR(32) NOT NULL,
 	`reason` VARCHAR(2048) NOT NULL,
@@ -381,6 +405,7 @@ CREATE TABLE `stickyban_matched_cid` (
 	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`stickyban`, `matched_cid`)
 ) ENGINE=InnoDB;
+```
 
 ----------------------------------------------------
 
@@ -390,6 +415,8 @@ Modified ban table to remove the need for the `bantype` column, a python script 
 See the file 'ban_conversion_2018-10-28.py' for instructions on how to use the script.
 
 A new ban table can be created with the query:
+
+```sql
 CREATE TABLE `ban` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `bantime` DATETIME NOT NULL,
@@ -419,6 +446,7 @@ CREATE TABLE `ban` (
   KEY `idx_ban_isbanned_details` (`ckey`,`ip`,`computerid`,`role`,`unbanned_datetime`,`expiration_time`),
   KEY `idx_ban_count` (`bantime`,`a_ckey`,`applies_to_admins`,`unbanned_datetime`,`expiration_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+```
 
 ----------------------------------------------------
 

@@ -8,200 +8,201 @@
 
 # Dominion/Cyberboss
 
-/.github/workflows/update_tgs_dmapi.yml @Cyberboss
-/.tgs.yml @Cyberboss
-/code/world.dm @Cyberboss
-/code/__DEFINES/tgs.config.dm @Cyberboss
-/code/__DEFINES/tgs.dm @Cyberboss
-/code/__DEFINES/_globals.dm @Cyberboss
-/code/__HELPERS/chat.dm @Cyberboss
-/code/__HELPERS/jatum.dm @Cyberboss
-/code/game/world.dm @Cyberboss
-/code/controllers/subsystem/atoms.dm @Cyberboss
-/code/controllers/globals.dm @Cyberboss
-/code/datums/helper_datums/getrev.dm @Cyberboss
-/code/modules/tgs/ @Cyberboss
-/code/ze_genesis_call/ @Cyberboss
-/tools/tgs_test/ @Cyberboss
+#/.github/workflows/update_tgs_dmapi.yml @Cyberboss
+#/.tgs.yml @Cyberboss
+#/code/world.dm @Cyberboss
+#/code/__DEFINES/tgs.config.dm @Cyberboss
+#/code/__DEFINES/tgs.dm @Cyberboss
+#/code/__DEFINES/_globals.dm @Cyberboss
+#/code/__HELPERS/chat.dm @Cyberboss
+#/code/__HELPERS/jatum.dm @Cyberboss
+#/code/game/world.dm @Cyberboss
+#/code/controllers/subsystem/atoms.dm @Cyberboss
+#/code/controllers/globals.dm @Cyberboss
+#/code/datums/helper_datums/getrev.dm @Cyberboss
+#/code/modules/tgs/ @Cyberboss
+#/code/ze_genesis_call/ @Cyberboss
+#/tools/tgs_test/ @Cyberboss
 
 
 # Fikou
 
-/code/modules/awaymissions/ @Fikou
-/code/modules/mining/ @Fikou
-/code/modules/mod/ @Fikou
-/code/modules/mapfluff/ruins/lavalandruin_code/ @Fikou
-/code/modules/mapfluff/ruins/lavaland_ruin_code.dm @Fikou
+#/code/modules/awaymissions/ @Fikou
+#/code/modules/mining/ @Fikou
+#/code/modules/mod/ @Fikou
+#/code/modules/mapfluff/ruins/lavalandruin_code/ @Fikou
+#/code/modules/mapfluff/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
-/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
-/code/modules/modular_computers/ @JohnFulpWillard
+#/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+#/code/modules/modular_computers/ @JohnFulpWillard
 
 # Kylerace
 
-/code/__DEFINES/spatial_gridmap.dm @Kylerace
-/code/controllers/subsystem/spatial_gridmap.dm @Kylerace
+#/code/__DEFINES/spatial_gridmap.dm @Kylerace
+#/code/controllers/subsystem/spatial_gridmap.dm @Kylerace
 
 # LemonInTheDark
 
-/.github/guides/VISUALS.md @LemonInTheDark
-/code/_onclick/hud/ @LemonInTheDark
-/code/__DEFINES/layers.dm @LemonInTheDark
+#/.github/guides/VISUALS.md @LemonInTheDark
+#/code/_onclick/hud/ @LemonInTheDark
+#/code/__DEFINES/layers.dm @LemonInTheDark
 
 # Mothblocks
 
-/.github/workflows/ @Mothblocks
-/code/game/gamemodes/ @Mothblocks
-/code/modules/autowiki/ @Mothblocks
-/code/modules/unit_tests/ @Mothblocks
-/code/modules/client/preferences/ @Mothblocks
-/code/modules/client/preferences_menu.dm @Mothblocks
-/tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
-/tools/maplint/source/ @Mothblocks
-/tools/pull_request_hooks/ @Mothblocks
-/tools/screenshot-test-comparison/ @Mothblocks
-/tools/test_merge_bot/ @Mothblocks
+#/.github/workflows/ @Mothblocks
+#/code/game/gamemodes/ @Mothblocks
+#/code/modules/autowiki/ @Mothblocks
+#/code/modules/unit_tests/ @Mothblocks
+#/code/modules/client/preferences/ @Mothblocks
+#/code/modules/client/preferences_menu.dm @Mothblocks
+#/tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+#/tools/ezdb/ @Mothblocks
+#/tools/maplint/source/ @Mothblocks
+#/tools/pull_request_hooks/ @Mothblocks
+#/tools/screenshot-test-comparison/ @Mothblocks
+#/tools/test_merge_bot/ @Mothblocks
 
 # MrMelbert
 
-/code/modules/hydroponics/ @MrMelbert
+#/code/modules/hydroponics/ @MrMelbert
 
 # ninjanomnom
 
-/code/__DEFINES/dcs/ @ninjanomnom
-/code/controllers/subsystem/dcs.dm @ninjanomnom
-/code/controllers/subsystem/shuttle.dm @ninjanomnom
-/code/datums/components/ @ninjanomnom
-/code/datums/elements/ @ninjanomnom
-/code/modules/shuttle/ @ninjanomnom
+#/code/__DEFINES/dcs/ @ninjanomnom
+#/code/controllers/subsystem/dcs.dm @ninjanomnom
+#/code/controllers/subsystem/shuttle.dm @ninjanomnom
+#/code/datums/components/ @ninjanomnom
+#/code/datums/elements/ @ninjanomnom
+#/code/modules/shuttle/ @ninjanomnom
 
 # Ryll-Ryll/Shaps
 
-/code/datums/wounds/ @Ryll-Ryll
-/code/datums/status_effects/wound_effects.dm @Ryll-Ryll
-/code/__DEFINES/wounds.dm @Ryll-Ryll
+#/code/datums/wounds/ @Ryll-Ryll
+#/code/datums/status_effects/wound_effects.dm @Ryll-Ryll
+#/code/__DEFINES/wounds.dm @Ryll-Ryll
 
 # san7890
 
-/code/game/area/ @san7890
-/icons/area/ @san7890
+#/code/game/area/ @san7890
+#/icons/area/ @san7890
 
 # stylemistake
 
-/code/__DEFINES/chat.dm @stylemistake
-/code/__DEFINES/tgui.dm @stylemistake
-/code/controllers/subsystem/chat.dm @stylemistake
-/code/controllers/subsystem/ping.dm @stylemistake
-/code/controllers/subsystem/tgui.dm @stylemistake
-/code/modules/tgchat/ @stylemistake
-/code/modules/tgui/ @stylemistake
-/code/modules/tgui_panel/ @stylemistake
-/tgui/ @stylemistake
+#/code/__DEFINES/chat.dm @stylemistake
+#/code/__DEFINES/tgui.dm @stylemistake
+#/code/controllers/subsystem/chat.dm @stylemistake
+#/code/controllers/subsystem/ping.dm @stylemistake
+#/code/controllers/subsystem/tgui.dm @stylemistake
+#/code/modules/tgchat/ @stylemistake
+#/code/modules/tgui/ @stylemistake
+#/code/modules/tgui_panel/ @stylemistake
+#/tgui/ @stylemistake
 
 # stylemistake (explicitly disowned)
 
-/tgui/packages/tgui/interfaces/
-/tgui/packages/tgui/styles/interfaces/
-/tgui/packages/tgui-panel/styles/tgchat/chat-dark.scss
-/tgui/packages/tgui-panel/styles/tgchat/chat-light.scss
+#/tgui/packages/tgui/interfaces/
+#/tgui/packages/tgui/styles/interfaces/
+#/tgui/packages/tgui-panel/styles/tgchat/chat-dark.scss
+#/tgui/packages/tgui-panel/styles/tgchat/chat-light.scss
 
 # SuperNovaa41
 
-/code/modules/forensics/ @SuperNovaa41
-/code/datums/mood.dm @SuperNovaa41
+#/code/modules/forensics/ @SuperNovaa41
+#/code/datums/mood.dm @SuperNovaa41
 
 # Time-Green
 
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
+#/code/modules/plumbing/ @Time-Green
+#/code/modules/surgery/organs/external/ @Time-Green
 
 # tralezab
-/code/__DEFINES/basic_mobs.dm @tralezab
-/code/datums/ai @tralezab
-/code/modules/mob/living/basic/ @tralezab
+#/code/__DEFINES/basic_mobs.dm @tralezab
+#/code/datums/ai @tralezab
+#/code/modules/mob/living/basic/ @tralezab
 
 # Watermelon914
 
-/code/modules/wiremod/ @Watermelon914
-/code/modules/antagonists/traitor/ @Watermelon914
+#/code/modules/wiremod/ @Watermelon914
+#/code/modules/antagonists/traitor/ @Watermelon914
 
 # ZephyrTFA
 
-/code/__HELPERS/admin_verb.dm @ZephyrTFA
-/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
-/code/datums/json_savefile.dm @ZephyrTFA
-/code/datums/armor/ @ZephyrTFA
-/code/modules/admin/verbs/ @ZephyrTFA
-/code/modules/logging/ @ZephyrTFA
+#/code/__HELPERS/admin_verb.dm @ZephyrTFA
+#/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
+#/code/datums/json_savefile.dm @ZephyrTFA
+#/code/datums/armor/ @ZephyrTFA
+#/code/modules/admin/verbs/ @ZephyrTFA
+#/code/modules/logging/ @ZephyrTFA
 
 
 # CONTRIBUTORS
 
 # Cobby
 
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
+#/code/modules/reagents/ @ExcessiveUseOfCobblestone
+#/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+#/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Jordie0608
 
-/SQL/ @Jordie0608
-/code/controllers/subsystem/dbcore.dm @Jordie0608
-/tools/SQLAlertEmail/ @Jordie0608
+#/SQL/ @Jordie0608
+#/code/controllers/subsystem/dbcore.dm @Jordie0608
+#/tools/SQLAlertEmail/ @Jordie0608
 
 # Kapu1178
 
-/code/modules/surgery/bodyparts/ @Kapu1178
-/code/modules/surgery/organs/ @Kapu1178
-/code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
-/code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
+#/code/modules/surgery/bodyparts/ @Kapu1178
+#/code/modules/surgery/organs/ @Kapu1178
+#/code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
+#/code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
 # MrStonedOne
 
-/SQL/database_changelog.txt @MrStonedOne
-/code/__DEFINES/MC.dm @MrStonedOne
-/code/controllers/admin.dm @MrStonedOne
-/code/controllers/master.dm @MrStonedOne
-/code/controllers/failsafe.dm @MrStonedOne
-/code/controllers/subsystem.dm @MrStonedOne
-/code/controllers/subsystem/timer.dm @MrStonedOne
-/code/controllers/configuration/entries @MrStonedOne
-/config/ @MrStonedOne
+#/SQL/database_changelog.txt @MrStonedOne
+#/code/__DEFINES/MC.dm @MrStonedOne
+#/code/controllers/admin.dm @MrStonedOne
+#/code/controllers/master.dm @MrStonedOne
+#/code/controllers/failsafe.dm @MrStonedOne
+#/code/controllers/subsystem.dm @MrStonedOne
+#/code/controllers/subsystem/timer.dm @MrStonedOne
+#/code/controllers/configuration/entries @MrStonedOne
+#/config/ @MrStonedOne
 
 # NamelessFairy
 
-/code/modules/capture_the_flag/ @NamelessFairy
-/_maps/map_files/CTF/ @NamelessFairy
+#/code/modules/capture_the_flag/ @NamelessFairy
+#/_maps/map_files/CTF/ @NamelessFairy
 
 # Pickle-Coding
 
-/code/__DEFINES/atmospherics/ @Pickle-Coding
-/code/__DEFINES/reactions.dm @Pickle-Coding
-/code/modules/atmospherics/ @Pickle-Coding
-/code/modules/power/ @Pickle-Coding
+#/code/__DEFINES/atmospherics/ @Pickle-Coding
+#/code/__DEFINES/reactions.dm @Pickle-Coding
+#/code/modules/atmospherics/ @Pickle-Coding
+#/code/modules/power/ @Pickle-Coding
 
 # MULTIPLE OWNERS
 
-/_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
-/icons/ @Imaginos16 @Krysonism @Twaticus
-/icons/ass/ @Ghilker @tralezab
+#/_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
+#/icons/ @Imaginos16 @Krysonism @Twaticus
+#/icons/ass/ @Ghilker @tralezab
 
-/code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
-/code/__HELPERS/logging/ @dragomagol @ZephyrTFA
-/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
-/code/modules/atmospherics/ @Ghilker @LemonInTheDark
-/code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
-/code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
-/code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
-/code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
-/code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
-/code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
-/tools/build/ @MrStonedOne @stylemistake
-/tools/tgs_scripts/ @Cyberboss @MrStonedOne
+#/code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
+#/code/__HELPERS/logging/ @dragomagol @ZephyrTFA
+#/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+#/code/modules/atmospherics/ @Ghilker @LemonInTheDark
+#/code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
+#/code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
+#/code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+#/code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+#/code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+#/code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
+#/tools/build/ @MrStonedOne @stylemistake
+#/tools/tgs_scripts/ @Cyberboss @MrStonedOne
 
-/tools/WebhookProcessor/ @BraveMole @TiviPlus
+#/tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # SIC SEMPER TYRANNIS
 
-/code/modules/hydroponics/grown/citrus.dm @optimumtact
+#/code/modules/hydroponics/grown/citrus.dm @optimumtact

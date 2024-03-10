@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(dbcore)
 
 	var/connection  // Arbitrary handle returned from rust_g.
 
+	var/db_daemon_started = FALSE
+
 /datum/controller/subsystem/dbcore/Initialize()
 	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
 	//will queue properly with goonchat
@@ -73,8 +75,6 @@ SUBSYSTEM_DEF(dbcore)
 			CONFIG_SET(number/pooling_min_sql_connections, min(min_sql_connections, max_sql_connections))
 			CONFIG_SET(number/pooling_max_sql_connections,  max(min_sql_connections, max_sql_connections))
 			log_config("ERROR: POOLING_MAX_SQL_CONNECTIONS ([max_sql_connections]) is set lower than POOLING_MIN_SQL_CONNECTIONS ([min_sql_connections]). Please check your config or the code defaults for sanity")
-
-
 
 /datum/controller/subsystem/dbcore/stat_entry(msg)
 	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
@@ -183,6 +183,7 @@ SUBSYSTEM_DEF(dbcore)
 		qdel(query_round_shutdown)
 	if(IsConnected())
 		Disconnect()
+	stop_db_daemon()
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
@@ -225,6 +226,8 @@ SUBSYSTEM_DEF(dbcore)
 
 	if(!CONFIG_GET(flag/sql_enabled))
 		return FALSE
+
+	start_db_daemon()
 
 	var/user = CONFIG_GET(string/feedback_login)
 	var/pass = CONFIG_GET(string/feedback_password)
@@ -441,6 +444,47 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	else
 		. = Query.Execute(async)
 	qdel(Query)
+
+/datum/controller/subsystem/dbcore/proc/start_db_daemon()
+	set waitfor = FALSE
+
+	if (db_daemon_started)
+		return
+
+	db_daemon_started = TRUE
+
+	var/daemon = CONFIG_GET(string/db_daemon)
+	if (!daemon)
+		return
+
+	ASSERT(fexists(daemon), "Configured db_daemon doesn't exist")
+
+	var/list/result = world.shelleo("echo \"Starting ezdb daemon, do not close this window\" && [daemon]")
+	var/error_code = result[1]
+	if (!error_code)
+		return
+
+	stack_trace("Failed to start DB daemon: [error_code]\n[result[3]]")
+
+/datum/controller/subsystem/dbcore/proc/stop_db_daemon()
+	set waitfor = FALSE
+
+	if (!db_daemon_started)
+		return
+
+	db_daemon_started = FALSE
+
+	var/daemon = CONFIG_GET(string/db_daemon)
+	if (!daemon)
+		return
+
+	switch (world.system_type)
+		if (MS_WINDOWS)
+			var/list/result = world.shelleo("Get-Process | ? { $_.Path -eq '[daemon]' } | Stop-Process")
+			ASSERT(result[1], "Failed to stop DB daemon: [result[3]]")
+		if (UNIX)
+			var/list/result = world.shelleo("kill $(pgrep -f '[daemon]')")
+			ASSERT(result[1], "Failed to stop DB daemon: [result[3]]")
 
 /datum/db_query
 	// Inputs

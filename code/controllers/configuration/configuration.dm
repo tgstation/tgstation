@@ -93,6 +93,8 @@
 				break
 	if (fexists("[directory]/dev_overrides.txt"))
 		LoadEntries("dev_overrides.txt")
+	if (fexists("[directory]/ezdb.txt"))
+		LoadEntries("ezdb.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	LoadPolicy()
