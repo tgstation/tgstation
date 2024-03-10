@@ -50,6 +50,7 @@ type Domain = {
   difficulty: number;
   id: string;
   is_modular: BooleanLike;
+  has_secondary_objectives: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -228,7 +229,16 @@ const AccessView = (props) => {
 
 const DomainEntry = (props: DomainEntryProps) => {
   const {
-    domain: { cost, desc, difficulty, id, is_modular, name, reward },
+    domain: {
+      cost,
+      desc,
+      difficulty,
+      id,
+      is_modular,
+      has_secondary_objectives,
+      name,
+      reward,
+    },
   } = props;
   const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
@@ -268,6 +278,9 @@ const DomainEntry = (props: DomainEntryProps) => {
         <>
           {name}
           {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
+          {!!has_secondary_objectives && name !== '???' && (
+            <Icon name="gem" ml={1} />
+          )}
         </>
       }
     >
@@ -275,6 +288,7 @@ const DomainEntry = (props: DomainEntryProps) => {
         <Stack.Item color="label" grow={4}>
           {desc}
           {!!is_modular && ' (Modular)'}
+          {!!has_secondary_objectives && ' (Secondary Objective Available)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>

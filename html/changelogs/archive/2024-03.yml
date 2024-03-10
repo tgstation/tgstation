@@ -253,3 +253,49 @@
   - bugfix: Spies no longer have access to infinite use autosurgeons.
   starrm4nn:
   - qol: EVA can be given now in common access slots for non-command crewmembers.
+2024-03-10:
+  00-Steven:
+  - bugfix: When a carbon talks over robotic it uses their voice instead of visible
+      name. Meaning, voice changers work like they do over other comms regardless
+      of face covering.
+  Absolucy:
+  - refactor: Improved shuttle gibbing code, adding a new resistance flag, `SHUTTLE_CRUSH_PROOF`.
+  - bugfix: Immortality revival spectres can no longer be crushed by shuttles.
+  - rscadd: The ghost of Poly can no longer be shuttle-crushed, nor can anything incorporeal.
+  JohnFulpWillard, Tattax:
+  - rscadd: 'Adds a new station trait job: The Human AI.'
+  LemonInTheDark:
+  - rscadd: Tweaked the saturation, color and intensity of a bunch of lights
+  Momo8289:
+  - rscadd: Wheat and meatwheat can now be worn in the mask slot. Farmers rejoice!
+  - code_imp: Chem stun reductions are now applied more consistently.
+  - bugfix: Chem stun reductions should now more consistently apply to unconsciousness.
+  PapaMichael:
+  - bugfix: Removed erroneous information on some health analyzer's examine text.
+  Rhials:
+  - code_imp: Players now receive antag datums specific for reinforcements/support
+      borgs.
+  Shroopy:
+  - qol: Uninverted the inverted corner of the Icebox medbay treatment center.
+  Singul0:
+  - rscadd: Adds 3 new kits into the syndie-kit spawn pool, 2 for special and another
+      for tactical
+  SyncIt21:
+  - code_imp: Use a common list for acceptable silo materials for some stuff. Renamed
+      ore category into silo category.
+  - bugfix: fixes toolact screentips & balloon alerts for boulder machines & machine
+      frame
+  Thunder12345:
+  - rscadd: Added secondary objectives to bitrunning!
+  - rscadd: Pick up encrypted curiosities and return them to the safehouse to claim
+      their contents.
+  - rscadd: Glacier Grind has been given a secondary objective, look out for the limited
+      edition hat.
+  - rscadd: Bitrunning domains can now be modified during the round by admins.
+  Zergspower:
+  - qol: Curtains and shower curtains are no longer solid objects that defy common
+      sense
+  necromanceranne:
+  - balance: Bulldog Shotguns now have a 2-round burst fire.
+  - balance: Lone Operatives now come with some additional Bulldog Shotgun magazines.
+  - balance: Adjusts the values and contents of the Contraband Crate's item loot table.
