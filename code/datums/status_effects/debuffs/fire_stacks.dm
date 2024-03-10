@@ -272,11 +272,6 @@
 
 	overlays |= created_overlay
 
-/obj/effect/dummy/lighting_obj/moblight/fire
-	name = "fire"
-	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
-
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
 

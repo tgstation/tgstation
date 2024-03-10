@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Tweaked the saturation, color and intensity of a bunch of lights"
