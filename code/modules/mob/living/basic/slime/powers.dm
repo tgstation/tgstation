@@ -47,13 +47,14 @@
 
 	if(length(choices) == 1)
 		if(!slime_owner.can_feed_on(choices[1]))
+			to_chat(world, span_warning("No valid mob in range."))
 			return FALSE
 		slime_owner.start_feeding(choices[1])
 		return TRUE
 
 	var/choice = tgui_input_list(slime_owner, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
 	if(isnull(choice))
-		to_chat(world, "No mob to choose from")
+		to_chat(world, span_warning("No valid mob in range."))
 		return FALSE
 	var/mob/living/victim = choice
 	if(slime_owner.can_feed_on(victim))
