@@ -5,7 +5,8 @@
 	multiplicative_slowdown = -0.55
 
 /datum/movespeed_modifier/reagent/ephedrine
-	multiplicative_slowdown = -0.5
+	variable = TRUE
+	// multiplicative_slowdown is set on add
 
 /datum/movespeed_modifier/reagent/pepperspray
 	multiplicative_slowdown = 0.25
