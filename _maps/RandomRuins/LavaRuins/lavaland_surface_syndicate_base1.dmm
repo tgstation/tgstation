@@ -4065,6 +4065,7 @@
 "Ue" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/teleport/hub/syndicate,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "Um" = (
