@@ -1,6 +1,18 @@
 
 
-/mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
+/mob/living/carbon/human/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if(!HAS_TRAIT(src, TRAIT_SPEAKS_CLEARLY))
 		var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
 		var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")

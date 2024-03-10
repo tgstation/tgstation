@@ -28,7 +28,7 @@
 	if(element_flags & ELEMENT_DETACH_ON_HOST_DESTROY)
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(OnTargetDelete), override = TRUE)
 
-/datum/element/proc/OnTargetDelete(datum/source, force)
+/datum/element/proc/OnTargetDelete(datum/source)
 	SIGNAL_HANDLER
 	Detach(source)
 
@@ -75,3 +75,29 @@
 		ele.Detach(arglist(arguments))
 	else
 		ele.Detach(src)
+
+/**
+ * Used to manage (typically non_bespoke) elements with multiple sources through traits
+ * so we don't have to make them a components again.
+ * The element will be later removed once all trait sources are gone, there's no need of a
+ * "RemoveElementTrait" counterpart.
+ */
+/datum/proc/AddElementTrait(trait, source, datum/element/eletype, ...)
+	if(!ispath(eletype, /datum/element))
+		CRASH("AddElementTrait called, but [eletype] is not of a /datum/element path")
+	ADD_TRAIT(src, trait, source)
+	if(HAS_TRAIT_NOT_FROM(src, trait, source))
+		return
+	var/list/arguments = list(eletype)
+	/// 3 is the length of fixed args of this proc, any further one is passed down to AddElement.
+	if(length(args) > 3)
+		arguments += args.Copy(4)
+	/// We actually pass down a copy of the arguments since it's manipulated by the end of the proc.
+	_AddElement(arguments.Copy())
+	var/datum/ele = SSdcs.GetElement(arguments)
+	ele.RegisterSignal(src, SIGNAL_REMOVETRAIT(trait), TYPE_PROC_REF(/datum/element, _detach_on_trait_removed))
+
+/datum/element/proc/_detach_on_trait_removed(datum/source, trait)
+	SIGNAL_HANDLER
+	Detach(source)
+	UnregisterSignal(source, SIGNAL_REMOVETRAIT(trait))

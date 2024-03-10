@@ -93,8 +93,9 @@
 	hitsound = 'sound/items/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
-	light_range = 1
+	light_system = OVERLAY_LIGHT
+	light_range = 1.5
+	light_power = 1.2
 	light_color = COLOR_SOFT_RED
 
 /obj/item/cautery/advanced/get_all_tool_behaviours()
@@ -378,8 +379,9 @@
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
-	light_range = 1
+	light_system = OVERLAY_LIGHT
+	light_range = 1.5
+	light_power = 1.2
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
 
@@ -413,7 +415,7 @@
 		set_light_range(2)
 	else
 		tool_behaviour = TOOL_SCALPEL
-		set_light_range(1)
+		set_light_range(1.5)
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)

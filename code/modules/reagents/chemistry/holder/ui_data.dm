@@ -9,7 +9,7 @@
 		ui.open()
 
 
-/datum/reagents/ui_status(mob/user)
+/datum/reagents/ui_status(mob/user, datum/ui_state/state)
 	return UI_INTERACTIVE //please advise
 
 /datum/reagents/ui_state(mob/user)

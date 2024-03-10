@@ -19,22 +19,9 @@
 	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
-	var/list/allowed_materials = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace
-	)
 	materials = AddComponent(
 		/datum/component/material_container, \
-		allowed_materials, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_NO_INSERT \
 	)
@@ -82,6 +69,12 @@
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
+	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
+		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
@@ -241,7 +234,7 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 
-/obj/machinery/recycler/on_deconstruction()
+/obj/machinery/recycler/on_deconstruction(disassembled)
 	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap

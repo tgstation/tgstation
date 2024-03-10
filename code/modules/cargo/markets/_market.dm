@@ -13,10 +13,7 @@
 
 /// Adds item to the available items and add it's category if it is not in categories yet.
 /datum/market/proc/add_item(datum/market_item/item)
-	if(!prob(initial(item.availability_prob)))
-		return FALSE
-
-	if(ispath(item))
+	if(ispath(item, /datum/market_item))
 		item = new item()
 
 	if(!(item.category in categories))

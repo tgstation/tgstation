@@ -6937,7 +6937,7 @@
 /area/station/engineering/atmos/project)
 "ccp" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/button/door/directional/south{
 	id = "Dorm5";
@@ -8403,11 +8403,10 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "cyo" = (
-/obj/machinery/stasis{
-	dir = 4
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
 	},
-/obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "cyA" = (
 /obj/machinery/door/airlock/maintenance,
@@ -10057,7 +10056,7 @@
 /area/station/cargo/office)
 "cXp" = (
 /obj/structure/bed/pod,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
@@ -10420,7 +10419,7 @@
 "dcq" = (
 /obj/structure/bed,
 /obj/machinery/airalarm/directional/north,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/button/door/directional/east{
 	id = "Dorm3";
 	name = "Dorm Bolt Control";
@@ -20593,9 +20592,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -33374,16 +33375,12 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "kmG" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/cup/bottle/epinephrine,
-/obj/item/reagent_containers/cup/bottle/multiver{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/syringe,
 /obj/machinery/defibrillator_mount/directional/north,
-/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "kmH" = (
@@ -33549,15 +33546,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"kpO" = (
-/obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "kpX" = (
 /obj/structure/bed/medical{
 	dir = 4
@@ -34264,7 +34252,7 @@
 /area/station/hallway/secondary/service)
 "kzv" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "kzw" = (
@@ -41240,7 +41228,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/bouldertech/brm,
+/obj/machinery/brm,
 /turf/open/floor/iron,
 /area/mine/production)
 "mHu" = (
@@ -41367,7 +41355,7 @@
 "mJO" = (
 /obj/structure/bed,
 /obj/machinery/airalarm/directional/north,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/button/door/directional/east{
 	id = "Dorm2";
 	name = "Dorm Bolt Control";
@@ -45232,7 +45220,7 @@
 "nOl" = (
 /obj/structure/bed,
 /obj/machinery/airalarm/directional/north,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/button/door/directional/east{
 	id = "Dorm4";
@@ -45378,7 +45366,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "nRm" = (
@@ -47339,7 +47328,7 @@
 	start_active = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/station/ai_monitored/turret_protected/aisat/maint)
+/area/icemoon/surface/outdoors/nospawn)
 "oxB" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -49799,7 +49788,7 @@
 /area/station/hallway/primary/central)
 "piC" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/machinery/button/door/directional/south{
 	id = "Dorm6";
 	name = "Cabin Bolt Control";
@@ -51938,13 +51927,6 @@
 "pOL" = (
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
-"pOU" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6
-	},
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "pOV" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
@@ -52893,6 +52875,17 @@
 "qfh" = (
 /turf/open/floor/iron/recharge_floor,
 /area/station/science/robotics/mechbay)
+"qfi" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/syringe,
+/obj/effect/turf_decal/tile/blue/full,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/large,
+/area/station/medical/treatment_center)
 "qfj" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -56034,7 +56027,7 @@
 	start_active = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/station/ai_monitored/turret_protected/aisat/maint)
+/area/icemoon/surface/outdoors/nospawn)
 "rbs" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/light/directional/east,
@@ -58769,10 +58762,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/east,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #2";
-	suffix = "#2"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "rUz" = (
@@ -63486,7 +63476,7 @@
 /obj/structure/bed{
 	dir = 1
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 1
 	},
 /obj/effect/spawner/random/contraband/permabrig_gear,
@@ -66448,6 +66438,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "upa" = (
@@ -66638,7 +66629,7 @@
 /obj/structure/bed{
 	dir = 1
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -75177,10 +75168,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xaH" = (
@@ -246029,7 +246017,7 @@ cXu
 frP
 oIJ
 nRd
-pOU
+lwQ
 tHr
 tHr
 bxU
@@ -246287,7 +246275,7 @@ eqp
 cTV
 fHz
 lwQ
-lwQ
+qfi
 sEK
 eHg
 ahL
@@ -246546,7 +246534,7 @@ sFG
 lwQ
 kmG
 cyo
-kpO
+lup
 lup
 aCA
 jDn
@@ -246802,8 +246790,8 @@ mcW
 fPb
 bEL
 efK
-evp
 juw
+nji
 tkf
 ikz
 oSQ

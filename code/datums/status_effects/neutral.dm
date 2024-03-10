@@ -61,6 +61,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		null,
 		new_owner,
 	))
 
@@ -561,7 +562,7 @@
 	return ..()
 
 /datum/status_effect/tinlux_light/on_apply()
-	mob_light_obj = owner.mob_light(2)
+	mob_light_obj = owner.mob_light(2, 1.5, "#ccff33")
 	return TRUE
 
 /datum/status_effect/tinlux_light/on_remove()

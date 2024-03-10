@@ -122,6 +122,7 @@
 
 /obj/machinery/light/LateInitialize()
 	. = ..()
+#ifndef MAP_TEST
 	switch(fitting)
 		if("tube")
 			if(prob(2))
@@ -129,6 +130,7 @@
 		if("bulb")
 			if(prob(5))
 				break_light_tube(TRUE)
+#endif
 	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()
@@ -384,10 +386,7 @@
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 
-/obj/machinery/light/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		qdel(src)
-		return
+/obj/machinery/light/on_deconstruction(disassembled)
 	var/obj/structure/light_construct/new_light = null
 	var/current_stage = 2
 	if(!disassembled)
@@ -416,7 +415,6 @@
 		new_light.cell = real_cell
 		real_cell.forceMove(new_light)
 		cell = null
-	qdel(src)
 
 /obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user)
 	..()

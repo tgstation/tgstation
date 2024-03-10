@@ -24,7 +24,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
-	AddComponent(/datum/component/bloodysoles/feet)
+	AddComponent(/datum/component/bloodysoles/feet, FOOTPRINT_SPRITE_SHOES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human/, should_strip))
 	var/static/list/loc_connections = list(
@@ -41,9 +41,10 @@
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
-	if (isdummy(src))
-		return
 	mob_mood = new /datum/mood(src)
+
+/mob/living/carbon/human/dummy/setup_mood()
+	return
 
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
@@ -347,6 +348,14 @@
 		var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
 
+/mob/living/carbon/human/get_butt_sprite()
+	var/obj/item/bodypart/chest/chest = get_bodypart(BODY_ZONE_CHEST)
+	return chest?.get_butt_sprite()
+
+/mob/living/carbon/human/get_footprint_sprite()
+	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
+	return shoes?.footprint_sprite || L?.footprint_sprite
+
 #define CHECK_PERMIT(item) (item && item.item_flags & NEEDS_PERMIT)
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
@@ -455,30 +464,34 @@
 			return FALSE
 
 		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
-			to_chat(src, span_warning("[target.name] is dead!"))
+			balloon_alert(src, "[target.p_they()] [target.p_are()] dead!")
 			return FALSE
 
 		if (is_mouth_covered())
-			to_chat(src, span_warning("Remove your mask first!"))
+			balloon_alert(src, "remove your mask first!")
 			return FALSE
 
 		if (target.is_mouth_covered())
-			to_chat(src, span_warning("Remove [p_their()] mask first!"))
+			balloon_alert(src, "remove [target.p_their()] mask first!")
 			return FALSE
 
-		if (!get_organ_slot(ORGAN_SLOT_LUNGS))
-			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
+		if(HAS_TRAIT_FROM(src, TRAIT_NOBREATH, DISEASE_TRAIT))
+			to_chat(src, span_warning("you can't breathe!"))
 			return FALSE
 
-		if (HAS_TRAIT(src, TRAIT_NOBREATH))
-			to_chat(src, span_warning("You do not breathe, so you cannot perform CPR!"))
+		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		if(isnull(human_lungs))
+			balloon_alert(src, "you don't have lungs!")
+			return FALSE
+		if(human_lungs.organ_flags & ORGAN_FAILING)
+			balloon_alert(src, "your lungs are too damaged!")
 			return FALSE
 
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
 						span_notice("You try to perform CPR on [target.name]... Hold still!"))
 
 		if (!do_after(src, delay = panicking ? CPR_PANIC_SPEED : (3 SECONDS), target = target))
-			to_chat(src, span_warning("You fail to perform CPR on [target]!"))
+			balloon_alert(src, "you fail to perform CPR!")
 			return FALSE
 
 		if (target.health > target.crit_threshold)
@@ -974,16 +987,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
-
-/mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return FALSE
-	return ..()
-
-/mob/living/carbon/human/set_nutrition(change) //Seriously fuck you oldcoders.
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return FALSE
-	return ..()
 
 /mob/living/carbon/human/is_bleeding()
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))

@@ -334,10 +334,10 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
-	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
-	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/advanced
 	name = "MOD advanced EMP shield module"
@@ -365,7 +365,7 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 4
 	light_power = 1
@@ -788,19 +788,7 @@
 		/obj/item/cigbutt,
 	)
 	/// Materials that will be extracted.
-	var/list/accepted_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-	)
+	var/list/accepted_mats
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
@@ -810,10 +798,15 @@
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
+
+	if(!length(accepted_mats))
+		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+
 	container = AddComponent( \
 		/datum/component/material_container, \
-		accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, \
-		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
+		accepted_mats, \
+		50 * SHEET_MATERIAL_AMOUNT, \
+		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
 			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \

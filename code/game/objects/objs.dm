@@ -28,14 +28,6 @@
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
-	// Access levels, used in modules\jobs\access.dm
-	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
-	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
-	var/list/req_access
-	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
-	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
-	var/list/req_one_access
-
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
@@ -373,6 +365,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
+	if(obj_flags & NO_DECONSTRUCTION)
+		return CANT_UNFASTEN
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
 		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
@@ -380,7 +374,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Try to unwrench an object in a WONDERFUL DYNAMIC WAY
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20)
-	if((obj_flags & NO_DECONSTRUCTION) || wrench.tool_behaviour != TOOL_WRENCH)
+	if(wrench.tool_behaviour != TOOL_WRENCH)
 		return CANT_UNFASTEN
 
 	var/turf/ground = get_turf(src)

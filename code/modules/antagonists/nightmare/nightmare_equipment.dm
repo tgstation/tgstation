@@ -64,7 +64,7 @@
 	remove_crit()
 
 /obj/item/light_eater/proc/prepare_crit_timer()
-	crit_timer = addtimer(CALLBACK(src, PROC_REF(add_crit)), 15 SECONDS, TIMER_DELETE_ME | TIMER_STOPPABLE)
+	crit_timer = addtimer(CALLBACK(src, PROC_REF(add_crit)), 7 SECONDS, TIMER_DELETE_ME | TIMER_STOPPABLE)
 
 /obj/item/light_eater/proc/stop_crit_timer()
 	deltimer(crit_timer)

@@ -10,7 +10,7 @@
 	)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(!HAS_TRAIT(target, TRAIT_FAT) || target.nutrition >= NUTRITION_LEVEL_WELL_FED)
+	if(!HAS_TRAIT(target, TRAIT_FAT) || target.nutrition < NUTRITION_LEVEL_WELL_FED)
 		return FALSE
 	return ..()
 
@@ -87,14 +87,17 @@
 	var/mob/living/carbon/human/human = target
 	var/typeofmeat = /obj/item/food/meat/slab/human
 
-	if(human.dna && human.dna.species)
+	if(target.flags_1 & HOLOGRAM_1)
+		typeofmeat = null
+	else if(human.dna && human.dna.species)
 		typeofmeat = human.dna.species.meat
 
-	var/obj/item/food/meat/slab/human/newmeat = new typeofmeat
-	newmeat.name = "fatty meat"
-	newmeat.desc = "Extremely fatty tissue taken from a patient."
-	newmeat.subjectname = human.real_name
-	newmeat.subjectjob = human.job
-	newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
-	newmeat.forceMove(target.loc)
+	if(typeofmeat)
+		var/obj/item/food/meat/slab/human/newmeat = new typeofmeat
+		newmeat.name = "fatty meat"
+		newmeat.desc = "Extremely fatty tissue taken from a patient."
+		newmeat.subjectname = human.real_name
+		newmeat.subjectjob = human.job
+		newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
+		newmeat.forceMove(target.loc)
 	return ..()

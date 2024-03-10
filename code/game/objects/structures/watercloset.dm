@@ -760,11 +760,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
 

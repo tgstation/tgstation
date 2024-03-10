@@ -15,12 +15,12 @@
 	// below, their accesses are optimized away.
 
 	/// A text string of the verb's name.
-	var/name as text
+	var/name = null as text|null
 	/// The verb's help text or description.
-	var/desc as text
+	var/desc = null as text|null
 	/// The category or tab the verb will appear in.
-	var/category as text
+	var/category = null as text|null
 	/// Only clients/mobs with `see_invisibility` higher can use the verb.
-	var/invisibility as num
+	var/invisibility = null as num|null
 	/// Whether or not the verb appears in statpanel and commandbar when you press space
-	var/hidden as num
+	var/hidden = null as num|null

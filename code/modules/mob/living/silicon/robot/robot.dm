@@ -285,40 +285,6 @@
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
 
-/mob/living/silicon/robot/proc/allowed(mob/M)
-	//check if it doesn't require any access at all
-	if(check_access(null))
-		return TRUE
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
-			return TRUE
-	else if(isalien(M))
-		var/mob/living/carbon/george = M
-		//they can only hold things :(
-		if(isitem(george.get_active_held_item()))
-			return check_access(george.get_active_held_item())
-	return FALSE
-
-/mob/living/silicon/robot/proc/check_access(obj/item/card/id/I)
-	if(!istype(req_access, /list)) //something's very wrong
-		return TRUE
-
-	var/list/L = req_access
-	if(!L.len) //no requirements
-		return TRUE
-
-	if(!isidcard(I) && isitem(I))
-		I = I.GetID()
-
-	if(!I || !I.access) //not ID or no access
-		return FALSE
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return FALSE
-	return TRUE
-
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
 
@@ -352,7 +318,7 @@
 		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		head_overlay.pixel_z += hat_offset
 		add_overlay(head_overlay)
-	update_fire()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
@@ -1017,25 +983,19 @@
 /mob/living/silicon/robot/proc/untip_roleplay()
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
 
-/mob/living/silicon/robot/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/fire_icon = "generic_fire[suffix]"
+/mob/living/silicon/robot/get_fire_overlay(stacks, on_fire)
+	var/fire_icon = "generic_fire"
 
 	if(!GLOB.fire_appearances[fire_icon])
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', fire_icon, -FIRE_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
+		var/mutable_appearance/new_fire_overlay = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			fire_icon,
+			-HIGHEST_LAYER,
+			appearance_flags = RESET_COLOR,
+		)
 		GLOB.fire_appearances[fire_icon] = new_fire_overlay
 
-	if(stacks && on_fire)
-		if(last_icon_state == fire_icon)
-			return last_icon_state
-		add_overlay(GLOB.fire_appearances[fire_icon])
-		return fire_icon
-
-	if(!last_icon_state)
-		return last_icon_state
-
-	cut_overlay(GLOB.fire_appearances[fire_icon])
-	return null
+	return GLOB.fire_appearances[fire_icon]
 
 /// Draw power from the robot
 /mob/living/silicon/robot/proc/draw_power(power_to_draw)

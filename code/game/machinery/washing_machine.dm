@@ -24,7 +24,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_REDCOAT = /obj/item/clothing/under/costume/redcoat,
 		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner,
 		DYE_SYNDICATE = /obj/item/clothing/under/syndicate,
-		DYE_CENTCOM = /obj/item/clothing/under/rank/centcom/commander
+		DYE_CENTCOM = /obj/item/clothing/under/rank/centcom/commander,
+		DYE_COSMIC = /obj/item/clothing/under/rank/station_trait/human_ai,
 	),
 	DYE_REGISTRY_JUMPSKIRT = list(
 		DYE_RED = /obj/item/clothing/under/color/jumpskirt/red,
@@ -415,10 +416,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/attack_ai_secondary(mob/user, modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	if (!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(drop_location(), 2)
-	qdel(src)
+/obj/machinery/washing_machine/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(drop_location(), 2)
 
 /obj/machinery/washing_machine/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()

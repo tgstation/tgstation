@@ -27,6 +27,7 @@
 	holdingitems = list()
 	beaker = new /obj/item/reagent_containers/cup/beaker/large(src)
 	warn_of_dust()
+	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 
 /// Add a description to the current beaker warning of blended dust, if it doesn't already have that warning.
 /obj/machinery/reagentgrinder/proc/warn_of_dust()
@@ -42,11 +43,10 @@
 	QDEL_NULL(beaker)
 	update_appearance()
 
-/obj/machinery/reagentgrinder/deconstruct()
+/obj/machinery/reagentgrinder/on_deconstruction(disassmbled)
 	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
-	return ..()
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
@@ -206,6 +206,24 @@
 		holdingitems[weapon] = TRUE
 		return FALSE
 
+/obj/machinery/reagentgrinder/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
+	SIGNAL_HANDLER
+
+	for(var/obj/item/to_dump in storage.real_location)
+		if(holdingitems.len >= limit)
+			break
+
+		if(!to_dump.grind_results && !to_dump.juice_typepath)
+			continue
+
+		if(!storage.attempt_remove(to_dump, src, silent = TRUE))
+			continue
+
+		holdingitems[to_dump] = TRUE
+
+	to_chat(user, span_notice("You dump [storage.parent] into [src]."))
+	return STORAGE_DUMP_HANDLED
+
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
@@ -217,7 +235,7 @@
 	if(beaker || length(holdingitems))
 		options["eject"] = radial_eject
 
-	if(isAI(user))
+	if(HAS_AI_ACCESS(user))
 		if(machine_stat & NOPOWER)
 			return
 		options["examine"] = radial_examine
@@ -237,10 +255,10 @@
 		for(var/key in options)
 			choice = key
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(operating || (HAS_AI_ACCESS(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	switch(choice)

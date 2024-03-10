@@ -325,9 +325,9 @@
 	armour_penetration = 20
 	bare_wound_bonus = 10
 	item_flags = NO_BLOOD_ON_ITEM
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1.5
-	light_power = 0.75
+	light_power = 1.3
 	light_color = COLOR_SOFT_RED
 	light_on = FALSE
 	dart_insert_projectile_icon_state = "overlay_edagger"

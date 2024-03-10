@@ -74,6 +74,10 @@
 	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_respiration_type = ALL
+	/// A list of traits to apply while the reagent is being metabolized.
+	var/list/metabolized_traits
+	/// A list of traits to apply while the reagent is in a mob.
+	var/list/added_traits
 
 	///The default reagent container for the reagent, used for icon generation
 	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
@@ -191,20 +195,24 @@ Primarily used in reagents/reaction_agents
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
 	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
-	return
+	if(added_traits)
+		affected_mob.add_traits(added_traits, "base:[type]")
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/affected_mob)
 	affected_mob.clear_mood_event("[type]_overdose")
-	return
+	REMOVE_TRAITS_IN(affected_mob, "base:[type]")
 
 /// Called when this reagent first starts being metabolized by a liver
 /datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(metabolized_traits)
+		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
 
 /// Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
 
 /**
  * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag

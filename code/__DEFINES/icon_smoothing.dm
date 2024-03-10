@@ -192,8 +192,13 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(68) ///obj/effect/decal/cleanable/dirt
 
-#define SMOOTH_GROUP_GAS_TANK S_OBJ(72)
+#define SMOOTH_GROUP_GAS_TANK S_OBJ(69)
 
+#define SMOOTH_GROUP_SPIDER_WEB S_OBJ(70) // /obj/structure/spider/stickyweb
+#define SMOOTH_GROUP_SPIDER_WEB_WALL S_OBJ(71) // /obj/structure/spider/stickyweb/sealed
+#define SMOOTH_GROUP_SPIDER_WEB_ROOF S_OBJ(72) // /obj/structure/spider/passage
+#define SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH S_OBJ(73) // /obj/structure/spider/stickyweb/sealed/thick
+#define SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR S_OBJ(74) // /obj/structure/spider/stickyweb/sealed/reflector
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
