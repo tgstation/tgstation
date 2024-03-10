@@ -2,6 +2,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_RABID = FALSE,
+		BB_HUNGER_DISABLED = FALSE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -9,11 +10,6 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/slime,
-	)
-
-/datum/ai_controller/basic_controller/slime/docile
-	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/slime,
 	)
 

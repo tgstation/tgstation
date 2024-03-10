@@ -138,8 +138,11 @@
 
 ///Friendly docile subtype
 /mob/living/basic/slime/pet
-	ai_controller = /datum/ai_controller/basic_controller/slime/docile
 	hunger_disabled = TRUE
+
+/mob/living/basic/slime/pet/Initialize(mapload, new_colour, new_life_stage)
+	. = ..()
+	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, TRUE)
 
 ///Hilbert subtype
 /mob/living/basic/slime/hilbert/Initialize(mapload, new_colour, new_life_stage)
@@ -372,21 +375,21 @@
 ///Makes the slime peaceful and content
 /mob/living/basic/slime/proc/set_pacified_behaviour()
 	hunger_disabled = TRUE
-	new /datum/ai_controller/basic_controller/slime/docile(src)
-	ai_controller?.clear_blackboard_key(BB_RABID)
+	ai_controller?.set_blackboard_key(BB_RABID, FALSE)
+	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, TRUE)
 	set_nutrition(700)
 
 ///Makes the slime angry and hungry
 /mob/living/basic/slime/proc/set_enraged_behaviour()
 	hunger_disabled = FALSE
-	new /datum/ai_controller/basic_controller/slime(src)
+	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, FALSE)
 	ai_controller?.set_blackboard_key(BB_RABID, TRUE)
 
 ///Makes the slime hungry but mostly friendly
 /mob/living/basic/slime/proc/set_default_behaviour()
 	hunger_disabled = FALSE
-	new /datum/ai_controller/basic_controller/slime(src)
-	ai_controller?.clear_blackboard_key(BB_RABID)
+	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, FALSE)
+	ai_controller?.set_blackboard_key(BB_RABID, FALSE)
 
 #undef SLIME_EXTRA_SHOCK_COST
 #undef SLIME_EXTRA_SHOCK_THRESHOLD
