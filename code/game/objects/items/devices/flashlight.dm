@@ -95,7 +95,7 @@
 	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
 
 /obj/item/flashlight/attack_self(mob/user)
-	toggle_light(user)
+	return toggle_light(user)
 
 /obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
 	attack_self(user)
@@ -421,7 +421,7 @@
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
 	if(randomize_fuel)
-		fuel = rand(25 MINUTES, 35 MINUTES)
+		fuel = rand(10 MINUTES, 15 MINUTES)
 	if(light_on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
@@ -755,7 +755,7 @@
 	emp_cur_charges = 100
 
 // Glowsticks, in the uncomfortable range of similar to flares,
-// but not similar enough to make it worth a refactor
+// Flares need to process (for hotspots) tho so this becomes irrelevant
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
@@ -774,34 +774,73 @@
 	toggle_context = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
+	/// How much max fuel we have
+	var/max_fuel = 0
+	/// The timer id powering our burning
+	var/timer_id = TIMER_ID_NULL
 
 /obj/item/flashlight/glowstick/Initialize(mapload)
-	fuel = rand(50 MINUTES, 60 MINUTES)
+	fuel = rand(20 MINUTES, 25 MINUTES)
+	max_fuel = fuel
 	set_light_color(color)
 	return ..()
 
-/obj/item/flashlight/glowstick/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+/// Burns down the glowstick by the specified time
+/// Returns the amount of time we need to burn before a visual change will occur
+/obj/item/flashlight/glowstick/proc/burn_down(amount = 0)
+	fuel -= amount
+	var/fuel_target = 0
+	if(fuel >= max_fuel)
+		fuel_target = max_fuel * 0.4
+	else if(fuel >= max_fuel * 0.4)
+		fuel_target = max_fuel * 0.3
+		set_light_range(3)
+		set_light_power(1.5)
+	else if(fuel >= max_fuel * 0.3)
+		fuel_target = max_fuel * 0.2
+		set_light_range(2)
+		set_light_power(1.25)
+	else if(fuel >= max_fuel * 0.2)
+		fuel_target = max_fuel * 0.1
+		set_light_power(1)
+	else if(fuel >= max_fuel * 0.1)
+		fuel_target = 0
+		set_light_range(1.5)
+		set_light_power(0.5)
 
-/obj/item/flashlight/glowstick/process(seconds_per_tick)
-	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
-	if(fuel <= 0)
+	var/time_to_burn = round(fuel - fuel_target)
+	// Less then a ds? go home
+	if(time_to_burn <= 0)
 		turn_off()
-		STOP_PROCESSING(SSobj, src)
+
+	return time_to_burn
+
+/obj/item/flashlight/glowstick/proc/burn_loop(amount = 0)
+	timer_id = TIMER_ID_NULL
+	var/burn_next = burn_down(amount)
+	if(burn_next <= 0)
+		return
+	timer_id = addtimer(CALLBACK(src, PROC_REF(burn_loop), burn_next), burn_next, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+
+/obj/item/flashlight/glowstick/proc/turn_on()
+	set_light_on(TRUE) // Just in case
+	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
+	// No sense having a toggle light action that we don't use eh?
+	if(toggle)
+		remove_item_action(toggle)
+	burn_loop()
 
 /obj/item/flashlight/glowstick/proc/turn_off()
+	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
+	if(fuel && !toggle)
+		add_item_action(/datum/action/item_action/toggle_light)
+	if(timer_id != TIMER_ID_NULL)
+		var/expected_burn_time = burn_down(0) // This is dumb I'm sorry
+		burn_down(expected_burn_time - timeleft(timer_id))
+		deltimer(timer_id)
+		timer_id = TIMER_ID_NULL
 	set_light_on(FALSE)
 	update_appearance(UPDATE_ICON)
-
-/obj/item/flashlight/glowstick/update_appearance(updates=ALL)
-	. = ..()
-	if(fuel <= 0)
-		set_light_on(FALSE)
-		return
-	if(light_on)
-		set_light_on(TRUE)
-		return
 
 /obj/item/flashlight/glowstick/update_icon_state()
 	. = ..()
@@ -817,6 +856,13 @@
 	glowstick_overlay.color = color
 	. += glowstick_overlay
 
+/obj/item/flashlight/glowstick/toggle_light(mob/user)
+	if(fuel <= 0)
+		return FALSE
+	if(light_on)
+		return FALSE
+	return ..()
+
 /obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(fuel <= 0)
 		balloon_alert(user, "glowstick is spent!")
@@ -828,7 +874,7 @@
 	. = ..()
 	if(.)
 		user.visible_message(span_notice("[user] cracks and shakes [src]."), span_notice("You crack and shake [src], turning it on!"))
-		START_PROCESSING(SSobj, src)
+		turn_on()
 
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
 	if(!fuel)
@@ -839,7 +885,7 @@
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
-	fuel = 0
+	burn_loop(fuel)
 	return FIRELOSS
 
 /obj/item/flashlight/glowstick/red
