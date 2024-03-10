@@ -151,5 +151,9 @@
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)
-	if(do_after(bumpee, climb_time * 1.2, source))
-		do_climb(source, bumpee)
+	if(HAS_TRAIT(bumpee, TRAIT_FREERUNNING))
+		if(do_after(bumpee, climb_time, source))
+			do_climb(source, bumpee)
+	else
+		if(do_after(bumpee, climb_time * 1.2, source))
+			do_climb(source, bumpee)

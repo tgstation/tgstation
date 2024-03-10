@@ -55,11 +55,10 @@
 					dust.appear("sprint_cloud_tiny", direct, get_turf(carbon_parent), 0.3 SECONDS)
 					last_dust = world.time
 				sustained_moves = 0
-		if(HAS_TRAIT(src, TRAIT_FREERUNNING))
-			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST/2)
+		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
+			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * 0.7) //0.5 * cost Means almost infinnite sprint due to regen
 		else
 			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST)
-
 	else if(sprinting)
 		stopSprint()
 
