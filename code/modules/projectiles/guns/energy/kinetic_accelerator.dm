@@ -191,7 +191,7 @@
 	return ..()
 
 /obj/projectile/kinetic/prehit_pierce(atom/target)
-	if(LAZYLEN(kinetic_gun.ignored_mob_types) && is_type_in_typecache(target, kinetic_gun.ignored_mob_types))
+	if(is_type_in_typecache(target, kinetic_gun.ignored_mob_types))
 		return PROJECTILE_PIERCE_PHASE
 	. = ..()
 	if(. == PROJECTILE_PIERCE_PHASE)
