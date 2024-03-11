@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
 
-	if(isAI(user))
+	if(HAS_AI_ACCESS(user))
 		data["isAI"] = TRUE
 		data["can_AI_print"] = toner_cartridge && (toner_cartridge.charges >= PHOTO_TONER_USE) && (get_paper_count() >= PHOTO_PAPER_USE)
 	else

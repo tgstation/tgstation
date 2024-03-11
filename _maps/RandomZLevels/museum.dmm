@@ -9,11 +9,18 @@
 /obj/machinery/computer/old{
 	name = "replica computer";
 	dir = 8;
-	icon_keyboard = "rd_key";
-	icon_screen = "rdcomp"
+	icon_screen = "rdcomp";
+	icon_keyboard = "rd_key"
 	},
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
+"ac" = (
+/obj/structure/sign/poster/contraband/fake_bombable/directional/west,
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/warm/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "ai" = (
 /obj/structure/railing{
 	dir = 8
@@ -59,6 +66,11 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"ax" = (
+/obj/structure/sink/directional/north,
+/obj/structure/mirror/directional/south,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "az" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/entertainment/musical_instrument,
@@ -75,6 +87,22 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/preopen,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"aO" = (
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "museum_toilet_wontwork"
+	},
+/obj/effect/mob_spawn/corpse/human/skeleton/museum_chef,
+/obj/structure/toilet/museum{
+	dir = 4
+	},
+/obj/item/keycard/cafeteria,
+/obj/item/paper/fluff/museum/chefs_ultimatum,
+/obj/machinery/light/small/dim/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "aR" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -147,8 +175,8 @@
 	},
 /turf/open/mirage{
 	dir = 8;
-	target_turf_x = 11;
-	range = 1
+	range = 1;
+	target_turf_x = 11
 	},
 /area/awaymission/museum)
 "bC" = (
@@ -177,8 +205,8 @@
 /area/awaymission/museum)
 "bJ" = (
 /mob/living/basic/statue/mannequin{
-	dir = 8;
-	name = "Dale Knox"
+	name = "Dale Knox";
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/holofloor/white,
@@ -229,6 +257,14 @@
 /obj/item/storage/box/stickers/googly,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"ci" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "cm" = (
 /obj/machinery/door/airlock/grunge,
 /obj/structure/barricade/wooden/crude,
@@ -255,8 +291,8 @@
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
 "ct" = (
-/obj/structure/chair/comfy,
 /mob/living/basic/mothroach,
+/obj/structure/chair/comfy,
 /obj/effect/mapping_helpers/mob_buckler,
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/dark/textured_large,
@@ -313,8 +349,8 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/item/toy/balloon/corgi,
 /obj/machinery/status_display/random_message{
-	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS");
-	pixel_x = 32
+	pixel_x = 32;
+	firstline_to_secondline = list(NO="LITTERING", "YOU ARE"="BEING WATCHED", "DO NOT TOUCH"="THE EXHIBITS")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -328,9 +364,9 @@
 "cS" = (
 /obj/effect/step_trigger/thrower{
 	direction = 1;
-	facedir = 1;
+	mobs_only = 1;
 	tiles = 10;
-	mobs_only = 1
+	facedir = 1
 	},
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
@@ -343,6 +379,14 @@
 /obj/structure/plaque/static_plaque/golden/commission/dream,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
+"cY" = (
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/obj/machinery/light/warm/directional/east,
+/obj/structure/fluff/fake_scrubber,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "cZ" = (
 /obj/structure/fluff/divine/nexus,
 /turf/open/floor/cult,
@@ -398,9 +442,9 @@
 /area/awaymission/museum)
 "dK" = (
 /turf/open/mirage{
+	dir = 1;
 	range = 2;
-	target_turf_y = -4;
-	dir = 1
+	target_turf_y = -4
 	},
 /area/awaymission/museum)
 "dL" = (
@@ -434,8 +478,8 @@
 /area/awaymission/museum)
 "dY" = (
 /mob/living/basic/statue/mannequin{
-	hat = /obj/item/clothing/head/helmet/space;
-	dir = 1
+	dir = 1;
+	hat = /obj/item/clothing/head/helmet/space
 	},
 /turf/open/floor/holofloor/hyperspace/ns,
 /area/awaymission/museum)
@@ -462,7 +506,7 @@
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "museum_secret"
 	},
-/obj/machinery/puzzle_keycardpad/directional/east{
+/obj/machinery/puzzle/keycardpad/directional/east{
 	id = "museum_secret"
 	},
 /turf/open/floor/iron/dark,
@@ -521,10 +565,10 @@
 /turf/open/floor/grass,
 /area/awaymission/museum)
 "ex" = (
+/mob/living/basic/mothroach,
 /obj/structure/chair/stool/bar/directional/west{
 	can_buckle = 1
 	},
-/mob/living/basic/mothroach,
 /obj/effect/mapping_helpers/mob_buckler,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
@@ -596,6 +640,15 @@
 /obj/structure/plaque/static_plaque/golden/commission/omega,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
+"eW" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/structure/fluff/wallsign/directional/north{
+	name = "Restrooms";
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "eX" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 4
@@ -605,11 +658,11 @@
 	},
 /area/awaymission/museum)
 "fa" = (
-/obj/effect/turf_decal/sand/plating,
 /mob/living/basic/statue/mannequin{
 	held_item = /obj/item/pickaxe;
 	hat = /obj/item/clothing/suit/hooded/explorer
 	},
+/obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/mining,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -627,6 +680,13 @@
 /obj/item/kitchen/fork,
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
+"fl" = (
+/obj/machinery/status_display/random_message{
+	pixel_x = -32;
+	firstline_to_secondline = list(CAFETERIA="YUMMY", CAFETERIA="HOTDOGS", ENJOY="YOUR MEAL")
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "fn" = (
 /turf/open/floor/holofloor/hyperspace/ns,
 /area/awaymission/museum)
@@ -706,6 +766,11 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"gg" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/shower/directional/east,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "gj" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8
@@ -750,6 +815,10 @@
 	},
 /obj/machinery/light/small/dim/directional/south,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"gE" = (
+/obj/item/clothing/suit/caution,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "gG" = (
 /obj/effect/turf_decal/siding/dark_blue/corner{
@@ -814,8 +883,8 @@
 "hk" = (
 /obj/effect/smooths_with_walls,
 /turf/open/mirage{
-	target_turf_y = -29;
-	dir = 1
+	dir = 1;
+	target_turf_y = -29
 	},
 /area/awaymission/museum)
 "hl" = (
@@ -827,6 +896,12 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"hm" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/condiment,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "hp" = (
 /mob/living/basic/mothroach/bar,
 /turf/open/floor/wood/tile,
@@ -874,10 +949,18 @@
 "hM" = (
 /turf/closed/wall/rock/porous,
 /area/awaymission/museum)
+"hS" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "hT" = (
 /mob/living/basic/statue/mannequin{
-	dir = 8;
 	name = "Dale Knox";
+	dir = 8;
 	held_item = /obj/item/circuitboard
 	},
 /obj/structure/sign/flag/nanotrasen/directional/south,
@@ -892,8 +975,8 @@
 /area/awaymission/museum)
 "hX" = (
 /obj/item/circuitboard{
-	icon_state = "flopdrive";
-	name = "microprocessor"
+	name = "microprocessor";
+	icon_state = "flopdrive"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/circuit/green,
@@ -983,6 +1066,15 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"iJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/toilet/museum{
+	dir = 1
+	},
+/obj/structure/curtain,
+/obj/structure/broken_flooring/plating,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "iK" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/siding{
@@ -1031,9 +1123,9 @@
 	},
 /obj/effect/step_trigger/thrower{
 	direction = 1;
-	facedir = 1;
+	mobs_only = 1;
 	tiles = 10;
-	mobs_only = 1
+	facedir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -1067,10 +1159,20 @@
 	},
 /turf/open/floor/cult,
 /area/awaymission/museum)
+"ju" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 6
+	},
+/obj/structure/fluff/wallsign/directional/north{
+	name = "Restrooms"
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "jy" = (
 /mob/living/basic/statue/mannequin{
-	dir = 8;
 	name = "Dale Knox";
+	dir = 8;
 	held_item = /obj/item/circuitboard
 	},
 /obj/effect/turf_decal/stripes{
@@ -1081,6 +1183,14 @@
 "jB" = (
 /obj/effect/spawner/structure/window,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"jC" = (
+/obj/effect/puzzle_poddoor_open{
+	icon = 'icons/effects/mapping_helpers.dmi';
+	id = "museum_right_wing";
+	queue_id = "museum_right_wing"
+	},
+/turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
 "jF" = (
 /obj/machinery/suit_storage_unit/open,
@@ -1110,6 +1220,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"jO" = (
+/obj/structure/toilet/museum,
+/obj/structure/sign/poster/contraband/fake_bombable/directional/north,
+/obj/machinery/button/door/directional/east{
+	name = "Lock Control";
+	id = "museum_toilet6";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "jP" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue/corner{
@@ -1120,13 +1242,16 @@
 	dir = 9
 	},
 /obj/item/reagent_containers/cup/glass/coffee,
+/obj/item/paper/fluff/scrambled_pass{
+	puzzle_id = "museum_r_wing_puzzle"
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "jU" = (
 /obj/effect/landmark/transport/nav_beacon/tram/platform{
+	name = "Exhibit Loading Bay";
 	specific_transport_id = "museum_cargo";
-	platform_code = 2;
-	name = "Exhibit Loading Bay"
+	platform_code = 2
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -1193,12 +1318,28 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"kx" = (
+/obj/machinery/door/airlock/public{
+	name = "Restrooms"
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "kA" = (
 /obj/machinery/conveyor{
 	dir = 1
 	},
 /obj/item/vending_refill/wardrobe/coroner_wardrobe,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"kL" = (
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	dir = 8;
+	id = "museum_cafeteria"
+	},
+/obj/machinery/puzzle/keycardpad/directional/south{
+	id = "museum_cafeteria"
+	},
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "kO" = (
 /obj/structure/railing{
@@ -1226,6 +1367,19 @@
 /obj/effect/spawner/random/entertainment/money_medium,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"kZ" = (
+/obj/structure/toilet/museum{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "museum_toilet5";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "la" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1324,11 +1478,11 @@
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "lT" = (
-/obj/structure/chair/office{
-	dir = 1
-	},
 /mob/living/basic/statue/mannequin{
-	hat = /obj/item/clothing/suit/toggle/labcoat/science;
+	dir = 1;
+	hat = /obj/item/clothing/suit/toggle/labcoat/science
+	},
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/machinery/light/floor,
@@ -1345,9 +1499,9 @@
 	specific_transport_id = "museum_cargo"
 	},
 /obj/effect/landmark/transport/nav_beacon/tram/platform{
+	name = "Internal Loading Bay";
 	specific_transport_id = "museum_cargo";
-	platform_code = 1;
-	name = "Internal Loading Bay"
+	platform_code = 1
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -1379,6 +1533,9 @@
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
+"ms" = (
+/turf/open/floor/iron,
+/area/awaymission/museum/cafeteria)
 "mA" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/holofloor/beach/water,
@@ -1403,9 +1560,9 @@
 /area/awaymission/museum)
 "mS" = (
 /mob/living/basic/statue/mannequin{
+	dir = 1;
 	held_item = /obj/item/wrench;
-	hat = /obj/item/clothing/head/utility/hardhat;
-	dir = 1
+	hat = /obj/item/clothing/head/utility/hardhat
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -1436,8 +1593,8 @@
 /obj/structure/transport/linear/tram/slow,
 /obj/structure/tram,
 /obj/machinery/transport/tram_controller{
-	configured_transport_id = "museum_cargo";
-	cover_locked = 0
+	cover_locked = 0;
+	configured_transport_id = "museum_cargo"
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -1477,8 +1634,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/museum)
 "nu" = (
-/obj/effect/decal/cleanable/glass/titanium,
 /mob/living/basic/mouse/rat,
+/obj/effect/decal/cleanable/glass/titanium,
 /turf/open/floor/iron/white,
 /area/awaymission/museum)
 "nv" = (
@@ -1510,9 +1667,9 @@
 "nz" = (
 /obj/structure/lattice/catwalk/mining,
 /obj/structure/fluff{
+	name = "old plasma extractor";
 	icon = 'icons/mob/simple/hivebot.dmi';
-	icon_state = "fab_robot";
-	name = "old plasma extractor"
+	icon_state = "fab_robot"
 	},
 /turf/open/lava/plasma/mafia,
 /area/awaymission/museum)
@@ -1537,9 +1694,9 @@
 	},
 /obj/effect/step_trigger/thrower{
 	direction = 1;
-	facedir = 1;
+	mobs_only = 1;
 	tiles = 10;
-	mobs_only = 1
+	facedir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -1588,6 +1745,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"nY" = (
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
+"nZ" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "od" = (
 /obj/structure/fluff/fake_vent,
 /turf/open/floor/iron,
@@ -1648,10 +1815,30 @@
 /obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
 /area/awaymission/museum/mothroachvoid)
+"oD" = (
+/obj/structure/toilet/museum{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "museum_toilet4";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "oI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"oP" = (
+/obj/effect/puzzle_poddoor_open{
+	id = "museum_cafeteria";
+	queue_id = "museum_cafeteria"
+	},
+/turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
 "oQ" = (
 /turf/open/floor/holofloor/beach/coast{
@@ -1694,8 +1881,8 @@
 /area/awaymission/museum)
 "pi" = (
 /mob/living/basic/statue/mannequin{
-	hat = /obj/item/clothing/head/costume/nursehat;
-	held_item = /obj/item/clothing/neck/stethoscope
+	held_item = /obj/item/clothing/neck/stethoscope;
+	hat = /obj/item/clothing/head/costume/nursehat
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/holofloor/white,
@@ -1729,6 +1916,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/awaymission/museum)
+"pz" = (
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	dir = 8;
+	id = "museum_cafeteria"
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "pD" = (
 /obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1758,6 +1952,17 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"pN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 6
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "pX" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -1773,6 +1978,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"ql" = (
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "qo" = (
 /obj/effect/oneway{
 	dir = 8
@@ -1784,15 +1993,15 @@
 /area/awaymission/museum)
 "qt" = (
 /obj/effect/spawner/random/food_or_drink/booze{
-	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer=10, /obj/item/reagent_containers/cup/glass/bottle/ale=10, /obj/item/reagent_containers/cup/glass/bottle/beer/light=5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor=5, /obj/item/reagent_containers/cup/glass/bottle/whiskey=5, /obj/item/reagent_containers/cup/glass/bottle/gin=5, /obj/item/reagent_containers/cup/glass/bottle/vodka=5, /obj/item/reagent_containers/cup/glass/bottle/tequila=5, /obj/item/reagent_containers/cup/glass/bottle/rum=5, /obj/item/reagent_containers/cup/glass/bottle/vermouth=5, /obj/item/reagent_containers/cup/glass/bottle/cognac=5, /obj/item/reagent_containers/cup/glass/bottle/wine=5, /obj/item/reagent_containers/cup/glass/bottle/kahlua=5, /obj/item/reagent_containers/cup/glass/bottle/amaretto=5, /obj/item/reagent_containers/cup/glass/bottle/hcider=5, /obj/item/reagent_containers/cup/glass/bottle/absinthe=5, /obj/item/reagent_containers/cup/glass/bottle/sake=5, /obj/item/reagent_containers/cup/glass/bottle/grappa=5, /obj/item/reagent_containers/cup/glass/bottle/applejack=5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic=5, /obj/item/reagent_containers/cup/bottle/ethanol=2, /obj/item/reagent_containers/cup/glass/bottle/fernet=2, /obj/item/reagent_containers/cup/glass/bottle/champagne=2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium=2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager=2, /obj/item/reagent_containers/cup/glass/bottle/patron=1, /obj/item/reagent_containers/cup/glass/bottle/kong=1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine=1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka=1, /obj/item/reagent_containers/cup/glass/bottle/trappist=1);
 	spawn_random_offset = 2
 	},
 /turf/open/floor/carpet/cyan,
 /area/awaymission/museum/mothroachvoid)
 "qw" = (
 /obj/item/flashlight/flare{
-	start_on = 1;
-	icon_state = "flare-on"
+	icon_state = "flare-on";
+	start_on = 1
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1822,6 +2031,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"qK" = (
+/obj/machinery/vending/hotdog/museum,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "qL" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -1879,8 +2092,8 @@
 /area/awaymission/museum)
 "qY" = (
 /obj/machinery/power/shuttle_engine/heater{
-	dir = 4;
-	opacity = 1
+	opacity = 1;
+	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/indestructible/plating,
@@ -1909,22 +2122,29 @@
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
 "rq" = (
+/mob/living/basic/statue/mannequin/suspicious,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/gibspawner/human,
 /obj/effect/gibspawner/human,
 /obj/effect/gibspawner/human,
 /obj/effect/gibspawner/human,
-/mob/living/basic/statue/mannequin/suspicious,
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "rr" = (
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
+"ry" = (
+/obj/machinery/door/airlock{
+	name = "Restroom Cabin 6";
+	id_tag = "museum_toilet6"
+	},
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "rA" = (
+/mob/living/basic/mothroach,
 /obj/structure/chair/comfy/beige{
 	dir = 8
 	},
-/mob/living/basic/mothroach,
 /obj/effect/mapping_helpers/mob_buckler,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
@@ -1964,13 +2184,17 @@
 	dir = 1
 	},
 /obj/structure/railing/corner/end,
+/obj/structure/fluff/wallsign/directional/south{
+	name = "Cafeteria";
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "rU" = (
 /mob/living/basic/statue/mannequin{
+	name = "Michael Trasen";
 	dir = 4;
-	held_item = /obj/item/wrench;
-	name = "Michael Trasen"
+	held_item = /obj/item/wrench
 	},
 /obj/structure/sign/flag/nanotrasen/directional/south,
 /obj/machinery/light/small/dim/directional/west,
@@ -1997,9 +2221,9 @@
 /turf/open/floor/engine,
 /area/awaymission/museum)
 "rY" = (
+/mob/living/basic/mouse/rat,
 /obj/machinery/light/small/broken/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/mouse/rat,
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "sd" = (
@@ -2110,13 +2334,20 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"ta" = (
+/obj/machinery/door/airlock{
+	name = "Restroom Cabin 5";
+	id_tag = "museum_toilet5"
+	},
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "tc" = (
+/mob/living/basic/mothroach,
 /obj/structure/lattice/catwalk/mining,
 /obj/structure/railing{
 	dir = 6
 	},
 /obj/structure/chair,
-/mob/living/basic/mothroach,
 /obj/effect/mapping_helpers/mob_buckler,
 /turf/open/misc/grass,
 /area/awaymission/museum/mothroachvoid)
@@ -2136,14 +2367,14 @@
 /turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "tj" = (
+/mob/living/basic/statue/mannequin{
+	dir = 1;
+	held_item = /obj/item/wrench;
+	hat = /obj/item/clothing/head/utility/hardhat
+	},
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
-	},
-/mob/living/basic/statue/mannequin{
-	dir = 1;
-	hat = /obj/item/clothing/head/utility/hardhat;
-	held_item = /obj/item/wrench
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -2185,7 +2416,7 @@
 "tx" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/booze{
-	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer=10, /obj/item/reagent_containers/cup/glass/bottle/ale=10, /obj/item/reagent_containers/cup/glass/bottle/beer/light=5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor=5, /obj/item/reagent_containers/cup/glass/bottle/whiskey=5, /obj/item/reagent_containers/cup/glass/bottle/gin=5, /obj/item/reagent_containers/cup/glass/bottle/vodka=5, /obj/item/reagent_containers/cup/glass/bottle/tequila=5, /obj/item/reagent_containers/cup/glass/bottle/rum=5, /obj/item/reagent_containers/cup/glass/bottle/vermouth=5, /obj/item/reagent_containers/cup/glass/bottle/cognac=5, /obj/item/reagent_containers/cup/glass/bottle/wine=5, /obj/item/reagent_containers/cup/glass/bottle/kahlua=5, /obj/item/reagent_containers/cup/glass/bottle/amaretto=5, /obj/item/reagent_containers/cup/glass/bottle/hcider=5, /obj/item/reagent_containers/cup/glass/bottle/absinthe=5, /obj/item/reagent_containers/cup/glass/bottle/sake=5, /obj/item/reagent_containers/cup/glass/bottle/grappa=5, /obj/item/reagent_containers/cup/glass/bottle/applejack=5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic=5, /obj/item/reagent_containers/cup/bottle/ethanol=2, /obj/item/reagent_containers/cup/glass/bottle/fernet=2, /obj/item/reagent_containers/cup/glass/bottle/champagne=2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium=2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager=2, /obj/item/reagent_containers/cup/glass/bottle/patron=1, /obj/item/reagent_containers/cup/glass/bottle/kong=1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine=1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka=1, /obj/item/reagent_containers/cup/glass/bottle/trappist=1);
 	spawn_random_offset = 2
 	},
 /turf/open/floor/wood/tile,
@@ -2193,9 +2424,9 @@
 "ty" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow{
-	siemens_coefficient = 10;
 	name = "fake stungloves";
-	desc = "A crude replica of stungloves. Essentially gloves wrapped with wire. Extremely unsafe."
+	desc = "A crude replica of stungloves. Essentially gloves wrapped with wire. Extremely unsafe.";
+	siemens_coefficient = 10
 	},
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
@@ -2293,6 +2524,13 @@
 	dir = 2
 	},
 /area/awaymission/museum/mothroachvoid)
+"um" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/sign/warning/fire/directional/west,
+/obj/structure/tank_holder/extinguisher/anti,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "up" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2301,6 +2539,21 @@
 	name = "Bathroom"
 	},
 /turf/open/floor/iron/showroomfloor,
+/area/awaymission/museum)
+"us" = (
+/obj/machinery/door/airlock{
+	name = "Restroom Cabin 2";
+	id_tag = "museum_toilet2"
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
+"ut" = (
+/obj/machinery/light/very_dim/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_vent,
+/obj/structure/mop_bucket,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "uu" = (
 /obj/structure/rack,
@@ -2315,6 +2568,10 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"uH" = (
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "uM" = (
 /obj/structure/fluff/fake_camera{
 	dir = 10
@@ -2345,8 +2602,8 @@
 "vc" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting/large{
-	persistence_id = "museumgate_big";
-	dir = 1
+	dir = 1;
+	persistence_id = "museumgate_big"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
@@ -2418,6 +2675,11 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"vG" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Kitchen"
+	},
+/area/awaymission/museum/cafeteria)
 "vM" = (
 /mob/living/basic/statue/mannequin{
 	dir = 1;
@@ -2448,6 +2710,16 @@
 /obj/effect/turf_decal/siding/dark_blue,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
+"wg" = (
+/obj/machinery/door/airlock{
+	name = "Restroom Cabin 3"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "I'VE WORKED HERE FOR 7 YEARS! JUST TO BE REPLACED BY A VENDING MACHINE?! YOU KNOW WHAT? FUCK YOU, I'VE LOCKED DOWN THE CAFETERIA AND WON'T BE COMING OUT 'TILL YOU GIVE ME MY JOB BACK!"
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
 "wh" = (
 /obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /obj/structure/lattice,
@@ -2456,7 +2728,7 @@
 "wi" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = "nothing"
+	id = "museum_secret"
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
@@ -2526,14 +2798,21 @@
 "wN" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting/large{
-	persistence_id = "museumgate_big";
-	dir = 1
+	dir = 1;
+	persistence_id = "museumgate_big"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "wO" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
+/area/awaymission/museum)
+"wV" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "wZ" = (
 /turf/open/misc/beach/coast{
@@ -2558,8 +2837,8 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/spawner/directional/west,
 /obj/effect/spawner/random/bureaucracy/paper{
-	spawn_random_offset = 7;
-	spawn_loot_count = 8
+	spawn_loot_count = 8;
+	spawn_random_offset = 7
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
@@ -2575,8 +2854,8 @@
 "xg" = (
 /obj/structure/table/reinforced,
 /obj/item/circuitboard{
-	icon_state = "bluespacearray";
-	name = "fancy replica tech"
+	name = "fancy replica tech";
+	icon_state = "bluespacearray"
 	},
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
@@ -2599,6 +2878,10 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/museum/mothroachvoid)
+"xp" = (
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "xr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/freezer/food,
@@ -2668,6 +2951,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"xO" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "xP" = (
 /obj/structure/closet/crate/cardboard,
 /obj/item/storage/toolbox/artistic,
@@ -2704,10 +2992,10 @@
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "yi" = (
+/mob/living/basic/mothroach,
 /obj/structure/chair/comfy/beige{
 	dir = 1
 	},
-/mob/living/basic/mothroach,
 /obj/effect/mapping_helpers/mob_buckler,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
@@ -2731,9 +3019,9 @@
 /turf/open/floor/holofloor/hyperspace/ns,
 /area/awaymission/museum)
 "yr" = (
+/mob/living/basic/mothroach,
 /obj/structure/chair/comfy,
 /obj/effect/mapping_helpers/mob_buckler,
-/mob/living/basic/mothroach,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "yu" = (
@@ -2855,14 +3143,14 @@
 /turf/closed/indestructible/rock,
 /area/awaymission/museum)
 "zG" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/red,
 /mob/living/basic/statue/mannequin{
 	dir = 8;
 	hat = /obj/item/clothing/head/fedora
 	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
@@ -2891,13 +3179,13 @@
 	pixel_y = 12
 	},
 /obj/item/stamp/granted{
-	pixel_y = 12;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /obj/effect/spawner/random/bureaucracy/paper{
-	spawn_random_offset = 12;
+	spawn_loot_count = 8;
 	spawn_scatter_radius = 1;
-	spawn_loot_count = 8
+	spawn_random_offset = 12
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
@@ -3043,8 +3331,8 @@
 	teleport_y_offset = -30
 	},
 /turf/open/mirage{
-	target_turf_y = -29;
-	dir = 1
+	dir = 1;
+	target_turf_y = -29
 	},
 /area/awaymission/museum)
 "AP" = (
@@ -3053,6 +3341,13 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"AQ" = (
+/obj/machinery/door/airlock{
+	name = "Restroom Cabin 4";
+	id_tag = "museum_toilet4"
+	},
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "AR" = (
 /obj/structure/railing{
@@ -3217,9 +3512,9 @@
 "Cy" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/booze{
-	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
-	spawn_random_offset = 2;
-	spawn_loot_count = 2
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer=10, /obj/item/reagent_containers/cup/glass/bottle/ale=10, /obj/item/reagent_containers/cup/glass/bottle/beer/light=5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor=5, /obj/item/reagent_containers/cup/glass/bottle/whiskey=5, /obj/item/reagent_containers/cup/glass/bottle/gin=5, /obj/item/reagent_containers/cup/glass/bottle/vodka=5, /obj/item/reagent_containers/cup/glass/bottle/tequila=5, /obj/item/reagent_containers/cup/glass/bottle/rum=5, /obj/item/reagent_containers/cup/glass/bottle/vermouth=5, /obj/item/reagent_containers/cup/glass/bottle/cognac=5, /obj/item/reagent_containers/cup/glass/bottle/wine=5, /obj/item/reagent_containers/cup/glass/bottle/kahlua=5, /obj/item/reagent_containers/cup/glass/bottle/amaretto=5, /obj/item/reagent_containers/cup/glass/bottle/hcider=5, /obj/item/reagent_containers/cup/glass/bottle/absinthe=5, /obj/item/reagent_containers/cup/glass/bottle/sake=5, /obj/item/reagent_containers/cup/glass/bottle/grappa=5, /obj/item/reagent_containers/cup/glass/bottle/applejack=5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic=5, /obj/item/reagent_containers/cup/bottle/ethanol=2, /obj/item/reagent_containers/cup/glass/bottle/fernet=2, /obj/item/reagent_containers/cup/glass/bottle/champagne=2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium=2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager=2, /obj/item/reagent_containers/cup/glass/bottle/patron=1, /obj/item/reagent_containers/cup/glass/bottle/kong=1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine=1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka=1, /obj/item/reagent_containers/cup/glass/bottle/trappist=1);
+	spawn_loot_count = 2;
+	spawn_random_offset = 2
 	},
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/wood/large,
@@ -3254,6 +3549,11 @@
 	id = "nothing"
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"CG" = (
+/obj/structure/mirror/directional/east,
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "CI" = (
 /obj/effect/turf_decal/caution,
@@ -3293,6 +3593,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Db" = (
+/obj/item/maneki_neko{
+	pixel_y = 4
+	},
+/obj/structure/table,
+/obj/machinery/status_display/random_message{
+	pixel_y = 32;
+	firstline_to_secondline = list(ACCEPTING="DONATIONS")
+	},
+/obj/structure/fluff/fake_vent,
+/turf/open/floor/iron,
+/area/awaymission/museum/cafeteria)
 "De" = (
 /obj/effect/oneway{
 	dir = 8
@@ -3383,6 +3695,11 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"DX" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "DY" = (
 /turf/closed/indestructible/reinforced/titanium,
 /area/awaymission/museum)
@@ -3400,8 +3717,8 @@
 /obj/machinery/computer/old{
 	name = "replica computer";
 	dir = 4;
-	icon_keyboard = "rd_key";
-	icon_screen = "rdcomp"
+	icon_screen = "rdcomp";
+	icon_keyboard = "rd_key"
 	},
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
@@ -3421,8 +3738,8 @@
 	dir = 4
 	},
 /obj/structure/fluff/wallsign/directional/south{
-	dir = 4;
-	name = "Oddities"
+	name = "Oddities";
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -3435,12 +3752,17 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Er" = (
-/obj/structure/chair/comfy/beige,
 /mob/living/basic/mothroach,
+/obj/structure/chair/comfy/beige,
 /obj/effect/mapping_helpers/mob_buckler,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
+"Es" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "EA" = (
 /obj/machinery/door/airlock/shuttle/glass,
 /obj/effect/turf_decal/siding/dark_blue,
@@ -3460,9 +3782,9 @@
 /area/awaymission/museum)
 "EG" = (
 /obj/item/flashlight/flare{
-	start_on = 1;
 	icon_state = "flare-on";
-	light_range = 4
+	light_range = 4;
+	start_on = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
@@ -3476,9 +3798,9 @@
 "EM" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/booze{
-	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
-	spawn_random_offset = 2;
-	spawn_loot_count = 2
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer=10, /obj/item/reagent_containers/cup/glass/bottle/ale=10, /obj/item/reagent_containers/cup/glass/bottle/beer/light=5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor=5, /obj/item/reagent_containers/cup/glass/bottle/whiskey=5, /obj/item/reagent_containers/cup/glass/bottle/gin=5, /obj/item/reagent_containers/cup/glass/bottle/vodka=5, /obj/item/reagent_containers/cup/glass/bottle/tequila=5, /obj/item/reagent_containers/cup/glass/bottle/rum=5, /obj/item/reagent_containers/cup/glass/bottle/vermouth=5, /obj/item/reagent_containers/cup/glass/bottle/cognac=5, /obj/item/reagent_containers/cup/glass/bottle/wine=5, /obj/item/reagent_containers/cup/glass/bottle/kahlua=5, /obj/item/reagent_containers/cup/glass/bottle/amaretto=5, /obj/item/reagent_containers/cup/glass/bottle/hcider=5, /obj/item/reagent_containers/cup/glass/bottle/absinthe=5, /obj/item/reagent_containers/cup/glass/bottle/sake=5, /obj/item/reagent_containers/cup/glass/bottle/grappa=5, /obj/item/reagent_containers/cup/glass/bottle/applejack=5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic=5, /obj/item/reagent_containers/cup/bottle/ethanol=2, /obj/item/reagent_containers/cup/glass/bottle/fernet=2, /obj/item/reagent_containers/cup/glass/bottle/champagne=2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium=2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager=2, /obj/item/reagent_containers/cup/glass/bottle/patron=1, /obj/item/reagent_containers/cup/glass/bottle/kong=1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine=1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka=1, /obj/item/reagent_containers/cup/glass/bottle/trappist=1);
+	spawn_loot_count = 2;
+	spawn_random_offset = 2
 	},
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
@@ -3502,13 +3824,13 @@
 /turf/open/floor/circuit/green,
 /area/awaymission/museum)
 "ET" = (
+/mob/living/basic/statue/mannequin{
+	dir = 1
+	},
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/siding/green{
-	dir = 1
-	},
-/mob/living/basic/statue/mannequin{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -3520,8 +3842,8 @@
 	dir = 4
 	},
 /obj/structure/fluff/wallsign/directional/north{
-	dir = 4;
-	name = "Oddities"
+	name = "Oddities";
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -3594,8 +3916,8 @@
 /area/awaymission/museum)
 "Fw" = (
 /obj/effect/decal/cleanable/blood/tracks{
-	should_dry = 0;
-	name = "replica blood"
+	name = "replica blood";
+	should_dry = 0
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3604,8 +3926,8 @@
 "FA" = (
 /obj/structure/table/reinforced,
 /obj/item/circuitboard{
-	icon_state = "printer";
-	name = "fancy replica tech"
+	name = "fancy replica tech";
+	icon_state = "printer"
 	},
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
@@ -3642,6 +3964,32 @@
 /obj/structure/sign/departments/restroom/directional/south,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
+"FO" = (
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	puzzle_id = "museum_r_wing_puzzle"
+	},
+/turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
+"FU" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/fluff/wallsign/directional/south{
+	name = "Cafeteria";
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"FY" = (
+/obj/structure/chair/sofa/bench/left,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
+"Ga" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "Gh" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -3654,6 +4002,9 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/closet/crate/miningcar,
 /turf/open/floor/tram/plate,
+/area/awaymission/museum)
+"Gn" = (
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Gv" = (
 /obj/effect/decal/cleanable/crayon{
@@ -3675,19 +4026,26 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"GB" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/soda_cans/thirteenloko{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "GE" = (
 /obj/structure/plaque/static_plaque/golden/commission/meta,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "GG" = (
+/mob/living/basic/statue/mannequin{
+	dir = 4
+	},
 /obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
-	},
-/mob/living/basic/statue/mannequin{
-	dir = 4
 	},
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
@@ -3762,8 +4120,8 @@
 /area/awaymission/museum)
 "Hn" = (
 /mob/living/basic/statue/mannequin{
-	hat = /obj/item/clothing/head/costume/kitty;
-	dir = 8
+	dir = 8;
+	hat = /obj/item/clothing/head/costume/kitty
 	},
 /obj/effect/turf_decal/trimline/yellow,
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -3797,7 +4155,7 @@
 /area/awaymission/museum)
 "HA" = (
 /obj/machinery/status_display/random_message{
-	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS")
+	firstline_to_secondline = list(NO="LITTERING", "YOU ARE"="BEING WATCHED", "DO NOT TOUCH"="THE EXHIBITS")
 	},
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
@@ -3806,7 +4164,7 @@
 /obj/effect/turf_decal/siding/dark_blue,
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = "nothing"
+	id = "museum_secret"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -3838,6 +4196,9 @@
 "HP" = (
 /turf/open/floor/iron/freezer,
 /area/awaymission/museum)
+"HQ" = (
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "HU" = (
 /obj/structure/railing{
 	dir = 4
@@ -3848,6 +4209,19 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"HW" = (
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "museum_toilet1";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/structure/toilet/museum{
+	dir = 4
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "HY" = (
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3856,6 +4230,12 @@
 "Ic" = (
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/carpet,
+/area/awaymission/museum)
+"Id" = (
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	puzzle_id = "museum_r_wing_puzzle"
+	},
+/turf/closed/indestructible/wood,
 /area/awaymission/museum)
 "Ij" = (
 /obj/machinery/door/airlock/external,
@@ -3870,6 +4250,9 @@
 	},
 /obj/structure/holosign/barrier/engineering,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"Ir" = (
+/turf/closed/indestructible/fakedoor,
 /area/awaymission/museum)
 "Iu" = (
 /turf/open/floor/mineral/titanium/blue,
@@ -3898,6 +4281,12 @@
 /obj/item/food/grilled_beef_gyro,
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
+"IG" = (
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "IH" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3914,11 +4303,22 @@
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
+"IX" = (
+/mob/living/basic/statue/mannequin{
+	name = "cafeteria patron";
+	held_item = /obj/item/knife
+	},
+/obj/structure/chair/sofa/bench{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "IZ" = (
+/mob/living/basic/mothroach,
 /obj/structure/chair/comfy/beige{
 	dir = 4
 	},
-/mob/living/basic/mothroach,
 /obj/effect/mapping_helpers/mob_buckler,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
@@ -3959,6 +4359,13 @@
 /obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
+"Jl" = (
+/obj/machinery/status_display/random_message{
+	pixel_x = 32;
+	firstline_to_secondline = list(CAFETERIA="YUMMY", CAFETERIA="HOTDOGS", ENJOY="YOUR MEAL")
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Jn" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/entertainment/toy,
@@ -3966,6 +4373,13 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding/dark_blue,
 /turf/open/floor/mineral/titanium/blue,
+/area/awaymission/museum)
+"Jp" = (
+/obj/machinery/door/airlock{
+	name = "Restroom Cabin 1";
+	id_tag = "museum_toilet1"
+	},
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "Js" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -4077,11 +4491,24 @@
 /turf/open/floor/catwalk_floor,
 /area/awaymission/museum)
 "Kx" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /mob/living/basic/skeleton,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Kz" = (
+/obj/structure/sign/warning/no_smoking/directional/west,
+/obj/machinery/computer/terminal/museum{
+	name = "extinguisher manual terminal";
+	dir = 4;
+	content = list("Instructions; stand upright; remove safety clip; aim noozle at base of fire... the rest is up to you.")
+	},
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
+"KB" = (
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "KI" = (
 /turf/open/floor/iron/dark/side{
 	dir = 10
@@ -4112,7 +4539,7 @@
 /area/awaymission/museum)
 "Lp" = (
 /obj/machinery/status_display/random_message{
-	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS")
+	firstline_to_secondline = list(NO="LITTERING", "YOU ARE"="BEING WATCHED", "DO NOT TOUCH"="THE EXHIBITS")
 	},
 /turf/closed/indestructible/reinforced/titanium/nodiagonal,
 /area/awaymission/museum)
@@ -4162,6 +4589,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"LK" = (
+/obj/structure/table,
+/obj/item/piggy_bank/museum,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/museum/cafeteria)
 "LN" = (
 /obj/effect/decal/cleanable/glass/titanium,
 /turf/open/floor/iron/dark/textured_large,
@@ -4197,6 +4630,11 @@
 "Ma" = (
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
+"Mb" = (
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Mg" = (
 /obj/structure/plaque/static_plaque/golden/commission/tram,
 /turf/closed/indestructible/reinforced,
@@ -4215,9 +4653,9 @@
 /area/awaymission/museum)
 "Mv" = (
 /mob/living/basic/statue/mannequin{
+	name = "Michael Trasen";
 	dir = 4;
-	held_item = /obj/item/wrench;
-	name = "Michael Trasen"
+	held_item = /obj/item/wrench
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -4300,10 +4738,16 @@
 /obj/structure/plaque/static_plaque/golden/commission/birdboat,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
+"Nn" = (
+/obj/machinery/door/airlock/public{
+	name = "Restrooms"
+	},
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "Ns" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/booze{
-	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer=10, /obj/item/reagent_containers/cup/glass/bottle/ale=10, /obj/item/reagent_containers/cup/glass/bottle/beer/light=5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor=5, /obj/item/reagent_containers/cup/glass/bottle/whiskey=5, /obj/item/reagent_containers/cup/glass/bottle/gin=5, /obj/item/reagent_containers/cup/glass/bottle/vodka=5, /obj/item/reagent_containers/cup/glass/bottle/tequila=5, /obj/item/reagent_containers/cup/glass/bottle/rum=5, /obj/item/reagent_containers/cup/glass/bottle/vermouth=5, /obj/item/reagent_containers/cup/glass/bottle/cognac=5, /obj/item/reagent_containers/cup/glass/bottle/wine=5, /obj/item/reagent_containers/cup/glass/bottle/kahlua=5, /obj/item/reagent_containers/cup/glass/bottle/amaretto=5, /obj/item/reagent_containers/cup/glass/bottle/hcider=5, /obj/item/reagent_containers/cup/glass/bottle/absinthe=5, /obj/item/reagent_containers/cup/glass/bottle/sake=5, /obj/item/reagent_containers/cup/glass/bottle/grappa=5, /obj/item/reagent_containers/cup/glass/bottle/applejack=5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic=5, /obj/item/reagent_containers/cup/bottle/ethanol=2, /obj/item/reagent_containers/cup/glass/bottle/fernet=2, /obj/item/reagent_containers/cup/glass/bottle/champagne=2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium=2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager=2, /obj/item/reagent_containers/cup/glass/bottle/patron=1, /obj/item/reagent_containers/cup/glass/bottle/kong=1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine=1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka=1, /obj/item/reagent_containers/cup/glass/bottle/trappist=1);
 	spawn_random_offset = 2
 	},
 /turf/open/floor/wood/large,
@@ -4324,8 +4768,8 @@
 /obj/structure/railing,
 /obj/structure/table,
 /obj/item/clothing/mask/cigarette/cigar{
-	lit = 1;
-	icon_state = "cigaron"
+	icon_state = "cigaron";
+	lit = 1
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
@@ -4431,11 +4875,11 @@
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "OS" = (
+/mob/living/basic/mothroach,
 /obj/structure/chair/stool/bar/directional/east{
 	can_buckle = 1
 	},
 /obj/effect/mapping_helpers/mob_buckler,
-/mob/living/basic/mothroach,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "OT" = (
@@ -4481,6 +4925,9 @@
 /obj/item/food/kebab/pineapple_skewer,
 /turf/open/floor/iron/freezer,
 /area/awaymission/museum)
+"Ph" = (
+/turf/closed/indestructible/reinforced,
+/area/awaymission/museum/cafeteria)
 "Pi" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue/corner{
@@ -4584,8 +5031,8 @@
 "PZ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/flashlight/flare{
-	start_on = 1;
-	icon_state = "flare-on"
+	icon_state = "flare-on";
+	start_on = 1
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -4756,9 +5203,9 @@
 	},
 /obj/structure/fluff{
 	name = "replica prototype autolathe";
+	desc = "A non-functional replica of a prototype Autolathe.";
 	icon = 'icons/obj/machines/lathes.dmi';
-	icon_state = "autolathe";
-	desc = "A non-functional replica of a prototype Autolathe."
+	icon_state = "autolathe"
 	},
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
@@ -4803,6 +5250,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/awaymission/museum)
+"RQ" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/structure/fluff/fake_camera,
+/obj/effect/decal/puzzle_dots{
+	pixel_y = -32;
+	id = "museum_r_wing_puzzle"
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "RR" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal/box,
@@ -4829,8 +5288,8 @@
 /turf/open/floor/bluespace,
 /area/awaymission/museum)
 "Se" = (
-/obj/structure/chair/comfy/beige,
 /mob/living/basic/mothroach,
+/obj/structure/chair/comfy/beige,
 /obj/effect/mapping_helpers/mob_buckler,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
@@ -4838,6 +5297,11 @@
 /obj/effect/turf_decal/siding,
 /obj/structure/railing,
 /turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
+"Sm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_scrubber,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "So" = (
 /obj/machinery/shower/directional/east,
@@ -4849,7 +5313,7 @@
 /area/awaymission/museum)
 "Sv" = (
 /obj/machinery/status_display/random_message{
-	firstline_to_secondline = list("SOUVENIR" = "SHOP")
+	firstline_to_secondline = list(SOUVENIR="SHOP")
 	},
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
@@ -4880,7 +5344,11 @@
 	},
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = "nothing"
+	id = "museum_secret"
+	},
+/obj/machinery/puzzle/password/pin/directional/south{
+	id = "museum_r_wing_puzzle";
+	late_initialize_pop = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -4888,6 +5356,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/spacecash/c1000,
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"Ta" = (
+/obj/machinery/light/directional/west,
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	pixel_x = -32;
+	puzzle_id = "museum_r_wing_puzzle"
+	},
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Tr" = (
 /obj/structure/plaque/static_plaque/golden/commission/kilo,
@@ -4923,6 +5399,13 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"TC" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Cafeteria";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum/cafeteria)
 "TF" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 4
@@ -4998,8 +5481,8 @@
 	dir = 8
 	},
 /obj/structure/fluff/wallsign/directional/east{
-	dir = 2;
-	name = "Exit"
+	name = "Exit";
+	dir = 2
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -5037,8 +5520,8 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table,
 /obj/item/computer_disk{
-	icon_state = "datadisk_hydro";
-	name = "plant data disk"
+	name = "plant data disk";
+	icon_state = "datadisk_hydro"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -5066,6 +5549,12 @@
 /mob/living/basic/mothroach,
 /turf/open/misc/beach/sand,
 /area/awaymission/museum/mothroachvoid)
+"UH" = (
+/obj/structure/mirror/broken/directional/east,
+/obj/structure/sink/directional/west,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
 "UI" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -5106,8 +5595,8 @@
 /area/awaymission/museum)
 "UT" = (
 /obj/machinery/status_display/random_message{
-	firstline_to_secondline = list("NO" = "LITTERING","YOU ARE" = "BEING WATCHED", "DO NOT TOUCH" = "THE EXHIBITS");
-	pixel_x = 32
+	pixel_x = 32;
+	firstline_to_secondline = list(NO="LITTERING", "YOU ARE"="BEING WATCHED", "DO NOT TOUCH"="THE EXHIBITS")
 	},
 /turf/open/floor/carpet,
 /area/awaymission/museum)
@@ -5129,6 +5618,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
+"Vb" = (
+/obj/effect/replica_spawner{
+	obvious_replica = 0;
+	pixel_y = 30;
+	target_path = /obj/structure/sign/painting/eldritch/weeping
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Vc" = (
 /obj/machinery/light/warm/directional/east,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -5380,6 +5877,25 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"WY" = (
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "museum_toilet2";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/structure/toilet/museum{
+	dir = 4
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum)
+"WZ" = (
+/obj/structure/chair/sofa/bench{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Xa" = (
 /obj/structure/broken_flooring/corner/always_floorplane{
 	dir = 2
@@ -5402,6 +5918,10 @@
 "Xh" = (
 /turf/closed/indestructible/fakedoor/maintenance,
 /area/awaymission/museum)
+"Xi" = (
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Xo" = (
 /obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
@@ -5502,8 +6022,8 @@
 /turf/closed/indestructible/reinforced/titanium/nodiagonal,
 /area/awaymission/museum)
 "Yg" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /mob/living/basic/cockroach,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Yk" = (
@@ -5511,6 +6031,12 @@
 	id = "museum_secret"
 	},
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"Yn" = (
+/obj/machinery/light/warm/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/fake_camera,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Yr" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -5521,13 +6047,21 @@
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Yy" = (
+/obj/machinery/computer/terminal/museum{
+	name = "donation info terminal";
+	dir = 8;
+	content = list("We're once again asking for your financial support; We love our job, but love alone can only get us so far. Please consider leaving a donation to help keep the musuem running. Thank you.")
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Yz" = (
-/obj/effect/turf_decal/siding,
 /mob/living/basic/statue/mannequin{
 	dir = 8;
 	held_item = /obj/item/pickaxe;
 	hat = /obj/item/clothing/suit/hooded/explorer
 	},
+/obj/effect/turf_decal/siding,
 /obj/structure/railing,
 /turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
@@ -5571,8 +6105,15 @@
 /obj/item/reagent_containers/cup/glass/coffee/no_lid{
 	pixel_x = 12
 	},
+/obj/item/paper/fluff/museum/numbers_on_walls,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"Za" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Zf" = (
 /obj/structure/plaque/static_plaque/golden/commission/donut,
 /turf/closed/indestructible/reinforced,
@@ -5589,6 +6130,11 @@
 /obj/structure/lattice,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
+"Zo" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "Zp" = (
 /obj/structure/plaque/static_plaque/golden/commission/icebox,
 /turf/closed/indestructible/reinforced,
@@ -5613,6 +6159,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Zx" = (
+/obj/structure/chair/sofa/bench,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
+"Zz" = (
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/museum/cafeteria)
 "ZB" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/broken_flooring/side/always_floorplane/directional/east,
@@ -5643,6 +6199,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"ZO" = (
+/obj/structure/sink/directional/south{
+	pixel_y = 6
+	},
+/obj/structure/mirror/directional/north,
+/turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "ZP" = (
 /obj/structure/statue/gold/ce{
@@ -26150,7 +26713,7 @@ re
 re
 re
 re
-re
+Uq
 re
 re
 re
@@ -26403,12 +26966,12 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
+FK
+FK
+FK
+FK
+FK
+Uq
 re
 re
 re
@@ -26660,11 +27223,11 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
+FK
+kZ
+FK
+oD
+FK
 re
 re
 re
@@ -26915,13 +27478,13 @@ Wc
 FK
 re
 re
-re
-re
-re
-re
-re
-re
-re
+FK
+FO
+FK
+ta
+FK
+AQ
+FK
 re
 re
 re
@@ -27172,13 +27735,13 @@ fy
 FK
 re
 re
-re
-re
-re
-re
-re
-re
-re
+FK
+jO
+ry
+Gn
+Ta
+Gn
+FK
 re
 re
 re
@@ -27429,13 +27992,13 @@ tD
 FK
 re
 re
-re
-re
-re
-re
-re
-re
-re
+FK
+FK
+FO
+IG
+Gn
+ax
+FK
 re
 re
 re
@@ -27687,12 +28250,12 @@ FK
 re
 re
 re
-re
-re
-re
-re
-re
-re
+FK
+ZO
+Gn
+Gn
+Gn
+FK
 re
 re
 re
@@ -27947,7 +28510,7 @@ FK
 FK
 FK
 FK
-FK
+Nn
 FK
 FK
 Uq
@@ -29699,7 +30262,7 @@ aW
 MF
 MF
 MF
-MF
+Id
 Re
 PZ
 Ma
@@ -34375,7 +34938,7 @@ FK
 FK
 FK
 FK
-FK
+FO
 FK
 FK
 FK
@@ -35113,7 +35676,7 @@ re
 re
 re
 re
-FK
+FO
 qw
 XK
 PP
@@ -35916,7 +36479,7 @@ FK
 FK
 FK
 Yd
-FK
+FO
 NO
 dZ
 mn
@@ -35958,10 +36521,10 @@ nu
 FK
 FK
 FK
+FK
+FK
+FK
 Uq
-re
-re
-re
 re
 re
 re
@@ -36214,10 +36777,10 @@ qQ
 xI
 gT
 Qb
-FK
-re
-re
-re
+Ga
+gg
+iJ
+FO
 re
 re
 re
@@ -36472,9 +37035,9 @@ xI
 xd
 ns
 FK
-re
-re
-re
+FK
+FK
+FK
 re
 re
 re
@@ -36731,7 +37294,7 @@ BO
 FK
 re
 re
-re
+Uq
 re
 re
 re
@@ -36986,7 +37549,7 @@ Nc
 FK
 FK
 FK
-Uq
+re
 re
 re
 re
@@ -37461,7 +38024,7 @@ FK
 FK
 FK
 PB
-FK
+FO
 Ma
 Ma
 Ma
@@ -40781,7 +41344,7 @@ FK
 FK
 FK
 FK
-lb
+eW
 uY
 rQ
 FK
@@ -42582,7 +43145,7 @@ FK
 FK
 lb
 uY
-qX
+RQ
 FK
 FK
 FK
@@ -43085,19 +43648,19 @@ re
 re
 re
 re
+FK
+FK
+FK
+FK
+FK
+FK
+FK
 re
-re
-re
-re
-re
-re
-re
-re
-Uq
-re
-re
-re
-Uq
+FK
+aa
+uY
+ci
+jC
 re
 re
 re
@@ -43342,19 +43905,19 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+FK
+aO
+FK
+WY
+FK
+HW
+FK
+FK
+FK
+Mb
+TM
+wV
+FK
 re
 re
 re
@@ -43599,19 +44162,19 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+FK
+wg
+FK
+us
+FK
+Jp
+FK
+um
+FK
+Mb
+uY
+wV
+FK
 re
 re
 re
@@ -43856,19 +44419,19 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+FK
+Gn
+Gn
+Gn
+Sm
+Gn
+Kz
+Gn
+FK
+ju
+uY
+ci
+Ir
 re
 re
 re
@@ -44113,19 +44676,19 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+FK
+nY
+Gn
+Gn
+Gn
+Gn
+Gn
+Gn
+kx
+uY
+uY
+wV
+FK
 re
 re
 re
@@ -44370,19 +44933,19 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+FK
+ut
+UH
+gE
+CG
+Gn
+CG
+Yn
+FK
+RC
+TM
+FU
+FK
 re
 re
 re
@@ -44627,20 +45190,20 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Mb
+uY
+wV
+FK
+Uq
 re
 re
 re
@@ -44892,11 +45455,11 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
+FK
+pN
+uY
+hS
+oP
 re
 re
 re
@@ -45149,11 +45712,11 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
+FK
+FK
+pz
+kL
+FK
 re
 re
 re
@@ -45403,16 +45966,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+Ph
+Ph
+Ph
+Ph
+ms
+TC
+Ph
+Ph
+Ph
 re
 re
 re
@@ -45660,16 +46223,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+DX
+HQ
+fl
+Zz
+HQ
+HQ
+HQ
+ac
+Ph
 re
 re
 re
@@ -45917,16 +46480,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+qK
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+vG
 re
 re
 re
@@ -46174,16 +46737,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+uH
+HQ
+Xi
+xp
+nZ
+Xi
+Es
+nZ
+Ph
 re
 re
 re
@@ -46431,17 +46994,17 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+Vb
+HQ
+Zx
+hm
+WZ
+ql
+xp
+WZ
+Ph
+Uq
 re
 re
 re
@@ -46688,16 +47251,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+HQ
+HQ
+ql
+Zo
+WZ
+ql
+GB
+IX
+Ph
 re
 re
 re
@@ -46945,16 +47508,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+Db
+HQ
+FY
+xO
+Za
+FY
+xp
+Za
+Ph
 re
 re
 re
@@ -47202,16 +47765,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+LK
+Yy
+HQ
+HQ
+KB
+Jl
+HQ
+cY
+Ph
 re
 re
 re
@@ -47459,16 +48022,16 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
 re
 re
 re

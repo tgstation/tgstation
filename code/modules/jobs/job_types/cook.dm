@@ -46,6 +46,9 @@
 	)
 
 	rpg_title = "Tavern Chef"
+	alternate_titles = list(
+		JOB_CHEF,
+	)
 	job_flags = STATION_JOB_FLAGS
 
 /datum/job/cook/award_service(client/winner, award)

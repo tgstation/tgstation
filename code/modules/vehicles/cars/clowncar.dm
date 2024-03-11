@@ -10,7 +10,7 @@
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
-	light_range = 8
+	light_range = 6
 	light_power = 2
 	light_on = FALSE
 	access_provider_flags = VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_KIDNAPPED

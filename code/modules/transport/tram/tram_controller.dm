@@ -992,7 +992,7 @@
 /obj/machinery/transport/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
-	if(!cover_open && !issiliconoradminghost(user) && !isobserver(user))
+	if(!cover_open && !HAS_SILICON_ACCESS(user) && !isobserver(user))
 		return
 
 	if(!is_operational)

@@ -63,9 +63,11 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/become_ghost()
 	icon_state = "herald_ghost"
 
-/mob/living/simple_animal/hostile/asteroid/elite/herald/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/living/simple_animal/hostile/asteroid/elite/herald/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	if(stat != CONSCIOUS)
+		return
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 
 /datum/action/innate/elite_attack/herald_trishot
 	name = "Triple Shot"

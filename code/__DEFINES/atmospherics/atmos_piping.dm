@@ -9,11 +9,13 @@
 #define EAST_SHORTPIPE (1<<6)
 #define WEST_SHORTPIPE (1<<7)
 // Helpers to convert cardinals to and from pipe bitfields
-// Assumes X_FULLPIPE = X, X_SHORTPIPE >> 4 = X as above
+// Assumes X_FULLPIPE = X, X_SHORTPIPE >> 4 = X, X_PIPECAPS >> 8 = X as above
 #define FULLPIPE_TO_CARDINALS(bitfield) ((bitfield) & ALL_CARDINALS)
 #define SHORTPIPE_TO_CARDINALS(bitfield) (((bitfield) >> 4) & ALL_CARDINALS)
+#define PIPECAPS_TO_CARDINALS(bitfield) (((bitfield) >> 8) & ALL_CARDINALS)
 #define CARDINAL_TO_FULLPIPES(cardinals) (cardinals)
 #define CARDINAL_TO_SHORTPIPES(cardinals) ((cardinals) << 4)
+#define CARDINAL_TO_PIPECAPS(cardinals) ((cardinals) << 8)
 // A pipe is a stub if it only has zero or one permitted direction. For a regular pipe this is nonsensical, and there are no pipe sprites for this, so it is not allowed.
 #define ISSTUB(bits) !((bits) & ((bits) - 1))
 #define ISNOTSTUB(bits) ((bits) & ((bits) - 1))

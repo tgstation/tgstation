@@ -53,6 +53,7 @@
 /obj/item/toy/mecha/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
+	AddElement(/datum/element/toy_talk)
 	combat_health = max_combat_health
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE)
@@ -263,12 +264,8 @@
 	if(wins || losses)
 		. += span_notice("This toy has [wins] wins, and [losses] losses.")
 
-/**
- * Override the say proc if they're mute
- */
-/obj/item/toy/mecha/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	if(!quiet)
-		. = ..()
+/obj/item/toy/mecha/can_speak(allow_mimes)
+	return !quiet && ..()
 
 /**
  * The 'master' proc of the mech battle. Processes the entire battle's events and makes sure it start and finishes correctly.
