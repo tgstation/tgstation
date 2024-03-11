@@ -98,6 +98,7 @@
 /obj/item/coupon/proc/curse_heart(mob/living/cursed)
 	if(!iscarbon(cursed))
 		cursed.gib(DROP_ALL_REMAINS)
+		burn_evilly()
 		return TRUE
 
 	var/mob/living/carbon/player = cursed
@@ -105,6 +106,11 @@
 	to_chat(player, span_mind_control("What could that coupon mean?"))
 	to_chat(player, span_userdanger("...The suspense is killing you!"))
 	player.set_heartattack(status = TRUE)
+	burn_evilly()
+
+/obj/item/coupon/proc/burn_evilly()
+	visible_message(span_warning("[src] burns up in a sinister flash, taking an evil energy with it..."))
+	burn()
 
 /obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
