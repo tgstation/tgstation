@@ -47,7 +47,7 @@
 	hud_used?.hunger?.update_appearance()
 	mob_mood?.update_nutrition_moodlets()
 
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+	if(HAS_TRAIT(src, TRAIT_FAT))
 		add_movespeed_modifier(/datum/movespeed_modifier/obesity)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
