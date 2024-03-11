@@ -56,6 +56,15 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
 
+/obj/machinery/fax/auto_name
+	name = "Auto-naming Fax Machine"
+
+/obj/machinery/fax/auto_name/Initialize(mapload)
+	var/area/current_area = get_area(src)
+	name = "[current_area.name]'s Fax Machine"
+	fax_name = "[current_area.name]"
+	return ..()
+
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
 	if (!fax_id)
