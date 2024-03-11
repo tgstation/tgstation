@@ -781,11 +781,15 @@ const ModuleSection = (props) => {
                     />
                   )}
                 </Table.Cell>
-                <Table.Cell textAlign="center">{formatPower(module.idle_power)}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  {formatPower(module.idle_power)}
+                </Table.Cell>
                 <Table.Cell textAlign="center">
                   {formatPower(module.active_power)}
                 </Table.Cell>
-                <Table.Cell textAlign="center">{formatEnergy(module.use_energy)}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  {formatEnergy(module.use_energy)}
+                </Table.Cell>
                 <Table.Cell textAlign="center">
                   {module.module_complexity}
                 </Table.Cell>
