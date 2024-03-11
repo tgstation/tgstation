@@ -297,8 +297,8 @@
 
 		var/datum/reagent/target_holder = cached_reagents[current_list_element]
 		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		// We can't really remove any more than the minimum quantization level
-		remove_amt = max(CHEMICAL_QUANTISATION_LEVEL, amount)
+		// If the logic above means removing really tiny amounts, instead choose a sensible smallish number, so this proc will actually finish instead of slowly approaching zero
+		remove_amt = max(CHEMICAL_VOLUME_ROUNDING, amount)
 		remove_amt = remove_reagent(target_holder.type, remove_amt)
 
 		current_list_element++
