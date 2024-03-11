@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Secondary alt-click works, so you can now properly detach accessories and such."

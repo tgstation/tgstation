@@ -1,5 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - bugfix: "Crafting a mk58 flashlight module should now give you a mk58 flashlight module."
-  - image: "Added a open icon sprite (maintenance hatch) for nanite programmer and nanite program hub."
