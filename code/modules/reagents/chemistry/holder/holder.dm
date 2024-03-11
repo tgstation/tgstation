@@ -284,10 +284,6 @@
 	current_list_element = rand(1, cached_reagents.len)
 
 	while(total_removed < amount)
-		// If the amount left to remove is less than the quantisation level then we have to stop, since you can't remove below this
-		if( (amount - total_removed) < CHEMICAL_QUANTISATION_LEVEL)
-			break
-
 		// There's nothing left in the container
 		if(total_volume <= 0 || !cached_reagents.len)
 			break
