@@ -364,13 +364,13 @@
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
-	for(var/mob/living/L in oview(2, user))
-		if(L.stat == DEAD)
+	for(var/mob/living/living_target in oview(2, user))
+		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(L, 'sound/magic/fireball.ogg', 20, TRUE)
-		new /obj/effect/temp_visual/fire(L.loc)
-		addtimer(CALLBACK(src, PROC_REF(pushback), L, user), 1) //no free backstabs, we push AFTER module stuff is done
-		L.adjustFireLoss(bonus_value, forced = TRUE)
+		playsound(living_target, 'sound/magic/fireball.ogg', 20, TRUE)
+		new /obj/effect/temp_visual/fire(living_target.loc)
+		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
+		living_target.adjustFireLoss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
 	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
