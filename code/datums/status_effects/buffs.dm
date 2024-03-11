@@ -195,7 +195,7 @@
 	if(HAS_TRAIT(new_owner, TRAIT_HULK))
 		modifier += 0.5
 
-	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
+	if(HAS_TRAIT_FROM(new_owner, TRAIT_FAT, OBESITY)) // less xp until you get into shape
 		modifier -= 0.5
 
 	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!

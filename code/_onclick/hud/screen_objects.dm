@@ -799,7 +799,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		state = HUNGER_STATE_FINE
 		return
 
-	if(HAS_TRAIT(hungry, TRAIT_FAT))
+	if(HAS_TRAIT_FROM(hungry, TRAIT_FAT, OBESITY))
 		state = HUNGER_STATE_FAT
 		return
 

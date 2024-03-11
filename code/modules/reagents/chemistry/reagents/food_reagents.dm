@@ -1192,7 +1192,7 @@
 
 /datum/reagent/consumable/mintextract/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(HAS_TRAIT(affected_mob, TRAIT_FAT))
+	if(HAS_TRAIT_FROM(affected_mob, TRAIT_FAT, OBESITY))
 		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
 		affected_mob.inflate_gib()
 
