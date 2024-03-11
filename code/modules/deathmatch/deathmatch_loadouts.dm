@@ -17,6 +17,8 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
+	else if (istype(user.dna.species.outfit_important_for_life)) //plasmamen get lit on fire and die
+		user.set_species(/datum/species/human)
 	for(var/datum/action/act as anything in granted_spells)
 		var/datum/action/new_ability = new act(user)
 		if(istype(new_ability, /datum/action/cooldown/spell))
@@ -34,6 +36,7 @@
 	name = "Deathmatch: Assistant loadout"
 	display_name = "Assistant"
 	desc = "A simple assistant loadout: greyshirt and a toolbox"
+
 	l_hand = /obj/item/storage/toolbox/mechanical
 	uniform = /obj/item/clothing/under/color/grey
 	back = /obj/item/storage/backpack
@@ -50,6 +53,7 @@
 	name = "Deathmatch: Operative"
 	display_name = "Operative"
 	desc = "A syndicate operative."
+
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -60,6 +64,7 @@
 	name = "Deathmatch: Ranged Operative"
 	display_name = "Ranged Operative"
 	desc = "A syndicate operative with a gun and a knife."
+
 	l_hand = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/knife/combat
 	backpack_contents = list(/obj/item/ammo_box/magazine/m9mm = 5)
@@ -68,6 +73,7 @@
 	name = "Deathmatch: Melee Operative"
 	display_name = "Melee Operative"
 	desc = "A syndicate operative with multiple knives."
+
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	suit = /obj/item/clothing/suit/armor/vest
 	head = /obj/item/clothing/head/helmet
@@ -79,6 +85,7 @@
 	name = "Deathmatch: Security Officer"
 	display_name = "Security Officer"
 	desc = "A security officer."
+
 	uniform = /datum/outfit/job/security::uniform
 	suit = /datum/outfit/job/security::suit
 	suit_store = /datum/outfit/job/security::suit_store
@@ -98,6 +105,7 @@
 	name = "DM: Instagib"
 	display_name = "Instagib"
 	desc = "Assistant with an instakill rifle."
+
 	l_hand = /obj/item/gun/energy/laser/instakill
 
 /datum/outfit/deathmatch_loadout/operative/sniper
@@ -140,6 +148,7 @@
 	name = "Deathmatch: Battler Base"
 	display_name = "Battler"
 	desc = "What is a battler whith out weapone?."
+
 	shoes = /obj/item/clothing/shoes/combat
 	uniform = /obj/item/clothing/under/syndicate
 	gloves = /obj/item/clothing/gloves/combat
@@ -150,6 +159,7 @@
 	name = "Deathmatch: Soldier"
 	display_name = "Soldier"
 	desc = "Ready for combat."
+
 	l_hand = /obj/item/gun/ballistic/rifle/boltaction
 	l_pocket = /obj/item/knife/combat
 	uniform = /obj/item/clothing/under/syndicate/rus_army
@@ -194,6 +204,7 @@
 	name = "Deathmatch: North Star"
 	display_name = "North Star"
 	desc = "flip flip flip"
+
 	uniform = /obj/item/clothing/under/suit/carpskin
 	head = /obj/item/clothing/head/fedora/carpskin
 	gloves = /obj/item/clothing/gloves/rapid
@@ -206,6 +217,7 @@
 	name = "Deathmatch: Janitor"
 	display_name = "Janitor"
 	desc = "Regular work"
+
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	suit = /obj/item/clothing/suit/caution
 	head = /obj/item/reagent_containers/cup/bucket
@@ -222,6 +234,7 @@
 	name = "Deathmatch: Surgeon"
 	display_name = "Surgeon"
 	desc = "Treatment has come"
+
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	suit = /obj/item/clothing/suit/apron/surgical
 	head = /obj/item/clothing/head/utility/surgerycap
@@ -240,6 +253,7 @@
 	name = "Deathmatch: Raider"
 	display_name = "Raider"
 	desc = "Not from Shadow Legends"
+
 	l_hand = /obj/item/nullrod/claymore/chainsaw_sword
 	r_pocket = /obj/item/switchblade
 	uniform = /obj/item/clothing/under/costume/jabroni
@@ -251,6 +265,7 @@
 	name = "DM: Clown"
 	display_name = "Clown (Man Of Honk)"
 	desc = "Who called this honking clown"
+
 	uniform = /datum/outfit/job/clown::uniform
 	belt = /datum/outfit/job/clown::belt
 	shoes = /datum/outfit/job/clown::shoes
@@ -275,6 +290,7 @@
 	name = "Deathmatch: Coder"
 	display_name = "Coder"
 	desc = "What"
+
 	l_hand = /obj/item/toy/katana
 	uniform = /obj/item/clothing/under/costume/schoolgirl
 	suit = /obj/item/clothing/suit/costume/joker
@@ -288,6 +304,7 @@
 	name = "Deathmatch: Engineer"
 	display_name = "Engineer"
 	desc = "Meet the engineer"
+
 	l_hand = /obj/item/storage/toolbox/emergency/turret
 	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	shoes = /obj/item/clothing/shoes/magboots
@@ -299,6 +316,7 @@
 	name = "Deathmatch: Scientist"
 	display_name = "Scientist"
 	desc = "What a nerd"
+
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	suit = /obj/item/clothing/suit/armor/reactive/stealth
 	mask = /obj/item/clothing/mask/gas
@@ -339,6 +357,7 @@
 	name = "Deathmatch: Ripper"
 	display_name = "Ripper"
 	desc = "Die die die!!!"
+
 	l_hand = /obj/item/gun/ballistic/shotgun/hook
 	r_hand = /obj/item/gun/ballistic/shotgun/hook
 	uniform = /obj/item/clothing/under/costume/skeleton
@@ -351,6 +370,7 @@
 	name = "Deathmatch: Cowboy"
 	display_name = "Cowboy"
 	desc = "Yeehaw partner"
+
 	r_hand  = /obj/item/clothing/mask/cigarette/cigar
 	l_hand = /obj/item/melee/curator_whip
 	l_pocket = /obj/item/lighter

@@ -50,8 +50,6 @@
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
-	ass_image = 'icons/ass/assplasma.png'
-
 	outfit_override_registry = list(
 		/datum/outfit/syndicate = /datum/outfit/syndicate/plasmaman,
 		/datum/outfit/syndicate/full = /datum/outfit/syndicate/full/plasmaman,
@@ -61,10 +59,6 @@
 
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE
-
-/datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	. = ..()
-	C.set_safe_hunger_level()
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()

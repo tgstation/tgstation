@@ -31,7 +31,7 @@
 	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	light_range = 8
+	light_range = 6
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
@@ -457,9 +457,9 @@
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(mecha_flags & PANEL_OPEN)
 		if(servo)
-			. += span_notice("Micro-servos reduce movement power usage by [100 - round(100 / servo.rating)]%")
+			. += span_notice("Servo reduces movement power usage by [100 - round(100 / servo.rating)]%")
 		else
-			. += span_warning("It's missing a micro-servo.")
+			. += span_warning("It's missing a servo.")
 		if(capacitor)
 			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
