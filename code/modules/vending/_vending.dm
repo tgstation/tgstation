@@ -1625,7 +1625,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
 /obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
 	if(tilted && !held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
 		return CONTEXTUAL_SCREENTIP_SET
