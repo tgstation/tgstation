@@ -6663,6 +6663,7 @@
 #include "monkestation\code\modules\security\code\holographic_handcuffs.dm"
 #include "monkestation\code\modules\security\code\weapons\lawbringer.dm"
 #include "monkestation\code\modules\security\code\weapons\paco.dm"
+#include "monkestation\code\modules\shelves\shelf.dm"
 #include "monkestation\code\modules\skyrat_snipes\languages.dm"
 #include "monkestation\code\modules\skyrat_snipes\reagents\drink_reagents.dm"
 #include "monkestation\code\modules\skyrat_snipes\vending_machines\vending_food.dm"
