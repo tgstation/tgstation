@@ -521,7 +521,7 @@
 	desc = "Honk NATH!"
 
 	l_hand = /obj/item/gun/magic/staff/honk
-	uniform = /obj/item/clothing/under/rank/civilian/clown/magic
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	suit = /obj/item/clothing/suit/chaplainsuit/clownpriest
 	head = /obj/item/clothing/head/chaplain/clownmitre
 	mask = /obj/item/clothing/mask/gas/clown_hat
