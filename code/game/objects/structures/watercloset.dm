@@ -231,7 +231,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/urinal/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(user)
 	deconstruct(TRUE)
-	to_chat(user, span_notice("You remove [src] from the wall."))
+	loc.balloon_alert(user, "removed")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/urinal/deconstruct(disassembled = TRUE)
