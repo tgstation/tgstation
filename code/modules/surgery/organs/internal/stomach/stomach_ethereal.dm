@@ -33,7 +33,7 @@
 	SIGNAL_HANDLER
 	adjust_charge(amount / 3.5)
 
-/obj/item/organ/internal/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+/obj/item/organ/internal/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
 	if(flags & SHOCK_ILLUSION)
 		return

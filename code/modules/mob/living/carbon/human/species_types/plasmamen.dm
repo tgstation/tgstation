@@ -60,10 +60,6 @@
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE
 
-/datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	. = ..()
-	C.set_safe_hunger_level()
-
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	var/atmos_sealed = TRUE

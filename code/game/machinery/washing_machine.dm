@@ -24,7 +24,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_REDCOAT = /obj/item/clothing/under/costume/redcoat,
 		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner,
 		DYE_SYNDICATE = /obj/item/clothing/under/syndicate,
-		DYE_CENTCOM = /obj/item/clothing/under/rank/centcom/commander
+		DYE_CENTCOM = /obj/item/clothing/under/rank/centcom/commander,
+		DYE_COSMIC = /obj/item/clothing/under/rank/station_trait/human_ai,
 	),
 	DYE_REGISTRY_JUMPSKIRT = list(
 		DYE_RED = /obj/item/clothing/under/color/jumpskirt/red,

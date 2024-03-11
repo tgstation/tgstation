@@ -369,7 +369,8 @@
 		The wires coming out of it could be hooked into a MODsuit."
 	light_system = OVERLAY_LIGHT
 	light_color = "#cc00cc"
-	light_range = 2
+	light_range = 2.5
+	light_power = 1.5
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
 	maxcharge = 15000

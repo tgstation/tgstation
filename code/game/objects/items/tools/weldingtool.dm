@@ -19,7 +19,7 @@
 	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
 	light_system = OVERLAY_LIGHT
 	light_range = 2
-	light_power = 0.75
+	light_power = 1.5
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
 	throw_speed = 3

@@ -116,7 +116,7 @@
 	if(!can_open_with_hands)
 		return .
 
-	if(isaicamera(user) || issilicon(user))
+	if(isaicamera(user) || HAS_SILICON_ACCESS(user))
 		return .
 
 	if(isnull(held_item) && Adjacent(user))

@@ -20,16 +20,29 @@
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
-/obj/item/organ/internal/cyberimp/bci/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/obj/item/organ/internal/cyberimp/bci/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if (owner)
 		// Otherwise say_dead will be called.
 		// It's intentional that a circuit for a dead person does not speak from the shell.
 		if (owner.stat == DEAD)
 			return
 
-		owner.say(message, forced = "circuit speech")
-	else
-		return ..()
+		forced = "circuit speech"
+		return owner.say(arglist(args))
+
+	return ..()
 
 /obj/item/organ/internal/cyberimp/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
@@ -184,7 +197,7 @@
 
 	parent.cell.give(amount)
 
-/obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, siemens_coefficient, flags)
+/obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coefficient, flags)
 	SIGNAL_HANDLER
 
 	if (isnull(parent.cell))

@@ -283,40 +283,6 @@
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
 
-/mob/living/silicon/robot/proc/allowed(mob/M)
-	//check if it doesn't require any access at all
-	if(check_access(null))
-		return TRUE
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
-			return TRUE
-	else if(isalien(M))
-		var/mob/living/carbon/george = M
-		//they can only hold things :(
-		if(isitem(george.get_active_held_item()))
-			return check_access(george.get_active_held_item())
-	return FALSE
-
-/mob/living/silicon/robot/proc/check_access(obj/item/card/id/I)
-	if(!istype(req_access, /list)) //something's very wrong
-		return TRUE
-
-	var/list/L = req_access
-	if(!L.len) //no requirements
-		return TRUE
-
-	if(!isidcard(I) && isitem(I))
-		I = I.GetID()
-
-	if(!I || !I.access) //not ID or no access
-		return FALSE
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return FALSE
-	return TRUE
-
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
 
