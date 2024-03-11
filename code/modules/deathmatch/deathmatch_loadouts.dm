@@ -176,6 +176,7 @@
 	name = "Deathmatch: Druid"
 	display_name = "Druid"
 	desc = "How can plants help you?"
+
 	species_override = /datum/species/pod
 	l_hand = /obj/item/gun/ballistic/bow
 	r_hand = /obj/item/ammo_casing/arrow
@@ -243,7 +244,6 @@
 	l_pocket = /obj/item/reagent_containers/hypospray/combat
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/penthrite
 	l_hand = /obj/item/chainsaw
-
 	backpack_contents = list(
 		/obj/item/storage/medkit/tactical,
 		/obj/item/reagent_containers/hypospray/medipen/stimulants,
@@ -277,7 +277,6 @@
 	l_pocket = /obj/item/melee/energy/sword/bananium
 	r_pocket = /obj/item/shield/energy/bananium
 	gloves = /obj/item/clothing/gloves/tackler/rocket
-
 	backpack_contents = list(
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/instrument/bikehorn = 1,
@@ -343,6 +342,7 @@
 	name = "Deathmatch: Blood Miner"
 	display_name = "Blood Miner"
 	desc = "Rip and tear!!!"
+
 	l_hand = /obj/item/melee/cleaving_saw
 	r_hand = /obj/item/gun/energy/recharge/kinetic_accelerator
 	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
@@ -386,6 +386,7 @@
 	name = "Deathmatch: Wizard"
 	display_name = "Wizard"
 	desc = "It's wizard time, motherfucker! FIREBALL!!"
+
 	l_hand = /obj/item/staff
 	uniform = /datum/outfit/wizard::uniform
 	suit = /datum/outfit/wizard::suit
@@ -401,6 +402,7 @@
 	name = "Deathmatch: Pyromancer"
 	display_name = "Pyromancer"
 	desc = "Burninating the station-side! Burninating all the wizards!"
+
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
 	mask = /obj/item/clothing/mask/cigarette
@@ -413,6 +415,7 @@
 	name = "Deathmatch: Electromancer"
 	display_name = "Electromancer"
 	desc = "Batons are so last century."
+
 	suit = /obj/item/clothing/suit/wizrobe/magusred
 	head = /obj/item/clothing/head/wizard/magus
 	granted_spells = list(
@@ -424,6 +427,7 @@
 	name = "Deathmatch: Necromancer"
 	display_name = "Necromancer"
 	desc = "I've got a BONE to pick- Yeah, sorry."
+
 	species_override = /datum/species/skeleton
 	suit = /obj/item/clothing/suit/wizrobe/black
 	head = /obj/item/clothing/head/wizard/black
@@ -436,6 +440,7 @@
 	name = "Deathmatch: LARPer"
 	display_name = "LARPer"
 	desc = "Lightning bolt! Lightning bolt! Lightning bolt!"
+
 	l_hand = /obj/item/staff/stick
 	suit = /obj/item/clothing/suit/wizrobe/fake
 	head = /obj/item/clothing/head/wizard/fake
@@ -449,6 +454,7 @@
 	name = "Deathmatch: Chuuni"
 	display_name = "Chuunibyou"
 	desc = "Darkness blacker than black and darker than dark, I beseech thee..."
+
 	l_hand = /obj/item/staff/broom
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
@@ -462,6 +468,7 @@
 	name = "Deathmatch: Battlemage"
 	display_name = "Battlemage"
 	desc = "Have you heard of the High Elves?"
+
 	l_hand = /obj/item/mjollnir
 	suit = /obj/item/clothing/suit/wizrobe/magusblue
 	head = /obj/item/clothing/head/wizard/magus
@@ -473,6 +480,7 @@
 	name = "Deathmatch: Apprentice"
 	display_name = "Apprentice"
 	desc = "You feel severely under-leveled for this encounter..."
+
 	l_hand = null
 	granted_spells = list(
 		/datum/action/cooldown/spell/charge,
@@ -482,6 +490,7 @@
 	name = "Deathmatch: Gunmancer"
 	display_name = "Gunmancer"
 	desc = "Magic is lame."
+
 	l_hand = /obj/item/gun/ballistic/automatic/pistol/m1911
 	suit = /obj/item/clothing/suit/wizrobe/tape
 	head = /obj/item/clothing/head/wizard/tape
@@ -491,24 +500,11 @@
 		/datum/action/cooldown/spell/aoe/knock,
 	)
 
-/datum/outfit/deathmatch_loadout/wizard/monkey
-	name = "Deathmatch: Monkey"
-	display_name = "Monkeymancer"
-	desc = "Ook eek aaa ooo eee!"
-	species_override = /datum/species/monkey
-	l_hand = /obj/item/food/grown/banana
-	uniform = null
-	suit = null
-	head = /obj/item/clothing/head/wizard
-	shoes = null
-	granted_spells = list(
-		/datum/action/cooldown/spell/conjure/simian,
-	)
-
 /datum/outfit/deathmatch_loadout/wizard/chaos
 	name = "Deathmatch: Chaos"
 	display_name = "Chaosmancer"
 	desc = "Hardcore Random Body ONLY!"
+
 	l_hand = /obj/item/gun/magic/staff/chaos
 	uniform = /obj/item/clothing/under/color/rainbow
 	suit = /obj/item/clothing/suit/costume/hawaiian
@@ -523,6 +519,7 @@
 	name = "Deathmatch: Clown"
 	display_name = "Funnymancer"
 	desc = "Honk NATH!"
+
 	l_hand = /obj/item/gun/magic/staff/honk
 	uniform = /obj/item/clothing/under/rank/civilian/clown/magic
 	suit = /obj/item/clothing/suit/chaplainsuit/clownpriest
@@ -531,3 +528,18 @@
 	back = /obj/item/storage/backpack/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	granted_spells = null
+
+/datum/outfit/deathmatch_loadout/wizard/monkey
+	name = "Deathmatch: Monkey"
+	display_name = "Monkeymancer"
+	desc = "Ook eek aaa ooo eee!"
+
+	species_override = /datum/species/monkey
+	l_hand = /obj/item/food/grown/banana
+	uniform = null
+	suit = null
+	head = /obj/item/clothing/head/wizard
+	shoes = null
+	granted_spells = list(
+		/datum/action/cooldown/spell/conjure/simian,
+	)
