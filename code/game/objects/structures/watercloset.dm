@@ -232,7 +232,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	tool.play_tool_sound(user)
 	deconstruct(TRUE)
 	to_chat(user, span_notice("You remove [src] from the wall."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/urinal/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NO_DECONSTRUCTION))
