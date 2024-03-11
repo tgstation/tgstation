@@ -283,9 +283,12 @@
 
 	current_list_element = rand(1, cached_reagents.len)
 
-	while(total_removed != amount)
-		if(total_removed >= amount)
+	while(total_removed < amount)
+		// If the amount left to remove is less than the quantisation level then we have to stop, since you can't remove below this
+		if( (amount - total_removed) < CHEMICAL_QUANTISATION_LEVEL)
 			break
+
+		// There's nothing left in the container
 		if(total_volume <= 0 || !cached_reagents.len)
 			break
 
@@ -294,6 +297,8 @@
 
 		var/datum/reagent/target_holder = cached_reagents[current_list_element]
 		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
+		// We can't really remove any more than the minimum quantization level
+		remove_amt = min(CHEMICAL_QUANTISATION_LEVEL, amount)
 		remove_amt = remove_reagent(target_holder.type, remove_amt)
 
 		current_list_element++
