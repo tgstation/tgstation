@@ -63,7 +63,7 @@
 		update_name()
 
 /// Choose what our prize is :D
-/obj/item/coupon/proc/generate(discount, datum/supply_pack/discounted_pack)
+/obj/item/coupon/proc/generate(discount, datum/supply_pack/discounted_pack, mob/user)
 	src.discounted_pack = discounted_pack || pick(GLOB.discountable_packs[pick_weight(GLOB.pack_discount_odds)])
 	var/static/list/chances = list("0.10" = 4, "0.15" = 8, "0.20" = 10, "0.25" = 8, "0.50" = 4, COUPON_OMEN = 1)
 	discount_pct_off = discount || pick_weight(chances)
@@ -77,14 +77,14 @@
 	name = "coupon - fuck you"
 	desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
 
-	if(!ismob(loc))
+	var/mob/cursed = user || loc
+	if(!ismob(cursed))
 		return FALSE
 
-	var/mob/cursed = loc
 	to_chat(cursed, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
 
 	if(!cursed.GetComponent(/datum/component/omen))
-		cursed.AddComponent(/datum/component/omen, 1)
+		cursed.AddComponent(/datum/component/omen, src, 1)
 		return TRUE
 	if(HAS_TRAIT(cursed, TRAIT_CURSED))
 		to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
