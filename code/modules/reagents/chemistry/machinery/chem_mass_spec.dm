@@ -459,7 +459,7 @@
 		return
 
 	if(!use_energy(active_power_usage * seconds_per_tick))
-    return
+		return
 
 	progress_time += seconds_per_tick
 	if(progress_time >= delay_time)
