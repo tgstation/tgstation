@@ -417,7 +417,7 @@
 **/
 /proc/list_clear_nulls(list/list_to_clear)
 	return (list_to_clear.RemoveAll(null) > 0)
-	
+
 
 /**
  * Removes any empty weakrefs from the list
