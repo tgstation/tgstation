@@ -349,7 +349,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if((total_loaded_stock() / total_max_stock()) < 1)
 			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [refill_canister]")] with the panel open.")
 		else
-			. += span_warning("\The [src] is fully stocked.")
+			. += span_notice("\The [src] is fully stocked.")
+		if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
+			. += span_notice("It should have a handfull of credits stored based on the missing items.")
+		else if (credits_contained > PAYCHECK_CREW)
+			. += span_notice("It should have at least a full paycheck worth of credits inside!")
+		/**
+		 * Intentionally leaving out a case for zero credits as it should be covered by the vending machine's stock being full,
+		 * or covered by first case if items were returned.
+		 */
 
 
 /obj/machinery/vending/atom_break(damage_flag)
