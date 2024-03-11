@@ -134,9 +134,6 @@
 /area/ruin/lizard_gaslava)
 "ng" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id = "lizgas_AAAA"
-	},
 /turf/open/floor/plating,
 /area/ruin/lizard_gaslava)
 "om" = (
@@ -173,9 +170,6 @@
 /obj/machinery/door/airlock/external/ruin,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id = "lizgas_AAAA"
-	},
 /turf/open/floor/plating,
 /area/ruin/lizard_gaslava)
 "tD" = (
@@ -441,9 +435,6 @@
 "HW" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/machinery/duct,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id = "lizgas_AAAA"
-	},
 /turf/open/floor/plating,
 /area/ruin/lizard_gaslava)
 "IU" = (
