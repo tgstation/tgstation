@@ -149,7 +149,7 @@
 		if(prob(5))//Fry it!
 			food_item.AddElement(/datum/element/fried_item, rand(15, 60))
 		if(prob(5))//Grill it!
-			food_item.AddElement(/datum/element/grilled_item, rand(30, 100))
+			food_item.AddElement(/datum/element/grilled_item, rand(30 SECONDS, 100 SECONDS))
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(food_item, pick(NORTH,SOUTH,EAST,WEST))

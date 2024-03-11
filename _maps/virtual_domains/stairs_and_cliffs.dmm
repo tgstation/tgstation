@@ -5,6 +5,10 @@
 	},
 /turf/open/cliff/snowrock/virtual_domain,
 /area/icemoon/underground/explored/virtual_domain)
+"bU" = (
+/mob/living/basic/bear/snow/ancient,
+/turf/open/misc/asteroid/snow,
+/area/icemoon/underground/explored/virtual_domain)
 "cu" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -18,6 +22,10 @@
 "cJ" = (
 /obj/structure/chair/sofa/bench,
 /turf/open/floor/plating/snowed/smoothed,
+/area/icemoon/underground/explored/virtual_domain)
+"cS" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/iron/stairs,
 /area/icemoon/underground/explored/virtual_domain)
 "dR" = (
 /turf/open/misc/asteroid/snow,
@@ -33,6 +41,14 @@
 "gB" = (
 /obj/structure/railing/corner,
 /turf/open/cliff/snowrock/virtual_domain,
+/area/icemoon/underground/explored/virtual_domain)
+"gF" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/misc/asteroid/snow,
+/area/icemoon/underground/explored/virtual_domain)
+"gY" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
 "hc" = (
 /obj/structure/railing/corner/end{
@@ -65,6 +81,10 @@
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
+"mr" = (
+/obj/structure/fluff/fokoff_sign,
+/turf/open/misc/asteroid/snow,
+/area/icemoon/underground/explored/virtual_domain)
 "mx" = (
 /obj/structure/railing,
 /obj/structure/railing{
@@ -84,6 +104,13 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/turf/open/floor/wood,
+/area/icemoon/underground/explored/virtual_domain)
+"nY" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
 /turf/open/floor/wood,
 /area/icemoon/underground/explored/virtual_domain)
 "pl" = (
@@ -597,10 +624,10 @@ dR
 dR
 dR
 dR
-sM
-sM
-sM
-sM
+Nv
+Nv
+Nv
+dR
 sM
 sM
 sM
@@ -672,23 +699,23 @@ Qv
 Qv
 kK
 sw
+gY
+dR
+sM
+sM
+sM
+dR
+cS
+Nv
+Nv
 dR
 dR
+sw
 sM
 sM
 sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
+qc
+gF
 sM
 sM
 sM
@@ -754,18 +781,18 @@ dR
 sM
 sM
 sM
+sa
 sM
 sM
+gY
+dR
+dR
+sa
+dR
 sM
 sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
+Dz
+dR
 sM
 sM
 sM
@@ -827,21 +854,21 @@ Qv
 eB
 sw
 dR
+mr
+sM
+sM
+sM
+sM
+sM
+sM
+mr
+sa
 dR
+dR
+gY
 sM
 sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
+nY
 sM
 sM
 sM
@@ -901,24 +928,24 @@ Am
 Am
 Qv
 Qv
-dR
+mr
 eB
 dR
-sw
+dR
 dR
 sM
 sM
 sM
 sM
 sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
-sM
+kK
+dR
+bU
+dR
+dR
+cS
+Nv
+hc
 sM
 sM
 sM
@@ -989,10 +1016,10 @@ sM
 sM
 sM
 sM
-sM
-sM
-sM
-sM
+dR
+sa
+gY
+dR
 sM
 sM
 sM
@@ -1063,13 +1090,13 @@ dR
 sM
 sM
 sM
+pL
 sM
 sM
-sM
-sM
-sM
-sM
-sM
+sw
+dR
+dR
+sa
 sM
 sM
 sM
@@ -1140,13 +1167,13 @@ sM
 sM
 sM
 sM
+pL
+pL
 sM
 sM
-sM
-sM
-sM
-sM
-sM
+dR
+dR
+sw
 sM
 sM
 sM
@@ -1217,8 +1244,8 @@ sM
 sM
 sM
 sM
-sM
-sM
+pL
+pL
 sM
 sM
 sM
@@ -1295,11 +1322,11 @@ sM
 sM
 sM
 sM
-sM
-sM
-sM
-sM
-sM
+pL
+pL
+pL
+pL
+pL
 sM
 sM
 sM
@@ -1373,8 +1400,8 @@ sM
 sM
 sM
 sM
-sM
-sM
+pL
+pL
 sM
 sM
 sM

@@ -290,8 +290,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	GLOB.vending_machines_to_restock -= src
 	return ..()
 
-/obj/machinery/vending/can_speak()
-	return !shut_up
+/obj/machinery/vending/can_speak(allow_mimes)
+	return is_operational && !shut_up && ..()
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()
@@ -1172,7 +1172,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (!isAI(user))
+	if (!HAS_AI_ACCESS(user))
 		if(seconds_electrified && !(machine_stat & NOPOWER))
 			if(shock(user, 100))
 				return
