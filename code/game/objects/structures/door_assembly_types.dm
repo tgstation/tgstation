@@ -84,7 +84,7 @@
 
 /obj/structure/door_assembly/door_assembly_ext
 	name = "external airlock assembly"
-	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/external/external.dmi'
 	base_name = "external airlock"
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	glass_type = /obj/machinery/door/airlock/external/glass
@@ -135,7 +135,7 @@
 
 /obj/structure/door_assembly/door_assembly_shuttle
 	name = "shuttle airlock assembly"
-	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/shuttle/shuttle.dmi'
 	base_name = "shuttle airlock"
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/shuttle
@@ -231,7 +231,7 @@
 
 /obj/structure/door_assembly/door_assembly_titanium
 	name = "titanium airlock assembly"
-	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/shuttle/shuttle.dmi'
 	base_name = "shuttle airlock"
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	glass_type = /obj/machinery/door/airlock/titanium/glass
