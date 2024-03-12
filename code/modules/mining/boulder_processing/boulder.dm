@@ -127,7 +127,7 @@
 			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
 		if(!continued)
-			to_chat(user, span_notice("You scrape away at \the [src]...  speed is [process_speed * skill_modifier]."))
+			to_chat(user, span_notice("You scrape away at \the [src]..."))
 	else
 		CRASH("No weapon, acceptable user, or override speed multiplier passed to manual_process()")
 	if(durability > 0)
