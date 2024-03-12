@@ -856,15 +856,15 @@
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 
-/obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/rack/attackby(obj/item/attacking_item, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		W.play_tool_sound(src)
+	if (attacking_item.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION) && LAZYACCESS(modifiers, RIGHT_CLICK))
+		attacking_item.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
 	if(user.combat_mode)
 		return ..()
-	if(user.transferItemToLoc(W, drop_location(), silent = FALSE))
+	if(user.transferItemToLoc(attacking_item, drop_location(), silent = FALSE))
 		return TRUE
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
