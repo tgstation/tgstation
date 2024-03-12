@@ -8,14 +8,14 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 
 	/// Refernce to a "stickered" atom.
-	var/atom/our_sticker
+	var/atom/movable/our_sticker
 	/// Either `turf` or `null`, used to connect to `COMSIG_TURF_EXPOSE` signal when parent is closed.
 	var/turf/listening_turf
 	/// Reference to the created overlay, used during component deletion.
 	var/mutable_appearance/sticker_overlay
 
 /datum/component/sticker/Initialize(atom/stickering_atom, mob/user, dir = NORTH, px = 0, py = 0)
-	if(!isatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.our_sticker = our_sticker
@@ -29,7 +29,7 @@
 
 	unregister_turf_signals()
 
-	REMOVE_TRAIT(parent, TRAIT_STICKERED, src)
+	REMOVE_TRAIT(parent, TRAIT_STICKERED, REF(src))
 
 	QDEL_NULL(our_sticker)
 	QDEL_NULL(sticker_overlay)
@@ -61,7 +61,7 @@
 	UnregisterSignal(listening_turf, COMSIG_TURF_EXPOSE)
 
 /// Handles overlay creation from supplied atom, adds created icon to the parent object, moves source atom to the nullspace.
-/datum/component/sticker/proc/stick(atom/stickering_atom, px, py)
+/datum/component/sticker/proc/stick(atom/movable/stickering_atom, px, py)
 	our_sticker = stickering_atom
 	our_sticker.moveToNullspace()
 
@@ -73,7 +73,7 @@
 
 	parent_atom.add_overlay(sticker_overlay)
 
-	ADD_TRAIT(parent, TRAIT_STICKERED, src)
+	ADD_TRAIT(parent, TRAIT_STICKERED, REF(src))
 
 /// Moves stickered atom from the nullspace, deletes component.
 /datum/component/sticker/proc/peel()
