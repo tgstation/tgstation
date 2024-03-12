@@ -7,10 +7,10 @@
 /datum/component/sticker
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 
+	/// Either `turf` or `null`, used to connect to `COMSIG_TURF_EXPOSE` signal when parent is a turf.
+	var/turf/listening_turf
 	/// Refernce to a "stickered" atom.
 	var/atom/movable/our_sticker
-	/// Either `turf` or `null`, used to connect to `COMSIG_TURF_EXPOSE` signal when parent is closed.
-	var/turf/listening_turf
 	/// Reference to the created overlay, used during component deletion.
 	var/mutable_appearance/sticker_overlay
 
