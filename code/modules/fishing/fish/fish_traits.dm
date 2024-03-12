@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		addtimer(CALLBACK(src, PROC_REF(revive), WEAKREF(source)), rand(1 MINUTES, 2 MINUTES))
 
 /datum/fish_trait/revival/proc/revive(datum/weakref/fish_ref)
-	var/obj/item/fish/source = fish_ref.Resolve()
+	var/obj/item/fish/source = fish_ref.resolve()
 	if(QDELETED(source) || source.status != FISH_DEAD)
 		return
 	source.set_status(FISH_ALIVE)
