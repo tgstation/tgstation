@@ -3,6 +3,10 @@
 // #define SOUTH 2
 // #define EAST 4
 // #define WEST 8
+// #define NORTHEAST NORTH|EAST // 1|4 // 5
+// #define NORTHWEST NORTH|WEST // 1|8 // 9
+// #define SOUTHEAST SOUTH|EAST // 2|4 // 6
+// #define SOUTHWEST SOUTH|WEST // 2|8 // 10
 
 /// North direction as a string "[1]"
 #define TEXT_NORTH "[NORTH]"

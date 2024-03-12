@@ -29,10 +29,19 @@
 	var/obj/item/pipe_dispenser/pipe_placing
 	var/mob/living/pipe_placer
 
+	var/building_pipes
+	/// overlay on turfs to show we're speedpiping there
+	var/static/mutable_appearance/pipe_overlay_appearance
+	var/list/turfs_hovering = list()
 	/// A weakref to the mob we're currently targeting with the lockon component.
 	var/datum/weakref/current_target_weakref
 	/// A ref to our lockon component, which is created and destroyed on activation and deactivation.
 	var/datum/component/lock_on_cursor/lockon_component
+
+/obj/structure/plasma_extraction_hub/part/pipe/Initialize(mapload)
+	. = ..()
+	if(!pipe_overlay_appearance)
+		pipe_overlay_appearance = mutable_appearance(icon = 'icons/obj/pipes_n_cables/disposal.dmi', icon_state = "pipe", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, alpha = 100, offset_const = src)
 
 /obj/structure/plasma_extraction_hub/part/pipe/attackby(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/pipe_dispenser) || pipe_placer)
@@ -50,6 +59,8 @@
 	)
 
 /obj/structure/plasma_extraction_hub/part/pipe/proc/on_lockon_component(list/locked_weakrefs)
+	if(building_pipes)
+		return
 	if(!length(locked_weakrefs))
 		current_target_weakref = null
 		return
@@ -57,10 +68,23 @@
 	var/atom/real_target = current_target_weakref.resolve()
 	if(real_target)
 		pipe_placer.face_atom(real_target)
+	var/list/pipe_locations = get_path_to(src, real_target, max_distance = 5, diagonal_handling = DIAGONAL_REMOVE_ALL)
+	var/list/new_turf_list = list()
+	for(var/turf/next_location as anything in pipe_locations)
+		new_turf_list += pipe_locations
+		if(!(next_location in turfs_hovering)) //already has one
+			next_location.add_overlay(pipe_overlay_appearance)
+	for(var/turf/existing_turfs as anything in turfs_hovering)
+		if(!(existing_turfs in new_turf_list))
+			existing_turfs.cut_overlay(pipe_overlay_appearance)
+	turfs_hovering = new_turf_list
 
 /obj/structure/plasma_extraction_hub/part/pipe/proc/clear_click_catch()
 	if(!lockon_component)
 		return
+	for(var/turf/turfs_with_overlay as anything in turfs_hovering)
+		turfs_with_overlay.cut_overlay(pipe_overlay_appearance)
+	turfs_hovering.Cut()
 	UnregisterSignal(pipe_placing, COMSIG_MOVABLE_MOVED)
 	pipe_placing = null
 	pipe_placer.clear_fullscreen("pipe_extractor")
@@ -68,21 +92,48 @@
 	playsound(src, 'sound/effects/empulse.ogg', 75, TRUE)
 	QDEL_NULL(lockon_component)
 
-/obj/structure/plasma_extraction_hub/part/pipe/proc/on_catcher_click(location, control, params, user)
+/obj/structure/plasma_extraction_hub/part/pipe/proc/on_catcher_click(turf/location, control, params, user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(build_pipes), get_turf(location))
+	if(building_pipes)
+		return
+	INVOKE_ASYNC(src, PROC_REF(build_pipes), location)
 
 /obj/structure/plasma_extraction_hub/part/pipe/proc/build_pipes(turf/starting_location)
-	var/list/pipe_locations = get_path_to(src, starting_location, max_distance = 5, diagonal_handling = DIAGONAL_DO_NOTHING)
-	for(var/turf/next_location as anything in pipe_locations)
-		pipe_locations -= next_location
-		if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
-			break
-		new /obj/structure/disposalpipe/segment(next_location)
+	building_pipes = TRUE
+	var/list/pipe_locations = get_path_to(src, starting_location, max_distance = 5, diagonal_handling = DIAGONAL_REMOVE_ALL)
+	if(length(pipe_locations))
+		for(var/turf/next_location as anything in pipe_locations)
+			if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
+				break
+			var/obj/structure/liquid_plasma_extraction_pipe/new_segment = new(next_location)
+			var/spot_in_list = pipe_locations.Find(next_location)
+			var/direction_to_place
+			if(spot_in_list == 1) //first one starts from the extraction hub
+				var/turf/next_segment = pipe_locations[spot_in_list + 1]
+				direction_to_place = get_dir(src, next_segment)
+			else if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
+				var/turf/previous_segment = pipe_locations[spot_in_list - 1]
+				direction_to_place = get_dir(previous_segment, next_location) //no special diagonal movement cause it can't be diagonal.
+			else
+				var/turf/previous_segment = pipe_locations[spot_in_list - 1]
+				var/turf/next_segment = pipe_locations[spot_in_list + 1]
+				direction_to_place = get_dir(previous_segment, next_segment)
+			new_segment.setDir(direction_to_place)
 
+	building_pipes = FALSE
 	pipe_locations = null
 	clear_click_catch()
+
+/obj/structure/liquid_plasma_extraction_pipe
+	name = "liquid plasma extraction pipe"
+	desc = "Get that mork- liquid plasma, and return back to the base."
+	icon = 'icons/obj/pipes_n_cables/plasma_extractor.dmi'
+	icon_state = "pipe"
+	anchored = TRUE
+	density = FALSE
+	obj_flags = CAN_BE_HIT
+	dir = NONE // dir will contain dominant direction for junction pipes
 
 /obj/structure/plasma_extraction_hub/part/pipe/proc/holding_pipe_check()
 	var/obj/item/pipe_dispenser/held_item = pipe_placer.get_active_held_item()
