@@ -922,6 +922,7 @@
 /obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
+	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
