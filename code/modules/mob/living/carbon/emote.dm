@@ -42,6 +42,7 @@
 
 /datum/emote/living/carbon/blink/blink_r
 	key = "blink_r"
+	name = "blink (Rapid)"
 	message = "blinks rapidly."
 
 /datum/emote/living/carbon/clap
