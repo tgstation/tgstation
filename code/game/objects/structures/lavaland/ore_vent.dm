@@ -437,8 +437,8 @@
 	defending_mobs = list(
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
+		/mob/living/basic/mining/wolf,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
-		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE,
@@ -450,8 +450,8 @@
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/ice_demon,
+		/mob/living/basic/mining/wolf,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
-		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE = 3,

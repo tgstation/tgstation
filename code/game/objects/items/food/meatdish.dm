@@ -554,6 +554,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/food/sausage/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -734,6 +735,7 @@
 	foodtypes = MEAT | DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_price = PAYCHECK_CREW
 
 /obj/item/food/bbqribs
 	name = "bbq ribs"
@@ -749,19 +751,6 @@
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_2
-
-///Special private component to handle how bbq is grilled, not meant to be used anywhere else
-/datum/component/grillable/bbq
-
-/datum/component/grillable/bbq/finish_grilling(atom/grill_source)
-	//when on a grill allow it to roast without deleting itself
-	if(istype(grill_source, /obj/machinery/grill))
-		grill_source.visible_message(span_notice("[parent] is grilled to perfection!"))
-	else //when on a girddle allow it to burn into an mouldy mess
-		return ..()
-
-/obj/item/food/bbqribs/make_grillable()
-	AddComponent(/datum/component/grillable/bbq, /obj/item/food/badrecipe, rand(30 SECONDS, 40 SECONDS), FALSE)
 
 /obj/item/food/meatclown
 	name = "meat clown"

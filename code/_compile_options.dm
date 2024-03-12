@@ -142,3 +142,12 @@
 #warn In order to build, run BUILD.bat in the root directory.
 #warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
 #endif
+
+/// Runs the game in "map test mode"
+/// Map test mode prevents common annoyances, such as rats from spawning and random light fixture breakage,
+/// so mappers can test important facets of their map (working powernet, atmos, good light coverage) without these interfering.
+// #define MAP_TEST
+
+#ifdef MAP_TEST
+#warn Compiling in MAP_TEST mode. Certain game mechanics will be disabled.
+#endif

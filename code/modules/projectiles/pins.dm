@@ -387,4 +387,5 @@
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null
+		gun = null
 	return ..()
