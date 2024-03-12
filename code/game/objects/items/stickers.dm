@@ -18,16 +18,15 @@
 	desc = "A sticker with some strong adhesive on the back, sticks to stuff!"
 
 	icon = 'icons/obj/toys/stickers.dmi'
-	icon_state = "plizard"
 
-	w_class = WEIGHT_CLASS_TINY
+	max_integrity = 50
+	resistance_flags = FLAMMABLE
 
 	throw_range = 3
-
 	pressure_resistance = 0
 
-	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	item_flags = NOBLUDGEON | XENOMORPH_HOLDABLE //funny ~Jimmyl
+	w_class = WEIGHT_CLASS_TINY
 
 	/// `list` or `null`, contains possible alternate `icon_states`.
 	var/list/icon_states
@@ -41,8 +40,8 @@
 		icon_state = pick(icon_states)
 
 /obj/item/sticker/Bump(atom/bumped_atom)
-	if(prob(100))
-		attempt_attach(bumped_atom)
+	if(prob(50) && attempt_attach(bumped_atom))
+		bumped_atom.balloon_alert_to_viewers("sticker landed on sticky side!")
 
 /obj/item/sticker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isatom(interacting_with))
@@ -66,6 +65,7 @@
  */
 /obj/item/sticker/proc/attempt_attach(atom/target, mob/user, px, py)
 	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_STICKER_COUNT)
+		balloon_alert_to_viewers("sticker won't stick!")
 		return FALSE
 
 	if(isnull(px) || isnull(py))
@@ -79,8 +79,8 @@
 
 	if(!isnull(user))
 		user.do_attack_animation(target, used_item = src)
+		target.balloon_alert(user, "sticker sticked")
 
-	user.balloon_alert(user, "sticker attached")
 	target.AddComponent(/datum/component/sticker, src, user, get_dir(target, src), px, py)
 	return TRUE
 

@@ -20,6 +20,13 @@
 
 	src.our_sticker = our_sticker
 
+	if(isliving(parent) && !isnull(user))
+		var/mob/living/victim = parent
+
+		if(!isnull(victim.client))
+			user.log_message("stuck [stickering_atom] to [key_name(victim)]", LOG_ATTACK)
+			victim.log_message("had [stickering_atom] stuck to them by [key_name(user)]", LOG_ATTACK)
+
 	stick(stickering_atom, px, py)
 	register_turf_signals(dir)
 
