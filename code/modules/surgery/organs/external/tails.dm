@@ -188,6 +188,9 @@
 	. = ..()
 	qdel(GetComponent(/datum/component/connect_containers))
 
+/obj/item/organ/external/tail/monkey/saiyan/get_butt_sprite()
+	return BUTT_SPRITE_CAT // how don't we have a monkey one...
+
 /// When we move check if we are exposed to space
 /obj/item/organ/external/tail/monkey/saiyan/proc/on_moved()
 	SIGNAL_HANDLER

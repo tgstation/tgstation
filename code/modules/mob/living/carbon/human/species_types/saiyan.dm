@@ -13,6 +13,14 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/clown
 
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/saiyan,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/saiyan,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/saiyan,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/saiyan,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/saiyan,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/saiyan,
+	)
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey/saiyan = "Monkey",
 	)
@@ -80,6 +88,12 @@
 			SPECIES_PERK_ICON = "bowl-rice",
 			SPECIES_PERK_NAME = "Warrior's Appetite",
 			SPECIES_PERK_DESC = "Maintaining fighting fitness sure makes you awfully hungry.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "paw",
+			SPECIES_PERK_NAME = "Melee Fixation",
+			SPECIES_PERK_DESC = "Saiyans mostly disavow the use of projectile weaponry on the grounds of honour, although some say it's simply that their big hands mean that they're not very good at using it.",
 		),
 	)
 
