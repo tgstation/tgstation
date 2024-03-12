@@ -856,12 +856,14 @@
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 
+/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(obj_flags & NO_DECONSTRUCTION)
+		return FALSE
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/structure/rack/attackby(obj/item/attacking_item, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if (attacking_item.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		attacking_item.play_tool_sound(src)
-		deconstruct(TRUE)
-		return
 	if(user.combat_mode || attacking_item.item_flags & ABSTRACT)
 		return ..()
 	if(user.transferItemToLoc(attacking_item, drop_location(), silent = FALSE))
