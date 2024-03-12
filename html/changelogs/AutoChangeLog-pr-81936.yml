@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Some things which should pacify people (but aren't) now will properly, like hypnoflash"

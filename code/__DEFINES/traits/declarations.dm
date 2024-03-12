@@ -672,8 +672,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STORAGE_INSERT "no_storage_insert"
 /// Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
-/// If this item's been grilled
-#define TRAIT_FOOD_GRILLED "food_grilled"
 /// If this item's been fried
 #define TRAIT_FOOD_FRIED "food_fried"
 /// This is a silver slime created item
