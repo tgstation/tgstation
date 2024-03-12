@@ -283,9 +283,8 @@
 
 	current_list_element = rand(1, cached_reagents.len)
 
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
+	while(total_removed < amount)
+		// There's nothing left in the container
 		if(total_volume <= 0 || !cached_reagents.len)
 			break
 
@@ -294,6 +293,9 @@
 
 		var/datum/reagent/target_holder = cached_reagents[current_list_element]
 		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
+		// If the logic above means removing really tiny amounts (or even zero if it's a remove amount of 10) instead choose a sensible smallish number
+		// so this proc will actually finish instead of looping forever
+		remove_amt = max(CHEMICAL_VOLUME_ROUNDING, remove_amt)
 		remove_amt = remove_reagent(target_holder.type, remove_amt)
 
 		current_list_element++

@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "As a borg you shouldn't be able to resist from grab while locked down"
