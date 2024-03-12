@@ -104,3 +104,8 @@
 /// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name. add_id_name will control whether or not we append "(as [id_name])".
 /atom/proc/get_visible_name(add_id_name)
 	return name
+
+/mob/living/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_MARTIAL_VISION))
+		. += report_power_level()

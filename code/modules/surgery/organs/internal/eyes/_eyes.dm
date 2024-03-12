@@ -700,6 +700,18 @@
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-cybermoth"
 
+/obj/item/organ/internal/eyes/saiyan
+	name = "saiyan eyes"
+	desc = "The incisive eyes of a warrior. Special cells allow the detection of power levels."
+
+/obj/item/organ/internal/eyes/saiyan/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	ADD_TRAIT(organ_owner, TRAIT_MARTIAL_VISION, ORGAN_TRAIT)
+
+/obj/item/organ/internal/eyes/saiyan/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	REMOVE_TRAIT(organ_owner, TRAIT_MARTIAL_VISION, ORGAN_TRAIT)
+
 /obj/item/organ/internal/eyes/snail
 	name = "snail eyes"
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."

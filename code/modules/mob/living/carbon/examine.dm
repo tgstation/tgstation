@@ -132,6 +132,9 @@
 				. += "[t_He] look[p_s()] ecstatic."
 	. += "</span>"
 
+	if(HAS_TRAIT(user, TRAIT_MARTIAL_VISION))
+		. += "[t_His] power level is [report_power_level()]."
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
 /mob/living/carbon/examine_more(mob/user)

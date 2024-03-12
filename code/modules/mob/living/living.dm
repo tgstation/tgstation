@@ -2645,3 +2645,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		physical_cash_total += counted_credit.get_item_credit_value()
 		counted_money += counted_credit
 	return round(physical_cash_total)
+
+/// Returns the approximate power level of this creature
+/mob/living/proc/calculate_power_level()
+	return maxHealth * max((melee_damage_lower + melee_damage_upper) / 2, 0.1)
+
+/// Formats the above as a string
+/mob/living/proc/report_power_level()
+	var/power_level = floor(calculate_power_level())
+	if (power_level >= 9000)
+		return span_boldwarning("[p_Their()] power level is... What?! [power_level]?!?!")
+	return span_notice("[p_Their()] power level is [power_level].")

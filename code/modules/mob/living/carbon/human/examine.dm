@@ -351,6 +351,9 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
+	if(HAS_TRAIT(user, TRAIT_MARTIAL_VISION))
+		. += report_power_level()
+
 	if(isliving(user))
 		var/mob/living/morbid_weirdo = user
 		if(HAS_MIND_TRAIT(morbid_weirdo, TRAIT_MORBID))

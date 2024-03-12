@@ -724,6 +724,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAUNTED "haunted"
 /// limbs with this trait can be empowered by a saiyan heart
 #define TRAIT_SAIYAN_STRENGTH "saiyan_strength"
+/// Allows you to detect power levels
+#define TRAIT_MARTIAL_VISION "martial_vision"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"

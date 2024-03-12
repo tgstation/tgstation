@@ -169,7 +169,7 @@
 
 /mob/living/basic/gorilla/saiyan/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_traits(list(TRAIT_MARTIAL_VISION, TRAIT_SPACEWALK), INNATE_TRAIT)
 	AddComponent(\
 		/datum/component/ranged_attacks,\
 		projectile_type = /obj/projectile/beam/emitter/hitscan,\

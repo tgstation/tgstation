@@ -1448,3 +1448,17 @@
 	if(!unwagged)
 		return FALSE
 	return unwagged.stop_wag(src)
+
+/mob/living/carbon/calculate_power_level()
+	var/min_damage = 0
+	var/max_damage = 0
+	var/part_count = 0
+	for (var/obj/item/bodypart/part as anything in bodyparts)
+		if (part.unarmed_damage_high <= 0)
+			continue
+		min_damage += part.unarmed_damage_low
+		max_damage += part.unarmed_damage_high
+		part_count++
+
+	var/damage = ((min_damage / part_count) + (max_damage / part_count)) / 2
+	return maxHealth * max(damage, 0.1)

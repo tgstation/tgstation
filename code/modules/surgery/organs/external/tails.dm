@@ -224,6 +224,7 @@
 	owner.visible_message(span_warning("[owner] transforms into a huge, ape-like creature!"))
 	var/mob/living/basic/gorilla/saiyan/monkie = new(owner.loc)
 	monkie.dir = owner.dir
+	monkie.faction = owner.faction.Copy()
 	monkie.name = owner.real_name
 	monkie.real_name = owner.real_name
 	monkie.apply_status_effect(/datum/status_effect/shapechange_mob, owner)
