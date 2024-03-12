@@ -924,6 +924,23 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
+/obj/item/rack_parts/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/rack_parts/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
+
 /obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
