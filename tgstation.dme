@@ -2285,7 +2285,7 @@
 #include "code\game\objects\items\signs.dm"
 #include "code\game\objects\items\skub.dm"
 #include "code\game\objects\items\spear.dm"
-#include "code\game\objects\items\sticker.dm"
+#include "code\game\objects\items\stickers.dm"
 #include "code\game\objects\items\surgery_tray.dm"
 #include "code\game\objects\items\syndie_spraycan.dm"
 #include "code\game\objects\items\tail_pin.dm"
