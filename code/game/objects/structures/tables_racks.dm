@@ -835,6 +835,20 @@
 	. = ..()
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
+	register_context()
+
+/obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
