@@ -1,5 +1,5 @@
 /datum/lazy_template/deathmatch //deathmatch maps that have any possibility of the walls being destroyed should use indestructible walls, because baseturf moment
-	map_dir = "_maps/map_files/Deathmatch"
+	map_dir = "_maps/deathmatch"
 	place_on_top = TRUE
 	/// Map UI Name
 	var/name
@@ -82,7 +82,7 @@
 	map_name = "mech_madness"
 	key = "mech_madness"
 
-/datum/lazy_template/deathmatch/sniperelite
+/datum/lazy_template/deathmatch/sniper_elite
 	name = "Sniper Elite"
 	desc = "Sound of gunfire and screaming people make my day"
 	max_players = 8
@@ -140,7 +140,7 @@
 	map_name = "underground_arena"
 	key = "underground_arena"
 
-/datum/lazy_template/deathmatch/raidthebase
+/datum/lazy_template/deathmatch/backalley
 	name = "Backalley"
 	desc = "You are not built for these streets."
 	max_players = 8
