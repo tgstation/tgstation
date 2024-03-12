@@ -862,7 +862,7 @@
 		attacking_item.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
-	if(user.combat_mode)
+	if(user.combat_mode || attacking_item.item_flags & ABSTRACT)
 		return ..()
 	if(user.transferItemToLoc(attacking_item, drop_location(), silent = FALSE))
 		return TRUE
