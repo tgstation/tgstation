@@ -345,7 +345,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 /obj/machinery/vending/examine(mob/user)
 	. = ..()
-	if(refill_canister)
+	if(isnull(refill_canister))
+		return // you can add the comment here instead
 		if((total_loaded_stock() / total_max_stock()) < 1)
 			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [refill_canister]")] with the panel open.")
 		else
@@ -1654,7 +1655,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && istype(held_item, refill_canister))
-		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine [credits_contained ? "and collect credits" : null ]"
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
 		return TRUE
 	return NONE
 
