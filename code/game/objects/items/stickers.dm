@@ -31,6 +31,8 @@
 
 	/// `list` or `null`, contains possible alternate `icon_states`.
 	var/list/icon_states
+	/// Whether sticker is legal and allowed to generate inside non-syndicate boxes.
+	var/contraband = FALSE
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -158,6 +160,7 @@
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"
 	icon_state = "synd"
+	contraband = TRUE
 
 /obj/item/sticker/syndicate/c4
 	name = "C-4 sticker"

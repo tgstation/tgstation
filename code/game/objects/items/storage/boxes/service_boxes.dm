@@ -203,3 +203,34 @@
 /obj/item/storage/box/party_poppers/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
+
+/obj/item/storage/box/stickers
+	name = "box of stickers"
+	desc = "A box full of random stickers. Do give to the clown."
+
+/obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
+	var/list/allowed_stickers = list()
+
+	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
+		if(!sticker_type::contraband)
+			allowed_stickers += sticker_type
+
+	return allowed_stickers
+
+/obj/item/storage/box/stickers/PopulateContents()
+	var/static/list/non_contraband
+
+	if(isnull(non_contraband))
+		non_contraband = generate_non_contraband_stickers_list()
+
+	for(var/i in 1 to rand(4, 8))
+		var/type = pick(non_contraband)
+		new type(src)
+
+/obj/item/storage/box/stickers/googly
+	name = "box of googly eye stickers"
+	desc = "Turn anything and everything into something vaguely alive!"
+
+/obj/item/storage/box/stickers/googly/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/sticker/googly(src)
