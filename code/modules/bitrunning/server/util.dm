@@ -1,4 +1,3 @@
-#define REDACTED "???"
 #define MAX_DISTANCE 4 // How far crates can spawn from the server
 
 /// Resets the cooldown state and updates icons
@@ -6,28 +5,6 @@
 	is_ready = TRUE
 	update_appearance()
 	radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY)
-
-/// Compiles a list of available domains.
-/obj/machinery/quantum_server/proc/get_available_domains()
-	var/list/levels = list()
-
-	for(var/datum/lazy_template/virtual_domain/domain as anything in available_domains)
-		if(initial(domain.test_only))
-			continue
-		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
-		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1) && initial(domain.cost) <= points + 3
-
-		levels += list(list(
-			"cost" = initial(domain.cost),
-			"desc" = can_view ? initial(domain.desc) : "Limited scanning capabilities. Cannot infer domain details.",
-			"difficulty" = initial(domain.difficulty),
-			"id" = initial(domain.key),
-			"is_modular" = initial(domain.is_modular),
-			"name" = can_view ? initial(domain.name) : REDACTED,
-			"reward" = can_view_reward ? initial(domain.reward_points) : REDACTED,
-		))
-
-	return levels
 
 /// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
 /obj/machinery/quantum_server/proc/get_avatar_data()
@@ -120,5 +97,4 @@
 		if(!tile.is_blocked_turf())
 			return chosen_turf
 
-#undef REDACTED
 #undef MAX_DISTANCE

@@ -445,7 +445,7 @@
 	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
 	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
-	if(!registered_account.replaceable || registered_account.account_balance > 0)
+	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -1078,6 +1078,14 @@
 	inhand_icon_state = "silver_id"
 	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
+
+/obj/item/card/id/advanced/robotic
+	name = "magnetic identification card"
+	desc = "An integrated card which shows the work poured into opening doors."
+	icon_state = "card_carp" //im not a spriter
+	inhand_icon_state = "silver_id"
+	assigned_icon_state = "assigned_silver"
+	wildcard_slots = WILDCARD_LIMIT_GREY
 
 /datum/id_trim/maint_reaper
 	access = list(ACCESS_MAINT_TUNNELS)

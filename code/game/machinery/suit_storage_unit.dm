@@ -375,7 +375,7 @@
 		src,
 		choices,
 		custom_check = CALLBACK(src, PROC_REF(check_interactable), user),
-		require_near = !issilicon(user),
+		require_near = !HAS_SILICON_ACCESS(user),
 		autopick_single_option = FALSE
 	)
 
