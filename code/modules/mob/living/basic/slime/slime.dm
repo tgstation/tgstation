@@ -107,9 +107,6 @@
 
 /mob/living/basic/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_life_stage=SLIME_LIFE_STAGE_BABY)
 
-	var/datum/action/innate/slime/feed/feeding_action = new
-	feeding_action.Grant(src)
-
 	set_slime_type(new_type)
 	set_life_stage(new_life_stage)
 	update_name()
@@ -203,6 +200,11 @@
 		if(can_feed_on(food))
 			start_feeding(food)
 	return ..()
+
+///Slimes can hop off mobs they have latched onto
+/mob/living/basic/slime/resist_buckle()
+	if(isliving(buckled))
+		buckled.unbuckle_mob(src,force=TRUE)
 
 //slimes can not pull
 /mob/living/basic/slime/start_pulling(atom/movable/moveable_atom, state, force = move_force, supress_message = FALSE)
@@ -306,6 +308,12 @@
 ///Handles slime attacking restrictions, and any extra effects that would trigger
 /mob/living/basic/slime/proc/slime_pre_attack(mob/living/basic/slime/our_slime, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(target) && target != src && usr == src)
+		if(our_slime.can_feed_on(target))
+			our_slime.start_feeding(target)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(isAI(target)) //The aI is not tasty!
 		target.balloon_alert(our_slime, "not tasty!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
