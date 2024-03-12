@@ -15,7 +15,7 @@
 	var/mutable_appearance/sticker_overlay
 
 /datum/component/sticker/Initialize(atom/stickering_atom, mob/user, dir = NORTH, px = 0, py = 0)
-	if(!ismovable(parent))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.our_sticker = our_sticker
