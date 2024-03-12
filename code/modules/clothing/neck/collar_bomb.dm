@@ -104,8 +104,15 @@
 		return
 	playsound(user, 'sound/machines/click.ogg', 25, TRUE)
 	balloon_alert_to_viewers("button pushed")
-	if(collar && !collar.active)
-		collar.explosive_countdown(ticks_left = 5)
+	if(!collar|| collar.active)
+		return
+	collar.explosive_countdown(ticks_left = 5)
+	if(!ishuman(collar.loc))
+		return
+	var/mob/living/carbon/human/brian = collar.loc
+	if(brian.get_item_by_slot(ITEM_SLOT_NECK) == collar)
+		brian.investigate_log("has has their [collar] triggered by [user] via yellow button.", INVESTIGATE_DEATHS)
+
 
 /obj/item/collar_bomb_button/Destroy()
 	collar?.button = null
