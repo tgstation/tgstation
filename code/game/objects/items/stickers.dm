@@ -57,15 +57,23 @@
 
 	return NONE
 
+/**
+ * Attempts to attach sticker to an object. Returns `FALSE` if atom has more than
+ * `MAX_STICKER_COUNT` stickers, `TRUE` otherwise. If no `px` or `py` were passed
+ * picks random coordinates based on a `target`'s icon.
+ */
 /obj/item/sticker/proc/attempt_attach(atom/target, mob/user, px, py)
 	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_STICKER_COUNT)
 		return FALSE
 
-	if(isnull(px))
-		px = rand(1, world.icon_size)
+	if(isnull(px) || isnull(py))
+		var/icon/target_mask = icon(target.icon, target.icon_state)
 
-	if(isnull(py))
-		py = rand(1, world.icon_size)
+		if(isnull(px))
+			px = rand(1, target_mask.Width())
+
+		if(isnull(py))
+			py = rand(1, target_mask.Height())
 
 	if(!isnull(user))
 		user.do_attack_animation(target, used_item = src)
