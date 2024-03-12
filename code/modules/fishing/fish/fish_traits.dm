@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/revival/proc/check_status(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD)
-		addtimer(CALLBACK(src, PROC_REF(revive), source), rand(1 MINUTES, 2 MINUTES), TIMER_STOPPABLE|TIMER_DELETE_ME)
+		addtimer(CALLBACK(source, TYPE_PROC_REF(/datum/fish_trait/revival, revive), source), rand(1 MINUTES, 2 MINUTES), TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /datum/fish_trait/revival/proc/revive(obj/item/fish/source)
 	if(QDELETED(source) || source.status != FISH_DEAD)
