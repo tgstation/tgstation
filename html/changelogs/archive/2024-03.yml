@@ -139,3 +139,7 @@
       module.
   - image: Added a open icon sprite (maintenance hatch) for nanite programmer and
       nanite program hub.
+2024-03-12:
+  Generic DM, PositiveEntropy, ReturnToZender:
+  - rscadd: Cargo shelves are now craftable using metal! They store up to 3 crates
+      per shelf.

@@ -1,4 +1,0 @@
-author: "Generic DM, PositiveEntropy, ReturnToZender"
-delete-after: True
-changes:
-  - rscadd: "Cargo shelves are now craftable using metal! They store up to 3 crates per shelf."
