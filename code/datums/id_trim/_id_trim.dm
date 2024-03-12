@@ -23,3 +23,9 @@
 	var/list/access = list()
 	/// Accesses that this trim unlocks on a card that require wildcard slots to apply. If a card cannot accept all a trim's wildcard accesses, the card is incompatible with the trim.
 	var/list/wildcard_access = list()
+
+/// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
+/obj/item/proc/get_sechud_job_icon_state()
+	var/obj/item/card/id/id_card = GetID()
+
+	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID

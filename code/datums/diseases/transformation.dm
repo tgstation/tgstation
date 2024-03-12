@@ -148,7 +148,6 @@
 				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
-
 	name = "Robotic Transformation"
 	cure_text = "An injection of copper."
 	cures = list(/datum/reagent/copper)
@@ -169,7 +168,6 @@
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = JOB_CYBORG
-
 
 /datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
 	. = ..()

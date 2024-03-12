@@ -55,8 +55,6 @@
 	affected_mob.adjust_temp_blindness(-2 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
 	switch(current_cycle)
-		if(1 to 20)
-			//nothing
 		if(21 to 110)
 			if(SPT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), seconds_per_tick))
 				need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
@@ -639,7 +637,7 @@
 	. = ..()
 	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
-	switch(affected_mob.mob_mood.sanity_level)
+	switch(affected_mob.mob_mood.sanity)
 		if (SANITY_INSANE to SANITY_CRAZY)
 			need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 		if (SANITY_UNSTABLE to SANITY_DISTURBED)

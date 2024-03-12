@@ -440,7 +440,7 @@
 
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
-	
+
 	if(isitem(loc)) // we are in a storage item
 		balloon_alert(user, "can't reach!")
 		return
@@ -553,7 +553,7 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	log_atmos("[type] released its contents of ", air_contents)
+	log_atmos("[type] released its contents of ", removed)
 	T.assume_air(removed)
 
 #undef ASSEMBLY_BOMB_BASE

@@ -106,7 +106,7 @@
 
 	return answer
 
-/obj/item/mecha_parts/mecha_tracking/emp_act()
+/obj/item/mecha_parts/mecha_tracking/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_SELF))
 		qdel(src)

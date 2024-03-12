@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Basic mobs no longer have the (unintended) ability to shoot out of containers, like bluespace body bags."
