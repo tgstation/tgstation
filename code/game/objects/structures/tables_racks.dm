@@ -934,6 +934,10 @@
 	if(isnull(held_item))
 		return NONE
 
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Construct Rack"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
