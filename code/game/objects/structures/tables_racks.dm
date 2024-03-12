@@ -847,14 +847,14 @@
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
+/obj/structure/rack/MouseDrop_T(obj/dropping, mob/user, params)
 	. = ..()
-	if ((!( isitem(O) ) || user.get_active_held_item() != O))
+	if ((!( isitem(dropping) ) || user.get_active_held_item() != dropping))
 		return
-	if(!user.dropItemToGround(O))
+	if(!user.dropItemToGround(dropping))
 		return
-	if(O.loc != src.loc)
-		step(O, get_dir(O, src))
+	if(dropping.loc != src.loc)
+		step(dropping, get_dir(dropping, src))
 
 /obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION)
