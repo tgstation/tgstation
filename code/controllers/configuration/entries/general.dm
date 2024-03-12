@@ -162,7 +162,6 @@
 /datum/config_entry/flag/log_as_human_readable
 	default = TRUE
 
-
 /// allows admins with relevant permissions to have their own ooc colour
 /datum/config_entry/flag/allow_admin_ooccolor
 
