@@ -214,7 +214,7 @@
 
 /obj/item/storage/box/collar_bomb
 	name = "collar bomb box"
-	desc = "A small print on the back reads 'For research purposes only. Handle with care. In case of emergency, call the following number:'. the rest scratched out with a marker... welp."
+	desc = "A small print on the back reads 'For research purposes only. Handle with care. In case of emergency, call the following number:'... the rest is scratched out with a marker..."
 
 /obj/item/storage/box/collar_bomb/PopulateContents()
 	var/obj/item/collar_bomb_button/button = new(src)
