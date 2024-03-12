@@ -68,6 +68,7 @@
 	. = ..()
 	if(!isnull(puzzle_id) && uses_queuelinks)
 		SSqueuelinks.add_to_queue(src, puzzle_id)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
 	for(var/partner in partners)
@@ -81,9 +82,6 @@
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
-
-/obj/machinery/door/puzzle/emp_act(severity)
-	return
 
 /obj/machinery/door/puzzle/ex_act(severity, target)
 	return FALSE

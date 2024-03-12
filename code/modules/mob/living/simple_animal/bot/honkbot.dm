@@ -2,10 +2,12 @@
 	name = "\improper Honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
+	light_color = "#e084f7"
+	light_power = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = FALSE
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT

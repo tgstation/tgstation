@@ -13,6 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
+#include "__odlint.dm"
 #include "_maps\_basemap.dm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
@@ -618,6 +619,7 @@
 #include "code\controllers\subsystem\atoms.dm"
 #include "code\controllers\subsystem\augury.dm"
 #include "code\controllers\subsystem\ban_cache.dm"
+#include "code\controllers\subsystem\bitrunning.dm"
 #include "code\controllers\subsystem\blackbox.dm"
 #include "code\controllers\subsystem\blackmarket.dm"
 #include "code\controllers\subsystem\chat.dm"
@@ -2262,6 +2264,7 @@
 #include "code\game\objects\items\kitchen.dm"
 #include "code\game\objects\items\knives.dm"
 #include "code\game\objects\items\latexballoon.dm"
+#include "code\game\objects\items\machine_wand.dm"
 #include "code\game\objects\items\mail.dm"
 #include "code\game\objects\items\maintenance_loot.dm"
 #include "code\game\objects\items\manuals.dm"
@@ -3427,6 +3430,7 @@
 #include "code\modules\bitrunning\objects\hololadder.dm"
 #include "code\modules\bitrunning\objects\host_monitor.dm"
 #include "code\modules\bitrunning\objects\landmarks.dm"
+#include "code\modules\bitrunning\objects\loot_box.dm"
 #include "code\modules\bitrunning\objects\loot_crate.dm"
 #include "code\modules\bitrunning\objects\netpod.dm"
 #include "code\modules\bitrunning\objects\quantum_console.dm"
@@ -3812,6 +3816,7 @@
 #include "code\modules\clothing\under\jobs\medical.dm"
 #include "code\modules\clothing\under\jobs\rnd.dm"
 #include "code\modules\clothing\under\jobs\security.dm"
+#include "code\modules\clothing\under\jobs\station_trait.dm"
 #include "code\modules\clothing\under\jobs\civilian\civilian.dm"
 #include "code\modules\clothing\under\jobs\civilian\clown_mime.dm"
 #include "code\modules\clothing\under\jobs\civilian\curator.dm"
@@ -4265,6 +4270,7 @@
 #include "code\modules\jobs\job_types\spawner\zombie.dm"
 #include "code\modules\jobs\job_types\station_trait\bridge_assistant.dm"
 #include "code\modules\jobs\job_types\station_trait\cargo_gorilla.dm"
+#include "code\modules\jobs\job_types\station_trait\human_ai.dm"
 #include "code\modules\jobs\job_types\station_trait\veteran_advisor.dm"
 #include "code\modules\keybindings\bindings_atom.dm"
 #include "code\modules\keybindings\bindings_client.dm"
