@@ -136,7 +136,7 @@
 		return
 
 	if(!user.combat_mode && !(W.item_flags & NOBLUDGEON))
-		return attack_hand(user)
+		return interact(user)
 	else
 		return ..()
 
@@ -157,7 +157,7 @@
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
-		return attack_hand(user)
+		return interact(user)
 
 /obj/machinery/button/attack_robot(mob/user)
 	return attack_ai(user)
