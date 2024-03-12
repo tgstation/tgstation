@@ -94,10 +94,19 @@
 
 	//AI related traits
 
+	/// Instructions you can give to slimes
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targeting/attack,
+	)
+
 	///The current mood of the slime, set randomly or through emotes (if sentient).
 	var/current_mood
 
 /mob/living/basic/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_life_stage=SLIME_LIFE_STAGE_BABY)
+
 	var/datum/action/innate/slime/feed/feeding_action = new
 	feeding_action.Grant(src)
 
@@ -109,8 +118,9 @@
 	. = ..()
 	set_nutrition(700)
 
-	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
 	AddComponent(/datum/component/buckle_mob_effect,  mob_effect_callback = CALLBACK(src, PROC_REF(feed_process)))
+	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SLIME)
@@ -142,7 +152,7 @@
 
 /mob/living/basic/slime/pet/Initialize(mapload, new_colour, new_life_stage)
 	. = ..()
-	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, TRUE)
+	set_pacified_behaviour()
 
 ///Hilbert subtype
 /mob/living/basic/slime/hilbert/Initialize(mapload, new_colour, new_life_stage)
@@ -203,7 +213,6 @@
 		return 3
 
 /mob/living/basic/slime/examine(mob/user)
-//todo: make prettier
 	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if (stat == DEAD)
 		. += span_deadsay("It is limp and unresponsive.")
