@@ -959,7 +959,7 @@
 	if(lockcharge)
 		balloon_alert(src, "locked down!")
 		return FALSE
-	. = ..()
+	return ..()
 
 /mob/living/silicon/robot/execute_resist()
 	. = ..()
