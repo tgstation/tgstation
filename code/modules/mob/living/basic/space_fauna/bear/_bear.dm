@@ -82,6 +82,12 @@
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
 
+/mob/living/basic/bear/snow/ancient
+	name = "ancient polar bear"
+	desc = "A grizzled old polar bear, its hide thick enough to make it impervious to almost all weapons."
+	status_flags = CANPUSH | GODMODE
+	gold_core_spawnable = NO_SPAWN
+
 /mob/living/basic/bear/snow/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)

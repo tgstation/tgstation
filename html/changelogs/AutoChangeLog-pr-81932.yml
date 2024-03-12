@@ -1,0 +1,4 @@
+author: "Vermidia"
+delete-after: True
+changes:
+  - bugfix: "Doors with ID scan disabled will no longer open when an ID is thrown at them"
