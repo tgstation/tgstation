@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a spurious CI runtime caused by explosive mines quite literally blowing up the unit test area"

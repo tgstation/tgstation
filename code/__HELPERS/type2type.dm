@@ -36,8 +36,8 @@
 			return "northwest"
 		if(SOUTHWEST)
 			return "southwest"
-		else
-	return
+
+	return NONE
 
 //Turns text into proper directions
 /proc/text2dir(direction)
@@ -58,8 +58,8 @@
 			return SOUTHEAST
 		if("SOUTHWEST")
 			return SOUTHWEST
-		else
-	return
+
+	return NONE
 
 //Converts an angle (degrees) into a ss13 direction
 GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
