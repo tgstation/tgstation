@@ -15,7 +15,7 @@
 
 /obj/item/sticker
 	name = "sticker"
-	desc = "it sticks to objects"
+	desc = "A sticker with some strong adhesive on the back, sticks to stuff!"
 
 	icon = 'icons/obj/toys/stickers.dmi'
 	icon_state = "plizard"
@@ -80,5 +80,113 @@
 
 	user.balloon_alert(user, "sticker attached")
 	target.AddComponent(/datum/component/sticker, src, user, get_dir(target, src), px, py)
+	return TRUE
 
 #undef MAX_STICKER_COUNT
+
+/obj/item/sticker/smile
+	name = "smiley sticker"
+	icon_state = "smile"
+
+/obj/item/sticker/frown
+	name = "frowny sticker"
+	icon_state = "frown"
+
+/obj/item/sticker/left_arrow
+	name = "left arrow sticker"
+	icon_state = "arrow-left"
+
+/obj/item/sticker/right_arrow
+	name = "right arrow sticker"
+	icon_state = "arrow-right"
+
+/obj/item/sticker/star
+	name = "star sticker"
+	icon_state = "star"
+
+/obj/item/sticker/heart
+	name = "heart sticker"
+	icon_state = "heart"
+
+/obj/item/sticker/googly
+	name = "googly eye sticker"
+	icon_state = "googly"
+	icon_states = list("googly", "googly-alt")
+
+/obj/item/sticker/rev
+	name = "blue R sticker"
+	desc = "A sticker of FUCK THE SYSTEM, the galaxy's premiere hardcore punk band."
+	icon_state = "revhead"
+
+/obj/item/sticker/pslime
+	name = "slime plushie sticker"
+	icon_state = "pslime"
+
+/obj/item/sticker/pliz
+	name = "lizard plushie sticker"
+	icon_state = "plizard"
+
+/obj/item/sticker/pbee
+	name = "bee plushie sticker"
+	icon_state = "pbee"
+
+/obj/item/sticker/psnake
+	name = "snake plushie sticker"
+	icon_state = "psnake"
+
+/obj/item/sticker/robot
+	name = "bot sticker"
+	icon_state = "tile"
+	icon_states = list("tile", "medbot", "clean")
+
+/obj/item/sticker/toolbox
+	name = "toolbox sticker"
+	icon_state = "soul"
+
+/obj/item/sticker/clown
+	name = "clown sticker"
+	icon_state = "honkman"
+
+/obj/item/sticker/mime
+	name = "mime sticker"
+	icon_state = "silentman"
+
+/obj/item/sticker/assistant
+	name = "assistant sticker"
+	icon_state = "tider"
+
+/obj/item/sticker/syndicate
+	name = "syndicate sticker"
+	icon_state = "synd"
+
+/obj/item/sticker/syndicate/c4
+	name = "C-4 sticker"
+	icon_state = "c4"
+
+/obj/item/sticker/syndicate/bomb
+	name = "syndicate bomb sticker"
+	icon_state = "sbomb"
+
+/obj/item/sticker/syndicate/apc
+	name = "broken APC sticker"
+	icon_state = "milf"
+
+/obj/item/sticker/syndicate/larva
+	name = "larva sticker"
+	icon_state = "larva"
+
+/obj/item/sticker/syndicate/cult
+	name = "bloody paper sticker"
+	icon_state = "cult"
+
+/obj/item/sticker/syndicate/flash
+	name = "flash sticker"
+	icon_state = "flash"
+
+/obj/item/sticker/syndicate/op
+	name = "operative sticker"
+	icon_state = "newcop"
+
+/obj/item/sticker/syndicate/trap
+	name = "bear trap sticker"
+	icon_state = "trap"
