@@ -73,7 +73,7 @@ export class NumberInput extends Component<Props, State> {
   };
 
   // default values for the number input props
-  static defaultProps : Props = {
+  static defaultProps: Props = {
     step: 1,
     stepPixelSize: 1,
     suppressFlicker: 50,
