@@ -143,3 +143,24 @@
   Generic DM, PositiveEntropy, ReturnToZender:
   - rscadd: Cargo shelves are now craftable using metal! They store up to 3 crates
       per shelf.
+2024-03-13:
+  Absolucy:
+  - rscadd: Say emote prefixes are no longer forced to be lowercase. This includes
+      radio emotes!
+  - bugfix: new hotkeys unbound by default (like emotes) no longer scream at you when
+      added
+  - bugfix: fixed custom say emotes with non-ASCII characters
+  - bugfix: Mobs can once again emote (with sound) when they die.
+  - rscadd: Adds an emote to push up glasses with *glasses
+  - rscadd: Adds a visual effect to *sigh
+  - spellcheck: Fixed a spelling error with the daps emote.
+  - sound: '*flap now makes a fluttering noise for moth wings'
+  - sound: Moths now have a death sound
+  - qol: '*tremble emote now is just "trembles!" instead of "trembles in fear!"'
+  - qol: Improve the emote help verb to be more user friendly.
+  - rscadd: Emote Panel TGUI added in IC category.
+  - bugfix: Cut down a significant amount of time that caused the start of rounds
+      to lag.
+  - bugfix: Fixed a lot of missing/broken images, such as emojis, language icons,
+      commendation hearts, icons in R&D menu, etc.
+  - sound: Dying with a SecHailer on your face will make a unique death sound
