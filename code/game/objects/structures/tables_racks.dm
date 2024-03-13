@@ -838,17 +838,15 @@
 	register_context()
 
 /obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = ..()
-
 	if(isnull(held_item))
 		return NONE
 
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
-			. = CONTEXTUAL_SCREENTIP_SET
+			return CONTEXTUAL_SCREENTIP_SET
 
-	return . || NONE
+	return NONE
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -929,21 +927,19 @@
 	register_context()
 
 /obj/item/rack_parts/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = ..()
-
 	if(isnull(held_item))
 		return NONE
 
 	if(held_item == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Construct Rack"
-		. = CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-			. = CONTEXTUAL_SCREENTIP_SET
+			return CONTEXTUAL_SCREENTIP_SET
 
-	return . || NONE
+	return NONE
 
 /obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION)
