@@ -447,7 +447,7 @@
 	name = "human passthrough"
 	desc = "Causes kinetic accelerator shots to pass through humans, good for preventing friendly fire."
 	denied_type = /obj/item/borg/upgrade/modkit/minebot_passthrough
-	cost = 10
+	cost = 0
 
 /obj/item/borg/upgrade/modkit/human_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
 	. = ..()
