@@ -187,12 +187,8 @@
 	. = ..()
 	if(!hunger_disabled)
 		. += "Nutrition: [nutrition]/[max_nutrition]"
-
-	switch(stat)
-		if(HARD_CRIT, UNCONSCIOUS)
-			. += "You are knocked out by high levels of BZ!"
-		else
-			. += "Power Level: [powerlevel]"
+		. += "Growth: [amoung_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+		. += "Power Level: [powerlevel]"
 
 /mob/living/basic/slime/MouseDrop(atom/movable/target_atom as mob|obj)
 	if(isliving(target_atom) && target_atom != src && usr == src)
