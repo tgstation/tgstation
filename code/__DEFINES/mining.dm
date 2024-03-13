@@ -47,3 +47,11 @@
 //String defines to use with CaveGenerator presets for what ore breakdown to use.
 #define OREGEN_PRESET_LAVALAND "lavaland"
 #define OREGEN_PRESET_TRIPLE_Z "triple_z"
+
+//defines for liquid plasma pipes
+#define PIPE_STATE_UNBUILT 0
+#define PIPE_STATE_DAMAGED 1
+#define PIPE_STATE_FINE 2
+
+#define PIPE_STATUS_OFF 0
+#define PIPE_STATUS_ON 1

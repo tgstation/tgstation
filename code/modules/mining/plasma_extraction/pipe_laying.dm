@@ -3,26 +3,35 @@
 	var/obj/item/pipe_dispenser/pipe_placing
 	///The user that is placing the pipes, and ahs the lock on component.
 	var/mob/living/pipe_placer
+	///The extraction part hub that owns the whole pipe layers, including ones we make.
+	var/obj/structure/plasma_extraction_hub/part/pipe/part_hub
+
 	///Boolean on whether the pipe needs to start a tile in front of parent when building.
 	var/start_one_tile_ahead
-	///Boolean on whether pipes are currently being built
+	///Boolean on whether pipes are currently being built, to prevent spam and/or other players.
 	var/building_pipes
-	/// A weakref to the mob we're currently targeting with the lockon component.
+
+	/// A weakref to the tile currently being targeted by the lockon component.
 	var/datum/weakref/current_target_weakref
 	/// A ref to our lockon component, which is created and destroyed on activation and deactivation.
 	var/datum/component/lock_on_cursor/lockon_component
-	///List of all turfs that is currently being hovered over, and has the pip overlay appearance.
+
+	///List of all turfs that is currently being hovered over, and has the pipe overlay appearance.
 	var/list/turf/turfs_hovering = list()
 	///The overlay put in the path of where our cursor is hovering, to tell where pipes will be built.
 	var/static/mutable_appearance/pipe_overlay_appearance
 
 /datum/component/pipe_laying/Initialize(
+	obj/structure/plasma_extraction_hub/part/pipe/connecting_part_hub,
 	start_one_tile_ahead = FALSE
 )
 	. = ..()
+	if(!connecting_part_hub || !istype(connecting_part_hub))
+		return COMPONENT_INCOMPATIBLE
+	src.part_hub = connecting_part_hub
 	src.start_one_tile_ahead = start_one_tile_ahead
 	if(!pipe_overlay_appearance)
-		pipe_overlay_appearance = mutable_appearance(icon = 'icons/obj/pipes_n_cables/disposal.dmi', icon_state = "pipe", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, alpha = 100, offset_const = src)
+		pipe_overlay_appearance = mutable_appearance(icon = 'icons/obj/pipes_n_cables/plasma_extractor.dmi', icon_state = "pipe", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, alpha = 100, offset_const = src)
 
 /datum/component/pipe_laying/RegisterWithParent()
 	. = ..()
@@ -107,14 +116,20 @@
 	else
 		pipe_locations = get_path_to(parent, starting_location, max_distance = 4, diagonal_handling = DIAGONAL_REMOVE_ALL)
 	var/obj/structure/liquid_plasma_extraction_pipe/last_placed_pipe
+	var/should_delete_ourselves = FALSE
 	if(length(pipe_locations))
 		for(var/turf/next_location as anything in pipe_locations)
 			if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
 				break
-			var/obj/structure/liquid_plasma_extraction_pipe/new_segment = new(next_location)
+			var/obj/structure/liquid_plasma_extraction_pipe/new_segment
+			var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
+			if(last_spot)
+				new_segment = new /obj/structure/liquid_plasma_extraction_pipe/ending(next_location, part_hub)
+			else
+				new_segment = new(next_location, part_hub)
 			var/spot_in_list = pipe_locations.Find(next_location)
 			var/direction_to_place
-			if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
+			if(spot_in_list == length(pipe_locations) || last_spot) //last one copies the last one as it's trailing
 				var/turf/previous_segment
 				if(spot_in_list == 1) //in case you're only building one pipe
 					previous_segment = get_turf(parent)
@@ -136,20 +151,26 @@
 				if(ISDIAGONALDIR(next_direction) && (NSCOMPONENT(previous_direction)))
 					direction_to_place = REVERSE_DIR(direction_to_place)
 			last_placed_pipe = new_segment
+			should_delete_ourselves = TRUE
 			new_segment.setDir(direction_to_place)
+			part_hub.connected_pipes += new_segment
+			if(last_spot) // no more building after the ending spot is reached.
+				last_placed_pipe = null
+				part_hub.last_pipe = new_segment
+				break
 
 	building_pipes = FALSE
 	pipe_locations = null
 	clear_click_catch()
 
 	if(last_placed_pipe)
-		last_placed_pipe.AddComponent(/datum/component/pipe_laying, start_one_tile_ahead = TRUE)
+		last_placed_pipe.AddComponent(/datum/component/pipe_laying, part_hub, start_one_tile_ahead = TRUE)
+	if(should_delete_ourselves)
 		qdel(src)
 
 /datum/component/pipe_laying/proc/holding_pipe_check()
 	var/obj/item/pipe_dispenser/held_item = pipe_placer.get_active_held_item()
 	return (held_item == pipe_placing)
-
 
 /datum/component/pipe_laying/proc/on_dispenser_move(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER

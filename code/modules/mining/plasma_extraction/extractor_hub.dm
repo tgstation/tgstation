@@ -1,3 +1,19 @@
+/*
+TODO LIST:
+- GIVE GEYSERS THEIR OWN SPRITE
+- GIVE THE PLASMA EXTRACTION MACHINE ITS OWN SPRITE
+- GIVE PIPES THEIR OWN SPRITE (MAYBE ??)
+- MAKE PIPES RIDABLE (MAYBE??)
+- MAKE PIPES NOT DENSE, BUT ALSO MAKE SURE IT DOESNT BREAK ANYTHING
+- Fix attack_animal not working, pipes aren't being destroyed properly.
+- Make pipes invincible
+- Make fauna attack pipes
+- Make pipes immediately resume work upon being repaired
+- Better feedback when placing down the pipes.
+- Make wrenching in pipes use use_tool(), requires adding support for do-after's interaction keys.
+*/
+
+
 /**
  * Base plasma extraction machine
  */
@@ -14,11 +30,7 @@
  * All parts that don't have a pipe, use this.
  */
 /obj/structure/plasma_extraction_hub/part
-	var/obj/structure/plasma_extraction_hub/part/pipe/main_machine
 
-/obj/structure/plasma_extraction_hub/part/proc/on_update_icon(obj/machinery/gravity_generator/source, updates, updated)
-	SIGNAL_HANDLER
-	return update_appearance(updates)
 
 /**
  * Plasma extraction machine pipe
@@ -26,60 +38,67 @@
  */
 /obj/structure/plasma_extraction_hub/part/pipe
 	name = "starting pipe location"
+	///List of all pipes connected to this extraction part.
+	var/list/obj/structure/liquid_plasma_extraction_pipe/connected_pipes = list()
+	///Reference to the 'ending' pipe, the last one to be built. This has to exist for t he machien to work.
+	var/obj/structure/liquid_plasma_extraction_pipe/ending/last_pipe
+	///Boolean on whether the extraction hub is currently functioning.
+	var/currently_functional = FALSE
 
 /obj/structure/plasma_extraction_hub/part/pipe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/pipe_laying)
+	AddComponent(/datum/component/pipe_laying, src)
 
-/obj/structure/plasma_extraction_hub/part/pipe/east
-	dir = EAST
-
-/obj/structure/plasma_extraction_hub/part/pipe/west
-	dir = WEST
+/obj/structure/plasma_extraction_hub/part/pipe/Destroy()
+	. = ..()
+	last_pipe = null
+	QDEL_LIST(connected_pipes)
 
 /**
- * Main plasma extraction machine
- * This 'Owns' all the rest, while also acting like a pipe part in its own right.
+ * Called when a pipe with a reference to us is destroyed,
+ * we'll give the pipe right before it the ability to lay pipes again,
+ * then destroy every single pipe made after it, and make sure they are out of our list, too.
  */
-/obj/structure/plasma_extraction_hub/part/pipe/main
-	///List of all parts connected to the extraction hub.
-	var/list/obj/structure/plasma_extraction_hub/hub_parts = list()
+/obj/structure/plasma_extraction_hub/part/pipe/proc/on_pipe_destroyed(obj/structure/liquid_plasma_extraction_pipe/broken_pipe)
+	var/position_in_list = connected_pipes.Find(broken_pipe)
+	var/obj/structure/liquid_plasma_extraction_pipe/previous_pipe = connected_pipes[position_in_list - 1]
+	previous_pipe.AddComponent(/datum/component/pipe_laying, src)
+	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
+		var/list_item_in_list = connected_pipes.Find(part_pipes)
+		if(list_item_in_list > position_in_list)
+			part_pipes.connected_hub = null
+			connected_pipes -= part_pipes
+			qdel(part_pipes)
 
-/obj/structure/plasma_extraction_hub/part/pipe/main/Initialize(mapload)
-	. = ..()
-	//the only one that calls setup, as the creator
-	setup_parts()
+	connected_pipes -= broken_pipe
+	if(currently_functional)
+		stop_drilling() //one of our pipes got destroyed, bitch!! god motherfuckin damn!
 
-///Copied over from Gravity Generator, this sets up the parts of the plasma extraction hub, and its
-///3 pipe starting points.
-/obj/structure/plasma_extraction_hub/part/pipe/main/proc/setup_parts()
-	var/turf/our_turf = get_turf(src)
-	// 9x9 block obtained from the bottom middle of the block
-	var/list/spawn_turfs = CORNER_BLOCK_OFFSET(our_turf, 3, 3, -1, 0)
-	var/count = 10
-	for(var/turf/T in spawn_turfs)
-		count--
-		if(T == our_turf) // Skip our turf.
-			continue
-		var/obj/structure/plasma_extraction_hub/part/new_part
-		switch(count)
-			//east
-			if(4)
-				new_part = new /obj/structure/plasma_extraction_hub/part/pipe/east(T)
-			//west
-			if(6)
-				new_part = new /obj/structure/plasma_extraction_hub/part/pipe/west(T)
-			else
-				new_part = new/obj/structure/plasma_extraction_hub/part(T)
-		hub_parts += new_part
-		new_part.main_machine = src
-		new_part.update_appearance()
-		new_part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, TYPE_PROC_REF(/obj/structure/plasma_extraction_hub/part, on_update_icon))
+/obj/structure/plasma_extraction_hub/part/pipe/proc/start_drilling()
+	if(!check_parts())
+		return FALSE
+	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
+		part_pipes.pipe_status = PIPE_STATUS_ON
+		part_pipes.update_appearance(UPDATE_ICON)
+	currently_functional = TRUE
 
-/obj/structure/plasma_extraction_hub/part/pipe/main/Destroy()
-	. = ..()
-	QDEL_LIST(hub_parts)
+/obj/structure/plasma_extraction_hub/part/pipe/proc/stop_drilling()
+	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
+		part_pipes.pipe_status = PIPE_STATUS_OFF
+		part_pipes.update_appearance(UPDATE_ICON)
+	currently_functional = FALSE
 
-/obj/structure/plasma_extraction_hub/part/pipe/main/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
-	to_chat(user, "Interacted with [src]")
+///Returns whether the pipe is able to drill. If it can't, and it currently is drilling, we'll stop.
+/obj/structure/plasma_extraction_hub/part/pipe/proc/check_parts()
+	if(!length(connected_pipes))
+		return FALSE
+	if(!last_pipe)
+		return FALSE
+	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
+		//if the pipe isn't perfectly built then it's not valid.
+		if(part_pipes.pipe_state != PIPE_STATE_FINE)
+			if(currently_functional)
+				stop_drilling()
+			return FALSE
+
+	return TRUE
