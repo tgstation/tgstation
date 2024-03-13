@@ -17,6 +17,7 @@ TODO LIST:
 	icon_state = "ore_redemption"
 	anchored = TRUE
 	density = TRUE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | INDESTRUCTIBLE
 
 /**
  * Base plasma extraction machine part

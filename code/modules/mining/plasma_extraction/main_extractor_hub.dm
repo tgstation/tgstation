@@ -6,7 +6,7 @@
 /obj/structure/plasma_extraction_hub/part/pipe/main
 	///Boolean on whether we've started drilling.
 	var/drilling = FALSE
-	///List of all parts connected to the extraction hub.
+	///List of all parts connected to the extraction hub, not including ourselves.
 	var/list/obj/structure/plasma_extraction_hub/hub_parts = list()
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Initialize(mapload)
@@ -73,11 +73,14 @@
 	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/process(seconds_per_tick)
+	if(HAS_TRAIT(src, TRAIT_FROZEN)) //halp
+		return
 	var/broken_hub = FALSE
 	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
-		if(!currently_functional)
+		if(!pipe_parts.currently_functional)
 			broken_hub = TRUE
-			continue
+			break
 	if(broken_hub)
+		to_chat(world, span_warning("One or more pipes were broken, couldn't process."))
 		return
-	to_chat(world, "Passed processing, extracting plasma.")
+	to_chat(world, span_green("Passed processing, extracting plasma."))
