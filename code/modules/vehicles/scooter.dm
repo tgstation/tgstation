@@ -49,6 +49,8 @@
 	var/board_item_type = /obj/item/melee/skateboard
 	///Stamina drain multiplier
 	var/instability = 10
+	///If true, riding the skateboard with walk intent on will prevent crashing.
+	var/can_slow_down = TRUE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
 	. = ..()
@@ -88,7 +90,7 @@
 	if(!bumped_thing.density || !has_buckled_mobs() || world.time < next_crash)
 		return
 	var/mob/living/rider = buckled_mobs[1]
-	if(rider.move_intent == MOVE_INTENT_WALK) //Going slow prevents you from crashing.
+	if(rider.move_intent == MOVE_INTENT_WALK && can_slow_down) //Going slow prevents you from crashing.
 		return
 
 	next_crash = world.time + 10
