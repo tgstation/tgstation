@@ -157,6 +157,14 @@
 	name = "assistant sticker"
 	icon_state = "tider"
 
+/obj/item/sticker/skub
+	name = "skub sticker"
+	icon_state = "skub"
+
+/obj/item/sticker/anti_skub
+	name = "anti-skub sticker"
+	icon_state = "anti_skub"
+
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"
 	icon_state = "synd"
