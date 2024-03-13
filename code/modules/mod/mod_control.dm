@@ -632,7 +632,17 @@
  * Updates the wearer's hud according to the current state of the MODsuit
  */
 /obj/item/mod/control/proc/update_charge_alert()
-	wearer?.update_spacesuit_hud_icon(isnull(core) ? "coreless" : (core.get_charge_icon_state() || "0"))
+	if(isnull(wearer))
+		return
+	var/state_to_use
+	if(!active)
+		state_to_use = "0"
+	else if(isnull(core))
+		state_to_use = "coreless"
+	else
+		state_to_use = core.get_charge_icon_state()
+
+	wearer.update_spacesuit_hud_icon(state_to_use || "0")
 
 /obj/item/mod/control/proc/update_speed()
 	var/list/all_parts = mod_parts + src
