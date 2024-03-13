@@ -309,33 +309,6 @@
 	back = /obj/item/fireaxe
 	gloves = /obj/item/clothing/gloves/color/yellow
 
-/datum/outfit/deathmatch_loadout/battler/scientist
-	name = "Deathmatch: Scientist"
-	display_name = "Scientist"
-	desc = "What a nerd"
-
-	uniform = /obj/item/clothing/under/rank/rnd/scientist
-	suit = /obj/item/clothing/suit/armor/reactive/stealth
-	mask = /obj/item/clothing/mask/gas
-	l_hand = /obj/item/reagent_containers/syringe/plasma
-	l_pocket = /obj/item/slimecross/stabilized/sepia
-	r_pocket = /obj/item/slimecross/stabilized/purple
-	backpack_contents = list(
-		/obj/item/reagent_containers/cup/bottle/plasma,
-		/obj/item/slimecross/burning/grey,
-		/obj/item/slimecross/burning/adamantine,
-		/obj/item/slimecross/burning/gold,
-		/obj/item/slimecross/burning/blue,
-		/obj/item/slimecross/burning/sepia,
-		/obj/item/slimecross/chilling/green,
-		/obj/item/slimecross/chilling/grey,
-		/obj/item/slimecross/industrial/oil,
-		/obj/item/slimecross/charged/silver,
-		/obj/item/slimecross/charged/black,
-		/obj/item/slimecross/burning/rainbow,
-		/obj/item/slimecross/chilling/adamantine,
-	)
-
 /datum/outfit/deathmatch_loadout/battler/bloodminer
 	name = "Deathmatch: Blood Miner"
 	display_name = "Blood Miner"
