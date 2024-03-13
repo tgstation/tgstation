@@ -72,7 +72,7 @@
 	update_appearance()
 
 /obj/item/dice/attack_self(mob/user)
-	diceroll(user)
+	diceroll(user, TRUE)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
@@ -80,7 +80,7 @@
 		diceroll(thrown_by)
 	return ..()
 
-/obj/item/dice/proc/diceroll(mob/user)
+/obj/item/dice/proc/diceroll(mob/user, in_hand=FALSE)
 	result = roll(sides)
 	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
 		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
@@ -104,12 +104,13 @@
 		if(!ISINTEGER(result))
 			comment = special_faces[result]  // should be a str now
 
-	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
-			span_notice("You throw [src]. It lands on [result]. [comment]"), \
+	if(in_hand) //Dice was rolled in someone's hand
+		user.visible_message(span_notice("[user] rolls [src]. It lands on [result]. [comment]"), \
+			span_notice("You roll [src]. It lands on [result]. [comment]"), \
 			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
-	else if(!src.throwing) //Dice was thrown and is coming to rest
+	else
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
+
 
 /obj/item/dice/update_overlays()
 	. = ..()
