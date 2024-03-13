@@ -95,7 +95,7 @@
 	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
 		comment = "Ouch, bad luck."
 	if(sides == 20 && result == 20)
-		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
+		comment = "NAT 20!"
 	update_appearance()
 	result = manipulate_result(result)
 	if(special_faces.len == sides)
