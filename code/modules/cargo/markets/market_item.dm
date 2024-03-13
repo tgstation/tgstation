@@ -40,6 +40,7 @@
 		stock = rand(stock_min, stock_max)
 	identifier = "[type]"
 
+///For 'dynamic' market items generated on runtime, this proc is to be used to properly sets the item, especially if it's a hardref.
 /datum/market_item/proc/set_item(path_or_ref)
 	//we're replacing the item to sell, and the old item is an instance!
 	if(ismovable(item))

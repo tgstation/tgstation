@@ -207,7 +207,7 @@
 #undef VICTIM_EXPERIENCE_THIRD_HIT
 #undef VICTIM_EXPERIENCE_LAST_HIT
 
-// We're returning the victim
+/// We're returning the victim to the station
 /datum/syndicate_contract/proc/return_victim(mob/living/victim)
 	var/list/possible_drop_loc = list()
 	for(var/turf/possible_drop in shuffle(contract.dropoff.contents))
@@ -223,11 +223,13 @@
 	return_pod.return_from_capture(victim, destination)
 	returnal_side_effects(return_pod, victim)
 
+///Called if the victim is being returned to the station early, when from the black market.
 /datum/syndicate_contract/proc/on_victim_shipped(datum/market_item/source, obj/item/market_uplink/uplink, shipping_method, turf/shipping_loc)
 	SIGNAL_HANDLER
 	deltimer(victim_timerid)
 	returnal_side_effects(shipping_loc, source.item)
 
+///The annoying negative effects applied to the victim when returned to the station.
 /datum/syndicate_contract/proc/returnal_side_effects(atom/dropoff_location, mob/living/victim)
 	for(var/datum/weakref/belonging_ref in victim_belongings)
 		var/obj/item/belonging = belonging_ref.resolve()
