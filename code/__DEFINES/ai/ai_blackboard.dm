@@ -120,8 +120,6 @@
 #define BB_MOD_TARGET "BB_mod_target"
 ///The implant the AI was created from
 #define BB_MOD_IMPLANT "BB_mod_implant"
-///Range for a MOD AI controller.
-#define MOD_AI_RANGE 200
 
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"

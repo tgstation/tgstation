@@ -1,3 +1,5 @@
+#define PATHFINDER_PRE_ANIMATE_TIME (2 SECONDS)
+
 ///Pathfinder - Can fly the suit from a long distance to an implant installed in someone.
 /obj/item/mod/module/pathfinder
 	name = "MOD pathfinder module"
@@ -78,6 +80,8 @@
 	var/obj/item/mod/module/pathfinder/module
 	/// The jet icon we apply to the MOD.
 	var/image/jet_icon
+	/// Are we currently travelling?
+	var/in_transit = FALSE
 
 /obj/item/implant/mod/Initialize(mapload)
 	. = ..()
@@ -87,8 +91,6 @@
 	jet_icon = image(icon = 'icons/obj/clothing/modsuit/mod_modules.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
 
 /obj/item/implant/mod/Destroy()
-	if(module?.mod?.ai_controller)
-		end_recall(successful = FALSE)
 	module = null
 	jet_icon = null
 	return ..()
@@ -105,48 +107,46 @@
 	if(module.mod.open)
 		balloon_alert(imp_in, "suit is open!")
 		return FALSE
-	if(module.mod.ai_controller)
+	if(in_transit)
 		balloon_alert(imp_in, "already in transit!")
 		return FALSE
 	if(ismob(get_atom_on_turf(module.mod)))
 		balloon_alert(imp_in, "already on someone!")
 		return FALSE
-	if(module.z != z || get_dist(imp_in, module.mod) > MOD_AI_RANGE)
-		balloon_alert(imp_in, "too far away!")
-		return FALSE
-	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
-	module.mod.ai_controller = mod_ai
-	mod_ai.set_movement_target(type, imp_in)
-	mod_ai.set_blackboard_key(BB_MOD_TARGET, imp_in)
-	mod_ai.set_blackboard_key(BB_MOD_IMPLANT, src)
-	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-	module.mod.AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
-	animate(module.mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
-	module.mod.add_overlay(jet_icon)
-	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	balloon_alert(imp_in, "suit recalled")
+	in_transit = TRUE
+	animate(module.mod, 0.2, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
+	module.mod.Shake(pixelshiftx = 1, pixelshifty = 1, duration = PATHFINDER_PRE_ANIMATE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(do_recall)), PATHFINDER_PRE_ANIMATE_TIME, TIMER_DELETE_ME)
 	return TRUE
 
-/obj/item/implant/mod/proc/end_recall(successful = TRUE)
-	if(!module?.mod)
-		return
-	QDEL_NULL(module.mod.ai_controller)
-	module.mod.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
-	REMOVE_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
-	module.mod.RemoveElement(/datum/element/movetype_handler)
-	module.mod.cut_overlay(jet_icon)
-	module.mod.transform = matrix()
-	UnregisterSignal(module.mod, COMSIG_MOVABLE_MOVED)
-	if(!successful)
-		balloon_alert(imp_in, "suit lost connection!")
+/// Pod-transport the suit to its owner
+/obj/item/implant/mod/proc/do_recall()
+	playsound(module.mod, 'sound/vehicles/rocketlaunch.ogg', vol = 80, vary = FALSE)
+	var/turf/land_target = get_turf(imp_in)
+	var/obj/structure/closet/supplypod/pod = podspawn(list(
+		"target" = get_turf(module.mod),
+		"path" = /obj/structure/closet/supplypod/transport/module_pathfinder,
+		"reverse_dropoff_coords" = list(land_target.x, land_target.y, land_target.z),
+	))
+	pod.insert(module.mod, pod)
+	RegisterSignal(pod, COMSIG_SUPPLYPOD_RETURNING, PROC_REF(pod_takeoff))
 
-/obj/item/implant/mod/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
+/// Track when pod has taken off so we don't falsely report the initial landing
+/obj/item/implant/mod/proc/pod_takeoff(datum/pod)
 	SIGNAL_HANDLER
+	RegisterSignal(pod, COMSIG_SUPPLYPOD_LANDED, PROC_REF(pod_landed))
 
-	var/matrix/mod_matrix = matrix()
-	mod_matrix.Turn(get_angle(source, imp_in))
-	source.transform = mod_matrix
+/// When the pod landed, we can recall again
+/obj/item/implant/mod/proc/pod_landed()
+	SIGNAL_HANDLER
+	in_transit = FALSE
+	playsound(module.mod, 'sound/items/handling/toolbox_drop.ogg', vol = 80, vary = FALSE)
+
+/// Special pod subtype we use just to make insertion check easy
+/obj/structure/closet/supplypod/transport/module_pathfinder
+
+/obj/structure/closet/supplypod/transport/module_pathfinder/insertion_allowed(atom/to_insert)
+	return istype(to_insert, /obj/item/mod/control)
 
 /datum/action/item_action/mod_recall
 	name = "Recall MOD"
@@ -160,7 +160,7 @@
 	COOLDOWN_DECLARE(recall_cooldown)
 
 /datum/action/item_action/mod_recall/New(Target)
-	..()
+	. = ..()
 	if(!istype(Target, /obj/item/implant/mod))
 		qdel(src)
 		return
@@ -173,5 +173,8 @@
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
 		implant.balloon_alert(implant.imp_in, "on cooldown!")
 		return
-	if(implant.recall())
-		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
+	if(!implant.recall())
+		return
+	COOLDOWN_START(src, recall_cooldown, 5 SECONDS)
+
+#undef PATHFINDER_PRE_ANIMATE_TIME

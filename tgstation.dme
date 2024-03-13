@@ -955,7 +955,6 @@
 #include "code\datums\ai\movement\ai_movement_complete_stop.dm"
 #include "code\datums\ai\movement\ai_movement_dumb.dm"
 #include "code\datums\ai\movement\ai_movement_jps.dm"
-#include "code\datums\ai\objects\mod.dm"
 #include "code\datums\ai\objects\vending_machines\vending_machine_behaviors.dm"
 #include "code\datums\ai\objects\vending_machines\vending_machine_controller.dm"
 #include "code\datums\ai\oldhostile\hostile_tameable.dm"

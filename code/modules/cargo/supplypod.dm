@@ -70,6 +70,18 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
+/// Quick setup for if you want a pod that transports a specific object somewhere and makes it look like it is flying away
+/obj/structure/closet/supplypod/transport
+	style = STYLE_SEETHROUGH
+	explosionSize = list(0,0,0,0)
+	reversing = TRUE
+	delays = list(POD_TRANSIT = 0, POD_FALLING = 0, POD_OPENING = 0, POD_LEAVING = 0)
+	reverse_delays = list(POD_TRANSIT = 15, POD_FALLING = 10, POD_OPENING = 0, POD_LEAVING = 0)
+	custom_rev_delay = TRUE
+	effectQuiet = TRUE
+	close_sound = null
+	pod_flags = FIRST_SOUNDS
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -234,6 +246,7 @@
 	if (custom_rev_delay)
 		delays = reverse_delays
 	backToNonReverseIcon()
+	SEND_SIGNAL(src, COMSIG_SUPPLYPOD_RETURNING)
 	var/turf/return_turf = locate(reverse_dropoff_coords[1], reverse_dropoff_coords[2], reverse_dropoff_coords[3])
 	new /obj/effect/pod_landingzone(return_turf, src)
 
@@ -242,9 +255,9 @@
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
 	resistance_flags = initial(resistance_flags)
 	set_density(TRUE) //Density is originally false so the pod doesn't block anything while it's still falling through the air
-	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
 	if(effectShrapnel)
-		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
+		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+	SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
 	for (var/mob/living/target_living in turf_underneath)
 		if (iscarbon(target_living)) //If effectLimb is true (which means we pop limbs off when we hit people):
 			if (effectLimb)
@@ -586,7 +599,11 @@
 		stack_trace("Pod landingzone effect created with no pod")
 		return INITIALIZE_HINT_QDEL
 	transform = matrix() * 1.5
-	animate(src, transform = matrix()*0.01, time = pod.delays[POD_TRANSIT]+pod.delays[POD_FALLING])
+	var/arrival_time = pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING]
+	if (arrival_time > 0)
+		animate(src, transform = matrix()*0.01, time = arrival_time)
+	else
+		alpha = 0
 
 /obj/effect/pod_landingzone //This is the object that forceMoves the supplypod to it's location
 	name = "Landing Zone Indicator"
@@ -613,7 +630,11 @@
 	if (!pod.effectStealth)
 		helper = new (drop_location(), pod)
 		alpha = 255
-	animate(src, transform = matrix().Turn(90), time = pod.delays[POD_TRANSIT]+pod.delays[POD_FALLING])
+	var/arrival_time = pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING]
+	if (arrival_time > 0)
+		animate(src, transform = matrix().Turn(90), time = arrival_time)
+	else
+		alpha = 0
 	if (single_order)
 		if (istype(single_order, /datum/supply_order))
 			var/datum/supply_order/SO = single_order
@@ -627,7 +648,7 @@
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
 		for (var/mob/living/target_living in get_turf(src))
 			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
-	if (pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
+	if (arrival_time < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound = 'sound/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
