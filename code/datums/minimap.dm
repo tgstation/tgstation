@@ -38,6 +38,52 @@ SUBSYSTEM_DEF(minimap)
 	var/section_columns = 0 //! Number of sections in the x direction
 	var/section_rows = 0 //! Number of sections in the y direction
 
+	var/datum/asset/simple/minimap_asset //! Asset of the minimap, registered on finalization
+
+/datum/minimap_data/proc/save_persistence_data()
+	text2file(json_encode(list(
+		"map_config_key" = SSmapping.config.config_filename,
+		"z_level" = z_level,
+		"save_location" = save_location,
+		"tile_offset_x" = tile_offset_x,
+		"tile_offset_y" = tile_offset_y,
+		"tile_width" = tile_width,
+		"tile_height" = tile_height,
+		"section_width" = section_width,
+		"section_height" = section_height,
+		"section_columns" = section_columns,
+		"section_rows" = section_rows,
+		"asset_paths" = json_encode(minimap_asset.assets),
+	)), "[save_location]/persistence.json")
+
+/datum/minimap_data/proc/try_load_persistence_data()
+	var/persistence_raw = file2text("[save_location]/persistence.json")
+	if(!length(persistence_raw))
+		return FALSE
+
+	var/list/persistence_data = json_decode(persistence_raw)
+	if(!length(persistence_data))
+		return FALSE
+	if(persistence_data["map_config_key"] != SSmapping.config.config_filename)
+		return FALSE
+	if(persistence_data["save_location"] != save_location)
+		return FALSE
+
+	z_level = persistence_data["z_level"]
+	save_location = persistence_data["save_location"]
+	tile_offset_x = persistence_data["tile_offset_x"]
+	tile_offset_y = persistence_data["tile_offset_y"]
+	tile_width = persistence_data["tile_width"]
+	tile_height = persistence_data["tile_height"]
+	section_width = persistence_data["section_width"]
+	section_height = persistence_data["section_height"]
+	section_columns = persistence_data["section_columns"]
+	section_rows = persistence_data["section_rows"]
+	minimap_asset = new /datum/asset/simple
+	minimap_asset.assets = json_decode(persistence_data["asset_paths"])
+	minimap_asset.register()
+	return TRUE
+
 /// Holds information used for generating a minimap.
 /datum/minimap_generation_cache
 	var/started_at //! When the generation of the minimap was queued
@@ -54,7 +100,7 @@ SUBSYSTEM_DEF(minimap)
 
 /datum/controller/subsystem/minimap/Initialize()
 	for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		generate_minimap_for_z(z_level)
+		generate_minimap_for_z(z_level, allow_persistence_recovery = TRUE)
 
 	return SS_INIT_SUCCESS
 
@@ -72,9 +118,17 @@ SUBSYSTEM_DEF(minimap)
 	return . + "S:[current_section.section_x],[current_section.section_y]|CR:[length(current_run)]"
 
 /// Generates a minimap for the given z level. Does not block and will generate the minimap in the background.
-/datum/controller/subsystem/minimap/proc/generate_minimap_for_z(z)
+/datum/controller/subsystem/minimap/proc/generate_minimap_for_z(z, allow_persistence_recovery = FALSE)
 	set waitfor = FALSE
 	PRIVATE_PROC(TRUE)
+
+	var/datum/minimap_data/minimap_data = new
+	minimap_data.z_level = z
+	minimap_data.save_location = "data/minimaps/z_[z]"
+
+	if(allow_persistence_recovery && minimap_data.try_load_persistence_data())
+		minimaps_by_z_level["[z]"] = minimap_data
+		return TRUE
 
 	if(generating && generating.data.z_level == z)
 		return TRUE
@@ -85,9 +139,7 @@ SUBSYSTEM_DEF(minimap)
 		return TRUE
 
 	var/datum/minimap_generation_cache/cache = new
-	cache.data = new
-	cache.data.z_level = z
-	cache.data.save_location = "data/minimaps/z_[z]"
+	cache.data = minimap_data
 	fdel("[cache.data.save_location]/")
 
 	var/list/all_turfs = list()
@@ -197,13 +249,15 @@ SUBSYSTEM_DEF(minimap)
 	testing("MINIMAP GEN | [generating.data.z_level] | DONE | [(REALTIMEOFDAY - generating.started_at) * 0.1]s")
 #endif
 
-	var/list/png_paths = list()
+	generating.data.minimap_asset = new /datum/asset/simple
 	for(var/section_x in 1 to generating.data.section_columns)
 		for(var/section_y in 1 to generating.data.section_rows)
-			png_paths += "[generating.data.save_location]/[section_x],[section_y].png"
-	//!!TODO!! rustg_stitch_png(json_encode(png_paths), "[generating.data.save_location]/final.png")
+			var/minimap_section_name = "minimap_[section_x]-[section_y]_z[generating.data.z_level].png"
+			generating.data.minimap_asset.assets[SANITIZE_FILENAME(minimap_section_name)] = "[generating.data.save_location]/[section_x],[section_y].png"
+	generating.data.minimap_asset.register()
 
 	minimaps_by_z_level["[generating.data.z_level]"] = generating.data
+	generating.data.save_persistence_data()
 	generating.data = null
 	generating = null
 
