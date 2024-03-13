@@ -863,7 +863,7 @@
 
 /obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
+		return NONE
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
