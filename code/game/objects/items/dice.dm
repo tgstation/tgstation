@@ -110,6 +110,8 @@
 			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
 	else
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
+		
+	return .
 
 
 /obj/item/dice/update_overlays()
