@@ -4,6 +4,7 @@ TODO LIST:
 - GIVE THE PLASMA EXTRACTION MACHINE ITS OWN SPRITE
 - GIVE PIPES THEIR OWN SPRITE (MAYBE ??)
 - Better feedback when placing down the pipes.
+- Placing pipes after the first one is still runtiming to fuck, also directionals dont seem to work
 */
 
 
