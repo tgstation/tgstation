@@ -15,11 +15,11 @@ import { Box } from './Box';
 
 const DEFAULT_UPDATE_RATE = 400;
 
-type Props = {
+type Props = Required<{
   value: number | string;
   minValue: number;
   maxValue: number;
-} &
+}> &
   Partial<{
     step: number;
     stepPixelSize: number;
@@ -73,7 +73,7 @@ export class NumberInput extends Component<Props, State> {
   };
 
   // default values for the number input props
-  static defaultProps: Props = {
+  static defaultProps = {
     step: 1,
     stepPixelSize: 1,
     suppressFlicker: 50,
