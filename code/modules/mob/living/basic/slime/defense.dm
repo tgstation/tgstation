@@ -7,20 +7,21 @@
 
 
 /mob/living/basic/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(isnull(buckled))
+		return ..()
+
 	user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-	if(buckled)
-		if(buckled == user ? prob(60) : prob(30)) //its easier to remove the slime from yourself
-			user.visible_message(span_warning("[user] attempts to wrestle \the [name] off [buckled == user ? "" : buckled] !"), \
-			span_danger("[buckled == user ? "You attempt" : (user + " attempts") ] to wrestle \the [name] off [buckled == user ? "" : buckled]!"))
-			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-			return
-
-		user.visible_message(span_warning("[user] manages to wrestle \the [name] off!"), span_notice("You manage to wrestle \the [name] off!"))
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-
-		//discipline_slime
+	if(buckled == user ? prob(60) : prob(30)) //its easier to remove the slime from yourself
+		user.visible_message(span_warning("[user] attempts to wrestle \the [name] off [buckled == user ? "" : buckled] !"), \
+		span_danger("[buckled == user ? "You attempt" : (user + " attempts") ] to wrestle \the [name] off [buckled == user ? "" : buckled]!"))
+		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
-	return ..()
+
+	user.visible_message(span_warning("[user] manages to wrestle \the [name] off!"), span_notice("You manage to wrestle \the [name] off!"))
+	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
+	//discipline_slime
+	return
 
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
 
