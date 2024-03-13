@@ -46,6 +46,7 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	// Blue, dim light
 	light_power = 0.8
 	light_color = LIGHT_COLOR_BLUE
@@ -123,7 +124,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	on_network = FALSE
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -271,7 +272,7 @@ Possible to do for anyone motivated enough:
 
 	return ..()
 
-/obj/machinery/holopad/ui_status(mob/user)
+/obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
 		return UI_CLOSE
 	if(outgoing_call && !calling)

@@ -49,12 +49,12 @@
 	if(isnull(current_bodypart) || isnull(current_bodypart.owner))
 		return
 	var/mob/living/carbon/human/victim = current_bodypart.owner
-	if(prob(SPT_PROB(3, SSMOBS_DT)))
+	if(SPT_PROB(3, SSMOBS_DT))
 		to_chat(victim, span_warning("The thing posing as your limb makes you feel funny...")) //warn em
 	//firstly as a sideeffect we drain nutrition from our host
 	victim.adjust_nutrition(-1.5)
 
-	if(!prob(SPT_PROB(1.5, SSMOBS_DT)))
+	if(!SPT_PROB(1.5, SSMOBS_DT))
 		return
 
 	if(istype(current_bodypart, /obj/item/bodypart/arm))
@@ -152,7 +152,7 @@
 	current_bodypart.dismember()
 	return TRUE//on_limb_lost should be called after that
 
-/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, dismembered)
+/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, special, dismembered)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_BODYPART_REMOVED)
 	UnregisterSignal(old_owner, COMSIG_LIVING_ELECTROCUTE_ACT)

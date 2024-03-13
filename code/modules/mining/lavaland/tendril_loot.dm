@@ -271,8 +271,10 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	light_system = MOVABLE_LIGHT
-	light_range = 7
+	light_system = OVERLAY_LIGHT
+	light_range = 6
+	light_power = 1.2
+	light_color = "#79f1ff"
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -467,8 +469,6 @@
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/item/shared_storage/red
-	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
 
 /obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()

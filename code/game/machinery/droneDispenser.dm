@@ -260,11 +260,6 @@
 	if(break_sound)
 		playsound(src, break_sound, 50, TRUE)
 
-/obj/machinery/drone_dispenser/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 5)
-	qdel(src)
-
 #undef DRONE_PRODUCTION
 #undef DRONE_RECHARGING
 #undef DRONE_READY

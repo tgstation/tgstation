@@ -405,7 +405,7 @@
 	if(IS_CULTIST(user))
 		user.visible_message(span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"), \
 							span_cultitalic("You attempt to stun [target] with the spell!"))
-		user.mob_light(range = 3, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
+		user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
 		if(IS_HERETIC(target))
 			to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the Forgotten Gods!"))
 			to_chat(target, span_warning("You are protected by your faith to the Forgotten Gods."))
@@ -739,15 +739,15 @@
 					to_chat(user,span_warning("[human_bloodbag.p_Theyre()] missing too much blood - you cannot drain [human_bloodbag.p_them()] further!"))
 					return
 		if(isconstruct(target))
-			var/mob/living/simple_animal/construct_thing = target
+			var/mob/living/basic/construct/construct_thing = target
 			var/missing_health = construct_thing.maxHealth - construct_thing.health
 			if(missing_health)
 				if(uses > missing_health)
-					construct_thing.adjustHealth(-missing_health)
+					construct_thing.adjust_health(-missing_health)
 					construct_thing.visible_message(span_warning("[construct_thing] is fully healed by [user]'s blood magic!"))
 					uses -= missing_health
 				else
-					construct_thing.adjustHealth(-uses)
+					construct_thing.adjust_health(-uses)
 					construct_thing.visible_message(span_warning("[construct_thing] is partially healed by [user]'s blood magic!"))
 					uses = 0
 				playsound(get_turf(construct_thing), 'sound/magic/staff_healing.ogg', 25)

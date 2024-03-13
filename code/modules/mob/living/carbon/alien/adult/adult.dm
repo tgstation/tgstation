@@ -74,12 +74,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		name = "[name] ([numba])"
 		real_name = name
 
-/mob/living/carbon/alien/adult/proc/grab(mob/living/carbon/human/target)
-	if(target.check_block(src, 0, "[target]'s grab"))
-		return FALSE
-	target.grabbedby(src)
-	return TRUE
-
 /mob/living/carbon/alien/adult/setGrabState(newstate)
 	if(newstate == grab_state)
 		return
@@ -148,6 +142,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	log_combat(src, lucky_winner, "devoured")
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE
+
+/mob/living/carbon/alien/adult/get_butt_sprite()
+	return BUTT_SPRITE_XENOMORPH
 
 // Aliens can touch acid
 /mob/living/carbon/alien/can_touch_acid(atom/acided_atom, acid_power, acid_volume)

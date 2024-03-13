@@ -416,6 +416,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
+	///The job type to dress up our nuclear operative as.
+	var/datum/job/job_type = /datum/job/nuclear_operative
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
@@ -430,8 +432,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
-		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
-		M.mind.special_role = ROLE_NUCLEAR_OPERATIVE
+		M.mind.set_assigned_role(SSjob.GetJobType(job_type))
+		M.mind.special_role = required_role
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
@@ -624,6 +626,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE
+	job_type = /datum/job/clown_operative
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
@@ -634,10 +637,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	for(var/obj/machinery/nuclearbomb/syndicate/nuke as anything in nukes)
 		new /obj/machinery/nuclearbomb/syndicate/bananium(nuke.loc)
 		qdel(nuke)
-
-	for(var/datum/mind/clowns in assigned)
-		clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-		clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 //////////////////////////////////////////////
 //                                          //
@@ -699,3 +698,45 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
 
 	GLOB.round_default_lawset = /datum/ai_laws/united_nations
+
+/datum/dynamic_ruleset/roundstart/spies
+	name = "Spies"
+	antag_flag = ROLE_SPY
+	antag_datum = /datum/antagonist/spy
+	minimum_required_age = 0
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL, // AA = bad
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 3 // lives or dies by there being a few spies
+	weight = 5
+	cost = 8
+	scaling_cost = 101 // see below
+	minimum_players = 8
+	antag_cap = list("denominator" = 8, "offset" = 1) // should have quite a few spies to work against each other
+	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
+
+/datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
+	for(var/i in 1 to get_antag_cap(population) * (scaled_times + 1))
+		if(length(candidates) <= 0)
+			break
+		var/mob/picked_player = pick_n_take(candidates)
+		assigned += picked_player.mind
+		picked_player.mind.special_role = ROLE_SPY
+		picked_player.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += picked_player.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/spies/scale_up(population, max_scale)
+	// Disabled (at least until dynamic can handle scaling this better)
+	// Because spies have a very low demoninator, this can easily spawn like 30 of them
+	return 0

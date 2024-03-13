@@ -225,9 +225,7 @@ export const ExoscannerConsole = (props) => {
               <Section title="Special Scan Condtions">
                 {scan_conditions &&
                   scan_conditions.map((condition) => (
-                    <NoticeBox key={condition} warning>
-                      {condition}
-                    </NoticeBox>
+                    <NoticeBox key={condition}>{condition}</NoticeBox>
                   ))}
               </Section>
             </Section>

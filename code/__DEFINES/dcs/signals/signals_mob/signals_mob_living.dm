@@ -12,8 +12,6 @@
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -28,6 +26,8 @@
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"
 ///from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"
+	/// Block the electrocute_act() proc from proceeding
+	#define COMPONENT_LIVING_BLOCK_SHOCK (1<<0)
 ///sent when items with siemen coeff. of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
 #define COMSIG_LIVING_SHOCK_PREVENTED "living_shock_prevented"
 ///sent by stuff like stunbatons and tasers: ()
@@ -155,9 +155,9 @@
 	#define ZIMPACT_NO_SPIN (1<<2)
 
 /// From mob/living/try_speak(): (message, ignore_spam, forced)
-#define COMSIG_LIVING_TRY_SPEECH "living_vocal_speech"
-	/// Return if the mob can speak the message, regardless of any other signal returns or checks.
-	#define COMPONENT_CAN_ALWAYS_SPEAK (1<<0)
+#define COMSIG_MOB_TRY_SPEECH "living_vocal_speech"
+	/// Return to skip can_speak check, IE, forcing success. Overrides below.
+	#define COMPONENT_IGNORE_CAN_SPEAK (1<<0)
 	/// Return if the mob cannot speak.
 	#define COMPONENT_CANNOT_SPEAK (1<<1)
 
@@ -228,6 +228,15 @@
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
 	#define SUCCESSFUL_BLOCK (1<<0)
 
+///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
+#define COMSIG_LIVING_DISARM_HIT "living_disarm_hit"
+///Before a living mob is shoved, sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target)
+#define COMSIG_LIVING_DISARM_PRESHOVE "living_disarm_preshove"
+	#define COMSIG_LIVING_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
+///When a living mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target, shove_blocked)
+#define COMSIG_LIVING_DISARM_COLLIDE "living_disarm_collision"
+	#define COMSIG_LIVING_SHOVE_HANDLED (1<<0)
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
@@ -240,5 +249,17 @@
 
 /// Sent from a mob to their loc when starting to remove cuffs on itself
 #define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
-/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
-#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
+
+/// From /datum/element/basic_eating/try_eating()
+#define COMSIG_MOB_PRE_EAT "mob_pre_eat"
+	///cancel eating attempt
+	#define COMSIG_MOB_CANCEL_EAT (1<<0)
+
+/// From /datum/element/basic_eating/finish_eating()
+#define COMSIG_MOB_ATE "mob_ate"

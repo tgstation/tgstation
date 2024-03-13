@@ -27,13 +27,13 @@
 	)
 
 /datum/surgery/repair_puncture/can_start(mob/living/user, mob/living/carbon/target)
-	if(!istype(target))
-		return FALSE
 	. = ..()
-	if(.)
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		var/datum/wound/burn/flesh/pierce_wound = targeted_bodypart.get_wound_type(targetable_wound)
-		return(pierce_wound && pierce_wound.blood_flow > 0)
+	if(!.)
+		return .
+
+	var/datum/wound/pierce/bleed/pierce_wound = target.get_bodypart(user.zone_selected).get_wound_type(targetable_wound)
+	ASSERT(pierce_wound, "[type] on [target] has no pierce wound when it should have been guaranteed to have one by can_start")
+	return pierce_wound.blood_flow > 0
 
 //SURGERY STEPS
 
@@ -45,6 +45,7 @@
 		TOOL_SCALPEL = 85,
 		TOOL_WIRECUTTER = 40)
 	time = 3 SECONDS
+	preop_sound = 'sound/surgery/hemostat1.ogg'
 
 /datum/surgery_step/repair_innards/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
@@ -104,6 +105,8 @@
 		TOOL_WELDER = 70,
 		/obj/item = 30)
 	time = 4 SECONDS
+	preop_sound = 'sound/surgery/cautery1.ogg'
+	success_sound = 'sound/surgery/cautery2.ogg'
 
 /datum/surgery_step/seal_veins/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)

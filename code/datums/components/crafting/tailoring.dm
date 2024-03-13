@@ -345,6 +345,27 @@
 	)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/shark_costume
+	name = "shark costume"
+	result = /obj/item/clothing/suit/hooded/shark_costume
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/leather = 5,
+		/obj/item/stack/sheet/animalhide/carp = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/shork_costume
+	name = "shork costume"
+	result = /obj/item/clothing/suit/hooded/shork_costume
+	time = 2 SECONDS
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	reqs = list(
+		/obj/item/clothing/suit/hooded/shark_costume = 1,
+	)
+	category = CAT_CLOTHING
+
+
 /datum/crafting_recipe/sturdy_shako
 	name = "Sturdy Shako"
 	result = /obj/item/clothing/head/hats/hos/shako
@@ -376,5 +397,25 @@
 	time = 5 SECONDS
 	reqs = list(
 		/obj/item/paper = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/biohood_sec
+	name = "security biohood"
+	result = /obj/item/clothing/head/bio_hood/security
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/clothing/head/bio_hood/general = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/biosuit_sec
+	name = "security biosuit"
+	result = /obj/item/clothing/suit/bio_suit/security
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/clothing/suit/bio_suit/general = 1,
+		/obj/item/clothing/suit/armor/vest = 1,
 	)
 	category = CAT_CLOTHING

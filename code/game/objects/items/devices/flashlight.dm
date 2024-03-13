@@ -19,7 +19,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_color = COLOR_LIGHT_ORANGE
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
@@ -75,7 +76,7 @@
 
 /obj/item/flashlight/proc/update_brightness()
 	update_appearance(UPDATE_ICON)
-	if(light_system == STATIC_LIGHT)
+	if(light_system == COMPLEX_LIGHT)
 		update_light()
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
@@ -94,7 +95,7 @@
 	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
 
 /obj/item/flashlight/attack_self(mob/user)
-	toggle_light(user)
+	return toggle_light(user)
 
 /obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
 	attack_self(user)
@@ -294,6 +295,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = CONDUCTS_ELECTRICITY
 	light_range = 2
+	light_power = 0.8
+	light_color = "#CCFFFF"
 	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
@@ -351,6 +354,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	light_range = 5 // A little better than the standard flashlight.
+	light_power = 0.8
+	light_color = "#99ccff"
 	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
@@ -363,7 +368,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
 	light_range = 3.5
-	light_system = STATIC_LIGHT
+	light_system = COMPLEX_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -396,7 +401,8 @@
 	actions_types = list()
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
+	light_power = 2
 	grind_results = list(/datum/reagent/sulfur = 15)
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
@@ -415,7 +421,7 @@
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
 	if(randomize_fuel)
-		fuel = rand(25 MINUTES, 35 MINUTES)
+		fuel = rand(10 MINUTES, 15 MINUTES)
 	if(light_on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
@@ -522,8 +528,9 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
-	light_color = LIGHT_COLOR_FIRE
 	light_range = 2
+	light_power = 1.5
+	light_color = LIGHT_COLOR_FIRE
 	fuel = 35 MINUTES
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
@@ -636,6 +643,7 @@
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	light_range = 4
+	light_power = 1.3
 	icon_state = "torch"
 	inhand_icon_state = "torch"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -653,20 +661,24 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
-	light_range = 6 // luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_range = 5 // luminosity when on
+	light_power = 1.5
+	light_color = "#ffcc66"
+	light_system = OVERLAY_LIGHT
 
 /obj/item/flashlight/lantern/heirloom_moth
 	name = "old lantern"
 	desc = "An old lantern that has seen plenty of use."
-	light_range = 4
+	light_range = 3.5
 
 /obj/item/flashlight/lantern/syndicate
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
 	inhand_icon_state = "syndilantern"
-	light_range = 10
+	light_range = 6
+	light_power = 2
+	light_color = "#ffffe6"
 
 /obj/item/flashlight/lantern/jade
 	name = "jade lantern"
@@ -684,8 +696,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
-	light_range = 7 //luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_range = 6 //luminosity when on
+	light_color = "#ffff66"
+	light_system = OVERLAY_LIGHT
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -742,14 +755,15 @@
 	emp_cur_charges = 100
 
 // Glowsticks, in the uncomfortable range of similar to flares,
-// but not similar enough to make it worth a refactor
+// Flares need to process (for hotspots) tho so this becomes irrelevant
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
 	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
-	light_range = 4
-	light_system = MOVABLE_LIGHT
+	light_range = 3.5
+	light_power = 2
+	light_system = OVERLAY_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	base_icon_state = "glowstick"
@@ -760,34 +774,73 @@
 	toggle_context = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
+	/// How much max fuel we have
+	var/max_fuel = 0
+	/// The timer id powering our burning
+	var/timer_id = TIMER_ID_NULL
 
 /obj/item/flashlight/glowstick/Initialize(mapload)
-	fuel = rand(50 MINUTES, 60 MINUTES)
+	fuel = rand(20 MINUTES, 25 MINUTES)
+	max_fuel = fuel
 	set_light_color(color)
 	return ..()
 
-/obj/item/flashlight/glowstick/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+/// Burns down the glowstick by the specified time
+/// Returns the amount of time we need to burn before a visual change will occur
+/obj/item/flashlight/glowstick/proc/burn_down(amount = 0)
+	fuel -= amount
+	var/fuel_target = 0
+	if(fuel >= max_fuel)
+		fuel_target = max_fuel * 0.4
+	else if(fuel >= max_fuel * 0.4)
+		fuel_target = max_fuel * 0.3
+		set_light_range(3)
+		set_light_power(1.5)
+	else if(fuel >= max_fuel * 0.3)
+		fuel_target = max_fuel * 0.2
+		set_light_range(2)
+		set_light_power(1.25)
+	else if(fuel >= max_fuel * 0.2)
+		fuel_target = max_fuel * 0.1
+		set_light_power(1)
+	else if(fuel >= max_fuel * 0.1)
+		fuel_target = 0
+		set_light_range(1.5)
+		set_light_power(0.5)
 
-/obj/item/flashlight/glowstick/process(seconds_per_tick)
-	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
-	if(fuel <= 0)
+	var/time_to_burn = round(fuel - fuel_target)
+	// Less then a ds? go home
+	if(time_to_burn <= 0)
 		turn_off()
-		STOP_PROCESSING(SSobj, src)
+
+	return time_to_burn
+
+/obj/item/flashlight/glowstick/proc/burn_loop(amount = 0)
+	timer_id = TIMER_ID_NULL
+	var/burn_next = burn_down(amount)
+	if(burn_next <= 0)
+		return
+	timer_id = addtimer(CALLBACK(src, PROC_REF(burn_loop), burn_next), burn_next, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+
+/obj/item/flashlight/glowstick/proc/turn_on()
+	set_light_on(TRUE) // Just in case
+	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
+	// No sense having a toggle light action that we don't use eh?
+	if(toggle)
+		remove_item_action(toggle)
+	burn_loop()
 
 /obj/item/flashlight/glowstick/proc/turn_off()
+	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
+	if(fuel && !toggle)
+		add_item_action(/datum/action/item_action/toggle_light)
+	if(timer_id != TIMER_ID_NULL)
+		var/expected_burn_time = burn_down(0) // This is dumb I'm sorry
+		burn_down(expected_burn_time - timeleft(timer_id))
+		deltimer(timer_id)
+		timer_id = TIMER_ID_NULL
 	set_light_on(FALSE)
 	update_appearance(UPDATE_ICON)
-
-/obj/item/flashlight/glowstick/update_appearance(updates=ALL)
-	. = ..()
-	if(fuel <= 0)
-		set_light_on(FALSE)
-		return
-	if(light_on)
-		set_light_on(TRUE)
-		return
 
 /obj/item/flashlight/glowstick/update_icon_state()
 	. = ..()
@@ -803,6 +856,13 @@
 	glowstick_overlay.color = color
 	. += glowstick_overlay
 
+/obj/item/flashlight/glowstick/toggle_light(mob/user)
+	if(fuel <= 0)
+		return FALSE
+	if(light_on)
+		return FALSE
+	return ..()
+
 /obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(fuel <= 0)
 		balloon_alert(user, "glowstick is spent!")
@@ -814,7 +874,7 @@
 	. = ..()
 	if(.)
 		user.visible_message(span_notice("[user] cracks and shakes [src]."), span_notice("You crack and shake [src], turning it on!"))
-		START_PROCESSING(SSobj, src)
+		turn_on()
 
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
 	if(!fuel)
@@ -825,7 +885,7 @@
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
-	fuel = 0
+	burn_loop(fuel)
 	return FIRELOSS
 
 /obj/item/flashlight/glowstick/red
@@ -856,9 +916,9 @@
 	name = "disco light"
 	desc = "Groovy..."
 	icon_state = null
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 4
-	light_power = 10
+	light_power = 2
 	alpha = 0
 	plane = FLOOR_PLANE
 	anchored = TRUE
@@ -884,7 +944,7 @@
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
-	light_system = STATIC_LIGHT //The overlay light component is not yet ready to produce darkness.
+	light_system = COMPLEX_LIGHT //The overlay light component is not yet ready to produce darkness.
 	light_range = 0
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_range = 2.5
@@ -903,23 +963,12 @@
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
-	light_system = MOVABLE_LIGHT
-	light_range = 15
-	light_power = 1
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
 
-/obj/item/flashlight/eyelight/adapted
-	name = "adaptedlight"
-	desc = "There is no possible way for a player to see this, so I can safely talk at length about why this exists. Adapted eyes come \
-	with icons that go above the lighting layer so to make sure the red eyes that pierce the darkness are always visible we make the \
-	human emit the smallest amount of light possible. Thanks for reading :)"
-	light_range = 1
-	light_power = 0.07
-
 /obj/item/flashlight/eyelight/glow
-	light_system = MOVABLE_LIGHT_BEAM
+	light_system = OVERLAY_LIGHT_BEAM
 	light_range = 4
 	light_power = 2
 

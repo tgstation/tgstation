@@ -21,8 +21,10 @@
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 5
+	light_power = 1.2
+	light_color = "#ffff66"
 	light_on = FALSE
 	var/list/trophies = list()
 	var/charged = TRUE
@@ -113,7 +115,7 @@
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				backstabbed = TRUE
 				combined_damage += backstab_bonus
-				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+				playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 
 			if(!QDELETED(C))
 				C.total_damage += combined_damage
@@ -159,7 +161,7 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
+		playsound(src.loc, 'sound/weapons/kinetic_reload.ogg', 60, TRUE)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
@@ -470,3 +472,17 @@
 			continue
 		return possible_turf
 	return get_turf(user)
+
+//wolf trophy
+
+/obj/item/crusher_trophy/wolf_ear
+	name = "wolf ear"
+	desc = "It's a wolf ear."
+	icon_state = "wolf_ear"
+	denied_type = /obj/item/crusher_trophy/wolf_ear
+
+/obj/item/crusher_trophy/wolf_ear/effect_desc()
+	return "mark detonation to gain a slight speed boost temporarily"
+
+/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)

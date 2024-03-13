@@ -21,6 +21,7 @@
 	/// The list of factions this atom belongs to
 	var/list/faction
 
+	/// Use get_default_say_verb() in say.dm instead of reading verb_say.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -68,7 +69,7 @@
 	var/movement_type = GROUND
 
 	var/atom/movable/pulling
-	var/grab_state = 0
+	var/grab_state = GRAB_PASSIVE
 	/// The strongest grab we can acomplish
 	var/max_grab = GRAB_KILL
 	var/throwforce = 0
@@ -114,6 +115,14 @@
 	/// How much we as a source block explosions by
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
+
+	// Access levels, used in modules\jobs\access.dm
+	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
+	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
+	var/list/req_access
+	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
+	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
+	var/list/req_one_access
 
 /mutable_appearance/emissive_blocker
 
@@ -177,11 +186,11 @@
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
-		if(MOVABLE_LIGHT)
+		if(OVERLAY_LIGHT)
 			AddComponent(/datum/component/overlay_lighting)
-		if(MOVABLE_LIGHT_DIRECTIONAL)
+		if(OVERLAY_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
-		if(MOVABLE_LIGHT_BEAM)
+		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
 /atom/movable/Destroy(force)
@@ -1254,9 +1263,11 @@
 	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
+	if(HAS_TRAIT(src, TRAIT_NO_THROW_HITPUSH))
+		hitpush = FALSE
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, hitting_atom.dir)
-	..()
+	return ..()
 
 /atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))

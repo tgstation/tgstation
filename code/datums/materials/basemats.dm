@@ -4,9 +4,12 @@
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
 	color = "#878687"
 	greyscale_colors = "#878687"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
+	ore_type = /obj/item/stack/ore/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	mineral_rarity = MATERIAL_RARITY_COMMON
+	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
@@ -22,9 +25,10 @@
 	color = "#88cdf1"
 	greyscale_colors = "#88cdf196"
 	alpha = 150
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
+	ore_type = /obj/item/stack/ore/glass/basalt
 	shard_type = /obj/item/shard
 	debris_type = /obj/effect/decal/cleanable/glass
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
@@ -33,6 +37,8 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)
+	mineral_rarity = MATERIAL_RARITY_COMMON
+	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
@@ -41,12 +47,12 @@
 /datum/material/glass/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(!isstack(source))
-		source.AddElement(/datum/element/shatters_when_thrown, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
+		source.AddElement(/datum/element/can_shatter, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
 
 /datum/material/glass/on_removed(atom/source, amount, material_flags)
 	. = ..()
 
-	source.RemoveElement(/datum/element/shatters_when_thrown, shard_type)
+	source.RemoveElement(/datum/element/can_shatter, shard_type)
 
 /*
 Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.
@@ -59,12 +65,15 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Silver"
 	color = list(255/255, 284/255, 302/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#e3f1f8"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
+	ore_type = /obj/item/stack/ore/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.075
+	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
+	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -77,13 +86,16 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
 	greyscale_colors = "#dbdd4c"
 	strength_modifier = 1.2
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
+	ore_type = /obj/item/stack/ore/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	beauty_modifier = 0.15
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
+	mineral_rarity = MATERIAL_RARITY_PRECIOUS
+	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -95,8 +107,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Highly pressurized carbon"
 	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#71c8f784"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
+	ore_type = /obj/item/stack/ore/diamond
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
@@ -104,6 +117,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	beauty_modifier = 0.3
 	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
+	mineral_rarity = MATERIAL_RARITY_RARE
+	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -115,13 +130,16 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Uranium"
 	color = rgb(48, 237, 26)
 	greyscale_colors = rgb(48, 237, 26)
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
+	ore_type = /obj/item/stack/ore/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	beauty_modifier = 0.3 //It shines so beautiful
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
+	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
+	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -152,11 +170,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#c162ec"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
+	ore_type = /obj/item/stack/ore/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.15
 	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, ENERGY = 1.2, BIO = 1.2, ACID = 0.5)
+	mineral_rarity = MATERIAL_RARITY_PRECIOUS
+	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -183,10 +204,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#4e7dffC8"
 	alpha = 200
 	starlight_color = COLOR_BLUE
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
 	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
+	ore_type = /obj/item/stack/ore/bluespace_crystal
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
+	mineral_rarity = MATERIAL_RARITY_RARE
+	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 
@@ -201,11 +225,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Material with hilarious properties"
 	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow
 	greyscale_colors = "#ffff00"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
+	ore_type = /obj/item/stack/ore/bananium
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
 	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
+	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -229,13 +256,15 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#b3c0c7"
 	greyscale_colors = "#b3c0c7"
 	strength_modifier = 1.3
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
+	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
+	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -252,6 +281,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
 	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
+	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -265,10 +296,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	ore_type = /obj/item/stack/ore/slag //No plastic or coal ore, so we use slag.
+	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = -0.01
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Nobody's found oil on lavaland yet.
+	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
 	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
@@ -328,6 +362,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.4
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, FIRE = 2.5, ACID = 1)
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
+	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -345,6 +381,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.5
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
+	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()

@@ -182,6 +182,8 @@
 	var/catastropic_dismemberment = FALSE //If TRUE, this projectile deals its damage to the chest if it dismembers a limb.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+	/// If true, the projectile won't cause any logging. Used for hallucinations and shit.
+	var/do_not_log = FALSE
 	/// We ignore mobs with these factions.
 	var/list/ignored_factions
 
@@ -359,7 +361,7 @@
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
-	if(ismob(firer))
+	if(ismob(firer) && !do_not_log)
 		log_combat(firer, living_target, "shot", src, reagent_note)
 		return BULLET_ACT_HIT
 
@@ -369,11 +371,12 @@
 		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
 		if(!LAZYLEN(logging_mobs))
 			logging_mobs = firing_vehicle.return_drivers()
-		for(var/mob/logged_mob as anything in logging_mobs)
-			log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+		if(!do_not_log)
+			for(var/mob/logged_mob as anything in logging_mobs)
+				log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
-
-	living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
+	if(!do_not_log)
+		living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -771,7 +774,7 @@
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if(firer)
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
-	if(!log_override && firer && original)
+	if(!log_override && firer && original && !do_not_log)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
@@ -792,9 +795,7 @@
 		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.Turn(Angle)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -811,11 +812,9 @@
 	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
@@ -827,11 +826,9 @@
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 
@@ -909,10 +906,6 @@
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
-	if(!nondirectional_sprite && !hitscanning)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
 	if(homing)
 		process_homing()
 	var/forcemoved = FALSE

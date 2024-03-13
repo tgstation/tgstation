@@ -101,6 +101,10 @@
 	controller.queue_loop(src)
 
 /datum/move_loop/process()
+	if(isnull(controller))
+		qdel(src)
+		return
+
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
@@ -441,7 +445,8 @@
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
-		movement_path.Cut(1,2)
+		if(length(movement_path))
+			movement_path.Cut(1,2)
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE

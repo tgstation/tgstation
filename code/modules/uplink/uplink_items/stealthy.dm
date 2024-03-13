@@ -99,7 +99,7 @@
 	These shocks are capable of affecting the inner circuitry of most robots as well, applying a short stun. \
 	Has the added benefit of affecting the vocal cords of your victim, causing them to slur as if inebriated."
 	item = /obj/item/melee/baton/telescopic/contractor_baton
-	cost = 12
+	cost = 7
 	surplus = 50
 	limited_stock = 1
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = UPLINK_TRAITORS | UPLINK_SPY

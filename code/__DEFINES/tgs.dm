@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "7.0.1"
+#define TGS_DMAPI_VERSION "7.1.1"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -48,6 +48,13 @@
 /// Get the number of connected /clients.
 #define TGS_CLIENT_COUNT
 
+#endif
+
+#ifndef TGS_FILE2TEXT_NATIVE
+#ifdef file2text
+#error Your codebase is re-defining the BYOND proc file2text. The DMAPI requires the native version to read the result of world.Export(). You can fix this by adding "#define TGS_FILE2TEXT_NATIVE file2text" before your override of file2text to allow the DMAPI to use the native version. This will only be used for world.Export(), not regular file accesses
+#endif
+#define TGS_FILE2TEXT_NATIVE file2text
 #endif
 
 // EVENT CODES
@@ -426,6 +433,7 @@
 
 /**
  * Send a message to connected chats. This function may sleep!
+ * If TGS is offline when called, the message may be placed in a queue to be sent and this function will return immediately. Your message will be sent when TGS reconnects to the game.
  *
  * message - The [/datum/tgs_message_content] to send.
  * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
@@ -435,6 +443,7 @@
 
 /**
  * Send a private message to a specific user. This function may sleep!
+ * If TGS is offline when called, the message may be placed in a queue to be sent and this function will return immediately. Your message will be sent when TGS reconnects to the game.
  *
  * message - The [/datum/tgs_message_content] to send.
  * user: The [/datum/tgs_chat_user] to PM.
@@ -444,6 +453,7 @@
 
 /**
  * Send a message to connected chats that are flagged as game-related in TGS. This function may sleep!
+ * If TGS is offline when called, the message may be placed in a queue to be sent and this function will return immediately. Your message will be sent when TGS reconnects to the game.
  *
  * message - The [/datum/tgs_message_content] to send.
  * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
@@ -485,6 +495,16 @@
 
 /// Returns a list of connected [/datum/tgs_chat_channel]s if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsChatChannelInfo()
+	return
+
+/**
+ * Trigger an event in TGS. Requires TGS version >= 6.3.0. Returns [TRUE] if the event was triggered successfully, [FALSE] otherwise. This function may sleep!
+ *
+ * event_name - The name of the event to trigger
+ * parameters - Optional list of string parameters to pass as arguments to the event script. The first parameter passed to a script will always be the running game's directory followed by these parameters.
+ * wait_for_completion - If set, this function will not return until the event has run to completion.
+ */
+/world/proc/TgsTriggerEvent(event_name, list/parameters, wait_for_completion = FALSE)
 	return
 
 /*

@@ -63,6 +63,8 @@
 
 /obj/item/taperecorder/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	play()
 
 /obj/item/taperecorder/proc/update_available_icons()
@@ -157,6 +159,9 @@
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
+	if(message_mods[MODE_RELAY])
+		return
+
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [raw_message]"

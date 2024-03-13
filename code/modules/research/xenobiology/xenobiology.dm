@@ -688,7 +688,6 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
-	var/list/not_interested = list()
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
@@ -704,16 +703,22 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-
+	var/potion_reason = tgui_input_text(user, "For what reason?", "Intelligence Potion", multiline = TRUE, timeout = 2 MINUTES)
+	if(isnull(potion_reason))
+		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, dumb_mob)
-	dumb_mob.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SENTIENCE_POTION, \
-		job_bans = ROLE_SENTIENCE, \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "[span_danger(user)] is offering [span_notice(dumb_mob)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 20 SECONDS,
+		checked_target = dumb_mob,
+		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
+		alert_pic = dumb_mob,
+		role_name_text = "intelligence potion",
+		chat_text_border_icon = src,
 	)
+	on_poll_concluded(user, dumb_mob, chosen_one)
 
 /// Assign the chosen ghost to the mob
 /obj/item/slimepotion/slime/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)
@@ -1065,9 +1070,10 @@
 
 /obj/item/areaeditor/blueprints/slime/edit_area()
 	..()
-	var/area/A = get_area(src)
-	for(var/turf/T in A)
-		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-	A.area_flags |= XENOBIOLOGY_COMPATIBLE
+	var/area/area = get_area(src)
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			area_turf.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+	area.area_flags |= XENOBIOLOGY_COMPATIBLE
 	qdel(src)

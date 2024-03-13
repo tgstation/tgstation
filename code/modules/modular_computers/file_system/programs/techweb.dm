@@ -88,7 +88,8 @@
 		)
 	return data
 
-/datum/computer_file/program/science/ui_act(action, list/params)
+/datum/computer_file/program/science/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")
@@ -110,7 +111,8 @@
 
 /datum/computer_file/program/science/ui_static_data(mob/user)
 	. = list(
-		"static_data" = list()
+		"static_data" = list(),
+		"point_types_abbreviations" = SSresearch.point_types,
 	)
 
 	// Build node cache...
@@ -199,7 +201,7 @@
 		if(stored_research.research_node_id(id))
 			computer.say("Successfully researched [tech_node.display_name].")
 			var/logname = "Unknown"
-			if(isAI(user))
+			if(HAS_AI_ACCESS(user))
 				logname = "AI [user.name]"
 			if(iscyborg(user))
 				logname = "CYBORG [user.name]"

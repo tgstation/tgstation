@@ -26,6 +26,10 @@
 	set_cap = 1
 	set_luminosity = 1.6
 
+/obj/effect/light_emitter/fake_outdoors
+	light_color = COLOR_LIGHT_YELLOW
+	set_cap = 1
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
@@ -69,7 +73,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
-	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/mining_scanner(src)
 	new /obj/item/clothing/glasses/meson(src)
 	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
 		new /obj/item/survivalcapsule/bathroom(src)

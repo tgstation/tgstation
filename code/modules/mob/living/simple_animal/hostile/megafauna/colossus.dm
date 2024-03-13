@@ -55,6 +55,7 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	summon_line = "Your trial begins now."
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -154,8 +155,8 @@
 		return FALSE
 	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
 		return TRUE
-	var/mob/living/carbon/human/human_victim = victim
-	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
+
+	return istype(victim.mind?.martial_art, /datum/martial_art/the_sleeping_carp)
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -164,8 +165,10 @@
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
-	light_system = MOVABLE_LIGHT
-	light_range = 2
+	light_system = OVERLAY_LIGHT
+	light_range = 2.5
+	light_power = 1.2
+	light_color = "#ffff66"
 	duration = 8
 	var/target
 
@@ -355,8 +358,7 @@
 
 /obj/machinery/anomalous_crystal/theme_warp/Initialize(mapload)
 	. = ..()
-	var/terrain_type = pick(subtypesof(/datum/dimension_theme))
-	terrain_theme = new terrain_type()
+	terrain_theme = SSmaterials.dimensional_themes[pick(subtypesof(/datum/dimension_theme))]
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme.name]\"."
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
@@ -366,12 +368,12 @@
 	var/area/current_area = get_area(src)
 	if (current_area in converted_areas)
 		return FALSE
-	terrain_theme.apply_theme_to_list_of_turfs(current_area.get_contained_turfs())
+	terrain_theme.apply_theme_to_list_of_turfs(current_area.get_turfs_from_all_zlevels())
 	converted_areas += current_area
 	return TRUE
 
 /obj/machinery/anomalous_crystal/theme_warp/Destroy()
-	QDEL_NULL(terrain_theme)
+	terrain_theme = null
 	converted_areas.Cut()
 	return ..()
 
@@ -496,6 +498,7 @@
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 		RegisterSignal(holder_animal, COMSIG_LIVING_DEATH, PROC_REF(on_holder_animal_death))
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -523,9 +526,6 @@
 			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()
 	return ..()
-
-/obj/structure/closet/stasis/emp_act()
-	return
 
 /obj/structure/closet/stasis/ex_act()
 	return FALSE

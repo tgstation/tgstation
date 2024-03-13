@@ -82,11 +82,14 @@
 	infestation += infestation_rate * seconds_per_tick
 	switch(infestation)
 		if(0 to WOUND_INFECTION_MODERATE)
+			return
+
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
 			if(SPT_PROB(15, seconds_per_tick))
 				victim.adjustToxLoss(0.2)
 				if(prob(6))
 					to_chat(victim, span_warning("The blisters on your [limb.plaintext_zone] ooze a strange pus..."))
+
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 			if(!disabling)
 				if(SPT_PROB(1, seconds_per_tick))
@@ -130,8 +133,7 @@
 					if(0)
 						to_chat(victim, span_deadsay("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
 						threshold_penalty = 120 // piss easy to destroy
-						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
-						victim.gain_trauma(sepsis)
+						set_disabling(TRUE)
 
 /datum/wound/burn/flesh/get_wound_description(mob/user)
 	if(strikes_to_lose_limb <= 0)

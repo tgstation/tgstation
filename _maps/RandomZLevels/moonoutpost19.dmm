@@ -4025,8 +4025,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "AC" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Gateway Access";
 	req_access = "150"
 	},

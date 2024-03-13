@@ -1,7 +1,8 @@
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
+import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Button,
   Dropdown,
@@ -62,10 +63,7 @@ export const TramController = (props) => {
     destinations = [],
   } = data;
 
-  const [tripDestination, setTripDestination] = useLocalState(
-    'TramDestination',
-    '',
-  );
+  const [tripDestination, setTripDestination] = useState('');
 
   return (
     <Window title="Tram Controller" width={778} height={327} theme="dark">

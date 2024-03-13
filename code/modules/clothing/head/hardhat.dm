@@ -13,9 +13,10 @@
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF
 
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
+	light_color = "#ffcc99"
 	light_on = FALSE
 	dog_fashion = /datum/dog_fashion/head
 
@@ -23,7 +24,7 @@
 	var/hat_type = "yellow"
 	///Whether the headlamp is on or off.
 	var/on = FALSE
-
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/utility_hardhat
 	melee = 15
@@ -216,6 +217,7 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
+	clothing_traits = list()
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -269,6 +271,6 @@
 	flags_inv = 0
 	armor_type = /datum/armor/none
 	light_range = 1 //luminosity when on
-
+	clothing_traits = list()
 
 	dog_fashion = /datum/dog_fashion/head/reindeer

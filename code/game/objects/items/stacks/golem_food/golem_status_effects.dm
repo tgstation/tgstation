@@ -404,7 +404,7 @@
 	. = ..()
 	if (!.)
 		return
-	owner.AddElement(/datum/element/waddling)
+	owner.AddElementTrait(TRAIT_WADDLING, TRAIT_STATUS_EFFECT(id), /datum/element/waddling)
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 	slipperiness = owner.AddComponent(\
 		/datum/component/slippery,\
@@ -418,8 +418,7 @@
 	return owner.body_position == LYING_DOWN
 
 /datum/status_effect/golem/bananium/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
-	owner.RemoveElement(/datum/element/waddling)
+	owner.remove_traits(owner, list(TRAIT_WADDLING, TRAIT_NO_SLIP_WATER), TRAIT_STATUS_EFFECT(id))
 	QDEL_NULL(slipperiness)
 	return ..()
 
@@ -434,15 +433,14 @@
 	var/glow_range = 3
 	var/glow_power = 1
 	var/glow_color = LIGHT_COLOR_DEFAULT
-	var/datum/component/overlay_lighting/lightbulb
+	var/obj/effect/dummy/lighting_obj/moblight/lightbulb
 
 /datum/status_effect/golem_lightbulb/on_apply()
 	. = ..()
 	if (!.)
 		return
 	to_chat(owner, span_notice("You start to emit a healthy glow."))
-	owner.light_system = MOVABLE_LIGHT
-	lightbulb = owner.AddComponent(/datum/component/overlay_lighting, _range = glow_range, _power = glow_power, _color = glow_color)
+	lightbulb = owner.mob_light(glow_range, glow_power, glow_color)
 	owner.add_filter(LIGHTBULB_FILTER, 2, list("type" = "outline", "color" = glow_color, "alpha" = 60, "size" = 1))
 
 /datum/status_effect/golem_lightbulb/on_remove()

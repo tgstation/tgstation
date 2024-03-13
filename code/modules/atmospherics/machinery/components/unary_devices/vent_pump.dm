@@ -14,6 +14,7 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "uvent"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	// vents are more complex machinery and so are less resistant to damage
 	max_integrity = 100
@@ -203,12 +204,14 @@
 			return
 
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
-			icon_state = "vent_out-off"
+			icon_state = "vent_off"
+			flick("vent_out-shutdown", src)
 		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
+			icon_state = "vent_off"
+			flick("vent_in-shutdown", src)
 		return
 
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+	if(icon_state == "vent_off")
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)

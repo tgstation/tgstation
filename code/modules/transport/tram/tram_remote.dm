@@ -108,6 +108,10 @@
 	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination, options)
 
 /obj/item/assembly/control/transport/remote/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
+
 	link_tram(user)
 
 /obj/item/assembly/control/transport/remote/proc/link_tram(mob/user)

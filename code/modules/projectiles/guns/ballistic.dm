@@ -130,6 +130,12 @@
 	///What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
+	/// Fire Selector Variables ///
+	/// Tracks the firemode of burst weapons. TRUE means it is in burst mode.
+	var/burst_fire_selection = FALSE
+	/// If it has an icon for a selector switch indicating current firemode.
+	var/selector_switch_icon = FALSE
+
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	if(!spawn_magazine_type)
@@ -200,6 +206,14 @@
 
 /obj/item/gun/ballistic/update_overlays()
 	. = ..()
+
+	if(selector_switch_icon)
+		switch(burst_fire_selection)
+			if(FALSE)
+				. += "[initial(icon_state)]_semi"
+			if(TRUE)
+				. += "[initial(icon_state)]_burst"
+
 	if(show_bolt_icon)
 		if (bolt_type == BOLT_TYPE_LOCKING)
 			. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
@@ -249,6 +263,27 @@
 	if(capacity_number)
 		. += "[icon_state]_mag_[capacity_number]"
 
+/obj/item/gun/ballistic/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
+
+/obj/item/gun/ballistic/proc/burst_select()
+	var/mob/living/carbon/human/user = usr
+	burst_fire_selection = !burst_fire_selection
+	if(!burst_fire_selection)
+		burst_size = 1
+		fire_delay = 0
+		balloon_alert(user, "switched to semi-automatic")
+	else
+		burst_size = initial(burst_size)
+		fire_delay = initial(fire_delay)
+		balloon_alert(user, "switched to [burst_size]-round burst")
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_appearance()
+	update_item_action_buttons()
 
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -264,8 +299,7 @@
 				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
-			UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
-			chambered = null
+			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
@@ -427,10 +461,9 @@
 	return TRUE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
-		if(prob(misfire_probability))
-			if(blow_up(user))
-				to_chat(user, span_userdanger("[src] misfires!"))
+	if(target != user && chambered.loaded_projectile && can_misfire && prob(misfire_probability) && blow_up(user))
+		to_chat(user, span_userdanger("[src] misfires!"))
+		return
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
@@ -697,11 +730,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
-	. = FALSE
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.loaded_projectile)
-			process_fire(user, user, FALSE)
-			. = TRUE
+	return chambered && process_fire(user, user, FALSE)
 
 /obj/item/gun/ballistic/proc/instant_reload()
 	SIGNAL_HANDLER

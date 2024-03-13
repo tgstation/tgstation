@@ -29,9 +29,9 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	COOLDOWN_DECLARE(mecha_bump_smash)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	light_range = 8
+	light_range = 6
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
@@ -54,7 +54,7 @@
 	/// Keeps track of the mech's servo motor
 	var/obj/item/stock_parts/servo/servo
 	///Contains flags for the mecha
-	var/mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 
 	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system
@@ -70,8 +70,6 @@
 	var/bumpsmash = FALSE
 
 	///////////ATMOS
-	///Whether the pilot is hidden from the outside viewers and whether the cabin can be sealed to be airtight
-	var/enclosed = TRUE
 	///Whether the cabin exchanges gases with the environment
 	var/cabin_sealed = FALSE
 	///Internal air mix datum
@@ -397,7 +395,7 @@
 
 /obj/vehicle/sealed/mecha/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	if(enclosed)
+	if(mecha_flags & IS_ENCLOSED)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
 	if(can_use_overclock)
 		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overclock)
@@ -459,16 +457,16 @@
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(mecha_flags & PANEL_OPEN)
 		if(servo)
-			. += span_notice("Micro-servos reduce movement power usage by [100 - round(100 / servo.rating)]%")
+			. += span_notice("Servo reduces movement power usage by [100 - round(100 / servo.rating)]%")
 		else
-			. += span_warning("It's missing a micro-servo.")
+			. += span_warning("It's missing a servo.")
 		if(capacitor)
 			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
 			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
 			. += span_warning("It's missing a scanning module.")
-	if(enclosed)
+	if(mecha_flags & IS_ENCLOSED)
 		return
 	if(mecha_flags & SILICON_PILOT)
 		. += span_notice("[src] appears to be piloting itself...")
@@ -574,7 +572,7 @@
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
-		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell && cell.maxcharge)
@@ -725,12 +723,12 @@
 /////////////////////////////////////
 
 /obj/vehicle/sealed/mecha/remove_air(amount)
-	if(enclosed && cabin_sealed)
+	if((mecha_flags & IS_ENCLOSED) && cabin_sealed)
 		return cabin_air.remove(amount)
 	return ..()
 
 /obj/vehicle/sealed/mecha/return_air()
-	if(enclosed && cabin_sealed)
+	if((mecha_flags & IS_ENCLOSED) && cabin_sealed)
 		return cabin_air
 	return ..()
 
@@ -749,7 +747,7 @@
 
 ///makes cabin unsealed, dumping cabin air outside or airtight filling the cabin with external air mix
 /obj/vehicle/sealed/mecha/proc/set_cabin_seal(mob/user, cabin_sealed)
-	if(!enclosed)
+	if(!(mecha_flags & IS_ENCLOSED))
 		balloon_alert(user, "cabin can't be sealed!")
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return

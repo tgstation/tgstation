@@ -150,6 +150,43 @@
 	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandanaskull_inhands.json'
 
+/datum/greyscale_config/facescarf
+	name = "Facescarf"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/facescarf.json'
+
+/datum/greyscale_config/facescarf/worn
+	name = "Facescarf (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/facescarf/inhands_left
+	name = "Facescarf (Held, Left)"
+	icon_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/facescarf_inhands.json'
+
+/datum/greyscale_config/facescarf/inhands_right
+	name = "Facescarf (Held, Right)"
+	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/facescarf_inhands.json'
+
+/datum/greyscale_config/kitsune
+	name = "Kitsune mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/kitsune.json'
+
+/datum/greyscale_config/kitsune/worn
+	name = "Kitsune mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/rebellion_mask
+	name = "Rebellion mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/rebellion_mask.json'
+
+/datum/greyscale_config/rebellion_mask/worn
+	name = "Rebellion mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
 //
 // NECK
 //
@@ -666,6 +703,15 @@
 
 /datum/greyscale_config/wellworn_shirt/worn
 	name = "Well-Worn Shirt (Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/wellworn_shirt_skub
+	name = "Well-Worn Shirt (Skub)"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wellworn_shirt_skub.json'
+
+/datum/greyscale_config/wellworn_shirt_skub/worn
+	name = "Well-Worn Shirt (Skub)(Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
 /datum/greyscale_config/wellworn_shirt_graphic

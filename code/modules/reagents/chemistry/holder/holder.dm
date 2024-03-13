@@ -255,9 +255,9 @@
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_subtypes)
-			break
+			return total_removed_amount
 
-	return total_removed_amount
+	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Removes a reagent at random and by a random quantity till the specified amount has been removed.
@@ -283,9 +283,8 @@
 
 	current_list_element = rand(1, cached_reagents.len)
 
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
+	while(total_removed < amount)
+		// There's nothing left in the container
 		if(total_volume <= 0 || !cached_reagents.len)
 			break
 
@@ -294,29 +293,37 @@
 
 		var/datum/reagent/target_holder = cached_reagents[current_list_element]
 		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		//min ensures we don't go over amount.
-		remove_reagent(target_holder.type, remove_amt)
+		// If the logic above means removing really tiny amounts (or even zero if it's a remove amount of 10) instead choose a sensible smallish number
+		// so this proc will actually finish instead of looping forever
+		remove_amt = max(CHEMICAL_VOLUME_ROUNDING, remove_amt)
+		remove_amt = remove_reagent(target_holder.type, remove_amt)
 
 		current_list_element++
 		total_removed += remove_amt
-
 	handle_reactions()
-	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
+
+	return round(total_removed, CHEMICAL_VOLUME_ROUNDING)
 
 /**
- * Removes all reagents by an amount equal to
- * [amount specified] / total volume present in this holder
+ * Removes all reagents either proportionally(amount is the direct volume to remove)
+ * when proportional the total volume of all reagents removed will equal to amount
+ * or relatively(amount is a percentile between 0->1) when relative amount is the %
+ * of each reagent to be removed
+ *
  * Arguments
  *
- * * amount - the volume of each reagent
+ * * amount - the amount to remove
+ * * relative - if TRUE amount is treated as an percentage between 0->1. If FALSE amount is the direct volume to remove
  */
-
-/datum/reagents/proc/remove_all(amount = 1)
+/datum/reagents/proc/remove_all(amount = 1, relative = FALSE)
 	if(!total_volume)
 		return FALSE
 
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to remove all reagents [amount]")
+		return FALSE
+	if(relative && (amount < 0 || amount > 1))
+		stack_trace("illegal percentage value passed to remove all reagents [amount]")
 		return FALSE
 
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
@@ -324,13 +331,14 @@
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
-	var/part = amount / total_volume
 	var/total_removed_amount = 0
-
+	var/part = amount
+	if(!relative)
+		part /= total_volume
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		total_removed_amount += remove_reagent(reagent.type, reagent.volume * part)
-
 	handle_reactions()
+
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
@@ -532,9 +540,14 @@
 		remove_reagent(reagent.type, transfer_amount)
 		transfer_log[reagent.type] = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 
+	//combat log
 	if(transferred_by && target_atom)
-		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
-		log_combat(transferred_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
+		var/atom/log_target = target_atom
+		if(isorgan(target_atom))
+			var/obj/item/organ/organ_item = target_atom
+			log_target = organ_item.owner ? organ_item.owner : organ_item
+		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
 	update_total()
 	target_holder.update_total()
@@ -642,7 +655,7 @@
 		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if(!reagent_volume || (reagent_volume <= 0.05 && !is_reacting))
+		if(reagent_volume <= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)

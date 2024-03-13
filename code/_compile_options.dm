@@ -112,7 +112,7 @@
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
-#ifdef CIBUILDING
+#if defined(CIBUILDING) && !defined(OPENDREAM)
 #define UNIT_TESTS
 #endif
 
@@ -137,8 +137,24 @@
 #define CBT
 #endif
 
-#if !defined(CBT) && !defined(SPACEMAN_DMM)
-#warn Building with Dream Maker is no longer supported and will result in errors.
-#warn In order to build, run BUILD.bat in the root directory.
-#warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
+#if defined(OPENDREAM)
+	#if !defined(CIBUILDING)
+		#warn You are building with OpenDream. Remember to build TGUI manually.
+		#warn You can do this by running tgui-build.cmd from the bin directory.
+	#endif
+#else
+	#if !defined(CBT) && !defined(SPACEMAN_DMM)
+		#warn Building with Dream Maker is no longer supported and will result in errors.
+		#warn In order to build, run BUILD.cmd in the root directory.
+		#warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
+	#endif
+#endif
+
+/// Runs the game in "map test mode"
+/// Map test mode prevents common annoyances, such as rats from spawning and random light fixture breakage,
+/// so mappers can test important facets of their map (working powernet, atmos, good light coverage) without these interfering.
+// #define MAP_TEST
+
+#ifdef MAP_TEST
+#warn Compiling in MAP_TEST mode. Certain game mechanics will be disabled.
 #endif

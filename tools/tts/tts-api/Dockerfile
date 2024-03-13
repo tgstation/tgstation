@@ -24,6 +24,8 @@ SHELL ["conda", "run", "-n", "intel", "/bin/bash", "-c"]
 # Setup python requirements and install the TTS python module into the new intel anaconda environment.
 RUN pip install Flask &&\
 	pip install waitress &&\
+	pip install pysbd &&\
+	pip install pydub &&\
 	pip cache purge
 
 COPY . /root

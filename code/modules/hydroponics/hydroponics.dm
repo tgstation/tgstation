@@ -102,7 +102,7 @@
 	// If the plant's not in either state, we can't do much else, so early return.
 	if(isnull(held_item))
 		// Silicons can't interact with trays :frown:
-		if(issilicon(user))
+		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
 		switch(plant_status)
@@ -1074,7 +1074,7 @@
 	. = ..()
 	if(.)
 		return
-	if(issilicon(user)) //How does AI know what plant is?
+	if(HAS_SILICON_ACCESS(user)) //How does AI know what plant is?
 		return
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
 		return myseed.harvest(user)
@@ -1159,7 +1159,7 @@
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15
@@ -1184,9 +1184,8 @@
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
 
-/obj/machinery/hydroponics/soil/deconstruct(disassembled)
+/obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
-	return ..()
 
 ///The usb port circuit
 

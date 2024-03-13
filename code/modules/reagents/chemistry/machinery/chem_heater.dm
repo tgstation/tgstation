@@ -25,13 +25,59 @@
 	create_reagents(200, NO_REACT)
 	register_context()
 
-/obj/machinery/chem_heater/on_deconstruction()
-	beaker?.forceMove(drop_location())
-
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		QDEL_NULL(beaker)
+	return ..()
+
+/obj/machinery/chem_heater/on_deconstruction(disassembled)
+	beaker?.forceMove(drop_location())
+
+/obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return NONE
+
+	if(!QDELETED(beaker))
+		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+			context[SCREENTIP_CONTEXT_LMB] = "Inject"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(is_reagent_container(held_item)  && held_item.is_open_container())
+			context[SCREENTIP_CONTEXT_LMB] = "Replace beaker"
+			return CONTEXTUAL_SCREENTIP_SET
+	else if(is_reagent_container(held_item)  && held_item.is_open_container())
+		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Open panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+
+/obj/machinery/chem_heater/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
+		if(!QDELETED(beaker))
+			. += span_notice("It has a beaker of [beaker.reagents.total_volume] units capacity.")
+			if(beaker.reagents.is_reacting)
+				. += span_notice("Its contents are currently reacting.")
+		else
+			. += span_warning("There is no beaker inserted.")
+		. += span_notice("Its heating is turned [on ? "On" : "Off"].")
+		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
+		if(panel_open)
+			. += span_notice("Its panel is open and can now be [EXAMINE_HINT("pried")] apart.")
+		else
+			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
+
+/obj/machinery/chem_heater/update_icon_state()
+	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
 /obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
@@ -41,9 +87,45 @@
 		beaker = null
 		update_appearance()
 
-/obj/machinery/chem_heater/update_icon_state()
-	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
+/obj/machinery/chem_heater/RefreshParts()
+	. = ..()
+	heater_coefficient = 0.1
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
+
+
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers, is_right_clicking)
+	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return ..()
+
+	if(QDELETED(beaker))
+		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/injector = held_item
+			injector.afterattack(beaker, user, proximity_flag = TRUE)
+			return ITEM_INTERACT_SUCCESS
+
+	if(is_reagent_container(held_item)  && held_item.is_open_container())
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
+		balloon_alert(user, "beaker added")
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
+
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -83,12 +165,6 @@
 
 	return TRUE
 
-/obj/machinery/chem_heater/RefreshParts()
-	. = ..()
-	heater_coefficient = 0.1
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		heater_coefficient *= micro_laser.tier
-
 /**
  * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
  * Arguments
@@ -116,47 +192,6 @@
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
-/obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return NONE
-
-	if(!QDELETED(beaker))
-		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
-			context[SCREENTIP_CONTEXT_LMB] = "Inject"
-			return CONTEXTUAL_SCREENTIP_SET
-		if(is_reagent_container(held_item)  && held_item.is_open_container())
-			context[SCREENTIP_CONTEXT_LMB] = "Replace beaker"
-			return CONTEXTUAL_SCREENTIP_SET
-	else if(is_reagent_container(held_item)  && held_item.is_open_container())
-		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "Open panel"
-		return CONTEXTUAL_SCREENTIP_SET
-	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	return NONE
-
-/obj/machinery/chem_heater/examine(mob/user)
-	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
-		if(!QDELETED(beaker))
-			. += span_notice("It has a beaker of [beaker.reagents.total_volume] units capacity.")
-			if(beaker.reagents.is_reacting)
-				. += span_notice("Its contents are currently reacting.")
-		else
-			. += span_warning("There is no beaker inserted.")
-		. += span_notice("Its heating is turned [on ? "On" : "Off"].")
-		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
-		if(panel_open)
-			. += span_notice("Its panel is open and can now be [EXAMINE_HINT("pried")] apart.")
-		else
-			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
-
 /obj/machinery/chem_heater/process(seconds_per_tick)
 	//is_reacting is handled in reaction_step()
 	if(QDELETED(beaker) || beaker.reagents.is_reacting)
@@ -169,39 +204,6 @@
 	//send updates to ui. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
-
-/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/attackby(obj/item/held_item, mob/user, params)
-	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return ..()
-
-	if(beaker)
-		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/injector = held_item
-			injector.afterattack(beaker, user, proximity_flag = TRUE)
-			return TRUE
-
-	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		if(replace_beaker(user, held_item))
-			ui_interact(user)
-		balloon_alert(user, "beaker added!")
-		return TRUE
-
-	return ..()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -220,13 +222,12 @@
 	if(!QDELETED(beaker))
 		beaker_data = list()
 		beaker_data["maxVolume"] = beaker.volume
-		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING))) // list in a list because Byond merges the first list...
 		beaker_data["contents"] = beakerContents
 		chem_temp = beaker.reagents.chem_temp
 	.["beaker"] = beaker_data
@@ -234,15 +235,13 @@
 
 	var/list/active_reactions = list()
 	var/flashing = DISABLE_FLASHING //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
-	for(var/_reaction in beaker?.reagents.reaction_list)
-		var/datum/equilibrium/equilibrium = _reaction
+	for(var/datum/equilibrium/equilibrium as anything in beaker?.reagents.reaction_list)
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
-		var/_reagent = equilibrium.reaction.results[1]
-		var/datum/reagent/reagent = beaker?.reagents.has_reagent(_reagent) //Reactions are named after their primary products
+		var/datum/reagents/beaker_reagents = beaker.reagents
+		var/datum/reagent/reagent = beaker_reagents.has_reagent(equilibrium.reaction.results[1]) //Reactions are named after their primary products
 		if(!reagent)
 			continue
-		var/datum/reagents/beaker_reagents = beaker.reagents
 
 		//check for danger levels primirarly overheating
 		var/overheat = FALSE
@@ -366,12 +365,11 @@
 
 	//trying to absorb buffer from currently inserted beaker
 	if(volume < 0)
-		var/datum/reagent/buffer_reagent = reagents.has_reagent(buffer_type)
-		if(!buffer_reagent)
+		if(!beaker.reagents.has_reagent(buffer_type))
 			var/name = initial(buffer_type.name)
 			say("Unable to find [name] in beaker to draw from! Please insert a beaker containing [name].")
 			return FALSE
-		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - buffer_reagent.volume, target_id = buffer_type)
+		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - reagents.get_reagent_amount(buffer_type), target_id = buffer_type)
 		return TRUE
 
 	//trying to inject buffer into currently inserted beaker

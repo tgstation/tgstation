@@ -9,9 +9,9 @@
 	armor_flag = LASER
 	eyeblur = 4 SECONDS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
-	light_power = 1
+	light_power = 1.4
 	light_color = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
@@ -179,7 +179,7 @@
 	if(pierce_hits <= 0)
 		projectile_piercing = NONE
 	pierce_hits -= 1
-	..()
+	return ..()
 
 /obj/projectile/beam/emitter
 	name = "emitter beam"

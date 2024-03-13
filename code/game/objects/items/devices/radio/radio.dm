@@ -10,6 +10,7 @@
 	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
@@ -261,17 +262,29 @@
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
-		return
+		return NONE
 	if(SEND_SIGNAL(src, COMSIG_RADIO_NEW_MESSAGE, talking_movable, message, channel) & COMPONENT_CANNOT_USE_RADIO)
-		return
+		return NONE
 
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
 		language = talking_movable.get_selected_language()
-	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, spans.Copy(), language, message_mods)
+	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, LAZYLISTDUPLICATE(spans), language, LAZYLISTDUPLICATE(message_mods))
 	return ITALICS | REDUCE_RANGE
 
+/**
+ * Handles talking into the radio
+ *
+ * Unlike most speech related procs, spans and message_mods are not guaranteed to be lists
+ *
+ * * talking_movable - the atom that is talking
+ * * message - the message to be spoken
+ * * channel - the channel to be spoken on
+ * * spans - the spans to be used, lazylist
+ * * language - the language to be spoken in. (Should) never be null
+ * * message_mods - the message mods to be used, lazylist
+ */
 /obj/item/radio/proc/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(!on)
 		return // the device has to be on
@@ -284,6 +297,12 @@
 
 	if(use_command)
 		spans |= SPAN_COMMAND
+
+	var/radio_message = message
+	if(LAZYACCESS(message_mods, WHISPER_MODE))
+		// Radios don't pick up whispers very well
+		radio_message = stars(radio_message)
+		spans |= SPAN_ITALICS
 
 	flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
@@ -317,7 +336,7 @@
 	var/atom/movable/virtualspeaker/speaker = new(null, talking_movable, src)
 
 	// Construct the signal
-	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans, message_mods)
+	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, radio_message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
 	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
@@ -351,9 +370,16 @@
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
+	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
 		return
-	var/filtered_mods = list()
+	var/list/filtered_mods = list()
+
+	if (message_mods[MODE_SING])
+		filtered_mods[MODE_SING] = message_mods[MODE_SING]
+	if (message_mods[WHISPER_MODE])
+		filtered_mods[WHISPER_MODE] = message_mods[WHISPER_MODE]
+	if (message_mods[SAY_MOD_VERB])
+		filtered_mods[SAY_MOD_VERB] = message_mods[SAY_MOD_VERB]
 	if (message_mods[MODE_CUSTOM_SAY_EMOTE])
 		filtered_mods[MODE_CUSTOM_SAY_EMOTE] = message_mods[MODE_CUSTOM_SAY_EMOTE]
 		filtered_mods[MODE_CUSTOM_SAY_ERASE_INPUT] = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]

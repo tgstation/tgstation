@@ -33,6 +33,9 @@ SUBSYSTEM_DEF(materials)
 		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_STRUCTURE),
 	)
 
+	///A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
+	var/list/datum/dimension_theme/dimensional_themes
+
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
@@ -46,6 +49,8 @@ SUBSYSTEM_DEF(materials)
 		if(!(initial(mat_type.init_flags) & MATERIAL_INIT_MAPLOAD))
 			continue // Do not initialize at mapload
 		InitializeMaterial(list(mat_type))
+
+	dimensional_themes = init_subtypes_w_path_keys(/datum/dimension_theme)
 
 /** Creates and caches a material datum.
  *
@@ -154,13 +159,13 @@ SUBSYSTEM_DEF(materials)
 	var/list/combo_params = list()
 	for(var/x in materials_declaration)
 		var/datum/material/mat = x
-		combo_params += "[istype(mat) ? mat.id : mat]=[materials_declaration[mat] * multiplier]"
+		combo_params += "[istype(mat) ? mat.id : mat]=[OPTIMAL_COST(materials_declaration[mat] * multiplier)]"
 	sortTim(combo_params, GLOBAL_PROC_REF(cmp_text_asc)) // We have to sort now in case the declaration was not in order
 	var/combo_index = combo_params.Join("-")
 	var/list/combo = material_combos[combo_index]
 	if(!combo)
 		combo = list()
 		for(var/mat in materials_declaration)
-			combo[GET_MATERIAL_REF(mat)] = materials_declaration[mat] * multiplier
+			combo[GET_MATERIAL_REF(mat)] = OPTIMAL_COST(materials_declaration[mat] * multiplier)
 		material_combos[combo_index] = combo
 	return combo

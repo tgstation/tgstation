@@ -95,7 +95,7 @@
 	if(D)
 		data["points"] = D.account_balance
 	data["locked"] = locked//swipe an ID to unlock
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["usingBeacon"] = usingBeacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !usingBeacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
@@ -164,7 +164,7 @@
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
 				rank = H.get_assignment(hand_first = TRUE)
-			else if(issilicon(usr))
+			else if(HAS_SILICON_ACCESS(usr))
 				name = usr.real_name
 				rank = "Silicon"
 			var/reason = ""
@@ -185,7 +185,7 @@
 						if (!landingzone)
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
-						for(var/turf/open/floor/T in landingzone.get_contained_turfs())//uses default landing zone
+						for(var/turf/open/floor/T in landingzone.get_turfs_from_all_zlevels())//uses default landing zone
 							if(T.is_blocked_turf())
 								continue
 							LAZYADD(empty_turfs, T)
@@ -204,7 +204,7 @@
 			else
 				if(SO.pack.get_cost() * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
 					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
-					for(var/turf/open/floor/T in landingzone.get_contained_turfs())
+					for(var/turf/open/floor/T in landingzone.get_turfs_from_all_zlevels())
 						if(T.is_blocked_turf())
 							continue
 						LAZYADD(empty_turfs, T)

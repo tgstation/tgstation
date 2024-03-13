@@ -136,8 +136,6 @@
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	/// For storing and overriding ui id
-	var/tgui_id // ID of TGUI interface
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
 	/// world.time of last use by [/mob/living]
@@ -198,9 +196,8 @@
 	end_processing()
 
 	clear_components()
-	dump_contents()
-
 	unset_static_power()
+
 	return ..()
 
 /**
@@ -596,10 +593,10 @@
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
-	if(!issilicon(user) && !user.can_hold_items())
+	if(!HAS_SILICON_ACCESS(user) && !user.can_hold_items())
 		return FALSE //spiders gtfo
 
-	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
+	if(HAS_SILICON_ACCESS(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
 
@@ -659,7 +656,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
-/obj/machinery/interact(mob/user, special_state)
+/obj/machinery/interact(mob/user)
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
 	update_last_used(user)
@@ -668,6 +665,9 @@
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	update_last_used(usr)
+	if(HAS_AI_ACCESS(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
+		to_chat(usr, span_warning("You can no longer connect to this device!"))
+		return FALSE
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
@@ -815,11 +815,15 @@
 	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(obj_flags & NO_DECONSTRUCTION)
+		dump_contents() //drop everything inside us
 		return ..() //Just delete us, no need to call anything else.
 
-	on_deconstruction()
+	on_deconstruction(disassembled)
 	if(!LAZYLEN(component_parts))
+		dump_contents() //drop everything inside us
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
@@ -838,8 +842,12 @@
 						continue
 					var/obj/item/stack/stack_path = component
 					new stack_path(loc, board.req_components[component])
-
 	LAZYCLEARLIST(component_parts)
+
+	//drop everything inside us. we do this last to give machines a chance
+	//to handle their contents before we dump them
+	dump_contents()
+
 	return ..()
 
 /**
@@ -853,7 +861,7 @@
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/new_frame = new /obj/structure/frame/machine(loc)
 
-	new_frame.state = 2
+	new_frame.state = FRAME_STATE_WIRED
 
 	// If the new frame shouldn't be able to fit here due to the turf being blocked, spawn the frame deconstructed.
 	if(isturf(loc))
@@ -863,7 +871,7 @@
 			new_frame.deconstruct(disassembled)
 			return
 
-	new_frame.icon_state = "box_1"
+	new_frame.update_appearance(UPDATE_ICON_STATE)
 	. = new_frame
 	new_frame.set_anchored(anchored)
 	if(!disassembled)
@@ -1125,8 +1133,14 @@
 /obj/machinery/proc/on_construction(mob/user)
 	return
 
-//called on deconstruction before the final deletion
-/obj/machinery/proc/on_deconstruction()
+/**
+ * called on deconstruction before the final deletion
+ * Arguments
+ *
+ * * disassembled - if TRUE means we used tools to deconstruct it, FALSE means it got destroyed by other means
+ */
+/obj/machinery/proc/on_deconstruction(disassembled)
+	PROTECTED_PROC(TRUE)
 	return
 
 /obj/machinery/proc/can_be_overridden()
