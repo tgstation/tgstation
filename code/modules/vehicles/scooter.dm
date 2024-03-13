@@ -193,10 +193,6 @@
 	instability = 3
 	icon_state = "hoverboard_red"
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/forced_gravity, 0)
-
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover)
 
@@ -208,11 +204,6 @@
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider, span_warning("[src] [p_are()] not powerful enough to fly upwards."))
 		return FALSE
-
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(length(buckled_mobs))
-		return TRUE //stop floating while someone's riding it.
-	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"

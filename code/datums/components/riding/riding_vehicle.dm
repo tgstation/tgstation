@@ -172,9 +172,16 @@
 	///If TRUE, the vehicle will be slower (but safer) to ride on walk intent.
 	var/can_slow_down = TRUE
 
+/datum/component/riding/vehicle/scooter/skateboard/handle_specials()
+	. = ..()
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
 /datum/component/riding/vehicle/scooter/skateboard/RegisterWithParent()
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/riding/vehicle/scooter/skateboard/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -201,16 +208,45 @@
 /datum/component/riding/vehicle/scooter/skateboard/pro
 	vehicle_move_delay = 1
 
+///This one lets the rider ignore gravity, move in zero g and son on, but only on ground turfs or at most one z-level above them.
 /datum/component/riding/vehicle/scooter/skateboard/hover
 	vehicle_move_delay = 1
 	override_allow_spacemove = TRUE
 
-/datum/component/riding/vehicle/scooter/skateboard/handle_specials()
+/datum/component/riding/vehicle/scooter/skateboard/hover/RegisterWithParent()
 	. = ..()
-	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	RegisterSignal(parent, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(check_grav))
+	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(check_drifting))
+	hover_check()
+
+///Makes sure that the vehicle is grav-less if capable of zero-g movement. Forced gravity will honestly screw this.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_grav(datum/source, turf/gravity_turf, list/gravs)
+	SIGNAL_HANDLER
+	if(override_allow_spacemove)
+		gravs += 0
+
+///Makes sure the vehicle isn't drifting while it can be maneuvered.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_drifting(datum/source, movement_dir, continuous_move)
+	SIGNAL_HANDLER
+	if(override_allow_spacemove)
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/vehicle_moved(atom/movable/source, oldloc, dir, forced)
+	. = ..()
+	hover_check(TRUE)
+
+///Makes sure that the hoverboard can move in zero-g in (open) space but only there's a ground turf on the z-level below.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/hover_check(is_moving = FALSE)
+	var/atom/movable/movable = parent
+	if(!isopenspaceturf(movable.loc))
+		override_allow_spacemove = TRUE
+		return
+	var/turf/open/our_turf = movable.loc
+	var/turf/turf_below = GET_TURF_BELOW(our_turf)
+	if(our_turf.zPassOut(DOWN) && (isnull(turf_below) || (isopenspaceturf(turf_below) && turf_below.zPassIn(DOWN))))
+		override_allow_spacemove = FALSE
+		if(turf_below)
+			our_turf.zFall(movable, falling_from_move = is_moving)
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys
 	vehicle_move_delay = 0
