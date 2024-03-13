@@ -5,6 +5,7 @@ TODO LIST:
 - GIVE PIPES THEIR OWN SPRITE (MAYBE ??)
 - MAKE PIPES RIDABLE (MAYBE??)
 - MAKE PIPES NOT DENSE, BUT ALSO MAKE SURE IT DOESNT BREAK ANYTHING
+- Make pipe endings not use directionals but instead appear similar to an ore vent.
 - Fix attack_animal not working, pipes aren't being destroyed properly.
 - Make pipes invincible
 - Make fauna attack pipes
