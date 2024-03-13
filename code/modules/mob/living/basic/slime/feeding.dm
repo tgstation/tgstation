@@ -101,7 +101,8 @@
 			prey.updatehealth()
 
 	if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on succesful damage adjustment
-		stop_feeding(FALSE, FALSE)
+		balloon_alert(src, "not food!")
+		stop_feeding()
 		return
 
 	if(totaldamage < 0 && SPT_PROB(5, seconds_per_tick) && prey.client)
@@ -136,12 +137,10 @@
 		balloon_alert(src, "latch failed!")
 
 ///The slime will stop feeding
-/mob/living/basic/slime/proc/stop_feeding(silent = FALSE, living=TRUE)
+/mob/living/basic/slime/proc/stop_feeding(silent = FALSE)
 	if(!buckled)
 		return
 
-	if(!living)
-		balloon_alert(src, "not food!")
 	var/mob/living/victim = buckled
 
 	if(istype(victim))
@@ -150,7 +149,6 @@
 			victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
 
 	if(!silent)
-		visible_message(span_warning("[src] lets go of [buckled]!"), \
-						span_notice("<i>I stopped feeding.</i>"))
+		visible_message(span_warning("[src] lets go of [buckled]!"), span_notice("You let go of [buckled]"))
 	layer = initial(layer)
 	buckled.unbuckle_mob(src,force=TRUE)

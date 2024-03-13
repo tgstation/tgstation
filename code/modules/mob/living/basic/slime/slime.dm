@@ -187,7 +187,7 @@
 	. = ..()
 	if(!hunger_disabled)
 		. += "Nutrition: [nutrition]/[max_nutrition]"
-		. += "Growth: [amoung_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+		. += "Growth: [amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
 		. += "Power Level: [powerlevel]"
 
 /mob/living/basic/slime/MouseDrop(atom/movable/target_atom as mob|obj)
