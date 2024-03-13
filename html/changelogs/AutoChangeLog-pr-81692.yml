@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "inserting a material sheet into an lathes should show the correct animation color"

@@ -353,3 +353,32 @@
   - code_imp: autodoc procs & vars for the grill (the machine for grilling food)
   - refactor: grills (the machine for grilling food) has been refactored. report bugs
       on github, also they only start processing after putting food/fuel into them.
+2024-03-13:
+  ArcaneMusic:
+  - bugfix: The black market illegal fish case now correctly initializes.
+  EEASAS:
+  - rscadd: New Lizard's Gas ruin, this time in lavaland
+  Ghommie:
+  - bugfix: The museum piggy bank now spawns with at least 400 creds in it.
+  Iajret:
+  - bugfix: As a borg you shouldn't be able to resist from grab while locked down
+  JohnFulpWillard, Atlasle:
+  - balance: You no longer feel cold if you're drunk. You still take damage, but get
+      no warning or slowdown.
+  Melbert:
+  - bugfix: Some things which should pacify people (but aren't) now will properly,
+      like hypnoflash
+  - bugfix: Silicons can use asterisks in binary without fear of saying something
+      interesting.
+  SyncIt21:
+  - bugfix: inserting a material sheet into an lathes should show the correct animation
+      color
+  Vermidia:
+  - bugfix: Doors with ID scan disabled will no longer open when an ID is thrown at
+      them
+  san7890:
+  - bugfix: All basic mobs are able to get wet. This means, among other things, that
+      you can clear the "slimed" status effect off your holoparasite or dog or whatever.
+  vinylspiders:
+  - bugfix: fixes a spurious CI runtime caused by explosive mines quite literally
+      blowing up the unit test area

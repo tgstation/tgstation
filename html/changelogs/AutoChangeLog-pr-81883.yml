@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Silicons can use asterisks in binary without fear of saying something interesting."
