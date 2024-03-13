@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Buffed the duration of the SC/FISHER Saboteur Handgun's disruption effects. It's also stealthier and it won't conspiciously alert living mobs hit by it."
+  - rscadd: "Added saboteur interactions with radios, pAIs, turrets, secbots and APCs."
