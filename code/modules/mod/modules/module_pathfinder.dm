@@ -141,6 +141,8 @@
 	SIGNAL_HANDLER
 	in_transit = FALSE
 	playsound(module.mod, 'sound/items/handling/toolbox_drop.ogg', vol = 80, vary = FALSE)
+	if(imp_in.Adjacent(module))
+		module.attach(imp_in)
 
 /// Special pod subtype we use just to make insertion check easy
 /obj/structure/closet/supplypod/transport/module_pathfinder
