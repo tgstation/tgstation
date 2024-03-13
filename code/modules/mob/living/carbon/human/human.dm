@@ -61,7 +61,7 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	if(biowares)
-		QDEL_LIST(biowares)
+		QDEL_LAZYLIST(biowares)
 	GLOB.human_list -= src
 
 	if (mob_mood)
