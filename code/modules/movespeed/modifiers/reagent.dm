@@ -6,7 +6,7 @@
 
 /datum/movespeed_modifier/reagent/ephedrine
 	variable = TRUE
-	// multiplicative_slowdown is set on add
+	// speed is based on purity of the reagent at the time of metabolization
 
 /datum/movespeed_modifier/reagent/pepperspray
 	multiplicative_slowdown = 0.25
