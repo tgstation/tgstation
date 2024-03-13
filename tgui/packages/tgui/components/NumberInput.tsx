@@ -15,11 +15,11 @@ import { Box } from './Box';
 
 const DEFAULT_UPDATE_RATE = 400;
 
-type Props = Required<{
+type Props = {
   value: number | string;
   minValue: number;
   maxValue: number;
-}> &
+} &
   Partial<{
     step: number;
     stepPixelSize: number;
