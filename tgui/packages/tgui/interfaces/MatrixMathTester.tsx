@@ -9,6 +9,8 @@ const MatrixMathTesterInput = (props: { value: number; varName: string }) => {
   const { act } = useBackend();
   return (
     <NumberInput
+      minValue={-Infinity}
+      maxValue={Infinity}
       value={props.value}
       step={0.005}
       format={(value) => toFixed(value, 3)}
@@ -111,6 +113,8 @@ export const MatrixMathTester = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   value={scaleX}
                   step={0.05}
                   format={(value) => toFixed(value, 2)}
@@ -120,6 +124,8 @@ export const MatrixMathTester = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   value={scaleY}
                   step={0.05}
                   format={(value) => toFixed(value, 2)}
@@ -142,6 +148,8 @@ export const MatrixMathTester = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   value={translateX}
                   step={1}
                   format={(value) => toFixed(value, 0)}
@@ -151,6 +159,8 @@ export const MatrixMathTester = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   value={translateY}
                   step={1}
                   format={(value) => toFixed(value, 0)}
@@ -171,6 +181,8 @@ export const MatrixMathTester = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   value={shearX}
                   step={0.005}
                   format={(value) => toFixed(value, 3)}
@@ -180,6 +192,8 @@ export const MatrixMathTester = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   value={shearY}
                   step={0.005}
                   format={(value) => toFixed(value, 3)}

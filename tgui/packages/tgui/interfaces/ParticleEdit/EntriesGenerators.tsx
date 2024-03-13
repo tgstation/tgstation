@@ -52,7 +52,9 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
           <Stack.Item>
             <NumberInput
               animated
-              value={float}
+              minValue={-Infinity}
+              maxValue={Infinity}
+              value={float || 0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -177,7 +179,9 @@ export const EntryGeneratorNumbersList = (
           <Stack.Item>
             <NumberInput
               animated
-              value={input}
+              minValue={-Infinity}
+              maxValue={Infinity}
+              value={input || 0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -196,6 +200,8 @@ export const EntryGeneratorNumbersList = (
           <Stack.Item>
             <NumberInput
               animated
+              minValue={-Infinity}
+              maxValue={Infinity}
               value={input[0]}
               onDrag={(e, value) =>
                 act('edit', {
@@ -206,6 +212,8 @@ export const EntryGeneratorNumbersList = (
             />
             <NumberInput
               animated
+              minValue={-Infinity}
+              maxValue={Infinity}
               value={input[1]}
               onDrag={(e, value) =>
                 act('edit', {
@@ -217,6 +225,8 @@ export const EntryGeneratorNumbersList = (
             {allow_z ? (
               <NumberInput
                 animated
+                minValue={-Infinity}
+                maxValue={Infinity}
                 value={input[2]}
                 onDrag={(e, value) =>
                   act('edit', {

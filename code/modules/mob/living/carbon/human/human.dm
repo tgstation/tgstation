@@ -362,7 +362,7 @@
 	if(judgement_criteria & JUDGE_EMAGGED || HAS_TRAIT(src, TRAIT_ALWAYS_WANTED))
 		return 10 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threatcount = judgement_criteria & JUDGE_CHILLOUT ? -THREAT_ASSESS_DANGEROUS : 0
 
 	//Lasertag bullshit
 	if(lasercolor)
