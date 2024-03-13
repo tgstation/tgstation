@@ -146,7 +146,7 @@
 	if(isnull(charge_source()))
 		return "missing"
 
-	switch(round(charge_amount() / max_charge_amount()), 0.01)
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
 		if(0.75 to INFINITY)
 			return "high"
 		if(0.5 to 0.75)
@@ -333,7 +333,7 @@
 	return charge_amount() >= amount
 
 /obj/item/mod/core/plasma/get_charge_icon_state()
-	switch(round(charge_amount() / max_charge_amount()), 0.01)
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
 		if(0.75 to INFINITY)
 			return "high"
 		if(0.5 to 0.75)
