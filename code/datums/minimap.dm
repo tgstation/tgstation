@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(minimap)
 
 	var/datum/minimap_data/minimap_data = new
 	minimap_data.z_level = z
-	minimap_data.save_location = "data/minimaps/z_[z]"
+	minimap_data.save_location = "data/minimaps/[SSmapping.config.map_name]_z_[z]"
 
 	if(allow_persistence_recovery && minimap_data.try_load_persistence_data())
 		minimaps_by_z_level["[z]"] = minimap_data
