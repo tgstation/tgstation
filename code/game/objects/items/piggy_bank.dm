@@ -46,7 +46,7 @@
 	persistence_cb = CALLBACK(src, PROC_REF(save_cash))
 	SSticker.OnRoundend(persistence_cb)
 
-	if(initial_value & initial_value + calculate_dosh_amount() <= maximum_value)
+	if(initial_value && initial_value + calculate_dosh_amount() <= maximum_value)
 		new /obj/item/holochip(src, initial_value)
 
 /obj/item/piggy_bank/proc/save_cash()

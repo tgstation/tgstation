@@ -1,6 +1,18 @@
 /datum/market_item/tool
 	category = "Tools"
 
+/datum/market_item/tool/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the \
+		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver is here to help. \
+		Contains a LTSRBT circuit. Bluespace crystals and ansible not included."
+	item = /obj/item/circuitboard/machine/ltsrbt
+	stock_min = 2
+	stock_max = 4
+	price_min = CARGO_CRATE_VALUE * 2.5
+	price_max = CARGO_CRATE_VALUE * 3.75
+	availability_prob = 100
+
 /datum/market_item/tool/caravan_wrench
 	name = "Experimental Wrench"
 	desc = "The extra fast and handy wrench you always wanted!"

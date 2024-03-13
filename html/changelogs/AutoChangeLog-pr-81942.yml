@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "The black market illegal fish case now correctly initializes."
