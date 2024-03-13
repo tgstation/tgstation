@@ -21,6 +21,8 @@
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	//discipline_slime
+	stop_feeding()
+
 	return
 
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)

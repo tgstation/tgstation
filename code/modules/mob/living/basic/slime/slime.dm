@@ -14,6 +14,8 @@
 	icon_living = "grey baby slime"
 	icon_dead = "grey baby slime dead"
 
+	attack_sound = 'sound/weapons/bite.ogg'
+
 	//Base physiology
 
 	maxHealth = 150
@@ -247,15 +249,7 @@
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
-/*	if(client)
-		return
-
-
-	if(Target) // Like cats
-		set_target(null)
-		++discipline_stacks
-	return
-	*/
+	stop_feeding()
 
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)

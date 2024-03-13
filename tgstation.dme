@@ -4712,7 +4712,7 @@
 #include "code\modules\mob\living\basic\slime\feeding.dm"
 #include "code\modules\mob\living\basic\slime\life.dm"
 #include "code\modules\mob\living\basic\slime\slime.dm"
-#include "code\modules\mob\living\basic\slime\slime_ai_subtree.dm"
+#include "code\modules\mob\living\basic\slime\slime_ai.dm"
 #include "code\modules\mob\living\basic\slime\slime_type.dm"
 #include "code\modules\mob\living\basic\space_fauna\ant.dm"
 #include "code\modules\mob\living\basic\space_fauna\cat_surgeon.dm"
