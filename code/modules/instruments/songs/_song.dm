@@ -123,7 +123,7 @@
 	tempo = sanitize_tempo(tempo, TRUE)
 	src.parent = parent
 	if(instrument_ids)
-		allowed_instrument_ids = islist(instrument_ids)? instrument_ids : list(instrument_ids)
+		allowed_instrument_ids = islist(instrument_ids) ? instrument_ids : list(instrument_ids)
 	if(length(allowed_instrument_ids))
 		set_instrument(allowed_instrument_ids[1])
 	hearing_mobs = list()

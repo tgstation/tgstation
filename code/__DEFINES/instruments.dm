@@ -6,6 +6,8 @@
 /// Max number of playing notes per instrument.
 #define CHANNELS_PER_INSTRUMENT 128
 
+/// Minimum length a note should ever go for
+#define INSTRUMENT_MIN_TOTAL_SUSTAIN 0.1
 /// Maximum length a note should ever go for
 #define INSTRUMENT_MAX_TOTAL_SUSTAIN (5 SECONDS)
 

@@ -6,6 +6,8 @@ import {
   Button,
   Collapsible,
   Divider,
+  Dropdown,
+  NumberInput,
   Section,
   Stack,
 } from '../components';
@@ -13,23 +15,36 @@ import { Window } from '../layouts';
 
 type Data = {
   using_instrument: string;
+  note_shift_min: number;
+  note_shift_max: number;
   note_shift: number;
   octaves: number;
+  sustain_modes: string[];
   sustain_mode: string;
   sustain_mode_button: string;
-  sustain_mode_text: string;
+  sustain_mode_duration: number;
   instrument_ready: BooleanLike;
   volume: number;
   volume_dropoff_threshold: number;
+  min_volume: number;
+  max_volume: number;
   sustain_indefinitely: BooleanLike;
+  sustain_mode_min: number;
+  sustain_mode_max: number;
   playing: BooleanLike;
   max_repeats: number;
   repeat: number;
   bpm: number;
   lines: LineData[];
   can_switch_instrument: BooleanLike;
+  possible_instruments: InstrumentData[];
   max_line_chars: number;
   max_lines: number;
+};
+
+type InstrumentData = {
+  name: string;
+  id: string;
 };
 
 type LineData = {
@@ -55,25 +70,38 @@ export const InstrumentEditor = (props) => {
   );
 };
 
-export const InstrumentSettings = (props) => {
+const InstrumentSettings = (props) => {
   const { act, data } = useBackend<Data>();
   const {
     playing,
     repeat,
     max_repeats,
     can_switch_instrument,
+    possible_instruments = [],
     instrument_ready,
     using_instrument,
+    note_shift_min,
+    note_shift_max,
     note_shift,
     octaves,
+    sustain_modes,
     sustain_mode,
     sustain_mode_button,
-    sustain_mode_text,
+    sustain_mode_duration,
     sustain_indefinitely,
+    sustain_mode_min,
+    sustain_mode_max,
     volume,
+    min_volume,
+    max_volume,
     volume_dropoff_threshold,
     lines,
   } = data;
+
+  const instrument_id_by_name = (name) => {
+    return possible_instruments.find((instrument) => instrument.name === name)
+      ?.id;
+  };
 
   return (
     <Section title="Settings">
@@ -85,40 +113,84 @@ export const InstrumentSettings = (props) => {
         </Box>
       )}
       <Box>
-        <Button disabled={playing} onClick={() => act('set_repeat')}>
-          Repeats Left
-        </Button>
-        : {repeat} / {max_repeats}
+        Repeats Left:
+        <NumberInput
+          minValue={0}
+          disabled={playing}
+          maxValue={max_repeats}
+          value={repeat}
+          onChange={(e, value) =>
+            act('set_repeat_amount', {
+              amount: value,
+            })
+          }
+        />
       </Box>
       <Box>
-        <Button
-          disabled={!can_switch_instrument}
-          onClick={() => act('switch_instrument')}
-        >
-          Current Instrument
-        </Button>
-        : {using_instrument}
+        {!!can_switch_instrument && (
+          <Stack fill>
+            <Stack.Item mt={0.5}>Instrument Using</Stack.Item>
+            <Stack.Item grow>
+              <Dropdown
+                width="40%"
+                selected={using_instrument}
+                disabled={!can_switch_instrument}
+                options={possible_instruments.map(
+                  (instrument) => instrument.name,
+                )}
+                onSelected={(value) =>
+                  act('change_instrument', {
+                    new_instrument: instrument_id_by_name(value),
+                  })
+                }
+              />
+            </Stack.Item>
+          </Stack>
+        )}
       </Box>
-      <Stack>
+      <Stack mt={1}>
         <Stack.Item>
           Playback Settings:
           <Box>
-            <Button onClick={() => act('set_note_shift')}>
-              Note Shift/Note Transpose
-            </Button>
-            : {note_shift} keys / {octaves} octaves
+            <NumberInput
+              minValue={note_shift_min}
+              maxValue={note_shift_max}
+              value={note_shift}
+              onChange={(e, value) =>
+                act('set_note_shift', {
+                  amount: value,
+                })
+              }
+            />
+            keys / {octaves} octaves
           </Box>
+          <Stack>
+            <Stack.Item mt={0.5}>Mode:</Stack.Item>
+            <Stack.Item grow>
+              <Dropdown
+                width="100%"
+                selected={sustain_mode}
+                options={sustain_modes}
+                onSelected={(value) =>
+                  act('set_sustain_mode', {
+                    new_mode: value,
+                  })
+                }
+              />
+            </Stack.Item>
+          </Stack>
           <Box>
-            <Button onClick={() => act('set_sustain_mode')}>
-              Sustain Mode
-            </Button>
-            : {sustain_mode}
-          </Box>
-          <Box>
-            <Button onClick={() => act('edit_sustain_mode')}>
-              {sustain_mode_button}
-            </Button>
-            : {sustain_mode_text}
+            {sustain_mode_button}:
+            <NumberInput
+              minValue={sustain_mode_min}
+              maxValue={sustain_mode_max}
+              value={sustain_mode_duration}
+              onChange={(e, value) =>
+                act('edit_sustain_mode', {
+                  amount: value,
+                })
+              }
+            />
           </Box>
         </Stack.Item>
         <Divider vertical />
@@ -135,19 +207,37 @@ export const InstrumentSettings = (props) => {
             )}
           </Box>
           <Box>
-            <Button onClick={() => act('set_volume')}>Volume</Button>: {volume}
+            Volume:
+            <NumberInput
+              minValue={min_volume}
+              maxValue={max_volume}
+              value={volume}
+              onChange={(e, value) =>
+                act('set_volume', {
+                  amount: value,
+                })
+              }
+            />
           </Box>
           <Box>
-            <Button onClick={() => act('set_dropoff_volume')}>
-              Volume Dropoff Threshold
-            </Button>
-            : {volume_dropoff_threshold}
+            Volume Dropoff Threshold:
+            <NumberInput
+              minValue={1}
+              maxValue={100}
+              value={volume_dropoff_threshold}
+              onChange={(e, value) =>
+                act('set_dropoff_volume', {
+                  amount: value,
+                })
+              }
+            />
           </Box>
           <Box>
             <Button onClick={() => act('toggle_sustain_hold_indefinitely')}>
-              Sustain indefinitely last held note
+              {sustain_indefinitely
+                ? 'Sustaining last held note indefinitely'
+                : 'Not sustaining last held note indefinitely'}
             </Button>
-            : {sustain_indefinitely ? 'Enabled' : 'Disabled'}
           </Box>
         </Stack.Item>
       </Stack>
@@ -155,7 +245,7 @@ export const InstrumentSettings = (props) => {
   );
 };
 
-export const EditingSettings = (props) => {
+const EditingSettings = (props) => {
   const { act, data } = useBackend<Data>();
   const { bpm, lines } = data;
 
@@ -208,7 +298,7 @@ export const EditingSettings = (props) => {
   );
 };
 
-export const HelpSection = (props) => {
+const HelpSection = (props) => {
   const { data } = useBackend<Data>();
   const { max_line_chars, max_lines } = data;
 
