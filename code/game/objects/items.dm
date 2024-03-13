@@ -1070,7 +1070,7 @@
 	add_filter(HOVER_OUTLINE_FILTER, 1, list("type" = "outline", "size" = 1, "color" = outline_color))
 
 /// Called when a mob tries to use the item as a tool. Handles most checks.
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, interaction_key)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(!delay && !tool_start_check(user, amount))
@@ -1095,7 +1095,7 @@
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
 
-		if(!do_after(user, delay, target=target, extra_checks=tool_check))
+		if(!do_after(user, delay, target=target, extra_checks=tool_check, interaction_key=interaction_key))
 			return
 	else
 		// Invoke the extra checks once, just in case.

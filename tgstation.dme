@@ -940,6 +940,7 @@
 #include "code\datums\ai\hunting_behavior\hunting_corpses.dm"
 #include "code\datums\ai\hunting_behavior\hunting_lights.dm"
 #include "code\datums\ai\hunting_behavior\hunting_mouse.dm"
+#include "code\datums\ai\hunting_behavior\hunting_pipes.dm"
 #include "code\datums\ai\idle_behaviors\_idle_behavior.dm"
 #include "code\datums\ai\idle_behaviors\idle_dog.dm"
 #include "code\datums\ai\idle_behaviors\idle_haunted.dm"

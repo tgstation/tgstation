@@ -43,11 +43,16 @@
 				hub_parts += new_part
 			else
 				new_part = new/obj/structure/plasma_extraction_hub/part(T)
+		new_part.pipe_owner = src
 
-/obj/structure/plasma_extraction_hub/part/pipe/main/ui_interact(mob/user, datum/tgui/ui)
+/obj/structure/plasma_extraction_hub/part/pipe/main/interact(mob/user)
 	. = ..()
-	var/ready_to_start = tgui_alert(user, "[drilling ? "Stop" : "Start"] collecting liquid plasma", (drilling ? "Really stop drilling?" : "Ready to go?"), list("Yes", "No"))
-	if(ready_to_start != "Yes")
+	var/list/radial_menu_options = list(
+		(drilling ? "Stop" : "Start") = image(icon = 'icons/hud/radial.dmi', icon_state = drilling ? "radial_close" : "radial_open"),
+		"Cancel" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_close"),
+	)
+	var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE)
+	if(radial_reset_menu != "Stop" && radial_reset_menu != "Start")
 		return
 	toggle_mining(user)
 

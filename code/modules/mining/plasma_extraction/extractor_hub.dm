@@ -3,15 +3,7 @@ TODO LIST:
 - GIVE GEYSERS THEIR OWN SPRITE
 - GIVE THE PLASMA EXTRACTION MACHINE ITS OWN SPRITE
 - GIVE PIPES THEIR OWN SPRITE (MAYBE ??)
-- MAKE PIPES RIDABLE (MAYBE??)
-- MAKE PIPES NOT DENSE, BUT ALSO MAKE SURE IT DOESNT BREAK ANYTHING
-- Make pipe endings not use directionals but instead appear similar to an ore vent.
-- Fix attack_animal not working, pipes aren't being destroyed properly.
-- Make pipes invincible
-- Make fauna attack pipes
-- Make pipes immediately resume work upon being repaired
 - Better feedback when placing down the pipes.
-- Make wrenching in pipes use use_tool(), requires adding support for do-after's interaction keys.
 */
 
 
@@ -31,7 +23,13 @@ TODO LIST:
  * All parts that don't have a pipe, use this.
  */
 /obj/structure/plasma_extraction_hub/part
+	///The main pipe that owns us as part of our 3x3 machine.
+	var/obj/structure/plasma_extraction_hub/part/pipe/main/pipe_owner
 
+/obj/structure/plasma_extraction_hub/part/interact(mob/user)
+	. = ..()
+	if(pipe_owner)
+		pipe_owner.interact(user)
 
 /**
  * Plasma extraction machine pipe
@@ -42,7 +40,7 @@ TODO LIST:
 	///List of all pipes connected to this extraction part.
 	var/list/obj/structure/liquid_plasma_extraction_pipe/connected_pipes = list()
 	///Reference to the 'ending' pipe, the last one to be built. This has to exist for t he machien to work.
-	var/obj/structure/liquid_plasma_extraction_pipe/ending/last_pipe
+	var/obj/structure/liquid_plasma_ending/last_pipe
 	///Boolean on whether the extraction hub is currently functioning.
 	var/currently_functional = FALSE
 

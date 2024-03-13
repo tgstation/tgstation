@@ -319,7 +319,7 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 4, TRUE, FALSE)
 	AddElement(/datum/element/lifesteal, 5)
 
-/obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+/obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, interaction_key)
 	var/turf/T = get_turf(target)
 	mineral_scan_pulse(T, world.view + 1, src)
 	. = ..()

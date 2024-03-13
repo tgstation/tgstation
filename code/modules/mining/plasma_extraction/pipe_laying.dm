@@ -121,15 +121,18 @@
 		for(var/turf/next_location as anything in pipe_locations)
 			if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
 				break
-			var/obj/structure/liquid_plasma_extraction_pipe/new_segment
+			var/obj/structure/new_segment
 			var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
 			if(last_spot)
-				new_segment = new /obj/structure/liquid_plasma_extraction_pipe/ending(next_location, part_hub)
-			else
-				new_segment = new(next_location, part_hub)
+				new_segment = new /obj/structure/liquid_plasma_ending(next_location, part_hub)
+				part_hub.last_pipe = new_segment
+				should_delete_ourselves = TRUE
+				last_placed_pipe = null
+				break
+			new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
 			var/spot_in_list = pipe_locations.Find(next_location)
 			var/direction_to_place
-			if(spot_in_list == length(pipe_locations) || last_spot) //last one copies the last one as it's trailing
+			if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
 				var/turf/previous_segment
 				if(spot_in_list == 1) //in case you're only building one pipe
 					previous_segment = get_turf(parent)
@@ -154,10 +157,6 @@
 			should_delete_ourselves = TRUE
 			new_segment.setDir(direction_to_place)
 			part_hub.connected_pipes += new_segment
-			if(last_spot) // no more building after the ending spot is reached.
-				last_placed_pipe = null
-				part_hub.last_pipe = new_segment
-				break
 
 	building_pipes = FALSE
 	pipe_locations = null
