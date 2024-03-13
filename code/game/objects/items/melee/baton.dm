@@ -491,12 +491,12 @@
 
 /obj/item/melee/baton/security/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
-	if(active)
-		toggle_light()
-		active = FALSE
-		update_appearance()
-		return COMSIG_SABOTEUR_SUCCESS
-
+	if(!active)
+		return
+	toggle_light()
+	active = FALSE
+	update_appearance()
+	return COMSIG_SABOTEUR_SUCCESS
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)
