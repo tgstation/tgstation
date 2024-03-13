@@ -866,11 +866,12 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(user.combat_mode || attacking_item.item_flags & ABSTRACT)
-		return ..()
-	if(user.transferItemToLoc(attacking_item, drop_location(), silent = FALSE))
-		return TRUE
+/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. || tool.item_flags & ABSTRACT)
+		return .
+	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers)
