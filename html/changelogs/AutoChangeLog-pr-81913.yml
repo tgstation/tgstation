@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "NumberInput(used in chem heater, plumbing reaction chamber etc) highlighting & editing requires only single click like before"
+  - refactor: "Typescript conversion for NumberInput TGUI Component"
