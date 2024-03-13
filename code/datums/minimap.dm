@@ -251,10 +251,10 @@ SUBSYSTEM_DEF(minimap)
 #endif
 
 	generating.data.minimap_asset = new /datum/asset/simple
+	generating.data.minimap_asset.keep_local_name = TRUE
 	for(var/section_x in 1 to generating.data.section_columns)
 		for(var/section_y in 1 to generating.data.section_rows)
-			var/minimap_section_name = "minimap_[section_x]-[section_y]_z[generating.data.z_level].png"
-			generating.data.minimap_asset.assets[SANITIZE_FILENAME(minimap_section_name)] = "[generating.data.save_location]/[section_x],[section_y].png"
+			generating.data.minimap_asset.assets["minimap_[section_x]_[section_y]_[generating.data.z_level].png"] = "[generating.data.save_location]/[section_x],[section_y].png"
 	generating.data.minimap_asset.register()
 
 	minimaps_by_z_level["[generating.data.z_level]"] = generating.data
@@ -349,3 +349,64 @@ SUBSYSTEM_DEF(minimap)
 
 /datum/controller/subsystem/minimap/ui_state(mob/user)
 	return GLOB.always_state
+
+/datum/controller/subsystem/minimap/ui_static_data(mob/user)
+	. = list()
+	var/list/z_data = list()
+	for(var/z_level in minimaps_by_z_level)
+		var/z_level_num = text2num(z_level)
+		if(z_level_num > z_data.len)
+			z_data.len = z_level_num
+
+		var/datum/minimap_data/minimap_data = minimaps_by_z_level[z_level]
+		z_data[z_level_num] = list(
+			"z" = z_level_num,
+			"name" = "[SSmapping.config.map_name] | Level [z_level]",
+			"sectionWidth" = minimap_data.section_width,
+			"sectionHeight" = minimap_data.section_height,
+			"sectionColumns" = minimap_data.section_columns,
+			"sectionRows" = minimap_data.section_rows,
+			"totalWidth" = minimap_data.tile_width,
+			"totalHeight" = minimap_data.tile_height,
+			"tileOffsetX" = minimap_data.tile_offset_x,
+			"tileOffsetY" = minimap_data.tile_offset_y,
+		)
+		minimap_data.minimap_asset.send(user.client)
+	.["zData"] = z_data
+
+/datum/controller/subsystem/minimap/ui_data(mob/user)
+	var/datum/minimap_data/minimap_data = minimaps_by_z_level["[user.z]"]
+	if(!minimap_data)
+		return list()
+
+	. = list()
+	.["zCoord"] = user.z
+	var/x_offset = user.x - minimap_data.tile_offset_x
+	.["xCoord"] = x_offset
+	var/y_offset = user.y - minimap_data.tile_offset_y
+	.["yCoord"] = y_offset
+
+/datum/controller/subsystem/minimap/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Minimap")
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+	// we override here because the user can just keep opening the minimap constantly. players am i right
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_viewer_moved), override = TRUE)
+
+/client/verb/minimap_open()
+	set name = "Show Minimap"
+	set category = "IC"
+	SSminimap.ui_interact(mob)
+
+/datum/controller/subsystem/minimap/ui_close(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+/datum/controller/subsystem/minimap/proc/on_viewer_moved(mob/source)
+	SIGNAL_HANDLER
+	set waitfor = FALSE
+
+	if(!SStgui.try_update_ui(source, src))
+		UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
