@@ -1,0 +1,8 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed the \"Fenced Goods\" black market category."
+  - balance: "Removed the LTSRBT from cargo and added it to the blackmarket, reduced the price from 4000 to 625 on average."
+  - balance: "The time it takes for captured mobs to be automatically sent back to the station from the holding facility has been increased from 3-4 minutes to 6."
+  - rscadd: "You can buy mobs captured by contractors, traitors and pirates from the black market and have them sent back to the station in advance. For safety, they'll also be handcuffed (not always) upon delivery."
+  - rscadd: "Human mobs sold by pirates are not deleted anymore. Instead, they're now captured and sent to the holding facility."
