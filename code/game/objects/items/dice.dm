@@ -72,7 +72,7 @@
 	update_appearance()
 
 /obj/item/dice/attack_self(mob/user)
-	diceroll(user, TRUE)
+	diceroll(user, in_hand = TRUE)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
