@@ -216,7 +216,7 @@
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -947,7 +947,7 @@
 
 /obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
 	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
+		return NONE
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
