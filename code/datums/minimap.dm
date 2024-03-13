@@ -122,9 +122,10 @@ SUBSYSTEM_DEF(minimap)
 	set waitfor = FALSE
 	PRIVATE_PROC(TRUE)
 
+	var/map_name = splittext(lowertext(SSmapping.config.map_name), " ").Join("-")
 	var/datum/minimap_data/minimap_data = new
 	minimap_data.z_level = z
-	minimap_data.save_location = "data/minimaps/[SSmapping.config.map_name]_z_[z]"
+	minimap_data.save_location = "data/minimaps/[map_name]_z-[z]"
 
 	if(allow_persistence_recovery && minimap_data.try_load_persistence_data())
 		minimaps_by_z_level["[z]"] = minimap_data
@@ -345,3 +346,6 @@ SUBSYSTEM_DEF(minimap)
 	announced_start_delay = TRUE
 	to_chat(world, span_boldannounce("Station Minimap generation is still in progress. Round start is delaying until it is done. Admins can bypass this delay using '[/datum/admins/proc/startnow::name]'."))
 	return FALSE
+
+/datum/controller/subsystem/minimap/ui_state(mob/user)
+	return GLOB.always_state
