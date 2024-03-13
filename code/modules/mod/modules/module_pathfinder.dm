@@ -114,7 +114,7 @@
 		balloon_alert(imp_in, "already on someone!")
 		return FALSE
 	in_transit = TRUE
-	animate(module.mod, 0.2, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
+	animate(module.mod, 0.5 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
 	module.mod.Shake(pixelshiftx = 1, pixelshifty = 1, duration = PATHFINDER_PRE_ANIMATE_TIME)
 	addtimer(CALLBACK(src, PROC_REF(do_recall)), PATHFINDER_PRE_ANIMATE_TIME, TIMER_DELETE_ME)
 	return TRUE
