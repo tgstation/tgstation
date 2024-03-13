@@ -83,7 +83,7 @@ export const BattleArcade = (props) => {
   );
 };
 
-export const ShopPanel = (props) => {
+const ShopPanel = (props) => {
   const { act, data } = useBackend<Data>();
   const { shop_items, cost_of_items, unlocked_world_modifier } = data;
   return (
@@ -115,7 +115,7 @@ export const ShopPanel = (props) => {
   );
 };
 
-export const WorldMapPanel = (props) => {
+const WorldMapPanel = (props) => {
   const { act, data } = useBackend<Data>();
   const { all_worlds, latest_unlocked_world_position } = data;
   return (
@@ -146,7 +146,7 @@ export const WorldMapPanel = (props) => {
   );
 };
 
-export const BattlePanel = (props) => {
+const BattlePanel = (props) => {
   const { act, data } = useBackend<Data>();
   const {
     attack_types,
@@ -190,7 +190,7 @@ export const BattlePanel = (props) => {
   );
 };
 
-export const BetweenBattlePanel = (props) => {
+const BetweenBattlePanel = (props) => {
   const { act, data } = useBackend<Data>();
   return (
     <Section align="center">
@@ -221,7 +221,7 @@ export const BetweenBattlePanel = (props) => {
   );
 };
 
-export const GameOverPanel = (props) => {
+const GameOverPanel = (props) => {
   const { act, data } = useBackend<Data>();
   return (
     <Section align="center">
@@ -233,9 +233,10 @@ export const GameOverPanel = (props) => {
           lineHeight={2}
           fluid
           icon="arrow-left"
-          content="Main Menu"
           onClick={() => act('restart')}
-        />
+        >
+          Main Menu
+        </Button>
       </Box>
     </Section>
   );
