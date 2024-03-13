@@ -145,6 +145,7 @@
 #include "code\__DEFINES\melee.dm"
 #include "code\__DEFINES\memory_defines.dm"
 #include "code\__DEFINES\mergers.dm"
+#include "code\__DEFINES\minimap.dm"
 #include "code\__DEFINES\mining.dm"
 #include "code\__DEFINES\mob_spawn.dm"
 #include "code\__DEFINES\mobfactions.dm"

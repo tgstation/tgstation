@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(minimap)
 /datum/minimap_data/proc/save_persistence_data()
 	text2file(json_encode(list(
 		"map_config_key" = SSmapping.config.config_filename,
+		"git_commit" = GLOB.revdata.commit,
 		"z_level" = z_level,
 		"save_location" = save_location,
 		"tile_offset_x" = tile_offset_x,
@@ -67,6 +68,8 @@ SUBSYSTEM_DEF(minimap)
 	if(persistence_data["map_config_key"] != SSmapping.config.config_filename)
 		return FALSE
 	if(persistence_data["save_location"] != save_location)
+		return FALSE
+	if(persistence_data["git_commit"] != GLOB.revdata.commit)
 		return FALSE
 
 	z_level = persistence_data["z_level"]
