@@ -113,6 +113,8 @@
 	for(var/mob/living/living in target)
 		ADD_TRAIT(living, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		RegisterSignal(living, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
+		RegisterSignal(living, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add))
+		RegisterSignal(living, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove))
 		elevate_mob(living)
 
 /datum/element/elevation_core/Detach(datum/source)
@@ -133,7 +135,7 @@
 			continue
 		REMOVE_TRAIT(living, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		elevate_mob(living, -pixel_shift)
-		UnregisterSignal(living, COMSIG_LIVING_SET_BUCKLED)
+		UnregisterSignal(living, list(COMSIG_LIVING_SET_BUCKLED, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION)))
 	return ..()
 
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
@@ -143,6 +145,8 @@
 		var/elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0
 		elevate_mob(entered, elevate_time = elevate_time)
 		RegisterSignal(entered, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
+		RegisterSignal(entered, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add))
+		RegisterSignal(entered, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove))
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
@@ -152,15 +156,17 @@
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	if((isnull(gone.loc) || !HAS_TRAIT_FROM(gone.loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(gone))
-		// Always unregister the signal, we're still leaving even if already shifted down.
-		UnregisterSignal(gone, COMSIG_LIVING_SET_BUCKLED)
+		// Always unregister the signals, we're still leaving even if not affected by elevation.
+		UnregisterSignal(gone, list(COMSIG_LIVING_SET_BUCKLED, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION)))
 		if(!HAS_TRAIT_FROM(gone, TRAIT_ON_ELEVATED_SURFACE, REF(src)))
 			return
 		REMOVE_TRAIT(gone, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		var/elevate_time = isturf(gone.loc) && source.Adjacent(gone.loc) ? ELEVATE_TIME : 0
 		elevate_mob(gone, -pixel_shift, elevate_time)
 
-/datum/element/elevation_core/proc/elevate_mob(mob/living/target, z_shift = pixel_shift, elevate_time = ELEVATE_TIME)
+/datum/element/elevation_core/proc/elevate_mob(mob/living/target, z_shift = pixel_shift, elevate_time = ELEVATE_TIME, force = FALSE)
+	if(HAS_TRAIT(target, TRAIT_IGNORE_ELEVATION) && !force)
+		return
 	var/buckled_to_vehicle = FALSE
 	if(target.buckled)
 		if(isvehicle(target.buckled))
@@ -181,6 +187,8 @@
  */
 /datum/element/elevation_core/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(source, TRAIT_IGNORE_ELEVATION))
+		return
 	if(source.buckled)
 		if(isvehicle(source.buckled))
 			animate(source.buckled, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
@@ -192,6 +200,14 @@
 		animate(new_buckled, pixel_z = pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	else if(!isliving(new_buckled))
 		animate(source, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+
+/datum/element/elevation_core/proc/on_ignore_elevation_add(mob/living/source, trait)
+	SIGNAL_HANDLER
+	elevate_mob(source, -pixel_shift, force = TRUE)
+
+/datum/element/elevation_core/proc/on_ignore_elevation_remove(mob/living/source, trait)
+	SIGNAL_HANDLER
+	elevate_mob(source, pixel_shift)
 
 /datum/element/elevation_core/proc/on_reset_elevation(turf/source, list/current_values)
 	SIGNAL_HANDLER
