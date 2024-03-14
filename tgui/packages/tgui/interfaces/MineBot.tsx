@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
@@ -7,7 +8,9 @@ import {
   Image,
   LabeledList,
   ProgressBar,
+  Dropdown,
   Section,
+  NumberInput,
   Stack,
 } from '../components';
 
@@ -18,8 +21,16 @@ type Data = {
   bot_mode: BooleanLike;
   bot_name: string;
   bot_health: number;
+  bot_maintain_distance: number;
   bot_maxhealth: number;
   bot_icon: string;
+  bot_color: string;
+  possible_colors: Possible_Colors[];
+};
+
+type Possible_Colors = {
+  color_name: string;
+  color_value: string;
 };
 
 export const MineBot = (props) => {
@@ -32,10 +43,24 @@ export const MineBot = (props) => {
     bot_health,
     bot_mode,
     bot_maxhealth,
+    possible_colors,
+    bot_maintain_distance,
+    bot_color,
     bot_icon,
   } = data;
+  const possibleColorList = {};
+  for (const index in possible_colors) {
+    const color = possible_colors[index];
+    possibleColorList[color.color_name] = color;
+  }
+  const [selectedDistance, setSelectedDistance] = useState(
+    bot_maintain_distance,
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    possibleColorList[bot_color],
+  );
   return (
-    <Window title="Minebot Settings" width={625} height={250} theme="hackerman">
+    <Window title="Minebot Settings" width={625} height={328} theme="hackerman">
       <Window.Content>
         <Stack>
           <Stack.Item width="50%">
@@ -55,17 +80,47 @@ export const MineBot = (props) => {
                 </Button.Input>
               }
             >
-              <Image
-                m={1}
-                src={`data:image/jpeg;base64,${bot_icon}`}
-                height="160px"
-                width="160px"
-                style={{
-                  verticalAlign: 'middle',
-                  borderRadius: '1em',
-                  border: '1px solid green',
-                }}
-              />
+              <Stack vertical>
+                <Stack.Item>
+                  <Image
+                    m={1}
+                    src={`data:image/jpeg;base64,${bot_icon}`}
+                    height="160px"
+                    width="160px"
+                    style={{
+                      verticalAlign: 'middle',
+                      borderRadius: '1em',
+                      border: '1px solid green',
+                    }}
+                  />
+                </Stack.Item>
+                <Stack.Item ml="25%">
+                  <Dropdown
+                    width="65%"
+                    displayText={selectedColor?.color_name}
+                    options={possible_colors.map((possible_color) => {
+                      return possible_color.color_name;
+                    })}
+                    onSelected={(selected) =>
+                      setSelectedColor(possibleColorList[selected])
+                    }
+                  />
+                </Stack.Item>
+                <Stack.Item textAlign="center">
+                  <Button
+                    textAlign="center"
+                    width="50%"
+                    style={{ padding: '3px' }}
+                    onClick={() =>
+                      act('set_color', {
+                        chosen_color: selectedColor?.color_value,
+                      })
+                    }
+                  >
+                    Apply Color
+                  </Button>
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item width="50%" textAlign="center">
@@ -117,6 +172,19 @@ export const MineBot = (props) => {
                   >
                     {auto_defend ? 'On' : 'Off'}
                   </Button>
+                </LabeledList.Item>
+                <LabeledList.Item label="Distance To Maintain">
+                  <NumberInput
+                    width="50%"
+                    value={selectedDistance}
+                    minValue={0}
+                    maxValue={5}
+                    onChange={(e, value) =>
+                      act('change_min_distance', {
+                        distance: value,
+                      })
+                    }
+                  />
                 </LabeledList.Item>
               </LabeledList>
             </Section>

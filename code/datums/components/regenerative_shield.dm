@@ -71,14 +71,14 @@
 	for(var/obj/effect/my_effect as anything in shield_overlays)
 		animate(my_effect, alpha = 0, time = 3 SECONDS)
 		my_effect.remove_filter(SHIELD_FILTER)
-	playsound(get_turf(parent), 'sound/mecha/mecha_shield_drop.ogg', 20)
+	playsound(get_turf(parent), 'sound/mecha/mech_shield_drop.ogg', 20)
 
 /datum/component/regenerative_shield/proc/enable_shield()
 	number_of_hits = initial(number_of_hits)
 	for(var/obj/effect/my_effect as anything in shield_overlays)
 		animate(my_effect, alpha = 255, time = 3 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(apply_filter_effects), my_effect), 5 SECONDS)
-	playsound(get_turf(parent), 'sound/mecha/mecha_shield_raise.ogg', 20)
+	playsound(get_turf(parent), 'sound/mecha/mech_shield_raise.ogg', 20)
 
 /datum/component/regenerative_shield/proc/apply_filter_effects(obj/effect/new_effect)
 	if(isnull(new_effect))

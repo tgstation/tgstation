@@ -30,6 +30,12 @@
 	ai_controller = /datum/ai_controller/basic_controller/minebot
 	///the gun we use to kill
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
+	///our normal overlay
+	var/mutable_appearance/neutral_overlay
+	///our combat mode overlay
+	var/mutable_appearance/combat_overlay
+	///our current color, if any
+	var/selected_color
 	///the commands our owner can give us
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle/minebot,
@@ -41,9 +47,18 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/minebot,
 	)
+	///possible colors the bot can have
+	var/static/list/possible_colors= list(
+		"Default" = null, //default color state
+		"Blue" = "#70d5e7",
+		"Red" = "#ee7fb9",
+		"Green" = "#5fea94",
+	)
 
 /mob/living/basic/mining_drone/Initialize(mapload)
 	. = ..()
+	neutral_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_grey")
+	combat_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_offense_grey")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
@@ -129,20 +144,36 @@
 	data["auto_defend"] = ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND]
 	data["repair_node_drone"] = ai_controller.blackboard[BB_MINEBOT_REPAIR_DRONE]
 	data["plant_mines"] = ai_controller.blackboard[BB_MINEBOT_PLANT_MINES]
+	data["bot_maintain_distance"] = ai_controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE]
 	data["bot_name"] = name
 	data["bot_mode"] = combat_mode
 	data["bot_health"] = health
 	data["bot_maxhealth"] = maxHealth
+	data["bot_color"] = ""
+	var/color_value = neutral_overlay.color
+	for(var/index in possible_colors)
+		if(possible_colors[index] == color_value)
+			data["bot_color"] = index
+			break
 	return data
 
 /mob/living/basic/mining_drone/ui_static_data(mob/user)
 	var/list/data = list()
 	data["bot_icon"] = icon2base64(getFlatIcon(src))
+	data["possible_colors"] = list()
+	for(var/color in possible_colors)
+		data["possible_colors"] += list(list(
+			"color_name" = color,
+			"color_value" = possible_colors[color],
+		))
 	return data
 
 /mob/living/basic/mining_drone/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	switch(action)
+		if("change_min_distance")
+			var/new_distance = clamp(params["distance"], 0, 5)
+			ai_controller.set_blackboard_key(BB_MINIMUM_SHOOTING_DISTANCE, new_distance)
 		if("toggle_defend")
 			var/new_toggle = !ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND]
 			ai_controller.set_blackboard_key(BB_MINEBOT_AUTO_DEFEND, new_toggle)
@@ -157,10 +188,17 @@
 			name = (input_name ? input_name : initial(name))
 		if("toggle_mode")
 			set_combat_mode(!combat_mode)
+		if("set_color")
+			change_color(params["chosen_color"])
+			update_static_data(ui.user, ui)
 	return TRUE
 
-
-
+/mob/living/basic/mining_drone/proc/change_color(new_color)
+	selected_color = new_color
+	if(!isnull(selected_color))
+		neutral_overlay.color = selected_color
+		combat_overlay.color = selected_color
+	update_appearance()
 
 /mob/living/basic/mining_drone/AltClick(mob/living/user)
 	. = ..()
@@ -221,18 +259,9 @@
 		return
 	my_target.heal_overall_damage(brute = 50)
 
-/obj/effect/overlay/minebot_top_shield
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	anchored = TRUE
-	vis_flags = VIS_INHERIT_DIR
-	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "minebot_shield_top_layer"
-	layer = ABOVE_ALL_MOB_LAYER
+/mob/living/basic/mining_drone/update_overlays()
+	. = ..()
+	if(stat == DEAD || isnull(selected_color))
+		return
 
-/obj/effect/overlay/minebot_bottom_shield
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	anchored = TRUE
-	vis_flags = VIS_INHERIT_DIR
-	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "minebot_shield_bottom_layer"
-	layer = BELOW_MOB_LAYER
+	. += combat_mode ? combat_overlay : neutral_overlay

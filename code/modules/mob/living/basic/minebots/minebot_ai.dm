@@ -2,8 +2,8 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_BASIC_MOB_FLEE_DISTANCE = 2,
-		BB_MINIMUM_SHOOTING_DISTANCE = 2,
+		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_MINIMUM_SHOOTING_DISTANCE = 3,
 		BB_MINEBOT_PLANT_MINES = TRUE,
 		BB_MINEBOT_REPAIR_DRONE = TRUE,
 		BB_MINEBOT_AUTO_DEFEND = TRUE,
@@ -19,6 +19,7 @@
 		/datum/ai_planning_subtree/befriend_miners,
 		/datum/ai_planning_subtree/defend_node,
 		/datum/ai_planning_subtree/launch_missiles,
+		/datum/ai_planning_subtree/minebot_maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot,
 		/datum/ai_planning_subtree/minebot_mining,
@@ -149,15 +150,21 @@
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.combat_mode) //we are not on attack mode
 		return
-	if(get_dist(living_pawn, target) < controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE])
+	controller.queue_behavior(ranged_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/minebot_maintain_distance/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(QDELETED(target))
+		return
+	var/mob/living/living_pawn = controller.pawn
+	if(get_dist(living_pawn, target) <= controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE])
 		controller.queue_behavior(/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot, BB_BASIC_MOB_CURRENT_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(/datum/ai_behavior/basic_ranged_attack/minebot, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/run_away_from_target/run_and_shoot/minebot
 
-/datum/ai_behavior/run_away_from_target/run_and_shoot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
 	if(!controller.blackboard[BB_MINEBOT_PLANT_MINES])
 		return ..()
 	var/datum/action/cooldown/mine_ability = controller.blackboard[BB_MINEBOT_LANDMINE_ABILITY]
@@ -166,10 +173,10 @@
 	return ..()
 
 /datum/ai_behavior/basic_ranged_attack/minebot
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	avoid_friendly_fire = TRUE
 	///if our target is closer than this distance, finish action
-	var/minimum_distance = 2
+	var/minimum_distance = 3
 
 /datum/ai_behavior/basic_ranged_attack/minebot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -177,8 +184,9 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		finish_action(controller, target_key, FALSE)
+		return
 	var/mob/living/living_pawn = controller.pawn
-	if(get_dist(living_pawn, target) < minimum_distance)
+	if(get_dist(living_pawn, target) <= minimum_distance)
 		finish_action(controller, target_key, TRUE)
 
 ///mine walls if we are on automated mining mode

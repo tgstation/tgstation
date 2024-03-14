@@ -72,9 +72,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/missile_launcher/proc/launch_missile(turf/target_turf)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = owner)
-	smoke.start()
+	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
 	var/obj/effect/temp_visual/rising_rocket/new_rocket = new(get_turf(owner))
 	addtimer(CALLBACK(src, PROC_REF(drop_missile), target_turf), new_rocket.duration)
 
@@ -138,7 +136,7 @@
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
 	playsound(src.drop_location(), 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(2, holder = src)
+	smoke.set_up(1, holder = src)
 	smoke.start()
 	for(var/turf/target_turf as anything in RANGE_TURFS(explosion_radius, src))
 		var/mob/living/living_target = locate() in target_turf
