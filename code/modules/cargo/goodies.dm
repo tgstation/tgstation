@@ -311,7 +311,7 @@
 
 /datum/supply_pack/goody/double_barrel
 	name = "Double Barrel Shotgun"
-	desc = "Lost your beloved bunny to a demonic invasion? clown broke in and stole your beloved gun? no worries! get a new gun so long as you can pay the absurd fees."
+	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun so long as you can pay the absurd fees."
 	cost = PAYCHECK_COMMAND * 18
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
