@@ -178,7 +178,7 @@ const Cache = (props: CacheProps) => {
           value={props.cacheCount}
           minValue={1}
           maxValue={20}
-          onChange={(_: any, value: number) => props.setCacheCount(value)}
+          onChange={(value: number) => props.setCacheCount(value)}
         />
         <Button
           icon="search"

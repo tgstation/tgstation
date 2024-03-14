@@ -79,7 +79,7 @@ export const BluespaceSender = (props) => {
                 unit="moles/S"
                 minValue={0}
                 maxValue={1}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('rate', {
                     rate: value,
                   })
@@ -135,7 +135,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             unit="per mole"
             minValue={0}
             maxValue={100}
-            onDrag={(event, value) =>
+            onDrag={(value) =>
               act('price', {
                 gas_price: value,
                 gas_type: id,

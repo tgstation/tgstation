@@ -81,7 +81,7 @@ export const TurbineComputer = (props) => {
                 unit="%"
                 minValue={1}
                 maxValue={100}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('regulate', {
                     regulate: value * 0.01,
                   })

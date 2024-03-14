@@ -298,7 +298,7 @@ const PulseSettings = (props) => {
             value={pulseStrength}
             minValue={1}
             maxValue={PULSE_STRENGTH_MAX}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('set_pulse_strength', {
                 val: value,
               })
@@ -313,7 +313,7 @@ const PulseSettings = (props) => {
             value={pulseDuration}
             minValue={1}
             maxValue={PULSE_DURATION_MAX}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('set_pulse_duration', {
                 val: value,
               })

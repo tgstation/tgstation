@@ -74,7 +74,7 @@ export const MassDriverControl = (props) => {
                     width="40px"
                     minValue={0.25}
                     maxValue={16}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       return act('set_power', {
                         power: value,
                       });

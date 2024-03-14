@@ -223,7 +223,7 @@ const ItemList = (props) => {
           width="35px"
           minValue={1}
           maxValue={item.max_amount}
-          onChange={(e, value) => item.setAmount(value)}
+          onChange={(value) => item.setAmount(value)}
         />
       </Table.Cell>
       <Table.Cell collapsing>

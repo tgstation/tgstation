@@ -55,7 +55,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
               minValue={-Infinity}
               maxValue={Infinity}
               value={float || 0}
-              onDrag={(e, value) =>
+              onDrag={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -182,7 +182,7 @@ export const EntryGeneratorNumbersList = (
               minValue={-Infinity}
               maxValue={Infinity}
               value={input || 0}
-              onDrag={(e, value) =>
+              onDrag={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -203,7 +203,7 @@ export const EntryGeneratorNumbersList = (
               minValue={-Infinity}
               maxValue={Infinity}
               value={input[0]}
-              onDrag={(e, value) =>
+              onDrag={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: [value, input![1], input![2]],
@@ -215,7 +215,7 @@ export const EntryGeneratorNumbersList = (
               minValue={-Infinity}
               maxValue={Infinity}
               value={input[1]}
-              onDrag={(e, value) =>
+              onDrag={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: [input![0], value, input![2]],
@@ -228,7 +228,7 @@ export const EntryGeneratorNumbersList = (
                 minValue={-Infinity}
                 maxValue={Infinity}
                 value={input[2]}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('edit', {
                     var: var_name,
                     new_value: [input![0], input![1], value],

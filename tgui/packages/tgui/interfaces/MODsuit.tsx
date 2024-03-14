@@ -173,7 +173,7 @@ const ConfigureNumberEntry = (props) => {
       maxValue={50}
       stepPixelSize={5}
       width="39px"
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('configure', {
           key: name,
           value: value,

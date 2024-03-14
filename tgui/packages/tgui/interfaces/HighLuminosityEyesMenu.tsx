@@ -83,7 +83,7 @@ const RangeDisplay = (props) => {
         value={range}
         minValue={0}
         maxValue={5}
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('set_range', {
             new_range: value,
           })

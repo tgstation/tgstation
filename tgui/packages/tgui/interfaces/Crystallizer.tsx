@@ -86,7 +86,7 @@ const Controls = (props) => {
             unit="moles/s"
             minValue={0}
             maxValue={250}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('gas_input', {
                 gas_input: value,
               })

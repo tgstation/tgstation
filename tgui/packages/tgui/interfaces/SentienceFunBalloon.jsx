@@ -36,7 +36,7 @@ export const SentienceFunBalloon = (props) => {
                   minValue={1}
                   maxValue={100}
                   stepPixelSize={15}
-                  onDrag={(e, value) =>
+                  onDrag={(value) =>
                     act('effect_range', {
                       updated_range: value,
                     })

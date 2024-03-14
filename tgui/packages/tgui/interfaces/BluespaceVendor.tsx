@@ -92,7 +92,7 @@ export const BluespaceVendor = (props) => {
                     unit="% tank filling goal"
                     minValue={0}
                     maxValue={100}
-                    onDrag={(e, value) =>
+                    onDrag={(value) =>
                       act('pumping_rate', {
                         rate: value,
                       })
