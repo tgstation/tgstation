@@ -164,3 +164,14 @@
   - bugfix: Fixed a lot of missing/broken images, such as emojis, language icons,
       commendation hearts, icons in R&D menu, etc.
   - sound: Dying with a SecHailer on your face will make a unique death sound
+2024-03-14:
+  AlbertNanotracen:
+  - rscadd: Radiohydrate now has an overdose threshold of 20u
+  - rscadd: While overdosing on Radiohydrate, your antigens slowly decay
+  - balance: Having a higher than normal immune strength now decays whenever you are
+      sick
+  - rscadd: Self Sustaining trays bypass the nutrient requirement to grow
+  - rscadd: Self Sustaining trays now pause aging when fully grown & functional(corpse
+      flowers)
+  - bugfix: Corpse flowers now make miasma again
+  - bugfix: Hydroponics trays now run out of nutrients entirely

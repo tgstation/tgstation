@@ -1,6 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - rscadd: "Radiohydrate now has an overdose threshold of 20u"
-  - rscadd: "While overdosing on Radiohydrate, your antigens slowly decay"
-  - balance: "Having a higher than normal immune strength now decays whenever you are sick"
