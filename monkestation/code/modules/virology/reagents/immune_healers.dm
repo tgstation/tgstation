@@ -23,6 +23,20 @@
 		"level" = -0.05,
 		"threshold" = 1,
 		) //level is in precentage
+	overdose_threshold = 20 //about double the amount needed to bring your immune strength to 0
+
+/datum/reagent/medicine/immune_healer/immune_suppressant/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(affected_mob.immune_system.antibodies && affected_mob.immune_system.strength == 0)
+		var/list/possible_antibodies = list()
+		//only reduce antibodies that arent 1
+		for(var/antibody as anything in affected_mob.immune_system.antibodies)
+			if(affected_mob.immune_system.antibodies[antibody] > 1)
+				possible_antibodies += antibody
+		//checks if there are any antibodies to remove
+		if(length(possible_antibodies) > 0)
+			var/affected_antibody = pick(possible_antibodies)
+			affected_mob.immune_system.antibodies[affected_antibody] = max(affected_mob.immune_system.antibodies[affected_antibody] - 1, 1)
+	..()
 
 /datum/reagent/medicine/immune_healer/immune_booster
 	name = "Aetericilide"
