@@ -72,7 +72,6 @@
 		balloon_alert_to_viewers("dud...")
 		active = FALSE
 		return
-	balloon_alert_to_viewers(UNLINT("BOOM!!"))
 	visible_message(span_warning("[src] goes off, outright decapitating [brian]!"), span_hear("You hear a fleshy boom!"))
 	playsound(src, SFX_EXPLOSION, 30, TRUE)
 	brian.apply_damage(200, BRUTE, BODY_ZONE_HEAD)
@@ -103,7 +102,6 @@
 	if(!do_after(user, 1.2 SECONDS, target = src))
 		return
 	playsound(user, 'sound/machines/click.ogg', 25, TRUE)
-	balloon_alert_to_viewers("button pushed")
 	if(!collar|| collar.active)
 		return
 	collar.explosive_countdown(ticks_left = 5)

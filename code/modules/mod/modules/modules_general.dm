@@ -427,9 +427,13 @@
 ///Like the flashlight module, except the light color is stuck to black and cannot be changed.
 /obj/item/mod/module/flashlight/darkness
 	name = "MOD flashdark module"
-	desc = "A quirky pair of configurable flashdarks installed on the left and right sides of the helmet, \
+	desc = "A quirky pair of configurable flashdarks installed on the sides of the helmet, \
 		useful for providing darkness at a configurable range."
 	light_color = COLOR_BLACK
+	light_system = OVERLAY_LIGHT
+	light_range = 2
+	min_range = 1
+	max_range = 3
 
 /obj/item/mod/module/flashlight/darkness/get_configuration()
 	. = ..()

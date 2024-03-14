@@ -268,7 +268,7 @@
 
 		if(KIT_DEAD_MONEY)
 			for(var/i in 1 to 4)
-				new /obj/item/clothing/neck/collar_bomb(src) // These let you remotely kill people with a signaler, though you may have to capture them first.
+				new /obj/item/clothing/neck/collar_bomb(src) // These let you remotely kill people with a signaler, though you have to get them first.
 			new /obj/item/storage/box/syndie_kit/signaler(src)
 			new /obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie(src) // basically a snowflake yet better elite modsuit, so like, 8 + 5 tc.
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
