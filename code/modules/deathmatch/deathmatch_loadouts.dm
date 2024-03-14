@@ -323,7 +323,6 @@
 	backpack_contents = list(
 		/obj/item/reagent_containers/cup/bottle/plasma,
 		/obj/item/slimecross/burning/grey,
-		/obj/item/slimecross/burning/adamantine,
 		/obj/item/slimecross/burning/gold,
 		/obj/item/slimecross/burning/blue,
 		/obj/item/slimecross/burning/sepia,
@@ -333,7 +332,6 @@
 		/obj/item/slimecross/charged/silver,
 		/obj/item/slimecross/charged/black,
 		/obj/item/slimecross/burning/rainbow,
-		/obj/item/slimecross/chilling/adamantine,
 	)
 
 /datum/outfit/deathmatch_loadout/battler/bloodminer
