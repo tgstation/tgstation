@@ -804,6 +804,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
 		/mob/living/basic/spider/growing/spiderling,
+		/mob/living/basic/spider/growing/young,
 		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
 		/obj/item/queen_bee,
