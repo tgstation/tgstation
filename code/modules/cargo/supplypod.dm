@@ -73,6 +73,7 @@
 /// Quick setup for if you want a pod that transports a specific object somewhere and makes it look like it is flying away
 /obj/structure/closet/supplypod/transport
 	style = STYLE_SEETHROUGH
+	specialised = TRUE
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	delays = list(POD_TRANSIT = 0, POD_FALLING = 0, POD_OPENING = 0, POD_LEAVING = 0)
