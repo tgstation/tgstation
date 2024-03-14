@@ -77446,6 +77446,8 @@
 "tVp" = (
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/status_display/ai/directional/east,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/piggy_bank/vault,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
 "tVq" = (
@@ -80646,6 +80648,10 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/status_display/ai/directional/west,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/maneki_neko{
+	pixel_y = 4
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
 "uNp" = (
