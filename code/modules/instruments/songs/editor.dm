@@ -30,7 +30,7 @@
 	data["sustain_indefinitely"] = full_sustain_held_note
 	data["playing"] = playing
 	data["repeat"] = repeat
-	data["bpm"] = round(600 / tempo)
+	data["bpm"] = round(60 SECONDS / tempo)
 	data["lines"] = list()
 	var/linecount
 	for(var/line in lines)
