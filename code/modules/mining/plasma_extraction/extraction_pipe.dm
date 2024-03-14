@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pipes_n_cables/plasma_extractor.dmi'
 	icon_state = "pipe_unbuilt"
 	base_icon_state = "pipe"
-	max_integrity = 900 //a lot more resistant.
+	max_integrity = 900 //a lot more resistant than the average structure, we want focus on repairs instead.
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	move_resist = MOVE_FORCE_STRONG
@@ -53,7 +53,7 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40, interaction_key = DOAFTER_SOURCE_PIPE_CONSTRUCTION))
 		return ITEM_INTERACT_BLOCKING
-	//diagonal pipes cant be moved on top of, others are fine, once we're wrenched in.
+	//diagonal pipes cant be moved on top of once wrenched in cause it just looks off.
 	if(ISDIAGONALDIR(dir))
 		density = TRUE
 	balloon_alert(user, "fastened")
@@ -100,7 +100,8 @@
 
 /**
  * Ending pipe
- * This one starts off freely built and has a different sprite.
+ * This one starts off freely built (so no need to wrench in) and has a different sprite.
+ * This basically has no functionality and only exists to tell pipes that they've successfully connected to a pipe.
  */
 /obj/structure/liquid_plasma_ending
 	name = "liquid plasma extractor"

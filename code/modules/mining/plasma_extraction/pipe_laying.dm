@@ -43,6 +43,12 @@
 	if(pipe_placing)
 		UnregisterSignal(pipe_placing, COMSIG_MOVABLE_MOVED)
 
+/**
+ * Called when attacking this with an item
+ * If it's a pipe dispenser, we'll set the user and pipe dispenser,
+ * and give the lock on component so we can listen in on where they are trying
+ * to build.
+ */
 /datum/component/pipe_laying/proc/on_attackby(datum/source, obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/pipe_dispenser) || building_pipes)
 		return
@@ -59,6 +65,13 @@
 	)
 	return COMPONENT_NO_AFTERATTACK
 
+/**
+ * Called when the lock on component sets their target to what the cursor is hovering over.
+ * We'll get the path to said target from parent, and give them a general idea of where
+ * the pipes they are trying to place will be built via an overlay.
+ * We'll only give this overlay if it doesn't already have it, and only remove it if it's no longer supposed to,
+ * this is to prevent a 'flashing' effect for tiles that already have the overlay but are supposed to keep it.
+ */
 /datum/component/pipe_laying/proc/on_lockon_component(list/locked_weakrefs)
 	if(building_pipes)
 		return
@@ -69,13 +82,8 @@
 	var/atom/real_target = current_target_weakref.resolve()
 	if(real_target)
 		pipe_placer.face_atom(real_target)
-	var/list/pipe_locations
-	if(start_one_tile_ahead)
-		var/obj/parent_obj = parent
-		var/turf/next_turf = get_step(parent, parent_obj.dir)
-		pipe_locations = get_path_to(next_turf, real_target, max_distance = 4, diagonal_handling = DIAGONAL_REMOVE_ALL) + next_turf
-	else
-		pipe_locations = get_path_to(parent, real_target, max_distance = 4, diagonal_handling = DIAGONAL_REMOVE_ALL)
+	var/obj/parent_obj = parent
+	var/list/pipe_locations = get_path_to(parent, real_target, max_distance = 4, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL)
 	var/list/new_turf_list = list()
 	for(var/turf/next_location as anything in pipe_locations)
 		new_turf_list += pipe_locations
@@ -86,6 +94,10 @@
 			existing_turfs.cut_overlay(pipe_overlay_appearance)
 	turfs_hovering = new_turf_list
 
+/**
+ * Removes all overlays and clears the list of turfs, essentially resetting the component back to default,
+ * ready to use again later (if possible).
+ */
 /datum/component/pipe_laying/proc/clear_click_catch()
 	if(!lockon_component)
 		return
@@ -99,28 +111,43 @@
 	playsound(parent, 'sound/effects/empulse.ogg', 75, TRUE)
 	QDEL_NULL(lockon_component)
 
+///Called when the user clicks on something, which we just redirect to build pipes.
 /datum/component/pipe_laying/proc/on_catcher_click(turf/location, control, params, user)
 	SIGNAL_HANDLER
 
 	if(building_pipes)
 		return
-	INVOKE_ASYNC(src, PROC_REF(build_pipes), location)
+	INVOKE_ASYNC(src, PROC_REF(build_pipes), location, user)
 
-/datum/component/pipe_laying/proc/build_pipes(turf/starting_location)
+/**
+ * #build_pipes
+ *
+ * This is in several steps.
+ * Basically, we start off by getting the path from parent to the ending location, then we check if said path exists.
+ * If the path exists, we'll start manually placing every pipe down like this:
+ * - Check if there's a plasma geyser - if so, we'll place a plasma ending pipe there and stop.
+ * - Place an extraction pipe down, everything beyond this is purely just for direction handling.
+ * - Check if it's the last one in the list, if so then we won't curve, we'll simply take the direction of the previous pipe and copy it.
+ * - Otherwise, we'll check if it's the first one in the list, if so then we'll take the direction of the hub and place it.
+ * - If it's neither, then we'll check the direction of the next and previous pipe, and place it accordingly, so diagonals work.
+ * Once this is all done, we'll check if our starting point has been a pipe, if so then as we can start off in a different direction
+ * than we started, we have to go back and change the starting pipe's direction to fit us.
+ *
+ * Once all pipes are built, we'll give the component to keep this construction chain going to the last pipe built, and delete ourselves.
+ * That is, if we haven't placed the last pipe (at a geyser), and actually placed something down.
+ */
+/datum/component/pipe_laying/proc/build_pipes(turf/ending_location, mob/user)
 	building_pipes = TRUE
-	var/list/pipe_locations
-	if(start_one_tile_ahead)
-		var/obj/parent_obj = parent
-		var/turf/next_turf = get_step(parent, parent_obj.dir)
-		pipe_locations = list(next_turf) + get_path_to(next_turf, starting_location, max_distance = 4, diagonal_handling = DIAGONAL_REMOVE_ALL)
-	else
-		pipe_locations = get_path_to(parent, starting_location, max_distance = 4, diagonal_handling = DIAGONAL_REMOVE_ALL)
+	var/obj/parent_obj = parent
+	var/list/pipe_locations = get_path_to(parent, ending_location, max_distance = 4, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL)
 	var/obj/structure/liquid_plasma_extraction_pipe/last_placed_pipe
 	var/should_delete_ourselves = FALSE
 	if(length(pipe_locations))
 		for(var/turf/next_location as anything in pipe_locations)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
 				break
+			playsound(user, RPD_USE_SOUND, 50, TRUE)
 			var/obj/structure/new_segment
 			var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
 			if(last_spot)
@@ -157,6 +184,21 @@
 			should_delete_ourselves = TRUE
 			new_segment.setDir(direction_to_place)
 			part_hub.connected_pipes += new_segment
+			if(start_one_tile_ahead && spot_in_list == 1)
+				//we are now changing the direction of the first pipe even though it's already been placed.
+				//this requires getting the list of all pipes, getting its location, then the pipe placed before IT was placed.
+				//If there isn't one, that means this was the first pipe, so we'll get the turf from the hub instead.
+				var/obj/structure/liquid_plasma_extraction_pipe/parent_segment = parent
+				var/previous_pipe_in_list = parent_segment.connected_hub.connected_pipes.Find(parent_segment)
+				var/turf/previous_pipe_location = (previous_pipe_in_list == 1) ? get_turf(parent_segment.connected_hub) : get_turf(parent_segment.connected_hub.connected_pipes[previous_pipe_in_list - 1])
+				var/turf/current_turf_location = get_turf(parent)
+
+				var/current_segment = get_dir(previous_pipe_location, next_location)
+				var/previous_direction = get_dir(current_turf_location, previous_pipe_location)
+				direction_to_place = current_segment
+				if(ISDIAGONALDIR(current_segment) && (NSCOMPONENT(previous_direction)))
+					direction_to_place = REVERSE_DIR(direction_to_place)
+				parent_segment.setDir(direction_to_place)
 
 	building_pipes = FALSE
 	pipe_locations = null
@@ -167,10 +209,13 @@
 	if(should_delete_ourselves)
 		qdel(src)
 
+///Checks if the user is still holding the pipe dispenser that they started the task with in the first place.
 /datum/component/pipe_laying/proc/holding_pipe_check()
 	var/obj/item/pipe_dispenser/held_item = pipe_placer.get_active_held_item()
 	return (held_item == pipe_placing)
 
+///Called when the pipe dispenser moves at all, which includes in the inventory and/or being dropped, instantly clearing everything.
+///do_after in build_pipes will cancel itself out, but this also works while you're simply in the stage of looking where to place the pipes down.
 /datum/component/pipe_laying/proc/on_dispenser_move(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(clear_click_catch))

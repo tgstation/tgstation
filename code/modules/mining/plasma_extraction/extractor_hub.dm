@@ -3,8 +3,9 @@ TODO LIST:
 - GIVE GEYSERS THEIR OWN SPRITE
 - GIVE THE PLASMA EXTRACTION MACHINE ITS OWN SPRITE
 - GIVE PIPES THEIR OWN SPRITE (MAYBE ??)
-- Better feedback when placing down the pipes.
-- Placing pipes after the first one is still runtiming to fuck, also directionals dont seem to work
+- MAKE IT DIG & GIVE IT REWARDS (MAYBE??) - BASICALLY: https://hackmd.io/6ggJpRGMRs2g4sKxpIBeMA?view
+- MAKE IT EXIST IN-GAME SO IT IS SOMETHING PLAYERS CAN ACTUALLY DO
+- CHANGE HOW IT IS ACTIVATED. PREFERABLY A BUTTON ON THE CORNERS OR SOMETHING.
 */
 
 
@@ -27,11 +28,6 @@ TODO LIST:
 /obj/structure/plasma_extraction_hub/part
 	///The main pipe that owns us as part of our 3x3 machine.
 	var/obj/structure/plasma_extraction_hub/part/pipe/main/pipe_owner
-
-/obj/structure/plasma_extraction_hub/part/interact(mob/user)
-	. = ..()
-	if(pipe_owner)
-		pipe_owner.interact(user)
 
 /**
  * Plasma extraction machine pipe
