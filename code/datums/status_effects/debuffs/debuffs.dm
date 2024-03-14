@@ -343,7 +343,7 @@
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
 	var/obj/item/kinetic_crusher/hammer_synced
@@ -370,9 +370,9 @@
 	QDEL_NULL(marked_underlay)
 	return ..()
 
-/datum/status_effect/crusher_mark/be_replaced()
-	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
-	..()
+//we will only clear ourselves if the crusher is the one that owns us.
+/datum/status_effect/crusher_mark/before_remove(obj/item/kinetic_crusher/attacking_hammer)
+	return (attacking_hammer == hammer_synced)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"

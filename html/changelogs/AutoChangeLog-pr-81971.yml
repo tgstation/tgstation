@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "All materials except glass are now worth more gulag points than before."
-  - balance: "Mining skill decreases the time it takes to break boulders, and makes it less tiring."

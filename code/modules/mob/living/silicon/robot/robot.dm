@@ -436,7 +436,7 @@
 	SIGNAL_HANDLER
 	if(lamp_enabled)
 		toggle_headlamp(TRUE)
-		to_chat(src, span_warning("Your headlamp was forcibly turned off. Restarting it should fix it, though."))
+		balloon_alert(src, "headlamp off!")
 	return COMSIG_SABOTEUR_SUCCESS
 
 /**

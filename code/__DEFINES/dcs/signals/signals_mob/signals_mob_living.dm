@@ -171,6 +171,9 @@
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
 
+///From obj/closet/supplypod/return_victim: (turf/destination)
+#define COMSIG_LIVING_RETURN_FROM_CAPTURE "living_return_from_capture"
+
 ///From mob/living/proc/wabbajack(): (randomize_type)
 #define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
 	/// Return to stop the rest of the wabbajack from triggering.
