@@ -9,17 +9,16 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/reshape_ligaments,
+		/datum/surgery_step/apply_bioware/reshape_ligaments,
 		/datum/surgery_step/close,
 	)
-	bioware_target = BIOWARE_LIGAMENTS
 
-/datum/surgery_step/reshape_ligaments
+	status_effect_gained = /datum/status_effect/bioware/ligaments/hooked
+
+/datum/surgery_step/apply_bioware/reshape_ligaments
 	name = "reshape ligaments (hand)"
-	accept_hand = TRUE
-	time = 125
 
-/datum/surgery_step/reshape_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/apply_bioware/reshape_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
@@ -29,7 +28,11 @@
 	)
 	display_pain(target, "Your limbs burn with severe pain!")
 
-/datum/surgery_step/reshape_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/apply_bioware/reshape_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	. = ..()
+	if(!.)
+		return
+
 	display_results(
 		user,
 		target,
@@ -38,18 +41,3 @@
 		span_notice("[user] finishes manipulating [target]'s ligaments."),
 	)
 	display_pain(target, "Your limbs feel... strangely loose.")
-	new /datum/bioware/hooked_ligaments(target)
-	return ..()
-
-/datum/bioware/hooked_ligaments
-	name = "Hooked Ligaments"
-	desc = "The ligaments and nerve endings that connect the torso to the limbs are formed into a hook-like shape, so limbs can be attached without requiring surgery, but are easier to sever."
-	mod_type = BIOWARE_LIGAMENTS
-
-/datum/bioware/hooked_ligaments/on_gain()
-	..()
-	owner.add_traits(list(TRAIT_LIMBATTACHMENT, TRAIT_EASYDISMEMBER), EXPERIMENTAL_SURGERY_TRAIT)
-
-/datum/bioware/hooked_ligaments/on_lose()
-	..()
-	owner.remove_traits(list(TRAIT_LIMBATTACHMENT, TRAIT_EASYDISMEMBER), EXPERIMENTAL_SURGERY_TRAIT)
