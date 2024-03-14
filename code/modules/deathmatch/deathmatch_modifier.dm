@@ -50,8 +50,8 @@
 /datum/deathmatch_modifier/health
 	name = "Double-Health"
 	description = "Doubles your starting health"
-	var/multiplier = 2
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/triple)
+	var/multiplier = 2
 
 /datum/deathmatch_modifier/health/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.maxHealth *= multiplier
@@ -230,8 +230,8 @@
 	var/list/contents
 	///An interval representing the min and max cooldown between each time it's fired.
 	var/interval = list(7 SECONDS, 12 SECONDS)
-	///How many (a number or a two keys list) drop pods can be dropped at a time.
-	var/amount = 1
+	///How many (a number or a two keyed list) drop pods can be dropped at a time.
+	var/amount = list(1, 2)
 	///The cooldown for dropping pods into every affected deathmatch arena.
 	COOLDOWN_DECLARE(drop_pod_cd)
 
@@ -323,7 +323,7 @@
 	description = "You're going to get shelled hard"
 	drop_pod_type = /obj/structure/closet/supplypod/deadmatch_missile
 	interval = list(3 SECONDS, 5 SECONDS)
-	amount = list(1, 2)
+	amount = list(1, 3)
 
 /datum/deathmatch_modifier/drop_pod/missiles/populate_contents()
 	return
@@ -397,7 +397,7 @@
 
 /datum/deathmatch_modifier/flipping
 	name = "Perma-Flipping"
-	description = "You're constantly flipping - the mob that's - however it's purely cosmetic"
+	description = "You're constantly flipping, however it's purely cosmetic"
 
 /datum/deathmatch_modifier/flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.SpinAnimation(speed = 0.9 SECONDS, loops = -1)
