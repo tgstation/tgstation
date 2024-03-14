@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Crusher marks no longer overwrite eachother, fauna can have one from each crusher."
+  - balance: "Ash drake's crusher trophy no longer affects people the same faction as you (like hiero trophy), so you won't friendly fire people with it."
+  - rscadd: "Added a new upgrade: Human Passthrough. You can shoot your PKA without having to worry about friendly fire with this, for 750 mining points at your mining vendor."
+  - bugfix: "Minebot passthrough upgrade now properly makes PKAs pass through minebots."
