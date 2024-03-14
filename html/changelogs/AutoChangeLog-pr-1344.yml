@@ -1,0 +1,7 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - rscadd: "Self Sustaining trays bypass the nutrient requirement to grow"
+  - rscadd: "Self Sustaining trays now pause aging when fully grown & functional(corpse flowers)"
+  - bugfix: "Corpse flowers now make miasma again"
+  - bugfix: "Hydroponics trays now run out of nutrients entirely"
