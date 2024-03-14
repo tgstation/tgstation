@@ -203,7 +203,7 @@
 	if(!song.playing)
 		return
 	if(!ismob(loc))
-		CRASH("[src] was still registed to listen in on [source] but was not found to be on their mob.")
+		CRASH("[src] was still registered to listen in on [source] but was not found to be on their mob.")
 	to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
 	song.playing = FALSE
 
