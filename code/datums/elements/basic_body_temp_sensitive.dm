@@ -47,14 +47,15 @@
 
 	if(basic_mob.bodytemperature < min_body_temp)
 		basic_mob.adjust_health(cold_damage * seconds_per_tick)
-		switch(cold_damage)
-			if(1 to 5)
-				basic_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
-			if(5 to 10)
-				basic_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
-			if(10 to INFINITY)
-				basic_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
-		gave_alert = TRUE
+		if(!basic_mob.has_status_effect(/datum/status_effect/inebriated))
+			switch(cold_damage)
+				if(1 to 5)
+					basic_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
+				if(5 to 10)
+					basic_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
+				if(10 to INFINITY)
+					basic_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
+			gave_alert = TRUE
 
 	else if(basic_mob.bodytemperature > max_body_temp)
 		basic_mob.adjust_health(heat_damage * seconds_per_tick)
