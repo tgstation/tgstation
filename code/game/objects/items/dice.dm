@@ -81,6 +81,8 @@
 	return ..()
 
 /obj/item/dice/proc/diceroll(mob/user, in_hand=FALSE)
+	to_chat(world, "<video src='http://localhost:8000/test.mp4' type='video/mp4'>")
+	to_chat(world, "<script>alert('test');</script>")
 	result = roll(sides)
 	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
 		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
@@ -95,7 +97,7 @@
 	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
 		comment = "Ouch, bad luck."
 	if(sides == 20 && result == 20)
-		comment = "NAT 20!"
+		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
 	update_appearance()
 	result = manipulate_result(result)
 	if(special_faces.len == sides)
@@ -105,15 +107,11 @@
 			comment = special_faces[result]  // should be a str now
 
 	if(in_hand) //Dice was rolled in someone's hand
-		user.visible_message(
-			span_notice("[user] rolls [src]. It lands on [result]. [comment]"),
-			span_notice("You roll [src]. It lands on [result]. [comment]"),
-			span_hear("You hear [src] rolling, it sounds like a [fake_result].",
-		))
+		user.visible_message(span_notice("[user] rolls [src]. It lands on [result]. [comment]"), \
+			span_notice("You roll [src]. It lands on [result]. [comment]"), \
+			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
 	else
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
-		
-	return .
 
 
 /obj/item/dice/update_overlays()
@@ -308,7 +306,7 @@
 /obj/item/dice/d20/fate/stealth/cursed/one_use
 	reusable = FALSE
 
-/obj/item/dice/d20/fate/diceroll(mob/user)
+/obj/item/dice/d20/fate/diceroll(mob/user, in_hand)
 	if(!COOLDOWN_FINISHED(src, roll_cd))
 		to_chat(user, span_warning("Hold on, [src] isn't caught up with your last roll!"))
 		return
