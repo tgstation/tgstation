@@ -161,8 +161,13 @@ export class NumberInput extends Component<Props, State> {
     });
 
     if (dragging) {
-      onChange?.(value);
-      onDrag?.(value);
+      if (this.state.oldValue !== value) {
+        onChange?.(value);
+        onDrag?.(value);
+        this.setState({
+          oldValue: value,
+        });
+      }
     } else if (this.inputRef) {
       const input = this.inputRef.current;
       if (input) {
@@ -197,8 +202,13 @@ export class NumberInput extends Component<Props, State> {
     this.setState({
       editing: false,
     });
-    onChange?.(targetValue);
-    onDrag?.(targetValue);
+    if (this.state.oldValue !== targetValue) {
+      onChange?.(targetValue);
+      onDrag?.(targetValue);
+      this.setState({
+        oldValue: targetValue,
+      });
+    }
   };
 
   handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -223,8 +233,13 @@ export class NumberInput extends Component<Props, State> {
         editing: false,
         value: targetValue,
       });
-      onChange?.(targetValue);
-      onDrag?.(targetValue);
+      if (this.state.oldValue !== targetValue) {
+        onChange?.(targetValue);
+        onDrag?.(targetValue);
+        this.setState({
+          oldValue: targetValue,
+        });
+      }
     } else if (event.key === KEY.Escape) {
       this.setState({
         editing: false,
