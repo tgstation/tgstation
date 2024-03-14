@@ -57,7 +57,7 @@
 		if(isnull(held_item))
 			context[SCREENTIP_CONTEXT_RMB] = "Remove beaker"
 			. = CONTEXTUAL_SCREENTIP_SET
-		return
+		return .
 
 	if(is_reagent_container(held_item) && held_item.is_open_container())
 		if(!QDELETED(beaker))
@@ -191,8 +191,8 @@
 
 	. = ITEM_INTERACT_BLOCKING
 	if(is_printing)
-		balloon_alert(user, "still printing")
-		return
+		balloon_alert(user, "still printing!")
+		return .
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
@@ -203,8 +203,8 @@
 
 	. = ITEM_INTERACT_BLOCKING
 	if(is_printing)
-		balloon_alert(user, "still printing")
-		return
+		balloon_alert(user, "still printing!")
+		return .
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance(UPDATE_OVERLAYS)
@@ -216,8 +216,8 @@
 
 	. = ITEM_INTERACT_BLOCKING
 	if(is_printing)
-		balloon_alert(user, "still printing")
-		return
+		balloon_alert(user, "still printing!")
+		return .
 
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
@@ -234,7 +234,6 @@
 
 	if(!QDELETED(beaker))
 		try_put_in_hand(beaker, user)
-		beaker = null
 	if(!QDELETED(new_beaker) && user.transferItemToLoc(new_beaker, src))
 		beaker = new_beaker
 	update_appearance(UPDATE_OVERLAYS)
@@ -413,6 +412,7 @@
 	if(.)
 		update_appearance(UPDATE_OVERLAYS)
 		use_power(active_power_usage)
+	return . 
 
 /obj/machinery/chem_master/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
