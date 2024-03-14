@@ -219,6 +219,7 @@
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
 		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
 		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
+		/datum/job/human_ai = /obj/item/organ/internal/brain/cybernetic,
 		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...

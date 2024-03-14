@@ -11,10 +11,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 /// Builds the list of crew records for all crew members.
 /datum/manifest/proc/build()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/readied_player = i
+	for(var/mob/dead/new_player/readied_player as anything in GLOB.new_player_list)
 		if(readied_player.new_character)
-			log_manifest(readied_player.ckey,readied_player.new_character.mind,readied_player.new_character)
+			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
 			inject(readied_player.new_character)
 		CHECK_TICK
@@ -104,14 +103,17 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
 
-	var/assignment = person.mind.assigned_role.title
+	// Attempt to get assignment from ID, otherwise default to mind.
+	var/obj/item/card/id/id_card = person.get_idcard(hand_first = FALSE)
+	var/assignment = id_card?.get_trim_assignment() || person.mind.assigned_role.title
+
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
-	var/datum/dna/record_dna = new()
+	var/datum/dna/stored/record_dna = new()
 	person.dna.copy_dna(record_dna)
 
 	var/datum/record/locked/lockfile = new(

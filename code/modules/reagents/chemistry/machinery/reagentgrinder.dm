@@ -235,7 +235,7 @@
 	if(beaker || length(holdingitems))
 		options["eject"] = radial_eject
 
-	if(isAI(user))
+	if(HAS_AI_ACCESS(user))
 		if(machine_stat & NOPOWER)
 			return
 		options["examine"] = radial_examine
@@ -255,10 +255,10 @@
 		for(var/key in options)
 			choice = key
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(operating || (HAS_AI_ACCESS(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	switch(choice)

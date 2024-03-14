@@ -79,6 +79,7 @@
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
+	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -89,6 +90,14 @@
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
+	SIGNAL_HANDLER
+	for(var/mob/living/living_mob in buckled_mobs)
+		unbuckle_mob(living_mob)
+		living_mob.electrocute_act(shock_damage/100, shock_source, siemens_coeff, flags) //Hard metal shell conducts!
+
+	return COMPONENT_LIVING_BLOCK_SHOCK //So borgs don't die trying to fix wiring
 
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
@@ -431,6 +440,9 @@
 
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
+
+/mob/living/silicon/get_butt_sprite()
+	return BUTT_SPRITE_QR_CODE
 
 /**
  * Records an IC event log entry in the cyborg's internal tablet.

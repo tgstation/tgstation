@@ -705,6 +705,15 @@
 	name = "Well-Worn Shirt (Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
+/datum/greyscale_config/wellworn_shirt_skub
+	name = "Well-Worn Shirt (Skub)"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wellworn_shirt_skub.json'
+
+/datum/greyscale_config/wellworn_shirt_skub/worn
+	name = "Well-Worn Shirt (Skub)(Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
 /datum/greyscale_config/wellworn_shirt_graphic
 	name = "Well-Worn Shirt (Graphic)"
 	icon_file = 'icons/obj/clothing/suits/costume.dmi'

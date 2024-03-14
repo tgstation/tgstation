@@ -133,15 +133,25 @@
 	do_sparks(3, FALSE, stealing)
 
 	// Don't mess with it while it's going away
+	var/had_attack_hand_interaction = stealing.interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
+	var/was_anchored = stealing.anchored
 	stealing.anchored = TRUE
 	// Add some pizzazz
-	animate(stealing, time = 0.5 SECONDS, transform = matrix(stealing.transform).Scale(0.01), easing = CUBIC_EASING)
+	animate(stealing, time = 0.5 SECONDS, transform = stealing.transform.Scale(0.01), easing = CUBIC_EASING)
 
 	if(isitem(stealing) && ((stealing.resistance_flags & INDESTRUCTIBLE) || prob(black_market_prob)))
-		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing, had_attack_hand_interaction, was_anchored), 0.5 SECONDS)
 	else
-		QDEL_IN(stealing, 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(finish_cleanup), stealing), 0.5 SECONDS)
+
+/**
+ * Called when cleaning up a stolen atom that was NOT sent to the black market.
+ *
+ * * stealing - The item that was stolen.
+ */
+/datum/spy_bounty/proc/finish_cleanup(atom/movable/stealing)
+	qdel(stealing)
 
 /**
  * Handles putting the passed movable up on the black market.
@@ -150,33 +160,31 @@
  *
  * * thing - The item to put up on the black market.
  */
-/datum/spy_bounty/proc/send_to_black_market(atom/movable/thing)
+/datum/spy_bounty/proc/send_to_black_market(atom/movable/thing, had_attack_hand_interaction, was_anchored)
 	if(QDELETED(thing)) // Just in case anything does anything weird
 		return FALSE
 
-	thing.interaction_flags_atom = initial(thing.interaction_flags_atom)
-	thing.anchored = initial(thing.anchored)
+	///reset the appearance and all.
+	if(had_attack_hand_interaction)
+		thing.interaction_flags_atom |= INTERACT_ATOM_ATTACK_HAND
+	thing.anchored = was_anchored
+	thing.transform = thing.transform.Scale(10)
 	thing.moveToNullspace()
 
-	var/datum/market_item/new_item = new()
-	new_item.item = thing
-	new_item.name = "Stolen [thing.name]"
-	new_item.desc = "A [thing.name], stolen from somewhere on the station. Whoever owned it probably wouldn't be happy to see it here."
-	new_item.category = "Fenced Goods"
-	new_item.stock = 1
-	new_item.availability_prob = 100
-
+	var/item_price
 	switch(difficulty)
 		if(SPY_DIFFICULTY_EASY)
-			new_item.price = PAYCHECK_COMMAND * 2.5
+			item_price = PAYCHECK_COMMAND * 2.5
 		if(SPY_DIFFICULTY_MEDIUM)
-			new_item.price = PAYCHECK_COMMAND * 5
+			item_price = PAYCHECK_COMMAND * 5
 		if(SPY_DIFFICULTY_HARD)
-			new_item.price = PAYCHECK_COMMAND * 10
+			item_price = PAYCHECK_COMMAND * 10
 
-	new_item.price += rand(0, PAYCHECK_COMMAND * 5)
+	item_price += rand(0, PAYCHECK_COMMAND * 5)
 	if(thing.resistance_flags & INDESTRUCTIBLE)
-		new_item.price *= 2
+		item_price *= 2
+
+	var/datum/market_item/stolen_good/new_item = new(thing, item_price)
 
 	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
@@ -311,6 +319,10 @@
 
 	return TRUE
 
+/datum/spy_bounty/machine/finish_cleanup(obj/machinery/stealing)
+	stealing.dump_inventory_contents()
+	return ..()
+
 /datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
 	if(isnull(target_type))
 		return FALSE
@@ -438,7 +450,7 @@
 /datum/spy_bounty/machine/random/hard/ai_sat_teleporter
 	random_options = list(
 		/obj/machinery/teleport,
-		/obj/machinery/computer/teleporter.
+		/obj/machinery/computer/teleporter,
 	)
 	location_type = /area/station/ai_monitored/aisat
 
@@ -625,6 +637,13 @@
 
 /datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
 	return bot_type
+
+/datum/spy_bounty/some_bot/finish_cleanup(mob/living/simple_animal/bot/stealing)
+	if(stealing.client)
+		to_chat(stealing, span_deadsay("You've been stolen! You are shipped off to the black market and taken apart for spare parts..."))
+		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
+		stealing.ghostize()
+	return ..()
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
