@@ -119,6 +119,7 @@
 		/datum/outfit/deathmatch_loadout/battler/northstar,
 		/datum/outfit/deathmatch_loadout/battler/raider,
 		/datum/outfit/deathmatch_loadout/battler/ripper,
+		/datum/outfit/deathmatch_loadout/battler/scientist,
 		/datum/outfit/deathmatch_loadout/battler/surgeon,
 		/datum/outfit/deathmatch_loadout/battler/tgcoder,
 		/datum/outfit/deathmatch_loadout/naked,
