@@ -24,6 +24,10 @@
 	)
 	summon_amount = 4
 
+/datum/action/cooldown/spell/conjure/simian/Destroy()
+	. = ..()
+	QDEL_NULL(gorilla_transformation)
+
 /datum/action/cooldown/spell/conjure/simian/level_spell(bypass_cap)
 	. = ..()
 	summon_amount++ // MORE, MOOOOORE
