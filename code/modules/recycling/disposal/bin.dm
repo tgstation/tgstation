@@ -385,9 +385,14 @@
 
 /obj/machinery/disposal/bin/Destroy()
 	if(!isnull(mounted_tagger))
-		mounted_tagger.forceMove(drop_location())
+		QDEL_NULL(mounted_tagger).forceMove(drop_location())
 		mounted_tagger = null
 	return ..()
+
+/obj/machinery/disposal/bin/deconstruct(disassembled)
+	. = ..()
+	if(!isnull(mounted_tagger))
+		mounted_tagger.forceMove(drop_location())
 
 /obj/machinery/disposal/bin/ui_state(mob/user)
 	return GLOB.notcontained_state
