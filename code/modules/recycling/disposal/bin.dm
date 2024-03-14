@@ -379,7 +379,7 @@
 /obj/machinery/disposal/bin/examine(mob/user)
 	. = ..()
 	if(isnull(mounted_tagger))
-		. += span_notice("\The destination tagger mount is empty.")
+		. += span_notice("The destination tagger mount is empty.")
 	else
 		. += span_notice("\The [mounted_tagger] is hanging on the side. Right Click to remove.")
 
