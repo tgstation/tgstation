@@ -60,6 +60,7 @@
 		satiety = 0
 		overeatduration = 0
 		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+		REMOVE_TRAIT(human, TRAIT_OFF_BALANCE_TACKLER, OBESITY)
 	else
 		hud_used?.hunger?.update_appearance()
 		mob_mood?.update_nutrition_moodlets()
