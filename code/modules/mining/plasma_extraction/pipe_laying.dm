@@ -147,7 +147,7 @@
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
 				break
-			playsound(user, RPD_USE_SOUND, 50, TRUE)
+			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			var/obj/structure/new_segment
 			var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
 			if(last_spot)
