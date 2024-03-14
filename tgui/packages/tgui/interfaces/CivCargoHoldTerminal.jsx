@@ -96,7 +96,7 @@ const BountyTextBox = (props) => {
 
 const BountyPickBox = (props) => {
   const { act, data } = useBackend();
-  const { id_bounty_names, id_bounty_values } = data;
+  const { id_bounty_names, id_bounty_infos, id_bounty_values } = data;
   return (
     <Section title="Please Select a Bounty:" textAlign="center">
       <Flex width="100%" wrap>

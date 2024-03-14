@@ -186,6 +186,9 @@
 			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
 											inserted_scan_id.registered_account.bounties[2].name,
 											inserted_scan_id.registered_account.bounties[3].name)
+			data["id_bounty_infos"] = list(inserted_scan_id.registered_account.bounties[1].description,
+											inserted_scan_id.registered_account.bounties[2].description,
+											inserted_scan_id.registered_account.bounties[3].description)
 			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
 											inserted_scan_id.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
 											inserted_scan_id.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
