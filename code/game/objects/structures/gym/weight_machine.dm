@@ -133,7 +133,7 @@
 		user.adjust_nutrition(-5) // feel the burn
 
 		if(iscarbon(user))
-			var/gravity_modifier = user.has_gravity() > STANDARD_GRAVITY ? 1.5 : 1
+			var/gravity_modifier = user.has_gravity() > STANDARD_GRAVITY ? 2 : 1
 			// remember the real xp gain is from sleeping after working out
 			user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP * gravity_modifier)
 			user.apply_status_effect(/datum/status_effect/exercised, EXERCISE_STATUS_DURATION)
