@@ -28,13 +28,12 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
-	///the access card we use to access mining
-	var/obj/item/card/id/access_card
 	///the gun we use to kill
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 	///the commands our owner can give us
-	var/list/pet_commands = list(
+	var/static/list/pet_commands = list(
 		/datum/pet_command/idle/minebot,
+		/datum/pet_command/protect_owner/minebot,
 		/datum/pet_command/minebot_ability/light,
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
@@ -45,20 +44,15 @@
 
 /mob/living/basic/mining_drone/Initialize(mapload)
 	. = ..()
-
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
-	AddComponent(\
-		/datum/component/tameable,\
-		food_types = list(/obj/item/stack/ore),\
-		tame_chance = 100,\
-		bonus_tame_chance = 5,\
-		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
-	)
 
 	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/missile_launcher = BB_MINEBOT_MISSILE_ABILITY,
+		/datum/action/cooldown/mob_cooldown/drop_landmine = BB_MINEBOT_LANDMINE_ABILITY,
 		/datum/action/cooldown/mob_cooldown/minedrone/toggle_light = BB_MINEBOT_LIGHT_ABILITY,
 		/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision = null,
 		/datum/action/cooldown/mob_cooldown/minedrone/dump_ore = BB_MINEBOT_DUMP_ABILITY,
@@ -69,10 +63,11 @@
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)
 	comms.implant(src)
-	access_card = new /obj/item/card/id/advanced/gold(src)
-	SSid_access.apply_trim_to_card(access_card, /datum/id_trim/job/shaft_miner)
-
-	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+	var/static/list/accesses = list(
+		/datum/id_trim/job/shaft_miner,
+	)
+	AddElement(/datum/element/mob_access, accesses)
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
@@ -118,8 +113,59 @@
 	return ..()
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(!user.combat_mode)
+		ui_interact(user)
+		return
+	return ..()
+
+/mob/living/basic/mining_drone/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MineBot", name)
+		ui.open()
+
+/mob/living/basic/mining_drone/ui_data(mob/user)
+	var/list/data = list()
+	data["auto_defend"] = ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND]
+	data["repair_node_drone"] = ai_controller.blackboard[BB_MINEBOT_REPAIR_DRONE]
+	data["plant_mines"] = ai_controller.blackboard[BB_MINEBOT_PLANT_MINES]
+	data["bot_name"] = name
+	data["bot_mode"] = combat_mode
+	data["bot_health"] = health
+	data["bot_maxhealth"] = maxHealth
+	return data
+
+/mob/living/basic/mining_drone/ui_static_data(mob/user)
+	var/list/data = list()
+	data["bot_icon"] = icon2base64(getFlatIcon(src))
+	return data
+
+/mob/living/basic/mining_drone/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	switch(action)
+		if("toggle_defend")
+			var/new_toggle = !ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND]
+			ai_controller.set_blackboard_key(BB_MINEBOT_AUTO_DEFEND, new_toggle)
+		if("toggle_repair")
+			var/new_defend = !ai_controller.blackboard[BB_MINEBOT_REPAIR_DRONE]
+			ai_controller.set_blackboard_key(BB_MINEBOT_REPAIR_DRONE, new_defend)
+		if("toggle_mines")
+			var/new_mines = !ai_controller.blackboard[BB_MINEBOT_PLANT_MINES]
+			ai_controller.set_blackboard_key(BB_MINEBOT_PLANT_MINES, new_mines)
+		if("set_name")
+			var/input_name = sanitize_name(params["chosen_name"], allow_numbers = TRUE)
+			name = (input_name ? input_name : initial(name))
+		if("toggle_mode")
+			set_combat_mode(!combat_mode)
+	return TRUE
+
+
+
+
+/mob/living/basic/mining_drone/AltClick(mob/living/user)
+	. = ..()
 	if(user.combat_mode)
-		return ..()
+		return
 	set_combat_mode(!combat_mode)
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 
@@ -127,7 +173,6 @@
 	if(!combat_mode)
 		return
 	stored_gun.afterattack(target, src)
-
 
 /mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -143,13 +188,6 @@
 	to_chat(src, span_notice("You dump your stored ore."))
 	for(var/obj/item/stack/ore/dropped_item in contents)
 		dropped_item.forceMove(get_turf(src))
-
-/mob/living/basic/mining_drone/proc/attempt_access(mob/drone, obj/door_attempt)
-	SIGNAL_HANDLER
-
-	if(door_attempt.check_access(access_card))
-		return ACCESS_ALLOWED
-	return ACCESS_DISALLOWED
 
 /mob/living/basic/mining_drone/proc/activate_bot()
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -167,6 +205,34 @@
 
 /mob/living/basic/mining_drone/Destroy()
 	QDEL_NULL(stored_gun)
-	QDEL_NULL(access_card)
 	return ..()
 
+/mob/living/basic/mining_drone/proc/pre_attack(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!istype(target, /mob/living/basic/node_drone))
+		return NONE
+	INVOKE_ASYNC(src, PROC_REF(repair_node_drone), target)
+	return COMPONENT_HOSTILE_NO_ATTACK
+
+/mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
+	do_sparks(5, FALSE, source = my_target)
+	if(!do_after(src, 6 SECONDS, my_target))
+		return
+	my_target.heal_overall_damage(brute = 50)
+
+/obj/effect/overlay/minebot_top_shield
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	vis_flags = VIS_INHERIT_DIR
+	icon = 'icons/mob/silicon/aibots.dmi'
+	icon_state = "minebot_shield_top_layer"
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/overlay/minebot_bottom_shield
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	vis_flags = VIS_INHERIT_DIR
+	icon = 'icons/mob/silicon/aibots.dmi'
+	icon_state = "minebot_shield_bottom_layer"
+	layer = BELOW_MOB_LAYER

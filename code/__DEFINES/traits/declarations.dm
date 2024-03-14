@@ -1074,6 +1074,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
 
+///Trait granted by the miner skillchip, allows communication with minebots
+#define TRAIT_ROCK_STONER "rock_stoner"
+
+///Trait given by the regenerative shield component
+#define TRAIT_REGEN_SHIELD "regen_shield"
+
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
 
