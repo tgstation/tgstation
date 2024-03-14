@@ -1,4 +1,0 @@
-author: "softcerv"
-delete-after: True
-changes:
-  - code_imp: "TRAIT_DEAF now works on non-carbon mobs"

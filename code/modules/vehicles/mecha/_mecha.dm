@@ -31,7 +31,7 @@
 	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	light_range = 8
+	light_range = 6
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
@@ -221,6 +221,7 @@
 	ui_view.generate_view("mech_view_[REF(src)]")
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 	spark_system = new
 	spark_system.set_up(2, 0, src)
@@ -798,6 +799,12 @@
 	for(var/occupant in occupants)
 		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 	return COMPONENT_BLOCK_LIGHT_EATER
+
+/obj/vehicle/sealed/mecha/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(mecha_flags &= HAS_LIGHTS && light_on)
+		set_light_on(FALSE)
+		return COMSIG_SABOTEUR_SUCCESS
 
 /// Apply corresponding accesses
 /obj/vehicle/sealed/mecha/proc/update_access()

@@ -21,7 +21,36 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
 	))
 
-/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
+/**
+ * What makes things... talk.
+ *
+ * * message - The message to say.
+ * * bubble_type - The type of speech bubble to use when talking
+ * * spans - A list of spans to attach to the message. Includes the atom's speech span by default
+ * * sanitize - Should we sanitize the message? Only set to FALSE if you have ALREADY sanitized it
+ * * language - The language to speak in. Defaults to the atom's selected language
+ * * ignore_spam - Should we ignore spam checks?
+ * * forced - What was it forced by? null if voluntary. (NOT a boolean!)
+ * * filterproof - Do we bypass the filter when checking the message?
+ * * message_range - The range of the message. Defaults to 7
+ * * saymode - Saymode passed to the speech
+ * This is usually set automatically and is only relevant for living mobs.
+ * * message_mods - A list of message modifiers, i.e. whispering/singing.
+ * Most of these are set automatically but you can pass in your own pre-say.
+ */
+/atom/movable/proc/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if(!try_speak(message, ignore_spam, forced, filterproof))
 		return
 	if(sanitize)
@@ -31,7 +60,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	spans |= speech_span
 	if(!language)
 		language = get_selected_language()
-	var/list/message_mods = list()
 	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
@@ -60,7 +88,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * 	TRUE of FASE depending on if our movable can speak
  */
 /atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
-	return TRUE
+	return can_speak()
 
 /**
  * Checks if our movable can currently speak, vocally, in general.
@@ -77,7 +105,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * if TRUE, we will check if the movable can speak REGARDLESS of if they have an active mime vow.
  */
 /atom/movable/proc/can_speak(allow_mimes = FALSE)
-	return TRUE
+	SHOULD_BE_PURE(TRUE)
+	return !HAS_TRAIT(src, TRAIT_MUTE)
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	var/found_client = FALSE
@@ -174,7 +203,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/get_default_say_verb()
 	return verb_say
 
-/atom/movable/proc/say_quote(input, list/spans=list(speech_span), list/message_mods = list())
+/**
+ * This prock is used to generate a message for chat
+ * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`.
+ *
+ * input - The message to be said
+ * spans - A list of spans to attach to the message. Includes the atom's speech span by default
+ * message_mods - A list of message modifiers, i.e. whispering/singing
+ */
+/atom/movable/proc/say_quote(input, list/spans = list(speech_span), list/message_mods = list())
 	if(!input)
 		input = "..."
 

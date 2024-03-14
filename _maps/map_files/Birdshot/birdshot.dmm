@@ -5554,6 +5554,7 @@
 "ciT" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/recharger,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab/firing_range)
 "cjm" = (

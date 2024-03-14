@@ -21,6 +21,19 @@
 		washer.visible_message("[src] implodes due to repeated washing.")
 		qdel(src)
 
+/obj/item/clothing/suit/costume/wellworn_shirt/skub
+	name = "pro-skub shirt"
+	desc = "A worn out, curiously comfortable t-shirt proclaiming your pro-skub stance. Fuck those anti-skubbies."
+	icon_state = "wellworn_shirt_pro_skub"
+	greyscale_colors = "#FFFF4D"
+	greyscale_config = /datum/greyscale_config/wellworn_shirt_skub
+	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt_skub/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti
+	name = "anti-skub shirt"
+	desc = "A worn out, curiously comfortable t-shirt proclaiming your anti-skub stance. Fuck those pro-skubbies."
+	icon_state = "wellworn_shirt_anti_skub"
+
 /obj/item/clothing/suit/costume/wellworn_shirt/graphic
 	name = "well-worn graphic shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a character from Phanic the Weasel on the front. It adds some charm points to itself and the wearer, and reminds you of when the series was still good; way back in 2500."

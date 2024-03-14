@@ -1,5 +1,0 @@
-author: "Cheshify"
-delete-after: True
-changes:
-  - qol: "The chapel has been slightly overhauled on Birdshot, with the chaplain now having a place to preach sermons."
-  - bugfix: "Sparring chaplains are now able to operate on Birdshot!"

@@ -43180,8 +43180,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/research/glass{
-	name = "Chemistry Lab"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Chemistry"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
 /obj/machinery/door/firedoor,
@@ -45173,7 +45173,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/effect/mapping_helpers/airlock/access/any/medical/pharmacy,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -50097,7 +50096,7 @@
 	name = "Surgery C Maintenance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "rTL" = (
@@ -62655,13 +62654,12 @@
 "whx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/research/glass{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Pharmacy"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/effect/mapping_helpers/airlock/access/any/medical/pharmacy,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/effect/landmark/navigate_destination,

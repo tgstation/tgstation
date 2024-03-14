@@ -147,17 +147,18 @@
 		asked_cultists += team_member.current
 
 	var/list/yes_voters = SSpolling.poll_candidates(
-		question = "[nominee] seeks to lead your cult, do you support [nominee.p_them()]?",
+		question = "[span_notice(nominee)] seeks to lead your cult, do you support [nominee.p_them()]?",
 		poll_time = 30 SECONDS,
 		group = asked_cultists,
-		pic_source = nominee,
-		role_name_text = "cult master",
+		alert_pic = nominee,
+		role_name_text = "cult master nomination",
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have pledged your allegience to [nominee].",
 			POLL_RESPONSE_ALREADY_SIGNED = "You have already pledged your allegience!",
 			POLL_RESPONSE_NOT_SIGNED = "You aren't nominated for this.",
 			POLL_RESPONSE_TOO_LATE_TO_UNREGISTER = "It's too late to unregister yourself, voting has already begun!",
 			POLL_RESPONSE_UNREGISTERED = "You have been removed your pledge to [nominee].",
+		chat_text_border_icon = mutable_appearance('icons/effects/effects.dmi', "cult_master_logo")
 		)
 	)
 	if(QDELETED(nominee) || nominee.incapacitated())
