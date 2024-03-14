@@ -44635,7 +44635,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "oQO" = (
-/obj/structure/safe,
+/obj/structure/safe/vault,
 /obj/item/clothing/head/costume/bearpelt,
 /obj/item/gun/ballistic/revolver/russian,
 /obj/item/ammo_box/a357,

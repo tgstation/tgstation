@@ -25361,7 +25361,7 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "hPf" = (
-/obj/structure/safe,
+/obj/structure/safe/vault,
 /obj/item/clothing/head/costume/bearpelt,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
