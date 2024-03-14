@@ -127,7 +127,7 @@
 		var/threshold = null
 		var/static/list/fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 		for(var/i in 1 to fill_icon_thresholds.len)
-			if(ROUND_UP(100 * reagents.total_volume / reagents.maximum_volume) >= fill_icon_thresholds[i])
+			if(ROUND_UP(100 * (reagents.total_volume / reagents.maximum_volume)) >= fill_icon_thresholds[i])
 				threshold = i
 		if(threshold)
 			var/fill_name = "chemmaster[fill_icon_thresholds[threshold]]"
