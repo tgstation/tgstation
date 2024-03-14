@@ -249,11 +249,14 @@
 		myseed.forceMove(src)
 
 	update_appearance()
-	if((world.time > (lastcycle + cycledelay) && waterlevel > 10 && reagents.total_volume > 2 && pestlevel < 10 && weedlevel < 10) || bio_boosted)
+	if((world.time > (lastcycle + cycledelay) && waterlevel > 10 && (reagents.total_volume > 2 || self_sustaining) && pestlevel < 10 && weedlevel < 10) || bio_boosted)
 		lastcycle = world.time
 		if(myseed && plant_status != HYDROTRAY_PLANT_DEAD)
 			// Advance age
-			age++
+			var/growth_mult = (1.01 ** -myseed.maturation)
+			//Checks if a self sustaining tray is fully grown and fully "functional" (corpse flowers require a specific age to produce miasma)
+			if(!(age > max(myseed.maturation, myseed.production) && (growth >= myseed.harvest_age * growth_mult) && self_sustaining))
+				age++
 
 			needs_update = TRUE
 			growth += 3
@@ -270,9 +273,9 @@
 			apply_chemicals(lastuser?.resolve())
 			// Nutrients deplete slowly
 			if(bio_boosted)
-				adjust_plant_nutriments((reagents.total_volume * ((nutriment_drain_precent * 0.2) * 0.01)))
+				adjust_plant_nutriments(max(reagents.total_volume * ((nutriment_drain_precent * 0.2) * 0.01), 0.05))
 			else
-				adjust_plant_nutriments((reagents.total_volume * (nutriment_drain_precent * 0.01)))
+				adjust_plant_nutriments(max(reagents.total_volume * (nutriment_drain_precent * 0.01), 0.05))
 
 /**
  * Photosynthesis
@@ -367,7 +370,6 @@
 			if(age > (myseed.lifespan - repeated_harvest))
 				adjust_plant_health(-rand(1,5) / rating)
 
-			var/growth_mult = (1.01 ** -myseed.maturation)
 			// Harvest code
 			if(growth >= myseed.harvest_age * growth_mult)
 			//if(myseed.harvest_age < age * max(myseed.production * 0.044, 0.5) && (myseed.harvest_age) < (age - lastproduce) * max(myseed.production * 0.044, 0.5) && (!harvest && !dead))

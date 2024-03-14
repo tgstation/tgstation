@@ -76,6 +76,9 @@
 	for(var/g in genes)
 		var/datum/plant_gene/G = g
 		S.genes += G.Copy()
+
+	for(var/datum/plant_gene/trait/traits in S.genes)
+		traits.on_new_seed(S)
 	// Copy all the stats
 	S.set_lifespan(lifespan)
 	S.set_endurance(endurance)
