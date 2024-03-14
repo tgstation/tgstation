@@ -199,16 +199,14 @@ export class NumberInput extends Component<Props, State> {
       });
       return;
     }
-    this.setState({
-      editing: false,
-    });
     if (this.state.oldValue !== targetValue) {
       onChange?.(targetValue);
       onDrag?.(targetValue);
-      this.setState({
-        oldValue: targetValue,
-      });
     }
+    this.setState({
+      editing: false,
+      oldValue: targetValue,
+    });
   };
 
   handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -229,17 +227,16 @@ export class NumberInput extends Component<Props, State> {
         });
         return;
       }
-      this.setState({
-        editing: false,
-        value: targetValue,
-      });
+
       if (this.state.oldValue !== targetValue) {
         onChange?.(targetValue);
         onDrag?.(targetValue);
-        this.setState({
-          oldValue: targetValue,
-        });
       }
+      this.setState({
+        editing: false,
+        value: targetValue,
+        oldValue: targetValue,
+      });
     } else if (event.key === KEY.Escape) {
       this.setState({
         editing: false,
