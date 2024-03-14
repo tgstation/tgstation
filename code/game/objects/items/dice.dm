@@ -81,8 +81,6 @@
 	return ..()
 
 /obj/item/dice/proc/diceroll(mob/user, in_hand=FALSE)
-	to_chat(world, "<video src='http://localhost:8000/test.mp4' type='video/mp4'>")
-	to_chat(world, "<script>alert('test');</script>")
 	result = roll(sides)
 	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
 		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
