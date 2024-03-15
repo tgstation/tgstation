@@ -12,6 +12,6 @@
 		)
 	tag_multipliers = list(TAG_COMMUNAL = 1.1, TAG_SPOOKY = 1.2)
 	guarantees_roundstart_roleset = FALSE
-	restricted = FALSE //admins can still use this if they want the crew to really suffer, for that reason im going all in
+	restricted = TRUE //admins can still use this if they want the crew to really suffer, for that reason im going all in
 	roundstart_prob = 75
 	ignores_roundstart = TRUE

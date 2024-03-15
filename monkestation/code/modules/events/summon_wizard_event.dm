@@ -1,7 +1,7 @@
 /datum/round_event_control/summon_wizard_event
 	name = "Summon Wizard Event"
 	typepath = /datum/round_event/summon_wizard_event
-	weight = 8
+	weight = 0
 	category = EVENT_CATEGORY_WIZARD
 	description = "Trigger a random wizard event that meets its normal conditions."
 	track = EVENT_TRACK_MAJOR

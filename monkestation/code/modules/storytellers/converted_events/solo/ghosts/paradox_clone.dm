@@ -2,7 +2,8 @@
 	name = "Paradox Clone"
 	tags = list(TAG_OUTSIDER_ANTAG, TAG_SPOOKY, TAG_TARGETED)
 	typepath = /datum/round_event/antagonist/solo/ghost/paradox_clone
-	antag_flag = ROLE_WIZARD
+	antag_flag = ROLE_PARADOX_CLONE
+	track = EVENT_TRACK_MAJOR
 	antag_datum = /datum/antagonist/paradox_clone
 	enemy_roles = list(
 		JOB_CAPTAIN,
@@ -12,7 +13,7 @@
 	)
 	maximum_antags = 1
 	required_enemies = 2
-	weight = 4
+	weight = 6
 	max_occurrences = 2
 	prompted_picking = TRUE
 
