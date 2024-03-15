@@ -23,8 +23,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
 /mob/living/carbon/human/ghost/death(gibbed)
 	. = ..()
-	fully_heal()
-	move_to_ghostspawn()
+	life_or_death()
 
 /mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter, obj/item/organ/internal/brain/_old_human)
 	. = ..()
@@ -48,23 +47,25 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	return ..()
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
-	if(stat > SOFT_CRIT)
-		if(dueling)
-			linked_button?.end_duel(src)
-		move_to_ghostspawn()
-		fully_heal()
 	. = ..()
+	if(. && stat > SOFT_CRIT)
+		life_or_death()
 
 /mob/living/carbon/human/ghost/proc/disolve_ghost()
-	var/mob/dead/observer/new_ghost = ghostize(FALSE)
-	new_ghost.key = old_key
-	new_ghost.mind = old_mind
-	new_ghost.can_reenter_corpse = old_reenter
-
-	if(old_human)
-		old_human.temporary_sleep = FALSE
-
+	var/mob/dead/observer/new_ghost = ghostize(can_reenter_corpse = FALSE)
+	if(!QDELETED(new_ghost))
+		new_ghost.key = old_key
+		new_ghost.mind = old_mind
+		new_ghost.can_reenter_corpse = old_reenter
+	old_human?.temporary_sleep = FALSE
 	qdel(src)
+
+/mob/living/carbon/human/ghost/proc/life_or_death()
+	if(QDELING(src) || QDELETED(client) || client.is_afk())
+		disolve_ghost()
+	else
+		move_to_ghostspawn()
+		revive(full_heal_flags = ADMIN_HEAL_ALL)
 
 /datum/action/cooldown/mob_cooldown/return_to_ghost
 	name = "Return to Ghost"
