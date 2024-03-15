@@ -6,6 +6,11 @@
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 
+/obj/item/clothing/under/dress/striped/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
+
 /obj/item/clothing/under/dress/striped
 	name = "striped dress"
 	desc = "Fashion in space."
@@ -17,11 +22,6 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	greyscale_colors = "#003284#000000#ffffff"
 
-/obj/item/clothing/under/dress/striped/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
-
 /obj/item/clothing/under/dress/sailor
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
@@ -31,12 +31,6 @@
 	greyscale_colors = "#0000ff#cc0000#eaeaea"
 	inhand_icon_state = "blackskirt"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/dress/sailor/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
-	inhand_icon_state = null
 
 /obj/item/clothing/under/dress/wedding_dress
 	name = "wedding dress"
@@ -56,11 +50,6 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	greyscale_colors = "#e11f1f"
 
-/obj/item/clothing/under/dress/eveninggown/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
-
 /obj/item/clothing/under/dress/skirt
 	name = "cardigan skirt"
 	desc = "A nice skirt with a cute cardigan, very fancy!"
@@ -70,11 +59,6 @@
 	greyscale_colors = "#bf504d#545454"
 	inhand_icon_state = "blackskirt"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/dress/skirt/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "plaid skirt"
@@ -88,11 +72,6 @@
 	greyscale_config_worn = /datum/greyscale_config/plaidskirt/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/dress/skirt/plaid/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
-
 /obj/item/clothing/under/dress/skirt/turtleskirt
 	name = "turtleneck skirt"
 	desc = "A casual turtleneck skirt."
@@ -102,11 +81,6 @@
 	greyscale_config = /datum/greyscale_config/turtleskirt
 	greyscale_config_worn = /datum/greyscale_config/turtleskirt/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/dress/skirt/turtleskirt/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/clothing/under/dress/tango
 	name = "tango dress"
@@ -118,11 +92,6 @@
 	greyscale_config_worn = /datum/greyscale_config/tango/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/dress/tango/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
-
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
@@ -132,8 +101,3 @@
 	greyscale_config = /datum/greyscale_config/sundress
 	greyscale_config_worn = /datum/greyscale_config/sundress/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/dress/sundress/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
