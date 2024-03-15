@@ -103,7 +103,6 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	)
 
 /datum/electrolyzer_reaction/halon_generation/react(turf/location, datum/gas_mixture/air_mixture, working_power)
-
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/bz, /datum/gas/oxygen, /datum/gas/halon)
 	var/reaction_efficency = min(air_mixture.gases[/datum/gas/bz][MOLES] * (1 - NUM_E ** (-0.5 * air_mixture.temperature * working_power / FIRE_MINIMUM_TEMPERATURE_TO_EXIST)), air_mixture.gases[/datum/gas/bz][MOLES])
