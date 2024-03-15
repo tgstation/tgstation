@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Cleanbots once again require an emag to spray acid on people. They can still acid trash objects normally."
