@@ -12,7 +12,7 @@
 		if (accessory_name != "Nude")
 			var/datum/sprite_accessory/accessory = accessory_list[accessory_name]
 
-			var/icon/accessory_icon = icon('icons/mob/clothing/underwear.dmi', accessory.icon_state)
+			var/icon/accessory_icon = icon(accessory.icon, accessory.icon_state) //MONKESTATION EDIT
 			if (color && !accessory.use_static)
 				accessory_icon.Blend(color, ICON_MULTIPLY)
 			icon_with_socks.Blend(accessory_icon, ICON_OVERLAY)
@@ -81,10 +81,25 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/socks/init_possible_values()
-	return generate_values_for_underwear(GLOB.socks_list, list("human_r_leg", "human_l_leg"))
+	return generate_values_for_underwear(GLOB.socks_list, list("human_r_leg", "human_l_leg"), COLOR_WHITE)
 
 /datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value)
 	target.socks = value
+
+/datum/preference/choiced/socks/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = new species_type
+	return !(NO_UNDERWEAR in species.species_traits)
+
+/datum/preference/choiced/socks/compile_constant_data()
+	var/list/data = ..()
+
+	data[SUPPLEMENTAL_FEATURE_KEY] = "socks_color"
+
+	return data
 
 /// Undershirt preference
 /datum/preference/choiced/undershirt
