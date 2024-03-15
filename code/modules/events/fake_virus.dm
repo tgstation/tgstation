@@ -1,7 +1,7 @@
 /datum/round_event_control/fake_virus
 	name = "Fake Virus"
 	typepath = /datum/round_event/fake_virus
-	weight = 20
+	weight = 15 //MONKESTATION CHANGE: 20 ==> 15
 	category = EVENT_CATEGORY_HEALTH
 	description = "Some crewmembers suffer from temporary hypochondria."
 
