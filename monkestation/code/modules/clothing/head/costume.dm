@@ -46,6 +46,13 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "milkman_hat"
 
+/obj/item/clothing/head/harlequinhat
+	name = "harlequin hat"
+	desc = "I wear officer I'm not a pirate!"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "harlequin_hat"
+
 /obj/item/clothing/head/guardmanhelmet
 	name = "guardman's helmet"
 	desc = "Keeps your brain intact when fighting heretics"

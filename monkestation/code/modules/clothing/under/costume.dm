@@ -72,6 +72,14 @@
 	alternate_worn_layer = GLOVES_LAYER
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/harlequin
+	name = "harlequin jumpsuit"
+	desc = "This is what you wear if you wanna be a weird fusion of a clown and mime."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "harlequin"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/bee
 	name = "bee hide costume"
 	desc = "A suit made of beehide"
