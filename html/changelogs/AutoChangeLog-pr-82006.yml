@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - qol: "added tooltip to newscaster to tell people that they need to insert paper if they want to print a newspaper"
