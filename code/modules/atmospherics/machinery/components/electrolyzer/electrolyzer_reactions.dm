@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		/datum/gas/bz = "Consumed during reaction.",
 		/datum/gas/oxygen = "0.2 moles of oxygen gets produced per mole of BZ consumed.",
 		/datum/gas/halon = "2 moles of Halon gets produced per mole of BZ consumed.",
-		"Energy" = "300 joules of energy is released per mole of BZ consumed.",
+		"Energy" = "[HALON_FORMATION_ENERGY] joules of energy is released per mole of BZ consumed.",
 		"Temperature" = "Reaction efficiency is proportional to temperature.",
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
