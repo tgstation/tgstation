@@ -1,0 +1,4 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - rscadd: "Replaced the generic shuttle welcome sound with Duke Nukem announcer"
