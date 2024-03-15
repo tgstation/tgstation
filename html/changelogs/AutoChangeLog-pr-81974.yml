@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - sound: "Placing paper in a paperbin is no longer silent."
