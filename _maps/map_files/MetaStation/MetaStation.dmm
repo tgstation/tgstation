@@ -41714,7 +41714,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "oXK" = (
-/obj/structure/safe,
+/obj/structure/safe/vault,
 /obj/item/storage/briefcase/secure/riches,
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/card/id/advanced/silver/reaper,

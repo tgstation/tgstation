@@ -103,6 +103,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+	/// While the cooldown is still going on, it cannot be re-enabled.
+	COOLDOWN_DECLARE(disabled_time)
 
 /datum/armor/machinery_porta_turret
 	melee = 50
@@ -133,18 +135,32 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!has_cover)
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
 	AddElement(/datum/element/hostile_machine)
 
-/obj/machinery/porta_turret/proc/toggle_on(set_to)
-	var/current = on
-	if (!isnull(set_to))
-		on = set_to
-	else
-		on = !on
-	if (current != on)
-		check_should_process()
-		if (!on)
-			popDown()
+///Toggles the turret on or off depending on the value of the turn_on arg.
+/obj/machinery/porta_turret/proc/toggle_on(turn_on = TRUE)
+	if(on == turn_on)
+		return
+	if(on && !COOLDOWN_FINISHED(src, disabled_time))
+		return
+	on = turn_on
+	check_should_process()
+	if (!on)
+		popDown()
+
+///Prevents turned from being turned on for a duration, then restarts them after that if the second ard is true.
+/obj/machinery/porta_turret/proc/set_disabled(duration = 6 SECONDS, will_restart = on)
+	COOLDOWN_START(src, disabled_time, duration)
+	if(will_restart)
+		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), duration + 1) //the cooldown isn't over until the tick after its end.
+	toggle_on(FALSE)
+
+/obj/machinery/porta_turret/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
@@ -256,7 +272,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	switch(action)
 		if("power")
 			if(anchored)
-				toggle_on()
+				toggle_on(!on)
 				return TRUE
 			else
 				to_chat(usr, span_warning("It has to be secured first!"))
@@ -364,10 +380,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	audible_message(span_hear("[src] hums oddly..."))
 	obj_flags |= EMAGGED
 	controllock = TRUE
-	toggle_on(FALSE) //turns off the turret temporarily
+	set_disabled(6 SECONDS)
 	update_appearance()
-	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 	return TRUE
 
@@ -385,10 +399,8 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(prob(20))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL // Shooting everyone is a pretty big deal, so it's least likely to get turned on
 
-		toggle_on(FALSE)
+		set_disabled(rand(6 SECONDS, 20 SECONDS))
 		remove_control()
-
-		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
 /obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -1186,17 +1198,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
 
-/obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/P)
+/obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/projectile)
 	. = ..()
-	if(on)
-		if(team_color == "blue")
-			if(istype(P, /obj/projectile/beam/lasertag/redtag))
-				toggle_on(FALSE)
-				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
-		else if(team_color == "red")
-			if(istype(P, /obj/projectile/beam/lasertag/bluetag))
-				toggle_on(FALSE)
-				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
+	if(!on)
+		return
+	if(team_color == "blue" && istype(projectile, /obj/projectile/beam/lasertag/redtag))
+		set_disabled(10 SECONDS)
+	else if(team_color == "red" && istype(projectile, /obj/projectile/beam/lasertag/bluetag))
+		set_disabled(10 SECONDS)
 
 #undef TURRET_STUN
 #undef TURRET_LETHAL

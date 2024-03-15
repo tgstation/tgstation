@@ -1522,9 +1522,8 @@
 
 	if(!disassembled)
 		A?.update_integrity(A.max_integrity * 0.5)
-	else if(obj_flags & EMAGGED)
-		//no electronics nothing
-	else
+
+	else if(!(obj_flags & EMAGGED))
 		var/obj/item/electronics/airlock/ae
 		if(!electronics)
 			ae = new/obj/item/electronics/airlock(loc)

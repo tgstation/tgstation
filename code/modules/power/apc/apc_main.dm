@@ -210,6 +210,7 @@
 	register_context()
 	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
@@ -239,6 +240,11 @@
 	if(terminal)
 		disconnect_terminal()
 	return ..()
+
+/obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	energy_fail(disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)

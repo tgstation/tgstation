@@ -193,6 +193,8 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define JUDGE_IDCHECK (1<<1)
 #define JUDGE_WEAPONCHECK (1<<2)
 #define JUDGE_RECORDCHECK (1<<3)
+///lowered threat level
+#define JUDGE_CHILLOUT (1<<4)
 
 /// Above this level of assessed threat, Beepsky will attack you
 #define THREAT_ASSESS_DANGEROUS 4
@@ -210,6 +212,8 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define SECBOT_CHECK_RECORDS (1<<3)
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
+///if it's currently affected by a saboteur bolt (lowered perp threat level)
+#define SECBOT_SABOTEUR_AFFECTED (1<<5)
 
 DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_DECLARE_ARRESTS" = SECBOT_DECLARE_ARRESTS,
@@ -217,6 +221,7 @@ DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_CHECK_WEAPONS" = SECBOT_CHECK_WEAPONS,
 	"SECBOT_CHECK_RECORDS" = SECBOT_CHECK_RECORDS,
 	"SECBOT_HANDCUFF_TARGET" = SECBOT_HANDCUFF_TARGET,
+	"SECBOT_SABOTEUR_AFFECTED" = SECBOT_SABOTEUR_AFFECTED,
 ))
 
 //MedBOT defines
