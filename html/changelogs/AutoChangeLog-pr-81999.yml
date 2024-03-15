@@ -1,0 +1,5 @@
+author: "intercepti0n"
+delete-after: True
+changes:
+  - bugfix: "Fixed cap overlay being added even when pipe is not hidden."
+  - bugfix: "Fixed cap overlay being visible on turfs that are masked with darkness plane, but still visible via mesons, cameras etc."
