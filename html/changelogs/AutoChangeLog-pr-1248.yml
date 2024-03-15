@@ -1,0 +1,4 @@
+author: "DimWhat"
+delete-after: True
+changes:
+  - balance: "Lowered the chance of both real and fake diseases occuring"
