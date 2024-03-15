@@ -529,8 +529,7 @@
 		var/area/source_area = power_source
 		source_area.apc?.terminal?.use_energy(drained_energy)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy
-		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
+		PN.delayedload += (min(drained_energy, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy
