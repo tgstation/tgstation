@@ -2104,6 +2104,7 @@
 #include "code\game\objects\obj_defense.dm"
 #include "code\game\objects\objs.dm"
 #include "code\game\objects\structures.dm"
+#include "code\game\objects\effects\bar_hud_display.dm"
 #include "code\game\objects\effects\blessing.dm"
 #include "code\game\objects\effects\bump_teleporter.dm"
 #include "code\game\objects\effects\countdown.dm"

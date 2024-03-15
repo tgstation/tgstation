@@ -4,6 +4,10 @@
  * This was split into its own file just cause the readability sucked.
  */
 /obj/structure/plasma_extraction_hub/part/pipe/main
+	///Reference to the plasma hud bar to show how much concentrated plasma has been collected.
+	var/obj/effect/bar_hud_display/plasma_bar/display_panel_ref
+	///A number representing the percentage of plasma that has been mined.
+	var/percentage_of_plasma_mined
 	///Boolean on whether we're trying to drill, regardless of whether we can or not.
 	///This is used to tell recently repaired pipes that they should get back to working.
 	var/drilling = FALSE
@@ -15,8 +19,10 @@
 	setup_parts()
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Destroy()
-	. = ..()
 	QDEL_LIST(hub_parts)
+	if(display_panel_ref)
+		QDEL_NULL(display_panel_ref)
+	return ..()
 
 ///Copied over from Gravity Generator, this sets up the parts of the plasma extraction hub, and its
 ///3 pipe starting points.
@@ -54,6 +60,7 @@
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/proc/toggle_mining(mob/user)
 	if(drilling)
+		QDEL_NULL(display_panel_ref)
 		drilling = FALSE
 		STOP_PROCESSING(SSprocessing, src)
 		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
@@ -64,6 +71,7 @@
 			balloon_alert(user, "cant start, pipes incomplete!")
 			return
 	drilling = TRUE
+	display_panel_ref = new(locate(x + 2, y, z))
 	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
 		pipe_parts.start_drilling()
 	START_PROCESSING(SSprocessing, src)
@@ -76,7 +84,24 @@
 		if(!pipe_parts.currently_functional)
 			broken_hub = TRUE
 			break
-	if(broken_hub)
-		to_chat(world, span_warning("One or more pipes were broken, couldn't process."))
+	if(broken_hub || percentage_of_plasma_mined >= 100)
 		return
-	to_chat(world, span_green("Passed processing, extracting plasma."))
+	percentage_of_plasma_mined += clamp(1, 0, 100) * seconds_per_tick
+	if(percentage_of_plasma_mined >= 100)
+		QDEL_NULL(display_panel_ref)
+		return
+	//this only has 20 dots so 1 dot = 5%
+	display_panel_ref.active_dots = round(percentage_of_plasma_mined / 5, 1)
+	display_panel_ref.update_appearance(UPDATE_OVERLAYS)
+
+///A variant of the hud display panel for life shards, this one is set up to display two columns.
+/obj/effect/bar_hud_display/plasma_bar
+	name = "concentrated plasma extracted"
+
+	dot_slots = 20
+	bar_offset_w = 3
+	individual_dot_offset_x = -5
+	number_of_columns = 2
+	dot_icon_state = "gem_purple"
+	dot_icon_state_empty = "gem_red_empty"
+	display_title = "extracted plasma"

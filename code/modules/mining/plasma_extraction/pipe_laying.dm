@@ -150,40 +150,40 @@
 			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			var/obj/structure/new_segment
 			var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
+			var/spot_in_list = pipe_locations.Find(next_location)
 			if(last_spot)
 				new_segment = new /obj/structure/liquid_plasma_ending(next_location, part_hub)
 				part_hub.last_pipe = new_segment
 				should_delete_ourselves = TRUE
 				last_placed_pipe = null
-				break
-			new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
-			var/spot_in_list = pipe_locations.Find(next_location)
-			var/direction_to_place
-			if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
-				var/turf/previous_segment
-				if(spot_in_list == 1) //in case you're only building one pipe
-					previous_segment = get_turf(parent)
-				else
-					previous_segment = pipe_locations[spot_in_list - 1]
-				direction_to_place = get_dir(previous_segment, next_location) //no special diagonal movement cause it can't be diagonal.
 			else
-				var/turf/previous_segment
-				if(spot_in_list == 1) //first one starts from the extraction hub
-					previous_segment = get_turf(parent)
+				new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
+				var/direction_to_place
+				if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
+					var/turf/previous_segment
+					if(spot_in_list == 1) //in case you're only building one pipe
+						previous_segment = get_turf(parent)
+					else
+						previous_segment = pipe_locations[spot_in_list - 1]
+					direction_to_place = get_dir(previous_segment, next_location) //no special diagonal movement cause it can't be diagonal.
 				else
-					previous_segment = pipe_locations[spot_in_list - 1]
-				var/turf/next_segment = pipe_locations[spot_in_list + 1]
+					var/turf/previous_segment
+					if(spot_in_list == 1) //first one starts from the extraction hub
+						previous_segment = get_turf(parent)
+					else
+						previous_segment = pipe_locations[spot_in_list - 1]
+					var/turf/next_segment = pipe_locations[spot_in_list + 1]
 
-				var/next_direction = get_dir(previous_segment, next_segment)
-				var/previous_direction = get_dir(next_location, previous_segment)
+					var/next_direction = get_dir(previous_segment, next_segment)
+					var/previous_direction = get_dir(next_location, previous_segment)
 
-				direction_to_place = next_direction
-				if(ISDIAGONALDIR(next_direction) && (NSCOMPONENT(previous_direction)))
-					direction_to_place = REVERSE_DIR(direction_to_place)
-			last_placed_pipe = new_segment
-			should_delete_ourselves = TRUE
-			new_segment.setDir(direction_to_place)
-			part_hub.connected_pipes += new_segment
+					direction_to_place = next_direction
+					if(ISDIAGONALDIR(next_direction) && (NSCOMPONENT(previous_direction)))
+						direction_to_place = REVERSE_DIR(direction_to_place)
+				last_placed_pipe = new_segment
+				should_delete_ourselves = TRUE
+				new_segment.setDir(direction_to_place)
+				part_hub.connected_pipes += new_segment
 			if(start_one_tile_ahead && spot_in_list == 1)
 				//we are now changing the direction of the first pipe even though it's already been placed.
 				//this requires getting the list of all pipes, getting its location, then the pipe placed before IT was placed.
@@ -195,10 +195,12 @@
 
 				var/current_segment = get_dir(previous_pipe_location, next_location)
 				var/previous_direction = get_dir(current_turf_location, previous_pipe_location)
-				direction_to_place = current_segment
+				var/direction_changed_into = current_segment
 				if(ISDIAGONALDIR(current_segment) && (NSCOMPONENT(previous_direction)))
-					direction_to_place = REVERSE_DIR(direction_to_place)
-				parent_segment.setDir(direction_to_place)
+					direction_changed_into = REVERSE_DIR(direction_changed_into)
+				parent_segment.setDir(direction_changed_into)
+			if(last_spot)
+				break
 
 	building_pipes = FALSE
 	pipe_locations = null

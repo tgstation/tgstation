@@ -53,9 +53,6 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40, interaction_key = DOAFTER_SOURCE_PIPE_CONSTRUCTION))
 		return ITEM_INTERACT_BLOCKING
-	//diagonal pipes cant be moved on top of once wrenched in cause it just looks off.
-	if(ISDIAGONALDIR(dir))
-		density = TRUE
 	balloon_alert(user, "fastened")
 	pipe_state = PIPE_STATE_FINE
 	update_appearance(UPDATE_ICON)
