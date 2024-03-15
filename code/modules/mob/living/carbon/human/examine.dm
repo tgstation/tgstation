@@ -6,20 +6,10 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
-	var/obscure_name
-	var/obscure_examine
 
-	if(isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(L, TRAIT_INVISIBLE_MAN))
-			obscure_name = TRUE
-		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
-			obscure_name = TRUE
-			obscure_examine = TRUE
+	. = list("<span class='info'>This is <EM>[get_observed_name(user)]</EM>!")
 
-	. = list("<span class='info'>This is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
-
-	if(obscure_examine)
+	if(isliving(user) && HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return list("<span class='warning'>You're struggling to make out any details...")
 
 	var/obscured = check_obscured_slots()

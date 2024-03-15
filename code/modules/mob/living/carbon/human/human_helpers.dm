@@ -56,6 +56,14 @@
 		return pda.saved_identification
 	return if_no_id
 
+/// Proc for getting the name as observed by a mob, used for screentips and examine, checking if there's anything modifying how said mob observes us.
+/mob/living/carbon/human/get_observed_name(mob/user)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(HAS_TRAIT(living_user, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(living_user, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(src, TRAIT_UNKNOWN))
+			return "Unknown"
+	return ..()
+
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
