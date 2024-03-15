@@ -22,9 +22,8 @@
 		side_choice = GLOB.side_choice_hemiplegic[pick(GLOB.side_choice_hemiplegic)]
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/side_string = "[side_choice::paralysis_type]"
 
-	medical_record_text = "Patient has an untreatable impairment in motor function on the [side_string] half of their body."
+	medical_record_text = "Patient has an untreatable impairment in motor function on the [side_choice::paralysis_type] half of their body."
 	human_holder.gain_trauma(side_choice, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/hemiplegic/remove()
