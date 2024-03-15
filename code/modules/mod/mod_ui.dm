@@ -84,7 +84,7 @@
 		return
 	switch(action)
 		if("lock")
-			if(locked & allowed(usr) || !locked)
+			if(!locked || allowed(usr))
 				req_access = wearer.get_access()
 				locked = !locked
 				balloon_alert(usr, "[locked ? "locked" : "unlocked"]!")
