@@ -36,12 +36,6 @@
 	var/turned_on = FALSE
 	///are we attempting to fire the laser currently?
 	var/firing = FALSE
-	///are we selling the power or just sending it into the ether
-	var/selling_power = FALSE
-	///how much we have earned in total
-	var/total_earnings = 0
-	///the amount of money we haven't sent to cargo yet
-	var/unsent_earnings = 0
 	///we need to create a list of all lasers we are creating so we can delete them in the end
 	var/list/laser_effects = list()
 	///list of all blocking turfs or objects
@@ -54,6 +48,19 @@
 	var/power_format_multi = 1
 	///same as above but for output
 	var/power_format_multi_output = 1
+
+	/// Are we selling the power or just sending it into the ether
+	var/selling_power = FALSE
+
+	/// How much power have we sold in total
+	var/total_power = 0
+	/// How much power do you have to sell in order to get an announcement
+	var/announcement_treshold = 1 MW
+
+	/// How much credits we have earned in total
+	var/total_earnings = 0
+	/// The amount of money we haven't sent to cargo yet
+	var/unsent_earnings = 0
 
 	///how much we are inputing pre multiplier
 	var/input_number = 0
@@ -108,6 +115,7 @@
 	. = ..()
 	. += span_notice("Laser currently has [unsent_earnings] unsent credits.")
 	. += span_notice("Laser has generated [total_earnings] credits.")
+	. += span_notice("Laser has sold [total_power] Watts")
 ///appearance changes are here
 
 /obj/machinery/power/transmission_laser/update_overlays()
@@ -224,9 +232,15 @@
 	if((machine_stat & BROKEN) || !turned_on)
 		return
 
+	if(total_power >= announcement_treshold)
+		send_ptl_announcement()
+
 	var/last_disp = return_charge()
 	var/last_chrg = inputting
 	var/last_fire = firing
+
+	if(last_disp != return_charge() || last_chrg != inputting || last_fire != firing)
+		update_appearance()
 
 	if(terminal && input_attempt)
 		input_pulling = min(input_available , input_number * power_format_multi)
@@ -247,24 +261,26 @@
 		firing = FALSE
 		output_level = 0
 		destroy_lasers()
+		return
 
-	if(charge > MINIMUM_POWER && firing)
-		output_level = min(charge, output_number * power_format_multi_output)
-		if(!length(laser_effects))
-			setup_lasers()
-		if(length(blocked_objects))
-			var/atom/listed_atom = blocked_objects[1]
-			if(prob(max((abs(output_level) * 0.1) / 500 KW, 1))) ///increased by a single % per 500 KW
-				listed_atom.visible_message(span_danger("[listed_atom] is melted away by the [src]!"))
-				blocked_objects -= listed_atom
-				qdel(listed_atom)
-		else
-			sell_power(output_level)
+	if(!firing)
+		return
 
-		charge -= output_level
+	output_level = min(charge, output_number * power_format_multi_output)
+	if(!length(laser_effects))
+		setup_lasers()
 
-	if(last_disp != return_charge() || last_chrg != inputting || last_fire != firing)
-		update_appearance()
+	if(length(blocked_objects))
+		var/atom/listed_atom = blocked_objects[1]
+		if(prob(max((abs(output_level) * 0.1) / 500 KW, 1))) ///increased by a single % per 500 KW
+			listed_atom.visible_message(span_danger("[listed_atom] is melted away by the [src]!"))
+			blocked_objects -= listed_atom
+			qdel(listed_atom)
+
+	else
+		sell_power(output_level)
+
+	charge -= output_level
 
 ////selling defines are here
 #define MINIMUM_BAR 25
@@ -273,7 +289,7 @@
 #define A1_CURVE 70
 
 /obj/machinery/power/transmission_laser/proc/sell_power(power_amount)
-	var/mw_power = power_amount * 0.000001
+	var/mw_power = power_amount / (1 MW)
 
 	var/generated_cash = (2 * mw_power * PROCESS_CAP) / (2 * mw_power + PROCESS_CAP * A1_CURVE)
 	generated_cash += (4 * mw_power * MINIMUM_BAR) / (4 * mw_power + MINIMUM_BAR)
@@ -281,28 +297,33 @@
 	if(generated_cash < 0)
 		return
 
+	total_power += power_amount
 	total_earnings += generated_cash
 	generated_cash += unsent_earnings
 	unsent_earnings = generated_cash
 
-	var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	var/datum/bank_account/department/engineer = SSeconomy.get_dep_account(ACCOUNT_ENG)
-	var/datum/bank_account/department/security = SSeconomy.get_dep_account(ACCOUNT_SEC)
+	var/datum/bank_account/department/engineering_bank_account = SSeconomy.get_dep_account(ACCOUNT_ENG)
+	var/datum/bank_account/department/cargo_bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/department/security_bank_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
+
+	var/medium_cut = generated_cash * 0.25
+	var/high_cut = generated_cash * 0.50
 
 	///the other 25% will be sent to engineers in the future but for now its stored inside
-	var/cargo_cut = generated_cash * 0.25
-	var/engineering_cut = generated_cash * 0.5
+	security_bank_account.adjust_money(medium_cut, "Transmission Laser Payout")
+	unsent_earnings -= medium_cut
 
-	security.adjust_money(cargo_cut, "Transmission Laser Payout")
-	unsent_earnings -= cargo_cut
-	engineer.adjust_money(engineering_cut, "Transmission Laser Payout")
-	unsent_earnings -= engineering_cut
-	cargo.adjust_money(cargo_cut, "Transmission Laser Payout")
-	unsent_earnings -= cargo_cut
+	cargo_bank_account.adjust_money(medium_cut, "Transmission Laser Payout")
+	unsent_earnings -= medium_cut
+
+	engineering_bank_account.adjust_money(high_cut, "Transmission Laser Payout")
+	unsent_earnings -= high_cut
 
 #undef A1_CURVE
 #undef PROCESS_CAP
 #undef MINIMUM_BAR
+
+// Beam related procs
 
 /obj/machinery/power/transmission_laser/proc/setup_lasers()
 	///this is why we set the range we did
@@ -323,51 +344,17 @@
 		qdel(listed_beam)
 
 ///this is called every time something enters our beams
-/obj/machinery/power/transmission_laser/proc/atom_entered_beam(obj/effect/transmission_beam/triggered, atom/movable/arrived)
-	var/mw_power = (output_number * power_format_multi_output) * 0.000001
-	if(mw_power < 25)
-		if(isliving(arrived))
-			var/mob/living/arrived_living = arrived
-			arrived_living.adjustFireLoss(-mw_power * 15)
-	else
-		if(mw_power < 50)
-			if(isliving(arrived))
-				var/mob/living/arrived_living = arrived
-				arrived_living.gib(FALSE)
+/obj/machinery/power/transmission_laser/proc/atom_entered_beam(obj/effect/transmission_beam/triggered, atom/movable/potential_victim)
+	var/mw_power = (output_number * power_format_multi_output) / (1 MW)
+	if(!isliving(potential_victim))
+		return
+	var/mob/living/victim = potential_victim
+	switch(mw_power)
+		if(0 to 25)
+			victim.adjustFireLoss(-mw_power * 15)
+			return
+		if(26 to 50)
+			victim.gib(FALSE)
 		else
-			if(isliving(arrived))
-				var/mob/living/arrived_living = arrived
-				explosion(arrived_living, 3, 2, 2)
-				arrived_living.gib(FALSE)
-
-
-/obj/effect/transmission_beam
-	name = ""
-	icon = 'goon/icons/obj/power.dmi'
-	icon_state = "ptl_beam"
-	anchored = TRUE
-
-	///used to deal with atoms stepping on us while firing
-	var/obj/machinery/power/transmission_laser/host
-
-/obj/effect/transmission_beam/Initialize(mapload, obj/machinery/power/transmission_laser/creator)
-	. = ..()
-	var/turf/source_turf = get_turf(src)
-	if(source_turf)
-		RegisterSignal(source_turf, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
-	update_appearance()
-
-/obj/effect/transmission_beam/Destroy(force)
-	. = ..()
-	var/turf/source_turf = get_turf(src)
-	if(source_turf)
-		UnregisterSignal(source_turf, COMSIG_ATOM_ENTERED)
-
-/obj/effect/transmission_beam/update_overlays()
-	. = ..()
-	. += emissive_appearance(icon, "ptl_beam", src)
-
-/obj/effect/transmission_beam/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	SIGNAL_HANDLER
-
-	host.atom_entered_beam(src, arrived)
+			explosion(victim, 3, 2, 2)
+			victim.gib(FALSE)
