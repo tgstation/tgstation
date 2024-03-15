@@ -1,0 +1,5 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "Posession now revives those who are dead or in hard crit and turns them into temporary vassals"
+  - qol: "Added a balloon alert that indicates when someone cannot be tortured in a persuasion rack due to being dead or in hard crit."
