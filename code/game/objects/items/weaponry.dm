@@ -809,7 +809,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			/obj/effect/decal/cleanable/ants,
 			/obj/item/queen_bee,
 		))
-	if (!strong_against)
+	if (isnull(strong_against))
 		strong_against = typecacheof(list(
 			/mob/living/basic/spider,
 		))
