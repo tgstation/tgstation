@@ -1,0 +1,4 @@
+author: "Bilbo367"
+delete-after: True
+changes:
+  - bugfix: "now spiders get extra damage by fly swatter"
