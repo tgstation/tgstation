@@ -6807,6 +6807,8 @@
 #include "monkestation\code\modules\vehicles\monkey_ball.dm"
 #include "monkestation\code\modules\vehicles\mecha\mecha_actions.dm"
 #include "monkestation\code\modules\vehicles\mecha\equipment\tools\other_tools.dm"
+#include "monkestation\code\modules\viking\viking_armour.dm"
+#include "monkestation\code\modules\viking\viking_axes.dm"
 #include "monkestation\code\modules\virology\__base_procs.dm"
 #include "monkestation\code\modules\virology\__effects.dm"
 #include "monkestation\code\modules\virology\fullscreen.dm"
