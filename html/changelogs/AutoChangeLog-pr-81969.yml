@@ -1,0 +1,4 @@
+author: "Webcomicartist"
+delete-after: True
+changes:
+  - bugfix: "Fixed RLD,RTD and Rebar crossbow not being storable on the engineering winter coat slot."
