@@ -111,8 +111,7 @@ export class NumberInput extends Component<Props, State> {
 
   handleDragMove = (event: MouseEvent) => {
     const { minValue, maxValue, step, stepPixelSize, disabled } = this.props;
-    const { dragging } = this.state;
-    if (disabled || !dragging) {
+    if (disabled) {
       return;
     }
 
