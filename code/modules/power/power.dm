@@ -133,6 +133,26 @@
 	return A.powered(chan) // return power status of the area
 
 /**
+ * Returns the available energy from the apc's cell and grid that can be used.
+ * Args:
+ * - consider_cell: Whether to count the energy from the APC's cell or not.
+ * Returns: The available energy the machine can access from the APC.
+ */
+/obj/machinery/proc/available_energy(consider_cell = TRUE)
+	var/area/home = get_area(src)
+
+	if(!home)
+		return FALSE
+	if(!home.requires_power)
+		return INFINITY
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(!local_apc)
+		return FALSE
+
+	return consider_cell ? local_apc.available_energy() : local_apc.surplus()
+
+/**
  * Draws energy from the APC. Will use excess energy from the APC's connected grid,
  * then use energy from the APC's cell if there wasn't enough energy from the grid, unless ignore_apc is true.
  * Args:
