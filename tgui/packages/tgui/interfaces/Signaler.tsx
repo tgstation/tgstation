@@ -35,7 +35,7 @@ export const SignalerContent = (props) => {
         <Stack.Item color="label">Frequency:</Stack.Item>
         <Stack.Item>
           <NumberInput
-            animate
+            animated
             unit="kHz"
             step={0.2}
             stepPixelSize={6}
@@ -70,7 +70,7 @@ export const SignalerContent = (props) => {
         </Stack.Item>
         <Stack.Item>
           <NumberInput
-            animate
+            animated
             step={1}
             stepPixelSize={6}
             minValue={1}
