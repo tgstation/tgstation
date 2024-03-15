@@ -811,8 +811,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		))
 	if (!strong_against)
 		strong_against = typecacheof(list(
-			/mob/living/basic/spider/giant,
-			/mob/living/basic/spider/growing/young,
+			/mob/living/basic/spider,
 		))
 
 
