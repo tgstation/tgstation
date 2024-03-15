@@ -50925,7 +50925,7 @@
 /turf/open/misc/sandy_dirt,
 /area/station/maintenance/starboard/aft)
 "rLN" = (
-/obj/structure/safe,
+/obj/structure/safe/vault,
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/siding/thinplating_new{
