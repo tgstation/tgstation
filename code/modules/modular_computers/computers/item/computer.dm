@@ -156,12 +156,12 @@
 
 /obj/item/modular_computer/proc/on_circuit_attached(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(use_power_for_circuits))
+	RegisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(use_energy_for_circuits))
 
 ///Try to draw power from our internal cell first, before switching to that of the circuit.
-/obj/item/modular_computer/proc/use_power_for_circuits(datum/source, power_usage_per_input)
+/obj/item/modular_computer/proc/use_energy_for_circuits(datum/source, energy_usage_per_input)
 	SIGNAL_HANDLER
-	if(use_energy(power_usage_per_input, check_programs = FALSE))
+	if(use_energy(energy_usage_per_input, check_programs = FALSE))
 		return COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/modular_computer/proc/on_circuit_removed(datum/source)
