@@ -462,6 +462,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	remove_any(amount = reagents_to_remove)
 
+	if(!reagents_per_turf)
+		return
+
 	if(group_burn_rate >= reagents_per_turf)
 		var/list/removed_turf = list()
 		for(var/num = 1, num < round(group_burn_rate / reagents_per_turf))

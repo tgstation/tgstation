@@ -23,17 +23,13 @@
 
 /obj/structure/centcom_item_spawner/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/choice
-	if(length(items_to_spawn == 1))
-		choice = 1 //this will act as an access key
-	else
-		choice = tgui_input_list(user, "What do you wish to fabricate?", "[src.name]", items_to_spawn)
+	var/choice = length(items_to_spawn) == 1 ? 1 : tgui_input_list(user, "What do you wish to fabricate?", "[src.name]", items_to_spawn) // the 1 acts as an access key
 
 	if(!choice)
 		return
 
 	var/atom/second_choice = tgui_input_list(user, "Choose what to fabricate", "[choice]", items_to_spawn[choice])
-	if(type in blacklisted_items) //should not be visible but just be extra sure we cant print these
+	if(!ispath(second_choice) || (type in blacklisted_items)) //should not be visible but just be extra sure we cant print these
 		return
 
 	spawn_chosen_item(second_choice)

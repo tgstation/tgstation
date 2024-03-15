@@ -2,6 +2,11 @@
 	if(isnum(view))
 		var/totalviewrange = (view < 0 ? -1 : 1) + 2 * view
 		return list(totalviewrange, totalviewrange)
+	else if(isnull(view)) // assume world.view if view is null
+		var/static/list/cached_world_view
+		if(!cached_world_view)
+			cached_world_view = getviewsize(world.view)
+		return cached_world_view
 	else
 		var/list/viewrangelist = splittext(view,"x")
 		return list(text2num(viewrangelist[1]), text2num(viewrangelist[2]))

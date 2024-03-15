@@ -4,6 +4,13 @@
 	value = 0
 	icon = FA_ICON_CROW
 
+/datum/quirk/jailbird/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source)
+	// Don't bother adding to ghost players
+	if(istype(new_holder, /mob/living/carbon/human/ghost))
+		qdel(src)
+		return FALSE
+	return ..()
+
 /datum/quirk/jailbird/post_add()
 	. = ..()
 	var/mob/living/carbon/human/jailbird = quirk_holder
@@ -18,6 +25,10 @@
 	var/crime = "[pick(world.file2list("monkestation/strings/random_police.txt"))] [(rand(9)+1)] [pick("days", "weeks", "months", "years")] ago"
 	var/perpname = jailbird.real_name
 	var/datum/record/crew/jailbird_record = find_record(perpname)
+	// remove quirk if we don't even have a record
+	if(QDELETED(jailbird_record))
+		qdel(src)
+		return
 	var/datum/crime/new_crime = new(name = crime_name, details = crime, author = "Nanotrasen Bounty Department")
 	jailbird_record.crimes += new_crime
 	jailbird_record.wanted_status = WANTED_PAROLE

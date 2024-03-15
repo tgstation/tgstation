@@ -3,7 +3,7 @@
 
 /datum/dna/proc/update_body_height()
 	var/mob/living/carbon/human/human_holder = holder
-	if(!istype(holder))
+	if(!istype(human_holder))
 		return
 	var/height = GLOB.body_heights[body_height]
 	if(isnull(height))

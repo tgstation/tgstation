@@ -32,7 +32,7 @@
 /datum/antagonist/ex_vassal/proc/on_examine(datum/source, mob/examiner, examine_text)
 	SIGNAL_HANDLER
 
-	var/datum/antagonist/vassal/revenge/vassaldatum = examiner.mind.has_antag_datum(/datum/antagonist/vassal/revenge)
+	var/datum/antagonist/vassal/revenge/vassaldatum = examiner.mind?.has_antag_datum(/datum/antagonist/vassal/revenge)
 	if(vassaldatum && !revenge_vassal)
 		examine_text += span_notice("[owner.current] is an ex-vassal!")
 

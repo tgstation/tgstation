@@ -34,7 +34,7 @@
 	return ..()
 
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
+	if(QDELETED(victim) || victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
 		return
 	if(limb.current_gauze?.splint_factor)
 		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
@@ -66,7 +66,7 @@
 	return BLOOD_FLOW_STEADY
 
 /datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+	if (QDELETED(victim) || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
