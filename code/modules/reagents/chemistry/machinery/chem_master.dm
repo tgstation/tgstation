@@ -172,7 +172,7 @@
 	return containers
 
 /obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1))
+	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return ..()
 
 	if(is_reagent_container(tool) && tool.is_open_container())
@@ -414,7 +414,7 @@
 	if(.)
 		update_appearance(UPDATE_OVERLAYS)
 		use_power(active_power_usage)
-	return . 
+	return .
 
 /obj/machinery/chem_master/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
