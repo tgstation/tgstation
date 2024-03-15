@@ -272,6 +272,10 @@
  */
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+	if(target.stat > UNCONSCIOUS)
+		balloon_alert(user, "too badly injured!")
+		return FALSE
+
 	if(IS_VASSAL(target))
 		var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
 		if(!vassaldatum.master.broke_masquerade)
