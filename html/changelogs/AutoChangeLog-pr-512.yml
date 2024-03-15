@@ -1,0 +1,14 @@
+author: "jlsnow301, Rhials, Paxilmaniac, san7890"
+delete-after: True
+changes:
+  - rscadd: "jlsnow301: Added some clarity to the range of netpods (4 tiles) in their exam text."
+  - rscdel: "jlsnow301: Chamber of Echoes map removed as it conflicts with the actual Legion"
+  - bugfix: "jlsnow301: Entering a virtual domain should no longer give you a message that it doesn't forbid items"
+  - bugfix: "jlsnow301: Paraplegics can now enter netpods."
+  - bugfix: "jlsnow301: Fixes an exploit caused by teleporting out of a netpod."
+  - bugfix: "jlsnow301: Outfit selection at netpods shouldn't give armor bonuses any longer."
+  - bugfix: "jlsnow301: Bubblegum should no longer teleport out of the simulation when threatened"
+  - bugfix: "jlsnow301: Heretics won't lose their living heart while bitrunning anymore."
+  - qol: "Rhials: As an observer, clicking on a bitrunning pod will let you orbit it's bitrunning avatar. Cool!"
+  - code_imp: "Paxilmaniac: Bitrunner domains can now have spells or items from disks disabled if the domain maker wants such a thing"
+  - bugfix: "san7890: Bitrunners can no longer get mass-mindswapped out of their avatar when the wizard does the event. Something about machinery and magic not going well together."
