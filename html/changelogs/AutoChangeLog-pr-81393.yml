@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a 'Closet Anomaly' station trait, which links and turns a portion of the roundstart closets into impromptu teleporters."

@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - code_imp: "We now log how many ores spawned on lavaland each round, as well as the sizes of all of the ore vents."
