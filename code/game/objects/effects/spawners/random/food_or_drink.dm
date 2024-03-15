@@ -119,6 +119,7 @@
 	icon_state = "can"
 	loot = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 3,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla = 3, //monkestation edit
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 3,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 2,
 		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 2,
