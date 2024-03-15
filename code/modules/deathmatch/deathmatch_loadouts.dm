@@ -480,8 +480,7 @@
 	name = "Deathmatch: Apprentice"
 	display_name = "Apprentice"
 	desc = "You feel severely under-leveled for this encounter..."
-
-	l_hand = null
+	
 	granted_spells = list(
 		/datum/action/cooldown/spell/charge,
 	)
@@ -527,7 +526,6 @@
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	back = /obj/item/storage/backpack/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
-	granted_spells = null
 
 /datum/outfit/deathmatch_loadout/wizard/monkey
 	name = "Deathmatch: Monkey"
@@ -536,10 +534,7 @@
 
 	species_override = /datum/species/monkey
 	l_hand = /obj/item/food/grown/banana
-	uniform = null
-	suit = null
 	head = /obj/item/clothing/head/wizard
-	shoes = null
 	granted_spells = list(
 		/datum/action/cooldown/spell/conjure/simian,
 	)
