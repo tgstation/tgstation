@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "the PTL after exporting 1 Megawatt of power will now give announcements every 30 minutes about its power exported"
