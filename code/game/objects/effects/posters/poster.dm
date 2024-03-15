@@ -211,7 +211,7 @@
 	pixel_x = 0
 	pixel_y = 0
 	var/obj/item/poster/rolled_poster = new poster_item_type(location, src) // /obj/structure/sign/poster/wanted/roll_and_drop() has some snowflake handling due to icon memes, if you make a major change to this, don't forget to update it too. <3
-	if(!user || !user.put_in_hands(rolled_poster))
+	if(!user?.put_in_hands(rolled_poster))
 		forceMove(rolled_poster)
 	return rolled_poster
 

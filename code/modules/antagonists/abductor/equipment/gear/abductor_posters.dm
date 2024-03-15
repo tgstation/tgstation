@@ -19,7 +19,7 @@
 
 /obj/structure/sign/poster/abductor/attackby(obj/item/tool, mob/user, params)
 	if(tool.toolspeed >= 0.2)
-		to_chat(user, span_warning("Your [tool.name] is too weak to cut through the superior adhesive on the [name]!"))
+		balloon_alert(user, "tool too weak!")
 		return FALSE
 	return ..()
 
