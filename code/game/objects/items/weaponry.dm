@@ -799,7 +799,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	if (!splattable)
+	if (isnull(splattable))
 		splattable = typecacheof(list(
 			/mob/living/basic/ant,
 			/mob/living/basic/butterfly,
