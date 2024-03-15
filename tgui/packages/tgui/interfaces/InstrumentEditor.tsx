@@ -119,7 +119,7 @@ const InstrumentSettings = (props) => {
           disabled={playing}
           maxValue={max_repeats}
           value={repeat}
-          onChange={(e, value) =>
+          onChange={(value) =>
             act('set_repeat_amount', {
               amount: value,
             })
@@ -156,7 +156,7 @@ const InstrumentSettings = (props) => {
               minValue={note_shift_min}
               maxValue={note_shift_max}
               value={note_shift}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_note_shift', {
                   amount: value,
                 })
@@ -185,7 +185,7 @@ const InstrumentSettings = (props) => {
               minValue={sustain_mode_min}
               maxValue={sustain_mode_max}
               value={sustain_mode_duration}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('edit_sustain_mode', {
                   amount: value,
                 })
@@ -212,7 +212,7 @@ const InstrumentSettings = (props) => {
               minValue={min_volume}
               maxValue={max_volume}
               value={volume}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_volume', {
                   amount: value,
                 })
@@ -225,7 +225,7 @@ const InstrumentSettings = (props) => {
               minValue={1}
               maxValue={100}
               value={volume_dropoff_threshold}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_dropoff_volume', {
                   amount: value,
                 })

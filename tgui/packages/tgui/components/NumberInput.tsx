@@ -40,7 +40,6 @@ type State = {
   value: number;
   dragging: BooleanLike;
   editing: BooleanLike;
-  clicked: BooleanLike;
   internalValue: number;
   oldValue: number;
   origin: number;
@@ -49,9 +48,6 @@ type State = {
 export class NumberInput extends Component<Props, State> {
   // Ref to the input field to set focus & highlight
   inputRef: RefObject<HTMLInputElement> = createRef();
-
-  // Timer id for the flicker id
-  flickerTimer: NodeJS.Timeout;
 
   // After this time has elapsed we are in drag mode so no editing when dragging ends
   dragTimeout: NodeJS.Timeout;
@@ -64,7 +60,6 @@ export class NumberInput extends Component<Props, State> {
     value: 0,
     dragging: false,
     editing: false,
-    clicked: false,
     internalValue: 0,
     oldValue: 0,
     origin: 0,
@@ -86,10 +81,10 @@ export class NumberInput extends Component<Props, State> {
     if (disabled || editing) {
       return;
     }
+    document.body.style['pointer-events'] = 'none';
 
     this.setState({
       dragging: false,
-      clicked: true,
       origin: event.screenY,
       internalValue: parseFloat(value.toString()),
     });
@@ -109,9 +104,12 @@ export class NumberInput extends Component<Props, State> {
         });
       }
     }, 400);
+
+    document.addEventListener('mousemove', this.handleDragMove);
+    document.addEventListener('mouseup', this.handleDragEnd);
   };
 
-  handleDragMove: MouseEventHandler<HTMLInputElement> = (event) => {
+  handleDragMove = (event: MouseEvent) => {
     const { minValue, maxValue, step, stepPixelSize, disabled } = this.props;
     const { dragging } = this.state;
     if (disabled || !dragging) {
@@ -145,18 +143,18 @@ export class NumberInput extends Component<Props, State> {
     });
   };
 
-  handleDragEnd: MouseEventHandler<HTMLInputElement> = (event) => {
-    const { value, dragging, clicked, internalValue } = this.state;
+  handleDragEnd = (event: MouseEvent) => {
+    const { value, dragging, internalValue } = this.state;
     const { onDrag, onChange, disabled } = this.props;
-    if (disabled || !clicked) {
+    if (disabled) {
       return;
     }
+    document.body.style['pointer-events'] = 'auto';
 
     clearInterval(this.dragInterval);
     clearTimeout(this.dragTimeout);
     this.setState({
       dragging: false,
-      clicked: false,
       editing: !dragging,
     });
 
@@ -178,6 +176,9 @@ export class NumberInput extends Component<Props, State> {
         }, 1);
       }
     }
+
+    document.removeEventListener('mousemove', this.handleDragMove);
+    document.removeEventListener('mouseup', this.handleDragEnd);
   };
 
   handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
@@ -293,9 +294,6 @@ export class NumberInput extends Component<Props, State> {
         lineHeight={lineHeight}
         fontSize={fontSize}
         onMouseDown={this.handleDragStart}
-        onMouseMove={this.handleDragMove}
-        onMouseUp={this.handleDragEnd}
-        onMouseLeave={this.handleDragEnd}
       >
         <div className="NumberInput__barContainer">
           <div
