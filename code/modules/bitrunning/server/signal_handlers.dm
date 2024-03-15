@@ -2,10 +2,7 @@
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	if(isnull(generated_domain))
-		return
-
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connections()
 
 /// Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations
 /obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
@@ -18,7 +15,7 @@
 	SIGNAL_HANDLER
 
 	if(generated_domain)
-		SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+		sever_connections()
 		scrub_vdom()
 
 	if(is_ready)
@@ -49,24 +46,13 @@
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+	var/obj/machinery/byteforge/chosen_forge = get_random_nearby_forge()
+	if(isnull(chosen_forge))
 		return
 
-	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot_crate = arrived
-	if(!istype(loot_crate))
+	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+		generate_loot(arrived, chosen_forge)
 		return
-
-	for(var/mob/person in loot_crate.contents)
-		if(isnull(person.mind))
-			person.forceMove(get_turf(loot_crate))
-
-		var/datum/component/avatar_connection/connection = person.GetComponent(/datum/component/avatar_connection)
-		connection?.full_avatar_disconnect()
-
-	spark_at_location(loot_crate)
-	qdel(loot_crate)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived, generated_domain.reward_points)
-	generate_loot()
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
@@ -83,8 +69,11 @@
 		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
 
-			if(creature.can_be_cybercop)
-				mutation_candidate_refs.Add(WEAKREF(creature))
+			if(ismegafauna(creature))
+				creature.AddElement(/datum/element/virtual_elite_mob)
+				continue
+
+			mutation_candidate_refs.Add(WEAKREF(creature))
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
@@ -98,10 +87,11 @@
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 
+	/// Just in case there's any special handling for the domain
+	generated_domain.setup_domain(created_atoms)
+
 /// Handles when cybercops are summoned into the area or ghosts click a ghost role spawner
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)
 	SIGNAL_HANDLER
 
-	domain_threats += 1
-	spawned_threat_refs.Add(WEAKREF(threat))
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED) // notify players
+	add_threats(threat)

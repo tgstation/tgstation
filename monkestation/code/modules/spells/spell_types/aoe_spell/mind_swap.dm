@@ -61,6 +61,12 @@
 		if(!nearby_mob.key && target_requires_key)
 			continue
 
+		if(HAS_TRAIT(nearby_mob, TRAIT_MIND_TEMPORARILY_GONE))
+			continue
+
+		if(HAS_TRAIT(nearby_mob, TRAIT_NO_MINDSWAP))
+			continue
+
 		things += nearby_mob
 	return things
 
