@@ -81,8 +81,8 @@ export class NumberInput extends Component<Props, State> {
     if (disabled || editing) {
       return;
     }
-    document.body.style['pointer-events'] = 'none';
 
+    document.body.style['pointer-events'] = 'none';
     this.setState({
       dragging: false,
       origin: event.screenY,
