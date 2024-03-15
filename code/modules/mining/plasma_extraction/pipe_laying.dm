@@ -130,11 +130,10 @@
  * - Check if it's the last one in the list, if so then we won't curve, we'll simply take the direction of the previous pipe and copy it.
  * - Otherwise, we'll check if it's the first one in the list, if so then we'll take the direction of the hub and place it.
  * - If it's neither, then we'll check the direction of the next and previous pipe, and place it accordingly, so diagonals work.
- * Once this is all done, we'll check if our starting point has been a pipe, if so then as we can start off in a different direction
- * than we started, we have to go back and change the starting pipe's direction to fit us.
+ * Once this is all done, we'll check if our starting point has been a pipe, if so then we'll modify it to fit the direction of the pipe we placed down, to fit.
  *
  * Once all pipes are built, we'll give the component to keep this construction chain going to the last pipe built, and delete ourselves.
- * That is, if we haven't placed the last pipe (at a geyser), and actually placed something down.
+ * That is, if we haven't placed the last pipe (at a geyser), and actually placed something down (in which case, we do nothing).
  */
 /datum/component/pipe_laying/proc/build_pipes(turf/ending_location, mob/user)
 	building_pipes = TRUE
@@ -199,6 +198,7 @@
 				if(ISDIAGONALDIR(current_segment) && (NSCOMPONENT(previous_direction)))
 					direction_changed_into = REVERSE_DIR(direction_changed_into)
 				parent_segment.setDir(direction_changed_into)
+				parent_segment.update_appearance(UPDATE_OVERLAYS)
 			if(last_spot)
 				break
 

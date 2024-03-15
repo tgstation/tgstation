@@ -76,6 +76,16 @@
 		update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/liquid_plasma_extraction_pipe/crowbar_act(mob/living/user, obj/item/tool)
+	if(pipe_status == PIPE_STATUS_ON)
+		balloon_alert(user, "currently working!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "destroying...")
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40, interaction_key = DOAFTER_SOURCE_PIPE_CONSTRUCTION))
+		return ITEM_INTERACT_BLOCKING
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
 //this is called by basic animals, but not simple. Too bad, if you want to fix this then start making more basic mobs!
 /obj/structure/liquid_plasma_extraction_pipe/attack_animal(mob/user, list/modifiers)
 	. = ..()
