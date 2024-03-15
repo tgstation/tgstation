@@ -265,9 +265,9 @@
 		ui.open()
 
 /obj/machinery/chem_master/ui_static_data(mob/user)
-	. = list()
+	var/list/data = list()
 
-	.["categories"] = list()
+	data["categories"] = list()
 	for(var/category in printable_containers)
 		//make the category
 		var/list/category_list = list(
@@ -285,7 +285,9 @@
 			))
 
 		//add the category
-		.["categories"] += list(category_list)
+		data["categories"] += list(category_list)
+
+	return data
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	. = list()
