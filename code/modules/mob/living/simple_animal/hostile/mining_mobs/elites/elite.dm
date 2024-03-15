@@ -383,7 +383,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
 		E.maxHealth = E.maxHealth * 0.4
 		E.health = E.maxHealth
-		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
+		E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
 		E.sentience_type = SENTIENCE_ORGANIC
 		qdel(src)
 	else

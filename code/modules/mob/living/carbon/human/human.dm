@@ -61,7 +61,7 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	if(biowares)
-		QDEL_LIST(biowares)
+		QDEL_LAZYLIST(biowares)
 	GLOB.human_list -= src
 
 	if (mob_mood)
@@ -362,7 +362,7 @@
 	if(judgement_criteria & JUDGE_EMAGGED || HAS_TRAIT(src, TRAIT_ALWAYS_WANTED))
 		return 10 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threatcount = judgement_criteria & JUDGE_CHILLOUT ? -THREAT_ASSESS_DANGEROUS : 0
 
 	//Lasertag bullshit
 	if(lasercolor)

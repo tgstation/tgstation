@@ -13,11 +13,12 @@ type Props = Partial<{
   buttons: ReactNode;
   open: boolean;
   title: ReactNode;
+  icon: string;
 }> &
   BoxProps;
 
 export function Collapsible(props: Props) {
-  const { children, color, title, buttons, ...rest } = props;
+  const { children, color, title, buttons, icon, ...rest } = props;
   const [open, setOpen] = useState(props.open);
 
   return (
@@ -27,7 +28,7 @@ export function Collapsible(props: Props) {
           <Button
             fluid
             color={color}
-            icon={open ? 'chevron-down' : 'chevron-right'}
+            icon={icon ? icon : open ? 'chevron-down' : 'chevron-right'}
             onClick={() => setOpen(!open)}
             {...rest}
           >
