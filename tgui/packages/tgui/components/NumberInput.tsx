@@ -149,8 +149,8 @@ export class NumberInput extends Component<Props, State> {
     if (disabled) {
       return;
     }
-    document.body.style['pointer-events'] = 'auto';
 
+    document.body.style['pointer-events'] = 'auto';
     clearInterval(this.dragInterval);
     clearTimeout(this.dragTimeout);
     this.setState({
