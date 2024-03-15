@@ -16192,7 +16192,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/structure/cable,
 /obj/machinery/door/airlock/research/glass{
-	name = "Artifact Science Lab"
+	name = "Artifact Experimentation Science Lab"
 	},
 /turf/open/floor/plating,
 /area/station/science/explab)

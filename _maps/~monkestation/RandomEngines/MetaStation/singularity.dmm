@@ -511,6 +511,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"Ki" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer1,
+/turf/open/space/basic,
+/area/space/nearstation)
 "KS" = (
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -1086,9 +1093,9 @@ kO
 MT
 An
 nM
-KS
 nM
-An
+nM
+nM
 MT
 kO
 xA
@@ -1108,13 +1115,13 @@ je
 je
 An
 An
-ol
-An
+Ki
+nM
 Rw
 nM
-KS
-KS
-KS
+nM
+An
+nM
 nM
 Bc
 An
@@ -1129,6 +1136,60 @@ je
 je
 "}
 (17,1,1) = {"
+je
+je
+je
+je
+Bc
+An
+ol
+An
+nM
+nM
+nM
+nM
+An
+nM
+nM
+nM
+An
+An
+bM
+je
+je
+je
+je
+je
+je
+"}
+(18,1,1) = {"
+je
+je
+je
+je
+bM
+An
+ol
+An
+An
+nM
+An
+nM
+An
+nM
+nM
+An
+An
+KS
+ej
+je
+je
+je
+je
+je
+je
+"}
+(19,1,1) = {"
 je
 je
 je
@@ -1155,7 +1216,7 @@ je
 je
 je
 "}
-(18,1,1) = {"
+(20,1,1) = {"
 je
 je
 je
@@ -1182,7 +1243,7 @@ je
 je
 je
 "}
-(19,1,1) = {"
+(21,1,1) = {"
 je
 je
 je
@@ -1209,7 +1270,7 @@ je
 je
 je
 "}
-(20,1,1) = {"
+(22,1,1) = {"
 je
 je
 je
@@ -1236,7 +1297,7 @@ je
 je
 je
 "}
-(21,1,1) = {"
+(23,1,1) = {"
 je
 je
 je
@@ -1263,7 +1324,7 @@ je
 je
 je
 "}
-(22,1,1) = {"
+(24,1,1) = {"
 je
 je
 je
@@ -1290,7 +1351,7 @@ je
 je
 je
 "}
-(23,1,1) = {"
+(25,1,1) = {"
 je
 je
 je
@@ -1317,7 +1378,7 @@ je
 je
 je
 "}
-(24,1,1) = {"
+(26,1,1) = {"
 je
 je
 je
@@ -1344,7 +1405,7 @@ je
 je
 je
 "}
-(25,1,1) = {"
+(27,1,1) = {"
 je
 je
 je
@@ -1371,7 +1432,7 @@ je
 je
 je
 "}
-(26,1,1) = {"
+(28,1,1) = {"
 je
 je
 je
@@ -1398,7 +1459,7 @@ je
 je
 je
 "}
-(27,1,1) = {"
+(29,1,1) = {"
 je
 je
 je
@@ -1425,80 +1486,26 @@ je
 je
 je
 "}
-(28,1,1) = {"
-je
-je
-je
-je
-bM
-An
-bM
-An
-Bc
-Bc
-Bc
-Bc
-Bc
-Bc
-Bc
-An
-bM
-KS
-KS
-je
-je
-je
-je
-je
-je
-"}
-(29,1,1) = {"
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-"}
 (30,1,1) = {"
 je
 je
 je
 je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
-je
+bM
+An
+bM
+An
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+An
+bM
+KS
+KS
 je
 je
 je
