@@ -418,11 +418,6 @@
 	. = ..()
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/obj/item/organ/internal/brain/saiyan
-	name = "saiyan brain"
-	desc = "The brain of a mighty saiyan warrior. Guess they don't work out at the library..."
-	brain_size = 0.5
-
 /obj/item/organ/internal/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 

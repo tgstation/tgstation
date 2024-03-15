@@ -4830,6 +4830,7 @@
 #include "code\modules\mob\living\brain\brain.dm"
 #include "code\modules\mob\living\brain\brain_cybernetic.dm"
 #include "code\modules\mob\living\brain\brain_item.dm"
+#include "code\modules\mob\living\brain\brain_saiyan.dm"
 #include "code\modules\mob\living\brain\brain_say.dm"
 #include "code\modules\mob\living\brain\death.dm"
 #include "code\modules\mob\living\brain\emote.dm"
