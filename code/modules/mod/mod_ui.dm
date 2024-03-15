@@ -84,8 +84,13 @@
 		return
 	switch(action)
 		if("lock")
-			locked = !locked
-			balloon_alert(usr, "[locked ? "locked" : "unlocked"]!")
+			if(locked & allowed(usr) || !locked)
+				req_access = wearer.get_access()
+				locked = !locked
+				balloon_alert(usr, "[locked ? "locked" : "unlocked"]!")
+			else
+				balloon_alert(usr, "access insufficent!")
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		if("call")
 			if(!mod_link.link_call)
 				call_link(usr, mod_link)
