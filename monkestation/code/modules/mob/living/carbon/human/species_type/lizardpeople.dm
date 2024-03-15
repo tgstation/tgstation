@@ -1,3 +1,6 @@
+/datum/species/lizard
+	payday_modifier = 1
+
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender ==MALE)
 		return pick(

@@ -1,3 +1,6 @@
+/datum/species/fly
+	payday_modifier = 1
+
 /datum/species/fly/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)
 		if(prob(1))

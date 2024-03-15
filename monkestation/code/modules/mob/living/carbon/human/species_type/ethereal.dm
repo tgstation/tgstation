@@ -2,6 +2,7 @@
 	return 'monkestation/sound/voice/laugh/ethereal/ethereal_laugh_1.ogg'
 
 /datum/species/ethereal
+	payday_modifier = 1
 	sexes = TRUE
 	species_traits = list(
 		DYNCOLORS,

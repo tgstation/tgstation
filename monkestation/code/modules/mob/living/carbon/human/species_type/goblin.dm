@@ -29,7 +29,7 @@
 	maxhealthmod = 0.75
 	stunmod = 0.75
 	speedmod = -0.25
-	payday_modifier = 0.75
+	payday_modifier = 1
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/goblin,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/goblin,
