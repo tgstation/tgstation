@@ -120,8 +120,8 @@ export const MODsuit = (props) => {
   const { interface_break } = data.suit_status;
   return (
     <Window
-      width={600}
-      height={600}
+      width={800}
+      height={640}
       theme={ui_theme}
       title="MOD Interface Panel"
     >
@@ -782,16 +782,44 @@ const ModuleSection = (props) => {
                   )}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  {formatPower(module.idle_power)}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatPower(module.idle_power)}
+                  </div>
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  {formatPower(module.active_power)}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatPower(module.active_power)}
+                  </div>
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  {formatEnergy(module.use_energy)}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatEnergy(module.use_energy)}
+                  </div>
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  {module.module_complexity}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                    }}
+                  >
+                    {module.module_complexity}
+                  </div>
                 </Table.Cell>
               </Table.Row>
             );
