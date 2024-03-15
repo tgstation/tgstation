@@ -53609,7 +53609,8 @@
 "nKc" = (
 /obj/structure/cable,
 /obj/machinery/conveyor/inverted{
-	dir = 10
+	dir = 10;
+	id = "mining"
 	},
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
@@ -73992,7 +73993,8 @@
 /obj/structure/cable,
 /obj/machinery/bouldertech/refinery/smelter,
 /obj/machinery/conveyor/inverted{
-	dir = 10
+	dir = 10;
+	id = "mining"
 	},
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
@@ -74666,7 +74668,8 @@
 "tkZ" = (
 /obj/structure/cable,
 /obj/machinery/conveyor/inverted{
-	dir = 6
+	dir = 6;
+	id = "mining"
 	},
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
