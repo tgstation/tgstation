@@ -43,10 +43,6 @@
 	user.clear_alert(ALERT_BRAINWASHED)
 	UnregisterSignal(user, COMSIG_MOB_CLIENT_LOGIN)
 
-/datum/antagonist/brainwashed/on_mindshield(mob/implanter)
-	owner.remove_antag_datum(/datum/antagonist/brainwashed)
-	return COMPONENT_MINDSHIELD_DECONVERTED
-
 /datum/antagonist/brainwashed/proc/greet_on_login(mob/body)
 	SIGNAL_HANDLER
 	if(popup_shown)
