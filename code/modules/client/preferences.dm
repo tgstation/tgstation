@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Ensures that we always load the last used save, QOL
 	var/default_slot = 1
 	/// The maximum number of slots we're allowed to contain
-	var/max_save_slots = 3
+	var/max_save_slots = 20
 
 	/// Bitflags for communications that are muted
 	var/muted = NONE
@@ -106,8 +106,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
 		unlock_content = !!parent.IsByondMember()
-		if(unlock_content)
-			max_save_slots = 8
+		// monke edit: more save slots
+		//if(unlock_content)
+		//	max_save_slots = 8
 	else
 		CRASH("attempted to create a preferences datum without a client or mock!")
 	load_savefile()
