@@ -11477,8 +11477,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "cRe" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/status_display/ai/directional/north,
+/obj/structure/secure_safe/caps_spare,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cRs" = (
@@ -91631,7 +91632,6 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/fore)
 "xzS" = (
-/obj/structure/secure_safe/caps_spare/directional/south,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)

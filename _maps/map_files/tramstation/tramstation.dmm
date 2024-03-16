@@ -35117,6 +35117,7 @@
 /area/station/engineering/atmos)
 "lrZ" = (
 /obj/structure/table/glass,
+/obj/structure/secure_safe/caps_spare,
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "lse" = (
@@ -43742,6 +43743,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
+"ouQ" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "ouW" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/library,
@@ -46135,6 +46140,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"ptq" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "pts" = (
 /obj/machinery/power/smes{
 	capacity = 9e+006;
@@ -46973,6 +46983,11 @@
 	},
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
+"pGr" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "pGy" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -48423,7 +48438,6 @@
 /area/station/medical/chemistry)
 "qgy" = (
 /obj/structure/table/reinforced,
-/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/machinery/cell_charger{
 	pixel_y = 4
 	},
@@ -64145,10 +64159,6 @@
 /area/station/hallway/secondary/entry)
 "vxv" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
@@ -68019,9 +68029,6 @@
 /obj/structure/chair/comfy/black,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
 	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
@@ -154914,8 +154921,8 @@ eOh
 pJJ
 fWM
 qyZ
-joF
-kSZ
+pGr
+ptq
 lmG
 hHI
 gIG
@@ -155171,7 +155178,7 @@ phB
 qdY
 xNj
 qyZ
-kSZ
+ouQ
 wWe
 imr
 iue
