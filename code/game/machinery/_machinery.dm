@@ -304,7 +304,7 @@
 	. = ..()
 	if(!use_power || machine_stat || (. & EMP_PROTECT_SELF))
 		return
-	use_energy(7500/severity)
+	use_energy(7.5 KILO JOULES / severity)
 	new /obj/effect/temp_visual/emp(loc)
 
 	if(!prob(70/severity))
@@ -417,7 +417,7 @@
 	update_appearance()
 
 ///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
-/obj/machinery/proc/update_use_energy(new_use_power)
+/obj/machinery/proc/update_use_power(new_use_power)
 	SHOULD_CALL_PARENT(TRUE)
 	if(new_use_power == use_power)
 		return FALSE

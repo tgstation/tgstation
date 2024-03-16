@@ -17,7 +17,7 @@
 	/// The current amount this machine is dispensing
 	var/amount = 30
 	/// The rate at which this machine recharges the power cell.
-	var/recharge_amount = 1.25e3
+	var/recharge_amount = 1.25 KILO WATTS
 	/// The temperature reagents are dispensed into the beaker
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	/// If the UI has the pH meter shown

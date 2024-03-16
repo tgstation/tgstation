@@ -230,9 +230,9 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 /obj/machinery/exoscanner/proc/scan_change()
 	SIGNAL_HANDLER
 	if(GLOB.exoscanner_controller.current_scan)
-		update_use_energy(ACTIVE_POWER_USE)
+		update_use_power(ACTIVE_POWER_USE)
 	else
-		update_use_energy(IDLE_POWER_USE)
+		update_use_power(IDLE_POWER_USE)
 	update_icon_state()
 
 /obj/machinery/exoscanner/Destroy()

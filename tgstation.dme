@@ -204,6 +204,7 @@
 #include "code\__DEFINES\screentips.dm"
 #include "code\__DEFINES\security.dm"
 #include "code\__DEFINES\shuttles.dm"
+#include "code\__DEFINES\si.dm"
 #include "code\__DEFINES\sight.dm"
 #include "code\__DEFINES\skills.dm"
 #include "code\__DEFINES\song.dm"

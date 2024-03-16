@@ -560,7 +560,7 @@
 	var/atom/holder_atom = holder.my_atom
 	if(QDELETED(holder_atom))
 		return
-	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1e3, zap_flags = zap_flags)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
 	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat

@@ -29,7 +29,7 @@
 #define ACTIVE_POWER_USE 2
 
 ///Base global power consumption for idling machines
-#define BASE_MACHINE_IDLE_CONSUMPTION 100
+#define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
 ///Base global power consumption for active machines
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 

@@ -25,10 +25,10 @@
 
 /obj/machinery/computer/monitor/process()
 	if(!get_powernet())
-		update_use_energy(IDLE_POWER_USE)
+		update_use_power(IDLE_POWER_USE)
 		search()
 	else
-		update_use_energy(ACTIVE_POWER_USE)
+		update_use_power(ACTIVE_POWER_USE)
 		record()
 
 /obj/machinery/computer/monitor/proc/search() //keep in sync with /obj/machinery/computer/monitor's version

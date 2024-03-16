@@ -164,7 +164,7 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
@@ -173,7 +173,7 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/on_finish_printing()
 	cut_overlay("fab-active")
-	update_use_energy(IDLE_POWER_USE)
+	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
 

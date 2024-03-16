@@ -329,7 +329,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/proc/enable()
 	charging_state = POWER_IDLE
 	on = TRUE
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 
 	soundloop.start()
 	var/old_gravity = gravity_in_level()
@@ -346,7 +346,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/proc/disable()
 	charging_state = POWER_IDLE
 	on = FALSE
-	update_use_energy(IDLE_POWER_USE)
+	update_use_power(IDLE_POWER_USE)
 
 	soundloop.stop()
 	QDEL_NULL(gravity_field)

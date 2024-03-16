@@ -405,7 +405,7 @@
 	if (!occupant || busy)
 		return
 
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 
 	var/locked_state = locked
 	locked = TRUE
@@ -416,7 +416,7 @@
 	addtimer(CALLBACK(src, PROC_REF(complete_process), locked_state), 3 SECONDS)
 
 /obj/machinery/bci_implanter/proc/complete_process(locked_state)
-	update_use_energy(IDLE_POWER_USE)
+	update_use_power(IDLE_POWER_USE)
 	locked = locked_state
 	set_busy(FALSE)
 

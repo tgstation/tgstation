@@ -122,7 +122,7 @@
 		return FALSE
 
 	music_player.start_music()
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 	update_appearance(UPDATE_ICON_STATE)
 	if(!music_player.sound_loops)
 		song_timerid = addtimer(CALLBACK(src, PROC_REF(stop_music)), music_player.selection.song_length, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
@@ -137,7 +137,7 @@
 	if(!QDELING(src))
 		COOLDOWN_START(src, jukebox_song_cd, 10 SECONDS)
 		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
-		update_use_energy(IDLE_POWER_USE)
+		update_use_power(IDLE_POWER_USE)
 		update_appearance(UPDATE_ICON_STATE)
 	return TRUE
 

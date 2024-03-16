@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = null
 	dest.deactivate(src)
 	QDEL_NULL(portal)
-	update_use_energy(IDLE_POWER_USE)
+	update_use_power(IDLE_POWER_USE)
 	transport_active = FALSE
 	update_appearance()
 	portal_visuals.reset_visuals()
@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	portal_visuals.setup_visuals(target)
 	transport_active = TRUE
 	generate_bumper()
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)

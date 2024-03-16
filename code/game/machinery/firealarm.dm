@@ -264,7 +264,7 @@
 	my_area.fault_location = name
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -285,7 +285,7 @@
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
-	update_use_energy(IDLE_POWER_USE)
+	update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)

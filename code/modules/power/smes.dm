@@ -22,19 +22,19 @@
 	circuit = /obj/item/circuitboard/machine/smes
 	can_change_cable_layer = TRUE
 
-	var/capacity = 5e6 // maximum charge
+	var/capacity = 5 MEGA JOULES // maximum charge
 	var/charge = 0 // actual charge
 
 	var/input_attempt = TRUE // TRUE = attempting to charge, FALSE = not attempting to charge
 	var/inputting = TRUE // TRUE = actually inputting, FALSE = not inputting
-	var/input_level = 5e4 // amount of power the SMES attempts to charge by
-	var/input_level_max = 2e5 // cap on input_level
+	var/input_level = 50 KILO WATTS // amount of power the SMES attempts to charge by
+	var/input_level_max = 200 KILO WATTS // cap on input_level
 	var/input_available = 0 // amount of charge available from input last tick
 
 	var/output_attempt = TRUE // TRUE = attempting to output, FALSE = not attempting to output
 	var/outputting = TRUE // TRUE = actually outputting, FALSE = not outputting
-	var/output_level = 5e4 // amount of power the SMES attempts to output
-	var/output_level_max = 2e5 // cap on output_level
+	var/output_level = 50 KILO WATTS // amount of power the SMES attempts to output
+	var/output_level_max = 200 KILO WATTS // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
 
 	var/obj/machinery/power/terminal/terminal = null
@@ -425,7 +425,7 @@
 
 /obj/machinery/power/smes/engineering
 	charge = 50 * STANDARD_CELL_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
-	output_level = 90000
+	output_level = 90 KILO WATTS
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"

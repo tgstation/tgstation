@@ -125,7 +125,7 @@
 			balloon_alert(user, "already fully charged!")
 			return
 		I.use(1)
-		cell.give(5e5 * charge_multiplier)
+		cell.give(500 KILO JOULES * charge_multiplier)
 		balloon_alert(user, "cell recharged")
 	else
 		..()

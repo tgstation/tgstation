@@ -159,9 +159,11 @@
 	var/disposed = 0
 	for(var/obj/item/dish in dish_drive_contents)
 		if(is_type_in_list(dish, disposable_items))
+			if(!use_energy(active_power_usage, force = FALSE))
+				say("Not enough energy to continue!")
+				break
 			LAZYREMOVE(dish_drive_contents, dish)
 			dish.forceMove(bin)
-			use_energy(active_power_usage)
 			disposed++
 	if (disposed)
 		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name]."))

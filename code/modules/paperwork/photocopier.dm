@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return
 
 	busy = TRUE
-	update_use_energy(ACTIVE_POWER_USE)
+	update_use_power(ACTIVE_POWER_USE)
 	// fucking god proc
 	INVOKE_ASYNC(src, PROC_REF(do_copy_loop), copy_cb, user, paper_use, toner_use, copies_amount)
 
@@ -353,7 +353,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /// Sets busy to `FALSE`.
 /obj/machinery/photocopier/proc/reset_busy()
-	update_use_energy(IDLE_POWER_USE)
+	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
 
 /// Determines if the printer is currently busy, informs the user if it is.

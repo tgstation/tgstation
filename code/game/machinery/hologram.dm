@@ -589,7 +589,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
-	update_use_energy(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
 	if(total_users || replay_mode)
 		set_light(2)

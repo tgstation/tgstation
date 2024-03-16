@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 2.5e5
+	var/charge_rate = 250 KILO WATTS
 
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
@@ -125,7 +125,7 @@
 
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
-	charge_rate = 2.5e5
+	charge_rate = 250 KILO WATTS
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		charge_rate *= capacitor.tier
 
