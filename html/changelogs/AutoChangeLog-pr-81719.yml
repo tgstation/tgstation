@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Ice cream and frozen treats now have a chilling effect."
+  - rscadd: "You can add a scoop of ice cream on waffles."
+  - balance: "added an action speed modifier to the generic food haste effect (you do things, and not just run, an itsy bitsy faster)"
