@@ -71,7 +71,6 @@
 /datum/round_event_control/fugitives
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_EXTERNAL)
-	checks_antag_cap = TRUE
 
 /datum/round_event_control/gravity_generator_blackout
 	track = EVENT_TRACK_MODERATE
@@ -125,7 +124,6 @@
 
 /datum/round_event_control/operative
 	track = EVENT_TRACK_MAJOR //this is a safe guard and does not trigger normally(technically it can but not really) so no tags
-	checks_antag_cap = TRUE
 
 /datum/round_event_control/portal_storm_syndicate
 	track = EVENT_TRACK_MAJOR
@@ -209,6 +207,7 @@
 /datum/round_event_control/spider_infestation
 	track = EVENT_TRACK_ROLESET
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN)
+	checks_antag_cap = TRUE
 
 /datum/round_event_control/stray_cargo
 	track = EVENT_TRACK_MUNDANE

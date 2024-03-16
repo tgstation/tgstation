@@ -101,6 +101,10 @@
 	controller.queue_loop(src)
 
 /datum/move_loop/process()
+	if(isnull(controller))
+		qdel(src)
+		return
+
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
@@ -410,7 +414,7 @@
 	src.avoid = avoid
 	src.skip_first = skip_first
 	movement_path = initial_path?.Copy()
-	
+
 /datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, initial_path)
 	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid)
 		return TRUE
@@ -460,7 +464,8 @@
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
-		movement_path.Cut(1,2)
+		if(length(movement_path))
+			movement_path.Cut(1,2)
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE

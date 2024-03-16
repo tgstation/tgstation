@@ -60,11 +60,11 @@ GLOBAL_VAR(dj_booth)
 	if(waiting_for_yield)
 		return
 	time_left -= round(seconds_per_tick)
-	if(time_left < 0)
+	if(time_left <= 0)
 		time_left = 0
 		if(COOLDOWN_FINISHED(src, next_song_timer) && broadcasting)
 			COOLDOWN_START(src, next_song_timer, 10 MINUTES)
-		broadcasting = 0
+		broadcasting = FALSE
 
 /obj/machinery/cassette/dj_station/attack_hand(mob/user)
 	. = ..()

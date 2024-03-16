@@ -367,8 +367,9 @@ SUBSYSTEM_DEF(gamemode)
 
 /// At this point we've rolled roundstart events and antags and we handle leftover points here.
 /datum/controller/subsystem/gamemode/proc/handle_post_setup_points()
-	for(var/track in event_track_points) //Just halve the points for now.
-		event_track_points[track] *= 0.5
+//	for(var/track in event_track_points) //Just halve the points for now.
+//		event_track_points[track] *= 0.5 TESTING HOW THINGS GO WITHOUT THIS HALVING OF POINTS
+	return
 
 /// Because roundstart events need 2 steps of firing for purposes of antags, here is the first step handled, happening before occupation division.
 /datum/controller/subsystem/gamemode/proc/handle_pre_setup_roundstart_events()

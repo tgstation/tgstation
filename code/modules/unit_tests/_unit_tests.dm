@@ -124,6 +124,7 @@
 #include "hallucination_icons.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
+#include "high_five.dm"
 #include "holidays.dm"
 #include "human_through_recycler.dm"
 #include "hunger_curse.dm"
