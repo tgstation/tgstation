@@ -163,7 +163,6 @@
 /mob/living/basic/gorilla/saiyan
 	name = "Saiyan Great Ape"
 	desc = "A large and destructive ape-like creature, capable of surviving the depths of space and discharging energy beams."
-	ai_controller = null
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 
@@ -176,5 +175,34 @@
 		projectile_sound = 'sound/weapons/emitter.ogg',\
 		cooldown_time = 0.5 SECONDS, \
 	)
+	RegisterSignal(src, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(check_tail_sever))
+
+/// Cut off his tail! It's the only way!
+/mob/living/basic/gorilla/saiyan/proc/check_tail_sever(mob/living/target, obj/item/weapon, mob/attacker, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+	if (!proximity_flag || weapon.force < 5 || weapon.get_sharpness() != SHARP_EDGED)
+		return
+	to_chat(world, "trying it")
+	if (!prob(3))
+		return
+	target.visible_message(span_warning("[src]'s tail falls to the ground, severed completely!"))
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
+
+	var/datum/status_effect/shapechange_mob/shapechange_status = has_status_effect(/datum/status_effect/shapechange_mob)
+	var/mob/living/carbon/saiyan
+	if (isnull(shapechange_status))
+		saiyan = new /mob/living/carbon/human/species/saiyan(loc)
+		saiyan.name = name
+		saiyan.real_name = name
+	else
+		saiyan = shapechange_status.caster_mob
+
+	if (istype(saiyan))
+		var/obj/item/organ/external/tail/saiyan_tail = saiyan.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		saiyan_tail.Remove(saiyan)
+		saiyan_tail.forceMove(saiyan.loc)
+
+	remove_status_effect(/datum/status_effect/shapechange_mob)
+	qdel(src)
 
 #undef GORILLA_HANDS_LAYER

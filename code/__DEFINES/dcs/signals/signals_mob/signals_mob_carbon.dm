@@ -148,3 +148,8 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// Saiyan survived a near-death encounter
+#define COMSIG_SAIYAN_SURVIVOR "miracle_zenkai_power"
+/// Saiyan just lost their tail
+#define COMSIG_SAIYAN_TAIL_REMOVED "saiyan_tail_removed"

@@ -15,14 +15,14 @@
 	SIGNAL_HANDLER
 	if (new_stat != UNCONSCIOUS)
 		return
-	source.apply_status_effect(/datum/status_effect/full_throttle_boost)
+	source.apply_status_effect(/datum/status_effect/saiyan_survivor_tracker)
 
 /// Removes itself if you die, buffs your saiyan limbs if you do not
-/datum/status_effect/full_throttle_boost
-	id = "full_throttle_boost"
+/datum/status_effect/saiyan_survivor_tracker
+	id = "saiyan_survivor_tracker"
 	alert_type = null
 
-/datum/status_effect/full_throttle_boost/on_apply()
+/datum/status_effect/saiyan_survivor_tracker/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
@@ -31,37 +31,18 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_died))
 	return TRUE
 
-/datum/status_effect/full_throttle_boost/on_remove()
+/datum/status_effect/saiyan_survivor_tracker/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH))
 
 /// Upgrade all of your limb stats if you recovered, wow
-/datum/status_effect/full_throttle_boost/proc/on_stat_changed(mob/living/source, new_stat)
+/datum/status_effect/saiyan_survivor_tracker/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	if (new_stat != CONSCIOUS || !iscarbon(source))
 		return
-
-	var/mob/living/carbon/limb_haver = owner
-	var/upgraded = 0
-	for (var/obj/item/bodypart/part as anything in limb_haver.bodyparts)
-		if (!HAS_TRAIT(part, TRAIT_SAIYAN_STRENGTH))
-			continue
-		part.unarmed_damage_high += 2
-		part.unarmed_damage_low += 2
-		part.unarmed_effectiveness += 2 // This is maybe stronger than increasing the damage tbqh
-		part.brute_modifier = max(0, part.brute_modifier - 0.05)
-		part.burn_modifier = max(0, part.burn_modifier - 0.05)
-		upgraded++
-
-	if (upgraded > 0)
-		to_chat(owner, span_notice("Your near-death experience grants you more strength!"))
-		owner.maxHealth += 5 // Fuck knows if this actually does anything
-		var/datum/action/cooldown/mob_cooldown/ki_blast/blast = locate() in owner.actions
-		if (!isnull(blast))
-			blast.damage_modifier += 0.1
-
+	SEND_SIGNAL(source, COMSIG_SAIYAN_SURVIVOR)
 	qdel(src)
 
-/datum/status_effect/full_throttle_boost/proc/on_died(mob/living/source)
+/datum/status_effect/saiyan_survivor_tracker/proc/on_died(mob/living/source)
 	SIGNAL_HANDLER
 	qdel(src)
