@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(exp_specialmap, list(
 		JOB_LAWYER,
 		JOB_CHAPLAIN,
 		JOB_PSYCHOLOGIST,
-	) // station jobs
+		) // station jobs
 ))
 GLOBAL_PROTECT(exp_specialmap)
 
