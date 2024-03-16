@@ -381,16 +381,20 @@
 		/obj/effect/mine/explosive, //too lethal.
 		/obj/effect/mine/kickmine, //will kick the client, lol
 		/obj/effect/mine/gas, //Just spawns oxygen.
+		/obj/effect/mine/gas/n2o, //no sleeping please.
 	)
 
-	///1 every 10 turfs, but it will actually spawn fewer mines since groundless and closed turfs are skipped.
-	var/mines_to_spawn = length(lobby.location.reserved_turfs) * 0.1
+	///1 every 11 turfs, but it will actually spawn fewer mines since groundless and closed turfs are skipped.
+	var/mines_to_spawn = length(lobby.location.reserved_turfs) * 0.09
 	for(var/iteration in 1 to mines_to_spawn)
 		var/turf/target_turf = pick(lobby.location.reserved_turfs)
 		if(!isopenturf(target_turf) || isgroundlessturf(target_turf))
 			continue
 		///don't spawn mine next to player spawns.
 		if(locate(/obj/effect/landmark/deathmatch_player_spawn) in range(1, target_turf))
+			continue
+		///skip belt loops or they'll explode right away.
+		if(locate(/obj/machinery/conveyor) in target_turf.contents)
 			continue
 		var/mine_path = pick(mines)
 		new mine_path (target_turf)
