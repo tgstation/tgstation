@@ -229,7 +229,7 @@
 /obj/vehicle/ridden/wheelchair/motorized/improved
 
 /obj/vehicle/ridden/wheelchair/motorized/improved/add_component_parts()
-	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
-	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	power_cell = new /obj/item/stock_parts/cell/upgraded/plus(src)

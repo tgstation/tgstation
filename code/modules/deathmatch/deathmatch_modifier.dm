@@ -353,8 +353,8 @@
 
 /datum/deathmatch_modifier/wasted/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.adjust_drunk_effect(rand(30, 35))
-	var/metabolism_rate = /datum/reagent/consumable/ethanol/kahlua::metabolization_rate
-	player.reagents.add_reagent(/datum/reagent/consumable/ethanol/kahlua, initial(lobby.map.automatic_gameend_time) * 0.35 / metabolism_rate)
+	var/metabolism_rate = /datum/reagent/consumable/ethanol/jack_rose::metabolization_rate
+	player.reagents.add_reagent(/datum/reagent/consumable/ethanol/jack_rose, initial(lobby.map.automatic_gameend_time) * 0.35 / metabolism_rate)
 
 /datum/deathmatch_modifier/monkeys
 	name = "Monkeyfication"
