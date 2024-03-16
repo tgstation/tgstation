@@ -66,6 +66,7 @@ export const AtmosMixer = (props) => {
               <NumberInput
                 animated
                 value={node1_concentration}
+                step={1}
                 unit="%"
                 width="60px"
                 minValue={0}
@@ -82,6 +83,7 @@ export const AtmosMixer = (props) => {
               <NumberInput
                 animated
                 value={node2_concentration}
+                step={1}
                 unit="%"
                 width="60px"
                 minValue={0}

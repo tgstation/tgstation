@@ -40,6 +40,7 @@ export const AtmosFilter = (props) => {
             <LabeledList.Item label="Transfer Rate">
               <NumberInput
                 animated
+                step={1}
                 value={rate}
                 width="63px"
                 unit="L/s"

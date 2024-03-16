@@ -191,6 +191,7 @@ const IdCardPage = (props) => {
             </Stack.Item>
             <Stack.Item>
               <NumberInput
+                step={1}
                 value={id_age || 0}
                 unit="Years"
                 minValue={17}

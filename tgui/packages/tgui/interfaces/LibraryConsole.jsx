@@ -301,6 +301,7 @@ const CheckoutModal = (props) => {
             value={checkoutPeriod}
             unit=" Minutes"
             minValue={1}
+            step={1}
             stepPixelSize={10}
             onChange={(e, value) => setCheckoutPeriod(value)}
           />

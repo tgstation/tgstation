@@ -132,6 +132,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             animated
             fluid
             value={price}
+            step={1}
             unit="per mole"
             minValue={0}
             maxValue={100}

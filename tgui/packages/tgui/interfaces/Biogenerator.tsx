@@ -220,6 +220,7 @@ const ItemList = (props) => {
       <Table.Cell collapsing>
         <NumberInput
           value={item.amount}
+          step={1}
           width="35px"
           minValue={1}
           maxValue={item.max_amount}

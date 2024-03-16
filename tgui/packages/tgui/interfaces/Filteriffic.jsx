@@ -26,6 +26,7 @@ const FilterIntegerEntry = (props) => {
       value={value}
       minValue={-500}
       maxValue={500}
+      step={1}
       stepPixelSize={5}
       width="39px"
       onDrag={(value) =>
@@ -229,6 +230,7 @@ const FilterEntry = (props) => {
         <>
           <NumberInput
             value={priority}
+            step={1}
             stepPixelSize={10}
             width="60px"
             onChange={(value) =>

@@ -118,6 +118,7 @@ const GasList = (props: GasListProps) => {
         />
         <NumberInput
           animated
+          step={1}
           value={parseFloat(data[input_rate])}
           unit="mol/s"
           minValue={input_min}

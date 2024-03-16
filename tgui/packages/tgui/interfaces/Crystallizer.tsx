@@ -81,6 +81,7 @@ const Controls = (props) => {
         <LabeledList.Item label="Gas Input">
           <NumberInput
             animated
+            step={0.1}
             value={gas_input}
             width="63px"
             unit="moles/s"

@@ -39,6 +39,7 @@ const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
             minValue={1}
             maxValue={serverData.maximum}
             value={props.value}
+            step={1}
           />
         )}
       </Stack.Item>

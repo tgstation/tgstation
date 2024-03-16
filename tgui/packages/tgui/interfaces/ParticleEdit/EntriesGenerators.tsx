@@ -54,6 +54,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
               animated
               minValue={-Infinity}
               maxValue={Infinity}
+              step={1}
               value={float || 0}
               onDrag={(value) =>
                 act('edit', {
@@ -181,6 +182,7 @@ export const EntryGeneratorNumbersList = (
               animated
               minValue={-Infinity}
               maxValue={Infinity}
+              step={1}
               value={input || 0}
               onDrag={(value) =>
                 act('edit', {
@@ -202,6 +204,7 @@ export const EntryGeneratorNumbersList = (
               animated
               minValue={-Infinity}
               maxValue={Infinity}
+              step={1}
               value={input[0]}
               onDrag={(value) =>
                 act('edit', {
@@ -214,6 +217,7 @@ export const EntryGeneratorNumbersList = (
               animated
               minValue={-Infinity}
               maxValue={Infinity}
+              step={1}
               value={input[1]}
               onDrag={(value) =>
                 act('edit', {
@@ -227,6 +231,7 @@ export const EntryGeneratorNumbersList = (
                 animated
                 minValue={-Infinity}
                 maxValue={Infinity}
+                step={1}
                 value={input[2]}
                 onDrag={(value) =>
                   act('edit', {

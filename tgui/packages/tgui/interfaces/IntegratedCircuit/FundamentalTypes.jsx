@@ -26,6 +26,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
         defaultValue={0}
       >
         <NumberInput
+          step={1}
           value={value}
           color={color}
           onChange={(val) => setValue(val)}

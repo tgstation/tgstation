@@ -84,6 +84,7 @@ export const Aquarium = (props) => {
                 value={feeding_interval}
                 minValue={1}
                 maxValue={7}
+                step={1}
                 unit="minutes"
                 onChange={(value) =>
                   act('feeding_interval', {

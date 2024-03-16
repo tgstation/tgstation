@@ -175,6 +175,7 @@ const Cache = (props: CacheProps) => {
           }
         />
         <NumberInput
+          step={1}
           value={props.cacheCount}
           minValue={1}
           maxValue={20}

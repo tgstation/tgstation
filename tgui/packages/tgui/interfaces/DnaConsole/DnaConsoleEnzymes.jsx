@@ -294,6 +294,7 @@ const PulseSettings = (props) => {
           <NumberInput
             animated
             width="32px"
+            step={1}
             stepPixelSize={10}
             value={pulseStrength}
             minValue={1}
@@ -309,6 +310,7 @@ const PulseSettings = (props) => {
           <NumberInput
             animated
             width="32px"
+            step={1}
             stepPixelSize={10}
             value={pulseDuration}
             minValue={1}

@@ -34,6 +34,7 @@ export const AtmosPump = (props) => {
                 <NumberInput
                   animated
                   value={rate}
+                  step={1}
                   width="63px"
                   unit="L/s"
                   minValue={0}

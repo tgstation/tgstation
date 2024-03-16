@@ -171,6 +171,7 @@ const ConfigureNumberEntry = (props) => {
       value={value}
       minValue={-50}
       maxValue={50}
+      step={1}
       stepPixelSize={5}
       width="39px"
       onChange={(value) =>

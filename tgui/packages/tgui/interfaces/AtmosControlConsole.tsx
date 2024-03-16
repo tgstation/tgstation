@@ -108,6 +108,7 @@ export const AtmosControlConsole = (props) => {
                     </LabeledList.Item>
                     <LabeledList.Item label="Input Rate">
                       <NumberInput
+                        step={1}
                         value={Number(selectedChamber.input_info.amount)}
                         unit="L/s"
                         width="63px"

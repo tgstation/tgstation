@@ -115,6 +115,7 @@ const InstrumentSettings = (props) => {
       <Box>
         Repeats Left:
         <NumberInput
+          step={1}
           minValue={0}
           disabled={playing}
           maxValue={max_repeats}
@@ -155,6 +156,7 @@ const InstrumentSettings = (props) => {
             <NumberInput
               minValue={note_shift_min}
               maxValue={note_shift_max}
+              step={1}
               value={note_shift}
               onChange={(value) =>
                 act('set_note_shift', {
@@ -182,6 +184,7 @@ const InstrumentSettings = (props) => {
           <Box>
             {sustain_mode_button}:
             <NumberInput
+              step={1}
               minValue={sustain_mode_min}
               maxValue={sustain_mode_max}
               value={sustain_mode_duration}
@@ -209,6 +212,7 @@ const InstrumentSettings = (props) => {
           <Box>
             Volume:
             <NumberInput
+              step={1}
               minValue={min_volume}
               maxValue={max_volume}
               value={volume}
@@ -222,6 +226,7 @@ const InstrumentSettings = (props) => {
           <Box>
             Volume Dropoff Threshold:
             <NumberInput
+              step={1}
               minValue={1}
               maxValue={100}
               value={volume_dropoff_threshold}

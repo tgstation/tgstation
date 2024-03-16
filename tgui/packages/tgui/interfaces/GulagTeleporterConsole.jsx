@@ -83,6 +83,7 @@ export const GulagTeleporterConsole = (props) => {
             <LabeledList.Item label="Point Goal">
               <NumberInput
                 value={goal}
+                step={1}
                 width="48px"
                 minValue={1}
                 maxValue={1000}

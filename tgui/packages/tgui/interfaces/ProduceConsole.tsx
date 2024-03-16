@@ -174,6 +174,7 @@ const ShoppingTab = (props) => {
                       width="41px"
                       minValue={0}
                       maxValue={20}
+                      step={1}
                       onChange={(value) =>
                         act('cart_set', {
                           target: item.ref,
@@ -251,6 +252,7 @@ const CheckoutTab = (props) => {
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
+                        step={1}
                         onChange={(value) =>
                           act('cart_set', {
                             target: item.ref,

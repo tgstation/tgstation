@@ -41,6 +41,7 @@ export const EntryFloat = (props: EntryFloatProps) => {
         value={float}
         minValue={0}
         maxValue={Infinity}
+        step={1}
         onDrag={(value) =>
           act('edit', {
             var: var_name,
@@ -67,6 +68,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         minValue={-Infinity}
         maxValue={Infinity}
+        step={1}
         value={coord?.[0] || 0}
         onDrag={(value) =>
           act('edit', {
@@ -79,6 +81,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         minValue={-Infinity}
         maxValue={Infinity}
+        step={1}
         value={coord?.[1] || 0}
         onDrag={(value) =>
           act('edit', {
@@ -91,6 +94,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         minValue={-Infinity}
         maxValue={Infinity}
+        step={1}
         value={coord?.[2] || 0}
         onDrag={(value) =>
           act('edit', {
@@ -241,6 +245,7 @@ export const EntryTransform = (props: EntryTransformProps) => {
               value={value}
               minValue={0}
               maxValue={1}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
@@ -283,6 +288,7 @@ export const EntryIcon = (props: EntryIconStateProps) => {
                   animated
                   minValue={0}
                   maxValue={Infinity}
+                  step={1}
                   value={icon_state[icon_name]}
                   onDrag={(value) =>
                     act('edit', {
@@ -373,6 +379,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
                   animated
                   minValue={0}
                   maxValue={Infinity}
+                  step={1}
                   value={icon_state[iconstate]}
                   onDrag={(value) =>
                     act('edit', {

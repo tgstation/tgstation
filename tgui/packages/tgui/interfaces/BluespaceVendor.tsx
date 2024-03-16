@@ -88,6 +88,7 @@ export const BluespaceVendor = (props) => {
                   <NumberInput
                     animated
                     value={tank_filling_amount}
+                    step={1}
                     width="63px"
                     unit="% tank filling goal"
                     minValue={0}

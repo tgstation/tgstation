@@ -17,9 +17,9 @@ type Props = Required<{
   value: number | string;
   minValue: number;
   maxValue: number;
+  step: number;
 }> &
   Partial<{
-    step: number;
     stepPixelSize: number;
     disabled: BooleanLike;
 
@@ -37,11 +37,10 @@ type Props = Required<{
   }>;
 
 type State = {
-  value: number;
-  dragging: BooleanLike;
   editing: BooleanLike;
-  internalValue: number;
-  oldValue: number;
+  dragging: BooleanLike;
+  currentValue: number;
+  previousValue: number;
   origin: number;
 };
 
@@ -57,22 +56,24 @@ export class NumberInput extends Component<Props, State> {
 
   // default values for the number input state
   state: State = {
-    value: 0,
-    dragging: false,
     editing: false,
-    internalValue: 0,
-    oldValue: 0,
+    dragging: false,
+    currentValue: 0,
+    previousValue: 0,
     origin: 0,
-  };
-
-  // default values for the number input props
-  static defaultProps = {
-    step: 1,
-    stepPixelSize: 1,
   };
 
   constructor(props: Props) {
     super(props);
+  }
+
+  componentDidMount(): void {
+    let displayValue = parseFloat(this.props.value.toString());
+
+    this.setState({
+      currentValue: displayValue,
+      previousValue: displayValue,
+    });
   }
 
   handleDragStart: MouseEventHandler<HTMLDivElement> = (event) => {
@@ -81,27 +82,29 @@ export class NumberInput extends Component<Props, State> {
     if (disabled || editing) {
       return;
     }
-
     document.body.style['pointer-events'] = 'none';
+
+    const parsedValue = parseFloat(value.toString());
     this.setState({
       dragging: false,
       origin: event.screenY,
-      internalValue: parseFloat(value.toString()),
+      currentValue: parsedValue,
+      previousValue: parsedValue,
     });
+
     this.dragTimeout = setTimeout(() => {
       this.setState({
         dragging: true,
       });
     }, 250);
-
     this.dragInterval = setInterval(() => {
-      const { dragging, value, oldValue } = this.state;
+      const { dragging, currentValue, previousValue } = this.state;
       const { onDrag } = this.props;
-      if (dragging && value !== oldValue) {
-        onDrag?.(value);
+      if (dragging && currentValue !== previousValue) {
         this.setState({
-          oldValue: value,
+          previousValue: currentValue,
         });
+        onDrag?.(currentValue);
       }
     }, 400);
 
@@ -119,21 +122,22 @@ export class NumberInput extends Component<Props, State> {
       const state = { ...prevState };
 
       const offset = state.origin - event.screenY;
-      if (prevState.dragging && step) {
+      if (prevState.dragging) {
         const stepOffset = isFinite(minValue) ? minValue % step : 0;
         // Translate mouse movement to value
         // Give it some headroom (by increasing clamp range by 1 step)
-        state.internalValue = clamp(
-          state.internalValue + (offset * step) / (stepPixelSize || 1),
+        state.currentValue = clamp(
+          state.currentValue + (offset * step) / (stepPixelSize || 1),
           minValue - step,
           maxValue + step,
         );
         // Clamp the final value
-        state.value = clamp(
-          state.internalValue - (state.internalValue % step) + stepOffset,
+        state.currentValue = clamp(
+          state.currentValue - (state.currentValue % step) + stepOffset,
           minValue,
           maxValue,
         );
+        // Set the new origin
         state.origin = event.screenY;
       } else if (Math.abs(offset) > 4) {
         state.dragging = true;
@@ -143,32 +147,28 @@ export class NumberInput extends Component<Props, State> {
   };
 
   handleDragEnd = (event: MouseEvent) => {
-    const { value, dragging, internalValue } = this.state;
+    const { dragging, currentValue } = this.state;
     const { onDrag, onChange, disabled } = this.props;
     if (disabled) {
       return;
     }
-
     document.body.style['pointer-events'] = 'auto';
+
     clearInterval(this.dragInterval);
     clearTimeout(this.dragTimeout);
+
     this.setState({
       dragging: false,
       editing: !dragging,
+      previousValue: currentValue,
     });
-
     if (dragging) {
-      if (this.state.oldValue !== value) {
-        onChange?.(value);
-        onDrag?.(value);
-        this.setState({
-          oldValue: value,
-        });
-      }
+      onChange?.(currentValue);
+      onDrag?.(currentValue);
     } else if (this.inputRef) {
       const input = this.inputRef.current;
       if (input) {
-        input.value = `${internalValue}`;
+        input.value = `${currentValue}`;
         setTimeout(() => {
           input.focus();
           input.select();
@@ -181,9 +181,8 @@ export class NumberInput extends Component<Props, State> {
   };
 
   handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-    const { editing } = this.state;
+    const { editing, previousValue } = this.state;
     const { minValue, maxValue, onChange, onDrag, disabled } = this.props;
-
     if (disabled || !editing) {
       return;
     }
@@ -199,14 +198,16 @@ export class NumberInput extends Component<Props, State> {
       });
       return;
     }
-    if (this.state.oldValue !== targetValue) {
+
+    this.setState({
+      editing: false,
+      currentValue: targetValue,
+      previousValue: targetValue,
+    });
+    if (previousValue !== targetValue) {
       onChange?.(targetValue);
       onDrag?.(targetValue);
     }
-    this.setState({
-      editing: false,
-      oldValue: targetValue,
-    });
   };
 
   handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -214,6 +215,7 @@ export class NumberInput extends Component<Props, State> {
     if (disabled) {
       return;
     }
+    const { previousValue } = this.state;
 
     if (event.key === KEY.Enter) {
       const targetValue = clamp(
@@ -228,15 +230,15 @@ export class NumberInput extends Component<Props, State> {
         return;
       }
 
-      if (this.state.oldValue !== targetValue) {
+      this.setState({
+        editing: false,
+        currentValue: targetValue,
+        previousValue: targetValue,
+      });
+      if (previousValue !== targetValue) {
         onChange?.(targetValue);
         onDrag?.(targetValue);
       }
-      this.setState({
-        editing: false,
-        value: targetValue,
-        oldValue: targetValue,
-      });
     } else if (event.key === KEY.Escape) {
       this.setState({
         editing: false,
@@ -245,14 +247,14 @@ export class NumberInput extends Component<Props, State> {
   };
 
   render() {
-    const { dragging, editing, value: intermediateValue } = this.state;
+    const { dragging, editing, currentValue } = this.state;
 
     const {
       className,
       fluid,
       animated,
-      value,
       unit,
+      value,
       minValue,
       maxValue,
       height,
@@ -264,7 +266,7 @@ export class NumberInput extends Component<Props, State> {
 
     let displayValue = parseFloat(value.toString());
     if (dragging) {
-      displayValue = intermediateValue;
+      displayValue = currentValue;
     }
 
     const contentElement = (

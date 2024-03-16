@@ -67,6 +67,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             animated
             value={A}
             minValue={0}
+            step={1}
             onDrag={(value) =>
               act('edit', {
                 var: var_name,
@@ -81,6 +82,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={A[0]}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
@@ -99,6 +101,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={A[1]}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
@@ -112,6 +115,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={A[2]}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
@@ -131,6 +135,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
           <NumberInput
             animated
             value={B}
+            step={1}
             onDrag={(value) =>
               act('edit', {
                 var: var_name,
@@ -146,6 +151,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={B[0]}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
@@ -164,6 +170,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={B[1]}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
@@ -182,6 +189,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={B[2]}
+              step={1}
               onDrag={(value) =>
                 act('edit', {
                   var: var_name,
