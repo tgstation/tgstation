@@ -29,6 +29,7 @@
 /datum/station_trait/unique_ai
 	name = "Unique AI"
 	trait_type = STATION_TRAIT_NEUTRAL
+	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	weight = 5
 	show_in_report = TRUE
 	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
@@ -103,7 +104,7 @@
 /datum/station_trait/glitched_pdas
 	name = "PDA glitch"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 5
 	show_in_report = TRUE
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
@@ -282,7 +283,7 @@
 /datum/station_trait/scarves
 	name = "Scarves"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	show_in_report = TRUE
 	var/list/scarves
@@ -316,7 +317,7 @@
 	name = "Wallets!"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
-	weight = 10
+	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
 
@@ -362,26 +363,201 @@
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
 
+/datum/station_trait/linked_closets
+	name = "Closet Anomaly"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	weight = 1
+	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
+
+/datum/station_trait/linked_closets/on_round_start()
+	. = ..()
+	var/list/roundstart_non_secure_closets = GLOB.roundstart_station_closets.Copy()
+	for(var/obj/structure/closet/closet in roundstart_non_secure_closets)
+		if(closet.secure)
+			roundstart_non_secure_closets -= closet
+
+	/**
+	 * The number of links to perform.
+	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
+	 * on-station, non-secure closet being linked are as high as 1 in 7/8 and as low as 1 in 16-17,
+	 * nearing an a mean of 1 in 9 to 11/12 the more repetitions are done.
+	 *
+	 * There are more than 220 roundstart closets on meta, around 150 of which aren't secure,
+	 * so, about 13 to 17 closets will be affected by this most of the times.
+	 */
+	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(350, 450)*0.0001), 1)
+	for(var/repetition in 1 to number_of_links)
+		var/closets_left = length(roundstart_non_secure_closets)
+		if(closets_left < 2)
+			return
+		var/list/targets = list()
+		for(var/how_many in 1 to min(closets_left, rand(2,3)))
+			targets += pick_n_take(roundstart_non_secure_closets)
+		if(closets_left == 1) //there's only one closet left. Let's not leave it alone.
+			targets += roundstart_non_secure_closets[1]
+		GLOB.eigenstate_manager.create_new_link(targets)
+
 /datum/station_trait/triple_ai
 	name = "AI Triumvirate"
 	trait_type = STATION_TRAIT_NEUTRAL
+	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	show_in_report = TRUE
 	weight = 1
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
 
 /datum/station_trait/triple_ai/New()
 	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(on_occupations_setup))
 
 /datum/station_trait/triple_ai/revert()
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
 	return ..()
 
-/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
+/datum/station_trait/triple_ai/proc/on_occupations_setup(datum/controller/subsystem/job/source)
 	SIGNAL_HANDLER
 
+	//allows for latejoining AIs
+	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+		secondary_ai_spawn.latejoin_active = TRUE
+
+	var/datum/station_trait/job/human_ai/ai_trait = locate() in SSstation.station_traits
+	//human AI quirk will handle adding its own job positions, but for now don't allow more AI slots.
+	if(ai_trait)
+		return
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
-	if(!pure)
-		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-			secondary_ai_spawn.latejoin_active = TRUE
+		ai_datum.total_positions = 3
+
+
+#define PRO_SKUB "pro-skub"
+#define ANTI_SKUB "anti-skub"
+#define SKUB_IDFC "i don't frikkin' care"
+#define RANDOM_SKUB null //This means that if you forgot to opt in/against/out, there's a 50/50 chance to be pro or anti
+
+/// A trait that lets players choose whether they want pro-skub or anti-skub (or neither), and receive the appropriate equipment.
+/datum/station_trait/skub
+	name = "The Great Skub Contention"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = FALSE
+	weight = 2
+	sign_up_button = TRUE
+	/// List of people signed up to be either pro_skub or anti_skub
+	var/list/skubbers = list()
+
+/datum/station_trait/skub/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/skub/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
+	return ..()
+
+/// Let late-joiners jump on this gimmick too.
+/datum/station_trait/skub/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/// We don't destroy buttons on round start for those who are still in the lobby.
+/datum/station_trait/skub/on_round_start()
+	return
+
+/datum/station_trait/skub/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(PRO_SKUB)
+			lobby_button.base_icon_state = "signup_on"
+		if(ANTI_SKUB)
+			lobby_button.base_icon_state = "signup"
+		else
+			lobby_button.base_icon_state = "signup_neutral"
+
+/datum/station_trait/skub/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(PRO_SKUB)
+			skubbers[player.ckey] = ANTI_SKUB
+			lobby_button.balloon_alert(player, "anti-skub")
+		if(ANTI_SKUB)
+			skubbers[player.ckey] = SKUB_IDFC
+			lobby_button.balloon_alert(player, "don't care")
+		if(SKUB_IDFC)
+			skubbers[player.ckey] = RANDOM_SKUB
+			lobby_button.balloon_alert(player, "on the best side")
+		if(RANDOM_SKUB)
+			skubbers[player.ckey] = PRO_SKUB
+			lobby_button.balloon_alert(player, "pro-skub")
+
+/datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	SIGNAL_HANDLER
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(PRO_SKUB)
+			overlays += "pro_skub"
+		if(ANTI_SKUB)
+			overlays += "anti_skub"
+		if(SKUB_IDFC)
+			overlays += "neutral_skub"
+		if(RANDOM_SKUB)
+			overlays += "random_skub"
+
+/datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	var/skub_stance = skubbers[player_client.ckey]
+	if(skub_stance == SKUB_IDFC)
+		return
+
+	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
+		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
+		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		if(ishuman(spawned))
+			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
+			if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
+				shirt.forceMove(boxie)
+		return
+
+	var/obj/item/storage/box/stickers/anti_skub/boxie = new(spawned.loc)
+	spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	if(!ishuman(spawned))
+		return
+	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)
+	if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
+		shirt.forceMove(boxie)
+
+/// A box containing a skub, for easier carry because skub is a bulky item.
+/obj/item/storage/box/skub
+	name = "skub box"
+	desc = "A box to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "hugbox"
+	illustration = "skub"
+
+/obj/item/storage/box/skub/Initialize(mapload)
+	. = ..()
+	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
+
+/obj/item/storage/box/skub/PopulateContents()
+	new /obj/item/skub(src)
+	new /obj/item/sticker/skub(src)
+	new /obj/item/sticker/skub(src)
+
+/obj/item/storage/box/stickers/anti_skub
+	name = "anti-skub stickers box"
+	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
+
+/obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
+	. = ..()
+	atom_storage.exception_hold = typecacheof(list(/obj/item/clothing/suit/costume/wellworn_shirt/skub))
+
+/obj/item/storage/box/stickers/anti_skub/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/sticker/anti_skub(src)
+
+#undef PRO_SKUB
+#undef ANTI_SKUB
+#undef SKUB_IDFC
+#undef RANDOM_SKUB
+

@@ -19,7 +19,6 @@
 	mutantlungs = null
 	mutantbrain = /obj/item/organ/internal/brain/abductor
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	ass_image = 'icons/ass/assgrey.png'
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/abductor,
@@ -39,8 +38,6 @@
 	. = ..()
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	abductor_hud.show_to(C)
-
-	C.set_safe_hunger_level()
 
 /datum/species/abductor/on_species_loss(mob/living/carbon/C)
 	. = ..()

@@ -664,7 +664,7 @@
 /area/deathmatch)
 "ot" = (
 /obj/structure/mop_bucket/janitorialcart{
-	dir = 4	
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/deathmatch)

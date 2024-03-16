@@ -16,6 +16,9 @@
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = OVERLAY_LIGHT
+	light_color = LIGHT_COLOR_FLARE
+	light_range = 2
+	light_power = 2
 	light_on = FALSE
 	var/status = FALSE
 	var/lit = FALSE //on or off
@@ -82,12 +85,13 @@
 		return // too close
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
+		log_combat(user, target, "attempted to flamethrower", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\" ([src]), igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = INFINITY)]\"" + lit ? " while lit" : "" + " but failed due to pacifism.")
 		return
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = get_line(user, target_turf)
-			log_combat(user, target, "flamethrowered", src)
+			log_combat(user, target, "flamethrowered", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\", igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = INFINITY)]\"" + lit ? " while lit." : ".")
 			flame_turf(turflist)
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)

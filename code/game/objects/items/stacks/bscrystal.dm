@@ -74,7 +74,7 @@
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
 	novariants = TRUE
 	grind_results = list(/datum/reagent/bluespace = 20)
-	point_value = 30
+	point_value = 90
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined

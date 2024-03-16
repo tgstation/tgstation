@@ -173,6 +173,7 @@
 		'sound/ambience/antag/ling_alert.ogg',
 		'sound/ambience/antag/malf.ogg',
 		'sound/ambience/antag/ops.ogg',
+		'sound/ambience/antag/spy.ogg',
 		'sound/ambience/antag/tatoralert.ogg',
 	)
 
