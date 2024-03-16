@@ -22,9 +22,19 @@
 	associated_typepath = /datum/quirk/item_quirk/junkie
 	customization_options = list(/datum/preference/choiced/junkie)
 
-/datum/quirk/item_quirk/junkie/proc/give_drug()
-	reagent_instance = new reagent_type()
+/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	// Avoid setting reagent_type for the Smoker and Alcoholic subtypes.
+	if(type == /datum/quirk/item_quirk/junkie)
+		var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
+		if(addiction && (addiction != "Random"))
+			reagent_type = GLOB.possible_junkie_addictions[addiction]
+
+	if(!reagent_type)
+		reagent_type = GLOB.possible_junkie_addictions[pick(GLOB.possible_junkie_addictions)]
+
+	reagent_instance = new reagent_type()
 
 	for(var/addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
@@ -64,13 +74,6 @@
 		)
 	)
 
-/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
-	reagent_type = GLOB.junkie_drug[client_source?.prefs?.read_preference(/datum/preference/choiced/junkie)]
-	if(isnull(reagent_type))
-		reagent_type = GLOB.junkie_drug[pick(GLOB.junkie_drug)]
-
-	give_drug()
-
 /datum/quirk/item_quirk/junkie/remove()
 	if(quirk_holder && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
@@ -101,7 +104,7 @@
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
 	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
-	medical_record_text = "Patient is addicted to nicotine."
+	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
 	mob_trait = TRAIT_SMOKER
@@ -118,15 +121,18 @@
 	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
 
+/datum/quirk/item_quirk/junkie/smoker/New()
+	drug_container_type = GLOB.possible_smoker_addictions[pick(GLOB.possible_smoker_addictions)]
+	return ..()
+
 /datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
-	drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
-	if(isnull(drug_container_type))
-		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
+	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/smoker)
+	if(addiction && (addiction != "Random"))
+		drug_container_type = GLOB.possible_smoker_addictions[addiction]
+	return ..()
 
-	give_drug()
-
-
-/datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)
+/datum/quirk/item_quirk/junkie/smoker/post_add()
+	. = ..()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/mob/living/carbon/carbon_holder = quirk_holder
@@ -174,17 +180,18 @@
 	/// Cached typepath of the owner's favorite alcohol reagent
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
-/datum/quirk/item_quirk/junkie/alcoholic/New()
-	drug_container_type = pick(
-		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
-		/obj/item/reagent_containers/cup/glass/bottle/vodka,
-		/obj/item/reagent_containers/cup/glass/bottle/ale,
-		/obj/item/reagent_containers/cup/glass/bottle/beer,
-		/obj/item/reagent_containers/cup/glass/bottle/hcider,
-		/obj/item/reagent_containers/cup/glass/bottle/wine,
-		/obj/item/reagent_containers/cup/glass/bottle/sake,
-	)
+/datum/quirk_constant_data/alcoholic
+	associated_typepath = /datum/quirk/item_quirk/junkie/alcoholic
+	customization_options = list(/datum/preference/choiced/alcoholic)
 
+/datum/quirk/item_quirk/junkie/alcoholic/New()
+	drug_container_type = GLOB.possible_alcoholic_addictions[pick(GLOB.possible_alcoholic_addictions)]
+	return ..()
+
+/datum/quirk/item_quirk/junkie/alcoholic/add_unique(client/client_source)
+	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/alcoholic)
+	if(addiction && (addiction != "Random"))
+		drug_container_type = GLOB.possible_alcoholic_addictions[addiction]
 	return ..()
 
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()

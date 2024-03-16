@@ -12,20 +12,9 @@
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
 	)
 
-/datum/quirk/hemiplegic/New()
-	trauma_type = null
-
-/datum/quirk_constant_data/hemiplegic
-	associated_typepath = /datum/quirk/hemiplegic
-	customization_options = list(/datum/preference/choiced/hemiplegic)
-
-/datum/quirk/hemiplegic/add_unique(client/client_source)
-	trauma_type = GLOB.hemiplegic_side[client_source?.prefs?.read_preference(/datum/preference/choiced/hemiplegic)]
-	if(isnull(trauma_type))
-		trauma_type = GLOB.hemiplegic_side[pick(GLOB.hemiplegic_side)]
-
 /datum/quirk/hemiplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/trauma_type = pick(/datum/brain_trauma/severe/paralysis/hemiplegic/left, /datum/brain_trauma/severe/paralysis/hemiplegic/right)
 	human_holder.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/hemiplegic/remove()

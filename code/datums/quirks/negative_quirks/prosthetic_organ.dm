@@ -12,11 +12,11 @@
 	/// The original organ from before the prosthetic was applied
 	var/obj/item/organ/old_organ
 
-/datum/quirk/prosthetic_organ/add_unique(client/client_source)
-	drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
-	if(isnull(drug_container_type))
-		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
+/datum/quirk_constant_data/prosthetic_organ
+	associated_typepath = /datum/quirk/prosthetic_organ
+	customization_options = list(/datum/preference/choiced/prosthetic_organ)
 
+/datum/quirk/prosthetic_organ/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/static/list/organ_slots = list(
 		ORGAN_SLOT_HEART,
@@ -24,6 +24,10 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 	)
+	var/preferred_organ = GLOB.organ_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic_organ)]
+	if(isnull(preferred_organ))  //Client is gone or they chose a random prosthetic
+		preferred_organ = GLOB.organ_choice[pick(GLOB.organ_choice)]
+
 	var/list/possible_organ_slots = organ_slots.Copy()
 	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
 		possible_organ_slots -= ORGAN_SLOT_HEART
@@ -35,7 +39,10 @@
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
 	if(!length(organ_slots)) //what the hell
 		return
+
 	var/organ_slot = pick(possible_organ_slots)
+	if(preferred_organ in possible_organ_slots)
+		organ_slot = preferred_organ
 	var/obj/item/organ/prosthetic
 	switch(organ_slot)
 		if(ORGAN_SLOT_HEART)

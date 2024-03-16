@@ -1,6 +1,6 @@
 /datum/preference/choiced/prosthetic
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
-	savefile_key = "prosthetic_limb"
+	savefile_key = "prosthetic"
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/prosthetic/init_possible_values()

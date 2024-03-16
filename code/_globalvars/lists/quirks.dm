@@ -18,50 +18,51 @@ GLOBAL_LIST_INIT(limb_choice, list(
 	"Right leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))
 
-///Junkie quirk
-GLOBAL_LIST_INIT(junkie_drug, list(
-	"bLaSToFF" = /datum/reagent/drug/blastoff,
-	"Krokodil" = /datum/reagent/drug/krokodil,
-	"Morphine" = /datum/reagent/medicine/morphine,
-	"Happiness" = /datum/reagent/drug/happiness,
-	"Methamphetamine" = /datum/reagent/drug/methamphetamine
-))
-
-///Options for the SMOKER quirk to choose from
-GLOBAL_LIST_INIT(favorite_brand, list(
-	"Space Cigarettes" = /obj/item/storage/fancy/cigarettes,
-	"Uplift Smooth" = /obj/item/storage/fancy/cigarettes/cigpack_uplift,
-	"Robust Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robust,
-	"Robust Gold Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-	"Carp Classic" = /obj/item/storage/fancy/cigarettes/cigpack_carp,
-	"Midori Tabako" = /obj/item/storage/fancy/cigarettes/cigpack_midori,
-	"Syndicate Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
-	"Premium Cigars" = /obj/item/storage/fancy/cigarettes/cigars,
-	"Cohiba Cigars" = /obj/item/storage/fancy/cigarettes/cigars/cohiba,
-	"Havanian Cigars" = /obj/item/storage/fancy/cigarettes/cigars/havana,
-))
-
-///The third and final junkie subtype: ALCOHOL
-GLOBAL_LIST_INIT(favorite_alcohol, list(
-	"Whiskey" = /obj/item/reagent_containers/cup/glass/bottle/whiskey,
-	"Vodka" = /obj/item/reagent_containers/cup/glass/bottle/vodka,
-	"Ale" = /obj/item/reagent_containers/cup/glass/bottle/ale,
-	"Beer" = /obj/item/reagent_containers/cup/glass/bottle/beer,
-	"Hard Cider" = /obj/item/reagent_containers/cup/glass/bottle/hcider,
-	"Wine" = /obj/item/reagent_containers/cup/glass/bottle/wine,
-	"Sake" = /obj/item/reagent_containers/cup/glass/bottle/sake,
-
-))
-///Options for hemiplegic quirk
-GLOBAL_LIST_INIT(hemiplegic_side, list(
-	"Left side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
-	"Right side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right
-))
-
 ///Transhumanist quirk
 GLOBAL_LIST_INIT(limb_choice_transhuman, list(
 	"Left Arm" = /obj/item/bodypart/arm/left/robot,
 	"Right Arm" = /obj/item/bodypart/arm/right/robot,
 	"Left Leg" = /obj/item/bodypart/leg/left/robot,
 	"Right Leg" = /obj/item/bodypart/leg/right/robot,
+))
+
+///Options for the Junkie quirk to choose from
+GLOBAL_LIST_INIT(possible_junkie_addictions, setup_junkie_addictions(list(
+		/datum/reagent/drug/blastoff,
+		/datum/reagent/drug/krokodil,
+		/datum/reagent/medicine/morphine,
+		/datum/reagent/drug/happiness,
+		/datum/reagent/drug/methamphetamine,
+	)))
+
+///Options for the Smoker quirk to choose from
+GLOBAL_LIST_INIT(possible_smoker_addictions, setup_junkie_addictions(list(
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori,
+		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
+		/obj/item/storage/fancy/cigarettes/cigpack_robust,
+		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
+		/obj/item/storage/fancy/cigarettes/cigpack_carp,
+		/obj/item/storage/fancy/cigarettes/cigars,
+		/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+		/obj/item/storage/fancy/cigarettes/cigars/havana,
+	)))
+
+///Options for the Alcoholic quirk to choose from
+GLOBAL_LIST_INIT(possible_alcoholic_addictions, setup_junkie_addictions(list(
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka,
+		/obj/item/reagent_containers/cup/glass/bottle/ale,
+		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/reagent_containers/cup/glass/bottle/hcider,
+		/obj/item/reagent_containers/cup/glass/bottle/wine,
+		/obj/item/reagent_containers/cup/glass/bottle/sake,
+	)))
+
+///Options for Prosthetic Organ
+GLOBAL_LIST_INIT(organ_choice, list(
+	"Heart" = ORGAN_SLOT_HEART,
+	"Lungs" = ORGAN_SLOT_LUNGS,
+	"Liver" = ORGAN_SLOT_LIVER,
+	"Stomach" = ORGAN_SLOT_STOMACH,
 ))
