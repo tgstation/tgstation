@@ -281,7 +281,7 @@
 	/// Are we being thrown?
 	var/thrown = FALSE
 	/// Are we anchored
-	var/anchored = FLASH_LIGHT_POWER
+	var/anchored = FALSE
 
 	/// Are we a ghost? (they have effectively unique pathfinding)
 	var/is_observer = FALSE

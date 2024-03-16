@@ -247,5 +247,13 @@ FLOOR SAFES
 	. = ..()
 	AddElement(/datum/element/undertile)
 
+///Special safe for the station's vault. Not explicitly required, but the piggy bank inside it is.
+/obj/structure/safe/vault
+
+/obj/structure/safe/vault/Initialize(mapload)
+	. = ..()
+	var/obj/item/piggy_bank/vault/piggy = new(src)
+	space += piggy.w_class
+
 #undef SOUND_CHANCE
 #undef BROKEN_THRESHOLD

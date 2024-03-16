@@ -40,6 +40,15 @@
 	chosen_forge.start_to_spawn(reward_cache)
 	return TRUE
 
+/obj/machinery/quantum_server/proc/generate_secondary_loot(obj/curiosity, obj/machinery/byteforge/chosen_forge)
+	spark_at_location(curiosity) // abracadabra!
+	qdel(curiosity) // and it's gone!
+
+	var/obj/item/storage/lockbox/bitrunning/decrypted/reward_curiosity = new(src, generated_domain)
+
+	chosen_forge.start_to_spawn(reward_curiosity)
+	return TRUE
+
 /// Returns the markdown text containing domain completion information
 /obj/machinery/quantum_server/proc/get_completion_certificate()
 	var/base_points = generated_domain.reward_points
