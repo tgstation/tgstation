@@ -4,11 +4,11 @@
 	/// Time between echolocations.
 	var/cooldown_time = 1.8 SECONDS
 	/// Time for the image to start fading out.
-	var/image_expiry_time = 1.5 SECONDS
+	var/image_expiry_time = 1.4 SECONDS
 	/// Time for the image to fade in.
-	var/fade_in_time = 0.5 SECONDS
+	var/fade_in_time = 0.4 SECONDS
 	/// Time for the image to fade out and delete itself.
-	var/fade_out_time = 0.5 SECONDS
+	var/fade_out_time = 0.4 SECONDS
 	/// Are images static? If yes, spawns them on the turf and makes them not change location. Otherwise they change location and pixel shift with the original.
 	var/images_are_static = TRUE
 	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
