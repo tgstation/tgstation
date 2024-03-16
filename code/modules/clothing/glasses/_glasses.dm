@@ -397,6 +397,29 @@
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+///Syndicate item that upgrades the flash protection of your eyes.
+/obj/item/syndicate_contacts
+	name = "suspicious contact lens case"
+	desc = "A sinister red case that contains two shiny black contact lenses."
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/device.dmi'
+	icon_state = "contacts"
+
+/obj/item/syndicate_contacts/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
+		to_chat(user, span_warning("You have no eyes to apply the contacts to!"))
+		return
+	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+
+	to_chat(user, span_notice("You begin applying the contact lenses to your eyes..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	to_chat(user, span_notice("The contacts seamlessly merge with your iris."))
+	eyes.flash_protect += FLASH_PROTECTION_WELDER
+	to_chat(user, span_warning("\The [src] disintegrates into nothing."))
+	qdel(src)
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."

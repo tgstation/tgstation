@@ -256,3 +256,10 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/powersink
 	cost = 11
+
+/datum/uplink_item/device_tools/syndicate_contacts
+	name = "Polarized Contact Lenses"
+	desc = "High tech contact lenses that bind directly with the surface of your eyes to give them immunity to flashes and \
+			bright lights. Effective, affordable, and nigh undetectable."
+	item = /obj/item/syndicate_contacts
+	cost = 2 // monke: lower cost to 2TC
