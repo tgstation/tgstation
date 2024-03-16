@@ -132,8 +132,7 @@
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
-			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
-			ADD_TRAIT(human, TRAIT_OFF_BALANCE_TACKLER, OBESITY)
+			human.add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
 	// nutrition decrease and satiety
 	if (human.nutrition > 0 && human.stat != DEAD)
