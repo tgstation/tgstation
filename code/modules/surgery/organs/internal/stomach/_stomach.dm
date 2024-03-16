@@ -127,8 +127,7 @@
 	if(HAS_TRAIT_FROM(human, TRAIT_FAT, OBESITY))//I share your pain, past coder.
 		if(human.overeatduration < (200 SECONDS))
 			to_chat(human, span_notice("You feel fit again!"))
-			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
-			REMOVE_TRAIT(human, TRAIT_OFF_BALANCE_TACKLER, OBESITY)
+			human.remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
 	else
 		if(human.overeatduration >= (200 SECONDS))
