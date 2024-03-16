@@ -85,7 +85,6 @@
 	switch(action)
 		if("lock")
 			if(!locked || allowed(ui.user))
-				req_access = wearer.get_access()
 				locked = !locked
 				balloon_alert(ui.user, "[locked ? "locked" : "unlocked"]!")
 			else
