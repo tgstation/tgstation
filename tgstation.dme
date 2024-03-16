@@ -6565,6 +6565,7 @@
 #include "monkestation\code\modules\power\singularity\particle_accelerator\particle_accelerator.dm"
 #include "monkestation\code\modules\power\singularity\particle_accelerator\particle_controller.dm"
 #include "monkestation\code\modules\power\singularity\particle_accelerator\particle_emitter.dm"
+#include "monkestation\code\modules\projectiles\guns\ballistic\revolver.dm"
 #include "monkestation\code\modules\projectiles\guns\ballistic\ryanecorp_whispering_jester.dm"
 #include "monkestation\code\modules\projectiles\guns\special\meat_hook.dm"
 #include "monkestation\code\modules\projectiles\projectile\bullets\c45_caseless.dm"
