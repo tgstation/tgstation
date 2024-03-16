@@ -220,7 +220,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/service/theater)
 "lG" = (

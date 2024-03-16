@@ -619,7 +619,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/circuit,
 /area/station/service/theater)
 "EH" = (

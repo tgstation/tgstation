@@ -209,7 +209,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/eighties,
 /area/station/service/theater)
 "kp" = (

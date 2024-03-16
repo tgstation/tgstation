@@ -107,7 +107,6 @@
 "eZ" = (
 /obj/structure/table/bronze,
 /obj/item/gun/ballistic/revolver/russian,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
