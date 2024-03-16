@@ -1,0 +1,22 @@
+{
+	"file": "code/modules/unit_tests/_unit_tests.dm",
+	"scannable_directory": "code/modules/unit_tests/",
+	"subdirectories": false,
+	"excluded_files": [
+		"find_reference_sanity.dm",
+		"organs.dm",
+		"modify_fantasy_variable.dm",
+		"hydroponics_self_mutations.dm",
+		"antag_conversion.dm",
+		"hydroponics_harvest.dm",
+		"atmospherics_sanity.dm",
+		"ensure_subtree_operational_datum.dm",
+		"metabolizing.dm",
+		"confusion.dm",
+		"font_awesome_icons.dm",
+		"outfit_sanity.dm",
+		"monkey_business.dm",
+		"rev_conversion.dm"
+	],
+	"forbidden_includes": []
+}

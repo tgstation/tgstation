@@ -1,7 +1,6 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
-// interface\skin.dmf needs to be at the very end of the file.
 // BEGIN_INTERNALS
 // END_INTERNALS
 
@@ -5639,6 +5638,7 @@
 #include "code\ze_genesis_call\genesis_call.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
+#include "interface\skin.dmf"
 #include "interface\stylesheet.dm"
 #include "interface\fonts\fonts_datum.dm"
 #include "interface\fonts\grand_9k.dm"
@@ -5646,7 +5646,6 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
-#include "interface\skin.dmf"
 #include "monkestation\code\__DEFINES\projectile.dm"
 #include "monkestation\code\__HELPERS\_lists.dm"
 #include "monkestation\code\__HELPERS\anime.dm"
