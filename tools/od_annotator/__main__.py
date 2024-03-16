@@ -1,9 +1,6 @@
 import sys
 import re
 
-# Usage: tools/bootstrap/python -m dm_annotator [filename]
-# If filename is not provided, stdin is checked instead
-
 def green(text):
     return "\033[32m" + str(text) + "\033[0m"
 
