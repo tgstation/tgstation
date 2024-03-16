@@ -1,0 +1,4 @@
+author: "DimWhat"
+delete-after: True
+changes:
+  - rscadd: "The detective's revolver is now a small sized item"
