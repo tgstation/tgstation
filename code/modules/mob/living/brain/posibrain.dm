@@ -216,3 +216,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return
+
+/obj/item/mmi/posibrain/display
+	name = "display positronic brain"
+	desc = "A small positronic brain that doesn't allow the downloading of personalities."
+
+/obj/item/mmi/posibrain/display/is_occupied()
+	return TRUE

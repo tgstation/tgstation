@@ -241,3 +241,6 @@ define_sanity_output.txt
 # ezdb
 /db/
 /config/ezdb.txt
+
+# Running OpenDream locally
+tgstation.json

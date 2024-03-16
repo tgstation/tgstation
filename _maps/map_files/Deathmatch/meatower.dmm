@@ -198,7 +198,7 @@
 /obj/machinery/conveyor/auto{
 	dir = 4
 	},
-/obj/item/pizzabox/margherita/robo,
+/obj/item/pizzabox/margherita,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},

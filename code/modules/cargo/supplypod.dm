@@ -100,6 +100,14 @@
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/closet/supplypod/back_to_station
+	name = "blood-red supply pod"
+	desc = "An intimidating supply pod, covered in the blood-red markings"
+	bluespace = TRUE
+	explosionSize = list(0,0,0,0)
+	style = STYLE_SYNDICATE
+	specialised = TRUE
+
 /obj/structure/closet/supplypod/deadmatch_missile
 	name = "cruise missile"
 	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
@@ -110,7 +118,7 @@
 	effectShrapnel = TRUE
 	rubble_type = RUBBLE_THIN
 	specialised = TRUE
-	delays = list(POD_TRANSIT = 3.5 SECONDS, POD_FALLING = 0.4 SECONDS)
+	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
 	effectMissile = TRUE
 	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
 
@@ -236,6 +244,24 @@
 
 /obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
+
+///Called by the drop pods that return captured crewmembers from the ninja den.
+/obj/structure/closet/supplypod/proc/return_from_capture(mob/living/victim, turf/destination = get_safe_random_station_turf())
+	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
+		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
+			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
+		flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+		explosionSize = list(0,1,1,1)
+		destination = get_random_station_turf()
+
+	do_sparks(8, FALSE, victim)
+	victim.visible_message(span_notice("[victim] vanishes..."))
+
+	victim.forceMove(src)
+
+	new /obj/effect/pod_landingzone(destination, src)
+
+	SEND_SIGNAL(victim, COMSIG_LIVING_RETURN_FROM_CAPTURE, destination)
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open_pod() )

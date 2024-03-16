@@ -36,6 +36,9 @@
 ///How long pirates will wait for a response before attacking
 #define RESPONSE_MAX_TIME 2 MINUTES
 
+/// How long till a spessman should come back after being captured and sent to the holding facility (which some antags use)
+#define COME_BACK_FROM_CAPTURE_TIME 6 MINUTES
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -145,6 +148,9 @@
 
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
+
+/// JSON file containing spy objectives
+#define SPY_OBJECTIVE_FILE "antagonist_flavor/spy_objective.json"
 
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
@@ -265,6 +271,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define OBJECTIVE_ITEM_TYPE_NORMAL "normal"
 /// Only appears in traitor objectives
 #define OBJECTIVE_ITEM_TYPE_TRAITOR "traitor"
+/// Only appears for spy bounties
+#define OBJECTIVE_ITEM_TYPE_SPY "spy"
 
 // Progression traitor defines
 
@@ -379,3 +387,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BATON_MODES 4
 
 #define FREEDOM_IMPLANT_CHARGES 4
+
+// Spy bounty difficulties
+/// Can easily be accomplished by any job without any specialized tools, people won't really miss these things
+#define SPY_DIFFICULTY_EASY "Easy"
+/// Requires some specialized tools, knowledge, or access to accomplish, may require getting into conflict with the crew
+#define SPY_DIFFICULTY_MEDIUM "Medium"
+/// Very difficult to accomplish, almost guaranteed to require crew conflict
+#define SPY_DIFFICULTY_HARD "Hard"

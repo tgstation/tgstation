@@ -1506,6 +1506,19 @@
 	acid = 90
 	wound = 10
 
+/datum/mod_theme/responsory/traitor
+	name = "dark paladin"
+	desc = "A high-speed suit <s>stolen</s> by the Gorlex Maradeurs, purposed for less than honest intents."
+	extended_desc = "A streamlined suit of <s>Nanotrasen</s> Syndicate design, these sleek black suits are only worn by \
+		elite <s>emergency response personnel</s> traitors to help <s>save</s> ruin the day. While the slim and nimble design of the suit \
+		cuts the ceramics and ablatives in it down, dropping the protection, \
+		it keeps the wearer safe from the harsh void of space while sacrificing no speed whatsoever. \
+		While wearing it you feel an extreme deference to <s>darkness</s> light."
+	armor_type = /datum/armor/mod_theme_elite
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster/no_speedbost)
+
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
 	desc = "A high-tech, only technically legal, armored suit created by a collaboration effort between Nanotrasen and Apadyne Technologies."

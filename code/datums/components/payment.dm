@@ -19,11 +19,6 @@
 	var/datum/bank_account/target_acc
 	///Does this payment component respect same-department-discount?
 	var/department_discount = FALSE
-	///A static typecache of all the money-based items that can be actively used as currency.
-	var/static/list/allowed_money = typecacheof(list(
-		/obj/item/stack/spacecash,
-		/obj/item/holochip,
-		/obj/item/coin))
 
 /datum/component/payment/Initialize(_cost, _target, _style)
 	target_acc = _target
@@ -47,7 +42,7 @@
 	if(!ismob(target))
 		return COMPONENT_OBJ_CANCEL_CHARGE
 	var/mob/living/user = target
-	if(issilicon(user) || isdrone(user) || isAdminGhostAI(user)) //They have evolved beyond the need for mere credits
+	if(HAS_SILICON_ACCESS(user) || isdrone(user)) //They have evolved beyond the need for mere credits
 		return
 	var/obj/item/card/id/card
 	if(istype(user))
@@ -80,13 +75,13 @@
 	//Here is all the possible non-ID payment methods.
 	var/list/counted_money = list()
 	var/physical_cash_total = 0
-	for(var/obj/item/credit in typecache_filter_list(user.get_all_contents(), allowed_money)) //Coins, cash, and credits.
+	for(var/obj/item/credit in typecache_filter_list(user.get_all_contents(), GLOB.allowed_money)) //Coins, cash, and credits.
 		if(physical_cash_total > total_cost)
 			break
 		physical_cash_total += credit.get_item_credit_value()
 		counted_money += credit
 
-	if(is_type_in_typecache(user.pulling, allowed_money) && (physical_cash_total < total_cost)) //Coins(Pulled).
+	if(is_type_in_typecache(user.pulling, GLOB.allowed_money) && (physical_cash_total < total_cost)) //Coins(Pulled).
 		var/obj/item/counted_credit = user.pulling
 		physical_cash_total += counted_credit.get_item_credit_value()
 		counted_money += counted_credit
@@ -134,9 +129,11 @@
  * Attempts to charge a mob, user, an integer number of credits, total_cost, directly from an ID card/bank account.
  */
 /datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
-	var/atom/atom_parent = parent
+	var/atom/movable/atom_parent = parent
 
 	if(!idcard)
+		if(transaction_style == PAYMENT_VENDING)
+			to_chat(user, span_warning("No card found."))
 		return FALSE
 	if(!idcard?.registered_account)
 		switch(transaction_style)
@@ -146,6 +143,13 @@
 				to_chat(user, span_warning("ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT."))
 			if(PAYMENT_CLINICAL)
 				to_chat(user, span_warning("ID Card lacks a bank account. Advancing."))
+			if(PAYMENT_VENDING)
+				to_chat(user, span_warning("No account found."))
+
+		return FALSE
+
+	if(!idcard.registered_account.account_job)
+		atom_parent.say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
 		return FALSE
 
 	if(!(idcard.registered_account.has_money(total_cost)))
@@ -156,6 +160,8 @@
 				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
 			if(PAYMENT_CLINICAL)
 				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
+			if(PAYMENT_VENDING)
+				to_chat(user, span_warning("You do not possess the funds to purchase that."))
 		atom_parent.balloon_alert(user, "needs [total_cost] credit\s!")
 		return FALSE
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
