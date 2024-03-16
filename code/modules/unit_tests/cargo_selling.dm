@@ -5,7 +5,7 @@
 
 /obj/item/cargo_unit_test_container/Initialize(mapload)
 	. = ..()
-	new /obj/item/cargo_unit_test(src)
+	new /obj/item/cargo_unit_test_content(src)
 
 /obj/item/cargo_unit_test_content
 
