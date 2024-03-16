@@ -385,3 +385,8 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define SHOVE_BLOCKED (1<<5)
 ///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
 #define SHOVE_DIRECTIONAL_BLOCKED (1<<6)
+
+///Deathmatch lobby current status
+#define DEATHMATCH_NOT_PLAYING 0
+#define DEATHMATCH_PRE_PLAYING 1
+#define DEATHMATCH_PLAYING 2
