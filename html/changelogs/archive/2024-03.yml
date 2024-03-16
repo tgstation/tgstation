@@ -474,3 +474,36 @@
       having to worry about friendly fire with this, for 750 mining points at your
       mining vendor.'
   - bugfix: Minebot passthrough upgrade now properly makes PKAs pass through minebots.
+2024-03-16:
+  00-Steven:
+  - sound: Placing paper in a paperbin is no longer silent.
+  ArcaneMusic:
+  - qol: Vending machines now have contextual tooltips for interactions with tools/objects/restocking/returns.
+  - qol: Vending machines can now be examined to see what type of restock module they
+      need to be refilled.
+  Bilbo367:
+  - bugfix: now spiders get extra damage by fly swatter
+  FlufflesTheDog:
+  - bugfix: Cleanbots once again require an emag to spray acid on people. They can
+      still acid trash objects normally.
+  JohnFulpWillard:
+  - bugfix: Time on servers hosted outside of the UK should now properly have their
+      timezone offset.
+  Kapu1178:
+  - bugfix: Modsuit Pathfinder module is significantly better at finding it's destination.
+  Webcomicartist:
+  - bugfix: Fixed RLD,RTD and Rebar crossbow not being storable on the engineering
+      winter coat slot.
+  intercepti0n:
+  - bugfix: Fixed cap overlay being added even when pipe is not hidden.
+  - bugfix: Fixed cap overlay being visible on turfs that are masked with darkness
+      plane, but still visible via mesons, cameras etc.
+  kawoppi:
+  - qol: added tooltip to newscaster to tell people that they need to insert paper
+      if they want to print a newspaper
+  projectkepler-ru:
+  - rscadd: The Bartender's double barrel shotgun can be purchased for 1,800 credits
+      on goodie tab
+  xXPawnStarrXx:
+  - image: added gags sprites for; Sailor dress, Evening gown, Cardigan skirts and
+      striped dresses.
