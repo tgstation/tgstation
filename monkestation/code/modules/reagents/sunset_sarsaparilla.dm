@@ -9,7 +9,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/sunset_sarsaparilla
-	required required_drink_type = /datum/reagent/consumable/sunset_sarsaparilla
+	required_drink_type = /datum/reagent/consumable/sunset_sarsaparilla
 	name = "glass of Sunset Sarsparilla"
 	desc = "Locally sourced from your nearest nuclear wasteland."
 	icon = 'monkestation/icons/obj/drinks/soda.dmi'
