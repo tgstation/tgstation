@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Cassette pouches are now proper storage, rather than their own snowflake thing. They can still only hold cassettes, tho."
+  - qol: "The roundstart cassettes (both blank and approved) now all spawn inside the cassette pouch in the radio booth."
