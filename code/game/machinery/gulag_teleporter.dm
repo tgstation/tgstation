@@ -138,7 +138,7 @@ The console is located at computer/gulag_teleporter.dm
 /// Strips the occupant of any items that are not allowed to be teleported to the gulag.
 /// Will either place those items in the linked_reclaimer or on the ground if the reclaimer is deleted.
 /obj/machinery/gulag_teleporter/proc/strip_prisoner(mob/living/carbon/human/victim)
-	if(linked_reclaimer)
+	if(!QDELETED(linked_reclaimer))
 		linked_reclaimer.stored_items[victim] = list()
 
 	for(var/obj/item/thing in victim)
