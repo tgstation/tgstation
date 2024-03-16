@@ -194,7 +194,7 @@
 		/mob/living/basic/cow/moonicorn,
 		/mob/living/basic/mining/wolf,
 		/mob/living/basic/mining/goldgrub,
-		/mob/living/basic/mining/goliath/saddled,
+		/mob/living/basic/mining/goliath/deathmatch,
 		))
 	var/mob/living/basic/mount = new mount_path (player.loc)
 	mount.tamed(player, null)

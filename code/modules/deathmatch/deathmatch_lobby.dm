@@ -111,7 +111,7 @@
 	announce(span_reallybig("GO!"))
 	if(length(modifiers))
 		var/list/modifier_names = list()
-		for(var/datum/deathmatch_modifier/modifier in modifiers)
+		for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
 			modifier_names += uppertext(initial(modifier.name))
 		announce(span_boldnicegreen("THIS MATCH MODIFIERS: [english_list(modifier_names, and_text = " ,")]."))
 	return TRUE
