@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "Vending machines now have contextual tooltips for interactions with tools/objects/restocking/returns."
-  - qol: "Vending machines can now be examined to see what type of restock module they need to be refilled."
