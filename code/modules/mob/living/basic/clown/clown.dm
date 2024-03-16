@@ -403,7 +403,7 @@
 	GRANT_ACTION(/datum/action/cooldown/regurgitate)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
@@ -461,7 +461,7 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/basic/clown/mutant/glutton/proc/tamed(mob/living/tamer)
+/mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 

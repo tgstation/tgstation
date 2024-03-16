@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Lathes don't hang if materials run out mid printing. Also displays message if materials are put on hold while printing"

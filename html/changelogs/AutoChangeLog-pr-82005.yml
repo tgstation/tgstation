@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Psyker vision no longer causes infinitely worsening lag"

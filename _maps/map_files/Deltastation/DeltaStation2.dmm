@@ -10252,7 +10252,6 @@
 "cxu" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
-/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -47062,7 +47061,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/flashlight/lamp,
+/obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/iron/grimy,
 /area/station/command/bridge)
 "lGE" = (
@@ -66326,8 +66325,8 @@
 "qBY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/secure_safe/caps_spare,
 /obj/structure/table/wood,
-/obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/iron/grimy,
 /area/station/command/bridge)
 "qCb" = (
@@ -95608,7 +95607,7 @@
 /obj/item/clothing/head/costume/kitty,
 /obj/item/clothing/under/costume/maid,
 /obj/item/clothing/head/costume/rabbitears,
-/obj/item/clothing/under/dress/redeveninggown,
+/obj/item/clothing/under/dress/eveninggown,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "xRa" = (

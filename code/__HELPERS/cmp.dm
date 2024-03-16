@@ -192,3 +192,6 @@
 /// Orders mobs by health
 /proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
 	return mob_b.health - mob_a.health
+
+/proc/cmp_deathmatch_mods(datum/deathmatch_modifier/a, datum/deathmatch_modifier/b)
+	return sorttext(b.name, a.name)

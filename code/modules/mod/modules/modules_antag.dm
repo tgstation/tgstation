@@ -29,6 +29,9 @@
 	/// List of traits added when the mod is activated
 	var/list/traits_to_add = list(TRAIT_HEAD_INJURY_BLOCKED)
 
+/obj/item/mod/module/armor_booster/no_speedbost
+	speed_added = 0
+
 /datum/armor/mod_module_armor_boost
 	melee = 25
 	bullet = 30
@@ -235,6 +238,9 @@
 
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
+
+/obj/item/mod/module/insignia/syndie
+	color = COLOR_SYNDIE_RED
 
 ///Anti Slip - Prevents you from slipping on water.
 /obj/item/mod/module/noslip

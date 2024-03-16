@@ -80,19 +80,23 @@
 	if(.)
 		return
 	if(malfunctioning && prob(75))
-		balloon_alert(usr, "button malfunctions!")
+		balloon_alert(ui.user, "button malfunctions!")
 		return
 	switch(action)
 		if("lock")
-			locked = !locked
-			balloon_alert(usr, "[locked ? "locked" : "unlocked"]!")
+			if(!locked || allowed(ui.user))
+				locked = !locked
+				balloon_alert(ui.user, "[locked ? "locked" : "unlocked"]!")
+			else
+				balloon_alert(ui.user, "access insufficent!")
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		if("call")
 			if(!mod_link.link_call)
-				call_link(usr, mod_link)
+				call_link(ui.user, mod_link)
 			else
 				mod_link.end_call()
 		if("activate")
-			toggle_activate(usr)
+			toggle_activate(ui.user)
 		if("select")
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
 			if(!module)
@@ -107,9 +111,9 @@
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
 			if(!module)
 				return
-			module.pin(usr)
+			module.pin(ui.user)
 		if("eject_pai")
-			if (!ishuman(usr))
+			if (!ishuman(ui.user))
 				return
-			remove_pai(usr)
+			remove_pai(ui.user)
 	return TRUE

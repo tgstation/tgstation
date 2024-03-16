@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "MODsuits now use the \"suit charge\" HUD element to show how much charge they have left, rather than a screen alert"

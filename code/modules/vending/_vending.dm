@@ -280,6 +280,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(onstation && !onstation_override)
 		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
+	register_context()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -341,6 +342,24 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		. += panel_type
 	if(light_mask && !(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask, src)
+
+/obj/machinery/vending/examine(mob/user)
+	. = ..()
+	if(isnull(refill_canister))
+		return // you can add the comment here instead
+	if((total_loaded_stock() / total_max_stock()) < 1)
+		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [refill_canister]")] with the panel open.")
+	else
+		. += span_notice("\The [src] is fully stocked.")
+	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
+		. += span_notice("It should have a handfull of credits stored based on the missing items.")
+	else if (credits_contained > PAYCHECK_CREW)
+		. += span_notice("It should have at least a full paycheck worth of credits inside!")
+		/**
+		 * Intentionally leaving out a case for zero credits as it should be covered by the vending machine's stock being full,
+		 * or covered by first case if items were returned.
+		 */
+
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
@@ -1101,6 +1120,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vending_machine_input[inserted_item.type] = 1
 	loaded_items++
 
+
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!force)
 		return
@@ -1578,11 +1598,13 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Arguments:
  * * loaded_item - the item being loaded
  * * user - the user doing the loading
+ * * send_message - should we send a message to the user if the item can't be loaded? Either a to_chat or a speak depending on vending type.
  */
-/obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user)
+/obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	if(!length(loaded_item.contents) && ((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband)))
 		return TRUE
-	to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
+	if(send_message)
+		to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
 	return FALSE
 
 /obj/machinery/vending/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -1611,6 +1633,32 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(tilted && !held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(!isnull(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE)))
+		context[SCREENTIP_CONTEXT_LMB] = "Load item"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && istype(held_item, refill_canister))
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
+		return TRUE
+	return NONE
+
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
 	icon_state = "custom"
@@ -1636,16 +1684,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(id_card?.registered_account && id_card.registered_account == linked_account)
 		return TRUE
 
-/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user)
+/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	. = FALSE
 	if(loaded_item.flags_1 & HOLOGRAM_1)
-		speak("This vendor cannot accept nonexistent items.")
+		if(send_message)
+			speak("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)
-		speak("There are too many items in stock.")
+		if(send_message)
+			speak("There are too many items in stock.")
 		return
 	if(isstack(loaded_item))
-		speak("Loose items may cause problems, try to use it inside wrapping paper.")
+		if(send_message)
+			speak("Loose items may cause problems, try to use it inside wrapping paper.")
 		return
 	if(loaded_item.custom_price)
 		return TRUE
