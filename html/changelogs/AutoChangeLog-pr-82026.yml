@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Fixes the conveyor belts found on north star's boulder processing room to all work when the lever is thrown."
