@@ -22,7 +22,7 @@
 	/// A list of paths of modifiers enabled for the match.
 	var/list/modifiers = list()
 	/// Is the modifiers modal menu open (for the host)
-	var/list/mod_menu_open = FALSE
+	var/mod_menu_open = FALSE
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
