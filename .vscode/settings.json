@@ -13,6 +13,7 @@
 	},
 	"files.eol": "\n",
 	"files.insertFinalNewline": true,
+	"git.branchProtection": ["master"],
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
 	"[javascript]": {
