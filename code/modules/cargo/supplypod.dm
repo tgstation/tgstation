@@ -111,6 +111,7 @@
 /obj/structure/closet/supplypod/deadmatch_missile
 	name = "cruise missile"
 	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	icon_state = "smissile"
 	decal = null
 	door = null
 	fin_mask = null

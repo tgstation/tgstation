@@ -402,16 +402,6 @@
 /datum/deathmatch_modifier/flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.SpinAnimation(speed = 0.9 SECONDS, loops = -1)
 
-/datum/deathmatch_modifier/screen_flipping
-	name = "Rotating Screen"
-	description = "♪ You spin me right round, baby right round ♪"
-
-/datum/deathmatch_modifier/screen_flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	var/atom/movable/plane_master_controller/pm_controller = player.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	var/clockwise = prob(50)
-	for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
-		plane.SpinAnimation(4.5 SECONDS, clockwise = clockwise)
-
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"
 	description = "Picks 3 to 5 random modifiers as the game is about to start"
