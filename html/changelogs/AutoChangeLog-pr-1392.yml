@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Centcom ghost players are now properly revived / cleaned up whenever they die."

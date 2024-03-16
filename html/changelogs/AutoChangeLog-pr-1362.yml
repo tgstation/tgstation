@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Removed some sources of hard deletes."
-  - bugfix: "Fixed some sources of runtime errors."

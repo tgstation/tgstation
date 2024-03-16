@@ -1,7 +1,0 @@
-author: "DimWhat"
-delete-after: True
-changes:
-  - rscadd: "You can now set your socks color."
-  - rscadd: "Added a few new sock types."
-  - rscdel: "Removed black socks as they aren't needed."
-  - bugfix: "Made socks properly change for feminine bodytypes if needed."

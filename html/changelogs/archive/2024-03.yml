@@ -175,3 +175,81 @@
       flowers)
   - bugfix: Corpse flowers now make miasma again
   - bugfix: Hydroponics trays now run out of nutrients entirely
+2024-03-16:
+  Absolucy:
+  - rscadd: Buffs number of character slots (for everyone) to 20.
+  - bugfix: Removed some sources of hard deletes.
+  - bugfix: Fixed some sources of runtime errors.
+  - bugfix: fixes experimental cloners spitting out randomized clones instead of clones
+      of who was scanned
+  - bugfix: Centcom ghost players are now properly revived / cleaned up whenever they
+      die.
+  Absolucy, Singul0:
+  - balance: Brainwashed individuals can no longer be debrainwashed through a mindshield
+      implant, they still protect you from brainwashing though! You just need to get
+      medical to fix them up.
+  DimWhat:
+  - rscadd: You can now set your socks color.
+  - rscadd: Added a few new sock types.
+  - rscdel: Removed black socks as they aren't needed.
+  - bugfix: Made socks properly change for feminine bodytypes if needed.
+  - rscadd: Equalized pay for most roundstart species.
+  - image: Tweaked the jabberwocky sprite slightly.
+  - balance: Lowered the chance of both real and fake diseases occuring
+  FernandoJ8:
+  - bugfix: Posession now revives those who are dead or in hard crit and turns them
+      into temporary vassals
+  - qol: Added a balloon alert that indicates when someone cannot be tortured in a
+      persuasion rack due to being dead or in hard crit.
+  Gboster-0:
+  - rscadd: the PTL after exporting 1 Megawatt of power will now give announcements
+      every 30 minutes about its power exported
+  - balance: AI's now do not have a good time when trying to prevent slashers from
+      incorporealizing
+  KittyNoodle:
+  - rscdel: The Operative has been removed from rotation
+  - rscdel: The Mystic no longer does wizard events
+  - bugfix: Clown Storyteller has been re-removed from rotation after it was re-added
+      thanks to an oversight.
+  - balance: Reduces the antag cap slightly.
+  - balance: Wizard weight has been lowered to match malf ai weight.
+  - balance: Guide is slightly less common
+  - balance: Jester is now slightly less excessive
+  - balance: Sleeper has been made less rare(it was at the same level as warrior before)
+  - balance: Paradox clones have been made more common.
+  KnigTheThrasher:
+  - bugfix: Moved cargo apc covering atm to below hop's office.
+  - bugfix: Moved Meta tesla/singulo engine a bit further to the east.
+  - rscadd: Replaced the generic shuttle welcome sound with Duke Nukem announcer
+  Marabout2:
+  - image: Replaced moffin_1 in food.dmi with the moffin sent on the discord.
+  NicoDeLuna:
+  - rscadd: Added Harlequin clothes for Clown and Mime
+  TTNT789:
+  - rscadd: viking stuff credit to dimwhat for the sprites(credit to camriod_core
+      for adjusting helmet for ian)
+  - rscadd: Sunset sarsaparilla drinking gives a slight healing over time effect
+  githubuser4141:
+  - image: Replaces the occupied, unoccupied, broken and phasing icons for phazon,
+      durand, gygax and odysseus mechs.
+  jlsnow301, Rhials, Paxilmaniac, san7890:
+  - rscadd: 'jlsnow301: Added some clarity to the range of netpods (4 tiles) in their
+      exam text.'
+  - rscdel: 'jlsnow301: Chamber of Echoes map removed as it conflicts with the actual
+      Legion'
+  - bugfix: 'jlsnow301: Entering a virtual domain should no longer give you a message
+      that it doesn''t forbid items'
+  - bugfix: 'jlsnow301: Paraplegics can now enter netpods.'
+  - bugfix: 'jlsnow301: Fixes an exploit caused by teleporting out of a netpod.'
+  - bugfix: 'jlsnow301: Outfit selection at netpods shouldn''t give armor bonuses
+      any longer.'
+  - bugfix: 'jlsnow301: Bubblegum should no longer teleport out of the simulation
+      when threatened'
+  - bugfix: 'jlsnow301: Heretics won''t lose their living heart while bitrunning anymore.'
+  - qol: 'Rhials: As an observer, clicking on a bitrunning pod will let you orbit
+      it''s bitrunning avatar. Cool!'
+  - code_imp: 'Paxilmaniac: Bitrunner domains can now have spells or items from disks
+      disabled if the domain maker wants such a thing'
+  - bugfix: 'san7890: Bitrunners can no longer get mass-mindswapped out of their avatar
+      when the wizard does the event. Something about machinery and magic not going
+      well together.'

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "fixes experimental cloners spitting out randomized clones instead of clones of who was scanned"
