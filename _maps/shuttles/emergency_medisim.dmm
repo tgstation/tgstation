@@ -701,7 +701,7 @@
 	iron_cost = 0;
 	maximum_idle = 1;
 	name = "binoculars fabricator";
-	power_used = 0;
+	energy_used = 0;
 	starting_amount = 25000
 	},
 /turf/open/floor/mineral/titanium/yellow,
