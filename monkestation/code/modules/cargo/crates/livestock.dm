@@ -15,16 +15,9 @@
 
 /datum/supply_pack/critter/bears/fill(obj/structure/closet/crate/critter/C)
 	for(var/i in 1 to 3)
-		var/item = pick(
-			prob (20);
-				/mob/living/basic/bear,
-			prob (20);
-				/mob/living/basic/bear/snow,
-			prob (20);
-				/mob/living/basic/bear/russian,
-			prob (20);
-				/mob/living/basic/bear/butter,
-			prob (20);
-				/mob/living/basic/bear/hudson
-		)
+		var/item = pick(/mob/living/basic/bear,
+						/mob/living/basic/bear/snow,
+						/mob/living/basic/bear/russian,
+						/mob/living/basic/bear/butter,
+						/mob/living/basic/bear/hudson)
 		new item(C)

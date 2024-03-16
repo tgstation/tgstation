@@ -59,9 +59,7 @@
 			new /obj/item/toy/balloon/syndicate(src)
 			new /obj/item/storage/box/syndimaid(src)
 		if(44,45,46)
-			new /obj/item/cardboard_cutout{
-				starting_cutout = "Xenomorph Maid"
-				}(src)
+			new /obj/item/cardboard_cutout/xeno_maid(src)
 			new	/obj/item/clothing/neck/maid(src)
 			new	/obj/item/clothing/head/costume/maidheadband(src)
 			new	/obj/item/clothing/gloves/maid(src)
@@ -223,3 +221,6 @@
 			new /obj/item/stack/spacecash/c10000(src)
 		if(100) //Jackpot
 			new /obj/item/storage/backpack/holding(src)
+
+/obj/item/cardboard_cutout/xeno_maid
+	starting_cutout = "Xenomorph Maid"

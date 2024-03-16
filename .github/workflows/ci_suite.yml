@@ -15,7 +15,7 @@ on:
     - master
 jobs:
   run_linters:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
     runs-on: ubuntu-22.04
     concurrency:
@@ -70,8 +70,27 @@ jobs:
         with:
           outputFile: output-annotations.txt
 
+  odlint:
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
+    name: "Lint with OpenDream"
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: odlint-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.9
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - name: Run OpenDream
+        run: |
+          ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING
+
   compile_all_maps:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps
     needs: [collect_data]
     runs-on: ubuntu-20.04
@@ -97,7 +116,7 @@ jobs:
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   collect_data:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Collect data for other tasks
     runs-on: ubuntu-20.04
     outputs:
@@ -128,7 +147,7 @@ jobs:
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
 
   run_all_tests:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Integration Tests
     needs: [collect_data]
     strategy:
@@ -205,7 +224,7 @@ jobs:
           path: artifacts/screenshot_comparisons
 
   test_windows:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Windows Build
     needs: [collect_data]
     runs-on: windows-latest

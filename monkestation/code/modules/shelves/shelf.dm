@@ -123,6 +123,7 @@
 		crate.SpinAnimation(rand(4,7), 1) // Spin the crates around a little as they fall. Randomness is applied so it doesn't look weird.
 		switch(pick(1, 1, 1, 1, 2, 2, 3)) // Randomly pick whether to do nothing, open the crate, or break it open.
 			if(1) // Believe it or not, this does nothing.
+				EMPTY_BLOCK_GUARD
 			if(2) // Open the crate!
 				if(crate.open()) // Break some open, cause a little chaos.
 					crate.visible_message(span_warning("[crate]'s lid falls open!"))

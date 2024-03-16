@@ -50,7 +50,9 @@
 	display = letter
 	update_icon_state()
 
+/* what the fuck??? -lucy
 /obj/item/mcobject/screen/proc/update_screen(letter)
 	letter = uppertext(letter)
 	switch(letter)
 		if(" ")
+*/

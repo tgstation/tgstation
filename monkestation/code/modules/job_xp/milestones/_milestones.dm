@@ -18,7 +18,7 @@
 			var/datum/loadout_item/listed_loadout = milestone_type
 			if(!force)
 				for(var/path in user.prefs.job_rewards_claimed[key_id])
-					if(path == initial(milestone_type))
+					if(path == milestone_type)
 						return
 			if(!user.prefs.inventory[initial(listed_loadout.item_path)])
 				user.prefs.inventory += initial(listed_loadout.item_path)

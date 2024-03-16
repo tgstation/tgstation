@@ -236,8 +236,7 @@ GLOBAL_LIST(fishing_property_cache)
 	for(var/result in final_table)
 		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
 		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
-		if(result == FISHING_DUD)
-		else if(ispath(result, /obj/item/fish))
+		if(result != FISHING_DUD && ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result
 

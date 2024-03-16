@@ -241,3 +241,6 @@ config/dbconfig.txt
 # ezdb
 /db/
 /config/ezdb.txt
+
+# Running OpenDream locally
+tgstation.json

@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(atoms)
 
 	switch(result)
 		if (INITIALIZE_HINT_NORMAL)
-			// pass
+			EMPTY_BLOCK_GUARD // Pass
 		if(INITIALIZE_HINT_LATELOAD)
 			if(arguments[1]) //mapload
 				late_loaders += A

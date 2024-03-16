@@ -49,22 +49,13 @@
 
 /datum/supply_pack/medical/randommedkit/fill/(obj/structure/closet/crate/C)
 	for(var/i in 1 to 6)
-		var/item = pick(
-			prob(10);
-				/obj/item/storage/medkit/regular,
-			prob(20);
-				/obj/item/storage/medkit/brute,
-			prob(20);
-				/obj/item/storage/medkit/fire,
-			prob(20);
-				/obj/item/storage/medkit/toxin,
-			prob(20);
-				/obj/item/storage/medkit/o2,
-			prob(10);
-				/obj/item/storage/medkit/advanced,
-			prob(10);
-				/obj/item/storage/medkit/surgery
-		)
+		var/item = pick(10;/obj/item/storage/medkit/regular,
+						20;/obj/item/storage/medkit/brute,
+						20;/obj/item/storage/medkit/fire,
+						20;/obj/item/storage/medkit/toxin,
+						20;/obj/item/storage/medkit/o2,
+						10;/obj/item/storage/medkit/advanced,
+						10;/obj/item/storage/medkit/surgery)
 		new item(C)
 
 /datum/supply_pack/medical/maintpills
