@@ -53644,9 +53644,8 @@
 /area/station/service/library)
 "mWE" = (
 /obj/structure/table/wood,
-/obj/structure/cassette_rack{
-	pixel_x = -5;
-	pixel_y = 12
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
@@ -56848,48 +56847,6 @@
 /obj/item/device/walkman{
 	pixel_y = 7;
 	pixel_x = -8
-	},
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = 2;
-	pixel_x = 9
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)

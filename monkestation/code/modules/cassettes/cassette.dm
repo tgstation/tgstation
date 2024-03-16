@@ -28,15 +28,15 @@
 	var/random = FALSE
 	var/cassette_desc_string = "Generic Desc"
 
-/obj/item/device/cassette_tape/Initialize()
+/obj/item/device/cassette_tape/Initialize(mapload, spawned_id)
 	. = ..()
-	var/ids_exist = file("data/cassette_storage/ids.json")
+	if(!length(GLOB.approved_ids))
+		GLOB.approved_ids = initialize_approved_ids()
 
-	if(!length(GLOB.approved_ids) && fexists(ids_exist))
-		GLOB.approved_ids = json_decode(file2text("data/cassette_storage/ids.json"))
-
-	if(random && fexists(ids_exist))
-		if(length(GLOB.approved_ids))
+	if(length(GLOB.approved_ids))
+		if(spawned_id && (spawned_id in GLOB.approved_ids))
+			id = spawned_id
+		else if(random)
 			id = pick(GLOB.approved_ids)
 
 	var/file = file("data/cassette_storage/[id].json")
@@ -61,7 +61,7 @@
 	..()
 	icon_state = flipped ? side1_icon : side2_icon
 	flipped = !flipped
-	to_chat(user,"You flip [src]")
+	to_chat(user, span_notice("You flip [src]."))
 
 /obj/item/device/cassette_tape/update_desc(updates)
 	. = ..()
@@ -75,31 +75,31 @@
 /obj/item/device/cassette_tape/attackby(obj/item/item, mob/living/user)
 	if(!istype(item, /obj/item/pen))
 		return ..()
-	var/choice = input("What would you like to change?") in list("Cassette Name", "Cassette Description", "Cancel")
+	var/choice = tgui_input_list(usr, "What would you like to change?", items = list("Cassette Name", "Cassette Description", "Cancel"))
 	switch(choice)
 		if("Cassette Name")
 			///the name we are giving the cassette
-			var/newcassettename = reject_bad_text(stripped_input(user, "Write a new Cassette name:", name, name))
+			var/newcassettename = reject_bad_text(tgui_input_text(user, "Write a new Cassette name:", name, name, max_length = MAX_NAME_LEN))
 			if(!user.can_perform_action (src, TRUE))
 				return
-			if (length(newcassettename) > 20)
-				to_chat(user, "<span class='warning'>That name is too long!</span>")
+			if(length(newcassettename) > MAX_NAME_LEN)
+				to_chat(user, span_warning("That name is too long!"))
 				return
 			if(!newcassettename)
-				to_chat(user, "<span class='warning'>That name is invalid.</span>")
+				to_chat(user, span_warning("That name is invalid."))
 				return
 			else
 				name = "[lowertext(newcassettename)]"
 		if("Cassette Description")
 			///the description we are giving the cassette
-			var/newdesc = stripped_input(user, "Write a new description:", name, desc)
+			var/newdesc = tgui_input_text(user, "Write a new description:", name, desc, max_length = 180)
 			if(!user.can_perform_action(src, TRUE))
 				return
 			if (length(newdesc) > 180)
-				to_chat(user, "<span class='warning'>That description is too long!</span>")
+				to_chat(user, span_warning("That description is too long!"))
 				return
 			if(!newdesc)
-				to_chat(user, "<span class='warning'>That description is invalid.</span>")
+				to_chat(user, span_warning("That description is invalid."))
 				return
 			cassette_desc_string = newdesc
 			update_appearance()
