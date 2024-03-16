@@ -7,13 +7,15 @@
 	. = ..()
 	new /obj/item/food/donkpocket/cargo_unit_test(src)
 
+/obj/item/food/donkpocket/cargo_unit_test
+
 /datum/export/unit_test_box
-	name = "unit test box"
+	unit_name = "unit test box"
 	cost = PAYCHECK_LOWER
 	export_types = list(/obj/item/storage/box/cargo_unit_test)
 
 /datum/export/unit_test_donk
-	name = "unit test command"
+	unit_name = "unit test donkpocket"
 	cost = PAYCHECK_COMMAND
 	export_types = list(/obj/item/food/donkpocket/cargo_unit_test)
 
@@ -27,7 +29,7 @@
 	var/value = counterlist_sum(report_one.total_value)
 	TEST_ASSERT_EQUAL(value, PAYCHECK_LOWER + PAYCHECK_COMMAND, "'export_item_and_contents' value didn't match expected value")
 
-	var/datum/export_report/report_two = export_single_item(box, apply_elastic = FALSE)
+	var/datum/export_report/report_two = export_single_item(box_no_donk, apply_elastic = FALSE)
 	if(isnull(report_two))
 		TEST_FAIL("called 'export_single_item' on the unit test box, but no export report was returned.")
 	value = counterlist_sum(report_two.total_value)
