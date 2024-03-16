@@ -56,6 +56,9 @@
 	if (upgraded > 0)
 		to_chat(owner, span_notice("Your near-death experience grants you more strength!"))
 		owner.maxHealth += 5 // Fuck knows if this actually does anything
+		var/datum/action/cooldown/mob_cooldown/ki_blast/blast = locate() in owner.actions
+		if (!isnull(blast))
+			blast.damage_modifier += 0.1
 
 	qdel(src)
 

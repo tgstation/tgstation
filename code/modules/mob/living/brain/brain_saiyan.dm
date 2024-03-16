@@ -29,12 +29,16 @@
 	background_icon_state = "bg_demon"
 	click_to_activate = FALSE
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
+	shared_cooldown = NONE
+	/// Extra damage to do
+	var/damage_modifier = 1
 
 /datum/action/cooldown/mob_cooldown/ki_blast/Activate(atom/target)
 	var/mob/living/mob_caster = target
 	if (!istype(mob_caster))
 		return FALSE
 	var/obj/item/gun/ki_blast/ki_gun = new(mob_caster.loc)
+	ki_gun.projectile_damage_multiplier = damage_modifier
 	if (!mob_caster.put_in_hands(ki_gun, del_on_fail = TRUE))
 		mob_caster.balloon_alert(mob_caster, "no free hands!")
 	return TRUE
@@ -92,6 +96,7 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED|AB_CHECK_LYING
 	click_to_activate = FALSE
 	cooldown_time = 3 SECONDS
+	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/saiyan_flight/Activate(atom/target)
 	var/mob/living/mob_caster = target
@@ -109,3 +114,65 @@
 	REMOVE_TRAIT(mob_caster, TRAIT_MOVE_FLYING, REF(src))
 	passtable_off(mob_caster, REF(src))
 	return TRUE
+
+
+#define GOKU_FILTER "goku_filter"
+
+/// Charge up a big beam
+/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha
+	name = "Kamehameha"
+	desc = "The signature technique of the turtle school, a devastating charged beam attack!"
+	button_icon = 'icons/effects/saiyan_effects.dmi'
+	button_icon_state = "kamehameha_start"
+	created_type = /obj/effect/brimbeam/kamehameha
+	charge_duration = 5 SECONDS
+	beam_duration = 12 SECONDS
+	cooldown_time = 90 SECONDS
+	shared_cooldown = NONE
+	/// Things we still need to say, before it's too late
+	var/speech_timers = list()
+
+/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/Activate(atom/target)
+	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_CYAN, "alpha" = 0, "size" = 1))
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+	owner.say("Ka...")
+	var/queued_speech = list("...me...", "...ha...", "...me...")
+	var/speech_interval = charge_duration/4
+	var/current_interval = speech_interval
+	while(length(queued_speech))
+		var/timer = addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom/movable, say), pop(queued_speech)), current_interval, TIMER_STOPPABLE | TIMER_DELETE_ME)
+		current_interval += speech_interval
+		speech_timers += timer
+	playsound(owner, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/fire_laser()
+	. = ..()
+	if (.)
+		owner.say("...HA!!!!!")
+
+/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
+	. = ..()
+	if (override_cooldown_time == 360 SECONDS) // Ignore the one we set while the ability is processing
+		return
+	for (var/timer as anything in speech_timers)
+		deltimer(timer)
+	speech_timers = list()
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter)
+	owner.remove_filter(GOKU_FILTER)
+
+/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/on_fail()
+	owner.visible_message(span_notice("...and launches it straight into a wall, wasting their energy."))
+
+/// It's blue now!
+/obj/effect/brimbeam/kamehameha
+	name = "kamehameha"
+	light_color = LIGHT_COLOR_CYAN
+	icon = 'icons/effects/saiyan_effects.dmi'
+	icon_state = "kamehameha"
+	base_icon_state = "kamehameha"
+
+#undef GOKU_FILTER

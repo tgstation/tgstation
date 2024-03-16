@@ -9,6 +9,8 @@
 	click_to_activate = TRUE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
+	/// How long to go on cooldown when interrupted?
+	var/fail_cooldown = 5 SECONDS
 	/// How far does our beam go?
 	var/beam_range = 10
 	/// How long does our beam last?
@@ -19,6 +21,8 @@
 	var/static/image/direction_overlay = image('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
+	/// If this isn't a child of /obj/effect/brimbeam it will likely runtime
+	var/created_type = /obj/effect/brimbeam
 
 /datum/action/cooldown/mob_cooldown/brimbeam/Destroy()
 	extinguish_laser()
@@ -35,13 +39,12 @@
 	var/fully_charged = do_after(owner, delay = charge_duration, target = owner)
 	owner.cut_overlay(direction_overlay)
 	if (!fully_charged)
-		StartCooldown()
+		StartCooldown(fail_cooldown)
 		return TRUE
 
 	if (!fire_laser())
-		var/static/list/fail_emotes = list("coughs.", "wheezes.", "belches out a puff of black smoke.")
-		owner.manual_emote(pick(fail_emotes))
-		StartCooldown()
+		on_fail()
+		StartCooldown(fail_cooldown)
 		return TRUE
 
 	do_after(owner, delay = beam_duration, target = owner)
@@ -49,9 +52,14 @@
 	StartCooldown()
 	return TRUE
 
+/// Emote if fired directly into a wall
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/on_fail()
+	var/static/list/fail_emotes = list("coughs.", "wheezes.", "belches out a puff of black smoke.")
+	owner.manual_emote(pick(fail_emotes))
+
 /// Create a laser in the direction we are facing
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
-	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
+	owner.visible_message(span_danger("[owner] fires a beam!"))
 	playsound(owner, 'sound/creatures/brimdemon.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
 	var/turf/origin_turf = get_turf(owner)
@@ -66,20 +74,20 @@
 				break
 		if(blocked)
 			break
-		var/obj/effect/brimbeam/new_brimbeam = new(affected_turf)
+		var/obj/effect/brimbeam/new_brimbeam = new created_type(affected_turf)
 		new_brimbeam.dir = owner.dir
 		beam_parts += new_brimbeam
 		new_brimbeam.assign_creator(owner)
 		for(var/mob/living/hit_mob in affected_turf.contents)
 			hit_mob.apply_damage(damage = 25, damagetype = BURN)
-			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
+			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s beam!"))
 		RegisterSignal(new_brimbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
 		return FALSE
 	var/atom/last_brimbeam = beam_parts[length(beam_parts)]
-	last_brimbeam.icon_state = "brimbeam_end"
+	last_brimbeam.icon_state = "[last_brimbeam.base_icon_state]_end"
 	var/atom/first_brimbeam = beam_parts[1]
-	first_brimbeam.icon_state = "brimbeam_start"
+	first_brimbeam.icon_state = "[last_brimbeam.base_icon_state]_start"
 	return TRUE
 
 /// Get rid of our laser when we are done with it
@@ -96,6 +104,7 @@
 	name = "brimbeam"
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "brimbeam_mid"
+	base_icon_state = "brimbeam"
 	layer = ABOVE_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
