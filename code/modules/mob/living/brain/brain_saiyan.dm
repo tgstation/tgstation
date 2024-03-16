@@ -1,3 +1,5 @@
+#define GOKU_FILTER "goku_filter"
+
 /// The Saiyan brain contains knowledge of powerful martial arts
 /obj/item/organ/internal/brain/saiyan
 	name = "saiyan brain"
@@ -30,6 +32,7 @@
 	click_to_activate = FALSE
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
 	shared_cooldown = NONE
+	melee_cooldown_time = 0 SECONDS
 	/// Extra damage to do
 	var/damage_modifier = 1
 
@@ -97,6 +100,7 @@
 	click_to_activate = FALSE
 	cooldown_time = 3 SECONDS
 	shared_cooldown = NONE
+	melee_cooldown_time = 0 SECONDS
 
 /datum/action/cooldown/mob_cooldown/saiyan_flight/Activate(atom/target)
 	var/mob/living/mob_caster = target
@@ -116,8 +120,6 @@
 	return TRUE
 
 
-#define GOKU_FILTER "goku_filter"
-
 /// Charge up a big beam
 /datum/action/cooldown/mob_cooldown/brimbeam/kamehameha
 	name = "Kamehameha"
@@ -129,6 +131,7 @@
 	beam_duration = 12 SECONDS
 	cooldown_time = 90 SECONDS
 	shared_cooldown = NONE
+	melee_cooldown_time = 0 SECONDS
 	/// Things we still need to say, before it's too late
 	var/speech_timers = list()
 
@@ -174,5 +177,17 @@
 	icon = 'icons/effects/saiyan_effects.dmi'
 	icon_state = "kamehameha"
 	base_icon_state = "kamehameha"
+	report_started = "holds their hands to their forehead!"
+	blinded_source = "flash of light!"
+
+/// Blinds people
+/datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare
+	name = "Solar Flare"
+	desc = "A surprising move of the Crane school, creating a blinding flash that can overpower even shaded glasses. Useful on opponents regardless of power level."
+	wait_delay = 1 SECONDS
+
+/datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare/trigger_effect()
+	. = ..()
+	owner.say("Solar flare!!")
 
 #undef GOKU_FILTER

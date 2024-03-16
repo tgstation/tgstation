@@ -22,12 +22,16 @@
 	var/image/current_overlay
 	/// Timer until we go to the next stage
 	var/stage_timer
+	/// Text to print upon use
+	var/report_started = "'s eye glows ominously!"
+	/// What do we report blinded people?
+	var/blinded_source = "piercing gaze"
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Activate(mob/living/target)
 	show_indicator_overlay("eye_open")
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
 	StartCooldown(360 SECONDS, 360 SECONDS)
-	owner.visible_message(span_warning("[owner]'s eye glows ominously!"))
+	owner.visible_message(span_warning("[owner] [report_started]"))
 	if (do_after(owner, delay = wait_delay, target = owner))
 		trigger_effect()
 	else
@@ -73,7 +77,7 @@
 	if (!viewer.flash_act(intensity = 4, affect_silicon = TRUE, visual = TRUE, length = 3 SECONDS))
 		return FALSE
 	viewer.set_confusion_if_lower(12 SECONDS)
-	to_chat(viewer, span_warning("You are blinded by [owner]'s piercing gaze!"))
+	to_chat(viewer, span_warning("You are blinded by [owner]'s [blinded_source]!"))
 	return TRUE
 
 /// Animate our effect out
