@@ -4386,6 +4386,7 @@
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_harvest.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_items.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_objectives.dm"
+#include "code\modules\mob\living\basic\space_fauna\slugcat\slugcat.dm"
 #include "code\modules\mob\living\basic\space_fauna\snake\snake.dm"
 #include "code\modules\mob\living\basic\space_fauna\snake\snake_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\space_dragon\dragon_breath.dm"
