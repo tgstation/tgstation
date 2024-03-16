@@ -333,6 +333,42 @@
 	name = "Sundress (Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 
+/datum/greyscale_config/striped_dress
+	name = "Striped dress"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/striped_dress.json'
+
+/datum/greyscale_config/striped_dress/worn
+	name = "Striped dress (Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/evening_dress
+	name = "Evening gown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eveningdress.json'
+
+/datum/greyscale_config/evening_dress/worn
+	name = "Evening gown (Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/cardiganskirt
+	name = "Cardigan Skirt"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/cardiganskirt.json'
+
+/datum/greyscale_config/cardiganskirt/worn
+	name = "Cardigan Skirt(Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/sailor_dress
+	name = "Sailor Dress"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sailor_dress.json'
+
+/datum/greyscale_config/sailor_dress/worn
+	name = "Sailor Dress(Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
 // SHIRTS, PANTS AND SHORTS
 /datum/greyscale_config/slacks
 	name = "Slacks"
@@ -703,6 +739,15 @@
 
 /datum/greyscale_config/wellworn_shirt/worn
 	name = "Well-Worn Shirt (Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/wellworn_shirt_skub
+	name = "Well-Worn Shirt (Skub)"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wellworn_shirt_skub.json'
+
+/datum/greyscale_config/wellworn_shirt_skub/worn
+	name = "Well-Worn Shirt (Skub)(Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
 /datum/greyscale_config/wellworn_shirt_graphic

@@ -13,7 +13,7 @@
 	health = 100
 	maxHealth = 100
 	path_image_color = "#80dae7"
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = HYGIENE_BOT

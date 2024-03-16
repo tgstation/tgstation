@@ -211,7 +211,6 @@
 	required_reagents = list(/datum/reagent/nitrogen = 3, /datum/reagent/acetone = 2)
 	required_catalysts = list(/datum/reagent/toxin/acid = 1)
 	mix_message = "The mixture turns into a tired reddish pink liquid."
-	optimal_temp = 1
 	optimal_temp = 900
 	overheat_temp = 720
 	optimal_ph_min = 2

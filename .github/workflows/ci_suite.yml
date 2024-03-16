@@ -115,6 +115,25 @@ jobs:
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/build/build --ci lint tgui-test
 
+  odlint:
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
+    name: "Lint with OpenDream"
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: odlint-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.9
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - name: Run OpenDream
+        run: |
+          ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING
+
   compile_all_maps:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps

@@ -447,6 +447,7 @@ const NewscasterChannelBox = (props) => {
           <Box>
             <Button
               icon="newspaper"
+              tooltip={paper <= 0 ? 'Insert paper first!' : ''}
               disabled={paper <= 0}
               onClick={() => act('printNewspaper')}
             >

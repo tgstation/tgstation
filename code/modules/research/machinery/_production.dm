@@ -28,7 +28,7 @@
 		/datum/component/remote_materials, \
 		mapload, \
 		mat_container_signals = list( \
-			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd, local_material_insert)
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd/production, local_material_insert)
 		) \
 	)
 
@@ -48,7 +48,6 @@
 	materials = null
 	cached_designs = null
 	return ..()
-
 
 // Stuff for the stripe on the department machines
 /obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
@@ -128,7 +127,7 @@
 	addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 ///When materials are instered via silo link
-/obj/machinery/rnd/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
+/obj/machinery/rnd/production/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
 	SIGNAL_HANDLER
 
 	process_item(item_inserted, mats_consumed, amount_inserted)
@@ -141,37 +140,39 @@
  * * list/mats_consumed - list of mats consumed
  * * amount_inserted - amount of material actually processed
  */
-/obj/machinery/rnd/proc/process_item(obj/item/item_inserted, list/mats_consumed, amount_inserted)
+/obj/machinery/rnd/production/proc/process_item(obj/item/item_inserted, list/mats_consumed, amount_inserted)
 	PRIVATE_PROC(TRUE)
 
 	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.01 * initial(active_power_usage))))
-		var/mat_name = "iron"
+	if(directly_use_power(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.02 * initial(active_power_usage))))
+		var/datum/material/highest_mat_ref
 
 		var/highest_mat = 0
 		for(var/datum/material/mat as anything in mats_consumed)
 			var/present_mat = mats_consumed[mat]
 			if(present_mat > highest_mat)
-				mat_name = initial(mat.name)
-				if(mat_name == "silver" || mat_name == "titanium" || mat_name == "plastic") //these materials have similar appearances so use an common overlay for them
-					mat_name = "shiny"
 				highest_mat = present_mat
+				highest_mat_ref = mat
 
-		flick_animation(mat_name)
+		flick_animation(highest_mat_ref)
 /**
  * Plays an visual animation when materials are inserted
  * Arguments
  *
- * * mat_name - the name of the material we are trying to animate on the machine
+ * * mat - the material ref we are trying to animate on the machine
  */
-/obj/machinery/rnd/proc/flick_animation(mat_name)
+/obj/machinery/rnd/production/proc/flick_animation(datum/material/mat_ref)
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 
-	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_[mat_name]"), 1 SECONDS)
+	//first play the insertion animation
+	flick_overlay_view(material_insertion_animation(mat_ref.greyscale_colors), 1 SECONDS)
+
+	//now play the progress bar animation
+	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
 
 ///When materials are instered into local storage
-/obj/machinery/rnd/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
+/obj/machinery/rnd/production/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
 	process_item(item_inserted, mats_consumed, amount_inserted)
@@ -288,7 +289,7 @@
 				return
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-			if(!directly_use_power(ROUND_UP((amount / MAX_STACK_SIZE) * 0.01 * initial(active_power_usage))))
+			if(!directly_use_power(ROUND_UP((amount / MAX_STACK_SIZE) * 0.02 * initial(active_power_usage))))
 				say("No power to dispense sheets")
 				return
 

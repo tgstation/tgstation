@@ -1142,9 +1142,6 @@
 	},
 /turf/open/indestructible/large,
 /area/deathmatch)
-"US" = (
-/turf/closed/indestructible/reinforced,
-/area/deathmatch)
 "Ve" = (
 /obj/effect/turf_decal/tile/red/full,
 /obj/structure/barricade/security/murderdome,
@@ -1320,7 +1317,7 @@ tV
 tV
 IC
 IC
-US
+KX
 Vz
 sZ
 sZ
