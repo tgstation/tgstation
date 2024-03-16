@@ -249,6 +249,12 @@
 			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
 		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
 
+	if(istype(cone))
+		if(isnull(cone.crafted_food_buff))
+			cone.crafted_food_buff = /datum/status_effect/food/chilling
+		if(user.mind)
+			ADD_TRAIT(cone, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+
 ///Swaps the mode to the next one meant to be selected, then tells the user who changed it.
 /obj/machinery/icecream_vat/proc/swap_modes(mob/user)
 	if(!user.can_perform_action(src))
