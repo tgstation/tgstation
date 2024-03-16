@@ -31,9 +31,9 @@
 	span_userdanger("Everything grows bigger!"))
 	QDEL_IN(src, shrink_time)
 
-/datum/component/shrink/proc/handle_shrunk_speech(mob/living/breather, list/speech_args)
+/datum/component/shrink/proc/handle_shrunk_speech(mob/living/little_guy, list/speech_args)
 	SIGNAL_HANDLER
-	speech_args[SPEECH_SPANS] |= SPAN_HELIUM
+	speech_args[SPEECH_SPANS] |= SPAN_SMALL_VOICE
 
 /datum/component/shrink/Destroy()
 	var/atom/parent_atom = parent
