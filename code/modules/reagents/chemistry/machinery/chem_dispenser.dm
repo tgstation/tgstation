@@ -481,7 +481,7 @@
 	has_panel_overlay = FALSE
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
 	amount = 10
-	pixel_y = 6
+	anchored_tabletop_offset = 6
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	working_state = null
 	nopower_state = null
