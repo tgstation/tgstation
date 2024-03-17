@@ -108,8 +108,8 @@
 		user.visible_message(
 			span_notice("[user] rolls [src]. It lands on [result]. [comment]"),
 			span_notice("You roll [src]. It lands on [result]. [comment]"),
-			span_hear("You hear [src] rolling, it sounds like a [fake_result].",
-		))
+			span_hear("You hear [src] rolling, it sounds like a [fake_result]."),
+		)
 	else
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
 
