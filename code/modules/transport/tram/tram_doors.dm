@@ -90,7 +90,7 @@
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	use_energy(50)
+	use_energy(50 JOULES)
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
