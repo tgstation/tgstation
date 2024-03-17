@@ -54,6 +54,7 @@ GLOBAL_LIST_INIT(possible_alcoholic_addictions, setup_junkie_addictions(list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
 		/obj/item/reagent_containers/cup/glass/bottle/ale,
 		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/reagent_containers/cup/glass/bottle/rum,
 		/obj/item/reagent_containers/cup/glass/bottle/hcider,
 		/obj/item/reagent_containers/cup/glass/bottle/wine,
 		/obj/item/reagent_containers/cup/glass/bottle/sake,
