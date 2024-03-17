@@ -100,6 +100,10 @@
 	damage_type = BRUTE
 	hitsound = 'sound/weapons/sear_disabler.ogg'
 	hitsound_wall = 'sound/weapons/sear_disabler.ogg'
+	light_system = OVERLAY_LIGHT
+	light_range = 1
+	light_power = 1.4
+	light_color = LIGHT_COLOR_CYAN
 
 /// Saiyans can fly
 /datum/action/cooldown/mob_cooldown/saiyan_flight
@@ -344,6 +348,7 @@
 	to_chat(owner, span_notice("Your power surges!"))
 
 	new /obj/effect/temp_visual/explosion/fast(get_turf(owner))
+	ADD_TRAIT(owner, TRAIT_SUPER_SAIYAN, "[STATUS_EFFECT_TRAIT]_[id]")
 
 	if (ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -377,6 +382,8 @@
 /datum/status_effect/super_saiyan/on_remove()
 	. = ..()
 	QDEL_NULL(lightbulb)
+
+	REMOVE_TRAIT(owner, TRAIT_SUPER_SAIYAN, "[STATUS_EFFECT_TRAIT]_[id]")
 
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter)
