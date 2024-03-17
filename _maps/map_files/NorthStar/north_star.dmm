@@ -11477,8 +11477,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "cRe" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/status_display/ai/directional/north,
+/obj/structure/secure_safe/caps_spare,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cRs" = (
@@ -53609,7 +53610,8 @@
 "nKc" = (
 /obj/structure/cable,
 /obj/machinery/conveyor/inverted{
-	dir = 10
+	dir = 10;
+	id = "mining"
 	},
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
@@ -73992,7 +73994,8 @@
 /obj/structure/cable,
 /obj/machinery/bouldertech/refinery/smelter,
 /obj/machinery/conveyor/inverted{
-	dir = 10
+	dir = 10;
+	id = "mining"
 	},
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
@@ -74666,7 +74669,8 @@
 "tkZ" = (
 /obj/structure/cable,
 /obj/machinery/conveyor/inverted{
-	dir = 6
+	dir = 6;
+	id = "mining"
 	},
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
@@ -91628,7 +91632,6 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/fore)
 "xzS" = (
-/obj/structure/secure_safe/caps_spare/directional/south,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
