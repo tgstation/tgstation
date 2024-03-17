@@ -19,6 +19,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.25)
 
+	///Ignore devices that can be usued to easily spam
+	var/static/list/ignore_types = typecacheof(list(
+		/obj/item/taperecorder,
+		/atom/movable/virtualspeaker,
+		/obj/effect/overlay/holo_pad_hologram,
+	))
+
 	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
 	VAR_PRIVATE/on = TRUE
 	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
@@ -377,6 +384,8 @@
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+	if(is_type_in_typecache(speaker, ignore_types))
+		return
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
 		return
