@@ -1,0 +1,4 @@
+author: "Bilbo367"
+delete-after: True
+changes:
+  - bugfix: "Deathmatch players should no longer be able to roll any midround antagonist."
