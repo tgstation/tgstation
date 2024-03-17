@@ -112,7 +112,7 @@
 		))
 	else
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
-		
+
 	return .
 
 
@@ -308,7 +308,7 @@
 /obj/item/dice/d20/fate/stealth/cursed/one_use
 	reusable = FALSE
 
-/obj/item/dice/d20/fate/diceroll(mob/user)
+/obj/item/dice/d20/fate/diceroll(mob/user, in_hand=FALSE)
 	if(!COOLDOWN_FINISHED(src, roll_cd))
 		to_chat(user, span_warning("Hold on, [src] isn't caught up with your last roll!"))
 		return
