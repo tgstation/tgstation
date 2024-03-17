@@ -2,6 +2,7 @@
 #define MALF_ION_PROB 33
 /// The probability to replace an existing law with an ion law instead of adding a new ion law.
 #define REPLACE_LAW_WITH_ION_PROB 10
+
 /// Midround Rulesets
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	ruletype = MIDROUND_RULESET
