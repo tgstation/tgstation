@@ -1,0 +1,4 @@
+author: "Runa-Dacino"
+delete-after: True
+changes:
+  - bugfix: "fixed consecutive tgui text input inheriting user input from previous input form within the same proc"
