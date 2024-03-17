@@ -26,6 +26,8 @@
 	var/report_started = "'s eye glows ominously!"
 	/// What do we report blinded people?
 	var/blinded_source = "piercing gaze"
+	/// Should we stun ourselves after?
+	var/stop_self = TRUE
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Activate(mob/living/target)
 	show_indicator_overlay("eye_open")
@@ -69,6 +71,8 @@
 		)
 		flick_overlay_global(flashed_overlay, show_to = GLOB.clients, duration = animation_time)
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(hide_eye)), animation_time, TIMER_STOPPABLE)
+	if (!stop_self)
+		return
 	var/mob/living/living_owner = owner
 	living_owner.Stun(1.5 SECONDS, ignore_canstun = TRUE)
 

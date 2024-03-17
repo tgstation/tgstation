@@ -186,11 +186,9 @@
 	icon_state = "great_ape"
 
 /mob/living/basic/gorilla/saiyan/death(gibbed)
-	if (has_status_effect(/datum/status_effect/shapechange_mob))
-		return ..()
-	var/mob/living/corpse = spawn_fake_saiyan()
+	var/mob/living/corpse = get_internal_saiyan()
 	corpse.death()
-	corpse.setBruteLoss(maxHealth, TRUE, TRUE)
+	corpse.setBruteLoss(corpse.maxHealth, TRUE, TRUE)
 	return ..()
 
 /// Cut off his tail! It's the only way!
@@ -204,13 +202,7 @@
 	target.visible_message(span_warning("[src]'s tail falls to the ground, severed completely!"))
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
 
-	var/datum/status_effect/shapechange_mob/shapechange_status = has_status_effect(/datum/status_effect/shapechange_mob)
-	var/mob/living/carbon/saiyan
-	if (isnull(shapechange_status))
-		saiyan = spawn_fake_saiyan()
-	else
-		saiyan = shapechange_status.caster_mob
-
+	var/mob/living/carbon/saiyan = get_internal_saiyan()
 	if (istype(saiyan))
 		var/obj/item/organ/external/tail/saiyan_tail = saiyan.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		saiyan_tail.Remove(saiyan)
@@ -219,8 +211,12 @@
 	remove_status_effect(/datum/status_effect/shapechange_mob)
 	qdel(src)
 
-/// Create a fake saiyan
-/mob/living/basic/gorilla/saiyan/proc/spawn_fake_saiyan()
+/// Find our normal body or return a fake saiyan
+/mob/living/basic/gorilla/saiyan/proc/get_internal_saiyan()
+	var/datum/status_effect/shapechange_mob/shapechange_status = has_status_effect(/datum/status_effect/shapechange_mob)
+	if (!isnull(shapechange_status))
+		return shapechange_status.caster_mob
+
 	var/mob/saiyan = new /mob/living/carbon/human/species/saiyan(loc)
 	saiyan.name = name
 	saiyan.real_name = name

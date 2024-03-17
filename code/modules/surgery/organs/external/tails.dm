@@ -194,7 +194,7 @@
 /// When we move check if we are exposed to space
 /obj/item/organ/external/tail/monkey/saiyan/proc/on_moved()
 	SIGNAL_HANDLER
-	if (isnull(owner) || owner.stat == DEAD)
+	if (isnull(owner))
 		return
 	if (is_space_exposed_turf(get_turf(src)))
 		go_ape(owner)
@@ -219,7 +219,7 @@
 
 /// Start being an ape
 /obj/item/organ/external/tail/monkey/saiyan/proc/go_ape()
-	if (HAS_TRAIT(owner, TRAIT_SHAPESHIFTED))
+	if (HAS_TRAIT(owner, TRAIT_SHAPESHIFTED) || owner.stat == DEAD)
 		return
 	owner.visible_message(span_warning("[owner] transforms into a huge, ape-like creature!"))
 	var/mob/living/basic/gorilla/saiyan/monkie = new(owner.loc)
@@ -228,6 +228,11 @@
 	monkie.name = owner.real_name
 	monkie.real_name = owner.real_name
 	monkie.apply_status_effect(/datum/status_effect/shapechange_mob, owner)
+	RegisterSignal(monkie, COMSIG_LIVING_DEATH, PROC_REF(ape_died))
+
+/obj/item/organ/external/tail/monkey/saiyan/proc/ape_died()
+	SIGNAL_HANDLER
+	owner.death()
 
 /// Stop being an ape
 /obj/item/organ/external/tail/monkey/saiyan/proc/escape_ape()

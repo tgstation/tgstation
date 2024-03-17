@@ -7,6 +7,13 @@
 	brain_size = 0.5
 	/// What buttons did we give out
 	var/list/granted_abilities = list()
+	/// Saiyans gain one of these cool karate moves at random
+	var/static/list/saiyan_skills = list(
+		/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha,
+		/datum/action/cooldown/mob_cooldown/kaioken,
+		/datum/action/cooldown/mob_cooldown/super_saiyan,
+		/datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare,
+	)
 
 /obj/item/organ/internal/brain/saiyan/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -17,6 +24,11 @@
 	var/datum/action/cooldown/mob_cooldown/saiyan_flight/flight = new(organ_owner)
 	flight.Grant(organ_owner)
 	granted_abilities += flight
+
+	var/random_skill_path = pick(saiyan_skills)
+	var/datum/action/random_skill = new random_skill_path(organ_owner)
+	random_skill.Grant(organ_owner)
+	granted_abilities += random_skill
 
 /obj/item/organ/internal/brain/saiyan/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -135,7 +147,7 @@
 	/// Things we still need to say, before it's too late
 	var/speech_timers = list()
 
-/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/Activate(mob/living/target)
 	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_CYAN, "alpha" = 0, "size" = 1))
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
@@ -149,23 +161,23 @@
 		current_interval += speech_interval
 		speech_timers += timer
 	playsound(owner, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
-	return ..()
+
+	var/mob/living/living_owner = owner
+	var/lightbulb = istype(living_owner) ? living_owner.mob_light(2, 1, LIGHT_COLOR_CYAN) : null
+
+	. = ..()
+
+	QDEL_NULL(lightbulb)
+	for (var/timer as anything in speech_timers)
+		deltimer(timer)
+	speech_timers = list()
+	animate(filter)
+	owner.remove_filter(GOKU_FILTER)
 
 /datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/fire_laser()
 	. = ..()
 	if (.)
 		owner.say("...HA!!!!!")
-
-/datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
-	. = ..()
-	if (override_cooldown_time == 360 SECONDS) // Ignore the one we set while the ability is processing
-		return
-	for (var/timer as anything in speech_timers)
-		deltimer(timer)
-	speech_timers = list()
-	var/filter = owner.get_filter(GOKU_FILTER)
-	animate(filter)
-	owner.remove_filter(GOKU_FILTER)
 
 /datum/action/cooldown/mob_cooldown/brimbeam/kamehameha/on_fail()
 	owner.visible_message(span_notice("...and launches it straight into a wall, wasting their energy."))
@@ -185,6 +197,7 @@
 	wait_delay = 1 SECONDS
 	report_started = "holds their hands to their forehead!"
 	blinded_source = "flash of light!"
+	stop_self = FALSE
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare/trigger_effect()
 	. = ..()
@@ -221,6 +234,8 @@
 	var/power_multiplier = 3
 	/// Percentage chance to die instantly, will be multiplied by current stacks
 	var/death_chance = 5
+	/// Light holder
+	var/lightbulb
 
 /datum/status_effect/stacking/kaioken/on_apply()
 	. = ..()
@@ -228,8 +243,10 @@
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
+	lightbulb = owner.mob_light(2, 1, LIGHT_COLOR_INTENSE_RED)
 
 /datum/status_effect/stacking/kaioken/on_remove()
+	QDEL_NULL(lightbulb)
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter)
 	owner.remove_filter(GOKU_FILTER)
@@ -281,11 +298,13 @@
 /datum/action/cooldown/mob_cooldown/super_saiyan/Activate(mob/living/target)
 	StartCooldown(360 SECONDS)
 
-	target.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "alpha" = 0, "size" = 1))
+	target.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_GOLD, "alpha" = 0, "size" = 1))
 	var/filter = target.get_filter(GOKU_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
 	yell()
+
+	var/lightbulb = target.mob_light(3, 1, LIGHT_COLOR_BRIGHT_YELLOW)
 
 	owner.balloon_alert(owner, "charging...")
 	var/succeeded = do_after(target, delay = charge_time, target = target)
@@ -293,12 +312,14 @@
 	deltimer(yell_timer)
 	animate(filter)
 	target.remove_filter(GOKU_FILTER)
+	QDEL_NULL(lightbulb)
 
 	if (succeeded)
 		charge_time = max(6 SECONDS, charge_time - 2 SECONDS)
 		target.apply_status_effect(/datum/status_effect/super_saiyan)
 		StartCooldown()
 		return TRUE
+
 	StartCooldown(10 SECONDS)
 	return TRUE
 
@@ -313,6 +334,10 @@
 	duration = 45 SECONDS
 	/// How much strength do we gain?
 	var/power_multiplier = 8
+	/// What colour was our hair?
+	var/previous_hair_colour
+	/// Light holder
+	var/atom/lightbulb
 
 /datum/status_effect/super_saiyan/on_apply()
 	. = ..()
@@ -320,11 +345,18 @@
 
 	new /obj/effect/temp_visual/explosion/fast(get_turf(owner))
 
-	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "alpha" = 0, "size" = 2.5))
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		previous_hair_colour = human_owner.hair_color
+		human_owner.set_haircolor(COLOR_GOLD, update = TRUE)
+
+	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_GOLD, "alpha" = 0, "size" = 2.5))
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter, alpha = 200, time = 0.25 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.25 SECONDS)
 	owner.saiyan_boost(multiplier = power_multiplier)
+
+	lightbulb = owner.mob_light(5, 1, COLOR_GOLD)
 
 	playsound(owner, 'sound/magic/charge.ogg', vol = 80)
 
@@ -344,9 +376,15 @@
 
 /datum/status_effect/super_saiyan/on_remove()
 	. = ..()
+	QDEL_NULL(lightbulb)
+
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter)
 	owner.remove_filter(GOKU_FILTER)
 	owner.saiyan_boost(multiplier = -power_multiplier)
+
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.set_haircolor(previous_hair_colour, update = TRUE)
 
 #undef GOKU_FILTER
