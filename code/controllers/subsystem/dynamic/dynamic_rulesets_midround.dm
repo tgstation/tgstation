@@ -55,63 +55,6 @@
 	list_observers = trim_list(GLOB.current_observers_list)
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/to_trim = list())
-	var/static/list/station_jobs = list(
-		JOB_ASSISTANT,
-		JOB_PRISONER,
-		//Command
-		JOB_CAPTAIN,
-		JOB_HEAD_OF_PERSONNEL,
-		JOB_HEAD_OF_SECURITY,
-		JOB_RESEARCH_DIRECTOR,
-		JOB_CHIEF_ENGINEER,
-		JOB_CHIEF_MEDICAL_OFFICER,
-		JOB_BRIDGE_ASSISTANT,
-		JOB_VETERAN_ADVISOR,
-		//Silicon
-		JOB_AI,
-		JOB_CYBORG,
-		JOB_PERSONAL_AI,
-		JOB_HUMAN_AI,
-		//Security
-		JOB_WARDEN,
-		JOB_DETECTIVE,
-		JOB_SECURITY_OFFICER,
-		JOB_SECURITY_OFFICER_MEDICAL,
-		JOB_SECURITY_OFFICER_ENGINEERING,
-		JOB_SECURITY_OFFICER_SCIENCE,
-		JOB_SECURITY_OFFICER_SUPPLY,
-		//Engineering
-		JOB_STATION_ENGINEER,
-		JOB_ATMOSPHERIC_TECHNICIAN,
-		//Medical
-		JOB_CORONER,
-		JOB_MEDICAL_DOCTOR,
-		JOB_PARAMEDIC,
-		JOB_CHEMIST,
-		JOB_VIROLOGIST,
-		//Science
-		JOB_SCIENTIST,
-		JOB_ROBOTICIST,
-		JOB_GENETICIST,
-		//Supply
-		JOB_QUARTERMASTER,
-		JOB_CARGO_TECHNICIAN,
-		JOB_CARGO_GORILLA,
-		JOB_SHAFT_MINER,
-		JOB_BITRUNNER,
-		//Service
-		JOB_BARTENDER,
-		JOB_BOTANIST,
-		JOB_COOK,
-		JOB_CHEF, // Alternate cook title.
-		JOB_JANITOR,
-		JOB_CLOWN,
-		JOB_MIME,
-		JOB_CURATOR,
-		JOB_LAWYER,
-		JOB_CHAPLAIN,
-		JOB_PSYCHOLOGIST
-	)
 	var/list/trimmed_list = to_trim.Copy()
 	for(var/mob/creature in trimmed_list)
 		if (!istype(creature, required_type))
