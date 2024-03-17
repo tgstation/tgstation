@@ -223,3 +223,6 @@
 
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
+
+	/// How much fasterer are we as a result of martial arts superpowers?
+	var/boost_movespeed = 0

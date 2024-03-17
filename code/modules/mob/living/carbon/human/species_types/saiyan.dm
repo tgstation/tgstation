@@ -1,8 +1,3 @@
-#define DAMAGE_BOOST 2
-#define DAMAGE_MULT 0.1
-#define DEFENCE_BOOST 0.05
-#define SPEED_BOOST 0.1
-#define HEALTH_BOOST 5
 #define SAIYAN_TAIL_MOOD "saiyan_humiliated"
 
 /datum/species/saiyan
@@ -32,8 +27,6 @@
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey/saiyan = "Monkey",
 	)
-	/// How much fasterer are we?
-	var/applied_movespeed = 0
 
 /datum/species/saiyan/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.set_haircolor("#292929", update = FALSE)
@@ -54,7 +47,12 @@
 
 /datum/species/saiyan/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, list(COMSIG_SAIYAN_SURVIVOR, COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_ATOM_AFTER_ATTACKEDBY))
+	UnregisterSignal(C, list(
+		COMSIG_ATOM_AFTER_ATTACKEDBY,
+		COMSIG_CARBON_GAIN_ORGAN,
+		COMSIG_CARBON_LOSE_ORGAN,
+		COMSIG_SAIYAN_SURVIVOR,
+	))
 
 /// If you take sharp damage someone might sever your tail
 /datum/species/saiyan/proc/check_tail_sever(mob/living/carbon/target, obj/item/weapon, mob/attacker, proximity_flag, click_parameters)
@@ -75,30 +73,7 @@
 /datum/species/saiyan/proc/on_survived_boost(mob/living/saiyan)
 	SIGNAL_HANDLER
 	to_chat(saiyan, span_notice("Your near-death experience grants you more strength!"))
-	power_up(saiyan)
-
-/// Increase our strength, wow
-/datum/species/saiyan/proc/power_up(mob/living/carbon/saiyan, var/multiplier = 1)
-	if (isnull(saiyan))
-		return
-
-	var/added_damage = DAMAGE_BOOST * multiplier
-	var/added_defence = DEFENCE_BOOST * multiplier
-	for (var/obj/item/bodypart/part as anything in saiyan.bodyparts)
-		if (!HAS_TRAIT(part, TRAIT_SAIYAN_STRENGTH))
-			continue
-		part.unarmed_damage_high += added_damage
-		part.unarmed_damage_low += added_damage
-		part.unarmed_effectiveness += added_damage // This is maybe stronger than increasing the damage tbqh
-		part.brute_modifier = max(0, part.brute_modifier - added_defence)
-		part.burn_modifier = max(0, part.burn_modifier - added_defence)
-
-	saiyan.maxHealth += HEALTH_BOOST * multiplier // Fuck knows if this actually does anything
-	var/datum/action/cooldown/mob_cooldown/ki_blast/blast = locate() in saiyan.actions
-	if (!isnull(blast))
-		blast.damage_modifier += DAMAGE_MULT * multiplier
-	applied_movespeed -= SPEED_BOOST * multiplier
-	saiyan.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/saiyan_speed, TRUE, applied_movespeed)
+	saiyan.saiyan_boost()
 
 /// When your tail is cut you get weaker
 /datum/species/saiyan/proc/on_tail_gained(mob/living/vegeta, obj/item/organ/tail)
@@ -108,7 +83,7 @@
 	if (!vegeta.mob_mood.has_mood_of_category(SAIYAN_TAIL_MOOD))
 		return
 	to_chat(vegeta, span_notice("As your tail returns, your strength returns too."))
-	power_up(vegeta, multiplier = 5)
+	vegeta.saiyan_boost(multiplier = 5)
 	vegeta.clear_mood_event(SAIYAN_TAIL_MOOD)
 
 /// If your tail is restored you return to original strength
@@ -117,7 +92,7 @@
 	if (!istype(tail, /obj/item/organ/external/tail/monkey/saiyan))
 		return
 	to_chat(vegeta, span_boldwarning("No! Your tail!!"))
-	power_up(vegeta, multiplier = -5)
+	vegeta.saiyan_boost(multiplier = -5)
 	vegeta.add_mood_event(SAIYAN_TAIL_MOOD, /datum/mood_event/saiyan_humiliated)
 	vegeta.Paralyze(10 SECONDS)
 	vegeta.adjust_confusion(1 MINUTES)
@@ -193,9 +168,4 @@
 	description = "Someone removed your Saiyan birthright... such an insult must not be tolerated."
 	mood_change = -4
 
-#undef DAMAGE_BOOST
-#undef DAMAGE_MULT
-#undef DEFENCE_BOOST
-#undef SPEED_BOOST
-#undef HEALTH_BOOST
 #undef SAIYAN_TAIL_MOOD

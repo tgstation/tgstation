@@ -1462,3 +1462,23 @@
 
 	var/damage = ((min_damage / part_count) + (max_damage / part_count)) / 2
 	return maxHealth * max(damage, 0.1)
+
+#define DAMAGE_BOOST 2
+#define DEFENCE_BOOST 0.05
+
+/mob/living/carbon/saiyan_boost(multiplier)
+	. = ..()
+	var/added_damage = DAMAGE_BOOST * multiplier
+	var/added_defence = DEFENCE_BOOST * multiplier
+
+	for (var/obj/item/bodypart/part as anything in bodyparts)
+		if (!HAS_TRAIT(part, TRAIT_SAIYAN_STRENGTH))
+			continue
+		part.unarmed_damage_high += added_damage
+		part.unarmed_damage_low += added_damage
+		part.unarmed_effectiveness += added_damage // This is maybe stronger than increasing the damage tbqh
+		part.brute_modifier = max(0, part.brute_modifier - added_defence)
+		part.burn_modifier = max(0, part.burn_modifier - added_defence)
+
+#undef DAMAGE_BOOST
+#undef DEFENCE_BOOST

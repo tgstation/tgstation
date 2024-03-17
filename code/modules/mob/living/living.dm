@@ -2676,3 +2676,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (power_level >= 9000)
 		return span_boldwarning("[p_Their()] power level is... What?! [power_level]?!?!")
 	return span_notice("[p_Their()] power level is [power_level].")
+
+#define DAMAGE_BOOST 2
+#define DAMAGE_MULT 0.1
+#define SPEED_BOOST 0.1
+#define HEALTH_BOOST 5
+
+/// Generally get stronger, as a saiyan would (or weaker if we pass a negative multiplier)
+/mob/living/proc/saiyan_boost(multiplier = 1)
+	maxHealth += HEALTH_BOOST * multiplier // Fuck knows if this actually does anything
+	var/datum/action/cooldown/mob_cooldown/ki_blast/blast = locate() in actions
+	if (!isnull(blast))
+		blast.damage_modifier += DAMAGE_MULT * multiplier
+	boost_movespeed -= SPEED_BOOST * multiplier
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/saiyan_speed, TRUE, boost_movespeed)
+
+	var/added_damage = DAMAGE_BOOST * multiplier
+	melee_damage_lower += added_damage
+	melee_damage_upper += added_damage
+
+#undef DAMAGE_BOOST
+#undef DAMAGE_MULT
+#undef SPEED_BOOST
+#undef HEALTH_BOOST

@@ -177,17 +177,86 @@
 	icon = 'icons/effects/saiyan_effects.dmi'
 	icon_state = "kamehameha"
 	base_icon_state = "kamehameha"
-	report_started = "holds their hands to their forehead!"
-	blinded_source = "flash of light!"
 
 /// Blinds people
 /datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare
 	name = "Solar Flare"
 	desc = "A surprising move of the Crane school, creating a blinding flash that can overpower even shaded glasses. Useful on opponents regardless of power level."
 	wait_delay = 1 SECONDS
+	report_started = "holds their hands to their forehead!"
+	blinded_source = "flash of light!"
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare/trigger_effect()
 	. = ..()
 	owner.say("Solar flare!!")
+
+/// Makes you stronger and stacks too. But watch out!
+/datum/action/cooldown/mob_cooldown/kaioken
+	name = "Kaio-ken Technique"
+	desc = "A technique taught by the powerful Kais of Otherworld, allows the user to multiply their ki at great personal risk. The effects can be stacked multiplicatively to greatly increase fighting strength, however overuse may cause immediate disintegration."
+	cooldown_time = 3 SECONDS
+	shared_cooldown = NONE
+	melee_cooldown_time = NONE
+	click_to_activate = FALSE
+	background_icon_state = "bg_demon"
+
+// This is basically handled entirely by the status effect
+/datum/action/cooldown/mob_cooldown/kaioken/Activate(mob/living/target)
+	target.apply_status_effect(/datum/status_effect/stacking/kaioken, 1)
+	StartCooldown()
+	return TRUE
+
+/datum/status_effect/stacking/kaioken
+	id = "kaioken"
+	stacks = 0
+	max_stacks = INFINITY // but good luck
+	consumed_on_threshold = FALSE
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH // Allows us to add one stack at a time by just applying the effect
+	duration = 10 SECONDS
+	stack_decay = 0
+	/// How much strength to add every time?
+	var/power_multiplier = 3
+	/// Percentage chance to die instantly, will be multiplied by current stacks
+	var/death_chance = 5
+
+/datum/status_effect/stacking/kaioken/on_apply()
+	. = ..()
+	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_RED, "alpha" = 0, "size" = 1))
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+
+/datum/status_effect/stacking/kaioken/on_remove()
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter)
+	owner.remove_filter(GOKU_FILTER)
+	owner.saiyan_boost(-power_multiplier * stacks)
+	return ..()
+
+/datum/status_effect/stacking/kaioken/refresh(effect, stacks_to_add)
+	. = ..()
+	add_stacks(stacks_to_add)
+
+/datum/status_effect/stacking/kaioken/add_stacks(stacks_added)
+	if (stacks_added == 0)
+		return
+	. = ..()
+	if (stacks == 0)
+		return
+	if (prob((stacks - 1) * death_chance))
+		owner.say("Kaio-AARGH!!")
+		owner.visible_message(span_boldwarning("[owner] vanishes in an intense flash of light!"))
+		owner.ghostize(can_reenter_corpse = FALSE)
+		owner.dust()
+		return
+	owner.saiyan_boost(power_multiplier)
+	if (stacks == 1)
+		owner.say("Kaio-ken!")
+		return
+	var/exclamations = ""
+	for (var/i in 1 to stacks)
+		exclamations += "!"
+	owner.say("Kaio-ken... times [convert_integer_to_words(stacks)][exclamations]")
 
 #undef GOKU_FILTER
