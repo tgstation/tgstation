@@ -194,11 +194,13 @@
 /datum/action/cooldown/mob_cooldown/kaioken
 	name = "Kaio-ken Technique"
 	desc = "A technique taught by the powerful Kais of Otherworld, allows the user to multiply their ki at great personal risk. The effects can be stacked multiplicatively to greatly increase fighting strength, however overuse may cause immediate disintegration."
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "tele"
+	background_icon_state = "bg_demon"
 	cooldown_time = 3 SECONDS
 	shared_cooldown = NONE
 	melee_cooldown_time = NONE
 	click_to_activate = FALSE
-	background_icon_state = "bg_demon"
 
 // This is basically handled entirely by the status effect
 /datum/action/cooldown/mob_cooldown/kaioken/Activate(mob/living/target)
