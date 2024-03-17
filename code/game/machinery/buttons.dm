@@ -228,7 +228,7 @@
 		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return
 
-	use_energy(5)
+	use_energy(5 JOULES)
 	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)
