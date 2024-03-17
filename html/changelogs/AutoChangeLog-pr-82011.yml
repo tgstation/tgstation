@@ -1,4 +1,0 @@
-author: "Bilbo367"
-delete-after: True
-changes:
-  - bugfix: "ID locking and unlocking work."

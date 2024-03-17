@@ -507,3 +507,55 @@
   xXPawnStarrXx:
   - image: added gags sprites for; Sailor dress, Evening gown, Cardigan skirts and
       striped dresses.
+2024-03-17:
+  ArcaneMusic:
+  - bugfix: Tramstation now has a pepperspray dispenser in it's science security outpost,
+      as with other security outposts.
+  - bugfix: Fixes the conveyor belts found on north star's boulder processing room
+      to all work when the lever is thrown.
+  Bilbo367:
+  - bugfix: ID locking and unlocking work.
+  FlufflesTheDog:
+  - bugfix: Psyker vision no longer causes infinitely worsening lag
+  Ghommie:
+  - rscadd: Added a collar bomb to the black market.
+  - rscadd: Added a possible kit to the special syndie bundle B, which also has uses
+      these collars.
+  - rscadd: Added 20+ modifiers to the deathmatch minigame, which can be enabled by
+      the host.
+  - rscadd: Ice cream and frozen treats now have a chilling effect.
+  - rscadd: You can add a scoop of ice cream on waffles.
+  - balance: added an action speed modifier to the generic food haste effect (you
+      do things, and not just run, an itsy bitsy faster)
+  - balance: The pro skateboard and hoverboard are now faster.
+  - balance: The improvised skateboard is a nick more unstable than the standard,
+      so the two aren't exactly the same.
+  - rscadd: Riding a skateboard on walk intent will prevent you from crashing into
+      things, at the cost of speed.
+  - rscadd: 'hoverboards now actually hovers and can be used even in zero g. There
+      are a caveat to it: It cannot be ridden on open space gaps deeper than one level
+      or actual space, unless there''re objects that prevent falls, like lattice or
+      catwalks.'
+  Jacquerel:
+  - balance: If you work out under heavier-than-earth gravity, you will get gains
+      faster.
+  JohnFulpWillard:
+  - bugfix: The captain's safe is no longer on the wall, therefore cannot be cheesed
+      by breaking the wall it sits on.
+  - bugfix: Tearing down a wall that a safe is on now drops the safe with its contents,
+      rather than dropping the contents onto the floor. The safe's contents cannot
+      be interacted with while it's not on a wall.
+  - bugfix: Security camera consoles no longer have infinite range.
+  - bugfix: Human AI now closes regular AI job positions.
+  Melbert:
+  - rscadd: MODsuits now use the "suit charge" HUD element to show how much charge
+      they have left, rather than a screen alert
+  Rhials:
+  - qol: Posters now return to your hand when the hanging process is cancelled, or
+      they are snipped down.
+  - qol: Abductor posters can now only be cut down with abductor-tier wirecutters.
+  SyncIt21:
+  - bugfix: Lathes don't hang if materials run out mid printing. Also displays message
+      if materials are put on hold while printing
+  Tattle:
+  - rscadd: Getting shrunk makes you talk small

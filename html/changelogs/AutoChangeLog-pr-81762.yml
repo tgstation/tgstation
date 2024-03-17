@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "The captain's safe is no longer on the wall, therefore cannot be cheesed by breaking the wall it sits on."
-  - bugfix: "Tearing down a wall that a safe is on now drops the safe with its contents, rather than dropping the contents onto the floor. The safe's contents cannot be interacted with while it's not on a wall."

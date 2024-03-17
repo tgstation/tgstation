@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "The pro skateboard and hoverboard are now faster."
-  - balance: "The improvised skateboard is a nick more unstable than the standard, so the two aren't exactly the same."
-  - rscadd: "Riding a skateboard on walk intent will prevent you from crashing into things, at the cost of speed."
-  - rscadd: "hoverboards now actually hovers and can be used even in zero g. There are a caveat to it: It cannot be ridden on open space gaps deeper than one level or actual space, unless there're objects that prevent falls, like lattice or catwalks."
