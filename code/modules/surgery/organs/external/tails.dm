@@ -194,7 +194,7 @@
 /// When we move check if we are exposed to space
 /obj/item/organ/external/tail/monkey/saiyan/proc/on_moved()
 	SIGNAL_HANDLER
-	if (isnull(owner))
+	if (isnull(owner) || owner.stat == DEAD)
 		return
 	if (is_space_exposed_turf(get_turf(src)))
 		go_ape(owner)

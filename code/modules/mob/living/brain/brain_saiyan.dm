@@ -261,6 +261,7 @@
 		exclamations += "!"
 	owner.say("Kaio-ken... times [convert_integer_to_words(stacks)][exclamations]")
 
+/// Achieve the legend
 /datum/action/cooldown/mob_cooldown/super_saiyan
 	name = "Power Up"
 	desc = "Concentrate your energy, surpass your limits, and go even further beyond!"
@@ -316,7 +317,6 @@
 /datum/status_effect/super_saiyan/on_apply()
 	. = ..()
 	to_chat(owner, span_notice("Your power surges!"))
-
 
 	new /obj/effect/temp_visual/explosion/fast(get_turf(owner))
 

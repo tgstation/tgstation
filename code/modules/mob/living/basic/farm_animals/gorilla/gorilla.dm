@@ -165,6 +165,7 @@
 	desc = "A large and destructive ape-like creature, capable of surviving the depths of space and discharging energy beams."
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
+	basic_mob_flags = DEL_ON_DEATH
 
 /mob/living/basic/gorilla/saiyan/Initialize(mapload)
 	. = ..()
@@ -176,6 +177,21 @@
 		cooldown_time = 0.5 SECONDS, \
 	)
 	RegisterSignal(src, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(check_tail_sever))
+	update_appearance(UPDATE_ICON)
+
+/mob/living/basic/gorilla/saiyan/update_icon_state()
+	. = ..()
+	if (stat == DEAD)
+		return
+	icon_state = "great_ape"
+
+/mob/living/basic/gorilla/saiyan/death(gibbed)
+	if (has_status_effect(/datum/status_effect/shapechange_mob))
+		return ..()
+	var/mob/living/corpse = spawn_fake_saiyan()
+	corpse.death()
+	corpse.setBruteLoss(maxHealth, TRUE, TRUE)
+	return ..()
 
 /// Cut off his tail! It's the only way!
 /mob/living/basic/gorilla/saiyan/proc/check_tail_sever(mob/living/target, obj/item/weapon, mob/attacker, proximity_flag, click_parameters)
@@ -191,9 +207,7 @@
 	var/datum/status_effect/shapechange_mob/shapechange_status = has_status_effect(/datum/status_effect/shapechange_mob)
 	var/mob/living/carbon/saiyan
 	if (isnull(shapechange_status))
-		saiyan = new /mob/living/carbon/human/species/saiyan(loc)
-		saiyan.name = name
-		saiyan.real_name = name
+		saiyan = spawn_fake_saiyan()
 	else
 		saiyan = shapechange_status.caster_mob
 
@@ -204,5 +218,12 @@
 
 	remove_status_effect(/datum/status_effect/shapechange_mob)
 	qdel(src)
+
+/// Create a fake saiyan
+/mob/living/basic/gorilla/saiyan/proc/spawn_fake_saiyan()
+	var/mob/saiyan = new /mob/living/carbon/human/species/saiyan(loc)
+	saiyan.name = name
+	saiyan.real_name = name
+	return saiyan
 
 #undef GORILLA_HANDS_LAYER
