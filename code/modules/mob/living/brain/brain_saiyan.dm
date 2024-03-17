@@ -261,4 +261,92 @@
 		exclamations += "!"
 	owner.say("Kaio-ken... times [convert_integer_to_words(stacks)][exclamations]")
 
+/datum/action/cooldown/mob_cooldown/super_saiyan
+	name = "Power Up"
+	desc = "Concentrate your energy, surpass your limits, and go even further beyond!"
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "sacredflame"
+	background_icon_state = "bg_demon"
+	cooldown_time = 4 MINUTES
+	cooldown_rounding = 0
+	shared_cooldown = NONE
+	melee_cooldown_time = NONE
+	click_to_activate = FALSE
+	/// How long does it take to assume your next form?
+	var/charge_time = 30 SECONDS
+	/// Storage for our scream timer
+	var/yell_timer
+
+/datum/action/cooldown/mob_cooldown/super_saiyan/Activate(mob/living/target)
+	StartCooldown(360 SECONDS)
+
+	target.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "alpha" = 0, "size" = 1))
+	var/filter = target.get_filter(GOKU_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+	yell()
+
+	owner.balloon_alert(owner, "charging...")
+	var/succeeded = do_after(target, delay = charge_time, target = target)
+
+	deltimer(yell_timer)
+	animate(filter)
+	target.remove_filter(GOKU_FILTER)
+
+	if (succeeded)
+		charge_time = max(6 SECONDS, charge_time - 2 SECONDS)
+		target.apply_status_effect(/datum/status_effect/super_saiyan)
+		StartCooldown()
+		return TRUE
+	StartCooldown(10 SECONDS)
+	return TRUE
+
+/// Aaaaaaa Aaaaaaaa aaaaaa AAAAAAAa a AaAAAAAA aAAAAAAAAAAAAAAAAAAAAAAA!!!!
+/datum/action/cooldown/mob_cooldown/super_saiyan/proc/yell()
+	owner.emote("scream")
+	yell_timer = addtimer(CALLBACK(src, PROC_REF(yell)), rand(1 SECONDS, 3 SECONDS), TIMER_DELETE_ME | TIMER_STOPPABLE)
+
+/datum/status_effect/super_saiyan
+	id = "super_saiyan"
+	alert_type = null
+	duration = 45 SECONDS
+	/// How much strength do we gain?
+	var/power_multiplier = 8
+
+/datum/status_effect/super_saiyan/on_apply()
+	. = ..()
+	to_chat(owner, span_notice("Your power surges!"))
+
+
+	new /obj/effect/temp_visual/explosion/fast(get_turf(owner))
+
+	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "alpha" = 0, "size" = 2.5))
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter, alpha = 200, time = 0.25 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.25 SECONDS)
+	owner.saiyan_boost(multiplier = power_multiplier)
+
+	playsound(owner, 'sound/magic/charge.ogg', vol = 80)
+
+	var/list/destroy_turfs = circle_range_turfs(center = owner, radius = 2)
+	for (var/turf/check_turf as anything in destroy_turfs)
+		if (!isfloorturf(check_turf) || isindestructiblefloor(check_turf))
+			continue
+		if (prob(75))
+			continue
+		check_turf.break_tile()
+
+	var/transform_area = get_area(owner)
+	for(var/mob/living/player as anything in GLOB.alive_player_list)
+		if (player == owner || !HAS_TRAIT(player, TRAIT_MARTIAL_VISION))
+			continue
+		to_chat(player, span_warning("You sense an incredible power level coming from the direction of the [transform_area]!"))
+
+/datum/status_effect/super_saiyan/on_remove()
+	. = ..()
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter)
+	owner.remove_filter(GOKU_FILTER)
+	owner.saiyan_boost(multiplier = -power_multiplier)
+
 #undef GOKU_FILTER

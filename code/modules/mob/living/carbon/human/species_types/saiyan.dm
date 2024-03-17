@@ -38,6 +38,27 @@
 	//	return TRUE
 	// return ..()
 
+/datum/species/saiyan/get_scream_sound(mob/living/carbon/human/human)
+	if(human.physique == MALE)
+		if(prob(1))
+			return 'sound/voice/human/wilhelm_scream.ogg'
+		return pick(
+			'sound/voice/human/malescream_1.ogg',
+			'sound/voice/human/malescream_2.ogg',
+			'sound/voice/human/malescream_3.ogg',
+			'sound/voice/human/malescream_4.ogg',
+			'sound/voice/human/malescream_5.ogg',
+			'sound/voice/human/malescream_6.ogg',
+		)
+
+	return pick(
+		'sound/voice/human/femalescream_1.ogg',
+		'sound/voice/human/femalescream_2.ogg',
+		'sound/voice/human/femalescream_3.ogg',
+		'sound/voice/human/femalescream_4.ogg',
+		'sound/voice/human/femalescream_5.ogg',
+	)
+
 /datum/species/saiyan/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 	RegisterSignal(human_who_gained_species, COMSIG_SAIYAN_SURVIVOR, PROC_REF(on_survived_boost))
