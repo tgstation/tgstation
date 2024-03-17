@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Posters now return to your hand when the hanging process is cancelled, or they are snipped down."
-  - qol: "Abductor posters can now only be cut down with abductor-tier wirecutters."
