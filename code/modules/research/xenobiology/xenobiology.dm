@@ -709,7 +709,7 @@
 /obj/item/slimepotion/slime/sentience/AltClick(mob/living/user)
 	if(!can_interact(user))
 		return
-	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", "[potion_reason]", multiline = TRUE)
+	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
 	if(being_used || !isliving(dumb_mob))
