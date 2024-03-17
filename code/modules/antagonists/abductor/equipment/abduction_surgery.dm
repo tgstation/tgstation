@@ -1,16 +1,25 @@
 /datum/surgery/organ_extraction
 	name = "Experimental organ replacement"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/extract_organ, /datum/surgery_step/gland_insert)
 	possible_locs = list(BODY_ZONE_CHEST)
-	ignore_clothes = 1
+	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/extract_organ,
+		/datum/surgery_step/gland_insert,
+	)
 
 /datum/surgery/organ_extraction/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(user))
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id == SPECIES_ABDUCTOR)
+	if(!..())
+		return FALSE
+	if(isabductor(user))
 		return TRUE
-	for(var/obj/item/implant/abductor/A in H.implants)
+	var/mob/living/non_abductor = user
+	if(locate(/obj/item/implant/abductor) in non_abductor.implants)
 		return TRUE
 	return FALSE
 
@@ -23,7 +32,7 @@
 	var/list/organ_types = list(/obj/item/organ/internal/heart)
 
 /datum/surgery_step/extract_organ/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/atom/A in target.internal_organs)
+	for(var/atom/A in target.organs)
 		if(A.type in organ_types)
 			IC = A
 			break

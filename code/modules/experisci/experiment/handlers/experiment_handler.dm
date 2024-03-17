@@ -38,6 +38,7 @@
 	disallowed_traits = null,
 	config_flags = null,
 	datum/callback/start_experiment_callback = null,
+	list/experiment_signals
 )
 	. = ..()
 	if(!ismovable(parent))
@@ -49,37 +50,29 @@
 	src.config_flags = config_flags
 	src.start_experiment_callback = start_experiment_callback
 
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
-		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/ignored_handheld_experiment_attempt)
-	if(istype(parent, /obj/machinery/destructive_scanner))
-		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
-	if(istype(parent, /obj/machinery/computer/operating))
-		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, .proc/try_run_dissection_experiment)
+	for(var/signal in experiment_signals)
+		RegisterSignal(parent, signal, experiment_signals[signal])
 
 	// Determine UI display mode
 	switch(config_mode)
 		if(EXPERIMENT_CONFIG_ATTACKSELF)
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(configure_experiment))
 		if(EXPERIMENT_CONFIG_ALTCLICK)
-			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+			RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(configure_experiment))
 		if(EXPERIMENT_CONFIG_CLICK)
-			RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, .proc/configure_experiment_click)
+			RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, PROC_REF(configure_experiment_click))
 		if(EXPERIMENT_CONFIG_UI)
-			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
+			RegisterSignal(parent, COMSIG_UI_ACT, PROC_REF(ui_handle_experiment))
 
 	// Auto connect to the first visible techweb (useful for always active handlers)
 	// Note this won't work at the moment for non-machines that have been included
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
-		var/list/found_servers = get_available_servers(parent)
-		var/obj/machinery/rnd/server/selected_server = found_servers.len ? found_servers[1] : null
-		if (selected_server)
-			link_techweb(selected_server.stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_web, parent)
 
 	GLOB.experiment_handlers += src
 
-/datum/component/experiment_handler/Destroy(force, silent)
+/datum/component/experiment_handler/Destroy(force)
 	. = ..()
 	GLOB.experiment_handlers -= src
 
@@ -88,9 +81,9 @@
  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
-	if (!should_run_handheld_experiment(source, target, user, params))
+	if (!should_run_handheld_experiment(source, target, user))
 		return
-	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
+	INVOKE_ASYNC(src, PROC_REF(try_run_handheld_experiment_async), source, target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /**
@@ -98,17 +91,23 @@
  */
 /datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
 	SIGNAL_HANDLER
-	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
+	if (!proximity_flag)
 		return
+	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
+	if ((selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || config_flags & EXPERIMENT_CONFIG_SILENT_FAIL)
+		return .
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
+	return .
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
  */
-/datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user)
 	// Check that there is actually an experiment selected
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
+		return
+	if (!linked_web)
 		return
 
 	// Determine if this experiment is actionable with this target
@@ -124,16 +123,17 @@
 /**
  * This proc exists because Jared Fogle really likes async
  */
-/datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user)
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
-		to_chat(user, span_notice("You do not have an experiment selected!"))
+		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
+			to_chat(user, span_notice("You do not have an experiment selected!"))
 		return
-	if(!do_after(user, 1 SECONDS, target = target))
+	if(!(config_flags & EXPERIMENT_CONFIG_IMMEDIATE_ACTION) && !do_after(user, 1 SECONDS, target = target))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, span_notice("You scan [target]."))
-	else
+	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
@@ -145,8 +145,9 @@
 	SIGNAL_HANDLER
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
-		playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(our_scanner, span_notice("No experiment selected!"))
+		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
+			playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
+			to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
 	for(var/scan_target in scanned_atoms)
@@ -156,19 +157,18 @@
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
 		to_chat(our_scanner, span_notice("The scan succeeds."))
-	else
+	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 
-/// Hooks on a successful dissection experiment
-/datum/component/experiment_handler/proc/try_run_dissection_experiment(obj/source, mob/living/target)
+/// Hooks on a successful autopsy experiment
+/datum/component/experiment_handler/proc/try_run_autopsy_experiment(obj/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	if (action_experiment(source, target))
 		playsound(source, 'sound/machines/ping.ogg', 25)
-	else
-		playsound(source, 'sound/machines/buzz-sigh.ogg', 25)
-		source.say("The dissection did not result in anything, either prior dissections have not been complete, or this one has already been researched.")
+		source.say("New unique autopsy successfully catalogued.")
+
 
 /**
  * Announces a message to all experiment handlers
@@ -177,8 +177,9 @@
  * * message - The message to announce
  */
 /datum/component/experiment_handler/proc/announce_message_to_all(message)
-	for(var/experiment in GLOB.experiment_handlers)
-		var/datum/component/experiment_handler/experi_handler = experiment
+	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
+		if(experi_handler.linked_web != linked_web)
+			continue
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 
@@ -225,7 +226,7 @@
 	SIGNAL_HANDLER
 	switch(action)
 		if("open_experiments")
-			INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
+			INVOKE_ASYNC(src, PROC_REF(configure_experiment), null, usr)
 
 /**
  * Attempts to show the user the experiment configuration panel
@@ -235,7 +236,7 @@
  */
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/ui_interact, user)
+	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /**
  * Attempts to show the user the experiment configuration panel
@@ -245,7 +246,7 @@
  */
 /datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, /datum/proc/ui_interact, user)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /**
  * Attempts to link this experiment_handler to a provided techweb
@@ -258,6 +259,7 @@
 /datum/component/experiment_handler/proc/link_techweb(datum/techweb/new_web)
 	if (new_web == linked_web)
 		return
+	selected_experiment?.on_unselected(src)
 	selected_experiment = null
 	linked_web = new_web
 
@@ -265,6 +267,7 @@
  * Unlinks this handler from the selected techweb
  */
 /datum/component/experiment_handler/proc/unlink_techweb()
+	selected_experiment?.on_unselected(src)
 	selected_experiment = null
 	linked_web = null
 
@@ -275,32 +278,16 @@
  * * experiment - The experiment to attempt to link to
  */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
-	if (experiment && can_select_experiment(experiment))
+	if (can_select_experiment(experiment))
 		selected_experiment = experiment
+		selected_experiment.on_selected(src)
 
 /**
  * Unlinks this handler from the selected experiment
  */
 /datum/component/experiment_handler/proc/unlink_experiment()
+	selected_experiment?.on_unselected(src)
 	selected_experiment = null
-
-/**
- * Get rnd servers that are on the same z-level or the same station as the experiment source
- *
- * Arguments:
- * * turf_source - The turf where the experiment conducted
- */
-/datum/component/experiment_handler/proc/get_available_servers(turf/turf_source = null)
-	if (!turf_source)
-		turf_source = get_turf(parent)
-	var/list/local_servers = list()
-	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
-		var/turf/turf_server = get_turf(server)
-		if (!turf_source || !turf_server)
-			break
-		if (turf_source.z == turf_server.z || (SSmapping.level_trait(turf_source.z, ZTRAIT_STATION) && SSmapping.level_trait(turf_server.z, ZTRAIT_STATION)))
-			local_servers += server
-	return local_servers
 
 /**
  * Checks if an experiment is valid to be selected by this handler
@@ -314,31 +301,19 @@
 		return FALSE
 
 	// Check against the list of allowed experimentors
-	if (experiment.allowed_experimentors && experiment.allowed_experimentors.len)
-		var/matched = FALSE
-		for (var/experimentor in experiment.allowed_experimentors)
-			if (istype(parent, experimentor))
-				matched = TRUE
-				break
-		if (!matched)
-			return FALSE
+	if (length(experiment.allowed_experimentors) && !is_type_in_list(parent, experiment.allowed_experimentors))
+		return FALSE
 
 	// Check that this experiment is visible currently
-	if (!linked_web || !(experiment in linked_web.available_experiments))
+	if (!(experiment in linked_web?.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted
-	for (var/badsci in blacklisted_experiments)
-		if (istype(experiment, badsci))
-			return FALSE
+	if(is_type_in_list(experiment, blacklisted_experiments))
+		return FALSE
 
-	// Check against the allowed experiment types
-	for (var/goodsci in allowed_experiments)
-		if (istype(experiment, goodsci))
-			return TRUE
-
-	// If we haven't returned yet then this shouldn't be allowed
-	return FALSE
+	// Finally, check against the allowed experiment types
+	return is_type_in_list(experiment, allowed_experiments)
 
 /datum/component/experiment_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -349,27 +324,34 @@
 
 /datum/component/experiment_handler/ui_data(mob/user)
 	. = list(
-		"always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE,
-		"has_start_callback" = !isnull(start_experiment_callback))
-	.["servers"] = list()
-	for (var/obj/machinery/rnd/server/server in get_available_servers())
+		"always_active" = (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE),
+		"has_start_callback" = !isnull(start_experiment_callback),
+	)
+	.["techwebs"] = list()
+	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
+		if(!length(techwebs.techweb_servers)) //no servers, we don't care
+			if(techwebs == linked_web) //disconnect if OUR techweb lost their servers.
+				unlink_techweb()
+			continue
+		if(!length(SSresearch.find_valid_servers(get_turf(parent), techwebs)))
+			continue
 		var/list/data = list(
-			name = server.name,
-			web_id = server.stored_research?.id,
-			web_org = server.stored_research?.organization,
-			location = get_area(server),
-			selected = !isnull(linked_web) && server.stored_research == linked_web,
-			ref = REF(server)
+			web_id = techwebs.id,
+			web_org = techwebs.organization,
+			selected = (techwebs == linked_web),
+			ref = REF(techwebs),
+			all_servers = techwebs.techweb_servers,
 		)
-		.["servers"] += list(data)
+		.["techwebs"] += list(data)
 	.["experiments"] = list()
 	if (linked_web)
-		for (var/datum/experiment/experiment in linked_web.available_experiments)
+		for (var/datum/experiment/experiment as anything in linked_web.available_experiments)
+			if(!can_select_experiment(experiment))
+				continue
 			var/list/data = list(
 				name = experiment.name,
 				description = experiment.description,
 				tag = experiment.exp_tag,
-				selectable = can_select_experiment(experiment),
 				selected = selected_experiment == experiment,
 				progress = experiment.check_progress(),
 				performance_hint = experiment.performance_hint,
@@ -384,9 +366,9 @@
 	switch (action)
 		if ("select_server")
 			. = TRUE
-			var/obj/machinery/rnd/server/server = locate(params["ref"])
-			if (server)
-				link_techweb(server.stored_research)
+			var/datum/techweb/new_techweb = locate(params["ref"])
+			if (new_techweb)
+				link_techweb(new_techweb)
 				return
 		if ("clear_server")
 			. = TRUE

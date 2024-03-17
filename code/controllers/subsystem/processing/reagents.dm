@@ -4,21 +4,20 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 	name = "Reagents"
 	init_order = INIT_ORDER_REAGENTS
 	priority = FIRE_PRIORITY_REAGENTS
-	wait = 0.25 SECONDS //You might think that rate_up_lim has to be set to half, but since everything is normalised around delta_time, it automatically adjusts it to be per second. Magic!
+	wait = 0.25 SECONDS //You might think that rate_up_lim has to be set to half, but since everything is normalised around seconds_per_tick, it automatically adjusts it to be per second. Magic!
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	///What time was it when we last ticked
 	var/previous_world_time = 0
 
 /datum/controller/subsystem/processing/reagents/Initialize()
-	. = ..()
 	//So our first step isn't insane
 	previous_world_time = world.time
 	///Blacklists these reagents from being added to the master list. the exact type only. Children are not blacklisted.
 	GLOB.fake_reagent_blacklist = list(/datum/reagent/medicine/c2, /datum/reagent/medicine, /datum/reagent/reaction_agent)
 	//Build GLOB lists - see holder.dm
 	build_chemical_reactions_lists()
-	return
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/processing/reagents/fire(resumed = FALSE)
 	if (!resumed)

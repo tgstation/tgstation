@@ -15,7 +15,12 @@
 
 /obj/item/toy/cards/deck/blank/Initialize(mapload)
 	. = ..()
-	for(var/i in 1 to decksize)
-		var/obj/item/toy/singlecard/blank_card = new (src, "blank card", src)
-		blank_card.blank = TRUE
-		cards += blank_card
+
+	for(var/_ in 1 to decksize)
+		initial_cards += /datum/deck_card/blank
+
+/datum/deck_card/blank
+	name = "blank card"
+
+/datum/deck_card/blank/update_card(obj/item/toy/singlecard/card)
+	card.blank = TRUE

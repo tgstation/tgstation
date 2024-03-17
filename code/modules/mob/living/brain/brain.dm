@@ -1,6 +1,5 @@
 /mob/living/brain
 	var/obj/item/mmi/container = null
-	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
@@ -16,9 +15,14 @@
 		OB.brainmob = src
 		forceMove(OB)
 	if(!container?.mecha) //Unless inside a mecha, brains are rather helpless.
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
+
+/mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	var/obj/item/organ/internal/brain/brain_loc = loc
+	if(brain_loc && isnull(new_turf) && brain_loc.owner) //we're actively being put inside a new body.
+		return ..(old_turf, get_turf(brain_loc.owner), same_z_layer, notify_contents)
+	return ..()
 
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
@@ -28,8 +32,8 @@
 
 /mob/living/brain/Destroy()
 	if(key) //If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
-		if(stat!=DEAD) //If not dead.
-			death(1) //Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
+		if(stat != DEAD)
+			death(TRUE)
 		if(mind) //You aren't allowed to return to brains that don't exist
 			mind.set_current(null)
 		ghostize() //Ghostize checks for key so nothing else is necessary.
@@ -37,6 +41,15 @@
 	QDEL_NULL(stored_dna)
 	return ..()
 
+/// Override parent here because... the blind message doesn't really work given what's happen when a brain suicides. Can't hear a brain going grey. So, we omit the "blind" message.
+/mob/living/brain/send_applicable_messages()
+	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()))
+
+/mob/living/brain/get_visible_suicide_message()
+	return "[src]'s brain is growing dull and lifeless. [p_They()] look[p_s()] like [p_theyve()] lost the will to live."
+
+/mob/living/brain/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE) // we don't really care about applying damage to the brain mob and is just needless work.
+	return FALSE
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return FALSE
@@ -86,8 +99,6 @@
 		var/obj/vehicle/sealed/mecha/M = container.mecha
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
-	if (client && ranged_ability?.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/brain/proc/get_traumas()
 	. = list()

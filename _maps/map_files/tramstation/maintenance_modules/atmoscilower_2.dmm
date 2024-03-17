@@ -1,0 +1,1159 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"ce" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"cq" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"dr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"dH" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"dK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/ladder,
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"dU" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"dY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"eO" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"hk" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"hP" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"jx" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/starboard/lesser)
+"ku" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/tile/catwalk_tile{
+	amount = 15
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"kI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"lw" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"lG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"nt" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"oU" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"oV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"qG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"rj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"sa" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"sx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/item/stack/sheet/iron{
+	amount = 2
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"sJ" = (
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/box,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"uF" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"xD" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"xF" = (
+/obj/item/plate{
+	pixel_x = -7;
+	pixel_y = -10
+	},
+/obj/item/food/sandwich/cheese/grilled{
+	pixel_x = -5;
+	pixel_y = -9
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"yl" = (
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"yY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"zB" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"Ar" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"AY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Cj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"CI" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"CX" = (
+/turf/template_noop,
+/area/template_noop)
+"Dw" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"DJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Eb" = (
+/obj/item/storage/bag/ore,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"EA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"EY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Fh" = (
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Gc" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/box,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Gr" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"GQ" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"GW" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/tile/iron/smooth{
+	amount = 15
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Hn" = (
+/obj/structure/rack,
+/obj/item/shovel{
+	pixel_x = -5
+	},
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/obj/item/storage/bag/ore,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Hz" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"HJ" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/starboard/lesser)
+"Iu" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 20;
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/stack/rods/twentyfive,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"KP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Lu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"LS" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/sheet/iron{
+	amount = 2
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"MO" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/lesser)
+"Ni" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Nn" = (
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"NV" = (
+/obj/structure/chair/stool/directional/east,
+/mob/living/basic/lizard{
+	dir = 4;
+	name = "Takes-Their-Mandated-Breaks"
+	},
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
+	pixel_x = 11;
+	pixel_y = 8
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"OK" = (
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"Pl" = (
+/obj/item/flashlight/flare,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"Qz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"QF" = (
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"Rw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"SB" = (
+/obj/structure/railing/corner,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"Tq" = (
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"UB" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"VC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"VX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Ys" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+
+(1,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+CX
+qG
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(2,1,1) = {"
+CX
+CX
+CX
+CX
+MO
+MO
+VX
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(3,1,1) = {"
+CX
+CX
+CX
+CX
+MO
+bG
+qG
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(4,1,1) = {"
+CX
+CX
+CX
+CX
+MO
+GQ
+DJ
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(5,1,1) = {"
+CX
+CX
+CX
+CX
+MO
+AY
+Cj
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(6,1,1) = {"
+Dw
+Dw
+Dw
+Dw
+MO
+GQ
+Lu
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(7,1,1) = {"
+Dw
+Fh
+Dw
+hk
+MO
+GQ
+Lu
+nt
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(8,1,1) = {"
+hk
+hk
+hk
+hk
+GQ
+nt
+Lu
+cq
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(9,1,1) = {"
+hk
+hk
+hk
+hk
+LS
+OK
+Lu
+nt
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(10,1,1) = {"
+hk
+hk
+hk
+hk
+OK
+cq
+Lu
+OK
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+"}
+(11,1,1) = {"
+Dw
+Hn
+hk
+hk
+OK
+nt
+Lu
+OK
+nt
+nt
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
+CX
+CX
+"}
+(12,1,1) = {"
+Dw
+Ar
+hk
+hk
+ce
+uF
+Lu
+lw
+nt
+SB
+dH
+oU
+HJ
+HJ
+HJ
+Dw
+CX
+CX
+"}
+(13,1,1) = {"
+Dw
+Ar
+hk
+hk
+ce
+GQ
+Lu
+nt
+SB
+dU
+sJ
+xD
+nt
+nt
+HJ
+Dw
+CX
+CX
+"}
+(14,1,1) = {"
+Dw
+Dw
+hk
+hk
+Gr
+nt
+sa
+EY
+EY
+EY
+dK
+jx
+HJ
+HJ
+HJ
+Dw
+CX
+CX
+"}
+(15,1,1) = {"
+Dw
+Dw
+Dw
+hk
+OK
+OK
+Lu
+OK
+hP
+Hz
+Gc
+xD
+HJ
+MO
+MO
+MO
+CX
+CX
+"}
+(16,1,1) = {"
+Dw
+Dw
+hk
+hk
+OK
+cq
+Lu
+nt
+nt
+zB
+eO
+UB
+nt
+AY
+lG
+yY
+CX
+CX
+"}
+(17,1,1) = {"
+Dw
+hk
+hk
+hk
+OK
+uF
+sa
+Ni
+Ni
+sx
+Ni
+Ni
+Ni
+EA
+yY
+yY
+CX
+CX
+"}
+(18,1,1) = {"
+Fh
+hk
+hk
+hk
+MO
+GW
+Lu
+MO
+MO
+Gr
+nt
+nt
+GQ
+MO
+MO
+MO
+CX
+CX
+"}
+(19,1,1) = {"
+Fh
+hk
+hk
+hk
+MO
+ku
+Lu
+MO
+HJ
+HJ
+HJ
+HJ
+nt
+nt
+HJ
+Dw
+Dw
+Dw
+"}
+(20,1,1) = {"
+Dw
+hk
+hk
+hk
+MO
+AY
+VX
+MO
+Dw
+Dw
+Dw
+HJ
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
+"}
+(21,1,1) = {"
+Dw
+Dw
+Dw
+Dw
+MO
+CI
+VC
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+"}
+(22,1,1) = {"
+CX
+CX
+CX
+CX
+MO
+CI
+qG
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+"}
+(23,1,1) = {"
+CX
+CX
+CX
+CX
+MO
+MO
+Rw
+MO
+HJ
+HJ
+HJ
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
+Dw
+"}
+(24,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+Qz
+MO
+HJ
+Iu
+HJ
+HJ
+Nn
+HJ
+HJ
+Dw
+Dw
+Dw
+"}
+(25,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+dY
+MO
+nt
+nt
+NV
+HJ
+nt
+QF
+HJ
+Dw
+Dw
+Dw
+"}
+(26,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+Qz
+Gr
+nt
+Pl
+xF
+nt
+Nn
+Eb
+HJ
+Dw
+Dw
+Dw
+"}
+(27,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+dr
+GQ
+cq
+OK
+nt
+nt
+nt
+HJ
+HJ
+Dw
+Dw
+Dw
+"}
+(28,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+yl
+kI
+GQ
+OK
+nt
+Tq
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
+Dw
+"}
+(29,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+oV
+MO
+HJ
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+"}
+(30,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+oV
+MO
+MO
+MO
+MO
+MO
+MO
+MO
+MO
+Dw
+Dw
+Dw
+"}
+(31,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+MO
+Ys
+rj
+rj
+rj
+rj
+rj
+rj
+KP
+MO
+Dw
+Dw
+Dw
+"}
+(32,1,1) = {"
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+yl
+CX
+CX
+CX
+CX
+"}

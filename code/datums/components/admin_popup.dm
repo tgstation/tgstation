@@ -16,17 +16,17 @@
 
 	create_notice()
 
-	RegisterSignal(
+	RegisterSignals(
 		ticket,
 		list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
-			COMSIG_PARENT_QDELETING,
+			COMSIG_QDELETING,
 		),
-		.proc/delete_self,
+		PROC_REF(delete_self),
 	)
 
-/datum/component/admin_popup/Destroy(force, silent)
+/datum/component/admin_popup/Destroy(force)
 	var/client/parent_client = parent
 
 	parent_client?.screen -= admin_popup
@@ -36,7 +36,7 @@
 		UnregisterSignal(ticket, list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
-			COMSIG_PARENT_QDELETING,
+			COMSIG_QDELETING,
 		))
 
 		ticket = null
@@ -83,7 +83,7 @@
 	/// The `world.time` when the last color update occurred.
 	var/last_update_time = 0
 
-/atom/movable/screen/admin_popup/Initialize(mapload, ...)
+/atom/movable/screen/admin_popup/Initialize(mapload, datum/hud/hud_owner, ...)
 	. = ..()
 
 	START_PROCESSING(SSobj, src)
@@ -93,7 +93,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/atom/movable/screen/admin_popup/process(delta_time)
+/atom/movable/screen/admin_popup/process(seconds_per_tick)
 	update_text()
 
 /atom/movable/screen/admin_popup/proc/update_text()
@@ -104,9 +104,9 @@
 
 	last_color_index = (last_color_index % colors.len) + 1
 
-	var/message = "<b style='color: [colors[last_color_index]]; text-align: center; font-size: 32px'>"
-	message += "HEY! An admin is trying to talk to you!<br>Check your chat window, and click their name to respond!"
-	message += "</b>"
+	var/message = "<span style='color: [colors[last_color_index]]; text-align: center; font-size: 24pt'>"
+	message += "HEY!<br>An admin is trying to talk to you!<br>Check your chat window,<br>and click their name to respond!"
+	message += "</span>"
 
 	maptext = MAPTEXT(message)
 	last_update_time = world.time

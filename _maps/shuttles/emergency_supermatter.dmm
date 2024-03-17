@@ -34,9 +34,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "al" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "am" = (
@@ -62,9 +60,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ap" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ar" = (
@@ -104,7 +100,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/power/supermatter_crystal/shard/hugbox/fakecrystal,
+/obj/machinery/power/supermatter_crystal/hugbox,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aD" = (
@@ -232,7 +228,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bd" = (
@@ -242,7 +238,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bf" = (
@@ -268,7 +264,7 @@
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/obj/machinery/light/directional/west,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bj" = (
@@ -276,21 +272,21 @@
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/obj/machinery/light/directional/east,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light/warm/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hD" = (
@@ -374,9 +370,9 @@ be
 "}
 (3,1,1) = {"
 ac
+bj
 ag
 ag
-bi
 Bi
 ag
 ag
@@ -518,9 +514,9 @@ aa
 "}
 (9,1,1) = {"
 ac
+bi
 ag
 ag
-bj
 pb
 ag
 ag

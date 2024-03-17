@@ -7,16 +7,23 @@
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
 	instability = 25
+	power_coeff = 1
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/datum/mutation/human/chameleon/on_life(delta_time, times_fired)
-	owner.alpha = max(owner.alpha - (12.5 * delta_time), 0)
+/datum/mutation/human/chameleon/on_life(seconds_per_tick, times_fired)
+	owner.alpha = max(owner.alpha - (12.5 * (GET_MUTATION_POWER(src)) * seconds_per_tick), 0)
+
+//Upgraded mutation of the base variant, used for changelings. No instability and better power_coeff
+/datum/mutation/human/chameleon/changeling
+	instability = 0
+	power_coeff = 2.5
+	locked = TRUE
 
 /**
  * Resets the alpha of the host to the chameleon default if they move.
@@ -53,4 +60,4 @@
 	if(..())
 		return
 	owner.alpha = 255
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EARLY_UNARMED_ATTACK))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_UNARMED_ATTACK))

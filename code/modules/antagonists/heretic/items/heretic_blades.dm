@@ -2,19 +2,24 @@
 /obj/item/melee/sickly_blade
 	name = "\improper sickly blade"
 	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched..."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 17
+	force = 20
 	throwforce = 10
+	wound_bonus = 5
+	bare_wound_bonus = 15
+	toolspeed = 0.375
+	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
@@ -74,6 +79,7 @@
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
 	after_use_message = "The Nightwatcher hears your call..."
+	resistance_flags = FIRE_PROOF
 
 // Path of Flesh's blade
 /obj/item/melee/sickly_blade/flesh
@@ -84,6 +90,23 @@
 	inhand_icon_state = "flesh_blade"
 	after_use_message = "The Marshal hears your call..."
 
+/obj/item/melee/sickly_blade/flesh/Initialize(mapload)
+	. = ..()
+
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 66.6,\
+		max_blood = INFINITY,\
+	)
+
+	AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("Unknown DNA" = "X*"),\
+		diseases = null,\
+	)
+
 // Path of Void's blade
 /obj/item/melee/sickly_blade/void
 	name = "\improper void blade"
@@ -93,11 +116,41 @@
 	inhand_icon_state = "void_blade"
 	after_use_message = "The Aristocrat hears your call..."
 
-// Path of the Blade's... blade
-// Opting for /dark (darkened blade) instead of /blade to avoid "sickly_blade/blade".
+// Path of the Blade's... blade.
+// Opting for /dark instead of /blade to avoid "sickly_blade/blade".
 /obj/item/melee/sickly_blade/dark
-	name = "\improper darkened blade"
-	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
+	name = "\improper sundered blade"
+	desc = "A galliant blade, sundered and torn. \
+		Furiously, the blade cuts. Silver scars bind it forever to its dark purpose."
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
-	after_use_message = "The Colonel hears your call..."
+	after_use_message = "The Torn Champion hears your call..."
+
+// Path of Cosmos's blade
+/obj/item/melee/sickly_blade/cosmic
+	name = "\improper cosmic blade"
+	desc = "A mote of celestial resonance, shaped into a star-woven blade. \
+		An iridescent exile, carving radiant trails, desperately seeking unification."
+	icon_state = "cosmic_blade"
+	inhand_icon_state = "cosmic_blade"
+	after_use_message = "The Stargazer hears your call..."
+
+// Path of Knock's blade
+/obj/item/melee/sickly_blade/lock
+	name = "\improper key blade"
+	desc = "A blade and a key, a key to what? \
+		What grand gates does it open?"
+	icon_state = "key_blade"
+	inhand_icon_state = "key_blade"
+	after_use_message = "The Stewards hear your call..."
+	tool_behaviour = TOOL_CROWBAR
+	toolspeed = 1.3
+
+// Path of Moon's blade
+/obj/item/melee/sickly_blade/moon
+	name = "\improper moon blade"
+	desc = "A blade of iron, reflecting the truth of the earth: All join the troupe one day. \
+		A troupe bringing joy, carving smiles on their faces if they want one or not."
+	icon_state = "moon_blade"
+	inhand_icon_state = "moon_blade"
+	after_use_message = "The Moon hears your call..."

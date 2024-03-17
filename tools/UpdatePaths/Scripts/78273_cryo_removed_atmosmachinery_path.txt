@@ -1,0 +1,2 @@
+#Updates cryo cells pathing by removing the atmosmachinery path
+/obj/machinery/atmospherics/components/unary/cryo_cell : /obj/machinery/cryo_cell{@OLD}

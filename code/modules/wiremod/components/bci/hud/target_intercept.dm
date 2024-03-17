@@ -25,7 +25,7 @@
 /obj/item/circuit_component/target_intercept/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
 /obj/item/circuit_component/target_intercept/unregister_shell(atom/movable/shell)
 	bci = null
@@ -35,11 +35,14 @@
 	if(!bci)
 		return
 
+	if(!parent.shell)
+		return
+
 	var/mob/living/owner = bci.owner
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
 		return
 
 	to_chat(owner, "<B>Left-click to trigger target interceptor!</B>")
@@ -55,7 +58,8 @@
 	user.client.click_intercept = null
 	clicked_atom.set_output(object)
 	trigger_output.set_output(COMPONENT_SIGNAL)
-	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_TARGET_INTERCEPT, intercept_cooldown)
+	if(parent.shell)
+		TIMER_COOLDOWN_START(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT, intercept_cooldown)
 
 /obj/item/circuit_component/target_intercept/get_ui_notices()
 	. = ..()

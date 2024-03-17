@@ -49,8 +49,13 @@ if (!(Test-Path $PythonExe -PathType Leaf)) {
 
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $PythonDir)
 
+	$PythonVersionArray = $PythonVersion.Split(".")
+	$PythonVersionString = "python$($PythonVersionArray[0])$($PythonVersionArray[1])"
+	Write-Output "Generating PATH descriptor."
+	New-Item "$Cache/$PythonVersionString._pth" | Out-Null
+	Set-Content "$Cache/$PythonVersionString._pth" "$PythonVersionString.zip`n.`n..\..\..`nimport site`n"
 	# Copy a ._pth file without "import site" commented, so pip will work
-	Copy-Item "$Bootstrap/python37._pth" $PythonDir `
+	Copy-Item "$Cache/$PythonVersionString._pth" $PythonDir `
 		-ErrorAction Stop
 
 	Remove-Item $Archive

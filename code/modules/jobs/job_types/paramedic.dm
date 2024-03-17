@@ -6,9 +6,9 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
+	supervisors = SUPERVISOR_CMO
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "PARAMEDIC"
 
 	outfit = /datum/outfit/job/paramedic
 	plasmaman_outfit = /datum/outfit/plasmaman/paramedic
@@ -32,10 +32,11 @@
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 10,
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 10,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 10,
-		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5
+		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5,
+		/obj/item/storage/box/bandages = 5,
 	)
 	rpg_title = "Corpse Runner"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 /datum/outfit/job/paramedic
@@ -48,18 +49,20 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/paramedic
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
-		/obj/item/roller = 1,
+		/obj/item/emergency_bed = 1,
 		)
 	belt = /obj/item/storage/belt/medical/paramedic
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/soft/paramedic
-	gloves = /obj/item/clothing/gloves/color/latex/nitrile
+	gloves = /obj/item/clothing/gloves/latex/nitrile
 	shoes = /obj/item/clothing/shoes/sneakers/blue
-	l_pocket = /obj/item/modular_computer/tablet/pda/medical
+	l_pocket = /obj/item/modular_computer/pda/medical/paramedic
+	r_pocket = /obj/item/storage/box/bandages
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	messenger = /obj/item/storage/backpack/messenger/med
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe

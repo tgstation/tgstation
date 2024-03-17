@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear
 	name = "polar bear"
 	desc = "An aggressive animal that defends it's territory with incredible power. These beasts don't run from their enemies."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "polarbear"
 	icon_living = "polarbear"
 	icon_dead = "polarbear_dead"
@@ -36,6 +36,15 @@
 	/// Message for when the polar bear starts to attack faster
 	var/aggressive_message_said = FALSE
 
+/mob/living/simple_animal/hostile/asteroid/polarbear/Initialize(mapload)
+	. = ..()
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_force = MOVE_FORCE_DEFAULT,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+		pull_force = PULL_FORCE_DEFAULT,\
+	)
+
 /mob/living/simple_animal/hostile/asteroid/polarbear/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(health > maxHealth*0.5)
@@ -46,30 +55,16 @@
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/polarbear/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
 	aggressive_message_said = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/death(gibbed)
-	move_force = MOVE_FORCE_DEFAULT
-	move_resist = MOVE_RESIST_DEFAULT
-	pull_force = PULL_FORCE_DEFAULT
-	return ..()
-
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal = FALSE, admin_revive = FALSE)
-	. = ..()
-	if(!.)
-		return
-	move_force = initial(move_force)
-	move_resist = initial(move_resist)
-	pull_force = initial(pull_force)
-
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 
 /obj/item/crusher_trophy/bear_paw
 	name = "polar bear paw"

@@ -7,15 +7,15 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-   $primary: #1596b6,
-   $fg-map-keys: (),
-   $bg-map-keys: (),
- );
+  $primary: #1596b6,
+  $fg-map-keys: (),
+  $bg-map-keys: ()
+);
 @use '../base.scss' with (
-   $color-bg: #213e4e,
-   $color-bg-grad-spread: 6%,
-   $border-radius: 2px,
- );
+  $color-bg: #213e4e,
+  $color-bg-grad-spread: 6%,
+  $border-radius: 2px
+);
 
 .theme-wizard {
   // Atomic classes

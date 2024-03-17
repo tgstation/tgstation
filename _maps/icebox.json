@@ -5,6 +5,7 @@
 	"map_file": "IceBoxStation.dmm",
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
+	"planetary": 1,
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
@@ -13,7 +14,7 @@
 	},
 	"traits": [
 		{
-			"Up": 1,
+			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -22,8 +23,8 @@
 			"No Parallax": true
 		},
 		{
-			"Down": -1,
-			"Up": 1,
+			"Down": true,
+			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -32,7 +33,7 @@
 			"No Parallax": true
 		},
 		{
-			"Down": -1,
+			"Down": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -42,12 +43,9 @@
 			"No Parallax": true
 		}
 	],
-	"orbit_shift_replacement": "Attention crew, it appears that someone on your outpost has shifted your planet into more dangerous territory.",
 	"minetype": "none",
+	"blacklist_file": "iceruinblacklist.txt",
 	"job_changes": {
-		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
-		},
 		"Captain": {
 			"special_charter": "moon"
 		}

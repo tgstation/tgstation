@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -29,7 +29,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "i" = (
-/obj/machinery/light/directional/west,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "j" = (
@@ -42,7 +43,6 @@
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "m" = (
@@ -53,6 +53,13 @@
 	port_direction = 2;
 	preferred_direction = 4
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
@@ -73,16 +80,16 @@ a
 "}
 (2,1,1) = {"
 b
-f
 i
+g
 j
 b
 d
 d
 d
 b
-f
 i
+g
 j
 b
 "}
@@ -105,7 +112,7 @@ c
 b
 f
 g
-j
+I
 b
 d
 d
@@ -113,7 +120,7 @@ d
 b
 f
 g
-j
+I
 b
 "}
 (5,1,1) = {"

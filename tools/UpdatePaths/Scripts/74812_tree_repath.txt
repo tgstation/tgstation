@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/tree : /mob/living/basic/tree{@OLD;wander=@SKIP}
+/mob/living/simple_animal/hostile/tree/festivus : /mob/living/basic/festivus{@OLD;wander=@SKIP}

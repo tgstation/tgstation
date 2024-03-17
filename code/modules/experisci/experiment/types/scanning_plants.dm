@@ -10,7 +10,7 @@
 	///List of plant genes actually required, indexed by the atom that is required.
 	var/list/required_genes = list()
 
-/datum/experiment/scanning/random/plants/New()
+/datum/experiment/scanning/random/plants/New(datum/techweb/techweb)
 	. = ..()
 	if(possible_plant_genes.len)
 		for(var/req_atom in required_atoms)
@@ -18,7 +18,7 @@
 			required_genes[req_atom] = chosen_gene
 
 /datum/experiment/scanning/random/plants/serialize_progress_stage(atom/target, list/seen_instances)
-	return EXPERIMENT_PROG_INT("Scan samples of \a harvested plant.", \
+	return EXPERIMENT_PROG_INT("Scan samples of a harvested plant.", \
 		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
 
 /datum/experiment/scanning/random/plants/traits/final_contributing_index_checks(atom/target, typepath)

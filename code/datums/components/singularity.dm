@@ -1,8 +1,13 @@
 /// The range at which a singularity is considered "contained" to admins
 #define FIELD_CONTAINMENT_DISTANCE 30
 
-/// What's the chance that, when a singularity moves, it'll go to its target?
+/// What's the chance that, when a normal singularity moves, it'll go to its target?
 #define CHANCE_TO_MOVE_TO_TARGET 60
+
+/// What's the /bloodthirsty subtype chance it'll go to its target?
+#define CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY 80
+/// what's the /bloodthirsty subtype chance it'll change targets to a closer one?
+#define CHANCE_TO_CHANGE_TARGET_BLOODTHIRSTY 20
 
 /// Things that maybe move around and does stuff to things around them
 /// Used for the singularity (duh) and Nar'Sie
@@ -46,10 +51,13 @@
 	/// The time that has elapsed since our last move/eat call
 	var/time_since_last_eat
 
+	/// What's the chance that, when a singularity moves, it'll go to its target?
+	var/chance_to_move_to_target = CHANCE_TO_MOVE_TO_TARGET
+
 /datum/component/singularity/Initialize(
 	bsa_targetable = TRUE,
 	consume_range = 0,
-	consume_callback = CALLBACK(src, .proc/default_singularity_act),
+	consume_callback = CALLBACK(src, PROC_REF(default_singularity_act)),
 	disregard_failed_movements = FALSE,
 	grav_pull = 4,
 	notify_admins = TRUE,
@@ -75,34 +83,34 @@
 	parent.AddElement(/datum/element/forced_gravity, FALSE)
 
 	parent.AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
+	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, PROC_REF(bluespace_reaction))
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)
+	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(block_blob))
 
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
-	), .proc/consume_attack)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
+	), PROC_REF(consume_attack))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(consume_attackby))
 
-	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
-	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
+	RegisterSignal(parent, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(consume_bullets))
 
 	if (notify_admins)
 		admin_investigate_setup()
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
-	QDEL_NULL(consume_callback)
+	consume_callback = null
 	target = null
 
 	return ..()
@@ -119,15 +127,15 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
-		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_PRE_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 	))
 
-/datum/component/singularity/process(delta_time)
+/datum/component/singularity/process(seconds_per_tick)
 	// We want to move and eat once a second, but want to process our turf consume queue the rest of the time
-	time_since_last_eat += delta_time
+	time_since_last_eat += seconds_per_tick
 	digest()
 	if(TICK_CHECK)
 		return
@@ -172,6 +180,7 @@
 	SIGNAL_HANDLER
 
 	qdel(projectile)
+	return COMPONENT_BULLET_BLOCKED
 
 /// Calls singularity_act on the thing passed, usually destroying the object
 /datum/component/singularity/proc/default_singularity_act(atom/thing)
@@ -226,7 +235,7 @@
 /datum/component/singularity/proc/move()
 	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
 
-	if (!QDELETED(target) && prob(CHANCE_TO_MOVE_TO_TARGET))
+	if (!QDELETED(target) && prob(chance_to_move_to_target))
 		drifting_dir = get_dir(parent, target)
 
 	step(parent, drifting_dir)
@@ -323,7 +332,7 @@
 	var/turf/spawned_turf = get_turf(parent)
 	message_admins("A singulo has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
 	var/atom/atom_parent = parent
-	atom_parent.investigate_log("was made a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
+	atom_parent.investigate_log("was made into a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
@@ -335,5 +344,59 @@
 	atom_parent.investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_ENGINE)
 	qdel(parent)
 
+/datum/component/singularity/bloodthirsty
+	chance_to_move_to_target = CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY
+
+/datum/component/singularity/bloodthirsty/move()
+	var/atom/atom_parent = parent
+	//handle current target
+	if(target && !QDELETED(target))
+		if(istype(target, /obj/machinery/power/singularity_beacon))
+			return ..() //don't switch targets from a singulo beacon
+		if(target.z != atom_parent.z)
+			target = null
+		var/mob/living/potentially_closer = find_new_target()
+		if(potentially_closer != target && prob(20))
+			target = potentially_closer
+	//if we lost that target get a new one
+	if(!target || QDELETED(target))
+		target = find_new_target()
+		foreboding_nosebleed(target)
+	return ..()
+
+///Searches the living list for the closest target, and begins chasing them down.
+/datum/component/singularity/bloodthirsty/proc/find_new_target()
+	var/atom/atom_parent = parent
+	var/closest_distance = INFINITY
+	var/mob/living/closest_target
+	for(var/mob/living/target as anything in GLOB.mob_living_list)
+		if(target.z != atom_parent.z)
+			continue
+		if(target.status_effects & GODMODE)
+			continue
+		var/distance_from_target = get_dist(target, atom_parent)
+		if(distance_from_target < closest_distance)
+			closest_distance = distance_from_target
+			closest_target = target
+	return closest_target
+
+/// gives a little fluff warning that someone is being hunted.
+/datum/component/singularity/bloodthirsty/proc/foreboding_nosebleed(mob/living/target)
+	if(!iscarbon(target))
+		to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
+		return
+	var/mob/living/carbon/carbon_target = target
+	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD))
+			to_chat(carbon_target, span_notice("You get a headache."))
+			return
+		head.adjustBleedStacks(5)
+		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_warning("You get a nosebleed."))
+		return
+	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
+
 #undef CHANCE_TO_MOVE_TO_TARGET
+#undef CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY
+#undef CHANCE_TO_CHANGE_TARGET_BLOODTHIRSTY
 #undef FIELD_CONTAINMENT_DISTANCE

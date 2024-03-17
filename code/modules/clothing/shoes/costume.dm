@@ -2,19 +2,26 @@
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
-	inhand_icon_state = "roman"
+	inhand_icon_state = "wizshoe"
 	strip_delay = 100
 	equip_delay_other = 100
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/shoes_roman
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
-	inhand_icon_state = "griffinboots"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	inhand_icon_state = null
 	lace_time = 8 SECONDS
+
+/datum/armor/shoes_roman
+	bio = 10
+
+/obj/item/clothing/shoes/griffin/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
@@ -43,59 +50,86 @@
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
 	name = "grilling sandals"
 	icon_state = "cookflops"
+	inhand_icon_state = "cookflops"
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/shoes/yakuza
-	name = "tojo clan shoes"
-	desc = "Steel-toed and intimidating."
-	icon_state = "MajimaShoes"
-	inhand_icon_state = "MajimaShoes_worn"
 
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
-	inhand_icon_state = "JackFrostShoes_worn"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/swagshoes
 	name = "swag shoes"
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
-	inhand_icon_state = "SwagShoes"
+	inhand_icon_state = null
 
-/obj/item/clothing/shoes/phantom
-	name = "phantom shoes"
-	desc = "Excellent for when you need to do cool flashy flips."
-	icon_state = "phantom_shoes"
-	inhand_icon_state = "phantom_shoes"
+/obj/item/clothing/shoes/glow
+	name = "glow shoes"
+	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
+	icon_state = "glow_shoes"
+	inhand_icon_state = null
+	greyscale_colors = "#4A3A40#8EEEEE"
+	greyscale_config = /datum/greyscale_config/glow_shoes
+	greyscale_config_worn = /datum/greyscale_config/glow_shoes/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/glow/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/clothing/shoes/glow/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(DEFAULT_SHOES_FILE, "glow_shoes_emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/shoes/glow/update_overlays()
+	. = ..()
+	. += emissive_appearance('icons/obj/clothing/shoes.dmi', "glow_shoes_emissive", offset_spokesman = src, alpha = src.alpha)
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/saints
 	name = "saints sneakers"
 	desc = "Officially branded Saints sneakers. Incredibly valuable!"
 	icon_state = "saints_shoes"
-	inhand_icon_state = "saints_shoes"
+	inhand_icon_state = null
 
-/obj/item/clothing/shoes/morningstar
-	name = "morningstar boots"
-	desc = "The most expensive boots on this station. Wearing them dropped the value by about 50%."
-	icon_state = "morningstar_shoes"
-	inhand_icon_state = "morningstar_shoes"
+/obj/item/clothing/shoes/jester_shoes
+	name = "jester shoes"
+	desc = "Shoes that jingle with every step!!"
+	icon_state = "green_jester_shoes"
+	inhand_icon_state = null
 
-/obj/item/clothing/shoes/deckers
-	name = "deckers rollerskates"
-	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
-	icon_state = "decker_shoes"
-	inhand_icon_state = "decker_shoes"
+/obj/item/clothing/shoes/jester_shoes/Initialize(mapload)
+	. = ..()
 
-/obj/item/clothing/shoes/sybil_slickers
-	name = "sybil slickers shoes"
-	desc = "FOOTBALL! YEAH!"
-	icon_state = "sneakers_blue"
-	inhand_icon_state = "sneakers_blue"
+	LoadComponent(/datum/component/squeak, list('sound/effects/jingle.ogg' = 1), 50, falloff_exponent = 20, step_delay_override = 0)
 
-/obj/item/clothing/shoes/basil_boys
-	name = "basil boys shoes"
-	desc = "FOOTBALL! YEAH!"
-	icon_state = "sneakers_red"
-	inhand_icon_state = "sneakers_red"
+/obj/item/clothing/shoes/ducky_shoes
+	name = "ducky shoes"
+	desc = "I got boots, that go *quack quack quack quack quack."
+	icon_state = "ducky_shoes"
+	inhand_icon_state = "ducky_shoes"
+
+/obj/item/clothing/shoes/ducky_shoes/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	LoadComponent(/datum/component/squeak, list('sound/effects/quack.ogg' = 1), 50, falloff_exponent = 20)
+
+/obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_FEET)
+		user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
+
+/obj/item/clothing/shoes/ducky_shoes/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)

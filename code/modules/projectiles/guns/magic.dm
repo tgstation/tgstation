@@ -1,13 +1,13 @@
 /obj/item/gun/magic
 	name = "staff of nothing"
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	inhand_icon_state = "staff"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
@@ -27,8 +27,19 @@
 
 /obj/item/gun/magic/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 
+/obj/item/gun/magic/apply_fantasy_bonuses(bonus)
+	. = ..()
+	recharge_rate = modify_fantasy_variable("recharge_rate", recharge_rate, -bonus, minimum = 1)
+	max_charges = modify_fantasy_variable("max_charges", max_charges, bonus)
+	charges = modify_fantasy_variable("charges", charges, bonus)
+
+/obj/item/gun/magic/remove_fantasy_bonuses(bonus)
+	recharge_rate = reset_fantasy_variable("recharge_rate", recharge_rate)
+	max_charges = reset_fantasy_variable("max_charges", max_charges)
+	charges = reset_fantasy_variable("charges", charges)
+	return ..()
 
 /obj/item/gun/magic/fire_sounds()
 	var/frequency_to_use = sin((90/max_charges) * charges)
@@ -42,7 +53,7 @@
  *
  * Adds uses to wands or staffs.
  */
-/obj/item/gun/magic/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+/obj/item/gun/magic/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	. = COMPONENT_ITEM_CHARGED
@@ -94,7 +105,7 @@
 		chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 
 
 /obj/item/gun/magic/Destroy()
@@ -103,11 +114,11 @@
 	return ..()
 
 
-/obj/item/gun/magic/process(delta_time)
+/obj/item/gun/magic/process(seconds_per_tick)
 	if (charges >= max_charges)
 		charge_timer = 0
 		return
-	charge_timer += delta_time
+	charge_timer += seconds_per_tick
 	if(charge_timer < recharge_rate)
 		return 0
 	charge_timer = 0
@@ -120,10 +131,10 @@
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, span_warning("The [name] whizzles quietly."))
 
-/obj/item/gun/magic/suicide_act(mob/user)
+/obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, fire_sound, 50, TRUE, -1)
-	return (FIRELOSS)
+	return FIRELOSS
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()

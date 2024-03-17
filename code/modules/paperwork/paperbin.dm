@@ -3,11 +3,11 @@
 /obj/item/paper_bin
 	name = "paper bin"
 	desc = "Contains all the paper you'll never need."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper_bin0"
 	inhand_icon_state = "sheet-metal"
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
@@ -15,7 +15,7 @@
 	pressure_resistance = 8
 	var/papertype = /obj/item/paper
 	var/total_paper = 30
-	var/list/papers = list()
+	var/list/paper_stack = list()
 	var/obj/item/pen/bin_pen
 	///Overlay of the pen on top of the bin.
 	var/mutable_appearance/pen_overlay
@@ -33,40 +33,55 @@
 		if(pen && !bin_pen)
 			pen.forceMove(src)
 			bin_pen = pen
-	for(var/i in 1 to total_paper)
-		papers.Add(generate_paper())
 	update_appearance()
 
-/obj/item/paper_bin/proc/generate_paper()
-	var/obj/item/paper/paper = new papertype(src)
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		if(prob(30))
-			paper.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-			paper.AddElement(/datum/element/honkspam)
-	return paper
-
 /obj/item/paper_bin/Destroy()
-	QDEL_LIST(papers)
-	. = ..()
+	QDEL_LIST(paper_stack)
+	return ..()
+
+/// Returns a fresh piece of paper
+/obj/item/paper_bin/proc/generate_paper()
+	var/obj/item/paper/paper = new papertype
+	if(check_holidays(APRIL_FOOLS))
+		if(prob(30))
+			paper.add_raw_text("<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>")
+			paper.AddElement(/datum/element/honkspam)
+			paper.update_appearance()
+	return paper
 
 /obj/item/paper_bin/dump_contents(atom/droppoint, collapse = FALSE)
 	if(!droppoint)
 		droppoint = drop_location()
 	if(collapse)
 		visible_message(span_warning("The stack of paper collapses!"))
-	for(var/atom/movable/movable_atom in contents)
-		movable_atom.forceMove(droppoint)
-		if(!movable_atom.pixel_y)
-			movable_atom.pixel_y = rand(-3,3)
-		if(!movable_atom.pixel_x)
-			movable_atom.pixel_x = rand(-3,3)
-	LAZYNULL(papers)
+	for(var/obj/item/paper/stacked_paper in paper_stack) //first, dump all of the paper that already exists
+		stacked_paper.forceMove(droppoint)
+		if(!stacked_paper.pixel_y)
+			stacked_paper.pixel_y = rand(-3,3)
+		if(!stacked_paper.pixel_x)
+			stacked_paper.pixel_x = rand(-3,3)
+		paper_stack -= stacked_paper
+		total_paper -= 1
+	for(var/i in 1 to total_paper) //second, generate new paper for the remainder
+		var/obj/item/paper/new_paper = generate_paper()
+		new_paper.forceMove(droppoint)
+		if(!new_paper.pixel_y)
+			new_paper.pixel_y = rand(-3,3)
+		if(!new_paper.pixel_x)
+			new_paper.pixel_x = rand(-3,3)
+	if(bin_pen)
+		var/obj/item/pen/pen = bin_pen
+		pen.forceMove(droppoint)
+		bin_pen = null
+	total_paper = 0
 	update_appearance()
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(LAZYLEN(papers))
-		LAZYNULL(papers)
+	if(total_paper > 0)
+		total_paper = 0
+		QDEL_LIST(paper_stack)
 		update_appearance()
+
 	..()
 
 /obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
@@ -90,9 +105,9 @@
 		to_chat(user, span_notice("You take [pen] out of [src]."))
 		bin_pen = null
 		update_appearance()
-	else if(LAZYLEN(papers))
-		var/obj/item/paper/top_paper = papers[papers.len]
-		LAZYREMOVE(papers, top_paper)
+	else if(total_paper > 0)
+		var/obj/item/paper/top_paper = pop(paper_stack) || generate_paper()
+		total_paper -= 1
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
 		user.put_in_hands(top_paper)
@@ -109,14 +124,15 @@
 		return
 	if(istype(I, /obj/item/paper))
 		var/obj/item/paper/paper = I
-		if(!user.transferItemToLoc(paper, src))
+		if(!user.transferItemToLoc(paper, src, silent = FALSE))
 			return
 		to_chat(user, span_notice("You put [paper] in [src]."))
-		LAZYADD(papers, paper)
+		paper_stack += paper
+		total_paper += 1
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/pen = I
-		if(!user.transferItemToLoc(pen, src))
+		if(!user.transferItemToLoc(pen, src, silent = FALSE))
 			return
 		to_chat(user, span_notice("You put [pen] in [src]."))
 		bin_pen = pen
@@ -126,6 +142,12 @@
 
 /obj/item/paper_bin/proc/at_overlay_limit()
 	return overlays.len >= MAX_ATOM_OVERLAYS - 1
+
+/obj/item/paper_bin/proc/remove_paper(amount = 1)
+	var/obj/item/paper/top_paper = pop(paper_stack)
+	if(top_paper)
+		qdel(top_paper)
+	total_paper -= amount
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
@@ -144,7 +166,9 @@
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
-	total_paper = LAZYLEN(papers)
+	var/static/obj/item/paper/reference_paper
+	if (isnull(reference_paper))
+		reference_paper = new /obj/item/paper
 
 	if(bin_pen)
 		pen_overlay = mutable_appearance(bin_pen.icon, bin_pen.icon_state)
@@ -152,21 +176,28 @@
 	if(!bin_overlay)
 		bin_overlay = mutable_appearance(icon, bin_overlay_string)
 
-	if(LAZYLEN(papers))
-		for(var/paper_number in 1 to papers.len)
-			if(paper_number != papers.len && paper_number % PAPERS_PER_OVERLAY != 0) //only top paper and every nth paper get overlays
+	if(total_paper > 0)
+		if(total_paper > length(paper_stack))
+			SET_PLANE_EXPLICIT(reference_paper, initial(reference_paper.plane), src)
+			reference_paper.update_appearance() // Ensures all our overlays are on the right plane
+		for(var/paper_number in 1 to total_paper)
+			if(paper_number != total_paper && paper_number % PAPERS_PER_OVERLAY != 0) //only top paper and every nth paper get overlays
 				continue
-			var/obj/item/paper/current_paper = papers[paper_number]
+
+			var/obj/item/paper/current_paper = paper_number > (total_paper - paper_stack.len) \
+				? paper_stack[paper_stack.len - (total_paper - paper_number + 1) + 1] \
+				: reference_paper
+
 			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
 			paper_overlay.color = current_paper.color
-			paper_overlay.pixel_y = paper_number/PAPERS_PER_OVERLAY - PAPER_OVERLAY_PIXEL_SHIFT //gives the illusion of stacking
+			paper_overlay.pixel_z = paper_number/PAPERS_PER_OVERLAY - PAPER_OVERLAY_PIXEL_SHIFT //gives the illusion of stacking
 			. += paper_overlay
-			if(paper_number == papers.len) //this is our top paper
+			if(paper_number == total_paper) //this is our top paper
 				. += current_paper.overlays //add overlays only for top paper
 				if(istype(src, /obj/item/paper_bin/bundlenatural))
-					bin_overlay.pixel_y = paper_overlay.pixel_y //keeps binding centred on stack
+					bin_overlay.pixel_z = paper_overlay.pixel_z //keeps binding centred on stack
 				if(bin_pen)
-					pen_overlay.pixel_y = paper_overlay.pixel_y //keeps pen on top of stack
+					pen_overlay.pixel_z = paper_overlay.pixel_z //keeps pen on top of stack
 		. += bin_overlay
 
 	if(bin_pen)
@@ -180,7 +211,7 @@
 /obj/item/paper_bin/bundlenatural
 	name = "natural paper bundle"
 	desc = "A bundle of paper created using traditional methods."
-	icon_state = null
+	icon_state = "paper_stack"
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 	bin_overlay_string = "paper_bundle_overlay"
@@ -188,14 +219,15 @@
 	var/obj/item/stack/cable_coil/binding_cable
 
 /obj/item/paper_bin/bundlenatural/Initialize(mapload)
-	binding_cable = new /obj/item/stack/cable_coil(src, 2)
-	binding_cable.color = COLOR_ORANGE_BROWN
-	binding_cable.cable_color = "brown"
+	binding_cable = new(src, 2)
+	binding_cable.set_cable_color(CABLE_COLOR_BROWN)
 	binding_cable.desc += " Non-natural."
 	return ..()
 
 /obj/item/paper_bin/bundlenatural/dump_contents(atom/droppoint)
 	. = ..()
+	binding_cable.forceMove(droppoint)
+	binding_cable = null
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/update_overlays()
@@ -205,11 +237,11 @@
 
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(!LAZYLEN(papers))
+	if(total_paper == 0)
 		deconstruct(FALSE)
 
 /obj/item/paper_bin/bundlenatural/deconstruct(disassembled)
-	dump_contents()
+	dump_contents(drop_location())
 	return ..()
 
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)

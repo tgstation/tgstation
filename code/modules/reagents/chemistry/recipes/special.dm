@@ -5,9 +5,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 /proc/build_reagents_to_food()
 	. = list()
-	for (var/type in subtypesof(/obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/item = new type()
-		for(var/datum/reagent/reagent as anything in item.list_reagents)
+	for (var/type in subtypesof(/obj/item/food))
+		var/obj/item/food/item = new type()
+		for(var/datum/reagent/reagent as anything in item.food_reagents)
 			var/chem_flags = initial(reagent.chemical_flags)
 			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
 				continue
@@ -35,10 +35,6 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		var/chem_flags = initial(reagent.chemical_flags)
 		if(VALID_RANDOM_RECIPE_REAGENT(chem_flags))
 			. += reagent
-
-#define RNGCHEM_INPUT "input"
-#define RNGCHEM_CATALYSTS "catalysts"
-#define RNGCHEM_OUTPUT "output"
 
 /datum/chemical_reaction/randomized
 
@@ -128,9 +124,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(randomize_impurity_reagents)
 		for(var/rid in required_reagents)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[rid]
-			R.impure_chem = get_random_reagent_id()
 			R.inverse_chem = get_random_reagent_id()
-			R.failed_chem = get_random_reagent_id()
 
 	if(randomize_results)
 		results = list()
@@ -150,7 +144,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 		var/in_reagent_count = min(rand(min_input_reagents,max_input_reagents),remaining_possible_reagents.len)
 		if(in_reagent_count <= 0)
-			return FALSE
+			CRASH("SECRET CHEM: Couldn't generate reagents for [type]!")
 
 		required_reagents = list()
 		for(var/i in 1 to in_reagent_count)
@@ -223,6 +217,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		return FALSE
 	required_reagents = req_reag
 
+	if (required_reagents.len == 0)
+		return FALSE
+
 	var/req_catalysts = unwrap_reagent_list(recipe_data["required_catalysts"])
 	if(!req_catalysts)
 		return FALSE
@@ -257,7 +254,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
-	possible_containers = list(/obj/item/reagent_containers/glass/bucket) //easy way to ensure no common conflicts
+	possible_containers = list(/obj/item/reagent_containers/cup/bucket) //easy way to ensure no common conflicts
 	randomize_req_temperature = TRUE
 	results = list(/datum/reagent/consumable/secretsauce=1)
 
@@ -283,11 +280,15 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /datum/chemical_reaction/randomized/metalgen/GetPossibleReagents(kind)
 	switch(kind)
 		if(RNGCHEM_INPUT)
-			return GLOB.medicine_reagents
+			var/list/possible_ingredients = list()
+			for(var/datum/reagent/compound as anything in GLOB.medicine_reagents)
+				if(initial(compound.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+					possible_ingredients += compound
+			return possible_ingredients
 	return ..()
 
 /obj/item/paper/secretrecipe
-	name = "old recipe"
+	name = "Old Recipe"
 
 	///List of possible recipes we could display
 	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
@@ -302,7 +303,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(SSpersistence.initialized)
 		UpdateInfo()
 	else
-		SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(UpdateInfo)))
 
 /obj/item/paper/secretrecipe/ui_static_data(mob/living/user)
 	. = ..()
@@ -318,7 +319,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
-		info = "This recipe is illegible."
+		add_raw_text("This recipe is illegible.")
+		update_appearance()
 		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
@@ -354,7 +356,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += "<li> and your purity above [recipe.purity_min]</li>"
 	dat += "</ul>"
 	dat += "."
-	info = dat.Join("")
+	add_raw_text(dat.Join(""))
 	update_appearance()
 
 #undef VALID_RANDOM_RECIPE_REAGENT

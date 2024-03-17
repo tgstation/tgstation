@@ -1,4 +1,4 @@
-/datum/map_template/ruin/proc/try_to_place(z,allowed_areas,turf/forced_turf)
+/datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
 		return place_on_isolated_level(z)
@@ -8,17 +8,21 @@
 		var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(height / 2)
 		var/turf/central_turf = forced_turf ? forced_turf : locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z)
 		var/valid = TRUE
+		var/list/affected_turfs = get_affected_turfs(central_turf,1)
+		var/list/affected_areas = list()
 
-		for(var/turf/check in get_affected_turfs(central_turf,1))
-			var/area/new_area = get_area(check)
-			valid = FALSE // set to false before we check
+		for(var/turf/check in affected_turfs)
+			// Use assoc lists to move this out, it's easier that way
 			if(check.turf_flags & NO_RUINS)
+				valid = FALSE // set to false before we check
 				break
-			for(var/type in allowed_areas)
-				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
-					valid = TRUE
-					break
-			if(!valid)
+			var/area/new_area = get_area(check)
+			affected_areas[new_area] = TRUE
+
+		// This is faster yes. Only BARELY but it is faster
+		for(var/area/affct_area as anything in affected_areas)
+			if(!allowed_areas_typecache[affct_area.type])
+				valid = FALSE
 				break
 
 		if(!valid)
@@ -26,29 +30,31 @@
 
 		testing("Ruin \"[name]\" placed at ([central_turf.x], [central_turf.y], [central_turf.z])")
 
-		for(var/i in get_affected_turfs(central_turf, 1))
-			var/turf/T = i
-			for(var/obj/structure/spawner/nest in T)
-				qdel(nest)
-			for(var/mob/living/simple_animal/monster in T)
-				qdel(monster)
-			for(var/obj/structure/flora/plant in T)
-				qdel(plant)
+		if(clear_below)
+			var/list/static/clear_below_typecache = typecacheof(list(
+				/obj/structure/spawner,
+				/mob/living/simple_animal,
+				/obj/structure/flora
+			))
+			for(var/turf/T as anything in affected_turfs)
+				for(var/atom/thing as anything in T)
+					if(clear_below_typecache[thing.type])
+						qdel(thing)
 
 		load(central_turf,centered = TRUE)
 		loaded++
 
-		for(var/turf/T in get_affected_turfs(central_turf, 1))
+		for(var/turf/T in affected_turfs)
 			T.turf_flags |= NO_RUINS
 
 		new /obj/effect/landmark/ruin(central_turf, src)
 		return central_turf
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(width, height, z) //Make the new level creation work with different traits.
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
 	if(!reservation)
 		return
-	var/turf/placement = locate(reservation.bottom_left_coords[1],reservation.bottom_left_coords[2],reservation.bottom_left_coords[3])
+	var/turf/placement = reservation.bottom_left_turfs[1]
 	load(placement)
 	loaded++
 	for(var/turf/T in get_affected_turfs(placement))
@@ -57,11 +63,21 @@
 	new /obj/effect/landmark/ruin(center, src)
 	return center
 
-
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins)
+/**
+ * Loads the ruins for a given z level.
+ * @param z_levels The z levels to load ruins on.
+ * @param budget The budget to spend on ruins. Compare against the cost of the ruins in /datum/map_template/ruin.
+ * @param whitelist A list of areas to allow ruins to be placed in.
+ * @param potentialRuins A list of ruins to choose from.
+ * @param clear_below Whether to clear the area below the ruin. Used for multiz ruins.
+ * @param mineral_budget The budget to spend on ruins that spawn ore vents. Map templates with vents have that defined by mineral_cost.
+ * @param mineral_budget_update What type of ore distribution should spawn from ruins picked by this cave generator? This list is copied from ores_spawned.dm into SSore_generation.ore_vent_minerals.
+ */
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
+	var/list/whitelist_typecache = typecacheof(whitelist)
 
 	for(var/zl in z_levels)
 		var/turf/T = locate(1, 1, zl)
@@ -74,17 +90,32 @@
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
 
+	if(PERFORM_ALL_TESTS(log_mapping))
+		log_mapping("All ruins being loaded for map testing.")
+
+	switch(mineral_budget_update) //If we use more map configurations, add another case
+		if(OREGEN_PRESET_LAVALAND)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
+		if(OREGEN_PRESET_TRIPLE_Z)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_triple_z)
+
 	//Set up the starting ruin list
 	for(var/key in ruins)
 		var/datum/map_template/ruin/R = ruins[key]
-		if(R.cost > budget) //Why would you do that
+
+		if(PERFORM_ALL_TESTS(log_mapping))
+			R.cost = 0
+			R.allow_duplicates = FALSE // no multiples for testing
+			R.always_place = !R.unpickable // unpickable ruin means it spawns as a set with another ruin
+
+		if(R.cost > budget || R.mineral_cost > mineral_budget) //Why would you do that
 			continue
 		if(R.always_place)
 			forced_ruins[R] = -1
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
-	while(budget > 0 && (ruins_available.len || forced_ruins.len))
+	while((budget > 0 || mineral_budget > 0) && (ruins_available.len || forced_ruins.len))
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z //If set we won't pick z level and use this one instead.
@@ -117,13 +148,13 @@
 					for(var/v in current_pick.always_spawn_with)
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
-							if(!SSmapping.get_turf_below(T))
+							if(!GET_TURF_BELOW(T))
 								if(forced_z)
 									continue outer
 								else
 									break outer
 
-				placed_turf = current_pick.try_to_place(target_z,whitelist,forced_turf)
+				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
 				if(!placed_turf)
 					continue
 				else
@@ -143,6 +174,7 @@
 			log_world("Failed to place [current_pick.name] ruin.")
 		else
 			budget -= current_pick.cost
+			mineral_budget -= current_pick.mineral_cost
 			if(!current_pick.allow_duplicates)
 				for(var/datum/map_template/ruin/R in ruins_available)
 					if(R.id == current_pick.id)
@@ -167,13 +199,13 @@
 								if(PLACE_DEFAULT)
 									forced_ruins[linked] = -1
 								if(PLACE_BELOW)
-									forced_ruins[linked] = SSmapping.get_turf_below(placed_turf)
+									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
-			if(R.cost > budget)
+			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
 
 	log_world("Ruin loader finished with [budget] left to spend.")

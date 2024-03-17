@@ -7,22 +7,20 @@
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
 	icon_state_menu = "menu"
-	display_overlays = FALSE
 
 	hardware_flag = PROGRAM_LAPTOP
-	max_hardware_size = 2
 	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	max_bays = 4
 
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
 
+	drag_slowdown = 0
 	screen_on = FALSE // Starts closed
 	var/start_open = TRUE // unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
 	var/w_class_open = WEIGHT_CLASS_BULKY
-	var/slowdown_open = TRUE
+	var/slowdown_open = 1
 
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
@@ -87,7 +85,7 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
 
 	toggle_open(user)
@@ -107,16 +105,22 @@
 		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
 		w_class = initial(w_class)
+		drag_slowdown = initial(drag_slowdown)
 	else
 		to_chat(user, span_notice("You open \the [src]."))
 		slowdown = slowdown_open
 		w_class = w_class_open
+		drag_slowdown = slowdown_open
+	if(isliving(loc))
+		var/mob/living/localmob = loc
+		localmob.update_equipment_speed_mods()
+		localmob.update_pull_movespeed()
 
 	screen_on = !screen_on
-	display_overlays = screen_on
 	update_appearance()
 
-
+/obj/item/modular_computer/laptop/get_messenger_ending()
+	return "Sent from my UNIX Laptop"
 
 // Laptop frame, starts empty and closed.
 /obj/item/modular_computer/laptop/buildable

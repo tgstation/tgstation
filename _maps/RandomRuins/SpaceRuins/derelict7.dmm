@@ -11,13 +11,9 @@
 /turf/open/floor/carpet/airless,
 /area/ruin/space/has_grav)
 "bU" = (
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav)
 "cD" = (
@@ -70,7 +66,7 @@
 /area/ruin/space/has_grav)
 "gw" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/structure/disposalpipe/broken,
 /turf/template_noop,
 /area/template_noop)
@@ -90,10 +86,10 @@
 /turf/template_noop,
 /area/template_noop)
 "iB" = (
+/obj/item/shard,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/shard,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav)
 "jk" = (
@@ -105,16 +101,16 @@
 	},
 /area/ruin/space/has_grav)
 "kI" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /turf/open/floor/carpet/airless,
 /area/ruin/space/has_grav)
 "lQ" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/template_noop,
 /area/template_noop)
 "lU" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
@@ -122,17 +118,14 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "or" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/template_noop,
 /area/template_noop)
 "oy" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /obj/structure/table_frame,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin/space/has_grav)
 "oP" = (
@@ -194,7 +187,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "tH" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/template_noop)
@@ -212,7 +205,7 @@
 /area/ruin/space/has_grav)
 "wz" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
 /area/template_noop)
@@ -258,10 +251,10 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav)
 "Cc" = (
+/obj/machinery/light/broken/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/white/corner/airless{
 	dir = 8
 	},
@@ -275,7 +268,7 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
 	},
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 1
 	},
@@ -465,10 +458,10 @@
 /turf/open/floor/carpet/airless,
 /area/ruin/space/has_grav)
 "Si" = (
+/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/corner/airless{
 	dir = 8
 	},
@@ -525,11 +518,6 @@
 /obj/structure/lattice,
 /obj/item/wallframe/intercom,
 /obj/item/stack/rods,
-/turf/template_noop,
-/area/template_noop)
-"YX" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/glass,
 /turf/template_noop,
 /area/template_noop)
 
@@ -809,7 +797,7 @@ eP
 eP
 gi
 dy
-YX
+CT
 Vn
 rN
 eP

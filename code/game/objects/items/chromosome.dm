@@ -1,6 +1,6 @@
 /obj/item/chromosome
 	name = "blank chromosome"
-	icon = 'icons/obj/chromosomes.dmi'
+	icon = 'icons/obj/science/chromosomes.dmi'
 	icon_state = ""
 	desc = "A tube holding chromosomic data."
 	force = 0
@@ -34,9 +34,13 @@
 		HM.power_coeff = power_coeff
 	if(HM.energy_coeff != -1)
 		HM.energy_coeff = energy_coeff
-	HM.can_chromosome = 2
+	HM.can_chromosome = CHROMOSOME_USED
 	HM.chromosome_name = name
-	HM.modify()
+
+	// Do the actual modification
+	if(HM.modify())
+		HM.modified = TRUE
+
 	qdel(src)
 
 /proc/generate_chromosome()

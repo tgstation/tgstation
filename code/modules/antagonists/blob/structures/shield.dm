@@ -1,6 +1,6 @@
 /obj/structure/blob/shield
 	name = "strong blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_shield"
 	desc = "A solid wall of slightly twitching tendrils."
 	var/damaged_desc = "A wall of twitching tendrils."
@@ -10,7 +10,16 @@
 	explosion_block = 3
 	point_return = BLOB_REFUND_STRONG_COST
 	atmosblock = TRUE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/blob_shield
+
+/datum/armor/blob_shield
+	fire = 90
+	acid = 90
+	laser = 25
+
+/obj/structure/blob/shield/Initialize(mapload, owner_overmind)
+	AddElement(/datum/element/blocks_explosives)
+	return ..()
 
 /obj/structure/blob/shield/scannerreport()
 	if(atmosblock)

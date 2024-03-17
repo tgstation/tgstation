@@ -14,6 +14,18 @@
 		/obj/item/storage/box/donkpockets/donkpockethonk,
 	)
 
+/obj/effect/spawner/random/food_or_drink/donkpockets_single
+	name = "single donk pocket spawner"
+	icon_state = "donkpocket_single"
+	loot = list(
+		/obj/item/food/donkpocket,
+		/obj/item/food/donkpocket/spicy,
+		/obj/item/food/donkpocket/teriyaki,
+		/obj/item/food/donkpocket/pizza,
+		/obj/item/food/donkpocket/berry,
+		/obj/item/food/donkpocket/honk,
+	)
+
 /obj/effect/spawner/random/food_or_drink/seed
 	name = "seed spawner"
 	icon_state = "seed"
@@ -33,6 +45,7 @@
 		/obj/item/seeds/chanter,
 		/obj/item/seeds/potato,
 		/obj/item/seeds/sugarcane,
+		/obj/item/seeds/cucumber,
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_rare
@@ -43,6 +56,7 @@
 		/obj/item/seeds/liberty = 5,
 		/obj/item/seeds/replicapod = 5,
 		/obj/item/seeds/reishi = 5,
+		/obj/item/seeds/seedling = 5,
 		/obj/item/seeds/nettle/death = 1,
 		/obj/item/seeds/plump/walkingmushroom = 1,
 		/obj/item/seeds/cannabis/rainbow = 1,
@@ -59,12 +73,12 @@
 	name = "soup spawner"
 	icon_state = "soup"
 	loot = list(
-		/obj/item/food/soup/beet,
-		/obj/item/food/soup/sweetpotato,
-		/obj/item/food/soup/stew,
-		/obj/item/food/soup/hotchili,
-		/obj/item/food/soup/nettle,
-		/obj/item/food/soup/meatball,
+		/obj/item/reagent_containers/cup/bowl/soup/hotchili,
+		/obj/item/reagent_containers/cup/bowl/soup/meatball_soup,
+		/obj/item/reagent_containers/cup/bowl/soup/nettle,
+		/obj/item/reagent_containers/cup/bowl/soup/stew,
+		/obj/item/reagent_containers/cup/bowl/soup/sweetpotato,
+		/obj/item/reagent_containers/cup/bowl/soup/white_beet,
 	)
 
 /obj/effect/spawner/random/food_or_drink/salad
@@ -104,54 +118,55 @@
 	name = "good soda spawner"
 	icon_state = "can"
 	loot = list(
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 3,
-		/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 3,
-		/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 2,
-		/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 2,
-		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 3,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 3,
+		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 2,
+		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 2,
+		/obj/item/reagent_containers/cup/soda_cans/shamblers = 1,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 1,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb = 1,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 1,
+		/obj/item/reagent_containers/cup/soda_cans/starkist = 1,
+		/obj/item/reagent_containers/cup/soda_cans/space_up = 1,
+		/obj/item/reagent_containers/cup/soda_cans/sol_dry = 1,
+		/obj/item/reagent_containers/cup/soda_cans/cola = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/booze
 	name = "booze spawner"
 	icon_state = "beer"
 	loot = list(
-		/obj/item/reagent_containers/food/drinks/bottle/beer = 75,
-		/obj/item/reagent_containers/food/drinks/bottle/ale = 25,
-		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/maltliquor = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/rum = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/vermouth = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/cognac = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/wine = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/kahlua = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/amaretto = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/applejack = 5,
-		/obj/item/reagent_containers/glass/bottle/ethanol = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/fernet = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/champagne = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/goldschlager = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/patron = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/kong = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/lizardwine = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/trappist = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/beer = 75,
+		/obj/item/reagent_containers/cup/glass/bottle/ale = 25,
+		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/gin = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/tequila = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/rum = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/vermouth = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/cognac = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/wine = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/kahlua = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/amaretto = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/hcider = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/absinthe = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/sake = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/grappa = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5,
+		/obj/item/reagent_containers/cup/bottle/ethanol = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/fernet = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/patron = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/kong = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/trappist = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/pizzaparty
@@ -190,7 +205,7 @@
 		/obj/item/food/peanuts = 5,
 		/obj/item/food/cnds = 5,
 		/obj/item/food/energybar = 5,
-		/obj/item/reagent_containers/food/drinks/dry_ramen = 5,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 5,
 		/obj/item/food/cornchips/random = 5,
 		/obj/item/food/semki = 5,
 		/obj/item/food/peanuts/random = 3,
@@ -210,7 +225,7 @@
 		/obj/item/food/breadslice/root = 5,
 		/obj/item/food/kebab/candied_mushrooms = 5,
 		/obj/item/food/steeped_mushrooms = 5,
-		/obj/item/food/larvae = 5,
+		/obj/item/food/canned/larvae = 5,
 		/obj/item/food/emperor_roll = 5,
 		/obj/item/food/honey_roll = 5,
 	)
@@ -219,16 +234,18 @@
 	name = "condiment spawner"
 	icon_state = "condiment"
 	loot = list(
-		/obj/item/reagent_containers/food/condiment/saltshaker = 3,
-		/obj/item/reagent_containers/food/condiment/peppermill = 3,
-		/obj/item/reagent_containers/food/condiment/pack/ketchup = 3,
-		/obj/item/reagent_containers/food/condiment/pack/hotsauce = 3,
-		/obj/item/reagent_containers/food/condiment/pack/astrotame = 3,
-		/obj/item/reagent_containers/food/condiment/pack/bbqsauce = 3,
-		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
-		/obj/item/reagent_containers/food/condiment/soysauce = 1,
-		/obj/item/reagent_containers/food/condiment/vinegar = 1,
-		/obj/item/reagent_containers/food/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/saltshaker = 3,
+		/obj/item/reagent_containers/condiment/peppermill = 3,
+		/obj/item/reagent_containers/condiment/pack/ketchup = 3,
+		/obj/item/reagent_containers/condiment/pack/hotsauce = 3,
+		/obj/item/reagent_containers/condiment/pack/astrotame = 3,
+		/obj/item/reagent_containers/condiment/pack/bbqsauce = 3,
+		/obj/item/reagent_containers/condiment/bbqsauce = 1,
+		/obj/item/reagent_containers/condiment/soysauce = 1,
+		/obj/item/reagent_containers/condiment/vinegar = 1,
+		/obj/item/reagent_containers/condiment/peanut_butter = 1,
+		/obj/item/reagent_containers/condiment/olive_oil = 1,
+		/obj/item/reagent_containers/condiment/cherryjelly = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/cups
@@ -238,4 +255,85 @@
 		/obj/item/storage/box/drinkingglasses,
 		/obj/item/storage/box/cups,
 		/obj/item/storage/box/condimentbottles,
+	)
+
+///Used for the employee birthday station trait
+/obj/effect/spawner/random/food_or_drink/cake_ingredients
+	name = "cake ingredients spawner"
+	icon_state = "cake"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/item/food/cakebatter,
+		/obj/item/flashlight/flare/candle,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/cup/bottle/caramel,
+	)
+
+/obj/effect/spawner/random/food_or_drink/cake_ingredients/Initialize(mapload)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		spawn_loot_chance = 0
+	return ..()
+
+/obj/effect/spawner/random/food_or_drink/donuts
+	name = "donut spawner"
+	icon_state = "donut"
+	loot = list(
+		/obj/item/food/donut/apple = 3,
+		/obj/item/food/donut/berry = 3,
+		/obj/item/food/donut/caramel = 3,
+		/obj/item/food/donut/choco = 3,
+		/obj/item/food/donut/plain = 3,
+		/obj/item/food/donut/blumpkin = 2,
+		/obj/item/food/donut/bungo = 2,
+		/obj/item/food/donut/laugh = 2,
+		/obj/item/food/donut/matcha = 2,
+		/obj/item/food/donut/trumpet = 2,
+		/obj/item/food/donut/chaos = 1,
+		/obj/item/food/donut/meat = 1,
+	)
+
+/obj/effect/spawner/random/food_or_drink/jelly_donuts
+	name = "jelly donut spawner"
+	icon_state = "jelly_donut"
+	loot = list(
+		/obj/item/food/donut/jelly/apple = 3,
+		/obj/item/food/donut/jelly/berry = 3,
+		/obj/item/food/donut/jelly/caramel = 3,
+		/obj/item/food/donut/jelly/choco = 3,
+		/obj/item/food/donut/jelly/plain = 3,
+		/obj/item/food/donut/jelly/blumpkin = 2,
+		/obj/item/food/donut/jelly/bungo = 2,
+		/obj/item/food/donut/jelly/laugh = 2,
+		/obj/item/food/donut/jelly/matcha = 2,
+		/obj/item/food/donut/jelly/trumpet = 2,
+	)
+
+/obj/effect/spawner/random/food_or_drink/slime_jelly_donuts
+	name = "slime jelly donut spawner"
+	icon_state = "slime_jelly_donut"
+	loot = list(
+		/obj/item/food/donut/jelly/slimejelly/apple = 3,
+		/obj/item/food/donut/jelly/slimejelly/berry = 3,
+		/obj/item/food/donut/jelly/slimejelly/caramel = 3,
+		/obj/item/food/donut/jelly/slimejelly/choco = 3,
+		/obj/item/food/donut/jelly/slimejelly/plain = 3,
+		/obj/item/food/donut/jelly/slimejelly/blumpkin = 2,
+		/obj/item/food/donut/jelly/slimejelly/bungo = 2,
+		/obj/item/food/donut/jelly/slimejelly/laugh = 2,
+		/obj/item/food/donut/jelly/slimejelly/matcha = 2,
+		/obj/item/food/donut/jelly/slimejelly/trumpet = 2,
+	)
+
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage
+	name = "any snack or beverage spawner"
+	icon_state = "slime_jelly_donut"
+	loot = list(
+		/obj/effect/spawner/random/food_or_drink/snack = 6,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 6,
+		/obj/effect/spawner/random/food_or_drink/donuts = 5,
+		/obj/effect/spawner/random/food_or_drink/donkpockets_single = 5,
+		/obj/effect/spawner/random/food_or_drink/booze = 4,
+		/obj/effect/spawner/random/food_or_drink/snack/lizard = 4,
+		/obj/effect/spawner/random/food_or_drink/jelly_donuts = 3,
+		/obj/effect/spawner/random/food_or_drink/slime_jelly_donuts = 1,
 	)

@@ -5,7 +5,7 @@
 */
 /obj/machinery/plumbing
 	name = "pipe thing"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 7.5
@@ -32,7 +32,7 @@
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
@@ -45,7 +45,7 @@
 	. = ..()
 	if(anchored)
 		to_chat(user, span_warning("The [name] needs to be unbolted to do that!"))
-	if(I.tool_start_check(user, amount=0))
+	if(I.tool_start_check(user, amount=1))
 		to_chat(user, span_notice("You start slicing the [name] apart."))
 		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)
@@ -59,6 +59,7 @@
 	icon_state = "pipe_input"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
+
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -76,6 +77,11 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
+/obj/machinery/plumbing/output/tap
+	name = "drinking tap"
+	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
+	icon_state = "tap_output"
+
 /obj/machinery/plumbing/tank
 	name = "chemical tank"
 	desc = "A massive chemical holding tank."
@@ -85,7 +91,6 @@
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/tank, bolt, layer)
-
 
 ///Layer manifold machine that connects a bunch of layers
 /obj/machinery/plumbing/layer_manifold

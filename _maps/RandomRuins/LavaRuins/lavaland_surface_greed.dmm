@@ -11,7 +11,6 @@
 "e" = (
 /obj/structure/table/wood/poker,
 /obj/item/gun/ballistic/revolver/russian/soul,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "f" = (
@@ -21,12 +20,12 @@
 "g" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/mythril,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "h" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/diamond,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "i" = (
@@ -35,11 +34,14 @@
 "j" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/adamantine,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "k" = (
-/obj/machinery/computer/arcade/battle{
-	set_obj_flags = "EMAGGED"
+/obj/machinery/computer/arcade/battle,
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/computer/arcade/battle
 	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
@@ -93,12 +95,11 @@
 /area/ruin/powered/greed)
 "v" = (
 /obj/item/coin/gold,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "w" = (
-/obj/item/storage/bag/money,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "J" = (
@@ -299,9 +300,9 @@ l
 m
 m
 m
-l
-m
 v
+m
+l
 W
 W
 a
@@ -343,9 +344,9 @@ l
 m
 m
 l
-m
-l
 w
+l
+o
 W
 W
 a

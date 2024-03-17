@@ -1,122 +1,157 @@
-
-/*
-	Telecomms monitor tracks the overall trafficing of a telecommunications network
-	and displays a heirarchy of linked machines.
-*/
-
+#define MAIN_VIEW 0
+#define MACHINE_VIEW 1
+#define MAX_NETWORK_ID_LENGTH 15
 
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitoring console"
-	icon_screen = "comm_monitor"
 	desc = "Monitors the details of the telecommunications network it's synced with."
 
-	var/screen = 0 // the screen number:
-	var/list/machinelist = list() // the machines located by the computer
-	var/obj/machinery/telecomms/SelectedMachine
-
-	var/network = "NULL" // the network to probe
-
-	var/temp = "" // temporary feedback messages
 	circuit = /obj/item/circuitboard/computer/comm_monitor
 
-/obj/machinery/computer/telecomms/monitor/ui_interact(mob/user)
+	icon_screen = "comm_monitor"
+
+	/// Weakref of the currently selected tcomms machine
+	var/datum/weakref/selected_machine_ref = null
+	/// Weakrefs of the machines located by the computer
+	var/list/datum/weakref/machine_refs
+
+	/// Currently displayed "tab"
+	var/screen = MAIN_VIEW
+	/// The network to probe
+	var/network = "NULL"
+	/// Error message to show
+	var/status_message = null
+
+/obj/machinery/computer/telecomms/monitor/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	var/dat = "<TITLE>Telecommunications Monitor</TITLE><center><b>Telecommunications Monitor</b></center>"
+	LAZYINITLIST(machine_refs)
+
+/obj/machinery/computer/telecomms/monitor/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/telecomms),
+	)
+
+/obj/machinery/computer/telecomms/monitor/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TelecommsMonitor")
+		ui.open()
+
+/obj/machinery/computer/telecomms/monitor/ui_data(mob/user)
+	var/list/data = list()
+
+	data["screen"] = screen
+	data["statusMessage"] = status_message
 
 	switch(screen)
+		if(MAIN_VIEW)
+			data["network"] = network
 
+			data["machines"] = list()
+			for(var/datum/weakref/machine_ref in machine_refs)
+				var/obj/machinery/telecomms/machine = machine_ref.resolve()
+				if(isnull(machine))
+					machine_refs -= machine_ref
+					continue
 
-	  // --- Main Menu ---
+				data["machines"] += list(list(
+					"id" = machine.id,
+					"name" = machine.name,
+					"icon" = initial(machine.icon_state),
+				))
 
-		if(0)
-			dat += "<br>[temp]<br><br>"
-			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
-			if(machinelist.len)
-				dat += "<br>Detected Network Entities:<ul>"
-				for(var/obj/machinery/telecomms/T in machinelist)
-					dat += "<li><a href='?src=[REF(src)];viewmachine=[T.id]'>[REF(T)] [T.name]</a> ([T.id])</li>"
-				dat += "</ul>"
-				dat += "<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"
-			else
-				dat += "<a href='?src=[REF(src)];operation=probe'>\[Probe Network\]</a>"
+		if(MACHINE_VIEW)
+			var/obj/machinery/telecomms/selected = selected_machine_ref?.resolve()
+			if(!isnull(selected))
+				var/list/linked_machines = list()
+				for(var/obj/machinery/telecomms/machine as anything in selected.links)
+					linked_machines += list(list(
+						"id" = machine.id,
+						"name" = machine.name,
+						"icon" = initial(machine.icon_state),
+					))
 
+				data["machine"] = list(
+					"id" = selected.id,
+					"name" = selected.name,
+					"network" = selected.network,
+					"linkedMachines" = linked_machines,
+				)
 
-	  // --- Viewing Machine ---
+	return data
 
-		if(1)
-			dat += "<br>[temp]<br>"
-			dat += "<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a></center>"
-			dat += "<br>Current Network: [network]<br>"
-			dat += "Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>"
-			dat += "Linked Entities: <ol>"
-			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
-				if(!T.hide)
-					dat += "<li><a href='?src=[REF(src)];viewmachine=[T.id]'>[REF(T.id)] [T.name]</a> ([T.id])</li>"
-			dat += "</ol>"
-
-
-
-	user << browse(dat, "window=comm_monitor;size=575x400")
-	onclose(user, "server_control")
-
-	temp = ""
-	return
-
-
-/obj/machinery/computer/telecomms/monitor/Topic(href, href_list)
-	if(..())
+/obj/machinery/computer/telecomms/monitor/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
 
+	status_message = null
 
-	add_fingerprint(usr)
-	usr.set_machine(src)
+	switch(action)
+		if("flush")
+			machine_refs = list()
+			network = ""
+			return TRUE
 
-	if(href_list["viewmachine"])
-		screen = 1
-		for(var/obj/machinery/telecomms/T in machinelist)
-			if(T.id == href_list["viewmachine"])
-				SelectedMachine = T
-				break
+		if("home")
+			selected_machine_ref = null
+			screen = MAIN_VIEW
+			return TRUE
 
-	if(href_list["operation"])
-		switch(href_list["operation"])
+		if("view")
+			var/machine_id = params["id"]
+			if(isnull(machine_id))
+				return
 
-			if("release")
-				machinelist = list()
-				screen = 0
+			for(var/datum/weakref/machine_ref as anything in machine_refs)
+				var/obj/machinery/telecomms/machine = machine_ref.resolve()
+				if(isnull(machine))
+					machine_refs -= machine_ref
+					continue
 
-			if("mainmenu")
-				screen = 0
+				if(machine.id != machine_id)
+					continue
 
-			if("probe")
-				if(machinelist.len > 0)
-					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
+				selected_machine_ref = machine_ref
+				screen = MACHINE_VIEW
 
-				else
-					for(var/obj/machinery/telecomms/T in urange(25, src))
-						if(T.network == network)
-							machinelist.Add(T)
+			if(isnull(selected_machine_ref))
+				status_message = "OPERATION FAILED: UNABLE TO LOCATE MACHINERY."
 
-					if(!machinelist.len)
-						temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\] -</font color>"
-					else
-						temp = "<font color = #336699>- [machinelist.len] ENTITIES LOCATED & BUFFERED -</font color>"
+			return TRUE
 
-					screen = 0
+		if("probe")
+			var/network_id = params["id"]
+			if(length(network_id) > MAX_NETWORK_ID_LENGTH)
+				status_message = "OPERATION FAILED: NETWORK ID TOO LONG."
+				return TRUE
 
+			list_clear_empty_weakrefs(machine_refs)
 
-	if(href_list["network"])
+			if(length(machine_refs) > 0)
+				status_message = "OPERATION FAILED: CANNOT PROBE WHEN BUFFER FULL."
+				return TRUE
 
-		var/newnet = tgui_input_text(usr, "Which network do you want to view?", "Comm Monitor", network, 15)
-		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
-			network = newnet
-			screen = 0
-			machinelist = list()
-			temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
+			network = network_id
 
-	updateUsrDialog()
-	return
+			var/list/telecomms_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/telecomms)
+			for(var/obj/machinery/telecomms/machine as anything in telecomms_machines)
+				if(machine.network != network)
+					continue
 
-/obj/machinery/computer/telecomms/monitor/attackby()
-	. = ..()
-	updateUsrDialog()
+				machine_refs += WEAKREF(machine)
+
+			if(length(machine_refs) == 0)
+				status_message = "OPERATION FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN [network]."
+				return TRUE
+
+			status_message = "[length(machine_refs)] ENTITIES LOCATED & BUFFERED"
+			return TRUE
+
+	return TRUE
+
+#undef MAIN_VIEW
+#undef MACHINE_VIEW
+#undef MAX_NETWORK_ID_LENGTH

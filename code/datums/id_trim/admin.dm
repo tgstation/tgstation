@@ -1,7 +1,10 @@
 /// Trim for admins and debug cards. Has every single access in the game.
 /datum/id_trim/admin
 	assignment = "Jannie"
-	trim_state = "trim_ert_janitor"
+	trim_state = "trim_janitor"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
+	threat_modifier = -INFINITY
 
 /datum/id_trim/admin/New()
 	. = ..()
@@ -12,6 +15,8 @@
 /datum/id_trim/highlander
 	assignment = "Highlander"
 	trim_state = "trim_ert_deathcommando"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
 
 /datum/id_trim/highlander/New()
 	. = ..()

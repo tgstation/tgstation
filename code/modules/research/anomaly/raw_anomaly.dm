@@ -9,7 +9,7 @@
 /obj/item/raw_anomaly_core
 	name = "raw anomaly core"
 	desc = "You shouldn't be seeing this. Someone screwed up."
-	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "broken_state"
 
 	/// Anomaly type
@@ -61,6 +61,18 @@
 	desc = "The raw core of a bioscrambler anomaly, it squirms."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/bioscrambler
 	icon_state = "rawcore_bioscrambler"
+
+/obj/item/raw_anomaly_core/dimensional
+	name = "raw dimensional core"
+	desc = "The raw core of a dimensional anomaly, vibrating with infinite potential."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
+	icon_state = "rawcore_dimensional"
+
+/obj/item/raw_anomaly_core/ectoplasm //Has no cargo order option, but can sometimes be a roundstart pick
+	name = "raw ectoplasm core"
+	desc = "The raw core of an ectoplasmic anomaly. It wants to share its secrets with you."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
+	icon_state = "rawcore_dimensional"
 
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()

@@ -1,0 +1,8 @@
+/obj/structure/shuttle/engine/@SUBTYPES : /obj/machinery/power/shuttle_engine/@SUBTYPES{@OLD}
+/obj/structure/shuttle : @DELETE
+
+/obj/structure/shuttle/engine/platform : /obj/machinery/power/shuttle_engine/propulsion{@OLD}
+/obj/machinery/power/shuttle_engine/platform : /obj/machinery/power/shuttle_engine/propulsion{@OLD}
+
+/obj/structure/shuttle/engine/router : /obj/machinery/power/shuttle_engine/propulsion{@OLD}
+/obj/machinery/power/shuttle_engine/router : /obj/machinery/power/shuttle_engine/propulsion{@OLD}

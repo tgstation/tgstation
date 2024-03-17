@@ -8,6 +8,31 @@
 	layer = TABLE_LAYER
 	resistance_flags = FIRE_PROOF
 	circuit = /obj/item/circuitboard/machine/bountypad
+	var/cooldown_reduction = 0
+
+/obj/machinery/piratepad/civilian/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", tool)
+
+/obj/machinery/piratepad/civilian/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_crowbar(tool)
+
+/obj/machinery/piratepad/civilian/RefreshParts()
+	. = ..()
+	var/T = -2
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		T += micro_laser.tier
+
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		T += scanning_module.tier
+
+	cooldown_reduction = T * (30 SECONDS)
+
+/obj/machinery/piratepad/civilian/proc/get_cooldown_reduction()
+	return cooldown_reduction
 
 ///Computer for assigning new civilian bounties, and sending bounties for collection.
 /obj/machinery/computer/piratepad_control/civilian
@@ -38,7 +63,7 @@
 /obj/machinery/computer/piratepad_control/civilian/LateInitialize()
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/civilian/C in GLOB.machines)
+		for(var/obj/machinery/piratepad/civilian/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad/civilian))
 			if(C.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(C)
 				return
@@ -58,7 +83,7 @@
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	status_report = "Civilian Bounty: "
-	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
+	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
@@ -84,7 +109,7 @@
 		return FALSE
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
-	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
+	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
@@ -113,7 +138,7 @@
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
-/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties()
+/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(cooldown_reduction = 0)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account)
 		return
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
@@ -127,7 +152,7 @@
 	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
 										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
 										random_bounty(CIV_JOB_BASIC))
-	COOLDOWN_START(pot_acc, bounty_timer, 5 MINUTES)
+	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	pot_acc.bounties = crumbs
 
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
@@ -173,9 +198,10 @@
 	. = ..()
 	if(.)
 		return
-	if(!pad_ref?.resolve())
+	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
+	if(!pad)
 		return
-	if(!usr.canUseTopic(src, BE_CLOSE) || (machine_stat & (NOPOWER|BROKEN)))
+	if(!usr.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")
@@ -187,7 +213,7 @@
 		if("pick")
 			pick_bounty(params["value"])
 		if("bounty")
-			add_bounties()
+			add_bounties(pad.get_cooldown_reduction())
 		if("eject")
 			id_eject(usr, inserted_scan_id)
 			inserted_scan_id = null
@@ -274,7 +300,7 @@
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
-	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
+	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, PROC_REF(on_export))
 
 /obj/item/bounty_cube/Destroy()
 	if(radio)
@@ -303,7 +329,7 @@
 	QDEL_NULL(radio)
 	return COMPONENT_STOP_EXPORT // stops the radio from exporting, not the cube
 
-/obj/item/bounty_cube/process(delta_time)
+/obj/item/bounty_cube/process(seconds_per_tick)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
 	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
 		//set up our nag message
@@ -364,13 +390,13 @@
 /obj/item/civ_bounty_beacon
 	name = "civilian bounty beacon"
 	desc = "N.T. approved civilian bounty beacon, toss it down and you will have a bounty pad and computer delivered to you."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "floor_beacon"
 	var/uses = 2
 
 /obj/item/civ_bounty_beacon/attack_self()
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
-	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
 	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -381,3 +407,5 @@
 			new /obj/machinery/computer/piratepad_control/civilian(drop_location())
 			qdel(src)
 	uses--
+
+#undef CIV_BOUNTY_SPLIT

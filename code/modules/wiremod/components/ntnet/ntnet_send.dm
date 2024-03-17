@@ -11,8 +11,6 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
-	network_id = __NETWORK_CIRCUITS
-
 	/// The list type
 	var/datum/port/input/option/list_options
 
@@ -35,4 +33,6 @@
 		data_package.set_datatype(PORT_TYPE_LIST(new_datatype))
 
 /obj/item/circuit_component/ntnet_send/input_received(datum/port/input/port)
-	ntnet_send(list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))
+	if(!find_functional_ntnet_relay())
+		return
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))

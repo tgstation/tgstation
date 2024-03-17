@@ -13,35 +13,35 @@
 	attack_verb_simple = "punch"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
+	melee_attack_cooldown = 1.5 SECONDS
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	faction = list("stickman")
+	faction = list(FACTION_STICKMAN)
+	unsuitable_atmos_damage = 7.5
+	unsuitable_cold_damage = 7.5
+	unsuitable_heat_damage = 7.5
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman
+
+/mob/living/basic/stickman/lesser
+	maxHealth = 25
+	health = 25
 
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))
-	AddElement(/datum/element/basic_body_temp_sensitive, cold_damage = 7.5, heat_damage = 7.5)
-	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
 
 /datum/ai_controller/basic_controller/stickman
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/stickman
+		/datum/ai_planning_subtree/basic_melee_attack_subtree
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/stickman
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/stickman
-
-/datum/ai_behavior/basic_melee_attack/stickman
-	action_cooldown = 1.5 SECONDS
 
 /mob/living/basic/stickman/dog
 	name = "Angry Stick Dog"
@@ -71,8 +71,9 @@
 
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/item/gun/ballistic/automatic/pistol/stickman))
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')
+	var/static/list/stickman_drops = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
+	AddElement(/datum/element/death_drops, stickman_drops)
+	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/c9mm, projectile_sound = 'sound/misc/bang.ogg', cooldown_time = 5 SECONDS)
 
 /datum/ai_controller/basic_controller/stickman/ranged
 	planning_subtrees = list(

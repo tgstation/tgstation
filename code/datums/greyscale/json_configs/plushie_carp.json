@@ -1,0 +1,26 @@
+{
+	"map_plushie_carp": [
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_carp_body",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_carp_eyes",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_carp_teeth",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_carp_pupil",
+			"blend_mode": "overlay"
+		}
+	]
+}

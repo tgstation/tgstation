@@ -2,23 +2,16 @@
 	name = "Flyperson"
 	plural_form = "Flypeople"
 	id = SPECIES_FLYPERSON
-	say_mod = "buzzes"
-	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_CAN_USE_FLIGHT_POTION,
-		TRAIT_LITERATE,
+		TRAIT_TACKLING_FRAIL_ATTACKER,
+		TRAIT_ANTENNAE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	mutanteyes = /obj/item/organ/internal/eyes/fly
-	liked_food = GROSS
-	disliked_food = NONE
-	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 
 	mutanttongue = /obj/item/organ/internal/tongue/fly
 	mutantheart = /obj/item/organ/internal/heart/fly
@@ -29,25 +22,30 @@
 	mutant_organs = list(/obj/item/organ/internal/fly, /obj/item/organ/internal/fly/groin)
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/fly,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/fly,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/fly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/fly,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/fly,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/fly,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/fly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/fly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/fly,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
 
-/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
-		return TRUE
-	..()
+/datum/species/fly/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	RegisterSignal(human_who_gained_species, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
-/datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
-	if(istype(weapon, /obj/item/melee/flyswatter))
-		return 30 //Flyswatters deal 30x damage to flypeople.
-	return 1
+/datum/species/fly/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+
+/datum/species/fly/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
+
+	if(istype(attacking_item, /obj/item/melee/flyswatter))
+		damage_mods += 30 // Yes, a 30x damage modifier
+
+/datum/species/fly/get_physical_attributes()
+	return "These hideous creatures suffer from pesticide immensely, eat waste, and are incredibly vulnerable to bright lights. They do have wings though."
 
 /datum/species/fly/get_species_description()
 	return "With no official documentation or knowledge of the origin of \
@@ -102,74 +100,3 @@
 	)
 
 	return to_add
-
-/obj/item/organ/internal/heart/fly
-	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
-
-/obj/item/organ/internal/heart/fly/Initialize(mapload)
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/internal/heart/fly/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return //don't set icon thank you
-
-/obj/item/organ/internal/lungs/fly
-	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
-
-/obj/item/organ/internal/lungs/fly/Initialize(mapload)
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/internal/liver/fly
-	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
-	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
-
-/obj/item/organ/internal/liver/fly/Initialize(mapload)
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/internal/stomach/fly
-	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
-
-/obj/item/organ/internal/stomach/fly/Initialize(mapload)
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/internal/stomach/fly/on_life(delta_time, times_fired)
-	if(locate(/datum/reagent/consumable) in reagents.reagent_list)
-		var/mob/living/carbon/body = owner
-		// we do not loss any nutrition as a fly when vomiting out food
-		body.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge_ratio = 0.67)
-		playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-		body.visible_message(span_danger("[body] vomits on the floor!"), \
-					span_userdanger("You throw up on the floor!"))
-	return ..()
-
-/obj/item/organ/internal/appendix/fly
-	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
-
-/obj/item/organ/internal/appendix/fly/Initialize(mapload)
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/internal/appendix/fly/update_appearance(updates=ALL)
-	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
-
-//useless organs we throw in just to fuck with surgeons a bit more
-/obj/item/organ/internal/fly
-	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
-	visual = FALSE
-
-/obj/item/organ/internal/fly/Initialize(mapload)
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/internal/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
-	zone = BODY_ZONE_PRECISE_GROIN

@@ -6,7 +6,7 @@
  */
 /datum/element/backblast
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// How many "pellets" of backblast we're shooting backwards, spread between the angle defined in angle_spread
 	var/plumes
@@ -25,9 +25,9 @@
 	src.range = range
 
 	if(plumes == 1)
-		RegisterSignal(target, COMSIG_GUN_FIRED, .proc/gun_fired_simple)
+		RegisterSignal(target, COMSIG_GUN_FIRED, PROC_REF(gun_fired_simple))
 	else
-		RegisterSignal(target, COMSIG_GUN_FIRED, .proc/gun_fired)
+		RegisterSignal(target, COMSIG_GUN_FIRED, PROC_REF(gun_fired))
 
 /datum/element/backblast/Detach(datum/source)
 	if(source)
@@ -48,7 +48,7 @@
 	for(var/i in 1 to plumes)
 		var/this_angle = SIMPLIFY_DEGREES(starting_angle + ((i - 1) * iter_offset))
 		var/turf/target_turf = get_turf_in_angle(this_angle, get_turf(user), 10)
-		INVOKE_ASYNC(src, .proc/pew, target_turf, weapon, user)
+		INVOKE_ASYNC(src, PROC_REF(pew), target_turf, weapon, user)
 
 /// If we're only firing one plume directly behind us, we don't need to bother with the loop or angles or anything
 /datum/element/backblast/proc/gun_fired_simple(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
@@ -59,12 +59,12 @@
 
 	var/backwards_angle = get_angle(target, user)
 	var/turf/target_turf = get_turf_in_angle(backwards_angle, get_turf(user), 10)
-	INVOKE_ASYNC(src, .proc/pew, target_turf, weapon, user)
+	INVOKE_ASYNC(src, PROC_REF(pew), target_turf, weapon, user)
 
 /// For firing an actual backblast pellet
 /datum/element/backblast/proc/pew(turf/target_turf, obj/item/gun/weapon, mob/living/user)
 	//Shooting Code:
-	var/obj/projectile/bullet/incendiary/backblast/P = new (get_turf(user))
+	var/obj/projectile/bullet/incendiary/fire/backblast/P = new (get_turf(user))
 	P.original = target_turf
 	P.range = range
 	P.fired_from = weapon

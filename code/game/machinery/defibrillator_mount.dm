@@ -23,19 +23,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 /obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
+	find_and_hang_on_wall()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
-	if(defib)
-		QDEL_NULL(defib)
-	. = ..()
-
-/obj/machinery/defibrillator_mount/handle_atom_del(atom/A)
-	if(A == defib)
-		defib = null
-		end_processing()
+	QDEL_NULL(defib)
 	return ..()
+
+/obj/machinery/defibrillator_mount/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == defib)
+		// Make sure processing ends before the defib is nulled
+		end_processing()
+		defib = null
+		update_appearance()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
@@ -155,7 +157,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	if(!defib)
 		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
@@ -171,10 +173,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
 		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	// Make sure processing ends before the defib is nulled
-	end_processing()
-	defib = null
-	update_appearance()
 
 /obj/machinery/defibrillator_mount/charging
 	name = "PENLITE defibrillator mount"
@@ -197,13 +195,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		begin_processing()
 
 
-/obj/machinery/defibrillator_mount/charging/process(delta_time)
+/obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
 	var/obj/item/stock_parts/cell/C = get_cell()
 	if(!C || !is_operational)
 		return PROCESS_KILL
 	if(C.charge < C.maxcharge)
-		use_power(active_power_usage * delta_time)
-		C.give(40 * delta_time)
+		use_power(active_power_usage * seconds_per_tick)
+		C.give(40 * seconds_per_tick)
 		defib.update_power()
 
 //wallframe, for attaching the mounts easily
@@ -212,7 +210,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	desc = "A frame for a defibrillator mount. Once placed, it can be removed with a wrench."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = 28
@@ -221,5 +219,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	name = "unhooked PENLITE defibrillator mount"
 	desc = "A frame for a PENLITE defibrillator mount. Unlike the normal mount, it can passively recharge the unit inside."
 	icon_state = "penlite_mount"
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 0.5)
 	result_path = /obj/machinery/defibrillator_mount/charging

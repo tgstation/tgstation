@@ -1,0 +1,2855 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aK" = (
+/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/ctf)
+"bM" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"bT" = (
+/obj/machinery/ctf/spawner/blue,
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"da" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/centcom/ctf)
+"dx" = (
+/obj/structure/shipping_container/nanotrasen{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/ctf)
+"eW" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/centcom/ctf)
+"fn" = (
+/obj/structure/steam_vent/fast{
+	resistance_flags = 115
+	},
+/turf/open/floor/plating,
+/area/centcom/ctf)
+"fp" = (
+/obj/structure/railing/corner{
+	dir = 4;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"fr" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"fA" = (
+/obj/structure/chair/sofa/bench/right{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"fH" = (
+/turf/open/floor/plating,
+/area/centcom/ctf)
+"gT" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"iK" = (
+/obj/effect/turf_decal/stripes{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"jf" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"lB" = (
+/obj/structure/railing{
+	dir = 8;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"lF" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 4
+	},
+/area/centcom/ctf)
+"lK" = (
+/obj/structure/trap/ctf/red,
+/obj/machinery/door/airlock/public/glass{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"mE" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
+/area/centcom/ctf)
+"no" = (
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/ctf)
+"nJ" = (
+/obj/structure/railing{
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"oP" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"qH" = (
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"qM" = (
+/obj/machinery/atmospherics/components/unary/hypertorus/core,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/ctf)
+"rJ" = (
+/obj/effect/turf_decal/stripes{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/effect/turf_decal/tile/blue/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"sa" = (
+/turf/open/floor/iron/stairs/left,
+/area/centcom/ctf)
+"tr" = (
+/turf/open/floor/iron/white/smooth_large,
+/area/centcom/ctf)
+"tO" = (
+/obj/structure/railing{
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"ua" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"uo" = (
+/obj/effect/turf_decal/stripes{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"uP" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"ve" = (
+/turf/closed/indestructible/fakedoor,
+/area/centcom/ctf)
+"wk" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"wW" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 1;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"xL" = (
+/obj/structure/table/wood{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/centcom/ctf)
+"ya" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"yj" = (
+/obj/structure/chair/comfy/teal{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/centcom/ctf)
+"ys" = (
+/turf/open/floor/iron/stairs/right,
+/area/centcom/ctf)
+"yA" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/ctf)
+"yB" = (
+/obj/effect/turf_decal/stripes{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"yC" = (
+/obj/structure/railing{
+	dir = 8;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"zb" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"zd" = (
+/turf/template_noop,
+/area/template_noop)
+"zj" = (
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/ctf)
+"zB" = (
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"AW" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 8;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"Bx" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"BU" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/centcom/ctf)
+"Cj" = (
+/obj/structure/railing{
+	dir = 1;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Dw" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen,
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Ea" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Ex" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Fj" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Fu" = (
+/obj/structure/chair/comfy/teal{
+	dir = 1;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/centcom/ctf)
+"Ga" = (
+/obj/structure/trap/ctf/blue,
+/obj/machinery/door/airlock/public/glass{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"Go" = (
+/obj/structure/closet/secure_closet/medical3{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"GN" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/closed/indestructible/riveted,
+/area/centcom/ctf)
+"Ia" = (
+/obj/structure/table{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Jh" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"JM" = (
+/obj/effect/turf_decal/stripes{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Kq" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 8
+	},
+/area/centcom/ctf)
+"KA" = (
+/obj/machinery/ctf/spawner/red,
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"KL" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Md" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"ME" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"MG" = (
+/obj/structure/window/reinforced/fulltile/indestructible,
+/turf/open/floor/plating,
+/area/centcom/ctf)
+"MP" = (
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"MS" = (
+/turf/open/floor/iron/stairs/medium,
+/area/centcom/ctf)
+"NF" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen,
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Or" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/centcom/ctf)
+"OW" = (
+/obj/structure/railing{
+	dir = 4;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Pj" = (
+/obj/structure/railing{
+	dir = 4;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Pk" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/centcom/ctf)
+"Px" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 8
+	},
+/area/centcom/ctf)
+"PB" = (
+/obj/structure/railing{
+	dir = 1;
+	resistance_flags = 115
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"PH" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 4;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"PP" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Qi" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Qn" = (
+/obj/effect/turf_decal/tile/blue/full,
+/obj/item/ctf_flag/blue,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Qp" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Qr" = (
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"QO" = (
+/obj/structure/shipping_container/gorlex/red{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/ctf)
+"QU" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"QY" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"Rf" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Rh" = (
+/obj/structure/window/reinforced/fulltile{
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
+/turf/open/floor/plating,
+/area/centcom/ctf)
+"RG" = (
+/obj/effect/turf_decal/stripes{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/anticorner,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"RL" = (
+/obj/machinery/atmospherics/components/unary/hypertorus/waste_output{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/ctf)
+"RX" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 4
+	},
+/area/centcom/ctf)
+"Se" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Tc" = (
+/obj/structure/chair/sofa/bench/left{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"Ty" = (
+/obj/effect/turf_decal/stripes{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"TB" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/anticorner,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Ub" = (
+/obj/effect/turf_decal/tile/red/full,
+/obj/item/ctf_flag/red,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"UD" = (
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"VK" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/half,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"VS" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/centcom/ctf)
+"XC" = (
+/obj/machinery/rnd/server{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"XE" = (
+/obj/effect/turf_decal/stripes{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"Yp" = (
+/obj/effect/turf_decal/tile/dark,
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+"YZ" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1;
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/white,
+/area/centcom/ctf)
+"Zp" = (
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
+
+(1,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+zd
+zd
+"}
+(2,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+GN
+GN
+GN
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+yA
+yA
+yA
+Qr
+Go
+Qr
+Qr
+Qr
+Qr
+Qr
+Qr
+yA
+zd
+zd
+"}
+(3,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+UD
+UD
+UD
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+ME
+ME
+yA
+Qr
+Qr
+Qr
+Qr
+Qr
+Qr
+KA
+Qr
+yA
+zd
+zd
+"}
+(4,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+UD
+UD
+UD
+yA
+yA
+yA
+yA
+yA
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+ME
+ME
+yA
+Qr
+Qr
+Qr
+QY
+AW
+Qr
+Qr
+Qr
+yA
+zd
+zd
+"}
+(5,1,1) = {"
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+MP
+MP
+yA
+MP
+MP
+MP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+yA
+Zp
+Zp
+sa
+sa
+sa
+sa
+sa
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+ME
+ME
+yA
+Rh
+lK
+lK
+Rh
+yA
+fA
+Qr
+Qr
+yA
+zd
+zd
+"}
+(6,1,1) = {"
+yA
+tr
+tr
+tr
+MG
+rJ
+Md
+Ex
+Rf
+JM
+Cj
+MP
+MP
+MP
+MP
+MP
+tO
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+yA
+Zp
+Zp
+ys
+ys
+ys
+ys
+ys
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Dw
+ME
+ME
+VS
+VS
+VS
+VS
+VS
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+Rh
+Tc
+Qr
+Qr
+yA
+zd
+zd
+"}
+(7,1,1) = {"
+yA
+tr
+tr
+tr
+MG
+Fj
+Qn
+VK
+Zp
+QU
+VS
+MP
+MP
+MP
+MP
+MP
+Ea
+lB
+lB
+lB
+lB
+MP
+MP
+yA
+Zp
+Zp
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Dw
+ME
+ME
+Or
+Or
+Or
+Or
+Or
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+lK
+Qr
+Qr
+Qr
+yA
+zd
+zd
+"}
+(8,1,1) = {"
+yA
+yj
+xL
+Fu
+MG
+wk
+Se
+TB
+Zp
+QU
+Pk
+MP
+MP
+yA
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+yA
+Zp
+Zp
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Dw
+ME
+ME
+Pk
+Pk
+Pk
+Pk
+Pk
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+lK
+Qr
+Qr
+Qr
+yA
+zd
+zd
+"}
+(9,1,1) = {"
+yA
+yj
+xL
+Fu
+MG
+jf
+Zp
+Zp
+Zp
+QU
+Cj
+MP
+MP
+yA
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+yA
+Zp
+Zp
+no
+QO
+no
+QO
+no
+QO
+no
+no
+QO
+no
+QO
+no
+QO
+no
+no
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+fn
+yA
+yA
+yA
+yA
+yA
+ME
+ME
+ME
+Rh
+Qr
+Qr
+Qr
+yA
+zd
+zd
+"}
+(10,1,1) = {"
+yA
+yj
+xL
+Fu
+MG
+jf
+Zp
+Zp
+Zp
+QU
+Cj
+MP
+MP
+yA
+MP
+MP
+yA
+yA
+yA
+yA
+MP
+MP
+MP
+yA
+Zp
+Zp
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+fH
+yA
+zd
+zd
+zd
+yA
+ME
+ME
+ME
+yA
+yA
+yA
+yA
+yA
+zd
+zd
+"}
+(11,1,1) = {"
+yA
+tr
+BU
+tr
+MG
+jf
+Zp
+ua
+bM
+XE
+Cj
+MP
+MP
+yA
+MP
+MP
+MG
+UD
+XC
+MG
+MP
+MP
+yA
+yA
+Zp
+Zp
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+fH
+yA
+zd
+zd
+zd
+yA
+ME
+ME
+ME
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(12,1,1) = {"
+yA
+tr
+tr
+tr
+MG
+uo
+bM
+OW
+Kq
+Px
+yA
+MP
+MP
+MP
+MP
+MP
+MG
+UD
+XC
+MG
+MP
+MP
+UD
+Qi
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+fH
+yA
+yA
+yA
+yA
+yA
+ME
+ME
+ME
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(13,1,1) = {"
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+ve
+UD
+UD
+yA
+MP
+MP
+UD
+Qi
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+fH
+fH
+fH
+fH
+fH
+yA
+ME
+ME
+ME
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(14,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+MP
+MP
+MP
+MP
+MP
+MP
+yA
+MP
+MP
+yA
+Ia
+Ia
+yA
+MP
+MP
+UD
+Qi
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+yA
+qH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+fH
+yA
+yA
+yA
+fH
+yA
+lF
+eW
+RX
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(15,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+MP
+MP
+MP
+yA
+fn
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+MG
+qH
+qH
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+fH
+yA
+zd
+yA
+fH
+yA
+lF
+eW
+RX
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(16,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Kq
+mE
+Px
+yA
+fH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Zp
+yA
+yA
+no
+zj
+aK
+zj
+zj
+aK
+zj
+zj
+aK
+zj
+no
+MG
+qH
+qH
+fn
+fH
+fH
+fH
+fH
+fH
+fH
+fH
+fH
+yA
+zd
+yA
+fH
+yA
+lF
+eW
+RX
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(17,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Kq
+mE
+Px
+yA
+fH
+yA
+zd
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+Zp
+Zp
+MG
+no
+zj
+qM
+zj
+zj
+qM
+zj
+zj
+qM
+zj
+no
+MG
+qH
+qH
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+zd
+yA
+fH
+yA
+lF
+eW
+RX
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(18,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Kq
+mE
+Px
+yA
+fH
+yA
+zd
+yA
+fH
+fH
+fH
+fH
+fH
+fH
+fH
+fH
+fn
+Zp
+Zp
+MG
+no
+zj
+RL
+zj
+zj
+RL
+zj
+zj
+RL
+zj
+no
+yA
+yA
+qH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+fH
+yA
+lF
+eW
+RX
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(19,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Kq
+mE
+Px
+yA
+fH
+yA
+zd
+yA
+fH
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+Zp
+Zp
+MG
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+fn
+yA
+ME
+ME
+ME
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(20,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Kq
+mE
+Px
+yA
+fH
+yA
+yA
+yA
+fH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+Zp
+yA
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Qi
+UD
+ME
+ME
+yA
+Ia
+Ia
+yA
+ME
+ME
+yA
+ME
+ME
+ME
+ME
+ME
+ME
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(21,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+MP
+MP
+MP
+yA
+fH
+fH
+fH
+fH
+fH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Qi
+UD
+ME
+ME
+yA
+UD
+UD
+ve
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+"}
+(22,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+MP
+MP
+MP
+yA
+yA
+yA
+yA
+yA
+fH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Qi
+UD
+ME
+ME
+MG
+XC
+UD
+MG
+ME
+ME
+ME
+ME
+ME
+yA
+lF
+RX
+yC
+Jh
+iK
+MG
+tr
+tr
+tr
+yA
+"}
+(23,1,1) = {"
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+MP
+MP
+MP
+yA
+zd
+zd
+zd
+yA
+fH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+no
+no
+no
+dx
+no
+dx
+no
+dx
+no
+no
+dx
+no
+dx
+no
+dx
+qH
+qH
+yA
+yA
+ME
+ME
+MG
+XC
+UD
+MG
+ME
+ME
+yA
+ME
+ME
+nJ
+yB
+Jh
+Bx
+qH
+oP
+MG
+tr
+da
+tr
+yA
+"}
+(24,1,1) = {"
+zd
+zd
+yA
+yA
+yA
+yA
+yA
+MP
+MP
+MP
+yA
+zd
+zd
+zd
+yA
+fH
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+qH
+qH
+yA
+ME
+ME
+ME
+yA
+yA
+yA
+yA
+ME
+ME
+yA
+ME
+ME
+nJ
+PP
+qH
+qH
+qH
+oP
+MG
+yj
+xL
+Fu
+yA
+"}
+(25,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+Qr
+Rh
+MP
+MP
+MP
+yA
+yA
+yA
+yA
+yA
+fn
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+qH
+qH
+yA
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+yA
+ME
+ME
+nJ
+PP
+qH
+qH
+qH
+oP
+MG
+yj
+xL
+Fu
+yA
+"}
+(26,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+Qr
+Ga
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+sa
+sa
+sa
+sa
+sa
+MP
+MP
+NF
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+qH
+qH
+yA
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+ME
+yA
+ME
+ME
+sa
+PP
+qH
+Yp
+ya
+Qp
+MG
+yj
+xL
+Fu
+yA
+"}
+(27,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+Qr
+Ga
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MS
+MS
+MS
+MS
+MS
+MP
+MP
+NF
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+qH
+qH
+yA
+ME
+ME
+Pj
+Pj
+Pj
+Pj
+Pj
+fp
+ME
+ME
+ME
+ME
+ys
+PP
+qH
+zB
+Ub
+gT
+MG
+tr
+tr
+tr
+yA
+"}
+(28,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+wW
+Rh
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+MP
+ys
+ys
+ys
+ys
+ys
+MP
+MP
+NF
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+VS
+VS
+VS
+VS
+VS
+qH
+qH
+yA
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+PB
+ME
+ME
+ME
+ME
+nJ
+Ty
+KL
+zb
+fr
+RG
+MG
+tr
+tr
+tr
+yA
+"}
+(29,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+YZ
+yA
+Rh
+Ga
+Ga
+Rh
+yA
+MP
+MP
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+Pk
+Pk
+Pk
+Pk
+Pk
+qH
+qH
+yA
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+ME
+ME
+yA
+ME
+ME
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+"}
+(30,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+Qr
+uP
+PH
+Qr
+Qr
+Qr
+yA
+MP
+MP
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+yA
+yA
+yA
+yA
+yA
+UD
+UD
+UD
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(31,1,1) = {"
+zd
+zd
+yA
+Qr
+bT
+Qr
+Qr
+Qr
+Qr
+Qr
+Qr
+yA
+MP
+MP
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+UD
+UD
+UD
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(32,1,1) = {"
+zd
+zd
+yA
+Qr
+Qr
+Qr
+Qr
+Qr
+Qr
+Go
+Qr
+yA
+yA
+yA
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+yA
+GN
+GN
+GN
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+"}
+(33,1,1) = {"
+zd
+zd
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+yA
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+zd
+"}

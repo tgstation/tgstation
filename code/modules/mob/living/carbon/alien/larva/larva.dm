@@ -22,7 +22,7 @@
 	bodyparts = list(
 		/obj/item/bodypart/chest/larva,
 		/obj/item/bodypart/head/larva,
-		)
+	)
 
 	var/amount_grown = 0
 	var/max_grown = 100
@@ -31,16 +31,20 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/Initialize(mapload)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/alien/hide,
+		/datum/action/cooldown/alien/larva_evolve,
+	)
+	grant_actions_by_list(innate_actions)
 
-	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
-	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
-	. = ..()
+	return ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	..()
 
 //This needs to be fixed
+// This comment is 12 years old I hope it's fixed by now
 /mob/living/carbon/alien/larva/get_status_tab_items()
 	. = ..()
 	. += "Progress: [amount_grown]/[max_grown]"
@@ -71,4 +75,8 @@
 	return
 
 /mob/living/carbon/alien/larva/canBeHandcuffed()
+	return TRUE
+
+/// Don't scramble a larva's body parts, it doesn't have any
+/mob/living/carbon/alien/larva/bioscramble(scramble_source)
 	return TRUE

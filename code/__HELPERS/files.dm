@@ -5,7 +5,7 @@
  */
 GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
-/client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
+/client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html", "gz", "json"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
 	switch(root_type)
@@ -19,14 +19,23 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
+		choices = sort_list(choices) + "Download Folder"
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
 		switch(choice)
 			if(null)
 				return
 			if("/")
 				path = root
 				continue
+			if("Download Folder")
+				var/list/comp_flist = flist(path)
+				var/confirmation = input(src, "Are you SURE you want to download all the files in this folder? (This will open [length(comp_flist)] prompt[length(comp_flist) == 1 ? "" : "s"])", "Confirmation") in list("Yes", "No")
+				if(confirmation != "Yes")
+					continue
+				for(var/file in comp_flist)
+					src << ftp(path + file)
+				return
 		path += choice
 
 		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
@@ -63,7 +72,12 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 #undef FTPDELAY
 #undef ADMIN_FTPDELAY_MODIFIER
 
-/proc/pathwalk(path)
+/**
+ * Takes a directory and returns every file within every sub directory.
+ * If extensions_filter is provided then only files that end in that extension are given back.
+ * If extensions_filter is a list, any file that matches at least one entry is given back.
+ */
+/proc/pathwalk(path, extensions_filter)
 	var/list/jobs = list(path)
 	var/list/filenames = list()
 
@@ -73,9 +87,19 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		for(var/new_filename in new_filenames)
 			// if filename ends in / it is a directory, append to currdir
 			if(findtext(new_filename, "/", -1))
-				jobs += current_dir + new_filename
+				jobs += "[current_dir][new_filename]"
+				continue
+			// filename extension filtering
+			if(extensions_filter)
+				if(islist(extensions_filter))
+					for(var/allowed_extension in extensions_filter)
+						if(endswith(new_filename, allowed_extension))
+							filenames += "[current_dir][new_filename]"
+							break
+				else if(endswith(new_filename, extensions_filter))
+					filenames += "[current_dir][new_filename]"
 			else
-				filenames += current_dir + new_filename
+				filenames += "[current_dir][new_filename]"
 	return filenames
 
 /proc/pathflatten(path)

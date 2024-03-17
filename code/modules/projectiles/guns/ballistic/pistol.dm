@@ -1,9 +1,9 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "makarov pistol"
+	name = "\improper Makarov pistol"
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/m9mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
@@ -21,30 +21,51 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
-	suppressor_x_offset = 4
+	suppressor_x_offset = 10
+	suppressor_y_offset = -1
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/fire_mag
-	mag_type = /obj/item/ammo_box/magazine/m9mm/fire
+	spawn_magazine_type = /obj/item/ammo_box/magazine/m9mm/fire
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
 
+/obj/item/gun/ballistic/automatic/pistol/clandestine
+	name = "\improper Ansem pistol"
+	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
+	icon_state = "pistol_evil"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
+	empty_indicator = TRUE
+	suppressor_x_offset = 12
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/m45
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
 	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+
+/**
+ * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.
+ * 15 damage every.. second? 7 shots to kill. Not fast.
+ */
+/obj/item/gun/ballistic/automatic/pistol/m1911/chimpgun
+	name = "\improper CH1M911"
+	desc = "For the monkey mafioso on-the-go. Uses .45 rounds and has the distinct smell of bananas."
+	projectile_damage_multiplier = 0.5
+	projectile_wound_bonus = -12
+	pin = /obj/item/firing_pin/monkey
+
 
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
@@ -54,7 +75,7 @@
 	desc = "A robust .50 AE handgun."
 	icon_state = "deagle"
 	force = 14
-	mag_type = /obj/item/ammo_box/magazine/m50
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
 	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
@@ -72,12 +93,26 @@
 	icon_state = "deaglecamo"
 	inhand_icon_state = "deagleg"
 
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal
+	name = "\improper Regal Condor"
+	desc = "Unlike the Desert Eagle, this weapon seems to utilize some kind of advanced internal stabilization system to significantly \
+		reduce felt recoil and increase overall accuracy, at the cost of using a smaller caliber. \
+		This does allow it to fire a very quick 2-round burst. Uses 10mm ammo."
+	icon_state = "reagle"
+	inhand_icon_state = "deagleg"
+	burst_size = 2
+	fire_delay = 1
+	projectile_damage_multiplier = 1.25
+	accepted_magazine_type = /obj/item/ammo_box/magazine/r10mm
+	actions_types = list(/datum/action/item_action/toggle_firemode)
+	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
+
 /obj/item/gun/ballistic/automatic/pistol/aps
-	name = "stechkin APS machine pistol"
+	name = "\improper Stechkin APS machine pistol"
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/m9mm_aps
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm_aps
 	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 1

@@ -4,16 +4,12 @@ BEDSHEETS
 LINEN BINS
 */
 
-#define BEDSHEET_ABSTRACT "abstract"
-#define BEDSHEET_SINGLE "single"
-#define BEDSHEET_DOUBLE "double"
-
 /obj/item/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
 	icon = 'icons/obj/bedsheets.dmi'
-	lefthand_file = 'icons/mob/inhands/misc/bedsheet_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/bedsheet_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/bedsheet_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
@@ -26,47 +22,109 @@ LINEN BINS
 	dying_key = DYE_REGISTRY_BEDSHEET
 
 	dog_fashion = /datum/dog_fashion/head/ghost
+	/// Custom nouns to act as the subject of dreams
 	var/list/dream_messages = list("white")
+	/// Cutting it up will yield this.
+	var/stack_type = /obj/item/stack/sheet/cloth
+	/// The number of sheets dropped by this bedsheet when cut
 	var/stack_amount = 3
+	/// Denotes if the bedsheet is a single, double, or other kind of bedsheet
 	var/bedsheet_type = BEDSHEET_SINGLE
+	var/datum/weakref/signal_sleeper //this is our goldylocks
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
-	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
+	AddElement(/datum/element/bed_tuckable, mapload, 0, 0, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	register_context()
+	register_item_context()
+
+/obj/item/bedsheet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item) && (held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness()))
+		context[SCREENTIP_CONTEXT_LMB] = "Shred into cloth"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
+	if(isliving(target) && target.body_position == LYING_DOWN)
+		context[SCREENTIP_CONTEXT_RMB] = "Cover"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/obj/item/bedsheet/attack_secondary(mob/living/target, mob/living/user, params)
+	if(!user.CanReach(target))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.body_position != LYING_DOWN)
+		return ..()
+	if(!user.dropItemToGround(src))
+		return ..()
+
+	forceMove(get_turf(target))
+	balloon_alert(user, "covered")
+	coverup(target)
+	add_fingerprint(user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/bedsheet/attack_self(mob/living/user)
-	if(!user.CanReach(src)) //No telekenetic grabbing.
+	if(!user.CanReach(src)) //No telekinetic grabbing.
+		return
+	if(user.body_position != LYING_DOWN)
 		return
 	if(!user.dropItemToGround(src))
 		return
-	if(layer == initial(layer))
-		layer = ABOVE_MOB_LAYER
-		plane = GAME_PLANE_UPPER
-		to_chat(user, span_notice("You cover yourself with [src]."))
-		pixel_x = 0
-		pixel_y = 0
-	else
-		layer = initial(layer)
-		plane = initial(plane)
-		to_chat(user, span_notice("You smooth [src] out beneath you."))
-	if(user.body_position == LYING_DOWN)    //The player isn't laying down currently
-		dir = user.dir
-	else
-		if(user.dir & WEST)    //The player is rotated to the right, lay the sheet left!
-			dir = WEST
-		else    //The player is rotated to the left, lay the sheet right!
-			dir = EAST
+
+	coverup(user)
 	add_fingerprint(user)
-	return
+
+/obj/item/bedsheet/proc/coverup(mob/living/sleeper)
+	layer = ABOVE_MOB_LAYER
+	pixel_x = 0
+	pixel_y = 0
+	balloon_alert(sleeper, "covered")
+	var/angle = sleeper.lying_prev
+	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
+
+	signal_sleeper = WEAKREF(sleeper)
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_QDELETING, PROC_REF(smooth_sheets))
+
+/obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(sleeper, COMSIG_QDELETING)
+	balloon_alert(sleeper, "smoothed sheets")
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
+	signal_sleeper = null
+
+// We need to do this in case someone picks up a bedsheet while a mob is covered up
+// otherwise the bedsheet will disappear while in our hands if the sleeper signals get activated by moving
+/obj/item/bedsheet/proc/on_pickup(datum/source, mob/grabber)
+	SIGNAL_HANDLER
+
+	var/mob/living/sleeper = signal_sleeper?.resolve()
+
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(sleeper, COMSIG_QDELETING)
+	signal_sleeper = null
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
-			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), stack_amount)
+			var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
 			if(!QDELETED(shreds)) //stacks merged
 				transfer_fingerprints_to(shreds)
 				shreds.add_fingerprint(user)
@@ -74,6 +132,12 @@ LINEN BINS
 		to_chat(user, span_notice("You tear [src] up."))
 	else
 		return ..()
+
+/obj/item/bedsheet/AltClick(mob/living/user)
+	// double check the canUseTopic args to make sure it's correct
+	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
+		return
+	dir = REVERSE_DIR(dir)
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
@@ -198,7 +262,7 @@ LINEN BINS
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	inhand_icon_state = "sheetqm"
-	dream_messages = list("a grey ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
+	dream_messages = list("authority", "a silvery ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
 
 /obj/item/bedsheet/chaplain
 	name = "chaplain's blanket"
@@ -245,6 +309,21 @@ LINEN BINS
 	inhand_icon_state = "sheetwiz"
 	dream_messages = list("a book", "an explosion", "lightning", "a staff", "a skeleton", "a robe", "magic")
 
+/obj/item/bedsheet/rev
+	name = "revolutionary's bedsheet"
+	desc = "A bedsheet stolen from a Central Command official's bedroom, used a symbol of triumph against Nanotrasen's tyranny. The golden emblem on the front has been scribbled out."
+	icon_state = "sheetrev"
+	inhand_icon_state = "sheetrev"
+	dream_messages = list(
+		"the people",
+		"liberation",
+		"collaboration",
+		"heads rolling",
+		"so, so many baseball bats",
+		"blinding light",
+		"your brothers in arms"
+	)
+
 /obj/item/bedsheet/nanotrasen
 	name = "\improper Nanotrasen bedsheet"
 	desc = "It has the Nanotrasen logo on it and has an aura of duty."
@@ -257,6 +336,60 @@ LINEN BINS
 	inhand_icon_state = "sheetian"
 	dream_messages = list("a dog", "a corgi", "woof", "bark", "arf")
 
+/obj/item/bedsheet/runtime
+	icon_state = "sheetruntime"
+	inhand_icon_state = "sheetruntime"
+	dream_messages = list("a kitty", "a cat", "meow", "purr", "nya~")
+
+/obj/item/bedsheet/pirate
+	name = "pirate's bedsheet"
+	desc = "It has a Jolly Roger emblem on it and has a faint scent of grog."
+	icon_state = "sheetpirate"
+	inhand_icon_state = "sheetpirate"
+	dream_messages = list(
+		"a buried treasure",
+		"an island",
+		"a monkey",
+		"a parrot",
+		"a swashbuckler",
+		"a talking skull",
+		"avast",
+		"being a pirate",
+		"'cause a pirate is free",
+		"doing whatever you want",
+		"gold",
+		"landlubbers",
+		"stealing",
+		"sailing the Seven Seas",
+		"yarr",
+	)
+
+/obj/item/bedsheet/gondola
+	name = "gondola bedsheet"
+	desc = "A precious bedsheet made from the hide of a endangered and peculiar critter."
+	icon_state = "sheetgondola"
+	inhand_icon_state = "sheetgondola"
+	dream_messages = list("peace", "comfiness", "a rare critter", "a harmless creature")
+	stack_type = /obj/item/stack/sheet/animalhide/gondola
+	stack_amount = 1
+	///one of four icon states that represent its mouth
+	var/gondola_mouth
+	///one of four icon states that represent its eyes
+	var/gondola_eyes
+
+/obj/item/bedsheet/gondola/Initialize(mapload)
+	. = ..()
+	gondola_mouth = "sheetgondola_mouth[rand(1, 4)]"
+	gondola_eyes = "sheetgondola_eyes[rand(1, 4)]"
+	add_overlay(gondola_mouth)
+	add_overlay(gondola_eyes)
+
+/obj/item/bedsheet/gondola/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += mutable_appearance(icon_file, gondola_mouth)
+		. += mutable_appearance(icon_file, gondola_eyes)
+
 /obj/item/bedsheet/cosmos
 	name = "cosmic space bedsheet"
 	desc = "Made from the dreams of those who wonder at the stars."
@@ -265,63 +398,6 @@ LINEN BINS
 	dream_messages = list("the infinite cosmos", "Hans Zimmer music", "a flight through space", "the galaxy", "being fabulous", "shooting stars")
 	light_power = 2
 	light_range = 1.4
-
-/obj/item/bedsheet/random
-	icon_state = "random_bedsheet"
-	name = "random bedsheet"
-	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
-	bedsheet_type = BEDSHEET_ABSTRACT
-	var/static/list/bedsheet_list
-	var/spawn_type = BEDSHEET_SINGLE
-
-/obj/item/bedsheet/random/Initialize(mapload)
-	..()
-	if(!LAZYACCESS(bedsheet_list, spawn_type))
-		var/list/spawn_list = list()
-		var/list/possible_types = typesof(/obj/item/bedsheet)
-		for(var/obj/item/bedsheet/sheet as anything in possible_types)
-			if(initial(sheet.bedsheet_type) == spawn_type)
-				spawn_list += sheet
-		LAZYSET(bedsheet_list, spawn_type, spawn_list)
-	var/chosen_type = pick(bedsheet_list[spawn_type])
-	new chosen_type(loc)
-	return INITIALIZE_HINT_QDEL
-
-/obj/item/bedsheet/random/double
-	icon_state = "random_bedsheet"
-	spawn_type = BEDSHEET_DOUBLE
-
-/obj/item/bedsheet/dorms
-	icon_state = "random_bedsheet"
-	name = "random dorms bedsheet"
-	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
-	bedsheet_type = BEDSHEET_DOUBLE
-	slot_flags = null
-
-/obj/item/bedsheet/dorms/Initialize(mapload)
-	..()
-	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
-	switch(type)
-		if("Colors")
-			type = pick(list(/obj/item/bedsheet,
-				/obj/item/bedsheet/blue,
-				/obj/item/bedsheet/green,
-				/obj/item/bedsheet/grey,
-				/obj/item/bedsheet/orange,
-				/obj/item/bedsheet/purple,
-				/obj/item/bedsheet/red,
-				/obj/item/bedsheet/yellow,
-				/obj/item/bedsheet/brown,
-				/obj/item/bedsheet/black))
-		if("Special")
-			type = pick(list(/obj/item/bedsheet/patriot,
-				/obj/item/bedsheet/rainbow,
-				/obj/item/bedsheet/ian,
-				/obj/item/bedsheet/cosmos,
-				/obj/item/bedsheet/nanotrasen))
-	var/obj/item/bedsheet = new type(loc)
-	bedsheet.dir = dir
-	return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/double
 	icon_state = "double_sheetwhite"
@@ -460,6 +536,11 @@ LINEN BINS
 	worn_icon_state = "sheetwiz"
 	bedsheet_type = BEDSHEET_DOUBLE
 
+/obj/item/bedsheet/rev/double
+	icon_state = "double_sheetrev"
+	worn_icon_state = "sheetrev"
+	bedsheet_type = BEDSHEET_DOUBLE
+
 /obj/item/bedsheet/nanotrasen/double
 	icon_state = "double_sheetNT"
 	worn_icon_state = "sheetNT"
@@ -470,39 +551,15 @@ LINEN BINS
 	worn_icon_state = "sheetian"
 	bedsheet_type = BEDSHEET_DOUBLE
 
+/obj/item/bedsheet/runtime/double
+	icon_state = "double_sheetruntime"
+	worn_icon_state = "sheetruntime"
+	bedsheet_type = BEDSHEET_DOUBLE
+
 /obj/item/bedsheet/cosmos/double
 	icon_state = "double_sheetcosmos"
 	worn_icon_state = "sheetcosmos"
 	bedsheet_type = BEDSHEET_DOUBLE
-
-/obj/item/bedsheet/dorms_double
-	icon_state = "random_bedsheet"
-	bedsheet_type = BEDSHEET_ABSTRACT
-
-/obj/item/bedsheet/dorms_double/Initialize()
-	..()
-	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
-	switch(type)
-		if("Colors")
-			type = pick(list(/obj/item/bedsheet,
-				/obj/item/bedsheet/blue/double,
-				/obj/item/bedsheet/green/double,
-				/obj/item/bedsheet/grey/double,
-				/obj/item/bedsheet/orange/double,
-				/obj/item/bedsheet/purple/double,
-				/obj/item/bedsheet/red/double,
-				/obj/item/bedsheet/yellow/double,
-				/obj/item/bedsheet/brown/double,
-				/obj/item/bedsheet/black/double))
-		if("Special")
-			type = pick(list(/obj/item/bedsheet/patriot/double,
-				/obj/item/bedsheet/rainbow/double,
-				/obj/item/bedsheet/ian/double,
-				/obj/item/bedsheet/cosmos/double,
-				/obj/item/bedsheet/nanotrasen/double))
-	var/obj/item/bedsheet = new type(loc)
-	bedsheet.dir = dir
-	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
@@ -512,8 +569,11 @@ LINEN BINS
 	anchored = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	/// The number of bedsheets in the bin
 	var/amount = 10
+	/// A list of actual sheets within the bin
 	var/list/sheets = list()
+	/// The object hiddin within the bedsheet bin
 	var/obj/item/hidden = null
 
 /obj/structure/bedsheetbin/empty
@@ -549,21 +609,21 @@ LINEN BINS
 	..()
 
 /obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
 		to_chat(user, span_notice("You disassemble the [src]."))
 		new /obj/item/stack/rods(loc, 2)
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))
@@ -639,7 +699,3 @@ LINEN BINS
 
 	add_fingerprint(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-#undef BEDSHEET_ABSTRACT
-#undef BEDSHEET_SINGLE
-#undef BEDSHEET_DOUBLE

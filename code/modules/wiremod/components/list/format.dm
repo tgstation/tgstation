@@ -94,6 +94,7 @@
  * * index_string - Just the "1" of the %1 format, actually used.
  */
 /regex/format_component/proc/process_format_component_param(match, index_string)
+	REGEX_REPLACE_HANDLER
 	// The static regex_context var is what you'd expect src to be, but src is actually the regex instance.
 	var/list/param_list = context.param_list_port.value
 	if(!islist(param_list))

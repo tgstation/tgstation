@@ -3,8 +3,7 @@
 	set name = "Map template - Place"
 
 	var/datum/map_template/template
-
-	var/map = input(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in sort_list(SSmapping.map_templates)
+	var/map = tgui_input_list(usr, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template", sort_list(SSmapping.map_templates))
 	if(!map)
 		return
 	template = SSmapping.map_templates[map]
@@ -23,9 +22,9 @@
 			center = FALSE
 		else
 			return
-	for(var/S in template.get_affected_turfs(T,centered = center))
-		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
-		item.plane = ABOVE_LIGHTING_PLANE
+	for(var/turf/place_on as anything in template.get_affected_turfs(T,centered = center))
+		var/image/item = image('icons/turf/overlays.dmi', place_on,"greenOverlay")
+		SET_PLANE(item, ABOVE_LIGHTING_PLANE, place_on)
 		preview += item
 	images += preview
 	if(tgui_alert(usr,"Confirm location.","Template Confirm",list("Yes","No")) == "Yes")

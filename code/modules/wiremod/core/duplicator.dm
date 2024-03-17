@@ -21,7 +21,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/variable_name = variable["name"]
 		var/datum/circuit_variable/variable_datum = new /datum/circuit_variable(variable_name, variable["datatype"])
 		circuit_variables[variable_name] = variable_datum
-		if(variable["is_list"])
+		if(variable["is_assoc_list"])
+			assoc_list_variables[variable_name] = variable_datum
+			variable_datum.set_value(list())
+		else if(variable["is_list"])
 			list_variables[variable_name] = variable_datum
 			variable_datum.set_value(list())
 		else
@@ -43,6 +46,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/obj/item/circuit_component/component = load_component(type)
 		identifiers_to_circuit[identifier] = component
 		component.load_data_from_list(component_data)
+		SEND_SIGNAL(component, COMSIG_CIRCUIT_COMPONENT_LOAD_DATA, component_data)
 
 		var/list/input_ports_data = component_data["input_ports_stored_data"]
 		for(var/port_name in input_ports_data)
@@ -167,6 +171,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		component_data["connections"] = connections
 		component_data["input_ports_stored_data"] = input_ports_stored_data
 
+		SEND_SIGNAL(component, COMSIG_CIRCUIT_COMPONENT_SAVE_DATA, component_data)
 		component.save_data_to_list(component_data)
 		circuit_data[identifier] = component_data
 
@@ -189,10 +194,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/datum/circuit_variable/variable = circuit_variables[variable_identifier]
 		new_data["name"] = variable.name
 		new_data["datatype"] = variable.datatype
-		if(variable_identifier in list_variables)
+		if(variable_identifier in assoc_list_variables)
+			new_data["is_assoc_list"] = TRUE
+		else if(variable_identifier in list_variables)
 			new_data["is_list"] = TRUE
-		else
-			new_data["is_list"] = FALSE
 		variables += list(new_data)
 	general_data["variables"] = variables
 

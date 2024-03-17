@@ -5,7 +5,7 @@
 
 // Fuel types and travel time per unit of distance on that fuel.
 #define FUEL_BASIC "basic"
-#define BASIC_FUEL_TIME_COST 300
+#define BASIC_FUEL_TIME_COST 250
 
 #define FUEL_ADVANCED "advanced"
 #define ADVANCED_FUEL_TIME_COST 200
@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /// Exploration drone
 /obj/item/exodrone
 	name = "exploration drone"
-	desc = "long range semi-autonomous exploration drone"
+	desc = "A long range, semi-autonomous exploration drone."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "drone"
 	w_class = WEIGHT_CLASS_BULKY
@@ -70,11 +70,8 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	else
 		name_counter[name] = 1
 	GLOB.exodrones += src
-	/// Cargo storage
-	var/datum/component/storage/storage = AddComponent(/datum/component/storage/concrete)
-	storage.cant_hold = GLOB.blacklisted_cargo_types
-	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_items = EXODRONE_CARGO_SLOTS
+	// Cargo storage
+	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()
@@ -89,6 +86,15 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 			return "Exploring [location?.display_name() || "ERROR"]." // better safe than sorry.
 		if(EXODRONE_IDLE)
 			return "Idle."
+
+// Searches for blacklisted items hidden inside containers
+/obj/item/exodrone/proc/check_blacklist()
+	for(var/obj/item/contained_item in contents)
+		if(contained_item.contents)
+			for(var/subcontained_object in contained_item.get_all_contents())
+				if(is_type_in_typecache(subcontained_object, GLOB.blacklisted_cargo_types))
+					return FALSE
+	return TRUE
 
 /// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)
@@ -107,7 +113,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		distance_to_travel = max(abs(target_site.distance - location.distance),1)
 	travel_target = target_site
 	travel_time = travel_cost_coeff*distance_to_travel
-	travel_timer_id = addtimer(CALLBACK(src,.proc/finish_travel),travel_time,TIMER_STOPPABLE)
+	travel_timer_id = addtimer(CALLBACK(src, PROC_REF(finish_travel)),travel_time,TIMER_STOPPABLE)
 
 /// Travel cleanup
 /obj/item/exodrone/proc/finish_travel()
@@ -148,8 +154,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Resizes storage component depending on slots used by tools.
 /obj/item/exodrone/proc/update_storage_size()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage/concrete)
-	storage.max_items = EXODRONE_CARGO_SLOTS - length(tools)
+	atom_storage.max_slots = EXODRONE_CARGO_SLOTS - length(tools)
 
 /// Builds ui data for drone storage.
 /obj/item/exodrone/proc/get_cargo_data()
@@ -163,7 +168,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Tries to add loot to drone cargo while respecting space left
 /obj/item/exodrone/proc/try_transfer(obj/loot, delete_on_failure=TRUE)
-	if(space_left() > 1)
+	if(space_left())
 		loot.forceMove(src)
 		drone_log("Acquired [loot.name].")
 	else
@@ -217,11 +222,12 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/exodrone/proc/updateKeywords(text)
 	_regex_context = src
 	var/static/regex/keywordRegex = regex(@"\$\$(\S*)","g")
-	. = keywordRegex.Replace(text,/obj/item/exodrone/proc/replace_keyword)
+	. = keywordRegex.Replace(text, /obj/item/exodrone/proc/replace_keyword)
 	_regex_context = null
 
 /// This is called with src = regex datum, so don't try to access any instance variables directly here.
 /obj/item/exodrone/proc/replace_keyword(match,g1)
+	REGEX_REPLACE_HANDLER
 	switch(g1)
 		if("SITE_NAME")
 			return _regex_context.location.display_name()
@@ -233,10 +239,10 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/proc/start_adventure(datum/adventure/adventure)
 	current_adventure = adventure
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_QUALITY_INIT,.proc/add_tool_qualities)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_START,.proc/adventure_delay_start)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_END,.proc/adventure_delay_end)
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_FINISHED, PROC_REF(resolve_adventure))
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_QUALITY_INIT, PROC_REF(add_tool_qualities))
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_START, PROC_REF(adventure_delay_start))
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_END, PROC_REF(adventure_delay_end))
 	set_status(EXODRONE_ADVENTURE)
 	current_adventure.start_adventure()
 
@@ -327,9 +333,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	drone_log("Sustained [amount] damage.")
 
 /obj/item/exodrone/proc/drone_log(message)
-	drone_log.Insert(1,message)
 	if(length(drone_log) > EXODRONE_LOG_SIZE)
-		drone_log.Cut(EXODRONE_LOG_SIZE)
+		drone_log = list()
+	drone_log.Insert(1,message)
 
 /obj/item/exodrone/proc/has_tool(tool_type)
 	return tools.Find(tool_type)
@@ -346,6 +352,11 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/machinery/exodrone_launcher/Initialize(mapload)
 	. = ..()
 	GLOB.exodrone_launchers += src
+
+/obj/machinery/exodrone_launcher/examine(user)
+	. = ..()
+	if(fuel_canister)
+		. += span_notice("You can remove the [fuel_canister] with a <b>prying tool</b>.")
 
 /obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, params)
 	if(istype(weapon, /obj/item/fuel_pellet))
@@ -420,8 +431,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	playsound(src,'sound/effects/podwoosh.ogg',50, FALSE)
 	do_smoke(1, holder = src, location = get_turf(src))
 
-/obj/machinery/exodrone_launcher/handle_atom_del(atom/A)
-	if(A == fuel_canister)
+/obj/machinery/exodrone_launcher/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == fuel_canister)
 		fuel_canister = null
 		update_icon()
 
@@ -446,7 +458,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	/// The amount of uses left in this fuel pellet.
 	var/uses = 5
 
-/obj/item/fuel_pellet/use()
+/obj/item/fuel_pellet/use(used)
 	uses--
 	if(uses <= 0)
 		qdel(src)

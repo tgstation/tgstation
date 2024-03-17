@@ -15,6 +15,8 @@
 	return ..()
 
 /atom/movable/ref_test
+	// Gotta make sure we do a full check
+	references_to_clear = INFINITY
 	var/atom/movable/ref_test/self_ref
 
 /atom/movable/ref_test/Destroy(force)
@@ -27,8 +29,11 @@
 	SSgarbage.should_save_refs = TRUE
 
 	//Sanity check
-	victim.DoSearchVar(testbed, "Sanity Check", search_time = 1) //We increment search time to get around an optimization
-	TEST_ASSERT(!victim.found_refs.len, "The ref-tracking tool found a ref where none existed")
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 3, "Should be: test references: 0 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(testbed, "Sanity Check") //We increment search time to get around an optimization
+
+	TEST_ASSERT(!LAZYLEN(victim.found_refs), "The ref-tracking tool found a ref where none existed")
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_baseline/Run()
@@ -41,11 +46,13 @@
 	testbed.test_list += victim
 	testbed.test_assoc_list["baseline"] = victim
 
-	victim.DoSearchVar(testbed, "First Run", search_time = 2)
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(testbed, "First Run")
 
-	TEST_ASSERT(victim.found_refs["test"], "The ref-tracking tool failed to find a regular value")
-	TEST_ASSERT(victim.found_refs[testbed.test_list], "The ref-tracking tool failed to find a list entry")
-	TEST_ASSERT(victim.found_refs[testbed.test_assoc_list], "The ref-tracking tool failed to find an assoc list value")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, "test"), "The ref-tracking tool failed to find a regular value")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.test_list), "The ref-tracking tool failed to find a list entry")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.test_assoc_list), "The ref-tracking tool failed to find an assoc list value")
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_exotic/Run()
@@ -58,12 +65,14 @@
 	testbed.vis_contents += victim
 	testbed.test_assoc_list[victim] = TRUE
 
-	victim.DoSearchVar(testbed, "Second Run", search_time = 3)
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(testbed, "Second Run")
 
 	//This is another sanity check
-	TEST_ASSERT(!victim.found_refs[testbed.overlays], "The ref-tracking tool found an overlays entry? That shouldn't be possible")
-	TEST_ASSERT(victim.found_refs[testbed.vis_contents], "The ref-tracking tool failed to find a vis_contents entry")
-	TEST_ASSERT(victim.found_refs[testbed.test_assoc_list], "The ref-tracking tool failed to find an assoc list key")
+	TEST_ASSERT(!LAZYACCESS(victim.found_refs, testbed.overlays), "The ref-tracking tool found an overlays entry? That shouldn't be possible")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.vis_contents), "The ref-tracking tool failed to find a vis_contents entry")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.test_assoc_list), "The ref-tracking tool failed to find an assoc list key")
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_esoteric/Run()
@@ -78,11 +87,14 @@
 	var/list/to_find_assoc = list(victim)
 	testbed.test_assoc_list["Nesting"] = to_find_assoc
 
-	victim.DoSearchVar(victim, "Third Run Self", search_time = 4)
-	victim.DoSearchVar(testbed, "Third Run Testbed", search_time = 4)
-	TEST_ASSERT(victim.found_refs["self_ref"], "The ref-tracking tool failed to find a self reference")
-	TEST_ASSERT(victim.found_refs[to_find], "The ref-tracking tool failed to find a nested list entry")
-	TEST_ASSERT(victim.found_refs[to_find_assoc], "The ref-tracking tool failed to find a nested assoc list entry")
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(victim, "Third Run Self")
+	victim.DoSearchVar(testbed, "Third Run Testbed")
+
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, "self_ref"), "The ref-tracking tool failed to find a self reference")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find), "The ref-tracking tool failed to find a nested list entry")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find_assoc), "The ref-tracking tool failed to find a nested assoc list entry")
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_null_key_entry/Run()
@@ -92,9 +104,11 @@
 
 	//Calm before the storm
 	testbed.test_assoc_list = list(null = victim)
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 4, "Should be: test references: 1 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(testbed, "Fourth Run")
 
-	victim.DoSearchVar(testbed, "Fourth Run", search_time = 5)
-	TEST_ASSERT(testbed.test_assoc_list, "The ref-tracking tool failed to find a null key'd assoc list entry")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.test_assoc_list), "The ref-tracking tool failed to find a null key'd assoc list entry")
 
 /datum/unit_test/find_reference_assoc_investigation/Run()
 	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
@@ -107,9 +121,12 @@
 	var/list/to_find_null_assoc_nested = list(victim)
 	testbed.test_assoc_list[null] = to_find_null_assoc_nested
 
-	victim.DoSearchVar(testbed, "Fifth Run", search_time = 6)
-	TEST_ASSERT(victim.found_refs[to_find_in_key], "The ref-tracking tool failed to find a nested assoc list key")
-	TEST_ASSERT(victim.found_refs[to_find_null_assoc_nested], "The ref-tracking tool failed to find a null key'd nested assoc list entry")
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 5, "Should be: test references: 2 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(testbed, "Fifth Run")
+
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find_in_key), "The ref-tracking tool failed to find a nested assoc list key")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find_null_assoc_nested), "The ref-tracking tool failed to find a null key'd nested assoc list entry")
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_static_investigation/Run()
@@ -127,7 +144,9 @@
 	for(var/key in global.vars)
 		global_vars[key] = global.vars[key]
 
-	victim.DoSearchVar(global_vars, "Sixth Run", search_time = 7)
+	var/refcount = refcount(victim)
+	TEST_ASSERT_EQUAL(refcount, 5, "Should be: test references: 2 + baseline references: 3 (victim var,loc,allocated list)")
+	victim.DoSearchVar(global_vars, "Sixth Run")
 
-	TEST_ASSERT(victim.found_refs[global_vars], "The ref-tracking tool failed to find a natively global variable")
+	TEST_ASSERT(LAZYACCESS(victim.found_refs, global_vars), "The ref-tracking tool failed to find a natively global variable")
 	SSgarbage.should_save_refs = FALSE

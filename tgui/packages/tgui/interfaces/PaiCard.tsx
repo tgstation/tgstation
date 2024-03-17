@@ -1,19 +1,31 @@
+import { decodeHtmlEntities } from 'common/string';
+
 import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
-type PaiCardData = {
-  candidates: Candidate[];
+type Data = {
+  candidates: ReadonlyArray<Candidate>;
   pai: Pai;
+  range_max: number;
+  range_min: number;
 };
 
-type Candidate = {
+type Candidate = Readonly<{
   comments: string;
+  ckey: string;
   description: string;
-  key: string;
   name: string;
-};
+}>;
 
 type Pai = {
   can_holo: BooleanLike;
@@ -24,118 +36,136 @@ type Pai = {
   name: string;
   transmit: BooleanLike;
   receive: BooleanLike;
+  range: number;
 };
 
-export const PaiCard = (_, context) => {
-  const { data } = useBackend<PaiCardData>(context);
+export const PaiCard = (props) => {
+  const { data } = useBackend<Data>();
   const { pai } = data;
 
   return (
     <Window width={400} height={400} title="pAI Options Menu">
-      <Window.Content>{!pai ? <PaiDownload /> : <PaiOptions />}</Window.Content>
+      <Window.Content scrollable>
+        {!pai ? <PaiDownload /> : <PaiOptions />}
+      </Window.Content>
     </Window>
   );
 };
 
 /** Gives a list of candidates as cards */
-const PaiDownload = (_, context) => {
-  const { act, data } = useBackend<PaiCardData>(context);
+const PaiDownload = (props) => {
+  const { act, data } = useBackend<Data>();
   const { candidates = [] } = data;
-  const [tabInChar, setTabInChar] = useLocalState(context, 'tab', true);
-  const onClick = () => {
-    setTabInChar(!tabInChar);
-  };
+
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <NoticeBox info>
+          <Stack fill>
+            <Stack.Item grow fontSize="16px">
+              pAI Candidates
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="good"
+                icon="bell"
+                onClick={() => act('request')}
+                tooltip="Request more candidates from beyond."
+              >
+                Request
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </NoticeBox>
+      </Stack.Item>
+      {candidates.map((candidate, index) => {
+        return (
+          <Stack.Item key={index}>
+            <CandidateDisplay candidate={candidate} index={index + 1} />
+          </Stack.Item>
+        );
+      })}
+    </Stack>
+  );
+};
+
+/**
+ * Renders a custom section that displays a candidate.
+ */
+const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
+  const { act } = useBackend<Data>();
+  const {
+    candidate: { comments, ckey, description, name },
+    index,
+  } = props;
 
   return (
     <Section
       buttons={
-        <>
-          {!!candidates.length && (
-            <Button
-              icon="info"
-              onClick={onClick}
-              tooltip="Toggles between IC and OOC information.">
-              {tabInChar ? 'IC' : 'OOC'}
-            </Button>
-          )}
-          <Button
-            icon="bell"
-            onClick={() => act('request')}
-            tooltip="Request candidates.">
-            Request
-          </Button>
-        </>
+        <Button icon="save" onClick={() => act('download', { ckey })}>
+          Download
+        </Button>
       }
-      fill
-      scrollable
-      title="pAI Candidates">
-      {!candidates.length ? (
-        <NoticeBox>None found!</NoticeBox>
-      ) : (
-        <Stack fill vertical>
-          {candidates.map((candidate, index) => {
-            return (
-              <Stack.Item key={index}>
-                <CandidateDisplay
-                  candidate={candidate}
-                  index={index + 1}
-                  tabInChar={tabInChar}
-                />
-              </Stack.Item>
-            );
-          })}
-        </Stack>
-      )}
+      overflow="hidden"
+      title={`Candidate ${index}`}
+    >
+      <Stack vertical>
+        <Stack.Item>
+          <Box color="label" mb={1}>
+            Name:
+          </Box>
+          {name ? (
+            <Box color="green">{name}</Box>
+          ) : (
+            'None provided - name will be randomized.'
+          )}
+        </Stack.Item>
+        {!!description && (
+          <>
+            <Stack.Divider />
+            <Stack.Item>
+              <Box color="label" mb={1}>
+                IC Description:
+              </Box>
+              {description}
+            </Stack.Item>
+          </>
+        )}
+        {!!comments && (
+          <>
+            <Stack.Divider />
+            <Stack.Item>
+              <Box color="label" mb={1}>
+                OOC Notes:
+              </Box>
+              {comments}
+            </Stack.Item>
+          </>
+        )}
+      </Stack>
     </Section>
   );
 };
 
-/** Candidate card: Individual. Since this info is refreshing,
- * had to make the comments and descriptions a separate tab.
- * In longer entries, it is much more readable.
- */
-const CandidateDisplay = (props, context) => {
-  const { act } = useBackend<PaiCardData>(context);
-  const { candidate, index, tabInChar } = props;
-  const { comments, description, key, name } = candidate;
-
-  return (
-    <Box
-      style={{
-        'background': '#111111',
-        'border': '1px solid #4972a1',
-        'border-radius': '5px',
-        'padding': '1rem',
-      }}>
-      <Section
-        buttons={
-          <Button
-            icon="download"
-            onClick={() => act('download', { key })}
-            tooltip="Accepts this pAI candidate.">
-            Download
-          </Button>
-        }
-        fill
-        height={12}
-        scrollable
-        title={'Candidate ' + index}>
-        <Box color="green" fontSize="16px">
-          Name: {name || 'Randomized Name'}
-        </Box>
-        {tabInChar
-          ? `Description: ${description || 'None'}`
-          : `OOC Comments: ${comments || 'None'}`}
-      </Section>
-    </Box>
-  );
-};
-
 /** Once a pAI has been loaded, you can alter its settings here */
-const PaiOptions = (_, context) => {
-  const { act, data } = useBackend<PaiCardData>(context);
-  const { pai } = data;
-  const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;
+const PaiOptions = (props) => {
+  const { act, data } = useBackend<Data>();
+  const {
+    range_max,
+    range_min,
+    pai: {
+      can_holo,
+      dna,
+      emagged,
+      laws,
+      master,
+      name,
+      transmit,
+      receive,
+      range,
+    },
+  } = data;
+  const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : 'None';
 
   return (
     <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>
@@ -147,21 +177,52 @@ const PaiOptions = (_, context) => {
             </Button>
           )}
         </LabeledList.Item>
-        {!!master && <LabeledList.Item label="DNA">{dna}</LabeledList.Item>}
-        <LabeledList.Item label="Laws">{laws}</LabeledList.Item>
+        {!!master && (
+          <LabeledList.Item color="red" label="DNA">
+            {dna}
+          </LabeledList.Item>
+        )}
+        <LabeledList.Item label="Laws">
+          <BlockQuote>{suppliedLaws}</BlockQuote>
+        </LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button
             icon={can_holo ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_holo')}
-            selected={can_holo}>
+            selected={can_holo}
+          >
             Toggle
           </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Holoform Range">
+          {emagged ? (
+            '∞'
+          ) : (
+            <Stack>
+              <Stack.Item>
+                <Button
+                  icon="fa-circle-minus"
+                  onClick={() => act('decrease_range')}
+                  disabled={range === range_min}
+                />
+              </Stack.Item>
+              <Stack.Item mt={0.5}>{range}</Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="fa-circle-plus"
+                  onClick={() => act('increase_range')}
+                  disabled={range === range_max}
+                />
+              </Stack.Item>
+            </Stack>
+          )}
         </LabeledList.Item>
         <LabeledList.Item label="Transmit">
           <Button
             icon={transmit ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_radio', { option: 'transmit' })}
-            selected={transmit}>
+            selected={transmit}
+          >
             Toggle
           </Button>
         </LabeledList.Item>
@@ -169,7 +230,8 @@ const PaiOptions = (_, context) => {
           <Button
             icon={receive ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_radio', { option: 'receive' })}
-            selected={receive}>
+            selected={receive}
+          >
             Toggle
           </Button>
         </LabeledList.Item>
@@ -188,8 +250,13 @@ const PaiOptions = (_, context) => {
         </LabeledList.Item>
       </LabeledList>
       {!!emagged && (
-        <Button color="bad" disabled icon="bug" mt={1}>
-          Malicious Software Detected
+        <Button
+          color="bad"
+          icon="bug"
+          mt={1}
+          onClick={() => act('reset_software')}
+        >
+          Reset Software
         </Button>
       )}
     </Section>

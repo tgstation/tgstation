@@ -57,10 +57,6 @@
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/ratvar)
-"q" = (
-/obj/structure/lattice,
-/turf/open/lava/smooth/lava_land_surface,
-/area/ruin/unpowered/ratvar)
 "r" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -424,13 +420,13 @@ l
 l
 b
 l
-q
+l
 r
 h
 h
 h
 c
-q
+l
 l
 b
 l
@@ -526,7 +522,7 @@ l
 l
 l
 l
-q
+l
 b
 h
 h
@@ -553,7 +549,7 @@ l
 l
 b
 l
-q
+l
 r
 h
 h
@@ -736,7 +732,7 @@ l
 l
 j
 j
-q
+l
 p
 h
 m
@@ -791,7 +787,7 @@ l
 l
 l
 g
-q
+l
 b
 h
 l

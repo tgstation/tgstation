@@ -1,6 +1,6 @@
 /obj/modular_map_root
 	invisibility = INVISIBILITY_ABSTRACT
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinonclose"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -15,7 +15,7 @@ INITIALIZE_IMMEDIATE(/obj/modular_map_root)
 
 /obj/modular_map_root/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/load_map)
+	INVOKE_ASYNC(src, PROC_REF(load_map))
 
 /// Randonly selects a map file from the TOML config specified in config_file, loads it, then deletes itself.
 /obj/modular_map_root/proc/load_map()
@@ -70,7 +70,7 @@ INITIALIZE_IMMEDIATE(/obj/modular_map_root)
 
 /obj/modular_map_connector
 	invisibility = INVISIBILITY_ABSTRACT
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinonclose"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

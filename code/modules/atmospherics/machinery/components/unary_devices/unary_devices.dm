@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
+	icon = 'icons/obj/machines/atmospherics/unary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH
 	device_type = UNARY
@@ -13,7 +13,7 @@
 /obj/machinery/atmospherics/components/unary/set_init_directions()
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/components/unary/on_construction()
+/obj/machinery/atmospherics/components/unary/on_construction(mob/user)
 	..()
 	update_appearance()
 

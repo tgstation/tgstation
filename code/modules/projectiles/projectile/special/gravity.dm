@@ -5,7 +5,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
@@ -17,7 +16,7 @@
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun?.power, 15)
 
-/obj/projectile/gravityrepulse/on_hit()
+/obj/projectile/gravityrepulse/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -40,7 +39,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#FF6600"
 	var/turf/T
 	var/power = 4
@@ -52,7 +50,7 @@
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun?.power, 15)
 
-/obj/projectile/gravityattract/on_hit()
+/obj/projectile/gravityattract/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -74,7 +72,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#101010"
 	var/turf/T
 	var/power = 4
@@ -86,11 +83,11 @@
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun?.power, 15)
 
-/obj/projectile/gravitychaos/on_hit()
+/obj/projectile/gravitychaos/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		if(ismob(A))
 			var/mob/M = A

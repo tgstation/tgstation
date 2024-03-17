@@ -4,7 +4,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 	minimum = 0
-	maximum = 3
+	maximum = 5
 
 	step = 0.5
 

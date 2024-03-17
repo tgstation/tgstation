@@ -1,6 +1,50 @@
+///The base color of light space emits
+GLOBAL_VAR_INIT(base_starlight_color, default_starlight_color())
+///The color of light space is currently emitting
+GLOBAL_VAR_INIT(starlight_color, default_starlight_color())
+/proc/default_starlight_color()
+	var/turf/open/space/read_from = /turf/open/space
+	return initial(read_from.light_color)
+
+///The range of the light space is displaying
+GLOBAL_VAR_INIT(starlight_range, default_starlight_range())
+/proc/default_starlight_range()
+	var/turf/open/space/read_from = /turf/open/space
+	return initial(read_from.light_range)
+
+///The power of the light space is throwin out
+GLOBAL_VAR_INIT(starlight_power, default_starlight_power())
+/proc/default_starlight_power()
+	var/turf/open/space/read_from = /turf/open/space
+	return initial(read_from.light_power)
+
+/proc/set_base_starlight(star_color = null, range = null, power = null)
+	GLOB.base_starlight_color = star_color
+	set_starlight(star_color, range, power)
+
+/proc/set_starlight(star_color = null, range = null, power = null)
+	if(isnull(star_color))
+		star_color = GLOB.starlight_color
+	var/old_star_color = GLOB.starlight_color
+	GLOB.starlight_color = star_color
+	// set light color on all lit turfs
+	for(var/turf/open/space/spess as anything in GLOB.starlight)
+		spess.set_light(l_range = range, l_power = power, l_color = star_color)
+
+	if(star_color == old_star_color)
+		return
+
+	// Update the base overlays
+	for(var/obj/light as anything in GLOB.starlight_objects)
+		light.color = star_color
+	// Send some signals that'll update everything that uses the color
+	SEND_GLOBAL_SIGNAL(COMSIG_STARLIGHT_COLOR_CHANGED, old_star_color, star_color)
+
+GLOBAL_LIST_EMPTY(starlight)
+
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
+	icon_state = "space"
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -8,83 +52,43 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	var/starlight_source_count = 0
 
 	var/destination_z
 	var/destination_x
 	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	// We do NOT want atmos adjacent turfs
+	init_air = FALSE
 	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
-	light_power = 0.25
-	always_lit = TRUE
+	light_power = 1
+	light_range = 2
+	light_color = COLOR_STARLIGHT
+	light_height = LIGHTING_HEIGHT_SPACE
+	light_on = FALSE
+	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
 
 /turf/open/space/basic/New() //Do not convert to Initialize
+	SHOULD_CALL_PARENT(FALSE)
 	//This is used to optimize the map loader
 	return
 
-/**
- * Space Initialize
- *
- * Doesn't call parent, see [/atom/proc/Initialize]
- */
-/turf/open/space/Initialize(mapload)
-	SHOULD_CALL_PARENT(FALSE)
-	icon_state = SPACE_ICON_STATE
-	air = space_gas
-	vis_contents.Cut() //removes inherited overlays
-	visibilityChanged()
-
-	if(flags_1 & INITIALIZED_1)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
-
-	if (length(smoothing_groups))
-		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
-		SET_BITFLAG_LIST(smoothing_groups)
-	if (length(canSmoothWith))
-		sortTim(canSmoothWith)
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(canSmoothWith)
-
-	var/area/our_area = loc
-	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
-		add_overlay(GLOB.fullbright_overlay)
-
-	if(requires_activation)
-		SSair.add_to_active(src, TRUE)
-
-	if (light_system == STATIC_LIGHT && light_power && light_range)
-		update_light()
-
-	if (opacity)
-		directional_opacity = ALL_CARDINALS
-
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_new(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_new(src, UP)
-
-	ComponentInitialize()
-
-	return INITIALIZE_HINT_NORMAL
+/turf/open/space/Destroy()
+	GLOB.starlight -= src
+	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
-
-/turf/open/space/Initalize_Atmos(times_fired)
-	return
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -102,20 +106,32 @@
 /turf/open/space/remove_air(amount)
 	return null
 
+/// Updates starlight. Called when we're unsure of a turf's starlight state
+/// Returns TRUE if we succeed, FALSE otherwise
 /turf/open/space/proc/update_starlight()
-	if(CONFIG_GET(flag/starlight))
-		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(isspaceturf(t))
-				//let's NOT update this that much pls
-				continue
-			set_light(2)
-			return
-		set_light(0)
+	for(var/t in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		// I've got a lot of cordons near spaceturfs, be good kids
+		if(isspaceturf(t) || istype(t, /turf/cordon))
+			//let's NOT update this that much pls
+			continue
+		enable_starlight()
+		return TRUE
+	GLOB.starlight -= src
+	set_light(l_on = FALSE)
+	return FALSE
+
+/// Turns on the stars, if they aren't already
+/turf/open/space/proc/enable_starlight()
+	if(!light_on)
+		set_light(l_on = TRUE, l_range = GLOB.starlight_range, l_power = GLOB.starlight_power, l_color = GLOB.starlight_color)
+		GLOB.starlight += src
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /turf/open/space/proc/CanBuildHere()
+	if(destination_z)
+		return FALSE
 	return TRUE
 
 /turf/open/space/handle_slip()
@@ -184,9 +200,7 @@
 	return FALSE
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
-	underlay_appearance.plane = PLANE_SPACE
+	generate_space_underlay(underlay_appearance, asking_turf)
 	return TRUE
 
 
@@ -194,27 +208,44 @@
 	if(!CanBuildHere())
 		return FALSE
 
-	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
-			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-			if(L)
-				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+	if(the_rcd.mode == RCD_TURF)
+		if(the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				return list("delay" = 0, "cost" = 1)
 			else
-				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+				return list("delay" = 0, "cost" = 3)
+		else if(the_rcd.rcd_design_path == /obj/structure/lattice/catwalk)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				return list("delay" = 0, "cost" = 2)
+			else
+				return list("delay" = 0, "cost" = 4)
+		else
+			return FALSE
+
 	return FALSE
 
-/turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
-			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+/turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(the_rcd.mode == RCD_TURF)
+		if(rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
+		else if(rcd_data["[RCD_DESIGN_PATH]"] == /obj/structure/lattice/catwalk)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				qdel(lattice)
+			new /obj/structure/lattice/catwalk(src)
+			return TRUE
+		else
+			return FALSE
+
 	return FALSE
 
 /turf/open/space/rust_heretic_act()
 	return FALSE
 
-/turf/open/space/ReplaceWithLattice()
+/turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
 	var/dest_z = destination_z
@@ -223,19 +254,34 @@
 	destination_y = dest_y
 	destination_z = dest_z
 
+/turf/open/space/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_SPACEWALK)
+
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "invisible"
+	icon_state = MAP_SWITCH("pure_white", "invisible")
+	plane = TRANSPARENT_FLOOR_PLANE
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
-	icon_state = "invisible"
+	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
+		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	icon_state = "pure_white"
+	// We make the assumption that the space plane will never be blacklisted, as an optimization
+	if(SSmapping.max_plane_offset)
+		plane = TRANSPARENT_FLOOR_PLANE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
+	AddElement(/datum/element/turf_z_transparency)
+
+/turf/open/space/openspace/Destroy()
+	// Signals persist through destroy, GO HOME
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		UnregisterSignal(below, COMSIG_TURF_CHANGE)
+	return ..()
 
 /turf/open/space/openspace/zAirIn()
 	return TRUE
@@ -243,7 +289,7 @@
 /turf/open/space/openspace/zAirOut()
 	return TRUE
 
-/turf/open/space/openspace/zPassIn(atom/movable/A, direction, turf/source)
+/turf/open/space/openspace/zPassIn(direction)
 	if(direction == DOWN)
 		for(var/obj/contained_object in contents)
 			if(contained_object.obj_flags & BLOCK_Z_IN_DOWN)
@@ -256,9 +302,7 @@
 		return TRUE
 	return FALSE
 
-/turf/open/space/openspace/zPassOut(atom/movable/A, direction, turf/destination)
-	if(A.anchored)
-		return FALSE
+/turf/open/space/openspace/zPassOut(direction)
 	if(direction == DOWN)
 		for(var/obj/contained_object in contents)
 			if(contained_object.obj_flags & BLOCK_Z_OUT_DOWN)
@@ -270,3 +314,37 @@
 				return FALSE
 		return TRUE
 	return FALSE
+
+/turf/open/space/openspace/enable_starlight()
+	var/turf/below = GET_TURF_BELOW(src)
+	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
+	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
+	if(!isspaceturf(below) || light_on)
+		return
+	set_light(l_on = TRUE, l_range = GLOB.starlight_range, l_power = GLOB.starlight_power, l_color = GLOB.starlight_color)
+	GLOB.starlight += src
+
+/turf/open/space/openspace/update_starlight()
+	. = ..()
+	if(.)
+		return
+	// If we're here, the starlight is not to be
+	var/turf/below = GET_TURF_BELOW(src)
+	UnregisterSignal(below, COMSIG_TURF_CHANGE)
+
+/turf/open/space/openspace/proc/on_below_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	if(isspaceturf(source) && !ispath(path, /turf/open/space))
+		GLOB.starlight += src
+		set_light(l_on = TRUE, l_range = GLOB.starlight_range, l_power = GLOB.starlight_power, l_color = GLOB.starlight_color)
+	else if(!isspaceturf(source) && ispath(path, /turf/open/space))
+		GLOB.starlight -= src
+		set_light(l_on = FALSE)
+
+/turf/open/space/replace_floor(turf/open/new_floor_path, flags)
+	if (!initial(new_floor_path.overfloor_placed))
+		ChangeTurf(new_floor_path, flags = flags)
+		return
+	// Create plating under tiled floor we try to create directly onto space
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)

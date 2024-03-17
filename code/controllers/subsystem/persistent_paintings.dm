@@ -1,13 +1,13 @@
-#define PAINTINGS_DATA_FORMAT_VERSION 2
+#define PAINTINGS_DATA_FORMAT_VERSION 3
 
 // Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
-#define PATRONAGE_OK_FRAME PAYCHECK_CREW * 3 // 150 credits, as of march 2022
-#define PATRONAGE_NICE_FRAME PATRONAGE_OK_FRAME * 2.5
-#define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME * 2
-#define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2
-#define PATRONAGE_AMAZING_FRAME PATRONAGE_EXCELLENT_FRAME * 2
-#define PATRONAGE_SUPERB_FRAME PATRONAGE_AMAZING_FRAME * 2
-#define PATRONAGE_LEGENDARY_FRAME PATRONAGE_SUPERB_FRAME * 2
+#define PATRONAGE_OK_FRAME (PAYCHECK_CREW * 3) // 150 credits, as of march 2022
+#define PATRONAGE_NICE_FRAME (PATRONAGE_OK_FRAME * 2.5)
+#define PATRONAGE_GREAT_FRAME (PATRONAGE_NICE_FRAME * 2)
+#define PATRONAGE_EXCELLENT_FRAME (PATRONAGE_GREAT_FRAME * 2)
+#define PATRONAGE_AMAZING_FRAME (PATRONAGE_EXCELLENT_FRAME * 2)
+#define PATRONAGE_SUPERB_FRAME (PATRONAGE_AMAZING_FRAME * 2)
+#define PATRONAGE_LEGENDARY_FRAME (PATRONAGE_SUPERB_FRAME * 2)
 
 /*
 {
@@ -113,6 +113,11 @@ SUBSYSTEM_DEF(persistent_paintings)
 	/// A list of /datum/paintings saved or ready to be saved this round.
 	var/list/paintings = list()
 
+	/// A list of paintings' data for paintings that are currently stored in the library.
+	var/list/cached_painting_data = list()
+	/// A list of paintings' data for paintings that are currently stored in the library, with admin metadata
+	var/list/admin_painting_data = list()
+
 	///The list of available frame reskins (they are purely cosmetic) and the associated patronage amount required for them.
 	var/list/frame_types_by_patronage_tier = list(
 		"simple" = 0,
@@ -127,10 +132,10 @@ SUBSYSTEM_DEF(persistent_paintings)
 		"gold" = PATRONAGE_EXCELLENT_FRAME,
 		"diamond" = PATRONAGE_AMAZING_FRAME,
 		"rainbow" = PATRONAGE_SUPERB_FRAME,
-		"supermatter" = PATRONAGE_LEGENDARY_FRAME
-			)
+		"supermatter" = PATRONAGE_LEGENDARY_FRAME,
+	)
 
-/datum/controller/subsystem/persistent_paintings/Initialize(start_timeofday)
+/datum/controller/subsystem/persistent_paintings/Initialize()
 	var/json_file = file("data/paintings.json")
 	if(fexists(json_file))
 		var/list/raw_data = update_format(json_decode(file2text(json_file)))
@@ -142,7 +147,28 @@ SUBSYSTEM_DEF(persistent_paintings)
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.load_persistent()
 
-	return ..()
+	cache_paintings()
+
+	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/persistent_paintings/proc/cache_paintings()
+	cached_painting_data = list()
+	admin_painting_data = list()
+
+	for(var/datum/painting/painting as anything in paintings)
+		cached_painting_data += list(list(
+				"title" = painting.title,
+				"creator" = painting.creator_name,
+				"md5" = painting.md5,
+				"ref" = REF(painting),
+				"width" = painting.width,
+				"height" = painting.height,
+				"ratio" = painting.width/painting.height,
+			))
+
+		var/list/pdata = painting.to_json()
+		pdata["ref"] = REF(painting)
+		UNTYPED_LIST_ADD(admin_painting_data, pdata)
 
 /**
  * Generates painting data ready to be consumed by ui.
@@ -152,31 +178,27 @@ SUBSYSTEM_DEF(persistent_paintings)
  * * search_text : text to search for if the PAINTINGS_FILTER_SEARCH_TITLE or PAINTINGS_FILTER_SEARCH_CREATOR filters are enabled.
  */
 /datum/controller/subsystem/persistent_paintings/proc/painting_ui_data(filter=NONE, admin=FALSE, search_text)
-	. = list()
 	var/searching = filter & (PAINTINGS_FILTER_SEARCH_TITLE|PAINTINGS_FILTER_SEARCH_CREATOR) && search_text
-	for(var/datum/painting/painting as anything in paintings)
-		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && ((painting.width != 24 && painting.width != 23) || (painting.height != 24 && painting.height != 23)))
+	var/list/paintings = admin ? admin_painting_data : cached_painting_data
+
+	if(!searching && !(filter & PAINTINGS_FILTER_AI_PORTRAIT))
+		return paintings
+
+	var/list/filtered_paintings = list()
+
+	for(var/painting in paintings)
+		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && ((painting["width"] != 24 && painting["width"] != 23) || (painting["height"] != 24 && painting["height"] != 23)))
 			continue
 		if(searching)
 			var/haystack_text = ""
 			if(filter & PAINTINGS_FILTER_SEARCH_TITLE)
-				haystack_text = painting.title
+				haystack_text = painting["title"]
 			else if(filter & PAINTINGS_FILTER_SEARCH_CREATOR)
-				haystack_text = painting.creator_name
+				haystack_text = painting["creator"]
 			if(!findtext(haystack_text, search_text))
 				continue
-		if(admin)
-			var/list/pdata = painting.to_json()
-			pdata["ref"] = REF(painting)
-			. += list(pdata)
-		else
-			. += list(list(
-				"title" = painting.title,
-				"creator" = painting.creator_name,
-				"md5" = painting.md5,
-				"ref" = REF(painting),
-				"ratio" = painting.width/painting.height,
-				))
+		filtered_paintings += list(painting)
+	return filtered_paintings
 
 /// Returns paintings with given tag.
 /datum/controller/subsystem/persistent_paintings/proc/get_paintings_with_tag(tag_name)
@@ -196,6 +218,11 @@ SUBSYSTEM_DEF(persistent_paintings)
 		current_data =  migrate_to_version_1(current_data)
 	if(version < 2) //Makes sure old paintings get a cosmetic frame type from their patronage tiers.
 		current_data =  migrate_to_version_2(current_data)
+	if(version < 3) //Reduces the allowed length of titles from 1000 characters circa to 42.
+		current_data["version"] = 3
+		var/old_title = current_data["title"]
+		var/new_title = reject_bad_name(old_title, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
+		current_data["title"] = new_title || "Illegibly Titled Artwork"
 
 	return current_data
 
@@ -304,7 +331,9 @@ SUBSYSTEM_DEF(persistent_paintings)
 	var/payload = json_encode(all_data)
 	fdel(json_file)
 	WRITE_FILE(json_file, payload)
+	cache_paintings()
 
+#undef PAINTINGS_DATA_FORMAT_VERSION
 #undef PATRONAGE_OK_FRAME
 #undef PATRONAGE_NICE_FRAME
 #undef PATRONAGE_GREAT_FRAME

@@ -1,0 +1,8 @@
+2022-11-22T05:59:45.2618397Z ##[group]/datum/unit_test/shapeshift_spell
+2022-11-22T05:59:45.4118582Z ##[error]Shapeshift spell: Wild Shapeshift failed to transform the dummy into the shape Juggernaut. (Pablo Pfeifer was located within the floor, which is a /turf/open/floor/iron).
+2022-11-22T05:59:45.4119786Z 	FAILURE #1: Shapeshift spell: Dragon Form failed to transform the dummy into the shape . (Pablo Pfeifer was located within the floor, which is a /turf/open/floor/iron). at code/modules/unit_tests/spell_shapeshift.dm:65
+2022-11-22T05:59:45.2618397Z ##[endgroup]
+2022-11-22T05:59:45.2618397Z ##[group]/datum/unit_test/more_shapeshift_spell
+2022-11-22T05:59:45.4118582Z ##[error]Shapeshift spell: Wild Shapeshift failed to transform the dummy into the shape Juggernaut. (Pablo Pfeifer was located within the floor, which is a /turf/open/floor/iron).
+2022-11-22T05:59:45.4119786Z 	FAILURE #1: Shapeshift spell: Dragon Form failed to transform the dummy into the shape . (Pablo Pfeifer was located within the floor, which is a /turf/open/floor/iron). at code/modules/unit_tests/spell_shapeshift.dm:65
+2022-11-22T05:59:45.2618397Z ##[endgroup]

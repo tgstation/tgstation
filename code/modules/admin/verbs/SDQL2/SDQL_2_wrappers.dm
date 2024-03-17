@@ -3,11 +3,11 @@
 /proc/_abs(A)
 	return abs(A)
 
-/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	var/mutable_appearance/MA = new()
-	for(var/v in set_vars)
-		MA.vars[v] = set_vars[v]
-	animate(A, appearance = MA, time, loop, easing, flags)
+/proc/_animate(atom/target, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
+	if(target)
+		animate(target, appearance = set_vars, time, loop, easing, flags)
+	else
+		animate(appearance = set_vars, time, easing = easing, flags)
 
 /proc/_arccos(A)
 	return arccos(A)
@@ -32,6 +32,15 @@
 
 /proc/_cos(X)
 	return cos(X)
+
+/proc/_findtext(Haystack, Needle, Start = 1, End = 0)
+	return findtext(Haystack, Needle, Start, End)
+
+/proc/_findtextEx(Haystack, Needle, Start = 1, End = 0)
+	return findtextEx(Haystack, Needle, Start, End)
+
+/proc/_flick(Icon, Object)
+	flick(Icon, Object)
 
 /proc/_get_dir(Loc1, Loc2)
 	return get_dir(Loc1, Loc2)
@@ -145,6 +154,9 @@
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)
 
+/proc/_rect_turfs(H_Radius = 0, V_Radius = 0, atom/Center)
+	return RECT_TURFS(H_Radius, V_Radius, Center)
+
 /proc/_regex(pattern, flags)
 	return regex(pattern, flags)
 
@@ -253,7 +265,32 @@
 
 /proc/_winset(player, control_id, params)
 	winset(player, control_id, params)
-	
+
 /proc/_winget(player, control_id, params)
 	winget(player, control_id, params)
 
+/proc/_text2path(text)
+	return text2path(text)
+
+/proc/_turn(dir, angle)
+	return turn(dir, angle)
+
+/proc/_view(Dist, Center = usr)
+	return view(Dist, Center)
+
+/proc/_viewers(Dist, Center = usr)
+	return viewers(Dist, Center)
+
+/// Auxtools REALLY doesn't know how to handle filters as values;
+/// when passed as arguments to auxtools-called procs, they aren't simply treated as nulls -
+/// they don't even count towards the length of args.
+/// For example, calling some_proc([a filter], foo, bar) from auxtools
+/// is equivalent to calling some_proc(foo, bar). Thus, we can't use _animate directly on filters.
+/// Use this to perform animation steps on a filter. Consecutive steps on the same filter can be
+/// achieved by calling _animate with no target.
+/proc/_animate_filter(atom/target, filter_index, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
+	if(!istype(target))
+		return
+	if(!filter_index || filter_index < 1 || filter_index > length(target.filters))
+		return
+	animate(target.filters[filter_index], appearance = set_vars, time, loop, easing, flags)

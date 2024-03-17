@@ -14,6 +14,8 @@
 	var/datum/callback/on_clear_callback
 	/// A typecache of all effects we can clear with our item.
 	var/list/obj/effect/effects_we_clear
+	/// If above 0, how long it takes while standing still to remove the effect.
+	var/time_to_remove = 0 SECONDS
 
 /datum/component/effect_remover/Initialize(
 	success_forcesay,
@@ -21,6 +23,7 @@
 	tip_text,
 	on_clear_callback,
 	effects_we_clear,
+	time_to_remove,
 	)
 
 	. = ..()
@@ -36,18 +39,19 @@
 	src.tip_text = tip_text
 	src.on_clear_callback = on_clear_callback
 	src.effects_we_clear = typecacheof(effects_we_clear)
+	src.time_to_remove = time_to_remove
 
-/datum/component/effect_remover/Destroy(force, silent)
-	QDEL_NULL(on_clear_callback)
+/datum/component/effect_remover/Destroy(force)
+	on_clear_callback = null
 	return ..()
 
 /datum/component/effect_remover/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_remove_effect)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_remove_effect))
 
 	if(tip_text)
 		var/obj/item/item_parent = parent
 		item_parent.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
-		RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
+		RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/component/effect_remover/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_EFFECT, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
@@ -62,13 +66,16 @@
 		return
 
 	if(effects_we_clear[target.type]) // Make sure we get all subtypes and everything
-		INVOKE_ASYNC(src, .proc/do_remove_effect, target, user)
+		INVOKE_ASYNC(src, PROC_REF(do_remove_effect), target, user)
 		return COMPONENT_NO_AFTERATTACK
 
 /*
  * Actually removes the effect, invoking our on_clear_callback before it's deleted.
  */
 /datum/component/effect_remover/proc/do_remove_effect(obj/effect/target, mob/living/user)
+	if(time_to_remove && !do_after(user, time_to_remove, target))
+		return
+
 	var/obj/item/item_parent = parent
 	if(success_forcesay)
 		user.say(success_forcesay, forced = item_parent.name)

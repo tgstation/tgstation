@@ -23,6 +23,11 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/accounting
 
+/obj/item/circuitboard/computer/bankmachine
+	name = "Bank Machine Console"
+	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	build_path = /obj/machinery/computer/bank_machine
+
 //Engineering
 
 /obj/item/circuitboard/computer/apc_control
@@ -203,11 +208,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor
 
-/obj/item/circuitboard/computer/powermonitor/secret
-	name = "Outdated Power Monitor" //Variant used on ruins to prevent them from showing up on PDA's.
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/monitor/secret
-
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -324,14 +324,6 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/shuttle/white_ship/bridge
 
-/obj/item/circuitboard/computer/white_ship/pod
-	name = "Salvage Pod"
-	build_path = /obj/machinery/computer/shuttle/white_ship/pod
-
-/obj/item/circuitboard/computer/white_ship/pod/recall
-	name = "Salvage Pod Recall"
-	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
-
 /obj/item/circuitboard/computer/bountypad
 	name = "Bounty Pad"
 	build_path = /obj/machinery/computer/piratepad_control/civilian
@@ -339,6 +331,20 @@
 /obj/item/circuitboard/computer/tram_controls
 	name = "Tram Controls"
 	build_path = /obj/machinery/computer/tram_controls
+	var/split_mode = FALSE
+
+/obj/item/circuitboard/computer/tram_controls/split
+	split_mode = TRUE
+
+/obj/item/circuitboard/computer/tram_controls/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
+	split_mode = !split_mode
+	to_chat(user, span_notice("[src] positioning set to [split_mode ? "split window" : "normal window"]."))
+	return TRUE
 
 /obj/item/circuitboard/computer/terminal
 	name = "Terminal"
@@ -354,7 +360,7 @@
 /obj/item/circuitboard/computer/med_data
 	name = "Medical Records Console"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/computer/med_data
+	build_path = /obj/machinery/computer/records/medical
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer"
@@ -453,7 +459,7 @@
 /obj/item/circuitboard/computer/secure_data
 	name = "Security Records Console"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
-	build_path = /obj/machinery/computer/secure_data
+	build_path = /obj/machinery/computer/records/security
 
 /obj/item/circuitboard/computer/warrant
 	name = "Security Warrant Viewer"
@@ -471,11 +477,10 @@
 	build_path = /obj/machinery/computer/camera_advanced/syndie
 
 //Service
-
-/obj/item/circuitboard/computer/chef_order
+/obj/item/circuitboard/computer/order_console
 	name = "Produce Orders Console"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/chef_order
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/computer/order_console/cook
 
 //Supply
 
@@ -493,11 +498,14 @@
 	else
 		to_chat(user, span_alert("The spectrum chip is unresponsive."))
 
-/obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+/obj/item/circuitboard/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	contraband = TRUE
+	obj_flags |= EMAGGED
+	to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
 	if(!istype(machine))
@@ -513,24 +521,42 @@
 	name = "Express Supply Console"
 	build_path = /obj/machinery/computer/cargo/express
 
-/obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		to_chat(user, span_notice("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
+/obj/item/circuitboard/computer/cargo/express/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	contraband = TRUE
+	obj_flags |= EMAGGED
+	to_chat(user, span_notice("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
 	if (!(obj_flags & EMAGGED))
 		contraband = !contraband
 		to_chat(user, span_notice("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
+		return TRUE
 	else
 		to_chat(user, span_notice("You reset the destination-routing protocols and receiver spectrum to factory defaults."))
 		contraband = FALSE
 		obj_flags &= ~EMAGGED
+		return TRUE
 
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console"
 	build_path = /obj/machinery/computer/cargo/request
+
+/obj/item/circuitboard/computer/order_console/mining
+	name = "Mining Vending Console"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/order_console/mining
+
+/obj/item/circuitboard/computer/order_console/mining/golem
+	name = "Golem Ship Equipment Vendor Console"
+	build_path = /obj/machinery/computer/order_console/mining/golem
+
+/obj/item/circuitboard/computer/order_console/bitrunning
+	name = "Bitrunning Vendor Console"
+	build_path = /obj/machinery/computer/order_console/bitrunning
 
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry"
@@ -555,6 +581,11 @@
 /obj/item/circuitboard/computer/mining_shuttle/common
 	name = "Lavaland Shuttle"
 	build_path = /obj/machinery/computer/shuttle/mining/common
+
+/obj/item/circuitboard/computer/emergency_pod
+	name = "Emergency Pod Controls"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/pod
 
 /obj/item/circuitboard/computer/exoscanner_console
 	name = "Scanner Array Control Console"

@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { sendAct } from '../../backend';
 import { Gender } from './preferences/gender';
 
@@ -10,14 +11,17 @@ export enum Food {
   Dairy = 'DAIRY',
   Fried = 'FRIED',
   Fruit = 'FRUIT',
+  Gore = 'GORE',
   Grain = 'GRAIN',
   Gross = 'GROSS',
   Junkfood = 'JUNKFOOD',
   Meat = 'MEAT',
   Nuts = 'NUTS',
+  Oranges = 'ORANGES',
   Pineapple = 'PINEAPPLE',
   Raw = 'RAW',
   Seafood = 'SEAFOOD',
+  Stone = 'STONE',
   Sugar = 'SUGAR',
   Toxic = 'TOXIC',
   Vegetables = 'VEGETABLES',
@@ -79,12 +83,15 @@ export type Quirk = {
   icon: string;
   name: string;
   value: number;
+  customizable: boolean;
+  customization_options?: string[];
 };
 
 export type QuirkInfo = {
   max_positive_quirks: number;
   quirk_info: Record<string, Quirk>;
   quirk_blacklist: string[][];
+  points_enabled: boolean;
 };
 
 export enum RandomSetting {
@@ -132,6 +139,7 @@ export type PreferencesMenuData = {
     };
     secondary_features: Record<string, unknown>;
     supplemental_features: Record<string, unknown>;
+    manually_rendered_features: Record<string, string>;
 
     names: Record<string, string>;
 

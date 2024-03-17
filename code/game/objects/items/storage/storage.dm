@@ -1,22 +1,66 @@
 /obj/item/storage
 	name = "storage"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/rummage_if_nodrop = TRUE
-	var/component_type = /datum/component/storage/concrete
 	/// Should we preload the contents of this type?
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
 	/// SANTA IS EVIL
 	var/preload = FALSE
+	/// What storage type to use for this item
+	var/datum/storage/storage_type = /datum/storage
+
+/obj/item/storage/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(isnull(atom_storage)) // some abstract types of storage (yes i know) don't get a datum
+		return
+
+	atom_storage.max_slots = modify_fantasy_variable("max_slots", atom_storage.max_slots, round(bonus/2))
+	atom_storage.max_total_storage = modify_fantasy_variable("max_total_storage", atom_storage.max_total_storage, round(bonus/2))
+	LAZYSET(fantasy_modifications, "max_specific_storage", atom_storage.max_specific_storage)
+	if(bonus >= 15)
+		atom_storage.max_specific_storage = max(WEIGHT_CLASS_HUGE, atom_storage.max_specific_storage)
+	else if(bonus >= 10)
+		atom_storage.max_specific_storage = max(WEIGHT_CLASS_BULKY, atom_storage.max_specific_storage)
+	else if(bonus <= -10)
+		atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	else if(bonus <= -15)
+		atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+
+/obj/item/storage/remove_fantasy_bonuses(bonus)
+	if(isnull(atom_storage)) // some abstract types of storage (yes i know) don't get a datum
+		return ..()
+
+	atom_storage.max_slots = reset_fantasy_variable("max_slots", atom_storage.max_slots)
+	atom_storage.max_total_storage = reset_fantasy_variable("max_total_storage", atom_storage.max_total_storage)
+	var/previous_max_storage = LAZYACCESS(fantasy_modifications, "max_specific_storage")
+	LAZYREMOVE(fantasy_modifications, "max_specific_storage")
+	if(previous_max_storage)
+		atom_storage.max_specific_storage = previous_max_storage
+	return ..()
 
 /obj/item/storage/Initialize(mapload)
 	. = ..()
+
+	create_storage(storage_type = storage_type)
+
 	PopulateContents()
+
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
 
-/obj/item/storage/ComponentInitialize()
-	AddComponent(component_type)
+/obj/item/storage/create_storage(
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+	list/canhold,
+	list/canthold,
+	storage_type,
+)
+	// If no type was passed in, default to what we already have
+	storage_type ||= src.storage_type
+	return ..()
+
 
 /obj/item/storage/AllowDrop()
 	return FALSE
@@ -37,8 +81,7 @@
 
 /obj/item/storage/doStrip(mob/who)
 	if(HAS_TRAIT(src, TRAIT_NODROP) && rummage_if_nodrop)
-		var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-		CP.do_quick_empty()
+		atom_storage.remove_all()
 		return TRUE
 	return ..()
 
@@ -48,8 +91,7 @@
 /obj/item/storage/proc/PopulateContents()
 
 /obj/item/storage/proc/emptyStorage()
-	var/datum/component/storage/ST = GetComponent(/datum/component/storage)
-	ST.do_quick_empty()
+	atom_storage.remove_all()
 
 /obj/item/storage/Destroy()
 	for(var/obj/important_thing in contents)

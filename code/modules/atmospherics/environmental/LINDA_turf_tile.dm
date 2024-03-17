@@ -56,14 +56,13 @@
 
 /turf/open/Initialize(mapload)
 	if(!blocks_air)
-		air = new
-		air.copy_from_turf(src)
+		air = create_gas_mixture()
 		if(planetary_atmos)
 			if(!SSair.planetary[initial_gas_mix])
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
 				SSair.planetary[initial_gas_mix] = mix
-	. = ..()
+	return ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -74,6 +73,18 @@
 	return ..()
 
 /////////////////GAS MIXTURE PROCS///////////////////
+
+///Copies all gas info from the turf into a new gas_mixture, along with our temperature
+///Returns the created gas_mixture
+/turf/proc/create_gas_mixture()
+	var/datum/gas_mixture/mix = SSair.parse_gas_string(initial_gas_mix, /datum/gas_mixture/turf)
+
+	//acounts for changes in temperature
+	var/turf/parent = parent_type
+	if(temperature != initial(temperature) || temperature != initial(parent.temperature))
+		mix.temperature = temperature
+
+	return mix
 
 /turf/open/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	if(!giver)
@@ -100,8 +111,7 @@
 
 /turf/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
-	var/datum/gas_mixture/copied_mixture = new
-	copied_mixture.copy_from_turf(src)
+	var/datum/gas_mixture/copied_mixture = create_gas_mixture()
 	return copied_mixture
 
 /turf/open/return_air()
@@ -120,9 +130,9 @@
 	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
 		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
-		burn()
+		burn_turf()
 
-/turf/proc/burn()
+/turf/proc/burn_turf()
 	burn_tile()
 	var/chance_of_deletion
 	if (heat_capacity) //beware of division by zero
@@ -134,10 +144,6 @@
 		max_fire_temperature_sustained = 0
 	else
 		to_be_destroyed = FALSE
-
-/turf/open/burn()
-	if(!active_hotspot) //Might not even be needed since excited groups are no longer cringe
-		..()
 
 /turf/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	atmos_expose(air, exposed_temperature)
@@ -168,7 +174,7 @@
 	var/list/gases = air.gases
 
 	var/list/new_overlay_types
-	GAS_OVERLAYS(gases, new_overlay_types)
+	GAS_OVERLAYS(gases, new_overlay_types, src)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -345,10 +351,12 @@
 		else
 			enemy_tile.consider_pressure_difference(src, difference)
 
-	our_air.react(src)
+	var/reacting = our_air.react(src)
+	if(our_excited_group)
+		our_excited_group.turf_reactions |= reacting //Adds the flag to turf_reactions so excited groups can check for them before dismantling.
 
 	update_visuals()
-	if(!consider_superconductivity(starting = TRUE) && !active_hotspot) //Might need to include the return of react() here
+	if(!consider_superconductivity(starting = TRUE) && !active_hotspot && !(reacting & (REACTING | STOP_REACTIONS)))
 		if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 			SSair.remove_from_active(src) //This will kill any connected excited group, be careful (This broke atmos for 4 years)
 		if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
@@ -407,6 +415,8 @@
 	var/display_id = 0
 	///Wrapping loop of the index colors
 	var/static/wrapping_id = 0
+	///All turf reaction flags we have received.
+	var/turf_reactions = NONE
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -473,7 +483,7 @@
 
 		var/list/giver_gases = mix.gases
 		for(var/giver_id in giver_gases)
-			ASSERT_GAS(giver_id, shared_mix)
+			ASSERT_GAS_IN_LIST(giver_id, shared_gases)
 			shared_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	if(!imumutable_in_group)
@@ -523,12 +533,14 @@
 		display_id = wrapping_id
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents += GLOB.colored_turfs[display_id]
+		var/offset = GET_Z_PLANE_OFFSET(display.z) + 1
+		display.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 /datum/excited_group/proc/hide_turfs()
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents -= GLOB.colored_turfs[display_id]
+		var/offset = GET_Z_PLANE_OFFSET(display.z) + 1
+		display.vis_contents -= GLOB.colored_turfs[display_id][offset]
 	display_id = 0
 
 /datum/excited_group/proc/display_turf(turf/thing)
@@ -536,7 +548,8 @@
 		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
-	thing.vis_contents += GLOB.colored_turfs[display_id]
+	var/offset = GET_Z_PLANE_OFFSET(thing.z) + 1
+	thing.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 
@@ -642,8 +655,9 @@ Then we space some of our heat, and think about if we should stop conducting.
 		return FALSE
 	return ..()
 
-/turf/proc/radiate_to_spess() //Radiate excess tile heat to space
-	if(temperature <= T0C) //Considering 0 degC as te break even point for radiation in and out
+/// Radiate excess tile heat to space.
+/turf/proc/radiate_to_spess()
+	if(temperature <= T0C) // Considering 0 degC as the break even point for radiation in and out.
 		return
 	// Because we keep losing energy, makes more sense for us to be the T2 here.
 	var/delta_temperature = temperature_archived - TCMB //hardcoded space temperature
@@ -664,3 +678,6 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
 	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 	sharer.temperature -= heat / sharer.heat_capacity
+
+#undef LAST_SHARE_CHECK
+#undef PLANET_SHARE_CHECK

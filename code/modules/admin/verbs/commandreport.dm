@@ -30,7 +30,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Create Command Report")
 	var/datum/command_report_menu/tgui = new(usr)
 	tgui.ui_interact(usr)
 
@@ -46,8 +46,14 @@
 	var/command_report_content
 	/// Whether the report's contents are announced.
 	var/announce_contents = TRUE
+	/// Whether a copy of the report is printed at every console.
+	var/print_report = TRUE
 	/// The sound that's going to accompany our message.
 	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
+	/// The colour of the announcement when sent
+	var/announcement_color = "default"
+	/// The subheader to include when sending the announcement. Keep blank to not include a subheader
+	var/subheader = ""
 	/// A static list of preset names that can be chosen.
 	var/list/preset_names = list(CENTCOM_PRESET, SYNDICATE_PRESET, WIZARD_PRESET, CUSTOM_PRESET)
 
@@ -75,7 +81,10 @@
 	data["custom_name"] = custom_name
 	data["command_report_content"] = command_report_content
 	data["announce_contents"] = announce_contents
+	data["print_report"] = print_report
 	data["played_sound"] = played_sound
+	data["announcement_color"] = announcement_color
+	data["subheader"] = subheader
 
 	return data
 
@@ -83,6 +92,7 @@
 	var/list/data = list()
 	data["command_name_presets"] = preset_names
 	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys
+	data["announcement_colors"] = ANNOUNCEMENT_COLORS
 
 	return data
 
@@ -103,6 +113,15 @@
 			played_sound = params["picked_sound"]
 		if("toggle_announce")
 			announce_contents = !announce_contents
+		if("toggle_printing")
+			print_report = !print_report
+		if("update_announcement_color")
+			var/colors = ANNOUNCEMENT_COLORS
+			var/chosen_color = params["updated_announcement_color"]
+			if(chosen_color in colors)
+				announcement_color = chosen_color
+		if("set_subheader")
+			subheader = params["new_subheader"]
 		if("submit_report")
 			if(!command_name)
 				to_chat(ui_user, span_danger("You can't send a report with no command name."))
@@ -131,8 +150,16 @@
 		report_sound = SSstation.announcer.get_rand_report_sound()
 
 	if(announce_contents)
-		priority_announce(command_report_content, null, report_sound, has_important_message = TRUE)
-	print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents)
+		var/chosen_color = announcement_color
+		if(chosen_color == "default")
+			if(command_name == SYNDICATE_PRESET)
+				chosen_color = "red"
+			else if(command_name == WIZARD_PRESET)
+				chosen_color = "purple"
+		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color)
+
+	if(!announce_contents || print_report)
+		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents)
 
 	change_command_name(original_command_name)
 

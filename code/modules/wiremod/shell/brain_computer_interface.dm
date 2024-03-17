@@ -1,7 +1,7 @@
 /obj/item/organ/internal/cyberimp/bci
 	name = "brain-computer interface"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "bci"
 	visual = FALSE
 	zone = BODY_ZONE_HEAD
@@ -10,86 +10,75 @@
 /obj/item/organ/internal/cyberimp/bci/Initialize(mapload)
 	. = ..()
 
+	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, PROC_REF(action_comp_registered))
+	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, PROC_REF(action_comp_unregistered))
+
 	var/obj/item/integrated_circuit/circuit = new(src)
-	circuit.add_component(new /obj/item/circuit_component/equipment_action/bci(null, "One"))
+	circuit.add_component(new /obj/item/circuit_component/equipment_action(null, "One"))
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
-/obj/item/organ/internal/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	. = ..()
-
-	// Organs are put in nullspace, but this breaks circuit interactions
-	forceMove(reciever)
-
-/obj/item/organ/internal/cyberimp/bci/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced)
+/obj/item/organ/internal/cyberimp/bci/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if (owner)
 		// Otherwise say_dead will be called.
 		// It's intentional that a circuit for a dead person does not speak from the shell.
 		if (owner.stat == DEAD)
 			return
 
-		owner.say(message, forced = "circuit speech")
-	else
-		return ..()
+		forced = "circuit speech"
+		return owner.say(arglist(args))
 
-/obj/item/circuit_component/equipment_action/bci
-	display_name = "BCI Action"
-	desc = "Represents an action the user can take when implanted with the brain-computer interface."
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
-
-	/// A reference to the action button itself
-	var/datum/action/innate/bci_action/bci_action
-
-/obj/item/circuit_component/equipment_action/bci/Destroy()
-	QDEL_NULL(bci_action)
 	return ..()
 
-/obj/item/circuit_component/equipment_action/bci/register_shell(atom/movable/shell)
-	. = ..()
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
-	if(istype(bci))
-		bci_action = new(src)
-		update_action()
+/obj/item/organ/internal/cyberimp/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	LAZYADD(actions, new/datum/action/innate/bci_action(src, action_comp))
 
-		bci.actions += list(bci_action)
-
-/obj/item/circuit_component/equipment_action/bci/unregister_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
-	if(istype(bci))
-		bci.actions -= bci_action
-		QDEL_NULL(bci_action)
-	return ..()
-
-/obj/item/circuit_component/equipment_action/bci/input_received(datum/port/input/port)
-	if (!isnull(bci_action))
-		update_action()
-
-/obj/item/circuit_component/equipment_action/bci/update_action()
-	bci_action.name = button_name.value
-	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
+/obj/item/organ/internal/cyberimp/bci/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	var/datum/action/innate/bci_action/action = action_comp.granted_to[REF(src)]
+	if(!istype(action))
+		return
+	LAZYREMOVE(actions, action)
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /datum/action/innate/bci_action
 	name = "Action"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "bci_power"
 
-	var/obj/item/circuit_component/equipment_action/bci/circuit_component
+	var/obj/item/organ/internal/cyberimp/bci/bci
+	var/obj/item/circuit_component/equipment_action/circuit_component
 
-/datum/action/innate/bci_action/New(obj/item/circuit_component/equipment_action/bci/circuit_component)
+/datum/action/innate/bci_action/New(obj/item/organ/internal/cyberimp/bci/_bci, obj/item/circuit_component/equipment_action/circuit_component)
 	..()
-
+	bci = _bci
+	circuit_component.granted_to[REF(_bci)] = src
 	src.circuit_component = circuit_component
 
 /datum/action/innate/bci_action/Destroy()
-	circuit_component.bci_action = null
+	circuit_component.granted_to -= REF(bci)
 	circuit_component = null
 
 	return ..()
 
 /datum/action/innate/bci_action/Activate()
+	circuit_component.user.set_output(owner)
 	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core
@@ -101,46 +90,66 @@
 
 	var/datum/port/input/message
 	var/datum/port/input/send_message_signal
+	var/datum/port/input/show_charge_meter
 
 	var/datum/port/output/user_port
 
 	var/datum/weakref/user
 
+	var/obj/item/organ/internal/cyberimp/bci/bci
+
 /obj/item/circuit_component/bci_core/populate_ports()
 
-	message = add_input_port("Message", PORT_TYPE_STRING)
+	message = add_input_port("Message", PORT_TYPE_STRING, trigger = null)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
+	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = PROC_REF(update_charge_action))
 
-	user_port = add_output_port("User", PORT_TYPE_ATOM)
+	user_port = add_output_port("User", PORT_TYPE_USER)
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)
 	return ..()
 
+/obj/item/circuit_component/bci_core/proc/update_charge_action()
+	CIRCUIT_TRIGGER
+	var/mob/living/carbon/resolved_owner = user?.resolve()
+	if (show_charge_meter.value)
+		if (charge_action)
+			return
+		charge_action = new(src)
+		if (resolved_owner)
+			charge_action.Grant(resolved_owner)
+		bci.actions += charge_action
+	else
+		if (!charge_action)
+			return
+		if (resolved_owner)
+			charge_action.Remove(resolved_owner)
+		bci.actions -= charge_action
+		QDEL_NULL(charge_action)
+
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	bci = shell
 
-	charge_action = new(src)
-	bci.actions += list(charge_action)
+	show_charge_meter.set_value(TRUE)
 
-	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, .proc/on_organ_implanted)
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
+	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
 /obj/item/circuit_component/bci_core/unregister_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	bci = shell
 
-	bci.actions -= charge_action
-	QDEL_NULL(charge_action)
+	if (charge_action)
+		var/mob/living/carbon/resolved_owner = user?.resolve()
+		if (resolved_owner)
+			charge_action.Remove(resolved_owner)
+		bci.actions -= charge_action
+		QDEL_NULL(charge_action)
 
 	UnregisterSignal(shell, list(
 		COMSIG_ORGAN_IMPLANTED,
 		COMSIG_ORGAN_REMOVED,
 	))
-
-/obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
-	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		return FALSE
-	return ..()
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
 	var/sent_message = trim(message.value)
@@ -159,12 +168,14 @@
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
+	update_charge_action()
+
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -173,7 +184,7 @@
 	user = null
 
 	UnregisterSignal(owner, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
@@ -186,7 +197,7 @@
 
 	parent.cell.give(amount)
 
-/obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, siemens_coefficient, flags)
+/obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coefficient, flags)
 	SIGNAL_HANDLER
 
 	if (isnull(parent.cell))
@@ -202,7 +213,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_they(capitalized = TRUE)] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
 
 /obj/item/circuit_component/bci_core/Topic(href, list/href_list)
 	..()
@@ -216,7 +227,7 @@
 /datum/action/innate/bci_charge_action
 	name = "Check BCI Charge"
 	check_flags = NONE
-	icon_icon = 'icons/obj/power.dmi'
+	button_icon = 'icons/obj/machines/cell_charger.dmi'
 	button_icon_state = "cell"
 
 	var/obj/item/circuit_component/bci_core/circuit_component
@@ -226,11 +237,11 @@
 
 	src.circuit_component = circuit_component
 
-	UpdateButtons()
+	build_all_button_icons()
 
 	START_PROCESSING(SSobj, src)
 
-/datum/action/innate/bci_charge_action/CreateButton()
+/datum/action/innate/bci_charge_action/create_button()
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext_x = 2
 	button.maptext_y = 0
@@ -253,15 +264,11 @@
 		to_chat(owner, span_info("[circuit_component.parent]'s [cell.name] has <b>[cell.percent()]%</b> charge left."))
 		to_chat(owner, span_info("You can recharge it by using a cyborg recharging station."))
 
-/datum/action/innate/bci_charge_action/process(delta_time)
-	UpdateButtons()
+/datum/action/innate/bci_charge_action/process(seconds_per_tick)
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
-/datum/action/innate/bci_charge_action/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
+/datum/action/innate/bci_charge_action/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
-	if(!.)
-		return
-	if(status_only)
-		return
 	var/obj/item/stock_parts/cell/cell = circuit_component.parent.cell
 	button.maptext = cell ? MAPTEXT("[cell.percent()]%") : ""
 
@@ -275,13 +282,13 @@
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 
 	var/busy = FALSE
 	var/busy_icon_state
 	var/locked = FALSE
 
-	var/datum/weakref/bci_to_implant
+	var/obj/item/organ/internal/cyberimp/bci/bci_to_implant
 
 	COOLDOWN_DECLARE(message_cooldown)
 
@@ -289,19 +296,16 @@
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 
-/obj/machinery/bci_implanter/on_deconstruction()
-	var/obj/item/organ/internal/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
-	bci_to_implant_resolved?.forceMove(drop_location())
-	bci_to_implant = null
+/obj/machinery/bci_implanter/on_deconstruction(disassembled)
+	drop_stored_bci()
 
 /obj/machinery/bci_implanter/Destroy()
-	QDEL_NULL(bci_to_implant)
+	qdel(bci_to_implant)
 	return ..()
 
 /obj/machinery/bci_implanter/examine(mob/user)
 	. = ..()
-
-	if (isnull(bci_to_implant?.resolve()))
+	if (isnull(bci_to_implant))
 		. += span_notice("There is no BCI inserted.")
 	else
 		. += span_notice("Right-click to remove current BCI.")
@@ -350,14 +354,11 @@
 		balloon_alert(user, "it's locked!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/obj/item/organ/internal/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
-	if (isnull(bci_to_implant_resolved))
+	if (isnull(bci_to_implant))
 		balloon_alert(user, "no bci inserted!")
 	else
-		user.put_in_hands(bci_to_implant_resolved)
+		user.put_in_hands(bci_to_implant)
 		balloon_alert(user, "ejected bci")
-
-	bci_to_implant = null
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -368,10 +369,10 @@
 			balloon_alert(user, "bci has no circuit!")
 			return
 
-		var/obj/item/organ/internal/cyberimp/bci/previous_bci_to_implant = bci_to_implant?.resolve()
+		var/obj/item/organ/internal/cyberimp/bci/previous_bci_to_implant = bci_to_implant
 
-		bci_to_implant = WEAKREF(weapon)
-		weapon.moveToNullspace()
+		user.transferItemToLoc(weapon, src)
+		bci_to_implant = weapon
 
 		if (isnull(previous_bci_to_implant))
 			balloon_alert(user, "inserted bci")
@@ -388,7 +389,7 @@
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if (default_pry_open(weapon))
+	if (default_pry_open(weapon, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if (default_deconstruction_crowbar(weapon))
@@ -410,9 +411,9 @@
 	locked = TRUE
 
 	set_busy(TRUE, "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"), 1 SECONDS)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"), 2 SECONDS)
-	addtimer(CALLBACK(src, .proc/complete_process, locked_state), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_active"), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_falling"), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(complete_process), locked_state), 3 SECONDS)
 
 /obj/machinery/bci_implanter/proc/complete_process(locked_state)
 	update_use_power(IDLE_POWER_USE)
@@ -425,25 +426,23 @@
 
 	playsound(loc, 'sound/machines/ping.ogg', 30, FALSE)
 
-	var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.getorgan(/obj/item/organ/internal/cyberimp/bci)
-	var/obj/item/organ/internal/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
+	var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
 
 	if (bci_organ)
 		bci_organ.Remove(carbon_occupant)
 
-		if (isnull(bci_to_implant_resolved))
+		if (isnull(bci_to_implant))
 			say("Occupant's previous brain-computer interface has been transferred to internal storage unit.")
-			bci_organ.moveToNullspace()
-			bci_to_implant = WEAKREF(bci_organ)
+			carbon_occupant.transferItemToLoc(bci_organ, src)
+			bci_to_implant = bci_organ
 		else
 			say("Occupant's previous brain-computer interface has been ejected.")
 			bci_organ.forceMove(drop_location())
-	else if (!isnull(bci_to_implant_resolved))
-		say("Occupant has been injected with [bci_to_implant_resolved].")
-		bci_to_implant_resolved.Insert(carbon_occupant)
-		bci_to_implant = null
+	else if (!isnull(bci_to_implant))
+		say("Occupant has been injected with [bci_to_implant].")
+		bci_to_implant.Insert(carbon_occupant)
 
-/obj/machinery/bci_implanter/open_machine()
+/obj/machinery/bci_implanter/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -451,7 +450,7 @@
 
 	return TRUE
 
-/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user)
+/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 
@@ -459,13 +458,13 @@
 
 	var/mob/living/carbon/carbon_occupant = occupant
 	if (istype(occupant))
-		var/obj/item/organ/internal/cyberimp/bci/existing_bci_organ = carbon_occupant.getorgan(/obj/item/organ/internal/cyberimp/bci)
-		if (isnull(existing_bci_organ) && isnull(bci_to_implant?.resolve()))
+		var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
+		if (isnull(bci_organ) && isnull(bci_to_implant))
 			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 			return FALSE
 
-	addtimer(CALLBACK(src, .proc/start_process), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_process)), 1 SECONDS)
 	return TRUE
 
 /obj/machinery/bci_implanter/relaymove(mob/living/user, direction)
@@ -495,11 +494,26 @@
 
 	open_machine()
 
+/obj/machinery/bci_implanter/proc/drop_stored_bci()
+	if (isnull(bci_to_implant))
+		return
+	bci_to_implant.forceMove(drop_location())
+
+/obj/machinery/bci_implanter/dump_inventory_contents(list/subset)
+	// Prevents opening the machine dropping the BCI.
+	// "dump_contents()" still drops the BCI.
+	return ..(contents - bci_to_implant)
+
+/obj/machinery/bci_implanter/Exited(atom/movable/gone, direction)
+	if (gone == bci_to_implant)
+		bci_to_implant = null
+	return ..()
+
 /obj/item/circuitboard/machine/bci_implanter
 	name = "Brain-Computer Interface Manipulation Chamber (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)

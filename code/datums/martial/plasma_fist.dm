@@ -10,87 +10,104 @@
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 	var/plasma_increment = 1 //how much explosion power gets added per kill (1 = 1, 2, 4. 2 = 2, 4, 8 and so on)
 	var/plasma_cap = 12 //max size explosion level
+	var/datum/action/cooldown/spell/aoe/repulse/tornado_spell
 	display_combos = TRUE
 
-/datum/martial_art/plasma_fist/proc/check_streak(mob/living/A, mob/living/D)
+/datum/martial_art/plasma_fist/New()
+	. = ..()
+	tornado_spell = new(src)
+
+/datum/martial_art/plasma_fist/Destroy()
+	tornado_spell = null
+	return ..()
+
+/datum/martial_art/plasma_fist/proc/check_streak(mob/living/attacker, mob/living/defender)
 	if(findtext(streak,TORNADO_COMBO))
-		if(A == D)//helps using apotheosis
+		if(attacker == defender)//helps using apotheosis
 			return FALSE
-		reset_streak(A)
-		Tornado(A,D)
-		return TRUE
+		reset_streak()
+		return Tornado(attacker, defender)
 	if(findtext(streak,THROWBACK_COMBO))
-		if(A == D)//helps using apotheosis
+		if(attacker == defender)//helps using apotheosis
 			return FALSE
-		reset_streak(A)
-		Throwback(A,D)
-		return TRUE
+		reset_streak()
+		return Throwback(attacker, defender)
 	if(findtext(streak,PLASMA_COMBO))
-		reset_streak(A)
-		if(A == D && !nobomb)
-			Apotheosis(A,D)
-		else
-			Plasma(A,D)
-		return TRUE
+		reset_streak()
+		if(attacker == defender && !nobomb)
+			return Apotheosis(attacker, defender)
+		return Plasma(attacker, defender)
 	return FALSE
 
-/datum/martial_art/plasma_fist/proc/Tornado(mob/living/A, mob/living/D)
-	A.say("TORNADO SWEEP!", forced="plasma fist")
-	dance_rotate(A, CALLBACK(GLOBAL_PROC, .proc/playsound, A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
-	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
-	R.cast(RANGE_TURFS(1,A))
-	log_combat(A, D, "tornado sweeped(Plasma Fist)")
-	return
+/datum/martial_art/plasma_fist/proc/Tornado(mob/living/attacker, mob/living/defender)
+	attacker.say("TORNADO SWEEP!", forced="plasma fist")
+	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
+	tornado_spell.cast(attacker)
+	log_combat(attacker, defender, "tornado sweeped (Plasma Fist)")
+	return TRUE
 
-/datum/martial_art/plasma_fist/proc/Throwback(mob/living/A, mob/living/D)
-	D.visible_message(span_danger("[A] hits [D] with Plasma Punch!"), \
-					span_userdanger("You're hit with a Plasma Punch by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
-	to_chat(A, span_danger("You hit [D] with Plasma Punch!"))
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-	D.throw_at(throw_target, 200, 4,A)
-	A.say("HYAH!", forced="plasma fist")
-	log_combat(A, D, "threw back (Plasma Fist)")
-	return
+/datum/martial_art/plasma_fist/proc/Throwback(mob/living/attacker, mob/living/defender)
+	defender.visible_message(
+		span_danger("[attacker] hits [defender] with Plasma Punch!"),
+		span_userdanger("You're hit with a Plasma Punch by [attacker]!"),
+		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		null,
+		attacker,
+	)
+	to_chat(attacker, span_danger("You hit [defender] with Plasma Punch!"))
+	playsound(defender, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
+	defender.throw_at(throw_target, 200, 4,attacker)
+	attacker.say("HYAH!", forced="plasma fist")
+	log_combat(attacker, defender, "threw back (Plasma Fist)")
+	return TRUE
 
-/datum/martial_art/plasma_fist/proc/Plasma(mob/living/A, mob/living/D)
-	var/hasclient = D.client ? TRUE : FALSE
+/datum/martial_art/plasma_fist/proc/Plasma(mob/living/attacker, mob/living/defender)
+	var/hasclient = !!defender.client
 
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-	A.say("PLASMA FIST!", forced="plasma fist")
-	D.visible_message(span_danger("[A] hits [D] with THE PLASMA FIST TECHNIQUE!"), \
-					span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
-	to_chat(A, span_danger("You hit [D] with THE PLASMA FIST TECHNIQUE!"))
-	log_combat(A, D, "gibbed (Plasma Fist)")
-	var/turf/Dturf = get_turf(D)
-	D.gib()
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
+	playsound(defender, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+	attacker.say("PLASMA FIST!", forced="plasma fist")
+	defender.visible_message(
+		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
+		span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"),
+		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		null,
+		attacker,
+	)
+	to_chat(attacker, span_danger("You hit [defender] with THE PLASMA FIST TECHNIQUE!"))
+	log_combat(attacker, defender, "gibbed (Plasma Fist)")
+	var/turf/Dturf = get_turf(defender)
+	defender.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
+	defender.gib(DROP_ALL_REMAINS)
 	if(nobomb)
 		return
+
 	if(!hasclient)
-		to_chat(A, span_warning("Taking this plasma energy for your </span>[span_notice("Apotheosis")]<span class='warning'> would bring dishonor to the clan!"))
+		to_chat(attacker, span_warning("Taking this plasma energy for your </span>[span_notice("Apotheosis")]<span class='warning'> would bring dishonor to the clan!"))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
-		return
+
 	else if(plasma_power >= plasma_cap)
-		to_chat(A, span_warning("You cannot power up your </span>[span_notice("Apotheosis")]<span class='warning'> any more!"))
+		to_chat(attacker, span_warning("You cannot power up your </span>[span_notice("Apotheosis")]<span class='warning'> any more!"))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
+
 	else
 		plasma_power += plasma_increment
-		to_chat(A, span_nicegreen("Power increasing! Your </span>[span_notice("Apotheosis")]<span class='nicegreen'> is now at power level [plasma_power]!"))
-		new /obj/effect/temp_visual/plasma_soul(Dturf, A)
-		var/oldcolor = A.color
-		A.color = "#9C00FF"
-		flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
-		animate(A, color = oldcolor, time = 3 SECONDS)
+		to_chat(attacker, span_nicegreen("Power increasing! Your </span>[span_notice("Apotheosis")]<span class='nicegreen'> is now at power level [plasma_power]!"))
+		new /obj/effect/temp_visual/plasma_soul(Dturf, attacker)
+		var/oldcolor = attacker.color
+		attacker.color = "#9C00FF"
+		flash_color(attacker, flash_color = "#9C00FF", flash_time = 3 SECONDS)
+		animate(attacker, color = oldcolor, time = 3 SECONDS)
 
+	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
 	user.say("APOTHEOSIS!!", forced="plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
-		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
-		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
+		human_attacker.add_traits(list(TRAIT_FORCED_STANDING, TRAIT_BOMBIMMUNE), type)
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
 		human_attacker.undershirt = "Nude"
@@ -105,41 +122,45 @@
 	to_chat(user, span_userdanger("The explosion knocks your soul out of your body!"))
 	user.ghostize(FALSE) //prevents... horrible memes just believe me
 
-	user.apply_damage(rand(50,70), BRUTE)
+	user.apply_damage(rand(50, 70), BRUTE, wound_bonus = CANT_WOUND)
 
-	addtimer(CALLBACK(src,.proc/Apotheosis_end, user), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(Apotheosis_end), user), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
+	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	if(ishuman(dying))
-		var/mob/living/carbon/human/dying_human = dying
-		REMOVE_TRAIT(dying_human, TRAIT_FORCED_STANDING, type)
-		dying_human.dna.species.species_traits -= TRAIT_BOMBIMMUNE
+	dying.remove_traits(list(TRAIT_FORCED_STANDING, TRAIT_BOMBIMMUNE), type)
 	if(dying.stat == DEAD)
 		return
+	dying.investigate_log("has been killed by plasma fist apotheosis.", INVESTIGATE_DEATHS)
 	dying.death()
 
-/datum/martial_art/plasma_fist/harm_act(mob/living/A, mob/living/D)
-	add_to_streak("H",D)
-	if(check_streak(A,D))
-		return TRUE
-	return FALSE
+/datum/martial_art/plasma_fist/harm_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, 10, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 
-/datum/martial_art/plasma_fist/disarm_act(mob/living/A, mob/living/D)
-	add_to_streak("D",D)
-	if(check_streak(A,D))
-		return TRUE
-	if(A == D)//there is no disarming yourself, so we need to let plasma fist user know
-		to_chat(A, span_notice("You have added a disarm to your streak."))
-	return FALSE
+	add_to_streak("H", defender)
+	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_INVALID
 
-/datum/martial_art/plasma_fist/grab_act(mob/living/A, mob/living/D)
-	add_to_streak("G",D)
-	if(check_streak(A,D))
-		return TRUE
-	return FALSE
+/datum/martial_art/plasma_fist/disarm_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, 0, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+	add_to_streak("D", defender)
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
+	if(attacker == defender)//there is no disarming yourself, so we need to let plasma fist user know
+		to_chat(attacker, span_notice("You have added a disarm to your streak."))
+		return MARTIAL_ATTACK_FAIL
+	return MARTIAL_ATTACK_INVALID
+
+/datum/martial_art/plasma_fist/grab_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+
+	add_to_streak("G", defender)
+	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_INVALID
 
 /mob/living/proc/plasma_fist_help()
 	set name = "Recall Teachings"
@@ -184,3 +205,7 @@
 /datum/martial_art/plasma_fist/nobomb
 	name = "Novice Plasma Fist"
 	nobomb = TRUE
+
+#undef TORNADO_COMBO
+#undef THROWBACK_COMBO
+#undef PLASMA_COMBO

@@ -50,15 +50,15 @@
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
-	var/sound/S = sound(get_sfx(soundin))
+	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
 	. = list()//output everything that successfully heard the sound
 
-	var/turf/above_turf = SSmapping.get_turf_above(turf_source)
-	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
+	var/turf/below_turf = GET_TURF_BELOW(turf_source)
 
 	if(ignore_walls)
 
@@ -175,7 +175,7 @@
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
-	if(prefs && (prefs.toggles & SOUND_LOBBY) && !CONFIG_GET(flag/disallow_title_music))
+	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 /proc/get_rand_frequency()
@@ -184,68 +184,250 @@
 /proc/get_sfx(soundin)
 	if(istext(soundin))
 		switch(soundin)
-			if (SFX_SHATTER)
+			if(SFX_SHATTER)
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
-			if (SFX_EXPLOSION)
+			if(SFX_EXPLOSION)
 				soundin = pick('sound/effects/explosion1.ogg','sound/effects/explosion2.ogg')
-			if (SFX_EXPLOSION_CREAKING)
+			if(SFX_EXPLOSION_CREAKING)
 				soundin = pick('sound/effects/explosioncreak1.ogg', 'sound/effects/explosioncreak2.ogg')
-			if (SFX_HULL_CREAKING)
+			if(SFX_HULL_CREAKING)
 				soundin = pick('sound/effects/creak1.ogg', 'sound/effects/creak2.ogg', 'sound/effects/creak3.ogg')
-			if (SFX_SPARKS)
+			if(SFX_SPARKS)
 				soundin = pick('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
-			if (SFX_RUSTLE)
+			if(SFX_RUSTLE)
 				soundin = pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
-			if (SFX_BODYFALL)
+			if(SFX_BODYFALL)
 				soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
-			if (SFX_PUNCH)
+			if(SFX_PUNCH)
 				soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-			if (SFX_CLOWN_STEP)
-				soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
-			if (SFX_SUIT_STEP)
+			if(SFX_CLOWN_STEP)
+				soundin = pick('sound/effects/footstep/clownstep1.ogg','sound/effects/footstep/clownstep2.ogg')
+			if(SFX_SUIT_STEP)
 				soundin = pick('sound/effects/suitstep1.ogg','sound/effects/suitstep2.ogg')
-			if (SFX_SWING_HIT)
+			if(SFX_SWING_HIT)
 				soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-			if (SFX_HISS)
+			if(SFX_HISS)
 				soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
-			if (SFX_PAGE_TURN)
+			if(SFX_PAGE_TURN)
 				soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-			if (SFX_RICOCHET)
+			if(SFX_RICOCHET)
 				soundin = pick( 'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
-			if (SFX_TERMINAL_TYPE)
-				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
-								'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \
-								'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
-			if (SFX_DESECRATION)
+			if(SFX_TERMINAL_TYPE)
+				soundin = pick(list(
+					'sound/machines/terminal_button01.ogg',
+					'sound/machines/terminal_button02.ogg',
+					'sound/machines/terminal_button03.ogg',
+					'sound/machines/terminal_button04.ogg',
+					'sound/machines/terminal_button05.ogg',
+					'sound/machines/terminal_button06.ogg',
+					'sound/machines/terminal_button07.ogg',
+					'sound/machines/terminal_button08.ogg',
+				))
+			if(SFX_DESECRATION)
 				soundin = pick('sound/misc/desecration-01.ogg', 'sound/misc/desecration-02.ogg', 'sound/misc/desecration-03.ogg')
-			if (SFX_IM_HERE)
+			if(SFX_IM_HERE)
 				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
-			if (SFX_CAN_OPEN)
+			if(SFX_CAN_OPEN)
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 			if(SFX_BULLET_MISS)
 				soundin = pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg')
 			if(SFX_REVOLVER_SPIN)
 				soundin = pick('sound/weapons/gun/revolver/spin1.ogg', 'sound/weapons/gun/revolver/spin2.ogg', 'sound/weapons/gun/revolver/spin3.ogg')
 			if(SFX_LAW)
-				soundin = pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
+				soundin = pick(list(
+					'sound/voice/beepsky/creep.ogg',
+					'sound/voice/beepsky/god.ogg',
+					'sound/voice/beepsky/iamthelaw.ogg',
+					'sound/voice/beepsky/insult.ogg',
+					'sound/voice/beepsky/radio.ogg',
+					'sound/voice/beepsky/secureday.ogg',
+				))
 			if(SFX_HONKBOT_E)
-				soundin = pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg',  'sound/items/WEEOO1.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/creep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg')
-			if("goose")
+				soundin = pick(list(
+					'sound/effects/pray.ogg',
+					'sound/effects/reee.ogg',
+					'sound/items/AirHorn.ogg',
+					'sound/items/AirHorn2.ogg',
+					'sound/items/bikehorn.ogg',
+					'sound/items/WEEOO1.ogg',
+					'sound/machines/buzz-sigh.ogg',
+					'sound/machines/ping.ogg',
+					'sound/magic/Fireball.ogg',
+					'sound/misc/sadtrombone.ogg',
+					'sound/voice/beepsky/creep.ogg',
+					'sound/voice/beepsky/iamthelaw.ogg',
+					'sound/voice/hiss1.ogg',
+					'sound/weapons/bladeslice.ogg',
+					'sound/weapons/flashbang.ogg',
+				))
+			if(SFX_GOOSE)
 				soundin = pick('sound/creatures/goose1.ogg', 'sound/creatures/goose2.ogg', 'sound/creatures/goose3.ogg', 'sound/creatures/goose4.ogg')
 			if(SFX_WARPSPEED)
 				soundin = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 			if(SFX_SM_CALM)
-				soundin = pick('sound/machines/sm/accent/normal/1.ogg', 'sound/machines/sm/accent/normal/2.ogg', 'sound/machines/sm/accent/normal/3.ogg', 'sound/machines/sm/accent/normal/4.ogg', 'sound/machines/sm/accent/normal/5.ogg', 'sound/machines/sm/accent/normal/6.ogg', 'sound/machines/sm/accent/normal/7.ogg', 'sound/machines/sm/accent/normal/8.ogg', 'sound/machines/sm/accent/normal/9.ogg', 'sound/machines/sm/accent/normal/10.ogg', 'sound/machines/sm/accent/normal/11.ogg', 'sound/machines/sm/accent/normal/12.ogg', 'sound/machines/sm/accent/normal/13.ogg', 'sound/machines/sm/accent/normal/14.ogg', 'sound/machines/sm/accent/normal/15.ogg', 'sound/machines/sm/accent/normal/16.ogg', 'sound/machines/sm/accent/normal/17.ogg', 'sound/machines/sm/accent/normal/18.ogg', 'sound/machines/sm/accent/normal/19.ogg', 'sound/machines/sm/accent/normal/20.ogg', 'sound/machines/sm/accent/normal/21.ogg', 'sound/machines/sm/accent/normal/22.ogg', 'sound/machines/sm/accent/normal/23.ogg', 'sound/machines/sm/accent/normal/24.ogg', 'sound/machines/sm/accent/normal/25.ogg', 'sound/machines/sm/accent/normal/26.ogg', 'sound/machines/sm/accent/normal/27.ogg', 'sound/machines/sm/accent/normal/28.ogg', 'sound/machines/sm/accent/normal/29.ogg', 'sound/machines/sm/accent/normal/30.ogg', 'sound/machines/sm/accent/normal/31.ogg', 'sound/machines/sm/accent/normal/32.ogg', 'sound/machines/sm/accent/normal/33.ogg')
+				soundin = pick(list(
+					'sound/machines/sm/accent/normal/1.ogg',
+					'sound/machines/sm/accent/normal/2.ogg',
+					'sound/machines/sm/accent/normal/3.ogg',
+					'sound/machines/sm/accent/normal/4.ogg',
+					'sound/machines/sm/accent/normal/5.ogg',
+					'sound/machines/sm/accent/normal/6.ogg',
+					'sound/machines/sm/accent/normal/7.ogg',
+					'sound/machines/sm/accent/normal/8.ogg',
+					'sound/machines/sm/accent/normal/9.ogg',
+					'sound/machines/sm/accent/normal/10.ogg',
+					'sound/machines/sm/accent/normal/11.ogg',
+					'sound/machines/sm/accent/normal/12.ogg',
+					'sound/machines/sm/accent/normal/13.ogg',
+					'sound/machines/sm/accent/normal/14.ogg',
+					'sound/machines/sm/accent/normal/15.ogg',
+					'sound/machines/sm/accent/normal/16.ogg',
+					'sound/machines/sm/accent/normal/17.ogg',
+					'sound/machines/sm/accent/normal/18.ogg',
+					'sound/machines/sm/accent/normal/19.ogg',
+					'sound/machines/sm/accent/normal/20.ogg',
+					'sound/machines/sm/accent/normal/21.ogg',
+					'sound/machines/sm/accent/normal/22.ogg',
+					'sound/machines/sm/accent/normal/23.ogg',
+					'sound/machines/sm/accent/normal/24.ogg',
+					'sound/machines/sm/accent/normal/25.ogg',
+					'sound/machines/sm/accent/normal/26.ogg',
+					'sound/machines/sm/accent/normal/27.ogg',
+					'sound/machines/sm/accent/normal/28.ogg',
+					'sound/machines/sm/accent/normal/29.ogg',
+					'sound/machines/sm/accent/normal/30.ogg',
+					'sound/machines/sm/accent/normal/31.ogg',
+					'sound/machines/sm/accent/normal/32.ogg',
+					'sound/machines/sm/accent/normal/33.ogg',
+				))
 			if(SFX_SM_DELAM)
-				soundin = pick('sound/machines/sm/accent/delam/1.ogg', 'sound/machines/sm/accent/delam/2.ogg', 'sound/machines/sm/accent/delam/3.ogg', 'sound/machines/sm/accent/delam/4.ogg', 'sound/machines/sm/accent/delam/5.ogg', 'sound/machines/sm/accent/delam/6.ogg', 'sound/machines/sm/accent/delam/7.ogg', 'sound/machines/sm/accent/delam/8.ogg', 'sound/machines/sm/accent/delam/9.ogg', 'sound/machines/sm/accent/delam/10.ogg', 'sound/machines/sm/accent/delam/11.ogg', 'sound/machines/sm/accent/delam/12.ogg', 'sound/machines/sm/accent/delam/13.ogg', 'sound/machines/sm/accent/delam/14.ogg', 'sound/machines/sm/accent/delam/15.ogg', 'sound/machines/sm/accent/delam/16.ogg', 'sound/machines/sm/accent/delam/17.ogg', 'sound/machines/sm/accent/delam/18.ogg', 'sound/machines/sm/accent/delam/19.ogg', 'sound/machines/sm/accent/delam/20.ogg', 'sound/machines/sm/accent/delam/21.ogg', 'sound/machines/sm/accent/delam/22.ogg', 'sound/machines/sm/accent/delam/23.ogg', 'sound/machines/sm/accent/delam/24.ogg', 'sound/machines/sm/accent/delam/25.ogg', 'sound/machines/sm/accent/delam/26.ogg', 'sound/machines/sm/accent/delam/27.ogg', 'sound/machines/sm/accent/delam/28.ogg', 'sound/machines/sm/accent/delam/29.ogg', 'sound/machines/sm/accent/delam/30.ogg', 'sound/machines/sm/accent/delam/31.ogg', 'sound/machines/sm/accent/delam/32.ogg', 'sound/machines/sm/accent/delam/33.ogg')
+				soundin = pick(list(
+					'sound/machines/sm/accent/delam/1.ogg',
+					'sound/machines/sm/accent/delam/2.ogg',
+					'sound/machines/sm/accent/delam/3.ogg',
+					'sound/machines/sm/accent/delam/4.ogg',
+					'sound/machines/sm/accent/delam/5.ogg',
+					'sound/machines/sm/accent/delam/6.ogg',
+					'sound/machines/sm/accent/delam/7.ogg',
+					'sound/machines/sm/accent/delam/8.ogg',
+					'sound/machines/sm/accent/delam/9.ogg',
+					'sound/machines/sm/accent/delam/10.ogg',
+					'sound/machines/sm/accent/delam/11.ogg',
+					'sound/machines/sm/accent/delam/12.ogg',
+					'sound/machines/sm/accent/delam/13.ogg',
+					'sound/machines/sm/accent/delam/14.ogg',
+					'sound/machines/sm/accent/delam/15.ogg',
+					'sound/machines/sm/accent/delam/16.ogg',
+					'sound/machines/sm/accent/delam/17.ogg',
+					'sound/machines/sm/accent/delam/18.ogg',
+					'sound/machines/sm/accent/delam/19.ogg',
+					'sound/machines/sm/accent/delam/20.ogg',
+					'sound/machines/sm/accent/delam/21.ogg',
+					'sound/machines/sm/accent/delam/22.ogg',
+					'sound/machines/sm/accent/delam/23.ogg',
+					'sound/machines/sm/accent/delam/24.ogg',
+					'sound/machines/sm/accent/delam/25.ogg',
+					'sound/machines/sm/accent/delam/26.ogg',
+					'sound/machines/sm/accent/delam/27.ogg',
+					'sound/machines/sm/accent/delam/28.ogg',
+					'sound/machines/sm/accent/delam/29.ogg',
+					'sound/machines/sm/accent/delam/30.ogg',
+					'sound/machines/sm/accent/delam/31.ogg',
+					'sound/machines/sm/accent/delam/32.ogg',
+					'sound/machines/sm/accent/delam/33.ogg',
+				))
 			if(SFX_HYPERTORUS_CALM)
-				soundin = pick('sound/machines/sm/accent/normal/1.ogg', 'sound/machines/sm/accent/normal/2.ogg', 'sound/machines/sm/accent/normal/3.ogg', 'sound/machines/sm/accent/normal/4.ogg', 'sound/machines/sm/accent/normal/5.ogg', 'sound/machines/sm/accent/normal/6.ogg', 'sound/machines/sm/accent/normal/7.ogg', 'sound/machines/sm/accent/normal/8.ogg', 'sound/machines/sm/accent/normal/9.ogg', 'sound/machines/sm/accent/normal/10.ogg', 'sound/machines/sm/accent/normal/11.ogg', 'sound/machines/sm/accent/normal/12.ogg', 'sound/machines/sm/accent/normal/13.ogg', 'sound/machines/sm/accent/normal/14.ogg', 'sound/machines/sm/accent/normal/15.ogg', 'sound/machines/sm/accent/normal/16.ogg', 'sound/machines/sm/accent/normal/17.ogg', 'sound/machines/sm/accent/normal/18.ogg', 'sound/machines/sm/accent/normal/19.ogg', 'sound/machines/sm/accent/normal/20.ogg', 'sound/machines/sm/accent/normal/21.ogg', 'sound/machines/sm/accent/normal/22.ogg', 'sound/machines/sm/accent/normal/23.ogg', 'sound/machines/sm/accent/normal/24.ogg', 'sound/machines/sm/accent/normal/25.ogg', 'sound/machines/sm/accent/normal/26.ogg', 'sound/machines/sm/accent/normal/27.ogg', 'sound/machines/sm/accent/normal/28.ogg', 'sound/machines/sm/accent/normal/29.ogg', 'sound/machines/sm/accent/normal/30.ogg', 'sound/machines/sm/accent/normal/31.ogg', 'sound/machines/sm/accent/normal/32.ogg', 'sound/machines/sm/accent/normal/33.ogg')
+				soundin = pick(list(
+					'sound/machines/sm/accent/normal/1.ogg',
+					'sound/machines/sm/accent/normal/2.ogg',
+					'sound/machines/sm/accent/normal/3.ogg',
+					'sound/machines/sm/accent/normal/4.ogg',
+					'sound/machines/sm/accent/normal/5.ogg',
+					'sound/machines/sm/accent/normal/6.ogg',
+					'sound/machines/sm/accent/normal/7.ogg',
+					'sound/machines/sm/accent/normal/8.ogg',
+					'sound/machines/sm/accent/normal/9.ogg',
+					'sound/machines/sm/accent/normal/10.ogg',
+					'sound/machines/sm/accent/normal/11.ogg',
+					'sound/machines/sm/accent/normal/12.ogg',
+					'sound/machines/sm/accent/normal/13.ogg',
+					'sound/machines/sm/accent/normal/14.ogg',
+					'sound/machines/sm/accent/normal/15.ogg',
+					'sound/machines/sm/accent/normal/16.ogg',
+					'sound/machines/sm/accent/normal/17.ogg',
+					'sound/machines/sm/accent/normal/18.ogg',
+					'sound/machines/sm/accent/normal/19.ogg',
+					'sound/machines/sm/accent/normal/20.ogg',
+					'sound/machines/sm/accent/normal/21.ogg',
+					'sound/machines/sm/accent/normal/22.ogg',
+					'sound/machines/sm/accent/normal/23.ogg',
+					'sound/machines/sm/accent/normal/24.ogg',
+					'sound/machines/sm/accent/normal/25.ogg',
+					'sound/machines/sm/accent/normal/26.ogg',
+					'sound/machines/sm/accent/normal/27.ogg',
+					'sound/machines/sm/accent/normal/28.ogg',
+					'sound/machines/sm/accent/normal/29.ogg',
+					'sound/machines/sm/accent/normal/30.ogg',
+					'sound/machines/sm/accent/normal/31.ogg',
+					'sound/machines/sm/accent/normal/32.ogg',
+					'sound/machines/sm/accent/normal/33.ogg',
+				))
 			if(SFX_HYPERTORUS_MELTING)
-				soundin = pick('sound/machines/sm/accent/delam/1.ogg', 'sound/machines/sm/accent/delam/2.ogg', 'sound/machines/sm/accent/delam/3.ogg', 'sound/machines/sm/accent/delam/4.ogg', 'sound/machines/sm/accent/delam/5.ogg', 'sound/machines/sm/accent/delam/6.ogg', 'sound/machines/sm/accent/delam/7.ogg', 'sound/machines/sm/accent/delam/8.ogg', 'sound/machines/sm/accent/delam/9.ogg', 'sound/machines/sm/accent/delam/10.ogg', 'sound/machines/sm/accent/delam/11.ogg', 'sound/machines/sm/accent/delam/12.ogg', 'sound/machines/sm/accent/delam/13.ogg', 'sound/machines/sm/accent/delam/14.ogg', 'sound/machines/sm/accent/delam/15.ogg', 'sound/machines/sm/accent/delam/16.ogg', 'sound/machines/sm/accent/delam/17.ogg', 'sound/machines/sm/accent/delam/18.ogg', 'sound/machines/sm/accent/delam/19.ogg', 'sound/machines/sm/accent/delam/20.ogg', 'sound/machines/sm/accent/delam/21.ogg', 'sound/machines/sm/accent/delam/22.ogg', 'sound/machines/sm/accent/delam/23.ogg', 'sound/machines/sm/accent/delam/24.ogg', 'sound/machines/sm/accent/delam/25.ogg', 'sound/machines/sm/accent/delam/26.ogg', 'sound/machines/sm/accent/delam/27.ogg', 'sound/machines/sm/accent/delam/28.ogg', 'sound/machines/sm/accent/delam/29.ogg', 'sound/machines/sm/accent/delam/30.ogg', 'sound/machines/sm/accent/delam/31.ogg', 'sound/machines/sm/accent/delam/32.ogg', 'sound/machines/sm/accent/delam/33.ogg')
+				soundin = pick(list(
+					'sound/machines/sm/accent/delam/1.ogg',
+					'sound/machines/sm/accent/delam/2.ogg',
+					'sound/machines/sm/accent/delam/3.ogg',
+					'sound/machines/sm/accent/delam/4.ogg',
+					'sound/machines/sm/accent/delam/5.ogg',
+					'sound/machines/sm/accent/delam/6.ogg',
+					'sound/machines/sm/accent/delam/7.ogg',
+					'sound/machines/sm/accent/delam/8.ogg',
+					'sound/machines/sm/accent/delam/9.ogg',
+					'sound/machines/sm/accent/delam/10.ogg',
+					'sound/machines/sm/accent/delam/11.ogg',
+					'sound/machines/sm/accent/delam/12.ogg',
+					'sound/machines/sm/accent/delam/13.ogg',
+					'sound/machines/sm/accent/delam/14.ogg',
+					'sound/machines/sm/accent/delam/15.ogg',
+					'sound/machines/sm/accent/delam/16.ogg',
+					'sound/machines/sm/accent/delam/17.ogg',
+					'sound/machines/sm/accent/delam/18.ogg',
+					'sound/machines/sm/accent/delam/19.ogg',
+					'sound/machines/sm/accent/delam/20.ogg',
+					'sound/machines/sm/accent/delam/21.ogg',
+					'sound/machines/sm/accent/delam/22.ogg',
+					'sound/machines/sm/accent/delam/23.ogg',
+					'sound/machines/sm/accent/delam/24.ogg',
+					'sound/machines/sm/accent/delam/25.ogg',
+					'sound/machines/sm/accent/delam/26.ogg',
+					'sound/machines/sm/accent/delam/27.ogg',
+					'sound/machines/sm/accent/delam/28.ogg',
+					'sound/machines/sm/accent/delam/29.ogg',
+					'sound/machines/sm/accent/delam/30.ogg',
+					'sound/machines/sm/accent/delam/31.ogg',
+					'sound/machines/sm/accent/delam/32.ogg',
+					'sound/machines/sm/accent/delam/33.ogg',
+				))
 			if(SFX_CRUNCHY_BUSH_WHACK)
 				soundin = pick('sound/effects/crunchybushwhack1.ogg', 'sound/effects/crunchybushwhack2.ogg', 'sound/effects/crunchybushwhack3.ogg')
 			if(SFX_TREE_CHOP)
 				soundin = pick('sound/effects/treechop1.ogg', 'sound/effects/treechop2.ogg', 'sound/effects/treechop3.ogg')
 			if(SFX_ROCK_TAP)
 				soundin = pick('sound/effects/rocktap1.ogg', 'sound/effects/rocktap2.ogg', 'sound/effects/rocktap3.ogg')
+			if(SFX_SEAR)
+				soundin = 'sound/weapons/sear.ogg'
+			if(SFX_REEL)
+				soundin = pick(
+					'sound/items/reel1.ogg',
+					'sound/items/reel2.ogg',
+					'sound/items/reel3.ogg',
+					'sound/items/reel4.ogg',
+					'sound/items/reel5.ogg',
+				)
+			if(SFX_RATTLE)
+				soundin = pick(
+					'sound/items/rattle1.ogg',
+					'sound/items/rattle2.ogg',
+					'sound/items/rattle3.ogg',
+				)
 	return soundin

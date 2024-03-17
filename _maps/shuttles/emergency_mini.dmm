@@ -6,16 +6,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "c" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"d" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "e" = (
@@ -41,33 +34,16 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "i" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "j" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"k" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"l" = (
-/obj/machinery/vending/wallmed/directional/east{
-	use_power = 0
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"m" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "n" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -78,7 +54,7 @@
 	name = "Escape Shuttle Cell"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "p" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -123,25 +99,21 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"A" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/obj/machinery/vending/wallmed/directional/west,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "B" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	dwidth = 8;
-	height = 9;
-	name = "Mini emergency shuttle";
-	width = 21
+	name = "Mini emergency shuttle"
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "D" = (
@@ -155,14 +127,24 @@
 /obj/item/extinguisher,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"E" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/blue,
+"F" = (
+/obj/machinery/vending/wallmed/directional/east{
+	use_power = 0
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "G" = (
 /obj/structure/table/optable,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"H" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "I" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Escape Shuttle Cockpit"
@@ -235,14 +217,32 @@
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"U" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "W" = (
 /obj/structure/table,
 /obj/item/clothing/suit/apron/surgical,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "X" = (
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Y" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Z" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -272,7 +272,7 @@ a
 b
 b
 e
-k
+X
 X
 p
 f
@@ -280,7 +280,7 @@ M
 M
 M
 M
-M
+C
 f
 M
 M
@@ -293,7 +293,7 @@ b
 "}
 (3,1,1) = {"
 c
-d
+Y
 W
 X
 X
@@ -316,30 +316,30 @@ n
 "}
 (4,1,1) = {"
 c
-d
+Y
 G
-l
+F
 g
 n
 f
 K
 K
 K
-y
+K
 K
 K
 K
 f
 w
 b
-t
 f
+Z
 R
 n
 "}
 (5,1,1) = {"
 c
-d
+Y
 b
 b
 b
@@ -362,30 +362,30 @@ n
 "}
 (6,1,1) = {"
 c
-d
+Y
 h
-h
+H
 n
 r
 f
 M
 M
 M
-A
+U
 M
 M
 M
 f
-E
+r
 b
 L
-f
+Z
 R
 n
 "}
 (7,1,1) = {"
 c
-d
+Y
 i
 i
 o
@@ -410,7 +410,7 @@ n
 b
 b
 j
-m
+j
 n
 s
 f
@@ -418,7 +418,7 @@ K
 K
 K
 K
-K
+y
 f
 K
 K

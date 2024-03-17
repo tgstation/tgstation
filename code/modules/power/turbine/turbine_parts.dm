@@ -1,7 +1,7 @@
 /obj/item/turbine_parts
 	name = "turbine parts"
 	desc = "you really should call an admin"
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
 
 	///Efficiency of the part to the turbine machine
@@ -64,7 +64,7 @@
 			if(!istype(attacking_item, second_tier_material))
 				return
 			var/obj/item/stack/sheet/second_tier = attacking_item
-			if(second_tier.use(second_tier_material_amount) && do_after(user, 1 SECONDS, src))
+			if(do_after(user, 1 SECONDS, src) && second_tier.use(second_tier_material_amount))
 				current_tier = 2
 				part_efficiency += part_efficiency_increase_amount
 				max_rpm *= max_rpm_tier_multiplier
@@ -74,7 +74,7 @@
 			if(!istype(attacking_item, third_tier_material))
 				return
 			var/obj/item/stack/sheet/third_tier = attacking_item
-			if(third_tier.use(third_tier_material_amount) && do_after(user, 2 SECONDS, src))
+			if(do_after(user, 2 SECONDS, src) && third_tier.use(third_tier_material_amount))
 				current_tier = 3
 				part_efficiency += part_efficiency_increase_amount
 				max_rpm *= max_rpm_tier_multiplier
@@ -84,7 +84,7 @@
 			if(!istype(attacking_item, fourth_tier_material))
 				return
 			var/obj/item/stack/sheet/fourth_tier = attacking_item
-			if(fourth_tier.use(fourth_tier_material_amount) && do_after(user, 3 SECONDS, src))
+			if(do_after(user, 3 SECONDS, src) && fourth_tier.use(fourth_tier_material_amount))
 				current_tier = 4
 				part_efficiency += part_efficiency_increase_amount
 				max_rpm *= max_rpm_tier_multiplier

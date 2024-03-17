@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(blackbox)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_BLACKBOX
 
-	var/list/feedback = list() //list of datum/feedback_variable
+	var/list/feedback_list = list() //list of datum/feedback_variable
 	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
 	var/triggertime = 0
 	var/sealed = FALSE //time to stop tracking stats?
@@ -14,7 +14,9 @@ SUBSYSTEM_DEF(blackbox)
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2,
-							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"testmerged_prs" = 2,
+							"dynamic_threat" = 2,
+						) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
@@ -23,7 +25,7 @@ SUBSYSTEM_DEF(blackbox)
 	record_feedback("amount", "dm_build", DM_BUILD)
 	record_feedback("amount", "byond_version", world.byond_version)
 	record_feedback("amount", "byond_build", world.byond_build)
-	. = ..()
+	return SS_INIT_SUCCESS
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
@@ -57,18 +59,18 @@ SUBSYSTEM_DEF(blackbox)
 	qdel(query_record_playercount)
 
 /datum/controller/subsystem/blackbox/Recover()
-	feedback = SSblackbox.feedback
+	feedback_list = SSblackbox.feedback_list
 	sealed = SSblackbox.sealed
 
 //no touchie
 /datum/controller/subsystem/blackbox/vv_get_var(var_name)
-	if(var_name == NAMEOF(src, feedback))
-		return debug_variable(var_name, deep_copy_list(feedback), 0, src)
+	if(var_name == NAMEOF(src, feedback_list))
+		return debug_variable(var_name, deep_copy_list(feedback_list), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, feedback))
+		if(NAMEOF(src, feedback_list))
 			return FALSE
 		if(NAMEOF(src, sealed))
 			if(var_value)
@@ -100,7 +102,9 @@ SUBSYSTEM_DEF(blackbox)
 		"datetime" = "NOW()"
 	)
 	var/list/sqlrowlist = list()
-	for (var/datum/feedback_variable/FV in feedback)
+
+	for (var/key in feedback_list)
+		var/datum/feedback_variable/FV = feedback_list[key]
 		sqlrowlist += list(list(
 			"round_id" = GLOB.round_id,
 			"key_name" = FV.key,
@@ -112,7 +116,7 @@ SUBSYSTEM_DEF(blackbox)
 	if (!length(sqlrowlist))
 		return
 
-	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE, special_columns = special_columns)
+	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, special_columns = special_columns)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)
@@ -161,13 +165,13 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", 1, "other")
 
 /datum/controller/subsystem/blackbox/proc/find_feedback_datum(key, key_type)
-	for(var/datum/feedback_variable/FV in feedback)
-		if(FV.key == key)
-			return FV
-
-	var/datum/feedback_variable/FV = new(key, key_type)
-	feedback += FV
-	return FV
+	var/datum/feedback_variable/FV = feedback_list[key]
+	if(FV)
+		return FV
+	else
+		FV = new(key, key_type)
+		feedback_list[key] = FV
+		return FV
 /*
 feedback data can be recorded in 5 formats:
 "text"
@@ -317,20 +321,23 @@ Versioning
 		return
 	if(!L || !L.key || !L.mind)
 		return
-	if(!L.suiciding && !first_death.len)
+
+	var/did_they_suicide = HAS_TRAIT_FROM(L, TRAIT_SUICIDED, REF(L)) // simple boolean, did they suicide (true) or not (false)
+
+	if(!did_they_suicide && !first_death.len)
 		first_death["name"] = "[(L.real_name == L.name) ? L.real_name : "[L.real_name] as [L.name]"]"
 		first_death["role"] = null
 		first_death["role"] = L.mind.assigned_role.title
 		first_death["area"] = "[AREACOORD(L)]"
-		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>/<font color='pink'>[L.getCloneLoss()]</font>"
+		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>"
 		first_death["last_words"] = L.last_words
 
 	if(!SSdbcore.Connect())
 		return
 
 	var/datum/db_query/query_report_death = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide)
-		VALUES (:pod, :x_coord, :y_coord, :z_coord, :map, INET_ATON(:internet_address), :port, :round_id, :time, :job, :special, :name, :key, :laname, :lakey, :brute, :fire, :brain, :oxy, :tox, :clone, :stamina, :last_words, :suicide)
+		INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, staminaloss, last_words, suicide)
+		VALUES (:pod, :x_coord, :y_coord, :z_coord, :map, INET_ATON(:internet_address), :port, :round_id, :time, :job, :special, :name, :key, :laname, :lakey, :brute, :fire, :brain, :oxy, :tox, :stamina, :last_words, :suicide)
 	"}, list(
 		"name" = L.real_name,
 		"key" = L.ckey,
@@ -341,16 +348,15 @@ Versioning
 		"lakey" = L.lastattackerckey,
 		"brute" = L.getBruteLoss(),
 		"fire" = L.getFireLoss(),
-		"brain" = L.getOrganLoss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //getOrganLoss returns null without a brain but a value is required for this column
+		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
 		"oxy" = L.getOxyLoss(),
 		"tox" = L.getToxLoss(),
-		"clone" = L.getCloneLoss(),
 		"stamina" = L.getStaminaLoss(),
 		"x_coord" = L.x,
 		"y_coord" = L.y,
 		"z_coord" = L.z,
 		"last_words" = L.last_words,
-		"suicide" = L.suiciding,
+		"suicide" = did_they_suicide,
 		"map" = SSmapping.config.map_name,
 		"internet_address" = world.internet_address || "0",
 		"port" = "[world.port]",

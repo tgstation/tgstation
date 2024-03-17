@@ -2,7 +2,7 @@
 /// If `Unlock()` is not called the menu is safe for players to use.
 /datum/greyscale_modify_menu
 	/// The "owner" object of this menu, is usually the greyscale object being edited but that can be changed for specific uses of this menu
-	var/atom/target
+	var/datum/target
 	/// The client that opened this menu
 	var/client/user
 
@@ -32,43 +32,63 @@
 	/// Whether the menu is in the middle of refreshing the preview
 	var/refreshing = TRUE
 
-	/// Whether the menu is currently locked down to prevent abuse from players. Currently is only unlocked when opened from vv.
+	/**
+	 * Whether the menu is currently locked down to prevent abuse from players.
+	 * Currently is only unlocked when opened from vv.
+	 * It also enables the user to modify the alpha channel of the colors.
+	 */
 	var/unlocked = FALSE
 
-/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors)
+/datum/greyscale_modify_menu/New(datum/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state = "", starting_config, starting_colors, unlocked = FALSE)
 	src.target = target
+	var/atom/atom_target
+	if(isatom(target))
+		atom_target = target
 	src.user = user
-	src.apply_callback = apply_callback || CALLBACK(src, .proc/DefaultApply)
+	src.apply_callback = apply_callback
+	if(!apply_callback)
+		if(atom_target)
+			src.apply_callback = CALLBACK(src, PROC_REF(DefaultApply))
+		else
+			stack_trace("A geyscale modify menu was instantiated with a non-atom target and no specified apply callback (DefaultApply won't do).")
+
 	icon_state = starting_icon_state
 
 	SetupConfigOwner()
 
-	var/current_config = "[starting_config]" || "[target?.greyscale_config]"
+
+	var/current_config = "[starting_config]" || "[atom_target?.greyscale_config]"
 	var/datum/greyscale_config/new_config = SSgreyscale.configurations[current_config]
 	if(!(current_config in allowed_configs))
 		new_config = SSgreyscale.configurations["[allowed_configs[pick(allowed_configs)]]"]
 	change_config(new_config)
 
-	var/list/config_choices = list()
-	for(var/config_string in allowed_configs)
-		var/datum/greyscale_config/allowed_config = text2path("[config_string]")
-		config_choices[initial(allowed_config.name)] = config_string
-	src.allowed_configs = config_choices
+	if(unlocked)
+		Unlock()
+	else
+		var/list/config_choices = list()
+		for(var/config_string in allowed_configs)
+			var/datum/greyscale_config/allowed_config = text2path("[config_string]")
+			config_choices[initial(allowed_config.name)] = config_string
 
-	ReadColorsFromString(starting_colors || target?.greyscale_colors)
+		src.allowed_configs = config_choices
+
+	ReadColorsFromString(starting_colors || atom_target?.greyscale_colors)
 
 	if(target)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/ui_close)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(ui_close))
 
 	refresh_preview()
 
 /datum/greyscale_modify_menu/Destroy()
 	target = null
 	user = null
+	apply_callback = null
+	config = null
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
-	return GLOB.always_state
+	return unlocked ? GLOB.always_state : GLOB.greyscale_menu_state
 
 /datum/greyscale_modify_menu/ui_close()
 	qdel(src)
@@ -135,14 +155,13 @@
 		if("recolor")
 			var/index = text2num(params["color_index"])
 			var/new_color = lowertext(params["new_color"])
-			if(split_colors[index] != new_color)
+			if(split_colors[index] != new_color && (findtext(new_color, GLOB.is_color) || (unlocked && findtext(new_color, GLOB.is_alpha_color))))
 				split_colors[index] = new_color
 				queue_refresh()
 
 		if("recolor_from_string")
 			var/full_color_string = lowertext(params["color_string"])
-			if(full_color_string != split_colors.Join())
-				ReadColorsFromString(full_color_string)
+			if(full_color_string != split_colors.Join() && ReadColorsFromString(full_color_string))
 				queue_refresh()
 
 		if("pick_color")
@@ -222,10 +241,15 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 			config.EnableAutoRefresh(config_owner_type)
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
-	var/list/raw_colors = splittext(colorString, "#")
-	split_colors = list()
-	for(var/i in 2 to length(raw_colors))
-		split_colors += "#[raw_colors[i]]"
+	var/list/new_split_colors = list()
+	var/list/colors = splittext(colorString, "#")
+	for(var/index in 2 to min(length(colors), config.expected_colors + 1))
+		var/color = "#[colors[index]]"
+		if(!findtext(color, GLOB.is_color) && (!unlocked || !findtext(color, GLOB.is_alpha_color)))
+			return FALSE
+		new_split_colors += color
+	split_colors = new_split_colors
+	return TRUE
 
 /datum/greyscale_modify_menu/proc/randomize_color(color_index)
 	var/new_color = "#"
@@ -237,16 +261,16 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 	if(config)
 		UnregisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED)
 	config = new_config
-	RegisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED, .proc/queue_refresh)
+	RegisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED, PROC_REF(queue_refresh))
 
 /datum/greyscale_modify_menu/proc/queue_refresh()
 	SIGNAL_HANDLER
 	refreshing = TRUE
-	addtimer(CALLBACK(src, .proc/refresh_preview), 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(refresh_preview)), 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
 	for(var/i in length(split_colors) + 1 to config.expected_colors)
-		split_colors += rgb(100, 100, 100)
+		LAZYADD(split_colors, rgb(100, 100, 100))
 	var/list/used_colors = split_colors.Copy(1, config.expected_colors+1)
 
 	sprite_data = list()
@@ -257,8 +281,12 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 	sprite_data["icon_states"] = generated_icon_states
 
 	if(!(icon_state in generated_icon_states))
-		icon_state = target.icon_state
-		if(!(icon_state in generated_icon_states))
+		if(isatom(target))
+			var/atom/atom_target = target
+			icon_state = atom_target.icon_state
+			if(!(icon_state in generated_icon_states))
+				icon_state = pick(generated_icon_states)
+		else
 			icon_state = pick(generated_icon_states)
 
 	var/image/finished
@@ -294,10 +322,14 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 	unlocked = TRUE
 
 /datum/greyscale_modify_menu/proc/DefaultApply()
-	target.set_greyscale(split_colors, config.type)
+	var/atom/atom_target = target
+	atom_target.set_greyscale(split_colors, config.type)
 
 /// Gets the top level type that first uses the configuration in this type path
 /datum/greyscale_modify_menu/proc/SetupConfigOwner()
+	if(!isatom(target))
+		return
+
 	var/atom/current = target.type
 	var/atom/parent = target.parent_type
 	if(!initial(current.greyscale_config))

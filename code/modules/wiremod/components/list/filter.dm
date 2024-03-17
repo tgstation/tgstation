@@ -49,7 +49,7 @@
 
 /obj/item/circuit_component/filter_list/populate_ports()
 	list_to_filter = add_input_port("List Input", PORT_TYPE_LIST(PORT_TYPE_ANY))
-	accept_entry = add_input_port("Accept Entry", PORT_TYPE_SIGNAL, trigger = .proc/accept_entry_port)
+	accept_entry = add_input_port("Accept Entry", PORT_TYPE_SIGNAL, trigger = PROC_REF(accept_entry_port))
 
 	element = add_output_port("Element", PORT_TYPE_ANY)
 	current_index = add_output_port("Index", PORT_TYPE_NUMBER)

@@ -1,0 +1,21 @@
+{
+	"cypherkey_service": [
+		{
+			"type": "icon_state",
+			"icon_state": "cypher_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cypher_serv",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cypher_wiring",
+			"blend_mode": "overlay"
+		}
+	]
+}

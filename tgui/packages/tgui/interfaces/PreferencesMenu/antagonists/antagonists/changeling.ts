@@ -1,5 +1,11 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
+
+export const CHANGELING_MECHANICAL_DESCRIPTION = multiline`
+Transform yourself or others into different identities, and buy from an
+arsenal of biological weaponry with the DNA you collect.
+`;
 
 const Changeling: Antagonist = {
   key: 'changeling',
@@ -9,11 +15,7 @@ const Changeling: Antagonist = {
       A highly intelligent alien predator that is capable of altering their
       shape to flawlessly resemble a human.
     `,
-
-    multiline`
-      Transform yourself or others into different identities, and buy from an
-      arsenal of biological weaponry with the DNA you collect.
-    `,
+    CHANGELING_MECHANICAL_DESCRIPTION,
   ],
   category: Category.Roundstart,
 };

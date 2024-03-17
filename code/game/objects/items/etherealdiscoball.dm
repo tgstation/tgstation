@@ -1,7 +1,7 @@
 /obj/item/etherealballdeployer
 	name = "Portable Ethereal Disco Ball"
 	desc = "Press the button for a deployment of slightly-unethical PARTY!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "ethdisco"
 
 /obj/item/etherealballdeployer/attack_self(mob/living/carbon/user)
@@ -13,7 +13,7 @@
 /obj/structure/etherealball
 	name = "Ethereal Disco Ball"
 	desc = "The ethics of this discoball are questionable."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "ethdisco_head_0"
 	anchored = TRUE
 	density = TRUE
@@ -26,9 +26,14 @@
 /obj/structure/etherealball/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	if(TurnedOn)
+		TurnOn()
 
 /obj/structure/etherealball/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+	if(!can_interact(user))
+		return
+
 	if(TurnedOn)
 		TurnOff()
 		to_chat(user, span_notice("You turn the disco ball off!"))
@@ -56,10 +61,10 @@
 /obj/structure/etherealball/proc/DiscoFever()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	current_color = random_color()
-	set_light(range, power, current_color)
+	set_light(range, power, "#[current_color]")
 	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
 	update_appearance()
-	TimerID = addtimer(CALLBACK(src, .proc/DiscoFever), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
+	TimerID = addtimer(CALLBACK(src, PROC_REF(DiscoFever)), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
 
 /obj/structure/etherealball/update_icon_state()
 	icon_state = "ethdisco_head_[TurnedOn]"

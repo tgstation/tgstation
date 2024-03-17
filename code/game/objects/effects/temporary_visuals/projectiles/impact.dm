@@ -1,6 +1,6 @@
 /obj/effect/projectile/impact
 	name = "beam impact"
-	icon = 'icons/obj/guns/projectiles_impact.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles_impact.dmi'
 
 /obj/effect/projectile/impact/laser
 	name = "laser impact"

@@ -1,16 +1,16 @@
 /obj/item/forcefield_projector
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
@@ -23,8 +23,9 @@
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!check_allowed_items(target, 1))
+	if(!check_allowed_items(target, not_inside = TRUE))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(target, /obj/structure/projected_forcefield))
 		var/obj/structure/projected_forcefield/F = target
 		if(F.generator == src)
@@ -82,11 +83,11 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/forcefield_projector/process(delta_time)
+/obj/item/forcefield_projector/process(seconds_per_tick)
 	if(!LAZYLEN(current_fields))
-		shield_integrity = min(shield_integrity + delta_time * 2, max_shield_integrity)
+		shield_integrity = min(shield_integrity + seconds_per_tick * 2, max_shield_integrity)
 	else
-		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * delta_time * 0.5, 0) //fields degrade slowly over time
+		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * seconds_per_tick * 0.5, 0) //fields degrade slowly over time
 	for(var/obj/structure/projected_forcefield/F in current_fields)
 		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
 			qdel(F)
@@ -104,8 +105,16 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	armor = list(MELEE = 0, BULLET = 25, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/structure_projected_forcefield
 	var/obj/item/forcefield_projector/generator
+
+/datum/armor/structure_projected_forcefield
+	bullet = 25
+	laser = 50
+	energy = 50
+	bomb = 25
+	fire = 100
+	acid = 100
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
 	. = ..()

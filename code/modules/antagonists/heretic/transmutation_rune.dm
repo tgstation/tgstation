@@ -24,6 +24,9 @@
 	. += span_notice("Allows you to transmute objects by invoking the rune after collecting the prerequisites overhead.")
 	. += span_notice("You can use your <i>Mansus Grasp</i> on the rune to remove it.")
 
+/obj/effect/heretic_rune/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
 /obj/effect/heretic_rune/can_interact(mob/living/user)
 	. = ..()
 	if(!.)
@@ -36,7 +39,7 @@
 
 /obj/effect/heretic_rune/interact(mob/living/user)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/try_rituals, user)
+	INVOKE_ASYNC(src, PROC_REF(try_rituals), user)
 	return TRUE
 
 /**
@@ -77,6 +80,10 @@
 	for(var/atom/close_atom as anything in range(1, src))
 		if(!ismovable(close_atom))
 			continue
+		if(isitem(close_atom))
+			var/obj/item/close_item = close_atom
+			if(close_item.item_flags & ABSTRACT) //woops sacrificed your own head
+				continue
 		if(close_atom.invisibility)
 			continue
 		if(close_atom == user)
@@ -87,6 +94,7 @@
 	// A copy of our requirements list.
 	// We decrement the values of to determine if enough of each key is present.
 	var/list/requirements_list = ritual.required_atoms.Copy()
+	var/list/banned_atom_types = ritual.banned_atom_types.Copy()
 	// A list of all atoms we've selected to use in this recipe.
 	var/list/selected_atoms = list()
 
@@ -102,9 +110,16 @@
 			// We already have enough of this type, skip
 			if(requirements_list[req_type] <= 0)
 				continue
-			if(!istype(nearby_atom, req_type))
+			// If req_type is a list of types, check all of them for one match.
+			if(islist(req_type))
+				if(!(is_type_in_list(nearby_atom, req_type)))
+					continue
+			else if(!istype(nearby_atom, req_type))
 				continue
-
+			// if list has items, check if the strict type is banned.
+			if(length(banned_atom_types))
+				if(nearby_atom.type in banned_atom_types)
+					continue
 			// This item is a valid type. Add it to our selected atoms list.
 			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
@@ -119,7 +134,7 @@
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
-	for(var/atom/req_type as anything in requirements_list)
+	for(var/req_type in requirements_list)
 		var/number_of_things = requirements_list[req_type]
 		// <= 0 means it's fulfilled, skip
 		if(number_of_things <= 0)
@@ -127,10 +142,16 @@
 
 		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
 		// Lets format the thing they're missing and put it into our list
-		var/formatted_thing = "[number_of_things] [initial(req_type.name)]\s"
-		if(ispath(req_type, /mob/living/carbon/human))
-			// If we need a human, there is a high likelihood we actually need a (dead) body
-			formatted_thing = "[number_of_things] [number_of_things > 1 ? "bodies":"body"]"
+		var/formatted_thing = "[number_of_things] "
+		if(islist(req_type))
+			var/list/req_type_list = req_type
+			var/list/req_text_list = list()
+			for(var/atom/possible_type as anything in req_type_list)
+				req_text_list += ritual.parse_required_item(possible_type)
+			formatted_thing += english_list(req_text_list, and_text = "or")
+
+		else
+			formatted_thing = ritual.parse_required_item(req_type)
 
 		what_are_we_missing += formatted_thing
 
@@ -153,13 +174,14 @@
 	// Some rituals may remove atoms from the selected_atoms list, and not consume them.
 	var/list/initial_selected_atoms = selected_atoms.Copy()
 	for(var/atom/to_disappear as anything in selected_atoms)
-		to_disappear.invisibility = INVISIBILITY_ABSTRACT
+		to_disappear.SetInvisibility(INVISIBILITY_ABSTRACT, id=type)
 
 	// All the components have been invisibled, time to actually do the ritual. Call on_finished_recipe
 	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
 	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
 	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
+
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)
 
@@ -167,7 +189,7 @@
 	for(var/atom/to_appear as anything in initial_selected_atoms)
 		if(QDELETED(to_appear))
 			continue
-		to_appear.invisibility = initial(to_appear.invisibility)
+		to_appear.RemoveInvisibility(type)
 
 	// And finally, give some user feedback
 	// No feedback is given on failure here -
@@ -177,9 +199,46 @@
 
 	return ritual_result
 
+
 /// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "eldritch_rune1"
-	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	icon_state = "transmutation_rune"
+	pixel_x = -30
+	pixel_y = 18
+	pixel_z = -48
+	greyscale_config = /datum/greyscale_config/heretic_rune
+
+/obj/effect/heretic_rune/big/Initialize(mapload, path_colour)
+	. = ..()
+	if (path_colour)
+		set_greyscale(colors = list(path_colour))
+
+/obj/effect/temp_visual/drawing_heretic_rune
+	duration = 30 SECONDS
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "transmutation_rune"
+	pixel_x = -30
+	pixel_y = 18
+	pixel_z = -48
+	plane = GAME_PLANE
+	layer = SIGIL_LAYER
+	greyscale_config = /datum/greyscale_config/heretic_rune
+	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
+	var/animation_state = "transmutation_rune_draw"
+
+/obj/effect/temp_visual/drawing_heretic_rune/Initialize(mapload, path_colour = COLOR_WHITE)
+	. = ..()
+	set_greyscale(colors = list(path_colour))
+	icon_state = animation_state
+	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
+
+/obj/effect/temp_visual/drawing_heretic_rune/fast
+	duration = 12 SECONDS
+	animation_state = "transmutation_rune_fast"
+
+/obj/effect/temp_visual/drawing_heretic_rune/fail
+	duration = 0.25 SECONDS
+	animation_state = "transmutation_rune_fail"

@@ -34,15 +34,16 @@
 	src.colors = colors
 	src.selected_color = selected_color || "#ffffff"
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/on_attack_self_secondary)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_PAINTING_TOOL_SET_COLOR, .proc/on_painting_tool_set_color)
-	RegisterSignal(parent, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .proc/get_palette_data)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(on_attack_self_secondary))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_PAINTING_TOOL_SET_COLOR, PROC_REF(on_painting_tool_set_color))
+	RegisterSignal(parent, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, PROC_REF(get_palette_data))
+	RegisterSignal(parent, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, PROC_REF(palette_color_changed))
 
 /datum/component/palette/Destroy()
 	QDEL_NULL(color_picker_menu)
 	QDEL_LIST(menu_choices)
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF_SECONDARY, COMSIG_PARENT_EXAMINE,
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF_SECONDARY, COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_DROPPED, COMSIG_PAINTING_TOOL_SET_COLOR, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA))
 	return ..()
 
@@ -56,7 +57,7 @@
 	SIGNAL_HANDLER
 
 	if(!color_picker_menu)
-		INVOKE_ASYNC(src, .proc/open_radial_menu, user)
+		INVOKE_ASYNC(src, PROC_REF(open_radial_menu), user)
 	else
 		close_radial_menu()
 
@@ -65,9 +66,9 @@
 /datum/component/palette/proc/open_radial_menu(mob/user)
 	var/list/choices = build_radial_list()
 
-	color_picker_menu = show_radial_menu_persistent(user, parent, choices, select_proc = CALLBACK(src, .proc/choice_selected, user), tooltips = TRUE, radial_slice_icon = "palette_bg")
+	color_picker_menu = show_radial_menu_persistent(user, parent, choices, select_proc = CALLBACK(src, PROC_REF(choice_selected), user), tooltips = TRUE, radial_slice_icon = "palette_bg")
 
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/close_radial_menu)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(close_radial_menu))
 
 /datum/component/palette/proc/build_radial_list()
 	var/radial_list = list()
@@ -128,3 +129,14 @@
 			"is_selected" = hexcolor == selected_color
 		))
 	data["paint_tool_palette"] = painting_data
+
+/datum/component/palette/proc/palette_color_changed(datum/source, chosen_color, index)
+	SIGNAL_HANDLER
+
+	var/was_selected_color = selected_color == colors[index]
+	colors[index] = chosen_color
+	if(was_selected_color)
+		var/obj/item/parent_item = parent
+		parent_item.set_painting_tool_color(chosen_color)
+	else
+		update_radial_list()

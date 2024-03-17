@@ -1,8 +1,4 @@
-/////////////////////////////////////////////////////////////
-// GENERAL AIR CONTROL (a.k.a atmos computer)
-/////////////////////////////////////////////////////////////
-GLOBAL_LIST_EMPTY(atmos_air_controllers)
-
+/// GENERAL AIR CONTROL (a.k.a atmos computer)
 /obj/machinery/computer/atmos_control
 	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
@@ -11,74 +7,44 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	circuit = /obj/item/circuitboard/computer/atmos_control
 	light_color = LIGHT_COLOR_CYAN
 
-	var/frequency = FREQ_ATMOS_STORAGE
-	var/datum/radio_frequency/radio_connection
-
-	/// Which sensors/input/outlets do we want to listen to.
+	/// Which sensors do we want to listen to.
 	/// Assoc of list[chamber_id] = readable_chamber_name
 	var/list/atmos_chambers
 
-	// The list where received signals about devices are written into.
-	// Assoc of list[atmos_chambers_string]
-	var/list/sensor_info
-	var/list/input_info
-	var/list/output_info
+	/// Used when control = FALSE to store the original atmos chambers so they dont get lost when reconnecting
+	var/list/always_displayed_chambers
 
 	/// Whether we can actually adjust the chambers or not.
 	var/control = TRUE
 	/// Whether we are allowed to reconnect.
 	var/reconnecting = TRUE
 
-/obj/machinery/computer/atmos_control/Initialize(mapload)
+	/// Was this computer multitooled before. If so copy the list connected_sensors as it now mantain's it's own sensors independent of the map loaded one's
+	var/was_multi_tooled = FALSE
+
+	/// list of all sensors[key is chamber id, value is id of air sensor linked to this chamber] monitered by this computer
+	var/list/connected_sensors
+
+/obj/machinery/computer/atmos_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 
-	GLOB.atmos_air_controllers += src
-	set_frequency(frequency)
+	var/static/list/multitool_tips = list(
+		TOOL_MULTITOOL = list(
+			SCREENTIP_CONTEXT_LMB = "Link Sensor",
+		)
+	)
+	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
 
-	sensor_info = list()
-	input_info = list()
-	output_info = list()
+	//all newly constructed/round start computers by default have access to this list
+	connected_sensors = GLOB.map_loaded_sensors
 
-/obj/machinery/computer/atmos_control/Destroy()
-	GLOB.atmos_air_controllers -= src
-	SSradio.remove_object(src, frequency)
-	return ..()
+	//special case for the station monitering console. We dont want to loose these chambers during reconnecting
+	if(!control && !isnull(atmos_chambers))
+		always_displayed_chambers = atmos_chambers.Copy()
 
-/obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
-
-	/// The tag of the signal data should be the id_tag var of the atmos object. Format is chamber_role.
-	/// Where chamber is the chamber name and role is one of "sensor", "in", and "out".
-	var/list/tag_data = splittext(signal.data["tag"], "_")
-
-	if(length(tag_data) < 2)
-		return
-
-	if(!(tag_data[1] in atmos_chambers))
-		return
-
-	var/list/info_list
-	switch(tag_data[2])
-		if("sensor")
-			info_list = sensor_info
-		if("in")
-			info_list = input_info
-		if("out")
-			info_list = output_info
-		else
-			return
-
-	if(signal.data["sigtype"] == "status")
-		info_list[tag_data[1]] = signal.data
-
-	if(signal.data["sigtype"] == "destroyed")
-		info_list[tag_data[1]] = null
-
-/obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+/obj/machinery/computer/atmos_control/examine(mob/user)
+	. = ..()
+	. += span_notice("Use a multitool to link a air sensor to this computer")
 
 /// Reconnect only works for station based chambers.
 /obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
@@ -87,39 +53,55 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 	// We only prompt the user with the sensors that are actually available.
 	var/available_devices = list()
-	for(var/datum/weakref/device_ref as anything in radio_connection.devices[RADIO_ATMOSIA])
-		var/obj/machinery/machine = device_ref.resolve()
-		if(istype(machine, /obj/machinery/computer/atmos_control)) // Skip if we are a listener. Make this a list if you add devices that work similarly to this comp.
+
+	for (var/chamber_identifier in connected_sensors)
+		//this sensor was destroyed at the time of reconnecting
+		var/obj/machinery/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber_identifier]]
+		if(QDELETED(sensor))
 			continue
-		var/chamber_identifier = splittext(machine.id_tag, "_")[1]
-		if(!GLOB.station_gas_chambers[chamber_identifier])
+
+		//non master computers don't have access to these station moniters. Only done to give master computer's special access to these chambers and make them feel special or something
+		if(chamber_identifier == ATMOS_GAS_MONITOR_DISTRO)
 			continue
+		if(chamber_identifier == ATMOS_GAS_MONITOR_WASTE)
+			continue
+
 		available_devices[GLOB.station_gas_chambers[chamber_identifier]] = chamber_identifier
 
 	// As long as we dont put any funny chars in the strings it should match.
 	var/new_name = tgui_input_list(user, "Select the device set", "Reconnect", available_devices)
+	if(isnull(new_name))
+		return FALSE
 	var/new_id = available_devices[new_name]
-
 	if(isnull(new_id))
 		return FALSE
 
 	atmos_chambers = list()
+	//these are chambers we always want to display even after reconnecting
+	if(always_displayed_chambers)
+		for(var/chamber_id in always_displayed_chambers)
+			atmos_chambers[chamber_id] = always_displayed_chambers[chamber_id]
 	atmos_chambers[new_id] = new_name
-	sensor_info = list()
-	input_info = list()
-	output_info = list()
 
 	name = new_name + (control ? " Control" : " Monitor")
 
-	// Ask things around us to update.
-	// Due to how signal datums work this is unoptimized but as long as our freq isnt terribly populated we should be fine.
-	// Also, we dont need to prompt sensors and meters since they already broadcast every process_atmos().
-	var/datum/signal/update_request = new(list("sigtype" = "command", "user" = usr, "status" = TRUE ,"tag" = "[new_id]_in"))
-	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
-	update_request = new(list("sigtype" = "command", "user" = usr, "status" = TRUE ,"tag" = "[new_id]_out"))
-	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
-
 	return TRUE
+
+/obj/machinery/computer/atmos_control/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = ..()
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		//computers reference a global map loaded list of sensor's but as soon a user attempt's to edit it, make a copy of that list so other computers aren't affected
+		if(!was_multi_tooled)
+			connected_sensors = connected_sensors.Copy()
+			was_multi_tooled = TRUE
+		//register the sensor's unique ID with it's assositated chamber
+		connected_sensors[sensor.chamber_id] = sensor.id_tag
+		user.balloon_alert(user, "sensor connected to [src]")
+		return ITEM_INTERACT_SUCCESS
+
+	return
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -145,54 +127,106 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		var/list/chamber_info = list()
 		chamber_info["id"] = chamber_id
 		chamber_info["name"] = atmos_chambers[chamber_id]
-		if(sensor_info[chamber_id])
-			chamber_info["gasmix"] = sensor_info[chamber_id]["gasmix"]
-		if(input_info[chamber_id])
-			chamber_info["input_info"] = list()
-			chamber_info["input_info"]["active"] = input_info[chamber_id]["power"]
-			chamber_info["input_info"]["amount"] = input_info[chamber_id]["volume_rate"]
-		if(output_info[chamber_id])
-			chamber_info["output_info"] = list()
-			chamber_info["output_info"]["active"] = output_info[chamber_id]["power"]
-			chamber_info["output_info"]["amount"] = output_info[chamber_id]["internal"]
+
+		var/obj/machinery/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber_id]]
+		if(!QDELETED(sensor))
+			chamber_info["gasmix"] = gas_mixture_parser(sensor.return_air())
+
+		if(istype(sensor, /obj/machinery/air_sensor)) //distro & waste loop are not air sensors and don't have these functions
+			var/obj/machinery/air_sensor/air_sensor = sensor
+
+			var/obj/machinery/atmospherics/components/unary/outlet_injector/input = GLOB.objects_by_id_tag[air_sensor.inlet_id || ""]
+			if (!QDELETED(input))
+				chamber_info["input_info"] = list(
+					"active" = input.on,
+					"amount" = input.volume_rate,
+				)
+
+			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag[air_sensor.outlet_id || ""]
+			if (!QDELETED(output))
+				chamber_info["output_info"] = list(
+					"active" = output.on,
+					"amount" = output.internal_pressure_bound,
+				)
+
 		data["chambers"] += list(chamber_info)
 	return data
 
 /obj/machinery/computer/atmos_control/ui_act(action, params)
 	. = ..()
-	if(. || !radio_connection || !(control || reconnecting))
+	if(. || !(control || reconnecting))
 		return
 
-	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
-	switch(action)
-		if("reconnect")
-			return reconnect(usr)
-		if("toggle_input")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			signal.data += list("tag" = params["chamber"] + "_in", "power_toggle" = TRUE)
-		if("toggle_output")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			signal.data += list("tag" = params["chamber"] + "_out", "power_toggle" = TRUE)
-		if("adjust_input")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			var/target = text2num(params["rate"])
-			if(isnull(target))
-				return FALSE
-			target = clamp(target, 0, MAX_TRANSFER_RATE)
-			signal.data += list("tag" = params["chamber"] + "_in", "set_volume_rate" = target)
-		if("adjust_output")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			var/target = text2num(params["rate"])
-			if(isnull(target))
-				return FALSE
-			target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
-			signal.data += list("tag" = params["chamber"] + "_out", "set_internal_pressure" = target)
+	var/chamber = params["chamber"]
 
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	switch(action)
+		if("toggle_input")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
+			var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber]]
+			if(QDELETED(sensor))
+				return TRUE
+
+			var/obj/machinery/atmospherics/components/unary/outlet_injector/input = GLOB.objects_by_id_tag[sensor.inlet_id || ""]
+			if(QDELETED(input))
+				return TRUE
+
+			input.on = !input.on
+			input.update_appearance(UPDATE_ICON)
+		if("toggle_output")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
+			var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber]]
+			if(QDELETED(sensor))
+				return TRUE
+
+			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag[sensor.outlet_id || ""]
+			if(QDELETED(output))
+				return TRUE
+
+			output.on = !output.on
+			output.update_appearance(UPDATE_ICON)
+		if("adjust_input")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
+			var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber]]
+			if(QDELETED(sensor))
+				return TRUE
+
+			var/obj/machinery/atmospherics/components/unary/outlet_injector/input = GLOB.objects_by_id_tag[sensor.inlet_id || ""]
+			if(QDELETED(input))
+				return TRUE
+
+			var/target = text2num(params["rate"])
+			if(isnull(target))
+				return TRUE
+			target = clamp(target, 0, MAX_TRANSFER_RATE)
+
+			input.volume_rate = clamp(target, 0, min(input.airs[1].volume, MAX_TRANSFER_RATE))
+		if("adjust_output")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
+			var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber]]
+			if(QDELETED(sensor))
+				return TRUE
+
+			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag[sensor.outlet_id || ""]
+			if(QDELETED(output))
+				return TRUE
+
+			var/target = text2num(params["rate"])
+			if(isnull(target))
+				return TRUE
+			target = clamp(target, 0, ATMOS_PUMP_MAX_PRESSURE)
+
+			output.internal_pressure_bound = target
+		if("reconnect")
+			reconnect(usr)
+
 	return TRUE
 
 /obj/machinery/computer/atmos_control/nocontrol

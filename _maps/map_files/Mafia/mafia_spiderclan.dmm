@@ -25,7 +25,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "h" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "i" = (
@@ -67,8 +67,8 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/fakeglass{
-	icon = 'icons/obj/smooth_structures/paperframes.dmi';
-	icon_state = "paper"
+	icon = 'icons/obj/smooth_structures/structure_variations.dmi';
+	icon_state = "paper-whole"
 	},
 /area/centcom/mafia)
 "q" = (
@@ -91,20 +91,18 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "B" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "Welp, only one way to recover your honour.";
-	icon = 'icons/obj/items_and_weapons.dmi';
-	icon_state = "katana";
-	name = "seppuku katana"
-	},
+/obj/structure/showcase/katana,
 /turf/open/misc/beach/sand,
 /area/centcom/mafia)
+"Q" = (
+/turf/template_noop,
+/area/template_noop)
 "S" = (
 /turf/closed/wall/mineral/wood,
 /area/centcom/mafia)
 
 (1,1,1) = {"
+Q
 a
 a
 a
@@ -126,10 +124,10 @@ a
 a
 a
 a
-a
-a
+Q
 "}
 (2,1,1) = {"
+Q
 a
 S
 S
@@ -150,14 +148,13 @@ S
 S
 S
 S
-S
-S
 a
+Q
 "}
 (3,1,1) = {"
+Q
 a
 S
-S
 c
 c
 c
@@ -175,13 +172,13 @@ c
 c
 c
 c
-S
 S
 a
+Q
 "}
 (4,1,1) = {"
+Q
 a
-S
 S
 c
 g
@@ -201,12 +198,12 @@ h
 k
 c
 S
-S
 a
+Q
 "}
 (5,1,1) = {"
 a
-S
+a
 S
 c
 h
@@ -226,7 +223,7 @@ i
 h
 c
 S
-S
+a
 a
 "}
 (6,1,1) = {"
@@ -264,11 +261,11 @@ S
 b
 r
 p
-m
+q
 q
 p
 r
-n
+r
 p
 q
 o
@@ -286,7 +283,7 @@ c
 d
 d
 S
-n
+r
 r
 S
 S
@@ -296,7 +293,7 @@ r
 S
 S
 q
-m
+q
 S
 d
 d
@@ -313,13 +310,13 @@ S
 S
 p
 r
-r
+n
 p
-q
+m
 p
-r
+n
 p
-q
+m
 q
 p
 S
@@ -360,19 +357,19 @@ S
 c
 d
 j
+q
+q
+q
 m
-q
-q
-q
 p
 t
 t
 t
 p
-r
-r
-r
 n
+r
+r
+r
 j
 i
 c
@@ -410,19 +407,19 @@ S
 c
 d
 j
+r
+r
+r
 n
-r
-r
-r
 p
 t
 t
 t
 p
-q
-q
-q
 m
+q
+q
+q
 j
 d
 c
@@ -463,13 +460,13 @@ S
 S
 p
 q
-q
+m
 p
-r
+n
 p
-q
+m
 p
-r
+n
 r
 p
 S
@@ -486,7 +483,7 @@ c
 f
 d
 S
-m
+q
 q
 S
 S
@@ -496,7 +493,7 @@ q
 S
 S
 r
-n
+r
 S
 d
 d
@@ -514,11 +511,11 @@ S
 o
 q
 p
-n
+r
 r
 p
 q
-m
+q
 p
 r
 b
@@ -556,7 +553,7 @@ a
 "}
 (19,1,1) = {"
 a
-S
+a
 S
 c
 h
@@ -576,12 +573,12 @@ d
 h
 c
 S
-S
+a
 a
 "}
 (20,1,1) = {"
+Q
 a
-S
 S
 c
 k
@@ -601,13 +598,13 @@ h
 v
 c
 S
-S
 a
+Q
 "}
 (21,1,1) = {"
+Q
 a
 S
-S
 c
 c
 c
@@ -625,11 +622,12 @@ c
 c
 c
 c
-S
 S
 a
+Q
 "}
 (22,1,1) = {"
+Q
 a
 S
 S
@@ -650,11 +648,11 @@ S
 S
 S
 S
-S
-S
 a
+Q
 "}
 (23,1,1) = {"
+Q
 a
 a
 a
@@ -676,6 +674,5 @@ a
 a
 a
 a
-a
-a
+Q
 "}

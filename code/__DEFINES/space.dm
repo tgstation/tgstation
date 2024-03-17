@@ -1,4 +1,5 @@
 #define SPACE_SIGNAL_GPSTAG "Distant Signal"
 
-///The icon_state for space.  There is 25 total icon states that vary based on the x/y/z position of the turf
-#define SPACE_ICON_STATE "[((x + y) ^ ~(x * y) + z) % 25]"
+/// Every mob in the game will have a screen object sitting inside them with a reference matching this
+/// So you can render_source against it and never need to update it again
+#define SPACE_OVERLAY_RENDER_TARGET(offset) "*space_overlay_target[offset]"

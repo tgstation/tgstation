@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/construct/artificer/@SUBTYPES : /mob/living/basic/construct/artificer/@SUBTYPES{@OLD}

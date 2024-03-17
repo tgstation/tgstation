@@ -1,40 +1,39 @@
 /datum/status_effect/speech
 	id = null
 	alert_type = null
+	remove_on_fullheal = TRUE
+
+	var/make_tts_message_original = FALSE
+	var/tts_filter = ""
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/speech/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, .proc/handle_message)
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_heal)
+	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_message))
 	return TRUE
 
 /datum/status_effect/speech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE)
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], removes all stutters and slurring on full heal
-/datum/status_effect/speech/proc/on_heal(datum/source, admin_revive)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /**
  * Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
  *
- * Iterates over all of the characters in the past message
+ * Iterates over all of the characters in the passed message
  * and calls apply_speech() on each.
- *
- * message_args[1] is the original message passed into the signal.
  */
 /datum/status_effect/speech/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args[1])
+	var/phrase = html_decode(message_args[TREAT_MESSAGE_ARG])
 	if(!length(phrase))
 		return
+
+	if(length(tts_filter) > 0)
+		message_args[TREAT_TTS_FILTER_ARG] += tts_filter
+	if(make_tts_message_original)
+		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
 
 	var/final_phrase = ""
 	var/original_char = ""
@@ -44,7 +43,7 @@
 
 		final_phrase += apply_speech(original_char, original_char)
 
-	message_args[1] = sanitize(final_phrase)
+	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
 
 /**
  * Applies the speech effects on the past character, changing
@@ -62,6 +61,9 @@
 	var/stutter_prob = 80
 	/// Regex of characters we won't apply a stutter to
 	var/static/regex/no_stutter
+
+	make_tts_message_original = TRUE
+	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
 	. = ..()
@@ -92,7 +94,7 @@
 
 /datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
 
-	var/message = html_decode(message_args[1])
+	var/message = html_decode(message_args[TREAT_MESSAGE_ARG])
 
 	message = replacetext(message, " am ", " ")
 	message = replacetext(message, " is ", " ")
@@ -109,7 +111,7 @@
 		message = uppertext(message)
 		message += "[apply_speech(exclamation, exclamation)]"
 
-	message_args[1] = message
+	message_args[TREAT_MESSAGE_ARG] = message
 
 	var/mob/living/living_source = source
 	if(!isliving(source) || living_source.has_status_effect(/datum/status_effect/speech/stutter))
@@ -200,13 +202,35 @@
 
 	return modified_char
 
-/datum/status_effect/speech/slurring/drunk
-	id = "drunk_slurring"
+/datum/status_effect/speech/slurring/generic
+	id = "generic_slurring"
 	common_prob = 33
-	uncommon_prob = 5
+	uncommon_prob = 0
 	replacement_prob = 5
 	doubletext_prob = 10
 	text_modification_file = "slurring_drunk_text.json"
+
+/datum/status_effect/speech/slurring/drunk
+	id = "drunk_slurring"
+	// These defaults are updated when speech event occur.
+	common_prob = -1
+	uncommon_prob = -1
+	replacement_prob = -1
+	doubletext_prob = -1
+	text_modification_file = "slurring_drunk_text.json"
+
+/datum/status_effect/speech/slurring/drunk/handle_message(datum/source, list/message_args)
+	var/current_drunkness = owner.get_drunk_amount()
+	// These numbers are arbitarily picked
+	// Common replacements start at about 20, and maxes out at about 85
+	common_prob = clamp((current_drunkness * 0.8) - 16, 0, 50)
+	// Uncommon replacements (burping) start at 50 and max out at 110 (when you are dying)
+	uncommon_prob = clamp((current_drunkness * 0.2) - 10, 0, 12)
+	// Replacements start at 20 and max out at about 60
+	replacement_prob = clamp((current_drunkness * 0.4) - 8, 0, 12)
+	// Double texting start out at about 25 and max out at about 60
+	doubletext_prob = clamp((current_drunkness * 0.5) - 12, 0, 20)
+	return ..()
 
 /datum/status_effect/speech/slurring/cult
 	id = "cult_slurring"
@@ -215,6 +239,8 @@
 	replacement_prob = 33
 	doubletext_prob = 0
 	text_modification_file = "slurring_cult_text.json"
+
+	tts_filter = "rubberband=pitch=0.5,vibrato=5"
 
 /datum/status_effect/speech/slurring/heretic
 	id = "heretic_slurring"

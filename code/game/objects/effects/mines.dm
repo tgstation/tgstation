@@ -3,8 +3,9 @@
 	desc = "Better stay away from that thing."
 	density = FALSE
 	anchored = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "uglymine"
+	icon = 'icons/obj/weapons/grenade.dmi'
+	icon_state = "landmine"
+	base_icon_state = "landmine"
 	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
 	var/triggered = FALSE
 	/// Can be set to FALSE if we want a short 'coming online' delay, then set to TRUE. Can still be set off by damage
@@ -12,43 +13,93 @@
 	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
 	var/arm_delay
 
+	/// Who's got their foot on the mine's pressure plate
+	/// Stepping on the mine will set this to the first mob who stepped over it
+	/// The mine will not detonate via movement unless the first mob steps off of it
+	var/datum/weakref/foot_on_mine
+
 /obj/effect/mine/Initialize(mapload)
 	. = ..()
 	if(arm_delay)
 		armed = FALSE
-		icon_state = "uglymine-inactive"
-		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
+		update_appearance(UPDATE_ICON_STATE)
+		addtimer(CALLBACK(src, PROC_REF(now_armed)), arm_delay)
+
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/mine/examine(mob/user)
 	. = ..()
 	if(!armed)
-		. += "\t<span class='information'>It appears to be inactive...</span>"
+		. += span_info("It appears to be inactive...")
+
+	var/atom/movable/unlucky_sod = foot_on_mine?.resolve()
+	if(user == unlucky_sod)
+		. += span_bolddanger("The pressure plate is depressed. Any movement you make will set it off now.")
+	else if(!isnull(unlucky_sod))
+		. += span_danger("The pressure plate is depressed by [unlucky_sod]. Any move they make'll set it off now.")
+
+/obj/effect/mine/update_icon_state()
+	. = ..()
+	if(armed)
+		icon_state = base_icon_state
+	else
+		icon_state = "[base_icon_state]-inactive"
 
 /// The effect of the mine
 /obj/effect/mine/proc/mineEffect(mob/victim)
-	to_chat(victim, span_danger("*click*"))
+	return
 
 /// If the landmine was previously inactive, this beeps and displays a message marking it active
 /obj/effect/mine/proc/now_armed()
 	armed = TRUE
-	icon_state = "uglymine"
+	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
 	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/effect/mine/proc/on_entered(datum/source, atom/movable/AM)
+/// Can this mine trigger on the passed movable?
+/obj/effect/mine/proc/can_trigger(atom/movable/on_who)
+	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
+		return FALSE
+
+	var/mob/living/living_mob
+	if(ismob(on_who))
+		if(!isliving(on_who)) //no ghosties.
+			return FALSE
+		living_mob = on_who
+
+	if(living_mob?.incorporeal_move || (on_who.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
+		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
+
+	return TRUE
+
+/obj/effect/mine/proc/on_entered(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
 
-	if(triggered || !isturf(loc) || !armed)
+	if(!can_trigger(arrived))
+		return
+	// Someone already on it
+	if(foot_on_mine?.resolve())
 		return
 
-	if(AM.movement_type & FLYING)
+	foot_on_mine = WEAKREF(arrived)
+	visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
+	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+
+/obj/effect/mine/proc/on_exited(datum/source, atom/movable/gone)
+	SIGNAL_HANDLER
+
+	if(!can_trigger(gone))
+		return
+	// Check that the guy who's on it is stepping off
+	if(foot_on_mine && !IS_WEAKREF_OF(gone, foot_on_mine))
 		return
 
-	triggermine(AM)
+	triggermine(gone)
+	foot_on_mine = null
 
 /obj/effect/mine/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
@@ -56,8 +107,6 @@
 
 /// When something sets off a mine
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
-	if(iseffect(triggerer))
-		return
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
@@ -68,8 +117,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	if(ismob(triggerer))
-		mineEffect(triggerer)
+	mineEffect(triggerer)
 	triggered = TRUE
 	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED, triggerer)
 	qdel(src)
@@ -90,46 +138,60 @@
 /obj/effect/mine/explosive/mineEffect(mob/victim)
 	explosion(src, range_devastation, range_heavy, range_light, range_flame, range_flash)
 
+/obj/effect/mine/explosive/light
+	name = "low-yield explosive mine"
+	range_heavy = 0
+	range_light = 3
+	range_flash = 2
+
+/obj/effect/mine/explosive/flame
+	name = "incendiary explosive mine"
+	range_heavy = 0
+	range_light = 1
+	range_flame = 3
+
+/obj/effect/mine/explosive/flash
+	name = "blinding explosive mine"
+	range_heavy = 0
+	range_light = 1
+	range_flash = 6
+
 /obj/effect/mine/stun
 	name = "stun mine"
 	var/stun_time = 80
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
-	if(isliving(victim))
+	if(isliving(victim) && Adjacent(victim))
 		victim.Paralyze(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
-	if(isliving(victim) && victim.client)
+	if(isliving(victim) && victim.client && Adjacent(victim))
 		to_chat(victim, span_userdanger("You have been kicked FOR NO REISIN!"))
 		qdel(victim.client)
-
 
 /obj/effect/mine/gas
 	name = "oxygen mine"
 	var/gas_amount = 360
-	var/gas_type = "o2"
+	var/gas_type = GAS_O2
 
 /obj/effect/mine/gas/mineEffect(mob/victim)
 	atmos_spawn_air("[gas_type]=[gas_amount]")
 
-
 /obj/effect/mine/gas/plasma
 	name = "plasma mine"
-	gas_type = "plasma"
-
+	gas_type = GAS_PLASMA
 
 /obj/effect/mine/gas/n2o
 	name = "\improper N2O mine"
-	gas_type = "n2o"
-
+	gas_type = GAS_N2O
 
 /obj/effect/mine/gas/water_vapor
 	name = "chilled vapor mine"
 	gas_amount = 500
-	gas_type = "water_vapor"
+	gas_type = GAS_WATER_VAPOR
 
 /obj/effect/mine/sound
 	name = "honkblaster 1000"
@@ -137,7 +199,6 @@
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
 	playsound(loc, sound, 100, TRUE)
-
 
 /obj/effect/mine/sound/bwoink
 	name = "bwoink mine"
@@ -182,7 +243,7 @@
 /obj/item/minespawner
 	name = "landmine deployment device"
 	desc = "When activated, will deploy an Asset Protection landmine after 3 seconds passes, perfect for high ranking NT officers looking to cover their assets from afar."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 
 	var/mine_type = /obj/effect/mine/shrapnel/capspawn
@@ -193,11 +254,10 @@
 	if(active)
 		return
 
-
 	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
 	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
 	active = TRUE
-	addtimer(CALLBACK(src, .proc/deploy_mine), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(deploy_mine)), 3 SECONDS)
 
 /// Deploys the mine and deletes itself
 /obj/item/minespawner/proc/deploy_mine()

@@ -10,6 +10,8 @@
 	average_size = 30
 	average_weight = 500
 	favorite_bait = list(/obj/item/food/bait/worm)
+	required_temperature_min = MIN_AQUARIUM_TEMP+18
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
 /obj/item/fish/angelfish
 	name = "angelfish"
@@ -21,6 +23,9 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
+	fish_traits = list(/datum/fish_trait/aggressive)
+	required_temperature_min = MIN_AQUARIUM_TEMP+22
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 /obj/item/fish/guppy
 	name = "guppy"
@@ -33,6 +38,8 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 6
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 /obj/item/fish/plasmatetra
 	name = "plasma tetra"
@@ -43,6 +50,8 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 /obj/item/fish/catfish
 	name = "cory catfish"
@@ -59,6 +68,8 @@
 			"Value" = JUNKFOOD
 		)
 	)
+	required_temperature_min = MIN_AQUARIUM_TEMP+12
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 // Saltwater fish below
 
@@ -73,8 +84,22 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 4
+	fish_traits = list(/datum/fish_trait/picky_eater)
+	evolution_types = list(/datum/fish_evolution/lubefish)
+	compatible_types = list(/obj/item/fish/clownfish/lube)
+	required_temperature_min = MIN_AQUARIUM_TEMP+22
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
-	fishing_traits = list(/datum/fishing_trait/picky_eater)
+/obj/item/fish/clownfish/lube
+	name = "lubefish"
+	desc = "A clownfish exposed to cherry-flavored lube for far too long. First discovered the days following a cargo incident around the seas of Europa, when thousands of thousands of thousands..."
+	icon_state = "lubefish"
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	dedicated_in_aquarium_icon_state = "lubefish_small"
+	fish_traits = list(/datum/fish_trait/picky_eater, /datum/fish_trait/lubed)
+	evolution_types = null
+	compatible_types = list(/obj/item/fish/clownfish)
+	food = /datum/reagent/lube
 
 /obj/item/fish/cardinal
 	name = "cardinalfish"
@@ -85,7 +110,9 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 4
-	fishing_traits = list(/datum/fishing_trait/vegan)
+	fish_traits = list(/datum/fish_trait/vegan)
+	required_temperature_min = MIN_AQUARIUM_TEMP+22
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 /obj/item/fish/greenchromis
 	name = "green chromis"
@@ -97,6 +124,8 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 5
+	required_temperature_min = MIN_AQUARIUM_TEMP+23
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 	fishing_difficulty_modifier = 5 // Bit harder
 
@@ -112,10 +141,12 @@
 	stable_population = 3
 	disliked_bait = list(/obj/item/food/bait/worm, /obj/item/food/bait/doughball)
 	fish_ai_type = FISH_AI_ZIPPY
+	required_temperature_min = MIN_AQUARIUM_TEMP+23
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 /obj/item/fish/pufferfish
 	name = "pufferfish"
-	desc = "One Pufferfish contains enough toxins in its liver to kill 30 people."
+	desc = "They say that one pufferfish contains enough toxins to kill 30 people, although in the last few decades they've been genetically engineered en masse to be less poisonous."
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
@@ -123,8 +154,10 @@
 	average_size = 60
 	average_weight = 1000
 	stable_population = 3
+	required_temperature_min = MIN_AQUARIUM_TEMP+23
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
-	fishing_traits = list(/datum/fishing_trait/heavy)
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 
 /obj/item/fish/lanternfish
 	name = "lanternfish"
@@ -139,8 +172,9 @@
 	average_size = 100
 	average_weight = 1500
 	stable_population = 3
-
-	fishing_traits = list(/datum/fishing_trait/nocturnal)
+	fish_traits = list(/datum/fish_trait/nocturnal)
+	required_temperature_min = MIN_AQUARIUM_TEMP+2 //My source is that the water at a depth 6600 feet is pretty darn cold.
+	required_temperature_max = MIN_AQUARIUM_TEMP+18
 
 //Tiziran Fish
 /obj/item/fish/dwarf_moonfish
@@ -152,6 +186,8 @@
 	fillet_type = /obj/item/food/fishmeat/moonfish
 	average_size = 100
 	average_weight = 2000
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
@@ -160,26 +196,74 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
+	required_temperature_min = MIN_AQUARIUM_TEMP+24
+	required_temperature_max = MIN_AQUARIUM_TEMP+32
 
 /obj/item/fish/needlefish
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
 	icon_state = "needlefish"
+	dedicated_in_aquarium_icon_state = "needlefish_small"
+	sprite_width = 7
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
 	fillet_type = null
-	average_size = 30
+	average_size = 20
 	average_weight = 300
-	fishing_traits = list(/datum/fishing_trait/carnivore)
+	fish_traits = list(/datum/fish_trait/carnivore)
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+32
 
 /obj/item/fish/armorfish
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
 	icon_state = "armorfish"
+	dedicated_in_aquarium_icon_state = "armorfish_small"
+	sprite_height = 5
+	sprite_width = 6
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
 	fish_ai_type = FISH_AI_SLOW
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+32
+
+//Chasm fish
+/obj/item/fish/chasm_crab
+	name = "chasm chrab"
+	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
+	icon_state = "chrab"
+	dedicated_in_aquarium_icon_state = "chrab_small"
+	sprite_height = 9
+	sprite_width = 8
+	stable_population = 4
+	feeding_frequency = 15 MINUTES
+	random_case_rarity = FISH_RARITY_RARE
+	fillet_type = /obj/item/food/meat/slab/rawcrab
+	required_temperature_min = MIN_AQUARIUM_TEMP+9
+	required_temperature_max = LAVALAND_MAX_TEMPERATURE+50
+	min_pressure = HAZARD_LOW_PRESSURE
+	safe_air_limits = list(
+		/datum/gas/oxygen = list(2, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 20),
+		/datum/gas/water_vapor,
+		/datum/gas/plasma = list(0, 5),
+		/datum/gas/bz = list(0, 5),
+		/datum/gas/miasma = list(0, 5),
+	)
+	evolution_types = list(/datum/fish_evolution/ice_chrab)
+	compatible_types = list(/obj/item/fish/chasm_crab/ice)
+
+/obj/item/fish/chasm_crab/ice
+	name = "arctic chrab"
+	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
+	icon_state = "arctic_chrab"
+	dedicated_in_aquarium_icon_state = "ice_chrab_small"
+	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
+	required_temperature_max = MIN_AQUARIUM_TEMP+15
+	evolution_types = list(/datum/fish_evolution/chasm_chrab)
+	compatible_types = list(/obj/item/fish/chasm_crab)
 
 /obj/item/storage/box/fish_debug
 	name = "box full of fish"
@@ -196,28 +280,20 @@
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/donkfish
+	fish_traits = list(/datum/fish_trait/yucky)
+	required_temperature_min = MIN_AQUARIUM_TEMP+15
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
-	desc = "Ah, the terrifying emulsijack. Created in a laboratory, this slimey, scaleless fish emits an invisible toxin that emulsifies other fish for it to feed on. Its only real use is for completely ruining a tank."
+	desc = "Ah, the terrifying emulsijack. Created in a laboratory, the only real use of this slimey, scaleless fish is for completely ruining a tank."
 	icon_state = "emulsijack"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
-
-/obj/item/fish/emulsijack/process(delta_time)
-	var/emulsified = FALSE
-	var/obj/structure/aquarium/aquarium = loc
-	if(istype(aquarium))
-		for(var/obj/item/fish/victim in aquarium)
-			if(istype(victim, /obj/item/fish/emulsijack))
-				continue //no team killing
-			victim.adjust_health((victim.health - 3) * delta_time) //the victim may heal a bit but this will quickly kill
-			emulsified = TRUE
-	if(emulsified)
-		adjust_health((health + 3) * delta_time)
-		last_feeding = world.time //emulsijack feeds on the emulsion!
-	..()
+	fish_traits = list(/datum/fish_trait/emulsijack)
+	required_temperature_min = MIN_AQUARIUM_TEMP+5
+	required_temperature_max = MIN_AQUARIUM_TEMP+40
 
 /obj/item/fish/ratfish
 	name = "ratfish"
@@ -227,6 +303,9 @@
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 10 //set by New, but this is the default config value
 	fillet_type = /obj/item/food/meat/slab/human/mutant/zombie //eww...
+	fish_traits = list(/datum/fish_trait/necrophage)
+	required_temperature_min = MIN_AQUARIUM_TEMP+15
+	required_temperature_max = MIN_AQUARIUM_TEMP+35
 
 	fish_ai_type = FISH_AI_ZIPPY
 	favorite_bait = list(
@@ -240,3 +319,224 @@
 	. = ..()
 	//stable pop reflects the config for how many mice migrate. powerful...
 	stable_population = CONFIG_GET(number/mice_roundstart)
+
+/obj/item/fish/sludgefish
+	name = "sludgefish"
+	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
+	icon_state = "sludgefish"
+	dedicated_in_aquarium_icon_state = "sludgefish_small"
+	sprite_width = 7
+	sprite_height = 6
+	required_fluid_type = AQUARIUM_FLUID_SULPHWATEVER
+	stable_population = 8
+	average_size = 20
+	average_weight = 400
+	health = 50
+	breeding_timeout = 5 MINUTES
+	fish_traits = list(/datum/fish_trait/parthenogenesis, /datum/fish_trait/no_mating)
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+40
+	evolution_types = list(/datum/fish_evolution/purple_sludgefish)
+
+/obj/item/fish/sludgefish/purple
+	name = "purple sludgefish"
+	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
+	icon_state = "sludgefish_purple"
+	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
+	random_case_rarity = FISH_RARITY_NOPE
+	fish_traits = list(/datum/fish_trait/parthenogenesis)
+
+/obj/item/fish/slimefish
+	name = "acquatic slime"
+	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
+	icon_state = "slimefish"
+	icon_state_dead = "slimefish_dead"
+	dedicated_in_aquarium_icon_state = "slimefish_small"
+	sprite_width = 7
+	sprite_height = 7
+	do_flop_animation = FALSE //it already has a cute bouncy wiggle. :3
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
+	stable_population = 4
+	health = 150
+	fillet_type = /obj/item/slime_extract/grey
+	grind_results = list(/datum/reagent/toxin/slimejelly = 10)
+	fish_traits = list(/datum/fish_trait/toxin_immunity, /datum/fish_trait/crossbreeder)
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = TOXIC,
+		),
+		list(
+			"Type" = "Reagent",
+			"Value" = /datum/reagent/toxin,
+			"Amount" = 5,
+		),
+	)
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+
+/obj/item/fish/boned
+	name = "unmarine bonemass"
+	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
+	icon_state = "bonemass"
+	dedicated_in_aquarium_icon_state = "bonemass_small"
+	sprite_width = 10
+	sprite_height = 7
+	fish_ai_type = FISH_AI_ZIPPY
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
+	min_pressure = HAZARD_LOW_PRESSURE
+	health = 150
+	stable_population = 3
+	grind_results = list(/datum/reagent/bone_dust = 20)
+	fillet_type = /obj/item/stack/sheet/bone
+	num_fillets = 2
+	fish_traits = list(/datum/fish_trait/revival, /datum/fish_trait/carnivore)
+	average_size = 70
+	average_weight = 2000
+	death_text = "%SRC stops moving." //It's dead... or is it?
+	evolution_types = list(/datum/fish_evolution/mastodon)
+
+/obj/item/fish/mastodon
+	name = "unmarine mastodon"
+	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
+	icon = 'icons/obj/aquarium_wide.dmi'
+	icon_state = "mastodon"
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
+	dedicated_in_aquarium_icon_state = "mastodon_small"
+	base_pixel_x = -16
+	pixel_x = -16
+	sprite_width = 12
+	sprite_height = 7
+	show_in_catalog = FALSE
+	random_case_rarity = FISH_RARITY_NOPE
+	fishing_difficulty_modifier = 5
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
+	min_pressure = HAZARD_LOW_PRESSURE
+	health = 300
+	stable_population = 2 //This means they can only crossbreed.
+	grind_results = list(/datum/reagent/bone_dust = 15, /datum/reagent/consumable/liquidgibs = 5)
+	fillet_type = /obj/item/stack/sheet/bone
+	num_fillets = 2
+	feeding_frequency = 2 MINUTES
+	breeding_timeout = 10 MINUTES
+	average_size = 180
+	average_weight = 5000
+	death_text = "%SRC stops moving."
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+
+/obj/item/fish/holo
+	name = "holographic goldfish"
+	desc = "A holographic representation of a common goldfish, slowly flickering out, removed from its holo-habitat."
+	icon_state = "goldfish"
+	show_in_catalog = FALSE
+	random_case_rarity = FISH_RARITY_NOPE
+	sprite_width = 8
+	sprite_height = 8
+	stable_population = 1
+	average_size = 30
+	average_weight = 500
+	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
+	grind_results = null
+	fillet_type = null
+	death_text = "%SRC gently disappears."
+	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
+	experisci_scannable = FALSE
+
+/obj/item/fish/holo/Initialize(mapload)
+	. = ..()
+	var/area/station/holodeck/holo_area = get_area(src)
+	if(!istype(holo_area))
+		addtimer(CALLBACK(src, PROC_REF(set_status), FISH_DEAD), 1 MINUTES)
+		return
+	holo_area.linked.add_to_spawned(src)
+
+/obj/item/fish/holo/set_status(new_status)
+	. = ..()
+	if(status == FISH_DEAD)
+		animate(src, alpha = 0, 3 SECONDS, easing = SINE_EASING)
+		QDEL_IN(src, 3 SECONDS)
+
+/obj/item/fish/holo/crab
+	name = "holographic crab"
+	desc = "A holographic represantion of a soul-crushingly soulless crab, unlike the cuter ones occasionally roaming around. It stares at you, with empty, beady eyes."
+	icon_state = "crab"
+	dedicated_in_aquarium_icon_state = "crab_small"
+	average_weight = 1000
+	sprite_height = 6
+	sprite_width = 10
+
+/obj/item/fish/holo/puffer
+	name = "holographic pufferfish"
+	desc ="A holographic representation of 100% safe-to-eat pufferfish... that is, if holographic fishes were even edible."
+	icon_state = "pufferfish"
+	sprite_width = 8
+	sprite_height = 8
+	average_size = 60
+	average_weight = 1000
+
+/obj/item/fish/holo/angel
+	name = "holographic angelfish"
+	desc = "A holographic representation of a angelfish. I got nothing snarky to say about this one."
+	icon_state = "angelfish"
+	dedicated_in_aquarium_icon_state = "bigfish"
+	sprite_height = 7
+
+/obj/item/fish/holo/clown
+	name = "holographic clownfish"
+	icon_state = "holo_clownfish"
+	desc = "A holographic representation of a clownfish, or at least how they used to look like five centuries ago."
+	dedicated_in_aquarium_icon_state = "holo_clownfish_small"
+	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	sprite_width = 8
+	sprite_height = 5
+
+/obj/item/fish/holo/checkered
+	name = "unrendered holographic fish"
+	desc = "A checkered silhoutte of searing purple and pitch black presents itself before your eyes, like a tear in fabric of reality. It hurts to watch."
+	icon_state = "checkered" //it's a meta joke, buddy.
+	dedicated_in_aquarium_icon_state = "checkered_small"
+	sprite_width = 4
+
+/obj/item/fish/holo/halffish
+	name = "holographic half-fish"
+	desc = "A holographic representation of... a fish reduced to all bones, except for its head. Isn't it supposed to be dead? Ehr, holo-dead?"
+	icon_state = "half_fish"
+	dedicated_in_aquarium_icon_state = "half_fish_small"
+	sprite_height = 4
+	sprite_width = 10
+	average_size = 50
+
+/obj/item/fish/starfish
+	name = "cosmostarfish"
+	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
+	icon_state = "starfish"
+	dedicated_in_aquarium_icon_state = "starfish_small"
+	icon_state_dead = "starfish_dead"
+	sprite_width = 4
+	average_size = 30
+	average_weight = 300
+	stable_population = 3
+	required_fluid_type = AQUARIUM_FLUID_AIR
+	random_case_rarity = FISH_RARITY_NOPE
+	required_temperature_min = 0
+	required_temperature_max = INFINITY
+	safe_air_limits = null
+	min_pressure = 0
+	max_pressure = INFINITY
+	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
+	fillet_type = null
+	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+
+/obj/item/fish/starfish/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/fish/starfish/update_overlays()
+	. = ..()
+	if(status == FISH_ALIVE)
+		. += emissive_appearance(icon, "starfish_emissive", src)
+
+///It spins, and dimly glows in the dark.
+/obj/item/fish/starfish/flop_animation()
+	DO_FLOATING_ANIM(src)

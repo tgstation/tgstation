@@ -3,9 +3,11 @@
 	desc = "The foundation of all circuits. All Circuitry go onto this."
 	id = "integrated_circuit"
 	build_path = /obj/item/integrated_circuit
-	build_type = IMPRINTER | COMPONENT_PRINTER
-	category = list("Circuitry", "Core")
-	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
+	)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/circuit_multitool
@@ -13,9 +15,11 @@
 	desc = "A circuit multitool to mark entities and load them into."
 	id = "circuit_multitool"
 	build_path = /obj/item/multitool/circuit
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Core")
-	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
+	)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/usb_cable
@@ -23,19 +27,23 @@
 	desc = "A cable that allows certain shells to connect to nearby computers and machines."
 	id = "usb_cable"
 	build_path = /obj/item/usb_cable
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Core")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
+	)
 	// Yes, it would make sense to make them take plastic, but then less people would make them, and I think they're cool
-	materials = list(/datum/material/iron = 2500)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/component
 	name = "Component ( NULL ENTRY )"
 	desc = "A component that goes into an integrated circuit."
-	build_type = IMPRINTER | COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 1000)
+	build_type = COMPONENT_PRINTER
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-	category = list("Circuitry", "Components")
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_COMPONENTS
+	)
 
 /datum/design/component/New()
 	. = ..()
@@ -52,6 +60,11 @@
 	name = "Trigonometry Component"
 	id = "comp_trigonometry"
 	build_path = /obj/item/circuit_component/trigonometry
+
+/datum/design/component/arctan2
+	name = "Arctangent 2 Component"
+	id = "comp_arctan2"
+	build_path = /obj/item/circuit_component/arctan2
 
 /datum/design/component/clock
 	name = "Clock Component"
@@ -116,12 +129,12 @@
 /datum/design/component/binary_conversion
 	name = "Binary Conversion Component"
 	id = "comp_binary_convert"
-	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
+	build_path = /obj/item/circuit_component/binary_conversion
 
 /datum/design/component/decimal_conversion
 	name = "Decimal Conversion Component"
 	id = "comp_decimal_convert"
-	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
+	build_path = /obj/item/circuit_component/decimal_conversion
 
 /datum/design/component/species
 	name = "Get Species Component"
@@ -268,6 +281,17 @@
 	id = "comp_list_remove"
 	build_path = /obj/item/circuit_component/variable/list/listremove
 
+/datum/design/component/assoc_list_set
+	name = "Associative List Set"
+	id = "comp_assoc_list_set"
+	build_path = /obj/item/circuit_component/variable/assoc_list/list_set
+
+/datum/design/component/assoc_list_remove
+	name = "Associative List Remove"
+	id = "comp_assoc_list_remove"
+	build_path = /obj/item/circuit_component/variable/assoc_list/list_remove
+
+
 /datum/design/component/list_clear
 	name = "List Clear"
 	id = "comp_list_clear"
@@ -321,30 +345,22 @@
 /datum/design/component/list_assoc_literal
 	name = "Associative List Literal"
 	id = "comp_list_assoc_literal"
-	build_path = /obj/item/circuit_component/list_literal/assoc_literal
+	build_path = /obj/item/circuit_component/assoc_literal
 
 /datum/design/component/typecast
 	name = "Typecast Component"
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
 
-/datum/design/component/printer
-	name = "Printer Component"
-	id = "comp_printer"
-	build_path = /obj/item/circuit_component/printer
-
 /datum/design/component/pinpointer
 	name = "Proximity Pinpointer Component"
 	id = "comp_pinpointer"
 	build_path = /obj/item/circuit_component/pinpointer
 
-/datum/design/component/bci
-	category = list("Circuitry", "BCI Components")
-
-/datum/design/component/bci/bci_action
-	name = "BCI Action Component"
-	id = "comp_bci_action"
-	build_path = /obj/item/circuit_component/equipment_action/bci
+/datum/design/component/equipment_action
+	name = "Equipment Action Component"
+	id = "comp_equip_action"
+	build_path = /obj/item/circuit_component/equipment_action
 
 /datum/design/component/bci/object_overlay
 	name = "Object Overlay Component"
@@ -376,6 +392,16 @@
 	id = "comp_counter_overlay"
 	build_path = /obj/item/circuit_component/counter_overlay
 
+/datum/design/component/bci/reagent_injector
+	name = "Reagent Injector Component"
+	id = "comp_reagent_injector"
+	build_path = /obj/item/circuit_component/reagent_injector
+
+/datum/design/component/bci/install_detector
+	name = "Install Detector Component"
+	id = "comp_install_detector"
+	build_path = /obj/item/circuit_component/install_detector
+
 /datum/design/component/foreach
 	name = "For Each Component"
 	id = "comp_foreach"
@@ -385,11 +411,6 @@
 	name = "Filter List Component"
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
-
-/datum/design/component/mod_action
-	name = "MOD Action Component"
-	id = "comp_mod_action"
-	build_path = /obj/item/circuit_component/equipment_action/mod
 
 /datum/design/component/id_getter
 	name = "ID Getter Component"
@@ -421,156 +442,207 @@
 	id = "comp_access_checker"
 	build_path = /obj/item/circuit_component/compare/access
 
+/datum/design/component/list_pick
+	name = "List Pick Component"
+	id = "comp_list_pick"
+	build_path = /obj/item/circuit_component/list_pick
+
+/datum/design/component/list_pick_assoc
+	name = "Associative List Pick Component"
+	id = "comp_assoc_list_pick"
+	build_path = /obj/item/circuit_component/list_pick/assoc
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
 	id = "compact_remote_shell"
 	build_path = /obj/item/compact_remote
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/controller_shell
 	name = "Controller Shell"
 	desc = "A handheld shell with several buttons."
 	id = "controller_shell"
 	build_path = /obj/item/controller
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5)
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/scanner_shell
 	name = "Scanner Shell"
 	desc = "A handheld scanner shell that can scan entities."
 	id = "scanner_shell"
 	build_path = /obj/item/wiremod_scanner
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5)
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
+
+/datum/design/keyboard_shell
+	name = "Keyboard Shell"
+	desc = "A handheld shell that allows the user to input a string"
+	id = "keyboard_shell"
+	build_path = /obj/item/keyboard_shell
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT*5)
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/gun_shell
 	name = "Gun Shell"
 	desc = "A handheld shell that can fire projectiles to output entities."
 	id = "gun_shell"
 	build_path = /obj/item/gun/energy/wiremod_gun
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/plasma = 100)
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/bot_shell
 	name = "Bot Shell"
 	desc = "An immobile shell that can store more components. Has a USB port to be able to connect to computers and machines."
 	id = "bot_shell"
 	build_path = /obj/item/shell/bot
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT*5)
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/money_bot_shell
 	name = "Money Bot Shell"
 	desc = "An immobile shell that is similar to a regular bot shell, but accepts monetary inputs and can also dispense money."
 	id = "money_bot_shell"
 	build_path = /obj/item/shell/money_bot
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/gold = 50)
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*0.5)
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/drone_shell
 	name = "Drone Shell"
 	desc = "A shell with the ability to move itself around."
 	id = "drone_shell"
 	build_path = /obj/item/shell/drone
-	build_type = PROTOLATHE | COMPONENT_PRINTER
+	build_type = COMPONENT_PRINTER
 	materials = list(
-		/datum/material/glass = 2000,
-		/datum/material/iron = 11000,
-		/datum/material/gold = 500,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5.5,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
 	)
-	category = list("Circuitry", "Shells")
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/server_shell
 	name = "Server Shell"
 	desc = "A very large shell that cannot be moved around. Stores the most components."
 	id = "server_shell"
 	materials = list(
-		/datum/material/glass = 5000,
-		/datum/material/iron = 15000,
-		/datum/material/gold = 1500,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/shell/server
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/airlock_shell
 	name = "Airlock Shell"
 	desc = "A door shell that cannot be moved around when assembled."
 	id = "door_shell"
 	materials = list(
-		/datum/material/glass = 5000,
-		/datum/material/iron = 15000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
 	)
 	build_path = /obj/item/shell/airlock
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/dispenser_shell
 	name = "Dispenser Shell"
 	desc = "A dispenser shell that can dispense items."
 	id = "dispenser_shell"
 	materials = list(
-		/datum/material/glass = 5000,
-		/datum/material/iron = 15000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
 	)
 	build_path = /obj/item/shell/dispenser
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/bci_shell
 	name = "Brain-Computer Interface Shell"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	id = "bci_shell"
 	materials = list(
-		/datum/material/glass = 2000,
-		/datum/material/iron = 8000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*4,
 	)
 	build_path = /obj/item/shell/bci
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/scanner_gate_shell
 	name = "Scanner Gate Shell"
 	desc = "A scanner gate shell that performs mid-depth scans on people when they pass through it."
 	id = "scanner_gate_shell"
 	materials = list(
-		/datum/material/glass = 4000,
-		/datum/material/iron = 12000,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*6,
 	)
 	build_path = /obj/item/shell/scanner_gate
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/board/bci_implanter
 	name = "Brain-Computer Interface Manipulation Chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
 	id = "bci_implanter"
 	build_path = /obj/item/circuitboard/machine/bci_implanter
-	build_type = IMPRINTER | COMPONENT_PRINTER
-	category = list("Circuitry", "Core")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
+	)
 
 /datum/design/assembly_shell
 	name = "Assembly Shell"
 	desc = "An assembly shell that can be attached to wires and other assemblies."
 	id = "assembly_shell"
-	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/assembly/wiremod
-	build_type = PROTOLATHE | COMPONENT_PRINTER
-	category = list("Circuitry", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
 
 /datum/design/mod_module_shell
 	name = "MOD Module Shell"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	id = "module_shell"
-	materials = list(/datum/material/glass = 2000)
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/circuit
-	build_type = MECHFAB | COMPONENT_PRINTER
-	category = list("MOD Modules", "Shells")
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)

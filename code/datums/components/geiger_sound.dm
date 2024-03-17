@@ -8,7 +8,7 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/geiger_sound/Destroy(force, silent)
+/datum/component/geiger_sound/Destroy(force)
 	QDEL_NULL(sound)
 
 	if (!isnull(last_parent))
@@ -21,13 +21,13 @@
 /datum/component/geiger_sound/RegisterWithParent()
 	sound = new(parent)
 
-	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 
 	ADD_TRAIT(parent, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 
 	if (isitem(parent))
 		var/atom/atom_parent = parent
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 		register_to_loc(atom_parent.loc)
 
 /datum/component/geiger_sound/UnregisterFromParent()
@@ -45,7 +45,7 @@
 	sound.last_radiation_pulse = pulse_information
 	sound.start()
 
-	addtimer(CALLBACK(sound, /datum/looping_sound/proc/stop), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(sound, TYPE_PROC_REF(/datum/looping_sound,stop)), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/component/geiger_sound/proc/on_moved(atom/source)
 	SIGNAL_HANDLER
@@ -61,7 +61,7 @@
 	last_parent = new_loc
 
 	if (!isnull(new_loc))
-		RegisterSignal(new_loc, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+		RegisterSignal(new_loc, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 
 /datum/looping_sound/geiger
 	mid_sounds = list(
@@ -86,7 +86,7 @@
 
 	return ..(mid_sounds[get_perceived_radiation_danger(last_radiation_pulse, last_insulation_to_target)])
 
-/datum/looping_sound/geiger/stop()
+/datum/looping_sound/geiger/stop(null_parent = FALSE)
 	. = ..()
 
 	last_radiation_pulse = null

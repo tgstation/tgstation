@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -32,17 +32,11 @@
 	return ..()
 
 /obj/item/pet_carrier/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(isliving(gone) && (gone in occupants))
-		var/mob/living/L = gone
+		var/mob/living/living_gone = gone
 		occupants -= gone
-		occupant_weight -= L.mob_size
-
-/obj/item/pet_carrier/handle_atom_del(atom/A)
-	if(A in occupants && isliving(A))
-		var/mob/living/L = A
-		occupants -= L
-		occupant_weight -= L.mob_size
-	..()
+		occupant_weight -= living_gone.mob_size
 
 /obj/item/pet_carrier/examine(mob/user)
 	. = ..()
@@ -52,10 +46,11 @@
 			. += span_notice("It has [L] inside.")
 	else
 		. += span_notice("It has nothing inside.")
-	if(user.canUseTopic(src))
-		. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door.")
-		if(!open)
-			. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
+
+	// At some point these need to be converted to contextual screentips
+	. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
+	if(!open)
+		. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
@@ -72,7 +67,7 @@
 	update_appearance()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.canUseTopic(src, BE_CLOSE))
+	if(open || !user.can_perform_action(src))
 		return
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
@@ -157,7 +152,7 @@
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()
-	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
+	if(isopenturf(over_atom) && usr.can_perform_action(src, NEED_DEXTERITY) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message(span_notice("[usr] unloads [src]."), \
 		span_notice("You unload [src] onto [over_atom]."))
 		for(var/V in occupants)
@@ -170,7 +165,7 @@
 	user.visible_message(span_notice("[user] starts loading [target] into [src]."), \
 	span_notice("You start loading [target] into [src]..."), null, null, target)
 	to_chat(target, span_userdanger("[user] starts loading you into [user.p_their()] [name]!"))
-	if(!do_mob(user, target, 30))
+	if(!do_after(user, 3 SECONDS, target))
 		return
 	if(target in occupants)
 		return

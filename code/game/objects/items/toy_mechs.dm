@@ -12,7 +12,7 @@
 #define MAX_BATTLE_LENGTH 50
 
 /obj/item/toy/mecha
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "fivestarstoy"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -53,6 +53,7 @@
 /obj/item/toy/mecha/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
+	AddElement(/datum/element/toy_talk)
 	combat_health = max_combat_health
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE)
@@ -179,7 +180,7 @@
 		to_chat(user, span_notice("You offer battle to [target.name]!"))
 		to_chat(target, span_notice("<b>[user.name] wants to battle with [user.p_their()] [name]!</b> <i>Attack them with a toy mech to initiate combat.</i>"))
 		wants_to_battle = TRUE
-		addtimer(CALLBACK(src, .proc/withdraw_offer, user), 6 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(withdraw_offer), user), 6 SECONDS)
 		return
 
 	..()
@@ -263,12 +264,8 @@
 	if(wins || losses)
 		. += span_notice("This toy has [wins] wins, and [losses] losses.")
 
-/**
- * Override the say proc if they're mute
- */
-/obj/item/toy/mecha/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
-	if(!quiet)
-		. = ..()
+/obj/item/toy/mecha/can_speak(allow_mimes)
+	return !quiet && ..()
 
 /**
  * The 'master' proc of the mech battle. Processes the entire battle's events and makes sure it start and finishes correctly.

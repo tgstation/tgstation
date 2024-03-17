@@ -62,5 +62,27 @@
 /// Called when the circuit component is saved.
 #define COMSIG_CIRCUIT_COMPONENT_SAVE "circuit_component_save"
 
+/// Called when circuit component data should be saved
+#define COMSIG_CIRCUIT_COMPONENT_SAVE_DATA "circuit_component_save_data"
+/// Called when circuit component data should be loaded
+#define COMSIG_CIRCUIT_COMPONENT_LOAD_DATA "circuit_component_load_data"
+
 /// Called when an external object is loaded.
 #define COMSIG_MOVABLE_CIRCUIT_LOADED "movable_circuit_loaded"
+
+/// Called when a ui action is sent for the circuit component
+#define COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION "circuit_component_perform_action"
+
+///Called when an Ntnet sender is sending Ntnet data
+#define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT "!circuit_ntnet_data_sent"
+
+/// Called when an equipment action component is added to a shell (/obj/item/circuit_component/equipment_action/action_comp)
+#define COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED "circuit_action_component_registered"
+
+/// Called when an equipment action component is removed from a shell (/obj/item/circuit_component/equipment_action/action_comp)
+#define COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED "circuit_action_component_unregistered"
+
+///Sent to the shell component when a circuit is attached.
+#define COMSIG_SHELL_CIRCUIT_ATTACHED "shell_circuit_attached"
+///Sent to the shell component when a circuit is removed.
+#define COMSIG_SHELL_CIRCUIT_REMOVED "shell_circuit_removed"

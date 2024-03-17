@@ -1,5 +1,9 @@
 /// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
 #define ASSUME_AIR_DT_FACTOR 1
+/// Multiplies the pressure of assembly bomb explosions before it's put through THE LOGARITHM
+#define ASSEMBLY_BOMB_COEFFICIENT 0.5
+/// Base of the logarithmic function used to calculate assembly bomb explosion size
+#define ASSEMBLY_BOMB_BASE 2.7
 
 /**
  * # Gas Tank
@@ -9,11 +13,12 @@
  */
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	icon_state = "generic"
+	inhand_icon_state = "generic_tank"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
 	hitsound = 'sound/weapons/smash.ogg'
@@ -23,10 +28,12 @@
 	throw_speed = 1
 	throw_range = 4
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
+	/// If we are in the process of exploding, stops multi explosions
+	var/igniting = FALSE
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
 	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ordinance.
@@ -43,42 +50,64 @@
 	var/list/explosion_info
 	/// List containing reactions happening inside our tank.
 	var/list/reaction_info
+	/// Mob that is currently breathing from the tank.
+	var/mob/living/carbon/breathing_mob = null
+	/// Attached assembly, can either detonate the tank or release its contents when receiving a signal
+	var/obj/item/assembly_holder/tank_assembly
+	/// Whether or not it will try to explode when it receives a signal
+	var/bomb_status = FALSE
+
+/// Closes the tank if dropped while open.
+/datum/armor/item_tank
+	bomb = 10
+	fire = 80
+	acid = 30
+
+/obj/item/tank/dropped(mob/living/user, silent)
+	. = ..()
+	// Close open air tank if its current user got sent to the shadowrealm.
+	if (QDELETED(breathing_mob))
+		breathing_mob = null
+		return
+	// Close open air tank if it got dropped by it's current user.
+	if (loc != breathing_mob)
+		breathing_mob.cutoff_internals()
+
+/// Closes the tank if given to another mob while open.
+/obj/item/tank/equipped(mob/living/user, slot, initial)
+	. = ..()
+	// Close open air tank if it was equipped by a mob other than the current user.
+	if (breathing_mob && (user != breathing_mob))
+		breathing_mob.cutoff_internals()
+
+/// Called by carbons after they connect the tank to their breathing apparatus.
+/obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
+	breathing_mob = carbon_target
+	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+
+/// Called by carbons after they disconnect the tank from their breathing apparatus.
+/obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
+	breathing_mob = null
+	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Internal Atmosphere Info: [name]"
+	items += "Tank Pressure: [air_contents.return_pressure()] kPa"
+	items += "Distribution Pressure: [distribute_pressure] kPa"
+
+/// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
+/obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
+	return mob_target.toggle_internals(src)
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
 
-/obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		return
-
-	if(H.internal == src)
-		to_chat(H, span_notice("You close [src] valve."))
-		H.internal = null
-		H.update_internals_hud_icon(0)
-	else
-		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(!H.wear_mask)
-				to_chat(H, span_warning("You need a mask!"))
-				return
-			var/is_clothing = isclothing(H.wear_mask)
-			if(is_clothing && H.wear_mask.mask_adjusted)
-				H.wear_mask.adjustmask(H)
-			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, span_warning("[H.wear_mask] can't use [src]!"))
-				return
-
-		if(H.internal)
-			to_chat(H, span_notice("You switch your internals to [src]."))
-		else
-			to_chat(H, span_notice("You open [src] valve."))
-		H.internal = src
-		H.update_internals_hud_icon(1)
-	H.update_action_buttons_icon()
-
-
 /obj/item/tank/Initialize(mapload)
 	. = ..()
+
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
@@ -92,35 +121,37 @@
 
 	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
-	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
+	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, PROC_REF(merging_information))
 
 	START_PROCESSING(SSobj, src)
 
 /obj/item/tank/proc/populate_gas()
 	return
 
-/obj/item/tank/ComponentInitialize()
-	. = ..()
-	if(tank_holder_icon_state)
-		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
-
 /obj/item/tank/Destroy()
-	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)
-	air_contents = null
 	STOP_PROCESSING(SSobj, src)
+	air_contents = null
+	QDEL_NULL(tank_assembly)
 	return ..()
+
+/obj/item/tank/update_overlays()
+	. = ..()
+	if(tank_assembly)
+		. += tank_assembly.icon_state
+		. += tank_assembly.overlays
+		. += "bomb_assembly"
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	. = ..()
-	if(istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	if(istype(loc, /obj/item/assembly))
+		icon = loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
 			. += span_notice("If you want any more information you'll need to get closer.")
 		return
 
-	. += span_notice("The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.")
+	. += span_notice("The pressure gauge reads [round(air_contents.return_pressure(),0.01)] kPa.")
 
 	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
@@ -140,6 +171,9 @@
 
 	. += span_notice("It feels [descriptive].")
 
+	if(tank_assembly)
+		. += span_warning("There is some kind of device [EXAMINE_HINT("rigged")] to the tank!")
+
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	var/atom/location = loc
 	if(location)
@@ -147,23 +181,44 @@
 		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
-/obj/item/tank/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
+/obj/item/tank/suicide_act(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
-		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.inflate_gib()
+	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
+		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		human_user.inflate_gib()
 		return MANUAL_SUICIDE
-	else
-		to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
+	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
-/obj/item/tank/attackby(obj/item/W, mob/user, params)
+/obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/assembly_holder))
-		bomb_assemble(W, user)
-		return TRUE
+	if(istype(attacking_item, /obj/item/assembly_holder))
+		if(tank_assembly)
+			balloon_alert(user, "something already attached!")
+			return ITEM_INTERACT_BLOCKING
+		bomb_assemble(attacking_item, user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/tank/wrench_act(mob/living/user, obj/item/tool)
+	if(tank_assembly)
+		tool.play_tool_sound(src)
+		bomb_disassemble(user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/tank/welder_act(mob/living/user, obj/item/tool)
+	if(bomb_status)
+		balloon_alert(user, "already welded!")
+		return ITEM_INTERACT_BLOCKING
+	if(tool.use_tool(src, user, 0, volume=40))
+		bomb_status = TRUE
+		balloon_alert(user, "bomb armed")
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [air_contents.temperature] Pressure: [air_contents.return_pressure()]")
+		add_fingerprint(user)
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/tank/ui_state(mob/user)
@@ -190,10 +245,10 @@
 		"releasePressure" = round(distribute_pressure)
 	)
 
-	var/mob/living/carbon/C = user
-	if(!istype(C))
-		C = loc.loc
-	if(istype(C) && C.internal == src)
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(carbon_user))
+		carbon_user = loc
+	if(istype(carbon_user) && (carbon_user.external == src || carbon_user.internal == src))
 		.["connected"] = TRUE
 
 /obj/item/tank/ui_act(action, params)
@@ -259,13 +314,13 @@
 
 	return remove_air(moles_needed)
 
-/obj/item/tank/process(delta_time)
+/obj/item/tank/process(seconds_per_tick)
 	if(!air_contents)
 		return
 
 	//Allow for reactions
 	excited = (excited | air_contents.react(src))
-	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | handle_tolerances(seconds_per_tick))
 	excited = (excited | leaking)
 
 	if(!excited)
@@ -285,9 +340,9 @@
  *
  * Returns true if it did anything of significance, false otherwise
  * Arguments:
- * - delta_time: How long has passed between ticks.
+ * - seconds_per_tick: How long has passed between ticks.
  */
-/obj/item/tank/proc/handle_tolerances(delta_time)
+/obj/item/tank/proc/handle_tolerances(seconds_per_tick)
 	if(!air_contents)
 		return FALSE
 
@@ -295,13 +350,13 @@
 	var/temperature = air_contents.return_temperature()
 	if(temperature >= TANK_MELT_TEMPERATURE)
 		var/temperature_damage_ratio = (temperature - TANK_MELT_TEMPERATURE) / temperature
-		take_damage(max_integrity * temperature_damage_ratio * delta_time, BURN, FIRE, FALSE, NONE)
+		take_damage(max_integrity * temperature_damage_ratio * seconds_per_tick, BURN, FIRE, FALSE, NONE)
 		if(QDELETED(src))
 			return TRUE
 
 	if(pressure >= TANK_LEAK_PRESSURE)
 		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
-		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
+		take_damage(max_integrity * pressure_damage_ratio * seconds_per_tick, BRUTE, BOMB, FALSE, NONE)
 		return TRUE
 	return FALSE
 
@@ -347,4 +402,160 @@
 /obj/item/tank/proc/explosion_information()
 	return list(TANK_RESULTS_REACTION = reaction_info, TANK_RESULTS_MISC = explosion_info)
 
+/obj/item/tank/on_found(mob/finder) //for mousetraps
+	. = ..()
+	if(tank_assembly)
+		tank_assembly.on_found(finder)
+
+/obj/item/tank/attack_hand() //also for mousetraps
+	if(..())
+		return
+	if(tank_assembly)
+		tank_assembly.attack_hand()
+
+/obj/item/tank/Move()
+	. = ..()
+	if(tank_assembly)
+		tank_assembly.setDir(dir)
+
+/obj/item/tank/dropped()
+	. = ..()
+	if(tank_assembly)
+		tank_assembly.dropped()
+
+/obj/item/tank/IsSpecialAssembly()
+	return TRUE
+
+/obj/item/tank/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
+	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
+	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(ignite)), 1 SECONDS)
+
+/// Attaches an assembly holder to the tank to create a bomb.
+/obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
+	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+	var/igniter_count = 0
+	for(var/obj/item/assembly/igniter/attached_assembly in assembly.assemblies)
+		igniter_count++
+
+	if(LAZYLEN(assembly.assemblies) == igniter_count)
+		return
+
+	if(isitem(loc)) // we are in a storage item
+		balloon_alert(user, "can't reach!")
+		return
+
+	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
+		balloon_alert(user, "it's stuck!")
+		return
+
+	if(!user.canUnEquip(assembly))
+		balloon_alert(user, "it's stuck!")
+		return
+
+	if(!user.transferItemToLoc(assembly, src))
+		balloon_alert(user, "it's stuck!")
+		return
+
+	tank_assembly = assembly //Tell the tank about its assembly part
+	assembly.master = src //Tell the assembly about its new owner
+	assembly.on_attach()
+	w_class = WEIGHT_CLASS_BULKY
+
+	balloon_alert(user, "bomb assembled")
+	update_appearance(UPDATE_OVERLAYS)
+
+/// Detaches an assembly holder from the tank, disarming the bomb
+/obj/item/tank/proc/bomb_disassemble(mob/user)
+	bomb_status = FALSE
+	balloon_alert(user, "bomb disarmed")
+	if(!tank_assembly)
+		CRASH("bomb_disassemble() called on a tank with no assembly!")
+	user.put_in_hands(tank_assembly)
+	tank_assembly.master = null
+	tank_assembly = null
+	w_class = initial(w_class)
+	update_appearance(UPDATE_OVERLAYS)
+
+/// Ignites the contents of the tank. Called when receiving a signal if the tank is welded and has an igniter attached.
+/obj/item/tank/proc/ignite()
+	if(!bomb_status) // if it isn't welded, release the gases instead
+		release()
+		return
+
+	// check to make sure it's not already exploding before exploding it
+	if(igniting)
+		CRASH("ignite() called multiple times on [type]")
+	igniting = TRUE
+
+	var/datum/gas_mixture/our_mix = return_air()
+	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
+	our_mix.garbage_collect()
+	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
+	var/strength = 1
+
+	var/turf/ground_zero = get_turf(loc)
+
+	/// Used to determine what the temperature of the hotspot when it isn't able to explode
+	var/igniter_temperature = 0
+	for(var/obj/item/assembly/igniter/firestarter in tank_assembly.assemblies)
+		igniter_temperature = max(igniter_temperature, firestarter.heat)
+
+	if(!igniter_temperature)
+		CRASH("[type] called ignite() without any igniters attached")
+
+	if(bomb_mixture.temperature > (T0C + 400))
+		strength = (fuel_moles/15)
+
+		if(strength >= 2)
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
+		else if(strength >= 1)
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else if(strength >= 0.5)
+			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
+		else if(strength >= 0.2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
+
+	else if(bomb_mixture.temperature > (T0C + 250))
+		strength = (fuel_moles/20)
+
+		if(strength >= 1)
+			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else if(strength >= 0.5)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
+
+	else if(bomb_mixture.temperature > (T0C + 100))
+		strength = (fuel_moles/25)
+
+		if(strength >= 1)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
+
+	else
+		ground_zero.assume_air(bomb_mixture)
+		ground_zero.hotspot_expose(igniter_temperature, 125)
+
+	qdel(src)
+
+/// Releases air stored in the tank. Called when signaled without being welded, or when ignited without enough pressure to explode.
+/obj/item/tank/proc/release()
+	var/datum/gas_mixture/our_mix = return_air()
+	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	log_atmos("[type] released its contents of ", removed)
+	T.assume_air(removed)
+
+#undef ASSEMBLY_BOMB_BASE
+#undef ASSEMBLY_BOMB_COEFFICIENT
 #undef ASSUME_AIR_DT_FACTOR

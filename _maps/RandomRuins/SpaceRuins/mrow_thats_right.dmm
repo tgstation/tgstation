@@ -4,10 +4,10 @@
 /area/template_noop)
 "ab" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ac" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ad" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -29,9 +29,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "ai" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -41,7 +41,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "ak" = (
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "al" = (
@@ -114,21 +114,15 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aw" = (
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "ax" = (
 /obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -177,25 +171,16 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aF" = (
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aG" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aH" = (
 /obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aI" = (
@@ -208,13 +193,13 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aM" = (
@@ -250,7 +235,7 @@
 	id = "meow";
 	name = "Kitty Protection Door"
 	},
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Kitty Door";
 	req_access = list("away_general")
 	},
@@ -260,7 +245,7 @@
 /obj/structure/bed/dogbed{
 	name = "kitty bed"
 	},
-/mob/living/simple_animal/pet/cat/space,
+/mob/living/basic/pet/cat/space,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "aS" = (
@@ -272,31 +257,21 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aW" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -304,22 +279,12 @@
 "aX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/cat_man)
-"aY" = (
-/obj/structure/bed/dogbed{
-	name = "kitty bed"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/corpse/human/damaged{
-	outfit_override = list("head" = /obj/item/clothing/head/kitty)
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aZ" = (
@@ -329,12 +294,6 @@
 "ba" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/powered/cat_man)
-"bb" = (
-/obj/machinery/light/directional/east,
-/obj/structure/closet/cabinet,
-/obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bc" = (
@@ -367,8 +326,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -435,12 +393,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
-"bs" = (
-/mob/living/simple_animal/hostile/cat_butcherer,
-/turf/open/floor/iron/white/side{
-	dir = 4
-	},
-/area/ruin/space/has_grav/powered/cat_man)
 "bt" = (
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/damaged,
@@ -450,23 +402,11 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bu" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/surgical_drapes,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
-/area/ruin/space/has_grav/powered/cat_man)
-"bv" = (
-/obj/machinery/firealarm/directional/east,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("catstation1" = "Chamber 1", "catstation2" = "Chamber 2", "catstation3" = "Chamber 3", "catstation4" = "Chamber 4", "catstation5" = "Chamber 5", "catstation6" = "Chamber 6", "catstationsupply" = "Supply");
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bw" = (
 /obj/structure/table/wood,
@@ -517,30 +457,18 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bH" = (
@@ -565,41 +493,29 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bJ" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bK" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bL" = (
 /obj/structure/chair,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bM" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -649,10 +565,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bT" = (
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bU" = (
@@ -665,17 +578,6 @@
 "bV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/cat_man)
-"bW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/dogbed{
-	name = "kitty bed"
-	},
-/obj/effect/mob_spawn/corpse/human/damaged{
-	outfit_override = list("head" = /obj/item/clothing/head/kitty)
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bX" = (
@@ -904,12 +806,59 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
+"lQ" = (
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head"=/obj/item/clothing/head/costume/kitty)
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"mm" = (
+/obj/structure/closet/cabinet,
+/obj/item/gps/spaceruin,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"nv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head"=/obj/item/clothing/head/costume/kitty)
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"uy" = (
+/mob/living/basic/cat_butcherer,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"yx" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
 "Bl" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"BX" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("catstation1"="Chamber 1","catstation2"="Chamber 2","catstation3"="Chamber 3","catstation4"="Chamber 4","catstation5"="Chamber 5","catstation6"="Chamber 6","catstationsupply"="Supply");
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "RT" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -1257,8 +1206,8 @@ ax
 aH
 ad
 aT
-bb
-aS
+mm
+yx
 by
 ad
 bM
@@ -1386,7 +1335,7 @@ ay
 aP
 aw
 be
-bs
+uy
 bA
 aG
 aP
@@ -1455,7 +1404,7 @@ bC
 aG
 bO
 aK
-bW
+nv
 ad
 an
 ad
@@ -1514,7 +1463,7 @@ ay
 aQ
 aW
 bh
-bv
+BX
 bh
 bG
 bO
@@ -1640,7 +1589,7 @@ at
 cb
 aM
 ad
-aY
+lQ
 bl
 ad
 bD

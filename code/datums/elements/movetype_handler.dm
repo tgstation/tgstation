@@ -1,7 +1,3 @@
-#define DO_FLOATING_ANIM(target) \
-	animate(target, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE);\
-	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-
 /**
  * An element that enables and disables movetype bitflags whenever the relative traits are added or removed.
  * It also handles the +2/-2 pixel y anim loop typical of mobs possessing the FLYING or FLOATING movetypes.
@@ -9,7 +5,7 @@
  * before adding them to non-living movables.
  */
 /datum/element/movetype_handler
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 	var/list/attached_atoms = list()
 	var/list/paused_floating_anim_atoms = list()
@@ -22,11 +18,11 @@
 		return
 
 	var/atom/movable/movable_target = target
-	RegisterSignal(movable_target, GLOB.movement_type_addtrait_signals, .proc/on_movement_type_trait_gain)
-	RegisterSignal(movable_target, GLOB.movement_type_removetrait_signals, .proc/on_movement_type_trait_loss)
-	RegisterSignal(movable_target, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_gain)
-	RegisterSignal(movable_target, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_loss)
-	RegisterSignal(movable_target, COMSIG_PAUSE_FLOATING_ANIM, .proc/pause_floating_anim)
+	RegisterSignals(movable_target, GLOB.movement_type_addtrait_signals, PROC_REF(on_movement_type_trait_gain))
+	RegisterSignals(movable_target, GLOB.movement_type_removetrait_signals, PROC_REF(on_movement_type_trait_loss))
+	RegisterSignal(movable_target, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), PROC_REF(on_no_floating_anim_trait_gain))
+	RegisterSignal(movable_target, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), PROC_REF(on_no_floating_anim_trait_loss))
+	RegisterSignal(movable_target, COMSIG_PAUSE_FLOATING_ANIM, PROC_REF(pause_floating_anim))
 	attached_atoms[movable_target] = TRUE
 
 	if(movable_target.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(movable_target, TRAIT_NO_FLOATING_ANIM))
@@ -44,7 +40,7 @@
 
 	attached_atoms -= source
 	paused_floating_anim_atoms -= source
-	stop_floating(source)
+	STOP_FLOATING_ANIM(source)
 	return ..()
 
 /// Called when a movement type trait is added to the movable. Enables the relative bitflag.
@@ -68,7 +64,7 @@
 	var/old_state = source.movement_type
 	source.movement_type &= ~flag
 	if((old_state & (FLOATING|FLYING)) && !(source.movement_type & (FLOATING|FLYING)))
-		stop_floating(source)
+		STOP_FLOATING_ANIM(source)
 		var/turf/pitfall = source.loc //Things that don't fly fall in open space.
 		if(istype(pitfall))
 			pitfall.zFall(source)
@@ -77,7 +73,7 @@
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the movable. Stops it from bobbing up and down.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_gain(atom/movable/source, trait)
 	SIGNAL_HANDLER
-	stop_floating(source)
+	STOP_FLOATING_ANIM(source)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob. Restarts the bobbing animation.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_loss(atom/movable/source, trait)
@@ -89,7 +85,7 @@
 /datum/element/movetype_handler/proc/pause_floating_anim(atom/movable/source, timer)
 	SIGNAL_HANDLER
 	if(paused_floating_anim_atoms[source] < world.time + timer)
-		stop_floating(source)
+		STOP_FLOATING_ANIM(source)
 		if(!length(paused_floating_anim_atoms))
 			START_PROCESSING(SSdcs, src) //1 second tickrate.
 		paused_floating_anim_atoms[source] = world.time + timer
@@ -103,13 +99,3 @@
 			paused_floating_anim_atoms -= paused
 	if(!length(paused_floating_anim_atoms))
 		STOP_PROCESSING(SSdcs, src)
-
-/// Stops the above. Also not a comsig proc.
-/datum/element/movetype_handler/proc/stop_floating(atom/movable/target)
-	var/final_pixel_y = target.base_pixel_y
-	if(isliving(target)) //Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
-		var/mob/living/living_target = target
-		final_pixel_y += living_target.body_position_pixel_y_offset
-	animate(target, pixel_y = final_pixel_y, time = 1 SECONDS)
-
-#undef DO_FLOATING_ANIM

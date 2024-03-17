@@ -1,0 +1,10 @@
+{
+	"greyscale_gloves": [
+		{
+			"type": "icon_state",
+			"icon_state": "greyscale_gloves",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

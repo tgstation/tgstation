@@ -24,21 +24,21 @@
 				. = FALSE
 			switch(dir)
 				if(SOUTHEAST)
-					if(object.dir != dir)
+					if(object.dir != SOUTH)
 						. = FALSE
 				if(SOUTHWEST)
-					if(object.dir != dir)
+					if(object.dir != WEST)
 						. = FALSE
 				if(NORTHEAST)
-					if(object.dir != dir)
+					if(object.dir != EAST)
 						. = FALSE
 				if(NORTHWEST)
-					if(object.dir != dir)
+					if(object.dir != NORTH)
 						. = FALSE
 			corners |= object
 			continue
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
@@ -53,7 +53,7 @@
 		if(object.panel_open)
 			. = FALSE
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
@@ -92,20 +92,20 @@
 	update_appearance()
 	linked_interface.active = TRUE
 	linked_interface.update_appearance()
-	RegisterSignal(linked_interface, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_interface, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_input.active = TRUE
 	linked_input.update_appearance()
-	RegisterSignal(linked_input, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_input, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_output.active = TRUE
 	linked_output.update_appearance()
-	RegisterSignal(linked_output, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_output, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_moderator.active = TRUE
 	linked_moderator.update_appearance()
-	RegisterSignal(linked_moderator, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_moderator, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
 		corner.update_appearance()
-		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
@@ -118,15 +118,15 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	SIGNAL_HANDLER
 	if(linked_interface)
-		UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_interface, COMSIG_QDELETING)
 	if(linked_input)
-		UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_input, COMSIG_QDELETING)
 	if(linked_output)
-		UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_output, COMSIG_QDELETING)
 	if(linked_moderator)
-		UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_moderator, COMSIG_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
-		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(corner, COMSIG_QDELETING)
 	if(!only_signals)
 		deactivate()
 
@@ -183,7 +183,7 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(seconds_per_tick)
 	fusion_temperature_archived = fusion_temperature
 	fusion_temperature = internal_fusion.temperature
 	moderator_temperature_archived = moderator_temperature
@@ -192,7 +192,7 @@
 	coolant_temperature = airs[1].temperature
 	output_temperature_archived = output_temperature
 	output_temperature = linked_output.airs[1].temperature
-	temperature_period = delta_time
+	temperature_period = seconds_per_tick
 
 	//Set the power level of the fusion process
 	switch(fusion_temperature)
@@ -413,16 +413,25 @@
 	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
 	if(critical)
 		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
-				Get as far away as possible from the reactor or find a way to shut it down.", "Alert")
+				Get as far away as possible from the reactor or find a way to shut it down.", "Alert", 'sound/misc/notice3.ogg')
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+
+	notify_ghosts(
+		"The [src] has begun melting down!",
+		source = src,
+		header = "Meltdown Incoming",
+		ghost_sound = 'sound/machines/warning-buzzer.ogg',
+		notify_volume = 75,
+	)
+
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
 		if(critical_threshold_proximity < melting_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
-			sleep(10)
+			sleep(1 SECONDS)
 			continue
 		else if(i > 50)
 			if(i == 10 SECONDS && critical)
@@ -431,7 +440,7 @@
 		else
 			speaking = "[i*0.1]..."
 		radio.talk_into(src, speaking, common_channel)
-		sleep(10)
+		sleep(1 SECONDS)
 
 	meltdown()
 
@@ -556,29 +565,6 @@
 
 	qdel(src)
 
-/**
- * Induce hallucinations in nearby humans.
- *
- * force will make hallucinations ignore meson protection.
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
-	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
-		if(!force && istype(human.glasses, /obj/item/clothing/glasses/meson))
-			continue
-		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
-		human.hallucination += strength * distance_root * delta_time
-		human.hallucination = clamp(human.hallucination, 0, 200)
-
-/**
- * Emit radiation
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads()
-	radiation_pulse(
-		src,
-		max_range = 6,
-		threshold = 0.3,
-	)
-
 /*
  * HFR cracking related procs
  */
@@ -602,7 +588,7 @@
 		return
 	origin_turf.assume_air(remove_mixture)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(seconds_per_tick)
 	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
 	if (cracked_part)
 		// We have an existing crack
@@ -618,7 +604,7 @@
 		else
 			// Gotta go fast
 			leak_rate = HYPERTORUS_STRONG_SPILL_RATE
-		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** delta_time)
+		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** seconds_per_tick)
 		return
 
 	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
@@ -650,4 +636,3 @@
 		)
 	spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
 	return
-

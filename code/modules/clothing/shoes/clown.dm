@@ -4,29 +4,31 @@
 	icon_state = "clown"
 	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
+	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
+	var/list/squeak_sound = list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
-	species_exception = list(/datum/species/golem/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
-	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+
+	create_storage(storage_type = /datum/storage/pockets/shoes/clown)
+	LoadComponent(/datum/component/squeak, squeak_sound, 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
-/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			user.AddElement(/datum/element/waddling)
+			user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
+			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)
 	if(is_clown_job(user.mind?.assigned_role))
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
+		user.clear_mood_event("clownshoes")
 
 /obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
 	if(!isliving(user))
@@ -45,3 +47,15 @@
 	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
+
+/obj/item/clothing/shoes/clown_shoes/meown_shoes
+	name = "meown shoes"
+	desc = "The adorable sound they make when you walk will mean making friends is more likely."
+	icon_state = "meown_shoes"
+	squeak_sound = list('sound/effects/footstep/meowstep1.ogg'=1) //mew mew mew mew
+
+/obj/item/clothing/shoes/clown_shoes/moffers
+	name = "moffers"
+	desc = "No moths were harmed in the making of these slippers."
+	icon_state = "moffers"
+	squeak_sound = list('sound/effects/footstep/moffstep01.ogg'=1) //like sweet music to my ears

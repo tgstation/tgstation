@@ -1,0 +1,99 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/port/central)
+"o" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"t" = (
+/turf/template_noop,
+/area/template_noop)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/mod/maint,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/bluespace_vendor/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/five,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+
+(1,1,1) = {"
+t
+t
+t
+t
+t
+t
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+w
+U
+Q
+u
+C
+a
+"}
+(4,1,1) = {"
+T
+Z
+Z
+Z
+Z
+a
+"}
+(5,1,1) = {"
+Z
+Z
+Z
+Z
+Z
+o
+"}
+(6,1,1) = {"
+t
+t
+t
+t
+t
+t
+"}

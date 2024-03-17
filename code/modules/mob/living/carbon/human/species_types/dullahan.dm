@@ -1,94 +1,102 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
-	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_USES_SKINTONES,
+		TRAIT_ADVANCEDTOOLUSER, // Normally applied by brain but we don't have one
+		TRAIT_LITERATE,
+		TRAIT_CAN_STRIP,
+	)
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/dullahan,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
-	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/internal/brain/dullahan
 	mutanteyes = /obj/item/organ/internal/eyes/dullahan
 	mutanttongue = /obj/item/organ/internal/tongue/dullahan
 	mutantears = /obj/item/organ/internal/ears/dullahan
-	examine_limb_id = SPECIES_HUMAN
+	mutantstomach = null
+	mutantlungs = null
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
-
 	/// Did our owner's first client connection get handled yet? Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
 	var/owner_first_client_connection_handled = FALSE
 
-
 /datum/species/dullahan/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/human, datum/species/old_species)
 	. = ..()
 	human.lose_hearing_sensitivity(TRAIT_GENERIC)
+	RegisterSignal(human, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_gained_part))
+
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+	head?.drop_limb()
+	if(QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
+		return
+	my_head = new /obj/item/dullahan_relay(head, human)
+	human.put_in_hands(head)
 
-	if(head)
-		head.drop_limb()
+	// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
+	var/obj/item/organ/internal/eyes/eyes = new /obj/item/organ/internal/eyes(head)
+	eyes.eye_color_left = human.eye_color_left
+	eyes.eye_color_right = human.eye_color_right
+	eyes.bodypart_insert(my_head)
+	human.update_body()
+	head.update_icon_dropped()
+	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
 
-		if(!QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
-			head.throwforce = 25
-			my_head = new /obj/item/dullahan_relay(head, human)
-			human.put_in_hands(head)
-			head.show_organs_on_examine = FALSE
+/// If we gained a new body part, it had better not be a head
+/datum/species/dullahan/proc/on_gained_part(mob/living/carbon/human/dullahan, obj/item/bodypart/part)
+	SIGNAL_HANDLER
+	if (part.body_zone != BODY_ZONE_HEAD)
+		return
+	my_head = null
+	dullahan.investigate_log("has been gibbed by having an illegal head put on [dullahan.p_their()] shoulders.", INVESTIGATE_DEATHS)
+	dullahan.gib(DROP_ALL_REMAINS) // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
 
-			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
-			head.eyes = new /obj/item/organ/internal/eyes(head)
-			head.eyes.eye_color_left = human.eye_color_left
-			head.eyes.eye_color_right = human.eye_color_right
-			human.update_body()
-			head.update_icon_dropped()
-
-	human.set_safe_hunger_level()
+/// If our head is destroyed, so are we
+/datum/species/dullahan/proc/on_head_destroyed()
+	SIGNAL_HANDLER
+	var/mob/living/human = my_head?.owner
+	if (QDELETED(human))
+		return // guess we already died
+	my_head = null
+	human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
+	human.gib(DROP_ALL_REMAINS)
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/human)
 	. = ..()
-
 	if(my_head)
 		var/obj/item/bodypart/head/detached_head = my_head.loc
+		UnregisterSignal(detached_head, COMSIG_QDELETING)
 		my_head.owner = null
 		QDEL_NULL(my_head)
 		if(detached_head)
 			qdel(detached_head)
 
+	UnregisterSignal(human, COMSIG_CARBON_ATTACH_LIMB)
 	human.regenerate_limb(BODY_ZONE_HEAD, FALSE)
 	human.become_hearing_sensitive()
 	prevent_perspective_change = FALSE
 	human.reset_perspective(human)
 
-/datum/species/dullahan/spec_life(mob/living/carbon/human/human, delta_time, times_fired)
-	if(QDELETED(my_head))
-		my_head = null
-		human.gib()
-		return
-
-	if(my_head.loc.name != human.real_name && istype(my_head.loc, /obj/item/bodypart/head))
-		var/obj/item/bodypart/head/detached_head = my_head.loc
-		detached_head.real_name = human.real_name
-		detached_head.name = human.real_name
-		detached_head.brain.name = "[human.name]'s brain"
-
-	var/obj/item/bodypart/head/illegal_head = human.get_bodypart(BODY_ZONE_HEAD)
-	if(illegal_head)
-		my_head = null
-		human.gib() // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
-
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)
-	var/obj/item/organ/internal/eyes/eyes = human.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		human.update_tint()
 		if(eyes.tint)
@@ -99,7 +107,7 @@
 			prevent_perspective_change = TRUE
 
 /datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
-	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if(owner_first_client_connection_handled)
 		if(!eyes.tint)
 			owner.reset_perspective(my_head, TRUE)
@@ -112,6 +120,8 @@
 	eyes_toggle_perspective_action?.Trigger()
 	owner_first_client_connection_handled = TRUE
 
+/datum/species/dullahan/get_physical_attributes()
+	return "A dullahan is much like a human, but their head is detached from their body and must be carried around."
 
 /datum/species/dullahan/get_species_description()
 	return "An angry spirit, hanging onto the land of the living for \
@@ -157,7 +167,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = 0
+	organ_flags = ORGAN_ORGANIC //not vital
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"
@@ -170,7 +180,7 @@
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			if(isobj(dullahan_species.my_head.loc))
 				var/obj/head = dullahan_species.my_head.loc
-				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], range = speech_args[SPEECH_RANGE])
+				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/internal/ears/dullahan
@@ -208,11 +218,15 @@
 	. = ..()
 	if(!new_owner)
 		return INITIALIZE_HINT_QDEL
+	var/obj/item/bodypart/head/detached_head = loc
+	if (!istype(detached_head))
+		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
-	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
-	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
+	RegisterSignal(owner, COMSIG_CLICK_SHIFT, PROC_REF(examinate_check))
+	RegisterSignal(owner, COMSIG_CARBON_REGENERATE_LIMBS, PROC_REF(unlist_head))
+	RegisterSignal(owner, COMSIG_LIVING_REVIVE, PROC_REF(retrieve_head))
+	RegisterSignal(owner, COMSIG_HUMAN_PREFS_APPLIED, PROC_REF(update_prefs_name))
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/dullahan_relay/Destroy()
@@ -221,19 +235,31 @@
 	return ..()
 
 /obj/item/dullahan_relay/process()
-	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
-		. = PROCESS_KILL
-		qdel(src)
+	if(istype(loc, /obj/item/bodypart/head) && !QDELETED(owner))
+		return
+	qdel(src)
+	return PROCESS_KILL
+
+/// Updates our names after applying name prefs
+/obj/item/dullahan_relay/proc/update_prefs_name(mob/living/carbon/human/wearer)
+	SIGNAL_HANDLER
+	var/obj/item/bodypart/head/detached_head = loc
+	if (!istype(detached_head))
+		return // It's so over
+	detached_head.real_name = wearer.real_name
+	detached_head.name = wearer.real_name
+	var/obj/item/organ/internal/brain/brain = locate(/obj/item/organ/internal/brain) in detached_head
+	brain.name = "[wearer.name]'s brain"
 
 /obj/item/dullahan_relay/proc/examinate_check(mob/user, atom/source)
 	SIGNAL_HANDLER
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(owner)
-		owner.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		owner.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range)
 
 ///Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)
@@ -247,13 +273,15 @@
 	excluded_zones |= BODY_ZONE_HEAD
 
 ///Retrieving the owner's head for better ahealing.
-/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal_flags)
 	SIGNAL_HANDLER
-	if(admin_revive)
-		var/obj/item/bodypart/head/head = loc
-		var/turf/body_turf = get_turf(owner)
-		if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
-			head.forceMove(body_turf)
+	if(!(full_heal_flags & HEAL_ADMIN))
+		return
+
+	var/obj/item/bodypart/head/head = loc
+	var/turf/body_turf = get_turf(owner)
+	if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
+		head.forceMove(body_turf)
 
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))
@@ -261,6 +289,6 @@
 		if(isdullahan(human))
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			dullahan_species.my_head = null
-			owner.gib()
+			owner.gib(DROP_ALL_REMAINS)
 	owner = null
 	return ..()

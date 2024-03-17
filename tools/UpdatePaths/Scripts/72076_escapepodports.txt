@@ -1,0 +1,1 @@
+/obj/docking_port/stationary{roundstart_template=/datum/map_template/shuttle/escape_pod/default} : /obj/docking_port/stationary/escape_pod{dir=@OLD}

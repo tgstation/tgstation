@@ -1,8 +1,15 @@
 
 // The proc you should always use to set the light of this atom.
-// Nonesensical value for l_color default, so we can detect if it gets set to null.
-#define NONSENSICAL_VALUE -99999
-/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
+/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_angle, l_dir, l_height, l_on)
+	// We null everything but l_dir, because we don't want to allow for modifications while frozen
+	if(light_flags & LIGHT_FROZEN)
+		l_range = null
+		l_power = null
+		l_color = null
+		l_on = null
+		l_angle = null
+		l_height = null
+
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE //Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
 
@@ -18,21 +25,26 @@
 	if(l_color != NONSENSICAL_VALUE)
 		set_light_color(l_color)
 
+	if(!isnull(l_angle))
+		set_light_angle(l_angle)
+
+	if(!isnull(l_dir))
+		set_light_dir(l_dir)
+
 	if(!isnull(l_on))
 		set_light_on(l_on)
 
-	update_light()
+	if(!isnull(l_height))
+		set_light_height(l_height)
 
-#undef NONSENSICAL_VALUE
+	update_light()
 
 /// Will update the light (duh).
 /// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
-	set waitfor = FALSE
-	if (QDELETED(src))
-		return
+	SHOULD_NOT_SLEEP(TRUE)
 
-	if(light_system != STATIC_LIGHT)
+	if(light_system != COMPLEX_LIGHT)
 		CRASH("update_light() for [src] with following light_system value: [light_system]")
 
 	if (!light_power || !light_range || !light_on) // We won't emit light anyways, destroy the light source.
@@ -47,7 +59,7 @@
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)
-
+		return .
 
 /**
  * Updates the atom's opacity value.
@@ -56,12 +68,12 @@
  * It notifies (potentially) affected light sources so they can update (if needed).
  */
 /atom/proc/set_opacity(new_opacity)
-	if (new_opacity == opacity)
+	if (new_opacity == opacity || light_flags & LIGHT_FROZEN)
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, new_opacity)
 	. = opacity
 	opacity = new_opacity
-
+	return .
 
 /atom/movable/set_opacity(new_opacity)
 	. = ..()
@@ -73,83 +85,128 @@
 	else
 		RemoveElement(/datum/element/light_blocking)
 
-
 /turf/set_opacity(new_opacity)
 	. = ..()
 	if(isnull(.))
 		return
 	recalculate_directional_opacity()
 
-/atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	return
+/atom/proc/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj)
+	if(!duration)
+		stack_trace("Lighting FX obj created on \[[type]\] without a duration")
+	var/obj/effect/dummy/light_obj = new light_type(get_turf(src), range, power, color, duration)
+	return light_obj
 
+/mob/living/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj/moblight)
+	return mob_light(range, power, color, duration)
 
-/turf/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	if(!_duration)
-		stack_trace("Lighting FX obj created on a turf without a duration")
-	new /obj/effect/dummy/lighting_obj (src, _range, _power, _color, _duration)
-
-
-/obj/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	if(!_duration)
-		stack_trace("Lighting FX obj created on a obj without a duration")
-	new /obj/effect/dummy/lighting_obj (get_turf(src), _range, _power, _color, _duration)
-
-
-/mob/living/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	mob_light(_range, _power, _color, _duration)
-
-
-/mob/living/proc/mob_light(_range, _power, _color, _duration)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _range, _power, _color, _duration)
+/mob/living/proc/mob_light(range, power, color, duration, light_type = /obj/effect/dummy/lighting_obj/moblight)
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new light_type(src, range, power, color, duration)
 	return mob_light_obj
 
 /// Setter for the light power of this atom.
 /atom/proc/set_light_power(new_power)
-	if(new_power == light_power)
+	if(new_power == light_power || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_power
 	light_power = new_power
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_POWER, .)
+	return .
 
 /// Setter for the light range of this atom.
 /atom/proc/set_light_range(new_range)
-	if(new_range == light_range)
+	if(new_range == light_range || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_range
 	light_range = new_range
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .)
+	return .
 
 /// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
-	if(new_color == light_color)
+	if(new_color == light_color || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_color
 	light_color = new_color
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
+	return .
+
+/// Setter for the light angle of this atom
+/atom/proc/set_light_angle(new_value)
+	if(new_value == light_angle || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ANGLE, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_angle
+	light_angle = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ANGLE, .)
+	return .
+
+/// Setter for the light direction of this atom
+/atom/proc/set_light_dir(new_value)
+	// No frozen check here because we allow direction changes in a freeze
+	if(new_value == light_dir)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_DIR, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_dir
+	light_dir = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_DIR, .)
+	return .
 
 /// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
-	if(new_value == light_on)
+	if(new_value == light_on || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_on
 	light_on = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
+	return .
+
+/// Setter for the height of our light
+/atom/proc/set_light_height(new_value)
+	if(new_value == light_height || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_HEIGHT, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_height
+	light_height = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_HEIGHT, .)
+	return .
 
 /// Setter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)
-	if(new_value == light_flags)
+	if(new_value == light_flags || (light_flags & LIGHT_FROZEN && new_value & LIGHT_FROZEN))
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_flags
 	light_flags = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)
+	return .
+
+/atom/proc/get_light_offset()
+	return list(0, 0)
+
+/// Returns a list of x and y offsets to apply to our visual lighting position
+/proc/calculate_light_offset(atom/get_offset)
+	var/list/hand_back
+	if(!(get_offset.light_flags & LIGHT_IGNORE_OFFSET))
+		hand_back = get_visual_offset(get_offset)
+		hand_back[1] = -hand_back[1] / world.icon_size
+		hand_back[2] = -hand_back[2] / world.icon_size
+	else
+		hand_back = list(0, 0)
+
+	var/list/atoms_opinion = get_offset.get_light_offset()
+	hand_back[1] += atoms_opinion[1]
+	hand_back[2] += atoms_opinion[2]
+	return hand_back

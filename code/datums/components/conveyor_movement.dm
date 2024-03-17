@@ -15,16 +15,16 @@
 	if(!start_delay)
 		start_delay = speed
 	var/atom/movable/moving_parent = parent
-	var/datum/move_loop/loop = SSmove_manager.move(moving_parent, direction, delay = start_delay, subsystem = SSconveyors, flags=MOVEMENT_LOOP_IGNORE_PRIORITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/should_move)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/loop_ended)
+	var/datum/move_loop/loop = SSmove_manager.move(moving_parent, direction, delay = start_delay, subsystem = SSconveyors, flags=MOVEMENT_LOOP_IGNORE_PRIORITY|MOVEMENT_LOOP_OUTSIDE_CONTROL)
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(should_move))
+	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_ended))
 
 /datum/component/convey/proc/should_move(datum/move_loop/source)
 	SIGNAL_HANDLER
 	source.delay = speed //We use the default delay
 	if(living_parent)
 		var/mob/living/moving_mob = parent
-		if((moving_mob.movement_type & FLYING) && !moving_mob.stat)
+		if((moving_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !moving_mob.stat)
 			return MOVELOOP_SKIP_STEP
 	var/atom/movable/moving_parent = parent
 	if(moving_parent.anchored || !moving_parent.has_gravity())

@@ -1,0 +1,341 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/bush/sparsegrass{
+	pixel_y = 9;
+	pixel_x = -3
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"b" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
+/area/template_noop)
+"c" = (
+/obj/structure/flora/tree/palm,
+/obj/structure/flora/bush/fullgrass/style_3,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"d" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/rock,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"f" = (
+/obj/structure/flora/bush/sparsegrass/style_2{
+	pixel_x = 6;
+	pixel_y = -14
+	},
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/template_noop)
+"g" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/obj/structure/flora/tree/palm,
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"j" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"k" = (
+/obj/structure/flora/rock/style_2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"l" = (
+/obj/structure/flora/bush/grassy,
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/template_noop)
+"m" = (
+/obj/structure/flora/bush/sparsegrass/style_3{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"n" = (
+/turf/open/misc/beach/coast/corner,
+/area/template_noop)
+"p" = (
+/turf/open/misc/beach/coast{
+	dir = 5
+	},
+/area/template_noop)
+"q" = (
+/obj/structure/flora/bush/stalky/style_random{
+	pixel_x = -7
+	},
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/template_noop)
+"s" = (
+/obj/structure/flora/bush/grassy/style_4{
+	pixel_y = 11;
+	pixel_x = 5
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"t" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/template_noop)
+"u" = (
+/obj/structure/flora/bush/sparsegrass/style_2{
+	pixel_y = 3;
+	pixel_x = 4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"w" = (
+/turf/open/water/beach,
+/area/template_noop)
+"y" = (
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/template_noop)
+"z" = (
+/obj/structure/flora/bush/reed/style_random{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/turf/open/misc/beach/coast{
+	dir = 10
+	},
+/area/template_noop)
+"C" = (
+/obj/item/toy/beach_ball,
+/turf/open/water/beach,
+/area/template_noop)
+"D" = (
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/template_noop)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"F" = (
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"G" = (
+/obj/structure/flora/bush/stalky/style_random{
+	pixel_y = 6
+	},
+/turf/open/misc/beach/coast,
+/area/template_noop)
+"H" = (
+/obj/structure/flora/bush/sparsegrass{
+	pixel_x = 12;
+	pixel_y = -4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"I" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"J" = (
+/turf/open/misc/beach/coast{
+	dir = 6
+	},
+/area/template_noop)
+"K" = (
+/obj/structure/flora/rock/pile/style_2,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"M" = (
+/obj/structure/flora/bush/sparsegrass/style_3{
+	pixel_y = 1;
+	pixel_x = 1
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"N" = (
+/obj/item/pillow{
+	pixel_y = 7;
+	pixel_x = -2
+	},
+/obj/item/binoculars{
+	pixel_x = -6;
+	pixel_y = -12
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/floor/carpet/cyan,
+/area/template_noop)
+"O" = (
+/obj/structure/flora/bush/sparsegrass/style_2{
+	pixel_y = 9;
+	pixel_x = -4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"P" = (
+/obj/structure/flora/tree/palm/style_2,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Q" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"R" = (
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_y = 2;
+	pixel_x = 16
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/floor/carpet/cyan,
+/area/template_noop)
+"T" = (
+/obj/structure/flora/bush/reed/style_random{
+	pixel_y = 8
+	},
+/turf/open/misc/beach/coast{
+	dir = 9
+	},
+/area/template_noop)
+"U" = (
+/obj/structure/flora/bush/sparsegrass/style_2,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/rock/pile,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"X" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_x = -5
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Y" = (
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/template_noop)
+"Z" = (
+/obj/structure/flora/bush/sparsegrass/style_2{
+	pixel_y = 2
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+
+(1,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+g
+"}
+(2,1,1) = {"
+d
+k
+F
+E
+K
+F
+U
+u
+d
+"}
+(3,1,1) = {"
+d
+F
+P
+n
+l
+s
+X
+a
+d
+"}
+(4,1,1) = {"
+d
+N
+R
+G
+p
+Y
+D
+E
+d
+"}
+(5,1,1) = {"
+d
+I
+n
+J
+w
+T
+f
+j
+d
+"}
+(6,1,1) = {"
+d
+E
+b
+z
+C
+y
+c
+Q
+d
+"}
+(7,1,1) = {"
+d
+H
+K
+b
+q
+t
+m
+M
+d
+"}
+(8,1,1) = {"
+d
+F
+Z
+O
+h
+e
+W
+F
+d
+"}
+(9,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}

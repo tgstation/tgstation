@@ -9,25 +9,16 @@
 /atom/movable/screen/blob/MouseExited()
 	closeToolTip(usr)
 
-/atom/movable/screen/blob/blob_help
-	icon_state = "ui_help"
-	name = "Blob Help"
-	desc = "Help on playing blob!"
-
-/atom/movable/screen/blob/blob_help/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.blob_help()
-
 /atom/movable/screen/blob/jump_to_node
 	icon_state = "ui_tonode"
 	name = "Jump to Node"
 	desc = "Moves your camera to a selected blob node."
 
 /atom/movable/screen/blob/jump_to_node/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.jump_to_node()
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.jump_to_node()
 
 /atom/movable/screen/blob/jump_to_core
 	icon_state = "ui_tocore"
@@ -46,11 +37,12 @@
 	return ..()
 
 /atom/movable/screen/blob/jump_to_core/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		if(!B.placed)
-			B.place_blob_core(BLOB_NORMAL_PLACEMENT)
-		B.transport_core()
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	if(!blob.placed)
+		blob.place_blob_core(BLOB_NORMAL_PLACEMENT)
+	blob.transport_core()
 
 /atom/movable/screen/blob/blobbernaut
 	icon_state = "ui_blobbernaut"
@@ -58,15 +50,16 @@
 	name = "Produce Blobbernaut (ERROR)"
 	desc = "Produces a strong, smart blobbernaut from a factory blob for (ERROR) resources.<br>The factory blob used will become fragile and unable to produce spores."
 
-/atom/movable/screen/blob/blobbernaut/Initialize(mapload)
+/atom/movable/screen/blob/blobbernaut/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	name = "Produce Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
 	desc = "Produces a strong, smart blobbernaut from a factory blob for [BLOBMOB_BLOBBERNAUT_RESOURCE_COST] resources.<br>The factory blob used will become fragile and unable to produce spores."
 
 /atom/movable/screen/blob/blobbernaut/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_blobbernaut()
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_blobbernaut()
 
 /atom/movable/screen/blob/resource_blob
 	icon_state = "ui_resource"
@@ -74,15 +67,16 @@
 	name = "Produce Resource Blob (ERROR)"
 	desc = "Produces a resource blob for ERROR resources.<br>Resource blobs will give you resources every few seconds."
 
-/atom/movable/screen/blob/resource_blob/Initialize(mapload)
+/atom/movable/screen/blob/resource_blob/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	name = "Produce Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST])"
 	desc = "Produces a resource blob for [BLOB_STRUCTURE_RESOURCE_COST] resources.<br>Resource blobs will give you resources every few seconds."
 
 /atom/movable/screen/blob/resource_blob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_special(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
@@ -90,15 +84,16 @@
 	name = "Produce Node Blob (ERROR)"
 	desc = "Produces a node blob for ERROR resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
-/atom/movable/screen/blob/node_blob/Initialize(mapload)
+/atom/movable/screen/blob/node_blob/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	name = "Produce Node Blob ([BLOB_STRUCTURE_NODE_COST])"
 	desc = "Produces a node blob for [BLOB_STRUCTURE_NODE_COST] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /atom/movable/screen/blob/node_blob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_special(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
@@ -106,15 +101,16 @@
 	name = "Produce Factory Blob (ERROR)"
 	desc = "Produces a factory blob for ERROR resources.<br>Factory blobs will produce spores every few seconds."
 
-/atom/movable/screen/blob/factory_blob/Initialize(mapload)
+/atom/movable/screen/blob/factory_blob/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	name = "Produce Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
 	desc = "Produces a factory blob for [BLOB_STRUCTURE_FACTORY_COST] resources.<br>Factory blobs will produce spores every few seconds."
 
 /atom/movable/screen/blob/factory_blob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_special(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
@@ -144,7 +140,7 @@
 	name = "Relocate Core (ERROR)"
 	desc = "Swaps a node and your core for ERROR resources."
 
-/atom/movable/screen/blob/relocate_core/Initialize(mapload)
+/atom/movable/screen/blob/relocate_core/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	name = "Relocate Core ([BLOB_POWER_RELOCATE_COST])"
 	desc = "Swaps a node and your core for [BLOB_POWER_RELOCATE_COST] resources."
@@ -158,60 +154,45 @@
 	..()
 	var/atom/movable/screen/using
 
-	blobpwrdisplay = new /atom/movable/screen()
+	blobpwrdisplay = new /atom/movable/screen(null, src)
 	blobpwrdisplay.name = "blob power"
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blobpwrdisplay.plane = ABOVE_HUD_PLANE
-	blobpwrdisplay.hud = src
+	SET_PLANE_EXPLICIT(blobpwrdisplay, ABOVE_HUD_PLANE, owner)
 	infodisplay += blobpwrdisplay
 
-	healths = new /atom/movable/screen/healths/blob()
-	healths.hud = src
+	healths = new /atom/movable/screen/healths/blob(null, src)
 	infodisplay += healths
 
-	using = new /atom/movable/screen/blob/blob_help()
-	using.screen_loc = "WEST:6,NORTH:-3"
-	using.hud = src
-	static_inventory += using
-
-	using = new /atom/movable/screen/blob/jump_to_node()
+	using = new /atom/movable/screen/blob/jump_to_node(null, src)
 	using.screen_loc = ui_inventory
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/jump_to_core()
+	using = new /atom/movable/screen/blob/jump_to_core(null, src)
 	using.screen_loc = ui_zonesel
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/blobbernaut()
+	using = new /atom/movable/screen/blob/blobbernaut(null, src)
 	using.screen_loc = ui_belt
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/resource_blob()
+	using = new /atom/movable/screen/blob/resource_blob(null, src)
 	using.screen_loc = ui_back
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/node_blob()
+	using = new /atom/movable/screen/blob/node_blob(null, src)
 	using.screen_loc = ui_hand_position(2)
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/factory_blob()
+	using = new /atom/movable/screen/blob/factory_blob(null, src)
 	using.screen_loc = ui_hand_position(1)
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/readapt_strain()
+	using = new /atom/movable/screen/blob/readapt_strain(null, src)
 	using.screen_loc = ui_storage1
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/relocate_core()
+	using = new /atom/movable/screen/blob/relocate_core(null, src)
 	using.screen_loc = ui_storage2
-	using.hud = src
 	static_inventory += using

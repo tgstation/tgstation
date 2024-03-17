@@ -2,9 +2,9 @@
 	category = "Consumables"
 
 /datum/market_item/consumable/clown_tears
-	name = "Bowl of Clown's Tears"
+	name = "Bottle of Clown's Tears"
 	desc = "Guaranteed fresh from Weepy Boggins Tragic Kitchen"
-	item = /obj/item/food/soup/clownstears
+	item = /obj/item/reagent_containers/cup/bottle/clownstears
 	stock = 1
 
 	price_min = CARGO_CRATE_VALUE * 2.6
@@ -39,7 +39,8 @@
 				/obj/item/storage/pill_bottle/lsd,
 				/obj/item/storage/pill_bottle/aranesp,
 				/obj/item/storage/pill_bottle/stimulant))
-	return new pillbottle(loc)
+	item = pillbottle
+	return ..()
 
 /datum/market_item/consumable/floor_pill
 	name = "Strange Pill"

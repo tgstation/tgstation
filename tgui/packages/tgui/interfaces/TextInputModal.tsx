@@ -1,9 +1,11 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { KEY } from 'common/keys';
+import { KeyboardEvent, useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type TextInputData = {
   large_buttons: boolean;
@@ -15,33 +17,43 @@ type TextInputData = {
   title: string;
 };
 
-export const TextInputModal = (_, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
+export const sanitizeMultiline = (toSanitize: string) => {
+  return toSanitize.replace(/(\n|\r\n){3,}/, '\n\n');
+};
+
+export const removeAllSkiplines = (toSanitize: string) => {
+  return toSanitize.replace(/[\r\n]+/, '');
+};
+
+export const TextInputModal = (props) => {
+  const { act, data } = useBackend<TextInputData>();
   const {
     large_buttons,
     max_length,
     message = '',
     multiline,
-    placeholder,
+    placeholder = '',
     timeout,
     title,
   } = data;
-  const [input, setInput] = useLocalState<string>(
-    context,
-    'input',
-    placeholder || ''
-  );
+
+  const [input, setInput] = useState(placeholder || '');
   const onType = (value: string) => {
     if (value === input) {
       return;
     }
-    setInput(value);
+    const sanitizedInput = multiline
+      ? sanitizeMultiline(value)
+      : removeAllSkiplines(value);
+    setInput(sanitizedInput);
   };
+
+  const visualMultiline = multiline || input.length >= 30;
   // Dynamically changes the window height based on the message.
   const windowHeight =
     135 +
     (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
-    (multiline || input.length >= 30 ? 75 : 0) +
+    (visualMultiline ? 75 : 0) +
     (message.length && large_buttons ? 5 : 0);
 
   return (
@@ -49,14 +61,17 @@ export const TextInputModal = (_, context) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
-          const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_ENTER) {
+          if (
+            event.key === KEY.Enter &&
+            (!visualMultiline || !event.shiftKey)
+          ) {
             act('submit', { entry: input });
           }
-          if (keyCode === KEY_ESCAPE) {
+          if (event.key === KEY.Escape) {
             act('cancel');
           }
-        }}>
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
@@ -79,10 +94,15 @@ export const TextInputModal = (_, context) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
+const InputArea = (props: {
+  input: string;
+  onType: (value: string) => void;
+}) => {
+  const { act, data } = useBackend<TextInputData>();
   const { max_length, multiline } = data;
   const { input, onType } = props;
+
+  const visualMultiline = multiline || input.length >= 30;
 
   return (
     <TextArea
@@ -91,10 +111,14 @@ const InputArea = (props, context) => {
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onEscape={() => act('cancel')}
-      onEnter={(event) => {
-        act('submit', { entry: input });
+      onEnter={(event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (visualMultiline && event.shiftKey) {
+          return;
+        }
         event.preventDefault();
+        act('submit', { entry: input });
       }}
+      onChange={(_, value) => onType(value)}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}

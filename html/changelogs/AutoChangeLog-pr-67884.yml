@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "Refactored how Knock (spell) tells stuff to open up, makes it easier to add more knockable things."

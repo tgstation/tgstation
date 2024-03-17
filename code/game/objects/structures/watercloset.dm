@@ -16,7 +16,8 @@
 	. = ..()
 	open = round(rand(0, 1))
 	update_appearance()
-
+	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
+		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -83,7 +84,7 @@
 	return ..()
 
 /obj/structure/toilet/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		for(var/obj/toilet_item in contents)
 			toilet_item.forceMove(drop_location())
 		if(buildstacktype)
@@ -91,7 +92,7 @@
 		else
 			for(var/i in custom_materials)
 				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
@@ -104,7 +105,7 @@
 			cistern = !cistern
 			update_appearance()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	else if(I.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		I.play_tool_sound(src)
 		deconstruct()
 		return TRUE
@@ -120,8 +121,9 @@
 			return
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
+		return
 
-	else if(istype(I, /obj/item/reagent_containers) && !user.combat_mode)
+	if(is_reagent_container(I) && !user.combat_mode)
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -156,14 +158,17 @@
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
-	var/exposed = 0 // can you currently put an item inside
-	var/obj/item/hiddenitem = null // what's in the urinal
+	/// Can you currently put an item inside
+	var/exposed = FALSE
+	/// What's in the urinal
+	var/obj/item/hidden_item
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
-	hiddenitem = new /obj/item/food/urinalcake
+	hidden_item = new /obj/item/food/urinalcake
+	find_and_hang_on_wall()
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -182,21 +187,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 			to_chat(user, span_warning("You need a tighter grip!"))
 
 	else if(exposed)
-		if(!hiddenitem)
+		if(!hidden_item)
 			to_chat(user, span_warning("There is nothing in the drain holder!"))
 		else
 			if(ishuman(user))
-				user.put_in_hands(hiddenitem)
+				user.put_in_hands(hidden_item)
 			else
-				hiddenitem.forceMove(get_turf(src))
-			to_chat(user, span_notice("You fish [hiddenitem] out of the drain enclosure."))
-			hiddenitem = null
+				hidden_item.forceMove(get_turf(src))
+			to_chat(user, span_notice("You fish [hidden_item] out of the drain enclosure."))
+			hidden_item = null
 	else
 		..()
 
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
 	if(exposed)
-		if (hiddenitem)
+		if (hidden_item)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))
 			return
 		if(I.w_class > 1)
@@ -205,7 +210,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
-		hiddenitem = I
+		hidden_item = I
 		to_chat(user, span_notice("You place [I] into the drain enclosure."))
 	else
 		return ..()
@@ -222,15 +227,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		exposed = !exposed
 	return TRUE
 
+/obj/structure/urinal/deconstruct(disassembled = TRUE)
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		new /obj/item/wallframe/urinal(loc)
+	qdel(src)
+
+/obj/item/wallframe/urinal
+	name = "urinal frame"
+	desc = "An unmounted urinal. Attach it to a wall to use."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "urinal"
+	result_path = /obj/structure/urinal
+	pixel_shift = 32
 
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
+	food_reagents = list(
+		/datum/reagent/chlorine = 3,
+		/datum/reagent/ammonia = 1,
+	)
 	foodtypes = TOXIC | GROSS
+	preserved_food = TRUE
 
 /obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] squishes [src]!"), span_notice("You squish [src]."), "<i>You hear a squish.</i>")
@@ -240,7 +261,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/bikehorn/rubberducky/plasticducky
 	name = "plastic ducky"
 	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
-	custom_materials = list(/datum/material/plastic = 1000)
+	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
@@ -248,7 +269,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	inhand_icon_state = "rubberducky"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "duck"
+	sound_file = 'sound/effects/quack.ogg'
 
 /obj/structure/sink
 	name = "sink"
@@ -256,6 +280,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
+	layer = ABOVE_OBJ_LAYER
+	pixel_z = 1
 	///Something's being washed at the moment
 	var/busy = FALSE
 	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
@@ -266,20 +292,45 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect it's water supply?
 	var/has_water_reclaimer = TRUE
-	///Has the water reclamation begun?
-	var/reclaiming = FALSE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
+	///Amount of shift the pixel for placement
+	var/pixel_shift = 14
 
-/obj/structure/sink/Initialize(mapload, bolt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
+
+/obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
+
+	if(ndir)
+		dir = ndir
+
+	if(has_water_reclaimer != null)
+		src.has_water_reclaimer = has_water_reclaimer
+
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = -pixel_shift
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = pixel_shift
+		if(EAST)
+			pixel_x = -pixel_shift
+			pixel_y = 0
+		if(WEST)
+			pixel_x = pixel_shift
+			pixel_y = 0
+
 	create_reagents(100, NO_REACT)
-	if(has_water_reclaimer)
+	if(src.has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
+	if(has_water_reclaimer)
+		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
 
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
@@ -316,7 +367,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	begin_reclamation()
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
-		user.adjust_drowsyness(rand(-2, -3)) //Washing your face wakes you up if you're falling asleep
 	else if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(!human_user.wash_hands(CLEAN_WASH))
@@ -333,14 +383,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(istype(O, /obj/item/reagent_containers))
+	if(is_reagent_container(O))
 		var/obj/item/reagent_containers/RG = O
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
-				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transfered_by = user)
+				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transferred_by = user)
 				begin_reclamation()
 				to_chat(user, span_notice("You fill [RG] from [src]."))
 				return TRUE
@@ -352,7 +402,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
+			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -363,27 +413,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
-		reagents.trans_to(O, 5, transfered_by = user)
+		reagents.trans_to(O, 5, transferred_by = user)
 		begin_reclamation()
 		to_chat(user, span_notice("You wet [O] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	if(O.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		O.play_tool_sound(src)
 		deconstruct()
 		return
 
+	if(O.tool_behaviour == TOOL_CROWBAR)
+		if(!has_water_reclaimer)
+			to_chat(user, span_warning("There isn't a water recycler to remove."))
+			return
+
+		O.play_tool_sound(src)
+		has_water_reclaimer = FALSE
+		new/obj/item/stock_parts/water_recycler(get_turf(loc))
+		to_chat(user, span_notice("You remove the water reclaimer from [src]"))
+		return
+
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/reagent_containers/glass/rag(src.loc)
+		new /obj/item/reagent_containers/cup/rag(src.loc)
 		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
 		G.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/cloth = O
-		new /obj/item/reagent_containers/glass/rag(loc)
+		new /obj/item/reagent_containers/cup/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
 		cloth.use(1)
 		return
@@ -392,6 +453,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		new /obj/item/stack/sheet/sandblock(loc)
 		to_chat(user, span_notice("You wet the sand in the sink and form it into a block."))
 		O.use(1)
+		return
+
+	if(istype(O, /obj/item/stock_parts/water_recycler))
+		if(has_water_reclaimer)
+			to_chat(user, span_warning("There is already has a water recycler installed."))
+			return
+
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		qdel(O)
+		has_water_reclaimer = TRUE
+		begin_reclamation()
+		return
+
+	if(istype(O, /obj/item/storage/fancy/pickles_jar))
+		if(O.contents.len)
+			to_chat(user, span_notice("Looks like there's something left in the jar"))
+			return
+		new /obj/item/reagent_containers/cup/beaker/large(loc)
+		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		qdel(O)
 		return
 
 	if(!istype(O))
@@ -415,16 +496,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		return ..()
 
 /obj/structure/sink/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		drop_materials()
+		if(has_water_reclaimer)
+			new /obj/item/stock_parts/water_recycler(drop_location())
 	..()
 
-/obj/structure/sink/process(delta_time)
-	if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
-		reagents.add_reagent(dispensedreagent, reclaim_rate * delta_time)
-	else
-		reclaiming = FALSE
+/obj/structure/sink/process(seconds_per_tick)
+	// Water reclamation complete?
+	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
 		return PROCESS_KILL
+
+	reagents.add_reagent(dispensedreagent, reclaim_rate * seconds_per_tick)
 
 /obj/structure/sink/proc/drop_materials()
 	if(buildstacktype)
@@ -432,16 +515,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	else
 		for(var/i in custom_materials)
 			var/datum/material/M = i
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/proc/begin_reclamation()
-	if(!reclaiming)
-		reclaiming = TRUE
-		START_PROCESSING(SSplumbing, src)
+	START_PROCESSING(SSplumbing, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
+	pixel_z = 4
+	pixel_shift = 16
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
@@ -460,16 +545,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/stock_parts/water_recycler))
-		qdel(I)
-		var/obj/structure/sink/greyscale/new_sink = new /obj/structure/sink/greyscale(loc)
-		new_sink.has_water_reclaimer = TRUE
+/obj/structure/sinkframe/attackby(obj/item/tool, mob/living/user, params)
+	if(istype(tool, /obj/item/stock_parts/water_recycler))
+		qdel(tool)
+		var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), TRUE)
 		new_sink.set_custom_materials(custom_materials)
-		new_sink.setDir(dir)
 		qdel(src)
+		playsound(new_sink, 'sound/machines/click.ogg', 20, TRUE)
 		return
 	return ..()
+
+/obj/structure/sinkframe/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	tool.play_tool_sound(src)
+	var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), FALSE)
+	new_sink.set_custom_materials(custom_materials)
+	qdel(src)
+
+	return TRUE
 
 /obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -478,13 +572,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	return TRUE
 
 /obj/structure/sinkframe/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		drop_materials()
 	return ..()
 
 /obj/structure/sinkframe/proc/drop_materials()
 	for(var/datum/material/material as anything in custom_materials)
-		new material.sheet_type(loc, FLOOR(custom_materials[material] / MINERAL_MATERIAL_AMOUNT, 1))
+		new material.sheet_type(loc, FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1))
 	return
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.
@@ -496,6 +590,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	anchored = TRUE
 	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+
+/obj/structure/water_source/Initialize(mapload)
+	. = ..()
+
+	create_reagents(INFINITY, NO_REACT)
+	reagents.add_reagent(dispensedreagent, INFINITY)
 
 /obj/structure/water_source/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -525,7 +625,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
-		user.adjust_drowsyness(rand(-2, -3)) //Washing your face wakes you up if you're falling asleep
 	else if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(!human_user.wash_hands(CLEAN_WASH))
@@ -542,7 +641,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(istype(O, /obj/item/reagent_containers))
+	if(is_reagent_container(O))
 		var/obj/item/reagent_containers/container = O
 		if(container.is_refillable())
 			if(!container.reagents.holder_full())
@@ -557,7 +656,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
+			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -572,14 +671,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/reagent_containers/glass/rag(loc)
+		new /obj/item/reagent_containers/cup/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
 		G.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/cloth = O
-		new /obj/item/reagent_containers/glass/rag(loc)
+		new /obj/item/reagent_containers/cup/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
 		cloth.use(1)
 		return
@@ -651,17 +750,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
 
+/obj/structure/curtain/Initialize(mapload)
+	// see-through curtains should let emissives shine through
+	if(!opaque_closed)
+		blocks_emissive = EMISSIVE_BLOCK_NONE
+	return ..()
+
 /obj/structure/curtain/proc/toggle()
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		plane = GAME_PLANE
-		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		plane = GAME_PLANE_UPPER
-		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
 
@@ -726,6 +827,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	alpha = 255
 	opaque_closed = TRUE
 
+/obj/structure/curtain/bounty/start_closed
+	icon_state = "bounty-closed"
+
+/obj/structure/curtain/bounty/start_closed/Initialize(mapload)
+	. = ..()
+	if(open)
+		toggle()
+
 /obj/structure/curtain/cloth
 	color = null
 	alpha = 255
@@ -751,13 +860,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	. = ..()
 	GLOB.curtains += src
 
-/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
-	plane = GAME_PLANE
+	SET_PLANE_IMPLICIT(src, GAME_PLANE)
 	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
@@ -765,7 +874,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)

@@ -1,30 +1,35 @@
-/obj/effect/proc_holder/spell/pointed/cleave
+/datum/action/cooldown/spell/pointed/cleave
 	name = "Cleave"
 	desc = "Causes severe bleeding on a target and several targets around them."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "cleave"
-	action_background_icon_state = "bg_ecult"
-	invocation = "CL'VE"
-	invocation_type = INVOCATION_WHISPER
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "cleave"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
+
 	school = SCHOOL_FORBIDDEN
-	charge_max = 350
-	clothes_req = FALSE
-	range = 9
+	cooldown_time = 45 SECONDS
 
-/obj/effect/proc_holder/spell/pointed/cleave/cast(list/targets, mob/user)
-	if(!targets.len)
-		user.balloon_alert(user, "no targets!")
-		return FALSE
-	if(!can_target(targets[1], user))
-		return FALSE
+	invocation = "CL'VE!"
+	invocation_type = INVOCATION_WHISPER
+	spell_requirements = NONE
 
-	for(var/mob/living/carbon/human/nearby_human in range(1, targets[1]))
-		targets |= nearby_human
+	cast_range = 4
 
-	for(var/mob/living/carbon/human/victim as anything in targets)
-		if(victim == user)
+	/// The radius of the cleave effect
+	var/cleave_radius = 1
+	/// What type of wound we apply
+	var/wound_type = /datum/wound/slash/flesh/critical/cleave
+
+/datum/action/cooldown/spell/pointed/cleave/is_valid_target(atom/cast_on)
+	return ..() && ishuman(cast_on)
+
+/datum/action/cooldown/spell/pointed/cleave/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	for(var/mob/living/carbon/human/victim in range(cleave_radius, cast_on))
+		if(victim == owner || IS_HERETIC_OR_MONSTER(victim))
 			continue
-		if(victim.can_block_magic())
+		if(victim.can_block_magic(antimagic_flags))
 			victim.visible_message(
 				span_danger("[victim]'s flashes in a firey glow, but repels the blaze!"),
 				span_danger("Your body begins to flash a firey glow, but you are protected!!")
@@ -40,20 +45,18 @@
 		)
 
 		var/obj/item/bodypart/bodypart = pick(victim.bodyparts)
-		var/datum/wound/slash/critical/crit_wound = new()
+		var/datum/wound/slash/flesh/crit_wound = new wound_type()
 		crit_wound.apply_wound(bodypart)
-		victim.adjustFireLoss(20)
-		new /obj/effect/temp_visual/cleave(victim.drop_location())
+		victim.apply_damage(20, BURN, wound_bonus = CANT_WOUND)
 
-/obj/effect/proc_holder/spell/pointed/cleave/can_target(atom/target, mob/user, silent)
-	if(!ishuman(target))
-		if(!silent)
-			target.balloon_alert(user, "invalid target!")
-		return FALSE
+		new /obj/effect/temp_visual/cleave(get_turf(victim))
+
 	return TRUE
 
-/obj/effect/proc_holder/spell/pointed/cleave/long
-	charge_max = 650
+/datum/action/cooldown/spell/pointed/cleave/long
+	name = "Lesser Cleave"
+	cooldown_time = 60 SECONDS
+	wound_type = /datum/wound/slash/flesh/severe
 
 /obj/effect/temp_visual/cleave
 	icon = 'icons/effects/eldritch.dmi'

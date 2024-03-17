@@ -34,24 +34,8 @@
 	if(!target_finder)
 		CRASH("Heretic datum didn't have a hunt_and_sacrifice knowledge learned, what?")
 
-	if(!target_finder.obtain_targets(user))
+	if(!target_finder.obtain_targets(user, heretic_datum = heretic_datum))
 		loc.balloon_alert(user, "ritual failed, no targets found!")
 		return FALSE
 
 	return TRUE
-
-/datum/heretic_knowledge/codex_cicatrix
-	name = "Codex Cicatrix"
-	desc = "Allows you to transmute a bible, a fountain pen, and hide from an animal (or human) to create a Codex Cicatrix. \
-		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
-		It can also be used to draw and remove transmutation runes easier."
-	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
-		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
-	required_atoms = list(
-		/obj/item/storage/book/bible = 1,
-		/obj/item/pen/fountain = 1,
-		/obj/item/stack/sheet/animalhide = 1,
-	)
-	result_atoms = list(/obj/item/codex_cicatrix)
-	cost = 1
-	route = PATH_SIDE

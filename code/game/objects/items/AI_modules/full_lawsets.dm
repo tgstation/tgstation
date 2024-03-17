@@ -69,6 +69,18 @@
 /obj/item/ai_module/core/full/asimovpp
 	name = "'Asimov++' Core AI Module"
 	law_id = "asimovpp"
+	var/subject = "human being"
+
+/obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
+	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
+	if(!target_name)
+		return
+	laws.Cut()
+	var/datum/ai_laws/asimovpp/lawset = new
+	subject = target_name
+	for (var/law in lawset.inherent)
+		laws += replacetext(replacetext(law, "human being", subject), "human", subject)
+	..()
 
 /obj/item/ai_module/core/full/corp
 	name = "'Corporate' Core AI Module"

@@ -56,27 +56,39 @@
 		if(!check_rights(NONE))
 			return
 		var/list/names = list()
-		var/list/componentsubtypes = sort_list(subtypesof(/datum/component), /proc/cmp_typepaths_asc)
+		var/list/componentsubtypes = sort_list(subtypesof(/datum/component), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		names += "---Components---"
 		names += componentsubtypes
 		names += "---Elements---"
-		names += sort_list(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
+		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
+
 		var/result = tgui_input_list(usr, "Choose a component/element to add", "Add Component", names)
 		if(isnull(result))
 			return
 		if(!usr || result == "---Components---" || result == "---Elements---")
 			return
+
 		if(QDELETED(src))
 			to_chat(usr, "That thing doesn't exist anymore!", confidential = TRUE)
 			return
+
+		var/add_source
+		if(ispath(result, /datum/component))
+			var/datum/component/comp_path = result
+			if(initial(comp_path.dupe_mode) == COMPONENT_DUPE_SOURCES)
+				add_source = tgui_input_text(usr, "Enter a source for the component", "Add Component", "ADMIN-ABUSE")
+				if(isnull(add_source))
+					return
+
 		var/list/lst = get_callproc_args()
 		if(!lst)
 			return
+
 		var/datumname = "error"
 		lst.Insert(1, result)
 		if(result in componentsubtypes)
 			datumname = "component"
-			target._AddComponent(lst)
+			target._AddComponent(lst, add_source)
 		else
 			datumname = "element"
 			target._AddElement(lst)
@@ -87,20 +99,15 @@
 			return
 		var/mass_remove = href_list[VV_HK_MASS_REMOVECOMPONENT]
 		var/list/components = list()
-		var/all_components_on_target = LAZYACCESS(target.datum_components, /datum/component)
-		if(islist(all_components_on_target))
-			for(var/datum/component/component in LAZYACCESS(target.datum_components, /datum/component))
-				components += component.type
-		else if(all_components_on_target)
-			var/datum/component/component = all_components_on_target
+		for(var/datum/component/component in target.GetComponents(/datum/component))
 			components += component.type
 		var/list/names = list()
 		names += "---Components---"
 		if(length(components))
-			names += sort_list(components, /proc/cmp_typepaths_asc)
+			names += sort_list(components, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		names += "---Elements---"
 		// We have to list every element here because there is no way to know what element is on this object without doing some sort of hack.
-		names += sort_list(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
+		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		var/path = tgui_input_list(usr, "Choose a component/element to remove. All elements listed here may not be on the datum.", "Remove element", names)
 		if(isnull(path))
 			return
@@ -133,8 +140,7 @@
 	if(href_list[VV_HK_MODIFY_GREYSCALE])
 		if(!check_rights(NONE))
 			return
-		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations)
-		menu.Unlock()
+		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations, unlocked = TRUE)
 		menu.ui_interact(usr)
 	if(href_list[VV_HK_CALLPROC])
 		usr.client.callproc_datum(target)

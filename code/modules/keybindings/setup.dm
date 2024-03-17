@@ -1,6 +1,7 @@
 // Set a client's focus to an object and override these procs on that object to let it handle keypresses
 
-/datum/proc/key_down(key, client/user) // Called when a key is pressed down initially
+/datum/proc/key_down(key, client/user, full_key) // Called when a key is pressed down initially
+	SHOULD_CALL_PARENT(TRUE)
 	return
 /datum/proc/key_up(key, client/user) // Called when a key is released
 	return
@@ -39,3 +40,12 @@
 			window.set_mouse_macro()
 
 	update_special_keybinds()
+
+/// Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.
+/client/proc/reset_held_keys()
+	for(var/key in keys_held)
+		keyUp(key)
+
+	//In case one got stuck and the previous loop didn't clean it, somehow.
+	for(var/key in key_combos_held)
+		keyUp(key_combos_held[key])

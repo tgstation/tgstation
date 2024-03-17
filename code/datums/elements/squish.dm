@@ -9,7 +9,7 @@
  * Normal squishes apply vertically, as if the target is being squished from above, but you can set reverse to TRUE if you want to squish them from the sides, like if they pancake into a wall from the East or West
 */
 /datum/element/squish
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/squish/Attach(datum/target, duration=20 SECONDS, reverse=FALSE)
 	. = ..()
@@ -18,7 +18,7 @@
 
 	var/mob/living/carbon/C = target
 	var/was_lying = C.body_position == LYING_DOWN
-	addtimer(CALLBACK(src, .proc/Detach, C, was_lying, reverse), duration)
+	addtimer(CALLBACK(src, PROC_REF(Detach), C, was_lying, reverse), duration)
 
 	if(reverse)
 		C.transform = C.transform.Scale(SHORT, TALL)

@@ -8,8 +8,8 @@
 	spawn_loot_count = 2
 	loot = list( // Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 		/obj/item/raw_anomaly_core/random,
-		/obj/item/disk/tech_disk/spaceloot,
-		/obj/item/camera_bug,
+		/obj/item/disk/design_disk/bepis,
+		/obj/item/computer_disk/syndicate/camera_app,
 	)
 
 /obj/effect/spawner/random/exotic/languagebook
@@ -17,6 +17,7 @@
 	icon_state = "book"
 	loot = list( // A single roundstart species language book.
 		/obj/item/language_manual/roundstart_species = 100,
+		/obj/item/book/granter/sign_language = 10,
 		/obj/item/language_manual/roundstart_species/five = 3,
 		/obj/item/language_manual/roundstart_species/unlimited = 1,
 	)
@@ -86,5 +87,5 @@
 	icon_state = "ripley"
 	loot = list(
 		/obj/structure/mecha_wreckage/ripley = 3,
-		/obj/vehicle/sealed/mecha/working/ripley/mining = 1,
+		/obj/vehicle/sealed/mecha/ripley/mining = 1,
 	)

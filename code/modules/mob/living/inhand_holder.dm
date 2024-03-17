@@ -44,6 +44,18 @@
 /obj/item/clothing/head/mob_holder/proc/update_visuals(mob/living/L)
 	appearance = L.appearance
 
+/obj/item/clothing/head/mob_holder/on_thrown(mob/living/carbon/user, atom/target)
+	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_notice("You set [src] down gently on the ground."))
+		release()
+		return
+
+	var/mob/living/throw_mob = held_mob
+	release()
+	return throw_mob
+
 /obj/item/clothing/head/mob_holder/dropped()
 	..()
 	if(held_mob && isturf(loc))
@@ -76,6 +88,11 @@
 /obj/item/clothing/head/mob_holder/container_resist_act()
 	release()
 
+/obj/item/clothing/head/mob_holder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(held_mob && held_mob == gone)
+		release()
+
 /obj/item/clothing/head/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
 		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))
@@ -97,11 +114,11 @@
 	desc = "This drone is scared and has curled up into a ball!"
 
 /obj/item/clothing/head/mob_holder/drone/update_visuals(mob/living/L)
-	var/mob/living/simple_animal/drone/D = L
-	if(!D)
+	var/mob/living/basic/drone/drone = L
+	if(!drone)
 		return ..()
-	icon = 'icons/mob/drone.dmi'
-	icon_state = "[D.visualAppearance]_hat"
+	icon = 'icons/mob/silicon/drone.dmi'
+	icon_state = "[drone.visualAppearance]_hat"
 
 /obj/item/clothing/head/mob_holder/destructible
 

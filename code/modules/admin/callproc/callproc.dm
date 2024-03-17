@@ -160,7 +160,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].") //Proccall announce removed.
 		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Advanced ProcCall")
 	if(get_retval)
 		get_retval += returnval
 	. = get_callproc_returnval(returnval, procname)
@@ -208,7 +208,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		GLOB.AdminProcCaller = user_identifier //if this runtimes, too bad for you
 		++GLOB.AdminProcCallCount
 		. = world.WrapAdminProcCall(target, procname, arguments)
-		if(--GLOB.AdminProcCallCount == 0)
+		GLOB.AdminProcCallCount--
+		if(GLOB.AdminProcCallCount == 0)
 			GLOB.AdminProcCaller = null
 	else
 		. = world.WrapAdminProcCall(target, procname, arguments)
@@ -254,7 +255,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
 	message_admins(msg)
 	admin_ticket_log(A, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Atom ProcCall")
 
 	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
@@ -276,7 +277,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(named_arg)
 			named_args[named_arg] = value["value"]
 		else
-			. += value["value"]
+			. += LIST_VALUE_WRAP_LISTS(value["value"])
 	if(LAZYLEN(named_args))
 		. += named_args
 

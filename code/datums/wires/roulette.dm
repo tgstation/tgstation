@@ -23,7 +23,7 @@
 /datum/wires/roulette/get_status()
 	var/obj/machinery/roulette/R = holder
 	var/list/status = list()
-	status += "The machines bolts [R.anchored ? "have fallen!" : "look up."]"
+	status += "The machines bolts [R.anchored ? "have engaged!" : "have disengaged."]"
 	status += "The main circuit is [R.on ? "on" : "off"]."
 	status += "The main system lock appears to be [R.locked ? "on" : "off"]."
 	status += "The account balance system appears to be [R.my_card ? "connected to [R.my_card.registered_account.account_holder]" : "disconnected"]."
@@ -51,7 +51,7 @@
 			R.audible_message(span_warning("Unauthorized prize vend detected! Locking down machine!"))
 			R.prize_theft(0.20)
 
-/datum/wires/roulette/on_cut(wire, mend)
+/datum/wires/roulette/on_cut(wire, mend, source)
 	var/obj/machinery/roulette/R = holder
 	switch(wire)
 		if(WIRE_SHOCK)

@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/chem_pack
 	name = "intravenous medicine bag"
 	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. It is fitted with a thermosealing strip."
-	icon = 'icons/obj/bloodpack.dmi'
+	icon = 'icons/obj/medical/bloodpack.dmi'
 	icon_state = "chempack"
 	volume = 100
 	reagent_flags = OPENCONTAINER
@@ -10,10 +10,10 @@
 	resistance_flags = ACID_PROOF
 	var/sealed = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)
+	if(user.can_perform_action(src, NEED_DEXTERITY) && !sealed)
 		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 			to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
 			SplashReagents(user)

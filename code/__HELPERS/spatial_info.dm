@@ -1,8 +1,3 @@
-/turf
-	///what /mob/oranges_ear instance is already assigned to us as there should only ever be one.
-	///used for guaranteeing there is only one oranges_ear per turf when assigned, speeds up view() iteration
-	var/mob/oranges_ear/assigned_oranges_ear
-
 /** # Oranges Ear
  *
  * turns out view() spends a significant portion of its processing time generating lists of contents of viewable turfs which includes EVERYTHING on it visible
@@ -23,7 +18,7 @@
 	icon_state = null
 	density = FALSE
 	move_resist = INFINITY
-	invisibility = 0
+	invisibility = INVISIBILITY_NONE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	logging = null
 	held_items = null //all of these are list objects that should not exist for something like us
@@ -79,7 +74,7 @@
 /**
  * returns every hearaing movable in view to the turf of source not taking into account lighting
  * useful when you need to maintain always being able to hear something if a sound is emitted from it and you can see it (and youre in range).
- * otherwise this is just a more expensive version of get_hearers_in_LOS()
+ * otherwise this is just a more expensive version of get_hearers_in_LOS().
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
@@ -105,25 +100,56 @@
 
 	var/list/assigned_oranges_ears = SSspatial_grid.assign_oranges_ears(hearables_from_grid)
 
-	var/old_luminosity = center_turf.luminosity
-	center_turf.luminosity = 6 //man if only we had an inbuilt dview()
-
-	//this is the ENTIRE reason all this shit is worth it due to how view() and the contents list works and can be optimized
+	//this is the ENTIRE reason all this shit is worth it due to how view()-like procs and the contents list works and can be optimized
 	//internally, the contents list is secretly two linked lists, one for /obj's and one for /mob's (/atom/movable counts as /obj here)
 	//by default, for(var/atom/name in view()) iterates through both the /obj linked list then the /mob linked list of each turf
 	//but because what we want are only a tiny proportion of all movables, most of the things in the /obj contents list are not what we're looking for
-	//while every mob can hear. for this case view() has an optimization to only look through 1 of these lists if it can (eg youre only looking for mobs)
+	//while every mob can hear. for this case view() and similar procs have an optimization to only look through 1 of these lists if it can (eg youre only looking for mobs)
 	//so by representing every hearing contents on a turf with a single /mob/oranges_ear containing references to all of them, we are:
 	//1. making view() only go through the smallest of the two linked lists per turf, which contains the type we're looking for at the end
 	//2. typechecking all mobs in the output to only actually return mobs of type /mob/oranges_ear
 	//on a whole this can outperform iterating through all movables in view() by ~2x especially when hearables are a tiny percentage of movables in view
-	for(var/mob/oranges_ear/ear in view(view_radius, center_turf))
+	//using hearers is a further optimization of that because for our purposes its the same as view except we dont have to set center's luminosity to 6 and then unset it
+	for(var/mob/oranges_ear/ear in hearers(view_radius, center_turf))
 		. += ear.references
 
 	for(var/mob/oranges_ear/remaining_ear as anything in assigned_oranges_ears)//we need to clean up our mess
 		remaining_ear.unassign()
 
-	center_turf.luminosity = old_luminosity
+	return .
+
+/**
+ * The exact same as get_hearers_in_view, but not limited by visibility. Does no filtering for traits, line of sight, or any other such criteria.
+ * Filtering is intended to be done by whatever calls this function.
+ *
+ * This function exists to allow for mobs to hear speech without line of sight, if such a thing is needed.
+ *
+ * * radius - what radius search circle we are using, worse performance as this increases
+ * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ */
+/proc/get_hearers_in_range(range, atom/source)
+	var/turf/center_turf = get_turf(source)
+	if(!center_turf)
+		return
+
+	. = list()
+
+	if(range <= 0)//special case for if only source cares
+		for(var/atom/movable/target as anything in center_turf)
+			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			if(recursive_contents)
+				. += recursive_contents
+		return .
+
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, range)
+
+	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
+		return .
+
+	for(var/atom/movable/hearable as anything in hearables_from_grid)
+		if (get_dist(center_turf, hearable) <= range)
+			. += hearable
+
 	return .
 
 /**
@@ -188,13 +214,13 @@
 ///Calculate if two atoms are in sight, returns TRUE or FALSE
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
-	if(X1==X2)
-		if(Y1==Y2)
+	if(X1 == X2)
+		if(Y1 == Y2)
 			return TRUE //Light cannot be blocked on same tile
 		else
 			var/s = SIGN(Y2-Y1)
 			Y1+=s
-			while(Y1!=Y2)
+			while(Y1 != Y2)
 				T=locate(X1,Y1,Z)
 				if(IS_OPAQUE_TURF(T))
 					return FALSE
@@ -206,7 +232,7 @@
 		var/signY = SIGN(Y2-Y1)
 		if(X1<X2)
 			b+=m
-		while(X1!=X2 || Y1!=Y2)
+		while(X1 != X2 || Y1 != Y2)
 			if(round(m*X1+b-Y1))
 				Y1+=signY //Line exits tile vertically
 			else
@@ -280,8 +306,7 @@
 	return turfs
 
 ///Returns a list of turfs around a center based on view()
-/proc/circle_view_turfs(center=usr,radius=3) //Is there even a diffrence between this proc and circle_range_turfs()?
-
+/proc/circle_view_turfs(center=usr,radius=3) //Is there even a diffrence between this proc and circle_range_turfs()? // Yes
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius + 0.5)
@@ -292,6 +317,31 @@
 		if(dx * dx + dy * dy <= rsq)
 			turfs += checked_turf
 	return turfs
+
+///Returns the list of turfs around the outside of a center based on RANGE_TURFS()
+/proc/border_diamond_range_turfs(atom/center = usr, radius = 3)
+	var/turf/center_turf = get_turf(center)
+	var/list/turfs = list()
+
+	for(var/turf/checked_turf as anything in RANGE_TURFS(radius, center_turf))
+		var/dx = checked_turf.x - center_turf.x
+		var/dy = checked_turf.y - center_turf.y
+		var/abs_sum = abs(dx) + abs(dy)
+		if(abs_sum == radius)
+			turfs += checked_turf
+	return turfs
+
+///Returns a slice of a list of turfs, defined by the ones that are inside the inner/outer angle's bounds
+/proc/slice_off_turfs(atom/center, list/turf/turfs, inner_angle, outer_angle)
+	var/turf/center_turf = get_turf(center)
+	var/list/sliced_turfs = list()
+
+	for(var/turf/checked_turf as anything in turfs)
+		var/angle_to = get_angle(center_turf, checked_turf)
+		if(angle_to < inner_angle || angle_to > outer_angle)
+			continue
+		sliced_turfs += checked_turf
+	return sliced_turfs
 
 /**
  * Get a bounding box of a list of atoms.
@@ -324,19 +374,27 @@
 
 ///Returns the open turf next to the center in a specific direction
 /proc/get_open_turf_in_dir(atom/center, dir)
-	var/turf/open/get_turf = get_ranged_target_turf(center, dir, 1)
+	var/turf/open/get_turf = get_step(center, dir)
 	if(istype(get_turf))
 		return get_turf
 
 ///Returns a list with all the adjacent open turfs. Clears the list of nulls in the end.
 /proc/get_adjacent_open_turfs(atom/center)
-	. = list(
-		get_open_turf_in_dir(center, NORTH),
-		get_open_turf_in_dir(center, SOUTH),
-		get_open_turf_in_dir(center, EAST),
-		get_open_turf_in_dir(center, WEST)
-		)
-	list_clear_nulls(.)
+	var/list/hand_back = list()
+	// Inlined get_open_turf_in_dir, just to be fast
+	var/turf/open/new_turf = get_step(center, NORTH)
+	if(istype(new_turf))
+		hand_back += new_turf
+	new_turf = get_step(center, SOUTH)
+	if(istype(new_turf))
+		hand_back += new_turf
+	new_turf = get_step(center, EAST)
+	if(istype(new_turf))
+		hand_back += new_turf
+	new_turf = get_step(center, WEST)
+	if(istype(new_turf))
+		hand_back += new_turf
+	return hand_back
 
 ///Returns a list with all the adjacent areas by getting the adjacent open turfs
 /proc/get_adjacent_open_areas(atom/center)
@@ -384,3 +442,31 @@
 		if(our_area == get_area(carbon))
 			return FALSE
 	return TRUE
+
+/**
+ * Behaves like the orange() proc, but only looks in the outer range of the function (The "peel" of the orange).
+ * This is useful for things like checking if a mob is in a certain range, but not within a smaller range.
+ *
+ * @params outer_range - The outer range of the cicle to pull from.
+ * @params inner_range - The inner range of the circle to NOT pull from.
+ * @params center - The center of the circle to pull from, can be an atom (we'll apply get_turf() to it within circle_x_turfs procs.)
+ * @params view_based - If TRUE, we'll use circle_view_turfs instead of circle_range_turfs procs.
+ */
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+	if(inner_range > outer_range) // If the inner range is larger than the outer range, you're using this wrong.
+		CRASH("Turf peel inner range is larger than outer range!")
+	var/list/peel = list()
+	var/list/outer
+	var/list/inner
+	if(view_based)
+		outer = circle_view_turfs(center, outer_range)
+		inner = circle_view_turfs(center, inner_range)
+	else
+		outer = circle_range_turfs(center, outer_range)
+		inner = circle_range_turfs(center, inner_range)
+	for(var/turf/possible_spawn as anything in outer)
+		if(possible_spawn in inner)
+			continue
+		peel += possible_spawn
+	return peel
+

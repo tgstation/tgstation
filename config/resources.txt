@@ -39,3 +39,8 @@ EXTERNAL_RSC_URLS http://tgstation13.download/byond/tgstationv2.zip
 # if you want to test this locally, you simpily run the `localhost-asset-webroot-server.py` python3 script to host assets stored in `data/asset-store/` via http://localhost:58715/
 #ASSET_CDN_URL http://localhost:58715/
 
+# CDN webservers must provide CORS headers, or TGUI will break and not be able to load all elements. The following example is for IIS:
+# <add name="Access-Control-Allow-Origin" value="*" />
+# <add name="Vary" value="Origin" />
+# <add name="Access-Control-Allow-Methods" value="GET, POST, OPTIONS" />
+# <add name="Access-Control-Max-Age" value="0" />

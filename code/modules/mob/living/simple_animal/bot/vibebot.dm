@@ -1,16 +1,17 @@
 /mob/living/simple_animal/bot/vibebot
 	name = "\improper Vibebot"
 	desc = "A little robot. It's just vibing, doing its thing."
-	icon = 'icons/mob/aibots.dmi'
-	icon_state = "vibebot"
+	icon = 'icons/mob/silicon/aibots.dmi'
+	icon_state = "vibebot1"
+	base_icon_state = "vibebot"
 	density = FALSE
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
 	pass_flags = PASSMOB | PASSFLAPS
-	light_system = MOVABLE_LIGHT
-	light_range = 7
-	light_power = 3
+	light_system = OVERLAY_LIGHT
+	light_range = 6
+	light_power = 2
 
 	hackables = "vibing scanners"
 	radio_key = /obj/item/encryptionkey/headset_service
@@ -18,15 +19,16 @@
 	bot_type = VIBE_BOT
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	path_image_color = "#2cac12"
+	possessed_message = "You are a vibebot! Maintain the station's vibes to the best of your ability!"
 
 	///The vibe ability given to vibebots, so sentient ones can still change their color.
 	var/datum/action/innate/vibe/vibe_ability
 
 /mob/living/simple_animal/bot/vibebot/Initialize(mapload)
 	. = ..()
-	update_appearance()
 	vibe_ability = new(src)
 	vibe_ability.Grant(src)
+	update_appearance(UPDATE_ICON)
 
 /mob/living/simple_animal/bot/vibebot/Destroy()
 	QDEL_NULL(vibe_ability)
@@ -61,10 +63,10 @@
 /datum/action/innate/vibe
 	name = "Vibe"
 	desc = "LMB: Change vibe color. RMB: Reset vibe color."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "funk"
 
-/datum/action/innate/vibe/IsAvailable()
+/datum/action/innate/vibe/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

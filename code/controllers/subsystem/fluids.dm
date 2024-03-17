@@ -20,8 +20,9 @@
 SUBSYSTEM_DEF(fluids)
 	name = "Fluid"
 	wait = 0 // Will be autoset to whatever makes the most sense given the spread and effect waits.
-	flags = SS_BACKGROUND|SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME|RUNLEVEL_POSTGAME
+	priority = FIRE_PRIORITY_FLUIDS
 
 	// Fluid spread processing:
 	/// The amount of time (in deciseconds) before a fluid node is created and when it spreads.
@@ -34,8 +35,6 @@ SUBSYSTEM_DEF(fluids)
 	var/spread_bucket_index
 	/// The set of fluid nodes we are currently processing spreading for.
 	var/list/currently_spreading
-	/// Whether the subsystem has resumed spreading fluid.
-	var/resumed_spreading
 
 	// Fluid effect processing:
 	/// The amount of time (in deciseconds) between effect processing ticks for each fluid node.
@@ -48,14 +47,12 @@ SUBSYSTEM_DEF(fluids)
 	var/effect_bucket_index
 	/// The set of fluid nodes we are currently processing effects for.
 	var/list/currently_processing
-	/// Whether the subsystem has resumed processing fluid effects.
-	var/resumed_effect_processing
 
-/datum/controller/subsystem/fluids/Initialize(start_timeofday)
+/datum/controller/subsystem/fluids/Initialize()
 	initialize_waits()
 	initialize_spread_carousel()
 	initialize_effect_carousel()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Initializes the subsystem waits.
@@ -118,59 +115,52 @@ SUBSYSTEM_DEF(fluids)
 
 
 /datum/controller/subsystem/fluids/fire(resumed)
-	var/delta_time
+	var/seconds_per_tick
 	var/cached_bucket_index
 	var/list/obj/effect/particle_effect/fluid/currentrun
+	// Ok so like I get the lighting style splittick but why are we doing this churn thing
+	// It seems like a bad idea for processing to get out of step with spreading
 	MC_SPLIT_TICK_INIT(2)
 
-	MC_SPLIT_TICK // Start processing fluid spread:
-	if(!resumed_spreading)
+	MC_SPLIT_TICK // Start processing fluid spread (we take a lot of cpu for ourselves, spreading is more important after all)
+	if(!resumed)
 		spread_bucket_index = WRAP_UP(spread_bucket_index, num_spread_buckets)
 		currently_spreading = spread_carousel[spread_bucket_index]
 		spread_carousel[spread_bucket_index] = list() // Reset the bucket so we don't process an _entire station's worth of foam_ spreading every 2 ticks when the foam flood event happens.
-		resumed_spreading = TRUE
 
-	delta_time = spread_wait / (1 SECONDS)
+	seconds_per_tick = spread_wait / (1 SECONDS)
 	currentrun = currently_spreading
 	while(currentrun.len)
 		var/obj/effect/particle_effect/fluid/to_spread = currentrun[currentrun.len]
 		currentrun.len--
 
 		if(!QDELETED(to_spread))
-			to_spread.spread(delta_time)
+			to_spread.spread(seconds_per_tick)
 			to_spread.spread_bucket = null
 
 		if (MC_TICK_CHECK)
 			break
 
-	if(!currentrun.len)
-		resumed_spreading = FALSE
-
 	MC_SPLIT_TICK // Start processing fluid effects:
-	if(!resumed_effect_processing)
+	if(!resumed)
 		effect_bucket_index = WRAP_UP(effect_bucket_index, num_effect_buckets)
 		var/list/tmp_list = effect_carousel[effect_bucket_index]
 		currently_processing = tmp_list.Copy()
-		resumed_effect_processing = TRUE
 
-	delta_time = effect_wait / (1 SECONDS)
+	seconds_per_tick = effect_wait / (1 SECONDS)
 	cached_bucket_index = effect_bucket_index
 	currentrun = currently_processing
 	while(currentrun.len)
 		var/obj/effect/particle_effect/fluid/to_process = currentrun[currentrun.len]
 		currentrun.len--
 
-		if (QDELETED(to_process) || to_process.process(delta_time) == PROCESS_KILL)
+		if (QDELETED(to_process) || to_process.process(seconds_per_tick) == PROCESS_KILL)
 			effect_carousel[cached_bucket_index] -= to_process
 			to_process.effect_bucket = null
 			to_process.datum_flags &= ~DF_ISPROCESSING
 
 		if (MC_TICK_CHECK)
 			break
-
-	if(!currentrun.len)
-		resumed_effect_processing = FALSE
-
 
 /**
  * Queues a fluid node to spread later after one full carousel rotation.

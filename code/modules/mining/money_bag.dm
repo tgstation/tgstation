@@ -2,6 +2,7 @@
 
 /obj/item/storage/bag/money
 	name = "money bag"
+	desc = "A bag for storing your profits."
 	icon_state = "moneybag"
 	worn_icon_state = "moneybag"
 	force = 10
@@ -14,11 +15,9 @@
 	. = ..()
 	if(prob(20))
 		icon_state = "moneybagalt"
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_items = 40
-	STR.max_combined_w_class = 40
-	STR.set_holdable(list(/obj/item/coin, /obj/item/stack/spacecash, /obj/item/holochip))
+	atom_storage.max_slots = 40
+	atom_storage.max_specific_storage = 40
+	atom_storage.set_holdable(list(/obj/item/coin, /obj/item/stack/spacecash, /obj/item/holochip))
 
 /obj/item/storage/bag/money/vault/PopulateContents()
 	new /obj/item/coin/silver(src)

@@ -5,9 +5,9 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
-	supervisors = "the head of personnel"
-	selection_color = "#bbe291"
+	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook
@@ -25,24 +25,31 @@
 		)
 
 	family_heirlooms = list(
-		/obj/item/reagent_containers/food/condiment/saltshaker,
+		/obj/item/reagent_containers/condiment/saltshaker,
 		/obj/item/kitchen/rollingpin,
-		/obj/item/clothing/head/chefhat,
+		/obj/item/clothing/head/utility/chefhat,
 	)
 
+	// Adds up to 100, don't mess it up
 	mail_goodies = list(
-		/obj/item/storage/box/ingredients/random = 80,
-		/obj/item/reagent_containers/glass/bottle/caramel = 20,
-		/obj/item/reagent_containers/food/condiment/flour = 20,
-		/obj/item/reagent_containers/food/condiment/rice = 20,
-		/obj/item/reagent_containers/food/condiment/enzyme = 15,
-		/obj/item/reagent_containers/food/condiment/soymilk = 15,
+		/obj/item/storage/box/ingredients/random = 40,
+		/obj/item/reagent_containers/cup/bottle/caramel = 7,
+		/obj/item/reagent_containers/condiment/flour = 7,
+		/obj/item/reagent_containers/condiment/rice = 7,
+		/obj/item/reagent_containers/condiment/ketchup = 7,
+		/obj/item/reagent_containers/condiment/enzyme = 7,
+		/obj/item/reagent_containers/condiment/soymilk = 7,
+		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/kitchen/tongs = 6,
 		/obj/item/knife/kitchen = 4,
-		/obj/item/knife/butcher = 2
+		/obj/item/knife/butcher = 2,
 	)
 
 	rpg_title = "Tavern Chef"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	alternate_titles = list(
+		JOB_CHEF,
+	)
+	job_flags = STATION_JOB_FLAGS
 
 /datum/job/cook/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
@@ -60,15 +67,15 @@
 	jobtype = /datum/job/cook
 
 	id_trim = /datum/id_trim/job/cook/chef
-	uniform = /obj/item/clothing/under/rank/civilian/chef
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
 	backpack_contents = list(
 		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
 	)
-	belt = /obj/item/modular_computer/tablet/pda/cook
+	belt = /obj/item/modular_computer/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
-	head = /obj/item/clothing/head/chefhat
+	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 	skillchips = list(/obj/item/skillchip/job/chef)
@@ -83,6 +90,17 @@
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
 			other_chefs.cooks++
+
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	// Update PDA to match possible new trim.
+	var/obj/item/card/id/worn_id = user.wear_id
+	var/obj/item/modular_computer/pda/pda = user.get_item_by_slot(pda_slot)
+	if(!istype(worn_id) || !istype(pda))
+		return
+	var/assignment = worn_id.get_trim_assignment()
+	if(!isnull(assignment))
+		pda.imprint_id(user.real_name, assignment)
 
 /datum/outfit/job/cook/get_types_to_preload()
 	. = ..()

@@ -90,8 +90,14 @@
 	input = /obj/item/food/grown/potato/wedges
 	output = /obj/item/food/fries
 
+/datum/food_processor_process/tempeh
+	input = /obj/item/food/tempehstarter
+	output = /obj/item/food/tempeh
+	food_multiplier = 2
+
 /datum/food_processor_process/spidereggs
 	input = /obj/item/food/spidereggs
+	blacklist = list(/obj/item/food/spidereggs/processed)
 	output = /obj/item/food/spidereggs/processed
 
 /datum/food_processor_process/potato

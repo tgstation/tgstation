@@ -18,16 +18,16 @@ effective or pretty fucking useless.
 /obj/item/batterer
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "batterer"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
 	var/times_used = 0 //Number of times it's been used.
 	var/max_uses = 2
@@ -35,6 +35,7 @@ effective or pretty fucking useless.
 
 /obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user) return
+
 	if(times_used >= max_uses)
 		to_chat(user, span_danger("The mind batterer has been burnt out!"))
 		return
@@ -75,30 +76,36 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 
-/obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
+/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!stealth || !irradiate)
-		..()
-	if(!irradiate)
-		return
-	var/mob/living/carbon/human/human_target = M
+		. = ..()
+
+	if(!ishuman(interacting_with) || !irradiate)
+		return .
+
+	var/mob/living/carbon/human/human_target = interacting_with
 	if(istype(human_target) && !used && SSradiation.wearing_rad_protected_clothing(human_target)) //intentionally not checking for TRAIT_RADIMMUNE here so that tatortot can still fuck up and waste their cooldown.
-		to_chat(user, span_warning("[M]'s clothing is fully protecting [M.p_them()] from irradiation!"))
-		return
+		to_chat(user, span_warning("[interacting_with]'s clothing is fully protecting [interacting_with.p_them()] from irradiation!"))
+		return . | ITEM_INTERACT_BLOCKING
+
 	if(!used)
-		log_combat(user, M, "irradiated", src)
+		log_combat(user, interacting_with, "irradiated", src)
 		var/cooldown = get_cooldown()
 		used = TRUE
 		icon_state = "health1"
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
-		to_chat(user, span_warning("Successfully irradiated [M]."))
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
-		return
+		to_chat(user, span_warning("Successfully irradiated [interacting_with]."))
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (wavelength+(intensity*4))*5)
+		return . | ITEM_INTERACT_SUCCESS
+
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
+	return . | ITEM_INTERACT_BLOCKING
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
 	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
+
 	if(passed_intensity >= 5)
 		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
 
@@ -140,117 +147,190 @@ effective or pretty fucking useless.
 		if("irradiate")
 			irradiate = !irradiate
 			. = TRUE
+
 		if("stealth")
 			stealth = !stealth
 			. = TRUE
+
 		if("scanmode")
 			scanmode = !scanmode
 			. = TRUE
+
 		if("radintensity")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "min")
 				target = 1
 				. = TRUE
+
 			else if(target == "max")
 				target = 20
 				. = TRUE
+
 			else if(adjust)
 				target = intensity + adjust
 				. = TRUE
+
 			else if(text2num(target) != null)
 				target = text2num(target)
 				. = TRUE
+
 			if(.)
 				target = round(target)
 				intensity = clamp(target, 1, 20)
+
 		if("radwavelength")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "min")
 				target = 0
 				. = TRUE
+
 			else if(target == "max")
 				target = 120
 				. = TRUE
+
 			else if(adjust)
 				target = wavelength + adjust
 				. = TRUE
+
 			else if(text2num(target) != null)
 				target = text2num(target)
 				. = TRUE
+
 			if(.)
 				target = round(target)
 				wavelength = clamp(target, 0, 120)
 
+/datum/action/item_action/stealth_mode
+	name = "Toggle Stealth"
+	desc = "Makes you invisible to the naked eye."
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "ninja_cloak"
+	/// Whether stealth is active or not
+	var/stealth_engaged = FALSE
+	/// The amount of time the stealth mode can be active for, drains to 0 when active
+	var/charge = 30 SECONDS
+	/// The maximum amount of time the stealth mode can be active for
+	var/max_charge = 30 SECONDS
+	/// The minimum alpha value for the stealth mode
+	var/min_alpha = 0
+	/// Whether the stealth mode recharges while active
+	/// if TRUE standing in darkness will recharge even while active
+	/// if FALSE it will not uncharge, but not recharge while in darkness
+	var/recharge_while_active = TRUE
+
+/datum/action/item_action/stealth_mode/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return stealth_engaged
+
+/datum/action/item_action/stealth_mode/Grant(mob/grant_to)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/action/item_action/stealth_mode/Remove(mob/remove_from)
+	if(!isnull(owner) && stealth_engaged)
+		stealth_off()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/datum/action/item_action/stealth_mode/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+
+	if(stealth_engaged)
+		stealth_off()
+	else
+		stealth_on()
+
+/datum/action/item_action/stealth_mode/proc/stealth_on()
+	animate(owner, alpha = get_alpha(), time = 0.5 SECONDS)
+	apply_wibbly_filters(owner)
+	stealth_engaged = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
+	owner.balloon_alert(owner, "stealth mode engaged")
+
+/datum/action/item_action/stealth_mode/proc/stealth_off()
+	owner.alpha = initial(owner.alpha)
+	remove_wibbly_filters(owner)
+	stealth_engaged = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
+	owner.balloon_alert(owner, "stealth mode disengaged")
+
+/datum/action/item_action/stealth_mode/proc/get_alpha()
+	return clamp(255 - (255 * charge / max_charge), min_alpha, 255)
+
+/datum/action/item_action/stealth_mode/process(seconds_per_tick)
+	if(!stealth_engaged)
+		// Recharge over time
+		charge = min(max_charge, charge + (max_charge * 0.04) * seconds_per_tick)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+		return
+
+	if(charge <= 0)
+		stealth_off()
+		return
+
+	var/turf/our_turf = get_turf(owner)
+	var/lumcount = our_turf?.get_lumcount() || 0
+	if(lumcount > 0.3)
+		// Decay charge while invisible+ in the light
+		charge = max(0, charge - (max_charge * 0.05) * seconds_per_tick)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+	else if(recharge_while_active)
+		// Return charage while invisible + in the darkness + recharge_while_active
+		charge = min(max_charge, charge + (max_charge * 0.1) * seconds_per_tick)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+	animate(owner, alpha = get_alpha(), time = 1 SECONDS, flags = ANIMATION_PARALLEL)
+
+/datum/action/item_action/stealth_mode/update_button_status(atom/movable/screen/movable/action_button/current_button, force)
+	. = ..()
+	current_button.maptext_x = 9
+	current_button.maptext = MAPTEXT_TINY_UNICODE("[round(charge / max_charge * 100, 0.01)]%")
+
+/datum/action/item_action/stealth_mode/weaker
+	charge = 15 SECONDS
+	max_charge = 15 SECONDS
+	min_alpha = 20
+	recharge_while_active = FALSE
+
 /obj/item/shadowcloak
 	name = "cloaker belt"
-	desc = "Makes you invisible for short periods of time. Recharges in darkness."
+	desc = "Makes you invisible for short periods of time. Recharges in darkness, even while active."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utility"
 	inhand_icon_state = "utility"
+	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	worn_icon_state = "utility"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
-
-	var/mob/living/carbon/human/user = null
-	var/charge = 300
-	var/max_charge = 300
-	var/on = FALSE
-	actions_types = list(/datum/action/item_action/toggle)
-
-/obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-		if(!on)
-			Activate(usr)
-		else
-			Deactivate()
-	return
+	actions_types = list(/datum/action/item_action/stealth_mode)
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BELT)
-		return 1
+	return slot & slot_flags
 
-/obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
-	if(!user)
-		return
-	to_chat(user, span_notice("You activate [src]."))
-	src.user = user
-	START_PROCESSING(SSobj, src)
-	on = TRUE
+/obj/item/shadowcloak/weaker
+	name = "stealth belt"
+	desc = "Makes you nigh-invisible to the naked eye for a short period of time. \
+		Lasts indefinitely in darkness, but will not recharge unless inactive."
+	actions_types = list(/datum/action/item_action/stealth_mode/weaker)
 
-/obj/item/shadowcloak/proc/Deactivate()
-	to_chat(user, span_notice("You deactivate [src]."))
-	STOP_PROCESSING(SSobj, src)
-	if(user)
-		user.alpha = initial(user.alpha)
-	on = FALSE
-	user = null
-
-/obj/item/shadowcloak/dropped(mob/user)
-	..()
-	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
-
-/obj/item/shadowcloak/process(delta_time)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
-		return
-	var/turf/T = get_turf(src)
-	if(on)
-		var/lumcount = T.get_lumcount()
-		if(lumcount > 0.3)
-			charge = max(0, charge - 12.5 * delta_time)//Quick decrease in light
-		else
-			charge = min(max_charge, charge + 25 * delta_time) //Charge in the dark
-		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
-
+/// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
+/proc/is_within_radio_jammer_range(atom/source)
+	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
+		if(IN_GIVEN_RANGE(source, jammer, jammer.range))
+			return TRUE
+	return FALSE
 
 /obj/item/jammer
 	name = "radio jammer"
 	desc = "Device used to disrupt nearby radio communication."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
 	var/range = 12
@@ -260,9 +340,15 @@ effective or pretty fucking useless.
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
+
 	else
 		GLOB.active_jammers -= src
+
 	update_appearance()
+
+/obj/item/jammer/Destroy()
+	GLOB.active_jammers -= src
+	return ..()
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
@@ -276,16 +362,28 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(attacking_item.tool_behaviour == TOOL_WRENCH && user.combat_mode && attacking_item.use_tool(src, user, 2 SECONDS, volume = 50))
-		user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-			span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
-		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-		var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
-		set_faction(turret, user)
-		turret.toolbox = src
-		forceMove(turret)
+	if(!istype(attacking_item, /obj/item/wrench/combat))
+		return ..()
+
+	if(!user.combat_mode)
 		return
-	return ..()
+
+	if(!attacking_item.toolspeed)
+		return
+
+	balloon_alert(user, "constructing...")
+	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+		return
+
+	balloon_alert(user, "constructed!")
+	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
+		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+
+	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+	set_faction(turret, user)
+	turret.toolbox = src
+	forceMove(turret)
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
@@ -321,29 +419,51 @@ effective or pretty fucking useless.
 /obj/machinery/porta_turret/syndicate/toolbox/target(atom/movable/target)
 	if(!target)
 		return
+
 	if(shootAt(target))
 		setDir(get_dir(base, target))
+
 	return TRUE
 
 /obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(istype(attacking_item, /obj/item/wrench/combat))
-		if(user.combat_mode && attacking_item.toolspeed && attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
-			deconstruct(TRUE)
-			attacking_item.play_tool_sound(src, 50)
-		else if(!user.combat_mode)
-			to_chat(user, span_notice("You start repairing [src]..."))
-			while(atom_integrity != max_integrity && attacking_item.toolspeed && attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-				repair_damage(10)
-		return
-	return ..()
+	if(!istype(attacking_item, /obj/item/wrench/combat))
+		return ..()
 
-/obj/machinery/porta_turret/syndicate/toolbox/deconstruct(disassembled)
+	if(!attacking_item.toolspeed)
+		return
+
+	if(user.combat_mode)
+		balloon_alert(user, "deconstructing...")
+		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+			return
+
+		deconstruct(TRUE)
+		attacking_item.play_tool_sound(src, 50)
+		balloon_alert(user, "deconstructed!")
+
+	else
+		if(atom_integrity == max_integrity)
+			balloon_alert(user, "already repaired!")
+			return
+
+		balloon_alert(user, "repairing...")
+		while(atom_integrity != max_integrity)
+			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+				return
+
+			repair_damage(10)
+
+		balloon_alert(user, "repaired!")
+
+/obj/machinery/porta_turret/syndicate/toolbox/on_deconstruction(disassembled)
 	if(disassembled)
 		var/atom/movable/old_toolbox = toolbox
 		toolbox = null
 		old_toolbox.forceMove(drop_location())
+
 	else
 		new /obj/effect/gibspawner/robot(drop_location())
+
 	return ..()
 
 /obj/machinery/porta_turret/syndicate/toolbox/Destroy()
@@ -356,9 +476,10 @@ effective or pretty fucking useless.
 		toolbox = null
 		qdel(src)
 
-/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user)
+/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user, datum/ui_state/state)
 	if(faction_check(user.faction, faction))
 		return ..()
+
 	return UI_CLOSE
 
 /obj/projectile/bullet/toolbox_turret

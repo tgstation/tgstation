@@ -23,10 +23,10 @@
 	if(!.)
 		return
 	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
-	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
+		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_power_cost)
 
@@ -36,7 +36,7 @@
 		return
 	if(bumpoff)
 		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
 
 /obj/item/mod/module/stealth/proc/unstealth(datum/source)
@@ -57,7 +57,7 @@
 /obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
-	if(projectile.nodamage)
+	if(!projectile.is_hostile_projectile())
 		return
 	unstealth(source)
 
@@ -76,6 +76,18 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
+/obj/item/mod/module/stealth/ninja/on_activation()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+
+/obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+
 ///Camera Vision - Prevents flashes, blocks tracking.
 /obj/item/mod/module/welding/camera_vision
 	name = "MOD camera vision module"
@@ -90,7 +102,7 @@
 
 /obj/item/mod/module/welding/camera_vision/on_suit_activation()
 	. = ..()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 
 /obj/item/mod/module/welding/camera_vision/on_suit_deactivation(deleting = FALSE)
 	. = ..()
@@ -131,10 +143,10 @@
 	var/door_hack_counter = 0
 
 /obj/item/mod/module/hacker/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/hack)
+	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(hack))
 
 /obj/item/mod/module/hacker/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK)
 
 /obj/item/mod/module/hacker/proc/hack(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -206,8 +218,8 @@
 
 /obj/item/mod/module/weapon_recall/proc/set_weapon(obj/item/weapon)
 	linked_weapon = weapon
-	RegisterSignal(linked_weapon, COMSIG_MOVABLE_IMPACT, .proc/catch_weapon)
-	RegisterSignal(linked_weapon, COMSIG_PARENT_QDELETING, .proc/deleted_weapon)
+	RegisterSignal(linked_weapon, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(catch_weapon))
+	RegisterSignal(linked_weapon, COMSIG_QDELETING, PROC_REF(deleted_weapon))
 
 /obj/item/mod/module/weapon_recall/proc/recall_weapon(caught = FALSE)
 	linked_weapon.forceMove(get_turf(src))
@@ -235,7 +247,7 @@
 		return
 	if(hit_atom != mod.wearer)
 		return
-	INVOKE_ASYNC(src, .proc/recall_weapon, TRUE)
+	INVOKE_ASYNC(src, PROC_REF(recall_weapon), TRUE)
 	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
 
 /obj/item/mod/module/weapon_recall/proc/deleted_weapon(obj/item/source)
@@ -257,9 +269,13 @@
 	. = ..()
 	if(. != MOD_CANCEL_ACTIVATE || !isliving(user))
 		return
+	if(mod.ai_assistant == user)
+		to_chat(mod.ai_assistant, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
+		return
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
-	living_user.gib()
+	living_user.investigate_log("has been gibbed by using a MODsuit equipped with [src].", INVESTIGATE_DEATHS)
+	living_user.gib(DROP_ALL_REMAINS)
 
 /obj/item/mod/module/dna_lock/reinforced/on_emp(datum/source, severity)
 	return
@@ -283,85 +299,99 @@
 	empulse(src, heavy_range = 4, light_range = 6)
 	drain_power(use_power_cost)
 
-///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
-/obj/item/mod/module/status_readout
-	name = "MOD status readout module"
-	desc = "A once-common module, this technology went unfortunately out of fashion; \
-		and right into the arachnid grip of the Spider Clan. This hooks into the suit's spine, \
-		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
-		and even useful information such as their overall health and wellness."
-	icon_state = "status"
-	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
-	incompatible_modules = list(/obj/item/mod/module/status_readout)
-	tgui_id = "status_readout"
-
-/obj/item/mod/module/status_readout/add_ui_data()
-	. = ..()
-	.["statustime"] = station_time_timestamp()
-	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer?.health || 0
-	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["statusburn"] = mod.wearer?.getFireLoss() || 0
-	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
-	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
-	.["statustemp"] = mod.wearer?.bodytemperature || 0
-	.["statusnutrition"] = mod.wearer?.nutrition || 0
-	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer?.dna.unique_enzymes
-	.["statusviruses"] = null
-	if(!length(mod.wearer?.diseases))
-		return
-	var/list/viruses = list()
-	for(var/datum/disease/virus as anything in mod.wearer.diseases)
-		var/list/virus_data = list()
-		virus_data["name"] = virus.name
-		virus_data["type"] = virus.spread_text
-		virus_data["stage"] = virus.stage
-		virus_data["maxstage"] = virus.max_stages
-		virus_data["cure"] = virus.cure_text
-		viruses += list(virus_data)
-	.["statusviruses"] = viruses
+/// Ninja Status Readout - Like the normal status display (see the base type), but with a clock.
+/obj/item/mod/module/status_readout/ninja
+	name = "MOD Spider Clan status readout module"
+	desc = "A once-common module, this technology unfortunately went out of fashion in the safer regions of space; \
+		and, according to the extra markings on this particular unit's casing, right into the arachnid grip of the Spider Clan. \
+		Like other similar units, this one hooks into the suit's spine, and is capable of capturing and displaying \
+		all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
+		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
+	display_time = TRUE
+	death_sound = null
+	death_sound_volume = null
 
 ///Energy Net - Ensnares enemies in a net that prevents movement.
 /obj/item/mod/module/energy_net
 	name = "MOD energy net module"
 	desc = "A custom-built net-thrower. While conventional implementations of this capturing device \
-		tilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
+		utilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
 		trapping field capable of immobilizing even the strongest opponents."
 	icon_state = "energy_net"
 	removable = FALSE
 	module_type = MODULE_ACTIVE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
-	cooldown_time = 1.5 SECONDS
+	cooldown_time = 5 SECONDS
+	/// List of all energy nets this module made.
+	var/list/energy_nets = list()
+
+/obj/item/mod/module/energy_net/on_suit_deactivation(deleting)
+	for(var/obj/structure/energy_net/net as anything in energy_nets)
+		net.atom_destruction(ENERGY)
 
 /obj/item/mod/module/energy_net/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
-		balloon_alert(mod.wearer, "invalid target!")
-		return
-	var/mob/living/living_target = target
-	if(locate(/obj/structure/energy_net) in get_turf(living_target))
-		balloon_alert(mod.wearer, "already trapped!")
-		return
-	for(var/turf/between_turf as anything in get_line(get_turf(mod.wearer), get_turf(living_target)))
-		if(between_turf.density)
-			balloon_alert(mod.wearer, "not through obstacles!")
-			return
-	if(IS_SPACE_NINJA(mod.wearer))
+	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
-	mod.wearer.Beam(living_target, "n_beam", time = 1.5 SECONDS)
-	var/obj/structure/energy_net/net = new /obj/structure/energy_net(living_target.drop_location())
-	net.affected_mob = living_target
-	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"), span_notice("You caught [living_target] with an energy net!"))
-	if(living_target.buckled)
-		living_target.buckled.unbuckle_mob(living_target, force = TRUE)
-	net.buckle_mob(living_target, force = TRUE)
+	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
+	net.preparePixelProjectile(target, mod.wearer)
+	net.firer = mod.wearer
+	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
+
+/obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)
+	energy_nets += net
+	RegisterSignal(net, COMSIG_QDELETING, PROC_REF(remove_net))
+
+/obj/item/mod/module/energy_net/proc/remove_net(obj/structure/energy_net/net)
+	SIGNAL_HANDLER
+	energy_nets -= net
+
+/obj/projectile/energy_net
+	name = "energy net"
+	icon_state = "net_projectile"
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	damage = 0
+	range = 9
+	hitsound = 'sound/items/fultext_deploy.ogg'
+	hitsound_wall = 'sound/items/fultext_deploy.ogg'
+	/// Reference to the beam following the projectile.
+	var/line
+	/// Reference to the energy net module.
+	var/datum/weakref/net_module
+
+/obj/projectile/energy_net/Initialize(mapload, net_module)
+	. = ..()
+	src.net_module = WEAKREF(net_module)
+
+/obj/projectile/energy_net/fire(setAngle)
+	if(firer)
+		line = firer.Beam(src, "net_beam", 'icons/obj/clothing/modsuit/mod_modules.dmi')
+	return ..()
+
+/obj/projectile/energy_net/on_hit(mob/living/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(!istype(target))
+		return
+	if(locate(/obj/structure/energy_net) in get_turf(target))
+		return
+	var/obj/structure/energy_net/net = new /obj/structure/energy_net(target.drop_location())
+	var/obj/item/mod/module/energy_net/module = net_module?.resolve()
+	if(module)
+		module.add_net(net)
+	firer?.visible_message(span_danger("[firer] caught [target] with an energy net!"), span_notice("You caught [target] with an energy net!"))
+	if(target.buckled)
+		target.buckled.unbuckle_mob(target, force = TRUE)
+	net.buckle_mob(target, force = TRUE)
+
+/obj/projectile/energy_net/Destroy()
+	QDEL_NULL(line)
+	return ..()
 
 ///Adrenaline Boost - Stops all stuns the ninja is affected with, increases his speed.
 /obj/item/mod/module/adrenaline_boost
@@ -375,6 +405,7 @@
 	icon_state = "adrenaline_boost"
 	removable = FALSE
 	module_type = MODULE_USABLE
+	allow_flags = MODULE_ALLOW_INCAPACITATED
 	incompatible_modules = list(/obj/item/mod/module/adrenaline_boost)
 	cooldown_time = 12 SECONDS
 	/// What reagent we need to refill?
@@ -406,13 +437,13 @@
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 	reagents.remove_reagent(reagent_required, reagents.total_volume * 0.75)
-	addtimer(CALLBACK(src, .proc/boost_aftereffects, mod.wearer), 7 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(boost_aftereffects), mod.wearer), 7 SECONDS)
 
 /obj/item/mod/module/adrenaline_boost/on_install()
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /obj/item/mod/module/adrenaline_boost/on_uninstall(deleting)
-	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
 
 /obj/item/mod/module/adrenaline_boost/attackby(obj/item/attacking_item, mob/user, params)
 	if(charge_boost(attacking_item, user))
@@ -432,7 +463,7 @@
 	if(reagents.has_reagent(reagent_required, reagent_required_amount))
 		balloon_alert(mod.wearer, "already charged!")
 		return FALSE
-	if(!attacking_item.reagents.trans_id_to(src, reagent_required, reagent_required_amount))
+	if(!attacking_item.reagents.trans_to(src, reagent_required_amount, target_id = reagent_required))
 		return FALSE
 	balloon_alert(mod.wearer, "charge [reagents.has_reagent(reagent_required, reagent_required_amount) ? "fully" : "partially"] reloaded")
 	return TRUE

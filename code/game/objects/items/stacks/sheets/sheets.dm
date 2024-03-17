@@ -1,7 +1,8 @@
 /obj/item/stack/sheet
 	name = "sheet"
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
+	icon_state = "sheet-metal_3"
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5
@@ -16,11 +17,27 @@
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
 	///What type of wall does this sheet spawn
 	var/walltype
+	/// whether this sheet can be sniffed by the material sniffer
+	var/sniffable = FALSE
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
+	if(sniffable && amount >= 10 && is_station_level(z))
+		GLOB.sniffable_sheets |= src
+
+/obj/item/stack/sheet/Destroy(force)
+	if(sniffable)
+		GLOB.sniffable_sheets -= src
+	return ..()
+
+/obj/item/stack/sheet/add(_amount)
+	. = ..()
+	if(sniffable && amount >= 10 && is_station_level(z))
+		GLOB.sniffable_sheets |= src
+
+/// removing from sniffable handled by the sniffer itself when it checks for targets
 
 /**
  * Facilitates sheets being smacked on the floor

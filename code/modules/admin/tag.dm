@@ -10,7 +10,7 @@
 		return
 
 	LAZYADD(tagged_datums, target_datum)
-	RegisterSignal(target_datum, COMSIG_PARENT_QDELETING, .proc/handle_tagged_del, override = TRUE)
+	RegisterSignal(target_datum, COMSIG_QDELETING, PROC_REF(handle_tagged_del), override = TRUE)
 	to_chat(owner, span_notice("[target_datum] has been tagged."))
 
 /// Get ahead of the curve with deleting
@@ -47,8 +47,7 @@
 					<font color='#ff3333'>[X.getBruteLoss()]</font> \
 					<font color='#ff9933'>[X.getFireLoss()]</font> \
 					<font color='#00cc66'>[X.getToxLoss()]</font> \
-					<font color='#00cccc'>[X.getOxyLoss()]</font>\
-					[X.getCloneLoss() ? " <font color='#1c3ac4'>[X.getCloneLoss()]</font>" : ""])"
+					<font color='#00cccc'>[X.getOxyLoss()]</font>"
 
 /// Display all of the tagged datums
 /datum/admins/proc/display_tags()

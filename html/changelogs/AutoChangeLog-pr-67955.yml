@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "the hookshot bounty hunter, when summoned as an ert team member, is no longer identical to the armoured bounty hunter."
-  - bugfix: "bounty hunter IDs are no longer invisible save for the trim"

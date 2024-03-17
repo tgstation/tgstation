@@ -4,7 +4,7 @@
 	force = 10
 	max_integrity = 100
 	resistance_flags = FLAMMABLE
-	icon = 'icons/obj/musician.dmi'
+	icon = 'icons/obj/art/musician.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/instruments_righthand.dmi'
 	/// Our song datum.
@@ -30,24 +30,11 @@
 	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
 		return STOP_PLAYING
 
-/obj/item/instrument/suicide_act(mob/user)
+/obj/item/instrument/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
-/obj/item/instrument/attack_self(mob/user)
-	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return TRUE
-	interact(user)
-
-/obj/item/instrument/interact(mob/user)
-	ui_interact(user)
-
-/obj/item/instrument/ui_interact(mob/living/user)
-	if(!isliving(user) || user.stat != CONSCIOUS || (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !ispAI(user)))
-		return
-
-	user.set_machine(src)
+/obj/item/instrument/ui_interact(mob/user, datum/tgui/ui)
 	song.ui_interact(user)
 
 /obj/item/instrument/violin
@@ -130,9 +117,9 @@
 	. = ..()
 	AddElement(/datum/element/spooky)
 
-/obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (src, 'sound/runtime/instruments/trombone/En4.mid', 100,1,-1)
-	..()
+/obj/item/instrument/trumpet/spectral/attack(mob/living/target_mob, mob/living/user, params)
+	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
+	return ..()
 
 /obj/item/instrument/saxophone
 	name = "saxophone"
@@ -154,9 +141,9 @@
 	. = ..()
 	AddElement(/datum/element/spooky)
 
-/obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (src, 'sound/runtime/instruments/saxophone/En4.mid', 100,1,-1)
-	..()
+/obj/item/instrument/saxophone/spectral/attack(mob/living/target_mob, mob/living/user, params)
+	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
+	return ..()
 
 /obj/item/instrument/trombone
 	name = "trombone"
@@ -178,9 +165,9 @@
 	. = ..()
 	AddElement(/datum/element/spooky)
 
-/obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (src, 'sound/runtime/instruments/trombone/Cn4.mid', 100,1,-1)
-	..()
+/obj/item/instrument/trombone/spectral/attack(mob/living/target_mob, mob/living/user, params)
+	playsound(src, 'sound/runtime/instruments/trombone/Cn4.mid', 1000, 1, -1)
+	return ..()
 
 /obj/item/instrument/recorder
 	name = "recorder"
@@ -201,19 +188,35 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
+/obj/item/instrument/harmonica/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	if(!(slot & slot_flags))
+		return
+	RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/obj/item/instrument/harmonica/dropped(mob/user, silent = FALSE)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_SAY)
+
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
-	if(song.playing && ismob(loc))
-		to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
-		song.playing = FALSE
+	if(!song.playing)
+		return
+	if(!ismob(loc))
+		CRASH("[src] was still registered to listen in on [source] but was not found to be on their mob.")
+	to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
+	song.playing = FALSE
 
-/obj/item/instrument/harmonica/equipped(mob/M, slot)
-	. = ..()
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+/datum/action/item_action/instrument
+	name = "Use Instrument"
+	desc = "Use the instrument specified"
 
-/obj/item/instrument/harmonica/dropped(mob/M)
-	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+/datum/action/item_action/instrument/Trigger(trigger_flags)
+	if(istype(target, /obj/item/instrument))
+		var/obj/item/instrument/I = target
+		I.interact(usr)
+		return
+	return ..()
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
@@ -230,34 +233,6 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
-
-/obj/item/choice_beacon/music
-	name = "instrument delivery beacon"
-	desc = "Summon your tool of art."
-	icon_state = "gangtool-red"
-
-/obj/item/choice_beacon/music/generate_display_names()
-	var/static/list/instruments
-	if(!instruments)
-		instruments = list()
-		var/list/templist = list(/obj/item/instrument/violin,
-							/obj/item/instrument/piano_synth,
-							/obj/item/instrument/banjo,
-							/obj/item/instrument/guitar,
-							/obj/item/instrument/eguitar,
-							/obj/item/instrument/glockenspiel,
-							/obj/item/instrument/accordion,
-							/obj/item/instrument/trumpet,
-							/obj/item/instrument/saxophone,
-							/obj/item/instrument/trombone,
-							/obj/item/instrument/recorder,
-							/obj/item/instrument/harmonica,
-							/obj/item/instrument/piano_synth/headphones
-							)
-		for(var/V in templist)
-			var/atom/A = V
-			instruments[initial(A.name)] = A
-	return instruments
 
 /obj/item/instrument/musicalmoth
 	name = "musical moth"

@@ -7,7 +7,7 @@
 	RegisterSignal(
 		src,
 		COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET,
-		.proc/add_item_context,
+		PROC_REF(add_item_context),
 	)
 
 /// Creates a "Type-A" contextual screentip interaction.

@@ -1,10 +1,10 @@
 /datum/computer_file/program/bounty_board
 	filename = "bountyboard"
 	filedesc = "Bounty Board Request Network"
-	category = PROGRAM_CATEGORY_SUPL
-	program_icon_state = "bountyboard"
+	downloader_category = PROGRAM_CATEGORY_SUPPLY
+	program_open_overlay = "bountyboard"
 	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible.."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 10
 	tgui_id = "NtosBountyBoard"
 	///Reference to the currently logged in user.
@@ -19,10 +19,9 @@
 	var/networked = FALSE
 
 /datum/computer_file/program/bounty_board/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	if(current_user)
 		data["user"] = list()
 		data["user"]["name"] = current_user.account_holder
@@ -31,7 +30,7 @@
 			data["user"]["department"] = current_user.account_job.paycheck_department
 		else
 			data["user"]["job"] = "No Job"
-			data["user"]["department"] = "No Department"
+			data["user"]["department"] = DEPARTMENT_UNASSIGNED
 	else
 		data["user"] = list()
 		data["user"]["name"] = user.name
@@ -40,8 +39,8 @@
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
-	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
-		current_user = card_slot.stored_card.registered_account
+	if(computer.computer_id_slot)
+		current_user = computer.computer_id_slot?.registered_account
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
@@ -58,10 +57,8 @@
 	data["bountyText"] = bounty_text
 	return data
 
-/datum/computer_file/program/bounty_board/ui_act(action, list/params)
+/datum/computer_file/program/bounty_board/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
@@ -83,7 +80,7 @@
 			for(var/datum/station_request/i in GLOB.request_list)
 				if("[i.req_number]" == "[current_user.account_id]")
 					computer.say("Account already has active bounty.")
-					return
+					return TRUE
 			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 			GLOB.request_list += list(curr_request)
 			for(var/obj/i in GLOB.allbountyboards)
@@ -104,7 +101,7 @@
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
-			request_target.transfer_money(current_user, active_request.value)
+			request_target.transfer_money(current_user, active_request.value, "Bounties: Request Completed")
 			computer.say("Paid out [active_request.value] credits.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
@@ -127,10 +124,7 @@
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
+			return TRUE
 		if("bountyText")
 			bounty_text = (params["bountytext"])
-	. = TRUE
-
-/datum/computer_file/program/bounty_board/Destroy()
-	GLOB.allbountyboards -= computer
-	. = ..()
+	return TRUE

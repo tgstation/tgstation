@@ -1,5 +1,0 @@
-author: "CoffeeDragon16"
-delete-after: True
-changes: 
-  - bugfix: "pianos will now look broken when they are damaged"
-  - soundadd: "pianos make a DONG sound when hit"

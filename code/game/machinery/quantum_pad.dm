@@ -1,7 +1,7 @@
 /obj/machinery/quantumpad
 	name = "quantum pad"
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "qpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
@@ -42,12 +42,12 @@
 /obj/machinery/quantumpad/RefreshParts()
 	. = ..()
 	var/E = 0
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		E += C.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		E += capacitor.tier
 	power_efficiency = E
 	E = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		E += M.rating
+	for(var/datum/stock_part/servo/servo in component_parts)
+		E += servo.tier
 	teleport_speed = initial(teleport_speed)
 	teleport_speed -= (E*10)
 	teleport_cooldown = initial(teleport_cooldown)
@@ -62,7 +62,8 @@
 			if(!multitool_check_buffer(user, I))
 				return
 			var/obj/item/multitool/M = I
-			M.buffer = src
+			M.set_buffer(src)
+			balloon_alert(user, "saved to multitool buffer")
 			to_chat(user, span_notice("You save the data in [I]'s buffer. It can now be saved to pads with closed panels."))
 			return TRUE
 	else if(I.tool_behaviour == TOOL_MULTITOOL)
@@ -71,14 +72,14 @@
 		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			if(M.buffer == src)
-				to_chat(user, span_warning("You cannot link a pad to itself!"))
+				balloon_alert(user, "cannot link to self!")
 				return TRUE
 			else
 				linked_pad = M.buffer
-				to_chat(user, span_notice("You link [src] to the one in [I]'s buffer."))
+				balloon_alert(user, "data uploaded from buffer")
 				return TRUE
 		else
-			to_chat(user, span_warning("There is no quantum pad data saved in [I]'s buffer!"))
+			balloon_alert(user, "no quantum pad data found!")
 			return TRUE
 
 	else if(istype(I, /obj/item/quantum_keycard))
@@ -90,7 +91,7 @@
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
 			if(do_after(user, 40, target = src))
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
-				K.qpad = src
+				K.set_pad(src)
 
 	if(default_deconstruction_crowbar(I))
 		return
@@ -141,7 +142,7 @@
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
-	addtimer(CALLBACK(src, .proc/teleport_contents, user, target_pad), teleport_speed)
+	addtimer(CALLBACK(src, PROC_REF(teleport_contents), user, target_pad), teleport_speed)
 
 /obj/machinery/quantumpad/proc/teleport_contents(mob/user, obj/machinery/quantumpad/target_pad)
 	teleporting = FALSE
@@ -191,7 +192,7 @@
 
 /obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
+	default_raw_text = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
 
 /obj/item/circuit_component/quantumpad
 	display_name = "Quantum Pad"

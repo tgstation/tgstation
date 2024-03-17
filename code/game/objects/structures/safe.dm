@@ -41,6 +41,7 @@ FLOOR SAFES
 /obj/structure/safe/Initialize(mapload)
 	. = ..()
 
+	update_appearance(UPDATE_ICON)
 	// Combination generation
 	for(var/iterating in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
@@ -57,7 +58,8 @@ FLOOR SAFES
 			inserting_item.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
-	icon_state = "[initial(icon_state)][open ? "-open" : null]"
+	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
+	icon_state = "[initial(icon_state)][open ? null : "_locked"]"
 	return ..()
 
 /obj/structure/safe/attackby(obj/item/attacking_item, mob/user, params)
@@ -93,6 +95,10 @@ FLOOR SAFES
 			if(3)
 				desc = initial(desc) + "\nThe lock seems to be broken."
 
+		return TRUE
+
+	return FALSE
+
 /obj/structure/safe/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/simple/safe),
@@ -117,9 +123,9 @@ FLOOR SAFES
 	if(open)
 		var/list/contents_names = list()
 		data["contents"] = contents_names
-		for(var/obj/O in contents)
-			contents_names[++contents_names.len] = list("name" = O.name, "sprite" = O.icon_state)
-			user << browse_rsc(icon(O.icon, O.icon_state), "[O.icon_state].png")
+		for(var/obj/jewel in contents)
+			contents_names[++contents_names.len] = list("name" = jewel.name, "sprite" = jewel.icon_state)
+			user << browse_rsc(icon(jewel.icon, jewel.icon_state), "[jewel.icon_state].png")
 
 	return data
 
@@ -131,7 +137,7 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
 
 	var/canhear = FALSE
@@ -242,6 +248,14 @@ FLOOR SAFES
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/undertile)
+
+///Special safe for the station's vault. Not explicitly required, but the piggy bank inside it is.
+/obj/structure/safe/vault
+
+/obj/structure/safe/vault/Initialize(mapload)
+	. = ..()
+	var/obj/item/piggy_bank/vault/piggy = new(src)
+	space += piggy.w_class
 
 #undef SOUND_CHANCE
 #undef BROKEN_THRESHOLD

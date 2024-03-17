@@ -6,34 +6,65 @@ SUBSYSTEM_DEF(achievements)
 
 	///List of achievements
 	var/list/datum/award/achievement/achievements = list()
+	///The achievement with the highest amount of players that have unlocked it.
+	var/datum/award/achievement/most_unlocked_achievement
 	///List of scores
 	var/list/datum/award/score/scores = list()
 	///List of all awards
 	var/list/datum/award/awards = list()
 
-/datum/controller/subsystem/achievements/Initialize(timeofday)
+/datum/controller/subsystem/achievements/Initialize()
 	if(!SSdbcore.Connect())
-		return ..()
+		return SS_INIT_NO_NEED
 	achievements_enabled = TRUE
 
-	for(var/T in subtypesof(/datum/award/achievement))
-		var/instance = new T
-		achievements[T] = instance
-		awards[T] = instance
+	var/list/achievements_by_db_id = list()
+	for(var/datum/award/achievement/achievement as anything in subtypesof(/datum/award/achievement))
+		if(!initial(achievement.database_id)) // abstract type
+			continue
+		var/datum/award/achievement/instance = new achievement
+		achievements[achievement] = instance
+		awards[achievement] = instance
+		achievements_by_db_id[instance.database_id] = instance
 
-	for(var/T in subtypesof(/datum/award/score))
-		var/instance = new T
-		scores[T] = instance
-		awards[T] = instance
+	for(var/datum/award/score/score as anything in subtypesof(/datum/award/score))
+		if(!initial(score.database_id)) // abstract type
+			continue
+		var/instance = new score
+		scores[score] = instance
+		awards[score] = instance
 
 	update_metadata()
+
+	/**
+	 * Count how many (unlocked) achievements are in the achievements database
+	 * then store that amount in the times_achieved variable for each achievement.
+	 *
+	 * Thanks to Jordie for the query.
+	 */
+	var/datum/db_query/query = SSdbcore.NewQuery(
+		"SELECT a.achievement_key, COUNT(a.achievement_key) AS count FROM achievements a \
+		JOIN achievement_metadata m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'achievement' \
+		GROUP BY a.achievement_key ORDER BY count DESC"
+	)
+	if(query.Execute(async = TRUE))
+		while(query.NextRow())
+			var/id = query.item[1]
+			var/datum/award/achievement/instance = id ? achievements_by_db_id[id] : null
+			if(isnull(instance)) // removed achievement
+				continue
+			instance.times_achieved = query.item[2]
+			// the results are ordered in descending orders, so the first in the list should be the most unlocked one.
+			if(!most_unlocked_achievement)
+				most_unlocked_achievement = instance
+	qdel(query)
 
 	for(var/i in GLOB.clients)
 		var/client/C = i
 		if(!C.player_details.achievements.initialized)
 			C.player_details.achievements.InitializeData()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/achievements/Shutdown()
 	save_achievements_to_db()
@@ -65,8 +96,6 @@ SUBSYSTEM_DEF(achievements)
 	var/list/to_update = list()
 	for(var/T in awards)
 		var/datum/award/A = awards[T]
-		if(!A.database_id)
-			continue
 		if(!current_metadata[A.database_id] || current_metadata[A.database_id] < A.achievement_version)
 			to_update += list(A.get_metadata_row())
 

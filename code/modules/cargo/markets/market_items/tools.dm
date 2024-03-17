@@ -1,6 +1,18 @@
 /datum/market_item/tool
 	category = "Tools"
 
+/datum/market_item/tool/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the \
+		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver is here to help. \
+		Contains a LTSRBT circuit. Bluespace crystals and ansible not included."
+	item = /obj/item/circuitboard/machine/ltsrbt
+	stock_min = 2
+	stock_max = 4
+	price_min = CARGO_CRATE_VALUE * 2.5
+	price_max = CARGO_CRATE_VALUE * 3.75
+	availability_prob = 100
+
 /datum/market_item/tool/caravan_wrench
 	name = "Experimental Wrench"
 	desc = "The extra fast and handy wrench you always wanted!"
@@ -64,7 +76,7 @@
 /datum/market_item/tool/thermite_bottle
 	name = "Thermite Bottle"
 	desc = "30u of Thermite to assist in creating a quick access point or get away!"
-	item = /obj/item/reagent_containers/glass/bottle/thermite
+	item = /obj/item/reagent_containers/cup/bottle/thermite
 
 	price_min = CARGO_CRATE_VALUE * 2.5
 	price_max = CARGO_CRATE_VALUE * 7.5
@@ -96,3 +108,12 @@
 	price_max = CARGO_CRATE_VALUE * 1.615
 	stock_max = 2
 	availability_prob = 50
+
+/datum/market_item/tool/program_disk
+	name = "Bootleg Data Disk"
+	desc = "A data disk containing EXCLUSIVE and LIMITED modular programs. Legally, we're not allowed to tell you how we aquired them."
+	item = /obj/item/computer_disk/black_market
+	price_min = CARGO_CRATE_VALUE * 0.75
+	price_max = CARGO_CRATE_VALUE * 2
+	stock_max = 3
+	availability_prob = 40

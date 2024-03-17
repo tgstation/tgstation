@@ -3,19 +3,19 @@
 
 /obj/item/ai_module
 	name = "\improper AI module"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "std_mod"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "An AI Module for programming laws to an AI."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/gold = 50)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)
@@ -30,22 +30,29 @@
 
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
-	if(Adjacent(user))
-		show_laws(user)
+	var/examine_laws = display_laws()
+	if(examine_laws)
+		. += "\n" + examine_laws
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
-	show_laws(user)
+	to_chat(user, examine_block(display_laws()))
+
+/// Returns a text display of the laws for the module.
+/obj/item/ai_module/proc/display_laws()
+	// Used to assemble the laws to show to an examining user.
+	var/assembled_laws = ""
+
+	if(laws.len)
+		assembled_laws += "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B><br>"
+		for(var/law in laws)
+			assembled_laws += "\"[law]\"<br>"
+
+	return assembled_laws
 
 ///what this module should do if it is mapload spawning on a unique AI station trait round.
 /obj/item/ai_module/proc/handle_unique_ai()
 	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
-
-/obj/item/ai_module/proc/show_laws(mob/user as mob)
-	if(laws.len)
-		to_chat(user, "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>")
-		for(var/law in laws)
-			to_chat(user, "\"[law]\"")
 
 //The proc other things should be calling
 /obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
@@ -161,17 +168,16 @@
 	color = "#00FF00"
 
 /obj/effect/spawner/round_default_module/Initialize(mapload)
-	..()
+	. = ..()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
 	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
 			continue
 		potential_lawboard = new potential_lawboard(loc)
-		return INITIALIZE_HINT_QDEL
+		return
 	//spawn the fallback instead
 	new /obj/item/ai_module/core/round_default_fallback(loc)
-	return INITIALIZE_HINT_QDEL
 
 ///When the default lawset spawner cannot find a module object to spawn, it will spawn this, and this sets itself to the round default.
 ///This is so /datum/lawsets can be picked even if they have no module for themselves.

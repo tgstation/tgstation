@@ -1,0 +1,683 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape/brig)
+"aR" = (
+/obj/effect/spawner/random/bedsheet/any{
+	dir = 8
+	},
+/obj/structure/bed,
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/machinery/light/dim/directional/east{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bw" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"cb" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cQ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape/brig)
+"cW" = (
+/mob/living/basic/pet/fox,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"dz" = (
+/mob/living/basic/parrot{
+	melee_damage_upper = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"dC" = (
+/obj/structure/closet/cabinet,
+/obj/item/pillow/random,
+/obj/item/pillow/random,
+/obj/item/pillow/random,
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"dP" = (
+/obj/structure/closet/cabinet,
+/obj/item/pillow/random,
+/obj/item/pillow/random,
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"eb" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/catwalk_floor/titanium,
+/area/shuttle/escape)
+"eE" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"eN" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"fG" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Emergency Shuttle Medical"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"fM" = (
+/obj/structure/sink/directional/north,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"gc" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"gg" = (
+/obj/effect/spawner/random/bedsheet/any{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"gj" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/item/restraints/handcuffs,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"gq" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/obj/item/pillow/random,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"hz" = (
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"hH" = (
+/mob/living/basic/pet/penguin/baby/permanent,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"iI" = (
+/obj/structure/bed,
+/obj/effect/spawner/random/bedsheet/any,
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"jl" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"kB" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"kZ" = (
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"nZ" = (
+/obj/structure/table/optable,
+/obj/machinery/status_display/evac/directional/west,
+/obj/item/toy/plush/lizard_plushie{
+	name = "Heals-The-Patients"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"oo" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/effect/spawner/random/bedsheet/any{
+	dir = 4
+	},
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"os" = (
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_x = 32
+	},
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"oY" = (
+/obj/item/pillow/random,
+/obj/structure/rack,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"px" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"pO" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"pY" = (
+/turf/template_noop,
+/area/template_noop)
+"rj" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/north,
+/obj/item/pillow/random,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"sx" = (
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/machinery/door/window/left/directional/west,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"sG" = (
+/mob/living/basic/pet/dog/corgi,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"tF" = (
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"up" = (
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/machinery/light/dim/directional/south{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ys" = (
+/obj/effect/spawner/random/bedsheet/any{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/machinery/light/dim/directional/west{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"yF" = (
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"zt" = (
+/obj/item/bedsheet/captain,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/structure/bed/pod,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Ag" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"Aw" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"AM" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"BW" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/brute,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/south,
+/obj/item/storage/pill_bottle/paxpsych,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Dl" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/catwalk_floor/titanium,
+/area/shuttle/escape)
+"FW" = (
+/obj/structure/sign/directions/security/directional/north,
+/obj/structure/sign/directions/medical/directional/north{
+	pixel_y = 40
+	},
+/obj/structure/sign/directions/command/directional/north{
+	pixel_y = 24
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Hf" = (
+/mob/living/basic/pet/cat/kitten,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"IH" = (
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
+	group_name = "a bunch of cutesy animals";
+	effect_range = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"IW" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"JE" = (
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/door/airlock/security/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"JF" = (
+/obj/docking_port/mobile/emergency{
+	name = "Hugcage"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Emergency Shuttle Medical"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"KT" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"KW" = (
+/obj/effect/spawner/random/bedsheet/any{
+	dir = 8
+	},
+/obj/structure/bed,
+/obj/item/pillow/random,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Ly" = (
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"LC" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Mu" = (
+/turf/open/floor/catwalk_floor/titanium,
+/area/shuttle/escape)
+"Ns" = (
+/obj/item/radio/intercom/chapel/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Ok" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Qc" = (
+/obj/machinery/door/window/left/directional/east,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"QX" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Rg" = (
+/obj/machinery/stasis,
+/obj/machinery/light/dim/directional/south{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Rj" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"RZ" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"Tw" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"TW" = (
+/obj/structure/table,
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Vf" = (
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/machinery/door/airlock/command/glass{
+	name = "Cockpit"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"VD" = (
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/obj/machinery/light/dim/directional/south{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Xb" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"XN" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"YQ" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"YW" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+cQ
+cQ
+cQ
+cQ
+JE
+cQ
+JF
+gc
+pY
+pY
+gc
+gc
+kB
+gc
+kB
+gc
+pY
+pY
+pY
+pY
+"}
+(2,1,1) = {"
+RZ
+KT
+kZ
+Ns
+Tw
+cQ
+QX
+gc
+pY
+gc
+Ag
+gg
+QX
+ys
+QX
+Ag
+gc
+pY
+pY
+pY
+"}
+(3,1,1) = {"
+RZ
+KT
+Tw
+Tw
+gj
+cQ
+fG
+gc
+XN
+gc
+dC
+eN
+eN
+eN
+eN
+gg
+Ag
+gc
+pY
+pY
+"}
+(4,1,1) = {"
+RZ
+KT
+Tw
+Ok
+ax
+Ag
+eN
+nZ
+VD
+gc
+iI
+eN
+hH
+eN
+eN
+cW
+gg
+bw
+bw
+pY
+"}
+(5,1,1) = {"
+cQ
+cQ
+JE
+RZ
+cQ
+Dl
+YW
+YW
+BW
+Ag
+Ag
+tF
+jl
+sx
+gq
+eN
+yF
+cb
+Rj
+pY
+"}
+(6,1,1) = {"
+pY
+XN
+eE
+eE
+AM
+Mu
+Mu
+Mu
+Mu
+Mu
+AM
+eN
+hz
+IH
+Ly
+eN
+up
+bw
+px
+Rj
+"}
+(7,1,1) = {"
+gc
+gc
+Vf
+XN
+gc
+eb
+pO
+pO
+fM
+Ag
+Ag
+FW
+rj
+Qc
+Xb
+eN
+TW
+cb
+Rj
+pY
+"}
+(8,1,1) = {"
+XN
+Aw
+eN
+Aw
+Ag
+Ag
+eN
+os
+Rg
+gc
+oo
+sG
+eN
+dz
+eN
+eN
+KW
+bw
+bw
+pY
+"}
+(9,1,1) = {"
+XN
+LC
+eN
+eN
+oY
+gc
+YQ
+gc
+XN
+gc
+dP
+eN
+eN
+eN
+Hf
+KW
+Ag
+gc
+pY
+pY
+"}
+(10,1,1) = {"
+XN
+Aw
+eN
+eN
+zt
+gc
+QX
+gc
+pY
+gc
+Ag
+KW
+KW
+aR
+KW
+Ag
+gc
+pY
+pY
+pY
+"}
+(11,1,1) = {"
+gc
+gc
+gc
+gc
+gc
+gc
+IW
+gc
+pY
+pY
+gc
+gc
+gc
+gc
+gc
+gc
+pY
+pY
+pY
+pY
+"}

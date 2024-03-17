@@ -41,8 +41,8 @@
 
 /obj/item/circuit_component/foreach/populate_ports()
 	list_to_iterate = add_input_port("List Input", PORT_TYPE_LIST(PORT_TYPE_ANY))
-	next_index = add_input_port("Next Index", PORT_TYPE_SIGNAL, trigger = .proc/trigger_next_index)
-	reset_index = add_input_port("Reset And Trigger", PORT_TYPE_SIGNAL, trigger = .proc/restart)
+	next_index = add_input_port("Next Index", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_next_index))
+	reset_index = add_input_port("Reset And Trigger", PORT_TYPE_SIGNAL, trigger = PROC_REF(restart))
 
 	element = add_output_port("Element", PORT_TYPE_ANY)
 	current_index = add_output_port("Index", PORT_TYPE_NUMBER)

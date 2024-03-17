@@ -25,7 +25,11 @@
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
 	var/next_hardcore_score = select_hardcore_quirks()
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
+	log_game("[character] started hardcore random with [english_list(all_quirks)], for a score of [next_hardcore_score].")
 
+	//Add a sixpack because honestly
+	var/obj/item/bodypart/chest/chest = character.get_bodypart(BODY_ZONE_CHEST)
+	chest.add_bodypart_overlay(new /datum/bodypart_overlay/simple/sixpack() )
 
 /**
  * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.
@@ -52,12 +56,13 @@
 		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
 		var/picked_quirk_blacklisted = FALSE
-		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
+		for(var/bl in GLOB.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
 			var/list/blacklist = bl
 			if(!(picked_quirk in blacklist))
 				continue
-			for(var/iterator_quirk in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
-				if((iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+			for(var/quirk_name in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
+				var/selected_quirk = SSquirks.quirks[quirk_name]
+				if((selected_quirk in blacklist) && !(selected_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
 					picked_quirk_blacklisted = TRUE
 					break
 			if(picked_quirk_blacklisted)
@@ -67,7 +72,7 @@
 			available_hardcore_quirks -= picked_quirk
 			continue
 
-		if(initial(picked_quirk.mood_quirk) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
+		if((initial(picked_quirk.quirk_flags) & QUIRK_MOODLET_BASED) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
 			available_hardcore_quirks -= picked_quirk
 			continue
 
@@ -94,9 +99,9 @@
 	if(preview_job)
 		// Silicons only need a very basic preview since there is no customization for them.
 		if (istype(preview_job,/datum/job/ai))
-			return image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+			return image('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		if (istype(preview_job,/datum/job/cyborg))
-			return image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH)
+			return image('icons/mob/silicon/robots.dmi', icon_state = "robot", dir = SOUTH)
 
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
@@ -105,5 +110,15 @@
 		mannequin.job = preview_job.title
 		mannequin.dress_up_as_job(preview_job, TRUE)
 
-	COMPILE_OVERLAYS(mannequin)
+	// Apply visual quirks
+	// Yes we do it every time because it needs to be done after job gear
+	if(SSquirks?.initialized)
+		// And yes we need to clean all the quirk datums every time
+		mannequin.cleanse_quirk_datums()
+		for(var/quirk_name as anything in all_quirks)
+			var/datum/quirk/quirk_type = SSquirks.quirks[quirk_name]
+			if(!(initial(quirk_type.quirk_flags) & QUIRK_CHANGES_APPEARANCE))
+				continue
+			mannequin.add_quirk(quirk_type, parent)
+
 	return mannequin.appearance

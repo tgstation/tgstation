@@ -1,7 +1,7 @@
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
 /datum/element/strippable
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
+	argument_hash_start_idx = 2
 
 	/// An assoc list of keys to /datum/strippable_item
 	var/list/items
@@ -14,12 +14,12 @@
 	/// An existing strip menus
 	var/list/strip_menus
 
-/datum/element/strippable/Attach(datum/target, list/items, should_strip_proc_path)
+/datum/element/strippable/Attach(datum/target, list/items = list(), should_strip_proc_path)
 	. = ..()
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/mouse_drop_onto)
+	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, PROC_REF(mouse_drop_onto))
 
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
@@ -57,15 +57,15 @@
 		strip_menu = new(source, src)
 		LAZYSET(strip_menus, source, strip_menu)
 
-	INVOKE_ASYNC(strip_menu, /datum/.proc/ui_interact, user)
+	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum/, ui_interact), user)
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item
 	/// The STRIPPABLE_ITEM_* key
 	var/key
 
-	/// Should we warn about dangerous clothing?
-	var/warn_dangerous_clothing = TRUE
+	/// Should we give feedback messages?
+	var/show_visible_message = TRUE
 
 /// Gets the item from the given source.
 /datum/strippable_item/proc/get_item(atom/source)
@@ -82,38 +82,16 @@
 		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
 		return FALSE
 
+	if (equipping.item_flags & ABSTRACT)
+		return FALSE //I don't know a sane-sounding feedback message for trying to put a slap into someone's hand
+
 	return TRUE
 
 /// Start the equipping process. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
-	if (warn_dangerous_clothing && isclothing(source))
-		var/obj/item/clothing/clothing = source
-		if(clothing.clothing_flags & DANGEROUS_OBJECT)
-			source.visible_message(
-				span_danger("[user] tries to put [equipping] on [source]."),
-				span_userdanger("[user] tries to put [equipping] on you."),
-				ignored_mobs = user,
-			)
-		else
-			source.visible_message(
-				span_notice("[user] tries to put [equipping] on [source]."),
-				span_notice("[user] tries to put [equipping] on you."),
-				ignored_mobs = user,
-			)
 
-		if(ishuman(source))
-			var/mob/living/carbon/human/victim_human = source
-			if(victim_human.key && !victim_human.client) // AKA braindead
-				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
-					LAZYADD(victim_human.afk_thefts, new_entry)
-
-	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
-
-	user.log_message("is putting [equipping] on [key_name(source)]", LOG_ATTACK, color="red")
-	source.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
-
+	equipping.item_start_equip(source, equipping, user, show_visible_message)
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.
@@ -153,12 +131,13 @@
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
 		span_userdanger("[user] tries to remove your [item.name]."),
+		blind_message = span_hear("You hear rustling."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
-	user.log_message("is stripping [key_name(source)] of [item]", LOG_ATTACK, color="red")
-	source.log_message("is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	to_chat(user, span_danger("You try to remove [source]'s [item.name]..."))
+	user.log_message("is stripping [key_name(source)] of [item].", LOG_ATTACK, color="red")
+	source.log_message("is being stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
 
 	if(ishuman(source))
@@ -167,6 +146,9 @@
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
+
+		else if(victim_human.is_blind())
+			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	return TRUE
 
@@ -217,13 +199,7 @@
 	if (!ismob(source))
 		return FALSE
 
-	if (!equipping.mob_can_equip(
-		source,
-		user,
-		item_slot,
-		disable_warning = TRUE,
-		bypass_equip_delay_self = TRUE,
-	))
+	if (!equipping.mob_can_equip(source, item_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		to_chat(user, span_warning("\The [equipping] doesn't fit in that place!"))
 		return FALSE
 
@@ -237,16 +213,10 @@
 	if (!ismob(source))
 		return FALSE
 
-	if (!do_mob(user, source, get_equip_delay(equipping)))
+	if (!do_after(user, get_equip_delay(equipping), source))
 		return FALSE
 
-	if (!equipping.mob_can_equip(
-		source,
-		user,
-		item_slot,
-		disable_warning = TRUE,
-		bypass_equip_delay_self = TRUE,
-	))
+	if (!equipping.mob_can_equip(source, item_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		return FALSE
 
 	if (!user.temporarilyRemoveItemFromInventory(equipping))
@@ -295,12 +265,12 @@
 
 /// A utility function for `/datum/strippable_item`s to finish equipping an item to a mob.
 /proc/finish_equip_mob(obj/item/item, mob/source, mob/user)
-	user.log_message("has put [item] on [key_name(source)]", LOG_ATTACK, color="red")
-	source.log_message("had [item] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	user.log_message("has put [item] on [key_name(source)].", LOG_ATTACK, color="red")
+	source.log_message("had [item] put on them by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
 /proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
-	if (!do_mob(user, source, strip_delay || item.strip_delay, interaction_key = REF(item)))
+	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item)))
 		return FALSE
 
 	return TRUE
@@ -310,8 +280,8 @@
 	if (!item.doStrip(user, source))
 		return FALSE
 
-	user.log_message("has stripped [key_name(source)] of [item]", LOG_ATTACK, color="red")
-	source.log_message("has been stripped of [item] by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	user.log_message("has stripped [key_name(source)] of [item].", LOG_ATTACK, color="red")
+	source.log_message("has been stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 	// Updates speed in case stripped speed affecting item
 	source.update_equipment_speed_mods()
@@ -372,7 +342,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP)))
+		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || (item.item_flags & EXAMINE_SKIP)))
 			items[strippable_key] = result
 			continue
 
@@ -440,9 +410,11 @@
 
 					// They equipped an item in the meantime
 					if (!isnull(strippable_item.get_item(owner)))
+						user.put_in_hands(held_item)
 						return
 
 					if (!user.Adjacent(owner))
+						user.put_in_hands(held_item)
 						return
 
 					strippable_item.finish_equip(owner, held_item, user)

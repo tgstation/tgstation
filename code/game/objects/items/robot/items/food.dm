@@ -33,7 +33,7 @@
 ///Queues another lollipop to be fabricated if there is enough room for one
 /obj/item/borg/lollipop/proc/check_amount()
 	if(!charging && candy < candymax)
-		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
+		addtimer(CALLBACK(src, PROC_REF(charge_lollipops)), charge_delay)
 		charging = TRUE
 
 ///Increases the amount of lollipops
@@ -86,12 +86,12 @@
 		return FALSE
 	candy--
 
-	var/obj/item/ammo_casing/caseless/lollipop/lollipop
+	var/obj/item/ammo_casing/lollipop/lollipop
 	var/mob/living/silicon/robot/robot_user = user
 	if(istype(robot_user) && robot_user.emagged)
-		lollipop = new /obj/item/ammo_casing/caseless/lollipop/harmful(src)
+		lollipop = new /obj/item/ammo_casing/lollipop/harmful(src)
 	else
-		lollipop = new /obj/item/ammo_casing/caseless/lollipop(src)
+		lollipop = new /obj/item/ammo_casing/lollipop(src)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	lollipop.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -104,12 +104,12 @@
 		to_chat(user, span_warning("Not enough gumballs left!"))
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/gumball/gumball
+	var/obj/item/ammo_casing/gumball/gumball
 	var/mob/living/silicon/robot/robot_user = user
 	if(istype(robot_user) && robot_user.emagged)
-		gumball = new /obj/item/ammo_casing/caseless/gumball/harmful(src)
+		gumball = new /obj/item/ammo_casing/gumball/harmful(src)
 	else
-		gumball = new /obj/item/ammo_casing/caseless/gumball(src)
+		gumball = new /obj/item/ammo_casing/gumball(src)
 
 	gumball.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
@@ -123,17 +123,17 @@
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell.use(12))
 			to_chat(user, span_warning("Not enough power."))
-			return FALSE
+			return AFTERATTACK_PROCESSED_ITEM
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
-				return FALSE
+				return AFTERATTACK_PROCESSED_ITEM
 			dispense(target, user)
 		if(THROW_LOLLIPOP_MODE)
 			shootL(target, user, click_params)
 		if(THROW_GUMBALL_MODE)
 			shootG(target, user, click_params)
-	return ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
 	switch(mode)
@@ -151,55 +151,62 @@
 			to_chat(user, span_notice("Module is now dispensing lollipops."))
 	..()
 
-/obj/item/ammo_casing/caseless/gumball
+/obj/item/ammo_casing/gumball
 	name = "Gumball"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/projectile/bullet/reusable/gumball
+	projectile_type = /obj/projectile/bullet/gumball
 	click_cooldown_override = 2
 
-/obj/item/ammo_casing/caseless/gumball/harmful
-	projectile_type = /obj/projectile/bullet/reusable/gumball/harmful
+/obj/item/ammo_casing/gumball/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
-/obj/projectile/bullet/reusable/gumball
+/obj/item/ammo_casing/gumball/harmful
+	projectile_type = /obj/projectile/bullet/gumball/harmful
+
+/obj/projectile/bullet/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/food/gumball
-	nodamage = TRUE
 	damage = 0
 	speed = 0.5
+	embedding = null
 
-/obj/projectile/bullet/reusable/gumball/harmful
-	nodamage = FALSE
+/obj/projectile/bullet/gumball/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, /obj/item/food/gumball)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+
+/obj/projectile/bullet/gumball/harmful
 	damage = 10
 
-/obj/projectile/bullet/reusable/gumball/handle_drop()
-	if(!dropped)
-		var/turf/turf = get_turf(src)
-		var/obj/item/food/gumball/gumball = new ammo_type(turf)
-		gumball.color = color
-		dropped = TRUE
+/obj/projectile/bullet/gumball/proc/handle_drop(datum/source, obj/item/food/gumball/gumball)
+	SIGNAL_HANDLER
+	gumball.color = color
 
-/obj/item/ammo_casing/caseless/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
+/obj/item/ammo_casing/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/projectile/bullet/reusable/lollipop
+	projectile_type = /obj/projectile/bullet/lollipop
 	click_cooldown_override = 2
 
-/obj/item/ammo_casing/caseless/lollipop/harmful
-	projectile_type = /obj/projectile/bullet/reusable/lollipop/harmful
+/obj/item/ammo_casing/lollipop/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
-/obj/projectile/bullet/reusable/lollipop
+/obj/item/ammo_casing/lollipop/harmful
+	projectile_type = /obj/projectile/bullet/lollipop/harmful
+
+/obj/projectile/bullet/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/food/lollipop/cyborg
-	nodamage = TRUE
 	damage = 0
 	speed = 0.5
-	var/color2 = rgb(0, 0, 0)
+	embedding = null
+	var/head_color
 
-/obj/projectile/bullet/reusable/lollipop/harmful
+/obj/projectile/bullet/lollipop/harmful
 	embedding = list(
 		embed_chance = 35,
 		fall_chance = 2,
@@ -210,25 +217,49 @@
 		rip_time = 10,
 	)
 	damage = 10
-	nodamage = FALSE
+	shrapnel_type = /obj/item/food/lollipop/cyborg
 	embed_falloff_tile = 0
 
-/obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
-	var/obj/item/food/lollipop/lollipop = new ammo_type(src)
-	color2 = lollipop.head_color
-	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
-	head.color = color2
+/obj/projectile/bullet/lollipop/Initialize(mapload)
+	. = ..()
+	var/mutable_appearance/head = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "lollipop_2")
+	head.color = head_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_overlay(head)
-	return ..()
+	if(!embedding)
+		AddElement(/datum/element/projectile_drop, /obj/item/food/lollipop/cyborg)
+	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
 
-/obj/projectile/bullet/reusable/lollipop/handle_drop()
-	if(!dropped)
-		var/turf/turf = get_turf(src)
-		var/obj/item/food/lollipop/lollipop = new ammo_type(turf)
-		lollipop.change_head_color(color2)
-		dropped = TRUE
+/obj/projectile/bullet/lollipop/proc/handle_drop(datum/source, obj/item/food/lollipop/lollipop)
+	SIGNAL_HANDLER
+	lollipop.change_head_color(head_color)
 
 #undef DISPENSE_LOLLIPOP_MODE
 #undef THROW_LOLLIPOP_MODE
 #undef THROW_GUMBALL_MODE
 #undef DISPENSE_ICECREAM_MODE
+
+/obj/item/borg/cookbook
+	name = "Codex Cibus Mechanicus"
+	desc = "It's a robot cookbook!"
+	icon = 'icons/obj/service/library.dmi'
+	icon_state = "cooked_book"
+	item_flags = NOBLUDGEON
+	var/datum/component/personal_crafting/cooking
+
+/obj/item/borg/cookbook/Initialize(mapload)
+	. = ..()
+	cooking = AddComponent(/datum/component/personal_crafting)
+	cooking.forced_mode = TRUE
+	cooking.mode = TRUE
+
+/obj/item/borg/cookbook/attack_self(mob/user, modifiers)
+	. = ..()
+	cooking.ui_interact(user)
+
+/obj/item/borg/cookbook/dropped(mob/user, silent)
+	SStgui.close_uis(cooking)
+	return ..()
+
+/obj/item/borg/cookbook/cyborg_unequip(mob/user)
+	SStgui.close_uis(cooking)
+	return ..()

@@ -14,14 +14,14 @@
 
 /datum/bounty/item/security/prison_clothes
 	name = "Prison Uniforms"
-	description = "Terragov has been unable to source any new prisoner uniforms, so if you have any spares, we'll take them off your hands."
+	description = "TerraGov has been unable to source any new prisoner uniforms, so if you have any spares, we'll take them off your hands."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 4
 	wanted_types = list(/obj/item/clothing/under/rank/prisoner = TRUE)
 
 /datum/bounty/item/security/plates
 	name = "License Plates"
-	description = "As a result of a bad clown car crash, we could use an advance on some of your prisoner's license plates."
+	description = "As a result of a bad clown car crash, we could use an advance on some of your prisoners' license plates."
 	reward = CARGO_CRATE_VALUE * 2
 	required_count = 10
 	wanted_types = list(/obj/item/stack/license_plates/filled = TRUE)
@@ -62,6 +62,8 @@
 			/area/station/security/prison,\
 			/area/station/security/range,\
 			/area/station/security/checkpoint,\
+			/area/station/security/tram,\
+			/area/station/security/breakroom,\
 			/area/station/security/interrogation))
 		for (var/area_type in possible_areas)
 			if(GLOB.areas_by_type[area_type])

@@ -1,652 +1,511 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/turf/template_noop,
-/area/template_noop)
-"ab" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape/luxury)
-"ac" = (
-/obj/machinery/door/airlock/external/ruin{
-	name = "Economy-Class"
-	},
+"bg" = (
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"ad" = (
-/obj/machinery/scanner_gate/luxury_shuttle{
-	layer = 2.6
-	},
-/obj/machinery/door/airlock/silver{
-	name = "First Class"
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
-"ae" = (
-/obj/docking_port/mobile/emergency{
-	dir = 2;
-	dwidth = 5;
-	height = 14;
-	name = "Luxurious Emergency Shuttle";
-	width = 25
-	},
-/obj/machinery/scanner_gate/luxury_shuttle{
-	layer = 2.6
-	},
-/obj/machinery/door/airlock/silver{
-	name = "First Class"
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
-"af" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Cell"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"ag" = (
-/turf/closed/indestructible/riveted/plastinum,
-/area/shuttle/escape/luxury)
-"ah" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/ore_box,
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"aj" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/large,
-/obj/effect/spawner/random/maintenance/eight,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"ak" = (
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"al" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/escape/luxury)
-"ao" = (
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
-"aq" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/structure/window{
+/area/shuttle/escape)
+"bJ" = (
+/turf/open/floor/holofloor/beach{
 	dir = 4
 	},
-/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
-"ar" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/escape/luxury)
-"as" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/escape/luxury)
-"at" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"au" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"av" = (
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "ohnopoors"
-	},
-/turf/closed/indestructible/opsglass{
-	desc = "A durable looking window made of an alloy of of plasma and titanium.";
-	name = "plastitanium window"
-	},
-/area/shuttle/escape/luxury)
-"aw" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
-"ax" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"ay" = (
-/turf/closed/indestructible/syndicate,
-/area/shuttle/escape/luxury)
-"az" = (
-/obj/machinery/computer/communications{
-	dir = 8
-	},
-/turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"aA" = (
-/obj/machinery/button/door{
-	id = "ohnopoors";
-	name = "window shutters";
-	pixel_y = 26
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
-"aB" = (
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"aC" = (
-/obj/item/food/enchiladas{
-	pixel_y = 3
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aD" = (
-/obj/item/food/candiedapple{
-	pixel_y = 6
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aE" = (
-/obj/item/food/benedict{
-	pixel_y = 1
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aF" = (
-/obj/item/food/cakeslice/chocolate{
-	pixel_y = 1
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aG" = (
-/obj/item/food/eggplantparm{
-	pixel_y = 3
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aH" = (
-/obj/item/food/spaghetti/copypasta{
-	pixel_y = 5
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aI" = (
-/obj/item/food/spaghetti/boiledspaghetti{
-	pixel_y = 5
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aJ" = (
-/obj/item/food/cherrycupcake{
-	pixel_y = 2
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aK" = (
-/obj/item/food/spaghetti/meatballspaghetti{
-	pixel_y = 5
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aL" = (
-/obj/item/food/notasandwich{
-	pixel_y = 11
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aM" = (
-/obj/structure/chair/comfy/teal{
-	dir = 4
-	},
-/turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"aN" = (
-/obj/item/food/burger/baconburger{
-	pixel_y = 2
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aO" = (
-/obj/item/food/melonfruitbowl{
-	pixel_y = 4
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aP" = (
-/obj/item/food/khachapuri{
-	pixel_y = 6
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aQ" = (
-/obj/item/food/bearsteak{
-	pixel_y = 6
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aR" = (
-/obj/structure/mirror/directional/west,
-/obj/structure/sink/greyscale{
-	dir = 4;
-	pixel_x = -12
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"aS" = (
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"aT" = (
-/obj/item/food/spaghetti/pastatomato{
-	pixel_y = 5
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aU" = (
-/obj/item/food/kebab/tofu{
-	pixel_y = 6
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aV" = (
-/obj/item/food/honkdae{
-	pixel_y = 8
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aW" = (
-/obj/item/food/spaghetti/chowmein{
-	pixel_y = 5
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aX" = (
-/obj/item/food/grilled_cheese_sandwich{
-	pixel_y = 11
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"aY" = (
+"bS" = (
 /obj/item/food/jelliedtoast/cherry{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"aZ" = (
-/obj/item/food/honeybun{
+"cI" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"cP" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"cV" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"dm" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"dA" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"dM" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/medical,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"dN" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"eb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ek" = (
+/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/iv_drip,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"en" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"et" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"eS" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/restraints/handcuffs,
+/obj/machinery/recharger,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"fH" = (
+/turf/template_noop,
+/area/template_noop)
+"fJ" = (
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ge" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"gf" = (
+/obj/structure/grille/broken,
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"gG" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 4;
+	id = "gimmemoney"
+	},
+/turf/closed/indestructible/opsglass{
+	desc = "A durable looking window made of an alloy of of plasma and titanium.";
+	name = "plastitanium window"
+	},
+/area/shuttle/escape/luxury)
+"gL" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/item/stack/ore/glass,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"gM" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"gQ" = (
+/obj/machinery/light/small/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"gU" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Cell"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
+/turf/open/indestructible/white,
+/area/shuttle/escape/brig)
+"gY" = (
+/obj/item/food/khachapuri{
+	pixel_y = 6
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"ho" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	loot = list(/obj/machinery/computer/arcade/orion_trail=49,/obj/machinery/computer/arcade/battle=49,/obj/machinery/computer/arcade/amputation=25)
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"hM" = (
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"iS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/ore/glass,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ja" = (
+/obj/machinery/light/small/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ji" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jy" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Economy-Class"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jC" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"jH" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jJ" = (
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"jZ" = (
+/obj/item/food/spaghetti/chowmein{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"kc" = (
+/obj/effect/decal/cleanable/chem_pile,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kF" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"kG" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kJ" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kM" = (
+/obj/machinery/door/airlock/silver{
+	name = "Pool"
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape/luxury)
+"la" = (
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"lq" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"lr" = (
+/obj/structure/mirror/directional/west,
+/obj/structure/sink/greyscale{
+	dir = 4;
+	pixel_x = -14
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"ly" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"lH" = (
+/obj/structure/chair/comfy/teal{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"mE" = (
+/obj/structure/table,
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire,
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/storage/medkit/brute,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"np" = (
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/holofloor/beach/water,
+/area/shuttle/escape/luxury)
+"od" = (
+/obj/item/food/honkdae{
+	pixel_y = 8
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"on" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"oA" = (
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"oH" = (
+/obj/machinery/door/airlock{
+	name = "Economy Medical"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"oP" = (
+/obj/structure/musician/piano,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"pW" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/large,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
+/obj/item/toy/plush/rouny{
+	name = "rouny plushie"
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"qc" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"qm" = (
+/obj/machinery/door/airlock/silver{
+	name = "Medical"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"qt" = (
+/obj/item/food/cakeslice/chocolate{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"ba" = (
+"qQ" = (
+/obj/effect/spawner/random/maintenance/six,
+/obj/structure/closet/crate/engineering,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ra" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"rh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"rt" = (
+/obj/structure/table/wood/fancy/black,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"rH" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"rN" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/engineering,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"rP" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"rZ" = (
 /obj/item/food/pizza/dank{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"bb" = (
-/obj/machinery/door/airlock/silver{
-	name = "Restroom"
+"sg" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Cell"
 	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"bc" = (
-/turf/closed/indestructible/opsglass{
-	desc = "A durable looking window made of an alloy of of plasma and titanium.";
-	name = "plastitanium window"
-	},
-/area/shuttle/escape/luxury)
-"be" = (
-/obj/structure/girder,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bf" = (
-/obj/structure/closet/crate/trashcart,
-/obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/random/maintenance/six,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bg" = (
-/obj/structure/closet/crate/trashcart,
-/obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/random/maintenance/three,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bi" = (
-/obj/machinery/computer/emergency_shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"bj" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
-"bk" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/blue,
+"sr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"sz" = (
+/obj/item/food/candiedapple{
+	pixel_y = 6
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"bl" = (
-/obj/machinery/computer/station_alert{
+"sC" = (
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"bm" = (
-/obj/structure/table/wood/fancy/black,
-/obj/item/storage/fancy/cigarettes/cigars/havana{
-	pixel_y = 7
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
-"bn" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/engineering/electrical,
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/random/maintenance/eight,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bo" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/engineering,
-/obj/effect/spawner/random/maintenance/eight,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bp" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bq" = (
-/obj/item/stack/rods/ten,
 /turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"br" = (
-/obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bs" = (
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bt" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
+/area/shuttle/escape)
+"sH" = (
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"sN" = (
 /obj/item/clothing/head/collectable/paper,
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
-"bu" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
-/turf/open/floor/holofloor/beach/water,
-/area/shuttle/escape/luxury)
-"bv" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
-/turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"bw" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/turf/open/floor/holofloor/beach/coast_t{
-	dir = 8
-	},
-/area/shuttle/escape/luxury)
-"bx" = (
-/obj/machinery/door/airlock/silver{
-	name = "Flight Control"
-	},
+"th" = (
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
-"by" = (
-/obj/structure/closet/crate/large,
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/random/maintenance/eight,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bz" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bA" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/decal/cleanable/oil,
-/obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bB" = (
-/obj/item/stack/ore/glass,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bC" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/window,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bD" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bE" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
-"bF" = (
-/obj/item/bikehorn/rubberducky,
-/obj/item/bikehorn/rubberducky,
-/turf/open/floor/holofloor/beach/water,
-/area/shuttle/escape/luxury)
-"bG" = (
-/obj/machinery/door/window/left/directional/east,
-/turf/open/floor/holofloor/beach/coast_t{
-	dir = 8
-	},
-/area/shuttle/escape/luxury)
-"bH" = (
-/obj/structure/door_assembly,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bI" = (
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bJ" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bK" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bL" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/holofloor/beach/water,
-/area/shuttle/escape/luxury)
-"bM" = (
-/obj/structure/window/reinforced,
-/obj/machinery/door/window/right/directional/east,
-/turf/open/floor/holofloor/beach/coast_t{
-	dir = 8
-	},
-/area/shuttle/escape/luxury)
-"bN" = (
-/obj/machinery/chem_dispenser/drinks/beer{
-	name = "aperitif fountain";
-	pixel_y = 8
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"bO" = (
-/obj/machinery/chem_dispenser/drinks{
-	name = "soda fountain";
-	pixel_y = 8
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"bP" = (
-/obj/structure/table/wood/fancy/black,
-/obj/machinery/recharger,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
-"bQ" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/holofloor/beach/water,
-/area/shuttle/escape/luxury)
-"bR" = (
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bS" = (
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bT" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bU" = (
+"ti" = (
 /obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"bV" = (
-/obj/structure/chair/comfy/brown,
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
-"bW" = (
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"bX" = (
+/area/shuttle/escape)
+"ty" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/window,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bY" = (
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ul" = (
+/obj/item/food/sandwich/cheese/grilled{
+	pixel_y = 11
+	},
 /obj/structure/table/wood/fancy/black,
-/obj/item/reagent_containers/food/drinks/bottle/champagne{
-	pixel_x = 7;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/food/drinks/shaker{
-	pixel_x = -7;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/glass/rag{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/turf/open/floor/carpet/green,
+/turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"bZ" = (
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"cb" = (
-/obj/machinery/stasis,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cc" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/large,
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/random/maintenance/eight,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cd" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Infirmary"
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cf" = (
-/obj/effect/decal/cleanable/vomit/old,
-/obj/item/stack/ore/glass,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cg" = (
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"ch" = (
-/obj/structure/chair/comfy/brown{
+"ur" = (
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
-"ci" = (
-/obj/structure/musician/piano,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"cj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"uC" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"vj" = (
+/obj/structure/grille/broken,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"vF" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood,
@@ -668,661 +527,1377 @@
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/a_plus,
 /obj/item/reagent_containers/blood/random,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"ck" = (
-/obj/item/stack/tile/iron/base,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cl" = (
-/mob/living/simple_animal/bot/medbot{
-	name = "\improper emergency medibot";
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cm" = (
-/obj/structure/table,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/retractor{
-	pixel_x = 4
-	},
-/obj/item/hemostat{
-	pixel_x = -4
-	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/surgicaldrill,
-/obj/item/cautery,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cn" = (
-/obj/machinery/door/airlock{
-	name = "Economy Medical"
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"co" = (
-/obj/item/shard,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cp" = (
-/obj/structure/closet/crate/freezer,
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/bot_assembly/medbot,
-/obj/item/stack/medical/gauze,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/item/reagent_containers/glass/bottle/ethanol,
-/obj/item/organ/internal/stomach,
-/obj/item/clothing/mask/surgical,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cq" = (
-/obj/effect/decal/cleanable/chem_pile,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cr" = (
-/obj/structure/frame/machine,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cs" = (
-/obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"ct" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"cu" = (
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"cv" = (
-/obj/structure/table,
-/obj/item/reagent_containers/pill/maintenance{
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/pill/maintenance{
-	pixel_x = 8;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/pill/maintenance,
-/obj/item/healthanalyzer{
-	pixel_y = 9
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cw" = (
-/obj/structure/bed,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cx" = (
-/obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cy" = (
-/obj/item/shard,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cz" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
-"cA" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cB" = (
-/obj/structure/bed,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cC" = (
-/obj/structure/grille/broken,
-/obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cD" = (
-/obj/structure/frame/machine,
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
-"cE" = (
-/obj/structure/chair/comfy/brown,
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
-"cF" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"cG" = (
-/obj/structure/table,
-/obj/item/storage/medkit/advanced,
-/obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/fire,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/glass/bottle/multiver{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/glass/bottle/multiver{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cH" = (
-/obj/machinery/light/directional/south,
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cI" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
-"cJ" = (
-/obj/item/stack/tile/iron/base,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cK" = (
-/obj/structure/table,
-/obj/item/wirecutters{
-	pixel_y = 6
-	},
-/obj/item/hatchet,
-/obj/item/knife/kitchen,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cL" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
-"cM" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"cN" = (
-/obj/structure/chair/wood{
+"vH" = (
+/obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"qa" = (
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
-"zh" = (
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
-"Eg" = (
-/obj/machinery/vending/wallmed/directional/north,
-/obj/machinery/iv_drip,
-/turf/open/floor/carpet/cyan,
+"vL" = (
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
-"Lt" = (
+"xn" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"xq" = (
+/obj/effect/spawner/random/maintenance/six,
+/obj/structure/closet/crate/engineering,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"xK" = (
+/obj/item/food/honeybun{
+	pixel_y = 1
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"xV" = (
+/obj/machinery/door/window/left/directional/east,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"xY" = (
+/obj/item/food/enchiladas{
+	pixel_y = 3
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"yj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"yk" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"yB" = (
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	dir = 1;
+	name = "buckleable bar stool"
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"ze" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"zq" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/shuttle/escape/brig)
+"zt" = (
+/obj/item/food/spaghetti/meatballspaghetti{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"zL" = (
+/obj/machinery/door/airlock/silver{
+	name = "Restrooms"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"zM" = (
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	dir = 8;
+	name = "buckleable bar stool"
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"zR" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"AT" = (
+/obj/machinery/shower/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"Bj" = (
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
+/obj/effect/spawner/random/structure/closet_private,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape/luxury)
+"Bo" = (
+/obj/item/shard,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Br" = (
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Bt" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/engineering,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/extinguisher/crafted,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"BK" = (
+/obj/structure/girder,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"BV" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Ck" = (
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
+/obj/machinery/door/airlock/silver{
+	name = "First Class"
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"CP" = (
+/obj/item/stack/tile/iron/base,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"CQ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Dc" = (
+/obj/item/food/spaghetti/boiledspaghetti{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Di" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Luxurious Emergency Shuttle"
+	},
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
+/obj/machinery/door/airlock/silver{
+	name = "First Class"
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"Dj" = (
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
+/obj/structure/rack,
+/obj/effect/spawner/random/trash/soap,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape/luxury)
+"Dr" = (
+/obj/item/food/burger/baconburger{
+	pixel_y = 2
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Du" = (
+/obj/machinery/button/door/indestructible{
+	id = "gimmemoney";
+	name = "anti-poor shutters control";
+	pixel_x = -26
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/recharger,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"DE" = (
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Cell"
 	},
-/obj/machinery/scanner_gate/luxury_shuttle,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"DK" = (
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"DP" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"DQ" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape/luxury)
+"Eb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Ed" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/delivery,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
+/obj/item/reagent_containers/cup/glass/waterbottle,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Eg" = (
+/obj/structure/chair/comfy/teal{
+	dir = 4
+	},
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"Ek" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"Ex" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/shuttle/escape/luxury)
+"EG" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"EL" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ER" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"EZ" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/preopen,
+/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Fl" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/gun/ballistic/revolver/russian,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"Fq" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"FC" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
+"FD" = (
+/obj/item/food/cherrycupcake{
+	pixel_y = 2
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"FN" = (
+/obj/structure/window/spawner/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Gq" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/shuttle/escape/brig)
+"Hq" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"HG" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"HI" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"HU" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"IB" = (
+/obj/effect/spawner/random/maintenance/six,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"IF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"IT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Jd" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"JB" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/gun/energy/laser/luxurypaywall,
+/obj/item/gun/energy/laser/luxurypaywall{
+	pixel_y = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"JO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"JS" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"JV" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"Ka" = (
+/obj/item/food/benedict{
+	pixel_y = 1
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Kb" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"Kw" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 4;
+	id = "gimmemoney"
+	},
+/turf/closed/indestructible/syndicate,
+/area/shuttle/escape/luxury)
+"Ky" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/box/fireworks/dangerous,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"KE" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"KJ" = (
+/obj/machinery/door/airlock/silver{
+	name = "Flight Control"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"KS" = (
+/obj/structure/closet/crate/large,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"KU" = (
+/obj/item/food/kebab/tofu{
+	pixel_y = 6
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Lc" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
+"LO" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"Mb" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/structure/door_assembly,
+/obj/item/stack/tile/iron/base,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Mi" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Mn" = (
+/turf/closed/indestructible/opsglass{
+	desc = "A durable looking window made of an alloy of of plasma and titanium.";
+	name = "plastitanium window"
+	},
+/area/shuttle/escape/luxury)
+"MC" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/reagent_containers/cup/glass/bottle/champagne{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"MX" = (
+/obj/structure/closet/crate/freezer,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+/obj/item/reagent_containers/cup/bottle/ethanol,
+/obj/item/stack/medical/gauze/improvised,
+/obj/item/bot_assembly/medbot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Na" = (
+/obj/item/food/spaghetti/pastatomato{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Nm" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Nu" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"Om" = (
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
+"OC" = (
+/obj/structure/table,
+/obj/item/healthanalyzer,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"OK" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"OU" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Pe" = (
+/obj/item/food/spaghetti/copypasta{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"PD" = (
+/obj/item/food/melonfruitbowl{
+	pixel_y = 4
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"PY" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"Qy" = (
+/obj/item/food/eggplantparm{
+	pixel_y = 3
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"QQ" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"Rk" = (
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Cell"
+	},
+/turf/open/indestructible/white,
+/area/shuttle/escape/brig)
+"RB" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Sm" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"Sy" = (
+/obj/structure/table,
+/obj/item/knife/kitchen,
+/obj/item/hatchet,
+/obj/item/wirecutters{
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"SE" = (
+/mob/living/basic/bot/medbot,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"SN" = (
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"SU" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"Ti" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/directional/west,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"Tz" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"TD" = (
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape/luxury)
+"TM" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"UK" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"UX" = (
+/obj/item/food/bearsteak{
+	pixel_y = 6
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"UZ" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"Wa" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"Wd" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
+"We" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"Wp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Wx" = (
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"WF" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"WG" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"WO" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"Xj" = (
+/obj/item/food/sandwich/notasandwich{
+	pixel_y = 11
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"Xz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape/luxury)
+"XY" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Yb" = (
+/obj/effect/decal/cleanable/generic,
+/obj/item/shard,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Yj" = (
+/turf/closed/indestructible/syndicate,
+/area/shuttle/escape/luxury)
+"Yo" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"YF" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"YN" = (
+/obj/machinery/door/airlock/silver{
+	name = "Restroom"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"YQ" = (
+/obj/structure/frame/machine,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"YV" = (
+/turf/open/floor/holofloor/beach/water,
+/area/shuttle/escape/luxury)
+"Za" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/preopen,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Zo" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 
 (1,1,1) = {"
-aa
-al
-ar
-ar
-al
-ar
-ar
-ar
-ar
-al
-ar
-ar
-al
-aa
+fH
+WO
+EG
+EG
+EG
+WO
+WO
+EG
+EG
+WO
+WO
+EG
+EG
+WO
+WO
+EG
+EG
+EG
+WO
+fH
 "}
 (2,1,1) = {"
-ab
-al
-as
-as
-al
-as
-as
-as
-as
-al
-as
-as
-al
-ab
+JV
+WO
+sC
+sC
+sC
+WO
+WO
+sC
+sC
+WO
+WO
+sC
+sC
+WO
+WO
+sC
+sC
+sC
+WO
+JV
 "}
 (3,1,1) = {"
-ab
-ah
-bn
-by
-ab
-cD
-aj
-cc
-aj
-ab
-cp
-cv
-cK
-ab
+CQ
+sH
+qc
+uC
+CQ
+xq
+qQ
+YQ
+JS
+Ed
+JV
+JO
+KE
+gM
+gf
+JV
+OK
+MX
+OC
+CQ
 "}
 (4,1,1) = {"
-ab
-aj
-bo
-bz
-bH
-bR
-bC
-bJ
-ak
-cn
-cq
-bs
-cA
-ab
+CQ
+Tz
+EZ
+Bt
+Mb
+XY
+fJ
+rH
+BV
+ti
+Mi
+IT
+KE
+BV
+CP
+oH
+kc
+JO
+et
+CQ
 "}
 (5,1,1) = {"
-ab
-aq
-bp
-bA
-ab
-bS
-bC
-bJ
-cf
-ab
-cr
-cw
-cB
-ab
+CQ
+KS
+rN
+Za
+CQ
+yj
+TM
+yk
+gM
+rh
+xn
+JO
+Bo
+Eb
+IF
+JV
+Sy
+EL
+Fq
+CQ
 "}
 (6,1,1) = {"
-ab
-be
-bq
-bB
-ck
-bT
-ak
-bU
-cg
-ab
-ab
-ab
-ab
-ab
+CQ
+KS
+dM
+rN
+CQ
+IB
+lq
+Br
+gL
+bg
+JO
+CP
+HG
+fJ
+DP
+JV
+kG
+dN
+dN
+CQ
 "}
 (7,1,1) = {"
-ab
-bf
-br
-bC
-bJ
-bI
-bC
-bK
-bs
-co
-cs
-cJ
-cC
-ab
+JV
+pW
+ER
+BK
+JV
+IB
+Br
+kJ
+JO
+ty
+FN
+yj
+TM
+JO
+JO
+Wp
+Br
+eb
+vj
+CQ
 "}
 (8,1,1) = {"
-ab
-bg
-ak
-bC
-bJ
-bU
-bC
-bJ
-bS
-bC
-bJ
-cx
-bC
-ab
+JV
+UK
+CP
+Nm
+ly
+JO
+yj
+gM
+CP
+rH
+zR
+eb
+KE
+kJ
+Eb
+yk
+kJ
+iS
+ur
+CQ
 "}
 (9,1,1) = {"
-ac
-ax
-bs
-bC
-bK
-bS
-bX
-bJ
-ak
-bC
-bJ
-cy
-bC
-ab
+jy
+jH
+Br
+gQ
+ji
+fJ
+bg
+gM
+yj
+sr
+zR
+JO
+KE
+kJ
+rh
+ty
+kJ
+Yb
+ja
+JV
 "}
 (10,1,1) = {"
-ag
-ag
-af
-ag
-ag
-ay
-av
-av
-av
-ay
-av
-av
-av
-ay
+Gq
+Gq
+sg
+Gq
+Gq
+Ex
+Ex
+Ex
+Ex
+Yj
+gG
+gG
+gG
+gG
+Yj
+gG
+gG
+gG
+Kw
+Yj
 "}
 (11,1,1) = {"
-af
-at
-at
-bD
-ag
-aA
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ag
+DE
+la
+la
+Wd
+Gq
+YF
+ze
+QQ
+Ex
+Ti
+jJ
+jJ
+jJ
+JB
+Du
+JB
+jJ
+jJ
+ge
+Ex
 "}
 (12,1,1) = {"
-ag
-bj
-at
-bD
-ag
-cE
-aG
-aK
-ch
-bV
-aO
-aT
-cL
-ag
+Gq
+jC
+la
+eS
+zq
+oA
+oA
+oA
+MC
+yB
+jJ
+SN
+SN
+SN
+SN
+SN
+SN
+SN
+Jd
+Ex
 "}
 (13,1,1) = {"
-ag
-at
-at
-bD
-ag
-bV
-aH
-aL
-ch
-bV
-aP
-aU
-ch
-ag
+Gq
+cI
+la
+Zo
+Gq
+ra
+oA
+oA
+DK
+yB
+jJ
+We
+Qy
+zt
+PY
+We
+PD
+Na
+PY
+Ex
 "}
 (14,1,1) = {"
-ag
-Lt
-ag
-ag
-ag
-bV
-aC
-aE
-ch
-bV
-aX
-aZ
-ch
-ag
+Gq
+Nu
+la
+la
+gU
+oA
+oA
+oA
+rt
+yB
+jJ
+We
+Pe
+Xj
+PY
+We
+gY
+KU
+PY
+Ex
 "}
 (15,1,1) = {"
-ag
-ao
-bt
-bQ
-bL
-bV
-aD
-aF
-ch
-bV
-aY
-ba
-ch
-ag
+Gq
+Gq
+Rk
+Gq
+Gq
+xV
+DK
+Ky
+Fl
+yB
+jJ
+We
+xY
+Ka
+PY
+We
+ul
+xK
+PY
+Ex
 "}
 (16,1,1) = {"
-ag
-ao
-bu
-bF
-bL
-bV
-aI
-aD
-ch
-bV
-aH
-aV
-ch
-ag
+Ex
+Yo
+jJ
+jJ
+jJ
+jJ
+zM
+zM
+zM
+jJ
+jJ
+We
+sz
+qt
+PY
+We
+bS
+rZ
+dA
+Ex
 "}
 (17,1,1) = {"
-ae
-ao
-bw
-bG
-bM
-bV
-aJ
-aN
-ch
-bV
-aQ
-aW
-cL
-ag
+Di
+jJ
+SN
+SN
+SN
+SN
+SN
+SN
+SN
+jJ
+jJ
+We
+Dc
+sz
+PY
+We
+Pe
+od
+PY
+Ex
 "}
 (18,1,1) = {"
-ag
-bk
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-cI
-ao
-ao
-ag
+Ex
+Hq
+SN
+ho
+SN
+OU
+SN
+OU
+SN
+jJ
+jJ
+We
+FD
+Dr
+PY
+We
+UX
+jZ
+PY
+Ex
 "}
 (19,1,1) = {"
-ad
-ao
-ao
-ao
-bN
-bW
-bY
-ao
-ci
-ag
-ag
-ag
-bb
-ag
+Ck
+jJ
+SN
+OU
+SN
+OU
+SN
+OU
+SN
+jJ
+jJ
+SN
+SN
+SN
+SN
+SN
+SN
+SN
+WG
+Ex
 "}
 (20,1,1) = {"
-ag
-ao
-ao
-ao
-bO
-cF
-bZ
-ao
-cN
-ag
-aR
-aR
-aS
-ag
+Ex
+Yo
+SN
+RB
+SN
+OU
+SN
+OU
+SN
+jJ
+cP
+jJ
+jJ
+jJ
+jJ
+cP
+jJ
+jJ
+jJ
+Ex
 "}
 (21,1,1) = {"
-ag
-au
-bx
-bx
-au
-ag
-au
-cd
-au
-ag
-ct
-ct
-cM
-ag
+Ex
+Wx
+SN
+SN
+SN
+SN
+SN
+SN
+SN
+oP
+Ex
+kM
+Xz
+Xz
+kM
+Ex
+Ex
+Ex
+zL
+Ex
 "}
 (22,1,1) = {"
-ag
-bm
-aw
-aw
-bP
-ag
-cj
-aB
-cm
-ag
-ag
-ag
-aS
-ag
+Ex
+rP
+jJ
+jJ
+jJ
+cP
+jJ
+jJ
+jJ
+HI
+Ex
+TD
+TD
+TD
+DQ
+Ex
+AT
+lr
+WF
+Ex
 "}
 (23,1,1) = {"
-ag
-bE
-aw
-aw
-cz
-ag
-cG
-aB
-cH
-ag
-cu
-bb
-aS
-ag
+Ex
+Xz
+KJ
+KJ
+Xz
+Ex
+qm
+Xz
+qm
+Ex
+Ex
+Bj
+TD
+TD
+Dj
+Ex
+AT
+WF
+LO
+Ex
 "}
 (24,1,1) = {"
-ag
-aM
-aM
-aM
-zh
-ag
-Eg
-aB
-cl
-ag
-ag
-ag
-cM
-ag
+Ex
+Sm
+dm
+dm
+SU
+Ex
+dm
+dm
+dm
+hM
+Ex
+bJ
+bJ
+bJ
+bJ
+Ex
+AT
+WF
+WF
+Ex
 "}
 (25,1,1) = {"
-ag
-az
-bi
-bl
-bv
-ag
-cb
-cb
-cb
-ag
-qa
-bb
-aS
-ag
+Ex
+dm
+dm
+dm
+dm
+Ex
+vF
+WF
+WF
+vL
+Ex
+FC
+Om
+Om
+Lc
+Ex
+Ex
+Ex
+WF
+Ex
 "}
 (26,1,1) = {"
-ag
-bc
-bc
-bc
-bc
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+Ex
+th
+dm
+dm
+th
+Ex
+mE
+WF
+WF
+Kb
+Ex
+YV
+YV
+YV
+YV
+Ex
+UZ
+YN
+WF
+Ex
+"}
+(27,1,1) = {"
+Ex
+Eg
+Eg
+Eg
+lH
+Ex
+ek
+WF
+WF
+SE
+Ex
+YV
+np
+YV
+YV
+Ex
+Ex
+Ex
+Wa
+Ex
+"}
+(28,1,1) = {"
+Ex
+en
+Ek
+cV
+vH
+Ex
+on
+on
+on
+on
+Ex
+YV
+YV
+YV
+sN
+Ex
+HU
+YN
+kF
+Ex
+"}
+(29,1,1) = {"
+Ex
+Mn
+Mn
+Mn
+Mn
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
+Ex
 "}

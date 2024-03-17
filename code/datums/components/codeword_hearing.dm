@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/component/codeword_hearing/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 /datum/component/codeword_hearing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_HEAR)
@@ -36,6 +36,14 @@
 /// Callback for COMSIG_MOVABLE_HEAR which highlights syndicate code phrases in chat.
 /datum/component/codeword_hearing/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
+
+	var/mob/living/owner = parent
+	if(!istype(owner))
+		return
+
+	// don't skip codewords when owner speaks
+	if(!owner.can_hear() || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
+		return
 
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	message = replace_regex.Replace(message, "<span class='[span_class]'>$1</span>")

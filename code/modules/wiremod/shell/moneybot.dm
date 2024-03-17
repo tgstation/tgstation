@@ -5,11 +5,11 @@
  */
 /obj/structure/money_bot
 	name = "money bot"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_large"
 
 	density = FALSE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 	var/stored_money = 0
@@ -35,7 +35,7 @@
 		return
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
-	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
+	balloon_alert(user, anchored ? "secured" : "unsecured")
 	return TRUE
 
 
@@ -95,7 +95,7 @@
 /obj/item/circuit_component/money_bot/populate_ports()
 	total_money = add_output_port("Total Money", PORT_TYPE_NUMBER)
 	money_input = add_output_port("Last Input Money", PORT_TYPE_NUMBER)
-	entity = add_output_port("User", PORT_TYPE_ATOM)
+	entity = add_output_port("User", PORT_TYPE_USER)
 	money_trigger = add_output_port("Money Input", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_bot/register_shell(atom/movable/shell)
@@ -103,14 +103,14 @@
 	if(istype(shell, /obj/structure/money_bot))
 		attached_bot = shell
 		total_money.set_output(attached_bot.stored_money)
-		RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_money_insert)
-		RegisterSignal(shell, COMSIG_MONEYBOT_ADD_MONEY, .proc/handle_money_update)
-		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
+		RegisterSignal(shell, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_money_insert))
+		RegisterSignal(shell, COMSIG_MONEYBOT_ADD_MONEY, PROC_REF(handle_money_update))
+		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, PROC_REF(on_set_locked))
 		attached_bot.locked = parent.locked
 
 /obj/item/circuit_component/money_bot/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 		COMSIG_MONEYBOT_ADD_MONEY,
 	))
 	total_money.set_output(null)

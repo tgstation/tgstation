@@ -3,8 +3,6 @@
 	desc = "Performs a basic comparison between two lists of strings, with additional functions that help in using it to check access on IDs."
 	category = "ID"
 
-	input_port_amount = 0 //Uses custom ports for its comparisons
-
 	/// A list of the accesses to check
 	var/datum/port/input/subject_accesses
 
@@ -14,11 +12,9 @@
 	/// Whether to check for all or any of the required accesses
 	var/datum/port/input/check_any
 
-	ui_buttons = list("id-card" = "access")
-
-/obj/item/circuit_component/compare/access/Initialize(mapload)
-	. = ..()
-	gen_access()
+	ui_buttons = list(
+		"id-card" = "access",
+	)
 
 /obj/item/circuit_component/compare/access/get_ui_notices()
 	. = ..()
@@ -36,7 +32,7 @@
 
 /obj/item/circuit_component/compare/access/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
-	RegisterSignal(added_to, COMSIG_CIRCUIT_POST_LOAD, .proc/on_post_load)
+	RegisterSignal(added_to, COMSIG_CIRCUIT_POST_LOAD, PROC_REF(on_post_load))
 
 /obj/item/circuit_component/compare/access/removed_from(obj/item/integrated_circuit/removed_from)
 	UnregisterSignal(removed_from, COMSIG_CIRCUIT_POST_LOAD)
@@ -57,12 +53,12 @@
 		LAZYCLEARLIST(req_one_access)
 		req_access = required_accesses_list.Copy()
 
-/obj/item/circuit_component/compare/access/do_comparisons(list/ports)
+/obj/item/circuit_component/compare/access/do_comparisons()
 	return check_access_list(subject_accesses.value)
 
 /obj/item/circuit_component/compare/access/ui_perform_action(mob/user, action)
 	if(length(required_accesses.connected_ports))
-		balloon_alert(user, "Disconnect port before manually configuring!")
+		balloon_alert(user, "disconnect port before manually configuring!")
 		return
 	interact(user)
 

@@ -28,10 +28,10 @@
 	else if(istype(var_value, /client))
 		. = VV_CLIENT
 
-	else if(istype(var_value, /datum/weakref))
+	else if(isweakref(var_value))
 		. = VV_WEAKREF
 
-	else if(istype(var_value, /datum))
+	else if(isdatum(var_value))
 		. = VV_DATUM_REFERENCE
 
 	else if(ispath(var_value))
@@ -295,8 +295,23 @@
 			.["value"] = newguy
 
 		if(VV_NEW_LIST)
-			.["value"] = list()
 			.["type"] = /list
+			var/list/value = list()
+
+			var/expectation = alert("Would you like to populate the list", "Populate List?", "Yes", "No")
+			if(!expectation || expectation == "No")
+				.["value"] = value
+				return .
+
+			var/list/insert = null
+			while(TRUE)
+				insert = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
+				if(!insert["class"])
+					break
+				value += LIST_VALUE_WRAP_LISTS(insert["value"])
+
+
+			.["value"] = value
 
 		if(VV_TEXT_LOCATE)
 			var/datum/D
@@ -323,7 +338,7 @@
 
 		if(VV_COLOR_MATRIX)
 			.["value"] = open_color_matrix_editor()
-			if(.["value"] == color_matrix_identity()) //identity is equivalent to null
+			if(.["value"] == COLOR_MATRIX_IDENTITY) //identity is equivalent to null
 				.["class"] = null
 
 		if(VV_INFINITY)

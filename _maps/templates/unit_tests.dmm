@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall,
+/turf/closed/indestructible,
 /area/misc/testroom)
 "m" = (
 /turf/open/floor/iron,

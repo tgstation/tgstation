@@ -1,6 +1,3 @@
-#define SIPHONING 0
-#define SCRUBBING 1
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map-3"
 
@@ -15,11 +12,12 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "scrubber"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	processing_flags = NONE
 
-	///The mode of the scrubber (SCRUBBING or SIPHONING)
-	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
+	///The mode of the scrubber (ATMOS_DIRECTION_SCRUBBING or ATMOS_DIRECTION_SIPHONING)
+	var/scrubbing = ATMOS_DIRECTION_SCRUBBING
 	///The list of gases we are filtering
 	var/list/filter_types = list(/datum/gas/carbon_dioxide)
 	///Rate of the scrubber to remove gases from the air
@@ -28,44 +26,63 @@
 	var/widenet = FALSE
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
-
-	///Frequency id for connecting to the NTNet
-	var/frequency = FREQ_ATMOS_CONTROL
-	///Reference to the radio datum
-	var/datum/radio_frequency/radio_connection
-	///Radio connection to the air alarm
-	var/radio_filter_out
-	///Radio connection from the air alarm
-	var/radio_filter_in
-
-	//Enables the use of plunger_act for ending the vent clog random event
-	var/clogged = FALSE
+	///The area this scrubber is assigned to
+	var/area/assigned_area
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	if(!id_tag)
-		id_tag = SSnetworks.assign_random_name()
+		id_tag = assign_random_name()
 	. = ..()
+
 	for(var/to_filter in filter_types)
 		if(istext(to_filter))
 			filter_types -= to_filter
 			filter_types += gas_id2path(to_filter)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
-	. = ..()
+	assign_to_area()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/scrub_area = get_area(src)
-	if(scrub_area)
-		scrub_area.air_scrub_info -= id_tag
-		GLOB.air_scrub_names -= id_tag
-
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
+	disconnect_from_area()
 	adjacent_turfs.Cut()
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	var/area/old_area = get_area(old_loc)
+	var/area/new_area = get_area(src)
+
+	if (old_area == new_area)
+		return
+
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on_enter_area(datum/source, area/area_to_register)
+	assign_to_area(area_to_register)
+	. = ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area(area/target_area = get_area(src))
+	//this scrubber is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	if(isnull(target_area) || !isnull(assigned_area))
+		return
+	assigned_area = target_area
+	assigned_area.air_scrubbers += src
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area(area/target_area = get_area(src))
+	//you cannot unassign from an area we never were assigned to
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	assigned_area.air_scrubbers -= src
+	assigned_area = null
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on_exit_area(datum/source, area/area_to_unregister)
+	. = ..()
+	disconnect_from_area(area_to_unregister)
 
 ///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)
@@ -79,16 +96,7 @@
 			filter_types |= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 ///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
@@ -103,18 +111,10 @@
 			filter_types -= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas
-
-	if(isopenturf(our_turf))
-		turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
+// WARNING: This proc takes untrusted user input from toggle_filter in air alarm's ui_act
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/toggle_filters(filter_or_filters)
 	if(!islist(filter_or_filters))
 		filter_or_filters = list(filter_or_filters)
@@ -128,17 +128,7 @@
 			else
 				filter_types |= translated_gas
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
@@ -157,7 +147,7 @@
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing & SCRUBBING)
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
 		if(widenet)
 			icon_state = "scrub_wide"
 		else
@@ -165,64 +155,47 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_power_usage()
+	idle_power_usage = initial(idle_power_usage)
+	active_power_usage = initial(idle_power_usage)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
-	if(!radio_connection)
-		return FALSE
+	var/new_power_usage = 0
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
+		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
+		update_use_power(IDLE_POWER_USE)
+	else
+		new_power_usage = active_power_usage
+		update_use_power(ACTIVE_POWER_USE)
 
-	var/list/f_types = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
+	if(widenet)
+		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
 
-	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
-		"device" = "VS",
-		"timestamp" = world.time,
-		"power" = on,
-		"scrubbing" = scrubbing,
-		"widenet" = widenet,
-		"filter_types" = f_types,
-		"sigtype" = "status"
-	))
+	update_mode_power_usage(scrubbing == ATMOS_DIRECTION_SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
 
-	var/area/scrub_area = get_area(src)
-	if(!GLOB.air_scrub_names[id_tag])
-		// If we do not have a name, assign one
-		update_name()
-		GLOB.air_scrub_names[id_tag] = name
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_scrubbing(scrubbing, mob/user)
+	if (src.scrubbing != scrubbing)
+		investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
 
-	scrub_area.air_scrub_info[id_tag] = signal.data
+	src.scrubbing = scrubbing
+	atmos_conditions_changed()
+	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
-	radio_connection.post_signal(src, signal, radio_filter_out)
-
-	return TRUE
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
+	src.widenet = widenet
+	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
 	if(override_naming)
 		return
-	var/area/scrub_area = get_area(src)
-	name = "\proper [scrub_area.name] [name] [id_tag]"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/atmos_init()
-	radio_filter_in = frequency == initial(frequency) ? RADIO_FROM_AIRALARM : null
-	radio_filter_out = frequency == initial(frequency) ? RADIO_TO_AIRALARM : null
-	if(frequency)
-		set_frequency(frequency)
-	broadcast_status()
-	check_turfs()
-	. = ..()
+	name = "\proper [get_area_name(src)] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)
 		return FALSE
-	if(!nodes[1] || !on || (!filter_types && scrubbing != SIPHONING))
+	if(!nodes[1] || !on || (!filter_types && scrubbing != ATMOS_DIRECTION_SIPHONING))
 		on = FALSE
 		return FALSE
 
@@ -231,7 +204,7 @@
 	if(!changed_gas)
 		return FALSE
 
-	if(scrubbing == SIPHONING || length(filter_types & changed_gas))
+	if(scrubbing == ATMOS_DIRECTION_SIPHONING || length(filter_types & changed_gas))
 		return TRUE
 
 	return FALSE
@@ -256,7 +229,7 @@
 	return TRUE
 
 ///filtered gases at or below this amount automatically get removed from the mix
-#define MINIMUM_MOLES_TO_SCRUB MOLAR_ACCURACY*100
+#define MINIMUM_MOLES_TO_SCRUB (MOLAR_ACCURACY*100)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
@@ -268,7 +241,7 @@
 	if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
 		return FALSE
 
-	if(scrubbing == SCRUBBING)
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
 		if(length(env_gases & filter_types))
 			///contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 			var/datum/gas_mixture/filtered_out = new
@@ -289,10 +262,10 @@
 			for(var/gas in filter_types & env_gases)
 				filtered_out.add_gas(gas)
 				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-				var/transfered_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
+				var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
 
-				filtered_gases[gas][MOLES] = transfered_moles
-				env_gases[gas][MOLES] -= transfered_moles
+				filtered_gases[gas][MOLES] = transferred_moles
+				env_gases[gas][MOLES] -= transferred_moles
 
 			environment.garbage_collect()
 
@@ -320,94 +293,13 @@
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/old_widenet = widenet
-	var/old_scrubbing = scrubbing
-	var/old_filter_length = length(filter_types)
-
-	///whether we should attempt to start processing due to settings allowing us to take gas out of our environment
-	var/try_start_processing = FALSE
-
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.air
-
-	var/atom/signal_sender = signal.data["user"]
-
-	if("power" in signal.data)
-		on = text2num(signal.data["power"])
-		try_start_processing = TRUE
-	if("power_toggle" in signal.data)
-		on = !on
-		try_start_processing = TRUE
-
-	if("widenet" in signal.data)
-		widenet = text2num(signal.data["widenet"])
-	if("toggle_widenet" in signal.data)
-		widenet = !widenet
-
-	if("scrubbing" in signal.data)
-		scrubbing = text2num(signal.data["scrubbing"])
-		try_start_processing = TRUE
-	if("toggle_scrubbing" in signal.data)
-		scrubbing = !scrubbing
-		try_start_processing = TRUE
-
-	if(scrubbing != old_scrubbing)
-		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
-
-	if("toggle_filter" in signal.data)
-		toggle_filters(signal.data["toggle_filter"])
-
-	if("set_filters" in signal.data)
-		filter_types = list()
-		add_filters(signal.data["set_filters"])
-
-	if("init" in signal.data)
-		name = signal.data["init"]
-		return
-
-	if("status" in signal.data)
-		broadcast_status()
-		return //do not update_appearance
-
-	broadcast_status()
-	update_appearance()
-
-	if(!our_turf || !turf_gas)
-		try_start_processing = FALSE
-
-	if(try_start_processing)//check if our changes should make us start processing
-		check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
-
-	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
-		return
-
-	idle_power_usage = initial(idle_power_usage)
-	active_power_usage = initial(idle_power_usage)
-
-	var/new_power_usage = 0
-	if(scrubbing == SCRUBBING)
-		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
-		update_use_power(IDLE_POWER_USE)
-	else
-		new_power_usage = active_power_usage
-		update_use_power(ACTIVE_POWER_USE)
-
-	if(widenet)
-		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
-
-	update_mode_power_usage(scrubbing == SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!welder.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("Now welding the scrubber."))
 	if(welder.use_tool(src, user, 20, volume=50))
@@ -419,7 +311,7 @@
 			welded = FALSE
 		update_appearance()
 		pipe_vision_img = image(src, loc, dir = dir)
-		pipe_vision_img.plane = ABOVE_HUD_PLANE
+		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
 	return TRUE
@@ -442,7 +334,7 @@
 	welded = FALSE
 	update_appearance()
 	pipe_vision_img = image(src, loc, dir = dir)
-	pipe_vision_img.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
 
@@ -466,61 +358,6 @@
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/plunger, mob/living/user, reinforced)
-	if(!clogged)
-		return
-
-	if(welded)
-		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
-		return
-
-	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
-	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping [src]."))
-		clogged = FALSE
-
-/**
- * Sets "clogged" to TRUE.
- *
- * Sets the clogged value to be true. Called during the scrubber clog event to begin the production of mobs, and allows for the plunger_act to run.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog()
-	clogged = TRUE
-
-/**
- * Sets "clogged" to FALSE.
- *
- * Changes the clogged value to be false. Called during the scrubber clog event to stop the production of mobs and prevent further plunger use.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
-	clogged = FALSE
-
-/**
- * Produces a mob based on the input given by scrubber clog event.
- *
- * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
- * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
- * new mob is created on the scrubber's turf, then added to the living_mobs list.
- *
- * Arguments:
- * * spawned_mob - Stores which mob will be spawned and added to the living_mobs list.
- * * living_mobs - Used to add the spawned mob to the list of currently living mobs produced by this vent.
- * Relevant code for how the list is handled is in the scrubber_clog.dm file.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(spawned_mob, list/living_mobs)
-	if(welded)
-		return
-
-	var/mob/new_mob = new spawned_mob(get_turf(src))
-	living_mobs += WEAKREF(new_mob)
-	visible_message(span_warning("[new_mob] crawls out of [src]!"))
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()
 	on = FALSE
-
-#undef SIPHONING
-#undef SCRUBBING

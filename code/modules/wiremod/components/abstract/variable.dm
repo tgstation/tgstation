@@ -50,7 +50,7 @@
 	if(current_variable)
 		if(should_listen)
 			current_variable.remove_listener(src)
-		UnregisterSignal(current_variable, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(current_variable, COMSIG_QDELETING)
 		current_variable = null
 
 /obj/item/circuit_component/variable/proc/set_current_variable(datum/circuit_variable/variable)
@@ -61,4 +61,4 @@
 	current_variable = variable
 	if(should_listen)
 		current_variable.add_listener(src)
-	RegisterSignal(current_variable, COMSIG_PARENT_QDELETING, .proc/remove_current_variable)
+	RegisterSignal(current_variable, COMSIG_QDELETING, PROC_REF(remove_current_variable))

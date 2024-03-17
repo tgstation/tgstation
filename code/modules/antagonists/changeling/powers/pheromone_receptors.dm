@@ -7,7 +7,7 @@
 	name = "Pheromone Receptors"
 	desc = "We attune our senses to track other changelings by scent.  The closer they are, the easier we can find them."
 	helptext = "We will know the general direction of nearby changelings, with closer scents being stronger.  Our chemical generation is slowed while this is active."
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "nose"
 	chemical_cost = 0 //Reduces regain rate while active.
 	dna_cost = 2
@@ -15,14 +15,14 @@
 
 /datum/action/changeling/pheromone_receptors/Remove(mob/living/carbon/user)
 	if(receptors_active)
-		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 		changeling.chem_recharge_slowdown -= 0.25
 		user.remove_status_effect(/datum/status_effect/agent_pinpointer/changeling)
 	..()
 
 /datum/action/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	..()
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(!receptors_active)
 		to_chat(user, span_warning("We search for the scent of any nearby changelings."))
 		changeling.chem_recharge_slowdown += 0.25
@@ -49,7 +49,7 @@
 
 	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 		if(C != owner && C.mind)
-			var/datum/antagonist/changeling/antag_datum = C.mind.has_antag_datum(/datum/antagonist/changeling)
+			var/datum/antagonist/changeling/antag_datum = IS_CHANGELING(C)
 			if(istype(antag_datum))
 				var/their_loc = get_turf(C)
 				var/distance = get_dist_euclidian(my_loc, their_loc)
@@ -65,3 +65,7 @@
 /atom/movable/screen/alert/status_effect/agent_pinpointer/changeling
 	name = "Pheromone Scent"
 	desc = "The nose always knows."
+
+#undef CHANGELING_PHEROMONE_MIN_DISTANCE
+#undef CHANGELING_PHEROMONE_MAX_DISTANCE
+#undef CHANGELING_PHEROMONE_PING_TIME

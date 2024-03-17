@@ -12,14 +12,14 @@
 	owner = new_owner
 	family_name = new_family_name
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-/datum/component/heirloom/Destroy(force, silent)
+/datum/component/heirloom/Destroy(force)
 	owner = null
 	return ..()
 
 /**
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  *
  * Shows who owns the heirloom on examine.
  */

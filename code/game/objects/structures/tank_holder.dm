@@ -2,10 +2,10 @@
 /obj/structure/tank_holder
 	name = "tank holder"
 	desc = "A metallic frame that can hold tanks and extinguishers."
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	icon_state = "holder"
 
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 
 	density = FALSE
 	anchored = FALSE
@@ -68,7 +68,6 @@
 	new /obj/item/stack/rods(Tsec, 2)
 	if(tank)
 		tank.forceMove(Tsec)
-		after_detach_tank()
 	qdel(src)
 
 /obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
@@ -83,12 +82,11 @@
 	add_fingerprint(user)
 	tank.add_fingerprint(user)
 	user.put_in_hands(tank)
-	after_detach_tank()
 
-/obj/structure/tank_holder/handle_atom_del(atom/A)
-	if(A == tank)
+/obj/structure/tank_holder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == tank)
 		after_detach_tank()
-	return ..()
 
 /obj/structure/tank_holder/contents_explosion(severity, target)
 	if(!tank)
@@ -144,3 +142,7 @@
 /obj/structure/tank_holder/extinguisher/advanced
 	icon_state = "holder_foam_extinguisher"
 	tank = /obj/item/extinguisher/advanced
+
+/obj/structure/tank_holder/extinguisher/anti
+	icon_state = "holder_extinguisher"
+	tank = /obj/item/extinguisher/anti

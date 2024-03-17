@@ -1,7 +1,9 @@
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 const jauntstyle = {
   color: 'lightblue',
@@ -11,27 +13,18 @@ const injurestyle = {
   color: 'yellow',
 };
 
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
-
 type Info = {
   fluff: string;
   explain_attack: BooleanLike;
   objectives: Objective[];
 };
 
-export const AntagInfoDemon = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoDemon = (props) => {
+  const { data } = useBackend<Info>();
   const { fluff, objectives, explain_attack } = data;
   return (
     <Window width={620} height={356} theme="syndicate">
-      <Window.Content style={{ 'background-image': 'none' }}>
+      <Window.Content style={{ backgroundImage: 'none' }}>
         <Stack fill>
           <Stack.Item>
             <DemonRunes />
@@ -44,11 +37,16 @@ export const AntagInfoDemon = (props, context) => {
                     <Stack.Item
                       textAlign="center"
                       textColor="red"
-                      fontSize="20px">
+                      fontSize="20px"
+                    >
                       {fluff}
                     </Stack.Item>
                     <Stack.Item>
-                      <ObjectivePrintout />
+                      <ObjectivePrintout
+                        titleMessage="It is in your nature to accomplish these goals:"
+                        objectiveTextSize="20px"
+                        objectives={objectives}
+                      />
                     </Stack.Item>
                   </Stack>
                 </Section>
@@ -88,27 +86,7 @@ export const AntagInfoDemon = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>
-        It is in your nature to accomplish these goals:
-      </Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item fontSize="20px" key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const DemonRunes = (props, context) => {
+const DemonRunes = (props) => {
   return (
     <Section height="102%" mt="-6px" fill>
       {/*

@@ -10,6 +10,11 @@
 	name = ".45 armor-piercing bullet"
 	armour_penetration = 50
 
+/obj/projectile/bullet/c45/hp
+	name = ".45 hollow point bullet"
+	damage = 50
+	weak_against_armour = TRUE
+
 /obj/projectile/bullet/incendiary/c45
 	name = ".45 incendiary bullet"
 	damage = 15

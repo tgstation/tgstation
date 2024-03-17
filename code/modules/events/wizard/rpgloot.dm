@@ -4,6 +4,9 @@
 	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Every item in the world will have fantastical names."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/rpgloot/start()
 	GLOB.rpgloot_controller = new /datum/rpgloot_controller
@@ -11,7 +14,7 @@
 /obj/item/upgradescroll
 	name = "item fortification scroll"
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". Apparently there's a risk of losing the item if it's already \"too good\". <i>This all feels so arbitrary...</i>"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "scroll"
 	worn_icon_state = "scroll"
 	w_class = WEIGHT_CLASS_TINY
@@ -20,17 +23,28 @@
 	var/can_backfire = TRUE
 	var/uses = 1
 
-/obj/item/upgradescroll/afterattack(obj/item/target, mob/user, proximity)
+/obj/item/upgradescroll/apply_fantasy_bonuses(bonus)
 	. = ..()
-	if(!proximity || !istype(target))
+	if(bonus >= 15)
+		can_backfire = FALSE
+	upgrade_amount = modify_fantasy_variable("upgrade_amount", upgrade_amount, round(bonus / 4), minimum = 1)
+
+/obj/item/upgradescroll/remove_fantasy_bonuses(bonus)
+	upgrade_amount = reset_fantasy_variable("upgrade_amount", upgrade_amount)
+	can_backfire = TRUE
+	return ..()
+
+
+/obj/item/upgradescroll/pre_attack(obj/item/target, mob/living/user)
+	. = ..()
+	if(. || !istype(target) || !user.combat_mode)
 		return
-
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
-
 	uses -= 1
 	if(!uses)
 		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
+	return TRUE
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"
@@ -59,13 +73,16 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 /datum/rpgloot_controller/New()
 	. = ..()
 	//second operation takes MUCH longer, so lets set up signals first.
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, .proc/on_new_item_in_existence)
+	RegisterSignal(SSdcs, COMSIG_GLOB_ATOM_AFTER_POST_INIT, PROC_REF(on_new_item_in_existence))
 	handle_current_items()
 
 ///signal sent by a new item being created.
 /datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
 	SIGNAL_HANDLER
-
+	if(!istype(created_item))
+		return
+	if(created_item.item_flags & SKIP_FANTASY_ON_SPAWN)
+		return
 	created_item.AddComponent(/datum/component/fantasy)
 
 /**
@@ -84,12 +101,15 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 
 		fantasy_item.AddComponent(/datum/component/fantasy)
 
+		if(isnull(fantasy_item.loc))
+			continue
+
 		if(istype(fantasy_item, /obj/item/storage))
 			var/obj/item/storage/storage_item = fantasy_item
-			var/datum/component/storage/storage_component = storage_item.GetComponent(/datum/component/storage)
-			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_items && !storage_item.invisibility)
+			var/datum/storage/storage_component = storage_item.atom_storage
+			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_slots && !storage_item.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(storage_item))
-				SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
+				storage_item.atom_storage?.attempt_insert(scroll, override = TRUE, force = STORAGE_SOFT_LOCKED)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 				if(isturf(scroll.loc))
 					qdel(scroll)

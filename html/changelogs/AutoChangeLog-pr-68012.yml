@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - bugfix: "fixes the ocean in the beach gateway having a different gasmix than the sand, making the place unbreathable"

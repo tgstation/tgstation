@@ -50,7 +50,7 @@
 			balloon_alert(user, "remove the floor plating!")
 			return
 		if(terminal)
-			balloon_alert(user, "APC is already wired!")
+			balloon_alert(user, "already wired!")
 			return
 		if(!has_electronics)
 			balloon_alert(user, "no board to wire!")
@@ -61,9 +61,17 @@
 			balloon_alert(user, "need ten lengths of cable!")
 			return
 
+		var/terminal_cable_layer = cable_layer // Default to machine's cable layer
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			if(isnull(choice))
+				return
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+
 		if(!do_after(user, 20, target = src))
 			return
 		if(installing_cable.get_amount() < 10 || !installing_cable)
@@ -71,13 +79,13 @@
 		if(terminal || !opened || !has_electronics)
 			return
 		var/turf/our_turf = get_turf(src)
-		var/obj/structure/cable/cable_node = our_turf.get_cable_node()
+		var/obj/structure/cable/cable_node = our_turf.get_cable_node(terminal_cable_layer)
 		if(prob(50) && electrocute_mob(usr, cable_node, cable_node, 1, TRUE))
 			do_sparks(5, TRUE, src)
 			return
 		installing_cable.use(10)
 		balloon_alert(user, "cables added to the frame")
-		make_terminal()
+		make_terminal(terminal_cable_layer)
 		terminal.connect_to_network()
 		return
 
@@ -136,15 +144,17 @@
 		return
 
 	if(istype(attacking_object, /obj/item/wallframe/apc) && opened)
-		if(!(machine_stat & BROKEN || opened==APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
+		if(!(machine_stat & BROKEN || opened == APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
 			balloon_alert(user, "no reason for repairs!")
 			return
-		if(!(machine_stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+		if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 			balloon_alert(user, "replacing APC's cover...")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
+				update_integrity(30) //needs to be welded to fully repair but can work without
+				set_machine_stat(machine_stat & ~(BROKEN|MAINT))
 				opened = APC_COVER_OPENED
 				update_appearance()
 			return
@@ -154,11 +164,11 @@
 		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 		balloon_alert(user, "replacing damaged frame...")
 		if(do_after(user, 50, target = src))
-			balloon_alert(user, "APC frame replaced")
+			balloon_alert(user, "replaced frame")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)
 			atom_integrity = max_integrity
-			if(opened==APC_COVER_REMOVED)
+			if(opened == APC_COVER_REMOVED)
 				opened = APC_COVER_OPENED
 			update_appearance()
 		return
@@ -173,25 +183,28 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !isturf(loc))
 		return
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/apc_interactor = user
-	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(maybe_ethereal_stomach))
 		togglelock(user)
 	else
 		if(maybe_ethereal_stomach.crystal_charge >= ETHEREAL_CHARGE_NORMAL)
 			togglelock(user)
-		ethereal_interact(user,modifiers)
+		ethereal_interact(user, modifiers)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/apc/proc/ethereal_interact(mob/living/user,list/modifiers)
+/// Special behavior for when an ethereal interacts with an APC.
+/obj/machinery/power/apc/proc/ethereal_interact(mob/living/user, list/modifiers)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/ethereal = user
-	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.get_organ_slot(ORGAN_SLOT_STOMACH)
+	// how long we wanna wait before we show the balloon alert. don't want it to be very long in case the ethereal wants to opt-out of doing that action, just long enough to where it doesn't collide with previously queued balloon alerts.
+	var/alert_timer_duration = 0.75 SECONDS
 
 	if(!istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 		return
@@ -201,14 +214,14 @@
 		return
 	if(ethereal.combat_mode)
 		if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-			balloon_alert(ethereal, "safeties prevent draining!")
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "safeties prevent draining!"), alert_timer_duration)
 			return
 		if(stomach.crystal_charge > charge_limit)
-			balloon_alert(ethereal, "charge is full!")
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "charge is full!"), alert_timer_duration)
 			return
 		stomach.drain_time = world.time + APC_DRAIN_TIME
-		balloon_alert(ethereal, "draining power")
-		if(do_after(user, APC_DRAIN_TIME, target = src))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "draining power"), alert_timer_duration)
+		while(do_after(user, APC_DRAIN_TIME, target = src))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
 			balloon_alert(ethereal, "received charge")
@@ -217,22 +230,23 @@
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-		balloon_alert(ethereal, "APC can't receive more power!")
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "APC can't receive more power!"), alert_timer_duration)
 		return
 	if(stomach.crystal_charge < APC_POWER_GAIN)
-		balloon_alert(ethereal, "charge is too low!")
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "charge is too low!"), alert_timer_duration)
 		return
 	stomach.drain_time = world.time + APC_DRAIN_TIME
-	balloon_alert(ethereal, "transfering power")
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "transfering power"), alert_timer_duration)
 	if(!do_after(user, APC_DRAIN_TIME, target = src))
 		return
 	if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
 		balloon_alert(ethereal, "can't transfer power!")
 		return
 	if(istype(stomach))
-		balloon_alert(ethereal, "transfered power")
-		stomach.adjust_charge(-APC_POWER_GAIN)
-		cell.give(APC_POWER_GAIN)
+		while(do_after(user, APC_DRAIN_TIME, target = src))
+			balloon_alert(ethereal, "transferred power")
+			stomach.adjust_charge(-APC_POWER_GAIN)
+			cell.give(APC_POWER_GAIN)
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 
@@ -247,10 +261,6 @@
 			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
 			balloon_alert(user, "cell removed")
 			user.put_in_hands(cell)
-			cell.update_appearance()
-			cell = null
-			charging = APC_NOT_CHARGING
-			update_appearance()
 		return
 	if((machine_stat & MAINT) && !opened) //no board; no interface
 		return
@@ -258,7 +268,7 @@
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
-/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
 	if(machine_stat & BROKEN && atom_integrity <= 0)
 		if(sound_effect)
@@ -279,22 +289,19 @@
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(isAdminGhostAI(user))
 		return TRUE
-	if(!user.has_unlimited_silicon_privilege)
+	if(!HAS_SILICON_ACCESS(user))
 		return TRUE
 	var/mob/living/silicon/ai/AI = user
 	var/mob/living/silicon/robot/robot = user
-	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
+	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai != AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
 		if(!loud)
-			balloon_alert(user, "APC has been disabled!")
+			balloon_alert(user, "it's disabled!")
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/apc/can_interact(mob/user)
-	. = ..()
-	if(!. && !QDELETED(remote_control))
-		. = remote_control.can_interact(user)
-
 /obj/machinery/power/apc/proc/set_broken()
+	if(machine_stat & BROKEN)
+		return
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	operating = FALSE

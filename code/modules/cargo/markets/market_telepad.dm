@@ -4,14 +4,15 @@
 	build_path = /obj/machinery/ltsrbt
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
-		/obj/item/stock_parts/subspace/ansible = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/scanning_module = 2)
+		/datum/stock_part/ansible = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/scanning_module = 2)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt
 	name = "Long-To-Short-Range-Bluespace-Transceiver"
 	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
+	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "exonet_node"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
@@ -25,13 +26,13 @@
 	/// The time it takes for the machine to recharge before being able to send or receive items.
 	var/recharge_time = 0
 	/// Current recharge progress.
-	var/recharge_cooldown = 0
+	COOLDOWN_DECLARE(recharge_cooldown)
 	/// Base recharge time in seconds which is used to get recharge_time.
 	var/base_recharge_time = 100
 	/// Current /datum/market_purchase being received.
-	var/receiving
+	var/datum/market_purchase/receiving
 	/// Current /datum/market_purchase being sent to the target uplink.
-	var/transmitting
+	var/datum/market_purchase/transmitting
 	/// Queue for purchases that the machine should receive and send.
 	var/list/datum/market_purchase/queue = list()
 
@@ -51,13 +52,13 @@
 	. = ..()
 	recharge_time = base_recharge_time
 	// On tier 4 recharge_time should be 20 and by default it is 80 as scanning modules should be tier 1.
-	for(var/obj/item/stock_parts/scanning_module/scan in component_parts)
-		recharge_time -= scan.rating * 10
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		recharge_time -= scanning_module.tier * 10
 	recharge_cooldown = recharge_time
 
 	power_efficiency = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		power_efficiency += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		power_efficiency += laser.tier
 	// Shouldn't happen but you never know.
 	if(!power_efficiency)
 		power_efficiency = 1
@@ -66,50 +67,48 @@
 /obj/machinery/ltsrbt/proc/add_to_queue(datum/market_purchase/purchase)
 	if(!recharge_cooldown && !receiving && !transmitting)
 		receiving = purchase
-		return
-	queue += purchase
+	else
+		queue += purchase
+	RegisterSignal(receiving, COMSIG_QDELETING, PROC_REF(on_receiving_del))
 
-/obj/machinery/ltsrbt/process(delta_time)
+/obj/machinery/ltsrbt/proc/on_receiving_del(datum/market_purchase/purchase)
+	SIGNAL_HANDLER
+	queue -= purchase
+	if(receiving == purchase)
+		receiving = null
+	if(transmitting == purchase)
+		transmitting = null
+
+/obj/machinery/ltsrbt/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
 		return
 
-	if(recharge_cooldown > 0)
-		recharge_cooldown -= delta_time
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown) && isnull(receiving) && isnull(transmitting))
 		return
 
-	var/turf/T = get_turf(src)
-	if(receiving)
-		var/datum/market_purchase/P = receiving
+	COOLDOWN_START(src, recharge_cooldown, recharge_time)
 
-		if(!P.item || ispath(P.item))
-			P.item = P.entry.spawn_item(T)
-		else
-			var/atom/movable/M = P.item
-			M.forceMove(T)
+	var/turf/turf = get_turf(src)
+	if(receiving)
+
+		receiving.item = receiving.entry.spawn_item(turf, receiving)
 
 		use_power(power_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new
 		sparks.set_up(5, 1, get_turf(src))
-		sparks.attach(P.item)
+		sparks.attach(receiving.item)
 		sparks.start()
 
+		transmitting = receiving
 		receiving = null
-		transmitting = P
 
 		recharge_cooldown = recharge_time
 		return
-	else if(transmitting)
-		var/datum/market_purchase/P = transmitting
-		if(!P.item)
-			QDEL_NULL(transmitting)
-		if(!(P.item in T.contents))
-			QDEL_NULL(transmitting)
-			return
-		do_teleport(P.item, get_turf(P.uplink))
-		use_power(power_usage_per_teleport / power_efficiency)
+	if(transmitting)
+		if(transmitting.item.loc == turf)
+			do_teleport(transmitting.item, get_turf(transmitting.uplink))
+			use_power(power_usage_per_teleport / power_efficiency)
 		QDEL_NULL(transmitting)
-
-		recharge_cooldown = recharge_time
 		return
 
 	if(queue.len)

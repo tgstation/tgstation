@@ -46,5 +46,29 @@
 /turf/open/floor/plasteel/white/corner : /turf/open/floor/iron/white/corner {@OLD}
 /turf/open/floor/plasteel/white/side : /turf/open/floor/iron/white/side {@OLD}
 /turf/open/floor/plasteel/white/telecomms : /turf/open/floor/iron/white/telecomms {@OLD}
-/turf/open/floor/plasteel/yellowsiding : /turf/open/floor/iron/yellowsiding, /obj/effect/turf_decal/siding/yellow {@OLD}
-/turf/open/floor/plasteel/yellowsiding/corner : /turf/open/floor/iron/yellowsiding/corner, /obj/effect/turf_decal/siding/yellow/corner {@OLD}
+/turf/open/floor/plasteel/yellowsiding : /turf/open/floor/iron, /obj/effect/turf_decal/siding/yellow {@OLD}
+/turf/open/floor/plasteel/yellowsiding/corner : /turf/open/floor/iron, /obj/effect/turf_decal/siding/yellow/corner {@OLD}
+/turf/open/floor/plasteel/shuttle : /turf/open/floor/mineral/titanium
+/turf/open/floor/plasteel/black : /turf/open/floor/iron/dark
+/turf/open/floor/plasteel/bot : /obj/effect/turf_decal/bot , /turf/open/floor/iron
+/turf/open/floor/plasteel/darkwarning : /obj/effect/turf_decal/stripes/line{dir=@OLD} , /turf/open/floor/iron/dark
+/turf/open/floor/plasteel/delivery : /obj/effect/turf_decal/delivery , /turf/open/floor/iron
+/turf/open/floor/plasteel/loadingarea : /obj/effect/turf_decal/loading_area{dir=@OLD} , /turf/open/floor/iron
+/turf/open/floor/plasteel/shuttle/red : /turf/open/floor/mineral/plastitanium/red/brig
+/turf/open/floor/plasteel/shuttle/white : /turf/open/floor/mineral/titanium/white
+/turf/open/floor/plasteel/warning : /obj/effect/turf_decal/stripes/line{dir=@OLD} , /turf/open/floor/iron
+/turf/open/floor/plasteel/warning/corner{dir=2} : /obj/effect/turf_decal/stripes/corner{dir=2} , /turf/open/floor/iron
+/turf/open/floor/plasteel/warning/corner{dir=@UNSET} : /obj/effect/turf_decal/stripes/corner , /turf/open/floor/iron
+/turf/open/floor/plasteel/warning/corner{dir=8} : /obj/effect/turf_decal/stripes/corner{dir=4} , /turf/open/floor/iron
+/turf/open/floor/plasteel/warning/corner{dir=1} : /obj/effect/turf_decal/stripes/corner{dir=8} , /turf/open/floor/iron
+/turf/open/floor/plasteel/warning/corner{dir=4} : /obj/effect/turf_decal/stripes/corner{dir=1} , /turf/open/floor/iron
+/turf/open/floor/plasteel/warnwhite : /obj/effect/turf_decal/stripes/line{dir=@OLD} , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/warnwhite/corner{dir=2} : /obj/effect/turf_decal/stripes/corner{dir=2} , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/warnwhite/corner{dir=@UNSET} : /obj/effect/turf_decal/stripes/corner , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/warnwhite/corner{dir=8} : /obj/effect/turf_decal/stripes/corner{dir=4} , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/warnwhite/corner{dir=1} : /obj/effect/turf_decal/stripes/corner{dir=8} , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/warnwhite/corner{dir=4} : /obj/effect/turf_decal/stripes/corner{dir=1} , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/whitebot : /obj/effect/turf_decal/bot , /turf/open/floor/iron/white
+/turf/open/floor/plasteel/whitebot/delivery : /obj/effect/turf_decal/delivery , /turf/open/floor/iron/white
+/turf/open/floor/plating/warnplate : /obj/effect/turf_decal/stripes/line{dir=@OLD} , /turf/open/floor/plating
+/turf/open/floor/plating/warnplate/corner : /obj/effect/turf_decal/stripes/corner{dir=@OLD} , /turf/open/floor/plating

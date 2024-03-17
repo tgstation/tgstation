@@ -18,7 +18,10 @@ SUBSYSTEM_DEF(server_maint)
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
 
-/datum/controller/subsystem/server_maint/Initialize(timeofday)
+/datum/controller/subsystem/server_maint/Initialize()
+	if (fexists("tmp/"))
+		fdel("tmp/")
+
 	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
 	//Keep in mind, because of how delay works adding a list here makes each list take wait * delay more time to clear
@@ -31,7 +34,12 @@ SUBSYSTEM_DEF(server_maint)
 		"dead_mob_list" = GLOB.dead_mob_list,
 		"keyloop_list" = GLOB.keyloop_list, //A null here will cause new clients to be unable to move. totally unacceptable
 	)
-	return ..()
+	
+	var/datum/tgs_version/tgsversion = world.TgsVersion()
+	if(tgsversion)
+		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
+	
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
@@ -77,6 +85,8 @@ SUBSYSTEM_DEF(server_maint)
 			return
 
 /datum/controller/subsystem/server_maint/Shutdown()
+	if (fexists("tmp/"))
+		fdel("tmp/")
 	kick_clients_in_lobby(span_boldannounce("The round came to an end with you in the lobby."), TRUE) //second parameter ensures only afk clients are kicked
 	var/server = CONFIG_GET(string/server)
 	for(var/thing in GLOB.clients)
@@ -86,9 +96,6 @@ SUBSYSTEM_DEF(server_maint)
 		C?.tgui_panel?.send_roundrestart()
 		if(server) //if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
-	var/datum/tgs_version/tgsversion = world.TgsVersion()
-	if(tgsversion)
-		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
 
 
 /datum/controller/subsystem/server_maint/proc/UpdateHubStatus()

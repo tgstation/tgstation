@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	/client/proc/cmd_admin_areatest_station_no_maintenance,
 	#ifdef TESTING
 	/client/proc/see_dirty_varedits,
 	#endif
@@ -53,7 +54,9 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/place_ruin,
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
-	/client/proc/check_atmos_controls,
+	/client/proc/check_for_obstructed_atmospherics,
+	/client/proc/modify_lights,
+	/client/proc/visualize_lights,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -69,13 +72,12 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
 	if(!on)
 		var/list/seen = list()
-		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
 			T.maptext = MAPTEXT(seen[T])
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
+	BLACKBOX_LOG_ADMIN_VERB("Show Camera Range")
 
 #ifdef TESTING
 GLOBAL_LIST_EMPTY(dirty_vars)
@@ -104,7 +106,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	var/list/obj/machinery/camera/CL = list()
 
-	for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		CL += C
 
 	var/output = {"<B>Camera Abnormalities Report</B><HR>
@@ -124,7 +126,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
+					if (W.dir == REVERSE_DIR(C1.dir) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
 						window_check = 1
 						break
 				if(!window_check)
@@ -132,7 +134,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Show Camera Report")
 
 /client/proc/intercom_view()
 	set category = "Mapping"
@@ -149,7 +151,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
 				for(var/turf/turf in view(7,intercom.loc))
 					new /obj/effect/abstract/marker/intercom(turf)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Show Intercom Range")
 
 /client/proc/show_map_reports()
 	set category = "Mapping"
@@ -178,7 +180,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	usr << browse(dat, "window=at_list")
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turfs")
 
 /client/proc/cmd_show_at_markers()
 	set category = "Mapping"
@@ -198,7 +200,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			count++
 		to_chat(usr, "[count] AT markers placed.", confidential = TRUE)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
+	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turf Markers")
 
 /client/proc/enable_mapping_verbs()
 	set category = "Debug"
@@ -207,14 +209,14 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		return
 	remove_verb(src, /client/proc/enable_mapping_verbs)
 	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Enable Debug Verbs")
 
 /client/proc/disable_mapping_verbs()
 	set category = "Debug"
 	set name = "Mapping verbs - Disable"
 	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
 	add_verb(src, /client/proc/enable_mapping_verbs)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Disable Debug Verbs")
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
@@ -253,7 +255,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					atom_list += A
 
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Count Objects Zlevel")
 
 /client/proc/count_objects_all()
 	set category = "Mapping"
@@ -273,7 +275,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			count++
 
 	to_chat(world, "There are [count] objects of type [type_path] in the game world", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Count Objects All")
 
 
 //This proc is intended to detect lag problems relating to communication procs
@@ -299,15 +301,14 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		var/datum/job/JB = new job
 		switch(JB.title)
 			if(JOB_AI)
-				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
+				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
 			if(JOB_CYBORG)
-				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
 			else
 				for(var/obj/item/I in D)
 					qdel(I)
 				randomize_human(D)
 				D.dress_up_as_job(JB, TRUE)
-				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)
 	qdel(D)
@@ -320,9 +321,14 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	set name = "Debug Z-Levels"
 	set category = "Mapping"
 
-	var/list/z_list = SSmapping.z_list
+	to_chat(src, examine_block(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
+
+/// Returns all necessary z-level information. Argument `append_grid` allows the user to see a table showing all of the z-level linkages, which is only visible and useful in-game.
+/proc/gather_z_level_information(append_grid = FALSE)
 	var/list/messages = list()
-	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br>"
+
+	var/list/z_list = SSmapping.z_list
+	messages += "\n<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY
@@ -332,49 +338,50 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	for(var/z in 1 to max(world.maxz, z_list.len))
 		if (z > z_list.len)
-			messages += "<b>[z]</b>: Unmanaged (out of bounds)<br>"
+			messages += "<b>[z]</b>: Unmanaged (out of bounds)"
 			continue
-		var/datum/space_level/S = z_list[z]
-		if (!S)
-			messages += "<b>[z]</b>: Unmanaged (null)<br>"
+		var/datum/space_level/level = z_list[z]
+		if (!level)
+			messages += "<b>[z]</b>: Unmanaged (null)"
 			continue
 		var/linkage
-		switch (S.linkage)
+		switch (level.linkage)
 			if (UNAFFECTED)
 				linkage = "no linkage"
 			if (SELFLOOPING)
 				linkage = "self-looping"
 			if (CROSSLINKED)
-				linkage = "linked at ([S.xi], [S.yi])"
-				linked_levels += S
-				min_x = min(min_x, S.xi)
-				min_y = min(min_y, S.yi)
-				max_x = max(max_x, S.xi)
-				max_y = max(max_y, S.yi)
+				linkage = "linked at ([level.xi], [level.yi])"
+				linked_levels += level
+				min_x = min(min_x, level.xi)
+				min_y = min(min_y, level.yi)
+				max_x = max(max_x, level.xi)
+				max_y = max(max_y, level.yi)
 			else
-				linkage = "unknown linkage '[S.linkage]'"
+				linkage = "unknown linkage '[level.linkage]'"
 
-		messages += "<b>[z]</b>: [S.name], [linkage], traits: [json_encode(S.traits)]<br>"
-		if (S.z_value != z)
-			messages += "-- z_value is [S.z_value], should be [z]<br>"
-		if (S.name == initial(S.name))
-			messages += "-- name not set<br>"
+		messages += "<b>[z]</b>: [level.name], [linkage], traits: [json_encode(level.traits)]"
+		if (level.z_value != z)
+			messages += "-- z_value is [level.z_value], should be [z]"
+		if (level.name == initial(level.name))
+			messages += "-- name not set"
 		if (z > world.maxz)
 			messages += "-- exceeds max z"
 
 	var/grid[max_x - min_x + 1][max_y - min_y + 1]
-	for(var/datum/space_level/S in linked_levels)
-		grid[S.xi - min_x + 1][S.yi - min_y + 1] = S.z_value
+	for(var/datum/space_level/linked_level in linked_levels)
+		grid[linked_level.xi - min_x + 1][linked_level.yi - min_y + 1] = linked_level.z_value
 
-	messages += "<table border='1'>"
-	for(var/y in max_y to min_y step -1)
-		var/list/part = list()
-		for(var/x in min_x to max_x)
-			part += "[grid[x - min_x + 1][y - min_y + 1]]"
-		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
-	messages += "</table>"
+	if(append_grid)
+		messages += "<br><table border='1'>"
+		for(var/y in max_y to min_y step -1)
+			var/list/part = list()
+			for(var/x in min_x to max_x)
+				part += "[grid[x - min_x + 1][y - min_y + 1]]"
+			messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
+		messages += "</table>"
 
-	to_chat(src, messages.Join(""), confidential = TRUE)
+	return messages.Join("\n")
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"
@@ -382,7 +389,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/list/foodcount = list()
 	for(var/obj/item/food/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
-		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+		if(!location || !SSmapping.level_trait(location.z, ZTRAIT_STATION))
 			continue
 		LAZYADDASSOC(foodcount, fuck_me.type, 1)
 
@@ -405,7 +412,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/list/stackcount = list()
 	for(var/obj/item/stack/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
-		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+		if(!location || !SSmapping.level_trait(location.z, ZTRAIT_STATION))
 			continue
 		LAZYADDASSOC(stackcount, fuck_me.type, fuck_me.amount)
 
@@ -422,97 +429,88 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	popup.set_content(page_contents)
 	popup.open()
 
-/// Checks the atmos monitor, sensors, meters, vents, and injectors, and makes sure they dont overlap or do nothing.
-/client/proc/check_atmos_controls()
-	set name = "Check Atmos Chamber Devices"
+/// Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up.
+/client/proc/check_for_obstructed_atmospherics()
+	set name = "Check For Obstructed Atmospherics"
 	set category = "Mapping"
+	if(!holder)
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
+		return
+	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
+	BLACKBOX_LOG_ADMIN_VERB("Check For Obstructed Atmospherics")
 
-	if(SSticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, "Game still loading, please run this again later!", confidential = TRUE)
+	var/list/results = list()
+
+	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
+
+	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
+	var/list/ignore_list = list(
+		/obj/effect,
+		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. fuck.
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary, //don't wanna flag on the vent or scrubber itself.
+		/obj/machinery/atmospherics/pipe,
+		/obj/machinery/button,
+		/obj/machinery/camera,
+		/obj/machinery/door_buttons,
+		/obj/machinery/door/window, // i kind of wish we didn't have to do it but we have some particularly compact areas that we need to be wary of
+		/obj/machinery/duct,
+		/obj/machinery/firealarm,
+		/obj/machinery/flasher,
+		/obj/machinery/light_switch,
+		/obj/machinery/light,
+		/obj/machinery/navbeacon,
+		/obj/machinery/newscaster,
+		/obj/machinery/portable_atmospherics,
+		/obj/machinery/power/apc,
+		/obj/machinery/power/terminal,
+		/obj/machinery/sparker,
+		/obj/machinery/status_display,
+		/obj/machinery/turretid,
+		/obj/structure/cable,
+		/obj/structure/disposalpipe,
+		/obj/structure/extinguisher_cabinet,
+		/obj/structure/lattice,
+		/obj/structure/sign,
+		/obj/structure/urinal, // the reason why this one gets to live and not the shower/sink is because it's pretty firmly on a wall.
+		/obj/structure/window/reinforced,
+	)
+
+	for(var/turf/iterated_turf in world)
+		var/obj/machinery/atmospherics/components/unary/device = locate() in iterated_turf.contents
+		if(!device)
+			continue
+		var/list/obj/obstruction = locate(/obj) in iterated_turf.contents
+		if(!is_type_in_list(obstruction, ignore_list))
+			results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(iterated_turf)].<br>"
+
+	if(results.len == 1) // only the header is in the list, we're good
+		to_chat(src, "No obstructions detected.", confidential = TRUE)
+	else
+		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
+		popup.set_content(results.Join())
+		popup.open()
+
+/client/proc/modify_lights()
+	set name = "Toggle Light Debug"
+	set category = "Mapping"
+	if(!check_rights(R_DEBUG))
+		return
+	if(GLOB.light_debug_enabled)
+		undebug_sources()
 		return
 
-	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Atmos Controls debug command."))
-	log_admin("[key_name(usr)] used the Test Atmos Controls debug command.")
+	for(var/obj/machinery/light/fix_up as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
+		// Only fix lights that started out fixed
+		if(initial(fix_up.status) == LIGHT_OK)
+			fix_up.fix()
+		CHECK_TICK
+	debug_sources()
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
+/client/proc/visualize_lights()
+	set name = "Visualize Lighting Corners"
+	set category = "Mapping"
+	if(!check_rights(R_DEBUG))
+		return
 
-	/// broadcaster[id_tag] = machine
-	var/list/broadcasters = list()
-	/// listened_to[atmos_chamber_entry] = bool
-	/// TRUE means we have the corresponding id_tag being listened to by an atmos control computer.
-	var/list/listened_to = list()
-	/// broadcasted_to[id_tag[1]] = bool
-	/// TRUE means we have the corresponding id_tag being broadcasted to by a device, be it meter, sensors, etc.
-	var/list/broadcasted_to = list()
-
-	/// How many things dont fit the recognized subtypes.
-	var/invalid_machine = 0
-	/// How many things have invalid (messes with our delimiter) tags.
-	var/invalid_tag = 0
-	/// How many things have empty tags, invalids but much worse.
-	var/tagless = 0
-	/// How many things have duped id_tag.
-	var/duplicate_tag = 0
-	/// How many things are broadcasting without an atmos computer listening
-	var/not_heard = 0
-	/// How many atmos computers are listening to an empty tag.
-	var/not_told = 0
-
-	var/list/valid_device_types = typecacheof(list(
-		/obj/machinery/computer/atmos_control,
-		/obj/machinery/air_sensor,
-		/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
-		/obj/machinery/meter/monitored,
-		/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
-		/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored
-	))
-	var/list/valid_tag_endings = list("sensor", "in", "out")
-
-	for (var/datum/weakref/device_ref as anything in frequency.devices[RADIO_ATMOSIA])
-		var/obj/machinery/machine = device_ref.resolve()
-		if(!machine)
-			continue
-		if(!valid_device_types[machine.type])
-			to_chat(usr, "Unrecognized machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] in FREQ_ATMOS_STORAGE ([FREQ_ATMOS_STORAGE]) frequency.", confidential=TRUE)
-			invalid_machine += 1
-			continue
-		if(istype(machine,/obj/machinery/computer/atmos_control))
-			var/obj/machinery/computer/atmos_control/atmos_comp = machine
-			for(var/listened_tags in atmos_comp.atmos_chambers)
-				LAZYINITLIST(listened_to[listened_tags])
-				listened_to[listened_tags] += atmos_comp
-			continue
-		// Code below is for valid machineries that are not atmos control.
-		var/list/tags = splittext(machine.id_tag, "_")
-		if(tags.len == 0 || length(tags[1]) == 0)
-			to_chat(usr, "Machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] does not have a tag or have an empty identifier tag: [machine.id_tag]", confidential=TRUE)
-			tagless += 1
-			continue
-		if(tags.len != 2 || !(tags[2] in valid_tag_endings))
-			to_chat(usr, "Invalid tag for machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type]. Tag = [machine.id_tag]", confidential=TRUE)
-			invalid_tag += 1
-			continue
-		if(broadcasters[machine.id_tag])
-			var/obj/original_machine = broadcasters[machine.id_tag]
-			to_chat(usr, "Duplicate machine id_tag ([machine.id_tag]) detected. Implicated machineries: [ADMIN_VERBOSEJMP(machine)] under [machine.type] and [ADMIN_VERBOSEJMP(original_machine)] under [original_machine.type]", confidential=TRUE)
-			duplicate_tag += 1
-			continue
-		broadcasters[machine.id_tag] = machine
-		LAZYINITLIST(broadcasted_to[tags[1]])
-		broadcasted_to[tags[1]] += machine
-
-	for (var/tag in listened_to)
-		if(!broadcasted_to[tag])
-			for (var/obj/computer in listened_to[tag])
-				to_chat(usr, "A computer [ADMIN_VERBOSEJMP(computer)] is listening to tag: [tag] yet it no devices is broadcasting there.", confidential=TRUE)
-			not_told += 1
-	for (var/tag in broadcasted_to)
-		if(!listened_to[tag])
-			for (var/obj/machine in broadcasted_to[tag])
-				to_chat(usr, "A machinery [ADMIN_VERBOSEJMP(machine)] is broadcasting in tag: [tag] yet there are no listeners. Are you sure you want to use a monitored atmos device?", confidential=TRUE)
-			not_heard += 1
-
-	if(!(invalid_machine || invalid_tag || tagless || duplicate_tag || not_heard || not_told))
-		to_chat(usr, "Atmos control frequency check passed without encountering problems.", confidential=TRUE)
-	else
-		to_chat(usr, "Total errors: [invalid_machine + invalid_tag + tagless + duplicate_tag + not_heard + not_told]", confidential=TRUE)
+	display_corners()

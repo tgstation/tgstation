@@ -34,7 +34,7 @@
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
@@ -65,7 +65,7 @@
 	QDEL_NULL(overlay)
 
 	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner, layer = RIPPLE_LAYER)
-	counter.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE_EXPLICIT(counter, ABOVE_LIGHTING_PLANE, owner)
 
 	if(image_pixel_x.value != null)
 		counter.pixel_x = image_pixel_x.value
@@ -76,6 +76,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"counter_overlay_[REF(src)]",
 		counter,
+		null,
 		owner,
 	)
 	alt_appearance.show_to(owner)
@@ -87,7 +88,7 @@
 	for(var/i = 1 to 3)
 		var/cur_num = round(cleared_number / (10 ** (3 - i))) % 10
 		var/image/number = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_number_[cur_num]", loc = owner, layer = RIPPLE_LAYER)
-		number.plane = ABOVE_LIGHTING_PLANE
+		SET_PLANE_EXPLICIT(number, ABOVE_LIGHTING_PLANE, owner)
 
 		if(image_pixel_x.value != null)
 			number.pixel_x = image_pixel_x.value + (i - 1) * 9
@@ -101,6 +102,7 @@
 			/datum/atom_hud/alternate_appearance/basic/one_person,
 			"counter_overlay_[REF(src)]_[i]",
 			number,
+			null,
 			owner,
 		)
 		number_alt_appearance.show_to(owner)

@@ -1,5 +1,3 @@
-// File ordered based on progression.
-
 /datum/uplink_category/explosives
 	name = "Explosives"
 	weight = 6
@@ -7,22 +5,17 @@
 /datum/uplink_item/explosives
 	category = /datum/uplink_category/explosives
 
-// Low progression cost
 /datum/uplink_item/explosives/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
-	progression_minimum = 10 MINUTES
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 3
-
-// Medium progression cost
 
 /datum/uplink_item/explosives/c4
 	name = "Composition C-4"
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It can be attached to almost all objects and has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/grenade/c4
 	cost = 1
 
@@ -30,7 +23,6 @@
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
-	progression_minimum = 20 MINUTES
 	cost = 8 //20% discount!
 	cant_discount = TRUE
 
@@ -39,7 +31,7 @@
 	desc = "Contains 3 X-4 shaped plastic explosives. Similar to C4, but with a stronger blast that is directional instead of circular. \
 			X-4 can be placed on a solid surface, such as a wall or window, and it will blast through the wall, injuring anything on the opposite side, while being safer to the user. \
 			For when you want a controlled explosion that leaves a wider, deeper, hole."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	item = /obj/item/storage/backpack/duffelbag/syndie/x4
 	cost = 4
 	cant_discount = TRUE
@@ -49,8 +41,7 @@
 	desc = "When inserted into a tablet, this cartridge gives you four opportunities to \
 			detonate tablets of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/computer_hardware/hard_drive/portable/virus/deto
+	item = /obj/item/computer_disk/virus/detomatix
 	cost = 6
 	restricted = TRUE
 
@@ -58,15 +49,19 @@
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 2
+
+/datum/uplink_item/explosives/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
 
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
 			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
-	progression_minimum = 30 MINUTES
+	progression_minimum = 15 MINUTES
 	item = /obj/item/pizzabox/bomb
 	cost = 6
 	surplus = 8
@@ -84,20 +79,26 @@
 /datum/uplink_item/explosives/syndicate_bomb/emp
 	name = "Syndicate EMP Bomb"
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
 
-// High progression cost
+/datum/uplink_item/explosives/syndicate_bomb/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"
 	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
-			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
-			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-			be defused, and some crew may attempt to do so. \
-			The bomb core can be pried out and manually detonated with other explosives."
-	progression_minimum = 40 MINUTES
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so. \
+		The bomb core can be pried out and manually detonated with other explosives."
+	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+
+/datum/uplink_item/explosives/syndicate_bomb/New()
+	. = ..()
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)

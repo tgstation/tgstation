@@ -5,7 +5,8 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
-	var/list/shared_action_buttons = list()
+	/// list of blacklisted abilities that cant be shared
+	var/list/blacklist_abilities = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	if(!isliving(parent))
@@ -25,26 +26,27 @@
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = TRUE
 
-/datum/component/riding/creature/Destroy(force, silent)
+/datum/component/riding/creature/Destroy(force)
 	unequip_buckle_inhands(parent)
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = FALSE
+	REMOVE_TRAIT(parent, TRAIT_AI_PAUSED, REF(src))
 	return ..()
 
 /datum/component/riding/creature/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
+	RegisterSignal(parent, COMSIG_MOB_EMOTE, PROC_REF(check_emote))
 	if(can_be_driven)
-		RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move) // this isn't needed on riding humans or cyborgs since the rider can't control them
+		RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(driver_move)) // this isn't needed on riding humans or cyborgs since the rider can't control them
 
 /// Creatures need to be logged when being mounted
 /datum/component/riding/creature/proc/log_riding(mob/living/living_parent, mob/living/rider)
 	if(!istype(living_parent) || !istype(rider))
 		return
 
-	living_parent.log_message("is now being ridden by [rider]", LOG_ATTACK, color="pink")
-	rider.log_message("started riding [living_parent]", LOG_ATTACK, color="pink")
+	living_parent.log_message("is now being ridden by [rider].", LOG_GAME, color="pink")
+	rider.log_message("started riding [living_parent].", LOG_GAME, color="pink")
 
 // this applies to humans and most creatures, but is replaced again for cyborgs
 /datum/component/riding/creature/ride_check(mob/living/rider, consequences = TRUE)
@@ -59,6 +61,8 @@
 	// for fireman carries, check if the ridden is stunned/restrained
 	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
+	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
+		. = FALSE
 
 	if(. || !consequences)
 		return
@@ -69,20 +73,25 @@
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
 
-/datum/component/riding/creature/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+/datum/component/riding/creature/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force = FALSE)
 	// Ensure that the /mob/post_buckle_mob(mob/living/M) does not mess us up with layers
 	// If we do not do this override we'll be stuck with the above proc (+ 0.1)-ing our rider's layer incorrectly
 	rider.layer = initial(rider.layer)
+	if(can_be_driven)
+		//let the player take over if they should be controlling movement
+		ADD_TRAIT(ridden, TRAIT_AI_PAUSED, REF(src))
 	return ..()
 
-/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/living_parent, mob/living/former_rider, force = FALSE)
-	if(istype(living_parent) && istype(former_rider))
-		living_parent.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")
-		former_rider.log_message("is no longer riding [living_parent]", LOG_ATTACK, color="pink")
+/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
+	if(istype(formerly_ridden) && istype(former_rider))
+		formerly_ridden.log_message("is no longer being ridden by [former_rider].", LOG_GAME, color="pink")
+		former_rider.log_message("is no longer riding [formerly_ridden].", LOG_GAME, color="pink")
 	remove_abilities(former_rider)
+	if(!formerly_ridden.buckled_mobs.len)
+		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
 	// We gotta reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
-	living_parent.layer = MOB_LAYER
+	formerly_ridden.layer = MOB_LAYER
 	return ..()
 
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
@@ -97,7 +106,27 @@
 	var/turf/next = get_step(living_parent, direction)
 	step(living_parent, direction)
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	var/modified_move_cooldown = vehicle_move_cooldown
+	var/modified_move_delay = vehicle_move_delay
+	if(ishuman(user) && HAS_TRAIT(user, TRAIT_SETTLER))
+		var/mob/living/carbon/human/settler_rider = user
+		switch(settler_rider.mob_mood.sanity_level)
+			if(SANITY_LEVEL_GREAT)
+				modified_move_cooldown *= 0.5
+				modified_move_delay *= 0.5
+			if(SANITY_LEVEL_NEUTRAL)
+				modified_move_cooldown *= 0.8
+				modified_move_delay *= 0.8
+			if(SANITY_LEVEL_DISTURBED)
+				modified_move_cooldown *= 1
+				modified_move_delay *= 1
+			if(SANITY_LEVEL_CRAZY)
+				modified_move_cooldown *= 1.2
+				modified_move_delay *= 1.2
+			if(SANITY_LEVEL_INSANE)
+				modified_move_cooldown *= 1.5
+				modified_move_delay *= 1.5
+	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, (last_move_diagonal ? 2 : 1) * modified_move_delay)
 	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
@@ -105,7 +134,7 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.unbuckle_mob(rider)
 
-	if(!isanimal(movable_parent) && !iscyborg(movable_parent))
+	if(!iscyborg(movable_parent) && !isanimal_or_basicmob(movable_parent))
 		return
 
 	var/turf/target = get_edge_target_turf(movable_parent, movable_parent.dir)
@@ -124,39 +153,37 @@
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/creature/proc/check_emote(mob/living/user, datum/emote/emote)
 	SIGNAL_HANDLER
-	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
+	if((!iscyborg(user) && !isanimal_or_basicmob(user)) || !istype(emote, /datum/emote/spin))
 		return
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
 		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
 
+
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
 
-	for(var/ability in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = ability
-		if(!proc_holder.action)
-			return
-		proc_holder.action.GiveAction(rider)
+	for(var/datum/action/action as anything in ridden_creature.actions)
+		if(is_type_in_list(action, blacklist_abilities))
+			continue
+		action.GiveAction(rider)
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
 
-	for(var/ability in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = ability
-		if(!proc_holder.action)
-			return
-		if(rider == proc_holder.ranged_ability_user)
-			proc_holder.remove_ranged_ability()
-		proc_holder.action.HideFrom(rider)
+	for(var/datum/action/action as anything in ridden_creature.actions)
+		if(istype(action, /datum/action/cooldown) && rider.click_intercept == action)
+			var/datum/action/cooldown/cooldown_action = action
+			cooldown_action.unset_click_ability(rider, refund_cooldown = TRUE)
+		action.HideFrom(rider)
 
 /datum/component/riding/creature/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))
@@ -185,40 +212,41 @@
 		human_parent.buckle_lying = 0
 		// the riding mob is made nondense so they don't bump into any dense atoms the carrier is pulling,
 		// since pulled movables are moved before buckled movables
-		riding_mob.set_density(FALSE)
+		ADD_TRAIT(riding_mob, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
-	RegisterSignal(parent, COMSIG_LIVING_SET_BODY_POSITION, .proc/check_carrier_fall_over)
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_host_unarmed_melee))
+	RegisterSignal(parent, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_carrier_fall_over))
 
 /datum/component/riding/creature/human/log_riding(mob/living/living_parent, mob/living/rider)
 	if(!istype(living_parent) || !istype(rider))
 		return
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
-		living_parent.log_message("started giving [rider] a piggyback ride", LOG_ATTACK, color="pink")
-		rider.log_message("started piggyback riding [living_parent]", LOG_ATTACK, color="pink")
+		living_parent.log_message("started giving [rider] a piggyback ride.", LOG_GAME, color="pink")
+		rider.log_message("started piggyback riding [living_parent].", LOG_GAME, color="pink")
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
-		living_parent.log_message("started fireman carrying [rider]", LOG_ATTACK, color="pink")
-		rider.log_message("was fireman carried by [living_parent]", LOG_ATTACK, color="pink")
+		living_parent.log_message("started fireman carrying [rider].", LOG_GAME, color="pink")
+		rider.log_message("was fireman carried by [living_parent].", LOG_GAME, color="pink")
 
 /datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/former_rider, force = FALSE)
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	former_rider.set_density(!former_rider.body_position)
+	REMOVE_TRAIT(former_rider, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
-/datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/carbon/human/human_parent, atom/target, proximity, modifiers)
+/datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && (target in human_parent.buckled_mobs))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && (target in source.buckled_mobs))
 		force_dismount(target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return NONE
 
 /// If the carrier gets knocked over, force the rider(s) off and see if someone got hurt
 /datum/component/riding/creature/human/proc/check_carrier_fall_over(mob/living/carbon/human/human_parent)
@@ -321,6 +349,38 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+/datum/component/riding/creature/pig/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony/handle_specials()
+	. = ..()
+	vehicle_move_delay = 1.5
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(-2, 9), TEXT_WEST = list(2, 9)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony
+	COOLDOWN_DECLARE(pony_trot_cooldown)
+
+/datum/component/riding/creature/pony/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	. = ..()
+
+	if (. == COMPONENT_DRIVER_BLOCK_MOVE || !COOLDOWN_FINISHED(src, pony_trot_cooldown))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+
+	if(human_user && is_clown_job(human_user.mind?.assigned_role))
+		// there's a new sheriff in town
+		playsound(movable_parent, 'sound/creatures/pony/clown_gallup.ogg', 50)
+		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 /datum/component/riding/creature/bear/handle_specials()
 	. = ..()
@@ -370,12 +430,24 @@
 
 /datum/component/riding/creature/goliath
 	keytype = /obj/item/key/lasso
+	vehicle_move_delay = 4
+
+/datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
+	. = ..()
+	var/mob/living/basic/mining/goliath/goliath = parent
+	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
+
+/datum/component/riding/creature/goliath/Destroy(force)
+	var/mob/living/basic/mining/goliath/goliath = parent
+	goliath.remove_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
+	return ..()
 
 /datum/component/riding/creature/goliath/handle_specials()
 	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_offsets(list(TEXT_NORTH = list(-12, 0), TEXT_SOUTH = list(-12, 0), TEXT_EAST = list(-12, 0), TEXT_WEST = list(-12, 0)))
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(-4, 12), TEXT_WEST = list(3, 12)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
@@ -391,3 +463,58 @@
 	set_vehicle_dir_offsets(NORTH, movable_parent.pixel_x, 0)
 	set_vehicle_dir_offsets(EAST, movable_parent.pixel_x, 0)
 	set_vehicle_dir_offsets(WEST, movable_parent.pixel_x, 0)
+
+/datum/component/riding/creature/guardian
+	can_be_driven = FALSE
+
+/datum/component/riding/creature/guardian/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list(6, 3)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
+
+/datum/component/riding/creature/guardian/ride_check(mob/living/user, consequences = TRUE)
+	var/mob/living/basic/guardian/charger = parent
+	if(!istype(charger))
+		return ..()
+	return charger.summoner == user
+
+/datum/component/riding/creature/goldgrub
+
+/datum/component/riding/creature/goldgrub/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(11, 3), TEXT_SOUTH = list(11, 3), TEXT_EAST = list(9, 3), TEXT_WEST = list(14, 3)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/leaper
+	can_force_unbuckle = FALSE
+	can_use_abilities = TRUE
+	blacklist_abilities = list(/datum/action/cooldown/toggle_seethrough)
+	ride_check_flags = JUST_FRIEND_RIDERS
+
+/datum/component/riding/creature/leaper/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(17, 46), TEXT_SOUTH = list(17,51), TEXT_EAST = list(27, 46), TEXT_WEST = list(6, 46)))
+
+/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+	. = ..()
+	RegisterSignal(riding_mob, COMSIG_MOB_POINTED, PROC_REF(attack_pointed))
+
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed)
+	SIGNAL_HANDLER
+	if(!isclosedturf(pointed))
+		return
+	var/mob/living/basic/basic_parent = parent
+	if(!basic_parent.CanReach(pointed))
+		return
+	basic_parent.melee_attack(pointed)
+
+
+/datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
+	. = ..()
+	UnregisterSignal(rider,  COMSIG_MOB_POINTED)

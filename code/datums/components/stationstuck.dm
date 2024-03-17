@@ -1,11 +1,3 @@
-
-#define PUNISHMENT_MURDER "murder"
-#define PUNISHMENT_GIB "gib"
-#define PUNISHMENT_TELEPORT "teleport"
-
-//very similar to stationloving, but more made for mobs and not objects. used on derelict drones currently
-
-
 /*
 This component is similar to stationloving in that it is meant to keep something on the z-level
 The difference is that stationloving is for objects and stationstuck is for mobs.
@@ -21,7 +13,7 @@ It has a punishment variable that is what happens to the parent when they leave 
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/L = parent
-	RegisterSignal(L, list(COMSIG_MOVABLE_Z_CHANGED), .proc/punish)
+	RegisterSignals(L, list(COMSIG_MOVABLE_Z_CHANGED), PROC_REF(punish))
 	punishment = _punishment
 	message = _message
 	stuck_zlevel = L.z
@@ -46,17 +38,20 @@ It has a punishment variable that is what happens to the parent when they leave 
 /datum/component/stationstuck/proc/punish()
 	SIGNAL_HANDLER
 
-	var/mob/living/L = parent
+	var/mob/living/escapee = parent
 	if(message)
 		var/span = punishment == PUNISHMENT_TELEPORT ? "danger" : "userdanger"
-		to_chat(L, "<span class='[span]'>[message]</span>")
+		to_chat(escapee, "<span class='[span]'>[message]</span>")
 	switch(punishment)
 		if(PUNISHMENT_MURDER)
-			L.death()
+			if(escapee.stat != DEAD)
+				escapee.investigate_log("has been killed by stationstuck component.", INVESTIGATE_DEATHS)
+			escapee.death()
 		if(PUNISHMENT_GIB)
-			L.gib()
+			escapee.investigate_log("has been gibbed by stationstuck component.", INVESTIGATE_DEATHS)
+			escapee.gib(DROP_ALL_REMAINS)
 		if(PUNISHMENT_TELEPORT)
 			var/targetturf = find_safe_turf(stuck_zlevel)
 			if(!targetturf)
 				targetturf = locate(world.maxx/2,world.maxy/2,stuck_zlevel)
-			L.forceMove(targetturf)
+			escapee.forceMove(targetturf)

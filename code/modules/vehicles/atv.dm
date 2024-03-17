@@ -4,10 +4,18 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
 	max_integrity = 150
-	armor = list(MELEE = 50, BULLET = 25, LASER = 20, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/ridden_atv
 	key_type = /obj/item/key/atv
 	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
+
+/datum/armor/ridden_atv
+	melee = 50
+	bullet = 25
+	laser = 20
+	bomb = 50
+	fire = 60
+	acid = 60
 
 /obj/vehicle/ridden/atv/Initialize(mapload)
 	. = ..()
@@ -38,7 +46,7 @@
 	turret = new(loc)
 	turret.base = src
 
-/obj/vehicle/ridden/atv/turret/Moved()
+/obj/vehicle/ridden/atv/turret/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!turret)
 		return
@@ -51,54 +59,65 @@
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
-			turret.plane = GAME_PLANE_UPPER
 		if(EAST)
 			turret.pixel_x = base_pixel_x - 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
 		if(SOUTH)
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
 		if(WEST)
 			turret.pixel_x = base_pixel_x + 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
 
-/obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/W)
+	if(user.combat_mode)
+		return
+	. = TRUE
+	if(DOING_INTERACTION(user, src))
+		balloon_alert(user, "you're already repairing it!")
+		return
 	if(atom_integrity >= max_integrity)
-		return TRUE
-	if(!I.use_tool(src, user, 0, volume=50, amount=1))
-		return TRUE
-	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
-	atom_integrity += min(10, max_integrity-atom_integrity)
-	if(atom_integrity == max_integrity)
-		to_chat(user, span_notice("It looks to be fully repaired now."))
-	return TRUE
+		balloon_alert(user, "it's not damaged!")
+		return
+	if(!W.tool_start_check(user, amount=1))
+		return
+	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	audible_message(span_hear("You hear welding."))
+	var/did_the_thing
+	while(atom_integrity < max_integrity)
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=50))
+			did_the_thing = TRUE
+			atom_integrity += min(10, (max_integrity - atom_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+	if(did_the_thing)
+		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+	else
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
 /obj/vehicle/ridden/atv/atom_break()
 	START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/vehicle/ridden/atv/process(delta_time)
+/obj/vehicle/ridden/atv/process(seconds_per_tick)
 	if(atom_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
-	if(DT_PROB(10, delta_time))
+	if(SPT_PROB(10, seconds_per_tick))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
-	if(prob(50) || !buckled_mobs)
+	if(prob(50) || !LAZYLEN(buckled_mobs))
 		return ..()
-	for(var/m in buckled_mobs)
-		var/mob/buckled_mob = m
+	for(var/mob/buckled_mob as anything in buckled_mobs)
 		buckled_mob.bullet_act(P)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/vehicle/ridden/atv/atom_destruction()
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)

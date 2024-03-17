@@ -21,11 +21,11 @@
 	else
 		icon_state = "larva[state]"
 
-/mob/living/carbon/alien/larva/perform_update_transform() //All this is handled in update_icons()
+/mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/larva/update_inv_handcuffed()
+/mob/living/carbon/alien/larva/update_worn_handcuffs()
 	update_icons() //larva icon_state changes if cuffed/uncuffed.
 
 

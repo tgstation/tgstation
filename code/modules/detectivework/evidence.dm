@@ -3,7 +3,7 @@
 /obj/item/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
@@ -13,12 +13,14 @@
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))
 		return 1
 
-/obj/item/evidencebag/handle_atom_del(atom/A)
+/obj/item/evidencebag/Exited(atom/movable/gone, direction)
+	. = ..()
 	cut_overlays()
 	w_class = initial(w_class)
 	icon_state = initial(icon_state)
@@ -28,7 +30,7 @@
 	if(!istype(I) || I.anchored)
 		return
 
-	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE) && SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
+	if(loc.atom_storage && I.atom_storage)
 		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
 		return TRUE //begone infinite storage ghosts, begone from me
 
@@ -53,10 +55,13 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE)) //in a container.
-			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
-		if(!user.dropItemToGround(I))
+		if(I.loc.atom_storage) //in a container.
+			I.loc.atom_storage.remove_single(user, I, src)
+		if(!user.is_holding(I) || HAS_TRAIT(I, TRAIT_NODROP))
 			return
+
+	if(QDELETED(I))
+		return
 
 	user.visible_message(span_notice("[user] puts [I] into [src]."), span_notice("You put [I] inside [src]."),\
 	span_hear("You hear a rustle as someone puts something into a plastic bag."))

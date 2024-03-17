@@ -3,11 +3,13 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
-	nodamage = FALSE
 	armor_flag = ENERGY
 	var/temperature = -50 // reduce the body temperature by 50 points
 
-/obj/projectile/temp/on_hit(atom/target, blocked = 0)
+/obj/projectile/temp/is_hostile_projectile()
+	return temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
+
+/obj/projectile/temp/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/hit_mob = target
@@ -24,6 +26,7 @@
 
 /obj/projectile/temp/hot
 	name = "heat beam"
+	icon_state = "lava"
 	temperature = 100 // Raise the body temp by 100 points
 
 /obj/projectile/temp/cryo
