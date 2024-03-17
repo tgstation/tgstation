@@ -897,25 +897,25 @@
 	name = "Fire Ants!"
 	desc = span_warning("JESUS FUCKING CHRIST IT BURNS! CLICK TO GET THOSE THINGS OFF!")
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
-	owner.next_move_modifier *= 1.5
+/datum/status_effect/rebuked/on_apply()
+	owner.next_move_modifier *= 2
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	owner.next_move_modifier /= 1.5
+	owner.next_move_modifier /= 2
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time /= 2.5

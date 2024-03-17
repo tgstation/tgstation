@@ -181,7 +181,7 @@
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
-	if(!ignore_staggered && has_status_effect(/datum/status_effect/stagger))
+	if(!ignore_staggered && has_status_effect(/datum/status_effect/rebuked))
 		for(var/update in cooldown_updates)
 			cooldown_updates[update] *= 2
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_MELEE])
