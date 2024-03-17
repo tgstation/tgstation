@@ -65,7 +65,7 @@
 		STOP_PROCESSING(SSobj, old_organ)
 
 /datum/quirk/prosthetic_organ/post_add()
-	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus organ. It is fragile and will easily come apart under duress. \
+	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus organ. It is weak and highly unstable. \
 	Additionally, any EMP will make it stop working entirely."))
 
 /datum/quirk/prosthetic_organ/remove()
