@@ -1335,7 +1335,7 @@
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_energy(50)
+			use_energy(50 JOULES)
 			playsound(src, doorClose, 30, TRUE)
 			return TRUE
 
