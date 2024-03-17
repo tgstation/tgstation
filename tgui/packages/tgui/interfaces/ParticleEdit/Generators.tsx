@@ -74,6 +74,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                 new_value: [type, value, B, RandToNumber[rand_type]],
               })
             }
+            maxValue={Infinity}
           />
         ) : (
           <>
@@ -92,6 +93,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -103,6 +106,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                   new_value: [type, [A[0], value, A[2]], B, rand_type],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -114,6 +119,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                   new_value: [type, [A[0], A[1], value], B, rand_type],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
           </>
         )}
@@ -131,6 +138,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                 new_value: [type, A, value, RandToNumber[rand_type]],
               })
             }
+            minValue={-Infinity}
+            maxValue={Infinity}
           />
         ) : (
           <>
@@ -149,6 +158,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -165,6 +176,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -181,6 +194,8 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
           </>
         )}

@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
-	point_value = 4
+	point_value = 12
 	matter_amount = 6
 	tableVariant = /obj/structure/table/reinforced/rglass
 
@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
-	point_value = 23
+	point_value = 69
 	matter_amount = 8
 	tableVariant = /obj/structure/table/reinforced/plasmarglass
 

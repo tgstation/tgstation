@@ -22,7 +22,7 @@
 
 	controller.clear_blackboard_key(target_key)
 	var/turf/our_turf = get_turf(spider)
-	if (is_valid_web_turf(our_turf))
+	if (is_valid_web_turf(our_turf, spider))
 		controller.set_blackboard_key(target_key, our_turf)
 		finish_action(controller, succeeded = TRUE)
 		return
@@ -31,7 +31,7 @@
 	for (var/i in 1 to scan_range)
 		turfs_by_range["[i]"] = list()
 	for (var/turf/turf_in_view in oview(scan_range, our_turf))
-		if (!is_valid_web_turf(turf_in_view))
+		if (!is_valid_web_turf(turf_in_view, spider))
 			continue
 		turfs_by_range["[get_dist(our_turf, turf_in_view)]"] += turf_in_view
 

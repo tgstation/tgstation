@@ -311,9 +311,11 @@
 
 // /obj/item/radio signals
 
+///called from base of /obj/item/proc/talk_into(): (atom/movable/speaker, message, channel, list/spans, language, list/message_mods)
+#define COMSIG_ITEM_TALK_INTO "item_talk_into"
 ///called from base of /obj/item/radio/proc/set_frequency(): (list/args)
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
-///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
+///called from base of /obj/item/radio/talk_into(): (atom/movable/M, message, channel)
 #define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
 ///called from base of /obj/item/radio/proc/on_receive_messgae(): (list/data)
 #define COMSIG_RADIO_RECEIVE_MESSAGE "radio_receive_message"
@@ -403,6 +405,10 @@
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
+
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
 
 // /obj/vehicle/sealed/car/vim signals
 

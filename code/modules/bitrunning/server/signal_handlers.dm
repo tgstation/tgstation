@@ -47,6 +47,10 @@
 		generate_loot(arrived, chosen_forge)
 		return
 
+	if(istype(arrived, /obj/item/storage/lockbox/bitrunning/encrypted))
+		generate_secondary_loot(arrived, chosen_forge, generated_domain)
+		return
+
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER

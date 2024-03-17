@@ -28,14 +28,6 @@
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
-	// Access levels, used in modules\jobs\access.dm
-	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
-	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
-	var/list/req_access
-	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
-	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
-	var/list/req_one_access
-
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any

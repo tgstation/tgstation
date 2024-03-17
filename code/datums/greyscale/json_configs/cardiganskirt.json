@@ -1,0 +1,21 @@
+{
+	"cardiganskirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "cardiganskirt_skirt",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cardiganskirt_cardigan",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cardiganskirt_collar",
+			"blend_mode": "overlay"
+		}
+	]
+}
