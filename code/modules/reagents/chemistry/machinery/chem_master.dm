@@ -427,6 +427,10 @@
 			return TRUE
 
 		if("transfer")
+			if(is_printing)
+				say("buffer locked while printing!")
+				return
+
 			var/reagent_ref = params["reagentRef"]
 			var/amount = params["amount"]
 			var/target = params["target"]
