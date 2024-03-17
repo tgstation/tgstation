@@ -838,7 +838,7 @@
 
 /datum/action/cooldown/spell/pointed/scan
 	name = "Scan"
-	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
+	desc = "Scan an enemy, to get their location and rebuke them, increasing their time between attacks."
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
@@ -875,7 +875,6 @@
 	var/mob/living/living_owner = owner
 	var/mob/living/living_scanned = cast_on
 	living_scanned.apply_status_effect(/datum/status_effect/rebuked)
-	living_scanned.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
