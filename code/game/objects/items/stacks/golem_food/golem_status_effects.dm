@@ -168,7 +168,7 @@
 	alert_icon_state = "sheet-plasma"
 	alert_desc = "You are protected from high pressure and can convert heat damage into power."
 	/// What do we multiply our damage by to convert it into power?
-	var/power_multiplier = 5000
+	var/energy_per_damage = 5 KILO JOULES
 	/// Multiplier to apply to burn damage, not 0 so that we can reverse it more easily
 	var/burn_multiplier = 0.05
 
@@ -195,7 +195,7 @@
 	if(damagetype != BURN)
 		return
 
-	var/power = damage * power_multiplier
+	var/power = damage * energy_per_damage
 	var/obj/machinery/power/energy_accumulator/ground = get_closest_atom(/obj/machinery/power/energy_accumulator, view(4, owner), owner)
 	if (ground)
 		zap_effect(ground)

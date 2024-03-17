@@ -50,7 +50,7 @@
 
 /obj/vehicle/sealed/mecha/durand/process()
 	. = ..()
-	if(defense_mode && !use_energy(100)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
+	if(defense_mode && !use_energy(100 KILO JOULES)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
 		for(var/O in occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)

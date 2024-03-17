@@ -1,6 +1,8 @@
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
+	// Energy cost per full stack of materials spent. Material insertion is 40% of this.
+	active_power_usage = 20 KILO * BASE_MACHINE_ACTIVE_CONSUMPTION
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -144,7 +146,7 @@
 	PRIVATE_PROC(TRUE)
 
 	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.02 * initial(active_power_usage))))
+	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		var/datum/material/highest_mat_ref
 
 		var/highest_mat = 0
@@ -289,7 +291,7 @@
 				return
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
-			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.02 * initial(active_power_usage))))
+			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
 				say("No power to dispense sheets")
 				return
 
@@ -338,7 +340,7 @@
 			var/charge_per_item = 0
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
-			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * 0.05 * active_power_usage)
+			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
 			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
 			//start production

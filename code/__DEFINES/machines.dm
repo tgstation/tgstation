@@ -30,7 +30,7 @@
 
 ///Base global power consumption for idling machines
 #define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
-///Base global power consumption for active machines
+///Base global power consumption for active machines. The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.

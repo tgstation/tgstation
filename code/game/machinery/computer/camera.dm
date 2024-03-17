@@ -173,7 +173,6 @@
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_energy(0)
 
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
