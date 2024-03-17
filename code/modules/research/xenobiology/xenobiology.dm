@@ -690,6 +690,24 @@
 	icon_state = "potpink"
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
+	var/potion_reason
+
+/obj/item/slimepotion/slime/sentience/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to set potion offer reason. [potion_reason ? "Current reason: [span_warning(potion_reason)]" : null]")
+
+/obj/item/slimepotion/slime/sentience/Initialize(mapload)
+	register_context()
+	return ..()
+
+/obj/item/slimepotion/slime/sentience/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set potion offer reason"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/slimepotion/slime/sentience/AltClick(mob/living/user)
+	if(!can_interact(user))
+		return
+	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", "[potion_reason]", multiline = TRUE)
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
 	if(being_used || !isliving(dumb_mob))
@@ -703,8 +721,8 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-	var/potion_reason = tgui_input_text(user, "For what reason?", "Intelligence Potion", multiline = TRUE, timeout = 2 MINUTES)
 	if(isnull(potion_reason))
+		balloon_alert(user, "no reason for offering set!")
 		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
