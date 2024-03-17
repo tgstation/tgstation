@@ -59,7 +59,7 @@
 				to_chat(src, span_warning("You feel [word]."))
 			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
 		if(BLOOD_VOLUME_SAFE to BLOOD_VOLUME_NORMAL)
-			if(SPT_PROB(1.7, seconds_per_tick))
+			if(SPT_PROB(2.1, seconds_per_tick))
 				adjustBruteLoss(-3)
 				adjustFireLoss(-3)
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
