@@ -226,7 +226,7 @@
 	if(!ionpulse_on)
 		return
 
-	if(!cell.use(1e4))
+	if(!cell.use(10 KILO JOULES))
 		toggle_ionpulse()
 		return
 	return TRUE

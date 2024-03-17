@@ -22,7 +22,7 @@
 	/// Divider for energy_usage_per_teleport.
 	var/power_efficiency = 1
 	/// Power used per teleported which gets divided by power_efficiency.
-	var/energy_usage_per_teleport = 10000
+	var/energy_usage_per_teleport = 10 KILO JOULES
 	/// The time it takes for the machine to recharge before being able to send or receive items.
 	var/recharge_time = 0
 	/// Current recharge progress.
