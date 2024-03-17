@@ -38,11 +38,11 @@
 			target_human.dna.features["tail_cat"] = "Cat"
 			if(target_human.dna.features["ears"] == "None")
 				target_human.dna.features["ears"] = "Cat"
-		if(target_human.dna.features["ears"] == "Cat")
+		if(target_human.dna.features["ears"] == "None")
+			mutantears = /obj/item/organ/internal/ears
+		else
 			var/obj/item/organ/internal/ears/cat/ears = new
 			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
-		else
-			mutantears = /obj/item/organ/internal/ears
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
