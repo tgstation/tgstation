@@ -2,7 +2,6 @@
 #define MALF_ION_PROB 33
 /// The probability to replace an existing law with an ion law instead of adding a new ion law.
 #define REPLACE_LAW_WITH_ION_PROB 10
-
 /// Midround Rulesets
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	ruletype = MIDROUND_RULESET
@@ -74,7 +73,7 @@
 			continue
 		if (isnull(creature.mind))
 			continue
-		if (restrict_ghost_roles && !(creature.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_STATION])) // Are they not playing a station role?
+		if (restrict_ghost_roles && !(creature.mind.assigned_role.title in station_jobs)) // Are they not playing a station role?
 			trimmed_list.Remove(creature)
 			continue
 		if (creature.mind.assigned_role.title in restricted_roles) // Does their job allow it?
@@ -90,6 +89,64 @@
 			trimmed_list.Remove(creature)
 			continue
 	return trimmed_list
+
+var/static/list/station_jobs = list(
+	JOB_ASSISTANT,
+	JOB_PRISONER,
+	//Command
+	JOB_CAPTAIN,
+	JOB_HEAD_OF_PERSONNEL,
+	JOB_HEAD_OF_SECURITY,
+	JOB_RESEARCH_DIRECTOR,
+	JOB_CHIEF_ENGINEER,
+	JOB_CHIEF_MEDICAL_OFFICER,
+	JOB_BRIDGE_ASSISTANT,
+	JOB_VETERAN_ADVISOR,
+	//Silicon
+	JOB_AI,
+	JOB_CYBORG,
+	JOB_PERSONAL_AI,
+	JOB_HUMAN_AI,
+	//Security
+	JOB_WARDEN,
+	JOB_DETECTIVE,
+	JOB_SECURITY_OFFICER,
+	JOB_SECURITY_OFFICER_MEDICAL,
+	JOB_SECURITY_OFFICER_ENGINEERING,
+	JOB_SECURITY_OFFICER_SCIENCE,
+	JOB_SECURITY_OFFICER_SUPPLY,
+	//Engineering
+	JOB_STATION_ENGINEER,
+	JOB_ATMOSPHERIC_TECHNICIAN,
+	//Medical
+	JOB_CORONER,
+	JOB_MEDICAL_DOCTOR,
+	JOB_PARAMEDIC,
+	JOB_CHEMIST,
+	JOB_VIROLOGIST,
+	//Science
+	JOB_SCIENTIST,
+	JOB_ROBOTICIST,
+	JOB_GENETICIST,
+	//Supply
+	JOB_QUARTERMASTER,
+	JOB_CARGO_TECHNICIAN,
+	JOB_CARGO_GORILLA,
+	JOB_SHAFT_MINER,
+	JOB_BITRUNNER,
+	//Service
+	JOB_BARTENDER,
+	JOB_BOTANIST,
+	JOB_COOK,
+	JOB_CHEF, // Alternate cook title.
+	JOB_JANITOR,
+	JOB_CLOWN,
+	JOB_MIME,
+	JOB_CURATOR,
+	JOB_LAWYER,
+	JOB_CHAPLAIN,
+	JOB_PSYCHOLOGIST
+)
 
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
