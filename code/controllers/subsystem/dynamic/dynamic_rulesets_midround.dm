@@ -131,7 +131,7 @@
 			continue
 		if (isnull(creature.mind))
 			continue
-		if (restrict_ghost_roles && !(creature.mind.assigned_role.title in station_jobs)) // Are they not playing a station role?
+		if (restrict_ghost_roles && !(creature.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) // Are they not playing a station role?
 			trimmed_list.Remove(creature)
 			continue
 		if (creature.mind.assigned_role.title in restricted_roles) // Does their job allow it?
