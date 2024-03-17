@@ -454,6 +454,13 @@
 /// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
 /obj/effect/particle_effect/fluid/foam/metal/resin/halon
 
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive) // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return FALSE // Doesn't dissolve in heat.
+
 /obj/effect/particle_effect/fluid/foam/metal/resin/halon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	return // Doesn't dissolve in heat.
 
