@@ -61,7 +61,8 @@
 
 /datum/ai_planning_subtree/find_occupied_rune/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if((LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used) < 0)
-		return SUBTREE_RETURN_FINISH_PLANNING
+		controller.clear_blackboard_key(BB_OCCUPIED_RUNE)
+		return
 
 	if(controller.blackboard_key_exists(BB_OCCUPIED_RUNE))
 		controller.queue_behavior(/datum/ai_behavior/activate_rune, BB_OCCUPIED_RUNE)
@@ -128,6 +129,10 @@
 /datum/ai_planning_subtree/find_dead_cultist
 
 /datum/ai_planning_subtree/find_dead_cultist/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if((LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used) < 0)
+		controller.clear_blackboard_key(BB_DEAD_CULTIST)
+		return
+
 	var/mob/living/living_pawn = controller.pawn
 
 	if(!isnull(living_pawn.pulling))

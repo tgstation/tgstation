@@ -747,13 +747,6 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		else
 			fail_invoke()
 			return
-		var/mob/dead/observer/chosen = pick(candidates)
-		if(mob_to_revive.mind)
-			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
-		message_admins("[key_name_admin(chosen)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
-		mob_to_revive.ghostize(FALSE)
-		mob_to_revive.key = chosen.key
-
 	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg')
 	to_chat(mob_to_revive, span_cult_large("\"PASNAR SAVRAE YAM'TOTH. Arise.\""))
 	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
