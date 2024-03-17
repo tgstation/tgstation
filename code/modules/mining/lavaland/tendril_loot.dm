@@ -875,7 +875,7 @@
 	var/mob/living/living_owner = owner
 	var/mob/living/living_scanned = cast_on
 	living_scanned.apply_status_effect(/datum/status_effect/rebuked)
-	living_scanned.adjust_staggered_up_to(10 SECONDS, 10 SECONDS)
+	living_scanned.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
