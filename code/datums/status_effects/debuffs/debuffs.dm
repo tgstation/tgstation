@@ -915,7 +915,7 @@
 	. = ..()
 	if(QDELETED(owner))
 		return
-	owner.next_move_modifier * 0.5
+	owner.next_move_modifier *= 0.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time /= 2.5
