@@ -327,7 +327,7 @@
 	item_flags = NO_BLOOD_ON_ITEM
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5
-	light_power = 0.75
+	light_power = 1.3
 	light_color = COLOR_SOFT_RED
 	light_on = FALSE
 	dart_insert_projectile_icon_state = "overlay_edagger"

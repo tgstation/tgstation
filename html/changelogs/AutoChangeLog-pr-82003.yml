@@ -1,0 +1,4 @@
+author: "Exester509"
+delete-after: True
+changes:
+  - bugfix: "Plasmamen will become human in the deathmatch so they don't instantly die"

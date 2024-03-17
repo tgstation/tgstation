@@ -16,7 +16,7 @@
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
@@ -125,7 +125,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/floorbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["tile_hull"] = autotile
 		data["custom_controls"]["place_tiles"] =  placetiles
 		data["custom_controls"]["place_custom"] = replacetiles
@@ -142,7 +142,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/floorbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)

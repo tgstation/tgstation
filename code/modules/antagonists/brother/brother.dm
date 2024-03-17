@@ -77,22 +77,23 @@
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
-	flashed.mind.add_antag_datum(/datum/antagonist/brother, team)
+	if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
+		flashed.balloon_alert(source, "failed!")
+		return
+
 	source.log_message("converted [key_name(flashed)] to blood brother", LOG_ATTACK)
 	flashed.log_message("was converted by [key_name(source)] to blood brother", LOG_ATTACK)
-	log_game("[key_name(flashed)] converted [key_name(source)] to blood brother", list(
-		"flashed" = flashed,
-		"victim" = source,
+	log_game("[key_name(flashed)] was made into a blood brother by [key_name(source)]", list(
+		"converted" = flashed,
+		"converted by" = source,
 	))
-
-	flashed.balloon_alert(source, "converted")
-	to_chat(source, span_notice("[span_bold("[flashed]")] has been converted to aide you as your Brother!"))
 	flash.burn_out()
 	flashed.mind.add_memory( \
 		/datum/memory/recruited_by_blood_brother, \
 		protagonist = flashed, \
 		antagonist = owner.current, \
 	)
+	flashed.balloon_alert(source, "converted")
 
 	UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
 	source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
@@ -170,6 +171,34 @@
 	. = ..()
 	if (prob(10))
 		brothers_left += 1
+
+/datum/team/brother_team/add_member(datum/mind/new_member)
+	. = ..()
+	if (!new_member.has_antag_datum(/datum/antagonist/brother))
+		add_brother(new_member.current)
+
+/datum/team/brother_team/remove_member(datum/mind/member)
+	if (!(member in members))
+		return
+	. = ..()
+	member.remove_antag_datum(/datum/antagonist/brother)
+	if (isnull(member.current))
+		return
+	for (var/datum/mind/brother_mind as anything in members)
+		to_chat(brother_mind, span_warning("[span_bold("[member.current.real_name]")] is no longer your brother!"))
+	update_name()
+
+/// Adds a new brother to the team
+/datum/team/brother_team/proc/add_brother(mob/living/new_brother, source)
+	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
+		return FALSE
+
+	for (var/datum/mind/brother_mind as anything in members)
+		if (brother_mind == new_brother.mind)
+			continue
+		to_chat(brother_mind, span_notice("[span_bold("[new_brother.real_name]")] has been converted to aid you as your brother!"))
+	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
+	return TRUE
 
 /datum/team/brother_team/proc/update_name()
 	var/list/last_names = list()

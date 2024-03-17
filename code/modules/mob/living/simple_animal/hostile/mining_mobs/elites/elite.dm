@@ -56,11 +56,8 @@
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 //Elites can't talk (normally)!
-/mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	if(can_talk)
-		. = ..()
-		return TRUE
-	return FALSE
+/mob/living/simple_animal/hostile/asteroid/elite/can_speak(allow_mimes)
+	return can_talk && ..()
 
 /*Basic setup for elite attacks, based on Whoneedspace's megafauna attack setup.
 While using this makes the system rely on OnFire, it still gives options for timers not tied to OnFire, and it makes using attacks consistent accross the board for player-controlled elites.*/
@@ -386,7 +383,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
 		E.maxHealth = E.maxHealth * 0.4
 		E.health = E.maxHealth
-		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
+		E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
 		E.sentience_type = SENTIENCE_ORGANIC
 		qdel(src)
 	else

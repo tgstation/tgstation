@@ -29,6 +29,13 @@
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
+/datum/map_template/ruin/lavaland/lizgas
+	name = "The Lizard's Gas(Lava)"
+	id = "lizgas2"
+	description = "A recently opened gas station from the Lizard's Gas franchise."
+	suffix = "lavaland_surface_gas.dmm"
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/cube
 	name = "Lava-Ruin The Wishgranter Cube"
 	id = "wishgranter-cube"

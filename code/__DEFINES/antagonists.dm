@@ -36,6 +36,9 @@
 ///How long pirates will wait for a response before attacking
 #define RESPONSE_MAX_TIME 2 MINUTES
 
+/// How long till a spessman should come back after being captured and sent to the holding facility (which some antags use)
+#define COME_BACK_FROM_CAPTURE_TIME 6 MINUTES
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"

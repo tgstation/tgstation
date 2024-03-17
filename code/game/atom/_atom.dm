@@ -794,6 +794,10 @@
 /atom/proc/setClosed()
 	return
 
+///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
+/atom/proc/tamed(mob/living/tamer, obj/item/food)
+	return
+
 /**
  * Used to attempt to charge an object with a payment component.
  *
