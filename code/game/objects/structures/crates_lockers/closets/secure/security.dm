@@ -59,7 +59,8 @@
 	..()
 
 	new /obj/item/computer_disk/command/hos(src)
-	new /obj/item/key/forklift/security(src)	new /obj/item/radio/headset/heads/hos(src)
+	new /obj/item/key/forklift/security(src)
+	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/radio/headset/heads/hos/alt(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)

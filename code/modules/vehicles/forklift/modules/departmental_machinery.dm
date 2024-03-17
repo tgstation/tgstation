@@ -7,10 +7,10 @@
 	) // Populated on New
 	resource_price = list(
 		/obj/structure/frame/machine = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/structure/frame/computer = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 	) // Populated on New
 	build_length = 5 SECONDS
@@ -19,11 +19,11 @@
 	deconstruction_cooldown = 5 SECONDS
 	var/bitflag_to_use = DEPARTMENT_BITFLAG_ENGINEERING
 	var/list/machinery_price = list(
-		/datum/material/iron = (MINERAL_MATERIAL_AMOUNT * 5) + 50, // 5x cable coils + 5 sheets of metal
+		/datum/material/iron = (SHEET_MATERIAL_AMOUNT * 5) + 50, // 5x cable coils + 5 sheets of metal
 		/datum/material/glass = 25, // 5x cable coils
 	)
 	var/list/computer_price = list(
-		/datum/material/iron = (MINERAL_MATERIAL_AMOUNT * 5) + 50, // 5x cable coils + 5 sheets of metal
+		/datum/material/iron = (SHEET_MATERIAL_AMOUNT * 5) + 50, // 5x cable coils + 5 sheets of metal
 		/datum/material/glass = 25, // 5x cable coils
 	)
 
@@ -45,7 +45,8 @@
 		/obj/structure/frame/machine,
 		/obj/structure/frame/computer,
 	)
-	for(var/i in SSresearch.science_tech.researched_designs)
+	var/datum/techweb/station_techweb = SSresearch.techwebs_assoc_lookup[TECHWEB_STATION]
+	for(var/i in station_techweb.researched_designs)
 		var/datum/design/board/circuit_board = SSresearch.techweb_design_by_id(i)
 		if(!istype(circuit_board)) // not a machine
 			continue

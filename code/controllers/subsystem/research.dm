@@ -70,17 +70,25 @@ SUBSYSTEM_DEF(research)
 	/// Lookup list for scipaper partners.
 	var/list/datum/scientific_partner/scientific_partners = list()
 
+	/// All techwebs in existence. Assoc key of ID -> techweb reference
+	var/list/techwebs_assoc_lookup = list()
+
 /datum/controller/subsystem/research/Initialize()
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
-	new /datum/techweb/science
-	new /datum/techweb/admin
-	new /datum/techweb/oldstation
+	techwebs_assoc_lookup = list(
+		TECHWEB_STATION = new /datum/techweb/science,
+		TECHWEB_ADMIN = new /datum/techweb/admin,
+		TECHWEB_CHARLIE = new /datum/techweb/oldstation
+	)
 	autosort_categories()
 	error_design = new
 	error_node = new
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/research/Recover()
+	techwebs = SSresearch.techwebs
 
 /datum/controller/subsystem/research/fire()
 	for(var/datum/techweb/techweb_list as anything in techwebs)

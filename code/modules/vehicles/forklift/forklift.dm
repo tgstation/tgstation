@@ -21,13 +21,15 @@
 	)
 	var/starting_module_path = /datum/forklift_module/furniture
 	///How many sheets of materials can this hold?
-	var/maximum_materials = MINERAL_MATERIAL_AMOUNT * 125 // 125 sheets of materials. Ideally 50 iron, 50 glass, 25 of anything else.
+	var/maximum_materials = SHEET_MATERIAL_AMOUNT * 125 // 125 sheets of materials. Ideally 50 iron, 50 glass, 25 of anything else.
 	///What construction holograms do we got?
 	var/list/holograms = list()
 	///What path do we use for the ridable component? Needed for key overrides.
 	var/ridable_path = /datum/component/riding/vehicle/forklift
 	///What upgrades have been applied?
 	var/list/applied_upgrades = list()
+	/// Our mouse movement catchers.
+	var/list/mouse_catchers = list()
 	COOLDOWN_DECLARE(build_cooldown)
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 	COOLDOWN_DECLARE(deconstruction_cooldown)
@@ -58,11 +60,13 @@
 		return FALSE
 	RegisterSignal(M, COMSIG_MOUSE_SCROLL_ON, .proc/on_scroll_wheel)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_click)
-	RegisterSignal(M, COMSIG_MOUSE_ENTERED_ON, .proc/on_mouse_entered)
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/fortnite_check)
 	var/datum/forklift_module/new_module = new starting_module_path
 	new_module.my_forklift = src
 	selected_modules[M] = new_module
+	var/atom/movable/screen/fullscreen/cursor_catcher/mouse_catcher = M.overlay_fullscreen("forklift", /atom/movable/screen/fullscreen/cursor_catcher/lock_on, 0)
+	mouse_catcher.assign_to_mob(M)
+	mouse_catchers[M] = mouse_catcher
 
 // Officially requested by the headcoder.
 /obj/vehicle/ridden/forklift/proc/fortnite_check(mob/source, list/speech_args)
@@ -76,12 +80,21 @@
 /obj/vehicle/ridden/forklift/remove_occupant(mob/M)
 	UnregisterSignal(M, list(COMSIG_MOUSE_SCROLL_ON, COMSIG_MOB_CLICKON, COMSIG_MOUSE_ENTERED_ON, COMSIG_MOB_SAY))
 	qdel(selected_modules[M])
+	qdel(mouse_catchers[M])
 	..()
 
 /obj/vehicle/ridden/forklift/key_inserted()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/vehicle/ridden/forklift/process(delta_time)
+	for(var/riding_mob in occupants)
+		if(mouse_catchers[riding_mob])
+			var/atom/movable/screen/fullscreen/cursor_catcher/mouse_catcher = mouse_catchers[riding_mob]
+			if(mouse_catcher.mouse_params)
+				mouse_catcher.calculate_params()
+			if(mouse_catcher.given_turf)
+				var/datum/forklift_module/current_module = selected_modules[riding_mob]
+				current_module.on_mouse_entered(riding_mob, mouse_catcher.given_turf)
 	if(COOLDOWN_FINISHED(src, build_cooldown)) // Build a hologram!
 		for(var/obj/structure/building_hologram/hologram in holograms)
 			if(get_dist(src, hologram) > 7)
@@ -91,7 +104,7 @@
 				if(!hologram.turf_place_on_top)
 					turf_to_replace.ChangeTurf(hologram.typepath_to_build)
 				else
-					turf_to_replace.PlaceOnTop(hologram.typepath_to_build)
+					turf_to_replace.place_on_top(hologram.typepath_to_build)
 			else
 				var/atom/built_atom = new hologram.typepath_to_build(get_turf(hologram))
 				hologram.after_build(built_atom)
@@ -157,12 +170,6 @@
 	else if(modifiers[MIDDLE_CLICK])
 		current_module.on_middle_click(source, clickingon)
 		return COMSIG_MOB_CANCEL_CLICKON
-
-/obj/vehicle/ridden/forklift/proc/on_mouse_entered(mob/source, atom/A, location, control, params)
-	SIGNAL_HANDLER
-	var/datum/forklift_module/current_module = selected_modules[source]
-	current_module.on_mouse_entered(source, A, location, control, params)
-
 
 /obj/vehicle/ridden/forklift/engineering
 	name = "engineering forklift"

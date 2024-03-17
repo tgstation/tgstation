@@ -49,7 +49,7 @@
 				if(!turf_place_on_top)
 					turf_to_replace.ChangeTurf(current_selected_typepath)
 				else
-					turf_to_replace.PlaceOnTop(current_selected_typepath)
+					turf_to_replace.place_on_top(current_selected_typepath)
 			else
 				var/atom/new_atom = create_atom(clickingon)
 				after_build(new_atom)
@@ -156,7 +156,7 @@
 	return
 
 /// Handles the visual preview updating.
-/datum/forklift_module/proc/on_mouse_entered(mob/source, atom/A, location, control, params)
+/datum/forklift_module/proc/on_mouse_entered(mob/source, location)
 	if(last_turf_moused_over == get_turf(location))
 		return
 	last_turf_moused_over = get_turf(location)

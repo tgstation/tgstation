@@ -8,9 +8,11 @@
  * * source - The atom the scans originate from
  * * scan_range - The range of turfs we grab from the source
  * * fade_time - The time for RCD holograms to fade
+ * * play_sound - Should we play a sound when we scan? Defaults to true.
  */
-/proc/rcd_scan(atom/source, scan_range = RCD_DESTRUCTIVE_SCAN_RANGE, fade_time = RCD_HOLOGRAM_FADE_TIME)
-	playsound(source, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
+/proc/rcd_scan(atom/source, scan_range = RCD_DESTRUCTIVE_SCAN_RANGE, fade_time = RCD_HOLOGRAM_FADE_TIME, play_sound = TRUE)
+	if(play_sound)
+		playsound(source, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
 
 	var/turf/source_turf = get_turf(source)
 	for(var/turf/open/surrounding_turf as anything in RANGE_TURFS(scan_range, source_turf))

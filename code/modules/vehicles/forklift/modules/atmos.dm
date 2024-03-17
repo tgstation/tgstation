@@ -38,79 +38,79 @@ GLOBAL_LIST_INIT(atmos_piping_layers, list(
 	)
 	resource_price = list(
 		/obj/machinery/atmospherics/pipe/smart = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/layer_manifold = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/color_adapter = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/bridge_pipe = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/multiz = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/unary/portables_connector = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/pump = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/volume_pump = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/trinary/filter = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/trinary/mixer = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/passive_gate = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/unary/outlet_injector = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/unary/vent_scrubber = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/unary/vent_pump = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/unary/passive_vent = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/valve = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/valve/digital = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/pressure_valve = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/temperature_gate = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/binary/temperature_pump = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/heat_exchanging/simple = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/pipe/heat_exchanging/junction = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 		/obj/machinery/atmospherics/components/unary/heat_exchanger = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.25,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,
 		),
 	)
 	build_length = 1 SECONDS

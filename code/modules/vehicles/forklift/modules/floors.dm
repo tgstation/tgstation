@@ -4,7 +4,7 @@
 	available_builds = list(/turf/open/floor/iron) // Populated on New
 	resource_price = list(
 		/turf/open/floor/iron = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1, // 1 rod for lattice = 0.5 iron, 1 floor tile for plating = 0.25 iron, 1 floor tile for covering = 0.25 iron
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1, // 1 rod for lattice = 0.5 iron, 1 floor tile for plating = 0.25 iron, 1 floor tile for covering = 0.25 iron
 		),
 	)
 	build_length = 5 SECONDS
@@ -19,7 +19,7 @@
 		if(initial(checked_path.initial_gas_mix) == OPENTURF_DEFAULT_ATMOS)
 			available_builds += typepath
 			resource_price[typepath] = list(
-				/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1,
+				/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
 			)
 		continue
 

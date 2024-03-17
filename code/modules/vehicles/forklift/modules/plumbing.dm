@@ -25,64 +25,64 @@
 	)
 	resource_price = list(
 		/obj/machinery/duct = list(
-			/datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/machinery/plumbing/input = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/plumbing/output = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/plumbing/tank = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 20,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20,
 		),
 		/obj/machinery/plumbing/synthesizer = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 15,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15,
 		),
 		/obj/machinery/plumbing/reaction_chamber = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 15,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15,
 		),
 		/obj/machinery/plumbing/buffer = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 10,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
 		),
 		/obj/machinery/plumbing/layer_manifold = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/plumbing/pill_press = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 20,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20,
 		),
 		/obj/machinery/plumbing/acclimator = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 10,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
 		),
 		/obj/machinery/plumbing/bottler = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 50,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 50,
 		),
 		/obj/machinery/plumbing/disposer = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 10,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
 		),
 		/obj/machinery/plumbing/fermenter = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 30,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30,
 		),
 		/obj/machinery/plumbing/filter = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/plumbing/grinder_chemical = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 30,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30,
 		),
 		/obj/machinery/plumbing/liquid_pump = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 35,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 35,
 		),
 		/obj/machinery/plumbing/splitter = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/plumbing/sender = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 20,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20,
 		),
 		/obj/machinery/plumbing/growing_vat = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 20,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20,
 		),
 		/obj/machinery/iv_drip/plumbing = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 20,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20,
 		),
 	)
 	build_length = 1 SECONDS

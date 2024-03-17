@@ -14,38 +14,38 @@
 	)
 	resource_price = list(
 		/turf/closed/wall = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 4,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		),
 		/turf/closed/wall/r_wall = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 4,
-			/datum/material/plasma = MINERAL_MATERIAL_AMOUNT * 2, // r-walls are an alloy of 1 iron and 1 plasma, so we assume the RAT just alloys it on the spot
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+			/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2, // r-walls are an alloy of 1 iron and 1 plasma, so we assume the RAT just alloys it on the spot
 		),
 		/turf/closed/wall/mineral/iron = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 4,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		),
 		/turf/closed/wall/mineral/silver = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/silver = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/turf/closed/wall/mineral/gold = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/turf/closed/wall/mineral/diamond = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/diamond = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/turf/closed/wall/mineral/plasma = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/plasma = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/turf/closed/wall/mineral/uranium = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/uranium = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/turf/closed/wall/mineral/bananium = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/bananium = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2,
 		),
 	)
 	build_length = 5 SECONDS

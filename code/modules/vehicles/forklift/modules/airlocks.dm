@@ -4,6 +4,7 @@
 	available_builds = list(
 		/obj/machinery/door/airlock,
 		/obj/machinery/door/airlock/glass,
+		/obj/machinery/door/airlock/maintenance,
 		/obj/machinery/door/airlock/public,
 		/obj/machinery/door/airlock/public/glass,
 		/obj/machinery/door/airlock/science,
@@ -18,63 +19,67 @@
 		/obj/machinery/door/airlock/medical/glass,
 		/obj/machinery/door/airlock/command,
 		/obj/machinery/door/airlock/command/glass,
+
 	)
 	resource_price = list(
 		/obj/machinery/door/airlock = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		),
+		/obj/machinery/door/airlock/maintenance = list(
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/public = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/public/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/machinery/door/airlock/science = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/science/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/machinery/door/airlock/security = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/security/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/machinery/door/airlock/engineering = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/engineering/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/machinery/door/airlock/hydroponics = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/hydroponics/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/machinery/door/airlock/medical = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/medical/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/machinery/door/airlock/command = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/machinery/door/airlock/command/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 	)
 	build_length = 10 SECONDS

@@ -22,58 +22,58 @@
 	)
 	resource_price = list(
 		/obj/structure/table/wood = list(
-			/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3,
+			/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3,
 		),
 		/obj/structure/table/wood/fancy = list(
-			/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3,
+			/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3,
 		),
 		/obj/structure/table/wood/poker = list(
-			/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3,
+			/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3,
 		),
 		/obj/structure/table/glass = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/structure/table = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 3,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
 		),
 		/obj/structure/chair/wood = list(
-			/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/structure/chair/wood/wings = list(
-			/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/structure/chair/office = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/structure/chair/office/light = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		),
 		/obj/structure/chair/comfy/beige = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/structure/chair = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/structure/grille = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1, // 1 sheet = 2 rods = 1 grille
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1, // 1 sheet = 2 rods = 1 grille
 		),
 		/obj/structure/window/reinforced/fulltile = list(
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/structure/window/reinforced = list(
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1,
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5,
 		),
 		/obj/structure/window/fulltile = list(
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		),
 		/obj/structure/window = list(
-			/datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1,
+			/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
 		),
 		/obj/structure/closet = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
+			/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 		),
 	)
 	build_length = 1 SECONDS
