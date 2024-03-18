@@ -23,16 +23,6 @@
 	/// genetic makeup data that's scanned
 	var/list/genetic_makeup_buffer = list()
 
-/obj/item/sequence_scanner/Initialize(mapload)
-	. = ..()
-	var/static/list/hovering_mob_typechecks = list(
-		/mob/living/targets = list(
-			SCREENTIP_CONTEXT_ALT_LMB = "Scan Genetic Mutation",
-			SCREENTIP_CONTEXT_ALT_RMB = "Scan Genetic Makeup"
-		)
-	)
-	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-
 /obj/item/sequence_scanner/examine(mob/user)
 	. = ..()
 	. += span_notice("Use primary attack to scan mutations, Secondary attack to scan genetic makeup")
