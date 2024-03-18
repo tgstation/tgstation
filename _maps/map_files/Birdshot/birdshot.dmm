@@ -2328,12 +2328,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/server)
-"bhd" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "bho" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -13490,18 +13484,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/office)
-"fOF" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer5,
-/turf/open/space/basic,
-/area/station/engineering/atmos/upper)
 "fOQ" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -26334,10 +26316,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/qm)
-"jZj" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/maintenance/disposal/incinerator)
 "jZl" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmospherics_engine)
@@ -49997,11 +49975,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"riH" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "riM" = (
 /turf/open/floor/iron/textured_half{
 	dir = 1
@@ -79763,7 +79736,7 @@ dDB
 blb
 dDB
 dDB
-riH
+blb
 dDB
 dDB
 dDB
@@ -83133,7 +83106,7 @@ dDB
 dDB
 dDB
 dDB
-bhd
+mAi
 dDB
 mAi
 dDB
@@ -83362,7 +83335,7 @@ blb
 qeU
 gzo
 iYT
-fOF
+qnw
 qnw
 cZd
 dvP
@@ -85670,7 +85643,7 @@ wBo
 sQB
 oRT
 yes
-jZj
+gKs
 oOq
 hAN
 mcT
