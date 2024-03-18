@@ -1,7 +1,7 @@
 /obj/item/grenade/hypnotic
 	name = "flashbang"
 	desc = "A modified flashbang which uses hypnotic flashes and mind-altering soundwaves to induce an instant trance upon detonation. \
-		 It seems you can set an hypnotic phrase that's uttered when triggered"
+		It seems you can set an hypnotic phrase that's uttered when triggered"
 	icon_state = "flashbang"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -48,8 +48,8 @@
 	if(soft_filter_result)
 		if(tgui_alert(user,"Your command contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return
-		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(hypno_text_input)]\"")
-		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[hypno_text_input]\"")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an Hypnotic command. Command: \"[html_encode(hypno_text_input)]\"")
+		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an Hypnotic command. Command: \"[hypno_text_input]\"")
 	hypno_text = hypno_text_input
 
 /obj/item/grenade/hypnotic/detonate(mob/living/lanced_by)
