@@ -6099,6 +6099,7 @@
 #include "code\modules\wiremod\shell\server.dm"
 #include "code\modules\wiremod\shell\shell_items.dm"
 #include "code\modules\xenobiology\xenoflora_plants\tier2.dm"
+#include "code\modules\xenobiology\xenoflora_plants\tier3.dm"
 #include "code\modules\xenobiology\xenoflora_plants\tier4.dm"
 #include "code\modules\xenobiology\xenoflora_plants\tier5.dm"
 #include "code\modules\xenobiology\xenoflora_pod\xenoflora_plant.dm"
