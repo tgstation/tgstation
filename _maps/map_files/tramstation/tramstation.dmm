@@ -8754,7 +8754,7 @@
 	pixel_x = -4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/x
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 4;
 	pixel_y = -32
 	},
@@ -63251,7 +63251,7 @@
 	pixel_x = -4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/x
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 4;
 	pixel_y = -32
 	},

@@ -25,7 +25,7 @@
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/x
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
@@ -78,7 +78,7 @@
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/x
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/trash/food_packaging,
@@ -117,7 +117,7 @@
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/x
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/trash/food_packaging,
