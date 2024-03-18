@@ -9,7 +9,7 @@
 	var/viewing_category
 	/// What market is currently being bought from by the uplink?
 	var/viewing_market
-	/// What item is the current uplink attempting to buy?
+	/// the identifier of the item that the current uplink is attempting to buy
 	var/selected_item
 	/// Is the uplink in the process of buying the selected item?
 	var/buying
@@ -56,25 +56,31 @@
 		current_user = null
 	data["categories"] = market ? market.categories : null
 	data["delivery_methods"] = list()
-	if(market)
-		for(var/delivery in market.shipping)
-			data["delivery_methods"] += list(list("name" = delivery, "price" = market.shipping[delivery]))
 	data["money"] = "N/A cr"
 	if(current_user)
 		data["money"] = current_user.account_balance
 	data["buying"] = buying
+	if(buying && market)
+		var/datum/market_item/target_item = market.available_items[viewing_category][selected_item]
+		var/list/shipping_list = market.shipping
+		if(length(target_item?.shipping_override))
+			shipping_list = target_item.shipping_override
+		for(var/delivery in shipping_list)
+			UNTYPED_LIST_ADD(data["delivery_methods"], list("name" = delivery, "price" = shipping_list[delivery]))
 	data["items"] = list()
-	data["viewing_category"] = viewing_category
+	data["viewing_category"] = market.categories[viewing_category] ? viewing_category : null
 	data["viewing_market"] = viewing_market
 	if(viewing_category && market)
 		if(market.available_items[viewing_category])
-			for(var/datum/market_item/I in market.available_items[viewing_category])
+			var/list/market_category = market.available_items[viewing_category]
+			for(var/id in market_category)
+				var/datum/market_item/item = market_category[id]
 				data["items"] += list(list(
-					"id" = I.type,
-					"name" = I.name,
-					"cost" = I.price,
-					"amount" = I.stock,
-					"desc" = I.desc || I.name
+					"id" = id,
+					"name" = item.name,
+					"cost" = item.price,
+					"amount" = item.stock,
+					"desc" = item.desc || item.name
 				))
 	return data
 
@@ -123,8 +129,7 @@
 		if("select")
 			if(isnull(params["item"]))
 				return
-			var/item = text2path(params["item"])
-			selected_item = item
+			selected_item = params["item"]
 			buying = TRUE
 			. = TRUE
 		if("cancel")
@@ -150,6 +155,7 @@
 	icon_state = "uplink"
 	//The original black market uplink
 	accessible_markets = list(/datum/market/blackmarket)
+	custom_premium_price = PAYCHECK_CREW * 2.5
 
 
 /datum/crafting_recipe/blackmarket_uplink

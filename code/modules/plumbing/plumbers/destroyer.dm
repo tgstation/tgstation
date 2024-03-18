@@ -18,7 +18,7 @@
 	if(reagents.total_volume)
 		if(icon_state != initial(icon_state) + "_working") //threw it here instead of update icon since it only has two states
 			icon_state = initial(icon_state) + "_working"
-		reagents.remove_any(disposal_rate * seconds_per_tick)
+		reagents.remove_all(disposal_rate * seconds_per_tick)
 		use_power(active_power_usage * seconds_per_tick)
 	else
 		if(icon_state != initial(icon_state))

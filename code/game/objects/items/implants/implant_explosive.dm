@@ -19,6 +19,8 @@
 	var/active = FALSE
 	///The final countdown (delay before we explode)
 	var/delay = MICROBOMB_DELAY
+	///If the delay is equal or lower to MICROBOMB_DELAY (0.7 sec), the explosion will be instantaneous.
+	var/instant_explosion = TRUE
 	///Radius of weak devastation explosive impact
 	var/explosion_light = MICROBOMB_EXPLOSION_LIGHT
 	///Radius of medium devastation explosive impact
@@ -33,7 +35,8 @@
 	var/no_paralyze = FALSE
 	///Do we override other explosive implants?
 	var/master_implant = FALSE
-
+	///Will this implant notify ghosts when activated?
+	var/notify_ghosts = TRUE
 
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -73,7 +76,7 @@
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 	//If the delay is shorter or equal to the default delay, just blow up already jeez
-	if(delay <= MICROBOMB_DELAY)
+	if(delay <= MICROBOMB_DELAY && instant_explosion)
 		explode()
 		return
 	timed_explosion()
@@ -119,14 +122,15 @@
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 
-	notify_ghosts(
-		"[imp_in] is about to detonate their explosive implant!",
-		source = src,
-		header = "Tick Tick Tick...",
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
-		ghost_sound = 'sound/machines/warning-buzzer.ogg',
-		notify_volume = 75,
-	)
+	if(notify_ghosts)
+		notify_ghosts(
+			"[imp_in] is about to detonate their explosive implant!",
+			source = src,
+			header = "Tick Tick Tick...",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			ghost_sound = 'sound/machines/warning-buzzer.ogg',
+			notify_volume = 75,
+		)
 
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	if(!panic_beep_sound)
@@ -202,6 +206,13 @@
 
 	if(source.health < source.crit_threshold)
 		INVOKE_ASYNC(src, PROC_REF(activate), "deniability")
+
+/obj/item/implant/explosive/deathmatch
+	name = "deathmatch microbomb implant"
+	delay = 0.5 SECONDS
+	actions_types = null
+	instant_explosion = FALSE
+	notify_ghosts = FALSE
 
 /obj/item/implanter/explosive
 	name = "implanter (microbomb)"

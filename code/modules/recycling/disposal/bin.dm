@@ -131,7 +131,7 @@
 			return
 		place_item_in_disposal(I, user)
 		update_appearance()
-		return 1 //no afterattack
+		return TRUE //no afterattack
 	else
 		return ..()
 
@@ -327,18 +327,72 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	/// Reference to the mounted destination tagger for disposal bins with one mounted.
+	var/obj/item/dest_tagger/mounted_tagger
 
 // attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/bag = I
+/obj/machinery/disposal/bin/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
+		var/obj/item/storage/bag/trash/bag = weapon
 		to_chat(user, span_warning("You empty the bag."))
 		bag.atom_storage.remove_all(src)
 		update_appearance()
 	else
 		return ..()
-
 // handle machine interaction
+
+/obj/machinery/disposal/bin/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/new_tagger = weapon
+		if(mounted_tagger)
+			balloon_alert(user, "already has a tagger!")
+			return
+		if(HAS_TRAIT(new_tagger, TRAIT_NODROP) || !user.transferItemToLoc(new_tagger, src))
+			balloon_alert(user, "stuck to your hand!")
+			return
+		new_tagger.moveToNullspace()
+		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
+		balloon_alert(user, "tagger returned")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		mounted_tagger = new_tagger
+		update_appearance()
+		return
+	else
+		return ..()
+
+/obj/machinery/disposal/bin/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!mounted_tagger)
+		balloon_alert(user, "no destination tagger!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!user.put_in_hands(mounted_tagger))
+		balloon_alert(user, "destination tagger falls!")
+		mounted_tagger = null
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.visible_message(span_notice("[user] unhooks the [mounted_tagger] from [src]."))
+	balloon_alert(user, "tagger pulled")
+	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	mounted_tagger = null
+	update_appearance(UPDATE_OVERLAYS)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/disposal/bin/examine(mob/user)
+	. = ..()
+	if(isnull(mounted_tagger))
+		. += span_notice("The destination tagger mount is empty.")
+	else
+		. += span_notice("\The [mounted_tagger] is hanging on the side. Right Click to remove.")
+
+/obj/machinery/disposal/bin/Destroy()
+	if(!isnull(mounted_tagger))
+		QDEL_NULL(mounted_tagger)
+	return ..()
+
+/obj/machinery/disposal/bin/on_deconstruction(disassembled)
+	. = ..()
+	if(!isnull(mounted_tagger))
+		mounted_tagger.forceMove(drop_location())
+		mounted_tagger = null
 
 /obj/machinery/disposal/bin/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -358,7 +412,7 @@
 	data["pressure_charging"] = pressure_charging
 	data["panel_open"] = panel_open
 	data["per"] = CLAMP01(air_contents.return_pressure() / (SEND_PRESSURE))
-	data["isai"] = isAI(user)
+	data["isai"] = HAS_AI_ACCESS(user)
 	return data
 
 /obj/machinery/disposal/bin/ui_act(action, params)
@@ -418,6 +472,9 @@
 	//flush handle
 	if(flush)
 		. += "dispover-handle"
+
+	if(mounted_tagger)
+		. += "tagger_mount"
 
 	//only handle is shown if no power
 	if(machine_stat & NOPOWER || panel_open)
@@ -492,6 +549,10 @@
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
+
+/obj/machinery/disposal/bin/tagger/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	mounted_tagger = new /obj/item/dest_tagger(null)
+	return ..()
 
 //Delivery Chute
 

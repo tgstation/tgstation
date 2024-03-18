@@ -298,7 +298,7 @@
 	name = "Grilling Starter Kit"
 	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT \
 		ONLY 5000 BUX GET NOW! Contains a grill and fuel."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 4
 	crate_type = /obj/structure/closet/crate
 	contains = list(
 		/obj/item/stack/sheet/mineral/coal/five,

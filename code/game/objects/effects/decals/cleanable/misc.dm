@@ -124,11 +124,28 @@
 	desc = "You know who to call."
 	light_power = 2
 
+/obj/effect/decal/cleanable/greenglow/radioactive
+	name = "radioactive goo"
+	desc = "Holy crap, stop looking at this and move away immediately! It's radioactive!"
+	light_power = 5
+	light_range = 3
+	light_color = LIGHT_COLOR_NUCLEAR
+
+/obj/effect/decal/cleanable/greenglow/radioactive/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddComponent(
+		/datum/component/radioactive_emitter, \
+		cooldown_time = 5 SECONDS, \
+		range = 4, \
+		threshold = RAD_MEDIUM_INSULATION, \
+	)
+
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
+	icon = 'icons/effects/web.dmi'
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
