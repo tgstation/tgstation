@@ -388,7 +388,7 @@
 		QDEL_NULL(mounted_tagger)
 	return ..()
 
-/obj/machinery/disposal/bin/deconstruct(disassembled)
+/obj/machinery/disposal/bin/on_deconstruction(disassembled)
 	. = ..()
 	if(!isnull(mounted_tagger))
 		mounted_tagger.forceMove(drop_location())
