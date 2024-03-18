@@ -168,6 +168,22 @@
 				)
 	crate_name = "cytology supplies crate"
 
+/datum/supply_pack/science/xenoflora
+	name = "Xenobotanical Starter Kit"
+	desc = "This kit contains 4 modules for basic xenoflora pod with a variety of seeds included; RPED not included"
+	cost = CARGO_CRATE_VALUE * 4
+	access = ACCESS_TELEPORTER
+	access_view = ACCESS_XENOBIOLOGY
+	contains = list(/obj/machinery/xenoflora_pod_part = 4,
+					/obj/item/xeno_seeds/broombush,
+					/obj/item/xeno_seeds/cubomelon,
+					/obj/item/xeno_seeds/bluespace_limon
+					/obj/item/xeno_seeds/pyrite_peaches
+					/obj/item/xeno_seeds/hyperlattice
+				)
+	crate_name = "xenoflora kit"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 /datum/supply_pack/science/mod_core
 	name = "MOD core Crate"
 	desc = "Three cores, perfect for any MODsuit construction! Naturally Harvested™, of course."
