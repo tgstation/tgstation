@@ -59,14 +59,3 @@
 
 /obj/effect/decal/cleanable/crayon/rune2
 	icon_state = "rune2"
-
-/obj/effect/decal/cleanable/crayon/lie1
-	icon_state = "l";
-	pixel_x = -10
-
-/obj/effect/decal/cleanable/crayon/lie2
-	icon_state = "i"
-
-/obj/effect/decal/cleanable/crayon/lie3
-	icon_state = "e";
-	pixel_x = 12
