@@ -87,8 +87,8 @@
 
 /obj/machinery/power/energy_accumulator/tesla_coil/process(seconds_per_tick)
 	. = ..()
-	zap_sound_volume = min(processed_energy / 8000, 100)
-	zap_sound_range = min(processed_energy / 1.6e5, 10)
+	zap_sound_volume = min(energy_to_power(processed_energy) / (4 KILO WATTS), 100) // 1 sound volume per 4kW.
+	zap_sound_range = min(energy_to_power(processed_energy) / (80 KILO WATTS), 10) // 1 sound range per 80kW.
 
 /obj/machinery/power/energy_accumulator/tesla_coil/zap_act(power, zap_flags)
 	if(!anchored || panel_open)

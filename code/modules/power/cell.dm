@@ -287,10 +287,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
-	if(charge >= 1000)
-		return clamp(20 + round(charge/25000), 20, 195) + rand(-5,5)
-	else
-		return 0
+	return ELECTROCUTE_DAMAGE(charge)
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge

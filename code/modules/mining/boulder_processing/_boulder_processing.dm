@@ -195,8 +195,11 @@
 	if(!can_process_golem(rockman))
 		return
 
+	if(!use_energy(active_power_usage * 1.5, force = FALSE))
+		say("Not enough energy!")
+		return
+
 	maim_golem(rockman)
-	use_power(active_power_usage * 1.5)
 	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, accept_cooldown, 3 SECONDS)
@@ -332,6 +335,9 @@
 		return
 	if(chosen_boulder.loc != src)
 		return
+	if(!use_energy(active_power_usage, force = FALSE))
+		say("Not enough energy!")
+		return
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
@@ -347,7 +353,6 @@
 			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
 			if(!silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 				rejected_mats[possible_mat] = quantity
-		use_energy(active_power_usage)
 
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)

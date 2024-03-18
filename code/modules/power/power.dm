@@ -193,21 +193,6 @@
 	return amount
 
 /**
- * Does what use_energy() does, but it automatically scales the amount by the machine's subsystem wait.
- * This draws the energy needed such that it will be drawing amount watts if this was called every process().
- * Args:
- * - amount: The amount of power to use.
- * - channel: The power channel to use.
- * - ignore_apc: If true, do not consider the APC's cell when demanding power.
- * Returns: The amount of energy used.
- */
-/obj/machinery/proc/use_power(amount, channel = power_channel, ignore_apc = FALSE, force = TRUE)
-	var/datum/controller/subsystem/subsystem = locate(subsystem_type) in Master.subsystems
-	if(!subsystem)
-		CRASH("No subsystem of the machine's subsystem_type \"[subsystem_type]\" was found in the master controller.")
-	return use_energy(amount * subsystem.wait / (1 SECONDS), channel = channel, ignore_apc = ignore_apc, force = force)
-
-/**
  * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to prioritising the grid.
  * Args:
  * - amount: How much energy the APC's cell is to be costed.

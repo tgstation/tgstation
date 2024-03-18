@@ -89,7 +89,4 @@
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	if(energy_to_power(avail) >= 1000)
-		return clamp(20 + round(energy_to_power(avail)/25000), 20, 195) + rand(-5,5)
-	else
-		return 0
+	return ELECTROCUTE_DAMAGE(energy_to_power(avail)) // Assuming 1 second of contact.
