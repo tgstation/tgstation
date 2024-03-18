@@ -1,17 +1,56 @@
 /obj/item/grenade/hypnotic
 	name = "flashbang"
-	desc = "A modified flashbang which uses hypnotic flashes and mind-altering soundwaves to induce an instant trance upon detonation."
+	desc = "A modified flashbang which uses hypnotic flashes and mind-altering soundwaves to induce an instant trance upon detonation. \
+		 It seems you can set an hypnotic phrase that's uttered when triggered"
 	icon_state = "flashbang"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7
+	///hypno text that is said when the grenade is triggered
+	var/hypno_text
+	verb_say = "beeps"
+	verb_ask = "inquires"
+	verb_yell = "blares"
+	verb_exclaim = "bleeps"
+
+/obj/item/grenade/hypnotic/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/grenade/hypnotic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_RMB] = "Set Hypno Text"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/grenade/hypnotic/apply_grenade_fantasy_bonuses(quality)
 	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
 
 /obj/item/grenade/hypnotic/remove_grenade_fantasy_bonuses(quality)
 	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+
+/obj/item/grenade/hypnotic/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	input_hypnotic_text(user)
+
+/obj/item/grenade/hypnotic/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	input_hypnotic_text(user)
+
+/obj/item/grenade/hypnotic/proc/input_hypnotic_text(mob/user)
+	var/hypno_text_input = tgui_input_text(user, "Enter a hypnotic command.", "Hypnotic Command Phrase", TRUE)
+	if(!hypno_text_input)
+		return
+	if(is_ic_filtered(hypno_text_input))
+		to_chat(user, span_warning("Error: Hypnotic commmand contains invalid text."))
+		return
+	var/list/soft_filter_result = is_soft_ooc_filtered(hypno_text_input)
+	if(soft_filter_result)
+		if(tgui_alert(user,"Your command contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(hypno_text_input)]\"")
+		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[hypno_text_input]\"")
+	hypno_text = hypno_text_input
 
 /obj/item/grenade/hypnotic/detonate(mob/living/lanced_by)
 	. = ..()
@@ -27,6 +66,8 @@
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, LIGHT_COLOR_PURPLE, 2)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(living_mob), living_mob)
+	if(hypno_text) //Sanity check if it's hypno text is null
+		say(hypno_text)
 	qdel(src)
 
 /obj/item/grenade/hypnotic/proc/bang(turf/turf, mob/living/living_mob)
