@@ -332,3 +332,9 @@
 	item_path = /obj/item/clothing/head/costume/fur_cap_quilark
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/suit/org_thirteen
+	name = "Organization 13 Cloak"
+	item_path = /obj/item/clothing/suit/hooded/org_thirteen
+	donator_only = TRUE
+	requires_purchase = FALSE

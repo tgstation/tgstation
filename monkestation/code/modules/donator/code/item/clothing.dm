@@ -286,3 +286,41 @@
 	cold_protection = CHEST|ARMS
 	layer = NECK_LAYER
 
+/obj/item/clothing/suit/hooded/org_thirteen
+	name = "\improper Organization 13 Cloak"
+	desc = "A large, hooded jacket belonging to an Organization 13 member."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "org_thirteen"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
+	allowed = list()
+	armor_type = /datum/armor/hooded_wintercoat
+	hoodtype = /obj/item/clothing/head/hooded/org_thirteen
+
+
+/obj/item/clothing/suit/hooded/org_thirteen/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/flashlight,
+		/obj/item/lighter,
+		/obj/item/modular_computer/pda,
+		/obj/item/radio,
+		/obj/item/storage/bag/books,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/toy,
+	)
+
+/obj/item/clothing/head/hooded/org_thirteen
+	name = "organization 13 hood"
+	desc = "A cozy winter hood attached to a heavy winter jacket."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "org_thirteen_hood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS
+	armor_type = /datum/armor/hooded_winterhood
