@@ -24,12 +24,21 @@
 			break
 	..()
 
+/datum/wires/vending/interact(mob/user)
+	var/obj/machinery/vending/vending_machine = holder
+	if (!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 100))
+		return
+
+	return ..()
+
 /datum/wires/vending/interactable(mob/user)
 	if(!..())
 		return FALSE
 	var/obj/machinery/vending/vending_machine = holder
-	if(!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 100))
-		return FALSE
+	if(!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified)
+		var/mob/living/carbon/carbon_user = user
+		if (!istype(carbon_user) || carbon_user.should_electrocute(get_area(vending_machine)))
+			return FALSE
 	if(vending_machine.panel_open)
 		return TRUE
 
@@ -57,6 +66,7 @@
 			vending_machine.extended_inventory = !vending_machine.extended_inventory
 		if(WIRE_SHOCK)
 			vending_machine.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
+			vending_machine.shock(usr, 100)
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
@@ -74,7 +84,11 @@
 		if(WIRE_CONTRABAND)
 			vending_machine.extended_inventory = FALSE
 		if(WIRE_SHOCK)
-			vending_machine.seconds_electrified = mend ? MACHINE_NOT_ELECTRIFIED : MACHINE_ELECTRIFIED_PERMANENT
+			if (mend)
+				vending_machine.seconds_electrified = MACHINE_NOT_ELECTRIFIED
+			else
+				vending_machine.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
+				vending_machine.shock(usr, 100)
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = mend
 		if(WIRE_SPEAKER)
