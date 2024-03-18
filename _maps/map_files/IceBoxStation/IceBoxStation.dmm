@@ -14749,12 +14749,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/stripes/white/end,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)

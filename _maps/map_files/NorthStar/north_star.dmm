@@ -3408,12 +3408,7 @@
 /area/station/maintenance/floor2/starboard/aft)
 "aSI" = (
 /obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white/small,
 /area/station/commons/fitness/recreation)
@@ -26842,12 +26837,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "gYI" = (
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor{
 	name = "bathroom tiles"
@@ -44797,12 +44787,7 @@
 "lBR" = (
 /obj/machinery/shower/directional/east,
 /obj/item/bikehorn/rubberducky,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/white/small,
 /area/station/commons/fitness/recreation)
 "lCf" = (
@@ -55983,12 +55968,7 @@
 	},
 /area/station/hallway/floor1/fore)
 "oqc" = (
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/shower/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/qm)
@@ -82419,12 +82399,7 @@
 	},
 /area/station/security/prison)
 "vlh" = (
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/trimline/neutral,
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
