@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - qol: "Sentience potion reason is set via alt-click"
