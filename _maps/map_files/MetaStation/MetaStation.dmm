@@ -1389,10 +1389,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aBJ" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/siding,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "aBL" = (
@@ -3254,13 +3254,13 @@
 	network = list("ss13","medbay")
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "bgV" = (
@@ -6857,7 +6857,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cxq" = (
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -6869,6 +6868,7 @@
 	name = "Labor Camp Shuttle Lockdown";
 	req_access = list("brig")
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "cxt" = (
@@ -9560,7 +9560,6 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "dBv" = (
-/obj/machinery/disposal/bin,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -9569,6 +9568,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "dBV" = (
@@ -43745,11 +43745,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "pIz" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "pID" = (
@@ -59390,11 +59390,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "vfO" = (
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "vfU" = (
