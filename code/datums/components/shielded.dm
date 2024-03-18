@@ -155,6 +155,10 @@
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
 
+	//No wearer? No block.
+	if(!wearer)
+		return
+
 	//if our wearer isn't the owner of the block, don't block
 	if(owner != wearer)
 		return
