@@ -4,6 +4,8 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 
 	var/last_move = null
+	/// A list containing arguments for Moved().
+	VAR_PRIVATE/tmp/list/active_movement
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -618,6 +620,9 @@
 	if(!newloc || newloc == loc)
 		return
 
+	// A mid-movement... movement... occured, resolve that first.
+	RESOLVE_ACTIVE_MOVEMENT
+
 	if(!direction)
 		direction = get_dir(src, newloc)
 
@@ -662,6 +667,7 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
+	SET_ACTIVE_MOVEMENT(oldloc, direction, FALSE, old_locs)
 	loc = newloc
 
 	. = TRUE
@@ -682,7 +688,7 @@
 	if(oldarea != newarea)
 		newarea.Entered(src, oldarea)
 
-	Moved(oldloc, direction, FALSE, old_locs)
+	RESOLVE_ACTIVE_MOVEMENT
 
 ////////////////////////////////////////
 
@@ -1091,8 +1097,13 @@
 
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
+	RESOLVE_ACTIVE_MOVEMENT
+
 	var/atom/oldloc = loc
 	var/is_multi_tile = bound_width > world.icon_size || bound_height > world.icon_size
+
+	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, null)
+
 	if(destination)
 		///zMove already handles whether a pull from another movable should be broken.
 		if(pulledby && !currently_z_moving)
@@ -1154,7 +1165,7 @@
 			if(old_area)
 				old_area.Exited(src, NONE)
 
-	Moved(oldloc, NONE, TRUE)
+	RESOLVE_ACTIVE_MOVEMENT
 
 /**
  * Called when a movable changes z-levels.

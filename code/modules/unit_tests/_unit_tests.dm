@@ -191,6 +191,7 @@
 #include "mouse_bite_cable.dm"
 #include "mutant_hands_consistency.dm"
 #include "mutant_organs.dm"
+#include "movement_order_sanity.dm"
 #include "novaflower_burn.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
