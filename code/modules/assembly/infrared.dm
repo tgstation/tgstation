@@ -9,14 +9,13 @@
 	var/on = FALSE
 	var/visible = FALSE
 	var/maxlength = 8
-	var/list/obj/effect/beam/i_beam/beams
+	var/datum/beam/infrared_beam
 	var/olddir = 0
 	var/turf/listeningTo
 	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize(mapload)
 	. = ..()
-	beams = list()
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
 
@@ -29,7 +28,7 @@
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	listeningTo = null
-	QDEL_LIST(beams)
+	infrared_beam.Destroy()
 	. = ..()
 
 /obj/item/assembly/infra/examine(mob/user)
@@ -50,7 +49,7 @@
 		START_PROCESSING(SSobj, src)
 		refreshBeam()
 	else
-		QDEL_LIST(beams)
+		infrared_beam.Destroy()
 		STOP_PROCESSING(SSobj, src)
 	update_appearance()
 	return secured
@@ -83,7 +82,6 @@
 		return
 
 /obj/item/assembly/infra/proc/refreshBeam()
-	QDEL_LIST(beams)
 	if(throwing || !on || !secured)
 		return
 	if(holder)
@@ -94,30 +92,32 @@
 			return
 	else if(!isturf(loc)) //or just where the fuck we are in general
 		return
-	var/turf/T = get_turf(src)
+	var/turf/origin = get_turf(src)
 	var/_dir = dir
-	var/turf/_T = get_step(T, _dir)
-	if(_T)
-		for(var/i in 1 to maxlength)
-			var/obj/effect/beam/i_beam/I = new(T)
-			if(istype(holder, /obj/item/assembly_holder))
-				I.icon_state = "[initial(I.icon_state)]_l" //Sync the offset of the beam with the position of the sensor.
-			else if(istype(holder, /obj/item/transfer_valve))
-				I.icon_state = "[initial(I.icon_state)]_ttv"
-			I.set_density(TRUE)
-			if(!I.Move(_T))
-				qdel(I)
-				switchListener(_T)
-				break
-			I.set_density(FALSE)
-			beams += I
-			I.master = src
-			I.setDir(_dir)
-			if(!visible)
-				I.SetInvisibility(INVISIBILITY_ABSTRACT)
-			T = _T
-			_T = get_step(_T, _dir)
-			CHECK_TICK
+	var/turf/target = get_step(origin, _dir)
+	if(target)
+		var/beam_icon_state = "ibeam"
+		var/beam_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+		infrared_beam = origin.Beam(BeamTarget = target, icon_state = beam_icon_state, icon = beam_icon, maxdistance = maxlength)
+		// for(var/i in 1 to maxlength)
+		// 	if(istype(holder, /obj/item/assembly_holder))
+		// 		I.icon_state = "[initial(I.icon_state)]_l" //Sync the offset of the beam with the position of the sensor.
+		// 	else if(istype(holder, /obj/item/transfer_valve))
+		// 		I.icon_state = "[initial(I.icon_state)]_ttv"
+		// 	I.set_density(TRUE)
+		// 	if(!I.Move(_T))
+		// 		qdel(I)
+		// 		switchListener(_T)
+		// 		break
+		// 	I.set_density(FALSE)
+		// 	beams += I
+		// 	I.master = src
+		// 	I.setDir(_dir)
+		// 	if(!visible)
+		// 		I.SetInvisibility(INVISIBILITY_ABSTRACT)
+		// 	T = _T
+		// 	_T = get_step(_T, _dir)
+		// 	CHECK_TICK
 
 /obj/item/assembly/infra/on_detach()
 	. = ..()
@@ -169,7 +169,7 @@
 
 	if(QDELETED(src))
 		return
-	if(src == gone || istype(gone, /obj/effect/beam/i_beam))
+	if(src == gone)// || istype(gone, /obj/effect/beam/i_beam))
 		return
 	if(isitem(gone))
 		var/obj/item/I = gone
@@ -215,30 +215,30 @@
 	refreshBeam()
 
 /***************************IBeam*********************************/
+// /datum/beam
+// /obj/effect/beam/i_beam
+// 	name = "infrared beam"
+// 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+// 	icon_state = "ibeam"
+// 	anchored = TRUE
+// 	density = FALSE
+// 	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE
+// 	pass_flags_self = LETPASSTHROW
+// 	var/obj/item/assembly/infra/master
 
-/obj/effect/beam/i_beam
-	name = "infrared beam"
-	icon = 'icons/obj/weapons/guns/projectiles.dmi'
-	icon_state = "ibeam"
-	anchored = TRUE
-	density = FALSE
-	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE
-	pass_flags_self = LETPASSTHROW
-	var/obj/item/assembly/infra/master
+// /obj/effect/beam/i_beam/Initialize(mapload)
+// 	. = ..()
+// 	var/static/list/loc_connections = list(
+// 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+// 	)
+// 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/effect/beam/i_beam/Initialize(mapload)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/effect/beam/i_beam/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
-	SIGNAL_HANDLER
-	if(istype(AM, /obj/effect/beam))
-		return
-	if (isitem(AM))
-		var/obj/item/I = AM
-		if (I.item_flags & ABSTRACT)
-			return
-	INVOKE_ASYNC(master, TYPE_PROC_REF(/obj/item/assembly/infra, trigger_beam), AM, get_turf(src))
+// /obj/effect/beam/i_beam/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
+// 	SIGNAL_HANDLER
+// 	if(istype(AM, /obj/effect/beam))
+// 		return
+// 	if (isitem(AM))
+// 		var/obj/item/I = AM
+// 		if (I.item_flags & ABSTRACT)
+// 			return
+// 	INVOKE_ASYNC(master, TYPE_PROC_REF(/obj/item/assembly/infra, trigger_beam), AM, get_turf(src))
