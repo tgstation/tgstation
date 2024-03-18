@@ -8739,37 +8739,22 @@
 /area/station/commons/lounge)
 "bXp" = (
 /obj/item/toy/crayon/orange,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_x = 8;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_x = -4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x
 	pixel_x = 4;
 	pixel_y = -32
 	},
@@ -63251,37 +63236,22 @@
 /area/station/maintenance/tram/mid)
 "viW" = (
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_x = 8;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i{
 	pixel_x = -4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x
 	pixel_x = 4;
 	pixel_y = -32
 	},

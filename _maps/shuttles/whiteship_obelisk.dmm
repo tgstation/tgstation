@@ -123,10 +123,7 @@
 "gw" = (
 /obj/structure/cable,
 /mob/living/basic/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -213,9 +210,7 @@
 /area/shuttle/abandoned/engine)
 "mQ" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune2"
-	},
+/obj/effect/decal/cleanable/crayon/rune2,
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/machinery/button/door/directional/west{
 	name = "Bolt Control";
@@ -252,10 +247,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "ne" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -308,10 +300,7 @@
 /area/shuttle/abandoned/bar)
 "oY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/effect/turf_decal/tile/dark_blue/half,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
@@ -439,10 +428,7 @@
 "yo" = (
 /obj/structure/cable,
 /mob/living/basic/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -496,10 +482,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "Cv" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned)
 "CX" = (
@@ -599,10 +582,7 @@
 "HU" = (
 /obj/structure/cable,
 /mob/living/basic/construct/juggernaut/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -780,10 +760,7 @@
 "SE" = (
 /obj/structure/cable,
 /mob/living/basic/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
