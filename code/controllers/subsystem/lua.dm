@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(lua)
 	name = "Lua Scripting"
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	wait = 0.1 SECONDS
-	flags = SS_OK_TO_FAIL_INIT
 
 	/// A list of all lua states
 	var/list/datum/lua_state/states = list()
@@ -17,29 +16,16 @@ SUBSYSTEM_DEF(lua)
 
 	var/list/current_run = list()
 
-	/// Protects return values from getting GCed before getting converted to lua values
-	/// Gets cleared every tick.
-	var/list/gc_guard = list()
-
 /datum/controller/subsystem/lua/Initialize()
-	if(!CONFIG_GET(flag/auxtools_enabled))
-		warning("SSlua requires auxtools to be enabled to run.")
-		return SS_INIT_NO_NEED
-
-	try
-		// Initialize the auxtools library
-		AUXTOOLS_CHECK(AUXLUA)
-
-		// Set the wrappers for setting vars and calling procs
-		__lua_set_set_var_wrapper("/proc/wrap_lua_set_var")
-		__lua_set_datum_proc_call_wrapper("/proc/wrap_lua_datum_proc_call")
-		__lua_set_global_proc_call_wrapper("/proc/wrap_lua_global_proc_call")
-		__lua_set_print_wrapper("/proc/wrap_lua_print")
-		return SS_INIT_SUCCESS
-	catch(var/exception/e)
-		// Something went wrong, best not allow the subsystem to run
-		warning("Error initializing SSlua: [e.name]")
-		return SS_INIT_FAILURE
+	// Set wrappers to ensure that lua scripts are subject to the same safety restrictions as other admin tooling
+	DREAMLUAU_SET_NEW_WRAPPER("/proc/_new")
+	DREAMLUAU_SET_VAR_GET_WRAPPER("/proc/wrap_lua_get_var")
+	DREAMLUAU_SET_VAR_SET_WRAPPER("/proc/wrap_lua_set_var")
+	DREAMLUAU_SET_OBJECT_CALL_WRAPPER("/proc/wrap_lua_datum_proc_call")
+	DREAMLUAU_SET_GLOBAL_CALL_WRAPPER("/proc/wrap_lua_global_proc_call")
+	// Set the print wrapper, as otherwise, the print function is meaningless
+	DREAMLUAU_SET_PRINT_WRAPPER("/proc/wrap_lua_print")
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/lua/OnConfigLoad()
 	// Read the paths from the config file
@@ -48,9 +34,6 @@ SUBSYSTEM_DEF(lua)
 	for(var/path in config_paths)
 		lua_path += path
 	world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
-
-/datum/controller/subsystem/lua/Shutdown()
-	AUXTOOLS_SHUTDOWN(AUXLUA)
 
 /datum/controller/subsystem/lua/proc/queue_resume(datum/lua_state/state, index, arguments)
 	if(!initialized)
@@ -63,34 +46,28 @@ SUBSYSTEM_DEF(lua)
 		arguments = list(arguments)
 	resumes += list(list("state" = state, "index" = index, "arguments" = arguments))
 
-/datum/controller/subsystem/lua/proc/kill_task(datum/lua_state/state, list/task_info)
+/datum/controller/subsystem/lua/proc/kill_task(datum/lua_state/state, is_sleep, index)
 	if(!istype(state))
 		return
-	if(!islist(task_info))
-		return
-	if(!(istext(task_info["name"]) && istext(task_info["status"]) && isnum(task_info["index"])))
-		return
-	switch(task_info["status"])
-		if("sleep")
-			var/task_index = task_info["index"]
-			var/state_index = 1
+	if(is_sleep)
+		var/state_index = 1
 
-			// Get the nth sleep in the sleep list corresponding to the target state
-			for(var/i in 1 to length(sleeps))
-				var/datum/lua_state/sleeping_state = sleeps[i]
-				if(sleeping_state == state)
-					if(state_index == task_index)
-						sleeps.Cut(i, i+1)
-						break
-					state_index++
-		if("yield")
-			// Remove the resumt from the resumt list
-			for(var/i in 1 to length(resumes))
-				var/resume = resumes[i]
-				if(resume["state"] == state && resume["index"] == task_info["index"])
-					resumes.Cut(i, i+1)
+		// Get the nth sleep in the sleep list corresponding to the target state
+		for(var/i in 1 to length(sleeps))
+			var/datum/lua_state/sleeping_state = sleeps[i]
+			if(sleeping_state == state)
+				if(state_index == index)
+					sleeps.Cut(i, i+1)
 					break
-	state.kill_task(task_info)
+				state_index++
+	else
+		// Remove the resumt from the resumt list
+		for(var/i in 1 to length(resumes))
+			var/resume = resumes[i]
+			if(resume["state"] == state && resume["index"] == index)
+				resumes.Cut(i, i+1)
+				break
+	state.kill_task(is_sleep, index)
 
 /datum/controller/subsystem/lua/fire(resumed)
 	// Each fire of SSlua awakens every sleeping task in the order they slept,
@@ -100,7 +77,6 @@ SUBSYSTEM_DEF(lua)
 		sleeps.Cut()
 		resumes.Cut()
 
-	gc_guard.Cut()
 	var/list/current_sleeps = current_run["sleeps"]
 	var/list/affected_states = list()
 	while(length(current_sleeps))

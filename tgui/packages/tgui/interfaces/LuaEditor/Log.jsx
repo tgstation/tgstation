@@ -1,45 +1,90 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider } from '../../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Divider,
+  LabeledList,
+  Stack,
+} from '../../components';
 import { logger } from '../../logging';
 import { ListMapper } from './ListMapper';
+
+const parsePanic = (name, panic_json) => {
+  const panic_info = JSON.parse(panic_json);
+  const {
+    message,
+    location: { file, line },
+    backtrace,
+  } = panic_info;
+  return (
+    <>
+      <Box textColor="red">
+        <b>{name}</b> panicked at {file}:{line}: {message}
+      </Box>
+      <Collapsible title="Backtrace">
+        <Stack vertical>
+          {backtrace
+            ?.filter(
+              (frame) => frame.file !== undefined && frame.line !== undefined,
+            )
+            ?.map(({ name, file, line }, i) => (
+              <>
+                {i > 0 && <Divider />}
+                <Stack.Item key={i}>
+                  <LabeledList>
+                    <LabeledList.Item label="function">{name}</LabeledList.Item>
+                    <LabeledList.Item label="location">
+                      {file}:{line}
+                    </LabeledList.Item>
+                  </LabeledList>
+                </Stack.Item>
+              </>
+            ))}
+        </Stack>
+      </Collapsible>
+    </>
+  );
+};
 
 export const Log = (props) => {
   const { act, data } = useBackend();
   const { stateLog } = data;
   const [, setViewedChunk] = useLocalState('viewedChunk');
   const [, setModal] = useLocalState('modal');
-  // We only kvpify logs so that the return values are kvpified.
-  const mappedLog = stateLog.map(({ value }) =>
-    Object.fromEntries(value.map(({ key, value }) => [key, value])),
-  );
-  return mappedLog.map((element, i) => {
-    const { name, status, param, chunk, repeats } = element;
-    let message;
+  return stateLog.map((element, i) => {
+    const { name, status, return_values, variants, message, chunk, repeats } =
+      element;
+    logger.log(element);
+    let output;
     let messageColor;
     switch (status) {
-      case 'sleeping':
+      case 'sleep':
         if (chunk) {
           messageColor = 'blue';
-          message = (
+          output = (
             <>
               <b>{name}</b> slept.
             </>
           );
         }
         break;
-      case 'yielded':
-        message = (
+      case 'yield':
+        output = (
           <>
             <b>{name}</b> yielded
-            {param.length
-              ? ` ${param.length} value${param.length > 1 ? 's' : ''}`
+            {return_values.length
+              ? ` ${return_values.length} value${
+                  return_values.length > 1 ? 's' : ''
+                }`
               : ''}
             .
-            {param.length ? (
+            {return_values.length ? (
               <ListMapper
-                list={param}
+                list={return_values}
+                variants={variants}
                 skipNulls
-                name="Return Value"
+                name="Return Values"
                 collapsible
                 vvAct={(path) =>
                   act('vvReturnValue', {
@@ -56,19 +101,22 @@ export const Log = (props) => {
         messageColor = 'yellow';
         break;
       case 'finished':
-        message = (
+        output = (
           <>
             <b>{name}</b> returned
-            {param.length
-              ? ` ${param.length} value${param.length > 1 ? 's' : ''}`
+            {return_values.length
+              ? ` ${return_values.length} value${
+                  return_values.length > 1 ? 's' : ''
+                }`
               : ''}
             .
             <Box color="default">
-              {param.length ? (
+              {return_values.length ? (
                 <ListMapper
-                  list={param}
+                  list={return_values}
+                  variants={variants}
                   skipNulls
-                  name="Return Value"
+                  name="Return Values"
                   collapsible
                   vvAct={(path) =>
                     act('vvReturnValue', {
@@ -85,28 +133,30 @@ export const Log = (props) => {
         );
         messageColor = 'green';
         break;
-      case 'errored':
-      case 'bad return':
-        message = (
+      case 'error':
+        output = (
           <>
-            <b>{name}</b> errored with the message &quot;{param}&quot;
+            <b>{name}</b> errored with the message &quot;{message}&quot;
           </>
         );
         messageColor = 'red';
         break;
+      case 'panic':
+        output = parsePanic(name, message);
+        break;
       case 'print':
-        message = param;
+        output = message;
         break;
       default:
         logger.warn(`unknown log status ${status}`);
     }
-    if (message === undefined) {
+    if (output === undefined) {
       return;
     }
     if (chunk) {
-      message = (
+      output = (
         <>
-          {message}
+          {output}
           <Button
             onClick={() => {
               setViewedChunk(chunk);
@@ -122,7 +172,7 @@ export const Log = (props) => {
       <>
         {i > 0 && <Divider />}
         <Box width="100%" key={i} color={messageColor}>
-          {message}
+          {output}
         </Box>
         {repeats && (
           <Box

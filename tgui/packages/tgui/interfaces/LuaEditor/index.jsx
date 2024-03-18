@@ -38,7 +38,8 @@ export class LuaEditor extends Component {
 
     this.handleSectionScroll = () => {
       const { showJumpToBottomButton } = this.state;
-      const scrollableCurrent = this.sectionRef.current?.scrollableRef.current;
+      const scrollableCurrent =
+        this.sectionRef?.current?.scrollableRef?.current;
       if (
         !showJumpToBottomButton &&
         scrollableCurrent?.scrollHeight >
@@ -84,22 +85,8 @@ export class LuaEditor extends Component {
       showGlobalTable,
       page,
       pageCount,
-      auxtools_enabled,
       ss_lua_init,
     } = data;
-
-    if (!auxtools_enabled) {
-      return (
-        <Window>
-          <Window.Content>
-            <NoticeBox danger>
-              Auxtools is not enabled. Please ask your server administrator to
-              enable it in the server configuration.
-            </NoticeBox>
-          </Window.Content>
-        </Window>
-      );
-    }
 
     if (!ss_lua_init) {
       return (
@@ -128,9 +115,11 @@ export class LuaEditor extends Component {
             </h1>
           );
         } else {
+          const { values, variants } = globals;
           tabContent = (
             <ListMapper
-              list={globals}
+              list={values}
+              variants={variants}
               skipNulls
               vvAct={(path) => act('vvGlobal', { indices: path })}
               callType="callFunction"
@@ -204,7 +193,7 @@ export class LuaEditor extends Component {
                     onChange={(_, value) =>
                       this.setState({ scriptInput: value })
                     }
-                    displayedValue={
+                    /* displayedValue={
                       <Box
                         style={{
                           pointerEvents: 'none',
@@ -215,7 +204,7 @@ export class LuaEditor extends Component {
                           }).value,
                         }}
                       />
-                    }
+                    }*/
                   />
                   <Button onClick={() => act('runCode', { code: scriptInput })}>
                     Run

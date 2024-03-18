@@ -107,6 +107,7 @@
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null //ensure prompt GCing of weakref.
+	DREAMLUAU_CLEAR_REF_USERDATA(src) //Remove all lua hard references
 
 	if(_active_timers)
 		var/list/timers = _active_timers

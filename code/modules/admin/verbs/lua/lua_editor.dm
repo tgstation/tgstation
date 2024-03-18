@@ -40,28 +40,36 @@
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
 	data["documentation"] = file2text('code/modules/admin/verbs/lua/README.md')
-	data["auxtools_enabled"] = CONFIG_GET(flag/auxtools_enabled)
 	data["ss_lua_init"] = SSlua.initialized
 	return data
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
-	if(!CONFIG_GET(flag/auxtools_enabled) || !SSlua.initialized)
+	if(!SSlua.initialized)
 		return data
 
 	data["noStateYet"] = !current_state
 	data["showGlobalTable"] = show_global_table
 	if(current_state)
 		if(current_state.log)
-			data["stateLog"] = kvpify_list(refify_list(current_state.log.Copy((page*50)+1, min((page+1)*50+1, current_state.log.len+1))))
+			var/list/logs = current_state.log.Copy((page*50)+1, min((page+1)*50+1, current_state.log.len+1))
+			for(var/i in 1 to logs.len)
+				var/list/log = logs[i]
+				log = log.Copy()
+				if(log["return_values"])
+					log["return_values"] = kvpify_list(prepare_lua_editor_list(deep_copy_without_cycles(log["return_values"])))
+					logs[i] = log
+			data["stateLog"] = logs
 		data["page"] = page
 		data["pageCount"] = CEILING(current_state.log.len/50, 1)
 		data["tasks"] = current_state.get_tasks()
 		if(show_global_table)
 			current_state.get_globals()
-			data["globals"] = kvpify_list(refify_list(current_state.globals))
+			var/list/values = kvpify_list(prepare_lua_editor_list(deep_copy_without_cycles(current_state.globals["values"])))
+			var/list/variants = current_state.globals["variants"]
+			data["globals"] = list("values" = values, "variants" = variants)
 	data["states"] = SSlua.states
-	data["callArguments"] = kvpify_list(refify_list(arguments))
+	data["callArguments"] = kvpify_list(prepare_lua_editor_list(deep_copy_without_cycles(arguments)))
 	if(force_modal)
 		data["forceModal"] = force_modal
 		force_modal = null
@@ -111,6 +119,8 @@
 			if(!length(state_name))
 				return TRUE
 			var/datum/lua_state/new_state = new(state_name)
+			if(QDELETED(new_state))
+				return
 			SSlua.states += new_state
 			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = new_state
@@ -163,25 +173,27 @@
 			return TRUE
 		if("callFunction")
 			var/list/recursive_indices = params["indices"]
-			var/list/current_list = kvpify_list(current_state.globals)
+			var/list/current_list = kvpify_list(current_state.globals["values"])
+			var/list/current_variants = current_state.globals["variants"]
 			var/function = list()
 			while(LAZYLEN(recursive_indices))
 				var/index = popleft(recursive_indices)
 				var/list/element = current_list[index]
 				var/key = element["key"]
 				var/value = element["value"]
-				if(!(istext(key) || isnum(key)))
-					to_chat(usr, span_warning("invalid key \[[key]] for function call (expected text or num)"))
+				var/list/variant_pair = current_variants[index]
+				var/key_variant = variant_pair["key"]
+				if(key_variant == "function" || key_variant == "thread" || key_variant == "userdata" || key_variant == "error_as_value")
+					to_chat(usr, span_warning("invalid table key \[[key]] for function call (expected text, num, path, list, or ref, got [key_variant])"))
 					return
 				function += key
 				if(islist(value))
 					current_list = value
+					current_variants = variant_pair["value"]
 				else
-					var/regex/function_regex = regex("^function: 0x\[0-9a-fA-F]+$")
-					if(function_regex.Find(value))
-						break
-					to_chat(usr, span_warning("invalid path element \[[value]] for function call (expected list or text matching [function_regex])"))
-					return
+					if(variant_pair["value"] != "function")
+						to_chat(usr, span_warning("invalid value \[[value]] for function call (expected list or function)"))
+						return
 			var/result = current_state.call_function(arglist(list(function) + arguments))
 			current_state.log_result(result)
 			arguments.Cut()
@@ -192,13 +204,14 @@
 			arguments.Cut()
 			return TRUE
 		if("killTask")
-			var/task_info = params["info"]
-			SSlua.kill_task(current_state, task_info)
+			var/is_sleep = params["is_sleep"]
+			var/index = params["index"]
+			SSlua.kill_task(current_state, is_sleep, index)
 			return TRUE
 		if("vvReturnValue")
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
-			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["param"])
+			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["return_values"])
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()

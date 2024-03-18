@@ -5,18 +5,8 @@ export const TaskManager = (props) => {
   const { act, data } = useBackend();
   const [, setToCall] = useLocalState('toCallTaskInfo');
   const [, setModal] = useLocalState('modal');
-  let { tasks } = data;
-  tasks?.sort((a, b) => {
-    if (a.status < b.status) {
-      return -1;
-    } else if (a.status > b.status) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-  const sleeps = tasks.filter((info) => info.status === 'sleep');
-  const yields = tasks.filter((info) => info.status === 'yield');
+  const { tasks } = data;
+  const { sleeps = [], yields = [] } = tasks;
   return (
     <Stack fill width="100%" justify="space-around">
       <Stack.Item grow="1" shrink="1">
@@ -27,7 +17,9 @@ export const TaskManager = (props) => {
                 <Button
                   color="red"
                   icon="window-close"
-                  onClick={() => act('killTask', { info: info })}
+                  onClick={() =>
+                    act('killTask', { is_sleep: true, index: info.index })
+                  }
                 >
                   Kill
                 </Button>
@@ -56,7 +48,7 @@ export const TaskManager = (props) => {
                   color="red"
                   icon="window-close"
                   onClick={() => {
-                    act('killTask', { info: info });
+                    act('killTask', { is_sleep: false, index: info.index });
                   }}
                 >
                   Kill
