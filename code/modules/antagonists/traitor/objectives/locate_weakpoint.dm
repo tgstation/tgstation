@@ -27,6 +27,8 @@
 	var/area/weakpoint_area
 
 /datum/traitor_objective/locate_weakpoint/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(length(possible_duplicates) > 0)
+		return FALSE
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
 	if(SStraitor.get_taken_count(/datum/traitor_objective/locate_weakpoint) > 0)
