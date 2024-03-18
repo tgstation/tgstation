@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "Deathmatch files, map names, and keys should all be consistent now."
