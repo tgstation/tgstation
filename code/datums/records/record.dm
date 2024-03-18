@@ -84,6 +84,9 @@
 	/// Current arrest status
 	var/wanted_status = WANTED_NONE
 
+	///Photo used for records, which we store here so we don't have to constantly make more of.
+	var/list/obj/item/photo/record_photos
+
 /datum/record/crew/New(
 	age = 18,
 	blood_type = "?",
@@ -120,6 +123,7 @@
 
 /datum/record/crew/Destroy()
 	GLOB.manifest.general -= src
+	QDEL_LAZYLIST(record_photos)
 	return ..()
 
 /**
@@ -170,6 +174,20 @@
 /datum/record/crew/proc/get_side_photo()
 	return get_photo("photo_side", WEST)
 
+/// A helper proc to recreate all photos of a character from the record.
+/datum/record/crew/proc/recreate_manifest_photos()
+	delete_photos("photo_front")
+	make_photo("photo_front", SOUTH)
+	delete_photos("photo_side")
+	make_photo("photo_side", WEST)
+
+///Deletes the existing photo for field_name
+/datum/record/crew/proc/delete_photos(field_name)
+	var/obj/item/photo/existing_photo = LAZYACCESS(record_photos, field_name)
+	if(existing_photo)
+		qdel(existing_photo)
+		LAZYREMOVE(record_photos, field_name)
+
 /**
  * You shouldn't be calling this directly, use `get_front_photo()` or `get_side_photo()`
  * instead.
@@ -188,30 +206,36 @@
  * Returns an empty `/icon` if there was no `character_appearance` entry in the `fields` list,
  * returns the generated/cached photo otherwise.
  */
-/datum/record/crew/proc/get_photo(field_name, orientation)
+/datum/record/crew/proc/get_photo(field_name, orientation = SOUTH)
 	if(!field_name)
 		return
-
 	if(!character_appearance)
 		return new /icon()
+	var/obj/item/photo/existing_photo = LAZYACCESS(record_photos, field_name)
+	if(!existing_photo)
+		existing_photo = make_photo(field_name, orientation)
+	return existing_photo
 
-	var/icon/picture_image
+/**
+ * make_photo
+ *
+ * Called if the person doesn't already have a photo, this will make a photo of the person,
+ * then make a picture out of it, then finally create a new photo.
+ */
+/datum/record/crew/proc/make_photo(field_name, orientation)
+	var/mutable_appearance/appearance = character_appearance
 	if(!isicon(character_appearance))
-		var/mutable_appearance/appearance = character_appearance
 		appearance.setDir(orientation)
-
-		picture_image = getFlatIcon(appearance)
-	else
-		picture_image = character_appearance
 
 	var/datum/picture/picture = new
 	picture.picture_name = name
 	picture.picture_desc = "This is [name]."
-	picture.picture_image = picture_image
+	picture.picture_image = getFlatIcon(appearance)
 
-	var/obj/item/photo/photo = new(null, picture)
-	field_name = photo
-	return photo
+	var/obj/item/photo/new_photo = new(null, picture)
+
+	LAZYSET(record_photos, field_name, new_photo)
+	return new_photo
 
 /// Returns a paper printout of the current record's crime data.
 /datum/record/crew/proc/get_rapsheet(alias, header = "Rapsheet", description = "No further details.")

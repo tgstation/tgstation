@@ -165,6 +165,18 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	target.rank = assignment
 	target.trim = trim
 
+/// Edits the rank and trim of the found record.
+/datum/manifest/proc/change_pictures(name, mob/living/person)
+	to_chat(world, "name: [name], person: [person]")
+	var/datum/record/crew/target = find_record(name)
+	if(!target)
+		to_chat(world, "couldnt find crew record")
+		return
+	to_chat(world, "found record [target]")
+
+	target.character_appearance = person.appearance
+	target.recreate_manifest_photos()
+
 /datum/manifest/ui_state(mob/user)
 	return GLOB.always_state
 
