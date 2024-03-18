@@ -6378,6 +6378,7 @@
 #include "monkestation\code\modules\mob\living\carbon\carbon_defense.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_defines.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_update_icons.dm"
+#include "monkestation\code\modules\mob\living\carbon\emote.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\accessory_helpers.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\carbon.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\custom_bodytype.dm"
