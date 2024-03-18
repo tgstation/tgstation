@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "The deathmatch modifiers modal menu can actually be opened now. Also fixed a bunch of issues it had."

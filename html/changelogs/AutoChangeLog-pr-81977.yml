@@ -1,0 +1,4 @@
+author: "Momo8289"
+delete-after: True
+changes:
+  - bugfix: "You can no longer determine the result of a dice roll from off-screen."

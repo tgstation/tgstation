@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Plasmamen nukie reinforcements are now properly given a plasmaman-safe outfit."

@@ -559,3 +559,28 @@
       if materials are put on hold while printing
   Tattle:
   - rscadd: Getting shrunk makes you talk small
+2024-03-18:
+  Bilbo367:
+  - bugfix: Deathmatch players should no longer be able to roll any midround antagonist.
+  Exester509:
+  - bugfix: Plasmamen will become human in the deathmatch so they don't instantly
+      die
+  Ghommie:
+  - bugfix: FIXED CARGO EXPORTS!
+  JohnFulpWillard:
+  - bugfix: Action abilities hidden from players are now not shown to observers either.
+  Rhials:
+  - bugfix: Plasmamen nukie reinforcements are now properly given a plasmaman-safe
+      outfit.
+  RikuTheKiller:
+  - balance: Smoke Machines, Showers, Vapes, etc will no longer arbitrarily delete
+      a random amount of the chems they are processing
+  Runa-Dacino:
+  - bugfix: fixed consecutive tgui text input inheriting user input from previous
+      input form within the same proc
+  san7890:
+  - bugfix: If you place a headset on a non-Poly Parrot, you should be able to remove
+      it from the parrot as-expected now rather than having the parrot send it to
+      the shadow realm.
+  xXPawnStarrXx:
+  - image: modified gi sprites, making them more customisable.

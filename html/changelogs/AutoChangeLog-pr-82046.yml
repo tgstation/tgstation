@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "If you place a headset on a non-Poly Parrot, you should be able to remove it from the parrot as-expected now rather than having the parrot send it to the shadow realm."

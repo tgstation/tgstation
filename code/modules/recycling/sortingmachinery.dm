@@ -60,14 +60,14 @@
 	. = ..()
 	if(note)
 		if(!in_range(user, src))
-			. += "There's a [note.name] attached to it. You can't read it from here."
+			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it. You can't read it from here.")
 		else
-			. += "There's a [note.name] attached to it..."
+			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it...")
 			. += note.examine(user)
 	if(sticker)
-		. += "There's a barcode attached to the side."
+		. += span_notice("There's a [EXAMINE_HINT("barcode")] attached to the side. The package is marked for [EXAMINE_HINT("export.")]")
 	if(sort_tag)
-		. += "There's a sorting tag with the destination set to [GLOB.TAGGERLOCATIONS[sort_tag]]."
+		. += span_notice("There's a [EXAMINE_HINT("sorting tag")] with the destination set to [EXAMINE_HINT("[GLOB.TAGGERLOCATIONS[sort_tag]].")]")
 
 /obj/item/delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
@@ -131,7 +131,7 @@
 	if(note)
 		. += "[base_icon_state]_note"
 	if(sticker)
-		. += "[base_icon_state]_tag"
+		. += "[base_icon_state]_barcode"
 
 /obj/item/delivery/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/dest_tagger))
