@@ -204,7 +204,7 @@
 /obj/item/clothing/mask/facescarf
 	name = "facescarf"
 	desc = "Cover your face like in the cowboy movies. It also has breathtube so you can wear it everywhere!"
-	actions_types = /datum/action/item_action/adjust
+	actions_types = list(/datum/action/item_action/adjust)
 	icon_state = "facescarf"
 	inhand_icon_state = "greyscale_facescarf"
 	alternate_worn_layer = BACK_LAYER
