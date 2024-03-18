@@ -22,6 +22,8 @@
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
+	///Is it a cluster grenade? We dont wanna spam admin logs with these.
+	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
 	///Will this state what it's det_time is when examined?
@@ -135,7 +137,8 @@
 		arm_grenade(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user)
-	log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
+	if(!type_cluster)
+		log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
