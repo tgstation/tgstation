@@ -194,7 +194,7 @@
 		/mob/living/basic/cow/moonicorn,
 		/mob/living/basic/mining/wolf,
 		/mob/living/basic/mining/goldgrub,
-		/mob/living/basic/mining/goliath/saddled,
+		/mob/living/basic/mining/goliath/deathmatch,
 		))
 	var/mob/living/basic/mount = new mount_path (player.loc)
 	mount.tamed(player, null)
@@ -353,8 +353,8 @@
 
 /datum/deathmatch_modifier/wasted/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.adjust_drunk_effect(rand(30, 35))
-	var/metabolism_rate = /datum/reagent/consumable/ethanol/kahlua::metabolization_rate
-	player.reagents.add_reagent(/datum/reagent/consumable/ethanol/kahlua, initial(lobby.map.automatic_gameend_time) * 0.35 / metabolism_rate)
+	var/metabolism_rate = /datum/reagent/consumable/ethanol/jack_rose::metabolization_rate
+	player.reagents.add_reagent(/datum/reagent/consumable/ethanol/jack_rose, initial(lobby.map.automatic_gameend_time) * 0.35 / metabolism_rate)
 
 /datum/deathmatch_modifier/monkeys
 	name = "Monkeyfication"
@@ -381,16 +381,20 @@
 		/obj/effect/mine/explosive, //too lethal.
 		/obj/effect/mine/kickmine, //will kick the client, lol
 		/obj/effect/mine/gas, //Just spawns oxygen.
+		/obj/effect/mine/gas/n2o, //no sleeping please.
 	)
 
-	///1 every 10 turfs, but it will actually spawn fewer mines since groundless and closed turfs are skipped.
-	var/mines_to_spawn = length(lobby.location.reserved_turfs) * 0.1
+	///1 every 11 turfs, but it will actually spawn fewer mines since groundless and closed turfs are skipped.
+	var/mines_to_spawn = length(lobby.location.reserved_turfs) * 0.09
 	for(var/iteration in 1 to mines_to_spawn)
 		var/turf/target_turf = pick(lobby.location.reserved_turfs)
 		if(!isopenturf(target_turf) || isgroundlessturf(target_turf))
 			continue
 		///don't spawn mine next to player spawns.
 		if(locate(/obj/effect/landmark/deathmatch_player_spawn) in range(1, target_turf))
+			continue
+		///skip belt loops or they'll explode right away.
+		if(locate(/obj/machinery/conveyor) in target_turf.contents)
 			continue
 		var/mine_path = pick(mines)
 		new mine_path (target_turf)
@@ -401,16 +405,6 @@
 
 /datum/deathmatch_modifier/flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.SpinAnimation(speed = 0.9 SECONDS, loops = -1)
-
-/datum/deathmatch_modifier/screen_flipping
-	name = "Rotating Screen"
-	description = "♪ You spin me right round, baby right round ♪"
-
-/datum/deathmatch_modifier/screen_flipping/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	var/atom/movable/plane_master_controller/pm_controller = player.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	var/clockwise = prob(50)
-	for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
-		plane.SpinAnimation(4.5 SECONDS, clockwise = clockwise)
 
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"

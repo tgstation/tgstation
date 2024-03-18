@@ -74,11 +74,10 @@
 	desc = "A blood-red styled drop pod."
 	specialised = TRUE
 
-/obj/structure/closet/supplypod/podspawn/deathmatch/Entered(atom/movable/arrived)
-	. = ..()
-	if(isliving(arrived))
-		var/mob/living/critter = arrived
+/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
+	for(var/mob/living/critter in contents)
 		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+	return ..()
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
@@ -111,6 +110,7 @@
 /obj/structure/closet/supplypod/deadmatch_missile
 	name = "cruise missile"
 	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	icon_state = "smissile"
 	decal = null
 	door = null
 	fin_mask = null
