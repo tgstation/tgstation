@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added 20+ modifiers to the deathmatch minigame, which can be enabled by the host."
