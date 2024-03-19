@@ -316,7 +316,7 @@
 ///A version of add_filter that takes a list of filters to add rather than being individual, to limit calls to update_filters().
 /datum/proc/add_filters(list/filters)
 	LAZYINITLIST(filter_data)
-	for(var/list/individual_filter in filters)
+	for(var/list/individual_filter as anything in filters)
 		var/list/params = individual_filter["params"]
 		var/list/copied_parameters = params.Copy()
 		copied_parameters["priority"] = individual_filter["priority"]
