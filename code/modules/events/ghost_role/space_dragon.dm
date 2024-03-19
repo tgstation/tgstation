@@ -20,9 +20,8 @@
 	priority_announce("A large organic energy flux has been recorded near [station_name()], please stand by.", "Lifesign Alert")
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
-
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
-	if(!candidates.len)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SPACE_DRAGON, role = ROLE_SPACE_DRAGON, pic_source = /mob/living/basic/space_dragon)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = pick(candidates)

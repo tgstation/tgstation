@@ -2582,7 +2582,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
-		var/list/candidates = poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
+			"Do you want to play as an admin created Guardian Spirit of [real_name]?",
+			check_jobban = ROLE_PAI,
+			poll_time = 10 SECONDS,
+			target_mob = src,
+			ignore_category = POLL_IGNORE_HOLOPARASITE,
+			pic_source = /mob/living/basic/guardian,
+			role_name_text = "guardian spirit"
+		)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/candidate = pick(candidates)
 			guardian_client = candidate.client

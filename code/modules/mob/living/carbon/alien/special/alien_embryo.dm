@@ -91,12 +91,20 @@
 
 	bursting = TRUE
 
-	var/list/candidates = poll_ghost_candidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as an alien larva that will burst out of [owner.real_name]?",
+		role = ROLE_ALIEN,
+		check_jobban = ROLE_ALIEN,
+		poll_time = 10 SECONDS,
+		ignore_category = POLL_IGNORE_ALIEN_LARVA,
+		pic_source = /mob/living/carbon/alien/larva,
+		role_name_text = "alien larva"
+	)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	if(!candidates.len || !owner)
+	if(!length(candidates) || !owner)
 		bursting = FALSE
 		stage = 5 // If no ghosts sign up for the Larva, let's regress our growth by one minute, we will try again!
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time)

@@ -122,7 +122,14 @@
 
 /// Polls for a ghost that wants to run it
 /datum/round_event/ghost_role/bitrunning_glitch/proc/get_ghost_mind(role_name)
-	var/list/mob/dead/observer/ghosties = poll_ghost_candidates("A short term antagonist role is available. Would you like to spawn as a '[role_name]'?", role_name)
+	var/list/mob/dead/observer/ghosties = SSpolling.poll_ghost_candidates(
+		question = "A short term antagonist role is available.",
+		check_jobban = ROLE_PAI,
+		poll_time = 7.5 SECONDS,
+		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
+		pic_source = /datum/antagonist/cyber_police,
+		role_name_text = role_name
+	)
 
 	if(!length(ghosties))
 		return

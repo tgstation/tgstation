@@ -80,6 +80,7 @@
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
 #include "antag_moodlets.dm"
+#include "antag_special_roles.dm"
 #include "area_contents.dm"
 #include "armor_verification.dm"
 #include "autowiki.dm"

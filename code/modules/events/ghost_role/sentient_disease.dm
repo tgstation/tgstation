@@ -14,8 +14,8 @@
 	role_name = "sentient disease"
 
 /datum/round_event/ghost_role/sentient_disease/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
-	if(!candidates.len)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENT_DISEASE, role = ROLE_SENTIENT_DISEASE, pic_source = /obj/structure/sign/warning/biohazard, role_name_text = role_name)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)

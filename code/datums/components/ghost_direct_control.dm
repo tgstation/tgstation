@@ -73,12 +73,14 @@
 	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	awaiting_ghosts = TRUE
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates(
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
 		question = "Do you want to play as [role_name]?",
-		jobban_type = ban_type,
-		be_special_flag = ban_type,
+		check_jobban = ban_type,
+		role = ban_type,
 		poll_time = poll_length,
 		ignore_category = poll_ignore_key,
+		pic_source = parent,
+		role_name_text = role_name,
 	)
 	awaiting_ghosts = FALSE
 	if (!LAZYLEN(candidates))

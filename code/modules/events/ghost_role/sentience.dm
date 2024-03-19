@@ -50,7 +50,12 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
-	candidates = get_candidates(ROLE_SENTIENCE, ROLE_SENTIENCE)
+	candidates = SSpolling.poll_ghost_candidates(
+		"Would you like to be a random animal?",
+		role = ROLE_SENTIENCE,
+		pic_source = /obj/item/slimepotion/slime/sentience,
+		role_name_text = role_name
+	)
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless, on station, and NOT holograms.
@@ -74,11 +79,11 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 	if(!potential.len)
 		return WAITING_FOR_SOMETHING
-	if(!candidates.len)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/spawned_animals = 0
-	while(spawned_animals < animals && candidates.len && potential.len)
+	while(spawned_animals < animals && length(candidates) && potential.len)
 		var/mob/living/selected = popleft(potential)
 		var/mob/dead/observer/picked_candidate = pick_n_take(candidates)
 

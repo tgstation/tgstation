@@ -32,11 +32,13 @@
 		used = TRUE
 		to_chat(user, use_message)
 		var/guardian_type_name = capitalize(initial(guardian_path.creator_name))
-		var/list/mob/dead/observer/candidates = poll_ghost_candidates(
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
 			"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
-			jobban_type = ROLE_PAI,
+			check_jobban = ROLE_PAI,
 			poll_time = 10 SECONDS,
 			ignore_category = POLL_IGNORE_HOLOPARASITE,
+			pic_source = guardian_path,
+			role_name_text = "guardian spirit",
 		)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/candidate = pick(candidates)

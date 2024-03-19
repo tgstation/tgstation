@@ -44,8 +44,15 @@
 
 		if(!affected_mob.client || affected_mob.client.is_afk())
 			set waitfor = FALSE
-			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [affected_mob.real_name], an inactive clock cultist?", \
-																			ROLE_CLOCK_CULTIST, ROLE_CLOCK_CULTIST, 5 SECONDS, affected_mob)
+			var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
+				"Do you want to play as a [affected_mob.real_name], an inactive clock cultist?",
+				check_jobban = ROLE_CLOCK_CULTIST,
+				role = ROLE_CLOCK_CULTIST,
+				poll_time = 5 SECONDS,
+				target_mob = affected_mob,
+				pic_source = affected_mob,
+				role_name_text = "clock cultist"
+			)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/candidate = pick(candidates)
 				to_chat(affected_mob.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")

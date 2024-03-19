@@ -42,12 +42,18 @@
 
 
 	if(prompted_picking)
-		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
+		candidates = SSpolling.poll_ghost_candidates(
+			"Would you like to be a paradox clone?",
+			check_jobban = ROLE_PARADOX_CLONE,
+			poll_time = 20 SECONDS,
+			pic_source = /datum/antagonist/paradox_clone,
+			role_name_text = "paradox clone",
+		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
 	for(var/i in 1 to antag_count)
-		if(!candidates.len)
+		if(!length(candidates))
 			break
 
 		var/client/mob_client = pick_n_take(weighted_candidates)

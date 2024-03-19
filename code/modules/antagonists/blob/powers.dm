@@ -194,7 +194,14 @@
 	if(!factory)
 		return
 
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as a [blobstrain.name] blobbernaut?",
+		check_jobban = ROLE_BLOB,
+		role = ROLE_BLOB,
+		poll_time = 5 SECONDS,
+		pic_source = /mob/living/basic/blob_minion/blobbernaut/minion,
+		role_name_text = "blobbernaut"
+	)
 
 	if(!length(candidates))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))

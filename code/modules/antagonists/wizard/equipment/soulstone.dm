@@ -438,7 +438,16 @@
  */
 /obj/item/soulstone/proc/get_ghost_to_replace_shade(mob/living/carbon/victim, mob/user)
 	var/mob/dead/observer/chosen_ghost
-	var/list/consenting_candidates = poll_ghost_candidates("Would you like to play as a Shade?", "Cultist", ROLE_CULTIST, 5 SECONDS, POLL_IGNORE_SHADE)
+	var/list/mob/dead/observer/consenting_candidates = SSpolling.poll_ghost_candidates_for_mob(
+		"Do you want to play as a Shade?",
+		check_jobban = ROLE_CULTIST,
+		role = ROLE_CULTIST,
+		poll_time = 5 SECONDS,
+		target_mob = victim,
+		ignore_category = POLL_IGNORE_SHADE,
+		pic_source = /mob/living/basic/shade,
+		role_name_text = "shade"
+	)
 	if(length(consenting_candidates))
 		chosen_ghost = pick(consenting_candidates)
 

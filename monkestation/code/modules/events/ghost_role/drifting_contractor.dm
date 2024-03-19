@@ -16,7 +16,14 @@
 	role_name = "Drifting Contractor"
 
 /datum/round_event/ghost_role/contractor/spawn_role()
-	var/list/candidates = get_candidates(ROLE_DRIFTING_CONTRACTOR)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as a drifting contractor?",
+		check_jobban = ROLE_DRIFTING_CONTRACTOR,
+		role = ROLE_DRIFTING_CONTRACTOR,
+		poll_time = 20 SECONDS,
+		pic_source = /datum/antagonist/traitor/contractor,
+		role_name_text = "drifting contractor"
+	)
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 

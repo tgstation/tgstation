@@ -135,7 +135,7 @@
  */
 /proc/summon_battlecruiser(datum/team/battlecruiser/team)
 
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for battlecruiser crew?", ROLE_TRAITOR)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for battlecruiser crew?", check_jobban = ROLE_TRAITOR, pic_source = /obj/machinery/sleeper/syndie, role_name_text = "battlecruiser crew")
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/ship = SSmapping.map_templates["battlecruiser_starfury.dmm"]
@@ -163,7 +163,7 @@
 	for(var/turf/open/spawned_turf as anything in ship.get_affected_turfs(battlecruiser_loading_turf)) //not as anything to filter out closed turfs
 		for(var/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/spawner in spawned_turf)
 			spawner.antag_team = team
-			if(candidates.len > 0)
+			if(length(candidates) > 0)
 				var/mob/our_candidate = candidates[1]
 				spawner.create_from_ghost(our_candidate)
 				spawner.antag_team.players_spawned += (our_candidate.ckey)

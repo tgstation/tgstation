@@ -19,8 +19,8 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates(ROLE_NINJA, ROLE_NINJA)
-	if(!candidates.len)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_NINJA, role = ROLE_NINJA, pic_source = /obj/item/energy_katana)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected_candidate = pick(candidates)

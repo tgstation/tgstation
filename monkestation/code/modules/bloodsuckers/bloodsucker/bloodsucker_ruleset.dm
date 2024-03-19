@@ -30,7 +30,7 @@
 	var/num_bloodsuckers = get_antag_cap(population) * (scaled_times + 1)
 
 	for(var/i = 1 to num_bloodsuckers)
-		if(candidates.len <= 0)
+		if(length(candidates) <= 0)
 			break
 		var/mob/selected_mobs = pick_n_take(candidates)
 		assigned += selected_mobs.mind
@@ -83,7 +83,7 @@
 			candidates.Remove(player)
 
 /datum/dynamic_ruleset/midround/bloodsucker/execute()
-	if(!candidates || !candidates.len)
+	if(!candidates || !length(candidates))
 		return FALSE
 	var/mob/selected_mobs = pick_n_take(candidates)
 	assigned += selected_mobs.mind

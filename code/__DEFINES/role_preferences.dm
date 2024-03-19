@@ -39,7 +39,10 @@
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
-#define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor" //monkestation edit
+// monke midrounds
+#define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
+#define ROLE_FLORIDA_MAN "Florida Man"
+#define ROLE_SLASHER "Slasher"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
@@ -68,7 +71,6 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
-#define ROLE_SLASHER "Slasher"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -153,6 +155,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
 	ROLE_MONSTERHUNTER = 0,
+	ROLE_SLASHER = 0,
+	ROLE_FLORIDA_MAN = 0,
 //monkestation edit end
 
 	// Latejoin

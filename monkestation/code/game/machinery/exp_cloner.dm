@@ -50,7 +50,14 @@
 	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [clonename]'s defective clone?", null, null, 10 SECONDS, H, POLL_IGNORE_DEFECTIVECLONE)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
+		"Do you want to play as [clonename]'s defective clone?",
+		poll_time = 10 SECONDS,
+		target_mob = H,
+		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
+		pic_source = H,
+		role_name_text = "defective clone"
+	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		H.key = C.key

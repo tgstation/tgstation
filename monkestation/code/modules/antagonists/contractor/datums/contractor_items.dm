@@ -86,8 +86,15 @@
 
 	to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
 
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_TRAITOR, FALSE, 100, \
-																POLL_IGNORE_CONTRACTOR_SUPPORT)
+	var/list/candidates = SSpolling.poll_ghost_candidates(
+		question = "Do you want to play as the Contractor Support Unit for [user.real_name]?",
+		check_jobban = ROLE_TRAITOR,
+		role = ROLE_TRAITOR,
+		poll_time = 10 SECONDS,
+		ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT,
+		pic_source = user,
+		role_name_text = "contractor support unit",
+	)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)

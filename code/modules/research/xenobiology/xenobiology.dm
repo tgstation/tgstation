@@ -703,7 +703,15 @@
 	balloon_alert(user, "offering...")
 	being_used = TRUE
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
+		"Do you want to play as [dumb_mob.name]",
+		role = ROLE_SENTIENCE,
+		poll_time = 5 SECONDS,
+		target_mob = dumb_mob,
+		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
+		pic_source = dumb_mob,
+		role_name_text = "sentient mob"
+	)
 	if(!LAZYLEN(candidates))
 		balloon_alert(user, "try again later!")
 		being_used = FALSE
