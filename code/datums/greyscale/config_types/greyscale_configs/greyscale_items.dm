@@ -58,6 +58,55 @@
 	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
 
 //
+// MEDICAL TOOLS
+//
+
+/datum/greyscale_config/scalpel
+	name = "Scalpel"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/scalpel.json'
+
+/datum/greyscale_config/hemostat
+	name = "Hemostat"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/hemostat.json'
+
+/datum/greyscale_config/retractor
+	name = "Retractor"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/retractor.json'
+
+/datum/greyscale_config/cautery
+	name = "Cautery"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/cautery.json'
+
+/datum/greyscale_config/saw
+	name = "Saw"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/saw.json'
+
+/datum/greyscale_config/surgicaldrill
+	name = "Surgical_Drill"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/surgical_drill.json'
+
+/datum/greyscale_config/bloodfilter
+	name = "Blood Filter"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bloodfilter.json'
+
+/datum/greyscale_config/bonesetter
+	name = "Bonesetter"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bloodfilter.json'
+
+/datum/greyscale_config/drapes
+	name = "Surgical Drapes"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/drapes.json'
+
+//
 // WEAPONS
 //
 
