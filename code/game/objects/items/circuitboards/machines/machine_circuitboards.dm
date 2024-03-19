@@ -1121,6 +1121,8 @@
 
 /obj/item/circuitboard/machine/photobooth/security
 	name = "Security Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/photobooth/security
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"
