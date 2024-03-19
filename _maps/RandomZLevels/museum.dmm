@@ -523,7 +523,7 @@
 	pixel_x = -10
 	},
 /obj/effect/decal/cleanable/crayon{
-	icon_state = "l"
+	icon_state = "i"
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "e";
@@ -1006,7 +1006,7 @@
 	pixel_x = -10
 	},
 /obj/effect/decal/cleanable/crayon{
-	icon_state = "l"
+	icon_state = "i"
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "e";
@@ -4012,7 +4012,7 @@
 	pixel_x = -10
 	},
 /obj/effect/decal/cleanable/crayon{
-	icon_state = "l"
+	icon_state = "i"
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "e";
