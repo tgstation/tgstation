@@ -11,13 +11,20 @@
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	set_dir_on_move = FALSE
+	/// Whether the beam is beaming
 	var/on = FALSE
+	/// Whether the beam is visible
 	var/visible = FALSE
+	/// The length the beam can go
 	var/max_beam_length = 8
+	/// The radius of which people can hear triggers
 	var/hearing_range = 3
+	/// Pass flags the beam uses to determine what it can pass through
 	var/beam_pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE
+	/// The current active beam datum
 	VAR_FINAL/datum/beam/active_beam
-	var/turf/buffer_turf
+	/// A reference to the turf at the END of our active beam
+	VAR_FINAL/turf/buffer_turf
 
 /obj/item/assembly/infra/Initialize(mapload)
 	. = ..()
@@ -69,6 +76,7 @@
 			return TRUE
 	return FALSE
 
+/// Used to refresh the beam in whatever context.
 /obj/item/assembly/infra/proc/make_beam()
 	SHOULD_NOT_SLEEP(TRUE)
 
@@ -186,16 +194,19 @@
 	. = ..()
 	make_beam()
 
+/// Toggles the beam on or off.
 /obj/item/assembly/infra/proc/toggle_on()
 	on = !on
 	make_beam()
 	update_appearance()
 
+/// Toggles the visibility of the beam.
 /obj/item/assembly/infra/proc/toggle_visible()
 	visible = !visible
 	update_visible()
 	update_appearance()
 
+/// Updates the visibility of the beam (if active).
 /obj/item/assembly/infra/proc/update_visible()
 	if(visible)
 		for(var/obj/effect/ebeam/beam as anything in active_beam?.elements)
