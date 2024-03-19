@@ -108,7 +108,7 @@
 	name = "searing tool"
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
-	icon_state = "e_cautery"
+	icon_state = "advancedcautery"
 	inhand_icon_state = "e_cautery"
 	surgical_tray_overlay = "cautery_advanced"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -121,6 +121,9 @@
 	light_range = 1.5
 	light_power = 1.2
 	light_color = COLOR_SOFT_RED
+	greyscale_config = /datum/greyscale_config/advancedcautery
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/cautery/advanced/get_all_tool_behaviours()
 	return list(TOOL_CAUTERY, TOOL_DRILL)
@@ -136,6 +139,8 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -410,7 +415,7 @@
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
-	icon_state = "e_scalpel"
+	icon_state = "advancedscalpel"
 	inhand_icon_state = "e_scalpel"
 	surgical_tray_overlay = "scalpel_advanced"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -425,6 +430,9 @@
 	light_power = 1.2
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
+	greyscale_config = /datum/greyscale_config/advancedscalpel
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/scalpel/advanced/get_all_tool_behaviours()
 	return list(TOOL_SAW, TOOL_SCALPEL)
@@ -442,6 +450,8 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -471,13 +481,16 @@
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
-	icon_state = "adv_retractor"
+	icon_state = "advancedretractor"
 	inhand_icon_state = "adv_retractor"
 	surgical_tray_overlay = "retractor_advanced"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
+	greyscale_config = /datum/greyscale_config/advancedhemostat
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/retractor/advanced/get_all_tool_behaviours()
 	return list(TOOL_HEMOSTAT, TOOL_RETRACTOR)
@@ -493,6 +506,8 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -639,9 +654,10 @@
 	toolspeed = 1
 	greyscale_config = /datum/greyscale_config/bloodfilter
 	greyscale_colors = "#24a5de"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
-	flags_1 = IS_PLAYER_COLORABLE_1
+
 
 /obj/item/bloodfilter/Initialize(mapload)
 	. = ..()
