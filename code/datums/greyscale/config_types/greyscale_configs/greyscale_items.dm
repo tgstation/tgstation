@@ -106,6 +106,21 @@
 	icon_file = 'icons/obj/medical/surgery_tools.dmi'
 	json_config = 'code/datums/greyscale/json_configs/drapes.json'
 
+/datum/greyscale_config/advancedscalpel
+	name = "Advanced Scalpel"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/advanced_scalpel.json'
+
+/datum/greyscale_config/advancedhemostat
+	name = "Advanced Hemostat"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/advanced_hemostat.json'
+
+/datum/greyscale_config/advancedcautery
+	name = "Advanced Cautery"
+	icon_file = 'icons/obj/medical/surgery_tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/advanced_cautery.json'
+
 //
 // WEAPONS
 //
