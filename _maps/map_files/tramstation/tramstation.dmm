@@ -11659,12 +11659,7 @@
 "cVk" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -16755,12 +16750,7 @@
 /area/station/science/auxlab/firing_range)
 "ePS" = (
 /obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
@@ -22531,12 +22521,7 @@
 /area/station/commons/fitness/recreation)
 "gWt" = (
 /obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -32937,12 +32922,7 @@
 	},
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/bot,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -60070,12 +60050,7 @@
 	},
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ujw" = (
@@ -69067,12 +69042,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "xrf" = (
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/duct,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/freezer,

@@ -54,7 +54,7 @@
 
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
-		actions_types += /datum/action/item_action/toggle_voice_box
+		actions_types += list(/datum/action/item_action/toggle_voice_box)
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
