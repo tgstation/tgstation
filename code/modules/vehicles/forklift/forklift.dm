@@ -30,14 +30,8 @@
 	var/maximum_materials = SHEET_MATERIAL_AMOUNT * 125 // 125 sheets of materials. Ideally 50 iron, 50 glass, 25 of anything else.
 	///What construction holograms do we got?
 	var/list/holograms = list()
-	///How much building can we do at once?
-	var/max_simultaneous_build = 1
-	///How much deconstructing can we do at once?
-	var/max_simultaneous_deconstruct = 1
 	///What path do we use for the ridable component? Needed for key overrides.
 	var/ridable_path = /datum/component/riding/vehicle/forklift
-	///What upgrades have been applied?
-	var/list/applied_upgrades = list()
 	COOLDOWN_DECLARE(build_cooldown)
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 	COOLDOWN_DECLARE(deconstruction_cooldown)
@@ -92,9 +86,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/vehicle/ridden/forklift/process(delta_time)
-	var/amount_of_building = 0
 	var/currently_building = FALSE
-	var/amount_of_deconstructing = 0
 	var/currently_deconstructing = FALSE
 	for(var/hologram in holograms)
 		var/obj/structure/building_hologram/found_hologram = hologram
@@ -104,18 +96,14 @@
 			if(currently_deconstructing)
 				continue
 			if(found_hologram.building)
-				amount_of_deconstructing++
-				if(amount_of_deconstructing >= max_simultaneous_deconstruct)
-					currently_deconstructing = TRUE
-					continue
+				currently_deconstructing = TRUE
+				continue
 		else
 			if(currently_building)
 				continue
 			if(found_hologram.building)
-				amount_of_building++
-				if(amount_of_building >= max_simultaneous_build)
-					amount_of_building = TRUE
-					continue
+				currently_building = TRUE
+				continue
 		found_hologram.begin_building()
 		break
 
@@ -181,33 +169,6 @@
 	var/datum/forklift_module/current_module = selected_modules[source]
 	current_module.on_mouse_entered(source, A)
 
-/obj/vehicle/ridden/forklift/attackby(obj/item/possible_upgrade, mob/user, params)
-	. = ..()
-	if(istype(possible_upgrade, /obj/item/forklift_upgrade))
-		var/obj/item/forklift_upgrade/applied_upgrade = possible_upgrade
-		if(applied_upgrades.Find(applied_upgrade.upgrade_type))
-			user.balloon_alert(user, "already has this upgrade!")
-			return
-		else
-			user.balloon_alert(user, "upgrade applied")
-			applied_upgrades.Add(applied_upgrade.upgrade_type)
-			switch(applied_upgrade.upgrade_type)
-				if(FORKLIFT_LIGHT_UPGRADE)
-					available_modules.Add(/datum/forklift_module/lighting)
-				if(FORKLIFT_UPGRADE_STORAGE)
-					var/datum/component/material_container/forklift_container = GetComponent(/datum/component/material_container)
-					forklift_container.max_amount *= 3
-				if(FORKLIFT_UPGRADE_SEATING)
-					max_drivers = 1 // just making sure
-					max_occupants = 3
-				if(FORKLIFT_UPGRADE_BUILD_2)
-					max_simultaneous_build += 2
-					max_simultaneous_deconstruct += 2
-				if(FORKLIFT_UPGRADE_BUILD_3)
-					max_simultaneous_build += 3
-					max_simultaneous_deconstruct += 3
-			qdel(applied_upgrade)
-
 /obj/vehicle/ridden/forklift/engineering
 	name = "engineering forklift"
 	desc = "A forklift for rapidly constructing in an area. Has a \"Days since supermatter incident: 0\" sticker on the back."
@@ -217,6 +178,7 @@
 		/datum/forklift_module/floors,
 		/datum/forklift_module/airlocks,
 		/datum/forklift_module/shuttle,
+		/datum/forklift_module/lighting,
 		/datum/forklift_module/department_machinery/engineering,
 		// /datum/forklift_module/atmos,
 	)

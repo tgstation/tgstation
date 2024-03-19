@@ -159,20 +159,11 @@
 /datum/component/riding/vehicle/forklift
 	keytype = /obj/item/key/forklift
 
-/datum/component/riding/vehicle/forklift/handle_specials()
-	. = ..()
-	set_riding_offsets(1, list(TEXT_NORTH = list(0, 5), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(0, 5), TEXT_WEST = list(0, 5)))
-	set_riding_offsets(2, list(TEXT_NORTH = list(0, 7), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-2, 5), TEXT_WEST = list(2, 5)))
-	set_riding_offsets(3, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 5), TEXT_EAST = list(-4, 5), TEXT_WEST = list(4, 5)))
-
 /datum/component/riding/vehicle/forklift/engineering
 	keytype = /obj/item/key/forklift/engineering
 
 /datum/component/riding/vehicle/forklift/engineering/handle_specials()
 	. = ..()
-	set_riding_offsets(1, list(TEXT_NORTH = list(0, 5), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(0, 5), TEXT_WEST = list(0, 5)))
-	set_riding_offsets(2, list(TEXT_NORTH = list(0, 7), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-2, 5), TEXT_WEST = list(2, 5)))
-	set_riding_offsets(3, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 5), TEXT_EAST = list(-4, 5), TEXT_WEST = list(4, 5)))
 	set_vehicle_dir_offsets(NORTH, -16, -16)
 	set_vehicle_dir_offsets(SOUTH, -16, -16)
 	set_vehicle_dir_offsets(EAST, -16, -16)

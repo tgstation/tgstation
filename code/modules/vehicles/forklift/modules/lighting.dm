@@ -17,7 +17,7 @@
 	)
 	build_length = 2 SECONDS
 
-/datum/forklift_module/airlocks/valid_placement_location(location)
+/datum/forklift_module/lighting/valid_placement_location(location)
 	var/obj/possible_light = locate(/obj/machinery/door/airlock) in location
 	if(possible_light) // cant stack lights if they're on the same direction
 		if(possible_light.dir == direction)
