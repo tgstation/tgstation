@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Ghost roles now offer ghosts a clickable poll button. Ghosts can select a role, deselect it, alt-click it for \"Never For This Round\", can cancel \"Never\", can see the countdown, and can see how many other people are signed up for the role poll."
+  - bugfix: "Admins can now properly force events to fire."
