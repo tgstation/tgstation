@@ -18,6 +18,10 @@
 
 	return data
 
+/obj/machinery/computer/records/ui_close(mob/user)
+	QDEL_NULL(character_preview_view)
+	return ..()
+
 /obj/machinery/computer/records/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -108,6 +112,7 @@
 	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
 	new_view.generate_view(assigned_view)
 	new_view.display_to(user)
+	return new_view
 
 /// Takes a record and updates the character preview view to match it.
 /obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target)
