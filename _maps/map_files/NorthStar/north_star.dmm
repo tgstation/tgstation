@@ -54444,6 +54444,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
+"nVN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red/diagonal_edge,
+/obj/structure/cable,
+/obj/machinery/photobooth/security,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/visit)
 "nVP" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -326705,7 +326713,7 @@ gDx
 iIb
 ftZ
 tBk
-qTA
+nVN
 wKi
 akt
 rbr

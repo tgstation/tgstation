@@ -65643,15 +65643,13 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
-/obj/structure/chair{
-	pixel_y = -2
-	},
 /obj/machinery/computer/security/telescreen/interrogation{
 	dir = 8;
 	name = "isolation room monitor";
 	network = list("isolation");
 	pixel_x = 30
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "wvn" = (

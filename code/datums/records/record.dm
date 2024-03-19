@@ -175,11 +175,11 @@
 	return get_photo("photo_side", WEST)
 
 /// A helper proc to recreate all photos of a character from the record.
-/datum/record/crew/proc/recreate_manifest_photos()
+/datum/record/crew/proc/recreate_manifest_photos(add_height_chart)
 	delete_photos("photo_front")
-	make_photo("photo_front", SOUTH)
+	make_photo("photo_front", SOUTH, add_height_chart)
 	delete_photos("photo_side")
-	make_photo("photo_side", WEST)
+	make_photo("photo_side", WEST, add_height_chart)
 
 ///Deletes the existing photo for field_name
 /datum/record/crew/proc/delete_photos(field_name)
@@ -222,11 +222,13 @@
  * Called if the person doesn't already have a photo, this will make a photo of the person,
  * then make a picture out of it, then finally create a new photo.
  */
-/datum/record/crew/proc/make_photo(field_name, orientation)
+/datum/record/crew/proc/make_photo(field_name, orientation, add_height_chart)
 	var/icon/picture_image
 	if(!isicon(character_appearance))
 		var/mutable_appearance/appearance = character_appearance
 		appearance.setDir(orientation)
+		if(add_height_chart)
+			appearance.underlays += mutable_appearance('icons/obj/machines/photobooth.dmi', "height_chart")
 		picture_image = getFlatIcon(appearance)
 	else
 		picture_image = character_appearance

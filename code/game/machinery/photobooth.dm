@@ -1,6 +1,6 @@
 /obj/machinery/photobooth
 	name = "photobooth"
-	desc = "A machine with some drapes and a camera, used to update security record photos. Requires proper clearance to use."
+	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Security Record access to use."
 	icon = 'icons/obj/machines/photobooth.dmi'
 	icon_state = "booth_open"
 	base_icon_state = "booth"
@@ -12,7 +12,9 @@
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
-	req_one_access = list(ACCESS_SECURITY, ACCESS_HOP)
+	req_one_access = list(ACCESS_LAWYER)
+	///Boolean on whether we should add a height chart to the underlays of the people we take photos of.
+	var/add_height_chart = FALSE
 	///Boolean on whether the machine is currently busy taking someone's pictures, so you can't start taking pictures while it's working.
 	var/taking_pictures = FALSE
 	///The ID of the photobooth, used to connect it to a button.
@@ -110,7 +112,7 @@
 ///Updates the records (if possible), giving feedback, and spitting the user out if all's well.
 /obj/machinery/photobooth/proc/finish_taking_pictures()
 	taking_pictures = FALSE
-	if(!GLOB.manifest.change_pictures(occupant.name, occupant))
+	if(!GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
 		balloon_alert(occupant, "record not found!")
 		return
 	balloon_alert(occupant, "records updated")
@@ -181,3 +183,15 @@
 		balloon_alert(activator, "machine busy!")
 		return
 	machine.start_taking_pictures()
+
+/**
+ * Security photobooth
+ * Adds a height chart in the background, used for people you want to evidently stick out as prisoners.
+ * Good for people you plan on putting in the permabrig.
+ */
+/obj/machinery/photobooth/security
+	name = "security photobooth"
+	desc = "A machine with some drapes and a camera, used to update security record photos. Requires security access to use, and adds a height chart to the person."
+	circuit = /obj/item/circuitboard/machine/photobooth/security
+	req_one_access = list(ACCESS_SECURITY)
+	add_height_chart = TRUE

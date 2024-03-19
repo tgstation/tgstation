@@ -1119,6 +1119,9 @@
 		/datum/stock_part/servo = 1,
 	)
 
+/obj/item/circuitboard/machine/photobooth/security
+	name = "Security Photobooth"
+
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE

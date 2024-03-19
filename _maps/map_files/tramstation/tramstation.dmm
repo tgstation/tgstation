@@ -604,6 +604,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "acj" = (
