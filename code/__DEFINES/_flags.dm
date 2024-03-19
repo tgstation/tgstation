@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DEATH_MESSAGE (1<<14)
 /// This area should have extra shielding from certain event effects
 #define EVENT_PROTECTED (1<<15)
-/// This Area Doesn't have Flood or Bomb Logging
+/// This Area Doesn't have Flood or Bomb admin logging
 #define QUIET_LOGS (1<<16)
 
 /*
