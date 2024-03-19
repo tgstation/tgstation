@@ -147,7 +147,7 @@
 			if(cable.get_amount() < 10 || !cable)
 				return
 			var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+			if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
 			if(!terminal)
