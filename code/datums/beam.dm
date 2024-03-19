@@ -194,6 +194,7 @@
 		return
 	var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state, src)
 	emissive_overlay.transform = transform
+	emissive_overlay.alpha = alpha
 	. += emissive_overlay
 
 /obj/effect/ebeam/Destroy()
