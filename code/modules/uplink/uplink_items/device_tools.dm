@@ -233,9 +233,10 @@
 /datum/uplink_item/device_tools/hypnotic_grenade
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers. \
-		It has an automatic subliminal speech system installed that automatically inducts targets with the hypnotic phrase that you can set."
+		Be warned however, that this grenade is finnicky to use and utilize. \
+		Ensure proper protection and instant uttering of hypnotic command before triggering the grenade."
 	item = /obj/item/grenade/hypnotic
-	cost = 12
+	cost = 6
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
