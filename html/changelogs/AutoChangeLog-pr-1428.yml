@@ -1,0 +1,4 @@
+author: "Absolucy, zeskorion"
+delete-after: True
+changes:
+  - rscadd: "Adds the Bluespace Compression Kit (based on Zams' implementation from BeeStation) to the syndie uplink for 4 TC. It can be used to compress items to fit in smaller slots, without compromising the functionality of the item. This does not work on storage items tho (except for the briefcase launchpad, which will lose its ability to function as a normal briefcase when compressed)"
