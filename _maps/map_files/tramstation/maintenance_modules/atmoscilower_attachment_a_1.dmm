@@ -9,19 +9,19 @@
 /area/station/maintenance/starboard/lesser)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 37;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 22;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 27;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 32;
 	pixel_y = 1
 	},
@@ -62,19 +62,19 @@
 /area/station/maintenance/starboard/lesser)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 37;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 22;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 27;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 32;
 	pixel_y = 1
 	},
@@ -101,19 +101,19 @@
 /area/station/maintenance/starboard/lesser)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 37;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 22;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 27;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 32;
 	pixel_y = 1
 	},

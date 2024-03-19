@@ -8739,18 +8739,18 @@
 /area/station/commons/lounge)
 "bXp" = (
 /obj/item/toy/crayon/orange,
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 8;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = -4;
 	pixel_y = -32
 	},
@@ -63236,18 +63236,18 @@
 /area/station/maintenance/tram/mid)
 "viW" = (
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 8;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon/i{
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = -4;
 	pixel_y = -32
 	},
