@@ -14,6 +14,8 @@
 	toolspeed = 1
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "retractor_normal"
+	greyscale_config = /datum/greyscale_config/retractor
+	greyscale_colors = "#24a5de"
 
 /obj/item/retractor/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -41,6 +43,8 @@
 	toolspeed = 1
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "hemostat_normal"
+	greyscale_config = /datum/greyscale_config/hemostat
+	greyscale_colors = "#24a5de"
 
 /obj/item/hemostat/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -69,6 +73,8 @@
 	heat = 500
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "cautery_normal"
+	greyscale_config = /datum/greyscale_config/cautery
+	greyscale_colors = "#24a5de"
 
 /obj/item/cautery/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -154,6 +160,8 @@
 	bare_wound_bonus = 10
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "drill_normal"
+	greyscale_config = /datum/greyscale_config/surgicaldrill
+	greyscale_colors = "#24a5de"
 
 /obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
@@ -202,6 +210,8 @@
 	bare_wound_bonus = 15
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "scalpel_normal"
+	greyscale_config = /datum/greyscale_config/scalpel
+	greyscale_colors = "#24a5de"
 
 /obj/item/scalpel/Initialize(mapload)
 	. = ..()
@@ -250,6 +260,8 @@
 	bare_wound_bonus = 10
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "saw_normal"
+	greyscale_config = /datum/greyscale_config/saw
+	greyscale_colors = "#24a5de"
 
 /obj/item/circular_saw/Initialize(mapload)
 	. = ..()
@@ -280,13 +292,15 @@
 	name = "surgical drapes"
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
-	icon_state = "surgical_drapes"
+	icon_state = "drapes"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "drapes"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
+	greyscale_config = /datum/greyscale_config/drapes
+	greyscale_colors = "#24a5de"
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
@@ -570,6 +584,8 @@
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+	greyscale_config = /datum/greyscale_config/bonesetter
+	greyscale_colors = "#24a5de"
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
 	return "bonesetter" + (tray_extended ? "" : "_out")
@@ -588,6 +604,8 @@
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+	greyscale_config = /datum/greyscale_config/bloodfilter
+	greyscale_colors = "#24a5de"
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
 
