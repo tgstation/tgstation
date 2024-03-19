@@ -327,7 +327,3 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 #define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))
 #define is_multi_tile_object(atom) (atom.bound_width > world.icon_size || atom.bound_height > world.icon_size)
-
-// Area Checker
-/// Returns whether or not the given location is a deathmatch area
-#define isdeathmatch(location) (istype(get_area(location), /area/deathmatch))
