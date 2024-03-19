@@ -13,8 +13,9 @@
 	var/atom/movable/our_sticker
 	/// Reference to the created overlay, used during component deletion.
 	var/mutable_appearance/sticker_overlay
-
+	// Callback invoked when sticker is applied to the parent.
 	var/datum/callback/stick_callback
+	// Callback invoked when sticker is peeled (not removed) from the parent.
 	var/datum/callback/peel_callback
 
 /datum/component/sticker/Initialize(atom/stickering_atom, dir = NORTH, px = 0, py = 0, datum/callback/stick_callback, datum/callback/peel_callback)
