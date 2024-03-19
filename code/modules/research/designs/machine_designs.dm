@@ -318,6 +318,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/board/photobooth
+	name = "Photobooth board"
+	desc = "The circuit board for a photobooth."
+	id = "photobooth"
+	build_path = /obj/item/circuitboard/machine/photobooth
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/board/biogenerator
 	name = "Biogenerator Board"
 	desc = "The circuit board for a biogenerator."

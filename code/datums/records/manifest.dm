@@ -165,7 +165,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	target.rank = assignment
 	target.trim = trim
 
-/// Edits the rank and trim of the found record.
+///Using the name to find the record, and person in reference to the body, we recreate photos for the manifest (and records).
 /datum/manifest/proc/change_pictures(name, mob/living/person)
 	var/datum/record/crew/target = find_record(name)
 	if(!target)

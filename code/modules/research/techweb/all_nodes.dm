@@ -1204,6 +1204,7 @@
 		"idcard",
 		"libraryconsole",
 		"mining",
+		"photobooth",
 		"rdcamera",
 		"seccamera",
 	)
