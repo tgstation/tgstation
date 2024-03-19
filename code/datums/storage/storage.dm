@@ -137,6 +137,10 @@
 
 	RegisterSignal(resolve_parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
+	// monke edit: bluespace compression kit
+	RegisterSignal(resolve_parent, COMSIG_ITEM_PRE_COMPRESS, PROC_REF(attempt_compression))
+	// monke end
+
 	orient_to_hud()
 
 /datum/storage/Destroy()

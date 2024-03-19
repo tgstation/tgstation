@@ -12,3 +12,12 @@
 	cost = 12
 	item = /obj/item/autosurgeon/syndicate/hacked_linked_surgery
 	surplus = 50
+
+/datum/uplink_item/device_tools/compressionkit
+	name = "Bluespace Compression Kit"
+	desc = "A modified version of a BSRPED that can be used to reduce the size of most items while retaining their original functions! \
+			Does not work on storage items. \
+			Recharge using bluespace crystals. \
+			Comes with 5 charges."
+	item = /obj/item/compression_kit
+	cost = 4
