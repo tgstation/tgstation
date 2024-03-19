@@ -81,7 +81,7 @@
 	SHOULD_NOT_SLEEP(TRUE)
 
 	if(!isnull(buffer_turf))
-		UnregisterSignal(buffer_turf, list(COMSIG_ATOM_EXITED, COMSIG_ATOM_HITBY, COMSIG_TURF_CHANGE))
+		UnregisterSignal(buffer_turf, list(COMSIG_ATOM_EXITED, COMSIG_TURF_CHANGE))
 		buffer_turf = null
 
 	QDEL_NULL(active_beam)
@@ -138,8 +138,8 @@
 	// Buffer can be null (if we're at map edge for an example) but this fine
 	if(!isnull(buffer_turf))
 		// We need to check the state of the turf at the end of the beam, to determine when we need to re-grow (if blocked)
-		RegisterSignals(buffer_turf, list(COMSIG_ATOM_EXITED, COMSIG_ATOM_HITBY), PROC_REF(buffer_exited))
-		RegisterSignals(buffer_turf, COMSIG_TURF_CHANGE, PROC_REF(buffer_changed))
+		RegisterSignal(buffer_turf, COMSIG_ATOM_EXITED, PROC_REF(buffer_exited))
+		RegisterSignal(buffer_turf, COMSIG_TURF_CHANGE, PROC_REF(buffer_changed))
 
 /obj/item/assembly/infra/proc/beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
 	SIGNAL_HANDLER
