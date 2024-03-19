@@ -5707,6 +5707,8 @@
 #include "monkestation\code\game\objects\effects\countdown.dm"
 #include "monkestation\code\game\objects\effects\landmark.dm"
 #include "monkestation\code\game\objects\effects\sprint_dust.dm"
+#include "monkestation\code\game\objects\effects\anomalies\anomalies_bioscrambler.dm"
+#include "monkestation\code\game\objects\effects\anomalies\anomalies_dimensional.dm"
 #include "monkestation\code\game\objects\effects\anomalies\anomalies_dimensional_themes.dm"
 #include "monkestation\code\game\objects\effects\random\ai_module.dm"
 #include "monkestation\code\game\objects\effects\spawners\roomspawner.dm"

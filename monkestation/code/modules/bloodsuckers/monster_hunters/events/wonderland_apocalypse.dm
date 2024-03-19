@@ -39,6 +39,7 @@
 	range = 5
 	immortal = TRUE
 	drops_core = FALSE
+	relocations_left = -1
 
 /obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan, drops_core)
 	INVOKE_ASYNC(src, PROC_REF(prepare_area), /datum/dimension_theme/wonderland)

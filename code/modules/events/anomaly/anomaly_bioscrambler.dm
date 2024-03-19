@@ -15,4 +15,4 @@
 	anomaly_path = /obj/effect/anomaly/bioscrambler
 
 /datum/round_event/anomaly/anomaly_bioscrambler/announce(fake)
-	priority_announce("Biologic limb swapping agent detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name]. Wear biosuits or other protective gear to counter the effects. Calculated half-life of %9£$T$%F3 years.", "Anomaly Alert")
+	priority_announce("Biologic limb swapping agent detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name]. Wear biosuits or other protective gear to counter the effects.", "Anomaly Alert") // monke edit: bioscrambler is no longer immortal
