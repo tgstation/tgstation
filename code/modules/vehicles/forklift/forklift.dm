@@ -103,7 +103,7 @@
 
 	if(COOLDOWN_FINISHED(src, destructive_scan_cooldown))
 		COOLDOWN_START(src, destructive_scan_cooldown, DESTRUCTIVE_SCAN_COOLDOWN)
-		rcd_scan(src, play_sound = FALSE)
+		//rcd_scan(src, play_sound = FALSE)
 	..()
 
 /obj/vehicle/ridden/forklift/key_removed()
