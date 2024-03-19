@@ -91,11 +91,11 @@
 
 	if(LAZYLEN(produced_gases))
 		for(var/gas_type in produced_gases)
-			if(parent_pod.internal_gases.return_volume() >= XENOFLORA_MAX_MOLES)
+			if(parent_pod.internal_gases.total_moles() >= XENOFLORA_MAX_MOLES)
 				break
 
 			parent_pod.internal_gases.assert_gas(gas_type)
-			parent_pod.internal_gases.gases[gas_type][MOLES] += min(produced_gases[gas_type], XENOFLORA_MAX_MOLES - parent_pod.internal_gases.return_volume()) //It'll get spread anyways
+			parent_pod.internal_gases.gases[gas_type][MOLES] += min(produced_gases[gas_type], XENOFLORA_MAX_MOLES - parent_pod.internal_gases.total_moles()) //It'll get spread anyways
 
 
 	if(LAZYLEN(produced_chems))
@@ -115,4 +115,3 @@
 	icon = 'icons/obj/xenobiology/xenoflora_harvest.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/seed_type = /obj/item/xeno_seeds
-	

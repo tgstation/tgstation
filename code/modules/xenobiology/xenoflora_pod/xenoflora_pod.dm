@@ -146,7 +146,7 @@
 	dump_gases()
 
 /obj/machinery/atmospherics/components/binary/xenoflora_pod/proc/inject_gases()
-	if(internal_gases.return_volume() >= XENOFLORA_MAX_MOLES)
+	if(internal_gases.total_moles() >= XENOFLORA_MAX_MOLES)
 		return
 
 	var/datum/gas_mixture/input_gases = airs[2]
