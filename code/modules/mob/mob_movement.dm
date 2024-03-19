@@ -510,6 +510,8 @@
 			selector.update_appearance()
 	update_move_intent_slowdown()
 
+	SEND_SIGNAL(user, COMSIG_MOVE_INTENT_TOGGLED)
+
 ///Moves a mob upwards in z level
 /mob/verb/up()
 	set name = "Move Upwards"
