@@ -1,10 +1,9 @@
+/// A mini-tool used to apply label items onto something to modify its name.
 /obj/item/hand_labeler
 	name = "hand labeler"
 	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "labeler0"
-	inhand_icon_state = null
-	force = 0
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	drop_sound = 'sound/items/handling/tape_drop.ogg'
@@ -65,8 +64,8 @@
 	if(!length(label))
 		balloon_alert(user, "no text set!")
 		return FALSE
-	if(length(interacting_with.name) + length(label) > 64)
-		balloon_alert(user, "label too big!")
+	if(length(interacting_with.name) + length(label) > MAX_LABEL_LEN)
+		balloon_alert(user, "label too long!")
 		return FALSE
 	if(ismob(interacting_with))
 		interacting_with.balloon_alert(user, "can't label!")
@@ -74,17 +73,13 @@
 
 	var/cursor_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/cursor_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-	if(isnull(cursor_x))
-		cursor_x = world.icon_size / 2
-	if(isnull(cursor_y))
-		cursor_y = world.icon_size / 2
-
 	interacting_with.balloon_alert_to_viewers("labelled")
 	user.visible_message(
 		span_notice("[user] labels [interacting_with] with \"[label]\"."),
 		span_notice("You label [interacting_with] with \"[label]\".")
 	)
-	interacting_with.AddComponent(/datum/component/label, label, cursor_x, cursor_y)
+	var/obj/item/label/stick_label = new(null, label)
+	stick_label.stick_to_atom(interacting_with, cursor_x, cursor_y)
 	playsound(interacting_with, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 	labels_left--
 	return TRUE
@@ -166,3 +161,171 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	item_flags = NOBLUDGEON
+
+/// The label item applied when labelling something
+/obj/item/label
+	name = "label"
+	desc = "A strip of paper."
+	icon = 'icons/obj/toys/stickers.dmi'
+	icon_state = "label"
+	throw_range = 1
+	throw_speed = 1
+	pressure_resistance = 0
+	resistance_flags = FLAMMABLE
+	max_integrity = 30
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
+	item_flags = NOBLUDGEON | SKIP_FANTASY_ON_SPAWN
+	w_class = WEIGHT_CLASS_TINY
+
+	/// The text on the label
+	var/label_name
+	/// What atom we're currently stuck to
+	VAR_FINAL/atom/sticking_to
+
+/obj/item/label/Initialize(mapload, new_label_name)
+	. = ..()
+	if(new_label_name)
+		update_label_name(new_label_name)
+
+/obj/item/label/Destroy()
+	clear_stick_to()
+	return ..()
+
+/obj/item/label/update_name(updates)
+	. = ..()
+	if(label_name)
+		name = "label ([label_name])"
+
+/// Sets the lable_name var and performs any necessary updates to the label's appearance
+/obj/item/label/proc/update_label_name(new_label_name)
+	if(label_name == new_label_name)
+		return
+
+	if(sticking_to)
+		remove_label()
+	label_name = new_label_name
+	if(sticking_to)
+		apply_label()
+	update_appearance(UPDATE_NAME)
+
+/obj/item/label/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, label_name))
+		update_label_name(var_value)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+
+	return ..()
+
+/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = world.icon_size / 2, stick_py = world.icon_size / 2)
+	applying_to.AddComponent( \
+		/datum/component/sticker, \
+		stickering_atom = src, \
+		dir = applying_to.dir, \
+		px = stick_px, \
+		py = stick_py, \
+		stick_callback = CALLBACK(src, PROC_REF(on_stick)), \
+		peel_callback = CALLBACK(src, PROC_REF(on_peel)), \
+	)
+
+/// Callback invoked when the label is attached to something
+/obj/item/label/proc/on_stick(atom/applying_to)
+	sticking_to = applying_to
+	RegisterSignal(sticking_to, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(interacted_with))
+	RegisterSignal(sticking_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignals(sticking_to, list(SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED), SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED)), PROC_REF(reapply))
+	RegisterSignal(sticking_to, COMSIG_QDELETING, PROC_REF(clear_stick_to))
+	apply_label()
+
+/// Callback invoked when the label is removed from something
+/obj/item/label/proc/on_peel(atom/peeled_from)
+	qdel(src)
+
+/// General purpose / signal proc used to clear references and clean up when removed
+/obj/item/label/proc/clear_stick_to(...)
+	SIGNAL_HANDLER
+
+	if(isnull(sticking_to))
+		return
+	if(!QDELING(sticking_to))
+		remove_label()
+	UnregisterSignal(sticking_to, list(
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_EXAMINE,
+		SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED),
+		COMSIG_QDELETING,
+	))
+	sticking_to = null
+
+/**
+ * This proc will trigger when any object is used to attack the thing we're stuck to. .
+ *
+ * If the attacking object is not a hand labeler, it will return.
+ * If the attacking object is a hand labeler, it will either update the label or remove the label entirely.
+ *
+ * Arguments:
+ * * source: The parent.
+ * * attacker: The object that is hitting the parent.
+ * * user: The mob who is wielding the attacking object.
+*/
+/obj/item/label/proc/interacted_with(atom/source, mob/living/user, obj/item/tool)
+	SIGNAL_HANDLER
+
+	// If the attacking object is not a hand labeler or its mode is 1 (has a label ready to apply), return.
+	// The hand labeler should be off (mode is 0), in order to remove a label.
+	var/obj/item/hand_labeler/labeler = tool
+	if(!istype(labeler))
+		return NONE
+
+	if(labeler.mode)
+		if(!length(labeler.label))
+			labeler.balloon_alert(user, "no text set!")
+			return ITEM_INTERACT_BLOCKING
+		if(labeler.label == label_name)
+			sticking_to.balloon_alert(user, "already labelled!")
+			return ITEM_INTERACT_BLOCKING
+		if(length(initial(sticking_to.name)) + length(labeler.label) > MAX_LABEL_LEN)
+			sticking_to.balloon_alert(user, "label too long!")
+			return ITEM_INTERACT_BLOCKING
+
+		update_label_name(labeler.label)
+		playsound(sticking_to, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
+		sticking_to.balloon_alert(user, "label renamed")
+	else
+		playsound(sticking_to, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		sticking_to.balloon_alert(user, "label removed")
+		qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/**
+ * This proc will trigger when someone examines the thing we're stuck to.
+ * It will attach the text found in the body of the proc to the `examine_list` and display it to the player examining the parent.
+ *
+ * Arguments:
+ * * source: The parent.
+ * * user: The mob exmaining the parent.
+ * * examine_list: The current list of text getting passed from the parent's normal examine() proc.
+*/
+/obj/item/label/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_notice("It has a label with some words written on it. Use a hand labeler to remove it.")
+
+/// Applies a label to the name of what we're stuck to in the format of: "parent_name (label)"
+/obj/item/label/proc/apply_label()
+	sticking_to.name += " ([label_name])"
+	ADD_TRAIT(sticking_to, TRAIT_HAS_LABEL, REF(src))
+
+/// Removes the label from the name of what we're stuck to
+/obj/item/label/proc/remove_label()
+	sticking_to.name = replacetext(sticking_to.name, "([label_name])", "") // Remove the label text from the parent's name, wherever it's located.
+	sticking_to.name = trim(sticking_to.name) // Shave off any white space from the beginning or end of the parent's name.
+	REMOVE_TRAIT(sticking_to, TRAIT_HAS_LABEL, REF(src))
+
+/// Used to re-apply the label when the thing we're stuck to is renamed.
+/obj/item/label/proc/reapply(...)
+	SIGNAL_HANDLER
+
+	remove_label()
+	apply_label()

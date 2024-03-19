@@ -14,11 +14,16 @@
 	/// Reference to the created overlay, used during component deletion.
 	var/mutable_appearance/sticker_overlay
 
-/datum/component/sticker/Initialize(atom/stickering_atom, dir = NORTH, px = 0, py = 0)
+	var/datum/callback/stick_callback
+	var/datum/callback/peel_callback
+
+/datum/component/sticker/Initialize(atom/stickering_atom, dir = NORTH, px = 0, py = 0, datum/callback/stick_callback, datum/callback/peel_callback)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.our_sticker = our_sticker
+	src.stick_callback = stick_callback
+	src.peel_callback = peel_callback
 	stick(stickering_atom, px, py)
 	register_turf_signals(dir)
 
@@ -30,18 +35,18 @@
 
 	REMOVE_TRAIT(parent, TRAIT_STICKERED, REF(src))
 
-	QDEL_NULL(our_sticker)
-	QDEL_NULL(sticker_overlay)
+	our_sticker = null
+	sticker_overlay = null
+	stick_callback = null
+	peel_callback = null
 	return ..()
 
 /datum/component/sticker/RegisterWithParent()
-	if(isliving(parent))
-		RegisterSignal(parent, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
+	RegisterSignal(parent, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 
 /datum/component/sticker/UnregisterFromParent()
-	if(isliving(parent))
-		UnregisterSignal(parent, COMSIG_LIVING_IGNITED)
+	UnregisterSignal(parent, COMSIG_LIVING_IGNITED)
 	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
 
 /// Subscribes to `COMSIG_TURF_EXPOSE` if parent atom is a turf. If turf is closed - subscribes to signal
@@ -59,10 +64,18 @@
 
 	UnregisterSignal(listening_turf, COMSIG_TURF_EXPOSE)
 
+/datum/component/sticker/proc/sticker_gone(...)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(our_sticker, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	our_sticker = null
+	qdel(src)
+
 /// Handles overlay creation from supplied atom, adds created icon to the parent object, moves source atom to the nullspace.
 /datum/component/sticker/proc/stick(atom/movable/stickering_atom, px, py)
 	our_sticker = stickering_atom
 	our_sticker.moveToNullspace()
+	RegisterSignals(our_sticker, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(sticker_gone))
 
 	var/atom/parent_atom = parent
 
@@ -71,23 +84,25 @@
 	sticker_overlay.pixel_z = py - world.icon_size / 2
 
 	parent_atom.add_overlay(sticker_overlay)
-
+	stick_callback?.Invoke(parent)
 	ADD_TRAIT(parent, TRAIT_STICKERED, REF(src))
 
 /// Moves stickered atom from the nullspace, deletes component.
 /datum/component/sticker/proc/peel()
 	var/atom/parent_atom = parent
-	var/turf/drop_location = isnull(listening_turf) ? parent_atom.drop_location() : listening_turf
+	var/turf/drop_location = listening_turf || parent_atom.drop_location()
 
+	UnregisterSignal(our_sticker, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	our_sticker.forceMove(drop_location)
 	our_sticker = null
+	peel_callback?.Invoke(parent)
 
 	qdel(src)
 
 /datum/component/sticker/proc/on_ignite(datum/source)
 	SIGNAL_HANDLER
 
-	qdel(src)
+	qdel(our_sticker) // which qdels us
 
 /datum/component/sticker/proc/on_clean(datum/source, clean_types)
 	SIGNAL_HANDLER
@@ -100,4 +115,4 @@
 	SIGNAL_HANDLER
 
 	if(exposed_temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		qdel(src)
+		qdel(our_sticker) // which qdels us

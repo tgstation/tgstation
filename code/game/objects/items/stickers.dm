@@ -81,7 +81,7 @@
 		user.do_attack_animation(target, used_item = src)
 		target.balloon_alert(user, "sticker sticked")
 		var/mob/living/victim = target
-		if(itsype(victim) && !isnull(victim.client))
+		if(istype(victim) && !isnull(victim.client))
 			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)
 			victim.log_message("had [src] stuck to them by [key_name(user)]", LOG_ATTACK)
 
