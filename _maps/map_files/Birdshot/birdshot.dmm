@@ -1466,8 +1466,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "aEl" = (
@@ -11922,7 +11922,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/bin,
 /obj/structure/railing{
 	dir = 10
 	},
@@ -11931,6 +11930,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "ewi" = (
@@ -24766,9 +24766,9 @@
 /area/station/construction/mining/aux_base)
 "iUN" = (
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "iVq" = (
@@ -57432,8 +57432,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -63470,10 +63470,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "vLT" = (
@@ -65229,8 +65226,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal/bin,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "woT" = (

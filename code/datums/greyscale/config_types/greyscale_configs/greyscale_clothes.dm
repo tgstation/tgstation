@@ -788,3 +788,12 @@
 /datum/greyscale_config/messyworn_shirt_graphic/worn
 	name = "Messy Shirt (Graphic (Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/gi
+	name = "Gi"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gi.json'
+
+/datum/greyscale_config/gi/worn
+	name = "Gi (Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'

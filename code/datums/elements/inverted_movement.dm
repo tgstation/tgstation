@@ -11,4 +11,7 @@
 	return ..()
 
 /datum/element/inverted_movement/proc/invert_movement(mob/living/source, move_args)
-	move_args[MOVE_ARG_DIRECTION] = REVERSE_DIR(move_args[MOVE_ARG_DIRECTION])
+	SIGNAL_HANDLER
+	var/new_direct = REVERSE_DIR(move_args[MOVE_ARG_DIRECTION])
+	move_args[MOVE_ARG_DIRECTION] = new_direct
+	move_args[MOVE_ARG_NEW_LOC] = get_step(source, new_direct)
