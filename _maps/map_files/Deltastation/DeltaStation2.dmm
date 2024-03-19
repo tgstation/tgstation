@@ -3172,6 +3172,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/item/key/forklift/medbay,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aNb" = (
@@ -37717,8 +37718,7 @@
 /area/station/maintenance/port/aft)
 "joU" = (
 /obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/key/forklift/service,
 /turf/open/floor/iron/checker,
 /area/station/hallway/secondary/service)
 "jpe" = (
@@ -43274,6 +43274,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"kJp" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/key/forklift/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "kJr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -52324,6 +52329,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"mZx" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/item/key/forklift/engineering,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "mZy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67994,6 +68007,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "qYn" = (
@@ -72431,6 +72445,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "sbh" = (
@@ -75104,6 +75119,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/key/forklift/security,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -80105,6 +80121,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -84075,6 +84092,7 @@
 /obj/effect/landmark/start/hangover,
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "uVe" = (
@@ -90766,6 +90784,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"wDY" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/item/key/forklift/science,
+/turf/open/floor/iron/white,
+/area/station/science/lab)
 "wEm" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/igniter,
@@ -92703,6 +92726,14 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"xgi" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/vehicle/ridden/forklift/engineering,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "xgl" = (
 /obj/structure/table/reinforced,
 /obj/item/ai_module/reset,
@@ -94485,6 +94516,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/morgue)
+"xBR" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/vehicle/ridden/forklift/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "xCa" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -121635,7 +121671,7 @@ kTn
 ttO
 cYY
 cui
-kpD
+xgi
 kMI
 mKv
 bOL
@@ -121892,7 +121928,7 @@ kTn
 sBy
 vvH
 vaw
-kpD
+mZx
 jkK
 fbn
 gTr
@@ -132460,7 +132496,7 @@ jUo
 ykE
 uua
 qYm
-vzA
+wDY
 iuU
 fMZ
 bXG
@@ -140100,7 +140136,7 @@ ueU
 cNf
 wqo
 rLB
-oSv
+xBR
 mOe
 yhh
 liD
@@ -140357,7 +140393,7 @@ oSv
 xYI
 wqo
 ncQ
-oSv
+kJp
 oSv
 eee
 oSv

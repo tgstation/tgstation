@@ -18061,6 +18061,7 @@
 /obj/structure/table/reinforced/titaniumglass,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/plasteel/fifty,
+/obj/item/key/forklift/engineering,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/break_room)
 "gCS" = (
@@ -26895,6 +26896,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "jHI" = (
@@ -32166,6 +32168,7 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 4
 	},
+/obj/item/key/forklift/security,
 /turf/open/floor/iron/small,
 /area/station/security/office)
 "lye" = (
@@ -36230,6 +36233,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "mSs" = (
@@ -41378,6 +41382,7 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/small,
 /area/station/security/office)
 "oMy" = (
@@ -51623,6 +51628,7 @@
 /obj/item/stock_parts/matter_bin{
 	pixel_y = 5
 	},
+/obj/item/key/forklift/science,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "rWs" = (
@@ -51923,6 +51929,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/item/key/forklift/service,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "sbx" = (
@@ -54509,6 +54516,7 @@
 	pixel_x = 19;
 	pixel_y = 6
 	},
+/obj/item/key/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "sSA" = (
@@ -55884,6 +55892,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/window/spawner/directional/north,
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "tqK" = (
@@ -56673,6 +56682,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "tDT" = (
@@ -59503,6 +59513,13 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood/tile,
 /area/station/command/bridge)
+"uAM" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/obj/vehicle/ridden/forklift/science,
+/turf/open/floor/iron/white/small,
+/area/station/science/lab)
 "uAV" = (
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -70250,6 +70267,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/item/key/forklift/medbay,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "xIw" = (
@@ -113007,7 +113025,7 @@ vMC
 apF
 vfk
 rWr
-tLn
+uAM
 wbu
 tbD
 tyA

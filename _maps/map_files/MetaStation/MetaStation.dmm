@@ -67,6 +67,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "abR" = (
@@ -7337,6 +7338,12 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"cIT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/vehicle/ridden/forklift/science,
+/turf/open/floor/iron/white,
+/area/station/science/lab)
 "cIU" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
@@ -9033,13 +9040,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "dpn" = (
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/key/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "dps" = (
@@ -9559,6 +9566,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron,
 /area/station/science/research)
+"dBq" = (
+/obj/vehicle/ridden/forklift/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "dBv" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/airalarm/directional/east,
@@ -10347,6 +10358,7 @@
 /obj/item/modular_computer/laptop/preset/civilian{
 	pixel_y = 3
 	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "dQG" = (
@@ -17087,6 +17099,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"goA" = (
+/obj/vehicle/ridden/forklift/security,
+/turf/open/floor/iron/dark,
+/area/station/security/office)
 "goG" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/camera/directional/north{
@@ -17140,6 +17156,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
+"gpt" = (
+/obj/item/key/forklift/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "gpv" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
@@ -18404,6 +18424,7 @@
 	},
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
+/obj/item/key/forklift/science,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "gLY" = (
@@ -29370,6 +29391,7 @@
 "kyt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/key/forklift/service,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "kyQ" = (
@@ -39904,6 +39926,8 @@
 /area/station/science/xenobiology/hallway)
 "ooG" = (
 /obj/structure/table,
+/obj/item/pen/fountain,
+/obj/item/paper_bin/carbon,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "ooP" = (
@@ -42020,6 +42044,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/cigbutt/roach,
 /obj/machinery/duct,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "pdT" = (
@@ -45660,6 +45685,11 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"qsE" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/vehicle/ridden/forklift/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "qsK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54322,9 +54352,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "tth" = (
-/obj/item/paper_bin/carbon,
-/obj/item/pen/fountain,
 /obj/structure/table,
+/obj/item/key/forklift/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "tts" = (
@@ -55355,6 +55384,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/key/forklift/medbay,
 /turf/open/floor/iron/white/side{
 	dir = 5
 	},
@@ -86835,7 +86865,7 @@ eLb
 wND
 mmR
 dka
-aok
+dBq
 lUI
 pvP
 dka
@@ -87092,7 +87122,7 @@ cZu
 bgx
 mmR
 aok
-aok
+gpt
 aok
 aok
 aok
@@ -89709,7 +89739,7 @@ qNi
 jxc
 gNT
 oah
-nKE
+qsE
 tMK
 xgn
 xfx
@@ -99404,7 +99434,7 @@ ope
 kYg
 jAN
 wxj
-wxj
+goA
 wxj
 nDk
 ipz
@@ -99730,7 +99760,7 @@ rHE
 dbd
 aBJ
 jXK
-sQB
+cIT
 gLU
 buT
 oOB

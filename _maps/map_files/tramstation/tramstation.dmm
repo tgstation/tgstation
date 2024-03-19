@@ -5009,6 +5009,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/item/key/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "aJI" = (
@@ -5016,6 +5017,7 @@
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/north,
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "aJN" = (
@@ -7452,6 +7454,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/right)
+"bAE" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/key/forklift/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/office)
 "bAK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8857,7 +8868,7 @@
 /area/station/commons/toilet)
 "bYA" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
+/obj/item/key/forklift/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "bYD" = (
@@ -14044,6 +14055,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "dNB" = (
@@ -32208,6 +32220,13 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
+/obj/item/book/manual/wiki/engineering_hacking{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_x = -2
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "ktb" = (
@@ -32291,6 +32310,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "kuq" = (
@@ -32443,6 +32463,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/station/security/office)
 "kyG" = (
@@ -35396,13 +35417,6 @@
 /area/station/hallway/primary/tram/center)
 "lxH" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/engineering_hacking{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/book/manual/wiki/engineering_guide{
-	pixel_x = -2
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
@@ -35410,6 +35424,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/item/key/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "lxI" = (
@@ -41279,6 +41294,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
+"nzW" = (
+/obj/vehicle/ridden/forklift/security,
+/turf/open/floor/iron,
+/area/station/security/office)
 "nAB" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -45587,6 +45606,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "pkk" = (
@@ -59559,6 +59579,7 @@
 	},
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table,
+/obj/item/key/forklift/service,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "uaM" = (
@@ -69749,6 +69770,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
+"xCB" = (
+/obj/vehicle/ridden/forklift/medical,
+/obj/item/key/forklift/medbay,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "xCR" = (
 /obj/structure/ladder,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -157730,7 +157756,7 @@ lvH
 uYd
 avk
 fBk
-wbH
+nzW
 bYA
 kyF
 kMI
@@ -169099,7 +169125,7 @@ aHP
 aKq
 aKP
 aLe
-oIU
+xCB
 aLB
 whF
 ecW
@@ -182431,7 +182457,7 @@ vSI
 vYl
 fJA
 cwG
-sFc
+bAE
 cwG
 ccj
 vYl

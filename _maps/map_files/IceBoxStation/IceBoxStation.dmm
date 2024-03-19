@@ -428,6 +428,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"aim" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/vehicle/ridden/forklift/science,
+/turf/open/floor/iron/white,
+/area/station/science/lab)
 "ait" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -995,6 +1002,7 @@
 /obj/item/folder/red,
 /obj/item/pen,
 /obj/item/inspector,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -15577,6 +15585,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/key/forklift/medbay,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "eIa" = (
@@ -16029,6 +16038,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"eQC" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/item/key/forklift/science,
+/turf/open/floor/iron/white,
+/area/station/science/lab)
 "eQH" = (
 /obj/structure/sign/departments/medbay/alt/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -18245,6 +18261,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"fBX" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/vehicle/ridden/forklift/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "fCd" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -23017,6 +23040,17 @@
 /obj/effect/spawner/random/trash/box,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
+"hbx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/duct,
+/obj/vehicle/ridden/forklift/service,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "hby" = (
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -27260,6 +27294,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"itg" = (
+/obj/vehicle/ridden/forklift/engineering,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/lobby)
 "itj" = (
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
@@ -39422,6 +39460,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
+"mcn" = (
+/obj/item/key/forklift/engineering,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/lobby)
 "mco" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -53626,9 +53668,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "qqM" = (
-/obj/effect/landmark/start/head_of_security,
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/segment,
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -65258,6 +65300,10 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
+"tVV" = (
+/obj/effect/landmark/start/head_of_security,
+/turf/open/floor/glass/reinforced,
+/area/station/security/office)
 "tWc" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/spawner/random/trash/soap,
@@ -67226,6 +67272,7 @@
 	pixel_y = -2
 	},
 /obj/structure/table,
+/obj/item/key/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "uDy" = (
@@ -71630,6 +71677,17 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/engineering/lobby)
+"vYK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/duct,
+/obj/item/key/forklift/service,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "vYN" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -73861,8 +73919,7 @@
 /area/station/engineering/atmos/storage)
 "wGW" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/manual/wiki/security_space_law,
+/obj/item/key/forklift/security,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -74258,6 +74315,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "wOc" = (
@@ -237720,7 +237778,7 @@ bln
 aBR
 nbp
 xKY
-omk
+tVV
 sMY
 wMV
 qqM
@@ -240647,7 +240705,7 @@ bID
 fhY
 vCK
 rSC
-rSC
+itg
 rSC
 tGH
 kVM
@@ -240904,7 +240962,7 @@ uwj
 axY
 eeT
 bDz
-rSC
+mcn
 inE
 oPU
 wuV
@@ -245986,7 +246044,7 @@ gmW
 jOY
 tux
 dsO
-kQX
+vYK
 tGZ
 mEZ
 mdZ
@@ -246243,7 +246301,7 @@ gmW
 mdZ
 gzw
 kiB
-kQX
+hbx
 kyZ
 kZz
 mdZ
@@ -247045,7 +247103,7 @@ cxA
 lka
 vkD
 cey
-lux
+fBX
 eHZ
 lux
 fUL
@@ -257579,8 +257637,8 @@ hDb
 qWn
 gav
 ljF
-ljF
-ljF
+aim
+eQC
 sDg
 gXJ
 oZW

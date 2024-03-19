@@ -8838,6 +8838,7 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "chO" = (
@@ -9095,6 +9096,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
+"ckE" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/item/key/forklift/security,
+/turf/open/floor/iron/dark,
+/area/station/security/office)
 "ckQ" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/parquet,
@@ -14195,6 +14203,7 @@
 "dDv" = (
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/segment,
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "dDw" = (
@@ -26300,10 +26309,10 @@
 "gQE" = (
 /obj/effect/turf_decal/tile/blue/full,
 /obj/structure/table/glass,
-/obj/item/storage/medkit/emergency,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/key/forklift/medbay,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "gQI" = (
@@ -34162,6 +34171,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "iRF" = (
@@ -42218,6 +42228,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "kUh" = (
@@ -46869,6 +46880,7 @@
 	name = "Service Fax Machine"
 	},
 /obj/structure/table/reinforced,
+/obj/item/aquarium_kit,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -47679,6 +47691,7 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/item/key/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "mlN" = (
@@ -52880,6 +52893,7 @@
 /area/station/maintenance/floor2/starboard/fore)
 "nAT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron/textured_half,
 /area/station/cargo/office)
 "nAU" = (
@@ -56021,6 +56035,7 @@
 	pixel_y = 7
 	},
 /obj/structure/cable,
+/obj/item/key/forklift/cargo,
 /turf/open/floor/iron/textured_half,
 /area/station/cargo/office)
 "oqv" = (
@@ -67081,7 +67096,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/aquarium_kit,
+/obj/item/key/forklift/service,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "riy" = (
@@ -70219,6 +70234,7 @@
 /area/station/hallway/floor4/aft)
 "sdA" = (
 /obj/effect/turf_decal/trimline/white/filled/corner,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "sdB" = (
@@ -86394,6 +86410,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/item/key/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "wiR" = (
@@ -88758,6 +88775,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "wLD" = (
@@ -320012,7 +320030,7 @@ rsh
 vWw
 pVj
 lAm
-fQA
+ckE
 chF
 fQA
 fQA
