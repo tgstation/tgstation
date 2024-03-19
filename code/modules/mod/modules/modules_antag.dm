@@ -159,8 +159,8 @@
 		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
-	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
-	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
+	idle_power_cost = 0 //magic
+	use_energy_cost = 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
