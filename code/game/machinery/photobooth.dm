@@ -36,6 +36,7 @@
 	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Security access to use, and adds a height chart to the person."
 	circuit = /obj/item/circuitboard/machine/photobooth/security
 	req_one_access = list(ACCESS_SECURITY)
+	color = COLOR_LIGHT_GRAYISH_RED
 	add_height_chart = TRUE
 
 /obj/machinery/photobooth/Initialize(mapload)
