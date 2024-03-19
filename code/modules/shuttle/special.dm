@@ -166,7 +166,7 @@
 /mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
-	AddComponentFrom(ROUNDSTART_TRAIT, TRAIT_PACIFISM) //drone is pacified
+	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT) //drone is pacified
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
