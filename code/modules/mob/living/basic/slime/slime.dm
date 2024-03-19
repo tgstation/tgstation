@@ -104,18 +104,30 @@
 		/datum/pet_command/point_targeting/attack,
 	)
 
+	/// Our evolve action
+	var/datum/action/innate/slime/evolve/evolve_action
+	/// Our reproduction action
+	var/datum/action/innate/slime/reproduce/reproduce_action
+
 	///The current mood of the slime, set randomly or through emotes (if sentient).
 	var/current_mood
 
 /mob/living/basic/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_life_stage=SLIME_LIFE_STAGE_BABY)
+
+	. = ..()
+
+	evolve_action = new (src)
+	evolve_action.Grant(src)
+
+	reproduce_action = new (src)
+	reproduce_action.Grant(src)
 
 	set_slime_type(new_type)
 	set_life_stage(new_life_stage)
 	update_name()
 	regenerate_icons()
 
-	. = ..()
-	set_nutrition(700)
+	set_nutrition(SLIME_STARTING_NUTRITION)
 
 	AddComponent(/datum/component/buckle_mob_effect,  mob_effect_callback = CALLBACK(src, PROC_REF(feed_process)))
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
@@ -131,13 +143,15 @@
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(slime_pre_attack))
 
+	ai_controller.set_blackboard_key(BB_SLIME_EVOLVE, evolve_action)
+	ai_controller.set_blackboard_key(BB_SLIME_REPRODUCE, reproduce_action)
+
 /mob/living/basic/slime/Destroy()
 
 	UnregisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 
-	for (var/action in actions)
-		var/datum/action/action_to_remove = action
-		action_to_remove.Remove(src)
+	QDEL_NULL(evolve_action)
+	QDEL_NULL(reproduce_action)
 
 	return ..()
 
@@ -257,10 +271,6 @@
 
 	switch(life_stage)
 		if(SLIME_LIFE_STAGE_BABY)
-			for(var/datum/action/innate/slime/reproduce/reproduce_action in actions)
-				reproduce_action.Remove(src)
-
-			GRANT_ACTION(/datum/action/innate/slime/evolve)
 
 			health = initial(health)
 			maxHealth = initial(maxHealth)
@@ -272,11 +282,6 @@
 
 		if(SLIME_LIFE_STAGE_ADULT)
 
-			for(var/datum/action/innate/slime/evolve/evolve_action in actions)
-				evolve_action.Remove(src)
-
-			GRANT_ACTION(/datum/action/innate/slime/reproduce)
-
 			health = 200
 			maxHealth = 200
 
@@ -284,6 +289,9 @@
 			melee_damage_lower += 10
 			melee_damage_upper += 10
 			wound_bonus = -90
+
+	ai_controller.set_blackboard_key(BB_SLIME_LIFE_STAGE, life_stage)
+	update_mob_action_buttons()
 
 ///Sets the slime's type, name and its icons
 /mob/living/basic/slime/proc/set_slime_type(new_type)
@@ -384,7 +392,7 @@
 	hunger_disabled = TRUE
 	ai_controller?.set_blackboard_key(BB_RABID, FALSE)
 	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, TRUE)
-	set_nutrition(700)
+	set_nutrition(SLIME_STARTING_NUTRITION)
 
 ///Makes the slime angry and hungry
 /mob/living/basic/slime/proc/set_enraged_behaviour()

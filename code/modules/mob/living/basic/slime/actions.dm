@@ -3,7 +3,11 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	///Does the ability require a specific slime lifestage?
+	var/life_stage_required
+	///Does the ability requires the slime to hit max growth?
 	var/needs_growth = FALSE
+	///Does the ability cost nutrition?
 	var/nutrition_cost = 0
 
 /datum/action/innate/slime/IsAvailable(feedback = FALSE)
@@ -12,6 +16,9 @@
 		return
 
 	var/mob/living/basic/slime/slime_owner = owner
+
+	if(!isnull(life_stage_required) && slime_owner.life_stage != life_stage_required)
+		return FALSE
 
 	if(slime_owner.nutrition < nutrition_cost)
 		return FALSE
@@ -27,6 +34,7 @@
 	name = "Evolve"
 	button_icon_state = "slimegrow"
 	desc = "This will let you evolve from baby to adult slime."
+	life_stage_required = SLIME_LIFE_STAGE_BABY
 	needs_growth = TRUE
 	nutrition_cost = SLIME_EVOLUTION_COST
 
@@ -64,6 +72,7 @@
 	name = "Reproduce"
 	button_icon_state = "slimesplit"
 	desc = "This will make you split into four slimes."
+	life_stage_required = SLIME_LIFE_STAGE_ADULT
 	needs_growth = TRUE
 
 /datum/action/innate/slime/reproduce/Activate()

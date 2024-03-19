@@ -10,6 +10,8 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/use_mob_ability/evolve,
+		/datum/ai_planning_subtree/use_mob_ability/reproduce,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_slime_food,
@@ -17,11 +19,19 @@
 		/datum/ai_planning_subtree/random_speech/slime,
 	)
 
+/datum/ai_planning_subtree/use_mob_ability/evolve
+	ability_key = BB_SLIME_EVOLVE
+
+/datum/ai_planning_subtree/use_mob_ability/reproduce
+	ability_key = BB_SLIME_REPRODUCE
+
+
 // Slime subtree for hunting down people to drain
 /datum/ai_planning_subtree/find_and_hunt_target/find_slime_food
 	finding_behavior = /datum/ai_behavior/find_hunt_target/find_slime_food
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/slime
 	hunt_targets = list(/mob/living)
+	hunt_range = 7
 
 
 /datum/ai_planning_subtree/find_and_hunt_target/find_slime_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
