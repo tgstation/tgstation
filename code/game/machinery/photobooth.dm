@@ -1,6 +1,12 @@
+/**
+ * Photobooth
+ * A machine used to change occupant's security record photos, working similarly to a
+ * camera, but doesn't give any physical photo to the user.
+ * Links to buttons for remote control.
+ */
 /obj/machinery/photobooth
 	name = "photobooth"
-	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Security Record access to use."
+	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Law Office access to use."
 	icon = 'icons/obj/machines/photobooth.dmi'
 	icon_state = "booth_open"
 	base_icon_state = "booth"
@@ -19,6 +25,18 @@
 	var/taking_pictures = FALSE
 	///The ID of the photobooth, used to connect it to a button.
 	var/button_id = "photobooth_machine_default"
+
+/**
+ * Security photobooth
+ * Adds a height chart in the background, used for people you want to evidently stick out as prisoners.
+ * Good for people you plan on putting in the permabrig.
+ */
+/obj/machinery/photobooth/security
+	name = "security photobooth"
+	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Security access to use, and adds a height chart to the person."
+	circuit = /obj/item/circuitboard/machine/photobooth/security
+	req_one_access = list(ACCESS_SECURITY)
+	add_height_chart = TRUE
 
 /obj/machinery/photobooth/Initialize(mapload)
 	. = ..()
@@ -183,15 +201,3 @@
 		balloon_alert(activator, "machine busy!")
 		return
 	machine.start_taking_pictures()
-
-/**
- * Security photobooth
- * Adds a height chart in the background, used for people you want to evidently stick out as prisoners.
- * Good for people you plan on putting in the permabrig.
- */
-/obj/machinery/photobooth/security
-	name = "security photobooth"
-	desc = "A machine with some drapes and a camera, used to update security record photos. Requires security access to use, and adds a height chart to the person."
-	circuit = /obj/item/circuitboard/machine/photobooth/security
-	req_one_access = list(ACCESS_SECURITY)
-	add_height_chart = TRUE

@@ -328,7 +328,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/board/photobooth
+/datum/design/board/security_photobooth
 	name = "Security Photobooth Board"
 	desc = "The circuit board for a security photobooth."
 	id = "security_photobooth"
