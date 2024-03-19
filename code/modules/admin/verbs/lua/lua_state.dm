@@ -21,6 +21,9 @@ GLOBAL_PROTECT(lua_usr)
 	/// A list in which to store datums and lists instantiated in lua, ensuring that they don't get garbage collected
 	var/list/references = list()
 
+	/// Ckey of the last user who ran a script on this lua state.
+	var/ckey_last_runner = ""
+
 /datum/lua_state/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == NAMEOF(src, internal_id))
@@ -167,5 +170,19 @@ GLOBAL_PROTECT(lua_usr)
 	if(editor_list)
 		for(var/datum/lua_editor/editor as anything in editor_list)
 			SStgui.update_uis(editor)
+
+/// Called by lua scripts when they add an atom to var/list/references so that it gets cleared up on delete.
+/datum/lua_state/proc/clear_on_delete(datum/to_clear)
+	RegisterSignal(to_clear, COMSIG_QDELETING, PROC_REF(on_delete))
+
+/// Called by lua scripts when an atom they've added should soft delete and this state should stop tracking it.
+/// Needs to unregister all signals.
+/datum/lua_state/proc/let_soft_delete(datum/to_clear)
+	UnregisterSignal(to_clear, COMSIG_QDELETING, PROC_REF(on_delete))
+	references -= to_clear
+
+/datum/lua_state/proc/on_delete(datum/to_clear)
+	SIGNAL_HANDLER
+	references -= to_clear
 
 #undef MAX_LOG_REPEAT_LOOKBACK
