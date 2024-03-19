@@ -2,7 +2,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/cultist,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/cultist,
-		BB_FRIENDLY_MESSAGE = "eagerly awaits your command..."
+		BB_FRIENDLY_MESSAGE = "eagerly awaits your command...",
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
