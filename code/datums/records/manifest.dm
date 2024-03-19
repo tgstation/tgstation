@@ -154,8 +154,6 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
 
-	return
-
 /// Edits the rank and trim of the found record.
 /datum/manifest/proc/modify(name, assignment, trim)
 	var/datum/record/crew/target = find_record(name)
