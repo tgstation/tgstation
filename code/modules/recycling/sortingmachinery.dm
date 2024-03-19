@@ -131,7 +131,7 @@
 	if(note)
 		. += "[base_icon_state]_note"
 	if(sticker)
-		. += "[base_icon_state]_barcode"
+		. += mutable_appearance(icon, "[base_icon_state]_barcode", layer = layer + 0.06)
 
 /obj/item/delivery/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/dest_tagger))
