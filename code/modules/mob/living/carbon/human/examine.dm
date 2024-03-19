@@ -22,6 +22,10 @@
 	if(obscure_examine)
 		return list("<span class='warning'>You're struggling to make out any details...")
 
+	//Monkestation Addition: Species
+	if(dna?.species?.name)
+		. += "[t_He] [t_is] \a [dna.species.name]."//name should be what others see you as imo, id should be used for your true species (for species that disguise)
+
 	var/obscured = check_obscured_slots()
 
 	//uniform
