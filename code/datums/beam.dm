@@ -207,7 +207,7 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
-//// A beam subtype used for advanced beams, to react to atoms entering the beam
+/// A beam subtype used for advanced beams, to react to atoms entering the beam
 /obj/effect/ebeam/reacting
 	/// If TRUE, atoms that exist in the beam's loc when inited count as "entering" the beam
 	var/react_on_init = FALSE

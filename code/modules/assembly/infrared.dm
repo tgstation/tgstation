@@ -276,8 +276,6 @@
 		x_move = 32
 	else if(movement_dir & EAST)
 		x_move = -32
-	if(!x_move && !y_move)
-		return
 
 	var/fake_glide_time = round(world.icon_size / glide_size * world.tick_lag, world.tick_lag)
 	for(var/obj/effect/ebeam/beam as anything in active_beam?.elements)
@@ -320,6 +318,7 @@
 			toggle_visible()
 			return TRUE
 
+// Beam subtype for the infrared emitter
 /obj/effect/ebeam/reacting/infrared
 	name = "infrared beam"
 	alpha = 175
