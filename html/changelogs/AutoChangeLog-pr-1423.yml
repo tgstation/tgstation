@@ -1,0 +1,4 @@
+author: "Skelessant"
+delete-after: True
+changes:
+  - rscadd: "Added Five pebbles ai display option."

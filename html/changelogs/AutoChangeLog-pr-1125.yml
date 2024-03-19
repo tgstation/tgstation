@@ -1,0 +1,4 @@
+author: "Litberries"
+delete-after: True
+changes:
+  - rscadd: "bee nuke"

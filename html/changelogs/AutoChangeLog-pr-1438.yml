@@ -1,0 +1,4 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - rscadd: "Examining a person will now give you their species."

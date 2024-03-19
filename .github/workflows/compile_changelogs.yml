@@ -51,4 +51,4 @@ jobs:
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
