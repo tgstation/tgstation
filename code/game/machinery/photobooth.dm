@@ -180,5 +180,4 @@
 	if(machine.taking_pictures)
 		balloon_alert(activator, "machine busy!")
 		return
-//	if(allowed(activator))
 	machine.start_taking_pictures()
