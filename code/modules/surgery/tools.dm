@@ -703,30 +703,42 @@
 /obj/item/retractor/cruel
 	name = "twisted retractor"
 	desc = "Helps reveal secrets that would rather stay buried."
-	icon_state = "cruelretractor"
+	icon_state = "retractor"
 	surgical_tray_overlay = "retractor_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+	greyscale_config = /datum/greyscale_config/retractor
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/hemostat/cruel
 	name = "cruel hemostat"
 	desc = "Clamping bleeders, but not so good at fixing breathers."
-	icon_state = "cruelhemostat"
+	icon_state = "hemostat_alt"
 	surgical_tray_overlay = "hemostat_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+	greyscale_config = /datum/greyscale_config/hemostat
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/cautery/cruel
 	name = "savage cautery"
 	desc = "Chalk this one up as another successful vivisection."
-	icon_state = "cruelcautery"
+	icon_state = "cautery_alt"
 	surgical_tray_overlay = "cautery_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+	greyscale_config = /datum/greyscale_config/cautery
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/scalpel/cruel
 	name = "hungry scalpel"
 	desc = "I remember every time I hold you. My born companion..."
-	icon_state = "cruelscalpel"
+	icon_state = "scalpel_alt"
 	surgical_tray_overlay = "scalpel_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+	greyscale_config = /datum/greyscale_config/scalpel
+	greyscale_colors = "#505665"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/scalpel/cruel/Initialize(mapload)
 	. = ..()
