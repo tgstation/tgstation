@@ -138,7 +138,7 @@
 
 /obj/item/grenade/proc/log_grenade(mob/user)
 	if(!type_cluster)
-		log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
+		log_bomber(user, "has primed a", src, "for detonation", message_admins = dud_flags != NONE)
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
