@@ -64,7 +64,7 @@
 )
 	SIGNAL_HANDLER
 
-	if(SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK && owner.belt == src)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK && (owner.belt == src))
 		return SUCCESSFUL_BLOCK
 	return NONE
 
