@@ -251,15 +251,18 @@
 
 	beam_turfs_changed(post_change_callbacks)
 
+/// Some atom entered the beam's line
 /obj/effect/ebeam/reacting/proc/beam_entered(atom/movable/entered)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(owner, COMSIG_BEAM_ENTERED, src, entered)
 
+/// Some atom exited the beam's line
 /obj/effect/ebeam/reacting/proc/beam_exited(atom/movable/exited)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(owner, COMSIG_BEAM_EXITED, src, exited)
 
-/obj/effect/ebeam/reacting/proc/beam_turfs_changed(post_change_callbacks)
+/// Some turf the beam covers has changed to a new turf type
+/obj/effect/ebeam/reacting/proc/beam_turfs_changed(list/datum/callback/post_change_callbacks)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(owner, COMSIG_BEAM_TURFS_CHANGED, post_change_callbacks)
 
