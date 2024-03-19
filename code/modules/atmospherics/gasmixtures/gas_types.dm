@@ -97,7 +97,7 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "What the fuck is carbon dioxide?"
-	primary_color = "#808080"
+	primary_color = COLOR_GRAY
 
 /datum/gas/plasma
 	id = GAS_PLASMA

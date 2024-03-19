@@ -916,7 +916,7 @@
 	name = "Oxygen"
 	description = "A colorless, odorless gas. Grows on trees but is still pretty valuable."
 	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_mult = 0 // oderless and tasteless
 	ph = 9.2//It's acutally a huge range and very dependant on the chemistry but ph is basically a made up var in it's implementation anyways
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -951,7 +951,7 @@
 	name = "Nitrogen"
 	description = "A colorless, odorless, tasteless gas. A simple asphyxiant that can silently displace vital oxygen."
 	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_mult = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -964,7 +964,7 @@
 	name = "Hydrogen"
 	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_mult = 0
 	ph = 0.1//Now I'm stuck in a trap of my own design. Maybe I should make -ve phes? (not 0 so I don't get div/0 errors)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1046,7 +1046,7 @@
 	name = "Fluorine"
 	description = "A comically-reactive chemical element. The universe does not want this stuff to exist in this form in the slightest."
 	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_description = "acid"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1067,7 +1067,7 @@
 	name = "Sodium"
 	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting it on your chips."
 	reagent_state = SOLID
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_description = "salty metal"
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1091,7 +1091,7 @@
 	name = "Lithium"
 	description = "A silver metal, its claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
 	reagent_state = SOLID
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_description = "metal"
 	ph = 11.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1537,7 +1537,7 @@
 		used alongside sanguirite to allow blood clotting to continue."
 	reagent_state = LIQUID
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-	color = "#808080"
+	color = COLOR_GRAY
 	taste_description = "sweetness"
 	ph = 5.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

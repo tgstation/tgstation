@@ -20,7 +20,7 @@
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
