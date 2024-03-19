@@ -1,0 +1,15 @@
+{
+	"bloodfilter": [
+		{
+			"type": "icon_state",
+			"icon_state": "bloodfilter_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bloodfilter_base",
+			"blend_mode": "overlay"
+		}
+	]
+}

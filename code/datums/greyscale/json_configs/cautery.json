@@ -1,0 +1,15 @@
+{
+	"cautery": [
+		{
+			"type": "icon_state",
+			"icon_state": "cautery_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cautery_tip",
+			"blend_mode": "overlay"
+		}
+	]
+}

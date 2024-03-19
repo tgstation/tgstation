@@ -1,0 +1,15 @@
+{
+	"scalpel": [
+		{
+			"type": "icon_state",
+			"icon_state": "scalpel_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "scalpel_blade",
+			"blend_mode": "overlay"
+		}
+	]
+}
