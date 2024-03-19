@@ -99,7 +99,7 @@
 /datum/greyscale_config/bonesetter
 	name = "Bonesetter"
 	icon_file = 'icons/obj/medical/surgery_tools.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bloodfilter.json'
+	json_config = 'code/datums/greyscale/json_configs/bonesetter.json'
 
 /datum/greyscale_config/drapes
 	name = "Surgical Drapes"
