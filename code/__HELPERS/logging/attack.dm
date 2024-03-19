@@ -80,5 +80,5 @@
 
 	GLOB.bombers += bomb_message
 
-	if(message_admins)
+	if(message_admins && !istype(bomb.loc, /area/deathmatch)) //don't spam the logs with deathmatch bombs
 		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][additional_details ? " [additional_details]" : ""].")
