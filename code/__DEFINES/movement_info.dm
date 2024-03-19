@@ -15,7 +15,7 @@
 /// Finish any active movements
 #define RESOLVE_ACTIVE_MOVEMENT \
 	if(active_movement) { \
-		var/__move_args = active_movement
+		var/__move_args = active_movement; \
 		active_movement = null; \
 		Moved(arglist(__move_args)); \
 	}
