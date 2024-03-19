@@ -1,0 +1,5 @@
+author: "Absolucy, san7890, EvilDragonfiend"
+delete-after: True
+changes:
+  - qol: "Who and Adminwho messages are now in an examine block for heightened clarity."
+  - admin: "Admins without R_ADMIN perm are sorted in another section in staff_who, so that people will not believe coders can handle adminhelps."
