@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Prisoners who are teleported to the Nanotrasen Work Camp should now always be stripped of their gear to prevent escapes."

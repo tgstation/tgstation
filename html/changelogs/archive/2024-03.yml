@@ -584,3 +584,24 @@
       the shadow realm.
   xXPawnStarrXx:
   - image: modified gi sprites, making them more customisable.
+2024-03-19:
+  13spacemen:
+  - qol: Sentience potion reason is set via alt-click
+  ArcaneMusic:
+  - rscadd: Disposal bins can now hold destination taggers using right click, and
+      can be removed the same way. Some disposal bins should have some pre-loaded
+      as well.
+  Ghommie:
+  - bugfix: The deathmatch modifiers modal menu can actually be opened now. Also fixed
+      a bunch of issues it had.
+  LT3:
+  - bugfix: Export barcodes are visible on wrapped packages
+  Momo8289:
+  - bugfix: You can no longer determine the result of a dice roll from off-screen.
+  Rhials:
+  - code_imp: Deathmatch files, map names, and keys should all be consistent now.
+  SyncIt21:
+  - bugfix: Selling stuff in cargo gives us money again.
+  san7890:
+  - bugfix: Prisoners who are teleported to the Nanotrasen Work Camp should now always
+      be stripped of their gear to prevent escapes.
