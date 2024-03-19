@@ -1,5 +1,5 @@
 {
-	"cautery": [
+	"cautery_alt": [
 		{
 			"type": "icon_state",
 			"icon_state": "cautery_handle",
@@ -9,6 +9,19 @@
 		{
 			"type": "icon_state",
 			"icon_state": "cautery_tip",
+			"blend_mode": "overlay"
+		}
+	],
+	"cautery": [
+		{
+			"type": "icon_state",
+			"icon_state": "cautery_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cautery_base",
 			"blend_mode": "overlay"
 		}
 	]

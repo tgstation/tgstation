@@ -1,5 +1,5 @@
 {
-	"hemostat": [
+	"hemostat_alt": [
 		{
 			"type": "icon_state",
 			"icon_state": "hemostat_tongs",
@@ -9,6 +9,19 @@
 		{
 			"type": "icon_state",
 			"icon_state": "hemostat_handle",
+			"blend_mode": "overlay"
+		}
+	],
+	"hemostat": [
+		{
+			"type": "icon_state",
+			"icon_state": "hemostat_wrap",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hemostat_base",
 			"blend_mode": "overlay"
 		}
 	]

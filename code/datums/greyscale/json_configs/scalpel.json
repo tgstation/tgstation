@@ -1,5 +1,5 @@
 {
-	"scalpel": [
+	"scalpel_alt": [
 		{
 			"type": "icon_state",
 			"icon_state": "scalpel_handle",
@@ -9,6 +9,19 @@
 		{
 			"type": "icon_state",
 			"icon_state": "scalpel_blade",
+			"blend_mode": "overlay"
+		}
+	],
+	"scalpel": [
+		{
+			"type": "icon_state",
+			"icon_state": "scalpel_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "scalpel_base",
 			"blend_mode": "overlay"
 		}
 	]
