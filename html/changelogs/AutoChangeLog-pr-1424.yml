@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Anomalies now last 200 seconds (from 99) before detonating."
+  - balance: "Bioscrambler anomalies are no longer immortal."
+  - balance: "Dimensional anomalies now have a limited number of relocations before they detonate, where it will distort a much larger surrounding area."
+  - balance: "All anomaly events now share their occurrence count, meaning that the storyteller can't spawn like 20 of each type of anomaly. Wormholes are also included in this shared \"group\"."
