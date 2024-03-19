@@ -165,7 +165,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			invoker.visible_message(span_cult_italic("[src] squeaks_loudly!"))
 			continue
 		if(!isliving(invoker))
-			return
+			continue
 		var/mob/living/living_invoker = invoker
 		if(invocation)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
