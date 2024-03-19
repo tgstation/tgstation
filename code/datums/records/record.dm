@@ -210,8 +210,7 @@
 	if(!field_name)
 		return
 	if(!character_appearance)
-		stack_trace("No character appearance has been found on [name]'s record!")
-		return
+		return new /icon()
 	var/obj/item/photo/existing_photo = LAZYACCESS(record_photos, field_name)
 	if(!existing_photo)
 		existing_photo = make_photo(field_name, orientation)
@@ -224,14 +223,18 @@
  * then make a picture out of it, then finally create a new photo.
  */
 /datum/record/crew/proc/make_photo(field_name, orientation)
-	var/mutable_appearance/appearance = character_appearance
+	var/icon/picture_image
 	if(!isicon(character_appearance))
+		var/mutable_appearance/appearance = character_appearance
 		appearance.setDir(orientation)
+		picture_image = getFlatIcon(appearance)
+	else
+		picture_image = character_appearance
 
 	var/datum/picture/picture = new
 	picture.picture_name = name
 	picture.picture_desc = "This is [name]."
-	picture.picture_image = getFlatIcon(appearance)
+	picture.picture_image = picture_image
 
 	var/obj/item/photo/new_photo = new(null, picture)
 
