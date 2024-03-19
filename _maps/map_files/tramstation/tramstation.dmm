@@ -38893,6 +38893,7 @@
 /area/station/command/heads_quarters/hop)
 "mHZ" = (
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/photobooth,
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "mId" = (

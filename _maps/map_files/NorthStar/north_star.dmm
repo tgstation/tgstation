@@ -14971,9 +14971,7 @@
 /turf/open/floor/engine,
 /area/station/maintenance/floor1/port/aft)
 "dNU" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/photobooth,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "dOa" = (
@@ -78896,7 +78894,8 @@
 "uqF" = (
 /obj/structure/table,
 /obj/machinery/button/ticket_machine{
-	pixel_x = -32
+	pixel_x = -24;
+	pixel_y = -6
 	},
 /obj/item/stamp/head/hop{
 	pixel_x = 8;
@@ -78905,6 +78904,10 @@
 /obj/item/flashlight/lamp{
 	pixel_x = -4;
 	pixel_y = 3
+	},
+/obj/machinery/button/photobooth{
+	pixel_y = 6;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)

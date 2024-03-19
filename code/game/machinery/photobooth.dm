@@ -150,9 +150,9 @@
 	balloon_alert(user, "linked to [tool.buffer]")
 
 /obj/item/assembly/control/photobooth_control
-	name = "ticket machine controller"
+	name = "photobooth controller"
 	desc = "A remote controller for the HoP's photobooth."
-	///Weakref to our ticket machine
+	///Weakref to the photobooth we're connected to.
 	var/datum/weakref/booth_machine_ref
 
 /obj/item/assembly/control/photobooth_control/Initialize(mapload)
@@ -162,7 +162,7 @@
 /obj/item/assembly/control/photobooth_control/LateInitialize()
 	find_machine()
 
-/// Locate the ticket machine to which we're linked by our ID
+/// Locate the photobooth we're linked via ID
 /obj/item/assembly/control/photobooth_control/proc/find_machine()
 	for(var/obj/machinery/photobooth/booth as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/photobooth))
 		if(booth.button_id == id)
