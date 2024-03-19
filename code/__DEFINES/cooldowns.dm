@@ -32,7 +32,6 @@
 //Mecha cooldowns
 #define COOLDOWN_MECHA_MESSAGE "mecha_message"
 #define COOLDOWN_MECHA_EQUIPMENT(type) ("mecha_equip_[type]")
-#define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 #define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
@@ -65,7 +64,6 @@
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)
-#define MOB_SHARED_COOLDOWN_3 (1<<2)
 
 //TIMER COOLDOWN MACROS
 
