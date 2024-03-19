@@ -32,7 +32,7 @@
 	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
 		return TRUE
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
-	else if(check_access(accessor.get_active_held_item()))
+	else if(check_access(accessor.get_active_held_item()) || check_access(accessor.get_inactive_held_item()))
 		return TRUE
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor

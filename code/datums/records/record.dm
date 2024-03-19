@@ -210,7 +210,8 @@
 	if(!field_name)
 		return
 	if(!character_appearance)
-		return new /icon()
+		stack_trace("No character appearance has been found on [name]'s record!")
+		return
 	var/obj/item/photo/existing_photo = LAZYACCESS(record_photos, field_name)
 	if(!existing_photo)
 		existing_photo = make_photo(field_name, orientation)

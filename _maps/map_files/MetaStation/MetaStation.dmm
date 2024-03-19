@@ -44736,7 +44736,7 @@
 "qaN" = (
 /obj/structure/table/wood,
 /obj/machinery/button/ticket_machine{
-	pixel_x = 32
+	pixel_x = 38
 	},
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 6;
@@ -44762,6 +44762,13 @@
 	pixel_x = -6;
 	pixel_y = -34;
 	req_access = list("hop")
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/machinery/button/photobooth{
+	pixel_x = 26
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -55075,6 +55082,9 @@
 	name = "Privacy Shutters"
 	},
 /obj/structure/cable,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "tIx" = (
@@ -57418,20 +57428,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "uwC" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = -4;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/bluespace_vendor/directional/east,
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
+/obj/machinery/photobooth,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "uwK" = (
