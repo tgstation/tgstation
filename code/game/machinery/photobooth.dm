@@ -79,7 +79,11 @@
 	if(panel_open)
 		balloon_alert(user, "close panel first!")
 		return
-	playsound(src, 'sound/machines/click.ogg', 50)
+	playsound(src, 'sound/effects/curtain.ogg', 50, TRUE)
+	return ..()
+
+/obj/machinery/photobooth/open_machine(drop = TRUE, density_to_set = FALSE)
+	playsound(src, 'sound/effects/curtain.ogg', 50, TRUE)
 	return ..()
 
 /obj/machinery/photobooth/update_icon_state()
