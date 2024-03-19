@@ -253,3 +253,27 @@
   - bugfix: 'san7890: Bitrunners can no longer get mass-mindswapped out of their avatar
       when the wizard does the event. Something about machinery and magic not going
       well together.'
+2024-03-19:
+  Absolucy:
+  - qol: Cassette pouches are now proper storage, rather than their own snowflake
+      thing. They can still only hold cassettes, tho.
+  - qol: The roundstart cassettes (both blank and approved) now all spawn inside the
+      cassette pouch in the radio booth.
+  - admin: Admin Lua scripting works once more!
+  - bugfix: Removed duplicate APC from Icebox random bar theaters.
+  Absolucy, itseasytosee:
+  - rscadd: A new traitor item has been added, Polarized Contacts, for 2 TC!
+  AlbertNanotracen:
+  - rscadd: Examining a person will now give you their species.
+  CannibalHunter:
+  - rscadd: Adds a new fingergun emote! (*fingergun)
+  DimWhat:
+  - rscadd: The detective's revolver is now a small sized item
+  Litberries:
+  - rscadd: bee nuke
+  Skelessant:
+  - rscadd: Added Five pebbles ai display option.
+  aberrantQuesrist:
+  - rscadd: Slugcats simplemob
+  lmenvs:
+  - rscadd: Adds Oliver's Donation items.  Thank you for your support!
