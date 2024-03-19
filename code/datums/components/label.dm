@@ -12,21 +12,54 @@
 /datum/component/label
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// The name of the label the player is applying to the parent.
-	var/label_name
+	VAR_PRIVATE/label_name
+	/// A ref to the physical label object stuck onto the target
+	VAR_PRIVATE/obj/item/label/label
 
-/datum/component/label/Initialize(_label_name)
+/datum/component/label/Initialize(label_name, label_px, label_py)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	label_name = _label_name
+	var/atom/atom_parent = parent
+
+	label = new()
+	label.name = "label ([label_name])"
+	// I wanted to merge the two components in some way, or to move the behavior to the label item itself, but stickers proved complex
+	if(!parent.AddComponent(/datum/component/sticker, label, atom_parent.dir, label_px, label_py))
+		return COMPONENT_INCOMPATIBLE
+
+	RegisterSignals(label, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(clear_label))
+	src.label_name = label_name
 	apply_label()
 
+/datum/component/label/Destroy()
+	if(QDELETED(label))
+		// qdeling of our label can trigger qdeling of us so avoid double qdelling
+		label = null
+	else
+		UnregisterSignal(label, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+		QDEL_NULL(label)
+	return ..()
+
+/// When the label is qdeleted or peeled off or otherwise moved, it will be deleted, and so will us.
+/datum/component/label/proc/clear_label(datum/source, ...)
+	SIGNAL_HANDLER
+
+	remove_label()
+	qdel(src)
+
 /datum/component/label/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(OnAttackby))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(interacted_with))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(Examine))
+	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED), SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED)), PROC_REF(reapply))
 
 /datum/component/label/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_EXAMINE,
+		SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED),
+	))
 
 /**
 	This proc will fire after the parent is hit by a hand labeler which is trying to apply another label.
@@ -51,19 +84,20 @@
 	* attacker: The object that is hitting the parent.
 	* user: The mob who is wielding the attacking object.
 */
-/datum/component/label/proc/OnAttackby(datum/source, obj/item/attacker, mob/user)
+/datum/component/label/proc/interacted_with(atom/source, mob/living/user, obj/item/tool)
 	SIGNAL_HANDLER
 
 	// If the attacking object is not a hand labeler or its mode is 1 (has a label ready to apply), return.
 	// The hand labeler should be off (mode is 0), in order to remove a label.
-	var/obj/item/hand_labeler/labeler = attacker
+	var/obj/item/hand_labeler/labeler = tool
 	if(!istype(labeler) || labeler.mode)
-		return
+		return NONE
 
-	remove_label()
 	playsound(parent, 'sound/items/poster_ripped.ogg', 20, TRUE)
-	to_chat(user, span_warning("You remove the label from [parent]."))
-	qdel(src) // Remove the component from the object.
+	source.balloon_alert(user, "label removed")
+	remove_label()
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /**
 	This proc will trigger when someone examines the parent.
@@ -93,3 +127,29 @@
 	owner.name = trim(owner.name) // Shave off any white space from the beginning or end of the parent's name.
 	REMOVE_TRAIT(owner, TRAIT_HAS_LABEL, REF(src))
 	owner.update_appearance(UPDATE_ICON)
+
+/// Used to re-apply the label when the parent's name changes
+/datum/component/label/proc/reapply(datum/source, ...)
+	SIGNAL_HANDLER
+
+	remove_label()
+	apply_label()
+
+/// The label item applied when labelling something
+/obj/item/label
+	name = "label"
+	desc = "A strip of paper."
+
+	icon = 'icons/obj/toys/stickers.dmi'
+	icon_state = "label"
+
+	throw_range = 1
+	throw_speed = 1
+	pressure_resistance = 0
+	resistance_flags = FLAMMABLE
+	max_integrity = 30
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
+
+	item_flags = NOBLUDGEON | SKIP_FANTASY_ON_SPAWN
+	w_class = WEIGHT_CLASS_TINY

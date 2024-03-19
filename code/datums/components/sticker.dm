@@ -14,19 +14,11 @@
 	/// Reference to the created overlay, used during component deletion.
 	var/mutable_appearance/sticker_overlay
 
-/datum/component/sticker/Initialize(atom/stickering_atom, mob/user, dir = NORTH, px = 0, py = 0)
+/datum/component/sticker/Initialize(atom/stickering_atom, dir = NORTH, px = 0, py = 0)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.our_sticker = our_sticker
-
-	if(isliving(parent) && !isnull(user))
-		var/mob/living/victim = parent
-
-		if(!isnull(victim.client))
-			user.log_message("stuck [stickering_atom] to [key_name(victim)]", LOG_ATTACK)
-			victim.log_message("had [stickering_atom] stuck to them by [key_name(user)]", LOG_ATTACK)
-
 	stick(stickering_atom, px, py)
 	register_turf_signals(dir)
 
