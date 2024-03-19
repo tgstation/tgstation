@@ -155,6 +155,6 @@
 	else
 		source_msg = "with no known source"
 
-	if(!istype(holder, /obj/machinery/plumbing) && !istype(location.loc, /area/deathmatch)) //excludes standard plumbing equipment aswell as deathmatch from spamming admins with this shit
+	if(!istype(holder, /obj/machinery/plumbing) && !istype(location.loc, /area/deathmatch)) //excludes standard plumbing equipment as well as deathmatch from spamming admins with this shit
 		message_admins("\A [flood] flood started at [ADMIN_VERBOSEJMP(location)] [source_msg][blame_msg].")
 	log_game("\A [flood] flood started at [location || "nonexistant location"] [holder ? "from [holder] last touched by [holder || "N/A"]" : "with no known source"].")
