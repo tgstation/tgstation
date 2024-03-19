@@ -77,7 +77,7 @@
 		),
 	)
 	build_length = 1 SECONDS
-	deconstruction_cooldown = 5 SECONDS
+	deconstruction_time = 5 SECONDS
 
 /datum/forklift_module/furniture/valid_placement_location(location)
 	if(istype(location, /turf/open/floor))

@@ -28,3 +28,5 @@
 #define COMSIG_MOUSE_SCROLL_ON "mousescroll_on"
 ///from base of mob/MouseEnteredOn(): (/atom, location, control, params)
 #define COMSIG_MOUSE_ENTERED_ON "mouseentered_on"
+///from base of mob/MouseEnteredOnCheap(): (/atom)
+#define COMSIG_MOUSE_ENTERED_ON_CHEAP "mouseentered_oncheap"

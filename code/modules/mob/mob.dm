@@ -1289,10 +1289,10 @@
 		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
-	if(istype(loc, /obj/vehicle/sealed))
-		var/obj/vehicle/sealed/E = loc
-		if(E.mouse_pointer)
-			client.mouse_pointer_icon = E.mouse_pointer
+	if(istype(loc, /obj/vehicle))
+		var/obj/vehicle/vehicle = loc
+		if(length(vehicle.mouse_pointers) && vehicle.mouse_pointers[src])
+			client.mouse_pointer_icon = vehicle.mouse_pointers[src]
 	if(client.mouse_override_icon)
 		client.mouse_pointer_icon = client.mouse_override_icon
 

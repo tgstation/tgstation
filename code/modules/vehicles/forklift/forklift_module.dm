@@ -10,8 +10,8 @@
 	var/list/resource_price = list() // list(typepath = list(material_define = amount))
 	///How long should it take to build things?
 	var/build_length = 2 SECONDS
-	///What should the cooldown be on deconstruction?
-	var/deconstruction_cooldown
+	///How long should it take to deconstruct?
+	var/deconstruction_time = 2 SECONDS
 	///What do you currently have selected?
 	var/current_selected_typepath
 	///What directions are available?
@@ -36,6 +36,11 @@
 	if(!valid_placement_location(get_turf(clickingon)))
 		playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
 		my_forklift.balloon_alert(source, "invalid location!")
+		return
+	var/found_hologram = locate(/obj/structure/building_hologram) in get_turf(clickingon)
+	if(found_hologram)
+		playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
+		my_forklift.balloon_alert(source, "already working here!")
 		return
 	var/datum/component/material_container/forklift_container = my_forklift.GetComponent(/datum/component/material_container) // material_container moment
 	var/list/price_of_build = resource_price[current_selected_typepath]
@@ -84,38 +89,35 @@
 /datum/forklift_module/proc/on_right_click(mob/source, atom/clickingon)
 	if(get_dist(my_forklift, clickingon) > 7)
 		return
-	if(length(clickingon.contents))
-		playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
-		my_forklift.balloon_alert(source, "has contents, can't refund!")
-		return
 	var/list/price_of_build = resource_price[clickingon.type]
-	var/is_hologram = FALSE
 	if(istype(clickingon, /obj/structure/building_hologram))
 		var/obj/structure/building_hologram/hologram = clickingon
-		is_hologram = TRUE
+		if(istype(hologram, /obj/structure/building_hologram/deconstruction))
+			hologram.give_refund = FALSE
+			qdel(hologram)
+			my_forklift.balloon_alert(source, "cancelled refund")
+			return
 		price_of_build = hologram.material_price // Refund this hologram and cancel the construction on it
-	if(!price_of_build)
-		playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
-		my_forklift.balloon_alert(source, "not refundable!")
-		return
-	if(deconstruction_cooldown && !COOLDOWN_FINISHED(my_forklift, destructive_scan_cooldown) && !is_hologram)
-		playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
-		my_forklift.balloon_alert(source, "deconstruction cooling down!")
-		return
-	var/datum/component/material_container/forklift_container = my_forklift.GetComponent(/datum/component/material_container) // material_container moment
-	if(!forklift_container.add_materials(price_of_build))
-		playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
-		my_forklift.balloon_alert(source, "not enough space to refund!")
-		return
-	if(deconstruction_cooldown && !is_hologram)
-		COOLDOWN_START(my_forklift, destructive_scan_cooldown, deconstruction_cooldown)
-	playsound(my_forklift, 'sound/effects/cashregister.ogg', 30, TRUE)
-	my_forklift.balloon_alert(source, "refunded materials")
-	if(istype(clickingon, /turf))
-		var/turf/clicked_turf = clickingon
-		clicked_turf.ChangeTurf(turf_deconstruct_path)
+		var/datum/component/material_container/forklift_container = my_forklift.GetComponent(/datum/component/material_container) // material_container moment
+		qdel(hologram)
+		if(!forklift_container.add_materials(price_of_build))
+			playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
+			my_forklift.balloon_alert(source, "not enough space to refund!")
+			return
+
 	else
-		qdel(clickingon)
+		if(!price_of_build)
+			playsound(my_forklift, 'sound/machines/buzz-two.ogg', 30, TRUE)
+			my_forklift.balloon_alert(source, "not refundable on this module!")
+			return
+		var/obj/structure/building_hologram/deconstruction/hologram = new /obj/structure/building_hologram/deconstruction(get_turf(clickingon))
+		hologram.my_forklift = my_forklift
+		hologram.build_length = build_length
+		hologram.material_price = price_of_build
+		hologram.targeted_atom = clickingon
+		hologram.layer = clickingon.layer + 0.1
+		LAZYADD(my_forklift.holograms, hologram)
+		playsound(my_forklift, 'sound/effects/pop.ogg', 50, FALSE)
 
 /// Ideally, you cycle through available build options here.
 /datum/forklift_module/proc/on_scrollwheel(mob/source, atom/A, scrolled_up)
@@ -142,9 +144,8 @@
 	LAZYREMOVE(source.client.images, preview_image)
 	qdel(preview_image)
 	update_preview_icon()
-	preview_image.loc = get_turf(A)
+	preview_image.loc = last_turf_moused_over
 	LAZYOR(source.client.images, preview_image)
-
 	playsound(my_forklift, 'sound/effects/pop.ogg', 50, FALSE)
 
 /// More available inputs, if the module needs it.
@@ -156,14 +157,14 @@
 	return
 
 /// Handles the visual preview updating.
-/datum/forklift_module/proc/on_mouse_entered(mob/source, location)
-	if(last_turf_moused_over == get_turf(location))
+/datum/forklift_module/proc/on_mouse_entered(mob/source, atom/A)
+	if(last_turf_moused_over == get_turf(A))
 		return
-	last_turf_moused_over = get_turf(location)
+	last_turf_moused_over = get_turf(A)
 	LAZYREMOVE(source.client.images, preview_image)
 	qdel(preview_image)
 	update_preview_icon()
-	preview_image.loc = get_turf(location)
+	preview_image.loc = get_turf(A)
 	LAZYOR(source.client.images, preview_image)
 
 /// Renders out an icon to overlay on the turf for the user.

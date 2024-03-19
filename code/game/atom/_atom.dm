@@ -848,6 +848,7 @@
 	var/mob/user = client?.mob
 	if (isnull(user))
 		return
+	user.MouseEnteredOnCheap(src)
 
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used

@@ -34,6 +34,8 @@
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
+	/// Associative list of mouse pointers to occupants.
+	var/list/mouse_pointers = list()
 
 /datum/armor/obj_vehicle
 	melee = 30

@@ -55,7 +55,7 @@
 		),
 	)
 	build_length = 10 SECONDS
-	deconstruction_cooldown = 10 SECONDS
+	deconstruction_time = 10 SECONDS
 	turf_place_on_top = TRUE
 
 /datum/forklift_module/shuttle/valid_placement_location(location)

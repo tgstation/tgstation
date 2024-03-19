@@ -16,7 +16,7 @@
 	build_length = 5 SECONDS
 	turf_place_on_top = TRUE
 	show_name_on_change = TRUE
-	deconstruction_cooldown = 5 SECONDS
+	deconstruction_time = 5 SECONDS
 	var/bitflag_to_use = DEPARTMENT_BITFLAG_ENGINEERING
 	var/list/machinery_price = list(
 		/datum/material/iron = (SHEET_MATERIAL_AMOUNT * 5) + 50, // 5x cable coils + 5 sheets of metal

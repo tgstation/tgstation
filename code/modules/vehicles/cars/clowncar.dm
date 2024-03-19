@@ -277,9 +277,9 @@
 
 ///Finalizes canon activation
 /obj/vehicle/sealed/car/clowncar/proc/activate_cannon()
-	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	cannonmode = CLOWN_CANNON_READY
 	for(var/mob/living/driver as anything in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
+		mouse_pointers[driver] = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 		driver.update_mouse_pointer()
 
 ///Finalizes canon deactivation
@@ -288,6 +288,7 @@
 	mouse_pointer = null
 	cannonmode = CLOWN_CANNON_INACTIVE
 	for(var/mob/living/driver as anything in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
+		mouse_pointers[driver] = null
 		driver.update_mouse_pointer()
 
 ///Fires the cannon where the user clicks

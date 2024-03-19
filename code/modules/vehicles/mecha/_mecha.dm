@@ -378,15 +378,14 @@
  * correct and then updates it for each mob in the occupants list.
  */
 /obj/vehicle/sealed/mecha/proc/set_mouse_pointer()
-	if(weapons_safety)
-		mouse_pointer = ""
-	else
-		if(equipment_disabled)
-			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
-		else
-			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-
 	for(var/mob/mob_occupant as anything in occupants)
+		if(weapons_safety)
+			mouse_pointers[mob_occupant] = null
+		else
+			if(equipment_disabled)
+				mouse_pointers[mob_occupant] = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
+			else
+				mouse_pointers[mob_occupant] = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 		mob_occupant.update_mouse_pointer()
 
 //override this proc if you need to split up mecha control between multiple people (see savannah_ivanov.dm)
