@@ -1,0 +1,5 @@
+author: "antropod"
+delete-after: True
+changes:
+  - bugfix: "Vending machine no longer shocks you twice when you pulse high voltage wire."
+  - bugfix: "Airlock wires window closes when you get shocked"
