@@ -101,32 +101,32 @@
 		var/mutable_appearance/destination_tag = mutable_appearance(icon, "tag_[sort_tag]", layer = layer + 0.05)
 		switch(icon_state)
 			if("deliverypackage1")
-				destination_tag.pixel_x = 5
-				destination_tag.pixel_y = -4
+				destination_tag.pixel_w = 5
+				destination_tag.pixel_z = -4
 			if("deliverypackage2")
-				destination_tag.pixel_x = 5
-				destination_tag.pixel_y = -4
+				destination_tag.pixel_w = 5
+				destination_tag.pixel_z = -4
 			if("deliverypackage3")
-				destination_tag.pixel_x = 5
-				destination_tag.pixel_y = -4
+				destination_tag.pixel_w = 5
+				destination_tag.pixel_z = -4
 			if("deliverypackage4")
-				destination_tag.pixel_x = 5
-				destination_tag.pixel_y = -4
+				destination_tag.pixel_w = 5
+				destination_tag.pixel_z = -4
 			if("deliverypackage5")
-				destination_tag.pixel_x = 6
-				destination_tag.pixel_y = -6
+				destination_tag.pixel_w = 6
+				destination_tag.pixel_z = -6
 			if("deliverypackage6")
-				destination_tag.pixel_x = -1
-				destination_tag.pixel_y = -9
+				destination_tag.pixel_w = -1
+				destination_tag.pixel_z = -9
 			if("deliverycloset")
-				destination_tag.pixel_x = 4
-				destination_tag.pixel_y = -10
+				destination_tag.pixel_w = 4
+				destination_tag.pixel_z = -10
 			if("deliverybox")
-				destination_tag.pixel_x = -1
-				destination_tag.pixel_y = -9
+				destination_tag.pixel_w = -1
+				destination_tag.pixel_z = -9
 			else
-				destination_tag.pixel_x = -4
-				destination_tag.pixel_y = -10
+				destination_tag.pixel_w = -4
+				destination_tag.pixel_z = -10
 		. += destination_tag
 	if(note)
 		. += "[base_icon_state]_note"
