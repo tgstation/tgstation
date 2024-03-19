@@ -1,0 +1,28 @@
+{
+	"advancedscalpel": [
+		{
+			"type": "icon_state",
+			"icon_state": "las_scalpel_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "las_scalpel_blade",
+			"blend_mode": "overlay"
+		}
+	],
+	"advancedscalpel_on": [
+		{
+			"type": "icon_state",
+			"icon_state": "las_saw_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "las_saw_blade",
+			"blend_mode": "overlay"
+		}
+	]
+}

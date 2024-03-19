@@ -1,0 +1,28 @@
+{
+	"advancedcautery": [
+		{
+			"type": "icon_state",
+			"icon_state": "adv_cautery_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "adv_cautery_bits",
+			"blend_mode": "overlay"
+		}
+	],
+	"advancedcautery_on": [
+		{
+			"type": "icon_state",
+			"icon_state": "adv_cautery_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "adv_drill_bits",
+			"blend_mode": "overlay"
+		}
+	]
+}

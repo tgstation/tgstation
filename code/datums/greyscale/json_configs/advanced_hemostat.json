@@ -1,0 +1,28 @@
+{
+	"advancedretractor_on": [
+		{
+			"type": "icon_state",
+			"icon_state": "adv_retractor_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "adv_retractor_bits",
+			"blend_mode": "overlay"
+		}
+	],
+	"advancedretractor": [
+		{
+			"type": "icon_state",
+			"icon_state": "adv_hemostat_handle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "adv_hemostat_bits",
+			"blend_mode": "overlay"
+		}
+	]
+}
