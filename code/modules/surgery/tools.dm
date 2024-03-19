@@ -16,6 +16,12 @@
 	var/surgical_tray_overlay = "retractor_normal"
 	greyscale_config = /datum/greyscale_config/retractor
 	greyscale_colors = "#24a5de"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/retractor/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/retractor/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -45,6 +51,12 @@
 	var/surgical_tray_overlay = "hemostat_normal"
 	greyscale_config = /datum/greyscale_config/hemostat
 	greyscale_colors = "#24a5de"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/hemostat/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/hemostat/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -75,6 +87,12 @@
 	var/surgical_tray_overlay = "cautery_normal"
 	greyscale_config = /datum/greyscale_config/cautery
 	greyscale_colors = "#24a5de"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/cautery/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/cautery/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -162,10 +180,13 @@
 	var/surgical_tray_overlay = "drill_normal"
 	greyscale_config = /datum/greyscale_config/surgicaldrill
 	greyscale_colors = "#24a5de"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/surgicaldrill/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -221,6 +242,8 @@
 	bonus_modifier = 0, \
 	)
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/scalpel/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -278,6 +301,8 @@
 		/datum/component/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -305,6 +330,8 @@
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
@@ -586,6 +613,12 @@
 	toolspeed = 1
 	greyscale_config = /datum/greyscale_config/bonesetter
 	greyscale_colors = "#24a5de"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/bonesetter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
 	return "bonesetter" + (tray_extended ? "" : "_out")
@@ -608,6 +641,12 @@
 	greyscale_colors = "#24a5de"
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/bloodfilter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
 	return "filter"
