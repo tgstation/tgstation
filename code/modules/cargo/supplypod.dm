@@ -111,7 +111,7 @@
 	name = "cruise missile"
 	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
 	style = STYLE_RED_MISSILE
-	explosionSize = list(0,0,2,2)
+	explosionSize = list(0,1,2,2)
 	effectShrapnel = TRUE
 	specialised = TRUE
 	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
