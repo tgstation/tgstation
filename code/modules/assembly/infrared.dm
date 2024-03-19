@@ -250,8 +250,10 @@
 /obj/item/assembly/infra/on_attach()
 	. = ..()
 	make_beam()
+	holder.set_dir_on_move = set_dir_on_move
 
 /obj/item/assembly/infra/on_detach()
+	holder.set_dir_on_move = initial(holder.set_dir_on_move)
 	. = ..()
 	if(!.)
 		return
