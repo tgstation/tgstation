@@ -18,7 +18,8 @@
 		/obj/item/storage/box/survival/syndie,
 		/obj/item/storage/box/syndie_kit/contract_kit/midround,
 		/obj/item/knife/combat/survival,
-		/obj/item/pinpointer/crew/contractor
+		/obj/item/pinpointer/crew/contractor,
+		/obj/item/pinpointer/area_pinpointer,
 	)
 
 	implants = list(

@@ -39,6 +39,10 @@
 
 /obj/item/pinpointer/examine(mob/user)
 	. = ..()
+	// MONKESTATION ADDITION START -- CONTRACTORS -- USED BY /obj/item/pinpointer/area_pinpointer
+	if(special_examine) // need it here else it would say "it is current tracking the floor". Technically correct but not really
+		return
+	// MONKESTATION ADDITION END
 	if(target)
 		. += "It is currently tracking [target]."
 

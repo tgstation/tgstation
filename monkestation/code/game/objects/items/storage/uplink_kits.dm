@@ -106,6 +106,7 @@
 
 	// Paper guide
 	new /obj/item/paper/contractor_guide(src)
+	new /obj/item/pinpointer/area_pinpointer(src)
 
 /obj/item/storage/box/syndie_kit/contract_kit/midround/PopulateContents()
 	// You get one item from each sub list
