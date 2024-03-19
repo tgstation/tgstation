@@ -725,7 +725,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		fail_invoke()
 		return
 
-	invocation = (user.name == "Herbet West") ? "To life, to life, I bring them!" : initial(invocation)
+	invocation = (user.name == "Herbert West") ? "To life, to life, I bring them!" : initial(invocation)
 
 	if(mob_to_revive.stat == DEAD)
 		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used
