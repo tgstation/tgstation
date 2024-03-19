@@ -1,7 +1,6 @@
 /obj/item/grenade/hypnotic
 	name = "flashbang"
-	desc = "A modified flashbang which uses hypnotic flashes and mind-altering soundwaves to induce an instant trance upon detonation. \
-		It seems you can set an hypnotic phrase that's uttered when triggered"
+	desc = "A modified flashbang which uses hypnotic flashes and mind-altering soundwaves to induce an instant trance upon detonation."
 	icon_state = "flashbang"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'

@@ -233,8 +233,7 @@
 /datum/uplink_item/device_tools/hypnotic_grenade
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers. \
-		Be warned however, that this grenade is finnicky to use and utilize. \
-		Ensure proper protection and instant uttering of hypnotic command before triggering the grenade."
+		Equipment to protect yourself from the effects is not provided. Ensure you are ready before pulling the pin."
 	item = /obj/item/grenade/hypnotic
 	cost = 6
 
