@@ -100,8 +100,7 @@
 	qdel(src)
 
 /obj/effect/anomaly/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_ANALYZER && aSignal)
-		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code]."))
+	if(weapon.tool_behaviour == TOOL_ANALYZER && scan_anomaly(user, weapon)) // monke edit: refactor into scan_anomaly
 		return TRUE
 
 	return ..()
