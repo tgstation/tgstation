@@ -5916,7 +5916,6 @@
 #include "code\modules\vehicles\forklift\forklift.dm"
 #include "code\modules\vehicles\forklift\forklift_module.dm"
 #include "code\modules\vehicles\forklift\keys.dm"
-#include "code\modules\vehicles\forklift\upgrades.dm"
 #include "code\modules\vehicles\forklift\modules\airlocks.dm"
 #include "code\modules\vehicles\forklift\modules\atmos.dm"
 #include "code\modules\vehicles\forklift\modules\departmental_machinery.dm"

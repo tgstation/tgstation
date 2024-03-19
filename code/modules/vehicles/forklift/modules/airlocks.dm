@@ -101,7 +101,7 @@
 		selected_access = previous_list_item(selected_access, available_accesses)
 	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 	if(selected_access == "None")
-		my_forklift.balloon_alert(source, "Public Access")
+		my_forklift.balloon_alert(source, UNLINT("Public Access"))
 	else
 		my_forklift.balloon_alert(source, SSid_access.desc_by_access[selected_access])
 

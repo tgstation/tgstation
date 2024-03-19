@@ -1,11 +1,5 @@
 #define HOLOGRAM_FADE_TIME (15 SECONDS)
 #define DESTRUCTIVE_SCAN_COOLDOWN (HOLOGRAM_FADE_TIME + 1 SECONDS)
-#define FORKLIFT_UPGRADE_SEATING "seating_upgrade"
-#define FORKLIFT_UPGRADE_BUILD_2 "build2_upgrade"
-#define FORKLIFT_UPGRADE_BUILD_3 "build3_upgrade"
-#define FORKLIFT_UPGRADE_STORAGE "storage_upgrade"
-#define FORKLIFT_UPGRADE_JETPACK "jetpack_upgrade"
-#define FORKLIFT_LIGHT_UPGRADE "light_upgrade"
 /**
  * # Forklifts
  */
@@ -60,10 +54,10 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	RegisterSignal(M, COMSIG_MOUSE_SCROLL_ON, .proc/on_scroll_wheel)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_click)
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/fortnite_check)
-	RegisterSignal(M, COMSIG_MOUSE_ENTERED_ON_CHEAP, .proc/on_mouse_entered)
+	RegisterSignal(M, COMSIG_MOUSE_SCROLL_ON, PROC_REF(on_scroll_wheel))
+	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_click))
+	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(fortnite_check))
+	RegisterSignal(M, COMSIG_MOUSE_ENTERED_ON_CHEAP, PROC_REF(on_mouse_entered))
 	var/datum/forklift_module/new_module = new starting_module_path
 	new_module.my_forklift = src
 	selected_modules[M] = new_module
@@ -241,3 +235,6 @@
 	starting_module_path = /datum/forklift_module/department_machinery/cargo
 	key_type = /obj/item/key/forklift/cargo
 	ridable_path = /datum/component/riding/vehicle/forklift/cargo
+
+#undef HOLOGRAM_FADE_TIME
+#undef DESTRUCTIVE_SCAN_COOLDOWN
