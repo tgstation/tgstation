@@ -280,6 +280,15 @@
 	crate_type = /obj/structure/closet/crate/large
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
+/datum/supply_pack/service/fish_feed
+	name = "Fish food"
+	desc = "What do you mean you have to feed fish? Alright, here's a can of fish food to keep those little guys alive."
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/fish_feed)
+	crate_name = "fish food crate"
+	crate_type = /obj/structure/closet/crate/wooden
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
+
 /datum/supply_pack/service/aquarium_kit
 	name = "Aquarium Kit"
 	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, \
