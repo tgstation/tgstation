@@ -121,7 +121,7 @@
 
 		to_chat(prey, span_userdanger(pick(pain_lines)))
 
-	adjust_nutrition(-1 * totaldamage * 2 * seconds_per_tick) //twice the damage dealt
+	adjust_nutrition(-1 * totaldamage * seconds_per_tick) //equals the damage dealt
 
 	//Heal yourself.
 	adjustBruteLoss(-1.5 * seconds_per_tick)
