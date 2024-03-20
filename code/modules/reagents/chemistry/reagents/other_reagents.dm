@@ -644,10 +644,10 @@
 			head.head_flags |= HEAD_HAIR //No hair? No problem!
 		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
 			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
-		affected_human.set_facial_haircolor("#000000", update = FALSE)
+		affected_human.set_facial_haircolor(COLOR_BLACK, update = FALSE)
 		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
 			affected_human.set_hairstyle("Spiky", update = FALSE)
-		affected_human.set_haircolor("#000000", update = FALSE)
+		affected_human.set_haircolor(COLOR_BLACK, update = FALSE)
 		if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 			affected_human.skin_tone = "orange"
 		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
@@ -980,7 +980,7 @@
 /datum/reagent/mercury
 	name = "Mercury"
 	description = "A curious metal that's a liquid at room temperature. Neurodegenerative and very bad for the mind."
-	color = "#484848" // rgb: 72, 72, 72A
+	color = COLOR_WEBSAFE_DARK_GRAY // rgb: 72, 72, 72A
 	taste_mult = 0 // apparently tasteless.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1446,7 +1446,7 @@
 /datum/reagent/snail
 	name = "Agent-S"
 	description = "Virological agent that infects the subject with Gastrolosis."
-	color = "#003300" // rgb(0, 51, 0)
+	color = COLOR_VERY_DARK_LIME_GREEN // rgb(0, 51, 0)
 	taste_description = "goo"
 	penetrates_skin = NONE
 	ph = 11
@@ -1713,7 +1713,7 @@
 /datum/reagent/plantnutriment
 	name = "Generic Nutriment"
 	description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
-	color = "#000000" // RBG: 0, 0, 0
+	color = COLOR_BLACK // RBG: 0, 0, 0
 	var/tox_prob = 0
 	taste_description = "plant food"
 	ph = 3
@@ -1925,7 +1925,7 @@
 /datum/reagent/carpet/royal/black
 	name = "Royal Black Carpet"
 	description = "For those that feel the need to show off their timewasting skills."
-	color = "#000000"
+	color = COLOR_BLACK
 	taste_description = "royalty"
 	carpet_type = /turf/open/floor/carpet/royalblack
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2460,7 +2460,7 @@
 /datum/reagent/glitter
 	name = "Generic Glitter"
 	description = "if you can see this description, contact a coder."
-	color = "#FFFFFF" //pure white
+	color = COLOR_WHITE //pure white
 	taste_description = "plastic"
 	reagent_state = SOLID
 	var/glitter_type = /obj/effect/decal/cleanable/glitter
@@ -2668,7 +2668,7 @@
 /datum/reagent/wittel
 	name = "Wittel"
 	description = "An extremely rare metallic-white substance only found on demon-class planets."
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 0 // oderless and tasteless
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

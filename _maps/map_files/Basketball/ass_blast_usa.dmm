@@ -52,7 +52,7 @@
 /area/centcom/basketball)
 "dS" = (
 /turf/closed/indestructible/riveted/plastinum{
-	color = "#FF0000"
+	color = COLOR_RED
 	},
 /area/centcom/basketball)
 "eU" = (
@@ -121,7 +121,7 @@
 /area/centcom/basketball)
 "kc" = (
 /turf/closed/indestructible/riveted/plastinum{
-	color = "#0000FF"
+	color = COLOR_BLUE
 	},
 /area/centcom/basketball)
 "ku" = (

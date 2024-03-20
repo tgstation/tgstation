@@ -61,7 +61,7 @@
 /area/centcom/ctf)
 "ef" = (
 /obj/structure/window/reinforced/fulltile/indestructible{
-	color = "#008000"
+	color = COLOR_GREEN
 	},
 /turf/open/floor/plating,
 /area/centcom/ctf)

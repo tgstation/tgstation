@@ -11872,7 +11872,7 @@
 /area/station/security/checkpoint/medical/medsci)
 "cSr" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -52270,7 +52270,7 @@
 /area/station/maintenance/port)
 "mZj" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#FFFF00";
+	color = COLOR_YELLOW;
 	name = "plasma mixer"
 	},
 /obj/effect/turf_decal/bot,

@@ -466,7 +466,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "interdyne_atmos";
 	dir = 1;
-	pipe_color = "#0000FF"
+	pipe_color = COLOR_BLUE
 	},
 /obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/engine/air,

@@ -11723,7 +11723,7 @@
 	},
 /obj/structure/rack,
 /obj/item/food/grown/poppy/geranium/fraxinella{
-	color = "#00FFFF";
+	color = COLOR_CYAN;
 	desc = "A beautiful cyan flower. You get the feeling you won't see one like this here very often."
 	},
 /obj/item/clothing/mask/gas/cyborg,
@@ -28097,7 +28097,7 @@
 "hpc" = (
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/arrows/white{
-	color = "#0000FF";
+	color = COLOR_BLUE;
 	pixel_y = 15
 	},
 /turf/open/floor/engine,

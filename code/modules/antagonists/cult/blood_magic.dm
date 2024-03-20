@@ -484,7 +484,7 @@
 	name = "Shackling Aura"
 	desc = "Will start handcuffing a victim on contact, and mute them if successful."
 	invocation = "In'totum Lig'abis!"
-	color = "#000000" // black
+	color = COLOR_BLACK // black
 
 /obj/item/melee/blood_magic/shackles/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(IS_CULTIST(user) && iscarbon(target) && proximity)
@@ -534,7 +534,7 @@
 	name = "Twisting Aura"
 	desc = "Corrupts certain metalic objects on contact."
 	invocation = "Ethra p'ni dedol!"
-	color = "#000000" // black
+	color = COLOR_BLACK // black
 	var/channeling = FALSE
 
 /obj/item/melee/blood_magic/construction/examine(mob/user)

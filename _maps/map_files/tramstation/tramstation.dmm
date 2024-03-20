@@ -8742,34 +8742,34 @@
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 8;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 4;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = -4;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "x";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 4;
 	pixel_y = -32
 	},
@@ -27667,7 +27667,7 @@
 	color = "#52B4E9"
 	},
 /obj/effect/turf_decal/arrows/white{
-	color = "#0000FF";
+	color = COLOR_BLUE;
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -53119,7 +53119,7 @@
 	color = "#9FED58"
 	},
 /obj/effect/turf_decal/arrows/white{
-	color = "#FF0000";
+	color = COLOR_RED;
 	dir = 4;
 	pixel_x = -15
 	},
@@ -63229,34 +63229,34 @@
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 8;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 4;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = -4;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "x";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 4;
 	pixel_y = -32
 	},

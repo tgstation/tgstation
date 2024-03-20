@@ -12,35 +12,35 @@
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 37;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 22;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 27;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 32;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "x";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
@@ -80,35 +80,35 @@
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 37;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 22;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 27;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 32;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "x";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/trash/food_packaging,
@@ -134,35 +134,35 @@
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 37;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 22;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 27;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "i";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 32;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "x";
 	name = "graffiti";
-	paint_colour = "#FF9300";
+	paint_colour = COLOR_CRAYON_ORANGE;
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/trash/food_packaging,

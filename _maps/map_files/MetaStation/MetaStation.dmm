@@ -35961,7 +35961,7 @@
 "mUf" = (
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/arrows/white{
-	color = "#0000FF";
+	color = COLOR_BLUE;
 	pixel_y = 15
 	},
 /turf/open/floor/engine,
@@ -51711,7 +51711,7 @@
 /area/station/medical/virology)
 "syV" = (
 /obj/effect/turf_decal/arrows/white{
-	color = "#0000FF";
+	color = COLOR_BLUE;
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{

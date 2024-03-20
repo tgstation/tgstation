@@ -284,7 +284,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "hW" = (
 /obj/structure/spawner/nether{
-	light_color = "#FF0000";
+	light_color = COLOR_RED;
 	light_power = 2;
 	light_range = 2;
 	max_mobs = 2
