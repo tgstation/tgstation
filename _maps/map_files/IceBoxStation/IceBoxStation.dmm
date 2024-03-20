@@ -25926,7 +25926,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "hYW" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -235224,10 +235223,10 @@ qrJ
 uLC
 xzh
 dnq
-dnq
 qcu
 bDR
 hYW
+mpy
 bep
 ylU
 dnq

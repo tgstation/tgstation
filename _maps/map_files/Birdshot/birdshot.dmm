@@ -39338,6 +39338,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/half,
 /area/station/hallway/primary/central/fore)
 "nZh" = (

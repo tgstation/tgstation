@@ -14972,6 +14972,7 @@
 /area/station/maintenance/floor1/port/aft)
 "dNU" = (
 /obj/machinery/photobooth,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "dOa" = (
