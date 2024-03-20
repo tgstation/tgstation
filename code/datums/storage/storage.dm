@@ -775,6 +775,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_attackby(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
+	//stops you from putting stuff like off-hand thingy inside
+	if((thing.item_flags & ABSTRACT) || (thing.flags_1 & HOLOGRAM_1))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(!thing.attackby_storage_insert(src, parent, user))
 		return
 
