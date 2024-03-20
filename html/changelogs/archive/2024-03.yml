@@ -605,3 +605,14 @@
   san7890:
   - bugfix: Prisoners who are teleported to the Nanotrasen Work Camp should now always
       be stripped of their gear to prevent escapes.
+2024-03-20:
+  Nidvex250:
+  - qol: Can now use wirecutters when performing Tend Wounds.
+  Watermelon914:
+  - bugfix: Fixed the lua editor being outright broken.
+  Y0SH1M4S73R:
+  - bugfix: lua scripting should work on BYOND 515.1633
+  antropod:
+  - bugfix: Vending machine no longer shocks you twice when you pulse high voltage
+      wire.
+  - bugfix: Airlock wires window closes when you get shocked
