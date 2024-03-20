@@ -1,8 +1,6 @@
 local SS13 = {}
 
 __SS13_signal_handlers = __SS13_signal_handlers or {}
-__SS13_timeouts = __SS13_timeouts or {}
-__SS13_timeouts_id_mapping = __SS13_timeouts_id_mapping or {}
 
 SS13.SSlua = dm.global_vars.vars.SSlua
 
