@@ -27,6 +27,9 @@ GLOBAL_PROTECT(lua_usr)
 	/// Whether the timer.lua script has been included into this lua context state.
 	var/timer_enabled = FALSE
 
+	/// Callbacks that need to be ran on next tick
+	var/list/functions_to_execute = list()
+
 /datum/lua_state/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == NAMEOF(src, internal_id))
@@ -94,7 +97,10 @@ GLOBAL_PROTECT(lua_usr)
 
 /datum/lua_state/process(seconds_per_tick)
 	if(timer_enabled)
-		call_function("__SS13_timer_process", seconds_per_tick)
+		call_function("__Timer_timer_process", seconds_per_tick)
+		for(var/function as anything in functions_to_execute)
+			call_function(list("__Timer_callbacks", function))
+		functions_to_execute.Cut()
 
 /datum/lua_state/proc/call_function(function, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
