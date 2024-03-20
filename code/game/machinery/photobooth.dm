@@ -111,12 +111,32 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
+/obj/machinery/photobooth/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	req_access = list() //in case someone sets this to something
+	req_one_access = list()
+	balloon_alert(user, "beeps softly")
+	obj_flags |= EMAGGED
+	return TRUE
+
 /**
  * Handles the effects of taking pictures of the user, calling finish_taking_pictures
  * to actually update the records.
  */
 /obj/machinery/photobooth/proc/start_taking_pictures()
 	taking_pictures = TRUE
+	if(obj_flags & EMAGGED)
+		var/mob/living/carbon/carbon_occupant = occupant
+		for(var/i in 1 to 5) //play a ton of sounds to mimic it blinding you
+			playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE)
+			if(carbon_occupant)
+				carbon_occupant.flash_act(5)
+			sleep(0.2 SECONDS)
+		if(carbon_occupant)
+			carbon_occupant.emote("scream")
+		finish_taking_pictures()
+		return
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.
 		taking_pictures = FALSE
 		return
