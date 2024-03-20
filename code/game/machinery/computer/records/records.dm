@@ -13,14 +13,16 @@
 	if(!has_access)
 		return data
 
-	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
+	data["assigned_view"] = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	data["station_z"] = !!(z && is_station_level(z))
 
 	return data
 
 /obj/machinery/computer/records/ui_close(mob/user)
-	QDEL_NULL(character_preview_view)
-	return ..()
+	. = ..()
+	user.client?.screen_maps -= USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
+	if((LAZYLEN(open_uis) <= 1) && character_preview_view) //only delete the preview if we're the last one to close the console.
+		QDEL_NULL(character_preview_view)
 
 /obj/machinery/computer/records/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
@@ -105,7 +107,7 @@
 
 /// Creates a character preview view for the UI.
 /obj/machinery/computer/records/proc/create_character_preview_view(mob/user)
-	var/assigned_view = "preview_[user.ckey]_[REF(src)]_records"
+	var/assigned_view = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	if(user.client?.screen_maps[assigned_view])
 		return
 
