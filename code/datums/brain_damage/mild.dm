@@ -285,9 +285,9 @@
 /datum/brain_trauma/mild/possessive
 	name = "Possessive"
 	desc = "Patient is extremely possessive of their belongings."
-	scan_desc = "possessive"
-	gain_text = span_warning("You feel a need to keep your things close.")
-	lose_text = span_notice("You can part with your things more easily now.")
+	scan_desc = "possessiveness"
+	gain_text = span_warning("You start to worry about your belongings.")
+	lose_text = span_notice("You worry less about your belongings.")
 
 /datum/brain_trauma/mild/possessive/on_lose(silent)
 	. = ..()
@@ -304,8 +304,8 @@
 
 	ADD_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
 	RegisterSignals(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), PROC_REF(clear_trait))
-	to_chat(owner, span_warning("You feel a need to keep [my_thing] close."))
-	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(1 MINUTES, 5 MINUTES), TIMER_DELETE_ME)
+	to_chat(owner, span_warning("You feel a need to keep [my_thing] close..."))
+	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(30 SECONDS, 3 MINUTES), TIMER_DELETE_ME)
 
 /datum/brain_trauma/mild/possessive/proc/relax(obj/item/my_thing)
 	if(QDELETED(my_thing))
@@ -314,7 +314,7 @@
 		to_chat(owner, span_notice("You feel more comfortable letting go of [my_thing]."))
 	clear_trait(my_thing)
 
-/datum/brain_trauma/mild/possessive/proc/clear_trait(obj/item/my_thing)
+/datum/brain_trauma/mild/possessive/proc/clear_trait(obj/item/my_thing, ...)
 	SIGNAL_HANDLER
 
 	REMOVE_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
