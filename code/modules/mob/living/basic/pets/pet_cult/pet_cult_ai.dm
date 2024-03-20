@@ -41,7 +41,7 @@
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_FRIENDLY_CULTIST)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/friendly_cultist, BB_FRIENDLY_CULTIST, /mob/living/carbon/human)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/friendly_cultist, BB_FRIENDLY_CULTIST, /mob/living/carbon)
 
 ///behavior to find cultists that we befriend
 /datum/ai_behavior/find_and_set/friendly_cultist
@@ -50,7 +50,7 @@
 
 /datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/living_pawn = controller.pawn
-	for(var/mob/living/carbon/human/possible_cultist in oview(search_range, controller.pawn))
+	for(var/mob/living/carbon/possible_cultist in oview(search_range, controller.pawn))
 		if(IS_CULTIST(possible_cultist) && !(living_pawn.faction.Find(REF(possible_cultist))))
 			return possible_cultist
 
