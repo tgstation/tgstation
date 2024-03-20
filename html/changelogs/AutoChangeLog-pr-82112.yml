@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Hand labels now have a visual effect associated, and are also affected by heat / can be cleaned off like stickers."
+  - refactor: "Refactored hand labels. They're objects now!"
