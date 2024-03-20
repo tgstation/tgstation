@@ -303,7 +303,7 @@
 		return
 
 	ADD_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
-	RegisterSignal(my_thing, COMSIG_ITEM_DROPPED, PROC_REF(clear_trait))
+	RegisterSignals(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), PROC_REF(clear_trait))
 	to_chat(owner, span_warning("You feel a need to keep [my_thing] close."))
 	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(1 MINUTES, 5 MINUTES), TIMER_DELETE_ME)
 
@@ -318,4 +318,4 @@
 	SIGNAL_HANDLER
 
 	REMOVE_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
-	UnregisterSignal(my_thing, COMSIG_ITEM_DROPPED)
+	UnregisterSignal(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED))
