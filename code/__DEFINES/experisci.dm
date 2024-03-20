@@ -8,6 +8,8 @@
 /// Integer stages, should be whole numbers with total being included
 /// to support rendering ``value of total``, or something akin to it.
 #define EXPERIMENT_INT_STAGE "integer"
+/// Float stages, the value should be between 0 and 1 representing percent completion
+#define EXPERIMENT_FLOAT_STAGE "float"
 /// Detail stages, only provide more textual information and have no inherent progress
 #define EXPERIMENT_DETAIL_STAGE "detail"
 
@@ -17,6 +19,8 @@
 #define EXPERIMENT_PROG_BOOL(desc, complete) EXPERIMENT_PROGRESS(EXPERIMENT_BOOL_STAGE, desc, complete)
 /// Macro for integer stages
 #define EXPERIMENT_PROG_INT(desc, complete, total) EXPERIMENT_PROGRESS(EXPERIMENT_INT_STAGE, desc, complete, total)
+/// Macro for float stages
+#define EXPERIMENT_PROG_FLOAT(desc, complete) EXPERIMENT_PROGRESS(EXPERIMENT_FLOAT_STAGE, desc, complete)
 /// Macro for non-valued stages, details for exp stages
 #define EXPERIMENT_PROG_DETAIL(desc, complete) EXPERIMENT_PROGRESS(EXPERIMENT_DETAIL_STAGE, desc, complete)
 
