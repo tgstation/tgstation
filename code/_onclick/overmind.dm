@@ -6,13 +6,13 @@
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_PRESS))
 		ShiftClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, ALT_PRESS))
 		AltClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
+	if(LAZYACCESS(modifiers, CTRL_PRESS))
 		CtrlClickOn(A)
 		return
 	var/turf/T = get_turf(A)

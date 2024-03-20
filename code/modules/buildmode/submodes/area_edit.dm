@@ -51,7 +51,7 @@
 		if(!storedarea)
 			to_chat(c, span_warning("Configure or select the area you want to paint first!"))
 			return
-		if(LAZYACCESS(modifiers, ALT_CLICK))
+		if(LAZYACCESS(modifiers, ALT_PRESS))
 			var/turf/T = get_turf(object)
 			if(get_area(T) != storedarea)
 				log_admin("Build Mode: [key_name(c)] added [AREACOORD(T)] to [storedarea]")

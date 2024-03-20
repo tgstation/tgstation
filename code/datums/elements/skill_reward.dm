@@ -21,7 +21,7 @@
 
 /datum/element/skill_reward/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(!LAZYACCESS(modifiers, CTRL_CLICK) && !check_equippable(user)) //Allows other players to drag it around at least.
+	if(!LAZYACCESS(modifiers, CTRL_PRESS) && !check_equippable(user)) //Allows other players to drag it around at least.
 		to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [source]."))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 

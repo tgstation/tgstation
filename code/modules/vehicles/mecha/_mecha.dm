@@ -636,7 +636,7 @@
 		return
 	if(isAI(user)) //For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
 		. = COMSIG_MOB_CANCEL_CLICKON
-	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
+	if(modifiers[SHIFT_PRESS]) //Allows things to be examined.
 		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return

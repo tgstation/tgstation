@@ -99,15 +99,15 @@
 		return // Avoid a double mousedown with no mouseup
 	var/list/modifiers = params2list(params)
 
-	if (LAZYACCESS(modifiers, SHIFT_CLICK))
+	if (LAZYACCESS(modifiers, SHIFT_PRESS))
 		return
-	if (LAZYACCESS(modifiers, CTRL_CLICK))
+	if (LAZYACCESS(modifiers, CTRL_PRESS))
 		return
 	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
-	if (LAZYACCESS(modifiers, ALT_CLICK))
+	if (LAZYACCESS(modifiers, ALT_PRESS))
 		return
 	var/mob/living/living_parent = parent
 	if (!isturf(living_parent.loc) || living_parent.Adjacent(target))

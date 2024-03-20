@@ -9,11 +9,11 @@
 	var/autofire_stat = AUTOFIRE_STAT_IDLE
 	var/mouse_parameters
 	/// Time between individual shots.
-	var/autofire_shot_delay = 0.3 SECONDS 
+	var/autofire_shot_delay = 0.3 SECONDS
 	/// This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
-	var/mouse_status = AUTOFIRE_MOUSEUP 
+	var/mouse_status = AUTOFIRE_MOUSEUP
 	/// Should dual wielding be allowed?
-	var/allow_akimbo 
+	var/allow_akimbo
 
 	///windup autofire vars
 	///Whether the delay between shots increases over time, simulating a spooling weapon
@@ -121,15 +121,15 @@
 	SIGNAL_HANDLER
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
 
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_PRESS))
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
+	if(LAZYACCESS(modifiers, CTRL_PRESS))
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
-	if(LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, ALT_PRESS))
 		return
 	if(source.mob.throw_mode)
 		return

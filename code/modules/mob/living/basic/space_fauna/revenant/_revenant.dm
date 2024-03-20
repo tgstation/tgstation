@@ -200,10 +200,10 @@
 
 /mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_PRESS))
 		ShiftClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, ALT_PRESS))
 		AltClickNoInteract(src, A)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

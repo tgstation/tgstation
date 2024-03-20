@@ -155,7 +155,7 @@
 		clicked_atom.set_output(target)
 		secondary_attack.set_output(COMPONENT_SIGNAL)
 		. = COMSIG_MOB_CANCEL_CLICKON
-	else if(modifiers[LEFT_CLICK] && !modifiers[SHIFT_CLICK] && !modifiers[ALT_CLICK] && !modifiers[CTRL_CLICK])
+	else if(modifiers[LEFT_CLICK] && !modifiers[SHIFT_PRESS] && !modifiers[ALT_PRESS] && !modifiers[CTRL_PRESS])
 		clicked_atom.set_output(target)
 		attack.set_output(COMPONENT_SIGNAL)
 		. = COMSIG_MOB_CANCEL_CLICKON

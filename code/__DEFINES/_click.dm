@@ -11,9 +11,9 @@
 #define BUTTON "button"
 
 //Keys held down during the mouse action
-#define CTRL_CLICK "ctrl"
-#define ALT_CLICK "alt"
-#define SHIFT_CLICK "shift"
+#define CTRL_PRESS "ctrl"
+#define ALT_PRESS "alt"
+#define SHIFT_PRESS "shift"
 
 //Cells involved if using a Grid control
 #define DRAG_CELL "drag-cell"

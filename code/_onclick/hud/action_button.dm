@@ -50,10 +50,10 @@
 		return FALSE
 
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, ALT_PRESS))
 		begin_creating_bind(usr)
 		return TRUE
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_PRESS))
 		var/datum/hud/our_hud = usr.hud_used
 		our_hud.position_action(src, SCRN_OBJ_DEFAULT)
 		return TRUE
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 
 	var/list/modifiers = params2list(params)
 
-	if(LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, ALT_PRESS))
 		for(var/datum/action/action as anything in usr.actions) // Reset action positions to default
 			for(var/datum/hud/hud as anything in action.viewers)
 				var/atom/movable/screen/movable/action_button/button = action.viewers[hud]

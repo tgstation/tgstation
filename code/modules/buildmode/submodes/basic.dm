@@ -16,10 +16,10 @@
 
 	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
 	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
-	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
-	var/ctrl_click = LAZYACCESS(modifiers, CTRL_CLICK)
+	var/alt_press = LAZYACCESS(modifiers, ALT_PRESS)
+	var/ctrl_press = LAZYACCESS(modifiers, CTRL_PRESS)
 
-	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
+	if(istype(object,/turf) && left_click && !alt_press && !ctrl_press)
 		var/turf/clicked_turf = object
 		if(isplatingturf(object))
 			clicked_turf.place_on_top(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
@@ -39,10 +39,10 @@
 		else if(isobj(object))
 			qdel(object)
 		return
-	else if(istype(object,/turf) && alt_click && left_click)
+	else if(istype(object,/turf) && alt_press && left_click)
 		log_admin("Build Mode: [key_name(c)] built an airlock at [AREACOORD(object)]")
 		new/obj/machinery/door/airlock(get_turf(object))
-	else if(istype(object,/turf) && ctrl_click && left_click)
+	else if(istype(object,/turf) && ctrl_press && left_click)
 		var/obj/structure/window/reinforced/window
 		if(BM.build_dir in GLOB.diagonals)
 			window = new /obj/structure/window/reinforced/fulltile(get_turf(object))

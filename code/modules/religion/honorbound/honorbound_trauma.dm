@@ -43,7 +43,7 @@
 /datum/brain_trauma/special/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+	if(modifiers[ALT_PRESS] || modifiers[SHIFT_PRESS] || modifiers[CTRL_PRESS] || modifiers[MIDDLE_CLICK])
 		return
 	if(!isliving(clickingon))
 		return

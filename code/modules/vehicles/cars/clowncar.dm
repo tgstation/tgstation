@@ -296,7 +296,7 @@
 	if(cannonmode != CLOWN_CANNON_READY || !length(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED)))
 		return
 	//The driver can still examine things and interact with his inventory.
-	if(modifiers[SHIFT_CLICK] || (ismovable(target) && !isturf(target.loc)))
+	if(modifiers[SHIFT_PRESS] || (ismovable(target) && !isturf(target.loc)))
 		return
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 	mob_exit(unlucky_sod, silent = TRUE)

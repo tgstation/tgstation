@@ -266,7 +266,7 @@
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 	//You need to be holding the rod to use it.
-	if(!source.get_active_held_item(used_rod) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
+	if(!source.get_active_held_item(used_rod) || LAZYACCESS(modifiers, SHIFT_PRESS) || LAZYACCESS(modifiers, CTRL_PRESS) || LAZYACCESS(modifiers, ALT_PRESS))
 		return
 	if(phase == WAIT_PHASE) //Reset wait
 		send_alert("miss!")

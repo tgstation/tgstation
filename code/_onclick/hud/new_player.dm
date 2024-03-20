@@ -272,7 +272,7 @@
 			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
 		return
 
-	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
+	if(!LAZYACCESS(params2list(params), CTRL_PRESS))
 		GLOB.latejoin_menu.ui_interact(new_player)
 	else
 		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show, ahelp immediately!"))

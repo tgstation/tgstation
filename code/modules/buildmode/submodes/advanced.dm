@@ -30,9 +30,9 @@
 	var/list/modifiers = params2list(params)
 	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
 	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
-	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
+	var/alt_press = LAZYACCESS(modifiers, ALT_PRESS)
 
-	if(left_click && alt_click)
+	if(left_click && alt_press)
 		if (istype(object, /turf) || isobj(object) || istype(object, /mob))
 			objholder = object.type
 			to_chat(c, span_notice("[initial(object.name)] ([object.type]) selected."))

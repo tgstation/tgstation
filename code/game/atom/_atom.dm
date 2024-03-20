@@ -826,11 +826,11 @@
 				return
 
 		if(href_list["statpanel_item_shiftclick"])
-			paramslist[SHIFT_CLICK] = "1"
+			paramslist[SHIFT_PRESS] = "1"
 		if(href_list["statpanel_item_ctrlclick"])
-			paramslist[CTRL_CLICK] = "1"
+			paramslist[CTRL_PRESS] = "1"
 		if(href_list["statpanel_item_altclick"])
-			paramslist[ALT_CLICK] = "1"
+			paramslist[ALT_PRESS] = "1"
 
 		var/mouseparams = list2params(paramslist)
 		usr_client.Click(src, loc, null, mouseparams)

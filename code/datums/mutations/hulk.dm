@@ -116,7 +116,7 @@
 	SIGNAL_HANDLER
 
 	/// Basically, we only proceed if we're in throw mode with a tailed carbon in our grasp with at least a neck grab and we're not restrained in some way
-	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
+	if(LAZYACCESS(modifiers, ALT_PRESS) || LAZYACCESS(modifiers, SHIFT_PRESS) || LAZYACCESS(modifiers, CTRL_PRESS) || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 	if(!user.throw_mode || user.get_active_held_item() || user.zone_selected != BODY_ZONE_PRECISE_GROIN)
 		return

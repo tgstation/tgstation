@@ -867,10 +867,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!. || isnull(poll))
 		return
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, ALT_CLICK) && poll.ignoring_category)
+	if(LAZYACCESS(modifiers, ALT_PRESS) && poll.ignoring_category)
 		set_never_round()
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
+	if(LAZYACCESS(modifiers, CTRL_PRESS) && poll.jump_to_me)
 		jump_to_jump_target()
 		return
 	handle_sign_up()
@@ -1053,7 +1053,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(usr != owner)
 		return FALSE
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
+	if(LAZYACCESS(modifiers, SHIFT_PRESS)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
 		return FALSE
 	var/datum/our_master = master_ref?.resolve()

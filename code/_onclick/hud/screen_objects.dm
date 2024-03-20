@@ -147,7 +147,7 @@
 /atom/movable/screen/floor_menu/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) || LAZYACCESS(modifiers, ALT_PRESS))
 		usr.down()
 		return
 

@@ -39,7 +39,7 @@
 	var/list/modifiers = params2list(params)
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK)) //rectangular
-		if(LAZYACCESS(modifiers, ALT_CLICK))
+		if(LAZYACCESS(modifiers, ALT_PRESS))
 			var/list/deletion_area = block(get_turf(cornerA),get_turf(cornerB))
 			for(var/beep in deletion_area)
 				var/turf/T = beep

@@ -5,7 +5,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/choiced/mod_select/init_possible_values()
-	return list(MIDDLE_CLICK, ALT_CLICK)
+	return list(MIDDLE_CLICK, ALT_PRESS)
 
 /datum/preference/choiced/mod_select/create_default_value()
 	return MIDDLE_CLICK

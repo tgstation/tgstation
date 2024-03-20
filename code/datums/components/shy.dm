@@ -116,7 +116,7 @@
 
 /datum/component/shy/proc/on_clickon(datum/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	if(modifiers[SHIFT_CLICK]) //let them examine their surroundings.
+	if(modifiers[SHIFT_PRESS]) //let them examine their surroundings.
 		return
 	return is_shy(target) && COMSIG_MOB_CANCEL_CLICKON
 

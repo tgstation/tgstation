@@ -77,28 +77,28 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_PRESS))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
 			return
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
+		if(LAZYACCESS(modifiers, CTRL_PRESS))
 			CtrlShiftClickOn(A)
 			return
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
+		if(LAZYACCESS(modifiers, CTRL_PRESS))
 			CtrlMiddleClickOn(A)
 		else
 			MiddleClickOn(A, params)
 		return
-	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
+	if(LAZYACCESS(modifiers, ALT_PRESS)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			alt_click_on_secondary(A)
 		else
 			AltClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
+	if(LAZYACCESS(modifiers, CTRL_PRESS))
 		CtrlClickOn(A)
 		return
 
@@ -542,7 +542,7 @@
 
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_PRESS))
 		var/view = 0
 		if(delta_y > 0)
 			view = -1
