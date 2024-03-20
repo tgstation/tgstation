@@ -14,7 +14,7 @@
 
 	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
 		attacker.visible_message(span_warning("[attacker] attempts to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled] !"), \
-		span_danger("[buckled == attacker ? "You attempt" : (attacker + " attempts") ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
+		span_danger("[buckled == attacker ? "You attempt" : "[attacker] attempts" ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
 
@@ -83,7 +83,7 @@
 	adjustBruteLoss(rand(15,20))
 	discipline_slime()
 
-///Stops the slime from feeding, and if the slime is a baby
+///Stops the slime from feeding, and might remove rabidity and targets
 /mob/living/basic/slime/proc/discipline_slime()
 	stop_feeding(silent = TRUE)
 	if(life_stage == SLIME_LIFE_STAGE_BABY && prob(80))
