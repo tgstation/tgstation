@@ -125,7 +125,7 @@
 	var/list/advance_diseases = list()
 	for(var/datum/disease/advance/P in infectee.diseases)
 		advance_diseases += P
-	var/replace_num = advance_diseases.len //amount of diseases that need to be removed to fit this one
+	var/replace_num = advance_diseases.len + 1 - DISEASE_LIMIT //amount of diseases that need to be removed to fit this one
 	if(replace_num > 0)
 		sortTim(advance_diseases, GLOBAL_PROC_REF(cmp_advdisease_resistance_asc))
 		for(var/i in 1 to replace_num)
