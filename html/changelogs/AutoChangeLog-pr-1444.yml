@@ -1,0 +1,6 @@
+author: "Absolucy, LT3"
+delete-after: True
+changes:
+  - code_imp: "Changing security levels will only trigger the nightshift subsystem if lighting changes are required."
+  - code_imp: "Server wide admin announcements now use an alert box like other announcements."
+  - qol: "Roundstart intercept report and security level announcements are combined into a single announcement."
