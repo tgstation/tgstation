@@ -76,7 +76,7 @@
 	interacting_with.balloon_alert_to_viewers("labelled")
 	user.visible_message(
 		span_notice("[user] labels [interacting_with] with \"[label]\"."),
-		span_notice("You label [interacting_with] with \"[label]\".")
+		span_notice("You label [interacting_with] with \"[label]\"."),
 	)
 	var/obj/item/label/stick_label = new(null, label)
 	stick_label.stick_to_atom(interacting_with, cursor_x, cursor_y)
