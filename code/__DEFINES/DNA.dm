@@ -96,7 +96,6 @@
 #define ORGAN_SLOT_EXTERNAL_HORNS "horns"
 #define ORGAN_SLOT_EXTERNAL_WINGS "wings"
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
-#define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
 #define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
 
 /// Xenomorph organ slots
@@ -192,47 +191,30 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define GOLEM_FOOD_GIBTONITE "golem_food_gibtonite"
 #define GOLEM_FOOD_LIGHTBULB "golem_food_lightbulb"
 
-/// Golem food datum singletons
-GLOBAL_LIST_INIT(golem_stack_food_types, list(
-	GOLEM_FOOD_IRON = new /datum/golem_food_buff/iron(),
-	GOLEM_FOOD_GLASS = new /datum/golem_food_buff/glass(),
-	GOLEM_FOOD_URANIUM = new /datum/golem_food_buff/uranium(),
-	GOLEM_FOOD_SILVER = new /datum/golem_food_buff/silver(),
-	GOLEM_FOOD_PLASMA = new /datum/golem_food_buff/plasma(),
-	GOLEM_FOOD_GOLD = new /datum/golem_food_buff/gold(),
-	GOLEM_FOOD_DIAMOND = new /datum/golem_food_buff/diamond(),
-	GOLEM_FOOD_TITANIUM = new /datum/golem_food_buff/titanium(),
-	GOLEM_FOOD_PLASTEEL = new /datum/golem_food_buff/plasteel(),
-	GOLEM_FOOD_BANANIUM = new /datum/golem_food_buff/bananium(),
-	GOLEM_FOOD_BLUESPACE = new /datum/golem_food_buff/bluespace(),
-	GOLEM_FOOD_GIBTONITE = new /datum/golem_food_buff/gibtonite(),
-	GOLEM_FOOD_LIGHTBULB = new /datum/golem_food_buff/lightbulb(),
-))
-
 /// Associated list of stack types to a golem food
 GLOBAL_LIST_INIT(golem_stack_food_directory, list(
-	/obj/item/gibtonite = GLOB.golem_stack_food_types[GOLEM_FOOD_GIBTONITE],
-	/obj/item/light = GLOB.golem_stack_food_types[GOLEM_FOOD_LIGHTBULB],
-	/obj/item/stack/sheet/iron = GLOB.golem_stack_food_types[GOLEM_FOOD_IRON],
-	/obj/item/stack/ore/iron = GLOB.golem_stack_food_types[GOLEM_FOOD_IRON],
-	/obj/item/stack/sheet/glass = GLOB.golem_stack_food_types[GOLEM_FOOD_GLASS],
-	/obj/item/stack/sheet/mineral/uranium = GLOB.golem_stack_food_types[GOLEM_FOOD_URANIUM],
-	/obj/item/stack/ore/uranium = GLOB.golem_stack_food_types[GOLEM_FOOD_URANIUM],
-	/obj/item/stack/sheet/mineral/silver = GLOB.golem_stack_food_types[GOLEM_FOOD_SILVER],
-	/obj/item/stack/ore/silver = GLOB.golem_stack_food_types[GOLEM_FOOD_SILVER],
-	/obj/item/stack/sheet/mineral/plasma = GLOB.golem_stack_food_types[GOLEM_FOOD_PLASMA],
-	/obj/item/stack/ore/plasma = GLOB.golem_stack_food_types[GOLEM_FOOD_PLASMA],
-	/obj/item/stack/sheet/mineral/gold = GLOB.golem_stack_food_types[GOLEM_FOOD_GOLD],
-	/obj/item/stack/ore/gold = GLOB.golem_stack_food_types[GOLEM_FOOD_GOLD],
-	/obj/item/stack/sheet/mineral/diamond = GLOB.golem_stack_food_types[GOLEM_FOOD_DIAMOND],
-	/obj/item/stack/ore/diamond = GLOB.golem_stack_food_types[GOLEM_FOOD_DIAMOND],
-	/obj/item/stack/sheet/mineral/titanium = GLOB.golem_stack_food_types[GOLEM_FOOD_TITANIUM],
-	/obj/item/stack/ore/titanium = GLOB.golem_stack_food_types[GOLEM_FOOD_TITANIUM],
-	/obj/item/stack/sheet/plasteel = GLOB.golem_stack_food_types[GOLEM_FOOD_PLASTEEL],
-	/obj/item/stack/ore/bananium = GLOB.golem_stack_food_types[GOLEM_FOOD_BANANIUM],
-	/obj/item/stack/sheet/mineral/bananium = GLOB.golem_stack_food_types[GOLEM_FOOD_BANANIUM],
-	/obj/item/stack/ore/bluespace_crystal = GLOB.golem_stack_food_types[GOLEM_FOOD_BLUESPACE],
-	/obj/item/stack/ore/bluespace_crystal/refined = GLOB.golem_stack_food_types[GOLEM_FOOD_BLUESPACE],
-	/obj/item/stack/ore/bluespace_crystal/artificial = GLOB.golem_stack_food_types[GOLEM_FOOD_BLUESPACE],
-	/obj/item/stack/sheet/bluespace_crystal = GLOB.golem_stack_food_types[GOLEM_FOOD_BLUESPACE],
+	/obj/item/gibtonite = GOLEM_FOOD_GIBTONITE,
+	/obj/item/light = GOLEM_FOOD_LIGHTBULB,
+	/obj/item/stack/sheet/iron = GOLEM_FOOD_IRON,
+	/obj/item/stack/ore/iron = GOLEM_FOOD_IRON,
+	/obj/item/stack/sheet/glass = GOLEM_FOOD_GLASS,
+	/obj/item/stack/sheet/mineral/uranium = GOLEM_FOOD_URANIUM,
+	/obj/item/stack/ore/uranium = GOLEM_FOOD_URANIUM,
+	/obj/item/stack/sheet/mineral/silver = GOLEM_FOOD_SILVER,
+	/obj/item/stack/ore/silver = GOLEM_FOOD_SILVER,
+	/obj/item/stack/sheet/mineral/plasma = GOLEM_FOOD_PLASMA,
+	/obj/item/stack/ore/plasma = GOLEM_FOOD_PLASMA,
+	/obj/item/stack/sheet/mineral/gold = GOLEM_FOOD_GOLD,
+	/obj/item/stack/ore/gold = GOLEM_FOOD_GOLD,
+	/obj/item/stack/sheet/mineral/diamond = GOLEM_FOOD_DIAMOND,
+	/obj/item/stack/ore/diamond = GOLEM_FOOD_DIAMOND,
+	/obj/item/stack/sheet/mineral/titanium = GOLEM_FOOD_TITANIUM,
+	/obj/item/stack/ore/titanium = GOLEM_FOOD_TITANIUM,
+	/obj/item/stack/sheet/plasteel = GOLEM_FOOD_PLASTEEL,
+	/obj/item/stack/ore/bananium = GOLEM_FOOD_BANANIUM,
+	/obj/item/stack/sheet/mineral/bananium = GOLEM_FOOD_BANANIUM,
+	/obj/item/stack/ore/bluespace_crystal = GOLEM_FOOD_BLUESPACE,
+	/obj/item/stack/ore/bluespace_crystal/refined = GOLEM_FOOD_BLUESPACE,
+	/obj/item/stack/ore/bluespace_crystal/artificial = GOLEM_FOOD_BLUESPACE,
+	/obj/item/stack/sheet/bluespace_crystal = GOLEM_FOOD_BLUESPACE,
 ))
