@@ -19,7 +19,7 @@
 			to_chat(src, span_danger("Nerve gas in the air has put you in stasis!"))
 			apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
 			powerlevel = 0
-			ai_controller?.clear_blackboard_key(BB_RABID)
+			ai_controller?.clear_blackboard_key(BB_SLIME_RABID)
 	else if(has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we still have the status effect
 		to_chat(src, span_notice("You wake up from the stasis."))
 		remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)

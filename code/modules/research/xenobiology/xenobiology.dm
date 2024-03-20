@@ -300,7 +300,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin flashes red for a moment..."), span_warning("Your skin flashes red as you emit rage-inducing pheromones..."))
 			for(var/mob/living/basic/slime/slime in viewers(get_turf(user), null))
-				slime.ai_controller?.set_blackboard_key(BB_RABID, TRUE)
+				slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 				slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
 			return 600
 
@@ -665,7 +665,7 @@
 	if(target_slime.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	if(target_slime.ai_controller?.clear_blackboard_key(BB_RABID)) //Stops being rabid, but doesn't become truly docile.
+	if(target_slime.ai_controller?.clear_blackboard_key(BB_SLIME_RABID)) //Stops being rabid, but doesn't become truly docile.
 		to_chat(target_slime, span_warning("You absorb the potion, and your rabid hunger finally settles to a normal desire to feed."))
 		to_chat(user, span_notice("You feed the slime the potion, calming its rabid rage."))
 		//target_slime.ai_controller?.black

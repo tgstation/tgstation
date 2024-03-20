@@ -171,7 +171,7 @@
 ///Hilbert subtype
 /mob/living/basic/slime/hilbert/Initialize(mapload, new_colour, new_life_stage)
 	. = ..(mapload, /datum/slime_type/bluespace)
-	ai_controller?.set_blackboard_key(BB_RABID, TRUE)
+	ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 
 //Overriden base procs
 
@@ -385,21 +385,21 @@
 ///Makes the slime peaceful and content
 /mob/living/basic/slime/proc/set_pacified_behaviour()
 	hunger_disabled = TRUE
-	ai_controller?.set_blackboard_key(BB_RABID, FALSE)
-	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, TRUE)
+	ai_controller?.set_blackboard_key(BB_SLIME_RABID, FALSE)
+	ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_DISABLED, TRUE)
 	set_nutrition(SLIME_STARTING_NUTRITION)
 
 ///Makes the slime angry and hungry
 /mob/living/basic/slime/proc/set_enraged_behaviour()
 	hunger_disabled = FALSE
-	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, FALSE)
-	ai_controller?.set_blackboard_key(BB_RABID, TRUE)
+	ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_DISABLED, FALSE)
+	ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 
 ///Makes the slime hungry but mostly friendly
 /mob/living/basic/slime/proc/set_default_behaviour()
 	hunger_disabled = FALSE
-	ai_controller?.set_blackboard_key(BB_HUNGER_DISABLED, FALSE)
-	ai_controller?.set_blackboard_key(BB_RABID, FALSE)
+	ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_DISABLED, FALSE)
+	ai_controller?.set_blackboard_key(BB_SLIME_RABID, FALSE)
 
 #undef SLIME_EXTRA_SHOCK_COST
 #undef SLIME_EXTRA_SHOCK_THRESHOLD

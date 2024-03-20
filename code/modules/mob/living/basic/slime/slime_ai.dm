@@ -2,8 +2,8 @@
 	blackboard = list(
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_RABID = FALSE,
-		BB_HUNGER_DISABLED = FALSE,
+		BB_SLIME_RABID = FALSE,
+		BB_SLIME_HUNGER_DISABLED = FALSE,
 		BB_CURRENT_HUNTING_TARGET = null, // people whose energy we want to drain
 	)
 

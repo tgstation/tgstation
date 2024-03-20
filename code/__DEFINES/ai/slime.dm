@@ -1,9 +1,9 @@
 // Slime AI controller blackboard keys
 
 ///If true, the slime will not get hungry, nor hunt
-#define BB_HUNGER_DISABLED "BB_hunger_disabled"
+#define BB_SLIME_HUNGER_DISABLED "BB_SLIME_HUNGER_DISABLED"
 ///If true, the slime is rabid
-#define BB_RABID "BB_rabid"
+#define BB_SLIME_RABID "BB_SLIME_RABID"
 ///Are we an adult, or a child
 #define BB_SLIME_LIFE_STAGE "BB_slime_life_stage"
 ///Our evolve action
