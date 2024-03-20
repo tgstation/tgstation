@@ -495,8 +495,8 @@
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)
 	. = ..()
+	QDEL_NULL(owner.ai_controller)
 	if(old_ai_controller_type)
-		QDEL_NULL(owner.ai_controller)
 		owner.ai_controller = new old_ai_controller_type(owner)
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
