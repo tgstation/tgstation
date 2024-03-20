@@ -68,7 +68,7 @@
 		controller.queue_behavior(/datum/ai_behavior/activate_rune, BB_OCCUPIED_RUNE)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/occupied_rune, BB_OCCUPIED_RUNE, /obj/effect/rune/convert)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/occupied_rune, BB_OCCUPIED_RUNE, /obj/effect/rune/raise_dead)
 
 /datum/ai_behavior/find_and_set/occupied_rune
 

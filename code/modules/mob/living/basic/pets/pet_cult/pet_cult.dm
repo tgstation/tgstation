@@ -39,7 +39,7 @@
 	basic_mob_flags &= DEL_ON_DEATH
 	qdel(ai_controller)
 	ai_controller = new /datum/ai_controller/basic_controller/pet_cult(src)
-	var/datum/action/cooldown/spell/conjure/convert_rune/rune_ability = new(src)
+	var/datum/action/cooldown/spell/conjure/revive_rune/rune_ability = new(src)
 	rune_ability.Grant(src)
 	ai_controller.set_blackboard_key(BB_RUNE_ABILITY, rune_ability)
 	ai_controller.set_blackboard_key(BB_CULT_TEAM, team)
