@@ -305,7 +305,7 @@
 	ADD_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
 	RegisterSignal(my_thing, COMSIG_ITEM_DROPPED, PROC_REF(clear_trait))
 	to_chat(owner, span_warning("You feel a need to keep [my_thing] close."))
-	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(1 MINUTES, 5 MINUTES), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(1 MINUTES, 5 MINUTES), TIMER_DELETE_ME)
 
 /datum/brain_trauma/mild/possessive/proc/relax(obj/item/my_thing)
 	if(QDELETED(my_thing))
