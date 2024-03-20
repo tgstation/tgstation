@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Clients joining a round twice as a crewmember (via admins or otherwise) no longer break security/medical record consoles permanently."
