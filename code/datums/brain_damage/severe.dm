@@ -419,7 +419,7 @@
 	desc = "Patient seems to oxidise things around them at random, and seem to believe they are aiding a creature in climbing a mountin."
 	scan_desc = "C_)L(#_I_##M;B"
 	gain_text = span_warning("The rusted climb shall finish at the peak")
-	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
+	lose_text = span_notice("The rusted climb? What's that? An odd dream to be sure.")
 	random_gain = FALSE
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)

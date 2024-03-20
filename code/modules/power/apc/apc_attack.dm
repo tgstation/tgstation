@@ -221,7 +221,7 @@
 			return
 		stomach.drain_time = world.time + APC_DRAIN_TIME
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "draining power"), alert_timer_duration)
-		if(do_after(user, APC_DRAIN_TIME, target = src))
+		while(do_after(user, APC_DRAIN_TIME, target = src))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
 			balloon_alert(ethereal, "received charge")
@@ -243,9 +243,10 @@
 		balloon_alert(ethereal, "can't transfer power!")
 		return
 	if(istype(stomach))
-		balloon_alert(ethereal, "transferred power")
-		stomach.adjust_charge(-APC_POWER_GAIN)
-		cell.give(APC_POWER_GAIN)
+		while(do_after(user, APC_DRAIN_TIME, target = src))
+			balloon_alert(ethereal, "transferred power")
+			stomach.adjust_charge(-APC_POWER_GAIN)
+			cell.give(APC_POWER_GAIN)
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 
@@ -288,7 +289,7 @@
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(isAdminGhostAI(user))
 		return TRUE
-	if(!user.has_unlimited_silicon_privilege)
+	if(!HAS_SILICON_ACCESS(user))
 		return TRUE
 	var/mob/living/silicon/ai/AI = user
 	var/mob/living/silicon/robot/robot = user

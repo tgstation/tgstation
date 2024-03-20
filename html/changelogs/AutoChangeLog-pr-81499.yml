@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Valentines Day now polls all players for candidates when it triggers rather than forcing all players to be a Valentine. Consent is important."
-  - rscadd: "Valentine silicons now gain special laws pertaining to their date."
-  - qol: "Valentines Cards are now paper, so you can write on them, stamp them, or burn them."
-  - qol: "Valentine's roundend report no longer takes up a massive amount of space and also no longer sound so, so weird."

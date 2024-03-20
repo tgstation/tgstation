@@ -71,7 +71,7 @@
 		if(do_after(user,100, target = src))
 			TeleporterSend()
 
-/obj/machinery/abductor/console/ui_status(mob/user)
+/obj/machinery/abductor/console/ui_status(mob/user, datum/ui_state/state)
 	if(!isabductor(user) && !isobserver(user))
 		return UI_CLOSE
 	return ..()

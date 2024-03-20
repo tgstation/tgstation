@@ -151,3 +151,26 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(
 	/mob/living/simple_animal/hostile/megafauna/colossus = 2,
 	/mob/living/simple_animal/hostile/megafauna/dragon = 4,
 ))
+
+/// List of how many minerals spawned based on proximity to an ore vent.
+GLOBAL_LIST_INIT(post_ore_random, list(
+	"[ORE_WALL_FAR]" = 0,
+	"[ORE_WALL_LOW]" = 0,
+	"[ORE_WALL_MEDIUM]" = 0,
+	"[ORE_WALL_HIGH]" = 0,
+	"[ORE_WALL_VERY_HIGH]" = 0,
+))
+/// List of how many minerals spawned randomly off of mining Z-levels, and at what quantity.
+GLOBAL_LIST_INIT(post_ore_manual, list(
+	"[ORE_WALL_FAR]" = 0,
+	"[ORE_WALL_LOW]" = 0,
+	"[ORE_WALL_MEDIUM]" = 0,
+	"[ORE_WALL_HIGH]" = 0,
+	"[ORE_WALL_VERY_HIGH]" = 0,
+))
+/// List of how many ore vents spawned, and of what size.
+GLOBAL_LIST_INIT(ore_vent_sizes, list(
+	LARGE_VENT_TYPE = 0,
+	MEDIUM_VENT_TYPE = 0,
+	SMALL_VENT_TYPE = 0,
+))

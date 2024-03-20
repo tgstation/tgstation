@@ -62,6 +62,7 @@
 		poll_ignore_key = POLL_IGNORE_REGAL_RAT,\
 		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+		poll_chat_border_icon = /obj/item/food/cheese/wedge,\
 	)
 
 	var/static/list/innate_actions = list(

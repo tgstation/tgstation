@@ -39,9 +39,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			qdel(src)
 			return
 		bodypart_overlay = new()
-		if(carbon_parent.bodytype & BODYTYPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
+		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "creampie_lizard"
-		else if(my_head.bodytype & BODYTYPE_MONKEY)
+		else if(my_head.bodyshape & BODYSHAPE_MONKEY)
 			bodypart_overlay.icon_state = "creampie_monkey"
 		else
 			bodypart_overlay.icon_state = "creampie_human"

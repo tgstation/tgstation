@@ -71,7 +71,7 @@
 #define LIGHTING_FORCE_UPDATE 3
 
 #define FLASH_LIGHT_DURATION 2
-#define FLASH_LIGHT_POWER 3
+#define FLASH_LIGHT_POWER 2
 #define FLASH_LIGHT_RANGE 3.8
 
 // Emissive blocking.

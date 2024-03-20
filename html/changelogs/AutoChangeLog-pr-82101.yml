@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Vending machines now show the correct vending refill name when examine and not full."

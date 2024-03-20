@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "forcefully pushing disposal outlets and chutes deconstructs them instead of making them behave like budget eigenstatium lockers"

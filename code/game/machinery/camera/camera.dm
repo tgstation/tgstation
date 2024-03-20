@@ -185,7 +185,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
-	emp_act(EMP_LIGHT, reset_time = disrupt_duration)
+	//lasts twice as much so we don't have to constantly shoot cameras just to be S T E A L T H Y
+	emp_act(EMP_LIGHT, reset_time = disrupt_duration * 2)
 	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)

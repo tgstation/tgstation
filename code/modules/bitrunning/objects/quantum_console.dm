@@ -56,7 +56,7 @@
 	if(isnull(server))
 		return data
 
-	data["available_domains"] = server.get_available_domains()
+	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points)
 	data["avatars"] = server.get_avatar_data()
 
 	return data

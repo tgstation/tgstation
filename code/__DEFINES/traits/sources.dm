@@ -34,6 +34,8 @@
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
 
+#define VENDING_MACHINE_TRAIT "vending_machine"
+
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 /// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
@@ -86,6 +88,8 @@
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with ctf
 #define CTF_TRAIT "ctf"
+/// Trait associated with deathmatch
+#define DEATHMATCH_TRAIT "deathmatch"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes

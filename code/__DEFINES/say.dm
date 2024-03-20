@@ -55,11 +55,14 @@
 
 #define MODE_MAFIA "mafia"
 
+/// Applies singing characters to the message
 #define MODE_SING "sing"
-
+/// A custom say emote is being supplied [value = the emote]
 #define MODE_CUSTOM_SAY_EMOTE "custom_say"
-
+/// No message is following, just emote
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
+/// Message is being relayed through another object
+#define MODE_RELAY "relayed"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -72,11 +75,14 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
-#define SPAN_HELIUM "small"
+#define SPAN_SMALL_VOICE "small"
 
 //bitflag #defines for return value of the radio() proc.
+/// Makes the message use italics
 #define ITALICS (1<<0)
+/// Reduces the range of the message to 1
 #define REDUCE_RANGE (1<<1)
+/// Stops any actual message from being sent
 #define NOPASS (1<<2)
 
 /// Range to hear normal messages

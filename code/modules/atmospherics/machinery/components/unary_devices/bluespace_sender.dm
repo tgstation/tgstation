@@ -4,6 +4,7 @@
 	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"
 	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 	density = TRUE
 	max_integrity = 300

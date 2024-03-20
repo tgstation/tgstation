@@ -143,6 +143,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE
 
+/mob/living/carbon/alien/adult/get_butt_sprite()
+	return BUTT_SPRITE_XENOMORPH
+
 // Aliens can touch acid
 /mob/living/carbon/alien/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
 	return TRUE

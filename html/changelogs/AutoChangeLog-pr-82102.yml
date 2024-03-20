@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - bugfix: "basic mob pirates no longer drop fake energy weapon lenses when shooting you to death with lasers."

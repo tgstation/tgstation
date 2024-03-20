@@ -35,6 +35,9 @@
 	///if true, the platform cannot be manually moved.
 	var/controls_locked = FALSE
 
+	/// probability of being thrown hard during an emergency stop
+	var/throw_chance = 17.5
+
 /datum/transport_controller/linear/New(obj/structure/transport/linear/transport_module)
 	transport_id = transport_module.transport_id
 	create_modular_set = transport_module.create_modular_set

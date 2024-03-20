@@ -54,6 +54,8 @@
 /datum/element/basic_eating/proc/try_eating(mob/living/eater, atom/target)
 	if(!is_type_in_list(target, food_types))
 		return FALSE
+	if(SEND_SIGNAL(eater, COMSIG_MOB_PRE_EAT, target) & COMSIG_MOB_CANCEL_EAT)
+		return FALSE
 	var/eat_verb
 	if(drinking)
 		eat_verb = pick("slurp","sip","guzzle","drink","quaff","suck")
@@ -79,6 +81,7 @@
 	return TRUE
 
 /datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target)
+	SEND_SIGNAL(eater, COMSIG_MOB_ATE)
 	if(drinking)
 		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	else

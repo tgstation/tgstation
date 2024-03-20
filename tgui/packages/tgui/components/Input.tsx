@@ -150,17 +150,6 @@ export function Input(props: Props) {
     }, 1);
   }, []);
 
-  /** Updates the initial value on props change */
-  useEffect(() => {
-    const input = inputRef.current;
-    if (!input) return;
-
-    const newValue = toInputValue(value);
-    if (input.value === newValue) return;
-
-    input.value = newValue;
-  }, [value]);
-
   return (
     <Box
       className={classes([

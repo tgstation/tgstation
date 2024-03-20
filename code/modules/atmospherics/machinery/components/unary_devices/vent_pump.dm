@@ -14,6 +14,7 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "uvent"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	// vents are more complex machinery and so are less resistant to damage
 	max_integrity = 100
