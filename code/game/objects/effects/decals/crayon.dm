@@ -44,19 +44,19 @@
 
 ///Common crayon decals in map.
 /obj/effect/decal/cleanable/crayon/rune4
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
+	icon_state = "rune4"
+	paint_colour = COLOR_CRAYON_RED
 
 /obj/effect/decal/cleanable/crayon/rune2
 	icon_state = "rune2"
 
 /obj/effect/decal/cleanable/crayon/x
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+	icon_state = "x"
+	name = "graffiti"
+	paint_colour = COLOR_CRAYON_ORANGE
 
 /obj/effect/decal/cleanable/crayon/l
-	icon_state = "l";
+	icon_state = "l"
 
 /obj/effect/decal/cleanable/crayon/i
 	icon_state = "i"
@@ -65,5 +65,5 @@
 	icon_state = "e"
 
 /obj/effect/decal/cleanable/crayon/i/orange
-	name = "graffiti";
-	paint_colour = "#FF9300";
+	name = "graffiti"
+	paint_colour = COLOR_CRAYON_ORANGE
