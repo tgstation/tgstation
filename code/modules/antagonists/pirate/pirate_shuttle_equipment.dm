@@ -271,6 +271,10 @@
 			. = TRUE
 		if("send")
 			start_sending()
+			//We ensure that the holding facility is loaded in time in case we're selling mobs.
+			//This isn't the prettiest place to put it, but 'start_sending()' is also used by civilian bounty computers
+			//And we don't need them to also load the holding facility.
+			SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 			. = TRUE
 		if("stop")
 			stop_sending()
@@ -283,12 +287,9 @@
 
 	status_report = "Predicted value: "
 	var/value = 0
-	var/datum/export_report/report = new
+
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
-	for(var/atom/movable/AM in get_turf(pad))
-		if(AM == pad)
-			continue
-		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = report, ignore_typecache = nosell_typecache)
+	var/datum/export_report/report = pirate_export_loop(pad)
 
 	for(var/datum/export/exported_datum in report.total_amount)
 		status_report += exported_datum.total_printout(report,notes = FALSE)
@@ -303,13 +304,8 @@
 	if(!sending)
 		return
 
-	var/datum/export_report/report = new
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
-
-	for(var/atom/movable/item_on_pad in get_turf(pad))
-		if(item_on_pad == pad)
-			continue
-		export_item_and_contents(item_on_pad, apply_elastic = FALSE, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache)
+	var/datum/export_report/report = pirate_export_loop(pad, dry_run = FALSE)
 
 	status_report = "Sold: "
 	var/value = 0
@@ -340,6 +336,33 @@
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	sending = FALSE
+
+///The loop that calculates the value of stuff on a pirate pad, or plain sell them if dry_run is FALSE.
+/obj/machinery/computer/piratepad_control/proc/pirate_export_loop(obj/machinery/piratepad/pad, dry_run = TRUE)
+	var/datum/export_report/report = new
+	for(var/atom/movable/item_on_pad as anything in get_turf(pad))
+		if(item_on_pad == pad)
+			continue
+		var/list/hidden_mobs = list()
+		var/skip_movable = FALSE
+		var/list/item_contents = item_on_pad.get_all_contents()
+		for(var/atom/movable/thing in reverse_range(item_contents))
+			///Don't destroy/sell stuff like the captain's laser gun, or borgs.
+			if(thing.resistance_flags & INDESTRUCTIBLE || is_type_in_typecache(thing, nosell_typecache))
+				skip_movable = TRUE
+				break
+			if(isliving(thing))
+				hidden_mobs += thing
+		if(skip_movable)
+			continue
+		for(var/mob/living/hidden as anything in hidden_mobs)
+			///Sell mobs, but leave their contents intact.
+			export_single_item(hidden, apply_elastic = FALSE, dry_run = dry_run, external_report = report)
+		///there are still licing mobs inside that item. Stop, don't sell it ffs.
+		if(locate(/mob/living) in item_on_pad.get_all_contents())
+			continue
+		export_item_and_contents(item_on_pad, apply_elastic = FALSE, dry_run = dry_run, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache)
+	return report
 
 /// Prepares to sell the items on the pad
 /obj/machinery/computer/piratepad_control/proc/start_sending()
@@ -391,7 +414,7 @@
 
 /datum/export/pirate/ransom/get_cost(atom/movable/exported_item)
 	var/mob/living/carbon/human/ransomee = exported_item
-	if(ransomee.stat != CONSCIOUS || !ransomee.mind) //mint condition only
+	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
 	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
@@ -399,6 +422,33 @@
 		return 3000
 	else
 		return 1000
+
+/datum/export/pirate/ransom/sell_object(mob/living/carbon/human/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
+	. = ..()
+	if(. == EXPORT_NOT_SOLD)
+		return
+	var/turf/picked_turf = pick(GLOB.holdingfacility)
+	sold_item.forceMove(picked_turf)
+	var/mob_cost = get_cost(sold_item)
+	sold_item.process_capture(mob_cost, mob_cost * 1.2)
+	do_sparks(8, FALSE, sold_item)
+	playsound(picked_turf, 'sound/weapons/emitter2.ogg', 25, TRUE)
+	sold_item.flash_act()
+	sold_item.adjust_confusion(10 SECONDS)
+	sold_item.adjust_dizzy(10 SECONDS)
+	addtimer(src, CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
+	to_chat(sold_item, span_hypnophrase("A million voices echo in your head... <i>\"Yaarrr, thanks for the booty, landlubber. \
+		You will be ransomed back to your station, so it's only a matter of time before we ship you back...</i>"))
+
+	return EXPORT_SOLD_DONT_DELETE
+
+///Send them back to the station after a while.
+/datum/export/pirate/ransom/proc/send_back_to_station(mob/living/prisoner)
+	///Deleted or already bailed out of the place.
+	if(QDELETED(prisoner) || !istype(get_area(prisoner), /area/centcom/central_command_areas/holding))
+		return
+	var/obj/structure/closet/supplypod/back_to_station/return_pod = new()
+	return_pod.return_from_capture(prisoner)
 
 /datum/export/pirate/parrot
 	cost = 2000

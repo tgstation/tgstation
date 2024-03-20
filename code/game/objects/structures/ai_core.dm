@@ -441,4 +441,9 @@ That prevents a few funky behaviors.
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
 	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
 
+/obj/item/circuitboard/aicore/Initialize(mapload)
+	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		return INITIALIZE_HINT_QDEL
+
 #undef AI_CORE_BRAIN

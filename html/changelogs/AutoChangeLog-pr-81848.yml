@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "You can talk via plushies, action figures, and toy mechs via `.l` or `.r`, same as a ventriloquist dummy or decapitated dead"
-  - rscdel: "Talking via a plushie, action figure, toy mech, ventriloqiest dummy, decapitated head, or marionette won't transmit over open mic comms"
-  - refactor: "Some say refactor and code cleanup. Vending machines now properly respect being shut up. Report any oddities."

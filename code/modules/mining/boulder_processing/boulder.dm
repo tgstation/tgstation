@@ -108,6 +108,7 @@
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, continued = FALSE)
 	var/process_speed = 0
 	//Handle weapon conditions.
+	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
 	if(weapon)
 		if(HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
 			durability = 0
@@ -118,25 +119,24 @@
 
 	// Handle user conditions/override conditions.
 	else if (override_speed_multiplier || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		if(user)
-			if(HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
-				durability = 0
+		if(HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+			durability = 0
 		else if(override_speed_multiplier)
 			process_speed = override_speed_multiplier
 		else
 			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
 		if(!continued)
-			to_chat(user, span_notice("You scrape away at \the [src]... speed is [process_speed]."))
+			to_chat(user, span_notice("You scrape away at \the [src]..."))
 	else
 		CRASH("No weapon, acceptable user, or override speed multiplier passed to manual_process()")
 	if(durability > 0)
-		if(!do_after(user, (2 * process_speed SECONDS), target = src))
+		if(!do_after(user, (2 * process_speed * skill_modifier SECONDS), target = src))
 			return
 		if(!user.Adjacent(src))
 			return
 		durability--
-		user.apply_damage(4, STAMINA)
+		user.apply_damage(4 * skill_modifier, STAMINA)
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))

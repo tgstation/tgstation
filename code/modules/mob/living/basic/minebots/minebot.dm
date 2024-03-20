@@ -25,6 +25,9 @@
 	death_message = "blows apart!"
 	light_system = OVERLAY_LIGHT
 	light_range = 6
+	// I want this to be a bit more dim, for vibes
+	light_power = 0.6
+	light_color = "#ff9933"
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
@@ -50,13 +53,7 @@
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
-	AddComponent(\
-		/datum/component/tameable,\
-		food_types = list(/obj/item/stack/ore),\
-		tame_chance = 100,\
-		bonus_tame_chance = 5,\
-		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
-	)
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 100, bonus_tame_chance = 5)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/minedrone/toggle_light = BB_MINEBOT_LIGHT_ABILITY,
@@ -151,7 +148,7 @@
 		return ACCESS_ALLOWED
 	return ACCESS_DISALLOWED
 
-/mob/living/basic/mining_drone/proc/activate_bot()
+/mob/living/basic/mining_drone/tamed(mob/living/tamer, atom/food)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/mining_drone/death(gibbed)

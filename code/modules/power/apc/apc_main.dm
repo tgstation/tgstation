@@ -205,6 +205,7 @@
 	register_context()
 	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
@@ -234,6 +235,11 @@
 	if(terminal)
 		disconnect_terminal()
 	return ..()
+
+/obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	energy_fail(disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
@@ -326,7 +332,7 @@
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = HAS_SILICON_ACCESS(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
@@ -401,11 +407,11 @@
 /obj/machinery/power/apc/ui_act(action, params)
 	. = ..()
 
-	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
+	if(. || !can_use(usr, 1) || (locked && !HAS_SILICON_ACCESS(usr) && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
 					to_chat(usr, span_warning("The APC does not respond to the command!"))
 				else
@@ -442,7 +448,7 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr))
 				overload_lighting()
 				. = TRUE
 		if("hack")

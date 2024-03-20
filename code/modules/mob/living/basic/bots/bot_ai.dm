@@ -208,14 +208,10 @@
 	action_cooldown = 30 SECONDS
 
 /datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	for(var/mob/living/robot in oview(search_range, controller.pawn))
-		if(istype(robot, /mob/living/simple_animal/bot/secbot))
-			return robot
-		if(!istype(robot, /mob/living/basic/bot/cleanbot))
+	for(var/mob/living/nearby_mob in oview(search_range, controller.pawn))
+		if(!HAS_TRAIT(nearby_mob, TRAIT_COMMISSIONED))
 			continue
-		var/mob/living/basic/bot/cleanbot/potential_bot = robot
-		if(potential_bot.comissioned)
-			return potential_bot
+		return nearby_mob
 	return null
 
 /datum/ai_behavior/salute_authority

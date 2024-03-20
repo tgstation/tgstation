@@ -219,7 +219,10 @@
 		delay *= FREQUENT_USE_DEBUFF_MULTIPLIER
 
 	current_active_effects += 1
-	_rcd_create_effect(target, user, delay, rcd_results)
+	var/target_name = target.name //Store the name before it gets mutated due to deconstruction.
+	var/target_path = target.type
+	if(_rcd_create_effect(target, user, delay, rcd_results))
+		log_tool("used RCD with design path: \"[rcd_results["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT ? "deconstruction" : rcd_results["[RCD_DESIGN_PATH]"]]\" with delay: \"[delay / (1 SECONDS)]s\" at target: \"[target_name] ([target_path])\" in location: \"[AREACOORD(target)]\".", user)
 	current_active_effects -= 1
 
 /**

@@ -98,15 +98,12 @@
 	desc = "MI13 designed one-use radio for calling immediate backup. Have no regards for safety of whom it summons - they are all inferior clones from Interdyne's genebanks anyway."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
-	var/borg_to_spawn
 	/// The name of the special role given to the recruit
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
-	/// The outfit given to plasmaman operatives
-	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 	/// The antag datum applied
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
+	var/datum/antagonist/nukeop/reinforcement/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
 	/// Do we use a random subtype of the outfit?
@@ -133,7 +130,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = "syndicate [borg_to_spawn ? "[borg_to_spawn] cyborg":"operative"]", amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -156,7 +153,6 @@
 		nukie.forceMove(locate(1,1,1))
 
 	antag_datum = new()
-	antag_datum.send_to_spawnpoint = FALSE
 
 	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
@@ -182,18 +178,20 @@
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "gangtool-red"
+	antag_datum = /datum/antagonist/nukeop/reinforcement/cyborg
+	special_role_name = "Syndicate Cyborg"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"
-	borg_to_spawn = "Assault"
+	special_role_name = ROLE_SYNDICATE_ASSAULTBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	name = "syndicate medical beacon"
-	borg_to_spawn = "Medical"
+	special_role_name = ROLE_SYNDICATE_MEDBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	name = "syndicate saboteur beacon"
-	borg_to_spawn = "Saboteur"
+	special_role_name = ROLE_SYNDICATE_SABOBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/borg
@@ -201,13 +199,15 @@
 	if(!creator_op)
 		return
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	switch(borg_to_spawn)
-		if("Medical")
+	switch(special_role_name)
+		if(ROLE_SYNDICATE_MEDBORG)
 			borg = new /mob/living/silicon/robot/model/syndicate/medical()
-		if("Saboteur")
+		if(ROLE_SYNDICATE_SABOBORG)
 			borg = new /mob/living/silicon/robot/model/syndicate/saboteur()
+		if(ROLE_SYNDICATE_ASSAULTBORG)
+			borg = new /mob/living/silicon/robot/model/syndicate()
 		else
-			borg = new /mob/living/silicon/robot/model/syndicate() //Assault borg by default
+			stack_trace("Unknown cyborg type '[special_role_name]' could not be found by [src]!")
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
@@ -225,10 +225,8 @@
 
 	borg.key = C.key
 
-	var/datum/antagonist/nukeop/new_borg = new()
-	new_borg.send_to_spawnpoint = FALSE
-	borg.mind.add_antag_datum(new_borg,creator_op.nuke_team)
-	borg.mind.special_role = "Syndicate Cyborg"
+	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	borg.mind.special_role = special_role_name
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 

@@ -1,11 +1,9 @@
-
-//
 /**
  * Returns TRUE if this mob has sufficient access to use this object
  *
  * * accessor - mob trying to access this object, !!CAN BE NULL!! because of telekiesis because we're in hell
  */
-/obj/proc/allowed(mob/accessor)
+/atom/movable/proc/allowed(mob/accessor)
 	var/result_bitflags = SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor)
 	if(result_bitflags & COMPONENT_OBJ_ALLOW)
 		return TRUE
@@ -18,7 +16,10 @@
 		return TRUE
 	if(isnull(accessor)) //likely a TK user.
 		return FALSE
-	if(issilicon(accessor))
+	if(isAdminGhostAI(accessor))
+		//Access can't stop the abuse
+		return TRUE
+	if(HAS_SILICON_ACCESS(accessor))
 		if(ispAI(accessor))
 			return FALSE
 		if(!(ROLE_SYNDICATE in accessor.faction))
@@ -27,9 +28,6 @@
 			if(onSyndieBase() && loc != accessor)
 				return FALSE
 		return TRUE //AI can do whatever it wants
-	if(isAdminGhostAI(accessor))
-		//Access can't stop the abuse
-		return TRUE
 	//If the mob has the simple_access component with the requried access, we let them in.
 	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
 		return TRUE
@@ -52,23 +50,11 @@
 			return check_access_list(big_stompy_robot.accesses)
 	return FALSE
 
-/obj/item/proc/GetAccess()
-	return list()
-
-/obj/item/proc/GetID()
-	return null
-
-/obj/item/proc/RemoveID()
-	return null
-
-/obj/item/proc/InsertID()
-	return FALSE
-
 // Check if an item has access to this object
-/obj/proc/check_access(obj/item/I)
+/atom/movable/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
 
-/obj/proc/check_access_list(list/access_list)
+/atom/movable/proc/check_access_list(list/access_list)
 	if(!length(req_access) && !length(req_one_access))
 		return TRUE
 
@@ -86,20 +72,14 @@
 		return FALSE
 	return TRUE
 
-/*
- * Checks if this packet can access this device
- *
- * Normally just checks the access list however you can override it for
- * hacking proposes or if wires are cut
- *
- * Arguments:
- * * passkey - passkey from the datum/netdata packet
- */
-/obj/proc/check_access_ntnet(list/passkey)
-	return check_access_list(passkey)
+/obj/item/proc/GetAccess()
+	return list()
 
-/// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
-/obj/item/proc/get_sechud_job_icon_state()
-	var/obj/item/card/id/id_card = GetID()
+/obj/item/proc/GetID()
+	return null
 
-	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID
+/obj/item/proc/RemoveID()
+	return null
+
+/obj/item/proc/InsertID()
+	return FALSE

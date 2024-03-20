@@ -289,7 +289,7 @@
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(isAdminGhostAI(user))
 		return TRUE
-	if(!user.has_unlimited_silicon_privilege)
+	if(!HAS_SILICON_ACCESS(user))
 		return TRUE
 	var/mob/living/silicon/ai/AI = user
 	var/mob/living/silicon/robot/robot = user
