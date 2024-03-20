@@ -15,7 +15,7 @@
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_slime_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/slime,
 		/datum/ai_planning_subtree/random_speech/slime,
 	)
 
@@ -69,6 +69,14 @@
 	var/mob/living/living_pawn = controller.pawn
 	if(living_pawn.buckled)
 		controller.clear_blackboard_key(hunting_target_key)
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/slime
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/slime/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if(living_pawn.buckled)
+		return
+	return ..()
 
 /datum/ai_planning_subtree/random_speech/slime
 	speech_chance = 1

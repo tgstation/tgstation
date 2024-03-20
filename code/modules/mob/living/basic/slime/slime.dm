@@ -141,14 +141,15 @@
 	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(slime_pre_attack))
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand) )
 
 	ai_controller.set_blackboard_key(BB_SLIME_EVOLVE, evolve_action)
 	ai_controller.set_blackboard_key(BB_SLIME_REPRODUCE, reproduce_action)
 
 /mob/living/basic/slime/Destroy()
 
-	UnregisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+	UnregisterSignal(src, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_ATOM_ATTACK_HAND))
 
 	QDEL_NULL(evolve_action)
 	QDEL_NULL(reproduce_action)
@@ -259,12 +260,6 @@
 
 //New procs
 
-
-///Handles the adverse effects of water on slimes
-/mob/living/basic/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
-	stop_feeding()
-
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
 	life_stage = new_life_stage
@@ -304,7 +299,7 @@
 	regenerate_icons()
 
 ///Handles slime attacking restrictions, and any extra effects that would trigger
-/mob/living/basic/slime/proc/slime_pre_attack(mob/living/basic/slime/our_slime, atom/target, proximity, modifiers)
+/mob/living/basic/slime/proc/on_slime_pre_attack(mob/living/basic/slime/our_slime, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(target) && target != src && usr == src)

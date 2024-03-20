@@ -5,25 +5,23 @@
 		return
 	powerlevel = 0 // oh no, the power!
 
+///If a slime is attack with an empty hand, shoves included, try to wrestle them off the mob they are on
+/mob/living/basic/slime/proc/on_attack_hand(mob/living/basic/slime/defender_slime, mob/living/attacker)
+	SIGNAL_HANDLER
 
-/mob/living/basic/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(isnull(buckled))
-		return ..()
+		return
 
-	user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-	if(buckled == user ? prob(60) : prob(30)) //its easier to remove the slime from yourself
-		user.visible_message(span_warning("[user] attempts to wrestle \the [name] off [buckled == user ? "" : buckled] !"), \
-		span_danger("[buckled == user ? "You attempt" : (user + " attempts") ] to wrestle \the [name] off [buckled == user ? "" : buckled]!"))
+	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
+		attacker.visible_message(span_warning("[attacker] attempts to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled] !"), \
+		span_danger("[buckled == attacker ? "You attempt" : (attacker + " attempts") ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
 
-	user.visible_message(span_warning("[user] manages to wrestle \the [name] off!"), span_notice("You manage to wrestle \the [name] off!"))
+	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
-	//discipline_slime
-	stop_feeding()
-
-	return
+	defender_slime.discipline_slime()
 
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
 
@@ -43,11 +41,10 @@
 			to_chat(user, span_danger("[attacking_item] passes right through [src]!"))
 			return
 
-//SLIMETODO: do we keep this? Move it to an ondamage component?
-/*	if(attacking_item.force >= 3)
+	if(attacking_item.force >= 3)
 		var/force_effect =  attacking_item.force * (life_stage == SLIME_LIFE_STAGE_BABY ? 2 : 1)
 		if(prob(10 + force_effect))
-			discipline_slime(user) */
+			discipline_slime()
 
 	if(!istype(attacking_item, /obj/item/storage/bag/xeno))
 		return ..()
@@ -81,3 +78,14 @@
 		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 	return
 
+///Handles the adverse effects of water on slimes
+/mob/living/basic/slime/proc/apply_water()
+	adjustBruteLoss(rand(15,20))
+	discipline_slime()
+
+///Stops the slime from feeding, and if the slime is a baby
+/mob/living/basic/slime/proc/discipline_slime()
+	stop_feeding(silent = TRUE)
+	if(life_stage == SLIME_LIFE_STAGE_BABY && prob(80))
+		ai_controller?.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		ai_controller?.clear_blackboard_key(BB_CURRENT_HUNTING_TARGET)
