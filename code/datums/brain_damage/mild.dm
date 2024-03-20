@@ -310,8 +310,8 @@
 /datum/brain_trauma/mild/possessive/proc/relax(obj/item/my_thing)
 	if(QDELETED(my_thing))
 		return
-
-	to_chat(owner, span_notice("You feel more comfortable letting go of [my_thing]."))
+	if(HAS_TRAIT_FROM_ONLY(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)) // in case something else adds nodrop, somehow?
+		to_chat(owner, span_notice("You feel more comfortable letting go of [my_thing]."))
 	clear_trait(my_thing)
 
 /datum/brain_trauma/mild/possessive/proc/clear_trait(obj/item/my_thing)
