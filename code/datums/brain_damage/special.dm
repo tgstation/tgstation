@@ -507,9 +507,7 @@
 	if(!SPT_PROB(3, seconds_per_tick))
 		return
 
-	if(prob(75))
-		owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
-
+	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
 		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
@@ -518,5 +516,4 @@
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
-	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, FALSE)
 	to_chat(owner, span_green("The urge subsides."))
