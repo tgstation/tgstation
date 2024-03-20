@@ -38,7 +38,7 @@
 #define STEP_SOUND_PRIORITY "step_sound_priority"
 
 /*
-Below is how the foolowing lists are defined
+Below is how the following lists are defined
 
 id = list(
 list(sounds),
