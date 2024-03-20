@@ -35,6 +35,15 @@
 	if(SPT_PROB(7.5, seconds_per_tick))
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
+	if(nutrition < starve_nutrition)
+		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
+
+	else if(nutrition < hunger_nutrition || (nutrition < grow_nutrition && SPT_PROB(25, seconds_per_tick)) )
+		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
+
+	else
+		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_NONE)
+
 	if(nutrition == 0) //adjust nutrition ensures it can't go below 0
 		if(SPT_PROB(50, seconds_per_tick))
 			adjustBruteLoss(rand(0,5))

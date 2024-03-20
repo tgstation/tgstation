@@ -33,23 +33,40 @@
 	hunt_targets = list(/mob/living)
 	hunt_range = 7
 
-
 /datum/ai_planning_subtree/find_and_hunt_target/find_slime_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 	if(living_pawn.buckled)
 		return FALSE
 
+	//Slimes don't want to hunt if they are neither rabid, hungry or feeling attack right now
+	if( (controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_NONE) && !controller.blackboard[BB_SLIME_RABID] && isnull(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+		return FALSE
+
+	. = ..()
+
 // Check if the slime can drain the target
-/datum/ai_behavior/find_hunt_target/find_slime_food/valid_dinner(mob/living/basic/slime/hunter, mob/living/dinner, radius)
+/datum/ai_behavior/find_hunt_target/find_slime_food/valid_dinner(mob/living/basic/slime/hunter, mob/living/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
 
 	if(REF(dinner) in hunter.faction) //Don't eat our friends...
 		return
 
-	if(!hunter.can_feed_on(dinner)) //Are they tasty to slimes?
+	if(!hunter.can_feed_on(dinner, check_adjacenct = FALSE)) //Are they tasty to slimes?
 		return
 
-	return can_see(hunter, dinner, radius)
+	//If we are retaliating on someone edible, lets eat them instead
+	if(dinner == controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+		return can_see(hunter, dinner, radius)
+
+	//We are so hungry, lets eat them
+	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_STARVING && controller.blackboard[BB_SLIME_RABID])
+		return can_see(hunter, dinner, radius)
+
+	//A bit pickier
+	if((islarva(dinner) || ismonkey(dinner)) || (ishuman(dinner) || isalienadult(dinner) && SPT_PROB(2.5, seconds_per_tick)))
+		return can_see(hunter, dinner, radius)
+
+	//We are not THAT hungry
+	return FALSE
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/slime
 

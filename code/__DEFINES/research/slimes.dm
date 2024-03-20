@@ -6,6 +6,9 @@
 #define SLIME_MAX_POWER 10
 
 #define SLIME_STARTING_NUTRITION 700
+#define SLIME_HUNGER_NONE 0
+#define SLIME_HUNGER_HUNGRY 1
+#define SLIME_HUNGER_STARVING 2
 
 // Just slimin' here.
 // Warning: These defines are used for slime icon states, so if you
