@@ -298,7 +298,7 @@
 	if(!SPT_PROB(5, seconds_per_tick))
 		return
 
-	var/obj/item/my_thing = pick(owner.get_active_held_item(), owner.get_inactive_held_item())
+	var/obj/item/my_thing = pick(owner.held_items) // can pick null, that's fine
 	if(isnull(my_thing) || HAS_TRAIT(my_thing, TRAIT_NODROP) || (my_thing.item_flags & (HAND_ITEM|ABSTRACT)))
 		return
 
