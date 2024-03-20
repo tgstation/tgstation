@@ -953,7 +953,7 @@
 	resistance_flags = 64
 	},
 /obj/item/clothing/head/fedora/white{
-	color = COLOR_RED_LIGHT;
+	color = "#FF3333";
 	name = "red fedora"
 	},
 /turf/open/floor/carpet/red,

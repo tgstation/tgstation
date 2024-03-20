@@ -5123,7 +5123,7 @@
 "TJ" = (
 /obj/structure/ladder/unbreakable/rune{
 	alpha = 0;
-	color = COLOR_BLACK;
+	color = "#000000";
 	desc = "It is time to bust out of this joint";
 	height = 1;
 	id = "whatkindofnerdusesmapmakertocheattheirwaytoateleportrune";

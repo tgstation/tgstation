@@ -51,19 +51,19 @@
 /area/ruin/space/has_grav)
 "l" = (
 /obj/machinery/power/shuttle_engine/heater{
-	color = COLOR_YELLOW;
+	color = "#FFFF00";
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/west{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /turf/open/floor/plating/airless{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /area/ruin/space/has_grav)
 "m" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
-	color = COLOR_YELLOW;
+	color = "#FFFF00";
 	dir = 4
 	},
 /turf/template_noop,
@@ -102,19 +102,19 @@
 /area/ruin/space/has_grav)
 "t" = (
 /obj/structure/grille{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /obj/structure/window/reinforced/spawner/directional/south{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /obj/structure/window/reinforced/spawner/directional/east{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /obj/structure/window/reinforced/spawner/directional/west{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /turf/open/floor/plating/airless{
-	color = COLOR_YELLOW
+	color = "#FFFF00"
 	},
 /area/ruin/space/has_grav)
 "u" = (

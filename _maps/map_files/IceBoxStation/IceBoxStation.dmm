@@ -68590,7 +68590,7 @@
 "vbd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/arrows/white{
-	color = COLOR_BLUE;
+	color = "#0000FF";
 	pixel_y = 15
 	},
 /turf/open/floor/engine,
