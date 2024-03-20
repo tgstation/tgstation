@@ -69,7 +69,6 @@ export const ChemDispenser = (props) => {
               <Button
                 icon="book"
                 disabled={!beaker}
-                content={'Reaction search'}
                 tooltip={
                   beaker
                     ? 'Look up recipes and reagents!'
@@ -77,7 +76,9 @@ export const ChemDispenser = (props) => {
                 }
                 tooltipPosition="bottom-start"
                 onClick={() => act('reaction_lookup')}
-              />
+              >
+                Reaction search
+              </Button>
               <Button
                 icon="cog"
                 tooltip="Color code the reagents by pH"
@@ -104,34 +105,38 @@ export const ChemDispenser = (props) => {
                 <Box inline mx={1}>
                   <Button
                     color="transparent"
-                    content="Clear recipes"
                     onClick={() => act('clear_recipes')}
-                  />
+                  >
+                    Clear recipes
+                  </Button>
                 </Box>
               )}
               {!recording && (
                 <Button
                   icon="circle"
                   disabled={!beaker}
-                  content="Record"
                   onClick={() => act('record_recipe')}
-                />
+                >
+                  Record
+                </Button>
               )}
               {recording && (
                 <Button
                   icon="ban"
                   color="transparent"
-                  content="Discard"
                   onClick={() => act('cancel_recording')}
-                />
+                >
+                  Discard
+                </Button>
               )}
               {recording && (
                 <Button
                   icon="save"
                   color="green"
-                  content="Save"
                   onClick={() => act('save_recording')}
-                />
+                >
+                  Save
+                </Button>
               )}
             </>
           }
@@ -143,13 +148,14 @@ export const ChemDispenser = (props) => {
                 icon="tint"
                 width="129.5px"
                 lineHeight={1.75}
-                content={recipe}
                 onClick={() =>
                   act('dispense_recipe', {
                     recipe: recipe,
                   })
                 }
-              />
+              >
+                {recipe}
+              </Button>
             ))}
             {recipes.length === 0 && <Box color="light-gray">No recipes.</Box>}
           </Box>
@@ -161,13 +167,14 @@ export const ChemDispenser = (props) => {
               key={amount}
               icon="plus"
               selected={amount === data.amount}
-              content={amount}
               onClick={() =>
                 act('amount', {
                   target: amount,
                 })
               }
-            />
+            >
+              {amount}
+            </Button>
           ))}
         >
           <Box mr={-1}>
@@ -177,7 +184,6 @@ export const ChemDispenser = (props) => {
                 icon="tint"
                 width="129.5px"
                 lineHeight={1.75}
-                content={chemical.title}
                 tooltip={'pH: ' + chemical.pH}
                 backgroundColor={
                   recipeReagents.includes(chemical.id)
@@ -193,7 +199,9 @@ export const ChemDispenser = (props) => {
                     reagent: chemical.id,
                   })
                 }
-              />
+              >
+                {chemical.title}
+              </Button>
             ))}
           </Box>
         </Section>
@@ -204,9 +212,10 @@ export const ChemDispenser = (props) => {
               key={amount}
               icon="minus"
               disabled={recording}
-              content={amount}
               onClick={() => act('remove', { amount })}
-            />
+            >
+              {amount}
+            </Button>
           ))}
         >
           <BeakerDisplay
