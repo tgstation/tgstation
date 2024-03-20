@@ -41,7 +41,7 @@
 		if(target_human.dna.features["ears"] == "None")
 			mutantears = /obj/item/organ/internal/ears
 		else
-			var/obj/item/organ/internal/ears/cat/ears = new
+			var/obj/item/organ/internal/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
 			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 	return ..()
 
