@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - rscadd: "Hemiplegic now lets you pick which side is disabled."
+  - rscadd: "The medical records text for hemiplegics now shows which side is disabled."
