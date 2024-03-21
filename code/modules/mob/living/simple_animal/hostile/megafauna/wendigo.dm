@@ -187,7 +187,7 @@ Difficulty: Hard
 			var/turf/endloc = get_turf(target)
 			if(!endloc)
 				break
-			var/obj/projectile/colossus/wendigo_shockwave/shockwave = new /obj/projectile/colossus/wendigo_shockwave(loc)
+			var/obj/projectile/wendigo_shockwave/shockwave = new /obj/projectile/wendigo_shockwave(loc)
 			shockwave.speed = 8
 			shockwave.preparePixelProjectile(endloc, startloc, null, spread)
 			shockwave.firer = src
@@ -236,7 +236,7 @@ Difficulty: Hard
 				var/offset = shoot_times % 2
 				for(var/shot in 1 to shots_per)
 					var/angle = shot * 360 / shots_per + (offset * 360 / shots_per) * 0.5
-					var/obj/projectile/colossus/wendigo_shockwave/shockwave = new /obj/projectile/colossus/wendigo_shockwave(loc)
+					var/obj/projectile/wendigo_shockwave/shockwave = new /obj/projectile/wendigo_shockwave(loc)
 					shockwave.firer = src
 					shockwave.speed = 3 - WENDIGO_ENRAGED
 					shockwave.fire(angle)
@@ -250,7 +250,7 @@ Difficulty: Hard
 				var/angle_change = (5 + WENDIGO_ENRAGED * shot / 6) * spiral_direction
 				for(var/count in 1 to shots_per_tick)
 					var/angle = angle_to_target + shot * angle_change + count * 360 / shots_per_tick
-					var/obj/projectile/colossus/wendigo_shockwave/shockwave = new /obj/projectile/colossus/wendigo_shockwave(loc)
+					var/obj/projectile/wendigo_shockwave/shockwave = new /obj/projectile/wendigo_shockwave(loc)
 					shockwave.firer = src
 					shockwave.damage = 15
 					shockwave.fire(angle)
@@ -262,7 +262,7 @@ Difficulty: Hard
 			for(var/shoot_times in 1 to WENDIGO_WAVE_REPEATCOUNT)
 				for(var/shot in 1 to shots_per)
 					var/angle = shot * difference + shoot_times * 5 * wave_direction * -1
-					var/obj/projectile/colossus/wendigo_shockwave/shockwave = new /obj/projectile/colossus/wendigo_shockwave(loc)
+					var/obj/projectile/wendigo_shockwave/shockwave = new /obj/projectile/wendigo_shockwave(loc)
 					shockwave.firer = src
 					shockwave.wave_movement = TRUE
 					shockwave.speed = 8
@@ -283,8 +283,14 @@ Difficulty: Hard
 	exit.set_light(20, 1, COLOR_SOFT_RED)
 	return ..()
 
-/obj/projectile/colossus/wendigo_shockwave
+/obj/projectile/wendigo_shockwave
 	name = "wendigo shockwave"
+	icon_state = "chronobolt"
+	damage = 25
+	armour_penetration = 100
+	speed = 2
+	damage_type = BRUTE
+	pass_flags = PASSTABLE
 	/// If wave movement is enabled
 	var/wave_movement = FALSE
 	/// Amount the angle changes every pixel move
@@ -292,7 +298,12 @@ Difficulty: Hard
 	/// Amount of movements this projectile has made
 	var/pixel_moves = 0
 
-/obj/projectile/colossus/wendigo_shockwave/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/wendigo_shockwave/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
+	if(isliving(target))
+		direct_target = TRUE
+	return ..(target, direct_target, ignore_loc, cross_failed)
+
+/obj/projectile/wendigo_shockwave/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dead_mob = target
@@ -304,15 +315,13 @@ Difficulty: Hard
 					var/mob/living/simple_animal/hostile/megafauna/megafauna = firer
 					megafauna.devour(target)
 		return
-	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
-		return
 	if(isturf(target) || isobj(target))
 		if(isobj(target))
 			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
 
-/obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
+/obj/projectile/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	. = ..()
 	if(wave_movement)
 		pixel_moves++

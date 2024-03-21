@@ -193,7 +193,7 @@ Difficulty: Extremely Hard
 			new /obj/item/pickaxe/drill/jackhammer/demonic(T)
 	return ..()
 
-/obj/projectile/colossus/frost_miner/frost_orb
+/obj/projectile/frost_miner/frost_orb
 	name = "frost orb"
 	icon_state = "ice_1"
 	damage = 20
@@ -204,7 +204,12 @@ Difficulty: Extremely Hard
 	homing_turn_speed = 3
 	damage_type = BURN
 
-/obj/projectile/colossus/frost_miner/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/frost_miner/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
+	if(isliving(target))
+		direct_target = TRUE
+	return ..(target, direct_target, ignore_loc, cross_failed)
+
+/obj/projectile/frost_miner/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dead_mob = target
@@ -216,14 +221,13 @@ Difficulty: Extremely Hard
 					var/mob/living/simple_animal/hostile/megafauna/megafauna = firer
 					megafauna.devour(target)
 		return
-	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
-		return
 	if(isturf(target) || isobj(target))
 		if(isobj(target))
 			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
-/obj/projectile/colossus/frost_miner/snowball
+
+/obj/projectile/frost_miner/snowball
 	name = "machine-gun snowball"
 	icon_state = "nuclear_particle"
 	damage = 5
@@ -232,9 +236,8 @@ Difficulty: Extremely Hard
 	pixel_speed_multiplier = 0.333
 	range = 150
 	damage_type = BRUTE
-	explode_hit_objects = FALSE
 
-/obj/projectile/colossus/frost_miner/ice_blast
+/obj/projectile/frost_miner/ice_blast
 	name = "ice blast"
 	icon_state = "ice_2"
 	damage = 15

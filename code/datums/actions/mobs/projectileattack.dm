@@ -59,7 +59,7 @@
 	button_icon_state = "kineticgun"
 	desc = "Fires projectiles repeatedly at a given target."
 	cooldown_time = 1.5 SECONDS
-	projectile_type = /obj/projectile/colossus/frost_miner/snowball
+	projectile_type = /obj/projectile/frost_miner/snowball
 	default_projectile_spread = 45
 	/// Total shot count
 	var/shot_count = 60
@@ -81,12 +81,12 @@
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles that will split into shrapnel after a period of time."
 	cooldown_time = 6 SECONDS
-	projectile_type = /obj/projectile/colossus/frost_miner/frost_orb
+	projectile_type = /obj/projectile/frost_miner/frost_orb
 	has_homing = TRUE
 	default_projectile_spread = 180
 	shot_count = 8
 	shot_delay = 1 SECONDS
-	var/shrapnel_projectile_type = /obj/projectile/colossus/frost_miner/ice_blast
+	var/shrapnel_projectile_type = /obj/projectile/frost_miner/ice_blast
 	var/shrapnel_angles = list(0, 60, 120, 180, 240, 300)
 	var/shrapnel_spread = 60
 	var/break_time = 2 SECONDS
@@ -202,7 +202,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern
 	name = "Alternating Shotgun Fire"
 	desc = "Fires projectiles in an alternating shotgun pattern."
-	projectile_type = /obj/projectile/colossus/frost_miner/ice_blast
+	projectile_type = /obj/projectile/frost_miner/ice_blast
 	projectile_sound = null
 	shot_angles = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30))
 	var/shot_count = 5
