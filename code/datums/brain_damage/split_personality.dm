@@ -34,13 +34,16 @@
 
 /// Attempts to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(schism))
-	owner.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SPLITPERSONALITY, \
-		job_bans = ROLE_PAI, \
-		title = "[owner.real_name]'s [poll_role]", \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
+		alert_pic = owner,
+		role_name_text = poll_role,
 	)
+	schism(chosen_one)
 
 /// Ghost poll has concluded
 /datum/brain_trauma/severe/split_personality/proc/schism(mob/dead/observer/ghost)
@@ -168,7 +171,8 @@
 	to_chat(src, span_notice("As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality."))
 	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
 
-/mob/living/split_personality/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/living/split_personality/try_speak(message, ignore_spam, forced, filterproof)
+	SHOULD_CALL_PARENT(FALSE)
 	to_chat(src, span_warning("You cannot speak, your other self is controlling your body!"))
 	return FALSE
 
@@ -211,10 +215,9 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", poll_time = 7.5 SECONDS, target_mob = stranger_backseat, pic_source = owner, role_name_text = "brainwashed mind")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
+	if(chosen_one)
+		stranger_backseat.key = chosen_one.key
 	else
 		qdel(src)
 

@@ -173,7 +173,7 @@ export const BountyBoardContent = (props) => {
               />
               <Box>
                 <NumberInput
-                  animate
+                  animated
                   unit="cr"
                   minValue={1}
                   maxValue={1000}

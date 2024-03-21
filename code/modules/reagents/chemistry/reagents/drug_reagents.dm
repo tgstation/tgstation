@@ -87,11 +87,8 @@
 		to_chat(affected_mob, span_notice("[smoke_message]"))
 	affected_mob.add_mood_event("smoked", /datum/mood_event/smoked)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
-	affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
-	affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
-	affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
-	affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
-	affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-50 * REM * seconds_per_tick)
+
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -177,11 +174,7 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
-	affected_mob.AdjustStun(-40 * REM * seconds_per_tick)
-	affected_mob.AdjustKnockdown(-40 * REM * seconds_per_tick)
-	affected_mob.AdjustUnconscious(-40 * REM * seconds_per_tick)
-	affected_mob.AdjustParalyzed(-40 * REM * seconds_per_tick)
-	affected_mob.AdjustImmobilized(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
@@ -459,11 +452,7 @@
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.AdjustStun(-10 * REM * seconds_per_tick)
-	affected_mob.AdjustKnockdown(-10 * REM * seconds_per_tick)
-	affected_mob.AdjustUnconscious(-10 * REM * seconds_per_tick)
-	affected_mob.AdjustParalyzed(-10 * REM * seconds_per_tick)
-	affected_mob.AdjustImmobilized(-10 * REM * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-10 * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	return UPDATE_MOB_HEALTH
 
@@ -784,6 +773,24 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 20)
+
+/datum/reagent/drug/kronkaine/on_new(data)
+	. = ..()
+	// Kronkaine also makes for a great fishing bait (found in "natural" baits)
+	if(!istype(holder?.my_atom, /obj/item/food))
+		return
+	ADD_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
+	RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
+	RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+
+/datum/reagent/drug/kronkaine/proc/on_reagents_clear(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
+
+/datum/reagent/drug/kronkaine/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
+	SIGNAL_HANDLER
+	if(deleted_reagent == src)
+		REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
 
 /datum/reagent/drug/kronkaine/on_mob_metabolize(mob/living/kronkaine_fiend)
 	. = ..()

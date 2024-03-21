@@ -44,7 +44,7 @@
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 
 /datum/status_effect/song/light/on_apply()
-	mob_light_obj = owner.mob_light(3, color = LIGHT_COLOR_DIM_YELLOW)
+	mob_light_obj = owner.mob_light(3, 1.5, color = LIGHT_COLOR_DIM_YELLOW)
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return TRUE
 

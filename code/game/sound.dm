@@ -424,4 +424,10 @@
 					'sound/items/reel4.ogg',
 					'sound/items/reel5.ogg',
 				)
+			if(SFX_RATTLE)
+				soundin = pick(
+					'sound/items/rattle1.ogg',
+					'sound/items/rattle2.ogg',
+					'sound/items/rattle3.ogg',
+				)
 	return soundin

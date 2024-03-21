@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		var/mob/living/carbon/human/human_orderer = usr
 		name = human_orderer.get_authentification_name()
 		rank = human_orderer.get_assignment(hand_first = TRUE)
-	else if(issilicon(usr))
+	else if(HAS_SILICON_ACCESS(usr))
 		name = usr.real_name
 		rank = "Silicon"
 	//already have a signal to finalize the order

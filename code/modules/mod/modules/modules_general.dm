@@ -334,10 +334,10 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
-	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
-	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/advanced
 	name = "MOD advanced EMP shield module"
@@ -377,6 +377,12 @@
 	/// Maximum range we can set.
 	var/max_range = 5
 
+/obj/item/mod/module/flashlight/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
+/obj/item/mod/module/flashlight/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR)
+
 /obj/item/mod/module/flashlight/on_activation()
 	. = ..()
 	if(!.)
@@ -391,6 +397,12 @@
 		return
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
+
+/obj/item/mod/module/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(active)
+		on_deactivation()
+		return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_range
@@ -423,6 +435,21 @@
 			mod.wearer.update_clothing(mod.slot_flags)
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
+
+///Like the flashlight module, except the light color is stuck to black and cannot be changed.
+/obj/item/mod/module/flashlight/darkness
+	name = "MOD flashdark module"
+	desc = "A quirky pair of configurable flashdarks installed on the sides of the helmet, \
+		useful for providing darkness at a configurable range."
+	light_color = COLOR_BLACK
+	light_system = OVERLAY_LIGHT
+	light_range = 2
+	min_range = 1
+	max_range = 3
+
+/obj/item/mod/module/flashlight/darkness/get_configuration()
+	. = ..()
+	. -= "light_color"
 
 ///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
@@ -788,19 +815,7 @@
 		/obj/item/cigbutt,
 	)
 	/// Materials that will be extracted.
-	var/list/accepted_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-	)
+	var/list/accepted_mats
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
@@ -810,10 +825,15 @@
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
+
+	if(!length(accepted_mats))
+		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+
 	container = AddComponent( \
 		/datum/component/material_container, \
-		accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, \
-		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
+		accepted_mats, \
+		50 * SHEET_MATERIAL_AMOUNT, \
+		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
 			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \

@@ -40,6 +40,7 @@ export const EntryFloat = (props: EntryFloatProps) => {
         animated
         value={float}
         minValue={0}
+        maxValue={Infinity}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -64,7 +65,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
-        value={coord?.[0]}
+        minValue={-Infinity}
+        maxValue={Infinity}
+        value={coord?.[0] || 0}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -74,7 +77,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
-        value={coord?.[1]}
+        minValue={-Infinity}
+        maxValue={Infinity}
+        value={coord?.[1] || 0}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -84,7 +89,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
-        value={coord?.[2]}
+        minValue={-Infinity}
+        maxValue={Infinity}
+        value={coord?.[2] || 0}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -274,8 +281,9 @@ export const EntryIcon = (props: EntryIconStateProps) => {
               <Stack.Item>
                 <NumberInput
                   animated
-                  value={icon_state[icon_name]}
                   minValue={0}
+                  maxValue={Infinity}
+                  value={icon_state[icon_name]}
                   onDrag={(e, value) =>
                     act('edit', {
                       var: var_name,
@@ -363,8 +371,9 @@ export const EntryIconState = (props: EntryIconStateProps) => {
               <Stack.Item>
                 <NumberInput
                   animated
-                  value={icon_state[iconstate]}
                   minValue={0}
+                  maxValue={Infinity}
+                  value={icon_state[iconstate]}
                   onDrag={(e, value) =>
                     act('edit', {
                       var: var_name,

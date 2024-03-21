@@ -25,15 +25,14 @@
 	create_reagents(200, NO_REACT)
 	register_context()
 
-/obj/machinery/chem_heater/on_deconstruction(disassembled)
-	beaker?.forceMove(drop_location())
-
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		QDEL_NULL(beaker)
 	return ..()
 
+/obj/machinery/chem_heater/on_deconstruction(disassembled)
+	beaker?.forceMove(drop_location())
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -60,9 +59,73 @@
 	return NONE
 
 
+/obj/machinery/chem_heater/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
+		if(!QDELETED(beaker))
+			. += span_notice("It has a beaker of [beaker.reagents.total_volume] units capacity.")
+			if(beaker.reagents.is_reacting)
+				. += span_notice("Its contents are currently reacting.")
+		else
+			. += span_warning("There is no beaker inserted.")
+		. += span_notice("Its heating is turned [on ? "On" : "Off"].")
+		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
+		if(panel_open)
+			. += span_notice("Its panel is open and can now be [EXAMINE_HINT("pried")] apart.")
+		else
+			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
+
 /obj/machinery/chem_heater/update_icon_state()
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
+
+/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		beaker = null
+		update_appearance()
+
+/obj/machinery/chem_heater/RefreshParts()
+	. = ..()
+	heater_coefficient = 0.1
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
+
+
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers, is_right_clicking)
+	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return ..()
+
+	if(QDELETED(beaker))
+		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/injector = held_item
+			injector.afterattack(beaker, user, proximity_flag = TRUE)
+			return ITEM_INTERACT_SUCCESS
+
+	if(is_reagent_container(held_item)  && held_item.is_open_container())
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
+		balloon_alert(user, "beaker added")
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -72,13 +135,6 @@
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == beaker)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
-		beaker = null
-		update_appearance()
 
 /obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
@@ -109,12 +165,6 @@
 
 	return TRUE
 
-/obj/machinery/chem_heater/RefreshParts()
-	. = ..()
-	heater_coefficient = 0.1
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		heater_coefficient *= micro_laser.tier
-
 /**
  * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
  * Arguments
@@ -142,23 +192,6 @@
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
-/obj/machinery/chem_heater/examine(mob/user)
-	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
-		if(!QDELETED(beaker))
-			. += span_notice("It has a beaker of [beaker.reagents.total_volume] units capacity.")
-			if(beaker.reagents.is_reacting)
-				. += span_notice("Its contents are currently reacting.")
-		else
-			. += span_warning("There is no beaker inserted.")
-		. += span_notice("Its heating is turned [on ? "On" : "Off"].")
-		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
-		if(panel_open)
-			. += span_notice("Its panel is open and can now be [EXAMINE_HINT("pried")] apart.")
-		else
-			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
-
 /obj/machinery/chem_heater/process(seconds_per_tick)
 	//is_reacting is handled in reaction_step()
 	if(QDELETED(beaker) || beaker.reagents.is_reacting)
@@ -171,39 +204,6 @@
 	//send updates to ui. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
-
-/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/attackby(obj/item/held_item, mob/user, params)
-	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return ..()
-
-	if(beaker)
-		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/injector = held_item
-			injector.afterattack(beaker, user, proximity_flag = TRUE)
-			return TRUE
-
-	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		if(replace_beaker(user, held_item))
-			ui_interact(user)
-		balloon_alert(user, "beaker added!")
-		return TRUE
-
-	return ..()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

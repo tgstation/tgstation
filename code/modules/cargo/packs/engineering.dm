@@ -25,6 +25,7 @@
 					/obj/item/mecha_parts/part/ripley_left_leg,
 					/obj/item/stock_parts/capacitor,
 					/obj/item/stock_parts/scanning_module,
+					/obj/item/stock_parts/servo,
 					/obj/item/circuitboard/mecha/ripley/main,
 					/obj/item/circuitboard/mecha/ripley/peripherals,
 					/obj/item/mecha_parts/mecha_equipment/drill,

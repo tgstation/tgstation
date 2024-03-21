@@ -688,9 +688,28 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
-	var/list/not_interested = list()
+	/// Are we being offered to a mob, and therefore is a ghost poll currently in progress for the sentient mob?
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
+	/// Reason for offering potion. This will be displayed in the poll alert to ghosts.
+	var/potion_reason
+
+/obj/item/slimepotion/slime/sentience/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to set potion offer reason. [potion_reason ? "Current reason: [span_warning(potion_reason)]" : null]")
+
+/obj/item/slimepotion/slime/sentience/Initialize(mapload)
+	register_context()
+	return ..()
+
+/obj/item/slimepotion/slime/sentience/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set potion offer reason"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/slimepotion/slime/sentience/AltClick(mob/living/user)
+	if(!can_interact(user))
+		return
+	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
 	if(being_used || !isliving(dumb_mob))
@@ -704,16 +723,22 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-
+	if(isnull(potion_reason))
+		balloon_alert(user, "no reason for offering set!")
+		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, dumb_mob)
-	dumb_mob.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SENTIENCE_POTION, \
-		job_bans = ROLE_SENTIENCE, \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 20 SECONDS,
+		checked_target = dumb_mob,
+		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
+		alert_pic = dumb_mob,
+		role_name_text = "intelligence potion",
+		chat_text_border_icon = src,
 	)
+	on_poll_concluded(user, dumb_mob, chosen_one)
 
 /// Assign the chosen ghost to the mob
 /obj/item/slimepotion/slime/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)

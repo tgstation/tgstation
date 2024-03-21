@@ -587,10 +587,10 @@
 	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
 
 /obj/item/mod/module/shove_blocker/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/locked
 	name = "superglued MOD bulwark module"

@@ -458,7 +458,7 @@
 	update_appearance(UPDATE_ICON)
 
 
-/obj/machinery/biogenerator/ui_status(mob/user)
+/obj/machinery/biogenerator/ui_status(mob/user, datum/ui_state/state)
 	if(machine_stat & BROKEN || panel_open)
 		return UI_CLOSE
 

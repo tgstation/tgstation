@@ -37,9 +37,10 @@
 ///signal fired on self attacking parent
 /datum/component/spirit_holding/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(get_ghost), user)
 
+/datum/component/spirit_holding/proc/get_ghost(mob/user)
 	var/atom/thing = parent
-
 	if(attempting_awakening)
 		thing.balloon_alert(user, "already channeling!")
 		return
@@ -47,20 +48,23 @@
 		thing.balloon_alert(user, "spirits are unwilling!")
 		to_chat(user, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
 		return
-
 	attempting_awakening = TRUE
 	thing.balloon_alert(user, "channeling...")
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(affix_spirit), user)
-	parent.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
-		job_bans = ROLE_PAI, \
-		to_call = to_call, \
-		title = "Spirit of [user.real_name]'s blade", \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = thing,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = thing,
+		role_name_text = "possessed blade",
+		chat_text_border_icon = thing,
 	)
+	affix_spirit(user, chosen_one)
 
 /// On conclusion of the ghost poll
 /datum/component/spirit_holding/proc/affix_spirit(mob/awakener, mob/dead/observer/ghost)
+
 	var/atom/thing = parent
 
 	if(isnull(ghost))

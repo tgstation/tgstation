@@ -41,11 +41,67 @@
 /obj/item/fishing_line/sinew
 	name = "fishing sinew"
 	desc = "An all-natural fishing line made of stretched out sinew. A bit stiff, but usable to fish in extreme enviroments."
-	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_sinew"
-	icon_state = "reel_green"
 	fishing_line_traits = FISHING_LINE_REINFORCED|FISHING_LINE_STIFF
 	line_color = "#d1cca3"
+
+/**
+ * A special line reel that let you skip the biting phase of the minigame, netting you a completion bonus,
+ * and thrown hooked items at you, so you can rapidly catch them from afar.
+ * It may also work on mobs if the right hook is attached.
+ */
+/obj/item/fishing_line/auto_reel
+	name = "fishing line auto-reel"
+	desc = "A fishing line that automatically starts reeling in fish the moment they bite. Also good for hurling things at yourself."
+	icon_state = "reel_auto"
+	fishing_line_traits = FISHING_LINE_AUTOREEL
+	line_color = "#F88414"
+
+/obj/item/fishing_line/auto_reel/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(line_equipped))
+
+/obj/item/fishing_line/auto_reel/proc/line_equipped(datum/source, obj/item/fishing_rod/rod)
+	SIGNAL_HANDLER
+	RegisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM, PROC_REF(on_hooked_item))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
+
+/obj/item/fishing_line/auto_reel/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(old_loc, COMSIG_FISHING_ROD_HOOKED_ITEM)
+
+/obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!ismovable(target))
+		return
+	var/atom/movable/movable_target = target
+	var/please_be_gentle = FALSE
+	var/atom/destination
+	var/datum/callback/throw_callback
+	if(isliving(movable_target) || !isitem(movable_target))
+		destination = get_step_towards(user, target)
+		please_be_gentle = TRUE
+	else
+		destination = user
+		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), movable_target)
+		RegisterSignal(movable_target, COMSIG_ATOM_PREHITBY, PROC_REF(catch_it_chucklenut))
+
+	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
+		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
+	else
+		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+
+/obj/item/fishing_line/auto_reel/proc/catch_it_chucklenut(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+	var/mob/living/user = throwingdatum.initial_target.resolve()
+	if(QDELETED(user) || hit_atom != user)
+		return
+	if(user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
+		return COMSIG_HIT_PREVENTED
+
+/obj/item/fishing_line/auto_reel/proc/clear_hitby_signal(obj/item/item)
+	UnregisterSignal(item, COMSIG_ATOM_PREHITBY)
 
 // Hooks
 

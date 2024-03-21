@@ -461,7 +461,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	update_dna_identity()
 
-/datum/dna/stored //subtype used by brain mob's stored_dna
+/datum/dna/stored //subtype used by brain mob's stored_dna and the crew manifest
 
 /datum/dna/stored/add_mutation(mutation_name) //no mutation changes on stored dna.
 	return

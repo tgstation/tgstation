@@ -107,37 +107,11 @@
 		s_store,
 		)
 
-/// Returns items which are currently visible on the mob
-/mob/living/carbon/human/proc/get_visible_items()
-	var/static/list/visible_slots = list(
-		ITEM_SLOT_OCLOTHING,
-		ITEM_SLOT_ICLOTHING,
-		ITEM_SLOT_GLOVES,
-		ITEM_SLOT_EYES,
-		ITEM_SLOT_EARS,
-		ITEM_SLOT_MASK,
-		ITEM_SLOT_HEAD,
-		ITEM_SLOT_FEET,
-		ITEM_SLOT_ID,
-		ITEM_SLOT_BELT,
-		ITEM_SLOT_BACK,
-		ITEM_SLOT_NECK,
-		ITEM_SLOT_HANDS,
-		ITEM_SLOT_BACKPACK,
-		ITEM_SLOT_SUITSTORE,
-		ITEM_SLOT_HANDCUFFED,
-		ITEM_SLOT_LEGCUFFED,
-	)
-	var/list/obscured = check_obscured_slots()
-	var/list/visible_items = list()
-	for (var/slot in visible_slots)
-		if (obscured & slot)
-			continue
-		var/obj/item/equipped = get_item_by_slot(slot)
-		if (equipped)
-			visible_items += equipped
-	for (var/obj/item/held in held_items)
-		visible_items += held
+/mob/living/carbon/human/get_visible_items()
+	var/list/visible_items = ..()
+	var/obj/item/clothing/under/under = w_uniform
+	if(istype(under) && length(under.attached_accessories) && (under in visible_items))
+		visible_items += under.attached_accessories
 	return visible_items
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()

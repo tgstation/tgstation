@@ -44,7 +44,8 @@
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
-	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
+	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
+	AddElement(/datum/element/toy_talk)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)

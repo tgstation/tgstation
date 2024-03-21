@@ -16,6 +16,8 @@
 
 /obj/item/aicard/Initialize(mapload)
 	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		return INITIALIZE_HINT_QDEL
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/item/aicard/Destroy(force)

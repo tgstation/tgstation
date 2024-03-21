@@ -25,6 +25,11 @@ GLOBAL_LIST_INIT(limb_choice_transhuman, list(
 	"Left Leg" = /obj/item/bodypart/leg/left/robot,
 	"Right Leg" = /obj/item/bodypart/leg/right/robot,
 ))
+///Hemiplegic Quirk
+GLOBAL_LIST_INIT(side_choice_hemiplegic, list(
+	"Left Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
+	"Right Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right,
+))
 
 ///Options for the Junkie quirk to choose from
 GLOBAL_LIST_INIT(possible_junkie_addictions, setup_junkie_addictions(list(

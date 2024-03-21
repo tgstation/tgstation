@@ -14,7 +14,13 @@ import {
   Stack,
 } from 'tgui/components';
 
-import { removeChatPage, toggleAcceptedType, updateChatPage } from './actions';
+import {
+  moveChatPageLeft,
+  moveChatPageRight,
+  removeChatPage,
+  toggleAcceptedType,
+  updateChatPage,
+} from './actions';
 import { MESSAGE_TYPES } from './constants';
 import { selectCurrentChatPage } from './selectors';
 
@@ -54,20 +60,59 @@ export const ChatPageSettings = (props) => {
             }
           />
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            content="Remove"
-            icon="times"
-            color="red"
-            onClick={() =>
-              dispatch(
-                removeChatPage({
-                  pageId: page.id,
-                }),
-              )
-            }
-          />
-        </Stack.Item>
+        {!page.isMain ? (
+          <Stack.Item>
+            <Button
+              icon="times"
+              color="red"
+              onClick={() =>
+                dispatch(
+                  removeChatPage({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              Remove
+            </Button>
+          </Stack.Item>
+        ) : (
+          ''
+        )}
+      </Stack>
+      <Divider />
+      <Stack align="center">
+        {!page.isMain ? (
+          <Stack.Item>
+            Reorder Chat:&emsp;
+            <Button
+              color="blue"
+              onClick={() =>
+                dispatch(
+                  moveChatPageLeft({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              &laquo;
+            </Button>
+            <Button
+              color="blue"
+              onClick={() =>
+                dispatch(
+                  moveChatPageRight({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              &raquo;
+            </Button>
+          </Stack.Item>
+        ) : (
+          ''
+        )}
       </Stack>
       <Divider />
       <Section title="Messages to display" level={2}>

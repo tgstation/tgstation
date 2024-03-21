@@ -23,7 +23,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/pet_bonus, "honks happily!")
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	if(!can_lay_eggs)
 		return
 	AddComponent(\

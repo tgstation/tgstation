@@ -340,7 +340,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		var/datum/data = data_list[key]
 
 		if(isnull(data))
-			// do nothing - nulls are allowed
+			pass() // nulls are allowed
 
 		else if(islist(data))
 			data = recursive_jsonify(data, semvers)

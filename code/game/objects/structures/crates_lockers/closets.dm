@@ -94,6 +94,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// Volume of the internal air
 	var/air_volume = TANK_STANDARD_VOLUME * 3
 
+	/// How many pixels the closet can shift on the x axis when shaking
+	var/x_shake_pixel_shift = 2
+	/// how many pixels the closet can shift on the y axes when shaking
+	var/y_shake_pixel_shift = 1
+
 /datum/armor/structure_closet
 	melee = 20
 	bullet = 10
@@ -1031,6 +1036,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear banging from [src]."))
+
+	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
+
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
@@ -1045,6 +1053,23 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
 	container.container_resist_act()
 
+/// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
+/obj/structure/closet/proc/check_if_shake()
+	// Assuming we decide to shake again, how long until we check to shake again
+	var/next_check_time = 1 SECONDS
+
+	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
+	var/shake_duration =  0.3 SECONDS
+
+	for(var/mob/living/mob in contents)
+		if(DOING_INTERACTION_WITH_TARGET(mob, src))
+			// Shake and queue another check_if_shake
+			Shake(x_shake_pixel_shift, y_shake_pixel_shift, shake_duration, shake_interval = 0.1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
+			return TRUE
+
+	// If we reach here, nobody is resisting, so dont shake
+	return FALSE
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER

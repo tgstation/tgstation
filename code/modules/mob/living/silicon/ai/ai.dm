@@ -699,7 +699,7 @@
 				if("Station Member")
 					var/list/personnel_list = list()
 
-					for(var/datum/record/crew/record in GLOB.manifest.locked)//Look in data core locked.
+					for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
 						personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
 
 					if(!length(personnel_list))

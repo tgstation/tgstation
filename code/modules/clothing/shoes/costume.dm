@@ -128,8 +128,8 @@
 /obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_FEET)
-		user.AddElement(/datum/element/waddling)
+		user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
 
 /obj/item/clothing/shoes/ducky_shoes/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)

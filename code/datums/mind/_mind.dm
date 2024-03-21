@@ -451,7 +451,7 @@
 					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
-				wipe_memory()//Remove any memory they may have had.
+				wipe_memory_type(/datum/memory/key/traitor_uplink/implant)
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN))
@@ -462,8 +462,8 @@
 							message = "Amount of telecrystals for [key]",
 							title = "Syndicate uplink",
 							default = U.uplink_handler.telecrystals,
-							)
-						if(crystals && isnum(crystals))
+						)
+						if(isnum(crystals))
 							U.uplink_handler.set_telecrystals(crystals)
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")

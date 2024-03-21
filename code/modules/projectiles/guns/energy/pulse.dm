@@ -12,8 +12,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = /obj/item/stock_parts/cell/pulse
 
-/obj/item/gun/energy/pulse/emp_act(severity)
-	return
+/obj/item/gun/energy/pulse/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/pulse/prize
 	pin = /obj/item/firing_pin

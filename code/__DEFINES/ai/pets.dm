@@ -51,3 +51,20 @@
 /// key that holds items we arent interested in hoarding
 #define BB_IGNORE_ITEMS "ignore_items"
 
+//virtual pet keys
+///the last PDA message we must relay
+#define BB_LAST_RECIEVED_MESSAGE "last_recieved_message"
+///our current virtual pet level
+#define BB_VIRTUAL_PET_LEVEL "virtual_pet_level"
+///the target we will play with
+#define BB_NEARBY_PLAYMATE "nearby_playmate"
+///cooldown till we search for playmates
+#define BB_NEXT_PLAYDATE "next_playdate"
+///our ability to trigger lights
+#define BB_LIGHTS_ABILITY "lights_ability"
+///our ability to capture images
+#define BB_PHOTO_ABILITY "photo_ability"
+///the name of our trick
+#define BB_TRICK_NAME "trick_name"
+///the sequence of our trick
+#define BB_TRICK_SEQUENCE "trick_sequence"

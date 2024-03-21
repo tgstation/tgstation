@@ -72,11 +72,9 @@
 		if (is_banned_from(creature.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			trimmed_list.Remove(creature)
 			continue
-
 		if (isnull(creature.mind))
 			continue
-
-		if (restrict_ghost_roles && (creature.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
+		if (restrict_ghost_roles && !(creature.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) // Are they not playing a station role?
 			trimmed_list.Remove(creature)
 			continue
 		if (creature.mind.assigned_role.title in restricted_roles) // Does their job allow it?
@@ -136,11 +134,11 @@
 
 	SSdynamic.log_dynamic_and_announce("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	candidates = SSpolling.poll_ghost_candidates(
-		question = "Looking for volunteers to become [antag_flag] for [name]",
+		question = "Looking for volunteers to become [span_notice(antag_flag)] for [span_danger(name)]",
 		check_jobban = antag_flag_override,
 		role = antag_flag || antag_flag_override,
 		poll_time = 30 SECONDS,
-		pic_source = signup_item_path,
+		alert_pic = signup_item_path,
 		role_name_text = antag_flag,
 	)
 

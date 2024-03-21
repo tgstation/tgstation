@@ -92,9 +92,12 @@
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"
 	desc = "Allows you to transmute a wallet, an iron rod, and an ID card to create an Eldritch Card. \
-		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
-		You can use it in-hand to change its form to a card you fused. \
-		Does not preserve the card used in the ritual."
+		Hit a pair of airlocks with it to create a pair of portals, which will teleport you between them, but teleport non-heretics randomly. \
+		You can ctrl-click the card to invert this behavior for created portals. \
+		Each card may only sustain a single pair of portals at the same time. \
+		It also functions and appears the same as a regular ID Card. \
+		Attacking it with a normal ID card consumes it and gains its access, and you can use it in-hand to change its appearance to a card you fused. \
+		Does not preserve the card originally used in the ritual."
 	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
@@ -186,7 +189,8 @@
 	desc = "The ascension ritual of the Path of Knock. \
 		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
 		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and in addition, create a tear to the Labyrinth's heart; \
+		and your keyblades will become even deadlier. \
+		In addition, you will create a tear to the Labyrinth's heart; \
 		a tear in reality located at the site of this ritual. \
 		Eldritch creatures will endlessly pour from this rift \
 		who are bound to obey your instructions."

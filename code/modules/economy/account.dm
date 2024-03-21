@@ -49,6 +49,7 @@
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
+		SSeconomy.bank_accounts_by_job[account_job] -= src
 	QDEL_LIST(redeemed_coupons)
 	return ..()
 
@@ -70,6 +71,8 @@
 	if(SSeconomy.bank_accounts_by_id["[account_id]"])
 		stack_trace("Unable to find a unique account ID, substituting currently existing account of id [account_id].")
 	SSeconomy.bank_accounts_by_id["[account_id]"] = src
+	if(account_job)
+		LAZYADD(SSeconomy.bank_accounts_by_job[account_job], src)
 
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
