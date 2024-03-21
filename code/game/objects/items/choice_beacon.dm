@@ -3,7 +3,7 @@
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "generic_delivery"
-	inhand_icon_state = "radio"
+	inhand_icon_state = "generic_delivery""
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	/// How many uses this item has before being deleted
