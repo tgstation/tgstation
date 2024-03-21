@@ -292,6 +292,26 @@ Difficulty: Hard
 	/// Amount of movements this projectile has made
 	var/pixel_moves = 0
 
+/obj/projectile/colossus/wendigo_shockwave/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/dead_mob = target
+		if(dead_mob.stat == DEAD)
+			if(dead_mob.has_status_effect(/datum/status_effect/gutted))
+				return BULLET_ACT_FORCE_PIERCE
+			else
+				if(ismegafauna(firer))
+					var/mob/living/simple_animal/hostile/megafauna/megafauna = firer
+					megafauna.devour(target)
+		return
+	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
+		return
+	if(isturf(target) || isobj(target))
+		if(isobj(target))
+			SSexplosions.med_mov_atom += target
+		else
+			SSexplosions.medturf += target
+
 /obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	. = ..()
 	if(wave_movement)
