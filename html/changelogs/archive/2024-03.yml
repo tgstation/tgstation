@@ -316,3 +316,12 @@
       which will lose its ability to function as a normal briefcase when compressed)
   Gboster-0:
   - rscadd: Contractors now can purchase an area pinpointer
+2024-03-21:
+  Absolucy, LT3:
+  - code_imp: Changing security levels will only trigger the nightshift subsystem
+      if lighting changes are required.
+  - code_imp: Server wide admin announcements now use an alert box like other announcements.
+  - qol: Roundstart intercept report and security level announcements are combined
+      into a single announcement.
+  SeeBeeSee:
+  - balance: Kneecapped instakill electrical activity plants
