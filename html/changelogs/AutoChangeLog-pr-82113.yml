@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscdel: "Removed the (non-working) \"Perma-Flipping\" and \"Echolocation\" deathmatch modifiers."
+  - rscadd: "Added \"No Slowdown\", \"Random Teleports\", \"Snail Crawl\", \"Forcefield Trail\" and \"Manual Blinking/Breathing\" modifiers."
+  - bugfix: "Fixed deathmatch cruise missiles looking like standard pods."
