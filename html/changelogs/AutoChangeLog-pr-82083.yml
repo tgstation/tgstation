@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fix hack comms console/locate weakpoint objective showing up multiple times"

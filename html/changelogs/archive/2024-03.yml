@@ -616,3 +616,39 @@
   - bugfix: Vending machine no longer shocks you twice when you pulse high voltage
       wire.
   - bugfix: Airlock wires window closes when you get shocked
+2024-03-21:
+  00-Steven:
+  - rscadd: Hemiplegic now lets you pick which side is disabled.
+  - rscadd: The medical records text for hemiplegics now shows which side is disabled.
+  ArcaneMusic:
+  - bugfix: Vending machines now show the correct vending refill name when examine
+      and not full.
+  - code_imp: Mineral logging now collects ore names more cleanly.
+  Bilbo367:
+  - admin: cluster bombs stop spamming admin logs
+  Higgin:
+  - bugfix: basic mob pirates no longer drop fake energy weapon lenses when shooting
+      you to death with lasers.
+  JohnFulpWillard:
+  - bugfix: Clients joining a round twice as a crewmember (via admins or otherwise)
+      no longer break security/medical record consoles permanently.
+  Melbert:
+  - refactor: Infrared emitters now function better (or at least more how you would
+      expect them) (hopefully). Report any oddities
+  - qol: Hand labels now have a visual effect associated, and are also affected by
+      heat / can be cleaned off like stickers.
+  - refactor: Refactored hand labels. They're objects now!
+  Singul0:
+  - bugfix: You can't complete a genetic makeup scan when the targets moves out of
+      target anymore using a genetic sequencer
+  SomeRandomOwl:
+  - admin: Deathmatch Bombs, Smoke, and Liquid floods are now suppressed in the logs
+      and will not actively spam admin logs.
+  - code_imp: adds a area flag to suppress logging for floods and bombs
+  TheVekter:
+  - rscadd: Added 5 new Felinid ear options, ported from Orbstation! (Sprites by Or-Fi-S)
+  Thlumyn:
+  - rscadd: Added corner filled warning decals
+  Xander3359:
+  - bugfix: Fix hack comms console/locate weakpoint objective showing up multiple
+      times
