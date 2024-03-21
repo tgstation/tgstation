@@ -288,7 +288,7 @@
 	consume(atom_source, nom)
 
 /datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
-	if((consumed_object.flags_1 & SUPERMATTER_IGNORES_1))
+	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
