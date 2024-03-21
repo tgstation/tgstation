@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
 	if((total_loaded_stock() / total_max_stock()) < 1)
-		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [refill_canister]")] with the panel open.")
+		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
 	else
 		. += span_notice("\The [src] is fully stocked.")
 	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)

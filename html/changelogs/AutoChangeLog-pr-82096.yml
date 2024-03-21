@@ -1,5 +1,0 @@
-author: "SomeRandomOwl"
-delete-after: True
-changes:
-  - admin: "Deathmatch Bombs, Smoke, and Liquid floods are now suppressed in the logs and will not actively spam admin logs."
-  - code_imp: "adds a area flag to suppress logging for floods and bombs"
