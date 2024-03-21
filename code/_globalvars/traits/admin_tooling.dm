@@ -4,6 +4,7 @@
 
 GLOBAL_LIST_INIT(admin_visible_traits, list(
 	/atom = list(
+		"TRAIT_UNHITTABLE_BY_PROJECTILES" = TRAIT_UNHITTABLE_BY_PROJECTILES,
 		"TRAIT_KEEP_TOGETHER" = TRAIT_KEEP_TOGETHER,
 	),
 	/atom/movable = list(

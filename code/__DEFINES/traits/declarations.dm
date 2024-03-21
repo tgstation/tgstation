@@ -497,6 +497,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ADAMANTINE_EXTRACT_ARMOR "adamantine_extract_armor"
 /// Mobs with this trait won't be able to dual wield guns.
 #define TRAIT_NO_GUN_AKIMBO "no_gun_akimbo"
+/// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
+#define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles"
 
 /// Projectile with this trait will always hit the defined zone of a struck living mob.
 #define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
