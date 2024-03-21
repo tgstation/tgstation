@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Removes some dirt tiles on the Sunrise deathmatch map, which would fill the map with lavaland atmos."
