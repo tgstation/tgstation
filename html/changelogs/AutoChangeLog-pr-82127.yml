@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "reagent containers like cup & syringe only update target appearance if action was successful."
+  - bugfix: "envelops don't stack overlays when interacting with cup & syringes."
