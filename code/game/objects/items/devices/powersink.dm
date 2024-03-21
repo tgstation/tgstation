@@ -171,8 +171,8 @@
 		if(istype(terminal.master, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = terminal.master
 			if(apc.operating && apc.cell)
-				drained += apc.cell.use(50 KILO JOULES, force = TRUE)
-	internal_heat += drained / 1000
+				drained += 0.001 * apc.cell.use(50 KILO JOULES, force = TRUE)
+	internal_heat += drained
 
 /obj/item/powersink/process()
 	if(!attached)
