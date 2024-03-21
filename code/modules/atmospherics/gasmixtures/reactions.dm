@@ -827,7 +827,7 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
-	var/heat_efficiency = min(temperature / ( FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(20))
+	var/heat_efficiency = min(temperature / HALON_COMBUSTION_TEMPERATURE_SCALE, cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(20))
 	if (heat_efficiency <= 0 || (cached_gases[/datum/gas/halon][MOLES] - heat_efficiency < 0 ) || (cached_gases[/datum/gas/oxygen][MOLES] - heat_efficiency * 20 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
