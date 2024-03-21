@@ -55,10 +55,13 @@
 				span_danger("The [bullet.name] gets reflected by [src]!"),
 				span_userdanger("The [bullet.name] gets reflected by [src]!"),
 			)
-			// Finds and plays the block_sound of item which reflected
 			for(var/obj/item/held_item in held_items)
+				// Plays the block_sound of the item which reflected
 				if(held_item.IsReflect(def_zone))
 					playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
+				// Applies a stamina penalty if the reflect item asks for it
+				if(held_item.IsReflectCostly())
+					apply_damage(REFLECT_STAMINA_COST, STAMINA)
 			// Find a turf near or on the original location to bounce to
 			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 				bullet.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
