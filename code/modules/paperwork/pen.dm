@@ -231,10 +231,6 @@
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
 			else
 				O.AddComponent(/datum/component/rename, input, O.desc)
-				var/datum/component/label/label = O.GetComponent(/datum/component/label)
-				if(label)
-					label.remove_label()
-					label.apply_label()
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
 				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 				O.update_appearance(UPDATE_ICON)
@@ -257,13 +253,6 @@
 				return
 
 			qdel(O.GetComponent(/datum/component/rename))
-
-			//reapply any label to name
-			var/datum/component/label/label = O.GetComponent(/datum/component/label)
-			if(label)
-				label.remove_label()
-				label.apply_label()
-
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
 			REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 			O.update_appearance(UPDATE_ICON)
