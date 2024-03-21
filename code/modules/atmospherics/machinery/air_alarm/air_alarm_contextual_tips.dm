@@ -1,5 +1,7 @@
 /obj/machinery/airalarm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	if(isnull(held_item))
+		return 
 
 	if(held_item.tool_behaviour == TOOL_CROWBAR)
 		if(buildstage == AIR_ALARM_BUILD_NO_WIRES)
