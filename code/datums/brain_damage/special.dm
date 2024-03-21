@@ -498,6 +498,7 @@
 	QDEL_NULL(owner.ai_controller)
 	if(old_ai_controller_type)
 		owner.ai_controller = new old_ai_controller_type(owner)
+	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
 	if(isnull(owner.ai_controller))
@@ -507,6 +508,7 @@
 	if(!SPT_PROB(3, seconds_per_tick))
 		return
 
+	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
@@ -517,4 +519,5 @@
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	to_chat(owner, span_green("The urge subsides."))
