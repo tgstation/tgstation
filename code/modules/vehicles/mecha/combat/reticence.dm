@@ -19,7 +19,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 0,
+		MECHA_ARMOR = 1,
 	)
 	step_energy_drain = 4
 	color = "#87878715"
