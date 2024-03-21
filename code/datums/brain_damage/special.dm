@@ -495,6 +495,9 @@
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)
 	. = ..()
+	if(QDELING(owner))
+		return
+
 	QDEL_NULL(owner.ai_controller)
 	if(old_ai_controller_type)
 		owner.ai_controller = new old_ai_controller_type(owner)
