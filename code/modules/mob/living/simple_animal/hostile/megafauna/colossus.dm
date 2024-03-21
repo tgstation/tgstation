@@ -196,14 +196,10 @@
 /obj/projectile/colossus/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/dead_mob = target
-		if(dead_mob.stat == DEAD)
-			if(dead_mob.has_status_effect(/datum/status_effect/gutted))
-				return BULLET_ACT_FORCE_PIERCE
-			else
-				if(ismegafauna(firer))
-					var/mob/living/simple_animal/hostile/megafauna/megafauna = firer
-					megafauna.devour(target)
+		var/mob/living/dust_mob = target
+		if(dust_mob.stat == DEAD)
+			dust_mob.investigate_log("has been dusted by a death bolt (colossus).", INVESTIGATE_DEATHS)
+			dust_mob.dust()
 		return
 	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
 		return
