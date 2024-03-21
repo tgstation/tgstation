@@ -108,9 +108,9 @@
 		return
 
 	var/datum/team/cult/cult_team = controller.blackboard[BB_CULT_TEAM]
-	var/mob/living/sac_human = locate(/mob/living/carbon/human) in get_turf(target)
+	var/mob/living/revive_mob = locate(/mob/living) in get_turf(target)
 
-	if(isnull(sac_human) || !is_convertable_to_cult(sac_human, cult_team))
+	if(isnull(revive_mob) || revive_mob.stat != DEAD || !(revive_mob.mind in cult_team.members))
 		finish_action(controller, FALSE, target_key)
 		return
 
