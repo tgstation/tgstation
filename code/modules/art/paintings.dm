@@ -276,8 +276,9 @@
 	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
 	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
 	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
-	if(SSeconomy.bank_accounts_by_job[/datum/job/curator])
-		var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
+	var/datum/job/curator_singleton = SSjob.GetJobType(/datum/job/curator)
+	if(SSeconomy.bank_accounts_by_job[curator_singleton])
+		var/list/curator_accounts = SSeconomy.bank_accounts_by_job[curator_singleton] - account
 		var/curators_length = length(curator_accounts)
 		if(curators_length)
 			var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
