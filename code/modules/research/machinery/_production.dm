@@ -423,6 +423,8 @@
 
 /obj/machinery/rnd/production/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
+	if(isdead(usr))
+		return
 	if((!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
 		return
 	if(busy)
