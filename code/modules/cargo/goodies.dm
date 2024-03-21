@@ -252,7 +252,7 @@
 /datum/supply_pack/goody/fish_feed
 	name = "Can of fish food"
 	desc = "For keeping your little friends fed and alive."
-	cost = PAYCHECK_CREW * 3
+	cost = PAYCHECK_CREW * 1
 	contains = list(/obj/item/fish_feed)
 
 /datum/supply_pack/goody/naturalbait
