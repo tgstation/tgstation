@@ -365,7 +365,7 @@
 
 /obj/machinery/autolathe/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if(isdead(usr) || (!HAS_SILICON_ACCESS(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+	if(isobserver(usr) || (!HAS_SILICON_ACCESS(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
 		return
 	if(busy)
 		balloon_alert(usr, "printing started!")
