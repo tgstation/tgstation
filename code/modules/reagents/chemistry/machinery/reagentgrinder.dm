@@ -440,15 +440,14 @@
 						to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
 						continue
 					item_processed = TRUE
-			else
-				if(ingredient.grind_results)
-					if(!ingredient.grind(beaker.reagents, user))
-						if(isstack(ingredient))
-							to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
-						else
-							to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
-						continue
-					item_processed = TRUE
+			else if(ingredient.grind_results)
+				if(!ingredient.grind(beaker.reagents, user))
+					if(isstack(ingredient))
+						to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
+					else
+						to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
+					continue
+				item_processed = TRUE
 
 		//happens only for stacks where some of the sheets were grinded so we roughly compute the weight grinded
 		if(item_weight != weapon.w_class)
