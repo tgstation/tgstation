@@ -78,12 +78,13 @@ function Timer.start_loop(time, amount, func)
 	if amount == 1 then
 		return __add_internal_timer(func, time * 10, false)
 	end
+	-- Lua counts from 1 so let's keep consistent with that
 	local doneAmount = 1
 	local funcId
 	local newFunc = function()
 		func(doneAmount)
 		doneAmount += 1
-		if doneAmount >= amount then
+		if doneAmount > amount then
 			Timer.end_loop(funcId)
 		end
 	end
