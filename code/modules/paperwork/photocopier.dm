@@ -552,10 +552,27 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
 /obj/machinery/photocopier/dump_contents()
+	var/turf/droppoint = get_turf(src)
+	
 	if(payment_component)
 		var/obj/item/spawned_obj = new /obj/item/stock_parts/card_reader(loc)
 		give_pixel_offset(spawned_obj)
 		QDEL_NULL(payment_component)
+
+	for(var/obj/item/paper/stacked_paper in paper_stack) // First, we dump already existing paper
+		stacked_paper.forceMove(droppoint)
+		if(!stacked_paper.pixel_y)
+			stacked_paper.pixel_y = rand(-3,3)
+		if(!stacked_paper.pixel_x)
+			stacked_paper.pixel_x = rand(-3,3)
+		paper_stack -= stacked_paper
+	for(var/i in 1 to starting_paper) // Second, generate new paper for the remainder
+		var/obj/item/paper/new_paper = new
+		new_paper.forceMove(droppoint)
+		if(!new_paper.pixel_y)
+			new_paper.pixel_y = rand(-3,3)
+		if(!new_paper.pixel_x)
+			new_paper.pixel_x = rand(-3,3)
 	. = ..()
 
 /obj/machinery/photocopier/add_context(atom/source, list/context, obj/item/held_item, mob/user)
