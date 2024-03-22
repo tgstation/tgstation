@@ -970,6 +970,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
 
+/// The duration of the flip emote animation
+#define FLIP_EMOTE_DURATION 0.7 SECONDS
+
 // Sprites for photocopying butts
 #define BUTT_SPRITE_HUMAN_MALE "human_male"
 #define BUTT_SPRITE_HUMAN_FEMALE "human_female"

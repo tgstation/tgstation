@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Infrared emitters now function better (or at least more how you would expect them) (hopefully). Report any oddities"

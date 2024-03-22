@@ -1,0 +1,4 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "A broken item was removed from the mimesvsclowns ruin. In its place is a spent revolver round."

@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
 	if((total_loaded_stock() / total_max_stock()) < 1)
-		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [refill_canister]")] with the panel open.")
+		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
 	else
 		. += span_notice("\The [src] is fully stocked.")
 	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
@@ -1269,16 +1269,20 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		var/mob/living/living_user = user
 		card_used = living_user.get_idcard(TRUE)
 		held_cash = living_user.tally_physical_credits()
+
+	var/list/user_data = null
 	if(card_used?.registered_account)
-		.["user"] = list()
-		.["user"]["name"] = card_used.registered_account.account_holder
-		.["user"]["cash"] = fetch_balance_to_use(card_used) + held_cash
+		user_data = list()
+		user_data["name"] = card_used.registered_account.account_holder
+		user_data["cash"] = fetch_balance_to_use(card_used) + held_cash
 		if(card_used.registered_account.account_job)
-			.["user"]["job"] = card_used.registered_account.account_job.title
-			.["user"]["department"] = card_used.registered_account.account_job.paycheck_department
+			user_data["job"] = card_used.registered_account.account_job.title
+			user_data["department"] = card_used.registered_account.account_job.paycheck_department
 		else
-			.["user"]["job"] = "No Job"
-			.["user"]["department"] = DEPARTMENT_UNASSIGNED
+			user_data["job"] = "No Job"
+			user_data["department"] = DEPARTMENT_UNASSIGNED
+	.["user"] = user_data
+
 	.["stock"] = list()
 
 	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
@@ -1413,6 +1417,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			return
 
 		if(!proceed_payment(card_used, living_user, item_record, price_to_use))
+			vend_ready = TRUE
 			return
 
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
@@ -1465,6 +1470,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * price_to_use - price of the item we're trying to vend.
  */
 /obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
+	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
+		speak("You do not possess an ID to purchase [product_to_vend.name].")
+		return FALSE
 	var/datum/bank_account/account = paying_id_card.registered_account
 	if(account.account_job && account.account_job.paycheck_department == payment_department)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
