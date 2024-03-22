@@ -85,11 +85,10 @@ SUBSYSTEM_DEF(machines)
 		current_part = SSMACHINES_APCS_EARLY
 		src.currentrun = apc_early_processing.Copy()
 
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-
 	//APC early processing. Draws static power usages from their grids.
 	if(current_part == SSMACHINES_APCS_EARLY)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
 		while(currentrun.len)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
@@ -99,10 +98,12 @@ SUBSYSTEM_DEF(machines)
 			if(MC_TICK_CHECK)
 				return
 		current_part = SSMACHINES_MACHINES
-		currentrun = processing.Copy()
+		src.currentrun = processing.Copy()
 
 	//General machine processing. Their power usage can be dynamic and based on surplus power, so they come after static power usage have been applied.
 	if(current_part == SSMACHINES_MACHINES)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
 		while(currentrun.len)
 			var/obj/machinery/thing = currentrun[currentrun.len]
 			currentrun.len--
@@ -112,11 +113,13 @@ SUBSYSTEM_DEF(machines)
 			if (MC_TICK_CHECK)
 				return
 		current_part = SSMACHINES_APCS_LATE
-		currentrun = apc_late_processing.Copy()
+		src.currentrun = apc_late_processing.Copy()
 
 	//APC late processing. APCs will use the remaining power on the grid to charge their cells if needed.
 	//This is applied at the end so charging APCs don't cause others to discharge by taking all the power from the grid before machines use power.
 	if(current_part == SSMACHINES_APCS_LATE)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
 		while(currentrun.len)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
