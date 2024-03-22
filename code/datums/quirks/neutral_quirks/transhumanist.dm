@@ -122,7 +122,7 @@
 		if(new_organ.Insert(human_holder, special = TRUE))
 			old_part.moveToNullspace()
 			STOP_PROCESSING(SSobj, old_part)
-			slot_string = "[new_organ.name]"
+			slot_string = new_organ.name
 
 /datum/quirk/transhumanist/post_add()
 	if(slot_string)
