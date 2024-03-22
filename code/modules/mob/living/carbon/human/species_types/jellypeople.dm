@@ -109,6 +109,14 @@
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
+/datum/species/jelly/get_species_description()
+	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."
+
+/datum/species/jelly/get_species_lore()
+	return list(
+		"Jellypeople are actively being experimented on my Nanotrasen scientists, who are trying to unlock the secrets of their unique biology.",
+	)
+
 // Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
 /datum/species/jelly/create_pref_blood_perks()
