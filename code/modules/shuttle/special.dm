@@ -169,7 +169,7 @@
 
 /mob/living/basic/drone/snowflake/bardrone/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback) //
-	QDEL_NULL(roundend_callback)
+	roundend_callback = null
 	return ..()
 
 /mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
