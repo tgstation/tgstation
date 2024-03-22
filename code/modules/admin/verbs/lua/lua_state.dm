@@ -97,9 +97,9 @@ GLOBAL_PROTECT(lua_usr)
 
 /datum/lua_state/process(seconds_per_tick)
 	if(timer_enabled)
-		call_function("__Timer_timer_process", seconds_per_tick)
+		call_function_return_first("__Timer_timer_process", seconds_per_tick)
 		for(var/function as anything in functions_to_execute)
-			call_function(list("__Timer_callbacks", function))
+			call_function_return_first(list("__Timer_callbacks", function))
 		functions_to_execute.Cut()
 
 /datum/lua_state/proc/call_function(function, ...)
