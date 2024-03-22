@@ -3636,11 +3636,11 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/disposal/bin,
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "awi" = (
@@ -8051,7 +8051,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
 "bLr" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
@@ -8062,6 +8061,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/security/office)
 "bLA" = (
@@ -8739,37 +8739,22 @@
 /area/station/commons/lounge)
 "bXp" = (
 /obj/item/toy/crayon/orange,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 8;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = -4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 4;
 	pixel_y = -32
 	},
@@ -11659,12 +11644,7 @@
 "cVk" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -16755,12 +16735,7 @@
 /area/station/science/auxlab/firing_range)
 "ePS" = (
 /obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
@@ -19128,10 +19103,10 @@
 	dir = 9
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "fKg" = (
@@ -21222,11 +21197,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
-/obj/machinery/disposal/bin,
 /obj/machinery/newscaster/directional/north,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "gxV" = (
@@ -22531,12 +22506,7 @@
 /area/station/commons/fitness/recreation)
 "gWt" = (
 /obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -32937,12 +32907,7 @@
 	},
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/bot,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -35117,6 +35082,7 @@
 /area/station/engineering/atmos)
 "lrZ" = (
 /obj/structure/table/glass,
+/obj/structure/secure_safe/caps_spare,
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "lse" = (
@@ -43742,6 +43708,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
+"ouQ" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "ouW" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/library,
@@ -44635,7 +44605,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "oQO" = (
-/obj/structure/safe,
+/obj/structure/safe/vault,
 /obj/item/clothing/head/costume/bearpelt,
 /obj/item/gun/ballistic/revolver/russian,
 /obj/item/ammo_box/a357,
@@ -46135,6 +46105,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"ptq" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "pts" = (
 /obj/machinery/power/smes{
 	capacity = 9e+006;
@@ -46973,6 +46948,11 @@
 	},
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
+"pGr" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "pGy" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -46998,7 +46978,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/disposal/bin,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pGS" = (
@@ -48423,7 +48403,6 @@
 /area/station/medical/chemistry)
 "qgy" = (
 /obj/structure/table/reinforced,
-/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/machinery/cell_charger{
 	pixel_y = 4
 	},
@@ -49930,6 +49909,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "qIc" = (
@@ -54283,13 +54263,13 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "skb" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ski" = (
@@ -60055,12 +60035,7 @@
 	},
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ujw" = (
@@ -63236,37 +63211,22 @@
 /area/station/maintenance/tram/mid)
 "viW" = (
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 8;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = -4;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 4;
 	pixel_y = -32
 	},
@@ -64144,10 +64104,6 @@
 /area/station/hallway/secondary/entry)
 "vxv" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
@@ -68019,9 +67975,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "wWh" = (
@@ -69059,12 +69012,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "xrf" = (
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/duct,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/freezer,
@@ -70448,13 +70396,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xSz" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "xSD" = (
@@ -154913,8 +154861,8 @@ eOh
 pJJ
 fWM
 qyZ
-joF
-kSZ
+pGr
+ptq
 lmG
 hHI
 gIG
@@ -155170,7 +155118,7 @@ phB
 qdY
 xNj
 qyZ
-kSZ
+ouQ
 wWe
 imr
 iue

@@ -260,51 +260,6 @@
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
- * Removes a reagent at random and by a random quantity till the specified amount has been removed.
- * Used to create a shower/spray effect for e.g. when you spill a bottle or turn a shower on
- * and you want an chaotic effect of whatever coming out
- * Arguments
- *
- * * amount- the volume to remove
- */
-/datum/reagents/proc/remove_any(amount = 1)
-	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to remove any reagent [amount]")
-		return FALSE
-
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
-		return FALSE
-
-	var/list/cached_reagents = reagent_list
-	var/total_removed = 0
-	var/current_list_element = 1
-	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
-
-	current_list_element = rand(1, cached_reagents.len)
-
-	while(total_removed < amount)
-		// There's nothing left in the container
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/target_holder = cached_reagents[current_list_element]
-		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		// If the logic above means removing really tiny amounts (or even zero if it's a remove amount of 10) instead choose a sensible smallish number
-		// so this proc will actually finish instead of looping forever
-		remove_amt = max(CHEMICAL_VOLUME_ROUNDING, remove_amt)
-		remove_amt = remove_reagent(target_holder.type, remove_amt)
-
-		current_list_element++
-		total_removed += remove_amt
-	handle_reactions()
-
-	return round(total_removed, CHEMICAL_VOLUME_ROUNDING)
-
-/**
  * Removes all reagents either proportionally(amount is the direct volume to remove)
  * when proportional the total volume of all reagents removed will equal to amount
  * or relatively(amount is a percentile between 0->1) when relative amount is the %

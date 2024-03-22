@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "Ore vents have to be scanned while standing next to them."
-  - bugfix: "Menacing ore vents now correctly only spawn in a node drone after the boss is defeated, instead of before."

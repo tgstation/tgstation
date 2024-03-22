@@ -1,23 +1,36 @@
-/datum/orderable_item/bepis
-	category_index = CATEGORY_BEPIS
+/datum/orderable_item/bitrunning_tech
+	category_index = CATEGORY_BITRUNNING_TECH
 
-/datum/orderable_item/bepis/circuit_stack
-	item_path = /obj/item/stack/circuit_stack/full
-	cost_per_order = 150
-
-/datum/orderable_item/bepis/survival_pen
-	item_path = /obj/item/pen/survival
-	cost_per_order = 150
-
-/datum/orderable_item/bepis/party_sleeper
-	item_path = /obj/item/circuitboard/machine/sleeper/party
-	cost_per_order = 750
-	desc = "A decommissioned sleeper circuitboard, repurposed for recreational purposes."
-
-/datum/orderable_item/bepis/sprayoncan
-	item_path = /obj/item/toy/sprayoncan
-	cost_per_order = 750
-
-/datum/orderable_item/bepis/pristine
-	item_path = /obj/item/disk/design_disk/bepis/remove_tech
+/datum/orderable_item/bitrunning_tech/item_tier1
 	cost_per_order = 1000
+	item_path = /obj/item/bitrunning_disk/item/tier1
+	desc = "This disk contains a program that lets you equip a medical beamgun, a C4 explosive, or a box of infinite pizza."
+
+/datum/orderable_item/bitrunning_tech/item_tier2
+	cost_per_order = 1500
+	item_path = /obj/item/bitrunning_disk/item/tier2
+	desc = "This disk contains a program that lets you equip a luxury medipen, a pistol, or an armour vest."
+
+/datum/orderable_item/bitrunning_tech/item_tier3
+	cost_per_order = 2500
+	item_path = /obj/item/bitrunning_disk/item/tier3
+	desc = "This disk contains a program that lets you equip an advanced energy gun, a dual bladed energy sword, or a minibomb."
+
+/datum/orderable_item/bitrunning_tech/ability_tier1
+	cost_per_order = 1000
+	item_path = /obj/item/bitrunning_disk/ability/tier1
+	desc = "This disk contains a program that lets you cast Summon Cheese or Lesser Heal."
+
+/datum/orderable_item/bitrunning_tech/ability_tier2
+	cost_per_order = 1800
+	item_path = /obj/item/bitrunning_disk/ability/tier2
+	desc = "This disk contains a program that lets you cast Fireball, Lightning Bolt, or Forcewall."
+
+/datum/orderable_item/bitrunning_tech/ability_tier3
+	cost_per_order = 3200
+	item_path = /obj/item/bitrunning_disk/ability/tier3
+	desc = "This disk contains a program that lets you shapeshift into a lesser ashdrake, or a polar bear."
+
+/datum/orderable_item/bitrunning_tech/flip_skillchip
+	item_path = /obj/item/skillchip/matrix_flip
+	cost_per_order = 2000

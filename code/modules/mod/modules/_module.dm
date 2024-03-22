@@ -225,7 +225,6 @@
 	if(!check_power(amount))
 		return FALSE
 	mod.subtract_charge(amount)
-	mod.update_charge_alert()
 	return TRUE
 
 /// Checks if there is enough power in the suit

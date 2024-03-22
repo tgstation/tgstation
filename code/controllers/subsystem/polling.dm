@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(polling)
 	// Start firing
 	total_polls++
 
-	if(!jump_target && isatom(alert_pic))
+	if(isnull(jump_target) && isatom(alert_pic))
 		jump_target = alert_pic
 
 	var/datum/candidate_poll/new_poll = new(role_name_text, question, poll_time, ignore_category, jump_target, custom_response_messages)
@@ -129,13 +129,15 @@ SUBSYSTEM_DEF(polling)
 				break
 
 		// Image to display
-		var/image/poll_image = image('icons/effects/effects.dmi', icon_state = "static")
-		if(alert_pic)
-			if(!ispath(alert_pic))
-				var/mutable_appearance/picture_source = alert_pic
-				poll_image = picture_source
-			else
-				poll_image = image(alert_pic)
+		var/image/poll_image
+		if(ispath(alert_pic, /atom))
+			poll_image = image(alert_pic)
+		else if(isatom(alert_pic))
+			poll_image = new /mutable_appearance(alert_pic)
+		else if(!isnull(alert_pic))
+			poll_image = alert_pic
+		else
+			poll_image = image('icons/effects/effects.dmi', icon_state = "static")
 
 		if(poll_image)
 			poll_image.layer = FLOAT_LAYER
