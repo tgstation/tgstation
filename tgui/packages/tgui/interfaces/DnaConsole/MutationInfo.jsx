@@ -15,6 +15,7 @@ import {
   CHROMOSOME_NONE,
   CHROMOSOME_USED,
   MUT_COLORS,
+  MUT_EXTRA,
 } from './constants';
 
 /**
