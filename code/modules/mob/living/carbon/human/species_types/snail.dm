@@ -1,5 +1,6 @@
 /datum/species/snail
-	name = "Snailperson"
+	name = "\improper Snailperson"
+	plural_form = "Snailpeople"
 	id = SPECIES_SNAIL
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -29,6 +30,44 @@
 /datum/species/snail/get_physical_attributes()
 	return "Snailpeople emit a viscous, slippery ooze when crawling along the ground, which they are somewhat faster at than other species. \
 		They are almost purely made of water, making them extremely susceptible to shocks, and salt will scour them heavily."
+
+/datum/species/snail/get_species_description()
+	return "Snailpeople are viscous, slimy beings with a shell on their back."
+
+/datum/species/snail/get_species_lore()
+	return list(
+		"Normally, Snailpeople are a result of a genetic experiment gone wrong, but they have since become recognized species in their own right, \
+		similar to the Felinid.",
+	)
+
+/datum/species/snail/create_pref_unique_perks()
+	var/list/to_add = list()
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = FA_ICON_RUNNING,
+		SPECIES_PERK_NAME = "Turbo",
+		SPECIES_PERK_DESC = "Snailpeople walk and run very slow, but crawl around very fast. While crawling, they leave a trail of slippery slime behind them.",
+	))
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = FA_ICON_SHRIMP,
+		SPECIES_PERK_NAME = "Shelled",
+		SPECIES_PERK_DESC = "The back of a Snailperson is covered in an armored shell, which is effectively an unremovable backpack. \
+			Good for keeping your things from being stolen, but bad for needing to wear a MODsuit, or disguising.",
+	))
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_SKULL_CROSSBONES,
+		SPECIES_PERK_NAME = "Salty",
+		SPECIES_PERK_DESC = "Being evolved from Snails, Snailpeople are extremely susceptible to salt, which burns them.",
+	))
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_HAND_FIST,
+		SPECIES_PERK_NAME = "Squishy",
+		SPECIES_PERK_DESC = "Snailpeople are squishy and slimy, making their punches and kicks far less effective than other species.",
+	))
+	return to_add
 
 /datum/species/snail/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	. = ..()
@@ -93,4 +132,4 @@
 
 /obj/item/storage/backpack/snail/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, "snailshell")
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
