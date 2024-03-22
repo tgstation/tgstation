@@ -99,4 +99,4 @@
 	speech_chance = 1
 	speak = list("Blorble...")
 	emote_hear = list("blorbles.")
-	emote_see = list("bounces","jiggles", "bounces in place")
+	emote_see = list("lights up for a bit, then stops.","bounces in place.", "jiggles!","vibrates!")
