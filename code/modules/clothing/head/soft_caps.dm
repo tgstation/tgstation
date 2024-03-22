@@ -135,6 +135,15 @@
 	strip_delay = 60
 	dog_fashion = null
 
+/obj/item/clothing/head/soft/veteran
+	name = "veteran cap"
+	desc = "It's a robust baseball hat in tasteful black colour with a golden connotation to \"REMEMBER\"."
+	icon_state = "veteransoft"
+	soft_type = "veteran"
+	armor_type = /datum/armor/cosmetic_sec
+	strip_delay = 60
+	dog_fashion = null
+
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."

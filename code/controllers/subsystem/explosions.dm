@@ -1,4 +1,8 @@
 #define EXPLOSION_THROW_SPEED 4
+#define EXPLOSION_BLOCK_LIGHT 2.5
+#define EXPLOSION_BLOCK_HEAVY 1.5
+#define EXPLOSION_BLOCK_DEV 1
+
 GLOBAL_LIST_EMPTY(explosions)
 
 SUBSYSTEM_DEF(explosions)
@@ -127,25 +131,26 @@ SUBSYSTEM_DEF(explosions)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
+		var/block = 0
 
 		if(newmode == "Yes")
 			if(explode != epicenter)
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
-				dist += our_block
+				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
 			else
 				cached_exp_block[explode] = explode.explosive_resistance
 
 		dist = round(dist, 0.01)
-		if(dist < dev)
+		if(dist + (block * EXPLOSION_BLOCK_DEV) < dev)
 			explode.color = "red"
 			explode.maptext = MAPTEXT("[dist]")
-		else if (dist < heavy)
+		else if (dist + (block * EXPLOSION_BLOCK_HEAVY) < heavy)
 			explode.color = "yellow"
-			explode.maptext = MAPTEXT("[dist]")
-		else if (dist < light)
+			explode.maptext = MAPTEXT("[dist + (block * EXPLOSION_BLOCK_HEAVY)]")
+		else if (dist + (block * EXPLOSION_BLOCK_LIGHT) < light)
 			explode.color = "blue"
-			explode.maptext = MAPTEXT("[dist]")
+			explode.maptext = MAPTEXT("[dist + (block * EXPLOSION_BLOCK_LIGHT)]")
 		else
 			continue
 
@@ -397,26 +402,26 @@ SUBSYSTEM_DEF(explosions)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
-
+		var/block = 0
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
 		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
 		// So we always sample from a "loop" closer
-		// It's kind of behaviorly unimpressive that that's a problem for the future
+		// It's kind of behaviorly unimpressive but that's a problem for the future
 		if(reactionary)
 			if(explode == epicenter)
 				cached_exp_block[explode] = explode.explosive_resistance
 			else
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
-				dist += our_block
+				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
 
 
 		var/severity = EXPLODE_NONE
-		if(dist < devastation_range)
+		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
 			severity = EXPLODE_DEVASTATE
-		else if(dist < heavy_impact_range)
+		else if(dist + (block * EXPLOSION_BLOCK_HEAVY) < heavy_impact_range)
 			severity = EXPLODE_HEAVY
-		else if(dist < light_impact_range)
+		else if(dist + (block * EXPLOSION_BLOCK_LIGHT) < light_impact_range)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
@@ -725,3 +730,6 @@ SUBSYSTEM_DEF(explosions)
 	currentpart = SSEXPLOSIONS_TURFS
 
 #undef EXPLOSION_THROW_SPEED
+#undef EXPLOSION_BLOCK_LIGHT
+#undef EXPLOSION_BLOCK_HEAVY
+#undef EXPLOSION_BLOCK_DEV

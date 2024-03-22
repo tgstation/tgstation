@@ -8,7 +8,6 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	use_power = ACTIVE_POWER_USE
 	circuit = /obj/item/circuitboard/computer/powermonitor
-	tgui_id = "PowerMonitor"
 
 	var/datum/weakref/attached_wire_ref
 	var/datum/weakref/local_apc_ref

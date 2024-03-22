@@ -50,7 +50,7 @@
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	if(!user.can_perform_action(src, NEED_DEXTERITY)) //prevents monkeys from using camera consoles
+	if(!user.client) //prevents errors by trying to pass clients that don't exist.
 		return
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -76,7 +76,7 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
-/obj/machinery/computer/security/ui_status(mob/user)
+/obj/machinery/computer/security/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE

@@ -79,14 +79,15 @@
 		poll_time = 30 SECONDS,
 		flash_window = FALSE,
 		start_signed_up = TRUE,
-		pic_source = /obj/item/storage/fancy/heart_box,
+		alert_pic = /obj/item/storage/fancy/heart_box,
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have signed up for a date!",
 			POLL_RESPONSE_ALREADY_SIGNED = "You are already signed up for a date.",
 			POLL_RESPONSE_NOT_SIGNED = "You aren't signed up for a date.",
 			POLL_RESPONSE_TOO_LATE_TO_UNREGISTER = "It's too late to decide against going on a date.",
-			POLL_RESPONSE_UNREGISTERED = "You deicde against going on a date.",
+			POLL_RESPONSE_UNREGISTERED = "You decide against going on a date.",
 		),
+		chat_text_border_icon = /obj/item/storage/fancy/heart_box,
 	)
 
 	for(var/mob/living/second_check as anything in candidates_pruned)

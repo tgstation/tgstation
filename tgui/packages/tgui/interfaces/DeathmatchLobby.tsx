@@ -8,6 +8,7 @@ import {
   Dropdown,
   Flex,
   Icon,
+  Modal,
   Section,
   Table,
 } from '../components';
@@ -21,11 +22,22 @@ type PlayerLike = {
   };
 };
 
+type Modifier = {
+  name: string;
+  desc: string;
+  modpath: string;
+  selected: BooleanLike;
+  selectable: BooleanLike;
+  player_selected: BooleanLike;
+  player_selectable: BooleanLike;
+};
+
 type Data = {
   self: string;
   host: BooleanLike;
   admin: BooleanLike;
   global_chat: BooleanLike;
+  playing: BooleanLike;
   loadouts: string[];
   maps: string[];
   map: {
@@ -35,6 +47,9 @@ type Data = {
     min_players: number;
     max_players: number;
   };
+  mod_menu_open: BooleanLike;
+  modifiers: Modifier[];
+  active_mods: string;
   loadoutdesc: string;
   players: PlayerLike[];
   observers: PlayerLike[];
@@ -42,12 +57,14 @@ type Data = {
 
 export const DeathmatchLobby = (props) => {
   const { act, data } = useBackend<Data>();
+  const { modifiers = [] } = data;
   return (
-    <Window title="Deathmatch Lobby" width={560} height={400}>
+    <Window title="Deathmatch Lobby" width={560} height={480}>
+      <ModSelector />
       <Window.Content>
         <Flex height="94%">
-          <Flex.Item width="350px">
-            <Section height="99%">
+          <Flex.Item width="63%">
+            <Section fill scrollable>
               <Table>
                 <Table.Row>
                   <Table.Cell collapsing />
@@ -147,6 +164,7 @@ export const DeathmatchLobby = (props) => {
               </Box>
               <Divider />
               {data.map.desc}
+              <Divider />
               <Box textAlign="center">
                 Maximum Play Time: <b>{`${data.map.time / 600}min`}</b>
                 <br />
@@ -168,9 +186,30 @@ export const DeathmatchLobby = (props) => {
                 }
               />
               <Divider />
+              <Box textAlign="center">{data.active_mods}</Box>
+              {(!!data.admin || !!data.host) && (
+                <>
+                  <Divider />
+                  <Button
+                    textAlign="center"
+                    fluid
+                    content="Toggle Modifiers"
+                    onClick={() => act('open_mod_menu')}
+                  />
+                </>
+              )}
+              <Divider />
               <Box textAlign="center">Loadout Description</Box>
               <Divider />
               <Box textAlign="center">{data.loadoutdesc}</Box>
+              {!!data.playing && (
+                <>
+                  <Divider />
+                  <Box textAlign="center">
+                    The game is currently in progress, or loading.
+                  </Box>
+                </>
+              )}
             </Section>
           </Flex.Item>
         </Flex>
@@ -199,5 +238,41 @@ export const DeathmatchLobby = (props) => {
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+const ModSelector = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { admin, host, mod_menu_open, modifiers = [] } = data;
+  if (!mod_menu_open || !(host || admin)) {
+    return null;
+  }
+  return (
+    <Modal>
+      <Button
+        fluid
+        content="Go Back"
+        color="bad"
+        onClick={() => act('exit_mod_menu')}
+      />
+      {modifiers.map((mod, index) => {
+        return (
+          <Button.Checkbox
+            key={index}
+            mb={2}
+            checked={mod.selected}
+            content={mod.name}
+            tooltip={mod.desc}
+            color={mod.selected ? 'green' : 'blue'}
+            disabled={!mod.selected && !mod.selectable}
+            onClick={() =>
+              act('toggle_modifier', {
+                modpath: mod.modpath,
+              })
+            }
+          />
+        );
+      })}
+    </Modal>
   );
 };

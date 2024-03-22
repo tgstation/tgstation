@@ -219,7 +219,14 @@
 		delay *= FREQUENT_USE_DEBUFF_MULTIPLIER
 
 	current_active_effects += 1
-	_rcd_create_effect(target, user, delay, rcd_results)
+
+	var/target_name = target.name //Store this information before it gets mutated by the rcd.
+	var/target_path = target.type
+	var/atom/design_path = rcd_results["[RCD_DESIGN_PATH]"]
+	var/location = AREACOORD(target)
+	if(_rcd_create_effect(target, user, delay, rcd_results))
+		log_tool("[key_name(user)] used [src] to [rcd_results["[RCD_DESIGN_MODE]"] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
+
 	current_active_effects -= 1
 
 /**
@@ -521,7 +528,7 @@
 	///How much charge is used up for each matter unit.
 	var/mass_to_energy = 16
 
-/obj/item/construction/rcd/exosuit/ui_status(mob/user)
+/obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
 	if(ismecha(owner))
 		return owner.ui_status(user)
 	return UI_CLOSE

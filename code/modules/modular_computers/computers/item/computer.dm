@@ -7,6 +7,7 @@
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "laptop"
 	light_on = FALSE
+	light_power = 1.2
 	integrity_failure = 0.5
 	max_integrity = 100
 	armor_type = /datum/armor/item_modular_computer
@@ -267,30 +268,34 @@
 
 /**
  * InsertID
- * Attempt to insert the ID in either card slot.
+ * Attempt to insert the ID in either card slot, if ID is present - attempts swap
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
 /obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
-	//all slots taken
-	if(computer_id_slot)
+	if(!isnull(user) && !user.transferItemToLoc(inserting_id, src))
 		return FALSE
 
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
 		inserting_id.forceMove(src)
 
+	if(!isnull(computer_id_slot))
+		RemoveID(user, silent = TRUE)
+
 	computer_id_slot = inserting_id
 
+	if(!isnull(user))
+		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
+		balloon_alert(user, "inserted ID")
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
+
 	update_appearance()
 	update_slot_icon()
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_INSERTED_ID, inserting_id, user)
@@ -300,8 +305,9 @@
  * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
  * Args:
  * user - The mob trying to remove the ID, if there is one
+ * silent - Boolean, determines whether fluff text would be printed
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/RemoveID(mob/user, silent = FALSE)
 	if(!computer_id_slot)
 		return ..()
 
@@ -314,14 +320,17 @@
 		computer_id_slot.forceMove(drop_location())
 
 	computer_id_slot = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	balloon_alert(user, "removed ID")
-	to_chat(user, span_notice("You remove the card from the card slot."))
+
+	if(!silent && !isnull(user))
+		to_chat(user, span_notice("You remove the card from the card slot."))
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
+
 	update_slot_icon()
 	update_appearance()
 	return TRUE
@@ -403,6 +412,10 @@
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(computer_id_slot && isidcard(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Swap ID"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Cell"
 		. = CONTEXTUAL_SCREENTIP_SET
@@ -469,7 +482,7 @@
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
-	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
+	var/issynth = HAS_SILICON_ACCESS(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(user)
 			if(issynth)

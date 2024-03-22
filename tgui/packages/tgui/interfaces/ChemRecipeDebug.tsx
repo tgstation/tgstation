@@ -368,7 +368,7 @@ export const ChemRecipeDebug = (props) => {
                         step={0.1}
                         stepPixelSize={3}
                         value={editReaction?.editValue || 0}
-                        minValue={0}
+                        minValue={-1000}
                         maxValue={1000}
                         disabled={editReaction === null}
                         onDrag={(e, value) =>

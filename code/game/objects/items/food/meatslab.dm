@@ -340,7 +340,6 @@
 	icon_state = "meatwheat_clump"
 	bite_consumption = 4
 	tastes = list("meat" = 1, "wheat" = 1)
-	foodtypes = GRAIN
 
 /obj/item/food/meat/slab/gorilla
 	name = "gorilla meat"

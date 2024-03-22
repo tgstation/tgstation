@@ -5,7 +5,9 @@
 	if (!outfit_item) { \
 		TEST_FAIL("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
-	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
+	else { \
+		outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
+	} \
 }
 
 /// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.

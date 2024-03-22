@@ -398,7 +398,7 @@
 		return
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= cone
-	cone.alpha = min(200, (abs(new_power) * 90)+20)
+	cone.alpha = min(120, (abs(new_power) * 60) + 15)
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += cone
 

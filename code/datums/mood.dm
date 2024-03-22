@@ -92,7 +92,6 @@
 			set_sanity(sanity + 0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(MOOD_LEVEL_HAPPY4)
 			set_sanity(sanity + 0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
-	handle_nutrition()
 
 	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
 	// mood runtime, so 50% average uptime across the hour.
@@ -112,16 +111,18 @@
 	last_stat = mob_parent.stat
 
 /// Handles mood given by nutrition
-/datum/mood/proc/handle_nutrition()
-	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
-		clear_mood_event(MOOD_CATEGORY_NUTRITION)  // if you happen to switch species while hungry youre no longer hungy
-		return FALSE // no moods for nutrition
+/datum/mood/proc/update_nutrition_moodlets()
+	if(HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
+		clear_mood_event(MOOD_CATEGORY_NUTRITION)
+		return FALSE
+
+	if(HAS_TRAIT(mob_parent, TRAIT_FAT) && !HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
+		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
+		return TRUE
+
 	switch(mob_parent.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			if (!HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
-				add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
-			else
-				add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/wellfed) // round and full
+			add_mood_event(MOOD_CATEGORY_NUTRITION, HAS_TRAIT(mob_parent, TRAIT_VORACIOUS) ? /datum/mood_event/wellfed : /datum/mood_event/too_wellfed)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
@@ -132,6 +133,8 @@
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/starving)
+
+	return TRUE
 
 /**
  * Adds a mood event to the mob

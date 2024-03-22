@@ -92,7 +92,7 @@
 	if(!IS_HERETIC(examiner))
 		to_chat(examiner, span_hypnophrase("Respite, for now...."))
 		examiner.mob_mood.mood_events.Remove("eldritch_weeping")
-		examiner.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
+		examiner.add_mood_event("weeping_withdrawal", /datum/mood_event/eldritch_painting/weeping_withdrawal)
 		return
 
 	to_chat(examiner, span_notice("Oh, what arts! Just gazing upon it clears your mind."))

@@ -83,7 +83,7 @@
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
-/obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
+/obj/machinery/computer/tram_controls/ui_status(mob/user, datum/tgui/ui)
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
 	if(tram?.controller_active)

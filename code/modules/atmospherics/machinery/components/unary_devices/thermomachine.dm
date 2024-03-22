@@ -5,6 +5,8 @@
 	icon_state = "thermo_base"
 	plane = GAME_PLANE
 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
 
@@ -13,8 +15,6 @@
 	armor_type = /datum/armor/unary_thermomachine
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
-
-	hide = TRUE
 
 	move_resist = MOVE_RESIST_DEFAULT
 	vent_movement = NONE
@@ -257,7 +257,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return
 
-/obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user, datum/ui_state/state)
 	if(interactive)
 		return ..()
 	return UI_CLOSE

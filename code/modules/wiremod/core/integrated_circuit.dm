@@ -413,7 +413,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		return FALSE
 	return ..()
 
-/obj/item/integrated_circuit/ui_status(mob/user)
+/obj/item/integrated_circuit/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 
 	if (isobserver(user))

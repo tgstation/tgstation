@@ -204,6 +204,24 @@
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
 
+///Safety-First Head Protection - Protects your brain matter from sudden impacts.
+/obj/item/mod/module/headprotector
+	name = "MOD Safety-First Head Protection module"
+	desc = "A series of dampening plates are installed along the back and upper areas of \
+		the helmet. These plates absorb abrupt kinetic shocks delivered to the skull. \
+		The bulk of this module prevents it from being installed in any suit that is capable \
+		of combat armor adjustments. However, the rudimentry nature of the module makes it \
+		relatively easy to install into most other suits."
+	icon_state = "welding"
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
+
+/obj/item/mod/module/constructor/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+
+/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+
 ///Mister - Sprays water over an area.
 /obj/item/mod/module/mister
 	name = "MOD water mister module"
