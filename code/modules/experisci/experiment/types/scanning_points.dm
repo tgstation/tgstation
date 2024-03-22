@@ -36,10 +36,7 @@
 			selected = req_atom
 		else if (!destructive && !(WEAKREF(target) in scanned[req_atom]))
 			selected = req_atom
-
-		// Run any additonal checks if necessary
-		if (selected && final_contributing_index_checks(target, selected))
-			return selected
+		return selected
 
 /datum/experiment/scanning/points/do_after_experiment(atom/target, typepath)
 	. = ..()

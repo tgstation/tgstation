@@ -96,7 +96,7 @@
 		return TRUE
 
 /datum/experiment/scanning/actionable(datum/component/experiment_handler/experiment_handler, atom/target)
-	return ..() && get_contributing_index(target)
+	return ..() && !isnull(get_contributing_index(target))
 
 /**
  * Attempts to get the typepath for an atom that would contribute to the experiment
