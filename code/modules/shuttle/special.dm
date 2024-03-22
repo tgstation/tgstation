@@ -151,6 +151,9 @@
 // Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
 
+/mob/living/basic/drone/snowflake/bardrone/proc/round_end_depacify()
+	TRAIT_CALLBACK_REMOVE(src, TRAIT_PACIFISM, INNATE_TRAIT)
+	balloon_alert(user,"You are no longer pacified!")
 /mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."
@@ -162,11 +165,19 @@
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
+	var/datum/callback/roundend_callback = null
+
+/mob/living/basic/drone/snowflake/bardrone/Destroy()
+	LAZYREMOVE(SSticker.round_end_events, roundend_callback) //
+	QDEL_NULL(roundend_callback)
+	return ..()
 
 /mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT) //drone is pacified
+	roundend_callback = CALLBACK(src, PROC_REF(round_end_depacify))
+	SSticker.OnRoundend(roundend_callback)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
