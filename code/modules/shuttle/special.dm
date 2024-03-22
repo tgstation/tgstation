@@ -153,7 +153,8 @@
 
 /mob/living/basic/drone/snowflake/bardrone/proc/round_end_depacify()
 	TRAIT_CALLBACK_REMOVE(src, TRAIT_PACIFISM, INNATE_TRAIT)
-	balloon_alert(src,"you are no longer pacified!")
+	balloon_alert(src, "no longer pacified!")
+
 /mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."
