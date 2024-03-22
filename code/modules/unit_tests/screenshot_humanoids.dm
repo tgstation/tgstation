@@ -32,7 +32,7 @@
 		var/mob/living/carbon/human/slime = allocate(/mob/living/carbon/human/dummy/consistent)
 		slime.dna.features["mcolor"] = COLOR_PINK
 		slime.hairstyle = "Bob Hair 2"
-		slime.hair_color = COLOR_PINK
+		slime.hair_color = COLOR_RED // Should be forced to pink
 		slime.set_species(slime_type)
 		slime.equipOutfit(/datum/outfit/job/scientist/consistent)
 		test_screenshot("[slime_type]", get_flat_icon_for_all_directions(slime))
