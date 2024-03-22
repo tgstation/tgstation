@@ -28,7 +28,7 @@
 	testable_species -= /datum/species/moth
 
 	// More in depth test for slimes since they have a lot going on
-	for (var/datum/species/slime_type as anything in subtypesof(/datum/species/slimeperson))
+	for (var/datum/species/slime_type as anything in subtypesof(/datum/species/jelly))
 		var/mob/living/carbon/human/slime = allocate(/mob/living/carbon/human/dummy/consistent)
 		slime.dna.features["mcolor"] = COLOR_PINK
 		slime.hairstyle = "Bob Hair 2"
