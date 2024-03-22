@@ -166,7 +166,8 @@
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
-	var/datum/callback/roundend_callback = null
+	///The roundend callback tied to the drone that we use to remove its pacification.
+	var/datum/callback/roundend_callback
 
 /mob/living/basic/drone/snowflake/bardrone/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback) //
