@@ -15,7 +15,7 @@
 
 /datum/quirk/transhumanist
 	name = "Transhumanist"
-	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your failing flesh with perfect silicon. You start with a robotic augmention."
+	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your failing flesh with perfect silicon. You start with a robotic augmentation."
 	icon = FA_ICON_ROBOT
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
 	value = 0
