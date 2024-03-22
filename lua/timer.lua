@@ -89,7 +89,7 @@ function Timer.start_loop(time, amount, func)
 		end
 	end
 	funcId = __add_internal_timer(newFunc, time * 10, true)
-	return newFunc
+	return funcId
 end
 
 function Timer.end_loop(id)
