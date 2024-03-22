@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - refactor: "Auxlua no longer uses the timer subsystem to get stuff done, lua scripts shouldn't slow down timers anymore."

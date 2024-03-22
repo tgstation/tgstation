@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "failing to equip a dual handed item should properly clear out all status effects related to equipping it, for e.g. remove the action button from chainsaw"

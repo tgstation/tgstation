@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Active skillchips are now copied on bitrunning avatars."
-  - rscadd: "To celebrate it, a skillchip is now available from the bitrunning order console, which lets you dodge projectiles for the duration of your flips, at the cost of stamina."

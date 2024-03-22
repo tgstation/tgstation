@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Vending machines will update its UI if ID is lost at any point"
-  - bugfix: "Vending machines won't brick if the payment fails (like due to lose of ID) for any reason"
