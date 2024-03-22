@@ -36,7 +36,7 @@ __Timer_timer_processing = __Timer_timer_processing or false
 SS13.state:set_var("timer_enabled", 1)
 __Timer_timer_process = function(seconds_per_tick)
 	if __Timer_timer_processing then
-		return
+		return 0
 	end
 	__Timer_timer_processing = true
 	local time = dm.world:get_var("time")
@@ -53,6 +53,7 @@ __Timer_timer_process = function(seconds_per_tick)
 		end
 	end
 	__Timer_timer_processing = false
+	return 1
 end
 
 function Timer.wait(time)
@@ -77,17 +78,16 @@ function Timer.start_loop(time, amount, func)
 	if amount == 1 then
 		return __add_internal_timer(func, time * 10, false)
 	end
-	local callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
-	local timedevent = dm.global_proc("_addtimer", callback, time * 10, 40, nil, debug.info(1, "sl"))
-	local doneAmount = 0
+	local doneAmount = 1
+	local funcId
 	local newFunc = function()
-		func()
+		func(doneAmount)
 		doneAmount += 1
 		if doneAmount >= amount then
-			Timer.end_loop(timedevent)
+			Timer.end_loop(funcId)
 		end
 	end
-	__add_internal_timer(newFunc, time * 10, true)
+	funcId = __add_internal_timer(newFunc, time * 10, true)
 	return newFunc
 end
 
