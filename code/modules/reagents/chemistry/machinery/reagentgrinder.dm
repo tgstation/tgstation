@@ -316,7 +316,6 @@
 	if(operating || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
-	dump_inventory_contents()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/reagentgrinder/attack_robot_secondary(mob/user, list/modifiers)
