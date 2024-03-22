@@ -88,7 +88,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
-	head_flags = HEAD_ALL_FEATURES
+	head_flags = HEAD_EYECOLOR|HEAD_EYESPRITES
 
 /obj/item/bodypart/chest/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -130,7 +130,7 @@
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
-	head_flags = HEAD_ALL_FEATURES
+	head_flags = parent_type::head_flags | HEAD_HAIR | HEAD_FACIAL_HAIR
 
 /obj/item/bodypart/chest/slime
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -159,7 +159,7 @@
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
-	head_flags = HEAD_ALL_FEATURES
+	head_flags = HEAD_EYECOLOR
 
 /obj/item/bodypart/chest/luminescent
 	biological_state = (BIO_FLESH|BIO_BLOODED)
