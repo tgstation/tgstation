@@ -26,6 +26,9 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/snail
 	)
 
+/datum/species/snail/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.dna.features["mcolor"] = COLOR_BEIGE
+	human.update_body(is_creating = TRUE)
 
 /datum/species/snail/get_physical_attributes()
 	return "Snailpeople emit a viscous, slippery ooze when crawling along the ground, which they are somewhat faster at than other species. \
