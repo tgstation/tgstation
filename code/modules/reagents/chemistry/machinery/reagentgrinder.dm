@@ -17,7 +17,7 @@
 	/// Is the grinder currently performing work
 	var/operating = FALSE
 	/// The beaker to hold the final products
-	var/obj/item/reagent_containers/cup/beaker/beaker = null
+	var/obj/item/reagent_containers/beaker = null
 	/// How fast operations take place
 	var/speed = 1
 
@@ -56,7 +56,7 @@
 			. = CONTEXTUAL_SCREENTIP_SET
 		return
 
-	if(istype(held_item, /obj/item/reagent_containers/cup/beaker) && !operating)
+	if(is_reagent_container(held_item) && held_item.is_open_container() && !operating)
 		if(QDELETED(beaker))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
 		else
@@ -141,9 +141,9 @@
  * Arguments
  *
  * * mob/living/user - the player performing the action
- * * obj/item/reagent_containers/cup/beaker/new_beaker - the new beaker to replace the old, null to do nothing
+ * * obj/item/reagent_containers/new_beaker - the new beaker to replace the old, null to do nothing
  */
-/obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/cup/beaker/new_beaker)
+/obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	PRIVATE_PROC(TRUE)
 
 	if(!QDELETED(beaker))
@@ -211,7 +211,7 @@
 		return ..()
 
 	//add the beaker
-	if (istype(tool, /obj/item/reagent_containers/cup/beaker))
+	if (is_reagent_container(tool) && tool.is_open_container())
 		replace_beaker(user, tool)
 		to_chat(user, span_notice("You add [tool] to [src]."))
 		return ITEM_INTERACT_SUCCESS
