@@ -77,7 +77,7 @@ function Timer.start_loop(time, amount, func)
 	if amount == 1 then
 		return __add_internal_timer(func, time * 10, false)
 	end
-	local callback = SS13.new("/datum/callback", SS13.state, "call_function")
+	local callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
 	local timedevent = dm.global_proc("_addtimer", callback, time * 10, 40, nil, debug.info(1, "sl"))
 	local doneAmount = 0
 	local newFunc = function()
