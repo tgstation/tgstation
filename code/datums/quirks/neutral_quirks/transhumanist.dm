@@ -114,7 +114,7 @@
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
 		var/obj/item/bodypart/new_bodypart = new_part
-		slot_string = "[new_bodypart.plaintext_zone]"
+		slot_string = new_bodypart.plaintext_zone
 		old_part = human_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
 	else if(isorgan(new_part))
 		var/obj/item/organ/new_organ = new_part
