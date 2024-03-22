@@ -450,7 +450,8 @@
 						continue
 					item_processed = TRUE
 
-		if(item_weight != weapon.w_class) //happens only for stacks where some of the sheets were grinded so we roughly compute the weight grinded
+		//happens only for stacks where some of the sheets were grinded so we roughly compute the weight grinded
+		if(item_weight != weapon.w_class)
 			total_weight += item_weight - weapon.w_class
 		else
 			total_weight += item_weight
