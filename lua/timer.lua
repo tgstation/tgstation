@@ -24,11 +24,13 @@ end
 
 function __stop_internal_timer(func)
 	local timer = __Timer_timers[func]
-	if timer and not timer.executing then
-		__Timer_timers[func] = nil
-		__Timer_callbacks[func] = nil
-	else
-		timer.terminate = true
+	if timer then
+		if not timer.executing then
+			__Timer_timers[func] = nil
+			__Timer_callbacks[func] = nil
+		else
+			timer.terminate = true
+		end
 	end
 end
 
