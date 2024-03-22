@@ -88,7 +88,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
-	head_flags = HEAD_EYECOLOR|HEAD_EYESPRITES
+	head_flags = HEAD_EYECOLOR | HEAD_EYESPRITES
 
 /obj/item/bodypart/chest/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED)
