@@ -18008,10 +18008,8 @@
 /area/station/hallway/primary/fore)
 "gBT" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/secure_safe/caps_spare,
 /obj/structure/table/glass,
-/obj/item/folder/blue{
-	pixel_y = 2
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
 "gCe" = (
@@ -35084,15 +35082,6 @@
 /area/station/maintenance/central/lesser)
 "mxa" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_x = -1;
-	pixel_y = 8
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
 "mxe" = (
@@ -40627,7 +40616,6 @@
 /area/station/hallway/primary/central/fore)
 "owZ" = (
 /obj/item/kirbyplants/organic/applebush,
-/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/bridge)
 "oxb" = (

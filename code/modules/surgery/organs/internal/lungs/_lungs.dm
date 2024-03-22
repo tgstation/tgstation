@@ -444,7 +444,7 @@
 /// React to speach while hopped up on the high pitched voice juice
 /obj/item/organ/internal/lungs/proc/handle_helium_speech(mob/living/carbon/breather, list/speech_args)
 	SIGNAL_HANDLER
-	speech_args[SPEECH_SPANS] |= SPAN_HELIUM
+	speech_args[SPEECH_SPANS] |= SPAN_SMALL_VOICE
 
 /// Gain hypernob effects if we have enough of the stuff
 /obj/item/organ/internal/lungs/proc/consume_hypernoblium(mob/living/carbon/breather, datum/gas_mixture/breath, hypernob_pp, old_hypernob_pp)

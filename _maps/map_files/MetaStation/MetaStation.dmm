@@ -38614,10 +38614,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "nOq" = (
-/obj/machinery/holopad/secure{
-	pixel_x = 9;
-	pixel_y = -9
-	},
+/obj/machinery/holopad/secure,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "nOv" = (
@@ -47699,10 +47696,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "raJ" = (
-/obj/machinery/computer/security/wooden_tv{
-	pixel_x = 1;
-	pixel_y = 6
-	},
+/obj/structure/secure_safe/caps_spare,
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -55714,13 +55708,11 @@
 /area/station/maintenance/port)
 "tTL" = (
 /obj/structure/table/glass,
-/obj/item/folder/blue{
-	pixel_y = 2
-	},
-/obj/item/folder/blue{
-	pixel_y = 2
-	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 1;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "tTP" = (
@@ -57213,7 +57205,6 @@
 	pixel_y = -3
 	},
 /obj/structure/table/glass,
-/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
