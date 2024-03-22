@@ -1,13 +1,8 @@
-/datum/quirk/item_quirk/junkie
-	name = "Junkie"
-	desc = "You can't get enough of hard drugs."
-	icon = FA_ICON_PILLS
-	value = -6
-	gain_text = span_danger("You suddenly feel the craving for drugs.")
-	medical_record_text = "Patient has a history of hard drugs."
-	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
-	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
+/datum/quirk/item_quirk/addict
+	name = "Addict"
+	desc = "You shouldn't be seeing this, call a coder!"
+	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
+	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
@@ -17,26 +12,35 @@
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out..."
+	abstract_parent_type = /datum/quirk/item_quirk/addict
+
+/datum/quirk/item_quirk/addict/junkie
+	name = "Junkie"
+	desc = "You can't get enough of hard drugs."
+	icon = FA_ICON_PILLS
+	value = -6
+	gain_text = span_danger("You suddenly feel the craving for drugs.")
+	medical_record_text = "Patient has a history of hard drugs."
+	hardcore_value = 4
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 
 /datum/quirk_constant_data/junkie
-	associated_typepath = /datum/quirk/item_quirk/junkie
+	associated_typepath = /datum/quirk/item_quirk/addict
 	customization_options = list(/datum/preference/choiced/junkie)
 
-/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
+/datum/quirk/item_quirk/addict/junkie/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	// Avoid setting reagent_type for the Smoker and Alcoholic subtypes.
-	if(type == /datum/quirk/item_quirk/junkie)
-		var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
-		if(addiction && (addiction != "Random"))
-			reagent_type = GLOB.possible_junkie_addictions[addiction]
+	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
+	if(addiction && (addiction != "Random"))
+		reagent_type = GLOB.possible_junkie_addictions[addiction]
 
 	if(!reagent_type)
 		reagent_type = GLOB.possible_junkie_addictions[pick(GLOB.possible_junkie_addictions)]
 
 	reagent_instance = new reagent_type()
 
-	for(var/addiction in reagent_instance.addiction_types)
+	for(addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
 	var/current_turf = get_turf(quirk_holder)
@@ -74,12 +78,12 @@
 		)
 	)
 
-/datum/quirk/item_quirk/junkie/remove()
+/datum/quirk/item_quirk/addict/remove()
 	if(quirk_holder && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
-/datum/quirk/item_quirk/junkie/process(seconds_per_tick)
+/datum/quirk/item_quirk/addict/process(seconds_per_tick)
 	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -97,7 +101,7 @@
 			for(var/addiction in reagent_instance.addiction_types)
 				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
-/datum/quirk/item_quirk/junkie/smoker
+/datum/quirk/item_quirk/addict/smoker
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
 	icon = FA_ICON_SMOKING
@@ -118,20 +122,20 @@
 	)
 
 /datum/quirk_constant_data/smoker
-	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
+	associated_typepath = /datum/quirk/item_quirk/addict/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
 
-/datum/quirk/item_quirk/junkie/smoker/New()
+/datum/quirk/item_quirk/addict/smoker/New()
 	drug_container_type = GLOB.possible_smoker_addictions[pick(GLOB.possible_smoker_addictions)]
 	return ..()
 
-/datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
+/datum/quirk/item_quirk/addict/smoker/add_unique(client/client_source)
 	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/smoker)
 	if(addiction && (addiction != "Random"))
 		drug_container_type = GLOB.possible_smoker_addictions[addiction]
 	return ..()
 
-/datum/quirk/item_quirk/junkie/smoker/post_add()
+/datum/quirk/item_quirk/addict/smoker/post_add()
 	. = ..()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
@@ -149,7 +153,7 @@
 		smoker_lungs = new smoker_lungs
 		smoker_lungs.Insert(carbon_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
-/datum/quirk/item_quirk/junkie/smoker/process(seconds_per_tick)
+/datum/quirk/item_quirk/addict/smoker/process(seconds_per_tick)
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
@@ -160,7 +164,7 @@
 		else
 			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
-/datum/quirk/item_quirk/junkie/alcoholic
+/datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
 	icon = FA_ICON_WINE_GLASS
@@ -181,20 +185,20 @@
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
 /datum/quirk_constant_data/alcoholic
-	associated_typepath = /datum/quirk/item_quirk/junkie/alcoholic
+	associated_typepath = /datum/quirk/item_quirk/addict/alcoholic
 	customization_options = list(/datum/preference/choiced/alcoholic)
 
-/datum/quirk/item_quirk/junkie/alcoholic/New()
+/datum/quirk/item_quirk/addict/alcoholic/New()
 	drug_container_type = GLOB.possible_alcoholic_addictions[pick(GLOB.possible_alcoholic_addictions)]
 	return ..()
 
-/datum/quirk/item_quirk/junkie/alcoholic/add_unique(client/client_source)
+/datum/quirk/item_quirk/addict/alcoholic/add_unique(client/client_source)
 	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/alcoholic)
 	if(addiction && (addiction != "Random"))
 		drug_container_type = GLOB.possible_alcoholic_addictions[addiction]
 	return ..()
 
-/datum/quirk/item_quirk/junkie/alcoholic/post_add()
+/datum/quirk/item_quirk/addict/alcoholic/post_add()
 	. = ..()
 	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
 
@@ -214,10 +218,10 @@
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
-/datum/quirk/item_quirk/junkie/alcoholic/remove()
+/datum/quirk/item_quirk/addict/alcoholic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
 
-/datum/quirk/item_quirk/junkie/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
+/datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
 	SIGNAL_HANDLER
 
 	//we don't care if it is not alcohol
