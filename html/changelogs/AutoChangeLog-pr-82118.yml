@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes:
+  - qol: "Fishfood is now more easily acquired through cargo"

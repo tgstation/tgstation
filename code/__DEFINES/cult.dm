@@ -39,6 +39,12 @@
 /// The global Nar'sie that the cult's summoned
 GLOBAL_DATUM(cult_narsie, /obj/narsie)
 
+///how many sacrifices we have used, cultists get 1 free revive at the start
+GLOBAL_VAR_INIT(sacrifices_used, -SOULS_TO_REVIVE)
+
+/// list of weakrefs to mobs OR minds that have been sacrificed
+GLOBAL_LIST(sacrificed)
+
 // Used in determining which cinematic to play when cult ends
 #define CULT_VICTORY_MASS_CONVERSION 2
 #define CULT_FAILURE_NARSIE_KILLED 1
