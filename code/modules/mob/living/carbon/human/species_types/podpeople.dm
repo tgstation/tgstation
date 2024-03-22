@@ -72,6 +72,11 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
+/datum/species/pod/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.dna.features["mcolor"] = "#886600"
+	human.dna.features["pod_hair"] = "Rose"
+	human.update_body(is_creating = TRUE)
+
 /datum/species/pod/get_physical_attributes()
 	return "Podpeople are in many ways the inverse of shadows, healing in light and starving with the dark. \
 		Their bodies are like tinder and easy to char."
