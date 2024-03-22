@@ -35,6 +35,8 @@
 	if (!isliving(attacker))
 		return
 	var/mob/living/living_attacker = attacker
+	if (!living_attacker.combat_mode && living_attacker.is_holding_item_of_type(/obj/item/pet_carrier))
+		return
 	if (!owner.unfriend(living_attacker))
 		return
 	if (!untamed_reaction)
