@@ -10,6 +10,13 @@
 #define SLIME_HUNGER_HUNGRY 1
 #define SLIME_HUNGER_STARVING 2
 
+#define SLIME_MOOD_NONE ""
+#define SLIME_MOOD_ANGRY "angry"
+#define SLIME_MOOD_MISCHIEVOUS "mischievous"
+#define SLIME_MOOD_POUT "pout"
+#define SLIME_MOOD_SAD "sad"
+#define SLIME_MOOD_SMILE ":3"
+
 // Just slimin' here.
 // Warning: These defines are used for slime icon states, so if you
 // touch these names, remember to update icons/mob/simple/slimes.dmi!

@@ -109,9 +109,6 @@
 	/// Our reproduction action
 	var/datum/action/innate/slime/reproduce/reproduce_action
 
-	///The current mood of the slime, set randomly or through emotes (if sentient).
-	var/current_mood
-
 /mob/living/basic/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_life_stage=SLIME_LIFE_STAGE_BABY)
 
 	. = ..()
@@ -144,6 +141,7 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand) )
 
+	ai_controller.set_blackboard_key(BB_SLIME_FACE, SLIME_MOOD_NONE)
 	ai_controller.set_blackboard_key(BB_SLIME_EVOLVE, evolve_action)
 	ai_controller.set_blackboard_key(BB_SLIME_REPRODUCE, reproduce_action)
 
@@ -168,7 +166,7 @@
 	. = ..()
 	set_pacified_behaviour()
 
-///Hilbert subtype
+//Hilbert subtype
 /mob/living/basic/slime/hilbert/Initialize(mapload, new_colour, new_life_stage)
 	. = ..(mapload, /datum/slime_type/bluespace)
 	ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
@@ -194,8 +192,8 @@
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
-		if(current_mood && !stat)
-			add_overlay("aslime-[current_mood]")
+		if(ai_controller?.blackboard[BB_SLIME_FACE] && !stat)
+			add_overlay("aslime-[ai_controller?.blackboard[BB_SLIME_FACE]]")
 	else
 		icon_state = icon_dead
 	..()

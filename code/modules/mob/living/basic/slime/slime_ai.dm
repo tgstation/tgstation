@@ -10,6 +10,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/change_slime_face,
 		/datum/ai_planning_subtree/use_mob_ability/evolve,
 		/datum/ai_planning_subtree/use_mob_ability/reproduce,
 		/datum/ai_planning_subtree/target_retaliate,
@@ -25,6 +26,49 @@
 /datum/ai_planning_subtree/use_mob_ability/reproduce
 	ability_key = BB_SLIME_REPRODUCE
 
+//Handles the slime changing their facial overlays
+/datum/ai_planning_subtree/change_slime_face
+	var/face_change_chance = 5
+
+/datum/ai_planning_subtree/change_slime_face/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!SPT_PROB(face_change_chance, seconds_per_tick))
+		return
+
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(!istype(slime_pawn))
+		return
+
+	if(slime_pawn.stat) //dead slimes make no smiles
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/perform_change_slime_face)
+
+/datum/ai_behavior/perform_change_slime_face
+
+/datum/ai_behavior/perform_change_slime_face/perform(seconds_per_tick, datum/ai_controller/controller, emote, speech_sound)
+	. = ..()
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(!istype(slime_pawn))
+		return
+
+	var/current_mood = controller.blackboard[BB_SLIME_FACE]
+
+	var/new_mood = SLIME_MOOD_NONE
+
+	if (controller.blackboard[BB_SLIME_RABID] || LAZYLEN(controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]) > 0)
+		new_mood = SLIME_MOOD_ANGRY
+	else if (controller.blackboard[BB_SLIME_HUNGER_DISABLED])
+		new_mood = SLIME_MOOD_SMILE
+	else if (controller.blackboard[BB_CURRENT_HUNTING_TARGET])
+		new_mood = SLIME_MOOD_MISCHIEVOUS
+	else
+		new_mood = pick(SLIME_MOOD_SAD, SLIME_MOOD_SMILE, SLIME_MOOD_POUT)
+
+	if(current_mood != new_mood)
+		controller.set_blackboard_key(BB_SLIME_FACE, new_mood)
+		slime_pawn.regenerate_icons()
+
+	finish_action(controller, TRUE)
 
 // Slime subtree for hunting down people to drain
 /datum/ai_planning_subtree/find_and_hunt_target/find_slime_food
@@ -97,6 +141,6 @@
 
 /datum/ai_planning_subtree/random_speech/slime
 	speech_chance = 1
-	speak = list("Blorble...")
+	speak = list("Blorble...","Bzzt...","")
 	emote_hear = list("blorbles.")
 	emote_see = list("lights up for a bit, then stops.","bounces in place.", "jiggles!","vibrates!")
