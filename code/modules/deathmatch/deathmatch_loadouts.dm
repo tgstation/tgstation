@@ -12,9 +12,6 @@
 
 /datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
 	. = ..()
-#ifdef UNIT_TESTS
-	return
-#endif
 	if(isdummy(user))
 		return
 
