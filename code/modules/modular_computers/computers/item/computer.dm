@@ -71,7 +71,7 @@
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
+	var/comp_light_color = COLOR_WHITE
 
 	///Power usage when the computer is open (screen is active) and can be interacted with.
 	var/base_active_power_usage = 125

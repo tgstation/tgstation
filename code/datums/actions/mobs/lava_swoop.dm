@@ -193,7 +193,7 @@
 	plane = GAME_PLANE
 	pixel_x = -32
 	pixel_y = -32
-	color = "#FF0000"
+	color = COLOR_RED
 	duration = 10
 
 /obj/effect/temp_visual/dragon_flight

@@ -830,7 +830,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///Chosen paint color
-	var/current_color = "#000000"
+	var/current_color = COLOR_BLACK
 
 /obj/item/paint_palette/Initialize(mapload)
 	. = ..()

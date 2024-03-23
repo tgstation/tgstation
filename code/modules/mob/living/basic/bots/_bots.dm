@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///state of the path icon
 	var/path_image_icon_state = "path_indicator"
 	///what color this path icon will use
-	var/path_image_color = "#FFFFFF"
+	var/path_image_color = COLOR_WHITE
 	///list of all layed path icons
 	var/list/current_pathed_turfs = list()
 

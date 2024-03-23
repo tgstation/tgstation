@@ -545,7 +545,7 @@
 /obj/item/clothing/head/beret/medical
 	name = "medical beret"
 	desc = "A medical-flavored beret for the doctor in you!"
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/medical/paramedic
