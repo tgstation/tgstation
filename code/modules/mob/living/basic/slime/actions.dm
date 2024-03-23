@@ -82,18 +82,18 @@
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
 	if(stat != CONSCIOUS)
-		balloon_alert(src, "need to be conscious to split!")
+		balloon_alert(src, "not conscious!")
 		return
 
 	if(!isopenturf(loc))
-		balloon_alert(src, "can't reproduce here!")
+		balloon_alert(src, "not here!")
 
 	if(life_stage != SLIME_LIFE_STAGE_ADULT)
-		balloon_alert(src, "not old enough to reproduce!")
+		balloon_alert(src, "not adult!")
 		return
 
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
-		balloon_alert(src, "I need to be bigger...")
+		balloon_alert(src, "need growth!")
 		return
 
 	var/list/babies = list()
