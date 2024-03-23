@@ -332,7 +332,7 @@
 			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
 				span_danger("You pull [target_slime] off!"))
 			return NONE // normal attack
-		//todo: make the targeted slime retaliate
+
 		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
 		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
 			var/stolen_nutrition = min(is_adult_slime ? 90 : 50, target_slime.nutrition)
