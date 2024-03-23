@@ -205,8 +205,6 @@
 	button_icon_state = "Light1"
 	desc = "Grabs a target with a sticky vine, allowing you to pull it alongside you."
 	cooldown_time = 8 SECONDS
-	///how many vines can we handle
-	var/max_vines = 2
 	/// An assoc list of all the plant's vines (beam = leash)
 	var/list/datum/beam/vines = list()
 	/// How far away a plant can attach a vine to something
@@ -221,10 +219,12 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/target_atom)
 	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
 		return
-	if(length(vines) >= max_vines || get_dist(owner, target_atom) > vine_grab_distance)
+	if(get_dist(owner, target_atom) > vine_grab_distance)
+		owner.balloon_alert(owner, "too far!")
 		return
 	for(var/turf/blockage in get_line(owner, target_atom))
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
+			owner.balloon_alert(owner, "something's in the way!")
 			return
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
