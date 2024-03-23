@@ -70,7 +70,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/storage/bag))
@@ -102,9 +102,9 @@
 		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present.")
 		. += span_notice("[EXAMINE_HINT("Right click")] with empty hand to remove beaker.")
 	else
-		. += span_warning("It's missing an beaker.")
+		. += span_warning("It's missing a beaker.")
 
-	. += span_notice("You can drag an storage item to dump its contents in the grinder.")
+	. += span_notice("You can drag a storage item to dump its contents in the grinder.")
 	if(anchored)
 		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
 	else
