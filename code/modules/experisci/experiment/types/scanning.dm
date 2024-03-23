@@ -33,8 +33,7 @@
 /**
  * Checks if the scanning experiment is complete
  *
- * Returns TRUE/FALSE as to if the necessary number of atoms have been
- * scanned.
+ * Returns TRUE/FALSE as to if the necessary number of atoms have been scanned.
  */
 /datum/experiment/scanning/is_complete()
 	. = TRUE
