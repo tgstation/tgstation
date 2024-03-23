@@ -173,7 +173,7 @@
 		return amount //Shuttles get free power, don't ask why
 
 	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
+	if(isnull(local_apc))
 		return FALSE
 
 	// Surplus from the grid.
