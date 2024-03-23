@@ -78,8 +78,8 @@
 	update_appearance()
 
 /obj/item/pet_carrier/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(user.combat_mode || !istype(interacting_with, /mob/living))
-		return
+	if(user.combat_mode || !isliving(interacting_with))
+		return NONE
 	attack(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
