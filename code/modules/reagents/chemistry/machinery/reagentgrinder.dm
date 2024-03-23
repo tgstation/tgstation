@@ -175,7 +175,7 @@
 
 		//Nothing would come from grinding or juicing
 		if(!length(ingredient.grind_results) && !ingredient.juice_typepath)
-			to_chat(user, span_warning("You cannot grind/juice \the[ingredient] into reagents!"))
+			to_chat(user, span_warning("You cannot grind/juice [ingredient] into reagents!"))
 			continue
 
 		//Error messages should be in the objects' definitions
