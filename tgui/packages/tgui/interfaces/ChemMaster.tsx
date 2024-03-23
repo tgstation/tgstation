@@ -65,7 +65,7 @@ export const ChemMaster = (props) => {
   const [analyzedReagent, setAnalyzedReagent] = useState<AnalyzableReagent>();
 
   return (
-    <Window width={400} height={620}>
+    <Window width={450} height={620}>
       <Window.Content scrollable>
         {analyzedReagent ? (
           <AnalysisResults
@@ -100,7 +100,9 @@ const ChemMasterContent = (props: {
     selectedContainerVolume,
   } = data;
 
-  const [itemCount, setItemCount] = useState(1);
+  const [itemCount, setItemCount] = useState<number>(1);
+  const [showPreferredContainer, setShowPreferredContainer] =
+    useState<BooleanLike>(false);
   const buffer_contents = buffer.contents;
 
   return (
@@ -183,6 +185,14 @@ const ChemMasterContent = (props: {
           buttons={
             buffer_contents.length !== 0 && (
               <Box>
+                <Button.Checkbox
+                  checked={showPreferredContainer}
+                  onClick={() =>
+                    setShowPreferredContainer((currentValue) => !currentValue)
+                  }
+                >
+                  Suggest
+                </Button.Checkbox>
                 <NumberInput
                   unit={'items'}
                   step={1}
@@ -225,6 +235,7 @@ const ChemMasterContent = (props: {
                   key={container.ref}
                   category={category}
                   container={container}
+                  showPreferredContainer={showPreferredContainer}
                 />
               ))}
             </Box>
@@ -353,9 +364,16 @@ const ReagentEntry = (props: ReagentProps) => {
   );
 };
 
-const ContainerButton = ({ container, category }) => {
+type CategoryButtonProps = {
+  category: Category;
+  container: Container;
+  showPreferredContainer: BooleanLike;
+};
+
+const ContainerButton = (props: CategoryButtonProps) => {
   const { act, data } = useBackend<Data>();
   const { isPrinting, selectedContainerRef, suggestedContainerRef } = data;
+  const { category, container, showPreferredContainer } = props;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
 
   return (
@@ -367,6 +385,7 @@ const ContainerButton = ({ container, category }) => {
         overflow="hidden"
         color={'transparent'}
         backgroundColor={
+          showPreferredContainer &&
           selectedContainerRef !== suggestedContainerRef && // if we selected the same container as the suggested then don't override color
           container.ref === suggestedContainerRef
             ? 'blue'
