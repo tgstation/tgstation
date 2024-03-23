@@ -269,6 +269,7 @@
 		return tool_result
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		update_appearance(UPDATE_OVERLAYS)
 		tool_result = ITEM_INTERACT_SUCCESS
 	return tool_result
 
