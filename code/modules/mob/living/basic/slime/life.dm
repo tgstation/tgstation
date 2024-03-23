@@ -35,10 +35,10 @@
 	if(SPT_PROB(7.5, seconds_per_tick))
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
-	if(nutrition < starve_nutrition)
+	if(nutrition < SLIME_STARVE_NUTRITION)
 		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
 
-	else if(nutrition < hunger_nutrition || (nutrition < grow_nutrition && SPT_PROB(25, seconds_per_tick)) )
+	else if(nutrition < SLIME_HUNGER_NUTRITION || (nutrition < SLIME_GROW_NUTRITION && SPT_PROB(25, seconds_per_tick)) )
 		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
 
 	else
@@ -49,7 +49,7 @@
 			adjustBruteLoss(rand(0,5))
 		return
 
-	if (grow_nutrition <= nutrition)
+	if (SLIME_GROW_NUTRITION <= nutrition)
 
 		if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 			adjust_nutrition(-10 * seconds_per_tick)
@@ -58,7 +58,7 @@
 		if(powerlevel < SLIME_MAX_POWER && SPT_PROB(30-powerlevel*2, seconds_per_tick))
 			powerlevel++
 
-	else if (powerlevel < SLIME_MEDIUM_POWER && hunger_nutrition <= nutrition && SPT_PROB(25-powerlevel*5, seconds_per_tick))
+	else if (powerlevel < SLIME_MEDIUM_POWER && SLIME_HUNGER_NUTRITION <= nutrition && SPT_PROB(25-powerlevel*5, seconds_per_tick))
 		powerlevel++
 
 	update_mob_action_buttons()

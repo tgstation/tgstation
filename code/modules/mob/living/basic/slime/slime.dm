@@ -70,14 +70,6 @@
 	var/powerlevel = SLIME_MIN_POWER
 	///Controls how long the slime has been overfed, if 10, grows or reproduces
 	var/amount_grown = 0
-	///The maximum amount of nutrition a slime can contain
-	var/max_nutrition = 1000
-	/// Above it we grow our amount_grown and our power_level, below it we can eat
-	var/grow_nutrition = 800
-	/// Below this, we feel hungry
-	var/hunger_nutrition = 500
-	/// Below this, we feel starving
-	var/starve_nutrition = 200
 	/// No hunger
 	var/hunger_disabled = FALSE
 
@@ -175,7 +167,7 @@
 
 /mob/living/basic/slime/adjust_nutrition(change)
 	..()
-	nutrition = min(nutrition, max_nutrition)
+	nutrition = min(nutrition, SLIME_MAX_NUTRITION)
 
 /mob/living/basic/slime/update_name()
 	///Checks if the slime has a generic name, in the format of baby/adult slime (123)
@@ -201,9 +193,9 @@
 /mob/living/basic/slime/get_status_tab_items()
 	. = ..()
 	if(!hunger_disabled)
-		. += "Nutrition: [nutrition]/[max_nutrition]"
+		. += "Nutrition: [nutrition]/[SLIME_MAX_NUTRITION]"
 		. += "Growth: [amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
-		. += "Power Level: [powerlevel]"
+		. += "Power Level: [powerlevel]/[SLIME_MAX_POWER]"
 
 /mob/living/basic/slime/MouseDrop(atom/movable/target_atom as mob|obj)
 	if(isliving(target_atom) && target_atom != src && usr == src)
