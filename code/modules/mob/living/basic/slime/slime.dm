@@ -140,16 +140,16 @@
 
 /mob/living/basic/slime/Destroy()
 
-	UnregisterSignal(src, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_ATOM_ATTACK_HAND))
-
 	QDEL_NULL(evolve_action)
 	QDEL_NULL(reproduce_action)
 
 	return ..()
 
 ///Random slime subtype
+/mob/living/basic/slime/random
+
 /mob/living/basic/slime/random/Initialize(mapload, new_colour, new_life_stage)
-	. = ..(mapload, pick(subtypesof(/datum/slime_type)), prob(50) ? SLIME_LIFE_STAGE_ADULT : SLIME_LIFE_STAGE_BABY)
+	return ..(mapload, pick(subtypesof(/datum/slime_type)), prob(50) ? SLIME_LIFE_STAGE_ADULT : SLIME_LIFE_STAGE_BABY)
 
 ///Friendly docile subtype
 /mob/living/basic/slime/pet
@@ -160,15 +160,22 @@
 	set_pacified_behaviour()
 
 //Hilbert subtype
+/mob/living/basic/slime/hilbert
+
 /mob/living/basic/slime/hilbert/Initialize(mapload, new_colour, new_life_stage)
 	. = ..(mapload, /datum/slime_type/bluespace)
 	ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 
 //Overriden base procs
 
-/mob/living/basic/slime/adjust_nutrition(change)
-	..()
+/mob/living/basic/slime/adjust_nutrition(change, forced)
+	. = ..()
 	nutrition = min(nutrition, SLIME_MAX_NUTRITION)
+
+/mob/living/basic/slime/set_nutrition(set_to, forced = FALSE)
+	. = ..()
+	nutrition = min(nutrition, SLIME_MAX_NUTRITION)
+
 
 /mob/living/basic/slime/update_name()
 	///Checks if the slime has a generic name, in the format of baby/adult slime (123)

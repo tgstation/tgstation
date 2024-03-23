@@ -23,10 +23,9 @@
 	if(slime_owner.nutrition < nutrition_cost)
 		return FALSE
 
-	if(!needs_growth) //always available if does not need growth
-		return TRUE
-
-	return slime_owner.amount_grown >= SLIME_EVOLUTION_THRESHOLD
+	if(needs_growth && slime_owner.amount_grown < SLIME_EVOLUTION_THRESHOLD)
+		return FALSE
+	return TRUE
 
 //Evolving
 
@@ -38,33 +37,30 @@
 	needs_growth = TRUE
 	nutrition_cost = SLIME_EVOLUTION_COST
 
+///Turns a baby slime into an adult slime
 /datum/action/innate/slime/evolve/Activate()
 	var/mob/living/basic/slime/slime_owner = owner
-	slime_owner.evolve()
 
-///Turns a baby slime into an adult slime
-/mob/living/basic/slime/proc/evolve()
-
-	if(stat)
-		balloon_alert(src, "unconscious!")
+	if(slime_owner.stat)
+		slime_owner.balloon_alert(slime_owner, "unconscious!")
 		return
-	if(life_stage == SLIME_LIFE_STAGE_ADULT)
-		balloon_alert(src, "already adult!")
+	if(slime_owner.life_stage == SLIME_LIFE_STAGE_ADULT)
+		slime_owner.balloon_alert(slime_owner, "already adult!")
 		return
-	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
-		balloon_alert(src, "need to grow!")
+	if(slime_owner.amount_grown < SLIME_EVOLUTION_THRESHOLD)
+		slime_owner.balloon_alert(slime_owner, "need to grow!")
 		return
-	if(nutrition < SLIME_EVOLUTION_COST)
-		balloon_alert(src, "need food!")
+	if(slime_owner.nutrition < nutrition_cost)
+		slime_owner.balloon_alert(slime_owner, "need food!")
 		return
 
-	adjust_nutrition(-SLIME_EVOLUTION_COST)
+	slime_owner.adjust_nutrition(-nutrition_cost)
 
-	set_life_stage(SLIME_LIFE_STAGE_ADULT)
-	update_name()
-	regenerate_icons()
+	slime_owner.set_life_stage(SLIME_LIFE_STAGE_ADULT)
+	slime_owner.update_name()
+	slime_owner.regenerate_icons()
 
-	amount_grown = 0
+	slime_owner.amount_grown = 0
 
 //Reproduction
 

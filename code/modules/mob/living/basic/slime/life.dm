@@ -2,6 +2,10 @@
 /mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 
+	handle_nutrition(seconds_per_tick)
+
+/mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	..()
 	if(bodytemperature <= (T0C - 40)) // stun temperature
 		apply_status_effect(/datum/status_effect/freon, SLIME_COLD)
 	else
@@ -23,8 +27,6 @@
 	else if(has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we still have the status effect
 		to_chat(src, span_notice("You wake up from the stasis."))
 		remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
-
-	handle_nutrition(seconds_per_tick)
 
 ///Handles the consumption of nutrition, and growth
 /mob/living/basic/slime/proc/handle_nutrition(seconds_per_tick = SSMOBS_DT)
