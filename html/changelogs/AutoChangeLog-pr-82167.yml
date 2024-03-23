@@ -1,0 +1,4 @@
+author: "Melberet"
+delete-after: True
+changes:
+  - bugfix: "Jellyperson, Luminescent, and Stargazer hair no longer look bad. All jellyperson types no longer have eyesockets."
