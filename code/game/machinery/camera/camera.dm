@@ -43,6 +43,7 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)

@@ -66,6 +66,14 @@
 
 	c_tag = "[format_text(camera_area.name)] #[number]"
 
+/obj/machinery/camera/autoname/motion
+	start_active = TRUE
+	name = "motion-sensitive security camera"
+
+/obj/machinery/camera/autoname/motion/Initialize(mapload)
+	. = ..()
+	upgradeMotion()
+
 ///The internal camera object for exosuits, applied by the camera upgrade
 /obj/machinery/camera/exosuit
 	c_tag = "Exosuit: unspecified"
