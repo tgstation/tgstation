@@ -173,7 +173,7 @@
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
 	var/static/list/innate_actions = list(
-		/datum/action/cooldown/vine_tangle = BB_TARGETED_ACTION,
+		/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle = BB_TARGETED_ACTION,
 	)
 	grant_actions_by_list(innate_actions)
 
@@ -199,7 +199,7 @@
 
 	adjustBruteLoss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
-/datum/action/cooldown/vine_tangle
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle
 	name = "Tangle"
 	button_icon = 'icons/mob/spacevines.dmi'
 	button_icon_state = "Light1"
@@ -214,11 +214,11 @@
 	/// how long does a vine attached to something last (and its leash) (lasts twice as long on nonliving things)
 	var/vine_duration = 2 SECONDS
 
-/datum/action/cooldown/vine_tangle/Remove(mob/remove_from)
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Remove(mob/remove_from)
 	QDEL_LIST(vines)
 	return ..()
 
-/datum/action/cooldown/vine_tangle/Activate(atom/target_atom)
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/target_atom)
 	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
 		return
 	if(length(vines) >= max_vines || get_dist(owner, target_atom) > vine_grab_distance)
@@ -245,7 +245,7 @@
  * Arguments:
  * * datum/beam/vine - The vine to be removed from the list.
  */
-/datum/action/cooldown/vine_tangle/proc/remove_vine(datum/beam/vine)
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/proc/remove_vine(datum/beam/vine)
 	SIGNAL_HANDLER
 
 	qdel(vines[vine])
