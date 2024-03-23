@@ -445,7 +445,7 @@
 	name = "Maintenance Tar"
 	description = "An unknown tar that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Raw tar, straight from the floor. It can help you with escaping bad situations at the cost of liver damage."
 	reagent_state = LIQUID
-	color = "#000000"
+	color = COLOR_BLACK
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 5)

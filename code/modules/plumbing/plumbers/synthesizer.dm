@@ -114,7 +114,7 @@
 /obj/machinery/plumbing/synthesizer/update_overlays()
 	. = ..()
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
-	r_overlay.color = reagent_id ? initial(reagent_id.color) : "#FFFFFF"
+	r_overlay.color = reagent_id ? initial(reagent_id.color) : COLOR_WHITE
 	. += r_overlay
 
 /obj/machinery/plumbing/synthesizer/soda

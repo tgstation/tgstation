@@ -377,7 +377,7 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 					"playersonly" = list("desc" = "Only spawn ghost-controlled mobs", "type" = "boolean", "value" = "No"),
 					"ghostpoll" = list("desc" = "Ghost poll question", "type" = "string", "value" = "Do you want to play as %TYPE% portal invader?"),
 					"delay" = list("desc" = "Time between portals, in deciseconds", "type" = "number", "value" = 50),
-					"color" = list("desc" = "Portal color", "type" = "color", "value" = "#00FF00"),
+					"color" = list("desc" = "Portal color", "type" = "color", "value" = COLOR_VIBRANT_LIME),
 					"playlightning" = list("desc" = "Play lightning sounds on announcement", "type" = "boolean", "value" = "Yes"),
 					"announce_players" = list("desc" = "Make an announcement", "type" = "boolean", "value" = "Yes"),
 					"announcement" = list("desc" = "Announcement", "type" = "string", "value" = "Massive bluespace anomaly detected en route to %STATION%. Brace for impact."),

@@ -543,7 +543,7 @@
 /datum/reagent/consumable/space_up
 	name = "Space-Up"
 	description = "Tastes like a hull breach in your mouth."
-	color = "#00FF00" // rgb: 0, 255, 0
+	color = COLOR_VIBRANT_LIME // rgb: 0, 255, 0
 	taste_description = "cherry soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1123,7 +1123,7 @@
 /datum/reagent/consumable/funky_monkey
 	name = "funky monkey smoothie"
 	description = "A classic smoothie made from chocolate and bananas."
-	color = "#663300"
+	color = COLOR_BROWNER_BROWN
 	nutriment_factor = 0
 	taste_description = "chocolate and banana"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1131,7 +1131,7 @@
 /datum/reagent/consumable/green_giant
 	name = "green giant smoothie"
 	description = "A green vegetable smoothie, made without vegetables."
-	color = "#003300"
+	color = COLOR_VERY_DARK_LIME_GREEN
 	nutriment_factor = 0
 	taste_description = "green, just green"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

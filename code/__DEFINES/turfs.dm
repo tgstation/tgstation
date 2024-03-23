@@ -64,9 +64,6 @@
 /// Turf has superlube on the floor and mobs will slip even if they are crawling
 #define TURF_WET_SUPERLUBE (1<<4)
 
-/// Checks if a turf is wet
-#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
-
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME (5 MINUTES)
 
@@ -85,9 +82,6 @@
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
-#define TEMPORARY_THERMAL_CONDUCTIVITY 1
-
-#define MAX_TEMPORARY_THERMAL_CONDUCTIVITY 1
 /// Turf will be passable if density is 0
 #define TURF_PATHING_PASS_DENSITY 0
 /// Turf will be passable depending on [CanAStarPass] return value

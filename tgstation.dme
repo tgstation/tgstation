@@ -95,7 +95,6 @@
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\firealarm.dm"
 #include "code\__DEFINES\fish.dm"
-#include "code\__DEFINES\flora.dm"
 #include "code\__DEFINES\font_awesome_icons.dm"
 #include "code\__DEFINES\fonts.dm"
 #include "code\__DEFINES\food.dm"
