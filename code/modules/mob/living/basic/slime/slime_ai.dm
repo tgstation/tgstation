@@ -14,7 +14,7 @@
 		/datum/ai_planning_subtree/use_mob_ability/evolve,
 		/datum/ai_planning_subtree/use_mob_ability/reproduce,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/pet_planning/slime,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_slime_food,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/slime,
 		/datum/ai_planning_subtree/random_speech/slime,
@@ -25,6 +25,31 @@
 
 /datum/ai_planning_subtree/use_mob_ability/reproduce
 	ability_key = BB_SLIME_REPRODUCE
+
+///Most of the slime actions are not queued up if a slime is buckled. When commanded, they will unbuckle.
+/datum/ai_planning_subtree/pet_planning/slime/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(!istype(slime_pawn))
+		return
+
+	var/datum/pet_command/command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
+	if (command)
+		controller.queue_behavior(/datum/ai_behavior/interrupt_slime_feeding)
+
+	return ..()
+
+/datum/ai_behavior/interrupt_slime_feeding
+
+/datum/ai_behavior/interrupt_slime_feeding/perform(seconds_per_tick, datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(!istype(slime_pawn))
+		return
+
+	slime_pawn.stop_feeding()
+
+	finish_action(controller, TRUE)
 
 //Handles the slime changing their facial overlays
 /datum/ai_planning_subtree/change_slime_face
@@ -45,7 +70,7 @@
 
 /datum/ai_behavior/perform_change_slime_face
 
-/datum/ai_behavior/perform_change_slime_face/perform(seconds_per_tick, datum/ai_controller/controller, emote, speech_sound)
+/datum/ai_behavior/perform_change_slime_face/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	if(!istype(slime_pawn))
