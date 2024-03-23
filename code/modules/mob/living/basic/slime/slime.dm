@@ -317,7 +317,7 @@
 
 		do_sparks(5, TRUE, carbon_target)
 		var/power = our_slime.powerlevel + rand(0,3)
-		carbon_target.Paralyze(power * 2 SECONDS)
+		carbon_target.Knockdown(power * 2 SECONDS)
 		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
 		if (prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
 			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
