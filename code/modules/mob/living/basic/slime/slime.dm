@@ -123,6 +123,7 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/basic_health_examine, light_damage_message = "It has some punctures in its flesh!", heavy_damage_message = span_bold("It has severe punctures and tears in its flesh!"), heavy_threshold = 0.4)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SLIME)
 	AddElement(/datum/element/soft_landing)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -218,34 +219,21 @@
 		return 3
 
 /mob/living/basic/slime/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
-	if (stat == DEAD)
-		. += span_deadsay("It is limp and unresponsive.")
-	else
-		if (stat == UNCONSCIOUS || stat == HARD_CRIT) // Slime stasis
-			. += span_deadsay("It appears to be alive but unresponsive.")
-		if (getBruteLoss())
-			. += "<span class='warning'>"
-			if (getBruteLoss() < 40)
-				. += "It has some punctures in its flesh!"
-			else
-				. += "<B>It has severe punctures and tears in its flesh!</B>"
-			. += "</span>\n"
+	. = ..()
 
-		switch(powerlevel)
-			if(2 to 3)
-				. += "It is flickering gently with a little electrical activity."
+	switch(powerlevel)
+		if(SLIME_MIN_POWER to SLIME_EXTRA_SHOCK_COST)
+			. += "It is flickering gently with harmless levels of electrical activity."
 
-			if(4 to 5)
-				. += "It is glowing gently with moderate levels of electrical activity."
+		if(SLIME_EXTRA_SHOCK_COST to SLIME_MEDIUM_POWER)
+			. += "It is glowing brightly with medium levels electrical activity."
 
-			if(6 to 9)
-				. += span_warning("It is glowing brightly with high levels of electrical activity.")
 
-			if(10)
-				. += span_warning("<B>It is radiating with massive levels of electrical activity!</B>")
+		if(SLIME_MEDIUM_POWER to SLIME_MAX_POWER)
+			. += "It is glowing alarmingly with high levels of electrical activity."
 
-	. += "</span>"
+		if(SLIME_MAX_POWER)
+			. += span_boldwarning("It is radiating with massive levels of electrical activity!")
 
 
 //New procs
