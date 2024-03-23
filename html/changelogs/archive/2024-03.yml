@@ -688,3 +688,26 @@
   - rscadd: Added the Chief Engineer's turtleneck and turtleneck skirt to the game.
   - rscadd: Added the Chief Engineer and Chief Medical Officer's turtlenecks to their
       respectives garment bags.
+2024-03-23:
+  Ben10Omintrix:
+  - rscadd: cultists can now convert pets to their side
+  Bilbo367:
+  - bugfix: Fixes ghosts being able to change a lathes output direction.
+  - image: fixed Fulton balloon having its smallest sprite copy pasted over itself
+  DaCoolBoss:
+  - bugfix: A broken item was removed from the mimesvsclowns ruin. In its place is
+      a spent revolver round.
+  Ghommie:
+  - bugfix: Fixed the LTSRBT.
+  Jacquerel:
+  - bugfix: Driving a vehicle into the supermatter will kill everyone riding the vehicle
+  Singul0:
+  - qol: Adds contextual screentips to air alarms
+  SyncIt21:
+  - bugfix: RCD logs are more human readable & stores the player name behind the action.
+  Thunder12345:
+  - image: Everything that used the old gangtool sprites (door remotes, landing field
+      designators, some choice beacons, windicate borg reinforcements) has been resprited.
+  - image: Door remotes now visibly show their current mode.
+  carshalash:
+  - qol: Fishfood is now more easily acquired through cargo

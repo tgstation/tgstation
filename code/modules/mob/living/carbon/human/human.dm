@@ -606,7 +606,7 @@
 
 	// If we have a species, we need to handle mutant parts and stuff
 	if(dna?.species)
-		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
+		add_atom_colour(COLOR_BLACK, TEMPORARY_COLOUR_PRIORITY)
 		var/static/mutable_appearance/shock_animation_dna
 		if(!shock_animation_dna)
 			shock_animation_dna = mutable_appearance(icon, "electrocuted_base")
@@ -625,7 +625,7 @@
 	addtimer(CALLBACK(src, PROC_REF(end_electrocution_animation), zap_appearance), anim_duration)
 
 /mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLACK)
 	cut_overlay(MA)
 
 /mob/living/carbon/human/resist_restraints()

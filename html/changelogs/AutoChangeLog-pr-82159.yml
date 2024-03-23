@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixed patronizing paintings not giving a cut to the curators."

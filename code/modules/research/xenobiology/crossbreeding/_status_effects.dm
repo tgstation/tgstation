@@ -528,7 +528,7 @@
 
 	// Technically, "healed this tick" by now.
 	if(healed_last_tick)
-		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
+		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_RED)
 
 	return ..()
 
