@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /obj/mystery_box_item/proc/present_item()
 	var/obj/item/selected_item = selected_path
-	add_filter("ready_outline", 2, list("type" = "outline", "color" = "#FBFF23", "size" = 0.2))
+	add_filter("ready_outline", 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "size" = 0.2))
 	name = initial(selected_item.name)
 	parent_box.present_weapon()
 	claimable = TRUE
