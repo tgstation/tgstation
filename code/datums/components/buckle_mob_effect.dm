@@ -8,7 +8,7 @@
  */
 
 /datum/component/buckle_mob_effect
-///Callback to be ran when we are processing
+	///Callback to be ran when we are processing
 	var/datum/callback/mob_effect_callback
 
 
@@ -27,12 +27,10 @@
 	return ..()
 
 /datum/component/buckle_mob_effect/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(on_buckled))
 	RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(on_unbuckled))
 
 /datum/component/buckle_mob_effect/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_MOB_BUCKLED, COMSIG_MOB_UNBUCKLED))
 	stop_buckle_effect()
 
@@ -42,11 +40,10 @@
 		stop_buckle_effect()
 		return FALSE
 
-	if(mob_effect_callback)
-		mob_effect_callback.Invoke(seconds_per_tick)
+	mob_effect_callback.Invoke(seconds_per_tick)
 
 ///Start processing if we are attached to a mob/living, do not suck out the life of chairs
-/datum/component/buckle_mob_effect/proc/on_buckled(atom/movable/buckle_target)
+/datum/component/buckle_mob_effect/proc/on_buckled(datum/source, atom/movable/buckle_target)
 	SIGNAL_HANDLER
 
 	if(!isliving(buckle_target))
@@ -55,7 +52,7 @@
 	START_PROCESSING(SSobj, src)
 
 ///If we are unbuckled, stop processing
-/datum/component/buckle_mob_effect/proc/on_unbuckled(atom/movable/buckle_target)
+/datum/component/buckle_mob_effect/proc/on_unbuckled(datum/source, atom/movable/buckle_target)
 	SIGNAL_HANDLER
 	stop_buckle_effect()
 
