@@ -108,7 +108,7 @@
 	// New sleepers
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
-		L.add_atom_colour("#800080", TEMPORARY_COLOUR_PRIORITY)
+		L.add_atom_colour(COLOR_PURPLE, TEMPORARY_COLOUR_PRIORITY)
 		L.visible_message(span_revennotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
 			span_revendanger("[desc]"))
 		// Don't let them sit suround unconscious forever
@@ -122,7 +122,7 @@
 	// Missing sleepers
 	for(var/i in sleepers - found)
 		var/mob/living/L = i
-		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#800080")
+		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_PURPLE)
 		L.visible_message("<span class='revennotice'>The glow from [L] fades \
 			away.</span>")
 		L.grab_ghost()

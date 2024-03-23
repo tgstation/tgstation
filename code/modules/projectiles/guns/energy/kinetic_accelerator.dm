@@ -618,7 +618,7 @@
 	desc = "Causes kinetic accelerator bolts to have a white tracer trail and explosion."
 	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/tracer
-	var/bolt_color = "#FFFFFF"
+	var/bolt_color = COLOR_WHITE
 
 /obj/item/borg/upgrade/modkit/tracer/modify_projectile(obj/projectile/kinetic/K)
 	K.icon_state = "ka_tracer"

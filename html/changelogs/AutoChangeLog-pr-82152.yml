@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Importing songs into instruments no longer cuts the first line of the song."

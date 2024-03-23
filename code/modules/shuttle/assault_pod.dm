@@ -17,8 +17,8 @@
 /obj/item/assault_pod
 	name = "Assault Pod Targeting Device"
 	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "gangtool-red"
-	inhand_icon_state = "radio"
+	icon_state = "designator_syndicate"
+	inhand_icon_state = "nukietalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."

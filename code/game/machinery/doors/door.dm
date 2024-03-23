@@ -422,7 +422,7 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
 	SLEEP_NOT_DEL(0.5 SECONDS)

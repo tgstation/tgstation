@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - bugfix: "Fixed lua error logging."
+  - bugfix: "Fixed the SS13.start_loop function not working properly."

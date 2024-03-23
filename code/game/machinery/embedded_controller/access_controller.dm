@@ -73,7 +73,7 @@
 					controller.cycle_close(door)
 		else
 			controller.only_close(door)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		addtimer(CALLBACK(src, PROC_REF(not_busy)), 2 SECONDS)
 
 /obj/machinery/door_buttons/access_button/proc/not_busy()

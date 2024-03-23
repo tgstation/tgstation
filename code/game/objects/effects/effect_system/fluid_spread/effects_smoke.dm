@@ -235,7 +235,7 @@
 /// Green smoke that makes you cough.
 /obj/effect/particle_effect/fluid/smoke/bad/green
 	name = "green smoke"
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 	opacity = FALSE
 
 /// A factory which produces green smoke that makes you cough.

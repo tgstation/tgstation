@@ -5,7 +5,7 @@
 	inhand_icon_state = null
 	greyscale_config = /datum/greyscale_config/wellworn_shirt
 	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt/worn
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	species_exception = list(/datum/species/golem)
 	flags_1 = IS_PLAYER_COLORABLE_1
 	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)

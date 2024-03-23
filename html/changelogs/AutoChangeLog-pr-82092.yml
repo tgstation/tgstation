@@ -1,4 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "You can't complete a genetic makeup scan when the targets moves out of target anymore using a genetic sequencer"
