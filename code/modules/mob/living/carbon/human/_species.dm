@@ -770,9 +770,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						if(MUTANT_COLOR)
 							accessory_overlay.color = fixed_mut_color || source.dna.features["mcolor"]
 						if(HAIR_COLOR)
-							accessory_overlay.color = get_fixed_hair_color() || source.hair_color
+							accessory_overlay.color = get_fixed_hair_color(source) || source.hair_color
 						if(FACIAL_HAIR_COLOR)
-							accessory_overlay.color = get_fixed_hair_color() || source.facial_hair_color
+							accessory_overlay.color = get_fixed_hair_color(source) || source.facial_hair_color
 						if(EYE_COLOR)
 							accessory_overlay.color = source.eye_color_left
 				else
@@ -2164,9 +2164,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /**
  * Get what hair color is used by this species for a mob.
  *
+ * Arguments
+ * * for_mob - The mob to get the hair color for. Required.
+ *
  * Returns a color string or null.
  */
 /datum/species/proc/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+	ASSERT(!isnull(for_mob))
 	switch(hair_color_mode)
 		if(USE_MUTANT_COLOR)
 			return for_mob.dna.features["mcolor"]
