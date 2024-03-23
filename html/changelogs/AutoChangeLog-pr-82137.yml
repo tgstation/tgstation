@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Driving a vehicle into the supermatter will kill everyone riding the vehicle"

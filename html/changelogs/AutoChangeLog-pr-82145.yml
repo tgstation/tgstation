@@ -1,5 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - image: "Everything that used the old gangtool sprites (door remotes, landing field designators, some choice beacons, windicate borg reinforcements) has been resprited."
-  - image: "Door remotes now visibly show their current mode."
