@@ -657,7 +657,8 @@
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
 // - They do not start at 0 for futureproofing
-// - When you get Dwarfism, the number is cut in half.
+// - They skip numbers for futureproofing as well
+// Otherwise they are completely arbitrary
 #define MONKEY_HEIGHT_DWARF 2
 #define MONKEY_HEIGHT_MEDIUM 4
 #define HUMAN_HEIGHT_DWARF 6
