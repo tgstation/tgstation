@@ -288,13 +288,16 @@
  * Returns a mob height num
  */
 /mob/living/carbon/human/proc/get_mob_height()
-	var/returned_height = mob_height
-	if(ismonkey(src))
-		returned_height = MONKEY_HEIGHT_MEDIUM
 	if(HAS_TRAIT(src, TRAIT_DWARF))
-		returned_height /= 2
+		if(ismonkey(src))
+			return MONKEY_HEIGHT_DWARF
+		else
+			return HUMAN_HEIGHT_DWARF
 
-	return returned_height
+	else if(ismonkey(src))
+		return MONKEY_HEIGHT_MEDIUM
+
+	return mob_height
 
 /**
  * Makes a full copy of src and returns it.
