@@ -19,10 +19,10 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2
 
-	/// Divider for power_usage_per_teleport.
+	/// Divider for energy_usage_per_teleport.
 	var/power_efficiency = 1
 	/// Power used per teleported which gets divided by power_efficiency.
-	var/power_usage_per_teleport = 10000
+	var/energy_usage_per_teleport = 10 KILO JOULES
 	/// The time it takes for the machine to recharge before being able to send or receive items.
 	var/recharge_time = 0
 	/// Current recharge progress.
@@ -92,7 +92,7 @@
 
 		receiving.item = receiving.entry.spawn_item(turf, receiving)
 
-		use_power(power_usage_per_teleport / power_efficiency)
+		use_energy(energy_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new
 		sparks.set_up(5, 1, get_turf(src))
 		sparks.attach(receiving.item)
@@ -106,7 +106,7 @@
 	if(transmitting)
 		if(transmitting.item.loc == turf)
 			do_teleport(transmitting.item, get_turf(transmitting.uplink))
-			use_power(power_usage_per_teleport / power_efficiency)
+			use_energy(energy_usage_per_teleport / power_efficiency)
 		QDEL_NULL(transmitting)
 		return
 

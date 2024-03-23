@@ -75,7 +75,7 @@
 		return
 
 	container?.reagents.expose_temperature(SOUP_BURN_TEMP + 80, heat_coefficient)
-	real_parent.use_power(real_parent.active_power_usage)
+	real_parent.use_energy(real_parent.active_power_usage)
 
 	var/turf/stove_spot = real_parent.loc
 	if(isturf(stove_spot))

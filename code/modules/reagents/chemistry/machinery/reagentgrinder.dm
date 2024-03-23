@@ -344,7 +344,7 @@
 		if((to_process in component_parts) || to_process == beaker)
 			continue
 
-		if(!QDELETED(beaker) && !beaker.reagents.holder_full() && is_operational && anchored && !(machine_stat & (BROKEN | NOPOWER)))
+		if(!QDELETED(beaker) && !beaker.reagents.holder_full() && is_operational && anchored)
 			var/static/radial_grind = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 			options["grind"] = radial_grind
 
@@ -357,7 +357,7 @@
 	if(!QDELETED(beaker))
 		options["eject"] = radial_eject
 		//mix reagents present inside
-		if(beaker?.reagents.total_volume && is_operational && anchored && !(machine_stat & (BROKEN | NOPOWER)))
+		if(beaker?.reagents.total_volume && is_operational && anchored)
 			options["mix"] = radial_mix
 	//examine action if Ai is trying to see whats up
 	if(HAS_AI_ACCESS(user))
@@ -464,7 +464,7 @@
 			qdel(weapon)
 
 	//use power according to the total weight of items grinded
-	use_power((active_power_usage * (duration / 1 SECONDS)) * (total_weight / maximum_weight))
+	use_energy((active_power_usage * (duration / 1 SECONDS)) * (total_weight / maximum_weight))
 
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), duration)
 
@@ -522,5 +522,5 @@
 		beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
 
 	//power consumed based on the ratio of total reagents mixed
-	use_power((active_power_usage * (duration / 1 SECONDS)) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
+	use_energy((active_power_usage * (duration / 1 SECONDS)) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
 	operating = FALSE
