@@ -423,7 +423,7 @@
 
 /obj/machinery/rnd/production/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if((!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+	if(!can_interact(usr) || (!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
 		return
 	if(busy)
 		balloon_alert(usr, "busy printing!")

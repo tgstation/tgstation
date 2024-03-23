@@ -127,7 +127,7 @@ Slimecrossing Potions
 	to_chat(user, span_notice("You slather the blue gunk over the [C], making it airtight."))
 	C.name = "pressure-resistant [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+	C.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
 	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	C.cold_protection = C.body_parts_covered
 	C.clothing_flags |= STOPSPRESSUREDAMAGE
@@ -166,7 +166,7 @@ Slimecrossing Potions
 	to_chat(user, span_notice("You slather the red gunk over the [C], making it lavaproof."))
 	C.name = "lavaproof [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour("#800000", FIXED_COLOUR_PRIORITY)
+	C.add_atom_colour(COLOR_MAROON, FIXED_COLOUR_PRIORITY)
 	C.resistance_flags |= LAVA_PROOF
 	if (isclothing(C))
 		var/obj/item/clothing/CL = C

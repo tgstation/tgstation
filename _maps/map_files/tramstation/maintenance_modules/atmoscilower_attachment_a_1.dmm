@@ -9,38 +9,23 @@
 /area/station/maintenance/starboard/lesser)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 37;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 22;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 27;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
@@ -77,38 +62,23 @@
 /area/station/maintenance/starboard/lesser)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 37;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 22;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 27;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/trash/food_packaging,
@@ -131,38 +101,23 @@
 /area/station/maintenance/starboard/lesser)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 37;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 22;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 27;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/i/orange{
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "x";
-	name = "graffiti";
-	paint_colour = "#FF9300";
+/obj/effect/decal/cleanable/crayon/x{
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/trash/food_packaging,
