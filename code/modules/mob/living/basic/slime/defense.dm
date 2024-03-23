@@ -25,7 +25,7 @@
 
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
 
- 	//Lets you feed slimes plasma. Checks before the passthrough force check
+	//Lets you feed slimes plasma. Checks before the passthrough force check
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && !stat)
 		befriend(user)
 		to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))
