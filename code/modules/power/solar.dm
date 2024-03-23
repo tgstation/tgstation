@@ -248,7 +248,7 @@
 		return
 
 	var/sgen = SOLAR_GEN_RATE * sunfrac
-	add_avail(sgen)
+	add_avail(power_to_energy(sgen))
 	if(control)
 		control.gen += sgen
 

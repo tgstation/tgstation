@@ -68,7 +68,7 @@
 	return TRUE
 
 /obj/item/mod/core/infinite/subtract_charge(amount)
-	return TRUE
+	return amount
 
 /obj/item/mod/core/infinite/check_charge(amount)
 	return TRUE
@@ -273,8 +273,7 @@
 	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
-	charge_source.adjust_charge(-amount*charge_modifier)
-	return TRUE
+	return -charge_source.adjust_charge(-amount*charge_modifier)
 
 /obj/item/mod/core/ethereal/check_charge(amount)
 	return charge_amount() >= amount*charge_modifier
@@ -282,8 +281,8 @@
 /obj/item/mod/core/ethereal/get_charge_icon_state()
 	return charge_source() ? "0" : "missing"
 
-#define PLASMA_CORE_ORE_CHARGE 1500
-#define PLASMA_CORE_SHEET_CHARGE 2000
+#define PLASMA_CORE_ORE_CHARGE (1.5 * STANDARD_CELL_CHARGE)
+#define PLASMA_CORE_SHEET_CHARGE (2 * STANDARD_CELL_CHARGE)
 
 /obj/item/mod/core/plasma
 	name = "MOD plasma core"
@@ -291,9 +290,9 @@
 	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
 		through plasma fuel, allowing for easy continued use by their mining squads."
 	/// How much charge we can store.
-	var/maxcharge = 10000
+	var/maxcharge = 10 * STANDARD_CELL_CHARGE
 	/// How much charge we are currently storing.
-	var/charge = 10000
+	var/charge = 10 * STANDARD_CELL_CHARGE
 	/// Associated list of charge sources and how much they charge, only stacks allowed.
 	var/list/charger_list = list(/obj/item/stack/ore/plasma = PLASMA_CORE_ORE_CHARGE, /obj/item/stack/sheet/mineral/plasma = PLASMA_CORE_SHEET_CHARGE)
 
@@ -325,9 +324,10 @@
 	return TRUE
 
 /obj/item/mod/core/plasma/subtract_charge(amount)
-	charge = max(0, charge - amount)
+	amount = min(amount, charge)
+	charge -= amount
 	mod.update_charge_alert()
-	return TRUE
+	return amount
 
 /obj/item/mod/core/plasma/check_charge(amount)
 	return charge_amount() >= amount
