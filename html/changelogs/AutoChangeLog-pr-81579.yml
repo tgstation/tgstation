@@ -1,0 +1,9 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - bugfix: "Fixes conservation of energy issues relating to charging powercells."
+  - qol: "APCs will display how much power they are using to charge their cell. This is accounted for in the power monitoring console."
+  - qol: "All arbitrary power cell energy units you see are replaced with prefixed joules."
+  - balance: "As a consequence of the conservation of energy issues getting fixed, the power consumption for charging cells is now very significant."
+  - balance: "APCs only use surplus power from the grid after every machine processes when charging, preventing APCs from causing others to discharge while charging."
+  - balance: "Engineering SMES start at max charge to combat the increased energy loss due to conservation of energy fixes."
