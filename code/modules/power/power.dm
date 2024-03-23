@@ -147,7 +147,7 @@
 		return INFINITY
 
 	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
+	if(isnull(local_apc))
 		return FALSE
 
 	return consider_cell ? local_apc.available_energy() : local_apc.surplus()
