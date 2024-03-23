@@ -93,9 +93,9 @@
 	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
 	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
-	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
-	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
 /mob/living/basic/Initialize(mapload)
@@ -115,23 +115,22 @@
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
-	apply_atmos_requirements()
-	apply_temperature_requirements()
+	apply_atmos_requirements(mapload)
+	apply_temperature_requirements(mapload)
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
-/mob/living/basic/proc/apply_atmos_requirements()
+/mob/living/basic/proc/apply_atmos_requirements(mapload)
 	if(unsuitable_atmos_damage == 0)
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)
-	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage, mapload)
 
 /// Ensures this mob can take temperature damage if it's supposed to
-/mob/living/basic/proc/apply_temperature_requirements()
+/mob/living/basic/proc/apply_temperature_requirements(mapload)
 	if(unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0)
 		return
-	AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
-
+	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -219,7 +218,7 @@
 			RemoveElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 			. = TRUE
 		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
-			RemoveElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+			RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 			. = TRUE
 
 	. = ..()
