@@ -10,13 +10,13 @@
 	if(stat)
 		if(silent)
 			return FALSE
-		balloon_alert(src, span_warning("unconscious!"))
+		balloon_alert(src, "unconscious!")
 		return FALSE
 
 	if(hunger_disabled)
 		if(silent)
 			return FALSE
-		balloon_alert(src, span_notice("not hungry!"))
+		balloon_alert(src, "not hungry!")
 		return FALSE
 
 	if(check_adjacenct && !Adjacent(meal))
@@ -25,13 +25,13 @@
 	if(meal.stat == DEAD)
 		if(silent)
 			return FALSE
-		balloon_alert(src, span_warning("no life energy!"))
+		balloon_alert(src, "no life energy!")
 		return FALSE
 
 	if(locate(/mob/living/basic/slime) in meal.buckled_mobs)
 		if(silent)
 			return FALSE
-		balloon_alert(src, span_warning("another slime in the way!"))
+		balloon_alert(src, "another slime in the way!")
 		return FALSE
 
 	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC || meal.flags_1 & HOLOGRAM_1)
