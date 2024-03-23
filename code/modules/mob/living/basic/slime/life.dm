@@ -38,6 +38,10 @@
 	if(nutrition < SLIME_STARVE_NUTRITION)
 		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
 
+		if(SPT_PROB(0.5, seconds_per_tick) && LAZYLEN(ai_controller?.blackboard[BB_FRIENDS_LIST]))
+			var/your_fault = pick(ai_controller?.blackboard[BB_FRIENDS_LIST])
+			unfriend(your_fault)
+
 	else if(nutrition < SLIME_HUNGER_NUTRITION || (nutrition < SLIME_GROW_NUTRITION && SPT_PROB(25, seconds_per_tick)) )
 		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
 
