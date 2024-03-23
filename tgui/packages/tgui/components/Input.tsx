@@ -102,31 +102,15 @@ export function Input(props: Props) {
   // The ref to the input field
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Used to upate value when onInput gets invoked after debounce or for an non expensive field directly.
-  let update: Boolean = true;
-
-  function updateAfterDebounce(
-    event: SyntheticEvent<HTMLInputElement>,
-    value: string,
-  ) {
-    if (!onInput) return;
-
-    onInput(event, value);
-
-    update = true;
-  }
-
   function handleInput(event: SyntheticEvent<HTMLInputElement>) {
     if (!onInput) return;
 
     const value = event.currentTarget?.value;
 
-    update = false;
     if (expensive) {
-      inputDebounce(() => updateAfterDebounce(event, value));
+      inputDebounce(() => onInput(event, value));
     } else {
       onInput(event, value);
-      update = true;
     }
   }
 
@@ -156,15 +140,12 @@ export function Input(props: Props) {
     const input = inputRef.current;
     if (!input) return;
 
-    if (update) {
-      const newValue = toInputValue(value);
+    const newValue = toInputValue(value);
 
-      if (input.value === newValue) return;
-
-      input.value = newValue;
-    }
+    if (input.value !== newValue) input.value = newValue;
 
     if (!autoFocus && !autoSelect) return;
+
     setTimeout(() => {
       input.focus();
 
