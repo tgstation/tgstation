@@ -413,7 +413,7 @@
 		. = TRUE
 	if(.)
 		update_appearance(UPDATE_OVERLAYS)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 	return .
 
 /obj/machinery/chem_master/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -519,7 +519,7 @@
 	reagents.trans_to(item, volume_in_each, transferred_by = user)
 	printing_progress++
 	update_appearance(UPDATE_OVERLAYS)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	//can happen when transferring explosive reagents(like potassium into water lol) so lets stop here
 	if(QDELETED(src))

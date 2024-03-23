@@ -458,7 +458,8 @@
 	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
 		return
 
-	use_power(active_power_usage)
+	if(!use_energy(active_power_usage * seconds_per_tick))
+		return
 
 	progress_time += seconds_per_tick
 	if(progress_time >= delay_time)
