@@ -167,7 +167,7 @@
 		return FALSE
 	var/area/home = get_area(src)
 
-	if(!home)
+	if(isnull(home))
 		return FALSE //apparently space isn't an area
 	if(!home.requires_power)
 		return amount //Shuttles get free power, don't ask why
