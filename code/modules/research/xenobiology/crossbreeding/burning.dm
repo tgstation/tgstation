@@ -199,13 +199,9 @@ Burning extracts:
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
 	for(var/mob/living/basic/slime/slime_in_view in view(7, get_turf(user)))
-		if(REF(user) in slime_in_view.faction)
-			slime_in_view.ai_controller?.clear_blackboard_key(BB_FRIENDS_LIST)
-			slime_in_view.faction = initial(faction)
-			slime_in_view.befriend(src)
-		else
-			slime_in_view.ai_controller?.clear_blackboard_key(BB_FRIENDS_LIST)
-			slime_in_view.faction = initial(faction)
+		var/list/mob/living/friends = slime_in_view.ai_controller?.blackboard[BB_FRIENDS_LIST] - user
+		for(var/list/mob/living/ex_friend in friends)
+			slime_in_view.unfriend(ex_friend)
 		slime_in_view.set_enraged_behaviour()
 		slime_in_view.visible_message(span_danger("The [slime_in_view] is driven into a dangerous frenzy!"))
 	..()
