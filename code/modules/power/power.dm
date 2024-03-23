@@ -141,7 +141,7 @@
 /obj/machinery/proc/available_energy(consider_cell = TRUE)
 	var/area/home = get_area(src)
 
-	if(!home)
+	if(isnull(home))
 		return FALSE
 	if(!home.requires_power)
 		return INFINITY
