@@ -1,6 +1,6 @@
 /datum/quirk/item_quirk/addict
 	name = "Addict"
-	desc = "You shouldn't be seeing this, call a coder!"
+	desc = "You are addicted to something that doesn't exist. Suffer."
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
@@ -11,29 +11,12 @@
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	var/next_process = 0 //! ticker for processing
-	var/drug_flavour_text = "Better hope you don't run out..."
+	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
 	abstract_parent_type = /datum/quirk/item_quirk/addict
 
-/datum/quirk/item_quirk/addict/junkie
-	name = "Junkie"
-	desc = "You can't get enough of hard drugs."
-	icon = FA_ICON_PILLS
-	value = -6
-	gain_text = span_danger("You suddenly feel the craving for drugs.")
-	medical_record_text = "Patient has a history of hard drugs."
-	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
-	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
-
-/datum/quirk_constant_data/junkie
-	associated_typepath = /datum/quirk/item_quirk/addict
-	customization_options = list(/datum/preference/choiced/junkie)
-
-/datum/quirk/item_quirk/addict/junkie/add_unique(client/client_source)
+/datum/quirk/item_quirk/addict/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
-	if(addiction && (addiction != "Random"))
-		reagent_type = GLOB.possible_junkie_addictions[addiction]
+	var/addiction
 
 	if(!reagent_type)
 		reagent_type = GLOB.possible_junkie_addictions[pick(GLOB.possible_junkie_addictions)]
@@ -77,6 +60,29 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS,
 		)
 	)
+
+/datum/quirk/item_quirk/addict/junkie
+	name = "Junkie"
+	desc = "You can't get enough of hard drugs."
+	icon = FA_ICON_PILLS
+	value = -6
+	gain_text = span_danger("You suddenly feel the craving for drugs.")
+	medical_record_text = "Patient has a history of hard drugs."
+	hardcore_value = 4
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
+	drug_flavour_text = "Better hope you don't run out..."
+
+/datum/quirk_constant_data/junkie
+	associated_typepath = /datum/quirk/item_quirk/addict/junkie
+	customization_options = list(/datum/preference/choiced/junkie)
+
+/datum/quirk/item_quirk/addict/junkie/add_unique(client/client_source)
+
+	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
+	if(addiction && (addiction != "Random"))
+		reagent_type = GLOB.possible_junkie_addictions[addiction]
+	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
 	if(quirk_holder && reagent_instance)
