@@ -7,3 +7,6 @@
 	melee_damage_upper = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/alien/drone
+
+/mob/living/basic/alien/drone/del_on_death
+	basic_mob_flags = parent_type::basic_mob_flags | DEL_ON_DEATH

@@ -3080,7 +3080,7 @@
 "tN" = (
 /obj/structure/alien/weeds/node,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -3218,7 +3218,7 @@
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5293,7 +5293,7 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5371,7 +5371,7 @@
 "Jw" = (
 /obj/structure/alien/weeds/node,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5505,7 +5505,7 @@
 "KA" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5951,7 +5951,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "NU" = (
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -7012,7 +7012,7 @@
 "UI" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"

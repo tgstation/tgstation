@@ -12,8 +12,6 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/alien/queen
 
-	///Boolean on whether the xeno queen can lay eggs.
-	var/can_lay_eggs = FALSE
 	///The type of projectile that fires from attacks.
 	var/projectiletype = /obj/projectile/neurotoxin/damaging
 	///The sound that plays when the projectile is fired.
@@ -39,3 +37,6 @@
 	)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/alien/queen/large/del_on_death
+	basic_mob_flags = parent_type::basic_mob_flags | DEL_ON_DEATH

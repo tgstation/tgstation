@@ -47,6 +47,11 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/alien
 
+	///Boolean on whether the xeno can plant weeds.
+	var/can_plant_weeds = TRUE
+	///Boolean on whether the xeno can lay eggs.
+	var/can_lay_eggs = FALSE
+
 /mob/living/basic/alien/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)

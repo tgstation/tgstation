@@ -1327,8 +1327,7 @@
 	},
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/structure/bed/nest,
-/mob/living/basic/alien/drone{
-	del_on_death = 1;
+/mob/living/basic/alien/drone/del_on_death{
 	loot = list(/obj/effect/gibspawner/xeno);
 	faction = list("syndicate","xenomorph")
 	},
@@ -1941,8 +1940,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "ER" = (
 /obj/structure/cable,
-/mob/living/basic/alien/sentinel{
-	del_on_death = 1;
+/mob/living/basic/alien/sentinel/del_on_death{
 	loot = list(/obj/effect/gibspawner/xeno);
 	faction = list("syndicate","xenomorph")
 	},
@@ -2809,8 +2807,7 @@
 /obj/item/shard{
 	icon_state = "plastitaniumtiny"
 	},
-/mob/living/basic/alien/queen/large{
-	del_on_death = 1;
+/mob/living/basic/alien/queen/large/del_on_death{
 	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
 	desc = "What you saw in your dreams last night.";
 	faction = list("syndicate","xenomorph")

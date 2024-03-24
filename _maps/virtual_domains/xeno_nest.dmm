@@ -67,7 +67,7 @@
 "p" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -82,7 +82,7 @@
 "s" = (
 /obj/structure/alien/weeds/node,
 /mob/living/basic/alien/drone{
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -179,7 +179,7 @@
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)

@@ -53,9 +53,9 @@
 	if(!.)
 		return .
 	plant_cooldown--
-	if(!plants_off && plant_cooldown <= 0)
+	var/mob/living/basic/alien/alien_pawn = controller.pawn
+	if(alien_pawn.can_plant_weeds && !plants_off && plant_cooldown <= 0)
 		plant_cooldown = initial(plant_cooldown)
-		var/mob/living/basic/alien/alien_pawn = controller.pawn
 		alien_pawn.place_weeds()
 
 /datum/idle_behavior/idle_random_walk/plant_weeds/queen
@@ -67,7 +67,7 @@
 	if(!.)
 		return .
 	egg_cooldown--
-	var/mob/living/basic/alien/queen/alien_pawn = controller.pawn
+	var/mob/living/basic/alien/alien_pawn = controller.pawn
 	if(alien_pawn.can_lay_eggs && !eggs_off && egg_cooldown <= 0)
 		egg_cooldown = initial(egg_cooldown)
 		alien_pawn.lay_alien_egg()
