@@ -517,7 +517,7 @@
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 ///How much charge is used up for each matter unit.
-#define MASS_TO_ENERGY * 16 KILO JOULES
+#define MASS_TO_ENERGY (16 KILO JOULES)
 
 /obj/item/construction/rcd/exosuit
 	name = "mounted RCD"
