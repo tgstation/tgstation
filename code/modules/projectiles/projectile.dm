@@ -621,7 +621,7 @@
 			return FALSE
 		if(HAS_TRAIT(living_target, TRAIT_IMMOBILIZED) && HAS_TRAIT(living_target, TRAIT_FLOORED) && HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 			return FALSE
-		if(!hit_prone_targets)
+		if(!hit_prone_targets || iscarbon(living_target))
 			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
 			if(!buckled_to.density) // Will just be us if we're not buckled to another mob
 				return FALSE
