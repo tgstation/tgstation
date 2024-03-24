@@ -57,7 +57,7 @@
 		return
 	reagents.add_reagent(reagent_id, amount)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -114,7 +114,7 @@
 /obj/machinery/plumbing/synthesizer/update_overlays()
 	. = ..()
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
-	r_overlay.color = reagent_id ? initial(reagent_id.color) : "#FFFFFF"
+	r_overlay.color = reagent_id ? initial(reagent_id.color) : COLOR_WHITE
 	. += r_overlay
 
 /obj/machinery/plumbing/synthesizer/soda

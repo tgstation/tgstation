@@ -1731,7 +1731,7 @@
 	///An icon state used as trim.
 	var/scribbled_trim
 	///The colors for each of the above variables, for when overlays are updated.
-	var/details_colors = list("#000000", "#000000", "#000000")
+	var/details_colors = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK)
 
 /obj/item/card/cardboard/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
@@ -1777,14 +1777,14 @@
 				return
 			scribbled_name = input_name
 			var/list/details = item.get_writing_implement_details()
-			details_colors[INDEX_NAME_COLOR] = details["color"] || "#000000"
+			details_colors[INDEX_NAME_COLOR] = details["color"] || COLOR_BLACK
 		if("Assignment")
 			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
 			if(!after_input_check(user, item, input_assignment, scribbled_assignment))
 				return
 			scribbled_assignment = sanitize(input_assignment)
 			var/list/details = item.get_writing_implement_details()
-			details_colors[INDEX_ASSIGNMENT_COLOR] = details["color"] || "#000000"
+			details_colors[INDEX_ASSIGNMENT_COLOR] = details["color"] || COLOR_BLACK
 		if("Trim")
 			var/static/list/possible_trims
 			if(!possible_trims)
@@ -1799,12 +1799,12 @@
 				return
 			scribbled_trim = "cardboard_[input_trim]"
 			var/list/details = item.get_writing_implement_details()
-			details_colors[INDEX_TRIM_COLOR] = details["color"] || "#000000"
+			details_colors[INDEX_TRIM_COLOR] = details["color"] || COLOR_BLACK
 		if("Reset")
 			scribbled_name = null
 			scribbled_assignment = null
 			scribbled_trim = null
-			details_colors = list("#000000", "#000000", "#000000")
+			details_colors = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK)
 
 	update_appearance()
 

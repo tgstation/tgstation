@@ -1,6 +1,6 @@
 #define RAT_ORGAN_COLOR "#646464"
 #define RAT_SCLERA_COLOR "#f0e055"
-#define RAT_PUPIL_COLOR "#000000"
+#define RAT_PUPIL_COLOR COLOR_BLACK
 #define RAT_COLORS RAT_ORGAN_COLOR + RAT_SCLERA_COLOR + RAT_PUPIL_COLOR
 
 ///bonus of the rat: you can ventcrawl!
@@ -16,8 +16,8 @@
 	name = "mutated rat-eyes"
 	desc = "Rat DNA infused into what was once a normal pair of eyes."
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
-	eye_color_left = "#000000"
-	eye_color_right = "#000000"
+	eye_color_left = COLOR_BLACK
+	eye_color_right = COLOR_BLACK
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "eyes"
