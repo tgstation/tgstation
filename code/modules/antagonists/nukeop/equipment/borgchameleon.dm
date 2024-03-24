@@ -11,8 +11,8 @@
 	var/friendlyName
 	var/savedName
 	var/active = FALSE
-	var/activationCost = 300
-	var/activationUpkeep = 50
+	var/activationCost = 300 KILO JOULES
+	var/activationUpkeep = 50 KILO JOULES
 	var/disguise = "engineer"
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
@@ -50,7 +50,7 @@
 		else
 			to_chat(user, span_warning("You can't use [src] while inside something!"))
 	else
-		to_chat(user, span_warning("You need at least [activationCost] charge in your cell to use [src]!"))
+		to_chat(user, span_warning("You need at least [activationCost]KJ charge in your cell to use [src]!"))
 
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
