@@ -86,21 +86,24 @@
 		/datum/computer_file/program/chatclient,
 	)
 	/// What department type is assigned to this console?
-	var/datum/job_department/department_type = /datum/job_department/assistant
+	var/datum/job_department/department_type
 
 /obj/machinery/modular_computer/preset/cargochat/Initialize(mapload)
 	add_starting_software()
 	. = ..()
 	setup_starting_software()
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
-
-	name = "[lowertext(initial(department_type.department_name))] [name]"
-	cpu.name = name
+	if(department_type)
+		name = "[lowertext(initial(department_type.department_name))] [name]"
+		cpu.name = name
 
 /obj/machinery/modular_computer/preset/cargochat/proc/add_starting_software()
 	starting_programs += /datum/computer_file/program/department_order
 
 /obj/machinery/modular_computer/preset/cargochat/proc/setup_starting_software()
+	if(!department_type)
+		return
+
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
 	chatprogram.username = "[lowertext(initial(department_type.department_name))]_department"
 	cpu.idle_threads += chatprogram
