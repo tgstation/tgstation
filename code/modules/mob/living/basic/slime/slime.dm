@@ -62,6 +62,9 @@
 	///What is our current lifestage?
 	var/life_stage = SLIME_LIFE_STAGE_BABY
 
+	///Our slime's current mood
+	var/current_mood = SLIME_MOOD_NONE
+
 	///The number of /obj/item/slime_extract's the slime has left inside
 	var/cores = 1
 	///Chance of mutating, should be between 25 and 35
@@ -134,7 +137,6 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand) )
 
-	ai_controller.set_blackboard_key(BB_SLIME_FACE, SLIME_MOOD_NONE)
 	ai_controller.set_blackboard_key(BB_SLIME_EVOLVE, evolve_action)
 	ai_controller.set_blackboard_key(BB_SLIME_REPRODUCE, reproduce_action)
 
@@ -192,8 +194,8 @@
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
-		if(ai_controller?.blackboard[BB_SLIME_FACE] && !stat)
-			add_overlay("aslime-[ai_controller?.blackboard[BB_SLIME_FACE]]")
+		if(current_mood && !stat)
+			add_overlay("aslime-[current_mood]")
 	else
 		icon_state = icon_dead
 	..()

@@ -1,7 +1,5 @@
 // Slime AI controller blackboard keys
 
-///The current face of the slime
-#define BB_SLIME_FACE "BB_slime_face"
 ///If true, the slime will not get hungry, nor hunt
 #define BB_SLIME_HUNGER_DISABLED "BB_slime_hunger_disabled"
 ///Keeps track how hungry the slime is

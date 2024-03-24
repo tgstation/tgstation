@@ -32,7 +32,7 @@
 	if(!.)
 		return
 	var/mob/living/basic/slime/slime_user = user
-	slime_user.ai_controller?.set_blackboard_key(BB_SLIME_FACE, mood_key)
+	slime_user.current_mood = mood_key
 	slime_user.regenerate_icons()
 
 /datum/emote/slime/mood/sneaky

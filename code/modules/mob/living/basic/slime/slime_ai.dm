@@ -76,7 +76,7 @@
 	if(!istype(slime_pawn))
 		return
 
-	var/current_mood = controller.blackboard[BB_SLIME_FACE]
+	var/current_mood = slime_pawn.current_mood
 
 	var/new_mood = SLIME_MOOD_NONE
 
@@ -90,7 +90,7 @@
 		new_mood = pick(SLIME_MOOD_SAD, SLIME_MOOD_SMILE, SLIME_MOOD_POUT)
 
 	if(current_mood != new_mood)
-		controller.set_blackboard_key(BB_SLIME_FACE, new_mood)
+		slime_pawn.current_mood = new_mood
 		slime_pawn.regenerate_icons()
 
 	finish_action(controller, TRUE)
