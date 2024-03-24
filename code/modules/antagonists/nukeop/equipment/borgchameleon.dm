@@ -50,7 +50,7 @@
 		else
 			to_chat(user, span_warning("You can't use [src] while inside something!"))
 	else
-		to_chat(user, span_warning("You need at least [activationCost / (1 KILO JOULES)]KJ charge in your cell to use [src]!"))
+		to_chat(user, span_warning("You need at least [display_energy(activationCost)] of charge in your cell to use [src]!"))
 
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
