@@ -415,6 +415,13 @@
 
 		wildcard_access_list |= new_access
 
+/// Helper proc that determines if a card can be used in certain types of payment transactions.
+/obj/item/card/id/proc/can_be_used_in_payment()
+	if(QDELETED(src) || isnull(registered_account) || isnull(registered_account.account_job))
+		return FALSE
+
+	return TRUE
+
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
 		var/minor
@@ -1242,6 +1249,13 @@
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
 	. = ..()
 	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars
+		return FALSE
+
+	return TRUE
+
+/obj/item/card/id/advanced/debug/can_be_used_in_payment()
+	. = ..()
+	if(!. || isnull(user.client?.holder))
 		return FALSE
 
 	return TRUE
