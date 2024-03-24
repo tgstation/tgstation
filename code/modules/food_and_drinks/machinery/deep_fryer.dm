@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		frying_burnt = TRUE
 		visible_message(span_warning("[src] emits an acrid smell!"))
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/deepfryer/Exited(atom/movable/gone, direction)
 	. = ..()

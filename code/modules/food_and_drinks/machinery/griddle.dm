@@ -176,7 +176,7 @@
 		if(prob(10))
 			visible_message(span_danger("[griddled_item] doesn't seem to be doing too great on the [src]!"))
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 	var/turf/griddle_loc = loc
 	if(isturf(griddle_loc))

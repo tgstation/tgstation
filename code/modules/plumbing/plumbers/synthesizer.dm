@@ -57,7 +57,7 @@
 		return
 	reagents.add_reagent(reagent_id, amount)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

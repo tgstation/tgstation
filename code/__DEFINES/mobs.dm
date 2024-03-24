@@ -210,13 +210,6 @@
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
-//Surgery Defines
-#define BIOWARE_GENERIC "generic"
-#define BIOWARE_NERVES "nerves"
-#define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_CORTEX "cortex"
-
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
@@ -289,14 +282,14 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals
+//Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 400
-#define ETHEREAL_CHARGE_NORMAL 1000
-#define ETHEREAL_CHARGE_ALMOSTFULL 1500
-#define ETHEREAL_CHARGE_FULL 2000
-#define ETHEREAL_CHARGE_OVERLOAD 2500
-#define ETHEREAL_CHARGE_DANGEROUS 3000
+#define ETHEREAL_CHARGE_LOWPOWER (400 KILO JOULES)
+#define ETHEREAL_CHARGE_NORMAL (1 MEGA JOULES)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 MEGA JOULES)
+#define ETHEREAL_CHARGE_FULL (2 MEGA JOULES)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 MEGA JOULES)
+#define ETHEREAL_CHARGE_DANGEROUS (3 MEGA JOULES)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
