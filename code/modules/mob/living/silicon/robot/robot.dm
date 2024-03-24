@@ -952,7 +952,7 @@
 	SIGNAL_HANDLER
 	charge_cell.Invoke(cell, seconds_per_tick)
 	if(model)
-		model.respawn_consumable(src, cell.use(STANDARD_CELL_CHARGE * 0.001))
+		model.respawn_consumable(src, cell.chargerate * 0.005)
 		if(sendmats)
 			model.restock_consumable()
 	if(repairs)
