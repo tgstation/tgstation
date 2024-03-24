@@ -77,7 +77,7 @@
 
 		if(ai_controller && !ai_controller.blackboard[BB_SLIME_RABID])
 			var/mob/last_to_hurt = prey.LAssailant?.resolve()
-			if(prob(30) && last_to_hurt && last_to_hurt != prey) //30 percent chance to befriend the last person who punched our food
+			if(prob(30) && last_to_hurt && last_to_hurt != prey && last_to_hurt != src) //30 percent chance to befriend the last person who punched our food
 				befriend(last_to_hurt)
 
 			if(prob(60) && prey.client && ishuman(prey))
