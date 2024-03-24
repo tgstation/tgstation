@@ -460,7 +460,7 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(!registered_account || !registered_account.account_job)
+	if(!id_card.can_be_used_in_payment())
 		balloon_alert(user, "no account")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
@@ -1243,12 +1243,14 @@
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
 	registered_account = new(player_account = FALSE)
+	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
 	registered_account.account_job = SSjob.GetJobType(/datum/job/admin)
-	registered_account.account_balance = 999999999 // MONEY
+	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
 
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
 	. = ..()
-	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars
+	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars. spawn in a holochip if you want them to get some dosh
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
 		return FALSE
 
 	return TRUE
@@ -1256,6 +1258,7 @@
 /obj/item/card/id/advanced/debug/can_be_used_in_payment()
 	. = ..()
 	if(!. || isnull(user.client?.holder))
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
 		return FALSE
 
 	return TRUE
