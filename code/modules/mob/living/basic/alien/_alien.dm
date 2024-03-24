@@ -47,6 +47,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/alien
 
+	///Lazylist of loot items to drop when deleted, if this is set then we apply DEL_ON_DEATH
+	var/list/loot
 	///Boolean on whether the xeno can plant weeds.
 	var/can_plant_weeds = TRUE
 	///Boolean on whether the xeno can lay eggs.
@@ -54,6 +56,10 @@
 
 /mob/living/basic/alien/Initialize(mapload)
 	. = ..()
+	if(LAZYLEN(loot))
+		basic_mob_flags |= DEL_ON_DEATH
+		loot = string_list(loot)
+		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 
 /mob/living/basic/alien/get_butt_sprite()

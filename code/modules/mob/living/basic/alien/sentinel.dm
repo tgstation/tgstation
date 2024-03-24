@@ -18,6 +18,3 @@
 /mob/living/basic/alien/sentinel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ranged_attacks, projectile_type = projectiletype, projectile_sound = projectilesound, cooldown_time = 1 SECONDS)
-
-/mob/living/basic/alien/sentinel/del_on_death
-	basic_mob_flags = parent_type::basic_mob_flags | DEL_ON_DEATH

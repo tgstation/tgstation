@@ -38,5 +38,3 @@
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/alien/queen/large/del_on_death
-	basic_mob_flags = parent_type::basic_mob_flags | DEL_ON_DEATH
