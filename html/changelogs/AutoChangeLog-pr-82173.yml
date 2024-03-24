@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Changelings with a flesh ID now properly show the icon of the disguised ID in examine."
