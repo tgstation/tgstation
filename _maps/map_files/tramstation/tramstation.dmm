@@ -22983,7 +22983,7 @@
 /area/station/command/bridge)
 "hhf" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -46112,8 +46112,8 @@
 /area/station/command/meeting_room)
 "pts" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
-	charge = 10000
+	capacity = 1.8e+008;
+	charge = 2e+005
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52854,7 +52854,7 @@
 /area/station/solars/port)
 "rLB" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -57295,7 +57295,7 @@
 /area/station/science/xenobiology)
 "tms" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -64130,7 +64130,7 @@
 /area/station/science/lobby)
 "vyD" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,

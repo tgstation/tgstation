@@ -8965,7 +8965,7 @@
 "chv" = (
 /obj/structure/cable,
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/west,
@@ -62791,7 +62791,7 @@
 /area/station/science/breakroom)
 "pKa" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/camera/directional/north{
@@ -65117,7 +65117,7 @@
 /area/station/service/library)
 "qlY" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -68579,7 +68579,7 @@
 /area/station/engineering/main)
 "rgH" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/cable,

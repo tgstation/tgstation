@@ -2833,7 +2833,7 @@
 "ps" = (
 /obj/structure/cable,
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -4965,7 +4965,7 @@
 /area/lavaland/surface/outdoors)
 "Ee" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,

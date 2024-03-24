@@ -49,7 +49,7 @@
 /area/shuttle/abandoned/engine)
 "am" = (
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9

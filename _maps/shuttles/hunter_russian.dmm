@@ -427,7 +427,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)

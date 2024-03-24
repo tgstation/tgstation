@@ -717,7 +717,7 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)

@@ -821,7 +821,7 @@
 "yN" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,

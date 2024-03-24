@@ -609,7 +609,7 @@
 /area/shuttle/pirate)
 "Ln" = (
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,

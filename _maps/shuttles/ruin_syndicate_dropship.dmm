@@ -377,7 +377,7 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "Oe" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5

@@ -987,7 +987,7 @@
 "cX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,

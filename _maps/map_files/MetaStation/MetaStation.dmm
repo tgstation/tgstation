@@ -31036,7 +31036,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "lew" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
@@ -49757,8 +49757,8 @@
 /area/station/engineering/gravity_generator)
 "rMT" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
-	charge = 10000
+	capacity = 1.8e+008;
+	charge = 2e+005
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -53047,7 +53047,7 @@
 /area/station/cargo/sorting)
 "sVx" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -55902,7 +55902,7 @@
 /area/station/service/chapel/funeral)
 "tVC" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

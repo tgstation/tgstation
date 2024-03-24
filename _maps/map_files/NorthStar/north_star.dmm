@@ -12198,7 +12198,7 @@
 	c_tag = "Minisat North"
 	},
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -61906,7 +61906,7 @@
 /area/station/science/lobby)
 "pUB" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -66525,7 +66525,7 @@
 	dir = 8
 	},
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
@@ -79818,7 +79818,7 @@
 "uDR" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,

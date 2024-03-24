@@ -811,7 +811,7 @@
 "IL" = (
 /obj/machinery/light/small/broken/directional/east,
 /obj/machinery/power/smes/engineering{
-	charge = 1e+006
+	charge = 2e+007
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
