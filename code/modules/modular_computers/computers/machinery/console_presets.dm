@@ -94,7 +94,8 @@
 	setup_starting_software()
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
-	name = "[initial(department_type.department_name)] [name]"
+	name = "[lowertext(initial(department_type.department_name))] [name]"
+	cpu.name = name
 
 /obj/machinery/modular_computer/preset/cargochat/proc/add_starting_software()
 	starting_programs += /datum/computer_file/program/department_order
