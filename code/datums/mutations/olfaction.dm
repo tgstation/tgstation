@@ -41,7 +41,7 @@
 		return FALSE
 
 	if(HAS_TRAIT(living_cast_on, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot fell any smell
-		to_chat(owner, span_warning("You can't feel any smells!"))
+		to_chat(owner, span_warning("You can't smell!"))
 		return FALSE
 
 	return TRUE
