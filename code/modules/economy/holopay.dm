@@ -255,7 +255,7 @@
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
-	if(isnull(id_card) || id_card.can_be_used_in_payment())
+	if(isnull(id_card) || id_card.can_be_used_in_payment(user))
 		balloon_alert(user, "invalid account")
 		to_chat(user, span_warning("You don't have a valid account."))
 		return FALSE

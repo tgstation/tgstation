@@ -416,8 +416,8 @@
 		wildcard_access_list |= new_access
 
 /// Helper proc that determines if a card can be used in certain types of payment transactions.
-/obj/item/card/id/proc/can_be_used_in_payment()
-	if(QDELETED(src) || isnull(registered_account) || isnull(registered_account.account_job))
+/obj/item/card/id/proc/can_be_used_in_payment(mob/living/user)
+	if(QDELETED(src) || isnull(registered_account) || isnull(registered_account.account_job) || !isliving(user))
 		return FALSE
 
 	return TRUE
@@ -460,7 +460,7 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(!id_card.can_be_used_in_payment())
+	if(!id_card.can_be_used_in_payment(user))
 		balloon_alert(user, "no account")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
@@ -1255,7 +1255,7 @@
 
 	return TRUE
 
-/obj/item/card/id/advanced/debug/can_be_used_in_payment()
+/obj/item/card/id/advanced/debug/can_be_used_in_payment(mob/living/user)
 	. = ..()
 	if(!. || isnull(user.client?.holder))
 		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
