@@ -2393,13 +2393,13 @@
 /turf/open/floor/grass,
 /area/station/service/chapel)
 "aWC" = (
-/obj/machinery/computer/department_orders/engineering{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/modular_computer/preset/cargochat/engineering{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "aXI" = (
@@ -5428,7 +5428,7 @@
 /area/station/maintenance/central/greater)
 "ceK" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/bed/medical/emergency,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "ceZ" = (
@@ -12933,12 +12933,10 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "eNV" = (
-/obj/machinery/modular_computer/preset/cargochat/engineering{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "eOo" = (
@@ -16585,11 +16583,11 @@
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "gcf" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/department_orders/medical{
-	dir = 1
-	},
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/modular_computer/preset/cargochat/medical{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "gcm" = (
@@ -25235,13 +25233,13 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/camera{
 	c_tag = "Engineering - Foyer - Starboard";
 	dir = 9
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/airalarm/directional/east,
+/obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "jct" = (
@@ -26490,7 +26488,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/structure/tank_holder/extinguisher,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
@@ -51923,6 +51920,13 @@
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/item/pen{
+	pixel_x = 11
+	},
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "sbx" = (
@@ -53413,9 +53417,17 @@
 "syE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/spawner/directional/west,
-/obj/machinery/vending/medical,
 /obj/machinery/camera/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "syG" = (
@@ -53672,10 +53684,6 @@
 "sDD" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/modular_computer/preset/cargochat/service{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "sDT" = (
@@ -56102,9 +56110,7 @@
 /area/station/security/brig/entrance)
 "tvg" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/modular_computer/preset/cargochat/medical{
-	dir = 1
-	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "tvM" = (
@@ -61466,12 +61472,6 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/science/server)
-"viC" = (
-/obj/machinery/computer/department_orders/science{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "viK" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -64976,9 +64976,9 @@
 /area/station/service/cafeteria)
 "wkl" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/computer/department_orders/service,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/modular_computer/preset/cargochat/service,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "wkm" = (
@@ -70898,7 +70898,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 8
 	},
-/obj/machinery/computer/department_orders/security{
+/obj/machinery/modular_computer/preset/cargochat/security{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -115581,7 +115581,7 @@ wPK
 xfc
 vRh
 xUV
-viC
+rpk
 uMU
 eAn
 bZN
