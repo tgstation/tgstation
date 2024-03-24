@@ -146,7 +146,11 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		audible_message(span_notice("[src] dings!"))
 	else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
 		frying_burnt = TRUE
-		visible_message(span_warning("[src] emits an acrid smell!"))
+		var/list/asomnia_hadders = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src)
+		for(var/mob/M in asomnia_hadders)
+			if(!HAS_TRAIT(M, TRAIT_ANOSMIA))
+				asomnia_hadders -= M
+		visible_message(span_warning("[src] emits an acrid smell!"), ignored_mobs = asomnia_hadders)
 
 	use_energy(active_power_usage)
 

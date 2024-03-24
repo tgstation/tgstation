@@ -466,6 +466,8 @@
 			miasma_disease.name = "Unknown"
 			breather.AirborneContractDisease(miasma_disease, TRUE)
 	// Miasma side effects
+	if (HAS_TRAIT(breather, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot feel miasma, but can take disease
+		return
 	switch(miasma_pp)
 		if(0.25 to 5)
 			// At lower pp, give out a little warning

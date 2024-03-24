@@ -320,6 +320,8 @@
 			miasma_disease.name = "Unknown"
 			ForceContractDisease(miasma_disease, make_copy = TRUE, del_on_fail = TRUE)
 		// Miasma side-effects.
+		if (HAS_TRAIT(src, TRAIT_ANOSMIA)) //We can't feel miasma without sense of smell
+			return
 		switch(miasma_pp)
 			if(0.25 to 5)
 				// At lower pp, give out a little warning

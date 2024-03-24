@@ -894,7 +894,8 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
-		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
+		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
+			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
 
 /**
