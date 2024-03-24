@@ -422,7 +422,8 @@
 /obj/item/construction/rcd/borg
 	desc = "A device used to rapidly build walls and floors."
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
-	var/energyfactor = 72
+	/// enery usage
+	var/energyfactor = 72 KILO JOULES
 
 /obj/item/construction/rcd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
@@ -526,7 +527,7 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
 	delay_mod = 0.5
 	///How much charge is used up for each matter unit.
-	var/mass_to_energy = 16
+	var/mass_to_energy = 16 KILO JOULES
 
 /obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
 	if(ismecha(owner))

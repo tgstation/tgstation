@@ -10,7 +10,7 @@
 	///Self explanatory, ratio of how much power we use
 	var/power_efficiency = 1
 	///How much power we use
-	var/power_usage = 100
+	var/power_usage = 100 KILO JOULES
 	///whether the panel is open so a user can take out the cell
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
