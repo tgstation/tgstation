@@ -437,7 +437,7 @@
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = STANDARD_CELL_CHARGE * 0.1
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -694,7 +694,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
-	cell_hit_cost = 2000
+	cell_hit_cost = STANDARD_CELL_CHARGE * 0.2
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
