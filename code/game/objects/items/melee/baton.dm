@@ -694,7 +694,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
-	cell_hit_cost = STANDARD_CELL_CHARGE * 0.2
+	cell_hit_cost = STANDARD_CELL_CHARGE * 2
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
