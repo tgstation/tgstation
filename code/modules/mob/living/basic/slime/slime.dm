@@ -121,7 +121,6 @@
 
 	set_nutrition(SLIME_STARTING_NUTRITION)
 
-	AddComponent(/datum/component/buckle_mob_effect,  mob_effect_callback = CALLBACK(src, PROC_REF(feed_process)))
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
