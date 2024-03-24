@@ -69,6 +69,9 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/datum/computer_file/program/department_order/ui_interact(mob/user, datum/tgui/ui)
+	check_cooldown()
+
 /datum/computer_file/program/department_order/ui_data(mob/user)
 	var/list/data = list()
 	data["no_link"] = !linked_department
@@ -258,10 +261,14 @@
 	department_cooldowns[linked_department] = world.time + time_y
 
 /datum/computer_file/program/department_order/process_tick(seconds_per_tick)
-	if(alert_silenced || !alert_able)
+	if(!check_cooldown() || alert_silenced || !alert_able)
 		return
+	radio?.talk_into(computer, "Order cooldown has expired! A new order may now be placed!", radio_channel)
+	computer.alert_call(src, "Order cooldown expired!", 'sound/machines/ping.ogg')
 
-	if(department_cooldowns[linked_department] != 0 && department_cooldowns[type] > world.time)
-		radio?.talk_into(computer, "Order cooldown has expired! A new order may now be placed!", radio_channel)
-		computer.alert_call(src, "Order cooldown expired!", 'sound/machines/ping.ogg')
+/// Checks if the cooldown is up and resets it if so.
+/datum/computer_file/program/department_order/proc/check_cooldown()
+	if(department_cooldowns[linked_department] > 0 && department_cooldowns[linked_department] <= world.time)
 		department_cooldowns[linked_department] = 0
+		return TRUE
+	return FALSE
