@@ -156,7 +156,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient KILO JOULES)
+		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient KILO WATTS)
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
