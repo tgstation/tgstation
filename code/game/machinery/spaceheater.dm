@@ -159,7 +159,7 @@
 			var/datum/gas_mixture/turf_gasmix = turf.return_air()
 			turf_gasmix.temperature += delta_temperature
 			air_update_turf(FALSE, FALSE)
-	cell.use(required_energy / efficiency)
+			cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
 	. = ..()
