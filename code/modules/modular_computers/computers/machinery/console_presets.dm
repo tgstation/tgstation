@@ -94,15 +94,14 @@
 	setup_starting_software()
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
-	var/dept_name = initial(department_type.department_name)
-	name = "[dept_name] [name]"
+	name = "[initial(department_type.department_name)] [name]"
 
 /obj/machinery/modular_computer/preset/cargochat/proc/add_starting_software()
 	starting_programs += /datum/computer_file/program/department_order
 
 /obj/machinery/modular_computer/preset/cargochat/proc/setup_starting_software()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
-	chatprogram.username = "[lowertext(dept_name)]_department"
+	chatprogram.username = "[lowertext(initial(department_type.department_name))]_department"
 	cpu.idle_threads += chatprogram
 
 	var/datum/computer_file/program/department_order/orderprogram = cpu.find_file_by_name("dept_order")
