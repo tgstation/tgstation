@@ -631,9 +631,9 @@
 /// Helper proc. Can the user alt-click the ID?
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
-		return
+		return FALSE
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return FALSE
 
 	return TRUE
 
@@ -1227,7 +1227,7 @@
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
-	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	desc = "A debug ID card. Has ALL the all access and a boatload of money, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
@@ -1235,8 +1235,16 @@
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
-	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	registered_account.account_job = SSjob.GetJobType(/datum/job/admin) // so we can actually use this account without being filtered as a "departmental" card
+	registered_account = new(player_account = FALSE)
+	registered_account.account_job = SSjob.GetJobType(/datum/job/admin)
+	registered_account.account_balance = 999999999 // MONEY
+
+/obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
+	. = ..()
+	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars
+		return FALSE
+
+	return TRUE
 
 /obj/item/card/id/advanced/prisoner
 	name = "prisoner ID card"
