@@ -152,7 +152,7 @@
 // and a good time.
 
 /mob/living/basic/drone/snowflake/bardrone/proc/round_end_depacify()
-	TRAIT_REMOVE(src, TRAIT_PACIFISM, INNATE_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	balloon_alert(src, "no longer pacified!")
 
 /mob/living/basic/drone/snowflake/bardrone
