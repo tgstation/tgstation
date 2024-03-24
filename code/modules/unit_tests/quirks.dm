@@ -57,7 +57,7 @@
 	dummy.add_quirk(/datum/quirk/blooddeficiency)
 	var/datum/quirk/blooddeficiency/quirk = dummy.get_quirk(/datum/quirk/blooddeficiency)
 
-	TEST_ASSERT((species_to_test[dummy.type] in quirk.mail_goodies), "Blood deficiency quirk spawned with no mail goodies!")
+	TEST_ASSERT((species_to_test[dummy.dna.species.type] in quirk.mail_goodies), "Blood deficiency quirk spawned with no mail goodies!")
 
 	for(var/species_type in species_to_test)
 		var/last_species = dummy.dna.species.type
