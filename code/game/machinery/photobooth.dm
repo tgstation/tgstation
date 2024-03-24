@@ -175,7 +175,7 @@
 	name = "photobooth control button"
 	desc = "Operates the photobooth from a distance, allowing people to update their security record photos."
 	device_type = /obj/item/assembly/control/photobooth_control
-	req_one_access = list(ACCESS_SECURITY, ACCESS_HOP)
+	req_one_access = list(ACCESS_SECURITY, ACCESS_LAWYER)
 	id = "photobooth_machine_default"
 
 /obj/machinery/button/photobooth/Initialize(mapload)
