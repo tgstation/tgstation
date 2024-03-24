@@ -482,7 +482,7 @@
 		var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
 		var/energy_consumed = energy_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_energy(energy_consumed, AREA_USAGE_EQUIP)
+			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
 		else if(!internal_cell?.use(energy_consumed * 0.025 KILO JOULES))
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
