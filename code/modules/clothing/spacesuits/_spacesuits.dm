@@ -23,7 +23,7 @@
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-	dog_fashion = THERMAL_REGULATOR_COST
+	dog_fashion = null
 
 /datum/armor/helmet_space
 	bio = 100
