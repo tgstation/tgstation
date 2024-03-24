@@ -434,7 +434,7 @@
 	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/stock_parts/cell/potato/Initialize(mapload, override_maxcharge)
-	charge = maxcharge * 0.03
+	charge = maxcharge * 0.3
 	. = ..()
 
 /obj/item/stock_parts/cell/emproof
