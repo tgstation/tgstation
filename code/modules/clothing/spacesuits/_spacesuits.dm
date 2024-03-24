@@ -1,4 +1,5 @@
-#define THERMAL_REGULATOR_COST 18 // the cost per tick for the thermal regulator
+/// Charge per tick consumed by the thermal regulator
+#define THERMAL_REGULATOR_COST 18 KILO WATTS
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -22,7 +23,7 @@
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-	dog_fashion = null
+	dog_fashion = THERMAL_REGULATOR_COST
 
 /datum/armor/helmet_space
 	bio = 100
