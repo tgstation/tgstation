@@ -13,10 +13,8 @@
 
 	var/bz_percentage =0
 
-	var/turf/open/our_turf = loc
-
-	if(our_turf?.air.gases[/datum/gas/bz])
-		bz_percentage = our_turf.air.gases[/datum/gas/bz][MOLES] / our_turf.air.total_moles()
+	if(environment.gases[/datum/gas/bz])
+		bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
 
 	if(bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) //Check if we should be in stasis
 		if(!has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we don't have the status effect yet
