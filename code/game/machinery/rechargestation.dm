@@ -46,7 +46,7 @@
 	recharge_speed = 0
 	repairs = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		recharge_speed += capacitor.tier * 100
+		recharge_speed += capacitor.tier * STANDARD_CELL_CHARGE * 0.01
 	for(var/datum/stock_part/servo/servo in component_parts)
 		repairs += servo.tier - 1
 	for(var/obj/item/stock_parts/cell/cell in component_parts)
