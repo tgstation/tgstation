@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored bioware slightly (the stuff experimental surgeries gives you). Report any weirdness"
