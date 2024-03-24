@@ -130,7 +130,7 @@
 /mob/living/basic/slime/proc/start_feeding(mob/living/target_mob)
 	target_mob.unbuckle_all_mobs(force=TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
 	if(target_mob.buckle_mob(src, force=TRUE))
-		layer = target_mob.layer+0.01 //appear above the target mob
+		layer = MOB_ABOVE_PIGGYBACK_LAYER //always appear above the target mob, no matter the direction
 		target_mob.visible_message(span_danger("[name] latches onto [target_mob]!"), \
 						span_userdanger("[name] latches onto [target_mob]!"))
 	else
