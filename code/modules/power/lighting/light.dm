@@ -249,7 +249,7 @@
 					l_power = power_set,
 					l_color = color_set
 					)
-	else if(has_emergency_power(LIGHT_EMERGENCY_ENERGY_USE) && !turned_off())
+	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
 		START_PROCESSING(SSmachines, src)
@@ -292,11 +292,11 @@
 		if(cell)
 			if(cell.charge == cell.maxcharge && !reagents) //If the cell is done mooching station power, and reagents don't need processing, stop processing
 				return PROCESS_KILL
-			cell.give(LIGHT_EMERGENCY_ENERGY_USE) //Recharge emergency power automatically while not using it
+			cell.give(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick) //Recharge emergency power automatically while not using it
 	if(reagents) //with most reagents coming out at 300, and with most meaningful reactions coming at 370+, this rate gives a few seconds of time to place it in and get out of dodge regardless of input.
 		reagents.adjust_thermal_energy(8 * reagents.total_volume * SPECIFIC_HEAT_DEFAULT * seconds_per_tick)
 		reagents.handle_reactions()
-	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_ENERGY_USE))
+	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 
 /obj/machinery/light/proc/burn_out()
@@ -458,25 +458,25 @@
 
 // returns whether this light has emergency power
 // can also return if it has access to a certain amount of that power
-/obj/machinery/light/proc/has_emergency_power(energy_usage_amount)
+/obj/machinery/light/proc/has_emergency_power(power_usage_amount)
 	if(no_low_power || (!cell && !has_mock_cell))
 		return FALSE
 	if (has_mock_cell)
 		return status == LIGHT_OK
-	if(energy_usage_amount ? cell.charge >= energy_usage_amount : cell.charge)
+	if(power_usage_amount ? cell.charge >= power_usage_amount : cell.charge)
 		return status == LIGHT_OK
 	return FALSE
 
 // attempts to use power from the installed emergency cell, returns true if it does and false if it doesn't
-/obj/machinery/light/proc/use_emergency_power(energy_usage_amount = LIGHT_EMERGENCY_ENERGY_USE)
-	if(!has_emergency_power(energy_usage_amount))
+/obj/machinery/light/proc/use_emergency_power(power_usage_amount = LIGHT_EMERGENCY_POWER_USE)
+	if(!has_emergency_power(power_usage_amount))
 		return FALSE
 	var/obj/item/stock_parts/cell/real_cell = get_cell()
 	if(real_cell.charge > 2.5 * /obj/item/stock_parts/cell/emergency_light::maxcharge) //it's meant to handle 120 W, ya doofus
 		visible_message(span_warning("[src] short-circuits from too powerful of a power cell!"))
 		burn_out()
 		return FALSE
-	real_cell.use(energy_usage_amount)
+	real_cell.use(power_usage_amount)
 	set_light(
 		l_range = brightness * bulb_low_power_brightness_mul,
 		l_power = max(bulb_low_power_pow_min, bulb_low_power_pow_mul * (real_cell.charge / real_cell.maxcharge)),

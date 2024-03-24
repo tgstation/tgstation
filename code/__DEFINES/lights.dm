@@ -1,5 +1,5 @@
 ///How much power emergency lights will consume per tick
-#define LIGHT_EMERGENCY_ENERGY_USE (0.2 KILO JOULES)
+#define LIGHT_EMERGENCY_POWER_USE (0.2 KILO WATTS)
 // status values shared between lighting fixtures and items
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1
