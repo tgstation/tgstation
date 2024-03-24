@@ -60,7 +60,7 @@
 	SIGNAL_HANDLER
 
 	if(slime.stat == DEAD)
-		return NONE
+		return HANDLE_BLOOD_HANDLED
 
 	if(slime.blood_volume <= 0)
 		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
