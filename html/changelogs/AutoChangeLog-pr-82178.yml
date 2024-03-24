@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Venus Human Traps can once again entangle victims and drag them into their web."
