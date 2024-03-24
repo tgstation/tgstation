@@ -948,14 +948,13 @@
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
 
-/mob/living/silicon/robot/proc/charge(datum/source, amount, repairs, sendmats)
+/mob/living/silicon/robot/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick, repairs, sendmats)
 	SIGNAL_HANDLER
+	charge_cell.Invoke(cell, seconds_per_tick)
 	if(model)
-		model.respawn_consumable(src, amount * 0.005)
+		model.respawn_consumable(src, cell.use(STANDARD_CELL_CHARGE * 0.001))
 		if(sendmats)
 			model.restock_consumable()
-	if(cell)
-		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs)
 

@@ -11,6 +11,8 @@
 	processing_flags = NONE
 	var/recharge_speed
 	var/repairs
+	///Callback for borgs & modsuits to provide their cell to us for charging
+	var/datum/callback/charge_cell
 	///Whether we're sending iron and glass to a cyborg. Requires Silo connection.
 	var/sendmats = FALSE
 	var/datum/component/remote_materials/materials
@@ -24,6 +26,7 @@
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT, \
 	)
+	charge_cell = CALLBACK(src, PROC_REF(charge_target_cell))
 
 	update_appearance()
 	if(is_operational)
@@ -40,6 +43,23 @@
 	if(area_name in GLOB.roundstart_station_borgcharger_areas)
 		return
 	GLOB.roundstart_station_borgcharger_areas += area_name
+
+/obj/machinery/recharge_station/Destroy()
+	materials = null
+	charge_cell = null
+	. = ..()
+
+/**
+ * Mobs & borgs invoke this through a callback to recharge their cells
+ * Arguments
+ *
+ * * obj/item/stock_parts/cell/target - the cell to charge, optional if provided else will draw power used directly
+ * * seconds_per_tick - supplied from process()
+ */
+/obj/machinery/recharge_station/proc/charge_target_cell(obj/item/stock_parts/cell/target, seconds_per_tick)
+	PRIVATE_PROC(TRUE)
+
+	return charge_cell(recharge_speed * seconds_per_tick, target, grid_only = TRUE)
 
 /obj/machinery/recharge_station/RefreshParts()
 	. = ..()
@@ -156,7 +176,4 @@
 /obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	var/main_draw = use_energy(recharge_speed * seconds_per_tick) //Pulls directly from the Powernet to dump into the cell
-	if(!main_draw)
-		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, main_draw, repairs, sendmats)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, charge_cell, seconds_per_tick, repairs, sendmats)
