@@ -37,6 +37,7 @@
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME, INJECTABLE)
 	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/simple_rotation)
 	for(var/datum/stock_part/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.tier
 	if(is_operational)
