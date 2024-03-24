@@ -359,7 +359,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES zombie
 #ROUNDSTART_RACES pod
 
-## Races that radial departures to what a species is, so while they technically can be roundstart it's probably not wise
+## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
 #ROUNDSTART_RACES android
 #ROUNDSTART_RACES golem
 

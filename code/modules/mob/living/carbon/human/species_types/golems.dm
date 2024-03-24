@@ -70,7 +70,7 @@
 /datum/species/golem/get_species_lore()
 	return list(
 		"While Golems have long been commonly found on frontier worlds, peacefully mining and otherwise living in harmony with the environment, \
-		it is belived they were originally constructed in Nanotrasen laboratories as a form of cheap labor. Whatever happened up to this point is unknown, \
+		it is believed they were originally constructed in Nanotrasen laboratories as a form of cheap labor. Whatever happened up to this point is unknown, \
 		but they have since gained freedom and are now a rare sight in the galaxy.",
 	)
 
