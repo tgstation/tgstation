@@ -22,7 +22,7 @@
 	src.unsuitable_atmos_damage = unsuitable_atmos_damage
 	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
-	if(!mapload || PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) || is_breathable_atmos(target))
+	if(!mapload || !PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) || is_breathable_atmos(target))
 		return
 	var/mob/living/living_mob = target
 	if(living_mob.stat == DEAD)
