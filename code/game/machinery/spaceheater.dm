@@ -30,7 +30,7 @@
 	///How much heat/cold we can deliver
 	var/heating_power = 40000
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 20 / (1 KILO JOULES)
+	var/efficiency = 20 / (1 KILO)
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
