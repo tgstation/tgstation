@@ -184,9 +184,6 @@
 		emote_hear = string_list(emote_hear)
 	if(emote_see)
 		emote_see = string_list(emote_hear)
-	if(atmos_requirements && unsuitable_atmos_damage)
-		atmos_requirements = string_assoc_list(atmos_requirements)
-		AddElement(/datum/element/atmos_requirements, atmos_requirements, unsuitable_atmos_damage, mapload)
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
@@ -196,7 +193,22 @@
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-	if(unsuitable_cold_damage || unsuitable_heat_damage)
+	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
+		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
+		return
+	init_atmos_temp_requirement(mapload)
+
+/mob/living/simple_animal/proc/on_ssair_init(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	init_atmos_temp_requirement(TRUE)
+
+/mob/living/simple_animal/proc/init_atmos_temp_requirement(mapload)
+	if(atmos_requirements && unsuitable_atmos_damage)
+		atmos_requirements = string_assoc_list(atmos_requirements)
+		AddElement(/datum/element/atmos_requirements, atmos_requirements, unsuitable_atmos_damage, mapload)
+	if((unsuitable_cold_damage || unsuitable_heat_damage) && (minbodytemp > 0 || maxbodytemp < INFINITY))
 		AddElement(/datum/element/body_temp_sensitive, minbodytemp, maxbodytemp, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)

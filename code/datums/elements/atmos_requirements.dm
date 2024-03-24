@@ -17,7 +17,10 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	if(!atmos_requirements)
-		stack_trace("[type] added to [target] without any requirements specified.")
+		CRASH("[type] added to [target] without any requirements specified.")
+	var/list/short = atmos_requirements
+	if(!short["min_oxy"] && !short["max_oxy"] && !short["min_plas"] && !short["max_plas"] && !short["min_co2"] && !short["max_co2"] && !short["min_n2"] && !short["max_n2"])
+		CRASH("[type] added to [target] with all requirements set to 0.")
 	src.atmos_requirements = atmos_requirements
 	src.unsuitable_atmos_damage = unsuitable_atmos_damage
 	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
@@ -56,8 +59,10 @@
 		return TRUE
 
 	var/turf/open/open_turf = target.loc
-	if(!open_turf.air && (atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"]))
-		return FALSE
+	if(!open_turf.air)
+		if(atmos_requirements["min_oxy"] || atmos_requirements["min_plas"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+			return FALSE
+		return TRUE
 
 	var/list/gases = get_atmos_req_list(open_turf)
 

@@ -115,12 +115,22 @@
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
+	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
+		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
+		return
 	apply_atmos_requirements(mapload)
 	apply_temperature_requirements(mapload)
 
+/mob/living/basic/proc/on_ssair_init(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	apply_atmos_requirements(TRUE)
+	apply_temperature_requirements(TRUE)
+
 /// Ensures this mob can take atmospheric damage if it's supposed to
 /mob/living/basic/proc/apply_atmos_requirements(mapload)
-	if(unsuitable_atmos_damage == 0)
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)
@@ -128,7 +138,7 @@
 
 /// Ensures this mob can take temperature damage if it's supposed to
 /mob/living/basic/proc/apply_temperature_requirements(mapload)
-	if(unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0)
+	if((unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0) || (minimum_survivable_temperature <= 0 && maximum_survivable_temperature >= INFINITY))
 		return
 	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
