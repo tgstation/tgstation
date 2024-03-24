@@ -199,7 +199,7 @@ const ChemMasterContent = (props: {
                   value={itemCount}
                   minValue={1}
                   maxValue={maxPrintable}
-                  onChange={(e, value) => {
+                  onChange={(value) => {
                     setItemCount(value);
                   }}
                 />
