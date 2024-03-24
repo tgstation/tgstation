@@ -17,12 +17,13 @@
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/bar_material = METAL
 
-/obj/structure/barricade/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		make_debris()
-	qdel(src)
+/obj/structure/barricade/atom_deconstruct(disassembled = TRUE)
+	make_debris()
 
+/// Spawn debris & stuff upon deconstruction
 /obj/structure/barricade/proc/make_debris()
+	PROTECTED_PROC(TRUE)
+
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)

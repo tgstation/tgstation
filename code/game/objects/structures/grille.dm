@@ -52,8 +52,6 @@
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 
 	if(anchored)
 		. += span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")
@@ -62,7 +60,7 @@
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(RCD_DECONSTRUCT)
+		if(RCD_DECONSTRUCT && !(resistance_flags & INDESTRUCTIBLE))
 			return list("delay" = 2 SECONDS, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
 			var/cost = 0
@@ -200,8 +198,6 @@
 	add_fingerprint(user)
 	if(shock(user, 100))
 		return
-	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
 	tool.play_tool_sound(src, 100)
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
@@ -211,8 +207,6 @@
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
-		return FALSE
-	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
@@ -296,18 +290,13 @@
 			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
 
 
-/obj/structure/grille/deconstruct(disassembled = TRUE)
-	if(!loc) //if already qdel'd somehow, we do nothing
-		return
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/obj/R = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(R)
-		qdel(src)
-	..()
+/obj/structure/grille/atom_deconstruct(disassembled = TRUE)
+	var/obj/R = new rods_type(drop_location(), rods_amount)
+	transfer_fingerprints_to(R)
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20

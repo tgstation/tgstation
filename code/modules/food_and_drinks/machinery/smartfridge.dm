@@ -143,7 +143,7 @@
 
 	if(welded_down)
 		balloon_alert(user, "unweld first!")
-	else
+	else if(can_be_pried())
 		default_deconstruction_crowbar(tool)
 	return ITEM_INTERACT_SUCCESS
 
@@ -168,7 +168,7 @@
 		tool_tip_set = TRUE
 
 	else if(held_item.tool_behaviour == TOOL_CROWBAR)
-		if(panel_open)
+		if(panel_open && can_be_pried())
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 			tool_tip_set = TRUE
 
@@ -190,6 +190,11 @@
 		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 	. += structure_examine()
+
+
+/// Can the fridge be deconstructed
+/obj/machinery/smartfridge/proc/can_be_pried()
+	return TRUE
 
 /// Returns details related to the fridge structure
 /obj/machinery/smartfridge/proc/structure_examine()

@@ -51,10 +51,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += contents
 
-/obj/item/delivery/deconstruct()
+/obj/item/delivery/atom_deconstruct(dissambled = TRUE)
 	unwrap_contents()
 	post_unwrap_contents()
-	return ..()
 
 /obj/item/delivery/examine(mob/user)
 	. = ..()

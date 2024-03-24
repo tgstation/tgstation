@@ -155,8 +155,32 @@
 			var/mob/living/buckled_mob = m
 			buckled_mob.electrocute_act((clamp(round(strength * 1.25e-3), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
-///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
+/**
+ * Custom behaviour per atom subtype on how they should deconstruct themselves
+ * Arguments
+ *
+ * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
+ */
+/obj/proc/atom_deconstruct(disassembled = TRUE)
+	PROTECTED_PROC(TRUE)
+
+/**
+ * The obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
+ * Arguments
+ *
+ * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
+ */
 /obj/proc/deconstruct(disassembled = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	//You can't destroy me
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+
+	//Won't create a mess
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		atom_deconstruct(disassembled)
+
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 

@@ -1159,7 +1159,7 @@
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+	resistance_flags = parent_type::resistance_flags | INDESTRUCTIBLE
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15

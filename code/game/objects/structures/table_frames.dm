@@ -75,9 +75,8 @@
 		T.set_custom_materials(custom_materials)
 	qdel(src)
 
-/obj/structure/table_frame/deconstruct(disassembled = TRUE)
+/obj/structure/table_frame/atom_deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
-	qdel(src)
 
 /obj/structure/table_frame/narsie_act()
 	new /obj/structure/table_frame/wood(src.loc)

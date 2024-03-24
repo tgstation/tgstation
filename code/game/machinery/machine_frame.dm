@@ -17,11 +17,10 @@
 	QDEL_LIST(components)
 	return ..()
 
-/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(state >= FRAME_STATE_WIRED)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
-		dump_contents()
+/obj/structure/frame/machine/atom_deconstruct(disassembled = TRUE)
+	if(state >= FRAME_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_location(), 5)
+	dump_contents()
 	return ..()
 
 /obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time)

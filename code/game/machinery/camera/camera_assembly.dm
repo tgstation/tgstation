@@ -267,12 +267,8 @@
 	qdel(src)
 	return TRUE
 
-
-/obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc)
-	qdel(src)
-
+/obj/structure/camera_assembly/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc)
 
 #undef STATE_WRENCHED
 #undef STATE_WELDED

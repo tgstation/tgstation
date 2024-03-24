@@ -798,7 +798,7 @@
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
-	. = !(state_open || panel_open || is_operational || (obj_flags & NO_DECONSTRUCTION)) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || is_operational) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
@@ -808,18 +808,14 @@
 		close_machine(density_to_set = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
-	. = (panel_open || ignore_panel) && !(obj_flags & NO_DECONSTRUCTION) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = (panel_open || ignore_panel) && !(resistance_flags & INDESTRUCTIBLE) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!. || custom_deconstruct)
 		return
 	crowbar.play_tool_sound(src, 50)
 	deconstruct(TRUE)
 
-/obj/machinery/deconstruct(disassembled = TRUE)
+/obj/machinery/atom_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
-	if(obj_flags & NO_DECONSTRUCTION)
-		dump_contents() //drop everything inside us
-		return ..() //Just delete us, no need to call anything else.
 
 	on_deconstruction(disassembled)
 	if(!LAZYLEN(component_parts))
@@ -881,7 +877,7 @@
 
 /obj/machinery/atom_break(damage_flag)
 	. = ..()
-	if(!(machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
+	if(!(machine_stat & BROKEN))
 		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_appearance()
@@ -928,7 +924,7 @@
 		qdel(atom_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if((obj_flags & NO_DECONSTRUCTION) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
 		return FALSE
 
 	screwdriver.play_tool_sound(src, 50)
@@ -955,7 +951,7 @@
 	if(!istype(replacer_tool))
 		return FALSE
 
-	if((obj_flags & NO_DECONSTRUCTION) && !replacer_tool.works_from_distance)
+	if(!replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = FALSE

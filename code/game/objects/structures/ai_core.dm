@@ -380,7 +380,7 @@
 			icon_state = "ai-empty"
 	return ..()
 
-/obj/structure/ai_core/deconstruct(disassembled = TRUE)
+/obj/structure/ai_core/atom_deconstruct(disassembled = TRUE)
 	if(state >= GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
@@ -389,7 +389,6 @@
 		circuit.forceMove(loc)
 		circuit = null
 	new /obj/item/stack/sheet/plasteel(loc, 4)
-	qdel(src)
 
 /// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
 /obj/structure/ai_core/proc/suicide_check()
