@@ -48,54 +48,42 @@
 	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(new_jellyperson)
-		update_mail_goodies(new_jellyperson)
 	new_jellyperson.AddElement(/datum/element/soft_landing)
+	RegisterSignal(new_jellyperson, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/former_jellyperson, datum/species/new_species, pref_load)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(former_jellyperson)
 	former_jellyperson.RemoveElement(/datum/element/soft_landing)
-
+	UnregisterSignal(former_jellyperson, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 	return ..()
 
-/datum/species/jelly/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		mail_goodies += list(
-			/obj/item/reagent_containers/blood/toxin
-		)
-	return ..()
+/datum/species/jelly/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	. = ..()
-	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
-		return
+	if(slime.stat == DEAD)
+		return HANDLE_BLOOD_HANDLED
 
-	if(!H.blood_volume)
-		H.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
-		H.adjustBruteLoss(2.5 * seconds_per_tick)
-		to_chat(H, span_danger("You feel empty!"))
+	if(slime.blood_volume <= 0)
+		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
+		slime.adjustBruteLoss(2.5 * seconds_per_tick)
+		to_chat(slime, span_danger("You feel empty!"))
 
-	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
-			if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
-				H.adjust_nutrition(-1.25 * seconds_per_tick)
+	if(slime.blood_volume < BLOOD_VOLUME_NORMAL)
+		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
+			slime.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
+			if(slime.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
-	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
-	if(HAS_TRAIT(H, TRAIT_BLOOD_DEFICIENCY))
-		var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
-		if(!isnull(blooddeficiency))
-			blooddeficiency.lose_blood(seconds_per_tick)
-
-	if(H.blood_volume < BLOOD_VOLUME_OKAY)
+	if(slime.blood_volume < BLOOD_VOLUME_OKAY)
 		if(SPT_PROB(2.5, seconds_per_tick))
-			to_chat(H, span_danger("You feel drained!"))
+			to_chat(slime, span_danger("You feel drained!"))
 
-	if(H.blood_volume < BLOOD_VOLUME_BAD)
-		Cannibalize_Body(H)
+	if(slime.blood_volume < BLOOD_VOLUME_BAD)
+		Cannibalize_Body(slime)
 
-	if(regenerate_limbs)
-		regenerate_limbs.build_all_button_icons()
+	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
