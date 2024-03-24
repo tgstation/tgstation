@@ -178,7 +178,7 @@
 	. = ..()
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT) //drone is pacified
-	roundend_callback = CALLBACK(src, PROC_REF(round_end_depacify))
+	roundend_callback = TRAIT_CALLBACK_REMOVE(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	SSticker.OnRoundend(roundend_callback)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
