@@ -46,5 +46,7 @@
 		return
 
 	for(var/obj/item/reagent_containers/blood/blood_bag as anything in typesof(/obj/item/reagent_containers/blood))
-		if(initial(blood_bag.blood_type) == new_species.exotic_bloodtype || initial(blood_bag.unique_blood) == new_species.exotic_blood)
+		var/right_blood_type = !isnull(new_species.exotic_bloodtype) && initial(blood_bag.blood_type) == new_species.exotic_bloodtype
+		var/right_blood_reagent = !isnull(new_species.exotic_blood) && initial(blood_bag.unique_blood) == new_species.exotic_blood
+		if(right_blood_type || right_blood_reagent)
 			mail_goodies += blood_bag

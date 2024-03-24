@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
 	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
-	var/exotic_bloodtype = ""
+	var/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
