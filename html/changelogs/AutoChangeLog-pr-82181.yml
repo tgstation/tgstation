@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "text fields which should save their value after hitting enter/closing the UI now actually does that"
+  - bugfix: "lathe search bar now saves its previous search query after the UI is closed and also reloads search results correctly"
