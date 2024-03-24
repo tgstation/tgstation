@@ -616,3 +616,129 @@
   - bugfix: Vending machine no longer shocks you twice when you pulse high voltage
       wire.
   - bugfix: Airlock wires window closes when you get shocked
+2024-03-21:
+  00-Steven:
+  - rscadd: Hemiplegic now lets you pick which side is disabled.
+  - rscadd: The medical records text for hemiplegics now shows which side is disabled.
+  ArcaneMusic:
+  - bugfix: Vending machines now show the correct vending refill name when examine
+      and not full.
+  - code_imp: Mineral logging now collects ore names more cleanly.
+  Bilbo367:
+  - admin: cluster bombs stop spamming admin logs
+  Higgin:
+  - bugfix: basic mob pirates no longer drop fake energy weapon lenses when shooting
+      you to death with lasers.
+  JohnFulpWillard:
+  - bugfix: Clients joining a round twice as a crewmember (via admins or otherwise)
+      no longer break security/medical record consoles permanently.
+  Melbert:
+  - refactor: Infrared emitters now function better (or at least more how you would
+      expect them) (hopefully). Report any oddities
+  - qol: Hand labels now have a visual effect associated, and are also affected by
+      heat / can be cleaned off like stickers.
+  - refactor: Refactored hand labels. They're objects now!
+  Singul0:
+  - bugfix: You can't complete a genetic makeup scan when the targets moves out of
+      target anymore using a genetic sequencer
+  SomeRandomOwl:
+  - admin: Deathmatch Bombs, Smoke, and Liquid floods are now suppressed in the logs
+      and will not actively spam admin logs.
+  - code_imp: adds a area flag to suppress logging for floods and bombs
+  TheVekter:
+  - rscadd: Added 5 new Felinid ear options, ported from Orbstation! (Sprites by Or-Fi-S)
+  Thlumyn:
+  - rscadd: Added corner filled warning decals
+  Xander3359:
+  - bugfix: Fix hack comms console/locate weakpoint objective showing up multiple
+      times
+2024-03-22:
+  AnturK:
+  - bugfix: Painting patronage works again when there's no curator present during
+      the round.
+  Ghommie:
+  - rscadd: Active skillchips are now copied on bitrunning avatars.
+  - rscadd: To celebrate it, a skillchip is now available from the bitrunning order
+      console, which lets you dodge projectiles for the duration of your flips, at
+      the cost of stamina.
+  - rscdel: Removed the (non-working) "Perma-Flipping" and "Echolocation" deathmatch
+      modifiers.
+  - rscadd: Added "No Slowdown", "Random Teleports", "Snail Crawl", "Forcefield Trail"
+      and "Manual Blinking/Breathing" modifiers.
+  - bugfix: Fixed deathmatch cruise missiles looking like standard pods.
+  Melbert:
+  - rscadd: 'Adds 3 Traumas: Primal Instincts (special), Kleptomania (severe), and
+      Possessive (mild)'
+  Rhials:
+  - bugfix: Removes some dirt tiles on the Sunrise deathmatch map, which would fill
+      the map with lavaland atmos.
+  SyncIt21:
+  - bugfix: Vending machines will update its UI if ID is lost at any point
+  - bugfix: Vending machines won't brick if the payment fails (like due to lose of
+      ID) for any reason
+  - bugfix: failing to equip a dual handed item should properly clear out all status
+      effects related to equipping it, for e.g. remove the action button from chainsaw
+  - bugfix: reagent containers like cup & syringe only update target appearance if
+      action was successful.
+  - bugfix: envelops don't stack overlays when interacting with cup & syringes.
+  Watermelon914:
+  - refactor: Auxlua no longer uses the timer subsystem to get stuff done, lua scripts
+      shouldn't slow down timers anymore.
+  myraowo:
+  - rscadd: Added the Chief Engineer's turtleneck and turtleneck skirt to the game.
+  - rscadd: Added the Chief Engineer and Chief Medical Officer's turtlenecks to their
+      respectives garment bags.
+2024-03-23:
+  Ben10Omintrix:
+  - rscadd: cultists can now convert pets to their side
+  Bilbo367:
+  - bugfix: Fixes ghosts being able to change a lathes output direction.
+  - image: fixed Fulton balloon having its smallest sprite copy pasted over itself
+  DaCoolBoss:
+  - bugfix: A broken item was removed from the mimesvsclowns ruin. In its place is
+      a spent revolver round.
+  Ghommie:
+  - bugfix: Fixed the LTSRBT.
+  Jacquerel:
+  - bugfix: Driving a vehicle into the supermatter will kill everyone riding the vehicle
+  Singul0:
+  - qol: Adds contextual screentips to air alarms
+  SyncIt21:
+  - bugfix: RCD logs are more human readable & stores the player name behind the action.
+  Thunder12345:
+  - image: Everything that used the old gangtool sprites (door remotes, landing field
+      designators, some choice beacons, windicate borg reinforcements) has been resprited.
+  - image: Door remotes now visibly show their current mode.
+  carshalash:
+  - qol: Fishfood is now more easily acquired through cargo
+2024-03-24:
+  00-Steven:
+  - bugfix: Fixed patronizing paintings not giving a cut to the curators.
+  Bilbo367:
+  - bugfix: pet carrier unfriending pets put in it.
+  JohnFulpWillard:
+  - bugfix: Importing songs into instruments no longer cuts the first line of the
+      song.
+  Melberet:
+  - bugfix: Jellyperson, Luminescent, and Stargazer hair no longer look bad. All jellyperson
+      types no longer have eyesockets.
+  Melbert:
+  - refactor: Refactored bioware slightly (the stuff experimental surgeries gives
+      you). Report any weirdness
+  Pickle-Coding:
+  - bugfix: Fixes conservation of energy issues relating to charging powercells.
+  - qol: APCs will display how much power they are using to charge their cell. This
+      is accounted for in the power monitoring console.
+  - qol: All arbitrary power cell energy units you see are replaced with prefixed
+      joules.
+  - balance: As a consequence of the conservation of energy issues getting fixed,
+      the power consumption for charging cells is now very significant.
+  - balance: APCs only use surplus power from the grid after every machine processes
+      when charging, preventing APCs from causing others to discharge while charging.
+  - balance: Engineering SMES start at max charge to combat the increased energy loss
+      due to conservation of energy fixes.
+  Thlumyn:
+  - rscadd: Crowbars/wirecutters now deconstruct wooden/cardboard crates/boxes
+  Watermelon914:
+  - bugfix: Fixed lua error logging.
+  - bugfix: Fixed the SS13.start_loop function not working properly.

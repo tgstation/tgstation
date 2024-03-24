@@ -67,7 +67,7 @@
 		if(20 to 49)
 			overlay_color = "#358F34"
 		if(50 to 99)
-			overlay_color = "#676767"
+			overlay_color = COLOR_SLIME_METAL
 		if(100 to 199)
 			overlay_color = "#009D9B"
 		if(200 to 499)

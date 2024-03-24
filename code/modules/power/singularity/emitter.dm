@@ -123,7 +123,7 @@
 		. += span_notice("Its status display is glowing faintly.")
 	else
 		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
-		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
+		. += span_notice("Power consumption at <b>[display_power(active_power_usage, convert = FALSE)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
 	return welded
@@ -186,15 +186,16 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/emitter/process(seconds_per_tick)
+	var/power_usage = active_power_usage * seconds_per_tick
 	if(machine_stat & (BROKEN))
 		return
-	if(!welded || (!powernet && active_power_usage))
+	if(!welded || (!powernet && power_usage))
 		active = FALSE
 		update_appearance()
 		return
 	if(!active)
 		return
-	if(active_power_usage && surplus() < active_power_usage)
+	if(power_usage && surplus() < power_usage)
 		if(powered)
 			powered = FALSE
 			update_appearance()
@@ -202,7 +203,7 @@
 			log_game("[src] lost power in [AREACOORD(src)]")
 		return
 
-	add_load(active_power_usage)
+	add_load(power_usage)
 	if(!powered)
 		powered = TRUE
 		update_appearance()

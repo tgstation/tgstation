@@ -297,6 +297,11 @@
 #define SSEXPLOSIONS_MOVABLES 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Machines subsystem subtasks.
+#define SSMACHINES_APCS_EARLY 1
+#define SSMACHINES_MACHINES 2
+#define SSMACHINES_APCS_LATE 3
+
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
