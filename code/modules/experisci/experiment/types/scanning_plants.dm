@@ -21,7 +21,7 @@
 	return EXPERIMENT_PROG_INT("Scan samples of a harvested plant.", \
 		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
 
-/datum/experiment/scanning/random/plants/traits/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/random/plants/traits/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	if(!istype(target, /obj/item/food/grown))
 		return FALSE
 	var/obj/item/food/grown/crop = target
@@ -35,5 +35,5 @@
 		return EXPERIMENT_PROG_INT("Scan samples of harvested plants with the trait: [initial(gene.name)].", \
 			traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
 
-/datum/experiment/scanning/random/plants/wild/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/random/plants/wild/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	return ..() && HAS_TRAIT(target, TRAIT_PLANT_WILDMUTATE)
