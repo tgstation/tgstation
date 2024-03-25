@@ -417,7 +417,7 @@
 
 /// Helper proc that determines if a card can be used in certain types of payment transactions.
 /obj/item/card/id/proc/can_be_used_in_payment(mob/living/user)
-	if(QDELETED(src) || isnull(registered_account) || isnull(registered_account.account_job) || !isliving(user))
+	if(QDELETED(src) || isnull(registered_account?.account_job) || !isliving(user))
 		return FALSE
 
 	return TRUE
@@ -461,7 +461,7 @@
 		balloon_alert(user, "still recharging")
 		return
 	if(can_be_used_in_payment(user))
-		balloon_alert(user, "no account")
+		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
 	/// Determines where the holopay will be placed based on tile contents
