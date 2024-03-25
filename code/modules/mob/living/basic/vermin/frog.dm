@@ -62,7 +62,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/basic/from/proc/make_rare()
+/mob/living/basic/frog/proc/make_rare()
 	name = "rare frog"
 	desc = "They seem a little smug."
 	icon_state = "rare_[icon_state]"
