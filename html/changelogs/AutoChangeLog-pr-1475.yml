@@ -1,0 +1,7 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - rscadd: "Immunity scanner now shows symptoms for recorded diseases."
+  - balance: "Aluxive has a stronger instant effect."
+  - balance: "Aetericilide is effective as preventative medication but not much value once infected. (Also its max strength was lowered to 3x base strength from 5x base strength)"
+  - bugfix: "Retrovirus now utilizes its multiplier for its effects rather than its constant max_multiplier."
