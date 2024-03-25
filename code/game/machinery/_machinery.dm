@@ -814,13 +814,18 @@
 	crowbar.play_tool_sound(src, 50)
 	deconstruct(TRUE)
 
-/obj/machinery/atom_deconstruct(disassembled = TRUE)
+/obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	. = TRUE
+
+	if(obj_flags & NO_DECONSTRUCTION)
+		dump_contents() //drop everything inside us
+		return //Just delete us, no need to call anything else.
 
 	on_deconstruction(disassembled)
 	if(!LAZYLEN(component_parts))
 		dump_contents() //drop everything inside us
-		return ..() //we don't have any parts.
+		return //we don't have any parts.
 	spawn_frame(disassembled)
 
 	for(var/part in component_parts)
@@ -843,8 +848,6 @@
 	//drop everything inside us. we do this last to give machines a chance
 	//to handle their contents before we dump them
 	dump_contents()
-
-	return ..()
 
 /**
  * Spawns a frame where this machine is. If the machine was not disassmbled, the
