@@ -236,6 +236,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		max_save_slots = old_max_save_slots
 		save_preferences()
 
+	validate_character_profiles()
+
 	return TRUE
 
 /datum/preferences/proc/save_preferences()

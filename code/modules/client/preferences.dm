@@ -399,6 +399,55 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return profiles
 
+/// Validates all character profiles are valid.
+/datum/preferences/proc/validate_character_profiles()
+	save_character() // just incase
+
+	var/old_slot = default_slot
+
+	// list of things we had to reset due to invalid data.
+	// indexed by name of the slot
+	var/list/list/what_did_we_reset = list()
+
+	for(var/character_index in 1 to max_save_slots)
+		var/character_key = "character[character_index]"
+		var/save_data = savefile.get_entry(character_key)
+		if(isnull(save_data))
+			continue // ignore empty slots
+		load_character(character_index) // savedata not null, load it
+
+		// grab name for letting user know there was an error
+		var/name = save_data["real_name"]
+		what_did_we_reset[name] = list()
+
+		// validate quirks
+		var/list/new_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
+		if(length(new_quirks) != length(all_quirks))
+			what_did_we_reset[name] += "quirks"
+			all_quirks.Cut()
+
+		// validate job preferences
+		var/list/new_job_preferences = list()
+		var/already_high = FALSE
+		for(var/job_title in job_preferences)
+			if(job_preferences[job_title] == JP_HIGH)
+				if(already_high)
+					job_preferences[job_title] = JP_MEDIUM
+					what_did_we_reset[name] += "high priority job"
+				else
+					already_high = TRUE
+
+		if(length(what_did_we_reset[name]))
+			save_character() // save the character if anything changed
+
+	for(var/character_name in what_did_we_reset)
+		var/list/reset_things = what_did_we_reset[character_name]
+		if(!length(reset_things))
+			continue
+		to_chat(parent, span_notice("Your character profile for [character_name] had to be reset due to invalid data: [english_list(reset_things)]."))
+
+	load_character(default_slot) // load their character back up
+
 /datum/preferences/proc/set_job_preference_level(datum/job/job, level)
 	if (!job)
 		return FALSE
