@@ -208,7 +208,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
 #define TRAIT_INNATELY_FANTASTICAL_ITEM "innately_fantastical_item"
 #define TRAIT_DEPRESSION "depression"
-#define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
 /// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
@@ -527,6 +526,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes the user handcuff others faster
 #define TRAIT_FAST_CUFFING "fast_cuffing"
+
+///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
+#define TRAIT_MAFIAINITIATE "mafiainitiate"
 
 ///Makes the player appear as their respective job in Binary Talk rather than being a 'Default Cyborg'.
 #define DISPLAYS_JOB_IN_BINARY "display_job_in_binary"
