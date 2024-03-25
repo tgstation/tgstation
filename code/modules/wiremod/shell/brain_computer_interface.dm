@@ -59,11 +59,19 @@
 /datum/action/innate/bci_action
 	name = "Action"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "bci_power"
 
 	var/obj/item/organ/internal/cyberimp/bci/bci
 	var/obj/item/circuit_component/equipment_action/circuit_component
+
+/datum/action/innate/bci_action/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(owner.stat > SOFT_CRIT) //softcrit and above
+		if (feedback)
+			owner.balloon_alert(owner, "unconscious!")
+		return FALSE
 
 /datum/action/innate/bci_action/New(obj/item/organ/internal/cyberimp/bci/_bci, obj/item/circuit_component/equipment_action/circuit_component)
 	..()
