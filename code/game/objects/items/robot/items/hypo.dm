@@ -108,7 +108,7 @@
 	 */
 	var/max_volume_per_reagent = 30
 	/// Cell cost for charging a reagent
-	var/charge_cost = 50
+	var/charge_cost = 50 KILO JOULES
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
@@ -308,7 +308,7 @@
 		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
 	icon_state = "borghypo_s"
 	tgui_theme = "syndicate"
-	charge_cost = 20
+	charge_cost = 20 KILO JOULES
 	recharge_time = 2
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
@@ -321,7 +321,7 @@
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20,1)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	charge_cost = 20
+	charge_cost = 20 KILO JOULES
 	recharge_time = 3
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 	default_reagent_types = BASE_SERVICE_REAGENTS
@@ -393,7 +393,7 @@
 	icon_state = "flour"
 	possible_transfer_amounts = list(5,10,20,1)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	charge_cost = 40 //Costs double the power of the borgshaker due to synthesizing solids
+	charge_cost = 40 KILO JOULES //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = EXPANDED_SERVICE_REAGENTS
