@@ -5,8 +5,9 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 /datum/atom_hud/alternate_appearance/basic/has_antagonist
 	var/antag_datum_type
 
-/datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/I, antag_datum_type)
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/I, antag_datum_type, valid_keys) //monkestation edit: adds valid_keys
 	src.antag_datum_type = antag_datum_type
+	src.valid_keys = valid_keys
 	GLOB.has_antagonist_huds += src
 	return ..(key, I, NONE)
 
@@ -14,8 +15,8 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	GLOB.has_antagonist_huds -= src
 	return ..()
 
-/datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/M)
-	return !!M.mind?.has_antag_datum(antag_datum_type)
+///datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/M) //monkestation removal, moved to the modular version of this file
+//	return !!M.mind?.has_antag_datum(antag_datum_type) //monkestation removal
 
 /// An alternate appearance that will show all the antagonists this mob has
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud
