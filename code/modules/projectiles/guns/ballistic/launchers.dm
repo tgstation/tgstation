@@ -95,6 +95,11 @@
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
 
+/obj/item/gun/ballistic/rocketlauncher/update_overlays()
+	. = ..()
+	if(get_ammo())
+		. += "rocketlauncher_loaded"
+
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
 	user.visible_message(span_warning("[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!"), \
 		span_userdanger("You aim [src] at the ground to perform a bisnasty rocket jump..."))
