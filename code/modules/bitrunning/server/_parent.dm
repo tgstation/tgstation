@@ -45,7 +45,7 @@
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
 	/// Determines if we broadcast to entertainment monitors or not
-	var/broadcasting = TRUE
+	var/broadcasting = FALSE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
