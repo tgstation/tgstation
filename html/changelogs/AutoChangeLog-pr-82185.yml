@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Blood deficiency and slimepeople now handle blood a tiny bit differently, report any oddities."
-  - refactor: "Blood deficiency now handles its mail goods a tiny bit different, report any oddities."

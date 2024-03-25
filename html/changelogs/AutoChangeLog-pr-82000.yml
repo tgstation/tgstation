@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "number input dragging will only send payload to backend when its value changes, Same applies when you hit enter or click outside the field, the value must have changed to trigger the back end"
-  - bugfix: "You can once again drag your mouse anywhere in the window outside the number input field to vary the value by large amounts"
-  - code_imp: "removed unnecessary variables(suppressFlickering, updateRate & event object param for handlers) from Number Input"
