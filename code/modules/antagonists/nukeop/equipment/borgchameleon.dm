@@ -1,5 +1,5 @@
 #define ACTIVATION_COST (300 KILO JOULES)
-#define ACTIVATION_UP_KEEP (50 KILO WATTS)
+#define ACTIVATION_UP_KEEP (25 KILO WATTS)
 
 /obj/item/borg_chameleon
 	name = "cyborg chameleon projector"
