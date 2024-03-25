@@ -198,7 +198,6 @@
 		else
 			target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
 			log_combat(user, target, "stuffed", addition="into [src]")
-			target.LAssailant = WEAKREF(user)
 			. = TRUE
 		update_appearance()
 

@@ -4,6 +4,7 @@
 	icon_state = "slime_leech"
 
 /datum/status_effect/slime_leech
+	id = "slime_leech"
 	var/mob/living/basic/slime/our_slime
 	alert_type = /atom/movable/screen/alert/status_effect/slime_leech
 
@@ -43,13 +44,10 @@
 		if(our_slime.client)
 			to_chat(our_slime, span_info("This subject does not have a strong enough life energy anymore..."))
 
-		if(our_slime.ai_controller && !our_slime.ai_controller.blackboard[BB_SLIME_RABID])
-			var/mob/last_to_hurt = owner.LAssailant?.resolve()
-			if(prob(30) && last_to_hurt && last_to_hurt != owner && last_to_hurt != our_slime) //30 percent chance to befriend the last person who punched our food
-				our_slime.befriend(last_to_hurt)
+		SEND_SIGNAL(owner, COMSIG_SLIME_DRAINED, our_slime)
 
-			if(prob(60) && owner.client && ishuman(owner))
-				our_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE) //we might go rabid after finishing to feed on a human with a client.
+		if(prob(60) && owner.client && ishuman(owner) && !our_slime.ai_controller.blackboard[BB_SLIME_RABID])
+			our_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE) //we might go rabid after finishing to feed on a human with a client.
 
 		our_slime.stop_feeding()
 		return
@@ -89,7 +87,7 @@
 
 		to_chat(owner, span_userdanger(pick(pain_lines)))
 
-	our_slime.adjust_nutrition(-1 * 2 * totaldamage * seconds_between_ticks) //equals twice the damage dealt
+	our_slime.adjust_nutrition(-1 * 1.6 * totaldamage * seconds_between_ticks)
 
 	//Heal yourself.
 	our_slime.adjustBruteLoss(-1.5 * seconds_between_ticks)

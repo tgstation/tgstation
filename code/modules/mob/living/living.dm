@@ -398,10 +398,6 @@
 								span_warning("[src] grabs you passively!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] passively!"))
 
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = WEAKREF(usr)
 		if(isliving(M))
 			var/mob/living/L = M
 

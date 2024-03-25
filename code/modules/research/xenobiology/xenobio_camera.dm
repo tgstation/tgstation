@@ -199,7 +199,8 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	if (QDELETED(food))
 		return
 
-	food.LAssailant = WEAKREF(user)
+	food.apply_status_effect(/datum/status_effect/slime_food, user)
+
 	monkeys--
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
 	to_chat(user, span_notice("[src] now has [monkeys] monkeys stored."))

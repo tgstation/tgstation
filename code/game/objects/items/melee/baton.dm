@@ -190,7 +190,6 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.LAssailant = WEAKREF(user)
 		if(log_stun_attack)
 			log_combat(user, target, "stun attacked", src)
 	if(baton_effect(target, user, modifiers) && user)
