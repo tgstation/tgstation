@@ -229,13 +229,13 @@
 	sound = 'sound/misc/somethingwicked.ogg'
 	var/probability = 5
 
-/obj/effect/step_trigger/sound_effect/something_wicked/Trigger(mob/A)
-	if(!A.client || QDELETED(src))
+/obj/effect/step_trigger/sound_effect/something_wicked/Trigger(mob/victim)
+	if(!victim.client || QDELETED(src))
 		return
 	if(!prob(probability))
 		qdel(src)
 		return
-	balloon_alert(A, "Something wicked this way comes.")
+	victim.balloon_alert(victim, "Something wicked this way comes.")
 	return ..()
 
 /obj/effect/step_trigger/sound_effect/something_wicked/guaranteed
