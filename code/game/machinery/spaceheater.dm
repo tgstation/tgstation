@@ -27,10 +27,12 @@
 	var/set_mode = HEATER_MODE_AUTO
 	///The temperature we trying to get to
 	var/target_temperature = T20C
+	///How much heat/cold we can deliver per tier
+	var/base_heating_power = 40 KILO JOULES
 	///How much heat/cold we can deliver
-	var/heating_power = 40000
+	var/heating_power = 40 KILO JOULES
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 20 / (1 KILO)
+	var/efficiency = 20
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
@@ -95,7 +97,7 @@
 	else
 		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Temperature range at <b>[settable_temperature_range]°C</b>.<br>Heating power at <b>[siunit(heating_power, "W", 1)]</b>.<br>Power consumption at <b>[100 / efficiency KILO JOULES]%</b>.") //100%, 75%, 50%, 25%
+		. += span_notice("The status display reads: Temperature range at <b>[settable_temperature_range]°C</b>.<br>Heating power at <b>[siunit(heating_power, "W", 1)]</b>.<br>Power consumption at <b>[100 / efficiency]%</b>.") //100%, 75%, 50%, 25%
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
 
 /obj/machinery/space_heater/update_icon_state()
@@ -173,10 +175,10 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		cap += capacitor.tier
 
-	heating_power = laser * 40000
+	heating_power = laser * base_heating_power
 
 	settable_temperature_range = cap * 30
-	efficiency = ((cap + 1) * 10) / (1 KILO JOULES)
+	efficiency = (cap + 1) * 10
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
@@ -463,8 +465,6 @@
 		settable_temperature_median + settable_temperature_range)
 
 	chem_heating_power = efficiency / 20
-
-	efficiency /= (1 KILO JOULES)
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
