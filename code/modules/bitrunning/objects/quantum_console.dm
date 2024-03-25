@@ -46,6 +46,8 @@
 	data["ready"] = server.is_ready && server.is_operational
 	data["scanner_tier"] = server.scanner_tier
 	data["retries_left"] = length(server.exit_turfs) - server.retries_spent
+	data["broadcasting"] = server.broadcasting
+	data["broadcasting_on_cd"] = !COOLDOWN_FINISHED(server, broadcast_toggle_cd)
 
 	return data
 
@@ -82,6 +84,9 @@
 			return TRUE
 		if("stop_domain")
 			server.begin_shutdown(usr)
+			return TRUE
+		if("broadcast")
+			server.toggle_broadcast()
 			return TRUE
 
 	return FALSE
