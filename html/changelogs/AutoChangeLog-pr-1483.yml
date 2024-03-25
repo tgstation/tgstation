@@ -1,0 +1,5 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "Placing a mouse inside your chef hat will once more allow it to pilot you around."
+  - rscadd: "A player-controlled mouse inside your chef hat can compel you to perform complex actions, such as flipping and spinning. You will obey because the mouse knows better than you do."
