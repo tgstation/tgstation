@@ -1,0 +1,6 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "Gunthers no longer kill Gubbucks instead of breeding with them"
+  - bugfix: "gutlunches will stop having too many children"
+  - balance: "gutlunches are no longer in the mining faction"
