@@ -711,3 +711,71 @@
   - image: Door remotes now visibly show their current mode.
   carshalash:
   - qol: Fishfood is now more easily acquired through cargo
+2024-03-24:
+  00-Steven:
+  - bugfix: Fixed patronizing paintings not giving a cut to the curators.
+  Bilbo367:
+  - bugfix: pet carrier unfriending pets put in it.
+  JohnFulpWillard:
+  - bugfix: Importing songs into instruments no longer cuts the first line of the
+      song.
+  Melberet:
+  - bugfix: Jellyperson, Luminescent, and Stargazer hair no longer look bad. All jellyperson
+      types no longer have eyesockets.
+  Melbert:
+  - refactor: Refactored bioware slightly (the stuff experimental surgeries gives
+      you). Report any weirdness
+  Pickle-Coding:
+  - bugfix: Fixes conservation of energy issues relating to charging powercells.
+  - qol: APCs will display how much power they are using to charge their cell. This
+      is accounted for in the power monitoring console.
+  - qol: All arbitrary power cell energy units you see are replaced with prefixed
+      joules.
+  - balance: As a consequence of the conservation of energy issues getting fixed,
+      the power consumption for charging cells is now very significant.
+  - balance: APCs only use surplus power from the grid after every machine processes
+      when charging, preventing APCs from causing others to discharge while charging.
+  - balance: Engineering SMES start at max charge to combat the increased energy loss
+      due to conservation of energy fixes.
+  Thlumyn:
+  - rscadd: Crowbars/wirecutters now deconstruct wooden/cardboard crates/boxes
+  Watermelon914:
+  - bugfix: Fixed lua error logging.
+  - bugfix: Fixed the SS13.start_loop function not working properly.
+2024-03-25:
+  00-Steven:
+  - qol: Smoke machines can actually be rotated with alt-click when unwrenched.
+  JohnFulpWillard:
+  - bugfix: Changelings with a flesh ID now properly show the icon of the disguised
+      ID in examine.
+  Melbert:
+  - bugfix: Slimepeople and Luminescents are now 50% burn resistant like Stargazers
+  - refactor: Blood deficiency and slimepeople now handle blood a tiny bit differently,
+      report any oddities.
+  - refactor: Blood deficiency now handles its mail goods a tiny bit different, report
+      any oddities.
+  - bugfix: Fixed Slimepeople's hair not matching their slimey colors.
+  Pickle-Coding:
+  - bugfix: Fixes flamethrower runtime preventing them from working.
+  Rhials:
+  - bugfix: Venus Human Traps can once again entangle victims and drag them into their
+      web.
+  Sadboysuss:
+  - bugfix: Musiver, Godblood, Synaphydramine, Hollow water and unholy water will
+      no longer show up in secret recipes
+  SyncIt21:
+  - bugfix: text fields which should save their value after hitting enter/closing
+      the UI now actually does that
+  - bugfix: lathe search bar now saves its previous search query after the UI is closed
+      and also reloads search results correctly
+  - bugfix: number input dragging will only send payload to backend when its value
+      changes, Same applies when you hit enter or click outside the field, the value
+      must have changed to trigger the back end
+  - bugfix: You can once again drag your mouse anywhere in the window outside the
+      number input field to vary the value by large amounts
+  - code_imp: removed unnecessary variables(suppressFlickering, updateRate & event
+      object param for handlers) from Number Input
+  TheBoondock:
+  - qol: Gold and silver crates now accurately reflects NT's greed
+  mc-oofert:
+  - bugfix: the virgin mary picture no longer makes its initiates harddelete

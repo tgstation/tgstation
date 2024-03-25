@@ -108,15 +108,13 @@ export const AtmosControlConsole = (props) => {
                     </LabeledList.Item>
                     <LabeledList.Item label="Input Rate">
                       <NumberInput
+                        step={1}
                         value={Number(selectedChamber.input_info.amount)}
                         unit="L/s"
                         width="63px"
                         minValue={0}
                         maxValue={data.maxInput}
-                        // This takes an exceptionally long time to update
-                        // due to being an async signal
-                        suppressFlicker={2000}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_input', {
                             chamber: selectedChamber.id,
                             rate: value,
@@ -158,10 +156,7 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxOutput}
                         step={10}
-                        // This takes an exceptionally long time to update
-                        // due to being an async signal
-                        suppressFlicker={2000}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_output', {
                             chamber: selectedChamber.id,
                             rate: value,

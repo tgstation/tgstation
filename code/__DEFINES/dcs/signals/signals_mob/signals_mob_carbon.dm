@@ -148,3 +148,12 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+#define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
+	/// Return to prevent all default blood handling
+	#define HANDLE_BLOOD_HANDLED (1<<0)
+	/// Return to skip default nutrition -> blood conversion
+	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
+	/// Return to skip oxyloss and similar effecst from blood level
+	#define HANDLE_BLOOD_NO_EFFECTS (1<<2)
