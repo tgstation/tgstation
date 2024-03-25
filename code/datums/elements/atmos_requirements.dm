@@ -36,7 +36,7 @@
 	if(open_turf.air)
 		gases = get_atmos_req_list(open_turf)
 		string_text = "O2: [gases["o2"]] - Plasma: [gases["plasma"]] - N2: [gases["n2"]] - CO2: [gases["co2"]]"
-	stack_trace("[target] loaded on a turf with unsafe atmos. Turf gases: [string_text]. Check the mob atmos requirements again.")
+	stack_trace("[target] loaded on a turf with unsafe atmos at \[[open_turf.x], [open_turf.y], [open_turf.z]\] (area : [open_turf.loc]). Turf gases: [string_text]. Check the mob atmos requirements again.")
 
 /datum/element/atmos_requirements/Detach(datum/target)
 	. = ..()

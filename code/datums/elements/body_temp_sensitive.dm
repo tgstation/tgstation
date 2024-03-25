@@ -39,10 +39,11 @@
 	var/mob/living/living_mob = target
 	if(living_mob.stat == DEAD)
 		return
-	var/datum/gas_mixture/environment = living_mob.loc.return_air()
+	var/atom/location = living_mob.loc
+	var/datum/gas_mixture/environment = location.return_air()
 	var/areatemp = living_mob.get_temperature(environment)
 	if(!ISINRANGE(areatemp, min_body_temp, max_body_temp))
-		stack_trace("[target] loaded on in a loc with unsafe temperature: [areatemp]. Acceptable Range: [min_body_temp] - [max_body_temp],")
+		stack_trace("[target] loaded on in a loc with unsafe temperature at \[[location.x], [location.y], [location.z]\] (area : [get_area(location)]): [areatemp]K. Acceptable Range: [min_body_temp]K - [max_body_temp]K,")
 
 /datum/element/body_temp_sensitive/Detach(datum/source)
 	if(source)
