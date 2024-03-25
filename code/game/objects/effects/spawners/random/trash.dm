@@ -136,8 +136,8 @@
 
 /obj/effect/spawner/random/trash/grime/Initialize(mapload)
 	if(mapload)
-		var/turf/location = loc
-		if(loation.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
 			loot -= /mob/living/basic/cockroach
 	return ..()
 
@@ -159,8 +159,8 @@
 
 /obj/effect/spawner/random/trash/moisture/Initialize(mapload)
 	if(mapload)
-		var/turf/location = loc
-		if(loation.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
 			loot -= list(/mob/living/basic/frog, /mob/living/basic/axolotl)
 	return ..()
 
