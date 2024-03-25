@@ -95,9 +95,12 @@
 	if(cell)
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
-		. += "There is no power cell installed."
+		. += span_warning("There is no power cell installed.")
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Temperature range at <b>[settable_temperature_range]°C</b>.<br>Heating power at <b>[siunit(heating_power, "W", 1)]</b>.<br>Power consumption at <b>[(efficiency / 50) * 100]%</b>.") //100%, 80%, 60%, 40%
+		var/target_temp = round(target_temperature - T0C, 1)
+		var/min_temp = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
+		var/max_temp = settable_temperature_median + settable_temperature_range - T0C
+		. += span_info("The status display reads:<br>Heating power: <b>[siunit(heating_power, "W", 1)] at [(efficiency / 20) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C \[[min_temp]°C - [max_temp]°C]</b>") // Base efficiency 100%, higher with upgraded components
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
 
 /obj/machinery/space_heater/update_icon_state()
