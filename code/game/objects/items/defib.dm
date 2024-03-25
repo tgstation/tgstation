@@ -187,7 +187,7 @@
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
-		deductcharge(1000 / severity)
+		deductcharge((STANDARD_CELL_CHARGE * 0.1) / severity)
 	if (. & EMP_PROTECT_SELF)
 		return
 
@@ -240,7 +240,7 @@
 
 /obj/item/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(cell)
-		if(cell.charge < (paddles.revivecost+chrgdeductamt))
+		if(cell.charge < (paddles.revivecost + chrgdeductamt))
 			powered = FALSE
 			update_power()
 		if(cell.use(chrgdeductamt))
