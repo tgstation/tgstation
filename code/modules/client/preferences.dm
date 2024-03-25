@@ -436,6 +436,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					what_did_we_reset[name] += "high priority job"
 				else
 					already_high = TRUE
+		if(already_high)
+			job_preferences = new_job_preferences
 
 		if(length(what_did_we_reset[name]))
 			save_character() // save the character if anything changed
@@ -446,7 +448,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			continue
 		to_chat(parent, span_notice("Your character profile for [character_name] had to be reset due to invalid data: [english_list(reset_things)]."))
 
-	load_character(default_slot) // load their character back up
+	load_character(old_slot) // load their character back up
 
 /datum/preferences/proc/set_job_preference_level(datum/job/job, level)
 	if (!job)
