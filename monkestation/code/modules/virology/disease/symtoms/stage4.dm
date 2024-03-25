@@ -316,7 +316,7 @@
 /datum/symptom/retrovirus/activate(mob/living/carbon/affected_mob)
 	if(!iscarbon(affected_mob))
 		return
-	switch(max_multiplier)
+	switch(multiplier)
 		if(1)
 			if(prob(4))
 				to_chat(affected_mob, span_danger("Your head hurts."))

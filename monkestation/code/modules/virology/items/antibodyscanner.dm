@@ -115,6 +115,8 @@
 			if(ID in GLOB.virusDB)
 				var/datum/data/record/V = GLOB.virusDB[ID]
 				info += "<br><i>[V.fields["name"]][V.fields["nickname"] ? " \"[V.fields["nickname"]]\"" : ""] detected. Strength: [D.strength]. Robustness: [D.robustness]. Antigen: [D.get_antigen_string()]</i>"
+				for(var/datum/symptom/e in D.symptoms)
+					info += "<br><b>Stage [e.stage] - [e.name]</b> (Danger: [e.badness]): <i>[e.desc]</i>"
 			else
 				info += "<br><i>Unknown [D.form] detected. Strength: [D.strength]</i>"
 
