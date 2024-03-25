@@ -60,9 +60,25 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
+/datum/species/pod/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.dna.features["mcolor"] = "#886600"
+	human.dna.features["pod_hair"] = "Rose"
+	human.update_body(is_creating = TRUE)
+
 /datum/species/pod/get_physical_attributes()
 	return "Podpeople are in many ways the inverse of shadows, healing in light and starving with the dark. \
 		Their bodies are like tinder and easy to char."
+
+/datum/species/pod/get_species_description()
+	return "Podpeople are largely peaceful plant based lifeforms, resembling a humanoid figure made of leaves, flowers, and vines."
+
+/datum/species/pod/get_species_lore()
+	return list(
+		"Not much is known about the origins of the Podpeople. \
+		Many assume them to be the result of a long forgotten botanical experiment, slowly mutating for years on years until they became the beings they are today. \
+		Ever since they were uncovered long ago, their kind have been found on board stations and planets across the galaxy, \
+		often working in hydroponics bays, kitchens, or science departments, working with plants and other botanical lifeforms.",
+	)
 
 /datum/species/pod/create_pref_unique_perks()
 	var/list/to_add = list()
