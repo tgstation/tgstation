@@ -1,0 +1,4 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "Plants with no product defined will no longer have a chance to return early on harvest."
