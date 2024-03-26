@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(!user.Adjacent(source))
-		source.ballon_alert(user, "can't reach!")
+		source.balloon_alert(user, "can't reach!")
 		return
 
 	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit]'s sensor."))
