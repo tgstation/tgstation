@@ -462,14 +462,26 @@
 		//Monkestation addition start: this is a port of #77651 which was closed, so I'm putting this as an addition
 	else if(helper.zone_selected == BODY_ZONE_PRECISE_MOUTH) //Boops
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH) && prob(75))
-			helper.visible_message(span_notice("[src] matrix dodges [helper]'s boop, holy shit!"), span_notice("[src] matrix dodges your boop, holy shit!"))
+			helper.visible_message(span_notice("[src] matrix dodges [helper]'s boop, holy shit!"), \
+						null, span_hear("You hear a strange noise, like someone fighting for their life!"), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("[src] matrix dodges your boop, holy shit!"))
+			to_chat(src, span_notice("[helper] tried to boop you but you avoid it with a matrix dodge, holy shit!"))
 		else if(istype(get_item_by_slot(ITEM_SLOT_MASK), /obj/item/clothing/mask/gas/clown_hat))
 			playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
-			helper.visible_message(span_notice("[helper] honks [src]'s nose"), span_notice("You honk [src]'s nose."))
+			helper.visible_message(span_notice("[helper] honks [src]'s nose"), \
+						null, span_hear("You hear a honk!"), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You honk [src]'s nose."))
+			to_chat(src, span_notice("[helper] honks your clown nose, honk! "))
 		else if(src.dna.species.bodytype & BODYTYPE_SNOUTED)
-			helper.visible_message(span_notice("[helper] boops [src]'s snout."), span_notice("You boop [src] on the snout."))
+			helper.visible_message(span_notice("[helper] boops [src]'s snout."), \
+						null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You boop [src] on the snout."))
+			to_chat(src, span_notice("[helper] boops you on the snout."))
 		else
-			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
+			helper.visible_message(span_notice("[helper] boops [src]'s nose."), \
+						null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You boop [src] on the nose."))
+			to_chat(src, span_notice("[helper] boops you on the nose."))
 		//Monkestation addition end
 	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
 		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
