@@ -1,4 +1,4 @@
-import { filterMap, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { useState } from 'react';
 
@@ -431,22 +431,17 @@ export const getRandomization = (
 
   const { data } = useBackend<PreferencesMenuData>();
 
+  if (!randomBodyEnabled) {
+    return {};
+  }
+
   return Object.fromEntries(
-    filterMap(Object.keys(preferences), (preferenceKey) => {
-      if (serverData.random.randomizable.indexOf(preferenceKey) === -1) {
-        return undefined;
-      }
-
-      if (!randomBodyEnabled) {
-        return undefined;
-      }
-
-      return [
-        preferenceKey,
-        data.character_preferences.randomization[preferenceKey] ||
-          RandomSetting.Disabled,
-      ];
-    }),
+    Object.keys(preferences)
+      .filter((key) => serverData.random.randomizable.includes(key))
+      .map((key) => [
+        key,
+        data.character_preferences.randomization[key] || RandomSetting.Disabled,
+      ]),
   );
 };
 

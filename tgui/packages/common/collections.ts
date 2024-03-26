@@ -4,36 +4,6 @@
  * @license MIT
  */
 
-type MapFunction = {
-  <T, U>(
-    iterateeFn: (value: T, index: number, collection: T[]) => U,
-  ): (collection: T[]) => U[];
-
-  <T, U, K extends string | number>(
-    iterateeFn: (value: T, index: K, collection: Record<K, T>) => U,
-  ): (collection: Record<K, T>) => U[];
-};
-
-/**
- * Given a collection, will run each element through an iteratee function.
- * Will then filter out undefined values.
- */
-export const filterMap = <T, U>(
-  collection: T[],
-  iterateeFn: (value: T) => U | undefined,
-): U[] => {
-  const finalCollection: U[] = [];
-
-  for (const value of collection) {
-    const output = iterateeFn(value);
-    if (output !== undefined) {
-      finalCollection.push(output);
-    }
-  }
-
-  return finalCollection;
-};
-
 const COMPARATOR = (objA, objB) => {
   const criteriaA = objA.criteria;
   const criteriaB = objB.criteria;
