@@ -1,0 +1,6 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - rscadd: "The PML-9's name has been changed to something that's a little less boring random numbers and letters, and something that TTS can likely pronounce much nicer than before. Get blown up by a Dardo rocket launcher today."
+  - image: "Sprites for rocket launchers, rockets, and rocket projectiles have been changed to something fresher looking."
+  - balance: "Rocket launchers can be worn on your back or armor vest."
