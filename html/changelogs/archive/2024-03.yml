@@ -354,3 +354,15 @@
   - sound: Increased the volume of shuttle welcome sound because it was too quiet.
   DexeeXI:
   - rscdel: Virus extrapolators no longer spawn in l3 bioclosets or pathologist kits.
+2024-03-26:
+  AlbertNanotracen:
+  - bugfix: Placing a mouse inside your chef hat will once more allow it to pilot
+      you around.
+  - rscadd: A player-controlled mouse inside your chef hat can compel you to perform
+      complex actions, such as flipping and spinning. You will obey because the mouse
+      knows better than you do.
+  - bugfix: Gunthers no longer kill Gubbucks instead of breeding with them
+  - bugfix: gutlunches will stop having too many children
+  - balance: gutlunches are no longer in the mining faction
+  wraith-54321:
+  - code_imp: added support for key based antag huds
