@@ -11024,7 +11024,8 @@
 /area/station/command/heads_quarters/hop)
 "eHn" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Engine Coolant Bypass"
+	name = "Engine Coolant Bypass";
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -39281,6 +39282,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "nQH" = (
@@ -41941,6 +41943,7 @@
 /area/station/hallway/secondary/recreation)
 "oJk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos)
 "oJn" = (
@@ -56001,6 +56004,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/textured_half,
 /area/station/engineering/atmos)
 "sGh" = (
