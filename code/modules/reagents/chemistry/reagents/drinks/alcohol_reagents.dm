@@ -53,12 +53,9 @@
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(drinker.get_drunk_amount() < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
-		var/booze_power = boozepwr
+		var/booze_power = boozepwr * 2
 		if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE)) // we're an accomplished drinker
 			booze_power *= 0.7
-		if(HAS_TRAIT(drinker, TRAIT_LIGHT_DRINKER))
-			booze_power *= 2
-
 		// water will dilute alcohol effects
 		var/total_water_volume = 0
 		var/total_alcohol_volume = 0
