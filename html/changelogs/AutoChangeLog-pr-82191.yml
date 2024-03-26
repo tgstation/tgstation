@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "recharge stations draw the same amount of power as before but directly from grid(without using apc cell power) and won't waste any excess power"
