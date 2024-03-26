@@ -233,7 +233,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	charge -= (STANDARD_CELL_CHARGE * 0.1) / severity
+	charge -= (STANDARD_CELL_CHARGE) / severity
 	if (charge < 0)
 		charge = 0
 
