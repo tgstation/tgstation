@@ -28,8 +28,30 @@
 
 /datum/antagonist/nukeop/support/proc/send_cameras()
 	for(var/datum/mind/teammate_mind in nuke_team.members)
+		teammate_mind.current.AddComponent( \
+			/datum/component/simple_bodycam, \
+			camera_name = "operative bodycam", \
+			c_tag = "[teammate_mind.current.real_name]", \
+			network = OPERATIVE_CAMERA_NET, \
+			emp_proof = FALSE, \
+		)
 		teammate_mind.current.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
-		to_chat(span_notice("Smile, you're on camera!"))
+		to_chat(span_notice("A Syndicate Overwatch Agent has been assigned to your team. Smile, you're on camera!"))
 
 /datum/antagonist/nukeop/support/give_uplink()
 	return
+
+///One of the special items that spawns in the overwatch agent's room.
+/obj/item/paper/fluff/overwatch
+	name = "INTERNSHIP NOTES #1"
+	color = COLOR_RED
+	desc = "Page one of your notes from your internship with Nanotrasen(?). How did you even end up interning at a place like this?"
+	default_raw_text = @{"
+
+<br>
+Anyways, I'm here now, and this is all pretty weird considering my internship was supposed to be with the Nanotrasen Internal Revenue Analysis department.
+<br>
+Maybe I got reassigned to the Combat Strategy department by mistake?
+<br>
+Whatever. The work experience will look great on my resume either way! I'm so glad to be working for a great company like Nanotrasen!
+	"}

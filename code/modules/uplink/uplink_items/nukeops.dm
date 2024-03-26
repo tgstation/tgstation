@@ -475,6 +475,13 @@
 		Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 
+/datum/uplink_item/reinforcements/overwatch_agent
+	name = "Syndicate Overwatch Agent"
+	desc = "An Overwatch Agent is assigned to your operation, and all members of your team recieve cameras for them to view you from. \
+		Additionally, they have their own set of cameras and other intelligence suites to gather reconnaissance data with. \
+		If you're a meathead who's just here to kill people and don't care about intelligence, you'll still have someone to bear witness to your murder-spree!"
+	item = /obj/item/antag_spawner/nuke_ops/overwatch
+
 // ~~ Disposable Sentry Gun ~~
 // Technically not a spawn but it is a kind of reinforcement...I guess.
 

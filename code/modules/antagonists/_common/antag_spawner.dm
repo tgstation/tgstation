@@ -103,11 +103,13 @@
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The antag datum applied
-	var/datum/antagonist/nukeop/reinforcement/antag_datum = /datum/antagonist/nukeop/reinforcement
+	var/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
+	/// Do we drop the user in via a pod?
+	var/deliver_target = TRUE
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -130,7 +132,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -143,7 +145,6 @@
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/our_client, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
-	var/obj/structure/closet/supplypod/pod = setup_pod()
 	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
@@ -152,15 +153,28 @@
 	else
 		nukie.forceMove(locate(1,1,1))
 
-	antag_datum = new()
+	var/new_datum = new antag_datum()
 
-	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+	if(outfit)
+		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(/datum/antagonist/nukeop)
+		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
-	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
 	op_mind.special_role = special_role_name
-	nukie.forceMove(pod)
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
+	if(deliver_target)
+		var/obj/structure/closet/supplypod/pod = setup_pod()
+		nukie.forceMove(pod)
+		new /obj/effect/pod_landingzone(get_turf(src), pod)
+
+/obj/item/antag_spawner/nuke_ops/overwatch
+	name = "overwatch support beacon"
+	desc = "Summons an intelligence agent to provide overwatch during your upcoming missing. Definitely not a syndicate intern we put in front of a bunch of computer screens. \
+		We might be an evil conglomerate hellbent on terrorizing the innocent researchers of Nanotrasen, but we wouldn't dare stoop low enough to hire unpaid interns!" //This is a bit on the nose.
+	special_role_name = ROLE_OPERATIVE_OVERWATCH
+	deliver_target = FALSE
+	outfit = null //Outfit is given by the antag datum so we don't need to interfere here.
+	antag_datum = /datum/antagonist/nukeop/support
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
