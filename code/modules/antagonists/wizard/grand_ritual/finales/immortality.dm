@@ -154,6 +154,7 @@
 	light_inner_range = 1 //monkestation edit
 	light_outer_range = 2 //monkestation edit
 	light_color = COLOR_PALE_GREEN
+	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 	/// Who are we reviving?
 	var/mob/living/corpse
 	/// Who if anyone is playing as them?
