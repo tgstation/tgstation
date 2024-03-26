@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixes Schrödinger's space heater, where a space heater both consumes a power cell instantly while also not consuming power when heating adjacent tiles"
