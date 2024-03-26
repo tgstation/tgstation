@@ -195,27 +195,26 @@
 	customization_options = list(/datum/preference/choiced/alcoholic)
 
 /datum/quirk/item_quirk/addict/alcoholic/New()
-	drug_container_type = GLOB.possible_alcoholic_addictions[pick(GLOB.possible_alcoholic_addictions)]
+	drug_container_type = GLOB.possible_alcoholic_addictions[pick(GLOB.possible_alcoholic_addictions["bottlepath"])]
 	return ..()
 
 /datum/quirk/item_quirk/addict/alcoholic/add_unique(client/client_source)
 	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/alcoholic)
 	if(addiction && (addiction != "Random"))
-		drug_container_type = GLOB.possible_alcoholic_addictions[addiction]
+		drug_container_type = GLOB.possible_alcoholic_addictions[addiction]["bottlepath"]
 	return ..()
 
 /datum/quirk/item_quirk/addict/alcoholic/post_add()
 	. = ..()
 	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
-
-	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
+	var/obj/item/reagent_containers/brandy_container = drug_container_type
 	if(isnull(brandy_container))
 		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
 		brandy_container = new drug_container_type
-		favorite_alcohol = brandy_container.list_reagents[1]
+		favorite_alcohol = brandy_container["reagent"]
 		qdel(brandy_container)
 	else
-		favorite_alcohol = brandy_container.list_reagents[1]
+		favorite_alcohol = brandy_container["reagent"]
 
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
