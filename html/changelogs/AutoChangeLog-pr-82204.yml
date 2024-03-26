@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Fixed more energy usages for cells(Part 3). See PR 82204 for details"

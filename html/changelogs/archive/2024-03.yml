@@ -779,3 +779,46 @@
   - qol: Gold and silver crates now accurately reflects NT's greed
   mc-oofert:
   - bugfix: the virgin mary picture no longer makes its initiates harddelete
+2024-03-26:
+  00-Steven:
+  - refactor: Touched most of the code for racks. It should function almost entirely
+      the same save for what's noted here, please report any issues.
+  - code_imp: Wrenching moved to wrenching procs. Side-effect, rack items are only
+      deconstructed on left-click
+  - sound: Items that have sounds make them when placed on racks, much like when placed
+      on tables.
+  - sound: Rack items now make a sound upon deconstructing them.
+  - bugfix: Racks no longer let you attempt to place abstract items like the slap
+      hand or water tank spray nozzles on them.
+  - qol: Clicking on a rack no longer kicks the shit out of it if you don't actually
+      have combat mode on.
+  - qol: Racks and rack items have hover tooltip usage context.
+  - rscdel: Killed ancient rack code for dragging your active item onto a rack. Just
+      click it does the same thing. This allows you to actually dump items onto racks,
+      though currently disorderly.
+  LT3:
+  - bugfix: "Fixes Schr\xF6dinger's space heater, where a space heater both consumes\
+      \ a power cell instantly while also not consuming power when heating adjacent\
+      \ tiles"
+  Melbert:
+  - bugfix: Fixed Suit Storage Unit cell charging rate
+  - qol: A few species (such as Jellypeople) now have proper(ish) preference menu
+      setups
+  - config: The in-repo species config has been updated. Well it's still the same
+      by default, but it's now updated for newer species.
+  - bugfix: Fixed space suit thermal regulators cell usage.
+  NeonNik2245:
+  - qol: makes surgery cap small
+  Pickle-Coding:
+  - bugfix: Fixes static power usage from being able to not draw power.
+  SyncIt21:
+  - bugfix: Fixed cell energy usage for a bunch of stuff(Part 1). See PR 82197 for
+      details
+  - bugfix: recharge stations draw the same amount of power as before but directly
+      from grid(without using apc cell power) and won't waste any excess power
+  - bugfix: Fixed more energy usages for cells(Part 2). See PR 82198 for details
+  - bugfix: Fixed more energy usages for cells(Part 3). See PR 82204 for details
+  necromanceranne:
+  - bugfix: Crank weapons now can actually be charged using their crank.
+  - bugfix: Stun batons and their variants now actually meaningfully consume charge
+      when used.

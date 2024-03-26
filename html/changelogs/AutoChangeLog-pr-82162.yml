@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "A few species (such as Jellypeople) now have proper(ish) preference menu setups"
-  - config: "The in-repo species config has been updated. Well it's still the same by default, but it's now updated for newer species."

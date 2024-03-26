@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Crank weapons now can actually be charged using their crank."
-  - bugfix: "Stun batons and their variants now actually meaningfully consume charge when used."
