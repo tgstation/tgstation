@@ -1,5 +1,3 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { capitalizeFirst, multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -204,16 +202,15 @@ const ObservableSection = (props: {
 
   const [searchQuery] = useLocalState<string>('searchQuery', '');
 
-  const filteredSection: Observable[] = flow([
-    filter<Observable>((observable) =>
-      isJobOrNameMatch(observable, searchQuery),
-    ),
-    sortBy<Observable>((observable) =>
-      getDisplayName(observable.full_name, observable.name)
-        .replace(/^"/, '')
-        .toLowerCase(),
-    ),
-  ])(section);
+  const getObservableDisplayName = (observable: Observable) =>
+    getDisplayName(observable.full_name, observable.name)
+      .replace(/^"/, '')
+      .toLowerCase();
+  const filteredSection = section
+    .filter((observable) => isJobOrNameMatch(observable, searchQuery))
+    .sort((a, b) =>
+      getObservableDisplayName(a).localeCompare(getObservableDisplayName(b)),
+    );
 
   if (!filteredSection.length) {
     return null;

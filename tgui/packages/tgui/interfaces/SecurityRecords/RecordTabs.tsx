@@ -1,5 +1,3 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -29,10 +27,9 @@ export const SecurityRecordTabs = (props) => {
 
   const [search, setSearch] = useState('');
 
-  const sorted: SecurityRecord[] = flow([
-    filter((record: SecurityRecord) => isRecordMatch(record, search)),
-    sortBy((record: SecurityRecord) => record.name),
-  ])(records);
+  const sorted = records
+    .filter((record) => isRecordMatch(record, search))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <Stack fill vertical>
