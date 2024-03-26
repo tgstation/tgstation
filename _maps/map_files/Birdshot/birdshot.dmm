@@ -582,6 +582,7 @@
 	pixel_y = -11
 	},
 /obj/structure/sign/poster/official/random/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/engineering)
 "aow" = (
@@ -2931,6 +2932,10 @@
 /obj/machinery/light_switch/directional/north,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/radio/off{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/plating/rust,
 /area/station/engineering/supermatter/room)
 "brZ" = (
@@ -5565,6 +5570,7 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor/titanium,
 /area/station/command/heads_quarters/ce)
 "cxK" = (
@@ -5975,11 +5981,11 @@
 	pixel_x = 7;
 	pixel_y = 14
 	},
-/obj/item/geiger_counter{
-	pixel_x = 4;
-	pixel_y = 9
-	},
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/radio/off{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/pumproom)
 "cEX" = (
@@ -8907,7 +8913,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "dUs" = (
-/obj/machinery/light/small/directional/south,
+/obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron/small,
 /area/station/security/checkpoint/engineering)
 "dUA" = (
@@ -9312,6 +9318,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -12064,6 +12071,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "fgR" = (
@@ -12567,7 +12575,6 @@
 /area/station/security/checkpoint/customs)
 "fsq" = (
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/light/small/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
@@ -12581,6 +12588,12 @@
 	pixel_y = 1;
 	pixel_x = -3
 	},
+/obj/machinery/requests_console/directional/north{
+	department = "Security";
+	name = "Security Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/engineering)
 "fss" = (
@@ -13442,6 +13455,10 @@
 	pixel_x = -32
 	},
 /obj/machinery/status_display/evac/directional/south,
+/obj/item/radio/off{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
 "fIH" = (
@@ -14026,6 +14043,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "fTd" = (
@@ -14952,6 +14970,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/cold/directional/east,
 /obj/item/radio/intercom/directional/east,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/engine_smes)
 "giU" = (
@@ -15357,6 +15376,7 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
 "gsv" = (
@@ -16577,6 +16597,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gMy" = (
@@ -18445,6 +18466,7 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/structure/sign/poster/official/random/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/small,
 /area/station/security/checkpoint/engineering)
 "hoG" = (
@@ -21190,6 +21212,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/break_room)
 "ikL" = (
@@ -24877,6 +24900,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/storage/gas)
 "jvB" = (
@@ -29615,6 +29639,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "kUt" = (
@@ -51658,6 +51683,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/landmark/navigate_destination,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
 "rwg" = (
@@ -57075,6 +57102,7 @@
 	dir = 4
 	},
 /obj/machinery/holopad,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "sXi" = (
@@ -63169,6 +63197,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "uLc" = (
@@ -67606,6 +67635,17 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"vWG" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_centre,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/diagonal,
+/area/station/engineering/lobby)
 "vWI" = (
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Creature Pen";
@@ -69556,6 +69596,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/off{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wyK" = (
@@ -73187,6 +73231,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/station/engineering/atmos/office)
 "xva" = (
@@ -96517,7 +96562,7 @@ dVE
 qRz
 iLM
 aDF
-gJs
+vWG
 dzq
 vVI
 vVI
