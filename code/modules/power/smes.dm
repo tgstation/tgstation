@@ -425,6 +425,12 @@
 	update_appearance()
 	log_smes()
 
+/obj/machinery/power/smes/full
+	charge = 50 * STANDARD_CELL_CHARGE
+
+/obj/machinery/power/smes/ship
+	charge = 20 * STANDARD_CELL_CHARGE
+
 /obj/machinery/power/smes/engineering
 	charge = 50 * STANDARD_CELL_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
 	output_level = 90 KILO WATTS

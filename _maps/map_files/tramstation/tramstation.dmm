@@ -22982,9 +22982,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hhf" = (
-/obj/machinery/power/smes{
-	charge = 5e+007
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -52853,9 +52851,7 @@
 /turf/open/floor/engine/hull,
 /area/station/solars/port)
 "rLB" = (
-/obj/machinery/power/smes{
-	charge = 5e+007
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -57294,9 +57290,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "tms" = (
-/obj/machinery/power/smes{
-	charge = 5e+007
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
@@ -64129,9 +64123,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "vyD" = (
-/obj/machinery/power/smes{
-	charge = 5e+007
-	},
+/obj/machinery/power/smes/full,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
