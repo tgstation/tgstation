@@ -244,8 +244,9 @@
 
 	if(cell.charge < (paddles.revivecost + chrgdeductamt))
 		powered = FALSE
-	else
-		cell.use(chrgdeductamt)
+	else if(!cell.use(chrgdeductamt))
+		return
+
 	update_power()
 
 /obj/item/defibrillator/proc/cooldowncheck()
