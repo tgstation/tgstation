@@ -938,10 +938,8 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/rack_parts/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(drop_location())
-	return ..()
+/obj/item/rack_parts/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(drop_location())
 
 /obj/item/rack_parts/attack_self(mob/user)
 	if(building)

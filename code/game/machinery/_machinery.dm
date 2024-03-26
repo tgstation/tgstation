@@ -819,7 +819,7 @@
 	. = TRUE
 
 	if(obj_flags & NO_DECONSTRUCTION)
-		dump_contents() //drop everything inside us
+		dump_inventory_contents() //drop stuff we consider important
 		return //Just delete us, no need to call anything else.
 
 	on_deconstruction(disassembled)
