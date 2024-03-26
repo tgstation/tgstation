@@ -9,6 +9,8 @@
 
 	if(!internal_cell)
 		return FALSE
+	if(amount == 0)
+		return TRUE
 	if(internal_cell.use(amount))
 		return TRUE
 	if(!check_programs)
