@@ -1,0 +1,15 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "adds examines & screentips for tool acts & other operations for reagent grinder"
+  - qol: "adds an off icon for when the grinder panel is open/not powered"
+  - code_imp: "auto docs vars & procs. Shared common proc for grinding or juicing"
+  - code_imp: "removed trait for blended dust, changed some item interactions to end the attack chain early & save time"
+  - bugfix: "no inserting hologram items into the reagent grinder"
+  - bugfix: "you can hit the reagent grinder tools like screwdriver, wrench, crowbar & even beakers/ingredients etc when in combat mode\nfix; adds sanity checks for when & how mobs interact with the reagent grinder"
+  - bugfix: "examining a reagent grinder by an AI/Human with AI access now actually works."
+  - bugfix: "you can insert Nova flowers & other food items from any bag type"
+  - bugfix: "reagent grinder now grinds all the contents of an item recursively to produce maximum reagents like a real grinder would"
+  - refactor: "reagent grinder now measures available capacity to store items as total weight of stored items & not number. Capacity can be increased with upgraded matter bin"
+  - refactor: "reagent grinder power usage is now a function of duration & total weight of items blended, meaining blending more number of items/larger items will consume more power"
+  - refactor: "reagent grinder code has been optimized overall. Report bugs on github"

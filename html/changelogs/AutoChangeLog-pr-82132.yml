@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "abstract(like the dual hand thingy on your hand) & hologram things can't be put inside storage items"

@@ -78,7 +78,7 @@
 	var/obj/item/bodypart/head/myhead = brian.get_bodypart(BODY_ZONE_HEAD)
 	myhead?.dismember()
 	brian.investigate_log("has been decapitated by [src].", INVESTIGATE_DEATHS)
-	flash_color(brian, flash_color = "#FF0000", flash_time = 1 SECONDS)
+	flash_color(brian, flash_color = COLOR_RED, flash_time = 1 SECONDS)
 	qdel(src)
 
 ///The button that detonates the collar.
