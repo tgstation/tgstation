@@ -233,7 +233,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	use(STANDARD_CELL_CHARGE / severity)
+	use(STANDARD_CELL_CHARGE / severity, force = TRUE)
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	. = ..()
