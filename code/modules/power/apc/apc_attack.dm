@@ -128,7 +128,7 @@
 			if(machine_stat & MAINT)
 				balloon_alert(user, "no board for a cell!")
 				return
-			if(!pseudocircuit.adapt_circuit(user, 500 KILO JOULES))
+			if(!pseudocircuit.adapt_circuit(user, circuit_cost = 500 KILO JOULES))
 				return
 			var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
 			bad_cell.forceMove(src)
