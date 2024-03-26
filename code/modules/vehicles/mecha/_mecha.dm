@@ -868,7 +868,7 @@
 		if(user)
 			balloon_alert(user, "mech has no lights!")
 		return
-	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < light_power_drain)
+	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < power_to_energy(light_power_drain, SSobj))
 		if(user)
 			balloon_alert(user, "no power for lights!")
 		return
