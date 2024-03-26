@@ -27,19 +27,9 @@
 	return pick(GLOB.nukeop_overwatch_start)
 
 /datum/antagonist/nukeop/support/proc/send_cameras()
-	var/obj/item/clothing/glasses/sunglasses/spy/overwatch/newglasses = new(src)
-	owner.current.put_in_hands(newglasses)
-
 	for(var/datum/mind/teammate_mind in nuke_team.members)
-		var/mob/living/carbon/teammate = teammate_mind.current
-		var/obj/item/clothing/accessory/spy_bug/overwatch/new_camera = new(get_turf(teammate))
-		if(istype(teammate) && teammate.put_in_hands(new_camera))
-			to_chat(teammate, span_boldnotice("[new_camera] materializes into your hands!"))
-		else
-			to_chat(teammate, span_boldnotice("[new_camera] materializes onto the floor!"))
-		teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
-		new_camera.linked_glasses = newglasses
-		newglasses.linked_bugs += new_camera
+		teammate_mind.current.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
+		to_chat(span_notice("Smile, you're on camera!"))
 
 /datum/antagonist/nukeop/support/give_uplink()
 	return
