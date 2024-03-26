@@ -31,7 +31,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 0 //value was 3, we need to manually test if this works or not before allowing it normally
+	weight = 15 //value was 3, we need to manually test if this works or not before allowing it normally
 	max_occurrences = 1
 
 /datum/antagonist/rev/head/event_trigger

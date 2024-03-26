@@ -570,8 +570,7 @@
 		job.allow_bureaucratic_error = FALSE
 		job.total_positions = 0
 
-	var/datum/game_mode/dynamic/dynamic = SSticker.mode
-	dynamic.unfavorable_situation()
+	SSgamemode.point_gain_multipliers[EVENT_TRACK_ROLESET]++
 
 	var/message_header = "A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials."
 	var/extra_detail = try_auto_call_shuttle() \

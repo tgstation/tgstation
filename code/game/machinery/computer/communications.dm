@@ -881,8 +881,8 @@
 					continue
 				shake_camera(crew_member, 15, 1)
 
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.unfavorable_situation()
+			SSgamemode.point_gain_multipliers[EVENT_TRACK_ROLESET]++
+
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/from_living/autotraitor
