@@ -199,7 +199,7 @@
 	if(shock(user, 100))
 		return
 	tool.play_tool_sound(src, 100)
-	deconstruct()
+	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)

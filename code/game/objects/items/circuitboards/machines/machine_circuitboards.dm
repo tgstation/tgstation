@@ -734,6 +734,28 @@
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/chem_dispenser/fullupgrade
+	build_path = /obj/machinery/chem_dispenser/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/servo/tier4 = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/cell/bluespace = 1,
+	)
+
+/obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
+	build_path = /obj/machinery/chem_dispenser/mutagensaltpeter
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/servo/tier4 = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/cell/bluespace = 1,
+	)
+
 /obj/item/circuitboard/machine/chem_dispenser/abductor
 	name = "Reagent Synthesizer"
 	name_extension = "(Abductor Machine Board)"
@@ -842,6 +864,15 @@
 	req_components = list(
 		/datum/stock_part/servo = 1,
 		/obj/item/reagent_containers/cup/beaker = 2,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/limbgrower/fullupgrade
+	name = "Limb Grower"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/limbgrower
+	req_components = list(
+		/datum/stock_part/servo/tier4  = 1,
+		/obj/item/reagent_containers/cup/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/protolathe/department/medical
@@ -1096,10 +1127,30 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/chem_dispenser/drinks
 
+/obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
+	build_path = /obj/machinery/chem_dispenser/drinks/fullupgrade
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/servo/tier4 = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/cell/bluespace = 1,
+	)
+
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	name = "Booze Dispenser"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/chem_dispenser/drinks/beer
+
+/obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
+	build_path = /obj/machinery/chem_dispenser/drinks/beer/fullupgrade
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/servo/tier4 = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/cell/bluespace = 1,
+	)
 
 /obj/item/circuitboard/machine/chem_master/condi
 	name = "CondiMaster 3000"
