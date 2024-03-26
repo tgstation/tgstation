@@ -138,17 +138,6 @@ export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
   return result;
 };
 
-/**
- * This method is like "zip" except that it accepts iteratee to
- * specify how grouped values should be combined. The iteratee is
- * invoked with the elements of each group.
- */
-export const zipWith =
-  <T, U>(iterateeFn: (...values: T[]) => U) =>
-  (...arrays: T[][]): U[] => {
-    return zip(...arrays).map((values: T[]) => iterateeFn(...values));
-  };
-
 const binarySearch = <T, U = unknown>(
   getKey: (value: T) => U,
   collection: readonly T[],
