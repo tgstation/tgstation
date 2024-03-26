@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Antag/event token requests now time out after 5 minutes of inaction."
+  - admin: "Improved the admin notification for token requests."
+  - sound: "Added a sound whenever an token is rejected."
