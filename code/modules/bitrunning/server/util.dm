@@ -109,7 +109,6 @@
 	if(generated_domain)
 		// The cooldown only really matter is we're flipping TVs
 		COOLDOWN_START(src, broadcast_toggle_cd, 5 SECONDS)
-		// And we only flip TVs when there's a domain, becuase otherwise there's no cams
-		for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-			tv.update_shows(broadcasting, BITRUNNER_CAMERA_NET)
+		// And we only flip TVs when there's a domain, because otherwise there's no cams to watch
+		set_network_broadcast_status(BITRUNNER_CAMERA_NET, broadcasting)
 	return TRUE

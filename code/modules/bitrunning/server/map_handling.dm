@@ -64,8 +64,7 @@
 	update_appearance()
 
 	if(broadcasting)
-		for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-			tv.update_shows(TRUE, BITRUNNER_CAMERA_NET)
+		start_broadcasting_network(BITRUNNER_CAMERA_NET)
 
 	return TRUE
 
@@ -151,8 +150,7 @@
 	domain_randomized = FALSE
 	retries_spent = 0
 
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-		tv.update_shows(FALSE, BITRUNNER_CAMERA_NET)
+	stop_broadcasting_network(BITRUNNER_CAMERA_NET)
 
 /// Tries to clean up everything in the domain
 /obj/machinery/quantum_server/proc/scrub_vdom()
