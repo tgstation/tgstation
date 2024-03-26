@@ -116,7 +116,7 @@
 			if(machine_stat & BROKEN)
 				balloon_alert(user, "frame is too damaged!")
 				return
-			if(!pseudocircuit.adapt_circuit(user, 50 KILO JOULES))
+			if(!pseudocircuit.adapt_circuit(user, circuit_cost = 50 KILO JOULES))
 				return
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt a power control board and click it into place in [src]'s guts."))
