@@ -37,6 +37,10 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/event_token_month = 0
 	///what token event do we currently have queued
 	var/datum/twitch_event/queued_token_event
+	/// The timer for the antag token timeout
+	var/antag_timeout
+	/// The timer for the event token timeout
+	var/event_timeout
 
 /datum/meta_token_holder/New(client/creator)
 	. = ..()
@@ -128,6 +132,9 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
+	if(antag_timeout)
+		deltimer(antag_timeout)
+		antag_timeout = null
 
 /datum/meta_token_holder/proc/reject_antag_token()
 	if(!in_queue)
@@ -135,9 +142,24 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	to_chat(owner, span_boldwarning("Your request to play as [in_queue] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been denied.")
+	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
+	if(antag_timeout)
+		deltimer(antag_timeout)
+		antag_timeout = null
+
+/datum/meta_token_holder/proc/timeout_antag_token()
+	if(!in_queue)
+		return
+	to_chat(owner, span_boldwarning("Your request to play as [in_queue] wasn't answered within 5 minutes. Better luck next time!"))
+	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has timed out.")
+	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+	in_queue = null
+	in_queued_tier = null
+	queued_donor = FALSE
+	antag_timeout = null
 
 /datum/meta_token_holder/proc/adjust_event_tokens(amount)
 	check_event_tokens(owner)
@@ -162,6 +184,9 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	adjust_event_tokens(-queued_token_event.token_cost)
 	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
 	queued_token_event = null
+	if(event_timeout)
+		deltimer(event_timeout)
+		event_timeout = null
 
 /datum/meta_token_holder/proc/reject_token_event()
 	if(!queued_token_event)
@@ -169,4 +194,17 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	to_chat(owner, span_boldwarning("Your request to trigger [queued_token_event] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been denied.")
+	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
+	if(event_timeout)
+		deltimer(event_timeout)
+		event_timeout = null
+
+/datum/meta_token_holder/proc/timeout_event_token()
+	if(!queued_token_event)
+		return
+	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has timed out.")
+	to_chat(owner, span_boldwarning("Your request to trigger [queued_token_event] wasn't answered within 5 minutes. Better luck next time!"))
+	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+	queued_token_event = null
+	event_timeout = null

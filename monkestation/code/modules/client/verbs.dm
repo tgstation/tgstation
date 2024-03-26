@@ -57,9 +57,12 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 	client_token_holder.in_queue = new chosen_antagonist
 
 	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
-	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> \
-							[ADMIN_APPROVE_ANTAG_TOKEN(src)] [ADMIN_REJECT_ANTAG_TOKEN(src)] | \
-							[src] has requested to use their antag token to be a [chosen_antagonist::name].")]")
+	send_formatted_admin_message( \
+		"[ADMIN_LOOKUPFLW(src)] has requested to use their antag token to be a [chosen_antagonist::name].\n\n[ADMIN_APPROVE_ANTAG_TOKEN(src)] | [ADMIN_REJECT_ANTAG_TOKEN(src)]",	\
+		title = "Antag Token Request", \
+		color_override = "orange" \
+	)
+	client_token_holder.antag_timeout = addtimer(CALLBACK(client_token_holder, TYPE_PROC_REF(/datum/meta_token_holder, timeout_antag_token)), 5 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 /client/verb/trigger_token_event()
 	set category = "IC"
@@ -92,9 +95,12 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 			client_token_holder.queued_token_event = selected_event
 			to_chat(src, span_boldnotice("Your request has been sent."))
 			logger.Log(LOG_CATEGORY_META, "[usr] has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).")
-			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
-																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
-																				[src] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).")]")
+			send_formatted_admin_message( \
+				"[ADMIN_LOOKUPFLW(src)] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).\n\n[ADMIN_APPROVE_TOKEN_EVENT(src)] | [ADMIN_REJECT_TOKEN_EVENT(src)]",	\
+				title = "Event Token Request", \
+				color_override = "orange" \
+			)
+			client_token_holder.event_timeout = addtimer(CALLBACK(client_token_holder, TYPE_PROC_REF(/datum/meta_token_holder, timeout_event_token)), 5 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 			return
 		to_chat(src, "You dont have enough tokens to trigger this event.")
 

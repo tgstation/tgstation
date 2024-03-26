@@ -537,6 +537,7 @@
 #include "code\__HELPERS\sorts\InsertSort.dm"
 #include "code\__HELPERS\sorts\MergeSort.dm"
 #include "code\__HELPERS\sorts\TimSort.dm"
+#include "code\__HELPERS\~monkestation-helpers\announcements.dm"
 #include "code\__HELPERS\~monkestation-helpers\icon_smoothing.dm"
 #include "code\__HELPERS\~monkestation-helpers\time.dm"
 #include "code\__HELPERS\~monkestation-helpers\virology.dm"
