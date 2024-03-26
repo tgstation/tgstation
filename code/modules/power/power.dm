@@ -524,7 +524,7 @@
 	else if (istype(power_source, /datum/powernet))
 		PN.delayedload += (min(drained_energy, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
-		cell.use(drained_energy KILO JOULES)
+		cell.use(drained_energy)
 	return drained_energy
 
 ////////////////////////////////////////////////
