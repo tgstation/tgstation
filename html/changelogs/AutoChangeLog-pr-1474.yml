@@ -1,0 +1,5 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - rscadd: "Blind support for booping"
+  - rscadd: "Chat message when someone boops you"
