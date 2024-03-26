@@ -39,7 +39,8 @@
 		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()
-	linked_bug.linked_glasses = null
+	if(linked_bug)
+		linked_bug.linked_glasses = null
 	. = ..()
 
 /datum/action/item_action/activate_remote_view
