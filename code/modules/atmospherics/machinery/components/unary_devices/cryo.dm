@@ -109,6 +109,8 @@
 	var/message_cooldown
 	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
 	var/treating_wounds = FALSE
+	/// Cryo should notify doctors if the patient is dead, and eject them if autoeject is enabled
+	var/patient_dead = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
@@ -268,19 +270,36 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process(seconds_per_tick)
 	..()
-
-	if(!on)
-		return
 	if(!occupant)
 		return
+
+	if(!on)
+		// Should turn on if set to auto
+		if(autoeject)
+			set_on(TRUE)
+		else
+			return
 
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
 		mob_occupant.extinguish_mob()
 	if(!check_nap_violations())
 		return
-	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
+	if(mob_occupant.stat == DEAD) // Notify doctors and potentially eject if the patient is dead
+		set_on(FALSE)
+		var/msg = "Patient is deceased."
+		if(autoeject) // Eject if configured.
+			msg += " Auto ejecting patient now."
+			open_machine()
+		// Only need to tell them once
+		if(!patient_dead)
+			playsound(src, 'sound/machines/cryo_warning.ogg', volume)
+			patient_dead = TRUE
+			radio.talk_into(src, msg, radio_channel)
 		return
+
+	patient_dead = FALSE
+
 	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		if(iscarbon(mob_occupant))
 			var/mob/living/carbon/C = mob_occupant
@@ -383,6 +402,9 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		if(loc == user?.loc)
+			to_chat(user, span_warning("You can't close [src] on yourself!"))
+			return
 		flick("pod-close-anim", src)
 		..(user)
 		return occupant

@@ -2142,7 +2142,7 @@
 	name = "Loading Doors";
 	pixel_y = 6
 	},
-/obj/machinery/modular_computer/console/preset{
+/obj/machinery/modular_computer/preset{
 	dir = 8
 	},
 /turf/open/floor/iron,

@@ -5278,7 +5278,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "we" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/modular_computer/console/preset/engineering,
+/obj/machinery/modular_computer/preset/engineering,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wg" = (

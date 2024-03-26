@@ -37,7 +37,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/planetengi)
 "as" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{

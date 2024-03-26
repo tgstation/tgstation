@@ -881,7 +881,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "cs" = (
-/obj/machinery/modular_computer/console/preset/id/centcom,
+/obj/machinery/modular_computer/preset/id/centcom,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
 "ct" = (
@@ -1337,7 +1337,7 @@
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "dC" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
@@ -2112,7 +2112,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "fU" = (
-/obj/machinery/modular_computer/console/preset/id/centcom,
+/obj/machinery/modular_computer/preset/id/centcom,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "fV" = (
@@ -7283,7 +7283,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/borbop)
 "ur" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 4;
 	desc = "A specialized console to connect to gaming computers to be able to broadcast live. Seriously, where does Ook find this stuff?"
 	},
@@ -10545,7 +10545,7 @@
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Dt" = (
-/obj/machinery/modular_computer/console/preset/id/centcom,
+/obj/machinery/modular_computer/preset/id/centcom,
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
 	},
@@ -11471,7 +11471,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
 "Gb" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 4
 	},
 /turf/open/floor/circuit,
@@ -11944,7 +11944,7 @@
 	},
 /area/centcom/central_command_areas/admin)
 "Hp" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -12934,7 +12934,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "Ki" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -13744,7 +13744,7 @@
 	},
 /area/centcom/central_command_areas/hall)
 "Mk" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -15663,7 +15663,7 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
 "RK" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1;
 	desc = "A specialized console to connect to gaming computers to be able to broadcast live. Seriously, where does Ook find this stuff?"
 	},
@@ -16290,7 +16290,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "Tx" = (
-/obj/machinery/modular_computer/console/preset/id/centcom,
+/obj/machinery/modular_computer/preset/id/centcom,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "Ty" = (
@@ -17089,7 +17089,7 @@
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "VL" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
 	},
 /turf/open/floor/iron/grimy,
@@ -17986,7 +17986,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
 "Yj" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/white,

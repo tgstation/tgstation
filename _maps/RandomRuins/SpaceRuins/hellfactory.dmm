@@ -338,7 +338,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "bg" = (
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/modular_computer/preset/civilian,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bh" = (

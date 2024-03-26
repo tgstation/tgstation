@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 	var/change_position_cooldown = 30
 	///Jobs blacklisted from having their slots edited.
-	var/list/blacklisted = list(
+	var/static/list/blacklisted = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_HEAD_OF_SECURITY,
@@ -36,7 +36,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/opened_positions = list()
 
 /datum/computer_file/program/job_management/New()
-	..()
+	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 
@@ -67,9 +67,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 
 /datum/computer_file/program/job_management/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	var/obj/item/card/id/user_id = computer.computer_id_slot
 	if(!user_id || !(ACCESS_CHANGE_IDS in user_id.access))
 		return TRUE

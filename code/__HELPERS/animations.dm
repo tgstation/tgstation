@@ -27,3 +27,6 @@
 		final_pixel_y += living_target.body_position_pixel_y_offset; \
 	}; \
 	animate(target, pixel_y = final_pixel_y, time = 1 SECONDS)
+
+/// The duration of the animate call in mob/living/update_transform
+#define UPDATE_TRANSFORM_ANIMATION_TIME (0.2 SECONDS)

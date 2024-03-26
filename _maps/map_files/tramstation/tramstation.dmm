@@ -2291,7 +2291,7 @@
 /area/station/asteroid)
 "ahs" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/modular_computer/console/preset/id,
+/obj/machinery/modular_computer/preset/id,
 /obj/structure/sign/calendar/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
@@ -2935,7 +2935,7 @@
 /area/station/engineering/break_room)
 "amA" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/modular_computer/preset/civilian,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
@@ -3049,7 +3049,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "anJ" = (
-/obj/machinery/modular_computer/console/preset/engineering{
+/obj/machinery/modular_computer/preset/engineering{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -7355,7 +7355,7 @@
 /area/station/maintenance/starboard/lesser)
 "bia" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/modular_computer/console/preset/engineering{
+/obj/machinery/modular_computer/preset/engineering{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8336,7 +8336,7 @@
 	},
 /area/station/command/bridge)
 "byp" = (
-/obj/machinery/modular_computer/console/preset/research,
+/obj/machinery/modular_computer/preset/research,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/glass/reinforced,
 /area/station/command/heads_quarters/rd)
@@ -13259,7 +13259,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "ddz" = (
-/obj/machinery/modular_computer/console/preset/cargochat/service{
+/obj/machinery/modular_computer/preset/cargochat/service{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -15569,7 +15569,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
 "dPS" = (
-/obj/machinery/modular_computer/console/preset/id{
+/obj/machinery/modular_computer/preset/id{
 	dir = 8
 	},
 /obj/machinery/keycard_auth/directional/north,
@@ -19893,7 +19893,7 @@
 "fkq" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/modular_computer/console/preset/engineering{
+/obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -21268,7 +21268,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "fGS" = (
-/obj/machinery/modular_computer/console/preset/id{
+/obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
 /obj/structure/sign/clock/directional/south,
@@ -28069,7 +28069,7 @@
 /area/station/command/heads_quarters/cmo)
 "ial" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/modular_computer/console/preset/cargochat/engineering,
+/obj/machinery/modular_computer/preset/cargochat/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plastic,
@@ -28096,7 +28096,7 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "iaZ" = (
-/obj/machinery/modular_computer/console/preset/engineering{
+/obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -44444,7 +44444,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "nkE" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /obj/structure/window/spawner/directional/north,
@@ -49741,7 +49741,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/modular_computer/console/preset/cargochat/cargo,
+/obj/machinery/modular_computer/preset/cargochat/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oZA" = (
@@ -56418,7 +56418,7 @@
 	name = "Captain's Requests Console";
 	can_send_announcements = 1
 	},
-/obj/machinery/modular_computer/console/preset/id{
+/obj/machinery/modular_computer/preset/id{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -58263,7 +58263,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/modular_computer/console/preset/engineering{
+/obj/machinery/modular_computer/preset/engineering{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -61960,7 +61960,7 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "sQu" = (
-/obj/machinery/modular_computer/console/preset/curator{
+/obj/machinery/modular_computer/preset/curator{
 	dir = 4
 	},
 /obj/machinery/light_switch/directional/west{
@@ -64853,7 +64853,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "tLA" = (
-/obj/machinery/modular_computer/console/preset/id{
+/obj/machinery/modular_computer/preset/id{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -66404,7 +66404,7 @@
 	c_tag = "Science - Ordnance Lab";
 	network = list("ss13","rd")
 	},
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/modular_computer/preset/civilian,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "ulJ" = (
@@ -66933,7 +66933,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/modular_computer/console/preset/id,
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "utY" = (
@@ -71230,7 +71230,7 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "vGt" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -72863,7 +72863,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
@@ -74415,7 +74415,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "wFS" = (
-/obj/machinery/modular_computer/console/preset/cargochat/security{
+/obj/machinery/modular_computer/preset/cargochat/security{
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/west,
@@ -78321,7 +78321,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/modular_computer/console/preset/cargochat/medical{
+/obj/machinery/modular_computer/preset/cargochat/medical{
 	dir = 4
 	},
 /turf/open/floor/iron/white,

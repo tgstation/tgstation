@@ -19,7 +19,8 @@
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	cost = 3
+	cost = 4
+	surplus = 66
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -82,11 +83,10 @@
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	cost = 8
 
-/datum/uplink_item/device_tools/camera_bug
-	name = "Camera Bug"
-	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
-			Bugging cameras allows you to disable them remotely."
-	item = /obj/item/camera_bug
+/datum/uplink_item/device_tools/camera_app
+	name = "SyndEye Program"
+	desc = "A data disk containing a unique PC app that allows you to watch cameras and track crewmembers."
+	item = /obj/item/computer_disk/syndicate/camera_app
 	cost = 1
 	surplus = 90
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

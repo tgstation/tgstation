@@ -18,6 +18,8 @@
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_NO_MIRROR_REFLECTION,
+		/*TRAIT_USES_SKINTONES,*/ //monkestation temp removal, we dont have this refactor yet
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")

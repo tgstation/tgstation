@@ -887,7 +887,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/modular_computer/console/preset/engineering,
+/obj/machinery/modular_computer/preset/engineering,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 1

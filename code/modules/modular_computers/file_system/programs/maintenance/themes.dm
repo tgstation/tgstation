@@ -32,7 +32,6 @@
 		theme_app.imported_themes += theme_name
 		theme_app.size += size
 		qdel(src)
-	return ..()
 
 /datum/computer_file/program/maintenance/theme/cat
 	theme_name = CAT_THEME_NAME

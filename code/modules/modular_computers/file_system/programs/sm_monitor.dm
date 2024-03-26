@@ -22,7 +22,7 @@
 	refresh()
 
 /// Apparently destroy calls this [/datum/computer_file/Destroy]. Here just to clean our references.
-/datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)
+/datum/computer_file/program/supermatter_monitor/kill_program(mob/user)
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	return ..()
@@ -54,10 +54,7 @@
 	data["focus_uid"] = focused_supermatter?.uid
 	return data
 
-/datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/supermatter_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_refresh")
 			refresh()

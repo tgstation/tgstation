@@ -11,6 +11,7 @@
 	integrity_failure = 0.25
 	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = LETPASSCLICKS
 
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj

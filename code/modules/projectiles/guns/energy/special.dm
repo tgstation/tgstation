@@ -286,16 +286,18 @@
 	p_orange.link_portal(p_blue)
 	p_blue.link_portal(p_orange)
 
-/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null)
-	RegisterSignal(P, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
-	if(istype(W, /obj/projectile/beam/wormhole/orange))
+/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/wormhole_beam, turf/target)
+	var/obj/effect/portal/new_portal = new /obj/effect/portal(target, 300, null, FALSE, null)
+	RegisterSignal(new_portal, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
+	if(istype(wormhole_beam, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)
-		p_orange = P
-		P.icon_state = "portal1"
+		p_orange = new_portal
+		new_portal.icon_state = "portal1"
+		new_portal.set_light_color(COLOR_MOSTLY_PURE_ORANGE)
+		new_portal.update_light()
 	else
 		qdel(p_blue)
-		p_blue = P
+		p_blue = new_portal
 	crosslink()
 
 /obj/item/gun/energy/wormhole_projector/core_inserted

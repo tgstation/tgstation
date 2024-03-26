@@ -611,7 +611,7 @@
 	health = 25;
 	maxHealth = 25;
 	name = "hatchling";
-	resize = 0.85
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -627,7 +627,7 @@
 	health = 25;
 	maxHealth = 25;
 	name = "hatchling";
-	resize = 0.85
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1467,7 +1467,7 @@
 	health = 25;
 	maxHealth = 25;
 	name = "hatchling";
-	resize = 0.85
+	current_size = 0.85
 	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)

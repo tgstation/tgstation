@@ -314,9 +314,6 @@
 /obj/item/healthanalyzer{
 	pixel_y = 10
 	},
-/obj/item/healthanalyzer{
-	pixel_y = 10
-	},
 /turf/open/floor/iron/edge,
 /area/shuttle/syndicate/medical)
 "bu" = (
@@ -487,6 +484,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/under/syndicate/scrubs,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/tank/internals/anesthetic,
 /turf/open/floor/iron,
 /area/shuttle/syndicate/medical)
 "ce" = (
@@ -530,7 +531,6 @@
 /area/shuttle/syndicate/hallway)
 "cp" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "cr" = (
@@ -737,11 +737,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "nZ" = (
-/obj/item/cautery,
-/obj/item/scalpel,
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/computer/operating{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
@@ -752,10 +752,17 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/bridge)
 "pQ" = (
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
+/obj/structure/table/reinforced,
+/obj/item/bodypart/arm/left/robot{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/bodypart/arm/right/robot{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "st" = (
@@ -850,21 +857,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "zj" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light/directional/west,
-/obj/item/bodypart/arm/left/robot{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/bodypart/arm/right/robot{
-	pixel_x = -10;
-	pixel_y = 9
-	},
-/obj/item/surgicaldrill,
-/obj/item/circular_saw,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/white/side,
 /area/shuttle/syndicate/medical)
 "zL" = (

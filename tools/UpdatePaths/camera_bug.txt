@@ -1,0 +1,1 @@
+/obj/item/camera_bug : /obj/item/computer_disk/syndicate/camera_app

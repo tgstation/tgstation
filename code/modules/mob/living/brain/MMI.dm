@@ -22,9 +22,6 @@
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/borg = loc
-		borg.mmi = null
 	set_mecha(null)
 	QDEL_NULL(brainmob)
 	QDEL_NULL(brain)

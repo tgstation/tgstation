@@ -24,13 +24,11 @@
 /mob/living/carbon/human/proc/on_gain_giant_trait(datum/source)
 	SIGNAL_HANDLER
 
-	src.resize = 1.25
-	src.update_transform()
+	src.update_transform(1.25)
 	src.visible_message(span_danger("[src] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 /mob/living/carbon/human/proc/on_lose_giant_trait(datum/source)
 	SIGNAL_HANDLER
 	//We're leaving the size traits permanent until someone wants to separate the mutation from customization aspects
-	//src.resize = 0.8
-	//src.update_transform()
+	//src.update_transform(0.8)
 	//src.visible_message(span_danger("[src] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))

@@ -56,6 +56,7 @@
 	attack_verb_simple = list("burn")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
+	heat = 500
 
 /obj/item/cautery/ignition_effect(atom/ignitable_atom, mob/user)
 	. = span_notice("[user] touches the end of [src] to \the [ignitable_atom], igniting it with a puff of smoke.")

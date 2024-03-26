@@ -19,7 +19,7 @@
 	. = ..()
 	set_frequency(signal_frequency)
 
-/datum/computer_file/program/signal_commander/kill_program(forced)
+/datum/computer_file/program/signal_commander/kill_program(mob/user)
 	. = ..()
 	SSradio.remove_object(computer, signal_frequency)
 
@@ -32,9 +32,6 @@
 	return data
 
 /datum/computer_file/program/signal_commander/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("signal")
 			INVOKE_ASYNC(src, PROC_REF(signal))

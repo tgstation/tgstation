@@ -7,8 +7,6 @@
 	var/list/required_access = list()
 	/// List of required access to download or file host the program. Any match will do.
 	var/list/transfer_access = list()
-	/// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
-	var/program_state = PROGRAM_STATE_KILLED
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -43,6 +41,8 @@
 	var/alert_pending = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
+	///Boolean on whether or not only one copy of the app can exist. This means it deletes itself when cloned elsewhere.
+	var/unique_copy = FALSE
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
@@ -51,7 +51,16 @@
 	temp.program_icon_state = program_icon_state
 	temp.requires_ntnet = requires_ntnet
 	temp.usage_flags = usage_flags
+	if(unique_copy)
+		if(computer)
+			computer.remove_file(src)
+		if(disk_host)
+			disk_host.remove_file(src)
 	return temp
+
+///We are not calling parent as it's handled by the computer itself, this is only called after.
+/datum/computer_file/program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(FALSE)
 
 // Relays icon update to the computer.
 /datum/computer_file/program/proc/update_computer_icon()
@@ -154,23 +163,43 @@
 		if(requires_ntnet)
 			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 			generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
-		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
 	return FALSE
 
 /**
  * Kills the running program
  *
- * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
- * Arguments:
- * * forced - Boolean to determine if this was a forced close. Should be TRUE if the user did not willingly close the program.
+ * Use this proc to kill the program.
+ * Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+ * Args:
+ * - user - If there's a user, this is the person killing the program.
  **/
-/datum/computer_file/program/proc/kill_program(forced = FALSE)
+/datum/computer_file/program/proc/kill_program(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	program_state = PROGRAM_STATE_KILLED
+
+	if(src == computer.active_program)
+		computer.active_program = null
+		if(computer.enabled)
+			computer.update_tablet_open_uis(usr)
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
+
 	if(requires_ntnet)
 		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
+
+	computer.update_appearance(UPDATE_ICON)
+	return TRUE
+
+///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
+/datum/computer_file/program/proc/background_program()
+	SHOULD_CALL_PARENT(TRUE)
+	if(header_program)
+		return kill_program()
+
+	computer.idle_threads.Add(src)
+	computer.active_program = null
+
+	computer.update_tablet_open_uis(usr)
+	computer.update_appearance(UPDATE_ICON)
 	return TRUE

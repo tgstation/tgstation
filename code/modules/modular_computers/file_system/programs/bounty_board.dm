@@ -58,9 +58,6 @@
 	return data
 
 /datum/computer_file/program/bounty_board/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target

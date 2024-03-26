@@ -215,7 +215,7 @@
 	pixel_y = -4;
 	pixel_x = -7
 	},
-/obj/item/camera_bug{
+/obj/item/computer_disk/syndicate/camera_app{
 	pixel_x = -5;
 	pixel_y = 9
 	},

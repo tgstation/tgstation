@@ -103,13 +103,6 @@
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
-/mob/living/silicon/robot/model/syndicate/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
-		modularInterface.saved_job = "Cyborg"
-	return ..()
-
-
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
 
@@ -461,7 +454,9 @@
 		modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
-		program.force_full_update()
+		var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)
+		if(active_ui)
+			active_ui.send_full_update()
 
 /// Same as the normal character name replacement, but updates the contents of the modular interface.
 /mob/living/silicon/fully_replace_character_name(oldname, newname)
