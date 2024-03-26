@@ -1,7 +1,7 @@
 /datum/quirk/item_quirk/borg_ready
 	name = "Cyborg Pre-screened dogtag"
 	desc = "Get pre-approved for NT's experimental Cyborg program, with a dog tag that lets medical staff know."
-	icon = FA_ICON_ROBOT
+	icon = FA_ICON_TAG
 	value = 0
 	gain_text = span_notice("You hear a distant echo of beeps and buzzes.")
 	lose_text = span_danger("The distant beeping halts.")
