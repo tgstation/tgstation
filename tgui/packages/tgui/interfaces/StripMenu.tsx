@@ -290,26 +290,26 @@ export const StripMenu = (props) => {
 
                   let alternateActions: string[] | undefined;
 
-                  let content;
-                  let tooltip;
+                  let content: JSX.Element | undefined;
+                  let tooltip: string | undefined;
 
                   if (item === null) {
                     tooltip = slot.displayName;
                   } else if ('name' in item) {
+                    content = (
+                      <Image
+                        src={`data:image/jpeg;base64,${item.icon}`}
+                        height="100%"
+                        width="100%"
+                        style={{
+                          verticalAlign: 'middle',
+                        }}
+                      />
+                    );
+
                     if (item.alternate) {
                       alternateActions = [];
-                      const alternateActionIconSize =
-                        100 / item.alternate.length;
                       for (const alternateKey of item.alternate || []) {
-                        const alternateAction = ALTERNATE_ACTIONS[alternateKey];
-                        <Image
-                          src={`data:image/jpeg;base64,${alternateAction.icon}`}
-                          height={`${alternateActionIconSize}%`}
-                          width={`${alternateActionIconSize}%`}
-                          style={{
-                            verticalAlign: 'middle',
-                          }}
-                        />;
                         alternateActions.push(alternateKey);
                       }
                     }
@@ -384,9 +384,21 @@ export const StripMenu = (props) => {
                         </Button>
 
                         {alternateActions &&
-                          alternateActions.map((alternateKey) => {
+                          alternateActions.map((alternateKey, idx) => {
                             const alternateAction =
                               ALTERNATE_ACTIONS[alternateKey];
+
+                            const alternateActionStyle = {
+                              background: 'rgba(0, 0, 0, 0.6)',
+                              position: 'absolute',
+                              overflow: 'hidden',
+                              margin: '0px',
+                              maxWidth: '22px', // 22px is a good width
+                              zIndex: '2',
+                              left: `${idx === 0 ? '0' : undefined}`,
+                              right: `${idx === 1 ? '0' : undefined}`,
+                              bottom: '0',
+                            };
                             return (
                               <Button
                                 key={alternateAction.text}
@@ -397,13 +409,7 @@ export const StripMenu = (props) => {
                                   });
                                 }}
                                 tooltip={alternateAction.text}
-                                style={{
-                                  background: 'rgba(0, 0, 0, 0.6)',
-                                  position: 'absolute',
-                                  bottom: '0',
-                                  right: '0',
-                                  zIndex: '2',
-                                }}
+                                style={alternateActionStyle}
                               >
                                 <Icon name={alternateAction.icon} />
                               </Button>

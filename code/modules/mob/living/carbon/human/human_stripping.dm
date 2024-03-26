@@ -90,20 +90,34 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 /datum/strippable_item/mob_item_slot/jumpsuit/proc/do_adjust_sensor(atom/source, mob/user, obj/item/clothing/under/jumpsuit)
 	if(!jumpsuit.has_sensor)
 		return
-	var/static/list/sensor_modes = list(
+
+	var/static/list/sensor_mode_text_to_num = list(
 		"Off" = SENSOR_OFF,
 		"Living" = SENSOR_LIVING,
 		"Vitals" = SENSOR_VITALS,
 		"Tracking" = SENSOR_COORDS,
 	)
-	var/new_mode = tgui_input_list(user, "Set To What", "Adjust Sensors", sensor_modes, sensor_modes[jumpsuit.sensor_mode])
-	new_mode = sensor_modes[new_mode]
-	if(isnull(new_mode) || !user.Adjacent(source)) // also catches returning null
+	var/static/list/senor_mode_num_to_text = list( // keep this as the inverse of the above list
+		"[SENSOR_OFF]" = "Off",
+		"[SENSOR_LIVING]" = "Living",
+		"[SENSOR_VITALS]" = "Vitals",
+		"[SENSOR_COORDS]" = "Tracking",
+	)
+
+	var/new_mode = tgui_input_list(user, "Set To What", "Adjust Sensors", sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
+	new_mode = sensor_mode_text_to_num[new_mode]
+	if(isnull(new_mode)) // also catches returning null
+		return
+
+	if(!user.Adjacent(source))
+		source.ballon_alert(user, "can't reach!")
 		return
 
 	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit]'s sensor."))
 	if(!do_after(user, (jumpsuit.strip_delay * 0.5), source)) // takes the same amount of time as adjusting it
+		source.balloon_alert(user, "failed!")
 		return
+	source.ballon_alert(user, "changed sensors")
 	jumpsuit.sensor_mode = new_mode
 	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit]'s sensor."))
 	if(ishuman(source))
