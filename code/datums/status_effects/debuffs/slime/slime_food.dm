@@ -49,7 +49,7 @@
 		return
 
 	draining_slime.befriend(feeder)
-
+	new /obj/effect/temp_visual/heart(draining_slime.loc)
 	qdel(src)
 
 /datum/status_effect/slime_food/on_remove()

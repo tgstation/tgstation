@@ -2,7 +2,7 @@
 //Feeding
 
 ///Can the slime leech life energy from the target?
-/mob/living/basic/slime/proc/can_feed_on(mob/living/meal, silent = FALSE, check_adjacenct = FALSE)
+/mob/living/basic/slime/proc/can_feed_on(mob/living/meal, silent = FALSE, check_adjacent = FALSE, check_friendship = FALSE)
 
 	if(!isliving(meal)) //sanity check
 		return FALSE
@@ -19,7 +19,10 @@
 		balloon_alert(src, "not hungry!")
 		return FALSE
 
-	if(check_adjacenct && !Adjacent(meal))
+	if(check_friendship && (REF(meal) in faction))
+		return FALSE
+
+	if(check_adjacent && !Adjacent(meal))
 		return FALSE
 
 	if(meal.stat == DEAD)

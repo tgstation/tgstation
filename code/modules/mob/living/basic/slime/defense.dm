@@ -31,6 +31,7 @@
 		to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))
 		var/obj/item/stack/sheet/mineral/plasma/sheet = attacking_item
 		sheet.use(1)
+		new /obj/effect/temp_visual/heart(loc)
 		return
 
 	//Checks if the item passes through the slime first. Safe items can be used simply
