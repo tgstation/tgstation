@@ -249,6 +249,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -265,9 +266,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	else
 		var/obj/item/instrument/guitar/G = new(src)
 		load(G)
-
-/obj/machinery/smartfridge/survival_pod/can_be_pried()
-	return FALSE
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	return isitem(O)
