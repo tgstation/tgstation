@@ -19,6 +19,7 @@
 
 ///from base of mob/living/basic/regal_rat: (mob/living/basic/regal_rat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
+	#define COMPONENT_RAT_INTERACTED (1<<0) //! If this is returned, cancel any further interactions.
 
 ///from /datum/status_effect/slime_leech: (mob/living/basic/slime/draining_slime)
 #define COMSIG_SLIME_DRAINED "slime_drained"
