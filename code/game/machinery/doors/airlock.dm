@@ -1253,14 +1253,14 @@
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
@@ -1335,7 +1335,7 @@
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorClose, 30, TRUE)
 			return TRUE
 
@@ -2321,7 +2321,7 @@
 			var/atom/throwtarget
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
-			flash_color(L, flash_color="#960000", flash_time=20)
+			flash_color(L, flash_color=COLOR_CULT_RED, flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE

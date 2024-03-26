@@ -174,11 +174,11 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer2
 	piping_layer = 2
-	icon_state = "volpump_map-2"
+	icon_state = "volpump_on_map-2"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer4
 	piping_layer = 4
-	icon_state = "volpump_map-4"
+	icon_state = "volpump_on_map-4"
 
 /obj/item/circuit_component/atmos_volume_pump
 	display_name = "Atmospheric Volume Pump"

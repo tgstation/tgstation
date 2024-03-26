@@ -162,7 +162,7 @@
 			stack_trace("boulder found containing material type [picked.type] with no set ore_type")
 			continue
 		cracked_ore = new cracked_ore_type (drop_location(), quantity)
-		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
+		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore.type)
 
 ///Moves boulder contents to the drop location, and then deletes the boulder.
 /obj/item/boulder/proc/break_apart()

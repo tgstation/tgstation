@@ -37,7 +37,7 @@ Slimecrossing Armor
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "prismglasses"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
-	var/glasses_color = "#FFFFFF"
+	var/glasses_color = COLOR_WHITE
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)

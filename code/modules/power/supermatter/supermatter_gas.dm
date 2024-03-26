@@ -39,7 +39,7 @@
 				"positive" = TRUE,
 			))
 		if(sm_gas.heat_power_generation)
-			var/list/si_derived_data = siunit_isolated(sm_gas.heat_power_generation * GAS_HEAT_POWER_SCALING_COEFFICIENT * 1e7 / SSair.wait, "eV/K/s", 2)
+			var/list/si_derived_data = siunit_isolated(sm_gas.heat_power_generation * GAS_HEAT_POWER_SCALING_COEFFICIENT MEGA SECONDS / SSair.wait, "eV/K/s", 2)
 			numeric_data += list(list(
 				"name" = "Heat Power Gain",
 				"amount" = si_derived_data["coefficient"],
@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	sm.supermatter_zap(
 		sm,
 		range = 6,
-		zap_str = clamp(sm.internal_energy * 1600, 3.2e6, 1.6e7),
+		zap_str = clamp(sm.internal_energy * 1.6 KILO JOULES, 3.2 MEGA JOULES, 16 MEGA JOULES),
 		zap_flags = ZAP_MOB_STUN,
 		zap_cutoff = sm.zap_cutoff,
 		power_level = sm.internal_energy,

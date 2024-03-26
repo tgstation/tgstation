@@ -15,7 +15,7 @@
 #define MAX_MICROWAVE_DIRTINESS 100
 
 /// For the wireless version, and display fluff
-#define TIER_1_CELL_CHARGE_RATE 250
+#define TIER_1_CELL_CHARGE_RATE (250 KILO JOULES)
 
 /obj/machinery/microwave
 	name = "microwave oven"
@@ -675,7 +675,7 @@
 				pre_success(cooker)
 		return
 	cycles--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(cook_loop), type, cycles, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()
@@ -831,8 +831,9 @@
 	if(cell_powered && !cell.use(charge_rate))
 		charge_loop_finish(cooker)
 
-	vampire_cell.give(charge_rate * (0.85 + (efficiency * 0.5))) // we lose a tiny bit of power in the transfer as heat
-	use_power(charge_rate)
+	use_energy(charge_rate * (0.5 - efficiency * 0.12)) //Some of the power gets lost as heat.
+	charge_cell(charge_rate * (0.5 + efficiency * 0.12), vampire_cell) //Cell gets charged, which further uses power.
+
 
 	vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 

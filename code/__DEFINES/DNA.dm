@@ -96,7 +96,6 @@
 #define ORGAN_SLOT_EXTERNAL_HORNS "horns"
 #define ORGAN_SLOT_EXTERNAL_WINGS "wings"
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
-#define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
 #define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
 
 /// Xenomorph organ slots
