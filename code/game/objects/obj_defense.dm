@@ -169,8 +169,8 @@
 /**
  * The interminate proc between deconstruct() & atom_deconstruct(). By default this delegates deconstruction to
  * atom_deconstruct if NO_DECONSTRUCTION is absent but subtypes can override this to handle NO_DECONSTRUCTION in their
- * own unique way and an even stop deconstruction if they return FALSE. Override this if for example you want to dump out
- * important content like mobs from the atom before deconstruction regardless if NO_DECONSTRUCTION is present or not
+ * own unique way. Override this if for example you want to dump out important content like mobs from the
+ * atom before deconstruction regardless if NO_DECONSTRUCTION is present or not
  * Arguments
  *
  * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
@@ -181,8 +181,6 @@
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		atom_deconstruct(disassembled)
 
-	return TRUE
-
 /**
  * The obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
  * Arguments
@@ -192,16 +190,13 @@
 /obj/proc/deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	//you can't destroy me
-	if(resistance_flags & INDESTRUCTIBLE)
-		return
+	//allow objects to deconstruct themselves
+	handle_deconstruct(disassembled)
 
-	//check if deconstruction was successful
-	if(!handle_deconstruct(disassembled))
-		return
-
-	//clean up
+	//inform objects we were deconstructed
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
+
+	//delete our self
 	qdel(src)
 
 ///what happens when the obj's integrity reaches zero.

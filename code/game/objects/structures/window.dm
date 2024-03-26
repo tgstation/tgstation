@@ -91,7 +91,7 @@
 				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.mode == RCD_DECONSTRUCT && !(resistance_flags & INDESTRUCTIBLE))
+	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("delay" = 2 SECONDS, "cost" = 5)
 	return FALSE
 
