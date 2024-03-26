@@ -1,6 +1,6 @@
 /datum/quirk/light_drinker
 	name = "Light Drinker"
-	desc = "You just can't handle your drinks and get drunk very quickly."
+	desc = "You just can't handle your drinks and get blackout drunk very quickly."
 	icon = FA_ICON_COCKTAIL
 	value = -2
 	mob_trait = TRAIT_LIGHT_DRINKER

@@ -143,6 +143,10 @@
 
 		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
+	var/mob/living/carbon/drunkard = owner
+	// If you're a light drinker, black out as soon as you start.
+	if(!drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && HAS_TRAIT(drunkard, TRAIT_LIGHT_DRINKER) && owner.stat == CONSCIOUS)
+		attempt_to_blackout()
 
 	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
 	// but when we start to scale up you definitely will

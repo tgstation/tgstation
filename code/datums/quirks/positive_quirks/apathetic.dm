@@ -8,7 +8,9 @@
 	mail_goodies = list(/obj/item/hourglass)
 
 /datum/quirk/apathetic/add(client/client_source)
-	quirk_holder.mob_mood?.mood_modifier -= 0.2
+	quirk_holder.mob_mood?.mood_modifier[MOOD_MODIFIER_BAD] -= 0.2
+	quirk_holder.mob_mood?.mood_modifier[MOOD_MODIFIER_GOOD] -= 0.2
 
 /datum/quirk/apathetic/remove()
-	quirk_holder.mob_mood?.mood_modifier += 0.2
+	quirk_holder.mob_mood?.mood_modifier[MOOD_MODIFIER_BAD] += 0.2
+	quirk_holder.mob_mood?.mood_modifier[MOOD_MODIFIER_GOOD] += 0.2

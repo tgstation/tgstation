@@ -245,6 +245,10 @@
 #define MOOD_LEVEL_SAD3 2
 #define MOOD_LEVEL_SAD4 1
 
+// Mood modifier types.
+#define MOOD_MODIFIER_GOOD "good"
+#define MOOD_MODIFIER_BAD "bad"
+
 //Sanity values for humans
 #define SANITY_MAXIMUM 150
 #define SANITY_GREAT 125

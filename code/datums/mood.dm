@@ -18,8 +18,11 @@
 	var/sanity = SANITY_NEUTRAL
 	/// the total combined value of all visible moodlets for the mob
 	var/shown_mood
-	/// Moodlet value modifier
-	var/mood_modifier = 1
+	/// Moodlet value modifiers
+	var/mood_modifier = list(
+		MOOD_MODIFIER_GOOD = 1,
+		MOOD_MODIFIER_BAD = 1,
+	)
 	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
@@ -209,6 +212,7 @@
 /datum/mood/proc/update_mood()
 	if(QDELETED(mob_parent)) //don't bother updating their mood if they're about to be salty anyway. (in other words, we're about to be destroyed too anyway.)
 		return
+	var/something_bad_happened = FALSE
 	mood = 0
 	shown_mood = 0
 
@@ -216,11 +220,15 @@
 
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
+		var/mood_change = the_event.mood_change
+		if(mood_change > 0)
+			mood_change *= mood_modifier[MOOD_MODIFIER_GOOD]
+		else
+			something_bad_happened = TRUE
+			mood_change *= mood_modifier[MOOD_MODIFIER_BAD]
 		mood += the_event.mood_change
 		if (!the_event.hidden)
 			shown_mood += the_event.mood_change
-	mood *= mood_modifier
-	shown_mood *= mood_modifier
 
 	switch(mood)
 		if (-INFINITY to MOOD_SAD4)
@@ -241,6 +249,19 @@
 			mood_level = MOOD_LEVEL_HAPPY3
 		if (MOOD_HAPPY4 to INFINITY)
 			mood_level = MOOD_LEVEL_HAPPY4
+
+	if(HAS_TRAIT(mob_parent, TRAIT_HYPERSENSITIVE) && something_bad_happened) // if something bad happened and we're hyper-sensitive, update my sanity IMMEDIATELY
+		switch(mood_level)
+			if(MOOD_LEVEL_SAD4)
+				set_sanity(sanity - 30, SANITY_INSANE)
+			if(MOOD_LEVEL_SAD3)
+				set_sanity(sanity - 15, SANITY_INSANE)
+			if(MOOD_LEVEL_SAD2)
+				set_sanity(sanity - 10, SANITY_CRAZY)
+			if(MOOD_LEVEL_SAD1)
+				set_sanity(sanity - 5, SANITY_UNSTABLE)
+			if(MOOD_LEVEL_NEUTRAL to INFINITY)
+				set_sanity(sanity - 1, SANITY_UNSTABLE)
 
 	update_mood_icon()
 

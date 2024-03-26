@@ -51,6 +51,8 @@
 	var/damaged = FALSE
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
+	/// What client color, if any, should we apply?
+	var/client_color_to_apply
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
@@ -93,6 +95,8 @@
 
 	if(call_update)
 		affected_human.update_body()
+	if(client_color_to_apply)
+		eye_owner.add_client_colour(client_color_to_apply)
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
@@ -119,6 +123,8 @@
 
 	eye_owner.update_tint()
 	eye_owner.update_sight()
+	if(client_color_to_apply)
+		eye_owner.remove_client_colour(client_color_to_apply)
 
 #define OFFSET_X 1
 #define OFFSET_Y 2

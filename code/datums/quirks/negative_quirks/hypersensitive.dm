@@ -1,9 +1,10 @@
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
-	desc = "For better or worse, everything seems to affect your mood more than it should."
+	desc = "When things are bad, they're BAD."
 	icon = FA_ICON_FLUSHED
-	value = -2
-	gain_text = span_danger("You seem to make a big deal out of everything.")
+	value = -4
+	mob_trait = TRAIT_HYPERSENSITIVE
+	gain_text = span_danger("You seem to make a big deal out of all the awful, no-good, terrible things that happen to you and you alone.")
 	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
 	hardcore_value = 3
@@ -11,8 +12,8 @@
 
 /datum/quirk/hypersensitive/add(client/client_source)
 	if (quirk_holder.mob_mood)
-		quirk_holder.mob_mood.mood_modifier += 0.5
+		quirk_holder.mob_mood.mood_modifier[MOOD_MODIFIER_BAD] += 1
 
 /datum/quirk/hypersensitive/remove()
 	if (quirk_holder.mob_mood)
-		quirk_holder.mob_mood.mood_modifier -= 0.5
+		quirk_holder.mob_mood.mood_modifier[MOOD_MODIFIER_BAD] -= 1
