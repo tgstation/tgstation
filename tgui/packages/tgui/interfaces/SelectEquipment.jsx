@@ -1,4 +1,4 @@
-import { map, sortBy, uniq } from 'common/collections';
+import { sortBy, uniq } from 'common/collections';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
 
@@ -29,10 +29,10 @@ export const SelectEquipment = (props) => {
 
   const isFavorited = (entry) => favorites?.includes(entry.path);
 
-  const outfits = map((entry) => ({
+  const outfits = [...data.outfits, ...data.custom_outfits].map((entry) => ({
     ...entry,
     favorite: isFavorited(entry),
-  }))([...data.outfits, ...data.custom_outfits]);
+  }));
 
   // even if no custom outfits were sent, we still want to make sure there's
   // at least a 'Custom' tab so the button to create a new one pops up

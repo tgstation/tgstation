@@ -1,4 +1,3 @@
-import { map } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
@@ -104,7 +103,7 @@ export const ShuttleManipulatorTemplates = (props) => {
       <Flex>
         <Flex.Item>
           <Tabs vertical>
-            {map((template, templateId) => (
+            {Object.entries(templateObject).map(([templateId, template]) => (
               <Tabs.Tab
                 key={templateId}
                 selected={selectedTemplateId === templateId}
@@ -112,7 +111,7 @@ export const ShuttleManipulatorTemplates = (props) => {
               >
                 {template.port_id}
               </Tabs.Tab>
-            ))(templateObject)}
+            ))}
           </Tabs>
         </Flex.Item>
         <Flex.Item grow={1} basis={0}>

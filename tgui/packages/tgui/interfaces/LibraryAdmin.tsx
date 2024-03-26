@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { capitalize } from 'common/string';
 import { useState } from 'react';
@@ -121,11 +121,12 @@ const SearchAndDisplay = (props) => {
     show_deleted,
   } = data;
   const books = flow([
-    map<Book, DisplayBook>((book, i) => ({
-      ...book,
-      // Generate a unique id
-      key: i,
-    })),
+    (pages) =>
+      pages.map((book, i) => ({
+        ...book,
+        // Generate a unique id
+        key: i,
+      })),
     sortBy<DisplayBook>((book) => book.key),
   ])(pages);
   return (

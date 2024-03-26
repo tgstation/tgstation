@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useState } from 'react';
 
@@ -160,11 +160,12 @@ const ApcControlScene = (props) => {
   const [sortByField] = useLocalState('sortByField', 'name');
 
   const apcs = flow([
-    map((apc, i) => ({
-      ...apc,
-      // Generate a unique id
-      id: apc.name + i,
-    })),
+    (apcs) =>
+      apcs.map((apc, i) => ({
+        ...apc,
+        // Generate a unique id
+        id: apc.name + i,
+      })),
     sortByField === 'name' && sortBy((apc) => apc.name),
     sortByField === 'charge' && sortBy((apc) => -apc.charge),
     sortByField === 'draw' &&
@@ -255,14 +256,13 @@ const ApcControlScene = (props) => {
 const LogPanel = (props) => {
   const { data } = useBackend();
 
-  const logs = flow([
-    map((line, i) => ({
+  const logs = data.logs
+    .map((line, i) => ({
       ...line,
       // Generate a unique id
       id: line.entry + i,
-    })),
-    (logs) => logs.reverse(),
-  ])(data.logs);
+    }))
+    .reverse();
   return (
     <Box m={-0.5}>
       {logs.map((line) => (

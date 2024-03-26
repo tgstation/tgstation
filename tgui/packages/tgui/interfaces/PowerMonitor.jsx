@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useState } from 'react';
@@ -48,11 +48,12 @@ export const PowerMonitorContent = (props) => {
   const maxValue = Math.max(PEAK_DRAW, ...history.supply, ...history.demand);
   // Process area data
   const areas = flow([
-    map((area, i) => ({
-      ...area,
-      // Generate a unique id
-      id: area.name + i,
-    })),
+    (areas) =>
+      areas.map((area, i) => ({
+        ...area,
+        // Generate a unique id
+        id: area.name + i,
+      })),
     sortByField === 'name' && sortBy((area) => area.name),
     sortByField === 'charge' && sortBy((area) => -area.charge),
     sortByField === 'draw' &&

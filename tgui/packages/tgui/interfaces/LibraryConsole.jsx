@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { useState } from 'react';
@@ -137,11 +137,12 @@ export const Inventory = (props) => {
 export const InventoryDetails = (props) => {
   const { act, data } = useBackend();
   const inventory = flow([
-    map((book, i) => ({
-      ...book,
-      // Generate a unique id
-      key: i,
-    })),
+    (inventory) =>
+      inventory.map((book, i) => ({
+        ...book,
+        // Generate a unique id
+        key: i,
+      })),
     sortBy((book) => book.key),
   ])(data.inventory);
   return (
@@ -262,11 +263,12 @@ export const CheckoutEntries = (props) => {
 const CheckoutModal = (props) => {
   const { act, data } = useBackend();
   const inventory = flow([
-    map((book, i) => ({
-      ...book,
-      // Generate a unique id
-      key: i,
-    })),
+    (inventory) =>
+      inventory.map((book, i) => ({
+        ...book,
+        // Generate a unique id
+        key: i,
+      })),
     sortBy((book) => book.key),
   ])(data.inventory);
 
@@ -388,11 +390,12 @@ export const SearchAndDisplay = (props) => {
     can_db_request,
   } = data;
   const records = flow([
-    map((record, i) => ({
-      ...record,
-      // Generate a unique id
-      key: i,
-    })),
+    (pages) =>
+      pages.map((record, i) => ({
+        ...record,
+        // Generate a unique id
+        key: i,
+      })),
     sortBy((record) => record.key),
   ])(data.pages);
 

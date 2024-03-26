@@ -1,4 +1,4 @@
-import { map, reduce, sortBy } from 'common/collections';
+import { reduce, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
@@ -72,21 +72,22 @@ const filterRecipeList = (
   keyFilter: (key: string) => boolean,
 ) => {
   const filteredList: RecipeList = flow([
-    map((entry: RecipeListEntry): RecipeListFilterableEntry => {
-      const [key, recipe] = entry;
+    (list) =>
+      list.map((entry: RecipeListEntry): RecipeListFilterableEntry => {
+        const [key, recipe] = entry;
 
-      if (isRecipeList(recipe)) {
-        // If category name matches, return the whole thing.
-        if (keyFilter(key)) {
-          return entry;
+        if (isRecipeList(recipe)) {
+          // If category name matches, return the whole thing.
+          if (keyFilter(key)) {
+            return entry;
+          }
+
+          // otherwise, filter sub-entries.
+          return [key, filterRecipeList(recipe, keyFilter)];
         }
 
-        // otherwise, filter sub-entries.
-        return [key, filterRecipeList(recipe, keyFilter)];
-      }
-
-      return keyFilter(key) ? entry : [key, undefined];
-    }),
+        return keyFilter(key) ? entry : [key, undefined];
+      }),
     (list) =>
       list.filter((entry: RecipeListFilterableEntry) => entry[1] !== undefined),
     sortBy((entry: RecipeListEntry) => entry[0].toLowerCase()),

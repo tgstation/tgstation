@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-import { map, reduce, zipWith } from './collections';
+import { reduce, zipWith } from './collections';
 
 const ADD = (a, b) => a + b;
 const SUB = (a, b) => a - b;
@@ -32,11 +32,11 @@ export const vecDivide = (...vecs) => {
 };
 
 export const vecScale = (vec, n) => {
-  return map((x) => x * n)(vec);
+  return vec.map((x) => x * n);
 };
 
 export const vecInverse = (vec) => {
-  return map((x) => -x)(vec);
+  return vec.map((x) => -x);
 };
 
 export const vecLength = (vec) => {

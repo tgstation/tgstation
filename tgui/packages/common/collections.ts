@@ -15,34 +15,6 @@ type MapFunction = {
 };
 
 /**
- * Creates an array of values by running each element in collection
- * thru an iteratee function. The iteratee is invoked with three
- * arguments: (value, index|key, collection).
- *
- * If collection is 'null' or 'undefined', it will be returned "as is"
- * without emitting any errors (which can be useful in some cases).
- */
-export const map: MapFunction =
-  <T, U>(iterateeFn) =>
-  (collection: T[]): U[] => {
-    if (collection === null || collection === undefined) {
-      return collection;
-    }
-
-    if (Array.isArray(collection)) {
-      return collection.map(iterateeFn);
-    }
-
-    if (typeof collection === 'object') {
-      return Object.entries(collection).map(([key, value]) => {
-        return iterateeFn(value, key, collection);
-      });
-    }
-
-    throw new Error(`map() can't iterate on type ${typeof collection}`);
-  };
-
-/**
  * Given a collection, will run each element through an iteratee function.
  * Will then filter out undefined values.
  */
@@ -224,7 +196,7 @@ export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
 export const zipWith =
   <T, U>(iterateeFn: (...values: T[]) => U) =>
   (...arrays: T[][]): U[] => {
-    return map((values: T[]) => iterateeFn(...values))(zip(...arrays));
+    return zip(...arrays).map((values: T[]) => iterateeFn(...values));
   };
 
 const binarySearch = <T, U = unknown>(

@@ -1,5 +1,3 @@
-import { map } from 'common/collections';
-
 import { useBackend } from '../backend';
 import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
@@ -20,7 +18,7 @@ export const NtosCrewManifest = (props) => {
             />
           }
         >
-          {map((entries, department) => (
+          {Object.entries(manifest).map(([department, entries]) => (
             <Section key={department} level={2} title={department}>
               <Table>
                 {entries.map((entry) => (
@@ -31,7 +29,7 @@ export const NtosCrewManifest = (props) => {
                 ))}
               </Table>
             </Section>
-          ))(manifest)}
+          ))}
         </Section>
       </NtosWindow.Content>
     </NtosWindow>

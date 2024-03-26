@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vecLength, vecSubtract } from 'common/vector';
@@ -7,24 +7,28 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
+const coordsToVec = (coords) => coords.split(', ').map(parseFloat);
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
   const signals = flow([
-    map((signal, index) => {
-      // Calculate distance to the target. BYOND distance is capped to 127,
-      // that's why we roll our own calculations here.
-      const dist =
-        signal.dist &&
-        Math.round(
-          vecLength(
-            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords)),
-          ),
-        );
-      return { ...signal, dist, index };
-    }),
+    (signals) =>
+      signals.map((signal, index) => {
+        // Calculate distance to the target. BYOND distance is capped to 127,
+        // that's why we roll our own calculations here.
+        const dist =
+          signal.dist &&
+          Math.round(
+            vecLength(
+              vecSubtract(
+                coordsToVec(currentCoords),
+                coordsToVec(signal.coords),
+              ),
+            ),
+          );
+        return { ...signal, dist, index };
+      }),
     sortBy(
       // Signals with distance metric go first
       (signal) => signal.dist === undefined,

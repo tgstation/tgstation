@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
@@ -41,9 +41,9 @@ const selectRemappedStaticData = (data) => {
       ...node,
       id: remapId(id),
       costs,
-      prereq_ids: map(remapId)(node.prereq_ids || []),
-      design_ids: map(remapId)(node.design_ids || []),
-      unlock_ids: map(remapId)(node.unlock_ids || []),
+      prereq_ids: node.prereq_ids?.map(remapId) || [],
+      design_ids: node.design_ids?.map(remapId) || [],
+      unlock_ids: node.unlock_ids?.map(remapId) || [],
       required_experiments: node.required_experiments || [],
       discount_experiments: node.discount_experiments || [],
     };

@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 
 import { useBackend } from '../backend';
@@ -72,11 +72,12 @@ const SearchAndDisplay = (props) => {
     params_changed,
   } = data;
   const records = flow([
-    map((record, i) => ({
-      ...record,
-      // Generate a unique id
-      key: i,
-    })),
+    (pages) =>
+      pages.map((record, i) => ({
+        ...record,
+        // Generate a unique id
+        key: i,
+      })),
     sortBy((record) => record.key),
   ])(data.pages);
   return (
