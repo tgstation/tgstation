@@ -1,5 +1,4 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { sortBy } from 'common/collections';
 
 import { useBackend, useSharedState } from '../backend';
 import {
@@ -159,16 +158,17 @@ const CargoStatus = (props) => {
 const searchForSupplies = (supplies, search) => {
   search = search.toLowerCase();
 
-  return flow([
-    (categories) => categories.flatMap((category) => category.packs),
-    filter(
+  let queriedSupplies = supplies
+    .flatMap((category) => category.packs)
+    .filter(
       (pack) =>
         pack.name?.toLowerCase().includes(search.toLowerCase()) ||
         pack.desc?.toLowerCase().includes(search.toLowerCase()),
-    ),
-    sortBy((pack) => pack.name),
-    (packs) => packs.slice(0, 25),
-  ])(supplies);
+    );
+
+  queriedSupplies = sortBy((pack) => pack.name)(queriedSupplies);
+
+  return queriedSupplies.slice(0, 25);
 };
 
 export const CargoCatalog = (props) => {

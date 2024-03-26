@@ -4,33 +4,6 @@
  * @license MIT
  */
 
-/**
- * Iterates over elements of collection, returning an array of all elements
- * iteratee returns truthy for. The predicate is invoked with three
- * arguments: (value, index|key, collection).
- *
- * If collection is 'null' or 'undefined', it will be returned "as is"
- * without emitting any errors (which can be useful in some cases).
- */
-export const filter =
-  <T>(iterateeFn: (input: T, index: number, collection: T[]) => boolean) =>
-  (collection: T[]): T[] => {
-    if (collection === null || collection === undefined) {
-      return collection;
-    }
-    if (Array.isArray(collection)) {
-      const result: T[] = [];
-      for (let i = 0; i < collection.length; i++) {
-        const item = collection[i];
-        if (iterateeFn(item, i, collection)) {
-          result.push(item);
-        }
-      }
-      return result;
-    }
-    throw new Error(`filter() can't iterate on type ${typeof collection}`);
-  };
-
 type MapFunction = {
   <T, U>(
     iterateeFn: (value: T, index: number, collection: T[]) => U,

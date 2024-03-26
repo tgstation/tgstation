@@ -1,5 +1,4 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { sortBy } from 'common/collections';
 
 import { HEALTH, THREAT } from './constants';
 import type { AntagGroup, Antagonist, Observable } from './types';
@@ -43,15 +42,16 @@ export const getMostRelevant = (
   searchQuery: string,
   observables: Observable[][],
 ): Observable => {
-  return flow([
-    // Filters out anything that doesn't match search
-    filter<Observable>((observable) =>
-      isJobOrNameMatch(observable, searchQuery),
-    ),
-    // Sorts descending by orbiters
-    sortBy<Observable>((observable) => -(observable.orbiters || 0)),
+  let queriedObservables = observables
     // Makes a single Observables list for an easy search
-  ])(observables.flat())[0];
+    .flat()
+    // Filters out anything that doesn't match search
+    .filter((observable) => isJobOrNameMatch(observable, searchQuery));
+  // Sorts descending by orbiters
+  queriedObservables = sortBy<Observable>(
+    (observable) => -(observable.orbiters || 0),
+  )(queriedObservables);
+  return queriedObservables[0];
 };
 
 /** Returns the display color for certain health percentages */

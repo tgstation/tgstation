@@ -1,5 +1,4 @@
-import { filter, map, sortBy, uniq } from 'common/collections';
-import { flow } from 'common/fp';
+import { map, sortBy, uniq } from 'common/collections';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
 
@@ -49,15 +48,14 @@ export const SelectEquipment = (props) => {
     (entry) => entry.name + entry.path,
   );
 
-  const visibleOutfits = flow([
-    filter((entry) => entry.category === tab),
-    filter(searchFilter),
-    sortBy(
-      (entry) => !entry.favorite,
-      (entry) => !entry.priority,
-      (entry) => entry.name,
-    ),
-  ])(outfits);
+  let visibleOutfits = outfits
+    .filter((entry) => entry.category === tab)
+    .filter(searchFilter);
+  visibleOutfits = sortBy(
+    (entry) => !entry.favorite,
+    (entry) => !entry.priority,
+    (entry) => entry.name,
+  )(outfits);
 
   const getOutfitEntry = (current_outfit) =>
     outfits.find((outfit) => getOutfitKey(outfit) === current_outfit);

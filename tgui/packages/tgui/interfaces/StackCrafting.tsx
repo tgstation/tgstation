@@ -1,4 +1,4 @@
-import { filter, map, reduce, sortBy } from 'common/collections';
+import { map, reduce, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
@@ -87,7 +87,8 @@ const filterRecipeList = (
 
       return keyFilter(key) ? entry : [key, undefined];
     }),
-    filter((entry: RecipeListFilterableEntry) => entry[1] !== undefined),
+    (list) =>
+      list.filter((entry: RecipeListFilterableEntry) => entry[1] !== undefined),
     sortBy((entry: RecipeListEntry) => entry[0].toLowerCase()),
     reduce((obj: RecipeList, entry: RecipeListEntry) => {
       obj[entry[0]] = entry[1];

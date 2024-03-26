@@ -1,5 +1,4 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { sortBy } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
@@ -70,13 +69,13 @@ const prevNextCamera = (
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
 
-  return flow([
-    filter((camera: Camera) => !!camera.name),
-    // Optional search term
-    searchText && filter(testSearch),
-    // Slightly expensive, but way better than sorting in BYOND
-    sortBy((camera: Camera) => camera),
-  ])(cameras);
+  let queriedCameras = cameras.filter((camera: Camera) => !!camera.name);
+  if (searchText) {
+    queriedCameras = queriedCameras.filter(testSearch);
+  }
+  queriedCameras = sortBy((camera: Camera) => camera)(queriedCameras);
+
+  return queriedCameras;
 };
 
 export const CameraConsole = (props) => {

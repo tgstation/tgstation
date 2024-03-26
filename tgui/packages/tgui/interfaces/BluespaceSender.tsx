@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
@@ -43,10 +43,9 @@ export const BluespaceSender = (props) => {
   const { act, data } = useBackend<Data>();
   const { gas_transfer_rate, credits, bluespace_network_gases = [], on } = data;
 
-  const gases: Gas[] = flow([
-    filter<Gas>((gas) => gas.amount >= 0.01),
-    sortBy<Gas>((gas) => -gas.amount),
-  ])(bluespace_network_gases);
+  const gases: Gas[] = flow([sortBy<Gas>((gas) => -gas.amount)])(
+    bluespace_network_gases.filter((gas) => gas.amount >= 0.01),
+  );
 
   const gasMax = Math.max(1, ...gases.map((gas) => gas.amount));
 

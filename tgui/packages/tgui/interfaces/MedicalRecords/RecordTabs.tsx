@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
@@ -29,9 +29,8 @@ export const MedicalRecordTabs = (props) => {
   const [search, setSearch] = useState('');
 
   const sorted: MedicalRecord[] = flow([
-    filter((record: MedicalRecord) => isRecordMatch(record, search)),
     sortBy((record: MedicalRecord) => record.name?.toLowerCase()),
-  ])(records);
+  ])(records.filter((record) => isRecordMatch(record, search)));
 
   return (
     <Stack fill vertical>

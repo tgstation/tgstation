@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from 'tgui/backend';
@@ -91,9 +91,8 @@ const GasList = (props: GasListProps) => {
   const { start_power, start_cooling } = data;
 
   const gases: HypertorusGas[] = flow([
-    filter((gas: HypertorusGas) => gas.amount >= 0.01),
     sortBy((gas: HypertorusGas) => -gas.amount),
-  ])(raw_gases);
+  ])(raw_gases.filter((gas: HypertorusGas) => gas.amount >= 0.01));
 
   if (stickyGases) {
     ensure_gases(gases, stickyGases);
