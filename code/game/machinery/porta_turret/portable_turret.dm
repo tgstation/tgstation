@@ -976,7 +976,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	if (issilicon(user))
 		return attack_hand(user)
 
-	if (isidcard(attacking_item) && check_access(attacking_item))
+	if(!isidcard(attacking_item) && !istype(attacking_item, /obj/item/modular_computer/pda))
+		return
+
+	if (check_access(attacking_item))
 		if(obj_flags & EMAGGED)
 			to_chat(user, span_warning("The turret control is unresponsive!"))
 			return
