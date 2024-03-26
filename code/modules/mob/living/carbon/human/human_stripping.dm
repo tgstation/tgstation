@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	if(!do_after(user, (jumpsuit.strip_delay * 0.5), source)) // takes the same amount of time as adjusting it
 		source.balloon_alert(user, "failed!")
 		return
-	source.ballon_alert(user, "changed sensors")
+	source.balloon_alert(user, "changed sensors")
 	jumpsuit.sensor_mode = new_mode
 	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit]'s sensor."))
 	if(ishuman(source))
