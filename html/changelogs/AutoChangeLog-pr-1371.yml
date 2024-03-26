@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Improved shuttle gibbing code, adding a new resistance flag, `SHUTTLE_CRUSH_PROOF`."
+  - bugfix: "Immortality revival spectres can no longer be crushed by shuttles."
+  - rscadd: "The ghost of Poly can no longer be shuttle-crushed, nor can anything incorporeal."
