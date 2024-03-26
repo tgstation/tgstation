@@ -244,8 +244,8 @@
 
 	if(cell.charge < (paddles.revivecost + chrgdeductamt))
 		powered = FALSE
-	else if(!cell.use(chrgdeductamt))
-		return
+	if(!cell.use(chrgdeductamt))
+		powered = false
 
 	update_power()
 
