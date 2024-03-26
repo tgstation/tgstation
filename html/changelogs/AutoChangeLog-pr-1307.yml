@@ -1,0 +1,7 @@
+author: "Gboster, Kapu1178"
+delete-after: True
+changes:
+  - qol: "Gboster: made the asteroid magnet into a TGUI"
+  - rscadd: "Kapu1178: The magnet now has a 60 second cooldown between uses."
+  - bugfix: "Kapu1178: Summoned asteroids are removed from the list of available asteroids."
+  - bugfix: "Kapu1178: Fixed a bug that allowed you to summon multiple asteroids at once."
