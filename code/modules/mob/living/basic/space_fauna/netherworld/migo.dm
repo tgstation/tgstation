@@ -41,6 +41,10 @@
 		new /mob/living/basic/migo/hatsune(get_turf(loc), mapload)
 		return INITIALIZE_HINT_QDEL
 
+	if(istype(src, /mob/living/basic/migo/hatsune))
+		var/static/list/death_loot = list(/obj/item/instrument/piano_synth)
+		AddElement(/datum/element/death_drops, death_loot)
+
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = -1.5, additional_status_callback = CALLBACK(src, PROC_REF(update_dodge_chance)))
 
@@ -52,15 +56,22 @@
 	. = ..()
 	if(stat != CONSCIOUS)
 		return
-	playsound(src, pick(migo_sounds), 50, TRUE)
+	if(!istype(src, /mob/living/basic/migo/hatsune))
+		playsound(src, pick(migo_sounds), 50, TRUE)
+	else
+		playsound(src, 'sound/creatures/tourist/tourist_talk_japanese1.ogg', 50, TRUE)
 
 /mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 	if(SPT_PROB(5, seconds_per_tick))
-		var/chosen_sound = pick(migo_sounds)
-		playsound(src, chosen_sound, 50, TRUE)
+		if(!istype(src, /mob/living/basic/migo/hatsune))
+			var/chosen_sound = pick(migo_sounds)
+			playsound(src, chosen_sound, 50, TRUE)
+		else
+			playsound(src, 'sound/creatures/tourist/tourist_talk_japanese1.ogg', 50, TRUE)
+
 
 /mob/living/basic/migo/Move(atom/newloc, dir, step_x, step_y)
 	if(!ckey && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
@@ -82,4 +93,6 @@
 	desc = parent_type::desc + " This one is wearing a bright blue wig."
 	icon_state = "mi-go-h"
 	icon_living = "mi-go-h"
-	gold_core_spawnable = NO_SPAWN
+
+	gold_core_spawnable = FRIENDLY_SPAWN
+	faction = list(FACTION_NEUTRAL)
