@@ -1067,6 +1067,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/ai_basic/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		design_ids -= list(
+			"aicore",
+			"borg_ai_control",
+			"intellicard",
+			"mecha_tracking_ai_control",
+			"aifixer",
+			"aiupload",
+		)
+
 /datum/techweb_node/ai_adv
 	id = "ai_adv"
 	display_name = "Advanced Artificial Intelligence"

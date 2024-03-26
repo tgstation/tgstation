@@ -1466,8 +1466,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "aEl" = (
@@ -5554,6 +5554,7 @@
 "ciT" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/recharger,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab/firing_range)
 "cjm" = (
@@ -11921,7 +11922,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/bin,
 /obj/structure/railing{
 	dir = 10
 	},
@@ -11930,6 +11930,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "ewi" = (
@@ -18007,10 +18008,8 @@
 /area/station/hallway/primary/fore)
 "gBT" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/secure_safe/caps_spare,
 /obj/structure/table/glass,
-/obj/item/folder/blue{
-	pixel_y = 2
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
 "gCe" = (
@@ -24767,9 +24766,9 @@
 /area/station/construction/mining/aux_base)
 "iUN" = (
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "iVq" = (
@@ -35083,15 +35082,6 @@
 /area/station/maintenance/central/lesser)
 "mxa" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_x = -1;
-	pixel_y = 8
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
 "mxe" = (
@@ -40626,7 +40616,6 @@
 /area/station/hallway/primary/central/fore)
 "owZ" = (
 /obj/item/kirbyplants/organic/applebush,
-/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/bridge)
 "oxb" = (
@@ -50924,7 +50913,7 @@
 /turf/open/misc/sandy_dirt,
 /area/station/maintenance/starboard/aft)
 "rLN" = (
-/obj/structure/safe,
+/obj/structure/safe/vault,
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -57443,8 +57432,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -63481,10 +63470,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "vLT" = (
@@ -65240,8 +65226,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal/bin,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "woT" = (

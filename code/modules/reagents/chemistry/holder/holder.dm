@@ -255,53 +255,9 @@
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_subtypes)
-			break
+			return total_removed_amount
 
-	return total_removed_amount
-
-/**
- * Removes a reagent at random and by a random quantity till the specified amount has been removed.
- * Used to create a shower/spray effect for e.g. when you spill a bottle or turn a shower on
- * and you want an chaotic effect of whatever coming out
- * Arguments
- *
- * * amount- the volume to remove
- */
-/datum/reagents/proc/remove_any(amount = 1)
-	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to remove any reagent [amount]")
-		return FALSE
-
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
-		return FALSE
-
-	var/list/cached_reagents = reagent_list
-	var/total_removed = 0
-	var/current_list_element = 1
-	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
-
-	current_list_element = rand(1, cached_reagents.len)
-
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/target_holder = cached_reagents[current_list_element]
-		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		//min ensures we don't go over amount.
-		remove_reagent(target_holder.type, remove_amt)
-
-		current_list_element++
-		total_removed += remove_amt
-
-	handle_reactions()
-	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
+	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Removes all reagents either proportionally(amount is the direct volume to remove)
@@ -336,8 +292,8 @@
 		part /= total_volume
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		total_removed_amount += remove_reagent(reagent.type, reagent.volume * part)
-
 	handle_reactions()
+
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**

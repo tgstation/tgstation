@@ -75,7 +75,7 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
-#define SPAN_HELIUM "small"
+#define SPAN_SMALL_VOICE "small"
 
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
@@ -106,6 +106,7 @@
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
 #define MAX_PLAQUE_LEN 144
+#define MAX_LABEL_LEN 64
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

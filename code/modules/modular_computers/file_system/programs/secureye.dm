@@ -46,6 +46,15 @@
 	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
 	spying = TRUE
 
+/datum/computer_file/program/secureye/human_ai
+	filename = "Overseer"
+	filedesc = "OverSeer"
+	run_access = list(ACCESS_MINISAT)
+	can_run_on_flags = PROGRAM_PDA
+	program_flags = PROGRAM_UNIQUE_COPY
+	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	spying = TRUE
+
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	// Map name has to start and end with an A-Z character,

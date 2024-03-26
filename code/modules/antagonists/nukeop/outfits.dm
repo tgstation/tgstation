@@ -77,6 +77,7 @@
 	backpack_contents = list(
 		/obj/item/gun/ballistic/automatic/pistol/clandestine = 1,
 		/obj/item/pen/edagger = 1,
+		/obj/item/ammo_box/magazine/m12g = 3,
 	)
 
 /datum/outfit/syndicate/full/plasmaman

@@ -80,7 +80,7 @@
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
-		use_power(active_power_usage * seconds_per_tick)
+		use_energy(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		//allowed containers
 		var/static/list/allowed_containers = list(
