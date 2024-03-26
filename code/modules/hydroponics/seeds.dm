@@ -294,6 +294,9 @@
 			if(prob(10) && has_viable_mutations())
 				t_prod = create_valid_mutation(output_loc)
 			else
+				if(!product)
+					t_amount++
+					continue
 				t_prod = new product(output_loc, src)
 				if(parent.myseed.plantname != initial(parent.myseed.plantname))
 					t_prod.name = parent.myseed.plantname
