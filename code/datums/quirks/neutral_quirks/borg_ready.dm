@@ -5,7 +5,7 @@
 	value = 0
 	gain_text = span_notice("You hear a distant echo of beeps and buzzes.")
 	lose_text = span_danger("The distant beeping halts.")
-	medical_record_text = "Patient appears ready to abandon the flesh." //considering this quirk's whole point is a dogtag for medical to see, this feels redundant and silly
+	medical_record_text = "Patient is a registered brain donor for Robotics research."
 
 /datum/quirk/item_quirk/borg_ready/add_unique(client/client_source)
 	if(is_banned_from(quirk_holder.ckey, JOB_CYBORG))
