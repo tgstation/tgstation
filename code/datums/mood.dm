@@ -19,7 +19,7 @@
 	/// the total combined value of all visible moodlets for the mob
 	var/shown_mood
 	/// Moodlet value modifier
-	var/mood_modifier = 1
+	var/mood_modifier = 1.5
 	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
