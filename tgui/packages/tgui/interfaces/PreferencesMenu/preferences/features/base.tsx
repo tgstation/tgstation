@@ -1,4 +1,4 @@
-import { sortBy, sortStrings } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import {
   ComponentType,
@@ -209,7 +209,7 @@ export const FeatureDropdownInput = (
 
   return (
     <StandardizedDropdown
-      choices={sortStrings(serverData.choices)}
+      choices={serverData.choices.sort()}
       disabled={props.disabled}
       buttons={props.buttons}
       displayNames={displayNames}
@@ -278,7 +278,7 @@ export const FeatureIconnedDropdownInput = (
 
   return (
     <StandardizedDropdown
-      choices={sortStrings(serverData.choices)}
+      choices={serverData.choices.sort()}
       displayNames={displayNames}
       onSetValue={props.handleSetValue}
       value={props.value.value}

@@ -142,10 +142,6 @@ export const sortBy =
     return values;
   };
 
-export const sort = sortBy();
-
-export const sortStrings = sortBy<string>();
-
 /**
  * Returns a range of numbers from start to end, exclusively.
  * For example, range(0, 5) will return [0, 1, 2, 3, 4].
