@@ -72,6 +72,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     icon: 'tshirt',
     text: 'Adjust jumpsuit',
   },
+
+  adjust_sensor: {
+    icon: 'microchip',
+    text: 'Adjust sensors',
+  },
 };
 
 const SLOTS: Record<
@@ -236,7 +241,7 @@ type StripMenuItem =
       | {
           icon: string;
           name: string;
-          alternate?: string;
+          alternate?: string[];
         }
       | {
           obscured: ObscuringLevel;
@@ -283,7 +288,7 @@ export const StripMenu = (props) => {
                   const item = data.items[keyAtSpot];
                   const slot = SLOTS[keyAtSpot];
 
-                  let alternateAction: AlternateAction | undefined;
+                  let alternateActions: string[] | undefined;
 
                   let content;
                   let tooltip;
@@ -292,19 +297,22 @@ export const StripMenu = (props) => {
                     tooltip = slot.displayName;
                   } else if ('name' in item) {
                     if (item.alternate) {
-                      alternateAction = ALTERNATE_ACTIONS[item.alternate];
+                      alternateActions = [];
+                      const alternateActionIconSize =
+                        100 / item.alternate.length;
+                      for (const alternateKey of item.alternate || []) {
+                        const alternateAction = ALTERNATE_ACTIONS[alternateKey];
+                        <Image
+                          src={`data:image/jpeg;base64,${alternateAction.icon}`}
+                          height={`${alternateActionIconSize}%`}
+                          width={`${alternateActionIconSize}%`}
+                          style={{
+                            verticalAlign: 'middle',
+                          }}
+                        />;
+                        alternateActions.push(alternateKey);
+                      }
                     }
-
-                    content = (
-                      <Image
-                        src={`data:image/jpeg;base64,${item.icon}`}
-                        height="100%"
-                        width="100%"
-                        style={{
-                          verticalAlign: 'middle',
-                        }}
-                      />
-                    );
 
                     tooltip = item.name;
                   } else if ('obscured' in item) {
@@ -375,25 +383,32 @@ export const StripMenu = (props) => {
                           {slot.additionalComponent}
                         </Button>
 
-                        {alternateAction !== undefined && (
-                          <Button
-                            onClick={() => {
-                              act('alt', {
-                                key: keyAtSpot,
-                              });
-                            }}
-                            tooltip={alternateAction.text}
-                            style={{
-                              background: 'rgba(0, 0, 0, 0.6)',
-                              position: 'absolute',
-                              bottom: '0',
-                              right: '0',
-                              zIndex: '2',
-                            }}
-                          >
-                            <Icon name={alternateAction.icon} />
-                          </Button>
-                        )}
+                        {alternateActions &&
+                          alternateActions.map((alternateKey) => {
+                            const alternateAction =
+                              ALTERNATE_ACTIONS[alternateKey];
+                            return (
+                              <Button
+                                key={alternateAction.text}
+                                onClick={() => {
+                                  act('alt', {
+                                    key: keyAtSpot,
+                                    alternate_action: alternateKey,
+                                  });
+                                }}
+                                tooltip={alternateAction.text}
+                                style={{
+                                  background: 'rgba(0, 0, 0, 0.6)',
+                                  position: 'absolute',
+                                  bottom: '0',
+                                  right: '0',
+                                  zIndex: '2',
+                                }}
+                              >
+                                <Icon name={alternateAction.icon} />
+                              </Button>
+                            );
+                          })}
                       </Box>
                     </Stack.Item>
                   );

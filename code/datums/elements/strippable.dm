@@ -163,15 +163,16 @@
 /// Returns the ID of this item's strippable action.
 /// Return `null` if there is no alternate action.
 /// Any return value of this must be in StripMenu.
-/datum/strippable_item/proc/get_alternate_action(atom/source, mob/user)
+/datum/strippable_item/proc/get_alternate_actions(atom/source, mob/user)
+	RETURN_TYPE(/list)
 	return null
 
 /// Performs an alternative action on this strippable_item.
 /// `has_alternate_action` needs to be TRUE.
 /// Returns FALSE if blocked by signal, TRUE otherwise.
-/datum/strippable_item/proc/alternate_action(atom/source, mob/user)
+/datum/strippable_item/proc/perform_alternate_action(atom/source, mob/user, action_key)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source) & COMPONENT_CANT_ALT_ACTION)
+	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source, action_key) & COMPONENT_CANT_ALT_ACTION)
 		return FALSE
 	return TRUE
 
@@ -350,7 +351,7 @@
 
 		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
 		result["name"] = item.name
-		result["alternate"] = item_data.get_alternate_action(owner, user)
+		result["alternate"] = item_data.get_alternate_actions(owner, user)
 
 		items[strippable_key] = result
 
@@ -442,6 +443,7 @@
 				strippable_item.finish_unequip(owner, user)
 		if ("alt")
 			var/key = params["key"]
+			var/alt_action = params["alternate_action"]
 			var/datum/strippable_item/strippable_item = strippable.items[key]
 
 			if (isnull(strippable_item))
@@ -457,13 +459,13 @@
 			if (isnull(item))
 				return
 
-			if (isnull(strippable_item.get_alternate_action(owner, user)))
+			if (!(alt_action in strippable_item.get_alternate_actions(owner, user)))
 				return
 
 			LAZYORASSOCLIST(interactions, user, key)
 
 			// Potentially yielding
-			strippable_item.alternate_action(owner, user)
+			strippable_item.perform_alternate_action(owner, user, alt_action)
 
 			LAZYREMOVEASSOC(interactions, user, key)
 
