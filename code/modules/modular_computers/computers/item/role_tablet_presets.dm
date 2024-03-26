@@ -348,7 +348,7 @@
 	)
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 
-/// Return true if our wearer is in a position to slip someone
+/// Returns whether the PDA can slip or not, if we have a wearer then check if they are in a position to slip someone.
 /obj/item/modular_computer/pda/clown/proc/try_slip(mob/living/slipper, mob/living/slippee)
 	if(isnull(slipper))
 		return TRUE
