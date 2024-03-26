@@ -1,9 +1,9 @@
 /*
  * For a new plane of (x,x'),(y,y') : offset_x,offset_y,x_size,y_size
  *
- * //Sign changes must account for 0-crossing
+ * // Sign changes must account for 0-crossing
  * (-100,100),(0,0) : 101,1,201,1
- * //Otherwise, it does not
+ * // Otherwise, it does not
  * (-100,-50),(0,0) : 101,1,50,1
  * (50,100) , (0,0) : -49,1,50,1
  */

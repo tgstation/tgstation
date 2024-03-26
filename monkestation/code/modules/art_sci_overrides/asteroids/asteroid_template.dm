@@ -11,9 +11,11 @@
 	// Asteroid Map location
 	var/x
 	var/y
+
+	/// Has this template been located by players?
 	var/found = FALSE
-
-
+	/// Has this template been summoned?
+	var/summoned = FALSE
 
 /datum/mining_template/New(center, max_size)
 	. = ..()
