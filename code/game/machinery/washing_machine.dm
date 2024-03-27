@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		qdel(color_source)
 		color_source = null
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key

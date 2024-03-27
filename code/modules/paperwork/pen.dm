@@ -25,7 +25,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
-	var/colour = "#000000" //what colour the ink is!
+	var/colour = COLOR_BLACK //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
 	var/requires_gravity = TRUE // can you use this to write in zero-g
@@ -71,42 +71,42 @@
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
-	colour = "#0000FF"
+	colour = COLOR_BLUE
 
 /obj/item/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
-	colour = "#FF0000"
+	colour = COLOR_RED
 	throw_speed = 4 // red ones go faster (in this case, fast enough to embed!)
 
 /obj/item/pen/invisible
 	desc = "It's an invisible pen marker."
 	icon_state = "pen"
-	colour = "#FFFFFF"
+	colour = COLOR_WHITE
 
 /obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	icon_state = "pen_4color"
-	colour = "#000000"
+	colour = COLOR_BLACK
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
 	. = ..()
 	var/chosen_color = "black"
 	switch(colour)
-		if("#000000")
-			colour = "#FF0000"
+		if(COLOR_BLACK)
+			colour = COLOR_RED
 			chosen_color = "red"
 			throw_speed++
-		if("#FF0000")
-			colour = "#00FF00"
+		if(COLOR_RED)
+			colour = COLOR_VIBRANT_LIME
 			chosen_color = "green"
 			throw_speed--
-		if("#00FF00")
-			colour = "#0000FF"
+		if(COLOR_VIBRANT_LIME)
+			colour = COLOR_BLUE
 			chosen_color = "blue"
 		else
-			colour = "#000000"
+			colour = COLOR_BLACK
 	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
 	desc = "It's a fancy four-color ink pen, set to [chosen_color]."
 
@@ -317,7 +317,7 @@
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5
 	light_power = 1.3
-	light_color = COLOR_SOFT_RED
+	light_color = "#FA8282"
 	light_on = FALSE
 	dart_insert_projectile_icon_state = "overlay_edagger"
 	/// The real name of our item when extended.
@@ -461,7 +461,7 @@
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
-	colour = "#0000FF"
+	colour = COLOR_BLUE
 	dart_insert_casing_icon_state = "overlay_survivalpen"
 	dart_insert_projectile_icon_state = "overlay_survivalpen_proj"
 

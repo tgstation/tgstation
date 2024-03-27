@@ -313,7 +313,7 @@
 /mob/living/carbon/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	//Default cell = 10,000 charge, 10,000/1000 = 10 uses without charging/upgrading
+	//20 uses for a standard cell. 200 for high capacity cells.
 	if(hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN*10))
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()

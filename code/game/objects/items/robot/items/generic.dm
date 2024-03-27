@@ -251,10 +251,7 @@
 				if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
 					break
 
-				if(!user.cell.give(150))
-					break
-
-				target_machine.use_power(200)
+				target_machine.charge_cell(0.15 * STANDARD_CELL_CHARGE, user.cell)
 
 			to_chat(user, span_notice("You stop charging yourself."))
 

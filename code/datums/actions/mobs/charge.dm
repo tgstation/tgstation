@@ -104,7 +104,7 @@
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(target_turf)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	animate(D, alpha = 0, color = COLOR_RED, transform = matrix()*2, time = 3)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER

@@ -189,13 +189,13 @@
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
 
-/obj/item/circuit_component/bci_core/proc/on_borg_charge(datum/source, amount)
+/obj/item/circuit_component/bci_core/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	if (isnull(parent.cell))
 		return
 
-	parent.cell.give(amount)
+	charge_cell.Invoke(parent.cell, seconds_per_tick)
 
 /obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coefficient, flags)
 	SIGNAL_HANDLER

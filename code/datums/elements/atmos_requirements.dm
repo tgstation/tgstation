@@ -25,18 +25,9 @@
 	src.unsuitable_atmos_damage = unsuitable_atmos_damage
 	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
-	if(!mapload || !PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) || is_breathable_atmos(target))
+	if(!mapload || !PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements))
 		return
-	var/mob/living/living_mob = target
-	if(living_mob.stat == DEAD)
-		return
-	var/turf/open/open_turf = living_mob.loc
-	var/list/gases
-	var/string_text = "No Air"
-	if(open_turf.air)
-		gases = get_atmos_req_list(open_turf)
-		string_text = "O2: [gases["o2"]] - Plasma: [gases["plasma"]] - N2: [gases["n2"]] - CO2: [gases["co2"]]"
-	stack_trace("[target] loaded on a turf with unsafe atmos at \[[open_turf.x], [open_turf.y], [open_turf.z]\] (area : [open_turf.loc]). Turf gases: [string_text]. Check the mob atmos requirements again.")
+	check_safe_environment(target)
 
 /datum/element/atmos_requirements/Detach(datum/target)
 	. = ..()
@@ -59,7 +50,7 @@
 		return TRUE
 
 	var/turf/open/open_turf = target.loc
-	if(!open_turf.air)
+	if(isnull(open_turf.air))
 		if(atmos_requirements["min_oxy"] || atmos_requirements["min_plas"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 			return FALSE
 		return TRUE
@@ -89,3 +80,15 @@
 	open_turf.air.garbage_collect()
 
 	return return_gases
+
+///Ensures that maploaded mobs are in a safe environment. Unit test stuff.
+/datum/element/atmos_requirements/proc/check_safe_environment(mob/living/living_mob)
+	if(living_mob.stat == DEAD || is_breathable_atmos(living_mob))
+		return
+	var/turf/open/open_turf = living_mob.loc
+	var/list/gases
+	var/string_text = "No Air"
+	if(open_turf.air)
+		gases = get_atmos_req_list(open_turf)
+		string_text = "O2: [gases["o2"]] - Plasma: [gases["plasma"]] - N2: [gases["n2"]] - CO2: [gases["co2"]]"
+	stack_trace("[living_mob] loaded on a turf with unsafe atmos at \[[open_turf.x], [open_turf.y], [open_turf.z]\] (area : [open_turf.loc]). Turf gases: [string_text]. Check the mob atmos requirements again.")

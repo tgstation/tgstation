@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
 		screentip_change = TRUE
 
-	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
+	if(istype(held_item, cutting_tool))
 		if(opened)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 			screentip_change = TRUE

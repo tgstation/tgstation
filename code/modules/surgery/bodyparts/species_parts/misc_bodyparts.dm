@@ -88,7 +88,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
-	head_flags = HEAD_ALL_FEATURES
+	head_flags = HEAD_EYECOLOR | HEAD_EYESPRITES | HEAD_HAIR | HEAD_FACIAL_HAIR
 
 /obj/item/bodypart/chest/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -126,61 +126,42 @@
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 ///SLIME
-/obj/item/bodypart/head/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/head/jelly/slime
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
-	head_flags = HEAD_ALL_FEATURES
 
-/obj/item/bodypart/chest/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_SLIMEPERSON
-	is_dimorphic = TRUE
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-
-/obj/item/bodypart/arm/left/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/chest/jelly/slime
 	limb_id = SPECIES_SLIMEPERSON
 
-/obj/item/bodypart/arm/right/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/arm/left/jelly/slime
 	limb_id = SPECIES_SLIMEPERSON
 
-/obj/item/bodypart/leg/left/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/arm/right/jelly/slime
 	limb_id = SPECIES_SLIMEPERSON
 
-/obj/item/bodypart/leg/right/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/leg/left/jelly/slime
+	limb_id = SPECIES_SLIMEPERSON
+
+/obj/item/bodypart/leg/right/jelly/slime
 	limb_id = SPECIES_SLIMEPERSON
 
 ///LUMINESCENT
-/obj/item/bodypart/head/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_LUMINESCENT
-	is_dimorphic = TRUE
-	head_flags = HEAD_ALL_FEATURES
-
-/obj/item/bodypart/chest/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_LUMINESCENT
-	is_dimorphic = TRUE
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-
-/obj/item/bodypart/arm/left/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/head/jelly/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-/obj/item/bodypart/arm/right/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/chest/jelly/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-/obj/item/bodypart/leg/left/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/arm/left/jelly/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-/obj/item/bodypart/leg/right/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/arm/right/jelly/luminescent
+	limb_id = SPECIES_LUMINESCENT
+
+/obj/item/bodypart/leg/left/jelly/luminescent
+	limb_id = SPECIES_LUMINESCENT
+
+/obj/item/bodypart/leg/right/jelly/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
 ///ZOMBIE

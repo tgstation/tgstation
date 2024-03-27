@@ -9,7 +9,7 @@
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
 	combat_mode = TRUE
-	habitable_atmos  = null
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	health = 125
 	maxHealth = 125
