@@ -274,6 +274,10 @@ GLOBAL_PROTECT(admin_verbs_poll)
 				add_verb(src, /client/proc/play_web_sound)
 		if(rights & R_SPAWN)
 			add_verb(src, GLOB.admin_verbs_spawn)
+#ifdef MAP_TEST
+		remove_verb(src, /client/proc/enable_mapping_verbs)
+		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
+#endif
 
 /client/proc/remove_admin_verbs()
 	remove_verb(src, list(
@@ -1191,4 +1195,3 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
-

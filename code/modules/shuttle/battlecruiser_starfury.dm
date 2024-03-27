@@ -135,7 +135,7 @@
  */
 /proc/summon_battlecruiser(datum/team/battlecruiser/team)
 
-	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for battlecruiser crew?", check_jobban = ROLE_TRAITOR, pic_source = /obj/machinery/sleeper/syndie, role_name_text = "battlecruiser crew")
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [span_notice("battlecruiser crew")]?", check_jobban = ROLE_TRAITOR, alert_pic = /obj/machinery/sleeper/syndie, role_name_text = "battlecruiser crew")
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/ship = SSmapping.map_templates["battlecruiser_starfury.dmm"]

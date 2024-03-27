@@ -90,8 +90,8 @@
 	chemical_cost = 1000
 	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
-	var/helmet_type = /obj/item
-	var/suit_type = /obj/item
+	var/helmet_type = null
+	var/suit_type = null
 	var/suit_name_simple = "    "
 	var/helmet_name_simple = "     "
 	var/recharge_slowdown = 0
@@ -125,10 +125,14 @@
 	if(!ishuman(user) || !changeling)
 		return 1
 	var/mob/living/carbon/human/H = user
+
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message(span_warning("[H] casts off [H.p_their()] [suit_name_simple]!"), span_warning("We cast off our [suit_name_simple]."), span_hear("You hear the organic matter ripping and tearing!"))
-		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
-		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
+		var/name_to_use = (isnull(suit_type) ? helmet_name_simple : suit_name_simple)
+		H.visible_message(span_warning("[H] casts off [H.p_their()] [name_to_use]!"), span_warning("We cast off our [name_to_use]."), span_hear("You hear the organic matter ripping and tearing!"))
+		if(!isnull(helmet_type))
+			H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
+		if(!isnull(suit_type))
+			H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_worn_oversuit()
 		H.update_worn_head()
 		H.update_body_parts()
@@ -141,18 +145,19 @@
 		return 1
 
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
-	if(!user.canUnEquip(user.wear_suit))
+	if(!user.canUnEquip(user.wear_suit) && !isnull(suit_type))
 		user.balloon_alert(user, "body occupied!")
 		return
-	if(!user.canUnEquip(user.head))
+	if(!user.canUnEquip(user.head) && !isnull(helmet_type))
 		user.balloon_alert(user, "head occupied!")
 		return
 	..()
-	user.dropItemToGround(user.head)
-	user.dropItemToGround(user.wear_suit)
-
-	user.equip_to_slot_if_possible(new suit_type(user), ITEM_SLOT_OCLOTHING, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), ITEM_SLOT_HEAD, 1, 1, 1)
+	if(!isnull(suit_type))
+		user.dropItemToGround(user.wear_suit)
+		user.equip_to_slot_if_possible(new suit_type(user), ITEM_SLOT_OCLOTHING, 1, 1, 1)
+	if(!isnull(helmet_type))
+		user.dropItemToGround(user.head)
+		user.equip_to_slot_if_possible(new helmet_type(user), ITEM_SLOT_HEAD, 1, 1, 1)
 
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -582,3 +587,124 @@
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/datum/action/changeling/suit/hive_head
+	name = "Hive Head"
+	desc = "We coat our head in a waxy outing coating similar to a bee hive which can be used to manufacture bees to attack our enemies. Costs 15 chemicals."
+	helptext = "While the hive head does not provide much in the ways of armor, it does allow the user to send bees out to attack targets. Reagents can poured inside the hive to cause all bees released to inject said reagents."
+	button_icon_state = "hive_head"
+	chemical_cost = 15
+	dna_cost = 2
+	req_human = FALSE
+	blood_on_castoff = TRUE
+
+	helmet_type = /obj/item/clothing/head/helmet/changeling_hivehead
+	helmet_name_simple = "hive head"
+
+/obj/item/clothing/head/helmet/changeling_hivehead
+	name = "hive head"
+	desc = "A strange, waxy outer coating covering your head. Gives you tinnitus."
+	icon_state = "hivehead"
+	inhand_icon_state = null
+	flash_protect = FLASH_PROTECTION_FLASH
+	item_flags = DROPDEL
+	armor_type = /datum/armor/changeling_hivehead
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+	actions_types = list(/datum/action/cooldown/hivehead_spawn_minions)
+	///Does this hive head hold reagents?
+	var/holds_reagents = TRUE
+
+/obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
+	. = ..()
+	if(holds_reagents)
+		create_reagents(50, REFILLABLE)
+
+/datum/armor/changeling_hivehead
+	melee = 10
+	bullet = 10
+	laser = 10
+	energy = 10
+	bio = 50
+
+/obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core/legion) || !holds_reagents)
+		return
+	visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
+	var/mob/living/carbon/wearer = loc
+	playsound(wearer, 'sound/effects/attackblob.ogg', 60, TRUE)
+	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
+	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
+	qdel(attacking_item)
+
+
+/datum/action/cooldown/hivehead_spawn_minions
+	name = "Release Bees"
+	desc = "Release a group of bees to attack all other lifeforms."
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	button_icon = 'icons/mob/simple/bees.dmi'
+	button_icon_state = "queen_item"
+	cooldown_time = 30 SECONDS
+	///The mob we're going to spawn
+	var/spawn_type = /mob/living/basic/bee/timed/short
+	///How many are we going to spawn
+	var/spawn_count = 6
+
+/datum/action/cooldown/hivehead_spawn_minions/PreActivate(atom/target)
+	if(owner.movement_type & VENTCRAWLING)
+		owner.balloon_alert(owner, "unavailable here")
+		return
+	return ..()
+
+/datum/action/cooldown/hivehead_spawn_minions/Activate(atom/target)
+	. = ..()
+	do_tell()
+	var/spawns = spawn_count
+	if(owner.stat >= HARD_CRIT)
+		spawns = 1
+	for(var/i in 1 to spawns)
+		var/mob/living/basic/summoned_minion = new spawn_type(get_turf(owner))
+		summoned_minion.faction = list("[REF(owner)]")
+		minion_additional_changes(summoned_minion)
+
+///Our tell that we're using this ability. Usually a sound and a visible message.area
+/datum/action/cooldown/hivehead_spawn_minions/proc/do_tell()
+	owner.visible_message(span_warning("[owner]'s head begins to buzz as bees begin to pour out!"), span_warning("We release the bees."), span_hear("You hear a loud buzzing sound!"))
+	playsound(owner, 'sound/creatures/bee_swarm.ogg', 60, TRUE)
+
+///Stuff we want to do to our minions. This is in its own proc so subtypes can override this behaviour.
+/datum/action/cooldown/hivehead_spawn_minions/proc/minion_additional_changes(mob/living/basic/minion)
+	var/mob/living/basic/bee/summoned_bee = minion
+	var/mob/living/carbon/wearer = owner
+	if(istype(summoned_bee) && length(wearer.head.reagents.reagent_list))
+		summoned_bee.assign_reagent(pick(wearer.head.reagents.reagent_list))
+
+/obj/item/clothing/head/helmet/changeling_hivehead/legion
+	name = "legion hive head"
+	desc = "A strange, boney coating covering your head with a fleshy inside. Surprisingly comfortable."
+	icon_state = "hivehead_legion"
+	actions_types = list(/datum/action/cooldown/hivehead_spawn_minions/legion)
+	holds_reagents = FALSE
+
+/datum/action/cooldown/hivehead_spawn_minions/legion
+	name = "Release Legion"
+	desc = "Release a group of legion to attack all other lifeforms."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "legion_head"
+	cooldown_time = 15 SECONDS
+	spawn_type = /mob/living/basic/legion_brood
+	spawn_count = 4
+
+/datum/action/cooldown/hivehead_spawn_minions/legion/do_tell()
+	owner.visible_message(span_warning("[owner]'s head begins to shake as legion begin to pour out!"), span_warning("We release the legion."), span_hear("You hear a loud squishing sound!"))
+	playsound(owner, 'sound/effects/attackblob.ogg', 60, TRUE)
+
+/datum/action/cooldown/hivehead_spawn_minions/legion/minion_additional_changes(mob/living/basic/minion)
+	var/mob/living/basic/legion_brood/brood = minion
+	if (istype(brood))
+		brood.assign_creator(owner, FALSE)

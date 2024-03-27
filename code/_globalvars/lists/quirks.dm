@@ -26,3 +26,8 @@ GLOBAL_LIST_INIT(part_choice_transhuman, list(
 	"Robotic Voice Box" = /obj/item/organ/internal/tongue/robot,
 	"Flashlights for Eyes" = /obj/item/organ/internal/eyes/robotic/flashlight,
 ))
+
+GLOBAL_LIST_INIT(side_choice_hemiplegic, list(
+	"Left Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
+	"Right Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right,
+))

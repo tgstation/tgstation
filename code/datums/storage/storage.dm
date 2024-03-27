@@ -347,6 +347,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(QDELETED(to_insert) || !istype(to_insert))
 		return FALSE
 
+	//stops you from putting stuff like off-hand thingy inside. Hologram storages can accept only hologram items
+	if(to_insert.item_flags & ABSTRACT)
+		return FALSE
+	if(parent.flags_1 & HOLOGRAM_1)
+		if(!(to_insert.flags_1 & HOLOGRAM_1))
+			return FALSE
+	else if(to_insert.flags_1 & HOLOGRAM_1)
+		return FALSE
+
 	if(locked > force)
 		if(messages && user)
 			user.balloon_alert(user, "closed!")

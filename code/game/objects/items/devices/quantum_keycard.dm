@@ -4,7 +4,7 @@
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "quantum_keycard_gags"
 	greyscale_config = /datum/greyscale_config/quantum_keycard
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'

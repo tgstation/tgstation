@@ -53,11 +53,11 @@
 	/// Cooldown for occupant breakout messages via relaymove()
 	var/message_cooldown
 	/// How long it takes to break out of the SSU.
-	var/breakout_time = 300
+	var/breakout_time = 30 SECONDS
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
-	var/base_charge_rate = 200
+	var/base_charge_rate = 200 KILO WATTS
 	/// Final charge rate which is base_charge_rate + contribution by capacitors
-	var/final_charge_rate = 250
+	var/final_charge_rate = 250 KILO WATTS
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
@@ -287,7 +287,7 @@
 	. = ..()
 
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		final_charge_rate = base_charge_rate + (capacitor.tier * 50)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 50 KILO WATTS)
 
 	set_access()
 
@@ -375,7 +375,7 @@
 		src,
 		choices,
 		custom_check = CALLBACK(src, PROC_REF(check_interactable), user),
-		require_near = !issilicon(user),
+		require_near = !HAS_SILICON_ACCESS(user),
 		autopick_single_option = FALSE
 	)
 
@@ -561,9 +561,7 @@
 	if(!cell || cell.charge == cell.maxcharge)
 		return
 
-	var/cell_charged = cell.give(final_charge_rate * seconds_per_tick)
-	if(cell_charged)
-		use_power((active_power_usage + final_charge_rate) * seconds_per_tick)
+	charge_cell(final_charge_rate * seconds_per_tick, cell)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

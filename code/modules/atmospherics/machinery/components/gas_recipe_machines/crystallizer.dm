@@ -55,7 +55,7 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)

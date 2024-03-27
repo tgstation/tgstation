@@ -46,6 +46,10 @@
 	var/overlay_icon = 'icons/mob/actions/backgrounds.dmi'
 	/// This is the icon state for any FOREGROUND overlay icons on the button (such as borders)
 	var/overlay_icon_state
+
+	/// full key we are bound to
+	var/full_key
+
 	/// Toggles whether this action is usable or not
 	var/action_disabled = FALSE
 
@@ -110,6 +114,7 @@
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
 
 	if(owner_has_control)
+		RegisterSignal(grant_to, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 		GiveAction(grant_to)
 
 /// Remove the passed mob from being owner of our action
@@ -122,6 +127,7 @@
 		HideFrom(hud.mymob)
 	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
 	viewers = list()
+	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
 	if(isnull(owner))
 		return
@@ -312,6 +318,7 @@
  * force - whether an update is forced regardless of existing status
  */
 /datum/action/proc/update_button_status(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	current_button.update_keybind_maptext(full_key)
 	if(IsAvailable())
 		current_button.color = rgb(255,255,255,255)
 	else
@@ -411,3 +418,14 @@
 /// Checks if our action is actively selected. Used for selecting icons primarily.
 /datum/action/proc/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return FALSE
+
+/datum/action/proc/keydown(mob/source, key, client/client, full_key)
+	SIGNAL_HANDLER
+	if(isnull(full_key) || full_key != src.full_key)
+		return
+	if(istype(source))
+		if(source.next_click > world.time)
+			return
+		else
+			source.next_click = world.time + CLICK_CD_RANGE
+	INVOKE_ASYNC(src, PROC_REF(Trigger))

@@ -955,7 +955,7 @@
 /area/shuttle/pirate)
 "DP" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "DX" = (

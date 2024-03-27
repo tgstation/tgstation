@@ -67,12 +67,19 @@
 	icon_state = "kitty"
 	visual = TRUE
 	damage_multiplier = 2
+	// Keeps track of which cat ears sprite is associated with this.
+	var/variant = "Cat"
+
+/obj/item/organ/internal/ears/cat/Initialize(mapload, variant_pref)
+	. = ..()
+	if(variant_pref)
+		variant = variant_pref
 
 /obj/item/organ/internal/ears/cat/on_mob_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
-		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"
+		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = variant
 		ear_owner.dna.update_uf_block(DNA_EARS_BLOCK)
 		ear_owner.update_body()
 
@@ -89,15 +96,13 @@
 
 /obj/item/organ/internal/ears/penguin/on_mob_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
-	if(istype(ear_owner))
-		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
-		ear_owner.AddElement(/datum/element/waddling)
+	to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
+	ear_owner.AddElementTrait(TRAIT_WADDLING, ORGAN_TRAIT, /datum/element/waddling)
 
 /obj/item/organ/internal/ears/penguin/on_mob_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
-	if(istype(ear_owner))
-		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
-		ear_owner.RemoveElement(/datum/element/waddling)
+	to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
+	REMOVE_TRAIT(ear_owner, TRAIT_WADDLING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/cybernetic
 	name = "basic cybernetic ears"

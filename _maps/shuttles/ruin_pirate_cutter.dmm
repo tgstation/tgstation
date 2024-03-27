@@ -344,7 +344,7 @@
 "wV" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/pirate,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "xb" = (
@@ -501,7 +501,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/brown{
+/obj/item/bedsheet/pirate{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -514,7 +514,7 @@
 "Ha" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/pirate,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "Hb" = (
@@ -838,7 +838,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/brown{
+/obj/item/bedsheet/pirate{
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/west,

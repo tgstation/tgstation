@@ -42,7 +42,8 @@
 
 /datum/heretic_knowledge/cosmic_grasp
 	name = "Grasp of Cosmos"
-	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand."
+	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand. \
+		People with a star mark can not pass cosmic fields."
 	gain_text = "Some stars dimmed, others' magnitude increased. \
 		With newfound strength I could channel the nebula's power into myself."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
@@ -82,7 +83,8 @@
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
 	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmic Blade. \
-		When triggered, the victim is returned to the location where the mark was originally applied to them. \
+		When triggered, the victim is returned to the location where the mark was originally applied to them, \
+		leaving a cosmic field in their place. \
 		They will then be paralyzed for 2 seconds."
 	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
 		I can help them, I have to help them."
@@ -98,8 +100,7 @@
 	name = "Star Touch"
 	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
 		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
-		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that \
-		deals a bit of fire damage and damages the cells. \
+		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that burns them. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
@@ -110,7 +111,7 @@
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
-	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
+	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
 		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
 	next_knowledge = list(
@@ -243,7 +244,8 @@
 		You can also give it commands through speech. \
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
 		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand."
+		Star Touch can now teleport you to the Star Gazer when activated in your hand. \
+		Your cosmic expansion spell and your blades also become greatly empowered."
 	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
 		I clung on to them, they would protect me, and I would protect it. \
 		I closed my eyes with my head laid against their form. I was safe. \
