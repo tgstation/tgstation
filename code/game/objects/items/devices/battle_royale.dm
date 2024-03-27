@@ -86,7 +86,7 @@
 	qdel(src)
 
 /// Link to an implanter
-/obj/item/royale_remote/proc/link_implanter(var/obj/item/royale_implanter/implanter, mob/user)
+/obj/item/royale_remote/proc/link_implanter(obj/item/royale_implanter/implanter, mob/user)
 	if (implanter in linked_implanters)
 		if (user)
 			balloon_alert(user, "already linked!")
