@@ -30,7 +30,7 @@
 	if (!potential_winner.mind)
 		balloon_alert(user, "target too boring!")
 		return ITEM_INTERACT_BLOCKING
-	if (!do_after(user, 4 SECONDS, potential_winner))
+	if (!do_after(user, 1.5 SECONDS, potential_winner))
 		balloon_alert(user, "interrupted!")
 		return ITEM_INTERACT_BLOCKING
 
