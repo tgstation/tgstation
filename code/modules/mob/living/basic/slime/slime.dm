@@ -285,15 +285,15 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(target) && target != src && usr == src)
 		if(our_slime.can_feed_on(target))
 			our_slime.start_feeding(target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(isAI(target)) //The aI is not tasty!
 		target.balloon_alert(our_slime, "not tasty!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
 		our_slime.stop_feeding()
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/borg_target = target
@@ -307,7 +307,7 @@
 		else
 			borg_target.visible_message(span_danger("The [our_slime.name] fails to hurt [borg_target]!"), span_userdanger("The [our_slime.name] failed to hurt you!"))
 
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(iscarbon(target) && our_slime.powerlevel > SLIME_MIN_POWER)
 		var/mob/living/carbon/carbon_target = target
@@ -328,7 +328,7 @@
 
 	if(isslime(target))
 		if(target == our_slime)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return COMPONENT_HOSTILE_NO_ATTACK
 		var/mob/living/basic/slime/target_slime = target
 		if(target_slime.buckled)
 			target_slime.stop_feeding(silent = TRUE)
