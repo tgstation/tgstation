@@ -13,7 +13,7 @@
 	light_range = 6
 	light_color = "#64bee1"
 	health = 100
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	unsuitable_atmos_damage = 0
 	can_buckle_to = FALSE
 	density = FALSE
