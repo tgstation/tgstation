@@ -481,6 +481,7 @@
 		Additionally, they have their own set of cameras and other intelligence suites to gather reconnaissance data with. \
 		If you're a meathead who's just here to kill people and don't care about intelligence, you'll still have someone to bear witness to your murder-spree!"
 	item = /obj/item/antag_spawner/nuke_ops/overwatch
+	cost = 12
 
 // ~~ Disposable Sentry Gun ~~
 // Technically not a spawn but it is a kind of reinforcement...I guess.
