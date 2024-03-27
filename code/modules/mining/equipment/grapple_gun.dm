@@ -19,6 +19,7 @@
 	var/static/list/traits_on_zipline = list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_MOVE_FLOATING,
+		TRAIT_FORCED_STANDING,
 	)
 	///the beam we draw
 	var/datum/beam/zipline
@@ -26,19 +27,27 @@
 	var/datum/weakref/zipliner
 	///ziplining sound
 	var/datum/looping_sound/zipline/zipline_sound
+	///our initial matrix
+	var/matrix/initial_matrix
 
 /obj/item/grapple_gun/Initialize(mapload)
 	. = ..()
 	zipline_sound = new(src)
 	update_appearance()
 
-/obj/item/grapple_gun/afterattack(atom/attacked_atom, mob/living/user, proximity)
+/obj/item/grapple_gun/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
 
-	if(attacked_atom == user || !hooked)
+	if(target == user || !hooked)
 		return
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+	if(get_dist(user, target) > 9)
+		user.balloon_alert(user, "too far away!")
+		return
+
+	var/turf/attacked_atom = get_turf(target)
+	if(isnull(attacked_atom))
+		return
 
 	var/list/turf_list = (get_line(user, attacked_atom) - get_turf(src))
 	for(var/turf/singular_turf as anything in turf_list)
@@ -49,14 +58,37 @@
 		attacked_atom = singular_turf
 		break
 
-	zipline = user.Beam(attacked_atom, icon_state = "zipline_hook", maxdistance = 9, layer = BELOW_MOB_LAYER)
-	playsound(src, 'sound/weapons/zipline_fire.ogg', 50)
+	if(user.CanReach(attacked_atom))
+		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
+	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/weapons/zipline_fire.ogg')
+	zipline = user.Beam(bullet, icon_state = "zipline_hook", maxdistance = 9, layer = BELOW_MOB_LAYER)
 	hooked = FALSE
+	RegisterSignal(bullet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_grapple_hit))
+	RegisterSignal(bullet, COMSIG_PREQDELETED, PROC_REF(on_grapple_fail))
+	zipliner = WEAKREF(user)
+	update_appearance()
+
+/obj/item/grapple_gun/proc/on_grapple_hit(datum/source, atom/movable/firer, atom/target, Angle)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_PREQDELETED))
+	QDEL_NULL(zipline)
+	var/mob/living/user = zipliner?.resolve()
+	if(isnull(user) || isnull(target))
+		cancel_hook()
+		return
+
+	zipline = user.Beam(target, icon_state = "zipline_hook", maxdistance = 9, layer = BELOW_MOB_LAYER)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(determine_distance))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_THROW, PROC_REF(apply_throw_traits))
-	zipliner = WEAKREF(user)
-	grapple_timer_id = addtimer(CALLBACK(src, PROC_REF(launch_user), attacked_atom), 1.5 SECONDS, TIMER_STOPPABLE)
-	update_appearance()
+	grapple_timer_id = addtimer(CALLBACK(src, PROC_REF(launch_user), target), 1.5 SECONDS, TIMER_STOPPABLE)
+
+/obj/item/grapple_gun/proc/on_grapple_fail(datum/source)
+	SIGNAL_HANDLER
+	cancel_hook()
 
 /obj/item/grapple_gun/proc/determine_distance(atom/movable/source)
 	SIGNAL_HANDLER
@@ -77,8 +109,9 @@
 	var/dir_to_turn = get_angle(source, target_atom)
 	if(dir_to_turn > 175 && dir_to_turn < 190)
 		dir_to_turn = 0
-	animate(source, transform = matrix().Turn(dir_to_turn), time = 0.1 SECONDS)
 	source.add_traits(traits_on_zipline, LEAPING_TRAIT)
+	initial_matrix = source.transform
+	animate(source, transform = matrix().Turn(dir_to_turn), time = 0.1 SECONDS)
 
 /obj/item/grapple_gun/proc/launch_user(atom/target_atom)
 	var/mob/living/my_user = zipliner?.resolve()
@@ -107,7 +140,7 @@
 /obj/item/grapple_gun/proc/post_land()
 	var/mob/living/my_user = zipliner?.resolve()
 	if(!isnull(my_user))
-		my_user.transform = initial(my_user.transform)
+		my_user.transform = initial_matrix
 		my_user.remove_traits(traits_on_zipline, LEAPING_TRAIT)
 	new /obj/effect/temp_visual/mook_dust(drop_location())
 	cancel_hook()
@@ -123,11 +156,21 @@
 	grapple_timer_id = null
 	hooked = TRUE
 	zipline_sound.stop()
+	initial_matrix = null
 	update_appearance()
 
 /obj/item/grapple_gun/update_overlays()
 	. = ..()
 	if(hooked)
 		. += hook_overlay
+
+/obj/projectile/grapple_hook
+	name = "grapple hook"
+	icon_state = "grapple_hook"
+	damage = 0
+	range = 9
+	speed = 0.1
+	can_hit_turfs = TRUE
+	hitsound = 'sound/weapons/zipline_hit.ogg'
 
 #undef DAMAGE_ON_IMPACT
