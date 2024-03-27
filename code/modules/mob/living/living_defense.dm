@@ -697,13 +697,19 @@
 		//Don't hit people through windows, ok?
 		if(!(shove_flags & SHOVE_DIRECTIONAL_BLOCKED) && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, src, target, shove_flags, weapon) & COMSIG_LIVING_SHOVE_HANDLED))
 			return
-		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
-				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
-			log_combat(src, target, "shoved", "knocking them down[weapon ? " with [weapon]" : ""]")
-			return
+		if((shove_flags & SHOVE_BLOCKED))
+			if(!(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
+				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
+					span_userdanger("You're knocked down from a shove by [name]!"),
+					span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+				to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
+				log_combat(src, target, "shoved", "knocking them down[weapon ? " with [weapon]" : ""]")
+				return
+			else if(shove_flags & SHOVE_KNOCKDOWN_BLOCKED) //check specifically for being blocked for an extra feedback message.
+				target.visible_message(span_danger("[name] tries to shove [target.name], but [target.p_they()] manages to stay up!"),
+					span_danger("[name] tries to shove you, but you manage to stay up!"),
+					span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE)
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
