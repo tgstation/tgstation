@@ -42,6 +42,7 @@
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
 	cpu = new(src)
+	cpu.physical = src
 	cpu.screen_on = TRUE
 	update_appearance()
 
