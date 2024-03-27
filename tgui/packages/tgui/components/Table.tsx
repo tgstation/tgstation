@@ -54,6 +54,8 @@ export function TableRow(props: RowProps) {
   );
 }
 
+Table.Row = TableRow;
+
 type CellProps = Partial<{
   /** Collapses table cell to the smallest possible size,
   and stops any text inside from wrapping. */
@@ -80,5 +82,4 @@ export function TableCell(props: CellProps) {
   );
 }
 
-Table.Row = TableRow;
 Table.Cell = TableCell;
