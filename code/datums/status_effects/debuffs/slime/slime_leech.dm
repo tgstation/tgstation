@@ -5,8 +5,8 @@
 
 /datum/status_effect/slime_leech
 	id = "slime_leech"
-	var/mob/living/basic/slime/our_slime
 	alert_type = /atom/movable/screen/alert/status_effect/slime_leech
+	var/mob/living/basic/slime/our_slime
 
 /datum/status_effect/slime_leech/on_creation(mob/living/new_owner, mob/living/basic/slime/our_slime)
 	src.our_slime = our_slime
@@ -74,7 +74,7 @@
 	if(totaldamage < 0 && SPT_PROB(5, seconds_between_ticks) && owner.client)
 
 		var/static/list/pain_lines
-		if(!pain_lines)
+		if(isnull(pain_lines))
 			pain_lines = list(
 				"You can feel your body becoming weak!",
 				"You feel like you're about to die!",

@@ -22,6 +22,8 @@
 
 /datum/ai_controller/basic_controller/slime/CancelActions()
 	..()
+	if(QDELETED(pawn))
+		return
+
 	var/mob/living/basic/slime/slime_pawn = pawn
-	if(!QDELETED(slime_pawn))
-		slime_pawn.stop_feeding()
+	slime_pawn.stop_feeding()

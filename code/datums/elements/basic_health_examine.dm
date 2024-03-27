@@ -35,6 +35,3 @@
 		return
 
 	examine_list += span_danger(light_damage_message)
-	return
-
-

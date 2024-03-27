@@ -7,16 +7,14 @@
 	if(!isliving(meal)) //sanity check
 		return FALSE
 
-	if(stat)
-		if(silent)
-			return FALSE
-		balloon_alert(src, "unconscious!")
+	if(stat != CONSCIOUS)
+		if(!silent)
+			balloon_alert(src, "unconscious!")
 		return FALSE
 
 	if(hunger_disabled)
-		if(silent)
-			return FALSE
-		balloon_alert(src, "not hungry!")
+		if(!silent)
+			balloon_alert(src, "not hungry!")
 		return FALSE
 
 	if(check_friendship && (REF(meal) in faction))
@@ -26,15 +24,13 @@
 		return FALSE
 
 	if(meal.stat == DEAD)
-		if(silent)
-			return FALSE
-		balloon_alert(src, "no life energy!")
+		if(!silent)
+			balloon_alert(src, "no life energy!")
 		return FALSE
 
 	if(locate(/mob/living/basic/slime) in meal.buckled_mobs)
-		if(silent)
-			return FALSE
-		balloon_alert(src, "another slime in the way!")
+		if(!silent)
+			balloon_alert(src, "another slime in the way!")
 		return FALSE
 
 	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC || meal.flags_1 & HOLOGRAM_1)
@@ -42,24 +38,21 @@
 		return FALSE
 
 	if(isslime(meal))
-		if(silent)
-			return FALSE
-		balloon_alert(src, "can't eat slime!")
+		if(!silent)
+			balloon_alert(src, "can't eat slime!")
 		return FALSE
 
 	if(isanimal(meal))
 		var/mob/living/simple_animal/simple_meal = meal
 		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
-			if(silent)
-				return FALSE
-			balloon_alert(src, "not food!")
+			if(!silent)
+				balloon_alert(src, "not food!")
 			return FALSE
 	else if(isbasicmob(meal))
 		var/mob/living/basic/basic_meal = meal
 		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[BRUTE] <= 0)
-			if (silent)
-				return FALSE
-			balloon_alert(src, "not food!")
+			if (!silent)
+				balloon_alert(src, "not food!")
 			return FALSE
 
 	return TRUE

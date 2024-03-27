@@ -130,8 +130,7 @@
 	AddElement(/datum/element/soft_landing)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_CANT_RIDE, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand) )
@@ -167,8 +166,6 @@
 	. = ..(mapload, /datum/slime_type/bluespace)
 	ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 
-//Overriden base procs
-
 /mob/living/basic/slime/adjust_nutrition(change, forced)
 	. = ..()
 	nutrition = min(nutrition, SLIME_MAX_NUTRITION)
@@ -193,7 +190,7 @@
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
-		if(current_mood && !stat)
+		if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
 			add_overlay("aslime-[current_mood]")
 	else
 		icon_state = icon_dead
@@ -223,7 +220,7 @@
 	return
 
 /mob/living/basic/slime/get_mob_buckling_height(mob/seat)
-	if(..())
+	if(..() != 0)
 		return 3
 
 /mob/living/basic/slime/examine(mob/user)
@@ -242,9 +239,6 @@
 
 		if(SLIME_MAX_POWER)
 			. += span_boldwarning("It is radiating with massive levels of electrical activity!")
-
-
-//New procs
 
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)

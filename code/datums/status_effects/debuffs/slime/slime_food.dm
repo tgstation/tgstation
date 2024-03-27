@@ -1,9 +1,9 @@
 ///Adds pheromones to a mob. If the target slime drains the mob to death, they might befriend the user
 /datum/status_effect/slime_food
 	id = "slime_food"
+	alert_type = null
 	var/befriend_chance = 30
 	var/mob/living/carbon/human/feeder
-	alert_type = null
 
 /datum/status_effect/slime_food/on_creation(mob/living/new_owner, mob/living/carbon/human/feeder, befriend_chance = 100)
 	src.befriend_chance = befriend_chance
@@ -17,10 +17,10 @@
 	if(!ishuman(feeder)) //don't give the AI pheromones
 		return FALSE
 
-	RegisterSignals(feeder, list(COMSIG_QDELETING), PROC_REF(on_feeder_deleted))
-	RegisterSignals(owner, list(COMSIG_COMPONENT_CLEAN_ACT), PROC_REF(on_feeder_deleted))
-	RegisterSignals(owner, list(COMSIG_SLIME_DRAINED), PROC_REF(on_drained))
-	RegisterSignals(owner, list(COMSIG_ATOM_EXAMINE), PROC_REF(on_examine))
+	RegisterSignal(feeder, COMSIG_QDELETING, PROC_REF(on_feeder_deleted))
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_feeder_deleted))
+	RegisterSignal(owner, COMSIG_SLIME_DRAINED, PROC_REF(on_drained))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	return ..()
 
@@ -32,7 +32,7 @@
 ///Gaze upon the target
 /datum/status_effect/slime_food/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(user==feeder)
+	if(user == feeder)
 		examine_list += span_boldnotice("Their smell reminds you of serenity and yourself.")
 	else
 		examine_list += span_boldnotice("Their smell reminds you of serenity and [feeder].")

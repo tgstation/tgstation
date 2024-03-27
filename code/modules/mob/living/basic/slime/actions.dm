@@ -13,7 +13,7 @@
 /datum/action/innate/slime/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
 	var/mob/living/basic/slime/slime_owner = owner
 

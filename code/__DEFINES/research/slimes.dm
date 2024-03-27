@@ -28,7 +28,7 @@
 ///The slime is very likely to feed on anything
 #define SLIME_HUNGER_STARVING 2
 
-#define SLIME_MOOD_NONE ""
+#define SLIME_MOOD_NONE "none"
 #define SLIME_MOOD_ANGRY "angry"
 #define SLIME_MOOD_MISCHIEVOUS "mischievous"
 #define SLIME_MOOD_POUT "pout"

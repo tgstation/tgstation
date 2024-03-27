@@ -11,7 +11,7 @@
 	else
 		remove_status_effect(/datum/status_effect/freon, SLIME_COLD)
 
-	var/bz_percentage =0
+	var/bz_percentage = 0
 
 	if(environment.gases[/datum/gas/bz])
 		bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()

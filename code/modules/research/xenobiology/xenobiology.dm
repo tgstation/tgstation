@@ -668,7 +668,7 @@
 	if(target_slime.ai_controller?.clear_blackboard_key(BB_SLIME_RABID)) //Stops being rabid, but doesn't become truly docile.
 		to_chat(target_slime, span_warning("You absorb the potion, and your rabid hunger finally settles to a normal desire to feed."))
 		to_chat(user, span_notice("You feed the slime the potion, calming its rabid rage."))
-		//target_slime.ai_controller?.black
+		target_slime.set_default_behaviour()
 		qdel(src)
 		return
 	target_slime.set_pacified_behaviour()
