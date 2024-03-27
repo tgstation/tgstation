@@ -21,6 +21,9 @@
 /mob/living/basic/cow/wisdom/setup_eating()
 	return //cannot tame me! and I don't care about eatin' nothing, neither!
 
+/mob/living/basic/cow/wisdom/udder_component()
+	AddComponent(/datum/component/udder, reagent_produced_override = get_random_reagent_id())
+
 /datum/ai_controller/basic_controller/cow/wisdom
 	//don't give a targeting strategy
 	blackboard = list(
