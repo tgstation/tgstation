@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed cigarettes not being smokeable without a space helmet + internals."
-  - bugfix: "Fixed being unable to melee lavaland tendrils."

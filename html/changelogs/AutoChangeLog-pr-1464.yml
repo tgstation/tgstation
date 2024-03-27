@@ -1,4 +1,0 @@
-author: "KnigTheThrasher"
-delete-after: True
-changes:
-  - bugfix: "Removed a duped door when meta rolls a sinularity engine"
