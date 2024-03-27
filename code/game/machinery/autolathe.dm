@@ -329,7 +329,7 @@
 	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
 		var/area/my_area = get_area(src)
 		var/obj/machinery/power/apc/my_apc = my_area.apc
-		var/charging_wait = my_apc.time_to_charge(charge_per_item - my_apc.charge())
+		var/charging_wait = my_apc.time_to_charge(charge_per_item)
 		if(!isnull(charging_wait))
 			say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
 		else
