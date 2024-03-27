@@ -321,8 +321,22 @@
 		finalize_build()
 		return
 
-	if(!is_operational || !directly_use_energy(charge_per_item))
+	if(!is_operational)
 		say("Unable to continue production, power failure.")
+		finalize_build()
+		return
+
+	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
+		var/area/my_area = get_area(src)
+		var/obj/machinery/power/apc/my_apc = my_area.apc
+		var/current_charge = my_apc.charge()
+		var/trickle_charge_power = energy_to_power(my_area.energy_usage[AREA_USAGE_APC_CHARGE])
+		if(trickle_charge_power >= 1 KILO WATTS)
+			var/required_energy = charge_per_item - current_charge
+			var/time_to_charge = energy_to_power(required_energy / trickle_charge_power) * SSmachines.wait + SSmachines.wait
+			say("Unable to continue production, APC overload. Wait [DisplayTimeText(time_to_charge, round_seconds_to = 1)] and try again.")
+		else
+			say("Unable to continue production, power grid overload.")
 		finalize_build()
 		return
 
