@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fix incorrect pixel_y shift after getting up, which resulted in the player being shifted 6 pixels down."
