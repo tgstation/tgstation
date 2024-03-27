@@ -196,3 +196,5 @@
 	name = "Nuclear Operative Overwatch Agent"
 	back = /obj/item/storage/backpack/satchel
 	uniform = /obj/item/clothing/under/misc/syndicate_souvenir
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	shoes = /obj/item/clothing/shoes/sandal

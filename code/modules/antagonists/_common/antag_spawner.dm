@@ -155,13 +155,14 @@
 
 	var/new_datum = new antag_datum()
 
-	if(outfit)
-		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(/datum/antagonist/nukeop)
-		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
-
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
 	op_mind.special_role = special_role_name
+
+	if(outfit)
+		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
+		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+
 	if(deliver_target)
 		var/obj/structure/closet/supplypod/pod = setup_pod()
 		nukie.forceMove(pod)

@@ -40,18 +40,3 @@
 
 /datum/antagonist/nukeop/support/give_uplink()
 	return
-
-///One of the special items that spawns in the overwatch agent's room.
-/obj/item/paper/fluff/overwatch
-	name = "INTERNSHIP NOTES #1"
-	color = COLOR_RED
-	desc = "Page one of your notes from your internship with Nanotrasen(?). How did you even end up interning at a place like this?"
-	default_raw_text = @{"
-
-<br>
-Anyways, I'm here now, and this is all pretty weird considering my internship was supposed to be with the Nanotrasen Internal Revenue Analysis department.
-<br>
-Maybe I got reassigned to the Combat Strategy department by mistake?
-<br>
-Whatever. The work experience will look great on my resume either way! I'm so glad to be working for a great company like Nanotrasen!
-	"}
