@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Stabilized Red extracts no longer bypass Immutably Slow items"
+  - bugfix: "Settler equipment speed modifier no longer applied to Immutably Slow items"
+  - bugfix: "Immutably Slow items no longer block construction of certain items"

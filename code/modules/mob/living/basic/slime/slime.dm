@@ -30,6 +30,7 @@
 	unsuitable_cold_damage = 15
 	unsuitable_heat_damage = 0
 	maximum_survivable_temperature = INFINITY
+	habitable_atmos = null
 
 	//Messages
 
