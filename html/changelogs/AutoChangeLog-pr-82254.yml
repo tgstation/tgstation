@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed modular computers failing to boot up using cell power (eg: contractor tablet)"

@@ -363,6 +363,8 @@
 
 /datum/deathmatch_modifier/drop_pod/proc/populate_contents()
 	contents = typesof(/mob/living/basic/trooper/syndicate)
+	for(var/typepath in contents) //Make sure to set even weights for the keys or `pick_weight` won't work.
+		contents[typepath] = 1
 
 /datum/deathmatch_modifier/drop_pod/monsters
 	name = "Drop Pod: Monsters"

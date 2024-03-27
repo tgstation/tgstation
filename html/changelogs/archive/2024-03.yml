@@ -822,3 +822,59 @@
   - bugfix: Crank weapons now can actually be charged using their crank.
   - bugfix: Stun batons and their variants now actually meaningfully consume charge
       when used.
+2024-03-27:
+  13spacemen:
+  - bugfix: the follow link upon poll completion should work properly now
+  Alecksohs:
+  - image: Updated the Advanced Surgical Tool's sprites
+  - code_imp: Updated the Advanced Surgical Tool's light code
+  JohnFulpWillard:
+  - refactor: Xenomorphs (Lavaland & Oldstation ones) are now basic mobs.
+  Melbert:
+  - bugfix: Puzzlegrids now report their answers properly
+  - rscadd: Bitrunners can now broadcast their Bitruns to the station's Entertainment
+      Monitors.
+  - bugfix: Blocks mobs from trying to "physically" interact with some of their hud
+      elements, such as using Telekinesis or point a gun at your mood meter.
+  Paxilmaniac:
+  - rscadd: The PML-9's name has been changed to something that's a little less boring
+      random numbers and letters, and something that TTS can likely pronounce much
+      nicer than before. Get blown up by a Dardo rocket launcher today.
+  - image: Sprites for rocket launchers, rockets, and rocket projectiles have been
+      changed to something fresher looking.
+  - balance: Rocket launchers can be worn on your back or armor vest.
+  SyncIt21:
+  - bugfix: abstract(like the dual hand thingy on your hand) & hologram things can't
+      be put inside storage items
+  - qol: adds examines & screentips for tool acts & other operations for reagent grinder
+  - qol: adds an off icon for when the grinder panel is open/not powered
+  - code_imp: auto docs vars & procs. Shared common proc for grinding or juicing
+  - code_imp: removed trait for blended dust, changed some item interactions to end
+      the attack chain early & save time
+  - bugfix: no inserting hologram items into the reagent grinder
+  - bugfix: 'you can hit the reagent grinder tools like screwdriver, wrench, crowbar
+      & even beakers/ingredients etc when in combat mode
+
+      fix; adds sanity checks for when & how mobs interact with the reagent grinder'
+  - bugfix: examining a reagent grinder by an AI/Human with AI access now actually
+      works.
+  - bugfix: you can insert Nova flowers & other food items from any bag type
+  - bugfix: reagent grinder now grinds all the contents of an item recursively to
+      produce maximum reagents like a real grinder would
+  - refactor: reagent grinder now measures available capacity to store items as total
+      weight of stored items & not number. Capacity can be increased with upgraded
+      matter bin
+  - refactor: reagent grinder power usage is now a function of duration & total weight
+      of items blended, meaining blending more number of items/larger items will consume
+      more power
+  - refactor: reagent grinder code has been optimized overall. Report bugs on github
+  Watermelon914:
+  - admin: Admins can now run lua files bigger than 36 KB by importing them directly.
+  YakumoChen:
+  - bugfix: Removed erroneous light switch in janitor office
+  carshalash:
+  - balance: The polymorph belt will no longer register space dragons as acceptable
+      DNA.
+  zxaber:
+  - rscadd: Added a new Neutral Quirk to indicate to Medical you're willing to be
+      borged
