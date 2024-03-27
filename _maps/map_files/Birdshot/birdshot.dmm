@@ -43879,6 +43879,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/break_room)
 "pkh" = (
@@ -47399,7 +47400,6 @@
 /turf/open/floor/iron,
 /area/station/security)
 "qhZ" = (
-/obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/break_room)
@@ -59551,7 +59551,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "tFD" = (
-/obj/effect/turf_decal/bot,
 /obj/structure/chair/office/light{
 	name = "blue";
 	color = "#6495ED";
