@@ -678,6 +678,7 @@
 	density = FALSE
 	alpha = 100
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
+	no_damage_feedback = "weakening the generator sustaining it"
 
 	///The shield generator sustaining us
 	var/obj/machinery/modular_shield_generator/shield_generator
