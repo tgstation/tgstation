@@ -286,8 +286,7 @@
 	SIGNAL_HANDLER
 	if (prob(98))
 		return
-	to_chat(source, span_danger("You scratch at yourself."))
-	if (prob(80))
+	if (!source.itch() || prob(80))
 		return
 	to_chat(source, span_boldwarning("You feel a lump which shouldn't be there."))
 

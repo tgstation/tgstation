@@ -1082,6 +1082,20 @@
 	else
 		return pick("trails_1", "trails_2")
 
+/// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
+/mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
+	if ((mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT)))
+		return FALSE
+	var/will_scratch = can_scratch && !incapacitated()
+	var/applied_damage = 0
+	if (will_scratch && damage)
+		applied_damage = apply_damage(damage, damagetype = BRUTE, def_zone = target_part)
+	if (silent)
+		return applied_damage > 0
+	var/visible_part = isnull(target_part) ? "side" : target_part.plaintext_zone
+	visible_message("[can_scratch ? span_warning("[src] scratches [p_their()] [visible_part].") : ""]", span_warning("Your [visible_part] itches. [can_scratch ? "You scratch it." : ""]"))
+	return TRUE
+
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
