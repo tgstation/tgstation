@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - admin: "Admins can now run lua files bigger than 36 KB by importing them directly."
