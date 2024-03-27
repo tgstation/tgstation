@@ -47,7 +47,9 @@ function PaneContent(props: ContentProps) {
       className={classes(['Window__content', className])}
       {...rest}
     >
-      {(fitted && children) || (
+      {fitted ? (
+        children
+      ) : (
         <div className="Window__contentPadding">{children}</div>
       )}
     </Layout.Content>

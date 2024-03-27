@@ -9,6 +9,7 @@ import { classes } from 'common/react';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 type Props = Partial<{
+  /** Collapses table to the smallest possible size. */
   collapsing: boolean;
 }> &
   BoxProps;
@@ -32,6 +33,7 @@ export function Table(props: Props) {
 }
 
 type RowProps = Partial<{
+  /** Whether this is a header cell. */
   header: boolean;
 }> &
   BoxProps;
@@ -53,7 +55,10 @@ export function TableRow(props: RowProps) {
 }
 
 type CellProps = Partial<{
+  /** Collapses table cell to the smallest possible size,
+  and stops any text inside from wrapping. */
   collapsing: boolean;
+  /** Whether this is a header cell. */
   header: boolean;
 }> &
   BoxProps;
@@ -75,5 +80,5 @@ export function TableCell(props: CellProps) {
   );
 }
 
-Table.Row = TableRow; 
+Table.Row = TableRow;
 Table.Cell = TableCell;
