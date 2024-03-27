@@ -114,7 +114,7 @@
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
 		var/obj/item/bodypart/new_bodypart = new_part
-		slot_string = new_bodypart.plaintext_zone
+		slot_string = "[new_bodypart.plaintext_zone]"
 		old_part = human_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
 	else if(isorgan(new_part))
 		var/obj/item/organ/new_organ = new_part
@@ -122,32 +122,37 @@
 		if(new_organ.Insert(human_holder, special = TRUE))
 			old_part.moveToNullspace()
 			STOP_PROCESSING(SSobj, old_part)
-			slot_string = new_organ.name
+			slot_string = "[new_organ.name]"
 
 /datum/quirk/transhumanist/post_add()
-	if(slot_string)
-		if(isbodypart(old_part))
-			to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
-		else if (old_part.name == "eyes")
-			to_chat(quirk_holder, span_boldannounce("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
-		else if (isorgan(old_part))
-			to_chat(quirk_holder, span_boldannounce("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
+	if(!slot_string)
+		return
+	if(isbodypart(old_part))
+		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+	else if (old_part.name == "eyes")
+		to_chat(quirk_holder, span_boldannounce("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
+	else if (isorgan(old_part))
+		to_chat(quirk_holder, span_boldannounce("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
 
 /datum/quirk/transhumanist/remove()
-	if(old_part)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		if(isbodypart(old_part))
-			var/obj/item/bodypart/old_bodypart = old_part
-			human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
-			old_bodypart = null
-		else if(isorgan(old_part))
-			var/obj/item/organ/old_organ = old_part
-			old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
-			old_organ.Insert(quirk_holder, special = TRUE)
-			old_part.moveToNullspace()
-			STOP_PROCESSING(SSobj, old_part)
-			old_organ = null
-			old_part = null
+	if(isnull(old_part))
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(isbodypart(old_part))
+		var/obj/item/bodypart/old_bodypart = old_part
+		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
+		old_bodypart = null
+	else if(isorgan(old_part))
+		var/obj/item/organ/old_organ = old_part
+		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+		old_organ.Insert(quirk_holder, special = TRUE)
+		old_part.moveToNullspace()
+		STOP_PROCESSING(SSobj, old_part)
+		old_organ = null
+		old_part = null
 
 	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
 	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
