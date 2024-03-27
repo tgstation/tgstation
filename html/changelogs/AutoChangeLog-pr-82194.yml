@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Suit Storage Units charge MODsuits while their cell panel is closed or open, rather than only when screwed open"
+  - qol: "Inducers can charge MODsuits while their cell panel is closed or open, rather than only when screwed open"
+  - qol: "Suit Storage Units will charge all items within simultaneously (if possible)"
