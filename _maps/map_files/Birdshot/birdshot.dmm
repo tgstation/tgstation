@@ -2295,6 +2295,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "bfI" = (
@@ -4794,6 +4795,9 @@
 	name = "North Tanks Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/space_catwalk)
 "cjm" = (
@@ -9062,6 +9066,21 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine/atmos)
+"dXl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/glass{
+	name = "North Tanks Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/station/engineering/atmos/space_catwalk)
 "dXo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -19220,6 +19239,21 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1,
 /turf/open/space/basic,
 /area/space/nearstation)
+"hBl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/glass{
+	name = "South Tanks Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/station/engineering/atmos/space_catwalk)
 "hBq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -28105,6 +28139,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "ktc" = (
@@ -28557,6 +28592,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "kCb" = (
@@ -28745,6 +28783,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "kFg" = (
@@ -29649,6 +29688,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "kUt" = (
@@ -36293,6 +36333,9 @@
 	name = "South Tanks Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/space_catwalk)
 "mTP" = (
@@ -36632,6 +36675,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "mZl" = (
@@ -46140,7 +46184,6 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/holopad,
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/space_catwalk)
 "pVD" = (
@@ -64609,6 +64652,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "vgc" = (
@@ -64663,6 +64707,7 @@
 	id = "atmosbridge";
 	name = "Space Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "vgN" = (
@@ -75504,6 +75549,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "xWq" = (
@@ -75765,6 +75811,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "xZx" = (
@@ -84750,13 +84797,13 @@ gsK
 gsK
 vLN
 wCq
-ciS
+dXl
 hTK
 ciS
 giG
 pVv
 dBR
-mTO
+hBl
 kzs
 mTO
 kiw
