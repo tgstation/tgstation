@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		"[SENSOR_COORDS]" = "Tracking",
 	)
 
-	var/new_mode = tgui_input_list(user, "Set To What", "Adjust Sensors", sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
+	var/new_mode = tgui_input_list(user, "Adjust suit sensors", "Adjust Sensors", sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
 	new_mode = sensor_mode_text_to_num[new_mode]
 	if(isnull(new_mode)) // also catches returning null
 		return
@@ -113,13 +113,13 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		source.balloon_alert(user, "can't reach!")
 		return
 
-	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit]'s sensor."))
-	if(!do_after(user, (jumpsuit.strip_delay * 0.5), source)) // takes the same amount of time as adjusting it
+	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit.name]'s sensor."))
+	if(!do_after(user, jumpsuit.strip_delay * 0.5, source)) // takes the same amount of time as adjusting it
 		source.balloon_alert(user, "failed!")
 		return
 	source.balloon_alert(user, "changed sensors")
 	jumpsuit.sensor_mode = new_mode
-	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit]'s sensor."))
+	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit.name]'s sensor."))
 	if(ishuman(source))
 		var/mob/living/carbon/human/humano = source
 		humano.update_suit_sensors()
