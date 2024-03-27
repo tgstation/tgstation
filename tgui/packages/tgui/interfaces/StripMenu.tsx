@@ -288,9 +288,8 @@ export const StripMenu = (props) => {
                   const item = data.items[keyAtSpot];
                   const slot = SLOTS[keyAtSpot];
 
-                  let alternateActions: string[] | undefined;
-
                   let content: JSX.Element | undefined;
+                  let alternateActions: JSX.Element[] | undefined;
                   let tooltip: string | undefined;
 
                   if (item === null) {
@@ -307,14 +306,42 @@ export const StripMenu = (props) => {
                       />
                     );
 
-                    if (item.alternate) {
-                      alternateActions = [];
-                      for (const alternateKey of item.alternate || []) {
-                        alternateActions.push(alternateKey);
-                      }
-                    }
-
                     tooltip = item.name;
+                    if (item.alternate) {
+                      alternateActions = item.alternate.map(
+                        (alternateKey, idx) => {
+                          const alternateAction =
+                            ALTERNATE_ACTIONS[alternateKey];
+
+                          const alternateActionStyle = {
+                            background: 'rgba(0, 0, 0, 0.6)',
+                            position: 'absolute',
+                            overflow: 'hidden',
+                            margin: '0px',
+                            maxWidth: '22px', // yes I know its not 20 or 25; they look bad. 22px is perfect
+                            zIndex: '2',
+                            left: `${idx === 0 ? '0' : undefined}`,
+                            right: `${idx === 1 ? '0' : undefined}`,
+                            bottom: '0',
+                          };
+                          return (
+                            <Button
+                              key={alternateAction.text}
+                              onClick={() => {
+                                act('alt', {
+                                  key: keyAtSpot,
+                                  alternate_action: alternateKey,
+                                });
+                              }}
+                              tooltip={alternateAction.text}
+                              style={alternateActionStyle}
+                            >
+                              <Icon name={alternateAction.icon} />
+                            </Button>
+                          );
+                        },
+                      );
+                    }
                   } else if ('obscured' in item) {
                     content = (
                       <Icon
@@ -382,39 +409,7 @@ export const StripMenu = (props) => {
 
                           {slot.additionalComponent}
                         </Button>
-
-                        {alternateActions &&
-                          alternateActions.map((alternateKey, idx) => {
-                            const alternateAction =
-                              ALTERNATE_ACTIONS[alternateKey];
-
-                            const alternateActionStyle = {
-                              background: 'rgba(0, 0, 0, 0.6)',
-                              position: 'absolute',
-                              overflow: 'hidden',
-                              margin: '0px',
-                              maxWidth: '22px', // 22px is a good width
-                              zIndex: '2',
-                              left: `${idx === 0 ? '0' : undefined}`,
-                              right: `${idx === 1 ? '0' : undefined}`,
-                              bottom: '0',
-                            };
-                            return (
-                              <Button
-                                key={alternateAction.text}
-                                onClick={() => {
-                                  act('alt', {
-                                    key: keyAtSpot,
-                                    alternate_action: alternateKey,
-                                  });
-                                }}
-                                tooltip={alternateAction.text}
-                                style={alternateActionStyle}
-                              >
-                                <Icon name={alternateAction.icon} />
-                              </Button>
-                            );
-                          })}
+                        {alternateActions}
                       </Box>
                     </Stack.Item>
                   );
