@@ -14966,9 +14966,8 @@
 /turf/open/floor/engine,
 /area/station/maintenance/floor1/port/aft)
 "dNU" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/photobooth,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "dOa" = (
@@ -54431,6 +54430,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
+"nVN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red/diagonal_edge,
+/obj/structure/cable,
+/obj/machinery/photobooth/security,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/visit)
 "nVP" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -78876,7 +78883,8 @@
 "uqF" = (
 /obj/structure/table,
 /obj/machinery/button/ticket_machine{
-	pixel_x = -32
+	pixel_x = -24;
+	pixel_y = -6
 	},
 /obj/item/stamp/head/hop{
 	pixel_x = 8;
@@ -78885,6 +78893,10 @@
 /obj/item/flashlight/lamp{
 	pixel_x = -4;
 	pixel_y = 3
+	},
+/obj/machinery/button/photobooth{
+	pixel_y = 6;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -326677,7 +326689,7 @@ gDx
 iIb
 ftZ
 tBk
-qTA
+nVN
 wKi
 akt
 rbr

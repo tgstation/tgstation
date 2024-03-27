@@ -604,6 +604,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "acj" = (
@@ -38858,6 +38859,7 @@
 /area/station/command/heads_quarters/hop)
 "mHZ" = (
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/photobooth,
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "mId" = (
