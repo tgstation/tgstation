@@ -1,16 +1,7 @@
 import { useBackend } from '../backend';
 import { Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 type Info = {
   antag_name: string;
@@ -20,7 +11,7 @@ type Info = {
 
 export const AntagInfoBrother = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { antag_name, brothers } = data;
+  const { antag_name, brothers, objectives } = data;
   return (
     <Window width={620} height={250}>
       <Window.Content>
@@ -30,29 +21,11 @@ export const AntagInfoBrother = (props, context) => {
               You are the {antag_name} of {brothers}!
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout />
+              <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
           </Stack>
         </Section>
       </Window.Content>
     </Window>
-  );
-};
-
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
   );
 };

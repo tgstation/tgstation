@@ -14,6 +14,8 @@
 	ui_name = "AntagInfoTraitor"
 	suicide_cry = "FOR THE SYNDICATE!!"
 	preview_outfit = /datum/outfit/traitor
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
 	var/give_secondary_objectives = TRUE
@@ -84,6 +86,9 @@
 			uplink_handler.has_objectives = FALSE
 //monkestation edit end
 
+		uplink_handler.can_replace_objectives = CALLBACK(src, PROC_REF(can_change_objectives))
+		uplink_handler.replace_objectives = CALLBACK(src, PROC_REF(submit_player_objective))
+
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
 
@@ -111,8 +116,10 @@
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(uplink_handler)
+	if(!isnull(uplink_handler))
 		uplink_handler.has_objectives = FALSE
+		uplink_handler.can_replace_objectives = null
+		uplink_handler.replace_objectives = null
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
@@ -162,6 +169,10 @@
 		result += "EMPTY<br>"
 	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
+
+/// Returns true if we're allowed to assign ourselves a new objective
+/datum/antagonist/traitor/proc/can_change_objectives()
+	return can_assign_self_objectives
 
 /// proc that generates the traitors replacement uplink code and radio frequency
 /datum/antagonist/traitor/proc/generate_replacement_codes()
@@ -323,11 +334,9 @@
 	if(objectives.len) //If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				traitor_won = FALSE
+			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 		if(uplink_handler.final_objective)
 			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"

@@ -15,7 +15,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/silent = FALSE
 	var/weapon_type
@@ -88,7 +88,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/helmet_type = /obj/item
 	var/suit_type = /obj/item
@@ -277,6 +277,7 @@
 	flags_1 = NONE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
+	antimagic_flags = NONE
 	pinless = TRUE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
 	fire_sound = 'sound/effects/splat.ogg'
@@ -511,78 +512,6 @@
 	else
 		remaining_uses--
 		return ..()
-
-
-/***************************************\
-|*********SPACE SUIT + HELMET***********|
-\***************************************/
-/datum/action/changeling/suit/organic_space_suit
-	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure, including regulation of temperature and oxygen needs. Costs 20 chemicals."
-	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
-	button_icon_state = "organic_suit"
-	chemical_cost = 20
-	dna_cost = 2
-	req_human = TRUE
-
-	suit_type = /obj/item/clothing/suit/space/changeling
-	helmet_type = /obj/item/clothing/head/helmet/space/changeling
-	suit_name_simple = "flesh shell"
-	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.25
-	blood_on_castoff = 1
-
-/obj/item/clothing/suit/space/changeling
-	name = "flesh mass"
-	icon_state = "lingspacesuit_t"
-	icon = 'icons/obj/clothing/suits/costume.dmi'
-	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
-	item_flags = DROPDEL
-	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
-	armor_type = /datum/armor/space_changeling
-	actions_types = list()
-	cell = null
-	show_hud = FALSE
-
-/datum/armor/space_changeling
-	bio = 100
-	fire = 90
-	acid = 90
-
-/obj/item/clothing/suit/space/changeling/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-	if(ismob(loc))
-		loc.visible_message(span_warning("[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!"), span_warning("We inflate our flesh, creating a spaceproof suit!"), span_hear("You hear organic matter ripping and tearing!"))
-	START_PROCESSING(SSobj, src)
-
-// seal the cell door
-/obj/item/clothing/suit/space/changeling/toggle_spacesuit_cell(mob/user)
-	return
-
-/obj/item/clothing/suit/space/changeling/process(seconds_per_tick)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (seconds_per_tick / SSMOBS_DT))
-		H.adjust_bodytemperature(temperature_setting - H.bodytemperature) // force changelings to normal temp step mode played badly
-
-/obj/item/clothing/head/helmet/space/changeling
-	name = "flesh mass"
-	icon = 'icons/obj/clothing/head/costume.dmi'
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
-	icon_state = "lingspacehelmet"
-	inhand_icon_state = null
-	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	item_flags = DROPDEL
-	clothing_flags = STOPSPRESSUREDAMAGE | HEADINTERNALS
-	armor_type = /datum/armor/space_changeling
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 /***************************************\
 |*****************ARMOR*****************|

@@ -48,10 +48,19 @@
 	var/debug_mode = FALSE
 	/// Whether the shop is locked or not. If set to true, nothing can be purchased.
 	var/shop_locked = FALSE
+	/// Callback which returns true if you can choose to replace your objectives with different ones
+	var/datum/callback/can_replace_objectives
+	/// Callback which performs that operation
+	var/datum/callback/replace_objectives
 
 /datum/uplink_handler/New()
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
+
+/datum/uplink_handler/Destroy(force, ...)
+	can_replace_objectives = null
+	replace_objectives = null
+	return ..()
 
 /// Called whenever an update occurs on this uplink handler. Used for UIs
 /datum/uplink_handler/proc/on_update()

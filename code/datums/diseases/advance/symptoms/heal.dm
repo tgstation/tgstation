@@ -384,9 +384,10 @@
 
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
+	if(QDELETED(M) || M.stat == DEAD)
+		return
 	M.fakedeath("regenerative_coma", !deathgasp)
 	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 300)
-
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
 	if(QDELETED(M) || !active_coma)

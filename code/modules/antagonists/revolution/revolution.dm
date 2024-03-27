@@ -78,6 +78,7 @@
 /datum/antagonist/rev/greet()
 	. = ..()
 	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/revolutionary_tide.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
@@ -562,7 +563,6 @@
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
@@ -628,7 +628,6 @@
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
 		if(!isnull(rev_head.current))
 			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			rev_head.current.med_hud_set_status()
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current

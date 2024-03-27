@@ -28,43 +28,44 @@
 		ui = new(user, src, "CellularEmporium", name)
 		ui.open()
 
+/datum/cellular_emporium/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/static/list/abilities
+	if(isnull(abilities))
+		abilities = list()
+		for(var/datum/action/changeling/ability_path as anything in changeling.all_powers)
+
+			var/dna_cost = initial(ability_path.dna_cost)
+
+			if(dna_cost < 0) // 0 = free, but negatives are invalid
+				continue
+
+			var/list/ability_data = list()
+			ability_data["name"] = initial(ability_path.name)
+			ability_data["desc"] = initial(ability_path.desc)
+			ability_data["path"] = ability_path
+			ability_data["helptext"] = initial(ability_path.helptext)
+			ability_data["genetic_point_required"] = dna_cost
+			ability_data["absorbs_required"] = initial(ability_path.req_absorbs) // compares against changeling true_absorbs
+			ability_data["dna_required"] = initial(ability_path.req_dna) // compares against changeling absorbed_count
+
+			abilities += list(ability_data)
+
+		// Sorts abilities alphabetically by default
+		sortTim(abilities, /proc/cmp_assoc_list_name)
+
+	data["abilities"] = abilities
+	return data
+
 /datum/cellular_emporium/ui_data(mob/user)
 	var/list/data = list()
 
 	data["can_readapt"] = changeling.can_respec
-
-	var/genetic_points_remaining = changeling.genetic_points
-	data["genetic_points_remaining"] = genetic_points_remaining
-
-	var/list/abilities = list()
-	for(var/datum/action/changeling/ability_path as anything in changeling.all_powers)
-
-		var/dna_cost = initial(ability_path.dna_cost)
-
-		if(dna_cost <= 0)
-			continue
-
-		var/list/ability_data = list()
-		ability_data["name"] = initial(ability_path.name)
-		ability_data["desc"] = initial(ability_path.desc)
-		ability_data["path"] = ability_path
-		ability_data["helptext"] = initial(ability_path.helptext)
-		ability_data["owned"] = !!changeling.purchased_powers[ability_path]
-		ability_data["dna_cost"] = dna_cost
-
-		var/can_purchase = TRUE
-		if(initial(ability_path.req_absorbs) > changeling.true_absorbs)
-			can_purchase = FALSE
-		if(initial(ability_path.req_dna) > changeling.absorbed_count)
-			can_purchase = FALSE
-		if(dna_cost > genetic_points_remaining)
-			can_purchase = FALSE
-
-		ability_data["can_purchase"] = can_purchase
-
-		abilities += list(ability_data)
-
-	data["abilities"] = abilities
+	data["owned_abilities"] = assoc_to_keys(changeling.purchased_powers)
+	data["genetic_points_count"] = changeling.genetic_points
+	data["absorb_count"] = changeling.true_absorbs
+	data["dna_count"] = changeling.absorbed_count
 
 	return data
 
@@ -77,33 +78,29 @@
 		if("readapt")
 			if(changeling.can_respec)
 				changeling.readapt()
+
 		if("evolve")
-			var/sting_path = text2path(params["path"])
-			if(!ispath(sting_path, /datum/action/changeling))
-				return
-			changeling.purchase_power(sting_path)
+			// purchase_power sanity checks stuff like typepath, DNA, and absorbs for us.
+			changeling.purchase_power(text2path(params["path"]))
 
 	return TRUE
 
-/datum/action/innate/cellular_emporium
+/datum/action/cellular_emporium
 	name = "Cellular Emporium"
 	button_icon = 'icons/obj/drinks/soda.dmi'
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_changeling"
 	overlay_icon_state = "bg_changeling_border"
-	/// The cell emporium we open.
-	var/datum/cellular_emporium/cellular_emporium
+	check_flags = NONE
 
-/datum/action/innate/cellular_emporium/New(our_target)
+/datum/action/cellular_emporium/New(Target)
 	. = ..()
-	if(istype(our_target, /datum/cellular_emporium))
-		cellular_emporium = our_target
-	else
-		CRASH("cellular_emporium action created with non emporium")
+	if(!istype(Target, /datum/cellular_emporium))
+		stack_trace("cellular_emporium action created with non-emporium.")
+		qdel(src)
 
-/datum/action/innate/cellular_emporium/Destroy()
-	cellular_emporium = null
-	return ..()
-
-/datum/action/innate/cellular_emporium/Activate()
-	cellular_emporium.ui_interact(owner)
+/datum/action/cellular_emporium/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	target.ui_interact(owner)

@@ -53,6 +53,7 @@ GLOBAL_VAR(antag_prototypes)
 				<br>"
 			obj_count++
 	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
+	result += "<a href='?src=[REF(owner)];obj_prompt_custom=1;target_antag=[REF(src)]'>Prompt custom objective entry</a><br>"
 	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
 	return result
 

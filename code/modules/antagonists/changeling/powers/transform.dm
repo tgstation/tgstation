@@ -3,7 +3,7 @@
 	desc = "We take on the appearance and voice of one we have absorbed. Costs 5 chemicals."
 	button_icon_state = "transform"
 	chemical_cost = 5
-	dna_cost = 0
+	dna_cost = CHANGELING_POWER_INNATE
 	req_dna = 1
 	req_human = TRUE
 
