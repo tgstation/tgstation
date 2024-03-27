@@ -1,0 +1,5 @@
+author: "Alecksohs"
+delete-after: True
+changes:
+  - image: "Updated the Advanced Surgical Tool's sprites"
+  - code_imp: "Updated the Advanced Surgical Tool's light code"
