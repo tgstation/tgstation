@@ -236,10 +236,15 @@
 	UnregisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(mod, COMSIG_MOD_WEARER_UNSET)
 
-/obj/item/mod/core/standard/proc/on_borg_charge(datum/source, amount)
+/obj/item/mod/core/standard/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	add_charge(amount)
+	var/obj/item/stock_parts/cell/target_cell = charge_source()
+	if(isnull(target_cell))
+		return
+
+	if(charge_cell.Invoke(target_cell, seconds_per_tick))
+		mod.update_charge_alert()
 
 /obj/item/mod/core/ethereal
 	name = "MOD ethereal core"

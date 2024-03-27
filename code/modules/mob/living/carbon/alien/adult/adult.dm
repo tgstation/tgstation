@@ -69,11 +69,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
-/mob/living/carbon/alien/adult/set_name()
-	if(numba)
-		name = "[name] ([numba])"
-		real_name = name
-
 /mob/living/carbon/alien/adult/setGrabState(newstate)
 	if(newstate == grab_state)
 		return

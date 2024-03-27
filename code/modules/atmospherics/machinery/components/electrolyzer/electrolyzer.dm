@@ -127,7 +127,7 @@
 	if(anchored)
 		use_energy(power_to_use)
 	else
-		cell.use(power_to_use)
+		cell.use(power_to_use KILO JOULES)
 
 /obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
 	for(var/reaction in GLOB.electrolyzer_reactions)

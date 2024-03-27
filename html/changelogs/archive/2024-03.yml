@@ -711,3 +711,170 @@
   - image: Door remotes now visibly show their current mode.
   carshalash:
   - qol: Fishfood is now more easily acquired through cargo
+2024-03-24:
+  00-Steven:
+  - bugfix: Fixed patronizing paintings not giving a cut to the curators.
+  Bilbo367:
+  - bugfix: pet carrier unfriending pets put in it.
+  JohnFulpWillard:
+  - bugfix: Importing songs into instruments no longer cuts the first line of the
+      song.
+  Melberet:
+  - bugfix: Jellyperson, Luminescent, and Stargazer hair no longer look bad. All jellyperson
+      types no longer have eyesockets.
+  Melbert:
+  - refactor: Refactored bioware slightly (the stuff experimental surgeries gives
+      you). Report any weirdness
+  Pickle-Coding:
+  - bugfix: Fixes conservation of energy issues relating to charging powercells.
+  - qol: APCs will display how much power they are using to charge their cell. This
+      is accounted for in the power monitoring console.
+  - qol: All arbitrary power cell energy units you see are replaced with prefixed
+      joules.
+  - balance: As a consequence of the conservation of energy issues getting fixed,
+      the power consumption for charging cells is now very significant.
+  - balance: APCs only use surplus power from the grid after every machine processes
+      when charging, preventing APCs from causing others to discharge while charging.
+  - balance: Engineering SMES start at max charge to combat the increased energy loss
+      due to conservation of energy fixes.
+  Thlumyn:
+  - rscadd: Crowbars/wirecutters now deconstruct wooden/cardboard crates/boxes
+  Watermelon914:
+  - bugfix: Fixed lua error logging.
+  - bugfix: Fixed the SS13.start_loop function not working properly.
+2024-03-25:
+  00-Steven:
+  - qol: Smoke machines can actually be rotated with alt-click when unwrenched.
+  JohnFulpWillard:
+  - bugfix: Changelings with a flesh ID now properly show the icon of the disguised
+      ID in examine.
+  Melbert:
+  - bugfix: Slimepeople and Luminescents are now 50% burn resistant like Stargazers
+  - refactor: Blood deficiency and slimepeople now handle blood a tiny bit differently,
+      report any oddities.
+  - refactor: Blood deficiency now handles its mail goods a tiny bit different, report
+      any oddities.
+  - bugfix: Fixed Slimepeople's hair not matching their slimey colors.
+  Pickle-Coding:
+  - bugfix: Fixes flamethrower runtime preventing them from working.
+  Rhials:
+  - bugfix: Venus Human Traps can once again entangle victims and drag them into their
+      web.
+  Sadboysuss:
+  - bugfix: Musiver, Godblood, Synaphydramine, Hollow water and unholy water will
+      no longer show up in secret recipes
+  SyncIt21:
+  - bugfix: text fields which should save their value after hitting enter/closing
+      the UI now actually does that
+  - bugfix: lathe search bar now saves its previous search query after the UI is closed
+      and also reloads search results correctly
+  - bugfix: number input dragging will only send payload to backend when its value
+      changes, Same applies when you hit enter or click outside the field, the value
+      must have changed to trigger the back end
+  - bugfix: You can once again drag your mouse anywhere in the window outside the
+      number input field to vary the value by large amounts
+  - code_imp: removed unnecessary variables(suppressFlickering, updateRate & event
+      object param for handlers) from Number Input
+  TheBoondock:
+  - qol: Gold and silver crates now accurately reflects NT's greed
+  mc-oofert:
+  - bugfix: the virgin mary picture no longer makes its initiates harddelete
+2024-03-26:
+  00-Steven:
+  - refactor: Touched most of the code for racks. It should function almost entirely
+      the same save for what's noted here, please report any issues.
+  - code_imp: Wrenching moved to wrenching procs. Side-effect, rack items are only
+      deconstructed on left-click
+  - sound: Items that have sounds make them when placed on racks, much like when placed
+      on tables.
+  - sound: Rack items now make a sound upon deconstructing them.
+  - bugfix: Racks no longer let you attempt to place abstract items like the slap
+      hand or water tank spray nozzles on them.
+  - qol: Clicking on a rack no longer kicks the shit out of it if you don't actually
+      have combat mode on.
+  - qol: Racks and rack items have hover tooltip usage context.
+  - rscdel: Killed ancient rack code for dragging your active item onto a rack. Just
+      click it does the same thing. This allows you to actually dump items onto racks,
+      though currently disorderly.
+  LT3:
+  - bugfix: "Fixes Schr\xF6dinger's space heater, where a space heater both consumes\
+      \ a power cell instantly while also not consuming power when heating adjacent\
+      \ tiles"
+  Melbert:
+  - bugfix: Fixed Suit Storage Unit cell charging rate
+  - qol: A few species (such as Jellypeople) now have proper(ish) preference menu
+      setups
+  - config: The in-repo species config has been updated. Well it's still the same
+      by default, but it's now updated for newer species.
+  - bugfix: Fixed space suit thermal regulators cell usage.
+  NeonNik2245:
+  - qol: makes surgery cap small
+  Pickle-Coding:
+  - bugfix: Fixes static power usage from being able to not draw power.
+  SyncIt21:
+  - bugfix: Fixed cell energy usage for a bunch of stuff(Part 1). See PR 82197 for
+      details
+  - bugfix: recharge stations draw the same amount of power as before but directly
+      from grid(without using apc cell power) and won't waste any excess power
+  - bugfix: Fixed more energy usages for cells(Part 2). See PR 82198 for details
+  - bugfix: Fixed more energy usages for cells(Part 3). See PR 82204 for details
+  necromanceranne:
+  - bugfix: Crank weapons now can actually be charged using their crank.
+  - bugfix: Stun batons and their variants now actually meaningfully consume charge
+      when used.
+2024-03-27:
+  13spacemen:
+  - bugfix: the follow link upon poll completion should work properly now
+  Alecksohs:
+  - image: Updated the Advanced Surgical Tool's sprites
+  - code_imp: Updated the Advanced Surgical Tool's light code
+  JohnFulpWillard:
+  - refactor: Xenomorphs (Lavaland & Oldstation ones) are now basic mobs.
+  Melbert:
+  - bugfix: Puzzlegrids now report their answers properly
+  - rscadd: Bitrunners can now broadcast their Bitruns to the station's Entertainment
+      Monitors.
+  - bugfix: Blocks mobs from trying to "physically" interact with some of their hud
+      elements, such as using Telekinesis or point a gun at your mood meter.
+  Paxilmaniac:
+  - rscadd: The PML-9's name has been changed to something that's a little less boring
+      random numbers and letters, and something that TTS can likely pronounce much
+      nicer than before. Get blown up by a Dardo rocket launcher today.
+  - image: Sprites for rocket launchers, rockets, and rocket projectiles have been
+      changed to something fresher looking.
+  - balance: Rocket launchers can be worn on your back or armor vest.
+  SyncIt21:
+  - bugfix: abstract(like the dual hand thingy on your hand) & hologram things can't
+      be put inside storage items
+  - qol: adds examines & screentips for tool acts & other operations for reagent grinder
+  - qol: adds an off icon for when the grinder panel is open/not powered
+  - code_imp: auto docs vars & procs. Shared common proc for grinding or juicing
+  - code_imp: removed trait for blended dust, changed some item interactions to end
+      the attack chain early & save time
+  - bugfix: no inserting hologram items into the reagent grinder
+  - bugfix: 'you can hit the reagent grinder tools like screwdriver, wrench, crowbar
+      & even beakers/ingredients etc when in combat mode
+
+      fix; adds sanity checks for when & how mobs interact with the reagent grinder'
+  - bugfix: examining a reagent grinder by an AI/Human with AI access now actually
+      works.
+  - bugfix: you can insert Nova flowers & other food items from any bag type
+  - bugfix: reagent grinder now grinds all the contents of an item recursively to
+      produce maximum reagents like a real grinder would
+  - refactor: reagent grinder now measures available capacity to store items as total
+      weight of stored items & not number. Capacity can be increased with upgraded
+      matter bin
+  - refactor: reagent grinder power usage is now a function of duration & total weight
+      of items blended, meaining blending more number of items/larger items will consume
+      more power
+  - refactor: reagent grinder code has been optimized overall. Report bugs on github
+  Watermelon914:
+  - admin: Admins can now run lua files bigger than 36 KB by importing them directly.
+  YakumoChen:
+  - bugfix: Removed erroneous light switch in janitor office
+  carshalash:
+  - balance: The polymorph belt will no longer register space dragons as acceptable
+      DNA.
+  zxaber:
+  - rscadd: Added a new Neutral Quirk to indicate to Medical you're willing to be
+      borged
