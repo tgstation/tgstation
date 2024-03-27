@@ -76,7 +76,7 @@
 		living_mob.clear_alert(ALERT_TEMPERATURE)
 
 ///Ensures that maploaded mobs are in a safe environment. Unit test stuff.
-/datum/element/body_temp_sensitive/proc/check_safe_environment(var/mob/living/living_mob)
+/datum/element/body_temp_sensitive/proc/check_safe_environment(mob/living/living_mob)
 	if(living_mob.stat == DEAD)
 		return
 	var/atom/location = living_mob.loc
