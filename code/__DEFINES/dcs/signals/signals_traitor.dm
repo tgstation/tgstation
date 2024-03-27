@@ -36,4 +36,4 @@
 #define COMSIG_EHMS_INJECTOR_INJECTED "after_ehms_inject"
 
 /// Called by an battle royale implanter when successfully implanting someone. Passes the implanted mob.
-#define COMSIG_ROYALE_IMPLANTED "new_guy_dropping"
+#define COMSIG_ROYALE_IMPLANTED "royale_implanted"
