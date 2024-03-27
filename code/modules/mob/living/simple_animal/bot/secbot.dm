@@ -7,8 +7,8 @@
 	light_power = 0.8
 	density = FALSE
 	anchored = FALSE
-	health = 75
-	maxHealth = 75
+	health = 25
+	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
@@ -75,7 +75,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/officer
 	name = "Officer Beepsky"
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too."
-	health = 75
+	health = 45
 
 /mob/living/simple_animal/bot/secbot/beepsky/officer/Initialize(mapload)
 	. = ..()
@@ -90,7 +90,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
-	health = 75
+	health = 45
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
