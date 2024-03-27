@@ -7,7 +7,7 @@
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
-	color = "#000000"
+	color = COLOR_BLACK
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
@@ -111,7 +111,7 @@
 /obj/item/clothing/head/wig/natural
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	adjustablecolor = FALSE
 	custom_price = PAYCHECK_COMMAND
 

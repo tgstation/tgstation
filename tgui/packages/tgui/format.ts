@@ -65,6 +65,10 @@ export const formatPower = (value: number, minBase1000 = 0) => {
   return formatSiUnit(value, minBase1000, 'W');
 };
 
+export const formatEnergy = (value: number, minBase1000 = 0) => {
+  return formatSiUnit(value, minBase1000, 'J');
+};
+
 // Formats a number as a currency string
 export const formatMoney = (value: number, precision = 0) => {
   if (!Number.isFinite(value)) {

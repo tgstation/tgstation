@@ -21,6 +21,8 @@
 	var/list/player_spawns = list()
 	/// A list of paths of modifiers enabled for the match.
 	var/list/modifiers = list()
+	/// Is the modifiers modal menu open (for the host)
+	var/mod_menu_open = FALSE
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
@@ -109,7 +111,7 @@
 	announce(span_reallybig("GO!"))
 	if(length(modifiers))
 		var/list/modifier_names = list()
-		for(var/datum/deathmatch_modifier/modifier in modifiers)
+		for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
 			modifier_names += uppertext(initial(modifier.name))
 		announce(span_boldnicegreen("THIS MATCH MODIFIERS: [english_list(modifier_names, and_text = " ,")]."))
 	return TRUE
@@ -357,7 +359,7 @@
 	.["map"]["max_players"] = map.max_players
 
 	.["mod_menu_open"] = FALSE
-	if((is_host || is_admin)  && players[user.ckey]["mod_menu_open"])
+	if((is_host || is_admin) && mod_menu_open)
 		.["mod_menu_open"] = TRUE
 		for(var/modpath in GLOB.deathmatch_game.modifiers)
 			var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
@@ -485,10 +487,10 @@
 					global_chat = !global_chat
 					return TRUE
 		if("open_mod_menu")
-			players[usr.ckey]["mod_menu_open"] = TRUE
+			mod_menu_open = TRUE
 			return TRUE
 		if("exit_mod_menu")
-			players[usr.ckey] -= "mod_menu_open"
+			mod_menu_open = FALSE
 			return TRUE
 		if("toggle_modifier")
 			var/datum/deathmatch_modifier/modpath = text2path(params["modpath"])
@@ -521,5 +523,5 @@
 
 /datum/deathmatch_lobby/ui_close(mob/user)
 	. = ..()
-	if(players[user.ckey])
-		players[user.ckey] -= "mod_menu_open"
+	if(user.ckey == host)
+		mod_menu_open = FALSE

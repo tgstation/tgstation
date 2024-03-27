@@ -214,6 +214,14 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/ceturtlenecks
+	name = "Chief Engineer Turtlenecks"
+	desc = "Contains the CE's turtleneck and turtleneck skirt."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck,
+					/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt,
+				)
 
 /// Engine Construction
 

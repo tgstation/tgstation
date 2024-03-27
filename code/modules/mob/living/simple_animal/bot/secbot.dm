@@ -20,7 +20,7 @@
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
-	path_image_color = "#FF0000"
+	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
 	automated_announcements = list(

@@ -254,7 +254,7 @@
 		chassis.repair_damage(h_boost)
 		repaired = TRUE
 	if(repaired)
-		if(!chassis.use_power(energy_drain))
+		if(!chassis.use_energy(energy_drain))
 			active = FALSE
 			return PROCESS_KILL
 	else //no repair needed, we turn off
@@ -458,7 +458,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(movement_dir)
 	if(!chassis)
 		return FALSE
-	if(chassis.use_power(chassis.step_energy_drain))
+	if(chassis.use_energy(chassis.step_energy_drain))
 		generate_effect(movement_dir)
 		return TRUE
 	return FALSE

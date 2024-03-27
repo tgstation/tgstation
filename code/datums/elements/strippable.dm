@@ -51,7 +51,7 @@
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
 
-	var/datum/strip_menu/strip_menu
+	var/datum/strip_menu/strip_menu = LAZYACCESS(strip_menus, source)
 
 	if (isnull(strip_menu))
 		strip_menu = new(source, src)

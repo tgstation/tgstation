@@ -154,8 +154,6 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
 
-	return
-
 /// Edits the rank and trim of the found record.
 /datum/manifest/proc/modify(name, assignment, trim)
 	var/datum/record/crew/target = find_record(name)
@@ -164,6 +162,22 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	target.rank = assignment
 	target.trim = trim
+
+/**
+ * Using the name to find the record, and person in reference to the body, we recreate photos for the manifest (and records).
+ * Args:
+ * - name - The name of the record we're looking for, which should be the name of the person.
+ * - person - The mob we're taking pictures of to update the records.
+ * - add_height_chart - If we should add a height chart to the background of the photo.
+ */
+/datum/manifest/proc/change_pictures(name, mob/living/person, add_height_chart = FALSE)
+	var/datum/record/crew/target = find_record(name)
+	if(!target)
+		return FALSE
+
+	target.character_appearance = new(person.appearance)
+	target.recreate_manifest_photos(add_height_chart)
+	return TRUE
 
 /datum/manifest/ui_state(mob/user)
 	return GLOB.always_state

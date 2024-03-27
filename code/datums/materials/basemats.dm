@@ -481,8 +481,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/snow
 	name = "snow"
 	desc = "There's no business like snow business."
-	color = "#FFFFFF"
-	greyscale_colors = "#FFFFFF"
+	color = COLOR_WHITE
+	greyscale_colors = COLOR_WHITE
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
