@@ -35,7 +35,7 @@
 	if(!istype(stompy))
 		return FALSE //Not a mech
 	if(!HAS_TRAIT(stompy,TRAIT_MECHA_CREATED_NORMALLY))
-		experiment_handler.announce_message("Scanned mech was not made by crew. Their is nothing to learn here.")
+		experiment_handler.announce_message("Scanned mech was not made by crew. There is nothing to learn here.")
 		return FALSE //Not hand-crafted
 	if(!(stompy.equip_by_category[MECHA_L_ARM] && stompy.equip_by_category[MECHA_R_ARM]))
 		experiment_handler.announce_message("Scanned mech is missing equipment on their arms to proceed this experiment.")
