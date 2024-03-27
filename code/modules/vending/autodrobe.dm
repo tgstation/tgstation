@@ -116,6 +116,7 @@
 				/obj/item/clothing/head/tragic = 2,
 				/obj/item/clothing/head/harlequinhat =2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/harlequin =2,//MONKESTATION EDIT ADDITION
+				/obj/item/clothing/shoes/clown_shoes/harlequin_boots =2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/tragic = 2,
 				/obj/item/clothing/under/costume/streetmime = 1,
 				/obj/item/clothing/mask/gas/clown_hat/yellow = 1,
