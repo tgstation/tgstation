@@ -9,8 +9,8 @@
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use
 	var/power_efficiency = 1
-	///How much power we use
-	var/power_usage = 100
+	///How much energy we use
+	var/energy_usage = 100 KILO JOULES
 	///whether the panel is open so a user can take out the cell
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
@@ -90,7 +90,7 @@
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
-	if(power_cell.charge < power_usage / max(power_efficiency, 1))
+	if(power_cell.charge < energy_usage / max(power_efficiency, 1))
 		to_chat(user, span_warning("The display on [src] blinks 'Out of Power'."))
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)

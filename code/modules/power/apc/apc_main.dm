@@ -699,7 +699,7 @@
 	terminal?.add_load(grid_used)
 	var/cell_used = 0
 	if(amount > grid_used)
-		cell_used += cell.use(amount - grid_used)
+		cell_used += cell.use(amount - grid_used, force = TRUE)
 	return grid_used + cell_used
 
 /// Draws power from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.

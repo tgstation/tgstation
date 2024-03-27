@@ -43,13 +43,19 @@
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/rocketlauncher
-	name = "\improper PML-9"
-	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel. \
-	A sticker near the cheek rest reads, \"ENSURE AREA BEHIND IS CLEAR BEFORE FIRING\""
+	name = "\improper Dardo-RE Rocket Launcher"
+	desc = "A reusable rocket propelled grenade launcher. An arrow pointing toward the front of the launcher \
+		alongside the words \"Front Toward Enemy\" are printed on the tube. Someone seems to have crossed out \
+		that last word and written \"NT\" over it at some point. A sticker near the back of the launcher warn \
+		to \"CHECK BACKBLAST CLEAR BEFORE FIRING\", whatever that means."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "rocketlauncher"
 	inhand_icon_state = "rocketlauncher"
+	worn_icon_state = "rocketlauncher"
+	SET_BASE_PIXEL(-8, 0)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -71,11 +77,16 @@
 		AddElement(/datum/element/backblast)
 
 /obj/item/gun/ballistic/rocketlauncher/unrestricted
+	desc = "A reusable rocket propelled grenade launcher. An arrow pointing toward the front of the launcher \
+		alongside the words \"Front Toward Enemy\" are printed on the tube. \
+		A sticker near the back of the launcher warn to \"CHECK BACKBLAST CLEAR BEFORE FIRING\", whatever that means."
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/rocketlauncher/nobackblast
-	name = "flameless PML-11"
-	desc = "A reusable rocket propelled grenade launcher. This one has been fitted with a special coolant loop to avoid embarassing teamkill 'accidents' from backblast."
+	name = "\improper Dardo-REF Flameless Rocket Launcher"
+	desc = "A reusable rocket propelled grenade launcher. An arrow pointing toward the front of the launcher \
+		alongside the words \"Front Toward Enemy\" are printed on the tube. \
+		This one has been fitted with a special backblast diverter to prevent 'friendly' fire 'accidents' during use."
 	backblast = FALSE
 
 /obj/item/gun/ballistic/rocketlauncher/afterattack()
@@ -84,6 +95,11 @@
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
+
+/obj/item/gun/ballistic/rocketlauncher/update_overlays()
+	. = ..()
+	if(get_ammo())
+		. += "rocketlauncher_loaded"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
 	user.visible_message(span_warning("[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!"), \

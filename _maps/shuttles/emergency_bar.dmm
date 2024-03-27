@@ -230,7 +230,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aU" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
+/mob/living/basic/alien/maid/barmaid,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)

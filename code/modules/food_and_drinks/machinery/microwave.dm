@@ -15,7 +15,7 @@
 #define MAX_MICROWAVE_DIRTINESS 100
 
 /// For the wireless version, and display fluff
-#define TIER_1_CELL_CHARGE_RATE 250
+#define TIER_1_CELL_CHARGE_RATE (250 KILO JOULES)
 
 /obj/machinery/microwave
 	name = "microwave oven"

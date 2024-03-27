@@ -380,6 +380,7 @@
 
 /obj/structure/closet/crate/goldcrate
 	name = "gold crate"
+	desc = "A rectangular steel crate. It seems to be painted to look like gold."
 	icon_state = "gold"
 	base_icon_state = "gold"
 
@@ -395,6 +396,7 @@
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"
+	desc = "A rectangular steel crate. It seems to be painted to look like silver."
 	icon_state = "silver"
 	base_icon_state = "silver"
 
