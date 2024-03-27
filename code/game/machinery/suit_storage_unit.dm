@@ -565,7 +565,7 @@
 	if(cell_count <= 0)
 		return
 
-	var/charge_per_item = final_charge_rate * seconds_per_tick / cell_count
+	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
 	for(var/obj/item/stock_parts/cell/cell as anything in cells_to_charge)
 		charge_cell(charge_per_item, cell)
 
