@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(battle_royale)
 		podspawn(list(
 			"target" = get_turf(winner),
 			"style" = STYLE_SYNDICATE,
-			"spawn" = /obj/item/food/fried_chicken,
+			"spawn" = /obj/item/food/roast_dinner,
 		))
 
 	priority_announce(
