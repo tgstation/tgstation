@@ -34,7 +34,7 @@ export const RouletteNumberCell = (props) => {
         'Roulette__board-cell-number',
         cellClass,
       ])}
-      colspan={colspan}
+      colSpan={colspan}
       rowspan={rowspan}
     >
       <Button
@@ -127,7 +127,7 @@ export const RouletteBoard = () => {
             <RouletteNumberCell
               cellClass="Roulette__board-cell-number--colspan-4"
               color="transparent"
-              colspan="4"
+              colSpan="4"
               key={value}
               text={text}
               value={value}
@@ -140,7 +140,7 @@ export const RouletteBoard = () => {
             <RouletteNumberCell
               cellClass="Roulette__board-cell-number--colspan-2"
               color={cell.color}
-              colspan="2"
+              colSpan="2"
               key={cell.value}
               text={cell.text}
               value={cell.value}

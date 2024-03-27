@@ -6,10 +6,16 @@
 
 import { classes } from 'common/react';
 
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
-export const Table = (props) => {
+type Props = Partial<{
+  collapsing: boolean;
+}> &
+  BoxProps;
+
+export function Table(props: Props) {
   const { className, collapsing, children, ...rest } = props;
+
   return (
     <table
       className={classes([
@@ -23,10 +29,16 @@ export const Table = (props) => {
       <tbody>{children}</tbody>
     </table>
   );
-};
+}
 
-export const TableRow = (props) => {
+type RowProps = Partial<{
+  header: boolean;
+}> &
+  BoxProps;
+
+export function TableRow(props: RowProps) {
   const { className, header, ...rest } = props;
+
   return (
     <tr
       className={classes([
@@ -38,10 +50,17 @@ export const TableRow = (props) => {
       {...computeBoxProps(rest)}
     />
   );
-};
+}
 
-export const TableCell = (props) => {
+type CellProps = Partial<{
+  collapsing: boolean;
+  header: boolean;
+}> &
+  BoxProps;
+
+export function TableCell(props: CellProps) {
   const { className, collapsing, header, ...rest } = props;
+
   return (
     <td
       className={classes([
@@ -54,7 +73,7 @@ export const TableCell = (props) => {
       {...computeBoxProps(rest)}
     />
   );
-};
+}
 
-Table.Row = TableRow;
+Table.Row = TableRow; 
 Table.Cell = TableCell;
