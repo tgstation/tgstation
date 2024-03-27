@@ -988,7 +988,7 @@
 
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
-	if(on_juice() == -1 || !reagents.total_volume)
+	if(on_juice() == -1 || !reagents?.total_volume)
 		return FALSE
 
 	if(ispath(juice_typepath))
