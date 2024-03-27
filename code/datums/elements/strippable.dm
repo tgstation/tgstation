@@ -160,16 +160,22 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	return STRIPPABLE_OBSCURING_NONE
 
-/// Returns the ID of this item's strippable action.
-/// Return `null` if there is no alternate action.
-/// Any return value of this must be in StripMenu.
+/**
+ * Returns a list of alternate actions that can be performed on this strippable_item.
+ * All string keys in the list must be inside tgui\packages\tgui\interfaces\StripMenu.tsx
+ * You can also return null if there are no alternate actions.
+ */
 /datum/strippable_item/proc/get_alternate_actions(atom/source, mob/user)
 	RETURN_TYPE(/list)
 	return null
 
-/// Performs an alternative action on this strippable_item.
-/// `has_alternate_action` needs to be TRUE.
-/// Returns FALSE if blocked by signal, TRUE otherwise.
+/**
+ * Performs an alternate action on this strippable_item.
+ * - source: The source of the action.
+ * - user: The user performing the action.
+ * - action_key: The key of the alternate action to perform.
+ * Returns FALSE if unable to perform the action; whether it be due to the signal or some other factor.
+ */
 /datum/strippable_item/proc/perform_alternate_action(atom/source, mob/user, action_key)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source, action_key) & COMPONENT_CANT_ALT_ACTION)
