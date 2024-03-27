@@ -186,6 +186,24 @@
 
 	atom_storage.silent = TRUE
 
+// MONKESTATION ADDITION START
+/obj/item/storage/belt/holster/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour != TOOL_MULTITOOL)
+		return ..()
+
+	if(chameleon_action.hidden)
+		chameleon_action.hidden = FALSE
+		actions += chameleon_action
+		chameleon_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon holster ([name]) with [W]")
+	else
+		chameleon_action.hidden = TRUE
+		actions -= chameleon_action
+		chameleon_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the chameleon holster ([name]) with [W]")
+// MONKESTATION ADDITION END
+
+
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
 	desc = "A deep shoulder holster capable of holding almost any form of firearm and its ammo."
