@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - admin: "Advanced Debug Cards will still provide a whole lot of access, but the way the money on those cards work is now a bit different. Players shouldn't be able to use the money on those cards in any context though, don't fret about that. Just know that the money printer goes wrrrr"

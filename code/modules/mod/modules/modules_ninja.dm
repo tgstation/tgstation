@@ -133,10 +133,10 @@
 	icon_state = "hacker"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/hacker)
-	/// Minimum amount of power we can drain in a single drain action
-	var/mindrain = 200
-	/// Maximum amount of power we can drain in a single drain action
-	var/maxdrain = 400
+	/// Minimum amount of energy we can drain in a single drain action
+	var/mindrain = 200 KILO JOULES
+	/// Maximum amount of energy we can drain in a single drain action
+	var/maxdrain = 400 KILO JOULES
 	/// Whether or not the communication console hack was used to summon another antagonist.
 	var/communication_console_hack_success = FALSE
 	/// How many times the module has been used to force open doors.

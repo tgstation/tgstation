@@ -409,6 +409,13 @@
 
 		wildcard_access_list |= new_access
 
+/// Helper proc that determines if a card can be used in certain types of payment transactions.
+/obj/item/card/id/proc/can_be_used_in_payment(mob/living/user)
+	if(QDELETED(src) || isnull(registered_account?.account_job) || !isliving(user))
+		return FALSE
+
+	return TRUE
+
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
 		var/minor
@@ -447,8 +454,8 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(!registered_account || !registered_account.account_job)
-		balloon_alert(user, "no account")
+	if(can_be_used_in_payment(user))
+		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
 	/// Determines where the holopay will be placed based on tile contents
@@ -625,9 +632,9 @@
 /// Helper proc. Can the user alt-click the ID?
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
-		return
+		return FALSE
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return FALSE
 
 	return TRUE
 
@@ -1221,7 +1228,7 @@
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
-	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	desc = "A debug ID card. Has ALL the all access and a boatload of money, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
@@ -1229,8 +1236,26 @@
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
-	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	registered_account.account_job = SSjob.GetJobType(/datum/job/admin) // so we can actually use this account without being filtered as a "departmental" card
+	registered_account = new(player_account = FALSE)
+	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
+	registered_account.account_job = SSjob.GetJobType(/datum/job/admin)
+	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
+
+/obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
+	. = ..()
+	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars. spawn in a holochip if you want them to get some dosh
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		return FALSE
+
+	return TRUE
+
+/obj/item/card/id/advanced/debug/can_be_used_in_payment(mob/living/user)
+	. = ..()
+	if(!. || isnull(user.client?.holder))
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		return FALSE
+
+	return TRUE
 
 /obj/item/card/id/advanced/prisoner
 	name = "prisoner ID card"
