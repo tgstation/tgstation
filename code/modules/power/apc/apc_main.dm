@@ -711,3 +711,9 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+
+/// Returns the amount of time it will take the APC at its current trickle charge rate to reach a charge level
+/obj/machinery/power/apc/proc/time_to_charge(joules)
+	var/trickle_charge_power = energy_to_power(area.energy_usage[AREA_USAGE_APC_CHARGE])
+	if(trickle_charge_power >= 1 KILO WATTS) // require at least a bit of charging
+		return round(energy_to_power(joules / trickle_charge_power) * SSmachines.wait + SSmachines.wait, SSmachines.wait)
