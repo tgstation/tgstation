@@ -11420,8 +11420,8 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/mining)
 "drG" = (
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "drH" = (
@@ -14749,12 +14749,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/effect/turf_decal/stripes/white/end,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -19049,8 +19044,8 @@
 /area/station/science/explab)
 "fOR" = (
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -60408,9 +60403,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/disposal/bin,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "sto" = (
@@ -61419,7 +61414,7 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "sHh" = (
@@ -74205,8 +74200,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "wMV" = (
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin/tagger,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},

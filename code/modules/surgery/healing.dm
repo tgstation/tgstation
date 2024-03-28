@@ -38,6 +38,7 @@
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 65,
+		TOOL_WIRECUTTER = 60,
 		/obj/item/pen = 55)
 	repeatable = TRUE
 	time = 25

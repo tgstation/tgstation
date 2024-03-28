@@ -244,7 +244,7 @@ export const DeathmatchLobby = (props) => {
 const ModSelector = (props) => {
   const { act, data } = useBackend<Data>();
   const { admin, host, mod_menu_open, modifiers = [] } = data;
-  if (!mod_menu_open || !host || !admin) {
+  if (!mod_menu_open || !(host || admin)) {
     return null;
   }
   return (

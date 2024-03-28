@@ -338,7 +338,7 @@
 	name = "Space"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blessed"
-	window_colour = "#000000"
+	window_colour = COLOR_BLACK
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/fakespace = 1)
 	replace_walls = /turf/closed/wall/rock/porous

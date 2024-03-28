@@ -1901,6 +1901,26 @@
 	hasinner = TRUE
 	color_src = HAIR_COLOR
 
+/datum/sprite_accessory/ears/cat/big
+	name = "Big"
+	icon_state = "big"
+
+/datum/sprite_accessory/ears/cat/miqo
+	name = "Coeurl"
+	icon_state = "miqo"
+
+/datum/sprite_accessory/ears/cat/fold
+	name = "Fold"
+	icon_state = "fold"
+
+/datum/sprite_accessory/ears/cat/lynx
+	name = "Lynx"
+	icon_state = "lynx"
+
+/datum/sprite_accessory/ears/cat/round
+	name = "Round"
+	icon_state = "round"
+
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"

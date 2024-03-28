@@ -55,7 +55,7 @@
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
 		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
-		if(!do_after(user, 3 SECONDS))
+		if(!do_after(user, 3 SECONDS, interacting_with))
 			balloon_alert(user, "scan failed!")
 			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
 			return ITEM_INTERACT_BLOCKING

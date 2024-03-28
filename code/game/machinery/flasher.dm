@@ -113,7 +113,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	flash_lighting_fx()
 
 	COOLDOWN_START(src, flash_cooldown, flash_cooldown_duration)
-	use_power(1000)
+	use_energy(1 KILO JOULES)
 
 	var/flashed = FALSE
 	for(var/mob/living/living_mob in viewers(src, null))

@@ -61,13 +61,13 @@
 
 		var/list/supply = history["supply"]
 		if(connected_powernet)
-			supply += connected_powernet.viewavail
+			supply += energy_to_power(connected_powernet.avail)
 		if(supply.len > record_size)
 			supply.Cut(1, 2)
 
 		var/list/demand = history["demand"]
 		if(connected_powernet)
-			demand += connected_powernet.viewload
+			demand += energy_to_power(connected_powernet.load)
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
@@ -88,8 +88,8 @@
 	data["areas"] = list()
 
 	if(connected_powernet)
-		data["supply"] = display_power(connected_powernet.viewavail)
-		data["demand"] = display_power(connected_powernet.viewload)
+		data["supply"] = display_power(connected_powernet.avail)
+		data["demand"] = display_power(connected_powernet.load)
 		for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
 			var/obj/machinery/power/apc/A = term.master
 			if(istype(A))
