@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Chameleon holsters, thermals, and sechuds can be locked with multitools, like all other chameleon items."
