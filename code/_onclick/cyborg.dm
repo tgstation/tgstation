@@ -79,7 +79,7 @@
 		if(!isturf(loc))
 			return
 
-		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
+		// cyborg rightclick code, allowing borgos to use weapons at range
 		if(CanReach(A,W))
 			W.melee_attack_chain(src, A, params)
 			return
@@ -89,11 +89,8 @@
 
 				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
 					W.afterattack(A, src, FALSE, params)
-			else
+			else if(isturf(A) || isturf(A.loc))
 				W.afterattack(A, src, FALSE, params)
-
-		if(isturf(A) || isturf(A.loc))
-			W.afterattack(A, src, 0, params)
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs
