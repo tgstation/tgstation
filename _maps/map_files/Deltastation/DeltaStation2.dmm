@@ -8601,7 +8601,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "bWT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -10224,7 +10224,7 @@
 /area/station/engineering/atmos/hfr_room)
 "crb" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "crd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -12548,7 +12548,7 @@
 /area/station/ai_monitored/security/armory)
 "cVt" = (
 /obj/structure/railing,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "cVx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -19246,7 +19246,7 @@
 "eGr" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/light/directional/east,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "eGs" = (
 /obj/structure/chair/office{
@@ -20908,7 +20908,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fam" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23009,7 +23009,7 @@
 "fzD" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/railing,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fzF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28028,7 +28028,7 @@
 /turf/open/floor/iron/large,
 /area/station/commons/locker)
 "gKu" = (
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "gKA" = (
 /obj/structure/cable,
@@ -35339,7 +35339,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/nestbox,
 /mob/living/basic/chicken,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "iBf" = (
 /obj/structure/cable,
@@ -41169,7 +41169,7 @@
 "jVg" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "jVx" = (
 /obj/machinery/computer/crew{
@@ -41575,7 +41575,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "kaw" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "kax" = (
 /obj/structure/chair/office/light{
@@ -42670,7 +42670,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "kmE" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
@@ -45001,7 +45001,7 @@
 "kSi" = (
 /obj/structure/nestbox,
 /obj/machinery/light/directional/west,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "kSk" = (
 /obj/structure/disposalpipe/segment{
@@ -51841,7 +51841,7 @@
 "mBG" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/nestbox,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "mBQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -55783,7 +55783,7 @@
 /area/station/maintenance/fore)
 "nzA" = (
 /mob/living/basic/chicken,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "nzD" = (
 /obj/structure/disposalpipe/segment{
@@ -76560,7 +76560,7 @@
 "sGm" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /mob/living/basic/chicken/brown,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "sGx" = (
 /obj/structure/cable,
@@ -77033,7 +77033,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "sLd" = (
 /obj/structure/cable,
@@ -80405,7 +80405,7 @@
 "tCH" = (
 /obj/machinery/light/directional/west,
 /mob/living/basic/chicken/brown,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "tCI" = (
 /obj/machinery/telecomms/server/presets/command,
@@ -90520,7 +90520,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "vZV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

@@ -5774,6 +5774,7 @@
 #include "monkestation\code\game\objects\items\storage\crate.dm"
 #include "monkestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "monkestation\code\game\turfs\open\water.dm"
+#include "monkestation\code\game\turfs\open\floor\misc_floor.dm"
 #include "monkestation\code\modules\_paperwork\paper_premade.dm"
 #include "monkestation\code\modules\admin\antag_tokens.dm"
 #include "monkestation\code\modules\admin\camera_view.dm"

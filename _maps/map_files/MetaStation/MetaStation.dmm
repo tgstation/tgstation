@@ -3199,7 +3199,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "bep" = (
 /obj/machinery/air_sensor/oxygen_tank,
@@ -4852,7 +4852,7 @@
 "bJs" = (
 /obj/machinery/light/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "bJQ" = (
 /obj/machinery/vending/coffee,
@@ -6246,7 +6246,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "cqk" = (
 /obj/structure/cable,
@@ -17176,7 +17176,7 @@
 /area/station/engineering/atmos)
 "gxn" = (
 /obj/structure/nestbox,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "gxx" = (
 /obj/machinery/door/airlock/atmos/glass{
@@ -19431,7 +19431,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "hmM" = (
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "hne" = (
 /obj/machinery/door/window/brigdoor{
@@ -21879,7 +21879,7 @@
 "igX" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/nestbox,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "igZ" = (
 /obj/machinery/door/firedoor,
@@ -24561,7 +24561,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "iVi" = (
 /obj/machinery/door/airlock{
@@ -25619,7 +25619,7 @@
 "jop" = (
 /obj/machinery/light/directional/south,
 /obj/structure/nestbox,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "joq" = (
 /obj/machinery/door/firedoor,
@@ -35106,7 +35106,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "mFC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45326,7 +45326,7 @@
 "qkV" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/basic/chicken,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "qkW" = (
 /obj/machinery/light/directional/south,
@@ -47969,7 +47969,7 @@
 "rhV" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/sign/poster/random/directional/south,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "riz" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -57753,7 +57753,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "uAM" = (
 /obj/structure/cable,
@@ -59959,7 +59959,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "vpg" = (
 /obj/machinery/door/poddoor/preopen{
@@ -65601,7 +65601,7 @@
 /area/station/engineering/atmos)
 "xpk" = (
 /mob/living/basic/chicken/brown,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "xpo" = (
 /turf/open/floor/carpet,
@@ -66403,7 +66403,7 @@
 	c_tag = "Hydroponics - Aft"
 	},
 /mob/living/basic/chicken,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "xDD" = (
 /obj/effect/turf_decal/stripes/red/line{
