@@ -12068,8 +12068,11 @@
 /area/station/maintenance/starboard/greater)
 "fkU" = (
 /obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4{
+	dir = 4
+	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "flo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -36070,7 +36073,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "mQx" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/rack,
@@ -85339,7 +85342,7 @@ ybO
 ybO
 dDB
 dDB
-fkU
+blb
 ryT
 blb
 hMf
@@ -85854,7 +85857,7 @@ tYT
 tYT
 dDB
 dDB
-fkU
+blb
 fkU
 mQp
 dDB
