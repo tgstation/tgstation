@@ -38,6 +38,13 @@
 	collar_icon_state = "bullterrier"
 	held_state = "bullterrier"
 
+/mob/living/basic/pet/dog/bullterrier/lavaland_party
+	name = "Saint Nick's Helpful Associate"
+	desc = "Undergraduate in 'Being a Good Boy'."
+	habitable_atmos = null
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
+
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
 	real_name = "Kobun"

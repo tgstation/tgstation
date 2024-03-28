@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes:
+  - balance: "You can no longer visually track something (See: AI tracking) if that object is inside something. You are also considered invisible by tracking if your alpha level is less than 50."
