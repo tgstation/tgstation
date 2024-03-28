@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "Certain weather types that arent supposed to be glowing no longer glow"
+  - image: "Snow storms no longer glow"
