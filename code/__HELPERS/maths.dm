@@ -165,17 +165,34 @@
 	power = convert ? energy_to_power(power) : power
 	return siunit(power, "W", 3)
 
-///Format an energy value in prefixed joules.
+/**
+ * Format an energy value in prefixed joules.
+ * Arguments
+ *
+ * * units - the value t convert
+ */
 /proc/display_energy(units)
 	return siunit(units, "J", 3)
 
-///Converts the joule to the watt, assuming SSmachines tick rate.
-/proc/energy_to_power(joules)
-	return joules * (1 SECONDS) / SSmachines.wait
+/**
+ * Converts the joule to the watt, assuming SSmachines tick rate.
+ * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/energy_to_power(joules, datum/controller/subsystem/scheduler = SSmachines)
+	return joules * (1 SECONDS) / scheduler.wait
 
-///Converts the watt to the joule, assuming SSmachines tick rate.
-/proc/power_to_energy(watts)
-	return watts * SSmachines.wait / (1 SECONDS)
+/**
+ * Converts the watt to the joule, assuming SSmachines tick rate.
+ * * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/power_to_energy(watts, datum/controller/subsystem/scheduler = SSmachines)
+	return watts * scheduler.wait / (1 SECONDS)
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)

@@ -8,7 +8,7 @@
 	return cell?.charge
 
 /obj/vehicle/sealed/mecha/proc/use_energy(amount)
-	var/output = get_charge() && cell.use(amount)
+	var/output = cell.use(amount)
 	if (output)
 		diag_hud_set_mechcell()
 	return output

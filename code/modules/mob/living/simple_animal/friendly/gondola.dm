@@ -22,7 +22,7 @@
 	icon_living = "gondola"
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/food/meat/slab/gondola = 1)
 	//Gondolas aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
 	minbodytemp = 0
 	maxbodytemp = 1500
 	maxHealth = 200

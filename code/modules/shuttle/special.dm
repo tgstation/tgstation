@@ -167,31 +167,6 @@
 	. = ..()
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = NO_SPAWN
-	name = "Barmaid"
-	desc = "A barmaid, a maiden found in a bar."
-	pass_flags = PASSTABLE
-	unique_name = FALSE
-	AIStatus = AI_OFF
-	stop_automated_movement = TRUE
-	initial_language_holder = /datum/language_holder/universal
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize(mapload)
-	. = ..()
-	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
-
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access + list(ACCESS_CENT_BAR))
-
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
-	qdel(access_card)
-	. = ..()
-
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
 // with CENTCOM_BARSTAFF)
