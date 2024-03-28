@@ -246,7 +246,7 @@
 	///Lazylist of syringes that we've picked up
 	var/list/syringes
 	///List of all scanned reagents, starts with epinephrine and multiver
-	var/list/known_reagents
+	var/list/datum/reagent/known_reagents
 	///List of reagents we want to be creating this processing tick
 	var/list/processed_reagents
 	///Maximu amount of syringes we can hold
@@ -312,7 +312,7 @@
 			else if(action == ("toggle_reagent_" + known_reagents[i].name))
 				synthesize(reagent_id)
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/synthesize(var/reagent)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/synthesize(reagent)
 	if(reagent in processed_reagents)
 		LAZYREMOVE(processed_reagents, reagent)
 		return
