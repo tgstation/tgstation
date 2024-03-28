@@ -25,7 +25,7 @@
 		/obj/item/grenade/clusterbuster,
 		/obj/item/spear/bamboospear,
 		/obj/item/reagent_containers/spray/chemsprayer/magical, //unsure if this would cause issues but they do already have access to a full chem lab so it should be fine
-		/obj/item/gun/energy/laser/instakill, //first to hit the other wins, very fast matches
+//		/obj/item/gun/energy/laser/instakill, //first to hit the other wins, very fast matches
 		/obj/item/melee/baton/security/loaded,
 		/obj/item/chainsaw,
 		/obj/item/melee/energy/sword/saber,
