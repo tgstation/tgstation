@@ -33,6 +33,8 @@
 	var/tame_message = "lets out a happy moo"
 	/// singular version for player cows
 	var/self_tame_message = "let out a happy moo"
+	/// What kind of juice do we produce?
+	var/milked_reagent = /datum/reagent/consumable/milk
 
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \
@@ -42,14 +44,14 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_cow_tipped)))
 	AddElement(/datum/element/pet_bonus, "moos happily!")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	udder_component()
+	setup_udder()
 	setup_eating()
 	. = ..()
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
-/mob/living/basic/cow/proc/udder_component()
-	AddComponent(/datum/component/udder)
+/mob/living/basic/cow/proc/setup_udder()
+	AddComponent(/datum/component/udder, reagent_produced_override = milked_reagent)
 
 /*
  * food related components and elements are set up here for a few reasons:
