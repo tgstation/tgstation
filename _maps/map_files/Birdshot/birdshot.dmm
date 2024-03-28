@@ -1261,7 +1261,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_2"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "aDe" = (
@@ -1969,7 +1971,9 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_1"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "aSI" = (
@@ -3945,7 +3949,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_3"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "bMW" = (
@@ -4719,7 +4725,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_1"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "cda" = (
@@ -5872,6 +5880,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "atmos_airlock_1"
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/hallway)
@@ -19646,7 +19657,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_2"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "hQs" = (
@@ -33826,6 +33839,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "atmos_airlock_1"
 	},
 /turf/open/floor/iron/smooth_half{
 	dir = 8
@@ -58011,6 +58027,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "atmos_airlock_1"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "thM" = (
@@ -69222,6 +69241,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "atmos_airlock_1"
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 8
 	},
@@ -69325,6 +69347,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "atmos_airlock_1"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "wpO" = (
@@ -69745,7 +69770,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_2"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "wwz" = (
@@ -70015,7 +70042,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_2"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "wzK" = (
@@ -71538,7 +71567,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine_airlock_2"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "wWI" = (
@@ -75008,6 +75039,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "atmos_airlock_1"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/hallway)
 "xOw" = (
