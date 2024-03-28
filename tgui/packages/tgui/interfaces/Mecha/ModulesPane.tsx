@@ -490,17 +490,6 @@ const SnowflakeSyringe = (props) => {
         />
       </LabeledList.Item>
       <LabeledList.Item label={'Reagent control'}>
-        <Button
-          content={'View'}
-          onClick={() =>
-            act('equip_act', {
-              ref: ref,
-              gear_action: 'show_reagents',
-            })
-          }
-        />
-      </LabeledList.Item>
-      <LabeledList.Item label={'Reagent control'}>
         {analyzed_reagents.map((reagent) => (
           <LabeledList.Item key={`${reagent}`} label={`${reagent}`}>
             <Button
