@@ -21,6 +21,7 @@
 			new /obj/item/shard(drop_loc)
 	if(state >= FRAME_COMPUTER_STATE_WIRED)
 		new /obj/item/stack/cable_coil(drop_loc, 5)
+	return ..()
 
 /obj/structure/frame/computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
