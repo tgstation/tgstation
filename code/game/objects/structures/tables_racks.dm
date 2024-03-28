@@ -832,10 +832,9 @@
 	if(isnull(held_item))
 		return NONE
 
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
@@ -851,8 +850,6 @@
 		return TRUE
 
 /obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -924,16 +921,13 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Construct Rack"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
 /obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
