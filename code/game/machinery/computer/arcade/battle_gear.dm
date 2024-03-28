@@ -4,22 +4,9 @@
 	///The slot this gear fits into
 	var/slot = WEAPON_SLOT
 	///The world the player has to be at in order to buy this item.
-	var/world_available = NONE
+	var/world_available
 	///The stat given by the gear
 	var/bonus_modifier
-
-/datum/battle_arcade_gear/tier_0
-	world_available = NONE
-
-/datum/battle_arcade_gear/tier_0/weapon
-	name = "Stick"
-	slot = WEAPON_SLOT
-	bonus_modifier = 1.25
-
-/datum/battle_arcade_gear/tier_0/armor
-	name = "Rags"
-	slot = ARMOR_SLOT
-	bonus_modifier = 1.25
 
 /datum/battle_arcade_gear/tier_1
 	world_available = BATTLE_WORLD_ONE
