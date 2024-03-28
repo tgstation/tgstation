@@ -1,5 +1,0 @@
-author: "JohnFulpWillard, Twox"
-delete-after: True
-changes:
-  - rscadd: "Added a new photobooth machine to the HoP's line."
-  - bugfix: "Things checking for access now checks your off hand, too."
