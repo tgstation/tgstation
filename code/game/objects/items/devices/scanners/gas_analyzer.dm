@@ -172,8 +172,8 @@
  * Also used in other chat-based gas scans.
  */
 /proc/atmos_scan(mob/user, atom/target, silent=FALSE)
-	var/mixture = target.return_air()
-	if(mixture)
+	var/mixture = target.return_analyzable_air()
+	if(!mixture)
 		return FALSE
 
 	var/icon = target
