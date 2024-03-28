@@ -23,6 +23,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
+	ADD_TRAIT(target, TRAIT_MOB_EATER, REF(src))
 	src.heal_amt = heal_amt
 	src.damage_amount = damage_amount
 	src.damage_type = damage_type
@@ -35,6 +36,7 @@
 	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attackingtarget))
 
 /datum/element/basic_eating/Detach(datum/target)
+	REMOVE_TRAIT(target, TRAIT_MOB_EATER, REF(src))
 	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 

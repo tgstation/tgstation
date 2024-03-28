@@ -39,14 +39,15 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
 
-
-
 /datum/unit_test/outfit_sanity/Run()
 	var/datum/outfit/prototype_outfit = /datum/outfit
 	var/prototype_name = initial(prototype_outfit.name)
 	var/mob/living/carbon/human/H = allocate(/mob/living/carbon/human/consistent)
 
-	for (var/outfit_type in subtypesof(/datum/outfit))
+	var/list/outfits_to_check = subtypesof(/datum/outfit)
+	outfits_to_check -= typesof(/datum/outfit/deathmatch_loadout)
+
+	for (var/outfit_type in outfits_to_check)
 		// Only make one human and keep undressing it because it's much faster
 		for (var/obj/item/I in H.get_equipped_items(include_pockets = TRUE))
 			qdel(I)

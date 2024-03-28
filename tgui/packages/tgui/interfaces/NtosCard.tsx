@@ -191,11 +191,12 @@ const IdCardPage = (props) => {
             </Stack.Item>
             <Stack.Item>
               <NumberInput
+                step={1}
                 value={id_age || 0}
                 unit="Years"
                 minValue={17}
                 maxValue={85}
-                onChange={(e, value) => {
+                onChange={(value) => {
                   act('PRG_age', {
                     id_age: value,
                   });

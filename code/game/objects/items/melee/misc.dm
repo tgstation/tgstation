@@ -470,7 +470,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace_lefthand
 	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace_righthand
 	greyscale_config_worn = /datum/greyscale_config/cleric_mace
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron Mace.

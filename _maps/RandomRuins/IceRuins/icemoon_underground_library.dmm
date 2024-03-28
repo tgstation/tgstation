@@ -145,7 +145,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "aO" = (
-/mob/living/basic/pet/fox,
+/mob/living/basic/pet/fox/icemoon,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -327,7 +327,7 @@
 /area/ruin/unpowered/buried_library)
 "cA" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/pet/fox,
+/mob/living/basic/pet/fox/icemoon,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -394,7 +394,7 @@
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/mob/living/basic/pet/fox,
+/mob/living/basic/pet/fox/icemoon,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

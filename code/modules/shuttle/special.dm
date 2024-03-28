@@ -108,7 +108,7 @@
 	// New sleepers
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
-		L.add_atom_colour("#800080", TEMPORARY_COLOUR_PRIORITY)
+		L.add_atom_colour(COLOR_PURPLE, TEMPORARY_COLOUR_PRIORITY)
 		L.visible_message(span_revennotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
 			span_revendanger("[desc]"))
 		// Don't let them sit suround unconscious forever
@@ -122,7 +122,7 @@
 	// Missing sleepers
 	for(var/i in sleepers - found)
 		var/mob/living/L = i
-		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#800080")
+		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_PURPLE)
 		L.visible_message("<span class='revennotice'>The glow from [L] fades \
 			away.</span>")
 		L.grab_ghost()
@@ -166,31 +166,6 @@
 /mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = NO_SPAWN
-	name = "Barmaid"
-	desc = "A barmaid, a maiden found in a bar."
-	pass_flags = PASSTABLE
-	unique_name = FALSE
-	AIStatus = AI_OFF
-	stop_automated_movement = TRUE
-	initial_language_holder = /datum/language_holder/universal
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize(mapload)
-	. = ..()
-	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
-
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access + list(ACCESS_CENT_BAR))
-
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
-	qdel(access_card)
-	. = ..()
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone

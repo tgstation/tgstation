@@ -128,6 +128,7 @@
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
+	SEND_SIGNAL(M, COMSIG_MOB_BUCKLED, src)
 	return TRUE
 
 /obj/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -163,6 +164,7 @@
 	if(!length(buckled_mobs))
 		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
+	SEND_SIGNAL(buckled_mob, COMSIG_MOB_UNBUCKLED, src)
 
 	if(can_fall)
 		var/turf/location = buckled_mob.loc

@@ -59,7 +59,7 @@
 	light_on = FALSE
 	var/helmet_on = FALSE
 	var/smile = FALSE
-	var/smile_color = "#FF0000"
+	var/smile_color = COLOR_RED
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
 	var/obj/item/clothing/head/attached_hat

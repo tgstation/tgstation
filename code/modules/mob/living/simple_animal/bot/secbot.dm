@@ -12,6 +12,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
+	can_buckle_to = FALSE
 
 	req_one_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
@@ -20,7 +21,7 @@
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
-	path_image_color = "#FF0000"
+	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
 	automated_announcements = list(
@@ -69,6 +70,7 @@
 	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
+
 
 /mob/living/simple_animal/bot/secbot/beepsky/officer
 	name = "Officer Beepsky"

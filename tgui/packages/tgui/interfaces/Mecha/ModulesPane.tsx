@@ -555,7 +555,7 @@ const SnowflakeRadio = (props) => {
           maxValue={maxFrequency / 10}
           value={frequency / 10}
           format={(value) => toFixed(value, 1)}
-          onDrag={(e, value) =>
+          onDrag={(value) =>
             act('equip_act', {
               ref: ref,
               gear_action: 'set_frequency',
@@ -661,7 +661,7 @@ const SnowflakeAirTank = (props) => {
               minValue={tank_release_pressure_min}
               maxValue={tank_release_pressure_max}
               step={10}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('equip_act', {
                   ref: ref,
                   gear_action: 'set_cabin_pressure',
@@ -741,7 +741,7 @@ const SnowflakeAirTank = (props) => {
             maxValue={tank_pump_pressure_max}
             step={10}
             format={(value) => `${Math.round(value)}`}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('equip_act', {
                 ref: ref,
                 gear_action: 'set_tank_pump_pressure',

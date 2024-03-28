@@ -638,11 +638,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/obj/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
+		use_energy(reqpower)
 		A = new stun_projectile(T)
 		playsound(loc, stun_projectile_sound, 75, TRUE)
 	else
-		use_power(reqpower * 2)
+		use_energy(reqpower * 2)
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, TRUE)
 
@@ -960,14 +960,14 @@ DEFINE_BITFIELD(turret_flags, list(
 		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
 					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
 
-/obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
+/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
 	if(machine_stat & BROKEN)
 		return
 
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, I))
+	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, attacking_item))
 			return
-		var/obj/item/multitool/M = I
+		var/obj/item/multitool/M = attacking_item
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
@@ -976,16 +976,20 @@ DEFINE_BITFIELD(turret_flags, list(
 	if (issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 ) // trying to unlock the interface
-		if (allowed(usr))
-			if(obj_flags & EMAGGED)
-				to_chat(user, span_warning("The turret control is unresponsive!"))
-				return
+	var/id = attacking_item.GetID()
 
-			locked = !locked
-			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
-		else
-			to_chat(user, span_alert("Access denied."))
+	if(isnull(id))
+		return
+
+	if (check_access(id))
+		if(obj_flags & EMAGGED)
+			to_chat(user, span_warning("The turret control is unresponsive!"))
+			return
+
+		locked = !locked
+		to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
+	else
+		to_chat(user, span_alert("Access denied."))
 
 /obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Wise cows produce surprising milk."
+  - spellcheck: "You now milk the owner of an udder, not the udder."
