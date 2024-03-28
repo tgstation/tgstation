@@ -19837,7 +19837,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "fZB" = (
-/obj/machinery/power/full,
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
@@ -21852,7 +21852,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gJc" = (
-/obj/machinery/power/full,
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -34618,7 +34618,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "llW" = (
-/obj/machinery/power/full,
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -58407,7 +58407,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "tGd" = (
-/obj/machinery/power/full,
+/obj/machinery/power/smes/full,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
