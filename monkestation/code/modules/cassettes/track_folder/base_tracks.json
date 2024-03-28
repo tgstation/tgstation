@@ -4972,7 +4972,7 @@
 	"artist": "SEGA",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4982,7 +4982,7 @@
 	"artist": "SEGA",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4992,7 +4992,7 @@
 	"artist": "Big Data & Joywave",
 	"genre": "Rock",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5002,7 +5002,7 @@
 	"artist": "Eddy Grant",
 	"genre": "Disco, Funk, Soul, and R&B",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5012,7 +5012,7 @@
 	"artist": "Weird Al Yankovic",
 	"genre": "Rock",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5022,7 +5022,7 @@
 	"artist": "Mother Mother",
 	"genre": "Rock",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5032,7 +5032,7 @@
 	"artist": "Mother Mother",
 	"genre": "Rock",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5042,7 +5042,7 @@
 	"artist": "Duran Duran",
 	"genre": "Pop",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5052,7 +5052,7 @@
 	"artist": "The Rah Band",
 	"genre": "Disco, Funk, Soul, and R&B",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5062,7 +5062,7 @@
 	"artist": "M83",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5072,7 +5072,7 @@
 	"artist": "Frank Sinatra",
 	"genre": "Pop",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5082,7 +5082,7 @@
 	"artist": "Frank Sinatra",
 	"genre": "Pop",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5092,7 +5092,7 @@
 	"artist": "The Champs",
 	"genre": "Rock",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5102,7 +5102,7 @@
 	"artist": "Valve Studio Orchestra",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5112,7 +5112,7 @@
 	"artist": "Valve Studio Orchestra",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5122,7 +5122,7 @@
 	"artist": "Valve Studio Orchestra",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5132,7 +5132,7 @@
 	"artist": "Valve Studio Orchestra",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5142,7 +5142,7 @@
 	"artist": "Squiller",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5152,7 +5152,7 @@
 	"artist": "Valve Studio Orchestra",
 	"genre": "Video Game",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -5162,17 +5162,7 @@
 	"artist": "Favored Nations",
 	"genre": "Pop",
 	"secret": false,
-	"lobby": true,
-	"jukebox": true
-	},
-	{
-	"url" : "https://files.catbox.moe/fcraa1.mp3",
-	"title": "Cotton Eye Joe",
-	"duration": 1940,
-	"artist": "Rednex",
-	"genre": "Country and Western",
-	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	}
 	]
