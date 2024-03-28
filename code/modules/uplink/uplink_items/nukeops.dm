@@ -226,7 +226,7 @@
 // 'If god had wanted you to live, he would not have created ME!'
 
 /datum/uplink_item/weapon_kits/medium_cost/rawketlawnchair
-	name = "84mm Rocket Propelled Grenade Launcher (Hard)"
+	name = "Dardo-RE Rocket Propelled Grenade Launcher (Hard)"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back! Comes with a bouquet of additional rockets!"
 	item = /obj/item/storage/toolbox/guncase/rocketlauncher

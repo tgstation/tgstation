@@ -13,17 +13,14 @@ import {
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
-const DEFAULT_UPDATE_RATE = 400;
-
 type Props = Required<{
   value: number | string;
   minValue: number;
   maxValue: number;
+  step: number;
 }> &
   Partial<{
-    step: number;
     stepPixelSize: number;
-    suppressFlicker: number;
     disabled: BooleanLike;
 
     className: string;
@@ -34,27 +31,22 @@ type Props = Required<{
     width: string;
     lineHeight: string;
     fontSize: string;
-    updateRate: number;
     format: (value: number) => string;
-    onChange: (e: any, value: number) => void;
-    onDrag: (e: any, value: number) => void;
+    onChange: (value: number) => void;
+    onDrag: (value: number) => void;
   }>;
 
 type State = {
-  value: number;
-  dragging: BooleanLike;
   editing: BooleanLike;
-  internalValue: number;
+  dragging: BooleanLike;
+  currentValue: number;
+  previousValue: number;
   origin: number;
-  suppressingFlicker: BooleanLike;
 };
 
 export class NumberInput extends Component<Props, State> {
   // Ref to the input field to set focus & highlight
   inputRef: RefObject<HTMLInputElement> = createRef();
-
-  // Timer id for the flicker id
-  flickerTimer: NodeJS.Timeout;
 
   // After this time has elapsed we are in drag mode so no editing when dragging ends
   dragTimeout: NodeJS.Timeout;
@@ -64,93 +56,88 @@ export class NumberInput extends Component<Props, State> {
 
   // default values for the number input state
   state: State = {
-    value: 0,
-    dragging: false,
     editing: false,
-    internalValue: 0,
+    dragging: false,
+    currentValue: 0,
+    previousValue: 0,
     origin: 0,
-    suppressingFlicker: false,
-  };
-
-  // default values for the number input props
-  static defaultProps = {
-    step: 1,
-    stepPixelSize: 1,
-    suppressFlicker: 50,
   };
 
   constructor(props: Props) {
     super(props);
   }
 
-  suppressFlicker = () => {
-    const { suppressFlicker } = this.props;
-    if (suppressFlicker) {
-      this.setState({
-        suppressingFlicker: true,
-      });
-      clearTimeout(this.flickerTimer);
-      this.flickerTimer = setTimeout(
-        () =>
-          this.setState({
-            suppressingFlicker: false,
-          }),
-        suppressFlicker,
-      );
-    }
-  };
+  componentDidMount(): void {
+    let displayValue = parseFloat(this.props.value.toString());
+
+    this.setState({
+      currentValue: displayValue,
+      previousValue: displayValue,
+    });
+  }
 
   handleDragStart: MouseEventHandler<HTMLDivElement> = (event) => {
-    const { value, updateRate, disabled } = this.props;
+    const { value, disabled } = this.props;
     const { editing } = this.state;
     if (disabled || editing) {
       return;
     }
+    document.body.style['pointer-events'] = 'none';
+
+    const parsedValue = parseFloat(value.toString());
     this.setState({
       dragging: false,
       origin: event.screenY,
-      internalValue: parseFloat(value.toString()),
+      currentValue: parsedValue,
+      previousValue: parsedValue,
     });
+
     this.dragTimeout = setTimeout(() => {
       this.setState({
         dragging: true,
       });
     }, 250);
-
     this.dragInterval = setInterval(() => {
-      const { dragging, value } = this.state;
+      const { dragging, currentValue, previousValue } = this.state;
       const { onDrag } = this.props;
-      if (dragging) {
-        onDrag?.(event, value);
+      if (dragging && currentValue !== previousValue) {
+        this.setState({
+          previousValue: currentValue,
+        });
+        onDrag?.(currentValue);
       }
-    }, updateRate || DEFAULT_UPDATE_RATE);
+    }, 400);
+
+    document.addEventListener('mousemove', this.handleDragMove);
+    document.addEventListener('mouseup', this.handleDragEnd);
   };
 
-  handleDragMove: MouseEventHandler<HTMLDivElement> = (event) => {
+  handleDragMove = (event: MouseEvent) => {
     const { minValue, maxValue, step, stepPixelSize, disabled } = this.props;
-    const { dragging } = this.state;
-    if (disabled || !dragging) {
+    if (disabled) {
       return;
     }
 
     this.setState((prevState) => {
       const state = { ...prevState };
+
       const offset = state.origin - event.screenY;
-      if (prevState.dragging && step) {
+      if (prevState.dragging) {
         const stepOffset = isFinite(minValue) ? minValue % step : 0;
         // Translate mouse movement to value
         // Give it some headroom (by increasing clamp range by 1 step)
-        state.internalValue = clamp(
-          state.internalValue + (offset * step) / (stepPixelSize || 1),
+        state.currentValue = clamp(
+          state.currentValue + (offset * step) / (stepPixelSize || 1),
           minValue - step,
           maxValue + step,
         );
         // Clamp the final value
-        state.value = clamp(
-          state.internalValue - (state.internalValue % step) + stepOffset,
+        state.currentValue = clamp(
+          state.currentValue - (state.currentValue % step) + stepOffset,
           minValue,
           maxValue,
         );
+        // Set the new origin
         state.origin = event.screenY;
       } else if (Math.abs(offset) > 4) {
         state.dragging = true;
@@ -159,40 +146,43 @@ export class NumberInput extends Component<Props, State> {
     });
   };
 
-  handleDragEnd: MouseEventHandler<HTMLInputElement> = (event) => {
-    const { value, dragging, internalValue } = this.state;
+  handleDragEnd = (event: MouseEvent) => {
+    const { dragging, currentValue } = this.state;
     const { onDrag, onChange, disabled } = this.props;
     if (disabled) {
       return;
     }
+    document.body.style['pointer-events'] = 'auto';
 
     clearInterval(this.dragInterval);
     clearTimeout(this.dragTimeout);
+
     this.setState({
       dragging: false,
       editing: !dragging,
+      previousValue: currentValue,
     });
-
     if (dragging) {
-      this.suppressFlicker();
-      onChange?.(event, value);
-      onDrag?.(event, value);
+      onChange?.(currentValue);
+      onDrag?.(currentValue);
     } else if (this.inputRef) {
       const input = this.inputRef.current;
       if (input) {
-        input.value = `${internalValue}`;
+        input.value = `${currentValue}`;
         setTimeout(() => {
           input.focus();
           input.select();
         }, 1);
       }
     }
+
+    document.removeEventListener('mousemove', this.handleDragMove);
+    document.removeEventListener('mouseup', this.handleDragEnd);
   };
 
   handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-    const { editing } = this.state;
+    const { editing, previousValue } = this.state;
     const { minValue, maxValue, onChange, onDrag, disabled } = this.props;
-
     if (disabled || !editing) {
       return;
     }
@@ -208,12 +198,16 @@ export class NumberInput extends Component<Props, State> {
       });
       return;
     }
+
     this.setState({
       editing: false,
+      currentValue: targetValue,
+      previousValue: targetValue,
     });
-    this.suppressFlicker();
-    onChange?.(event, targetValue);
-    onDrag?.(event, targetValue);
+    if (previousValue !== targetValue) {
+      onChange?.(targetValue);
+      onDrag?.(targetValue);
+    }
   };
 
   handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -221,6 +215,7 @@ export class NumberInput extends Component<Props, State> {
     if (disabled) {
       return;
     }
+    const { previousValue } = this.state;
 
     if (event.key === KEY.Enter) {
       const targetValue = clamp(
@@ -234,13 +229,16 @@ export class NumberInput extends Component<Props, State> {
         });
         return;
       }
+
       this.setState({
         editing: false,
-        value: targetValue,
+        currentValue: targetValue,
+        previousValue: targetValue,
       });
-      this.suppressFlicker();
-      onChange?.(event, targetValue);
-      onDrag?.(event, targetValue);
+      if (previousValue !== targetValue) {
+        onChange?.(targetValue);
+        onDrag?.(targetValue);
+      }
     } else if (event.key === KEY.Escape) {
       this.setState({
         editing: false,
@@ -249,19 +247,14 @@ export class NumberInput extends Component<Props, State> {
   };
 
   render() {
-    const {
-      dragging,
-      editing,
-      value: intermediateValue,
-      suppressingFlicker,
-    } = this.state;
+    const { dragging, editing, currentValue } = this.state;
 
     const {
       className,
       fluid,
       animated,
-      value,
       unit,
+      value,
       minValue,
       maxValue,
       height,
@@ -272,13 +265,13 @@ export class NumberInput extends Component<Props, State> {
     } = this.props;
 
     let displayValue = parseFloat(value.toString());
-    if (dragging || suppressingFlicker) {
-      displayValue = intermediateValue;
+    if (dragging) {
+      displayValue = currentValue;
     }
 
     const contentElement = (
       <div className="NumberInput__content">
-        {animated && !dragging && !suppressingFlicker ? (
+        {animated && !dragging ? (
           <AnimatedNumber value={displayValue} format={format} />
         ) : format ? (
           format(displayValue)
@@ -302,8 +295,6 @@ export class NumberInput extends Component<Props, State> {
         lineHeight={lineHeight}
         fontSize={fontSize}
         onMouseDown={this.handleDragStart}
-        onMouseMove={this.handleDragMove}
-        onMouseUp={this.handleDragEnd}
       >
         <div className="NumberInput__barContainer">
           <div

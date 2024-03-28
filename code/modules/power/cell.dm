@@ -233,9 +233,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	charge -= 1000 / severity
-	if (charge < 0)
-		charge = 0
+	use(STANDARD_CELL_CHARGE / severity, force = TRUE)
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	. = ..()
@@ -426,13 +424,16 @@
 	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
-	charge = 100
 	maxcharge = STANDARD_CELL_CHARGE * 0.3
 	charge_light_type = null
 	connector_type = null
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
 	custom_premium_price = PAYCHECK_CREW
+
+/obj/item/stock_parts/cell/potato/Initialize(mapload, override_maxcharge)
+	charge = maxcharge * 0.3
+	. = ..()
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"

@@ -452,7 +452,7 @@
 	overdose_threshold = 25
 	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/trauma
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

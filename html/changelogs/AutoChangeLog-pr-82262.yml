@@ -1,0 +1,4 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - bugfix: "Circuit multitools can now correctly scan carbons who are wearing clothes or holding objects again."
