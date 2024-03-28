@@ -184,7 +184,7 @@
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
 	ghostize(FALSE)
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(src)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
 	if(chosen_one)
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
 		key = chosen_one.key
@@ -233,18 +233,18 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/simple_animal/slime/new_slime
+	var/mob/living/basic/slime/new_slime
 	if(reproduce)
 		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i in 1 to number)
-			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
+			var/mob/living/basic/slime/M = new/mob/living/basic/slime(loc)
 			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)
 			babies += M
 		new_slime = pick(babies)
 	else
-		new_slime = new /mob/living/simple_animal/slime(loc)
+		new_slime = new /mob/living/basic/slime(loc)
 	new_slime.set_combat_mode(TRUE)
 	new_slime.key = key
 

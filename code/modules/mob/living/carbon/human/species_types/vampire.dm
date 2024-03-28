@@ -151,7 +151,7 @@
 /obj/item/organ/internal/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 	COOLDOWN_DECLARE(drain_cooldown)
 
 /datum/action/item_action/organ_action/vampire
@@ -200,7 +200,7 @@
 
 /obj/item/organ/internal/heart/vampire
 	name = "vampire heart"
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 
 /obj/item/organ/internal/heart/vampire/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()

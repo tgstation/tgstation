@@ -94,17 +94,28 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return new_msg
 
-/mob/living/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/living/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
-	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
-	if (!forced)
+	if (!forced && !saymode)
 		message = check_for_custom_say_emote(message, message_mods)
 
 	if(!message)
@@ -206,7 +217,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
-	if(LAZYACCESS(message_mods,WHISPER_MODE)) // whisper away
+	if(message_mods[WHISPER_MODE]) // whisper away
 		spans |= SPAN_ITALICS
 
 	if(!message)
@@ -222,6 +233,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	var/radio_return = radio(message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
+	if(radio_return & NOPASS)
+		return TRUE
+
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
@@ -229,8 +243,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!message_mods[WHISPER_MODE])
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 			message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
-	if(radio_return & NOPASS)
-		return TRUE
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -425,38 +437,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /mob/proc/binarycheck()
 	return FALSE
-
-/mob/living/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
-	if(!..())
-		return FALSE
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_TRY_SPEECH, message, ignore_spam, forced)
-	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
-		return TRUE
-
-	if(sigreturn & COMPONENT_CANNOT_SPEAK)
-		return FALSE
-
-	if(!can_speak())
-		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
-			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
-		else
-			to_chat(src, span_warning("You find yourself unable to speak!"))
-		return FALSE
-
-	return TRUE
-
-/mob/living/can_speak(allow_mimes = FALSE)
-	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
-		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return FALSE
-
-	if(is_muzzled())
-		return FALSE
-
-	return TRUE
-
 
 /**
  * Treats the passed message with things that may modify speech (stuttering, slurring etc).

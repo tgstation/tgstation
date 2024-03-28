@@ -235,7 +235,7 @@
 		stored_research.unhide_node(SSresearch.techweb_node_by_id(picked_node_id))
 
 	experiment(reaction, loaded_item)
-	use_power(750)
+	use_energy(750 JOULES)
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
@@ -351,7 +351,7 @@
 			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			var/obj/item/reagent_containers/cup/glass/coffee/C = new /obj/item/reagent_containers/cup/glass/coffee(get_turf(pick(oview(1,src))))
 			chosenchem = pick(/datum/reagent/toxin/plasma,/datum/reagent/consumable/capsaicin,/datum/reagent/consumable/ethanol)
-			C.reagents.remove_any(25)
+			C.reagents.remove_all(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
@@ -395,7 +395,7 @@
 			var/obj/item/reagent_containers/cup/glass/coffee/C = new /obj/item/reagent_containers/cup/glass/coffee(get_turf(pick(oview(1,src))))
 			playsound(src, 'sound/machines/ding.ogg', 50, TRUE) //Ding! Your death coffee is ready!
 			chosenchem = pick(/datum/reagent/uranium,/datum/reagent/consumable/frostoil,/datum/reagent/medicine/ephedrine)
-			C.reagents.remove_any(25)
+			C.reagents.remove_all(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
@@ -505,7 +505,7 @@
 			ejectItem(TRUE)
 		if(globalMalf > 76 && globalMalf < 98)
 			visible_message(span_warning("[src] begins to smoke and hiss, shaking violently!"))
-			use_power(500000)
+			use_energy(500 KILO JOULES)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 		if(globalMalf == 99)
 			visible_message(span_warning("[src] begins to glow and vibrate. It's going to blow!"))

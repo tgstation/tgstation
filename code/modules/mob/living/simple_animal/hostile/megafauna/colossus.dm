@@ -166,7 +166,9 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	light_system = OVERLAY_LIGHT
-	light_range = 2
+	light_range = 2.5
+	light_power = 1.2
+	light_color = "#ffff66"
 	duration = 8
 	var/target
 
@@ -496,6 +498,7 @@
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 		RegisterSignal(holder_animal, COMSIG_LIVING_DEATH, PROC_REF(on_holder_animal_death))
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -523,9 +526,6 @@
 			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()
 	return ..()
-
-/obj/structure/closet/stasis/emp_act()
-	return
 
 /obj/structure/closet/stasis/ex_act()
 	return FALSE

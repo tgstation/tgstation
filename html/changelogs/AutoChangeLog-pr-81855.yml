@@ -1,4 +1,0 @@
-author: "2whatever2"
-delete-after: True
-changes:
-  - bugfix: "Tackle and wellcheers code for sanity values now function."

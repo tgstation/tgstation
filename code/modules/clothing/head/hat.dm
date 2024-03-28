@@ -312,6 +312,13 @@
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
 
+/obj/item/clothing/head/costume/ushanka/polar
+	name = "bear hunter's ushanka"
+	desc = "Handcrafted in Siberia from real polar bears."
+	icon_state = "ushankadown_polar"
+	upsprite = "ushankaup_polar"
+	downsprite = "ushankadown_polar"
+
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
 	desc = "A blue nightcap for all the dreamers and snoozers out there."

@@ -606,8 +606,23 @@
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
-/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
-	return ITALICS | REDUCE_RANGE
+/**
+ * Handles someone talking INTO an item
+ *
+ * Commonly used by someone holding it and using .r or .l
+ * Also used by radios
+ *
+ * * speaker - the atom that is doing the talking
+ * * message - the message being spoken
+ * * channel - the channel the message is being spoken on, only really used for radios
+ * * spans - the spans of the message
+ * * language - the language the message is in
+ * * message_mods - any message mods that should be applied to the message
+ *
+ * Return a flag that modifies the original message
+ */
+/obj/item/proc/talk_into(atom/movable/speaker, message, channel, list/spans, datum/language/language, list/message_mods)
+	return SEND_SIGNAL(src, COMSIG_ITEM_TALK_INTO, speaker, message, channel, spans, language, message_mods) || (ITALICS|REDUCE_RANGE)
 
 /// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)

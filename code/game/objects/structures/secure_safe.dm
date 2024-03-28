@@ -1,3 +1,25 @@
+/obj/item/wallframe/secure_safe
+	name = "secure safe frame"
+	desc = "A locked safe. It being unpowered prevents any access until placed back onto a wall."
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "wall_safe"
+	base_icon_state = "wall_safe"
+	result_path = /obj/structure/secure_safe
+	pixel_shift = 32
+
+/obj/item/wallframe/secure_safe/Initialize(mapload)
+	. = ..()
+	create_storage(
+		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
+		max_total_storage = 20,
+	)
+	atom_storage.locked = STORAGE_FULLY_LOCKED
+
+/obj/item/wallframe/secure_safe/after_attach(obj/attached_to)
+	. = ..()
+	for(var/obj/item in contents)
+		item.forceMove(attached_to)
+
 /**
  * Wall safes
  * Holds items and uses the lockable storage component
@@ -18,8 +40,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
-	find_and_hang_on_wall()
-	PopulateContents()
+	if(!density)
+		find_and_hang_on_wall()
+	if(mapload)
+		PopulateContents()
+
+/obj/structure/secure_safe/deconstruct(disassembled)
+	if(!density) //if we're a wall item, we'll drop a wall frame.
+		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
+		for(var/obj/item in contents)
+			item.forceMove(new_safe)
+	return ..()
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
@@ -42,12 +73,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	desc = "In case of emergency, do not break glass. All Captains and Acting Captains are provided with codes to access this safe. \
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 		There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
-		It remains quite flush against the wall, and there only seems to be enough room to fit something as slim as an ID card."
+		Due to the expensive material, it was made incredibly small to cut corners, leaving only enough room to fit something as slim as an ID card."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "safe"
+	base_icon_state = "safe"
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
-	color = "#ffdd33"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
+	density = TRUE
+	anchored_tabletop_offset = 4
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 
 /datum/armor/safe_caps_spare
 	melee = 100
@@ -60,6 +95,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
 
 /obj/structure/secure_safe/caps_spare/Initialize(mapload)
 	. = ..()
+	var/matrix/small_safe_transformation = new
+	small_safe_transformation.Scale(0.6)
+	transform = small_safe_transformation
 	atom_storage.set_holdable(/obj/item/card/id)
 	AddComponent(/datum/component/lockable_storage, \
 		lock_code = SSid_access.spare_id_safe_code, \
