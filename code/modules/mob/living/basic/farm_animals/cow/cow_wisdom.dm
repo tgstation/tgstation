@@ -9,7 +9,8 @@
 	///How much experience this cow will grant.
 	var/granted_experience
 
-/mob/living/basic/cow/wisdom/Initialize(mapload, granted_wisdom, granted_experience = 500)
+/mob/living/basic/cow/wisdom/Initialize(mapload, granted_wisdom, granted_experience = 500, milked_reagent = null)
+	src.milked_reagent = milked_reagent
 	. = ..()
 	src.granted_wisdom = granted_wisdom
 	if(!granted_wisdom)
@@ -22,7 +23,8 @@
 	return //cannot tame me! and I don't care about eatin' nothing, neither!
 
 /mob/living/basic/cow/wisdom/setup_udder()
-	milked_reagent = get_random_reagent_id()
+	if (isnull(milked_reagent))
+		milked_reagent = get_random_reagent_id()
 	return ..()
 
 /datum/ai_controller/basic_controller/cow/wisdom
