@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Cameras built in-round can be upgraded again."
+  - bugfix: "Deconstructing cameras now more consistently return to you the upgrades inside of the camera."
+  - bugfix: "RD's telescreen can now properly see Ordnance cameras again."
+  - bugfix: "[Deltastation] Library art gallery no longer has an invisible camera."

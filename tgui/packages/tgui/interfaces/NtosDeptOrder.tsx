@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
+  Blink,
   Box,
   Button,
   Dimmer,
@@ -13,17 +14,18 @@ import {
   Tabs,
   Tooltip,
 } from '../components';
-import { Window } from '../layouts';
+import { NtosWindow } from '../layouts';
 
 // 15x crate value
 const COST_UPPER_BOUND = 3000;
 
+type typePath = string;
+
 type Pack = {
   name: string;
-  cost: number;
-  id: string;
   desc: string;
-  goody: string;
+  cost: number;
+  id: typePath;
 };
 
 type Category = {
@@ -33,8 +35,10 @@ type Category = {
 
 type Info = {
   can_override: BooleanLike;
-  time_left: number;
+  time_left: string | null;
   supplies: Category[];
+  no_link: BooleanLike;
+  id_inside: BooleanLike;
 };
 
 const CooldownEstimate = (props) => {
@@ -54,45 +58,60 @@ const CooldownEstimate = (props) => {
   );
 };
 
-export const DepartmentOrders = (props) => {
+export const DepartmentOrderContent = (props) => {
   const { data } = useBackend<Info>();
-  const { time_left } = data;
+  const { no_link, time_left } = data;
+  if (!data) {
+    return null;
+  }
+
+  if (no_link) {
+    return <NoLinkDimmer />;
+  }
+  if (time_left) {
+    return <CooldownDimmer />;
+  }
+
   return (
-    <Window title="Department Orders" width={620} height={580}>
-      <Window.Content>
-        {(!!time_left && <CooldownDimmer />) || (
-          <Stack vertical fill>
-            <Stack.Item grow>
-              <Stack fill vertical>
-                <Stack.Item>
-                  <NoticeBox info>
-                    As employees of Nanotrasen, the selection of orders here are
-                    completely free of charge, only incurring a cooldown on the
-                    service. Cheaper items will make you wait for less time
-                    before Nanotrasen allows another purchase, to encourage
-                    tasteful spending.
-                  </NoticeBox>
-                </Stack.Item>
-                <Stack.Item grow>
-                  <DepartmentCatalog />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-          </Stack>
-        )}
-      </Window.Content>
-    </Window>
+    <Stack vertical fill>
+      <Stack.Item grow>
+        <Stack fill vertical>
+          <Stack.Item>
+            <NoticeBox info>
+              As employees of Nanotrasen, the selection of orders here are
+              completely free of charge, only incurring a cooldown on the
+              service. Cheaper items will make you wait for less time before
+              Nanotrasen allows another purchase, to encourage tasteful
+              spending.
+            </NoticeBox>
+          </Stack.Item>
+          <Stack.Item grow>
+            <DepartmentCatalog />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
   );
 };
 
-const CooldownDimmer = (props) => {
+export const NtosDeptOrder = () => {
+  return (
+    <NtosWindow title="Department Orders" width={620} height={580}>
+      <NtosWindow.Content>
+        <DepartmentOrderContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+const CooldownDimmer = () => {
   const { act, data } = useBackend<Info>();
   const { can_override, time_left } = data;
   return (
     <Dimmer>
       <Stack vertical>
         <Stack.Item textAlign="center">
-          <Icon color="orange" name="route" size={20} />
+          <Icon color="bug" name="route" size={20} />
         </Stack.Item>
         <Stack.Item fontSize="18px" color="orange">
           Ready for another order in {time_left}...
@@ -119,7 +138,31 @@ const CooldownDimmer = (props) => {
   );
 };
 
-const DepartmentCatalog = (props) => {
+const NoLinkDimmer = () => {
+  const { act, data } = useBackend<Info>();
+  const { id_inside } = data;
+  return (
+    <Dimmer>
+      <Stack vertical>
+        <Stack.Item textAlign="center">
+          <Blink>
+            <Icon color="red" name="exclamation" size={16} opacity={0.8} />
+          </Blink>
+        </Stack.Item>
+        <Stack.Item textAlign="center" fontSize="22px" color="red">
+          Unlinked!
+        </Stack.Item>
+        <Stack.Item textAlign="center" fontSize="14px" color="red">
+          <Button disabled={!id_inside} onClick={() => act('link')}>
+            Please insert a silver Head of Staff ID and press to continue.
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
+};
+
+const DepartmentCatalog = () => {
   const { act, data } = useBackend<Info>();
   const { supplies } = data;
   const [tabCategory, setTabCategory] = useState(supplies[0]);
