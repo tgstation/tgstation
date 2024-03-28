@@ -97,6 +97,7 @@
 		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] cannot be extracted from there."))
 		return FALSE
 
+	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
 	playsound(stealing, 'sound/items/pshoom.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.33, ignore_walls = FALSE)
 
 	var/obj/effect/scan_effect/active_scan_effect = new(stealing.loc)
@@ -160,7 +161,8 @@
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-	log_spy("[key_name(spy)] completed the bounty [bounty.name] of difficulty [bounty.difficulty] for \a [reward].")
+	log_combat(spy, stealing, "stole", parent, "(spy bounty)")
+	log_spy("[key_name(spy)] completed the bounty [bounty.name] of difficulty [bounty.difficulty] by stealing [stealing] for \a [reward].")
 	SSblackbox.record_feedback("nested tally", "spy_bounty", 1, list("[stealing.type]", "[bounty.type]", "[bounty.difficulty]", "[bounty.reward_item.type]"))
 
 	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()

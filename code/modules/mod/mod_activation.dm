@@ -238,7 +238,8 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
 	update_speed()
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE)
+	update_charge_alert()
 	wearer.update_clothing(slot_flags)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.

@@ -13,6 +13,10 @@
 	/// The current (de/con)struction state of the frame
 	var/state = FRAME_STATE_EMPTY
 
+/obj/structure/frame/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
+
 /obj/structure/frame/examine(user)
 	. = ..()
 	if(circuit)

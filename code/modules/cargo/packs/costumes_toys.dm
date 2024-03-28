@@ -250,8 +250,9 @@
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/crate)
-	for(var/i in 1 to rand(1,2))
+	for(var/i in 1 to rand(1, 2))
 		new /obj/item/storage/box/stickers(crate)
+
 	if(prob(30)) // a pair of googly eyes because funny
 		new /obj/item/storage/box/stickers/googly(crate)
 

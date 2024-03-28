@@ -223,7 +223,7 @@
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
-	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null)
+	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null, null, user)
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"

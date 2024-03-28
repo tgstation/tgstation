@@ -27,10 +27,14 @@ SUBSYSTEM_DEF(polling)
  * * ignore_category: Optional, A poll category. If a candidate has this category in their ignore list, they won't be polled.
  * * flash_window: If TRUE, the candidate's window will flash when they're polled.
  * * list/group: A list of candidates to poll.
- * * pic_source: Optional, An /atom or an /image to display on the poll alert.
+ * * alert_pic: Optional, An /atom or an /image to display on the poll alert.
+ * * jump_target: An /atom to teleport/jump to, if alert_pic is an /atom defaults to that.
  * * role_name_text: Optional, A string to display in logging / the (default) question. If null, the role name will be used.
  * * list/custom_response_messages: Optional, A list of strings to use as responses to the poll. If null, the default responses will be used. see __DEFINES/polls.dm for valid keys to use.
  * * start_signed_up: If TRUE, all candidates will start signed up for the poll, making it opt-out rather than opt-in.
+ * * amount_to_pick: Lets you pick candidates and return a single mob or list of mobs that were chosen.
+ * * chat_text_border_icon: Object or path to make an icon of to decorate the chat announcement.
+ * * announce_chosen: Whether we should announce the chosen candidates in chat. This is ignored unless amount_to_pick is greater than 0.
  *
  * Returns a list of all mobs who signed up for the poll.
  */
@@ -42,18 +46,21 @@ SUBSYSTEM_DEF(polling)
 	ignore_category = null,
 	flash_window = TRUE,
 	list/group = null,
-	pic_source,
+	alert_pic,
+	jump_target,
 	role_name_text,
 	list/custom_response_messages,
 	start_signed_up = FALSE,
+	amount_to_pick = 0,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
 )
-	RETURN_TYPE(/list/mob)
 	if(group.len == 0)
-		return list()
+		return
 	if(role && !role_name_text)
 		role_name_text = role
 	if(role_name_text && !question)
-		question = "Do you want to play as [full_capitalize(role_name_text)]?"
+		question = "Do you want to play as [span_notice(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
 	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [DisplayTimeText(poll_time)] seconds")
@@ -61,9 +68,10 @@ SUBSYSTEM_DEF(polling)
 	// Start firing
 	total_polls++
 
-	var/jumpable = isatom(pic_source) ? pic_source : null
+	if(isnull(jump_target) && isatom(alert_pic))
+		jump_target = alert_pic
 
-	var/datum/candidate_poll/new_poll = new(role_name_text, question, poll_time, ignore_category, jumpable, custom_response_messages)
+	var/datum/candidate_poll/new_poll = new(role_name_text, question, poll_time, ignore_category, jump_target, custom_response_messages)
 	LAZYADD(currently_polling, new_poll)
 
 	var/category = "[new_poll.poll_key]_poll_alert"
@@ -122,82 +130,131 @@ SUBSYSTEM_DEF(polling)
 
 		// Image to display
 		var/image/poll_image
-		if(pic_source)
-			if(!ispath(pic_source))
-				var/atom/the_pic_source = pic_source
-				var/old_layer = the_pic_source.layer
-				var/old_plane = the_pic_source.plane
-				the_pic_source.plane = poll_alert_button.plane
-				the_pic_source.layer = FLOAT_LAYER
-				poll_alert_button.add_overlay(the_pic_source)
-				the_pic_source.layer = old_layer
-				the_pic_source.plane = old_plane
-			else
-				poll_image = image(pic_source, layer = FLOAT_LAYER)
+		if(ispath(alert_pic, /atom))
+			poll_image = image(alert_pic)
+		else if(isatom(alert_pic))
+			poll_image = new /mutable_appearance(alert_pic)
+		else if(!isnull(alert_pic))
+			poll_image = alert_pic
 		else
-			// Just use a generic image
-			poll_image = image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
+			poll_image = image('icons/effects/effects.dmi', icon_state = "static")
 
 		if(poll_image)
+			poll_image.layer = FLOAT_LAYER
 			poll_image.plane = poll_alert_button.plane
 			poll_alert_button.add_overlay(poll_image)
 
 		// Chat message
 		var/act_jump = ""
-		if(isatom(pic_source) && isobserver(candidate_mob))
-			act_jump = "<a href='?src=[REF(poll_alert_button)];jump=1'>\[Teleport\]</a>"
-		var/act_signup = "<a href='?src=[REF(poll_alert_button)];signup=1'>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
+		var/custom_link_style_start = "<style>a:visited{color:Crimson !important}</style>"
+		var/custom_link_style_end = "style='color:DodgerBlue;font-weight:bold;-dm-text-outline: 1px black'"
+		if(isatom(alert_pic) && isobserver(candidate_mob))
+			act_jump = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[Teleport\]</a>"
+		var/act_signup = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
 		var/act_never = ""
 		if(ignore_category)
-			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round\]</a>"
+			act_never = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
 			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
-			to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
+			var/surrounding_icon
+			if(chat_text_border_icon)
+				var/image/surrounding_image
+				if(!ispath(chat_text_border_icon))
+					var/mutable_appearance/border_image = chat_text_border_icon
+					surrounding_image = border_image
+				else
+					surrounding_image = image(chat_text_border_icon)
+				surrounding_icon = icon2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
+			var/final_message =  examine_block("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
+			to_chat(candidate_mob, final_message)
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, poll_alert_button)
 
 	// Sleep until the time is up
 	UNTIL(new_poll.finished)
-	return new_poll.signed_up
+	if(!(amount_to_pick > 0))
+		return new_poll.signed_up
+	for(var/pick in 1 to amount_to_pick)
+		new_poll.chosen_candidates += pick_n_take(new_poll.signed_up)
+	if(announce_chosen)
+		new_poll.announce_chosen(group)
+	if(new_poll.chosen_candidates.len == 1)
+		var/chosen_one = pick(new_poll.chosen_candidates)
+		return chosen_one
+	return new_poll.chosen_candidates
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, check_jobban, poll_time = 30 SECONDS, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	ignore_category = null,
+	flashwindow = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	amount_to_pick = 0,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
+)
 	var/list/candidates = list()
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		return candidates
-
+		return
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		candidates += ghost_player
+	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen)
 
-	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, candidates, pic_source, role_name_text)
+/datum/controller/subsystem/polling/proc/poll_ghosts_for_target(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	atom/movable/checked_target,
+	ignore_category = null,
+	flashwindow = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
+)
+	var/static/list/atom/movable/currently_polling_targets = list()
+	if(currently_polling_targets.Find(checked_target))
+		return
+	currently_polling_targets += checked_target
+	var/mob/chosen_one = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick = 1, chat_text_border_icon = chat_text_border_icon, announce_chosen = announce_chosen)
+	currently_polling_targets -= checked_target
+	if(!checked_target || QDELETED(checked_target) || !checked_target.loc)
+		return null
+	return chosen_one
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, check_jobban, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
-	var/static/list/mob/currently_polling_mobs = list()
-
-	if(currently_polling_mobs.Find(target_mob))
+/datum/controller/subsystem/polling/proc/poll_ghosts_for_targets(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	list/checked_targets,
+	ignore_category = null,
+	flashwindow = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	chat_text_border_icon,
+)
+	var/list/candidate_list = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, chat_text_border_icon = chat_text_border_icon)
+	for(var/atom/movable/potential_target as anything in checked_targets)
+		if(QDELETED(potential_target) || !potential_target.loc)
+			checked_targets -= potential_target
+	if(!length(checked_targets))
 		return list()
-
-	currently_polling_mobs += target_mob
-
-	var/list/possible_candidates = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, pic_source, role_name_text)
-
-	currently_polling_mobs -= target_mob
-	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
-		return list()
-
-	return possible_candidates
-
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, check_jobban, poll_time = 30 SECONDS, list/mobs, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
-	var/list/candidate_list = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, pic_source, role_name_text)
-
-	for(var/mob/potential_mob as anything in mobs)
-		if(QDELETED(potential_mob) || !potential_mob.loc)
-			mobs -= potential_mob
-
-	if(!length(mobs))
-		return list()
-
 	return candidate_list
 
 /datum/controller/subsystem/polling/proc/is_eligible(mob/potential_candidate, role, check_jobban, the_ignore_category)

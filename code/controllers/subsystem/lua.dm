@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(lua)
 	var/list/resumes = list()
 
 	var/list/current_run = list()
+	var/list/current_states_run = list()
 
 	/// Protects return values from getting GCed before getting converted to lua values
 	/// Gets cleared every tick.
@@ -97,6 +98,7 @@ SUBSYSTEM_DEF(lua)
 	// then resumes every yielded task in the order their resumes were queued
 	if(!resumed)
 		current_run = list("sleeps" = sleeps.Copy(), "resumes" = resumes.Copy())
+		current_states_run = states.Copy()
 		sleeps.Cut()
 		resumes.Cut()
 
@@ -135,6 +137,13 @@ SUBSYSTEM_DEF(lua)
 
 			if(MC_TICK_CHECK)
 				break
+
+	while(length(current_states_run))
+		var/datum/lua_state/state = current_states_run[current_states_run.len]
+		current_states_run.len--
+		state.process(wait)
+		if(MC_TICK_CHECK)
+			break
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)

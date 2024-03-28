@@ -257,7 +257,7 @@
 /datum/config_entry/number/outdated_movedelay/alien_delay
 	movedelay_type = /mob/living/carbon/alien
 /datum/config_entry/number/outdated_movedelay/slime_delay
-	movedelay_type = /mob/living/simple_animal/slime
+	movedelay_type = /mob/living/basic/slime
 /datum/config_entry/number/outdated_movedelay/animal_delay
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////

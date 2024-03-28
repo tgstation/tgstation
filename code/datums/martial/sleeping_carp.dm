@@ -327,7 +327,7 @@
 	name = "carp gloves"
 	desc = "This gloves are capable of making people use The Sleeping Carp."
 	icon_state = "black"
-	greyscale_colors = "#000000"
+	greyscale_colors = COLOR_BLACK
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
