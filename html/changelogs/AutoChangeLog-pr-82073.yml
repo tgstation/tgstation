@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Unfathomable Curios now properly block as expected."
+  - bugfix: "The shielded component actually respects the shield_inhand when determining blocking potential."
+  - bugfix: "Ensures that the shielded component has a wearer before attempting to block, and that this wearer is the same as the owner of the item."
