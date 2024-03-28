@@ -16,14 +16,13 @@
 
 /datum/quirk/item_quirk/addict/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/addiction
 
 	if(!reagent_type)
 		reagent_type = GLOB.possible_junkie_addictions[pick(GLOB.possible_junkie_addictions)]
 
 	reagent_instance = new reagent_type()
 
-	for(addiction in reagent_instance.addiction_types)
+	for(var/addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
 	var/current_turf = get_turf(quirk_holder)
@@ -61,6 +60,24 @@
 		)
 	)
 
+/datum/quirk/item_quirk/addict/process(seconds_per_tick)
+	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
+		return
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(world.time > next_process)
+		next_process = world.time + process_interval
+		var/deleted = QDELETED(reagent_instance)
+		var/missing_addiction = FALSE
+		for(var/addiction_type in reagent_instance.addiction_types)
+			if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
+				missing_addiction = TRUE
+		if(deleted || missing_addiction)
+			if(deleted)
+				reagent_instance = new reagent_type()
+			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
+			for(var/addiction in reagent_instance.addiction_types)
+				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
+
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
@@ -88,24 +105,6 @@
 	if(quirk_holder && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
-
-/datum/quirk/item_quirk/addict/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
-		return
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(world.time > next_process)
-		next_process = world.time + process_interval
-		var/deleted = QDELETED(reagent_instance)
-		var/missing_addiction = FALSE
-		for(var/addiction_type in reagent_instance.addiction_types)
-			if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
-				missing_addiction = TRUE
-		if(deleted || missing_addiction)
-			if(deleted)
-				reagent_instance = new reagent_type()
-			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
-			for(var/addiction in reagent_instance.addiction_types)
-				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
 /datum/quirk/item_quirk/addict/smoker
 	name = "Smoker"
