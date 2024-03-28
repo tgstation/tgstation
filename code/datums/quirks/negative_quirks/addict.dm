@@ -3,6 +3,7 @@
 	desc = "You are addicted to something that doesn't exist. Suffer."
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
+	abstract_parent_type = /datum/quirk/item_quirk/addict
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
@@ -12,7 +13,6 @@
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
-	abstract_parent_type = /datum/quirk/item_quirk/addict
 
 /datum/quirk/item_quirk/addict/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
