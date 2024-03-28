@@ -526,7 +526,6 @@
 ///After some dialogue (which doubles as the timer until explosion), causes a minibomb-level explosion.
 /obj/item/orion_ship/proc/commit_explosion(dialogue_level = 0)
 	var/time_for_next_level
-	to_chat(world, "dialogue level: [dialogue_level]")
 	switch(dialogue_level)
 		if(0)
 			say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
