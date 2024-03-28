@@ -7,78 +7,97 @@
 	req_access = null
 	circuit = /obj/item/circuitboard/machine/clonepod/experimental
 	internal_radio = FALSE
+	VAR_PRIVATE
+		static/list/image/cached_clone_images
+
+/obj/machinery/clonepod/experimental/Destroy()
+	clear_human_dummy(REF(src))
+	return ..()
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
-	if(panel_open)
-		return NONE
-	if(mess || attempting)
+/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+	if(panel_open || mess || attempting)
 		return NONE
 
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
 
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	var/mob/living/carbon/human/clonee = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
+	clonee.hardset_dna(ui, mutation_index, null, clonee.real_name, blood_type, mrace, features)
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
+		clonee.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.easy_random_mutate(POSITIVE)
+		clonee.easy_random_mutate(POSITIVE)
 	if(efficiency < 3 && prob(50))
-		var/mob/M = H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
-		if(ismob(M))
-			H = M
+		var/mob/new_mob = clonee.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
+		if(ismob(new_mob))
+			clonee = new_mob
 
-	occupant = H
+	occupant = clonee
 
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(1,999)])"
-	H.real_name = clonename
+	clonee.real_name = clonename
 
 	icon_state = "pod_1"
 	//Get the clone body ready
-	maim_clone(H)
-	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_MUTE, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOBREATH, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
-	H.Unconscious(80)
+	maim_clone(clonee)
+	ADD_TRAIT(clonee, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_MUTE, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_NOBREATH, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
+	clonee.Unconscious(80)
 
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
 		"Do you want to play as [clonename]'s defective clone?",
 		poll_time = 10 SECONDS,
-		target_mob = H,
+		target_mob = clonee,
 		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
-		pic_source = H,
+		pic_source = get_clone_preview(clonee.dna) || clonee,
 		role_name_text = "defective clone"
 	)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		H.key = C.key
+		var/mob/dead/observer/candidate = pick(candidates)
+		clonee.key = candidate.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
-		H.grab_ghost()
-		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
+		clonee.grab_ghost()
+		to_chat(clonee, span_notice("<b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i>"))
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		H.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
-		to_chat(H.get_ghost(TRUE), "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
+		clonee.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
+		to_chat(clonee.get_ghost(TRUE), span_notice("Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete."))
 
-	if(H)
-		H.faction |= factions
-
-		H.set_cloned_appearance()
-
-		H.set_suicide(FALSE)
+	if(!QDELETED(clonee))
+		clonee.faction |= factions
+		clonee.set_cloned_appearance()
+		clonee.set_suicide(FALSE)
 	attempting = FALSE
-	return CLONING_DELETE_RECORD | CLONING_SUCCESS //so that we don't spam clones with autoprocess unless we leave a body in the scanner
+	return CLONING_SUCCESS //so that we don't spam clones with autoprocess unless we leave a body in the scanner
 
+
+/obj/machinery/clonepod/experimental/proc/get_clone_preview(datum/dna/clone_dna)
+	RETURN_TYPE(/image)
+	if(!istype(clone_dna) || QDELING(clone_dna))
+		return
+	var/key = copytext_char(md5("[clone_dna.unique_identity][clone_dna.unique_features][clone_dna.species.type][clone_dna.body_height]"), 1, 8)
+	var/image/preview = LAZYACCESS(cached_clone_images, key)
+	if(!isnull(preview))
+		return preview
+	var/mob/living/carbon/human/dummy/preview_dummy = generate_or_wait_for_human_dummy(REF(src))
+	clone_dna.transfer_identity(preview_dummy, transfer_SE = FALSE, transfer_species = TRUE)
+	preview_dummy.set_cloned_appearance()
+	preview_dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	preview = getFlatIcon(preview_dummy)
+	unset_busy_human_dummy(REF(src))
+	LAZYSET(cached_clone_images, key, preview)
+	return preview
 
 //Prototype cloning console, much more rudimental and lacks modern functions such as saving records, autocloning, or safety checks.
 /obj/machinery/computer/prototype_cloning

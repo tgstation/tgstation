@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(polling)
 		// Image to display
 		var/image/poll_image
 		if(pic_source)
-			if(!ispath(pic_source))
+			if(isatom(pic_source))
 				var/atom/the_pic_source = pic_source
 				var/old_layer = the_pic_source.layer
 				var/old_plane = the_pic_source.plane

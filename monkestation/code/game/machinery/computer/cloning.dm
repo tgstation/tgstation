@@ -7,7 +7,7 @@
 	name = "record"
 	var/list/fields = list()
 
-/obj/machinery/computer/cloning		//hippie start, re-add cloning
+/obj/machinery/computer/cloning		//monke start, re-add cloning
 	name = "cloning console"
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
@@ -60,10 +60,11 @@
 			if(pod.is_operational && pod.efficiency > 5)
 				return TRUE
 
-/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
+/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null, cloning = FALSE)
 	if(pods)
-		for(var/P in pods)
-			var/obj/machinery/clonepod/pod = P
+		for(var/obj/machinery/clonepod/pod as anything in pods)
+			if(cloning & !pod.auto_clone)
+				continue
 			if(pod.occupant && pod.clonemind == mind)
 				return pod
 			else if(!. && pod.is_operational && !(pod.occupant || pod.mess) && pod.efficiency > 5)
@@ -79,21 +80,17 @@
 	if(scanner.occupant && scanner.scan_level > 2)
 		scan_occupant(scanner.occupant)
 
-	for(var/datum/data/record/R in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mindref"])
+	for(var/datum/data/record/record in records)
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(record.fields["mindref"], TRUE)
 
-		if(!pod)
+		if(QDELETED(pod) || !pod.auto_clone || !QDELETED(pod.occupant))
 			return
-
-		if(pod.occupant)
-			break
-
-		var/result = grow_clone_from_record(pod, R)
+		var/result = grow_clone_from_record(pod, record)
 		if(result & CLONING_SUCCESS)
-			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-			log_cloning("Cloning of [key_name(R.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+			temp = "[record.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+			log_cloning("Cloning of [key_name(record.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 		if(result & CLONING_DELETE_RECORD)
-			records -= R
+			records -= record
 
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
@@ -539,7 +536,7 @@
 			scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
-			
+
 	if(isbrain(mob_occupant))
 		dna = B.stored_dna
 	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
