@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "anything that has reagents can be either grinded or juiced"
+  - bugfix: "stuff that does not have reagents but has grind results can still be grinded but not juiced"
