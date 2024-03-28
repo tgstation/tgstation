@@ -26,7 +26,9 @@
 		return FALSE
 	var/obj/item/food/grown/crop = target
 	if(possible_plant_genes.len)
-		return ..() && crop.seed.get_gene(required_genes[typepath])
+		if(isnull(crop.seed.get_gene(required_genes[typepath])))
+			experiment_handler.announce_message("Scanned plant is missing required genetics. Please scan a plant with the proper genetics.")
+		return ..() && !isnull(crop.seed.get_gene(required_genes[typepath]))
 	return ..()
 
 /datum/experiment/scanning/random/plants/traits/serialize_progress_stage(atom/target, list/seen_instances)
