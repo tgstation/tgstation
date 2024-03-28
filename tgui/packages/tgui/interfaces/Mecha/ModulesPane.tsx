@@ -446,13 +446,26 @@ const SnowflakeSleeper = (props) => {
     </>
   );
 };
-
+type Data = {
+  contained_reagents: Reagent[];
+};
+type Reagent = {
+  name: string;
+  volume: number;
+};
 const SnowflakeSyringe = (props) => {
   const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const { ref, energy_per_use, equip_cooldown } = props.module;
-  const { mode, syringe, max_syringe, reagents, total_reagents } =
-    props.module.snowflake;
+  const {
+    mode,
+    syringe,
+    max_syringe,
+    reagents,
+    total_reagents,
+    contained_reagents,
+    analyzed_reagents,
+  } = props.module.snowflake;
   return (
     <>
       <LabeledList.Item label={'Syringes'}>
@@ -487,6 +500,47 @@ const SnowflakeSyringe = (props) => {
           }
         />
       </LabeledList.Item>
+      <LabeledList.Item label={'Reagent control'}>
+        {analyzed_reagents.map((reagent) => (
+          <LabeledList.Item key={`${reagent}`} label={`${reagent}`}>
+            <Button
+              content={'Toggle Synthesizing'}
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: `toggle_reagent_${reagent}`,
+                })
+              }
+            />
+          </LabeledList.Item>
+        ))}
+      </LabeledList.Item>
+      <LabeledList.Item>
+        <Button
+          content={'Purge All'}
+          onClick={() =>
+            act('equip_act', {
+              ref: ref,
+              gear_action: `purge_all`,
+            })
+          }
+        />
+      </LabeledList.Item>
+      {contained_reagents.map((reagent: Reagent) => (
+        <LabeledList.Item key={`${reagent.name}`} label={`${reagent.name}`}>
+          <LabeledList.Item label={`${reagent.volume}u`}>
+            <Button
+              content={'Purge'}
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: `purge_reagent_${reagent.name}`,
+                })
+              }
+            />
+          </LabeledList.Item>
+        </LabeledList.Item>
+      ))}
     </>
   );
 };

@@ -283,7 +283,10 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_snowflake_data()
-	return list(
+	var/list/analyzed_reagents = list() // we need to make this list because .tsk wont map over an indexed array
+	for(var/i=1 to known_reagents.len)
+		analyzed_reagents.Add(known_reagents[i].name)
+	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_SYRINGE,
 		"mode" = mode == FIRE_SYRINGE_MODE ? "Launch" : "Analyze",
 		"mode_label" = "Action",
@@ -291,7 +294,14 @@
 		"max_syringe" = max_syringes,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
+		"analyzed_reagents" = analyzed_reagents,
 	)
+	var/list/contained_reagents = list()
+	if(length(reagents.reagent_list))
+		for(var/datum/reagent/reagent in reagents.reagent_list)
+			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+	data["contained_reagents"] = contained_reagents
+	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/handle_ui_act(action, list/params)
 	if(action == "change_mode")
@@ -300,6 +310,43 @@
 	else if(action == "show_reagents")
 		usr << browse(get_reagents_page(),"window=msyringegun")
 		return FALSE
+	else if(action == "purge_all")
+		reagents.clear_reagents()
+	else
+		to_chat(world, action)
+		for(var/i=1 to known_reagents.len)
+			var/reagent_id = known_reagents[i]
+			if(action == ("purge_reagent_" + known_reagents[i].name))
+				reagents.del_reagent(reagent_id)
+				return
+			if(action == ("toggle_reagent_" + known_reagents[i].name))
+				synthesize(reagent_id)
+				return
+
+
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/synthesize(var/reagent)
+	to_chat(world, "Sytning")
+	to_chat(world, reagent)
+	if(reagent in processed_reagents)
+		to_chat(world, "removing")
+		LAZYREMOVE(processed_reagents, reagent)
+		return
+	// var/processingreagentamount = 0
+
+	// if(processingreagentamount >= synth_speed)
+	// 	break
+	// if(reagent && (reagent in known_reagents))
+	//var/message = "[processingreagentamount ? ", " : null][known_reagents[reagent]]"
+	var/message = "[known_reagents[reagent]]"
+	to_chat(world, "adding")
+	LAZYADD(processed_reagents, reagent)
+	// processingreagentamount++
+	if(LAZYLEN(processed_reagents))
+		message += " added to production"
+		START_PROCESSING(SSobj, src)
+		to_chat(usr, message)
+		to_chat(usr, "[icon2html(src, usr)][span_notice("Reagent processing started.")]")
+		log_message("Reagent processing started.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -341,8 +388,10 @@
 				break
 			var/reagent = text2path(href_list["reagent_[i]"])
 			if(reagent && (reagent in known_reagents))
+				to_chat(world, reagent)
 				message = "[processingreagentamount ? ", " : null][known_reagents[reagent]]"
 				LAZYADD(processed_reagents, reagent)
+				to_chat(world, "adding")
 				processingreagentamount++
 		if(LAZYLEN(processed_reagents))
 			message += " added to production"
@@ -405,6 +454,7 @@
 	return output
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_list()
+	to_chat(world, "getting new get_reagents_list")
 	var/output
 	for(var/i=1 to known_reagents.len)
 		var/reagent_id = known_reagents[i]
