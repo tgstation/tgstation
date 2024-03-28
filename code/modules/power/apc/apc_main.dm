@@ -718,3 +718,5 @@
 	var/trickle_charge_power = energy_to_power(area.energy_usage[AREA_USAGE_APC_CHARGE])
 	if(trickle_charge_power >= 1 KILO WATTS) // require at least a bit of charging
 		return round(energy_to_power(required_joules / trickle_charge_power) * SSmachines.wait + SSmachines.wait, SSmachines.wait)
+	
+	return null
