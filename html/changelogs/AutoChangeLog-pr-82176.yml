@@ -1,8 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - refactor: "Slimes are now basic mobs. Please report any strange behaviours!"
-  - balance: "Slimes only stun you for two seconds when they shock you, the rest of the duration is a knockdown."
-  - balance: "Slimes are not stunned from the cold, but rather, get frozen in a freon icecube. BZ also puts them in complete stasis, instead of making them unconscious. Their speed is likewise unchanged by temperatures."
-  - balance: "Slimes do not passively heal, they instead rely on feeding."
-  - bugfix: "Slimes can use the buckling screen alert to unbuckle and stop feeding, along with clicking on the mob they are riding"

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Made sure that mapped critters (i.e. penguins on the snow cabin away mission) can survive in the environment they're spawned in."
