@@ -353,7 +353,7 @@
 
 /obj/item/toy/balloon_dog
 	name = "balloon dog"
-	desc = "A balloon effigy of the best boy. Cannot truely compare, but it is an effort."
+	desc = "A balloon effigy of the best boy. It cannot truly compare, but it makes an effort."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_dog"
 	throwforce = 0
