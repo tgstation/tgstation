@@ -39,8 +39,8 @@
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'icons/obj/toys/toy.dmi'
-	icon_state = "waterballoon-e"
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_red-e"
 	inhand_icon_state = "balloon-empty"
 
 /obj/item/toy/waterballoon/Initialize(mapload)
@@ -107,11 +107,11 @@
 		icon_state = "waterballoon"
 		inhand_icon_state = "balloon"
 	else
-		icon_state = "waterballoon-e"
+		icon_state = "balloon_red-e"
 		inhand_icon_state = "balloon-empty"
 	return ..()
 
-#define BALLOON_COLORS list("red", "blue", "green", "yellow")
+#define BALLOON_COLORS list("red", "blue", "green", "yellow", "orange", "purple")
 
 /obj/item/toy/balloon
 	name = "balloon"
@@ -127,6 +127,73 @@
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
+	var/world_state
+	var/storage_state
+	var/current_color
+
+/obj/item/toy/balloon/long
+	name = "long balloon"
+	desc = "A perfect balloon to contort into goofy forms."
+	icon_state = "balloon_long"
+	inhand_icon_state = "balloon"
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(isturf(loc))
+		icon_state = "[world_state]"
+	else
+		icon_state = "[storage_state]"
+	update_appearance()
+
+/obj/item/toy/balloon/long/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/toy/balloon/long) && HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		var/obj/item/toy/balloon/long/hit_by = I
+		if(hit_by.current_color != current_color)
+			visible_message(span_notice("[user.name] starts contorting up a balloon animal!"),
+				blind_message = span_hear("You hear balloons being contorted."),
+				vision_distance = 3,
+				ignored_mobs = user
+			)
+			if((hit_by.current_color == "red" && current_color == "blue") || (hit_by.current_color == "blue" && current_color == "red"))
+				user.put_in_hands(new /obj/item/toy/balloon_guy)
+			if((hit_by.current_color == "red" && current_color == "green") || (hit_by.current_color == "green" && current_color == "red"))
+				user.put_in_hands(new /obj/item/toy/balloon_nukie)
+			if((hit_by.current_color == "red" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "red"))
+				user.put_in_hands(new /obj/item/toy/balloon_clown)
+			if((hit_by.current_color == "red" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "red"))
+				user.put_in_hands(new /obj/item/toy/balloon_cat)
+			if((hit_by.current_color == "red" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "red"))
+				user.put_in_hands(new /obj/item/toy/balloon_fly)
+			if((hit_by.current_color == "blue" && current_color == "green") || (hit_by.current_color == "green" && current_color == "blue"))
+				user.put_in_hands(new /obj/item/toy/balloon_podguy)
+			if((hit_by.current_color == "blue" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "blue"))
+				user.put_in_hands(new /obj/item/toy/balloon_ai)
+			if((hit_by.current_color == "blue" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "blue"))
+				user.put_in_hands(new /obj/item/toy/balloon_dog)
+			if((hit_by.current_color == "blue" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "blue"))
+				user.put_in_hands(new /obj/item/toy/balloon_xeno)
+			if((hit_by.current_color == "green" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "green"))
+				user.put_in_hands(new /obj/item/toy/balloon_banana)
+			if((hit_by.current_color == "green" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "green"))
+				user.put_in_hands(new /obj/item/toy/balloon_lizard)
+			if((hit_by.current_color == "green" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "green"))
+				user.put_in_hands(new /obj/item/toy/balloon_slime)
+			if((hit_by.current_color == "yellow" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "yellow"))
+				user.put_in_hands(new /obj/item/toy/balloon_moth)
+			if((hit_by.current_color == "yellow" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "yellow"))
+				user.put_in_hands(new /obj/item/toy/balloon_ethereal)
+			if((hit_by.current_color == "orange" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "orange"))
+				user.put_in_hands(new /obj/item/toy/balloon_plasmaman)
+
+			qdel(hit_by)
+			qdel(src)
+			return TRUE
+
+		if(hit_by.current_color == current_color)
+			to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+
+	return ..()
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
@@ -157,15 +224,25 @@
 	. = ..()
 	if(random_color)
 		var/chosen_balloon_color = pick(BALLOON_COLORS)
+		current_color = "[chosen_balloon_color]"
 		name = "[chosen_balloon_color] [name]"
 		icon_state = "[icon_state]_[chosen_balloon_color]"
 		inhand_icon_state = icon_state
+		world_state = "[icon_state]"
+		storage_state = "[icon_state]_storage"
 
 /obj/item/toy/balloon/corgi
 	name = "corgi balloon"
-	desc = "A balloon with a corgi face on it. For the all year good boys."
+	desc = "A balloon in the shape of a corgi's head. For the all year good boys."
 	icon_state = "corgi"
 	inhand_icon_state = "corgi"
+	random_color = FALSE
+
+/obj/item/toy/balloon/heart
+	name = "heart balloon"
+	desc = "A balloon in the shape of a hearth. How lovely"
+	icon_state = "heart"
+	inhand_icon_state = "heart"
 	random_color = FALSE
 
 /obj/item/toy/balloon/syndicate
@@ -199,6 +276,161 @@
 	random_color = FALSE
 
 #undef BALLOON_COLORS
+
+/*
+* Balloon animals
+*/
+
+/obj/item/toy/balloon_guy
+	name = "balloon guy"
+	desc = "A balloon effigy of every day standard issue human guy. Wonder if he pays balloon taxes. Probably he evades them"
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_guy"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_nukie
+	name = "balloon nukie"
+	desc = "A balloon effigy of syndicate's nuclear operative. Either made to appease to them and pray for survival, or to poke fun out of them."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_nukie"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_clown
+	name = "balloon clown"
+	desc = "A balloon clown, smiling from ear to ear and beyond!"
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_clown"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_cat
+	name = "balloon cat"
+	desc = "Without the sharp claws, balloon cats are possibly cuter than their live counterparts, though not as relatable, warm and fuzzy."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_cat"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_fly
+	name = "balloon fly"
+	desc = "A balloon effigy of a flyperson. Thankfuly, it doesn't come with balloon vomit."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_fly"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_podguy
+	name = "balloon podguy"
+	desc = "A balloon effigy of a podperson. Though, actual podpeople have heads and not stalks and leaves."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_podguy"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_ai
+	name = "balloon ai core"
+	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI propably wouldn't smile like this."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_ai"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_dog
+	name = "balloon dog"
+	desc = "A balloon effigy of the best boy. Cannot truely compare, but it is an effort."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_dog"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_xeno
+	name = "balloon xeno"
+	desc = "A balloon effigy of a spooky xeno! Too squishy to scare anyone itself, though."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_xeno"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_banana
+	name = "balloon banana"
+	desc = "A balloon banana. This one can't be slipped on. Good for psychological warfare, though."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_banana"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_lizard
+	name = "balloon lizard"
+	desc = "A balloon effigy of an lizard. One of the first species to adapt to clown planet's culture. Perhaps because they are naturally laughable?"
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_lizard"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_slime
+	name = "balloon slime"
+	desc = "A balloon effigy of single specimen of galaxy-wide slime scourge, of purple variety. Slimes tried to invade clown planets once. They got quickly washed out by water-spitting flowers, though."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_slime"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_moth
+	name = "balloon moth"
+	desc = "A balloon effigy of a common member of moth flotilla. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-dissapearing' acts."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_moth"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_ethereal
+	name = "balloon ethereal"
+	desc = "A balloon effigy of an ethereal artisian. Clownery is one form of art, and as so, ethereals were both drawn to and readily accepted at clown planet. Don't mind the lighbulb for head, it's art, too."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_ethereal"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_plasmaman
+	name = "balloon plasmaman"
+	desc = "A balloon effigy of a plasmaman. Among the rarest on the clown planet, only having appeared recently thanks to ready trade between clown planet and NT."
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_plasmaman"
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
 
 /*
 * Captain's Aid
