@@ -759,9 +759,13 @@
 	name = "elevator door"
 	desc = "Keeps idiots like you from walking into an open elevator shaft."
 	icon = 'icons/obj/doors/liftdoor.dmi'
-	elevator_mode = TRUE
 	opacity = FALSE
 	glass = TRUE
+
+/obj/machinery/door/poddoor/lift/Initialize(mapload)
+	. = ..()
+	if(!isnull(transport_linked_id)) //linter and stuff
+		elevator_mode = TRUE
 
 /obj/machinery/door/poddoor/lift/preopen
 	icon_state = "open"
