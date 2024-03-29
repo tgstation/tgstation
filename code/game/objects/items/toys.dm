@@ -413,7 +413,7 @@
 
 /obj/item/toy/balloon_ethereal
 	name = "balloon ethereal"
-	desc = "A balloon effigy of an ethereal artisian. Clownery is one form of art, and as so, ethereals were both drawn to and readily accepted at clown planet. Don't mind the lighbulb for head, it's art, too."
+	desc = "A balloon effigy of an ethereal artisan. Clownery is one form of art, and as such, ethereals were both drawn to and readily accepted at clown planet. Don't mind the lighbulb head, it's art too."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_ethereal"
 	throwforce = 0
