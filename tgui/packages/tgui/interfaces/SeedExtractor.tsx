@@ -378,8 +378,8 @@ const ReagentTooltip = (props) => {
             </Table.Cell>
           </Table.Row>
           {props.grind_results?.map((reagent, i) => (
-            <Table.Row key={i} colSpan={2}>
-              <Table.Cell>{reagent}</Table.Cell>
+            <Table.Row key={i}>
+              <Table.Cell colSpan={2}>{reagent}</Table.Cell>
             </Table.Row>
           ))}
         </>
