@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "When a carbon talks over robotic it uses their voice instead of visible name. Meaning, voice changers work like they do over other comms regardless of face covering."

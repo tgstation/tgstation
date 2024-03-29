@@ -166,7 +166,9 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	light_system = OVERLAY_LIGHT
-	light_range = 2
+	light_range = 2.5
+	light_power = 1.2
+	light_color = "#ffff66"
 	duration = 8
 	var/target
 

@@ -35,6 +35,9 @@
 	wound_bonus = 30
 	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=1)
 
+/obj/projectile/bullet/shrapnel/short_range
+	range = 5
+
 /obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
 	range = 45

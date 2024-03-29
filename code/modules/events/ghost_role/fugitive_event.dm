@@ -105,7 +105,7 @@
 
 /datum/round_event/ghost_role/fugitives/proc/check_spawn_hunters(backstory, remaining_time)
 	//if the emergency shuttle has been called, spawn hunters now to give them a chance
-	if(remaining_time == 0 || SSshuttle.emergency.mode != EMERGENCY_IDLE_OR_RECALLED)
+	if(remaining_time == 0 || !EMERGENCY_IDLE_OR_RECALLED)
 		spawn_hunters(backstory)
 		return
 	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), backstory, remaining_time - 1 MINUTES), 1 MINUTES)

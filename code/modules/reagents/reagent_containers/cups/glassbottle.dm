@@ -144,7 +144,7 @@
 		return
 
 	var/amount_lost = intensity * 5
-	reagents.remove_any(amount_lost)
+	reagents.remove_all(amount_lost)
 
 	visible_message(span_warning("Some of [name]'s contents are let loose!"))
 	var/intensity_state = null

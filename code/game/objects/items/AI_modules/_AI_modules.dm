@@ -165,7 +165,7 @@
 	name = "ai default lawset spawner"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 
 /obj/effect/spawner/round_default_module/Initialize(mapload)
 	. = ..()

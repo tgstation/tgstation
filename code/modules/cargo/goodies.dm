@@ -249,6 +249,12 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
 
+/datum/supply_pack/goody/fish_feed
+	name = "Can of fish food"
+	desc = "For keeping your little friends fed and alive."
+	cost = PAYCHECK_CREW * 1
+	contains = list(/obj/item/fish_feed)
+
 /datum/supply_pack/goody/naturalbait
 	name = "Freshness Jars full of Natural Bait"
 	desc = "Homemade in the Spinward Sector."
@@ -308,3 +314,10 @@
 	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
+
+/datum/supply_pack/goody/double_barrel
+	name = "Double Barrel Shotgun"
+	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun so long as you can pay the absurd fees."
+	cost = PAYCHECK_COMMAND * 18
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)

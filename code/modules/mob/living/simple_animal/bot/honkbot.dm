@@ -2,6 +2,8 @@
 	name = "\improper Honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
+	light_color = "#e084f7"
+	light_power = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = FALSE
 

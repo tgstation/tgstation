@@ -150,7 +150,7 @@
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0
-		cell.give(100)
+		cell.give(STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * seconds_per_tick)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
 		update_appearance()
@@ -169,10 +169,10 @@
 		return
 	if(use_cyborg_cell && !no_cyborg_drain)
 		if(iscyborg(loc))
-			var/mob/living/silicon/robot/R = loc
-			if(R.cell)
+			var/mob/living/silicon/robot/robot = loc
+			if(robot.cell)
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-				if(R.cell.use(shot.e_cost)) //Take power from the borg...
+				if(robot.cell.use(shot.e_cost)) //Take power from the borg...
 					cell.give(shot.e_cost) //... to recharge the shot
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]

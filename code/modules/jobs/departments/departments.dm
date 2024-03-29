@@ -32,6 +32,8 @@
 			department_jobs -= job_datum
 			job_datum.departments_bitflags -= department_bitflags
 			job_datum.job_flags &= ~JOB_NEW_PLAYER_JOINABLE
+			job_datum.spawn_positions = 0
+			job_datum.total_positions = 0
 
 /// Returns a nation name for this department.
 /datum/job_department/proc/generate_nation_name()

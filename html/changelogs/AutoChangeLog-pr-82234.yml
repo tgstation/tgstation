@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Dynamic midrounds \"Obsession Awakening\" and \"Blob Host\" now have ghost orbit popups, so you can see them happening in real time."
+  - qol: "There is no longer a ghost orbit popup for players being shocked by an electrified tram rail."
+  - qol: "The Stray Cargo orbit popup no longer has a half-second window to orbit before it becomes useless."

@@ -1,7 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - rscadd: "Added secondary objectives to bitrunning!"
-  - rscadd: "Pick up encrypted curiosities and return them to the safehouse to claim their contents."
-  - rscadd: "Glacier Grind has been given a secondary objective, look out for the limited edition hat."
-  - rscadd: "Bitrunning domains can now be modified during the round by admins."

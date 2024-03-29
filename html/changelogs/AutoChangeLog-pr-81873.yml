@@ -1,5 +1,0 @@
-author: "Momo8289"
-delete-after: True
-changes:
-  - code_imp: "Chem stun reductions are now applied more consistently."
-  - bugfix: "Chem stun reductions should now more consistently apply to unconsciousness."

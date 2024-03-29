@@ -4,7 +4,6 @@
  * Definitions for /mob/living/silicon/robot and its children, including AI shells.
  *
  */
-
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
@@ -53,6 +52,8 @@
 	var/lamp_doom = FALSE
 	///Lamp brightness. Starts at 3, but can be 1 - 5.
 	var/lamp_intensity = 3
+	////Power consumption of the light per lamp_intensity.
+	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
 
 	var/mutable_appearance/eye_lights
 

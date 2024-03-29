@@ -25,6 +25,9 @@
 	death_message = "blows apart!"
 	light_system = OVERLAY_LIGHT
 	light_range = 6
+	// I want this to be a bit more dim, for vibes
+	light_power = 0.6
+	light_color = "#ff9933"
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
@@ -226,9 +229,6 @@
 	to_chat(src, span_notice("You dump your stored ore."))
 	for(var/obj/item/stack/ore/dropped_item in contents)
 		dropped_item.forceMove(get_turf(src))
-
-/mob/living/basic/mining_drone/proc/activate_bot()
-	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/mining_drone/death(gibbed)
 	drop_ore()

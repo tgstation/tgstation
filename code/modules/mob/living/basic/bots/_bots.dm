@@ -6,7 +6,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	"home" = "RETURN HOME",
 ))
 
-
 /mob/living/basic/bot
 	icon = 'icons/mob/silicon/aibots.dmi'
 	layer = MOB_LAYER
@@ -37,7 +36,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
 	light_system = OVERLAY_LIGHT
 	light_range = 3
-	light_power = 0.9
+	light_power = 0.6
 	speed = 3
 	req_one_access = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
@@ -73,7 +72,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///state of the path icon
 	var/path_image_icon_state = "path_indicator"
 	///what color this path icon will use
-	var/path_image_color = "#FFFFFF"
+	var/path_image_color = COLOR_WHITE
 	///list of all layed path icons
 	var/list/current_pathed_turfs = list()
 

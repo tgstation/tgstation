@@ -187,7 +187,7 @@
 	icon_state = "flash"
 	plane = SPLASHSCREEN_PLANE
 	layer = CINEMATIC_LAYER
-	color = "#000000"
+	color = COLOR_BLACK
 	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/lighting_backdrop

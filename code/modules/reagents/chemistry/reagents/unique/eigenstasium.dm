@@ -118,4 +118,4 @@
 		lockers += closet
 	if(!length(lockers))
 		return
-	SSeigenstates.create_new_link(lockers)
+	GLOB.eigenstate_manager.create_new_link(lockers)
