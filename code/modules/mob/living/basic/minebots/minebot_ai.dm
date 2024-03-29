@@ -168,8 +168,7 @@
 	if(!controller.blackboard[BB_MINEBOT_PLANT_MINES])
 		return ..()
 	var/datum/action/cooldown/mine_ability = controller.blackboard[BB_MINEBOT_LANDMINE_ABILITY]
-	if(mine_ability?.IsAvailable())
-		mine_ability.Trigger()
+	mine_ability?.Trigger()
 	return ..()
 
 /datum/ai_behavior/basic_ranged_attack/minebot

@@ -12,12 +12,8 @@
 	///cooldown till we can drop the next bomb
 	COOLDOWN_DECLARE(bomb_timer)
 
-/obj/item/minebot_remote_control/Initialize(mapload)
+/obj/item/minebot_remote_control/Moved(atom/old_loc, ...)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-
-/obj/item/minebot_remote_control/proc/on_move(datum/source)
-	SIGNAL_HANDLER
 	clear_priming()
 
 /obj/item/minebot_remote_control/proc/clear_priming()
@@ -31,9 +27,13 @@
 
 /obj/item/minebot_remote_control/attack_self(mob/user)
 	. = ..()
-	if(. || !COOLDOWN_FINISHED(src, bomb_timer))
-		user.balloon_alert(user, "on cooldown!")
+	if(.)
+		return .
+
+	if(!COOLDOWN_FINISHED(src, bomb_timer))
+		balloon_alert(user, "on cooldown!")
 		return TRUE
+
 	prime_bomb(user)
 	return TRUE
 

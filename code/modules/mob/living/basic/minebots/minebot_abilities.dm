@@ -62,6 +62,13 @@
 	///how long before we launch said missile
 	var/wind_up_timer = 1 SECONDS
 
+/datum/action/cooldown/mob_cooldown/missile_launcher/IsAvailable(feedback = TRUE)
+	if(is_mining_level(owner.z))
+		return TRUE
+	if(feedback)
+		owner.balloon_alert(owner, "cant be used here!")
+	return FALSE
+
 /datum/action/cooldown/mob_cooldown/missile_launcher/Activate(atom/target)
 	var/turf/target_turf = get_turf(target)
 	if(isnull(target_turf) || !can_see(owner, target_turf, 7))
@@ -83,19 +90,26 @@
 
 /datum/action/cooldown/mob_cooldown/drop_landmine
 	name = "Landmine"
+	desc = "Drop a landmine!"
 	button_icon = 'icons/obj/weapons/grenade.dmi'
 	button_icon_state = "landmine"
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
-	desc = "Drop a landmine!"
 	cooldown_time = 10 SECONDS
 	shared_cooldown = NONE
 	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
+/datum/action/cooldown/mob_cooldown/drop_landmine/IsAvailable(feedback = TRUE)
+	if(is_mining_level(owner.z))
+		return TRUE
+	if(feedback)
+		owner.balloon_alert(owner, "cant be used here!")
+	return FALSE
+
 /datum/action/cooldown/mob_cooldown/drop_landmine/Activate(atom/target)
 	var/turf/my_turf = get_turf(owner)
-	if(isopenspaceturf(my_turf))
+	if(isgroundlessturf(my_turf))
 		return FALSE
 	var/obj/effect/mine/minebot/my_mine = new(my_turf)
 	my_mine.ignore_list = owner.faction.Copy()
@@ -112,7 +126,7 @@
 
 /obj/effect/temp_visual/rising_rocket/Initialize(mapload)
 	. = ..()
-	playsound(src.drop_location(), 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
+	playsound(src, 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
 	animate(src, pixel_y = base_pixel_y + 500, time = duration, easing = EASE_IN)
 
 /obj/effect/temp_visual/falling_rocket
@@ -134,13 +148,12 @@
 	animate(src, pixel_y = 0, time = duration)
 
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
-	playsound(src.drop_location(), 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
+	playsound(src, 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(1, holder = src)
 	smoke.start()
-	for(var/turf/target_turf as anything in RANGE_TURFS(explosion_radius, src))
-		var/mob/living/living_target = locate() in target_turf
-		if(isnull(living_target))
+	for(var/mob/living/living_target in oview(explosion_radius, src))
+		if(living_target.incorporeal_move)
 			continue
 		living_target.apply_damage(explosion_damage)
 
@@ -157,10 +170,10 @@
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src)
 	smoke.start()
-	playsound(drop_location(), 'sound/effects/explosion3.ogg', 100)
+	playsound(src, 'sound/effects/explosion3.ogg', 100)
 	victim.apply_damage(damage_to_apply)
 
 /obj/effect/mine/minebot/can_trigger(atom/movable/on_who)
-	if(ignore_list.Find(REF(on_who)))
+	if(REF(on_who) in ignore_list)
 		return FALSE
 	return ..()
