@@ -226,7 +226,7 @@ const GameOverPanel = (props) => {
   return (
     <Section align="center">
       <Box color="red" fontSize="32px" m={1}>
-        {'Game Over'}
+        Game Over
       </Box>
       <Box fontSize="15px">
         <Button
