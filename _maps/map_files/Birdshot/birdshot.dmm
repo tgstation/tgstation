@@ -491,9 +491,7 @@
 /area/station/engineering/atmos/project)
 "aiO" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "ajg" = (
@@ -4786,9 +4784,7 @@
 /area/station/maintenance/department/prison)
 "bSN" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/machinery/camera/directional/north{
 	c_tag = "AI Chamber - SMES";
 	network = list("aicore")
@@ -10941,9 +10937,7 @@
 /area/station/service/cafeteria)
 "efp" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
@@ -30888,9 +30882,7 @@
 "ldW" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/construction)
 "ldZ" = (
@@ -58305,9 +58297,7 @@
 /area/station/command/bridge)
 "ueD" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -71764,9 +71754,7 @@
 "yca" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/station/maintenance/department/prison)
 "ycd" = (
@@ -71954,9 +71942,7 @@
 /area/station/engineering/storage/tech)
 "yez" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)

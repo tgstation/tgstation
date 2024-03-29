@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed the \"Random\" deathmatch modifier. Also turned the \"Heightened Hearing\" option into a modifier as well."

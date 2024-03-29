@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "You can actually hit racks with objects when in combat mode again. Importantly, painting them with spraycans like that works again."
