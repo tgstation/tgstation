@@ -1,18 +1,18 @@
-import { useState } from 'react';
 import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
+import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
   Button,
+  Dropdown,
   Image,
   LabeledList,
-  ProgressBar,
-  Dropdown,
-  Section,
   NumberInput,
+  ProgressBar,
+  Section,
   Stack,
 } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   auto_defend: BooleanLike;
