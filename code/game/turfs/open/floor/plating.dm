@@ -308,6 +308,9 @@
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 
+/turf/open/floor/plating/reinforced/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 ///not an actual turf its used just for rcd ui purposes
 /turf/open/floor/plating/rcd
 	name = "Floor/Wall"
