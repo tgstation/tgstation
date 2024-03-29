@@ -24,8 +24,13 @@
 
 	///a list of all the reagents which alleviate the negative moodlet
 	var/list/stimulants = list(
+		/datum/reagent/consumable/cafe_latte,
 		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/hot_ice_coffee,
+		/datum/reagent/consumable/icecoffee,
 		/datum/reagent/consumable/monkey_energy,
+		/datum/reagent/consumable/pumpkin_latte,
+		/datum/reagent/consumable/soy_latte,
 		/datum/reagent/consumable/tea,
 		/datum/reagent/consumable/volt_energy,
 		/datum/reagent/drug/aranesp,
