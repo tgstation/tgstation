@@ -393,7 +393,7 @@
 
 /obj/item/toy/balloon_slime
 	name = "balloon slime"
-	desc = "A balloon effigy of single specimen of galaxy-wide slime scourge, of purple variety. Slimes tried to invade clown planets once. They got quickly washed out by water-spitting flowers, though."
+	desc = "A balloon effigy of single specimen of the galaxy-wide slime scourge, of purple variety. Slimes tried to invade clown planet once. They got quickly washed out by water-spitting flowers, though."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_slime"
 	throwforce = 0
