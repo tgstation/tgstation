@@ -1944,7 +1944,7 @@
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	req_access = list("xenobiology")
 	},
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "aJL" = (
@@ -5130,15 +5130,18 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "cdi" = (
-/obj/machinery/computer/department_orders/engineering{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 6
 	},
+/obj/structure/table,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/screwdriver,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "cdk" = (
@@ -7018,10 +7021,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "cUn" = (
-/obj/machinery/computer/department_orders/medical{
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/modular_computer/preset/cargochat/medical{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "cUv" = (
@@ -7429,6 +7432,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"dcs" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/modular_computer/preset/cargochat/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "dct" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24719,7 +24730,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 6
 	},
-/obj/machinery/computer/department_orders/science{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /turf/open/floor/iron/white/herringbone,
@@ -26773,10 +26784,10 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/machinery/modular_computer/preset/civilian{
+/obj/machinery/light/directional/east,
+/obj/machinery/modular_computer/preset/cargochat/science{
 	dir = 8
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/breakroom)
 "kSH" = (
@@ -29259,7 +29270,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "lXy" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "lXz" = (
@@ -46249,11 +46260,11 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
-/obj/machinery/modular_computer/preset/cargochat/science{
-	dir = 8
-	},
 /obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","rd","xeno")
+	},
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 8
 	},
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/breakroom)
@@ -47985,10 +47996,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/machinery/modular_computer/preset/cargochat/medical{
-	dir = 8
-	},
 /obj/item/radio/intercom/directional/east,
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "tDw" = (
@@ -51480,10 +51489,10 @@
 /turf/closed/wall,
 /area/station/cargo/sorting)
 "uWr" = (
-/obj/machinery/computer/department_orders/service{
+/obj/effect/turf_decal/tile/dark_green/opposingcorners,
+/obj/machinery/modular_computer/preset/cargochat/service{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/dark_green/opposingcorners,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "uWt" = (
@@ -51541,7 +51550,7 @@
 	network = list("prison");
 	pixel_y = -30
 	},
-/obj/machinery/computer/department_orders/security{
+/obj/machinery/modular_computer/preset/cargochat/security{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -72633,7 +72642,7 @@ mVX
 uDB
 sdc
 sdc
-aMH
+dcs
 uyL
 hQu
 uyL
