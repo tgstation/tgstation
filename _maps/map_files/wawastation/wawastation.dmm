@@ -48500,6 +48500,7 @@
 /area/station/command/heads_quarters/rd)
 "ubd" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/light/small/dim/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/security)
 "ubk" = (
@@ -56153,7 +56154,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "xlG" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -72496,7 +72497,7 @@ cem
 cem
 whY
 baH
-dUc
+bwC
 qhP
 dJK
 geh
@@ -137515,9 +137516,9 @@ baH
 baH
 baH
 baH
-jJe
-jJe
-jJe
+fZF
+fZF
+fZF
 hhX
 mIW
 cYG
@@ -137772,9 +137773,9 @@ baH
 jfE
 wrG
 baH
-jJe
-jJe
-jJe
+fZF
+fZF
+fZF
 hhX
 mIW
 lrV
