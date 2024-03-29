@@ -271,7 +271,8 @@
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if((world.time - co2overloadtime) > 12 SECONDS)
-			throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
+			if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+				throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 			Unconscious(6 SECONDS)
 			// Lets hurt em a little, let them know we mean business.
 			adjustOxyLoss(3)
@@ -289,7 +290,8 @@
 		// Plasma side-effects.
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
+		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+			throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 	else
 		// Reset side-effects.
 		clear_alert(ALERT_TOO_MUCH_PLASMA)
@@ -352,7 +354,8 @@
 	if(n2o_pp > n2o_para_min)
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
-		throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
+		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 		// give them one second of grace to wake up and run away a bit!
 		if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
 			Unconscious(6 SECONDS)
