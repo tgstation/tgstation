@@ -1048,6 +1048,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	return TRUE
 
 /atom/movable/screen/alert/Click(location, control, params)
+	SHOULD_CALL_PARENT(TRUE)
+
+	..()
 	if(!usr || !usr.client)
 		return FALSE
 	if(usr != owner)

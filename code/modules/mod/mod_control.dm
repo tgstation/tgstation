@@ -410,11 +410,9 @@
 	return ..()
 
 /obj/item/mod/control/get_cell()
-	if(!open)
-		return
 	var/obj/item/stock_parts/cell/cell = get_charge_source()
 	if(!istype(cell))
-		return
+		return null
 	return cell
 
 /obj/item/mod/control/GetAccess()

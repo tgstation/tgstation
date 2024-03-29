@@ -960,8 +960,8 @@
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
-
-/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
+//Used to check for extra requirements for blending(grinding or juicing) an object
+/obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
 	return TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
@@ -972,10 +972,12 @@
 /obj/item/proc/grind(datum/reagents/target_holder, mob/user)
 	if(on_grind() == -1)
 		return FALSE
-	if(target_holder)
+
+	if(length(grind_results))
 		target_holder.add_reagent_list(grind_results)
-		if(reagents)
-			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(reagents?.total_volume)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
 	return TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
@@ -986,12 +988,13 @@
 
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
-	if(on_juice() == -1)
+	if(on_juice() == -1 || !reagents?.total_volume)
 		return FALSE
-	if(reagents)
+
+	if(ispath(juice_typepath))
 		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-		if(target_holder)
-			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
 	return TRUE
 
 /obj/item/proc/set_force_string()

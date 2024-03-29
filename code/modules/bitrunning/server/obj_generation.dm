@@ -83,6 +83,13 @@
 
 		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
 
+	avatar.AddComponent( \
+		/datum/component/simple_bodycam, \
+		camera_name = "bitrunner bodycam", \
+		c_tag = "Avatar [avatar.real_name]", \
+		network = BITRUNNER_CAMERA_NET, \
+		emp_proof = TRUE, \
+	)
 	return avatar
 
 /// Generates a new hololadder for the bitrunner. Effectively a respawn attempt.
