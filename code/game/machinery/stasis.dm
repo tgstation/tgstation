@@ -118,7 +118,7 @@
 	update_use_power(ACTIVE_POWER_USE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/heart_stoppee = target
-		if(heart_stoppee.stat == DEAD || HAS_TRAIT(heart_stoppee, TRAIT_CRITICAL_CONDITION) || !heart_stoppee.can_heartattack() || (/datum/disease/heart_failure in heart_stoppee.diseases) || heart_stoppee.undergoing_cardiac_arrest()
+		if(heart_stoppee.stat == DEAD || HAS_TRAIT(heart_stoppee, TRAIT_CRITICAL_CONDITION) || !heart_stoppee.can_heartattack() || (/datum/disease/heart_failure in heart_stoppee.diseases) || heart_stoppee.undergoing_cardiac_arrest())
 			return
 		else
 			heart_stoppee.set_heartattack(TRUE)
