@@ -323,6 +323,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
+"tl" = (
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/icemoon/underground/explored)
 "tp" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -1691,7 +1694,7 @@ OB
 OB
 OB
 OB
-OB
+OM
 OM
 OM
 OM
@@ -1747,8 +1750,8 @@ OB
 OB
 OB
 OB
-OB
-OB
+OM
+OM
 OM
 OM
 MH
@@ -1760,7 +1763,7 @@ LP
 QU
 LP
 LP
-MH
+tl
 MH
 MH
 OM
@@ -1804,21 +1807,21 @@ OB
 OB
 OB
 OB
-OB
 OM
 OM
 OM
+OM
 MH
 MH
-MH
-MH
+tl
+tl
 LP
 nL
 ZE
 vV
 LP
-MH
-MH
+tl
+tl
 MH
 OM
 OM
@@ -1861,13 +1864,13 @@ OB
 OB
 OB
 OB
-OB
 OM
 OM
+OM
 MH
 MH
-MH
-MH
+tl
+tl
 MH
 LP
 YI
@@ -1875,7 +1878,7 @@ wh
 YI
 LP
 MH
-MH
+tl
 MH
 MH
 OM
@@ -1922,7 +1925,7 @@ OM
 OM
 MH
 MH
-MH
+tl
 LP
 LP
 LP
@@ -2319,7 +2322,7 @@ OM
 OM
 OM
 MH
-MH
+tl
 LP
 Mj
 Ml
@@ -2376,7 +2379,7 @@ OM
 jc
 MH
 MH
-MH
+tl
 LP
 KG
 Ng
@@ -2433,7 +2436,7 @@ OM
 OM
 MH
 MH
-MH
+tl
 LP
 un
 zG
@@ -2489,7 +2492,7 @@ sB
 OM
 MH
 MH
-MH
+tl
 LP
 LP
 LP
@@ -2546,7 +2549,7 @@ OM
 MH
 MH
 MH
-MH
+tl
 LP
 qE
 LP
@@ -2602,8 +2605,8 @@ OM
 OM
 MH
 MH
-MH
-MH
+tl
+tl
 LP
 YA
 VN
@@ -2659,8 +2662,8 @@ OM
 OM
 MH
 MH
-MH
-MH
+tl
+tl
 LP
 sc
 gt
@@ -2674,7 +2677,7 @@ Lh
 ud
 GI
 LP
-MH
+tl
 MH
 TV
 OM
@@ -2717,7 +2720,7 @@ OM
 MH
 MH
 MH
-MH
+tl
 LP
 mM
 xz
@@ -2731,7 +2734,7 @@ he
 cI
 zJ
 YX
-MH
+tl
 MH
 OM
 oE
@@ -2788,7 +2791,7 @@ he
 he
 he
 YX
-MH
+tl
 MH
 OM
 OM
@@ -2845,7 +2848,7 @@ xi
 xi
 PR
 PR
-MH
+tl
 MH
 TV
 OM
@@ -2896,12 +2899,12 @@ MH
 MH
 MH
 KQ
-MH
+tl
 YX
 YX
 YX
 PR
-MH
+tl
 MH
 MH
 OM
@@ -2953,8 +2956,8 @@ MH
 MH
 KQ
 KQ
-MH
-MH
+tl
+tl
 MH
 MH
 MH
@@ -3011,8 +3014,8 @@ MH
 KQ
 KQ
 KQ
-MH
-MH
+tl
+tl
 MH
 jc
 OM
@@ -3068,7 +3071,7 @@ MH
 MH
 KQ
 KQ
-MH
+tl
 MH
 MH
 OM
