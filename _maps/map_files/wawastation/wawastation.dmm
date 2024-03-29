@@ -8720,6 +8720,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/wood/tile,
 /area/station/service/chapel)
 "dCu" = (
@@ -30504,7 +30505,8 @@
 /area/station/security/breakroom)
 "mGM" = (
 /obj/item/flashlight/flare{
-	icon_state = "flare-on"
+	icon_state = "flare-on";
+	start_on = 1
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -50993,9 +50995,7 @@
 	name = "Chapel Morgue"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
-	},
+/obj/effect/mapping_helpers/airlock/access/all/service/crematorium,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "vdb" = (
@@ -54142,6 +54142,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"wwR" = (
+/obj/item/flashlight/flare{
+	icon_state = "flare-on";
+	start_on = 1
+	},
+/turf/open/misc/asteroid/airless,
+/area/space/nearstation)
 "wxa" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
@@ -146275,7 +146282,7 @@ unk
 kkx
 kkx
 kkx
-kkx
+wwR
 kkx
 kkx
 unk
