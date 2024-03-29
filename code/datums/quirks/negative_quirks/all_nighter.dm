@@ -39,7 +39,8 @@
 		/datum/reagent/drug/methamphetamine,
 		/datum/reagent/drug/pumpup,
 		/datum/reagent/medicine/stimulants,
-
+		/datum/reagent/toxin/coffeepowder,
+		/datum/reagent/toxin/teapowder,
 	)
 	///essentially our "sleep bank". sleeping charges it up and its drained while awake
 	var/five_more_minutes = 0
