@@ -495,8 +495,8 @@ const SnowflakeSyringe = (props) => {
         />
       </LabeledList.Item>
       <LabeledList.Item label={'Syntheizing'}>
-        {analyzed_reagents.map((reagent: KnownReagent) => (
-          <LabeledList.Item key={`${reagent.name}`} label={`${reagent.name}`}>
+        {analyzed_reagents.map((reagent) => (
+          <LabeledList.Item key={reagent.name} label={reagent.name}>
             <Button.Checkbox
               checked={reagent.enabled}
               onClick={() =>
@@ -511,27 +511,29 @@ const SnowflakeSyringe = (props) => {
       </LabeledList.Item>
       <LabeledList.Item>
         <Button
-          content={'Purge All'}
           onClick={() =>
             act('equip_act', {
               ref: ref,
               gear_action: `purge_all`,
             })
           }
-        />
+        >
+          Purge All
+        </Button>
       </LabeledList.Item>
-      {contained_reagents.map((reagent: Reagent) => (
-        <LabeledList.Item key={`${reagent.name}`} label={`${reagent.name}`}>
+      {contained_reagents.map((reagent) => (
+        <LabeledList.Item key={reagent.name} label={reagent.name}>
           <LabeledList.Item label={`${reagent.volume}u`}>
             <Button
-              content={'Purge'}
               onClick={() =>
                 act('equip_act', {
                   ref: ref,
                   gear_action: `purge_reagent_${reagent.name}`,
                 })
               }
-            />
+            >
+              Purge
+            </Button>
           </LabeledList.Item>
         </LabeledList.Item>
       ))}
