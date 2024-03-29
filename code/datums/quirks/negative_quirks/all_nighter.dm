@@ -38,6 +38,7 @@
 		/datum/reagent/consumable/tea,
 		/datum/reagent/consumable/t_letter,
 		/datum/reagent/consumable/monkey_energy, // Energy drinks
+		/datum/reagent/consumable/spacemountainwind,
 		/datum/reagent/consumable/volt_energy,
 		/datum/reagent/drug/aranesp, // Other stimulants
 		/datum/reagent/drug/bath_salts,
