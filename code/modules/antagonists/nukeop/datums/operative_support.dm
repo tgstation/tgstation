@@ -12,31 +12,44 @@
 
 /datum/antagonist/nukeop/support/on_gain() //All consoles and gear they should get should be in here
 	..()
-	send_cameras()
-	var/turf/owner_turf = get_turf(owner) //We use this location multiple times so we might as well just call get_turf once
-	var/list/gear_to_deliver = list()
-	gear_to_deliver += /obj/item/storage/toolbox/mechanical
-	gear_to_deliver += /obj/item/stack/sheet/glass/fifty
-	gear_to_deliver += /obj/item/stack/sheet/iron/fifty
-	gear_to_deliver += /obj/item/stack/cable_coil/thirty
+	for(var/datum/mind/teammate_mind in nuke_team.members)
+		var/mob/living/our_teammate = teammate_mind.current
+		our_teammate.AddComponent( \
+			/datum/component/simple_bodycam, \
+			camera_name = "operative bodycam", \
+			c_tag = "[our_teammate.real_name]", \
+			network = OPERATIVE_CAMERA_NET, \
+			emp_proof = FALSE, \
+		)
+		our_teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0)
+		to_chat(our_teammate, span_notice("A Syndicate Overwatch Agent has been assigned to your team. Smile, you're on camera!"))
 
-	for(var/atom/thing_to_deliver in gear_to_deliver)
-		new thing_to_deliver(owner_turf)
+	RegisterSignal(nuke_team, COMSIG_NUKE_TEAM_ADDITION, PROC_REF(late_bodycam))
 
 /datum/antagonist/nukeop/support/get_spawnpoint()
 	return pick(GLOB.nukeop_overwatch_start)
 
-/datum/antagonist/nukeop/support/proc/send_cameras()
-	for(var/datum/mind/teammate_mind in nuke_team.members)
-		teammate_mind.current.AddComponent( \
-			/datum/component/simple_bodycam, \
-			camera_name = "operative bodycam", \
-			c_tag = "[teammate_mind.current.real_name]", \
-			network = OPERATIVE_CAMERA_NET, \
-			emp_proof = FALSE, \
-		)
-		teammate_mind.current.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0, use_reverb = FALSE)
-		to_chat(span_notice("A Syndicate Overwatch Agent has been assigned to your team. Smile, you're on camera!"))
+/datum/antagonist/nukeop/support/forge_objectives()
+	var/datum/objective/overwatch/objective = new
+	objective.owner = owner
+	objectives += objective
 
-/datum/antagonist/nukeop/support/give_uplink()
-	return
+/datum/antagonist/nukeop/support/proc/late_bodycam(datum/source, mob/living/new_teammate)
+	SIGNAL_HANDLER
+	new_teammate.AddComponent( \
+		/datum/component/simple_bodycam, \
+		camera_name = "operative bodycam", \
+		c_tag = "[new_teammate.real_name]", \
+		network = OPERATIVE_CAMERA_NET, \
+		emp_proof = FALSE, \
+	)
+	to_chat(new_teammate, span_notice("You have been equipped with a bodycam, viewable by your Overwatch Agent. Make sure to show them a good performance!"))
+
+/datum/objective/overwatch
+
+/datum/objective/overwatch/New()
+	explanation_text = "Provide intelligence support and overwatch to your operative team!"
+	..()
+
+/datum/objective/overwatch/check_completion()
+	return GLOB.station_was_nuked = TRUE

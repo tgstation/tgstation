@@ -26,7 +26,7 @@ Happy hunting!
 	circuit = /obj/item/circuitboard/computer/overwatch
 
 /obj/item/circuitboard/computer/overwatch
-	name = "Overwatch Cameras"
+	name = "Overwatch Body Cameras"
 	build_path = /obj/machinery/computer/security/overwatch
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 

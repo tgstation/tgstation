@@ -170,8 +170,8 @@
 
 /obj/item/antag_spawner/nuke_ops/overwatch
 	name = "overwatch support beacon"
-	desc = "Summons an intelligence agent to provide overwatch during your upcoming missing. Definitely not a syndicate intern we put in front of a bunch of computer screens. \
-		We might be an evil conglomerate hellbent on terrorizing the innocent researchers of Nanotrasen, but we wouldn't dare stoop low enough to hire unpaid interns!" //This is a bit on the nose.
+	desc = "Assigns an Overwatch Intelligence Agent to your operation. Stationed at their own remote outpost, they can view station cameras, alarms, and even move the Infiltrator shuttle! \
+		Also, all members of your operation will recieve body cameras that they can view your progress from."
 	special_role_name = ROLE_OPERATIVE_OVERWATCH
 	deliver_target = FALSE
 	outfit = null //Outfit is given by the antag datum so we don't need to interfere here.

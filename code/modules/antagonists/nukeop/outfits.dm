@@ -199,3 +199,4 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	shoes = /obj/item/clothing/shoes/sandal
 	command_radio = TRUE
+	tc = 0

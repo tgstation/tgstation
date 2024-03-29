@@ -504,8 +504,17 @@
 "fx" = (
 /obj/machinery/light/small/dim/directional/west,
 /obj/structure/rack,
-/obj/item/circuitboard/computer/stationalert,
 /obj/effect/turf_decal/box/white,
+/obj/item/stack/cable_coil/thirty{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/circuitboard/computer/stationalert{
+	pixel_y = 1;
+	pixel_x = 3
+	},
+/obj/item/stack/cable_coil/thirty,
+/obj/item/circuitboard/computer/advanced_camera,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "fy" = (
@@ -2162,6 +2171,9 @@
 /obj/item/flashlight/lamp/green{
 	pixel_y = 9;
 	pixel_x = 5
+	},
+/obj/item/circuitboard/computer/overwatch{
+	pixel_x = -2
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
@@ -3841,6 +3853,7 @@
 	pixel_y = -1
 	},
 /obj/effect/turf_decal/box/white,
+/obj/item/circuitboard/computer/syndicate_shuttle_docker,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "Rr" = (
@@ -4496,16 +4509,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "YT" = (
-/obj/item/circuitboard/computer/overwatch{
-	pixel_y = 5
-	},
 /obj/structure/rack,
-/obj/item/stack/cable_coil/thirty,
-/obj/item/stack/cable_coil/thirty{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/circuitboard/computer/advanced_camera,
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
