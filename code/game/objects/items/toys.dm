@@ -323,7 +323,7 @@
 
 /obj/item/toy/balloon_fly
 	name = "balloon fly"
-	desc = "A balloon effigy of a flyperson. Thankfuly, it doesn't come with balloon vomit."
+	desc = "A balloon effigy of a flyperson. Thankfully, it doesn't come with balloon vomit."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_fly"
 	throwforce = 0
