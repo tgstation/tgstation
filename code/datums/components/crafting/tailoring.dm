@@ -443,7 +443,7 @@
 
 /datum/crafting_recipe/balloon_tophat/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
-	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
 		return TRUE
 
 /datum/crafting_recipe/balloon_vest
