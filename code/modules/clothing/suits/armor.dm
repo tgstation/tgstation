@@ -316,7 +316,7 @@
 	name = "balloon vest"
 	desc = "A vest enitrely made from balloons, resistant to any evil forces a mime could throw at you, including electrecity and fire. Just a strike with something sharp, though..."
 	icon_state = "balloon-vest"
-	inhand_icon_state = "balloon-vest"
+	inhand_icon_state = "balloon_armor"
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/balloon_vest
 	siemens_coefficient = 0

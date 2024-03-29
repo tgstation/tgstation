@@ -383,7 +383,7 @@
 
 /obj/item/toy/balloon_lizard
 	name = "balloon lizard"
-	desc = "A balloon effigy of an lizard. One of the first species to adapt to clown planet's culture. Perhaps because they are naturally laughable?"
+	desc = "A balloon effigy of a lizard. One of the first species to adapt to clown planet's culture. Perhaps because they are naturally laughable?"
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_lizard"
 	throwforce = 0

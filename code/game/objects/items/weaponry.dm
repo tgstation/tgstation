@@ -43,7 +43,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/balloon_mallet
 	name = "balloon mallet"
-	desc = "It's a mallet, a weapon known for beign heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarassing to get hit by this."
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "balloon_mallet"
 	inhand_icon_state = "balloon_mallet"
@@ -64,7 +64,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearths of their foes. Wield it with care."
+		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/M, mob/living/user)
 	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
