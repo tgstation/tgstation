@@ -244,7 +244,7 @@
 	if(!can_breathe_vacuum && (o2_pp < safe_oxygen_min))
 		// Breathe insufficient amount of O2.
 		oxygen_used = handle_suffocation(o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
-		if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
+		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 	else
 		// Enough oxygen to breathe.
