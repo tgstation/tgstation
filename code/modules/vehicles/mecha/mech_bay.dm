@@ -45,7 +45,7 @@
 	var/total_rating = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		total_rating += capacitor.tier
-	recharge_power = total_rating * 12.5
+	recharge_power = total_rating * 12.5 KILO WATTS
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
 	. = ..()

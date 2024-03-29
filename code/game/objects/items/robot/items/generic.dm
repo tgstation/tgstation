@@ -12,12 +12,13 @@
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
+/// Cost to use the stun arm
+#define CYBORG_STUN_CHARGE_COST (200 KILO JOULES)
+
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/stamina_damage = 60 //Same as normal batong
-	/// Cost to use the stun arm
-	var/charge_cost = 200
 	var/cooldown_check = 0
 	/// cooldown between attacks
 	var/cooldown = 4 SECONDS // same as baton
@@ -33,7 +34,7 @@
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(charge_cost))
+		if(!robot_user.cell.use(CYBORG_STUN_CHARGE_COST))
 			return
 
 	user.do_attack_animation(attacked_mob)
@@ -56,6 +57,8 @@
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	cooldown_check = world.time + cooldown
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+
+#undef CYBORG_STUN_CHARGE_COST
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
