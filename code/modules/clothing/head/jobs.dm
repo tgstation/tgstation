@@ -247,17 +247,17 @@
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || speaker != wearer) //if we are worn
-		return FALSE
+		return .
 
 	raw_message = htmlrendertext(raw_message)
 	var/prefix_index = findtext(raw_message, prefix)
 	if(prefix_index != 1)
-		return FALSE
+		return .
 
-	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
+	var/the_phrase = lowertext(trim_left(replacetext(raw_message, prefix, "")))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
-		return FALSE
+		return .
 
 	if(wearer.put_in_active_hand(result))
 		wearer.visible_message(span_warning("[src] drops [result] into the hands of [wearer]!"))
@@ -279,6 +279,9 @@
 	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
 	if(!input)
 		return
+
+	input = lowertext(input)
+
 	if(input in items_by_phrase)
 		balloon_alert(user, "already used!")
 		return
@@ -302,7 +305,7 @@
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
 	if(!new_prefix)
 		return
-	prefix = new_prefix
+	prefix = lowertext(new_prefix)
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()
