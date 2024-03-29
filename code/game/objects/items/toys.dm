@@ -403,7 +403,7 @@
 
 /obj/item/toy/balloon_moth
 	name = "balloon moth"
-	desc = "A balloon effigy of a common member of moth flotilla. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-dissapearing' acts."
+	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-dissapearing' acts."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_moth"
 	throwforce = 0
