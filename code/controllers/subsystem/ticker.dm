@@ -464,8 +464,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)

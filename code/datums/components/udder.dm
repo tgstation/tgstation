@@ -181,7 +181,7 @@
 		return
 	var/transferred = reagents.trans_to(milk_holder, rand(5,10))
 	if(transferred)
-		user.visible_message(span_notice("[user] milks [src] using \the [milk_holder]."), span_notice("You milk [src] using \the [milk_holder]."))
+		user.visible_message(span_notice("[user] milks [udder_mob] using \the [milk_holder]."), span_notice("You milk [udder_mob] using \the [milk_holder]."))
 	else
 		to_chat(user, span_warning("The udder is dry. Wait a bit longer..."))
 

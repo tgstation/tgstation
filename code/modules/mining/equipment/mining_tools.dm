@@ -314,8 +314,7 @@
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	obj_flags = IMMUTABLE_SLOW
-	item_flags = SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
 	/// The factor at which the recoil becomes less.

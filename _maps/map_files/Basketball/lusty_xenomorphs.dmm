@@ -217,7 +217,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "pu" = (
-/mob/living/simple_animal/slime/random,
+/mob/living/basic/slime/random,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "qU" = (
