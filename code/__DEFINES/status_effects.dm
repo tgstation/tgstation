@@ -43,6 +43,7 @@
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 #define STASIS_ADMIN "stasis_admin"
 #define STASIS_LEGION_EATEN "stasis_eaten"
+#define STASIS_SLIME_BZ "stasis_slime_bz"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
