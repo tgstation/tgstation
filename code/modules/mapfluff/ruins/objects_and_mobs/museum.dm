@@ -33,6 +33,10 @@
 
 	new_replica.name = "[appearance_object.name][obvious_replica ? " replica" : ""]"
 	new_replica.desc = "[appearance_object.desc][obvious_replica ? " ..except this one is a replica.": ""]"
+
+	new_replica.pixel_y = pixel_y
+	new_replica.pixel_x = pixel_x
+
 	qdel(appearance_object)
 	qdel(src)
 	return INITIALIZE_HINT_QDEL
@@ -129,3 +133,68 @@
 	<br>sometimes i can catch them moving
 	<br>
 	<br>we should have never come here"}
+
+/obj/item/paper/fluff/museum/chefs_ultimatum
+	name = "old note"
+	default_raw_text = {"I messed it up big times.
+	<br>I broke the button and now I'm stuck.
+	<br>Anyway, I don't have the key on me. I flushed it down.
+	<br>Hell knows where it's now, shit's like all linked together here."}
+
+/obj/item/paper/fluff/museum/numbers_on_walls
+	name = "reprimanding note"
+	default_raw_text = "Please refraim from writing the pass all over the place. I know you've the memory of a goldfish, but, like, just put it on a piece of paper, no?"
+
+/obj/effect/mob_spawn/corpse/human/skeleton/museum_chef
+	name = "Dead Museum Cafeteria Chef"
+	mob_name = "Nameless Chef"
+	outfit = /datum/outfit/museum_chef
+
+/datum/outfit/museum_chef
+	name = "Dead Museum Cafeteria Chef"
+	uniform = /obj/item/clothing/under/color/green
+	suit = /obj/item/clothing/suit/toggle/chef
+	head = /obj/item/clothing/head/utility/chefhat
+	shoes = /obj/item/clothing/shoes/laceup
+	mask = /obj/item/clothing/mask/fakemoustache/italian
+
+/obj/machinery/vending/hotdog/museum
+	obj_flags = parent_type::obj_flags|NO_DECONSTRUCTION
+	onstation_override = TRUE
+
+#define CAFE_KEYCARD_TOILETS "museum_cafe_key_toilets"
+
+///Do not place these beyond the cafeteria shutters, or you might lock people out of reaching it.
+/obj/structure/toilet/museum
+
+/obj/structure/toilet/museum/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		SSqueuelinks.add_to_queue(src, CAFE_KEYCARD_TOILETS)
+
+/obj/item/keycard/cafeteria
+	name = "museum cafeteria keycard"
+	color = COLOR_OLIVE
+	puzzle_id = "museum_cafeteria"
+	desc = "The key to the cafeteria, as the name implies."
+
+/obj/item/keycard/cafeteria/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		SSqueuelinks.add_to_queue(src, CAFE_KEYCARD_TOILETS)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/item/keycard/cafeteria/LateInitialize()
+	. = ..()
+	if(SSqueuelinks.queues[CAFE_KEYCARD_TOILETS])
+		SSqueuelinks.pop_link(CAFE_KEYCARD_TOILETS)
+
+/obj/item/keycard/cafeteria/MatchedLinks(id, partners)
+	if(id != CAFE_KEYCARD_TOILETS)
+		return ..()
+	var/obj/structure/toilet/destination = pick(partners)
+	forceMove(destination)
+	destination.w_items += w_class
+	destination.contents += src
+
+#undef CAFE_KEYCARD_TOILETS

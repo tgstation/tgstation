@@ -133,8 +133,9 @@
 		user.adjust_nutrition(-5) // feel the burn
 
 		if(iscarbon(user))
+			var/gravity_modifier = user.has_gravity() > STANDARD_GRAVITY ? 2 : 1
 			// remember the real xp gain is from sleeping after working out
-			user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP)
+			user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP * gravity_modifier)
 			user.apply_status_effect(/datum/status_effect/exercised, EXERCISE_STATUS_DURATION)
 
 	end_workout()
@@ -161,8 +162,13 @@
 
 	if(!iscarbon(user) || isnull(user.mind))
 		return TRUE
+
+	var/affected_gravity = user.has_gravity()
+	if (!affected_gravity)
+		return TRUE // No weight? I could do this all day
+	var/gravity_modifier = affected_gravity > STANDARD_GRAVITY ? 0.75 : 1
 	// the amount of workouts you can do before you hit stamcrit
-	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)]
+	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)] * gravity_modifier
 	// total stamina drain of 1 workout calculated based on the workout length
 	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)

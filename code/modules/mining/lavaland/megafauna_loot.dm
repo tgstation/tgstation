@@ -422,13 +422,16 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user)
-	AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
-		job_bans = ROLE_PAI, \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = src,
+		role_name_text = "soulscythe soul",
+		chat_text_border_icon = src,
 	)
+	on_poll_concluded(user, chosen_one)
 
 /// Ghost poll has concluded and a candidate has been chosen.
 /obj/item/soulscythe/proc/on_poll_concluded(mob/living/master, mob/dead/observer/ghost)

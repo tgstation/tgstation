@@ -5,7 +5,7 @@
 	inhand_icon_state = null
 	greyscale_config = /datum/greyscale_config/wellworn_shirt
 	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt/worn
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	species_exception = list(/datum/species/golem)
 	flags_1 = IS_PLAYER_COLORABLE_1
 	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
@@ -20,6 +20,19 @@
 	else
 		washer.visible_message("[src] implodes due to repeated washing.")
 		qdel(src)
+
+/obj/item/clothing/suit/costume/wellworn_shirt/skub
+	name = "pro-skub shirt"
+	desc = "A worn out, curiously comfortable t-shirt proclaiming your pro-skub stance. Fuck those anti-skubbies."
+	icon_state = "wellworn_shirt_pro_skub"
+	greyscale_colors = "#FFFF4D"
+	greyscale_config = /datum/greyscale_config/wellworn_shirt_skub
+	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt_skub/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti
+	name = "anti-skub shirt"
+	desc = "A worn out, curiously comfortable t-shirt proclaiming your anti-skub stance. Fuck those pro-skubbies."
+	icon_state = "wellworn_shirt_anti_skub"
 
 /obj/item/clothing/suit/costume/wellworn_shirt/graphic
 	name = "well-worn graphic shirt"

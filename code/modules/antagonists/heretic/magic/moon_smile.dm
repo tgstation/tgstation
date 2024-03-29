@@ -28,7 +28,8 @@
 /datum/action/cooldown/spell/pointed/moon_smile/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	/// The duration of these effects are based on sanity, mainly for flavor but also to make it a weaker alpha strike
-	var/moon_smile_duration = (150 - cast_on.mob_mood.sanity) / 10
+	var/maximum_duration = 15 SECONDS
+	var/moon_smile_duration = ((SANITY_MAXIMUM - cast_on.mob_mood.sanity) / (SANITY_MAXIMUM - SANITY_INSANE)) * maximum_duration
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("The moon turns, its smile no longer set on you."))
 		to_chat(owner, span_warning("The moon does not smile upon them."))
@@ -40,7 +41,8 @@
 	cast_on.set_eye_blur_if_lower(moon_smile_duration + 7 SECONDS)
 
 	var/obj/item/organ/internal/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
-	ears?.adjustEarDamage(0, moon_smile_duration + 2 SECONDS)
+	//adjustEarDamage takes deafness duration parameter in one unit per two seconds, instead of the normal time, so we divide by two seconds
+	ears?.adjustEarDamage(0, (moon_smile_duration + 2 SECONDS) / (2 SECONDS))
 
 	cast_on.adjust_silence(moon_smile_duration + 5 SECONDS)
 	cast_on.AdjustKnockdown(2 SECONDS)

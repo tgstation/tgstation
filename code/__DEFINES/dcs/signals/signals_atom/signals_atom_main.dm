@@ -129,3 +129,8 @@
 #define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
 /// signal sent to puzzle pieces by activator
 #define COMSIG_PUZZLE_COMPLETED "puzzle_completed"
+
+/// From /datum/compomnent/cleaner/clean()
+#define COMSIG_ATOM_PRE_CLEAN "atom_pre_clean"
+	///cancel clean
+	#define COMSIG_ATOM_CANCEL_CLEAN (1<<0)

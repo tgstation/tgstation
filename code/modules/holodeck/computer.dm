@@ -116,9 +116,9 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	linked.linked = src
 	var/area/my_area = get_area(src)
 	if(my_area)
-		linked.power_usage = my_area.power_usage
+		linked.energy_usage = my_area.energy_usage
 	else
-		linked.power_usage = list(AREA_USAGE_LEN)
+		linked.energy_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
@@ -446,7 +446,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	reset_to_default()
 	if(linked)
 		linked.linked = null
-		linked.power_usage = list(AREA_USAGE_LEN)
+		linked.energy_usage = list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
