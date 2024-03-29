@@ -108,8 +108,8 @@
 	var/pod_style = STYLE_SYNDICATE
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
-	/// Do we drop the user in via a pod?
-	var/deliver_target = TRUE
+	/// Where do we land our pod?
+	var/turf/spawn_location
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -132,7 +132,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -163,19 +163,22 @@
 		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
 		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
-	if(deliver_target)
-		var/obj/structure/closet/supplypod/pod = setup_pod()
-		nukie.forceMove(pod)
-		new /obj/effect/pod_landingzone(get_turf(src), pod)
+	var/obj/structure/closet/supplypod/pod = setup_pod()
+	nukie.forceMove(pod)
+	new /obj/effect/pod_landingzone(spawn_location ? spawn_location : get_turf(src), pod)
 
 /obj/item/antag_spawner/nuke_ops/overwatch
 	name = "overwatch support beacon"
 	desc = "Assigns an Overwatch Intelligence Agent to your operation. Stationed at their own remote outpost, they can view station cameras, alarms, and even move the Infiltrator shuttle! \
 		Also, all members of your operation will recieve body cameras that they can view your progress from."
 	special_role_name = ROLE_OPERATIVE_OVERWATCH
-	deliver_target = FALSE
-	outfit = null //Outfit is given by the antag datum so we don't need to interfere here.
+	outfit = /datum/outfit/syndicate/support
+	use_subtypes = FALSE
 	antag_datum = /datum/antagonist/nukeop/support
+
+/obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
+	. = ..()
+	spawn_location = pick(GLOB.nukeop_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown

@@ -5,7 +5,7 @@
 	desc = "A note from Syndicate leadership regarding your new job. You should read this!"
 	default_raw_text = @{"
 Congratulations! You have been picked to be the Sole Survivor of an anti-Nanotrasen suicide mission!
-We're kidding of course, these types of missions tend to have abnormally high survival rates.
+We're kidding of course, these types of missions tend to have abnormally high survival rates. I guess that says a lot about who your team will be going up against.
 <br>
 You've been assigned to provide intelligence support to the ground-pounders carrying out the operation.
 Each operative has been equipped with a bodycam that can be accessed via your Overwatch Camera Console.
@@ -34,3 +34,13 @@ Happy hunting!
 	name = "Shuttle Controller"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
+
+/obj/item/clothing/glasses/overwatch
+	name = "overwatch glasses"
+	desc = "A set of incredibly advanced sunglasses, providing you with an array of different sensor scans and visual readouts for pretty much anything you look at. \
+		It's kind of overwhelming, actually. Wearing this for a few hours will probably give you a migrane."
+	icon_state = "sunhudmed"
+	flags_cover = GLASSESCOVERSEYES
+	flash_protect = FLASH_PROTECTION_WELDER
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
+	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)

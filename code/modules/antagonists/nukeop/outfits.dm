@@ -195,8 +195,9 @@
 /datum/outfit/syndicate/support
 	name = "Nuclear Operative Overwatch Agent"
 	back = /obj/item/storage/backpack/satchel
-	uniform = /obj/item/clothing/under/misc/syndicate_souvenir
-	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	glasses = /obj/item/clothing/glasses/overwatch
+	suit = /obj/item/clothing/suit/jacket/letterman_syndie
 	shoes = /obj/item/clothing/shoes/sandal
 	command_radio = TRUE
 	tc = 0
