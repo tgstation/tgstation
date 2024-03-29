@@ -24,16 +24,17 @@
 
 	///a list of all the reagents which alleviate the negative moodlet
 	var/list/stimulants = list(
-		/datum/reagent/medicine/stimulants,
-		/datum/reagent/drug/methamphetamine,
-		/datum/reagent/drug/bath_salts,
-		/datum/reagent/drug/aranesp,
-		/datum/reagent/drug/pumpup,
-		/datum/reagent/drug/blastoff,
 		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/monkey_energy,
 		/datum/reagent/consumable/tea,
 		/datum/reagent/consumable/volt_energy,
-		/datum/reagent/consumable/monkey_energy
+		/datum/reagent/drug/aranesp,
+		/datum/reagent/drug/bath_salts,
+		/datum/reagent/drug/blastoff,
+		/datum/reagent/drug/methamphetamine,
+		/datum/reagent/drug/pumpup,
+		/datum/reagent/medicine/stimulants,
+
 	)
 	///essentially our "sleep bank". sleeping charges it up and its drained while awake
 	var/five_more_minutes = 0
