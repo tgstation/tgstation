@@ -11,7 +11,7 @@
 	///Ref to charge console for seeing charge for this port, cyclical reference
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	///Power unit per second to charge by
-	var/recharge_power = 25
+	var/recharge_power = 25 KILO WATTS
 	///turf that will be checked when a mech wants to charge. directly one turf in the direction it is facing
 	var/turf/recharging_turf
 
