@@ -235,7 +235,7 @@
 	if(!prob(probability))
 		qdel(src)
 		return
-	victim.balloon_alert(victim, "Something wicked this way comes.")
+	victim.balloon_alert(victim, UNLINT("Something wicked this way comes.")) //its rare and creepy so uhh
 	return ..()
 
 /obj/effect/step_trigger/sound_effect/something_wicked/guaranteed
