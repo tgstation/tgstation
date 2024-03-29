@@ -448,10 +448,15 @@ const SnowflakeSleeper = (props) => {
 };
 type Data = {
   contained_reagents: Reagent[];
+  analyzed_reagents: KnownReagent[];
 };
 type Reagent = {
   name: string;
   volume: number;
+};
+type KnownReagent = {
+  name: string;
+  enabled: boolean;
 };
 const SnowflakeSyringe = (props) => {
   const { act, data } = useBackend<MainData>();
@@ -489,15 +494,15 @@ const SnowflakeSyringe = (props) => {
           }
         />
       </LabeledList.Item>
-      <LabeledList.Item label={'Reagent control'}>
-        {analyzed_reagents.map((reagent) => (
-          <LabeledList.Item key={`${reagent}`} label={`${reagent}`}>
-            <Button
-              content={'Toggle Synthesizing'}
+      <LabeledList.Item label={'Syntheizing'}>
+        {analyzed_reagents.map((reagent: KnownReagent) => (
+          <LabeledList.Item key={`${reagent.name}`} label={`${reagent.name}`}>
+            <Button.Checkbox
+              checked={reagent.enabled}
               onClick={() =>
                 act('equip_act', {
                   ref: ref,
-                  gear_action: `toggle_reagent_${reagent}`,
+                  gear_action: `toggle_reagent_${reagent.name}`,
                 })
               }
             />

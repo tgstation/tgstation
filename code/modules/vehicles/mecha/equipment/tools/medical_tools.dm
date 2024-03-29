@@ -280,7 +280,10 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_snowflake_data()
 	var/list/analyzed_reagents = list() // we need to make this list because .tsk wont map over an indexed array
 	for(var/i=1 to known_reagents.len)
-		analyzed_reagents.Add(known_reagents[i].name)
+		var/enabled = FALSE
+		if(known_reagents[i] in processed_reagents)
+			enabled = TRUE
+		analyzed_reagents += list((list("name" = known_reagents[i].name, "enabled" = enabled)))
 	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_SYRINGE,
 		"mode" = mode == FIRE_SYRINGE_MODE ? "Launch" : "Analyze",
