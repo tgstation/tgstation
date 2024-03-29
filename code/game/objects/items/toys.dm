@@ -146,9 +146,9 @@
 		icon_state = "[storage_state]"
 	update_appearance()
 
-/obj/item/toy/balloon/long/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/toy/balloon/long) && HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		var/obj/item/toy/balloon/long/hit_by = I
+/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/toy/balloon/long) && HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		var/obj/item/toy/balloon/long/hit_by = attacking_item
 		if(hit_by.current_color != current_color)
 			visible_message(span_notice("[user.name] starts contorting up a balloon animal!"),
 				blind_message = span_hear("You hear balloons being contorted."),
