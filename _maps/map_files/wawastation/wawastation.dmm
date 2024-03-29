@@ -12445,6 +12445,7 @@
 "ffT" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/no_decals/two,
+/obj/machinery/camera/autoname/motion/directional/east,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat/uppersouth)
 "fgi" = (
@@ -15817,6 +15818,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/camera/autoname/motion/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/uppernorth)
 "gwI" = (
@@ -15992,9 +15994,6 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
-"gAg" = (
-/turf/closed/wall/rock/porous,
-/area/station/science/genetics)
 "gAv" = (
 /obj/structure/table,
 /obj/item/storage/box/evidence,
@@ -18886,6 +18885,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/light/dim/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "hME" = (
@@ -34320,9 +34320,10 @@
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "ogb" = (
-/obj/effect/decal/cleanable/oil,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/turret_protected/aisat/uppernorth)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/command/gateway)
 "ogH" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -35217,6 +35218,7 @@
 /area/station/security)
 "oBt" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "oBE" = (
@@ -37428,11 +37430,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"ptO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/command/gateway)
 "ptP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44966,12 +44963,12 @@
 "sti" = (
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/airlock/science,
-/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "stj" = (
@@ -80527,7 +80524,7 @@ tHF
 tCE
 bAw
 pBV
-ptO
+ogb
 ttT
 jOr
 pui
@@ -98240,7 +98237,7 @@ uOo
 ilp
 lAc
 sOJ
-gAg
+uhc
 uhc
 uhc
 tVF
@@ -159379,7 +159376,7 @@ oID
 hhX
 hhX
 hhX
-ogb
+mQE
 hZO
 fGm
 udf
