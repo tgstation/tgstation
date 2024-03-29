@@ -26,10 +26,6 @@ map deltastation
 	votable
 endmap
 
-map wawastation
-	votable
-endmap
-
 map icebox
 	minplayers 25
 	votable
@@ -49,6 +45,11 @@ endmap
 map tramstation
 	minplayers 35
 	votable
+endmap
+
+map wawastation
+	votable
+	minplayers 40
 endmap
 
 # Debug-only maps.
