@@ -240,7 +240,7 @@
 
 /obj/item/toy/balloon/heart
 	name = "heart balloon"
-	desc = "A balloon in the shape of a hearth. How lovely"
+	desc = "A balloon in the shape of a heart. How lovely"
 	icon_state = "heart"
 	inhand_icon_state = "heart"
 	random_color = FALSE
