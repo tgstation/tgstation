@@ -60,13 +60,15 @@ type CellProps = Partial<{
   /** Collapses table cell to the smallest possible size,
   and stops any text inside from wrapping. */
   collapsing: boolean;
+  /** Additional columns for this cell to expand, assuming there is room. */
+  colSpan: number;
   /** Whether this is a header cell. */
   header: boolean;
 }> &
   BoxProps;
 
 export function TableCell(props: CellProps) {
-  const { className, collapsing, header, ...rest } = props;
+  const { className, collapsing, colSpan, header, ...rest } = props;
 
   return (
     <td
@@ -77,6 +79,7 @@ export function TableCell(props: CellProps) {
         className,
         computeBoxClassName(props),
       ])}
+      colSpan={colSpan}
       {...computeBoxProps(rest)}
     />
   );
