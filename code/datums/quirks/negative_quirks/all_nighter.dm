@@ -24,15 +24,19 @@
 
 	///a list of all the reagents which alleviate the negative moodlet
 	var/list/stimulants = list(
-		/datum/reagent/consumable/cafe_latte, // Coffees
+		/datum/reagent/consumable/cafe_latte, // Coffee
 		/datum/reagent/consumable/coffee,
 		/datum/reagent/consumable/hot_ice_coffee,
 		/datum/reagent/consumable/icecoffee,
 		/datum/reagent/consumable/pumpkin_latte,
 		/datum/reagent/consumable/soy_latte,
-		/datum/reagent/consumable/icetea, // Teas
+		/datum/reagent/consumable/ethanol/irishcoffee, // Alcoholic coffee
+		/datum/reagent/consumable/ethanol/kahlua,
+		/datum/reagent/consumable/ethanol/konococo_rumtini,
+		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/icetea, // Tea
 		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/t_letter
+		/datum/reagent/consumable/t_letter,
 		/datum/reagent/consumable/monkey_energy, // Energy drinks
 		/datum/reagent/consumable/volt_energy,
 		/datum/reagent/drug/aranesp, // Other stimulants
