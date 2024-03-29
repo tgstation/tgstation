@@ -390,7 +390,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
 /turf/open/space/basic,
 /area/station/engineering/atmos/space_catwalk)
 "aiR" = (
@@ -2554,7 +2554,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible{
 	dir = 9
 	},
 /turf/open/space/basic,
@@ -16516,7 +16516,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/brown/visible,
 /turf/open/space/basic,
 /area/station/engineering/atmos/space_catwalk)
 "gRG" = (
@@ -16993,7 +16993,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/brown/visible,
 /turf/open/space/basic,
 /area/station/engineering/atmos/space_catwalk)
 "gYY" = (
@@ -18144,7 +18144,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/brown/visible,
 /turf/open/space/basic,
 /area/station/engineering/atmos/space_catwalk)
 "hpW" = (
@@ -25331,7 +25331,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/brown/visible,
 /turf/open/space/basic,
 /area/station/engineering/atmos/space_catwalk)
 "jIG" = (
@@ -41244,7 +41244,7 @@
 /area/station/maintenance/central/lesser)
 "ovq" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible{
 	dir = 6
 	},
 /turf/open/space/basic,
@@ -47582,7 +47582,7 @@
 /area/station/service/chapel)
 "qkB" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
 /turf/open/space/basic,
 /area/space/nearstation)
 "qkF" = (
@@ -49903,7 +49903,7 @@
 /area/station/science/research)
 "qTh" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible{
 	dir = 5
 	},
 /turf/open/space/basic,
@@ -64851,7 +64851,7 @@
 /area/station/hallway/secondary/construction)
 "vgZ" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/space_catwalk)
 "vhe" = (
@@ -76784,7 +76784,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible{
 	dir = 10
 	},
 /turf/open/space/basic,
