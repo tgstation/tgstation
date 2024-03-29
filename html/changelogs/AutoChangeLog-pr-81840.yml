@@ -1,0 +1,6 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - qol: "Wholesale Revamp of Birdshots Engineering Department"
+  - bugfix: "Some Birdshot Amtospherics Concerns"
+  - bugfix: "Some Birdshot Engine Concerns"
