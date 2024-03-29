@@ -3389,6 +3389,7 @@
 	id = "bridgedeliver";
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "brQ" = (
@@ -7352,6 +7353,7 @@
 	name = "Bridge"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "dca" = (
@@ -37426,6 +37428,11 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"ptO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/command/gateway)
 "ptP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37831,6 +37838,7 @@
 "pBV" = (
 /obj/structure/closet/secure_closet/exile,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "pCd" = (
@@ -50466,6 +50474,7 @@
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "uCx" = (
@@ -80518,7 +80527,7 @@ tHF
 tCE
 bAw
 pBV
-abK
+ptO
 ttT
 jOr
 pui
@@ -166591,7 +166600,7 @@ fYe
 fYe
 vfJ
 raz
-uYH
+raz
 uYH
 uYH
 uYH
@@ -166849,7 +166858,7 @@ fYe
 vfJ
 vfJ
 raz
-uYH
+raz
 uYH
 uYH
 uYH
