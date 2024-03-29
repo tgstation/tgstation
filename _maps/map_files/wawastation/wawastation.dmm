@@ -14907,7 +14907,6 @@
 "gei" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot_red,
-/obj/machinery/firealarm/directional/north,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -15994,6 +15993,11 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
+"gAg" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/sign/departments/morgue/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "gAv" = (
 /obj/structure/table,
 /obj/item/storage/box/evidence,
@@ -25233,7 +25237,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -34320,10 +34323,10 @@
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "ogb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/command/gateway)
+/obj/structure/bodycontainer/morgue,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/morgue)
 "ogH" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -38799,6 +38802,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"pVA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/command/gateway)
 "pVC" = (
 /obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -50559,7 +50567,6 @@
 "uEb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
-/obj/structure/broken_flooring/singular/directional,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -80524,7 +80531,7 @@ tHF
 tCE
 bAw
 pBV
-ogb
+pVA
 ttT
 jOr
 pui
@@ -139672,7 +139679,7 @@ lNv
 iMq
 ygh
 wca
-qMn
+ogb
 oVC
 vYQ
 ezM
@@ -139925,7 +139932,7 @@ evQ
 evQ
 evQ
 fpi
-uXR
+gAg
 iMq
 saA
 cDV
@@ -140696,7 +140703,7 @@ evQ
 evQ
 evQ
 fpi
-asz
+uXR
 iMq
 gei
 bQl
