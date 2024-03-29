@@ -185,7 +185,7 @@
 						span_danger("You shock [attacked_mob] to no effect."),
 					)
 			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
-			user.cell.charge -= 500
+			user.cell.use(500 KILO JOULES, force = TRUE)
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
 			if (!COOLDOWN_FINISHED(src, crush_cooldown))
@@ -202,7 +202,7 @@
 				)
 			playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
 			attacked_mob.adjustBruteLoss(15)
-			user.cell.charge -= 300
+			user.cell.use(300 KILO JOULES, force = TRUE)
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
 
 /obj/item/borg/cyborghug/peacekeeper
