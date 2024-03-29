@@ -493,14 +493,14 @@
 	set instant = TRUE
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
-		user_mob.toggle_move_intent(usr)
+		user_mob.toggle_move_intent()
 
 /**
  * Toggle the move intent of the mob
  *
  * triggers an update the move intent hud as well
  */
-/mob/living/proc/toggle_move_intent(mob/user)
+/mob/living/proc/toggle_move_intent()
 	if(move_intent == MOVE_INTENT_RUN)
 		move_intent = MOVE_INTENT_WALK
 	else
@@ -510,7 +510,7 @@
 			selector.update_appearance()
 	update_move_intent_slowdown()
 
-	SEND_SIGNAL(user, COMSIG_MOVE_INTENT_TOGGLED)
+	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
 
 ///Moves a mob upwards in z level
 /mob/verb/up()

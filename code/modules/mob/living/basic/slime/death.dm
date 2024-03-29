@@ -1,9 +1,10 @@
-/mob/living/simple_animal/slime/death(gibbed)
+/mob/living/basic/slime/death(gibbed)
 	if(stat == DEAD)
 		return
 	if(!gibbed && life_stage == SLIME_LIFE_STAGE_ADULT)
-		var/mob/living/simple_animal/slime/new_slime = new(drop_location(), slime_type.type)
-		new_slime.rabid = TRUE
+		var/mob/living/basic/slime/new_slime = new(drop_location(), slime_type.type)
+
+		new_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 		new_slime.regenerate_icons()
 
 		//revives us as a baby
@@ -20,6 +21,6 @@
 
 	return ..(gibbed)
 
-/mob/living/simple_animal/slime/gib()
+/mob/living/basic/slime/gib()
 	death(TRUE)
 	qdel(src)

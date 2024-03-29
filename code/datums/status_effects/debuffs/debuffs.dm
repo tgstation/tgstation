@@ -878,6 +878,9 @@
 	icon_state = "antalert"
 
 /atom/movable/screen/alert/status_effect/ants/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return

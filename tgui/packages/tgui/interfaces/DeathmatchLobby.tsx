@@ -36,7 +36,6 @@ type Data = {
   self: string;
   host: BooleanLike;
   admin: BooleanLike;
-  global_chat: BooleanLike;
   playing: BooleanLike;
   loadouts: string[];
   maps: string[];
@@ -174,17 +173,6 @@ export const DeathmatchLobby = (props) => {
                 <br />
                 Current players: <b>{Object.keys(data.players).length}</b>
               </Box>
-              <Button.Checkbox
-                checked={data.global_chat}
-                disabled={!(data.host || data.admin)}
-                content="Heightened Hearing"
-                tooltip="Players can hear ghosts and hear through walls."
-                onClick={() =>
-                  act('host', {
-                    func: 'global_chat',
-                  })
-                }
-              />
               <Divider />
               <Box textAlign="center">{data.active_mods}</Box>
               {(!!data.admin || !!data.host) && (
