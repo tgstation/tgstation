@@ -664,7 +664,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/robot_debris/limb,
-/obj/structure/canister_frame/machine,
+/obj/structure/fluff/broken_canister_frame,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
@@ -1928,8 +1928,7 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	layer = 3.2
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{

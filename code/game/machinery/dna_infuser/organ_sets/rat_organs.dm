@@ -63,28 +63,24 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 
-/obj/item/organ/internal/heart/rat/on_insert(mob/living/carbon/receiver)
+/obj/item/organ/internal/heart/rat/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
-	if(!. || !ishuman(receiver))
+	if(!ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
-	if(!human_receiver.can_mutate())
-		return
-	human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
+	if(human_receiver.can_mutate())
+		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
 	//but 1.5 damage
-	if(human_receiver.physiology)
-		human_receiver.physiology.damage_resistance -= 50
+	human_receiver.physiology?.damage_resistance -= 50
 
-/obj/item/organ/internal/heart/rat/on_remove(mob/living/carbon/heartless, special)
+/obj/item/organ/internal/heart/rat/on_mob_remove(mob/living/carbon/heartless, special)
 	. = ..()
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	if(!human_heartless.can_mutate())
-		return
-	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	if(human_heartless.physiology)
-		human_heartless.physiology.damage_resistance += 50
+	if(human_heartless.can_mutate())
+		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+	human_heartless.physiology?.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat
@@ -113,11 +109,11 @@
 	if(message == "hi?")
 		speech_args[SPEECH_MESSAGE] = "Um... cheesed to meet you?"
 
-/obj/item/organ/internal/tongue/rat/on_insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+/obj/item/organ/internal/tongue/rat/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
-/obj/item/organ/internal/tongue/rat/on_remove(mob/living/carbon/tongue_owner)
+/obj/item/organ/internal/tongue/rat/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
 	UnregisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN)
 
@@ -133,7 +129,7 @@
 	. = ..()
 	if(prob(5))
 		owner.emote("squeaks")
-		playsound(owner, 'sound/effects/mousesqueek.ogg', 100)
+		playsound(owner, 'sound/creatures/mousesqueek.ogg', 100)
 
 #undef RAT_ORGAN_COLOR
 #undef RAT_SCLERA_COLOR

@@ -247,8 +247,10 @@
 	icon_state = "coatjanitor"
 	inhand_icon_state = null
 	allowed = list(
+		/obj/item/access_key,
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
+		/obj/item/key/janitor,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
@@ -383,7 +385,10 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/coroner/Initialize(mapload)
 	. = ..()
-	allowed += /obj/item/autopsy_scanner
+	allowed += list(
+		/obj/item/autopsy_scanner,
+		/obj/item/scythe,
+	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/coroner
 	desc = "A white winter coat hood."
@@ -515,6 +520,9 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/storage/bag/construction,
 		/obj/item/t_scanner,
+		/obj/item/construction/rld,
+		/obj/item/construction/rtd,
+		/obj/item/gun/ballistic/rifle/rebarxbow
 	)
 	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
@@ -586,6 +594,7 @@
 	allowed = list(
 		/obj/item/storage/bag/mail,
 		/obj/item/stamp,
+		/obj/item/universal_scanner,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/cargo

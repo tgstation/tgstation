@@ -1,12 +1,13 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, NoticeBox, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
-import { SecurityRecordsData } from './types';
-import { SecurityRecordView } from './RecordView';
-import { SecurityRecordTabs } from './RecordTabs';
 
-export const SecurityRecords = (props, context) => {
-  const { data } = useBackend<SecurityRecordsData>(context);
+import { SecurityRecordTabs } from './RecordTabs';
+import { SecurityRecordView } from './RecordView';
+import { SecurityRecordsData } from './types';
+
+export const SecurityRecords = (props) => {
+  const { data } = useBackend<SecurityRecordsData>();
   const { authenticated } = data;
 
   return (
@@ -19,8 +20,8 @@ export const SecurityRecords = (props, context) => {
 };
 
 /** Unauthorized view. User can only log in with ID */
-const RestrictedView = (props, context) => {
-  const { act } = useBackend<SecurityRecordsData>(context);
+const RestrictedView = (props) => {
+  const { act } = useBackend<SecurityRecordsData>();
 
   return (
     <Stack.Item grow>
@@ -48,8 +49,8 @@ const RestrictedView = (props, context) => {
 };
 
 /** Logged in view */
-const AuthView = (props, context) => {
-  const { act } = useBackend<SecurityRecordsData>(context);
+const AuthView = (props) => {
+  const { act } = useBackend<SecurityRecordsData>();
 
   return (
     <>
@@ -69,7 +70,8 @@ const AuthView = (props, context) => {
                 icon="lock"
                 color="good"
                 ml={2}
-                onClick={() => act('logout')}>
+                onClick={() => act('logout')}
+              >
                 Log Out
               </Button>
             </NoticeBox>

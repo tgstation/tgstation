@@ -192,6 +192,10 @@
 			admin_ckey = add_admin(admin_ckey, admin_key, use_db)
 			if(!admin_ckey)
 				return
+
+			if(!admin_key) // Prevents failures in logging admin rank changes.
+				admin_key = admin_ckey
+
 			change_admin_rank(admin_ckey, admin_key, use_db, null, legacy_only)
 		if("remove")
 			remove_admin(admin_ckey, admin_key, use_db, D)

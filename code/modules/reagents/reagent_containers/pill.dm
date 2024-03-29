@@ -47,13 +47,14 @@
 	return on_consumption(M, user)
 
 ///Runs the consumption code, can be overriden for special effects
-/obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
+/obj/item/reagent_containers/pill/proc/on_consumption(mob/consumer, mob/giver)
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), consumer, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
 	if(apply_type == INGEST)
-		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = M, feeder = user)
+		SEND_SIGNAL(consumer, COMSIG_LIVING_PILL_CONSUMED, src, giver)
+		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = consumer, feeder = giver)
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
+		reagents.trans_to(consumer, reagents.total_volume, transferred_by = giver, methods = apply_type)
 	qdel(src)
 	return TRUE
 
@@ -74,7 +75,7 @@
 		return
 
 	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
-	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
+	reagents.trans_to(target, reagents.total_volume, transferred_by = user)
 	qdel(src)
 
 /*
@@ -82,7 +83,7 @@
  */
 /obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
 	to_chat(victim, span_warning("You swallow something small. [source_item ? "Was that in [source_item]?" : ""]"))
-	reagents?.trans_to(victim, reagents.total_volume, transfered_by = user, methods = INGEST)
+	reagents?.trans_to(victim, reagents.total_volume, transferred_by = user, methods = INGEST)
 	qdel(src)
 	return discover_after
 

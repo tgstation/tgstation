@@ -12,6 +12,8 @@
 		return COMPONENT_INCOMPATIBLE
 	src.climbing_distance = climbing_distance
 
+	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+
 /datum/component/tree_climber/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE), PROC_REF(climb_tree))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))

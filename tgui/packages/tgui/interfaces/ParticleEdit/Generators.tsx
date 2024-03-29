@@ -1,9 +1,17 @@
 import { useBackend } from '../../backend';
-import { NumberInput, Dropdown, Stack } from '../../components';
-import { GeneratorProps, GeneratorTypes, GeneratorTypesNoVectors, ParticleUIData, P_DATA_GENERATOR, RandToNumber, RandTypes } from './data';
+import { Dropdown, NumberInput, Stack } from '../../components';
+import {
+  GeneratorProps,
+  GeneratorTypes,
+  GeneratorTypesNoVectors,
+  P_DATA_GENERATOR,
+  ParticleUIData,
+  RandToNumber,
+  RandTypes,
+} from './data';
 
-export const GeneratorListEntry = (props: GeneratorProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
+export const GeneratorListEntry = (props: GeneratorProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
   const { var_name, generator, allow_vectors } = props;
   // omits generators that are not allowed with certain vars
   const allowed_generators = allow_vectors
@@ -66,6 +74,7 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                 new_value: [type, value, B, RandToNumber[rand_type]],
               })
             }
+            maxValue={Infinity}
           />
         ) : (
           <>
@@ -84,6 +93,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -95,6 +106,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                   new_value: [type, [A[0], value, A[2]], B, rand_type],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -106,6 +119,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                   new_value: [type, [A[0], A[1], value], B, rand_type],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
           </>
         )}
@@ -123,6 +138,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                 new_value: [type, A, value, RandToNumber[rand_type]],
               })
             }
+            minValue={-Infinity}
+            maxValue={Infinity}
           />
         ) : (
           <>
@@ -141,6 +158,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -157,6 +176,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
             <NumberInput
               animated
@@ -173,6 +194,8 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
                   ],
                 })
               }
+              minValue={-Infinity}
+              maxValue={Infinity}
             />
           </>
         )}

@@ -26,7 +26,8 @@
 
 ///Updates the held items overlay(s) & HUD element.
 /mob/proc/update_held_items()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_HELD_ITEMS)
 
 ///Updates the mask overlay & HUD element.
 /mob/proc/update_worn_mask()

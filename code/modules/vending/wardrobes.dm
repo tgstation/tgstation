@@ -5,7 +5,6 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
-	input_display_header = "Returned Clothing"
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
@@ -24,6 +23,7 @@
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
+		/obj/item/clothing/suit/armor/vest/secjacket = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
 		/obj/item/clothing/suit/armor/vest = 3,
 		/obj/item/clothing/gloves/color/black = 3,
@@ -60,6 +60,7 @@
 		/obj/item/clothing/head/utility/surgerycap/green = 4,
 		/obj/item/clothing/head/beret/medical/paramedic = 4,
 		/obj/item/clothing/head/soft/paramedic = 4,
+		/obj/item/clothing/head/utility/head_mirror = 4,
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/mask/surgical = 4,
 		/obj/item/clothing/under/rank/medical/doctor = 4,
@@ -130,6 +131,7 @@
 		/obj/item/clothing/accessory/pocketprotector = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
+		/obj/item/clothing/suit/atmos_overalls = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		/obj/item/storage/backpack/satchel/eng = 3,
@@ -155,8 +157,9 @@
 		/obj/item/clothing/mask/bandana/striped/cargo = 3,
 		/obj/item/clothing/head/soft = 3,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
-		/obj/item/clothing/under/rank/cargo/tech/alt = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
+		/obj/item/clothing/under/rank/cargo/tech/alt = 3,
+		/obj/item/clothing/under/rank/cargo/tech/skirt/alt = 3,
 		/obj/item/clothing/suit/toggle/cargo_tech = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
 		/obj/item/clothing/gloves/fingerless = 3,
@@ -168,6 +171,9 @@
 		/obj/item/storage/backpack/messenger = 3,
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/radio/headset/headset_cargo = 3,
+		/obj/item/clothing/accessory/pocketprotector = 3,
+		/obj/item/clothing/head/utility/hardhat/orange = 3,
+		/obj/item/clothing/suit/hazardvest = 3,
 	)
 	premium = list(
 		/obj/item/clothing/head/costume/mailman = 1,
@@ -487,6 +493,7 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/storage/box/evidence = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -520,6 +527,8 @@
 		/obj/item/storage/backpack/cultpack = 1,
 		/obj/item/storage/fancy/candle_box = 2,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/clothing/suit/chaplainsuit/habit = 1,
+		/obj/item/clothing/head/chaplain/habit_veil = 1,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
@@ -632,6 +641,7 @@
 		/obj/item/clothing/under/rank/security/detective = 2,
 		/obj/item/clothing/under/rank/security/detective/skirt = 2,
 		/obj/item/clothing/suit/jacket/det_suit = 2,
+		/obj/item/clothing/suit/jacket/det_suit/brown = 2,
 		/obj/item/clothing/shoes/sneakers/brown = 2,
 		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/gloves/color/black = 2,

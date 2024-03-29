@@ -30,8 +30,8 @@
 		/obj/item/reagent_containers/cup/soda_cans,
 		/obj/item/reagent_containers/cup/glass/bottle/beer,
 		/obj/item/reagent_containers/cup/glass/bottle/ale,
-		/obj/item/reagent_containers/cup/glass/waterbottle
-		))
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+	))
 
 /obj/item/storage/cans/sixsoda
 	name = "soda bottle ring"

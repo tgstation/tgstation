@@ -12,15 +12,15 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("catwalk floor tile", /obj/item/stack/tile/catwalk_tile, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("stairs frame", /obj/structure/stairs_frame, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("white cane", /obj/item/cane/white, 3, time = 1 SECONDS, one_per_turf = FALSE, category = CAT_TOOLS), \
+	new/datum/stack_recipe("sharpened iron rod", /obj/item/ammo_casing/rebar, 1, time = 0.2 SECONDS, one_per_turf = FALSE, category = CAT_WEAPON_AMMO), \
 	))
-
 /obj/item/stack/rods
 	name = "iron rod"
 	desc = "Some rods. Can be used for building or something."
 	singular_name = "iron rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 9
 	throwforce = 10
@@ -55,6 +55,13 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/spear, /datum/crafting_recipe/stunprod, /datum/crafting_recipe/teleprod) // snatcher prod isn't here as a spoopy secret
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
 		target.attackby(src, user, click_parameters)
@@ -85,7 +92,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		)
 		use(2)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/rods/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
@@ -98,7 +105,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		)
 		use(1)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/rods/cyborg/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -123,7 +130,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	icon_state = "rods"
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_NORMAL
 	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma=SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	max_amount = 30

@@ -15,6 +15,7 @@
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
 	if(old_limb)
+		old_limb.drop_limb(special = TRUE)
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
 
@@ -172,11 +173,21 @@
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+		for(var/obj/item/organ/external/ext_organ in limb)
 			all_limb_flags |= ext_organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 
 	bodytype = all_limb_flags
+
+/// Makes sure that the owner's bodyshape flags match the flags of all of it's parts and organs
+/mob/living/carbon/proc/synchronize_bodyshapes()
+	var/all_limb_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/organ/external/ext_organ in limb)
+			all_limb_flags |= ext_organ.external_bodyshapes
+		all_limb_flags |= limb.bodyshape
+
+	bodyshape = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0
@@ -215,3 +226,5 @@
 			. = "#fff4e6"
 		if("orange")
 			. = "#ffc905"
+		if("green")
+			. = "#a8e61d"

@@ -1,15 +1,22 @@
 #define AQUARIUM_LAYER_STEP 0.01
 /// Aquarium content layer offsets
-#define AQUARIUM_MIN_OFFSET 0.01
+#define AQUARIUM_MIN_OFFSET 0.02
 #define AQUARIUM_MAX_OFFSET 1
+/// The layer of the glass overlay
+#define AQUARIUM_GLASS_LAYER 0.01
+/// The layer of the aquarium pane borders
+#define AQUARIUM_BORDERS_LAYER AQUARIUM_MAX_OFFSET + AQUARIUM_LAYER_STEP
+/// Layer for stuff rendered below the glass overlay
+#define AQUARIUM_BELOW_GLASS_LAYER 0.01
 
 /obj/structure/aquarium
 	name = "aquarium"
+	desc = "A vivivarium in which aquatic fuana and flora are usually kept and displayed."
 	density = TRUE
 	anchored = TRUE
 
 	icon = 'icons/obj/aquarium.dmi'
-	icon_state = "aquarium_base"
+	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3
 
@@ -18,11 +25,13 @@
 	var/min_fluid_temp = MIN_AQUARIUM_TEMP
 	var/max_fluid_temp = MAX_AQUARIUM_TEMP
 
+	///While the feed storage is not empty, this is the interval which the fish are fed.
+	var/feeding_interval = 3 MINUTES
+	///The last time fishes were fed by the acquarium itsef.
+	var/last_feeding
+
 	/// Can fish reproduce in this quarium.
 	var/allow_breeding = FALSE
-
-	var/glass_icon_state = "aquarium_glass"
-	var/broken_glass_icon_state = "aquarium_glass_broken"
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
@@ -46,6 +55,10 @@
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(track_if_fish))
 	AddElement(/datum/element/relay_attackers)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	create_reagents(6, SEALED_CONTAINER)
+	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
+	AddComponent(/datum/component/plumbing/aquarium)
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
 	SIGNAL_HANDLER
@@ -60,6 +73,22 @@
 /obj/structure/aquarium/Exited(atom/movable/gone, direction)
 	. = ..()
 	LAZYREMOVEASSOC(tracked_fish_by_type, gone.type, gone)
+
+/obj/structure/aquarium/proc/start_autofeed(datum/source, new_reagent, amount, reagtemp, data, no_react)
+	SIGNAL_HANDLER
+	START_PROCESSING(SSobj, src)
+	UnregisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT)
+
+/obj/structure/aquarium/process(seconds_per_tick)
+	if(!reagents.total_volume)
+		RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
+		return PROCESS_KILL
+	if(world.time < last_feeding + feeding_interval)
+		return
+	last_feeding = world.time
+	var/list/fishes = get_fishes()
+	for(var/obj/item/fish/fish as anything in fishes)
+		fish.feed(reagents)
 
 /// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
 /obj/structure/aquarium/proc/get_fishes(shuffle = FALSE, blacklist)
@@ -83,16 +112,18 @@
 	 */
 	//optional todo: hook up sending surface changed on aquarium changing layers
 	switch(layer_type)
+		if(AQUARIUM_LAYER_MODE_BEHIND_GLASS)
+			return layer + AQUARIUM_BELOW_GLASS_LAYER
 		if(AQUARIUM_LAYER_MODE_BOTTOM)
 			return layer + AQUARIUM_MIN_OFFSET
 		if(AQUARIUM_LAYER_MODE_TOP)
 			return layer + AQUARIUM_MAX_OFFSET
 		if(AQUARIUM_LAYER_MODE_AUTO)
-			var/chosen_layer = layer + AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
-			while((chosen_layer in used_layers) && (chosen_layer <= layer + AQUARIUM_MAX_OFFSET))
+			var/chosen_layer = AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
+			while((chosen_layer in used_layers) && (chosen_layer <= AQUARIUM_MAX_OFFSET))
 				chosen_layer += AQUARIUM_LAYER_STEP
 			used_layers += chosen_layer
-			return chosen_layer
+			return layer + chosen_layer
 
 /obj/structure/aquarium/proc/free_layer(value)
 	used_layers -= value
@@ -104,29 +135,55 @@
 	.[AQUARIUM_PROPERTIES_PY_MIN] = aquarium_zone_min_py
 	.[AQUARIUM_PROPERTIES_PY_MAX] = aquarium_zone_max_py
 
+/obj/structure/aquarium/update_icon()
+	. = ..()
+	///"aquarium_map" is used for mapping, so mappers can tell what it's.
+	icon_state = "aquarium_base"
+
 /obj/structure/aquarium/update_overlays()
 	. = ..()
 	if(panel_open)
 		. += "panel"
 
-	//Glass overlay goes on top of everything else.
-	var/mutable_appearance/glass_overlay = mutable_appearance(icon,broken ? broken_glass_icon_state : glass_icon_state,layer=AQUARIUM_MAX_OFFSET-1)
-	. += glass_overlay
+	///The glass overlay
+	var/suffix = fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"
+	if(broken)
+		suffix += "_broken"
+		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
+	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
+	. += mutable_appearance(icon, "aquarium_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
+	. += span_notice("<b>Alt-click</b> to [panel_open ? "close" : "open"] the control and feed panel.")
+	if(panel_open && reagents.total_volume)
+		. += span_notice("You can use a plunger to empty the feed storage.")
 
-/obj/structure/aquarium/AltClick(mob/user)
+/obj/structure/aquarium/AltClick(mob/living/user)
+	. = ..()
 	if(!user.can_perform_action(src))
-		return ..()
+		return
 	panel_open = !panel_open
+	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
+	if(panel_open)
+		reagents.flags |= TRANSPARENT|REFILLABLE
+	else
+		reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 	update_appearance()
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/aquarium/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	if(!panel_open)
+		return
+	to_chat(user, span_notice("You start plunging [name]."))
+	if(do_after(user, 3 SECONDS, target = src))
+		to_chat(user, span_notice("You finish plunging the [name]."))
+		reagents.expose(get_turf(src), TOUCH) //splash on the floor
+		reagents.clear_reagents()
 
 /obj/structure/aquarium/attackby(obj/item/item, mob/living/user, params)
 	if(broken)
@@ -148,7 +205,7 @@
 			update_appearance()
 			return TRUE
 
-	if(istype(item, /obj/item/fish_feed))
+	if(istype(item, /obj/item/fish_feed) && !panel_open)
 		if(!item.reagents.total_volume)
 			balloon_alert(user, "[item] is empty!")
 			return TRUE
@@ -220,6 +277,7 @@
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allow_breeding"] = allow_breeding
+	.["feeding_interval"] = feeding_interval / (1 MINUTES)
 	var/list/content_data = list()
 	for(var/atom/movable/fish in contents)
 		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
@@ -250,6 +308,9 @@
 				. = TRUE
 		if("allow_breeding")
 			allow_breeding = !allow_breeding
+			. = TRUE
+		if("feeding_interval")
+			feeding_interval = params["feeding_interval"] MINUTES
 			. = TRUE
 		if("remove")
 			var/atom/movable/inside = locate(params["ref"]) in contents
@@ -292,14 +353,19 @@
 #undef AQUARIUM_LAYER_STEP
 #undef AQUARIUM_MIN_OFFSET
 #undef AQUARIUM_MAX_OFFSET
-
+#undef AQUARIUM_GLASS_LAYER
+#undef AQUARIUM_BORDERS_LAYER
+#undef AQUARIUM_BELOW_GLASS_LAYER
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
 
-	new /obj/item/aquarium_prop/rocks(src)
+	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
 	new /obj/item/fish/goldfish(src)
 	new /obj/item/fish/angelfish(src)
 	new /obj/item/fish/guppy(src)
+
+	//They'll be alive for about 30 minutes with this amount.
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 3)

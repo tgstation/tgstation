@@ -11,14 +11,14 @@
 	can_atmos_pass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 	qdel(src)
 
 /obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
 	..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return TRUE
 
 	user.visible_message(span_warning("[user] disassembles [src]."),

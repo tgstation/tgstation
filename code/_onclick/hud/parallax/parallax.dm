@@ -273,6 +273,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
+	// Parallax layers are independant of hud, they care about client
+	// Not doing this will just create a bunch of hard deletes
+	hud = null
 
 	if(template)
 		return
@@ -357,7 +360,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	var/turf/posobj = get_turf(boss?.eye)
 	if(!posobj)
 		return
-	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
+	SetInvisibility(is_station_level(posobj.z) ? INVISIBILITY_NONE : INVISIBILITY_ABSTRACT, id=type)
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move

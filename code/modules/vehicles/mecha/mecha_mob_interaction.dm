@@ -35,13 +35,14 @@
 		return FALSE
 	return ..()
 
-///proc called when a new non-mmi/AI mob enters this mech
+///proc called when a new non-mmi mob enters this mech
 /obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/newoccupant)
 	if(!(newoccupant?.client))
 		return FALSE
 	if(ishuman(newoccupant) && !Adjacent(newoccupant))
 		return FALSE
 	add_occupant(newoccupant)
+	mecha_flags &= ~PANEL_OPEN //Close panel if open
 	newoccupant.forceMove(src)
 	newoccupant.update_mouse_pointer()
 	add_fingerprint(newoccupant)
@@ -92,6 +93,7 @@
 
 	brain_obj.set_mecha(src)
 	add_occupant(brain_mob)//Note this forcemoves the brain into the mech to allow relaymove
+	mecha_flags &= ~PANEL_OPEN //Close panel if open
 	mecha_flags |= SILICON_PILOT
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
@@ -120,7 +122,7 @@
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			if(!AI.linked_core) //if the victim AI has no core
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+				AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
@@ -158,12 +160,16 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
 	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+	RegisterSignal(M, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
 	. = ..()
 	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	UnregisterSignal(M, list(
+		COMSIG_MOB_CLICKON,
+		COMSIG_MOB_SAY,
+		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+	))
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)
 	if(M.client)

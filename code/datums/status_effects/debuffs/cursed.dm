@@ -5,6 +5,8 @@
 /datum/status_effect/grouped/cursed
 	id = "cursed"
 	alert_type = /atom/movable/screen/alert/status_effect/cursed
+	remove_on_fullheal = TRUE
+	heal_flag_necessary = HEAL_ADMIN
 	/// The max number of curses a target can incur with this status effect.
 	var/max_curse_count = DEFAULT_MAX_CURSE_COUNT
 	/// The amount of times we have been "applied" to the target.
@@ -32,7 +34,7 @@
 	return ..()
 
 /// Checks the number of curses we have and returns information back to the slot machine. `max_curse_amount` is set by the slot machine itself.
-/datum/status_effect/grouped/cursed/proc/check_curses(max_curse_amount)
+/datum/status_effect/grouped/cursed/proc/check_curses(mob/user, max_curse_amount)
 	SIGNAL_HANDLER
 	if(curse_count >= max_curse_amount)
 		return SLOT_MACHINE_USE_CANCEL
@@ -64,7 +66,7 @@
 				playsound(human_owner, SFX_SEAR, 50, TRUE)
 				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
 				branded_hand = affecting
-				affecting.force_wound_upwards(/datum/wound/burn/severe/cursed_brand, wound_source = "curse of the slot machine")
+				affecting.force_wound_upwards(/datum/wound/burn/flesh/severe/cursed_brand, wound_source = "curse of the slot machine")
 
 			messages += span_boldwarning("Your hand burns, and you quickly let go of the lever! You feel a little sick as the nerves deaden in your hand...")
 			messages += span_boldwarning("Some smoke appears to be coming out of your hand now, but it's not too bad...")
@@ -100,7 +102,7 @@
 
 			to_chat(owner, span_userdanger("Why couldn't I get one more try?!"))
 			owner.investigate_log("has been gibbed by the cursed status effect after accumulating [curse_count] curses.", INVESTIGATE_DEATHS)
-			owner.gib()
+			owner.gib(DROP_ALL_REMAINS)
 			qdel(src)
 			return
 
@@ -114,7 +116,7 @@
 	SIGNAL_HANDLER
 
 	if(!isnull(branded_hand))
-		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/severe/cursed_brand)
+		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/flesh/severe/cursed_brand)
 		brand?.remove_wound()
 
 	owner.visible_message(

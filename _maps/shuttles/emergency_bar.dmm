@@ -239,7 +239,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aX" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
+/mob/living/basic/drone/snowflake/bardrone,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)

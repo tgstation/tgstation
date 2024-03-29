@@ -15,9 +15,20 @@
 	///The player's written notes, that they can send to chat at any time.
 	var/written_notes
 
+	///The ckey of the person playing as this Mafia role, CAN BE NULL IN FAVOR OF player_pda.
 	var/player_key
+	///The PDA of the person playing as this Mafia role, CAN BE NULL IN FAVOR OF player_key.
+	var/obj/item/modular_computer/player_pda
+
+	///List of all messages this role got throughout the game.
+	var/list/role_messages = list()
+
+
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
+
+	///The Mafia innate action panel that allows players to view the game's state.
+	var/datum/action/innate/mafia_panel/mafia_panel
 
 	///how many votes submitted when you vote. used in voting and deciding victory.
 	var/vote_power = 1
@@ -41,15 +52,64 @@
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
+	mafia_panel = new(null, game)
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions + /datum/mafia_ability/voting)
 		role_unique_actions += new abilities(game, src)
 		role_unique_actions -= abilities
 
-/datum/mafia_role/Destroy(force, ...)
+/datum/mafia_role/Destroy(force)
+	UnregisterSignal(body, COMSIG_MOB_SAY)
 	QDEL_NULL(mafia_alert)
-	QDEL_NULL(body)
+	QDEL_NULL(mafia_panel)
 	QDEL_LIST(role_unique_actions)
+	//we null these instead of qdel because Mafia controller's mapdeleter deletes it all.
+	assigned_landmark = null
+	body = null
+	role_messages.Cut()
 	return ..()
+
+/datum/mafia_role/proc/register_body(mob/living/carbon/human/new_body)
+	if(body)
+		UnregisterSignal(new_body, COMSIG_MOB_SAY)
+		mafia_panel.Remove(body)
+	body = new_body
+	RegisterSignal(new_body, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	mafia_panel.Grant(new_body)
+
+/**
+ * send_message_to_player
+ *
+ * Sends a message to a player, checking if they are playing through a PDA or not.
+ * Args:
+ * * message - The message to send to the person
+ * * balloon_alert - Whether it should be as a balloon alert, only if it's to a non-PDA user.
+ */
+/datum/mafia_role/proc/send_message_to_player(message, balloon_alert = FALSE)
+	if(player_pda)
+		role_messages += message
+		return
+	if(balloon_alert)
+		body.balloon_alert(body, message)
+		return
+	to_chat(body, message)
+
+/**
+ * handle_speech
+ *
+ * Handles Mafia roles talking in chat.
+ * First it will go through their abilities for Ability-specific speech,
+ * if none affects it, we will go to day chat.
+ */
+/datum/mafia_role/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	for(var/datum/mafia_ability/abilities as anything in role_unique_actions)
+		if(abilities.handle_speech(source, speech_args))
+			return
+	var/datum/mafia_controller/mafia_game = GLOB.mafia_game
+	if(!mafia_game || mafia_game.phase == MAFIA_PHASE_NIGHT)
+		return
+	var/message = "[source]: [html_decode(speech_args[SPEECH_MESSAGE])]"
+	mafia_game.send_message(message, log_only = TRUE)
 
 /**
  * Puts the player in their body and keeps track of their previous one to put them back in later.
@@ -69,14 +129,15 @@
  *
  * Does not count as visiting, see visit proc.
  */
-/datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch=FALSE)
+/datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch = FALSE)
+	if(game_status == MAFIA_DEAD)
+		return FALSE
 	if(attacker && (attacker.role_flags & ROLE_ROLEBLOCKED))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MAFIA_ON_KILL, game, attacker, lynch) & MAFIA_PREVENT_KILL)
 		return FALSE
-	if(game_status != MAFIA_DEAD)
-		game_status = MAFIA_DEAD
-		body.death()
+	game_status = MAFIA_DEAD
+	body.death()
 	if(lynch)
 		reveal_role(game, verbose = TRUE)
 	game.living_roles -= src

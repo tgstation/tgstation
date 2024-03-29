@@ -6,7 +6,6 @@
 	use_power = ACTIVE_POWER_USE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
 	armor_type = /datum/armor/machinery_camera
@@ -30,7 +29,6 @@
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
 	var/in_use_lights = 0
-
 	// Upgrades bitflag
 	var/upgrades = 0
 
@@ -104,6 +102,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		update_appearance()
 
 	alarm_manager = new(src)
+	find_and_hang_on_wall(directional = TRUE, \
+		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
+
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
@@ -113,6 +115,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
 		proximity_monitor = new(src, 1)
+		RegisterSignal(proximity_monitor, COMSIG_QDELETING, PROC_REF(proximity_deleted))
+
+/obj/machinery/camera/proc/proximity_deleted()
+	SIGNAL_HANDLER
+	proximity_monitor = null
 
 /obj/machinery/camera/proc/set_area_motion(area/A)
 	area_motion = A
@@ -155,7 +162,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		if(!status && powered())
 			. += span_info("It can reactivated with <b>wirecutters</b>.")
 
-/obj/machinery/camera/emp_act(severity)
+/obj/machinery/camera/emp_act(severity, reset_time = 90 SECONDS)
 	. = ..()
 	if(!status)
 		return
@@ -168,13 +175,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), 90 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client?.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, span_warning("The screen bursts into static!"))
+
+/obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	//lasts twice as much so we don't have to constantly shoot cameras just to be S T E A L T H Y
+	emp_act(EMP_LIGHT, reset_time = disrupt_duration * 2)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))
@@ -188,7 +201,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
-	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
@@ -334,7 +347,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/pda))
+	if(istype(attacking_item, /obj/item/modular_computer))
 		var/itemname = ""
 		var/info = ""
 
@@ -431,21 +444,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
-/obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
-			if(!assembly)
-				assembly = new()
-			assembly.forceMove(drop_location())
-			assembly.state = 1
-			assembly.setDir(dir)
-			assembly_ref = null
-		else
-			var/obj/item/I = new /obj/item/wallframe/camera (loc)
-			I.update_integrity(I.max_integrity * 0.5)
-			new /obj/item/stack/cable_coil(loc, 2)
-	qdel(src)
+/obj/machinery/camera/on_deconstruction(disassembled)
+	if(disassembled)
+		var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+		if(!assembly)
+			assembly = new()
+		assembly.forceMove(drop_location())
+		assembly.state = 1
+		assembly.setDir(dir)
+		assembly_ref = null
+		return
+
+	var/obj/item/I = new /obj/item/wallframe/camera (loc)
+	I.update_integrity(I.max_integrity * 0.5)
+	new /obj/item/stack/cable_coil(loc, 2)
 
 /obj/machinery/camera/update_icon_state() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
 	var/xray_module

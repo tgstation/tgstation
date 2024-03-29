@@ -31,12 +31,14 @@
 	src.use_alpha = use_alpha
 	src.use_anchor = use_anchor
 
-
 ///called when a tile has been covered or uncovered
 /datum/element/undertile/proc/hide(atom/movable/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 
-	source.invisibility = underfloor_accessibility < UNDERFLOOR_VISIBLE ? invisibility_level : 0
+	if(underfloor_accessibility < UNDERFLOOR_VISIBLE)
+		source.SetInvisibility(invisibility_level, id=type)
+	else
+		source.RemoveInvisibility(type)
 
 	var/turf/T = get_turf(source)
 
@@ -73,11 +75,10 @@
 		if(use_anchor)
 			source.set_anchored(FALSE)
 
-
 /datum/element/undertile/Detach(atom/movable/source, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()
 
 	hide(source, UNDERFLOOR_INTERACTABLE)
-
+	source.RemoveInvisibility(type)
 
 #undef ALPHA_UNDERTILE

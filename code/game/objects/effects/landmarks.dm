@@ -36,7 +36,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/proc/after_round_start()
 	// We'd like to keep these around for unit tests, so we can check that they exist.
-#ifndef UNIT_TESTS
+#if !defined(UNIT_TESTS) && !defined(MAP_TEST)
 	if(delete_after_roundstart)
 		qdel(src)
 #endif
@@ -76,6 +76,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/cargo_technician
 	name = "Cargo Technician"
 	icon_state = "Cargo Technician"
+
+/obj/effect/landmark/start/bitrunner
+	name = "Bitrunner"
+	icon_state = "Bitrunner"
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"

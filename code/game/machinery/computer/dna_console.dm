@@ -235,10 +235,13 @@
 	// Set the default tgui state
 	set_default_state()
 
+/obj/machinery/computer/scan_consolenew/LateInitialize()
+	. = ..()
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -397,7 +400,6 @@
 	. = TRUE
 
 	add_fingerprint(usr)
-	usr.set_machine(src)
 
 	switch(action)
 		// Connect this DNA Console to a nearby DNA Scanner
@@ -546,6 +548,7 @@
 						var/truegenes = GET_SEQUENCE(path)
 						newgene = truegenes[genepos]
 						joker_ready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+						tgui_view_state["jokerActive"] = FALSE
 					else
 						var/current_letter = gene_letters.Find(sequence[genepos])
 						newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]

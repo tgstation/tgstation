@@ -76,6 +76,7 @@ do { \
 
 /obj/item/clothing/glasses/chameleon
 	name = "Optical Meson Scanner"
+	flags_cover = GLASSESCOVERSEYES
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	inhand_icon_state = "meson"
@@ -107,6 +108,7 @@ do { \
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/gloves)
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/chameleon/broken
 

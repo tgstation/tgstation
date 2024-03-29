@@ -74,25 +74,23 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
+	var/quick_carry_trait = TRAIT_QUICK_CARRY
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
 	removable = FALSE
 	complexity = 0
-
-/obj/item/mod/module/quick_carry/on_suit_activation()
-	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-
-/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	quick_carry_trait = TRAIT_QUICKER_CARRY
 
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
@@ -186,7 +184,7 @@
 	organ = null
 	return ..()
 
-/obj/projectile/organ/on_hit(atom/target)
+/obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!ishuman(target))
 		organ.forceMove(drop_location())

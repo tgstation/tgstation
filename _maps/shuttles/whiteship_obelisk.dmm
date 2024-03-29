@@ -122,11 +122,8 @@
 /area/shuttle/abandoned/engine)
 "gw" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/mob/living/basic/construct/proteon/hostile,
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -134,7 +131,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
 "hg" = (
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/white,
@@ -166,7 +163,7 @@
 /area/shuttle/abandoned/engine)
 "ji" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -213,9 +210,7 @@
 /area/shuttle/abandoned/engine)
 "mQ" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune2"
-	},
+/obj/effect/decal/cleanable/crayon/rune2,
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/machinery/button/door/directional/west{
 	name = "Bolt Control";
@@ -252,10 +247,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "ne" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -308,10 +300,7 @@
 /area/shuttle/abandoned/bar)
 "oY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/effect/turf_decal/tile/dark_blue/half,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
@@ -438,11 +427,8 @@
 /area/shuttle/abandoned/crew)
 "yo" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/mob/living/basic/construct/proteon/hostile,
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -496,10 +482,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "Cv" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/obj/effect/decal/cleanable/crayon/rune4,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned)
 "CX" = (
@@ -590,7 +573,7 @@
 /area/shuttle/abandoned)
 "Hd" = (
 /obj/structure/cable,
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -598,11 +581,8 @@
 /area/shuttle/abandoned)
 "HU" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/juggernaut/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/mob/living/basic/construct/juggernaut/hostile,
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -616,7 +596,7 @@
 /area/shuttle/abandoned)
 "IH" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -625,9 +605,7 @@
 /area/shuttle/abandoned/crew)
 "JN" = (
 /obj/structure/cable,
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -704,7 +682,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "Ow" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "Ph" = (
@@ -741,7 +719,7 @@
 /area/shuttle/abandoned/engine)
 "Qo" = (
 /obj/structure/table,
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire{
@@ -781,11 +759,8 @@
 /area/shuttle/abandoned/medbay)
 "SE" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune4";
-	paint_colour = "#DC143C"
-	},
+/mob/living/basic/construct/proteon/hostile,
+/obj/effect/decal/cleanable/crayon/rune4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},

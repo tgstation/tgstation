@@ -1,27 +1,17 @@
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
+import { Button, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type Data = {
   amount: number;
   purity: number;
-  beakerCurrentVolume: number;
-  beakerMaxVolume: number;
-  isBeakerLoaded: BooleanLike;
-  beakerContents: { name: string; volume: number }[];
+  beaker: Beaker;
 };
 
-export const ChemDebugSynthesizer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const {
-    amount,
-    purity,
-    beakerCurrentVolume,
-    beakerMaxVolume,
-    isBeakerLoaded,
-    beakerContents = [],
-  } = data;
+export const ChemDebugSynthesizer = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { amount, purity, beaker } = data;
 
   return (
     <Window width={390} height={330}>
@@ -29,18 +19,13 @@ export const ChemDebugSynthesizer = (props, context) => {
         <Section
           title="Recipient"
           buttons={
-            isBeakerLoaded ? (
+            beaker ? (
               <>
-                <Button
-                  icon="eject"
-                  content="Eject"
-                  onClick={() => act('ejectBeaker')}
-                />
                 <NumberInput
                   value={amount}
                   unit="u"
                   minValue={1}
-                  maxValue={beakerMaxVolume}
+                  maxValue={beaker.maxVolume}
                   step={1}
                   stepPixelSize={2}
                   onChange={(e, value) =>
@@ -75,28 +60,9 @@ export const ChemDebugSynthesizer = (props, context) => {
                 onClick={() => act('makecup')}
               />
             )
-          }>
-          {isBeakerLoaded ? (
-            <>
-              <Box>
-                <AnimatedNumber value={beakerCurrentVolume} />
-                {' / ' + beakerMaxVolume + ' u'}
-              </Box>
-              {beakerContents.length > 0 ? (
-                <LabeledList>
-                  {beakerContents.map((chem) => (
-                    <LabeledList.Item key={chem.name} label={chem.name}>
-                      {chem.volume} u
-                    </LabeledList.Item>
-                  ))}
-                </LabeledList>
-              ) : (
-                <Box color="bad">Recipient Empty</Box>
-              )}
-            </>
-          ) : (
-            <Box color="average">No Recipient</Box>
-          )}
+          }
+        >
+          <BeakerDisplay beaker={beaker} showpH />
         </Section>
       </Window.Content>
     </Window>

@@ -29,6 +29,13 @@
 	soundloop = new(src, fermenting)
 	soundloop.volume = sound_volume
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_ADDTRAIT(TRAIT_HAS_LABEL),
+		SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_REMOVETRAIT(TRAIT_HAS_LABEL),
+	), PROC_REF(update_overlay_on_sig))
+
 /obj/structure/fermenting_barrel/Destroy()
 	QDEL_NULL(soundloop)
 	return ..()
@@ -82,9 +89,13 @@
 	icon_state = open ? "barrel_open" : "barrel"
 	return ..()
 
+/obj/structure/fermenting_barrel/proc/update_overlay_on_sig()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)
+
 /obj/structure/fermenting_barrel/update_overlays()
 	. = ..()
-	if(src.renamedByPlayer || HAS_TRAIT(src, TRAIT_HAS_LABEL))
+	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED) || HAS_TRAIT(src, TRAIT_HAS_LABEL))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_label")
 
 /// Adds the fruit to the barrel to queue the fermentation

@@ -49,7 +49,8 @@
 	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
 	var/obj/item/book/manual/to_spawn = new newtype(loc)
-	to_spawn.flags_1 |= (HOLOGRAM_1 | NODECONSTRUCT_1)
+	to_spawn.flags_1 |= HOLOGRAM_1
+	to_spawn.obj_flags |= NO_DECONSTRUCTION
 	return to_spawn
 
 /obj/effect/holodeck_effect/mobspawner
@@ -63,8 +64,7 @@
 	our_mob.flags_1 |= HOLOGRAM_1
 
 	// these vars are not really standardized but all would theoretically create stuff on death
-	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
-		our_mob.vars[v] = null
+	our_mob.add_traits(list(TRAIT_PERMANENTLY_MORTAL, TRAIT_NO_BLOOD_OVERLAY, TRAIT_NOBLOOD, TRAIT_NOHUNGER), INNATE_TRAIT)
 	RegisterSignal(our_mob, COMSIG_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
@@ -93,15 +93,22 @@
 		/mob/living/basic/pet/dog/pug,
 	)
 	mobtype += pick(
-		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/cat/kitten,
+		/mob/living/basic/pet/cat,
+		/mob/living/basic/pet/cat/kitten,
 	)
 
 /obj/effect/holodeck_effect/mobspawner/bee
 	mobtype = /mob/living/basic/bee/toxin
 
 /obj/effect/holodeck_effect/mobspawner/monkey
-	mobtype = /mob/living/simple_animal/holodeck_monkey
+	mobtype = /mob/living/carbon/human/species/monkey
+
+/obj/effect/holodeck_effect/mobspawner/monkey/activate(obj/machinery/computer/holodeck/computer)
+	var/mob/living/carbon/human/monkey = ..()
+	. = list() + monkey
+
+	for(var/atom/atom as anything in monkey.contents + monkey.organs)
+		. += atom
 
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/basic/pet/penguin/emperor/neuter

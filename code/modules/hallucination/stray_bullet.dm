@@ -34,6 +34,7 @@
 	damage = 0
 	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
+	do_not_log = TRUE
 	/// Our parent hallucination that's created us
 	var/datum/hallucination/parent
 	/// The image that represents our projectile itself

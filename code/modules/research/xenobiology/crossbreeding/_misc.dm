@@ -175,6 +175,12 @@ Slimecrossing Items
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "capturedevice"
+	///traits we give and remove from the mob on exit and entry
+	var/static/list/traits_on_transfer = list(
+		TRAIT_IMMOBILIZED,
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_AI_PAUSED,
+	)
 
 /obj/item/capturedevice/attack(mob/living/pokemon, mob/user)
 	if(length(contents))
@@ -209,9 +215,13 @@ Slimecrossing Items
 	else
 		to_chat(user, span_warning("The device is empty..."))
 
-/obj/item/capturedevice/proc/store(mob/living/M)
-	M.forceMove(src)
+/obj/item/capturedevice/proc/store(mob/living/pokemon)
+	pokemon.forceMove(src)
+	pokemon.add_traits(traits_on_transfer, ABSTRACT_ITEM_TRAIT)
+	pokemon.cancel_camera()
 
 /obj/item/capturedevice/proc/release()
-	for(var/atom/movable/M in contents)
-		M.forceMove(get_turf(loc))
+	for(var/mob/living/pokemon in contents)
+		pokemon.forceMove(get_turf(loc))
+		pokemon.remove_traits(traits_on_transfer, ABSTRACT_ITEM_TRAIT)
+		pokemon.cancel_camera()

@@ -108,7 +108,7 @@
 	update_appearance()
 	SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/on_deconstruction()
+/obj/machinery/computer/pandemic/on_deconstruction(disassembled)
 	eject_beaker()
 	. = ..()
 

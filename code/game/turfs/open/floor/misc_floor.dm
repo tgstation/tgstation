@@ -157,7 +157,7 @@
 
 /turf/open/floor/noslip/tram/Initialize(mapload)
 	. = ..()
-	var/current_holiday_color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	var/current_holiday_color = request_station_colors(src, PATTERN_VERTICAL_STRIPE) || request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
 	if(current_holiday_color)
 		color = current_holiday_color
 	else

@@ -12,6 +12,8 @@
 /// from /obj/item/toy/crayon/spraycan/afterattack: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
 	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
+/// from /obj/obj_reskin: (mob/user, skin)
+#define COMSIG_OBJ_RESKIN "obj_reskin"
 
 // /obj/machinery signals
 
@@ -33,6 +35,8 @@
 #define COMSIG_MACHINERY_STOP_PROCESSING_AIR "stop_processing_air"
 ///from /obj/machinery/RefreshParts: ()
 #define COMSIG_MACHINERY_REFRESH_PARTS "machine_refresh_parts"
+///from /obj/machinery/default_change_direction_wrench: (mob/user, obj/item/wrench)
+#define COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH "machinery_default_rotate_wrench"
 
 ///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
 #define COMSIG_TRY_USE_MACHINE "try_use_machine"
@@ -50,15 +54,17 @@
 // /obj/machinery/computer/teleporter
 /// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
 #define COMSIG_TELEPORTER_NEW_TARGET "teleporter_new_target"
+/// from /obj/item/beacon/proc/turn_off()
+#define COMSIG_BEACON_DISABLED "beacon_disabled"
 
 // /obj/machinery/power/supermatter_crystal
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
 
 
-// /obj/machinery/atmospherics/components/unary/cryo_cell signals
+// /obj/machinery/cryo_cell signals
 
-/// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
+/// from /obj/machinery/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
 /// from /obj/proc/unfreeze()
@@ -124,7 +130,7 @@
 #define COMSIG_ITEM_ON_JUICE "on_juice"
 ///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params) when an object is used as compost: (mob/user)
 #define COMSIG_ITEM_ON_COMPOSTED "on_composted"
-///Called when an item is dried by a drying rack:
+///Called when an item is dried by a drying rack
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
@@ -132,6 +138,10 @@
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
 #define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
+///from base of datum/storage/handle_enter(): (datum/storage/storage)
+#define COMSIG_ITEM_STORED "item_stored"
+///from base of datum/storage/handle_exit(): (datum/storage/storage)
+#define COMSIG_ITEM_UNSTORED "item_unstored"
 
 ///from base of obj/item/apply_fantasy_bonuses(): (bonus)
 #define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"
@@ -147,6 +157,9 @@
 #define COMSIG_ITEM_UI_ACTION_SLOT_CHECKED "item_action_slot_checked"
 	/// Return to prevent the default behavior (attack_selfing) from ocurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
+
+/// Sent from /obj/item/attack_atom(): (atom/attacked_atom, mob/living/user)
+#define COMSIG_ITEM_POST_ATTACK_ATOM "item_post_attack_atom"
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
@@ -246,6 +259,8 @@
 
 /// Called on component/uplink/OnAttackBy(..)
 #define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+///Called when a holoparasite/guardiancreator is used.
+#define COMSIG_TRAITOR_ITEM_USED(type) "traitor_item_used_[type]"
 
 // /obj/item/clothing signals
 
@@ -296,10 +311,14 @@
 
 // /obj/item/radio signals
 
+///called from base of /obj/item/proc/talk_into(): (atom/movable/speaker, message, channel, list/spans, language, list/message_mods)
+#define COMSIG_ITEM_TALK_INTO "item_talk_into"
 ///called from base of /obj/item/radio/proc/set_frequency(): (list/args)
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
-///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
+///called from base of /obj/item/radio/talk_into(): (atom/movable/M, message, channel)
 #define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
+///called from base of /obj/item/radio/proc/on_receive_messgae(): (list/data)
+#define COMSIG_RADIO_RECEIVE_MESSAGE "radio_receive_message"
 
 // /obj/item/pen signals
 
@@ -353,9 +372,9 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, angle, hit_limb)
+///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, angle, hit_limb, blocked)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, angle, hit_limb)
+///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, angle, hit_limb, blocked)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"
@@ -379,10 +398,17 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_FIRE_CASING "fire_casing"
 
+///from the base of /obj/item/ammo_casing/ready_proj() : (atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+#define COMSIG_CASING_READY_PROJECTILE "casing_ready_projectile"
+
 ///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
+
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
 
 // /obj/vehicle/sealed/car/vim signals
 
@@ -392,6 +418,11 @@
 #define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
 ///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
 #define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
+
+///from /datum/computer_file/program/messenger/proc/receive_message
+#define COMSIG_COMPUTER_RECIEVED_MESSAGE "computer_recieved_message"
+///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
+#define COMSIG_VIRTUAL_PET_LEVEL_UP "virtual_pet_level_up"
 
 // /obj/vehicle/sealed/mecha signals
 
@@ -429,7 +460,7 @@
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
+#define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 	/// Flag for when /afterattack potentially acts on an item.
@@ -440,9 +471,22 @@
 #define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
+///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
+#define COMSIG_ITEM_EMBEDDED "item_embedded"
+///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
+#define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
+/// from base of obj/item/failedEmbed()
+#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
+
+/// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
+#define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
+	#define COMPONENT_BLOCK_ITEM_DISARM_ATTACK (1<<0)
 
 ///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
+
+///from /datum/computer_file/program/nt_pay/_pay(), sent to every physical card of a bank account: (computer, money_received)
+#define COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED "id_card_ntpay_money_received"
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
@@ -474,3 +518,11 @@
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
 
+/// from /datum/component/dart_insert/add_to_dart() : (obj/item/ammo_casing, mob/user)
+#define COMSIG_DART_INSERT_ADDED "dart_insert_added"
+
+/// from /datum/component/dart_insert/remove_from_dart() : (obj/ammo_casing/dart, mob/user)
+#define COMSIG_DART_INSERT_REMOVED "dart_insert_removed"
+
+/// from /datum/component/dart_insert/on_reskin()
+#define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"

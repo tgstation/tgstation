@@ -34,6 +34,7 @@
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/spray,
 		/obj/item/lighter,
+		/obj/item/storage/box/bandages,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
@@ -258,7 +259,7 @@
 	icon_state = "medkit_advanced"
 	inhand_icon_state = "medkit-rad"
 	custom_premium_price = PAYCHECK_COMMAND * 6
-	damagetype_healed = "all"
+	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
@@ -270,12 +271,30 @@
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/medkit/tactical_lite
+	name = "combat first aid kit"
+	icon_state = "medkit_tactical"
+	inhand_icon_state = "medkit-tactical"
+	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/tactical_lite/PopulateContents()
+	if(empty)
+		return
+	var/static/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+	)
+	generate_items_inside(items_inside, src)
+
 /obj/item/storage/medkit/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
-	damagetype_healed = "all"
+	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
@@ -288,18 +307,19 @@
 	if(empty)
 		return
 	var/static/list/items_inside = list(
+		/obj/item/cautery = 1,
+		/obj/item/scalpel = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/storage/box/bandages = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/stack/medical/gauze = 2,
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
-		/obj/item/healthanalyzer/advanced = 1,
-		/obj/item/stack/medical/gauze = 2,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/surgical_drapes = 1,
-		/obj/item/scalpel = 1,
-		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -332,6 +352,7 @@
 		/obj/item/mod/module/health_analyzer = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
+		/obj/item/storage/box/bandages = 1,
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
@@ -663,12 +684,16 @@
 /obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
-	create_storage(storage_type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
-	atom_storage.set_holdable(list(
-		/obj/item/organ,
-		/obj/item/bodypart,
-		/obj/item/food/icecream
-		))
+	create_storage(
+		storage_type = /datum/storage/organ_box,
+		max_specific_storage = WEIGHT_CLASS_BULKY,
+		max_total_storage = 21,
+		canhold = list(
+			/obj/item/organ,
+			/obj/item/bodypart,
+			/obj/item/food/icecream,
+		),
+	)
 
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
@@ -711,7 +736,7 @@
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
 			return
@@ -763,9 +788,7 @@
 	atom_storage.max_slots = 8
 	atom_storage.screen_max_columns = 4
 	atom_storage.screen_max_rows = 2
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/cup/tube,
-	))
+	atom_storage.set_holdable(/obj/item/reagent_containers/cup/tube)
 
 /obj/item/storage/test_tube_rack/attack_self(mob/user)
 	emptyStorage()

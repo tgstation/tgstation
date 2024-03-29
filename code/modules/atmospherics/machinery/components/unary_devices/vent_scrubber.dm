@@ -12,6 +12,7 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "scrubber"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	processing_flags = NONE
 
@@ -261,10 +262,10 @@
 			for(var/gas in filter_types & env_gases)
 				filtered_out.add_gas(gas)
 				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-				var/transfered_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
+				var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
 
-				filtered_gases[gas][MOLES] = transfered_moles
-				env_gases[gas][MOLES] -= transfered_moles
+				filtered_gases[gas][MOLES] = transferred_moles
+				env_gases[gas][MOLES] -= transferred_moles
 
 			environment.garbage_collect()
 

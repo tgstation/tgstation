@@ -6,7 +6,7 @@
 	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	obj_damage = 400
 	light_range = 3
 	faction = list(FACTION_MINING, FACTION_BOSS)
@@ -15,7 +15,7 @@
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	vision_range = 5
@@ -25,9 +25,9 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	can_buckle_to = FALSE
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -50,6 +50,8 @@
 	var/chosen_attack = 1
 	/// Attack actions, sets chosen_attack to the number in the action
 	var/list/attack_action_types = list()
+	/// Summoning line, said when summoned via megafauna vents.
+	var/summon_line = "I'll kick your ass!"
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -59,9 +61,7 @@
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
-	for(var/action_type in attack_action_types)
-		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
-		attack_action.Grant(src)
+	grant_actions_by_list(attack_action_types)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	//Safety check
@@ -70,7 +70,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
-	if(health > 0)
+	if(gibbed) // in case they've been force dusted
+		return ..()
+
+	if(health > 0) // prevents instakills
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
@@ -95,8 +98,8 @@
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
-	else
-		..()
+
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/singularity_act()
 	set_health(0)
@@ -105,36 +108,63 @@
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return
-	else
-		..()
 
-/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	crusher_loot.Cut()
+	loot.Cut()
+
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget(atom/attacked_target)
 	if(recovery_time >= world.time)
 		return
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.stat != DEAD)
-			if(!client && ranged && ranged_cooldown <= world.time)
-				OpenFire()
-
-			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
-				devour(L)
-		else
-			devour(L)
+	if(!.)
+		LoseTarget()
+		return
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.stat == DEAD || (living_target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(living_target, TRAIT_NODEATH)))
+		devour(living_target)
+		return
+	if(isnull(client) && ranged && ranged_cooldown <= world.time)
+		OpenFire()
 
 /// Devours a target and restores health to the megafauna
-/mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
-	if(!L)
+/mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/victim)
+	if(isnull(victim) || victim.has_status_effect(/datum/status_effect/gutted))
+		LoseTarget()
 		return FALSE
-	visible_message(
-		span_danger("[src] devours [L]!"),
-		span_userdanger("You feast on [L], restoring your health!"))
+	celebrate_kill(victim)
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
-		adjustBruteLoss(-L.maxHealth/2)
-	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	L.gib()
+		heal_overall_damage(victim.maxHealth * 0.5)
+	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
+	if(iscarbon(victim))
+		qdel(victim.get_organ_slot(ORGAN_SLOT_LUNGS))
+		qdel(victim.get_organ_slot(ORGAN_SLOT_HEART))
+		qdel(victim.get_organ_slot(ORGAN_SLOT_LIVER))
+	victim.adjustBruteLoss(500)
+	victim.death() //make sure they die
+	victim.apply_status_effect(/datum/status_effect/gutted)
+	LoseTarget()
 	return TRUE
+
+/mob/living/simple_animal/hostile/megafauna/proc/celebrate_kill(mob/living/L)
+	visible_message(
+		span_danger("[src] disembowels [L]!"),
+		span_userdanger("You feast on [L]'s organs, restoring your health!"))
+
+
+
+/mob/living/simple_animal/hostile/megafauna/CanAttack(atom/the_target)
+	. = ..()
+	if (!.)
+		return FALSE
+	if(!isliving(the_target))
+		return TRUE
+	var/mob/living/living_target = the_target
+	return !living_target.has_status_effect(/datum/status_effect/gutted)
+
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)

@@ -38,7 +38,7 @@
 	inhand_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_HANDCUFFED
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -46,7 +46,9 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
-	var/handcuff_time = 3 SECONDS
+	var/handcuff_time = 4 SECONDS
+	///Multiplier for handcuff time
+	var/handcuff_time_mod = 1
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
@@ -72,12 +74,18 @@
 	if(!istype(C))
 		return
 
-	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
+	if(SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user) & COMSIG_CARBON_CUFF_PREVENT)
+		return
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
 		to_chat(user, span_warning("Uh... how do those things work?!"))
 		apply_cuffs(user,user)
 		return
+
+	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
+		handcuff_time_mod = 0.75
+	else
+		handcuff_time_mod = 1
 
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())
@@ -87,7 +95,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
-			if(do_after(user, handcuff_time, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
+			if(do_after(user, handcuff_time * handcuff_time_mod, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
@@ -175,10 +183,6 @@
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
-		/obj/item/stack/rods = list(
-			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
-		),
-
 		/obj/item/stack/sheet/iron = list(
 			SCREENTIP_CONTEXT_LMB = "Craft bola",
 		),
@@ -189,6 +193,13 @@
 
 	if(new_color)
 		set_cable_color(new_color)
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/restraints/handcuffs/cable/proc/set_cable_color(new_color)
 	color = GLOB.cable_colors[new_color]
@@ -289,36 +300,6 @@
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
 
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if (R.use(1))
-			var/obj/item/wirerod/W = new /obj/item/wirerod
-			remove_item_from_storage(user)
-			user.put_in_hands(W)
-			to_chat(user, span_notice("You wrap [src] around the top of [I]."))
-			qdel(src)
-		else
-			to_chat(user, span_warning("You need one rod to make a wired rod!"))
-			return
-	else if(istype(I, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = I
-		if(M.get_amount() < 6)
-			to_chat(user, span_warning("You need at least six iron sheets to make good enough weights!"))
-			return
-		to_chat(user, span_notice("You begin to apply [I] to [src]..."))
-		if(do_after(user, 35, target = src))
-			if(M.get_amount() < 6 || !M)
-				return
-			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
-			M.use(6)
-			user.put_in_hands(S)
-			to_chat(user, span_notice("You make some weights out of [I] and tie them to [src]."))
-			remove_item_from_storage(user)
-			qdel(src)
-	else
-		return ..()
-
 /**
  * # Zipties
  *
@@ -376,7 +357,7 @@
 	inhand_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
@@ -406,7 +387,7 @@
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(spring_trap),
+		COMSIG_ATOM_ENTERED = PROC_REF(trap_stepped_on),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -438,10 +419,23 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/trap_stepped_on(datum/source, atom/movable/entering, ...)
 	SIGNAL_HANDLER
+
+	spring_trap(entering)
+
+/**
+ * Tries to spring the trap on the target movable.
+ *
+ * This proc is safe to call without knowing if the target is valid or if the trap is armed.
+ *
+ * Does not trigger on tiny mobs.
+ * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
+ */
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE)
 	if(!armed || !isturf(loc) || !isliving(target))
 		return
+
 	var/mob/living/victim = target
 	if(istype(victim.buckled, /obj/vehicle))
 		var/obj/vehicle/ridden_vehicle = victim.buckled
@@ -450,12 +444,14 @@
 			ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]."))
 			return
 
-	//don't close the trap if they're as small as a mouse, or not touching the ground
-	if(victim.mob_size <= MOB_SIZE_TINY || (!thrown_at && victim.movement_type & (FLYING|FLOATING)))
+	//don't close the trap if they're as small as a mouse
+	if(victim.mob_size <= MOB_SIZE_TINY)
+		return
+	if(!ignore_movetypes && (victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return
 
 	close_trap()
-	if(thrown_at)
+	if(ignore_movetypes)
 		victim.visible_message(span_danger("\The [src] ensnares [victim]!"), \
 				span_userdanger("\The [src] ensnares you!"))
 	else
@@ -503,7 +499,7 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	spring_trap(null, user)
+	spring_trap(user)
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
@@ -580,7 +576,7 @@
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
 	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(null, hit_atom, TRUE)
+	B.spring_trap(hit_atom, ignore_movetypes = TRUE)
 	qdel(src)
 
 /**

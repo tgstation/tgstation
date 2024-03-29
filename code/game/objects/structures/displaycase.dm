@@ -82,7 +82,7 @@
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		dump()
 		if(!disassembled)
 			new /obj/item/shard(drop_location())
@@ -91,7 +91,7 @@
 
 /obj/structure/displaycase/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
@@ -272,7 +272,7 @@
 			electronics.forceMove(drop_location())
 			electronics = null
 		qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/electronics/airlock))
@@ -673,7 +673,7 @@
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		broken = TRUE
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()

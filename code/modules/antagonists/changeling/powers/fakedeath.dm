@@ -20,22 +20,28 @@
 	if(revive_ready)
 		INVOKE_ASYNC(src, PROC_REF(revive), user)
 		disable_revive(user) // this should be already called via signal, but just incase something wacky happens
+		return TRUE
 
-	else if(enable_fakedeath(user))
-		to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
+	var/death_duration_mod = 1
+	if(user.has_status_effect(/datum/status_effect/gutted))
+		death_duration_mod *= 8 // Anti-megafauna cheese
 
-	else
-		stack_trace("Changeling revive failed to enter fakedeath when it should have been in a valid state to.")
+	if(!enable_fakedeath(user, duration_modifier = death_duration_mod))
+		CRASH("Changeling revive failed to enter fakedeath when it should have been in a valid state to.")
 
+	to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
+	if(death_duration_mod > 1)
+		to_chat(user, span_changeling(span_bold("Our body has sustained severe damage, and will take [death_duration_mod >= 5 ? "far ":""]longer to regenerate.")))
 	return TRUE
 
 /// Used to enable fakedeath and register relevant signals / start timers
-/datum/action/changeling/fakedeath/proc/enable_fakedeath(mob/living/changeling)
+/datum/action/changeling/fakedeath/proc/enable_fakedeath(mob/living/changeling, duration_modifier = 1)
 	if(revive_ready || HAS_TRAIT_FROM(changeling, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
 
 	changeling.fakedeath(CHANGELING_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration, TIMER_UNIQUE)
+	ADD_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
+	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration * duration_modifier, TIMER_UNIQUE)
 	// Basically, these let the ling exit stasis without giving away their ling-y-ness if revived through other means
 	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
 	RegisterSignal(changeling, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
@@ -49,6 +55,7 @@
 		revive_ready = FALSE
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
+	REMOVE_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
 
@@ -111,7 +118,7 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 
-	var/datum/antagonist/changeling/ling = user.mind?.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling = IS_CHANGELING(user)
 	if(QDELETED(ling) || !(src in ling.innate_powers + ling.purchased_powers)) // checking both innate and purchased for full coverage
 		return
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))

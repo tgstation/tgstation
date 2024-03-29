@@ -559,9 +559,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "xV" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "xY" = (
@@ -1114,7 +1112,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "SE" = (
-/mob/living/simple_animal/bot/medbot,
+/mob/living/basic/bot/medbot,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)

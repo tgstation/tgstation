@@ -14,7 +14,7 @@
 
 /obj/item/storage/box/donkpockets/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/donkpocket))
+	atom_storage.set_holdable(/obj/item/food/donkpocket)
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
@@ -313,7 +313,7 @@
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/tomato(src)
-	new /obj/item/reagent_containers/condiment/quality_oil(src)
+	new /obj/item/reagent_containers/condiment/olive_oil(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
@@ -337,7 +337,7 @@
 
 /obj/item/storage/box/gum/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/bubblegum))
+	atom_storage.set_holdable(/obj/item/food/bubblegum)
 	atom_storage.max_slots = 4
 
 /obj/item/storage/box/gum/PopulateContents()
@@ -466,7 +466,7 @@
 			/obj/item/food/cheese/wheel = 5,
 			/obj/item/food/grown/toechtauese = 10,
 			/obj/item/reagent_containers/condiment/cornmeal = 5,
-			/obj/item/reagent_containers/condiment/quality_oil = 5,
+			/obj/item/reagent_containers/condiment/olive_oil = 5,
 			/obj/item/reagent_containers/condiment/yoghurt = 5,
 			))
 		new random_food(src)
@@ -508,7 +508,7 @@
 
 /obj/item/storage/box/coffeepack/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+	atom_storage.set_holdable(/obj/item/food/grown/coffee)
 
 /obj/item/storage/box/coffeepack/PopulateContents()
 	atom_storage.max_slots = 5

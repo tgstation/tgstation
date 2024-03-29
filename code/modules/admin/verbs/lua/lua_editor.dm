@@ -29,7 +29,7 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/lua_editor/Destroy(force, ...)
+/datum/lua_editor/Destroy(force)
 	. = ..()
 	if(current_state)
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
@@ -126,6 +126,7 @@
 			return TRUE
 		if("runCode")
 			var/code = params["code"]
+			current_state.ckey_last_runner = usr.ckey
 			var/result = current_state.load_script(code)
 			var/index_with_result = current_state.log_result(result)
 			message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")

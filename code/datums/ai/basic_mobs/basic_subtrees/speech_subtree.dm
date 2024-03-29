@@ -22,24 +22,31 @@
 		emote_see = string_list(emote_see)
 
 /datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(SPT_PROB(speech_chance, seconds_per_tick))
-		var/audible_emotes_length = emote_hear?.len
-		var/non_audible_emotes_length = emote_see?.len
-		var/speak_lines_length = speak?.len
+	if(!SPT_PROB(speech_chance, seconds_per_tick))
+		return
+	speak(controller)
 
-		var/total_choices_length = audible_emotes_length + non_audible_emotes_length + speak_lines_length
+/// Actually perform an action
+/datum/ai_planning_subtree/random_speech/proc/speak(datum/ai_controller/controller)
+	var/audible_emotes_length = emote_hear?.len
+	var/non_audible_emotes_length = emote_see?.len
+	var/speak_lines_length = speak?.len
 
-		var/random_number_in_range = rand(1, total_choices_length)
+	var/total_choices_length = audible_emotes_length + non_audible_emotes_length + speak_lines_length
 
-		if(random_number_in_range <= audible_emotes_length)
-			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_hear))
-		else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
-			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
-		else
-			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), length(sound) > 0 ? pick(sound) : null)
+	var/random_number_in_range = rand(1, total_choices_length)
+	var/sound_to_play = length(sound) > 0 ? pick(sound) : null
+
+	if(random_number_in_range <= audible_emotes_length)
+		controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_hear), sound_to_play)
+	else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
+		controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
+	else
+		controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), sound_to_play)
 
 /datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
+	sound = list('sound/creatures/chitter.ogg')
 	emote_hear = list("chitters.")
 
 /datum/ai_planning_subtree/random_speech/mothroach
@@ -49,6 +56,7 @@
 /datum/ai_planning_subtree/random_speech/mouse
 	speech_chance = 1
 	speak = list("Squeak!", "SQUEAK!", "Squeak?")
+	sound = list('sound/creatures/mousesqueek.ogg')
 	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
 
@@ -93,12 +101,14 @@
 /datum/ai_planning_subtree/random_speech/chicken
 	speech_chance = 15 // really talkative ladies
 	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
+	sound = list('sound/creatures/clucks.ogg', 'sound/creatures/bagawk.ogg')
 	emote_hear = list("clucks.", "croons.")
 	emote_see = list("pecks at the ground.","flaps her wings viciously.")
 
 /datum/ai_planning_subtree/random_speech/chick
 	speech_chance = 4
 	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
+	sound = list('sound/creatures/chick_peep.ogg')
 	emote_hear = list("cheeps.")
 	emote_see = list("pecks at the ground.","flaps her tiny wings.")
 
@@ -160,33 +170,37 @@
 
 /datum/ai_planning_subtree/random_speech/pony
 	speech_chance = 3
+	sound = list('sound/creatures/pony/whinny01.ogg', 'sound/creatures/pony/whinny02.ogg', 'sound/creatures/pony/whinny03.ogg')
 	emote_hear = list("whinnies!")
 	emote_see = list("horses around.")
 
 /datum/ai_planning_subtree/random_speech/pony/tamed
 	speech_chance = 3
+	sound = list('sound/creatures/pony/snort.ogg')
+	emote_hear = list("snorts.")
 	emote_see = list("snorts.")
 
 /datum/ai_planning_subtree/random_speech/killer_tomato
 	speech_chance = 3
-	speak = list("gnashes.", "growls lowly.", "snarls.")
-	emote_hear = list("gnashes.")
+	emote_hear = list("gnashes.", "growls lowly.", "snarls.")
 	emote_see = list("salivates.")
 
 /datum/ai_planning_subtree/random_speech/ant
 	speech_chance = 1
+	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
+	sound = list('sound/creatures/chitter.ogg')
 	emote_hear = list("buzzes.", "clacks.")
 	emote_see = list("shakes their head.", "twitches their antennae.")
-	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
 
 /datum/ai_planning_subtree/random_speech/fox
 	speech_chance = 1
+	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
 	emote_hear = list("howls.", "barks.", "screams.")
 	emote_see = list("shakes their head.", "shivers.")
-	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
 
 /datum/ai_planning_subtree/random_speech/crab
 	speech_chance = 1
+	sound = list('sound/creatures/claw_click.ogg')
 	emote_hear = list("clicks.")
 	emote_see = list("clacks.")
 
@@ -199,3 +213,29 @@
 	speech_chance = 5
 	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
 	emote_see = list("stares ferociously.")
+
+/datum/ai_planning_subtree/random_speech/cats
+	speech_chance = 10
+	speak = list(
+		"mrawww!",
+		"meow!",
+		"maw!",
+	)
+
+/datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
+	speech_chance = 1
+
+/datum/ai_planning_subtree/random_speech/blackboard/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]
+	if(isnull(speech_lines))
+		return ..()
+
+	// Note to future developers: this behaviour a singleton so this probably doesn't work as you would expect
+	// The whole speech tree really needs to be refactored because this isn't how we use AI data these days
+	speak = speech_lines[BB_EMOTE_SAY] || list()
+	emote_see = speech_lines[BB_EMOTE_SEE] || list()
+	emote_hear = speech_lines[BB_EMOTE_HEAR] || list()
+	sound = speech_lines[BB_EMOTE_SOUND] || list()
+	speech_chance = speech_lines[BB_SPEAK_CHANCE] ? speech_lines[BB_SPEAK_CHANCE] : initial(speech_chance)
+
+	return ..()

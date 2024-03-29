@@ -19,6 +19,10 @@
 	else
 		description = initial(description)
 
+/datum/mood_event/hang_over
+	mood_change = -4
+	description = "I have a killer hang over!"
+	timeout = 1 MINUTES
 
 /datum/mood_event/smoked
 	description = "I have had a smoke recently."

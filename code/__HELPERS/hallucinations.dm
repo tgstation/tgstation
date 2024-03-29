@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 #define HALLUCINATION_ARGLIST 3
 
 /// Biotypes which cannot hallucinate for balance and logic reasons (not code)
-#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
+#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_SPECIAL)
 
 // Macro wrapper for _cause_hallucination so we can cheat in named arguments, like AddComponent.
 /**

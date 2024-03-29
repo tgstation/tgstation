@@ -16,9 +16,7 @@
 	)
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
-	if(target.stat == DEAD)
-		return TRUE
-	return FALSE
+	return target.stat == DEAD && ..()
 
 //extract brain
 /datum/surgery_step/extract_core
@@ -49,10 +47,10 @@
 			span_notice("[user] successfully extracts a core from [target]!"),
 		)
 
-		new target_slime.coretype(target_slime.loc)
+		new target_slime.slime_type.core_type(target_slime.loc)
 
 		if(target_slime.cores <= 0)
-			target_slime.icon_state = "[target_slime.colour] baby slime dead-nocore"
+			target_slime.icon_state = "[target_slime.slime_type.colour] baby slime dead-nocore"
 			return ..()
 		else
 			return FALSE

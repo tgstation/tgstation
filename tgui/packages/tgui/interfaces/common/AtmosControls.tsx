@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
@@ -8,6 +9,8 @@ export type VentProps = {
   refID: string;
   long_name: string;
   power: BooleanLike;
+  overclock: BooleanLike;
+  integrity: number;
   checks: number;
   excheck: BooleanLike;
   incheck: BooleanLike;
@@ -31,12 +34,14 @@ export type ScrubberProps = {
   }[];
 };
 
-export const Vent = (props: VentProps, context) => {
-  const { act } = useBackend(context);
+export const Vent = (props: VentProps) => {
+  const { act } = useBackend();
   const {
     refID,
     long_name,
     power,
+    overclock,
+    integrity,
     checks,
     excheck,
     incheck,
@@ -50,19 +55,43 @@ export const Vent = (props: VentProps, context) => {
     <Section
       title={decodeHtmlEntities(long_name)}
       buttons={
-        <Button
-          icon={power ? 'power-off' : 'times'}
-          selected={power}
-          content={power ? 'On' : 'Off'}
-          onClick={() =>
-            act('power', {
-              ref: refID,
-              val: Number(!power),
-            })
-          }
-        />
-      }>
+        <>
+          <Button
+            icon={power ? 'power-off' : 'times'}
+            selected={power}
+            disabled={integrity <= 0}
+            content={power ? 'On' : 'Off'}
+            onClick={() =>
+              act('power', {
+                ref: refID,
+                val: Number(!power),
+              })
+            }
+          />
+          <Button
+            icon="gauge-high"
+            color={overclock ? 'green' : 'yellow'}
+            disabled={integrity <= 0}
+            onClick={() =>
+              act('overclock', {
+                ref: refID,
+              })
+            }
+            tooltip={`${overclock ? 'Disable' : 'Enable'} overclocking`}
+          />
+        </>
+      }
+    >
       <LabeledList>
+        <LabeledList.Item label="Integrity">
+          <p
+            title={
+              'Overclocking will allow the vent to overpower extreme pressure conditions. However, it will also cause the vent to become damaged over time and eventually fail. The lower the integrity, the less effective the vent will be when in normal operation.'
+            }
+          >
+            {(integrity * 100).toFixed(2)}%
+          </p>
+        </LabeledList.Item>
         <LabeledList.Item label="Mode">
           <Button
             icon="sign-in-alt"
@@ -161,8 +190,8 @@ export const Vent = (props: VentProps, context) => {
   );
 };
 
-export const Scrubber = (props: ScrubberProps, context) => {
-  const { act } = useBackend(context);
+export const Scrubber = (props: ScrubberProps) => {
+  const { act } = useBackend();
   const { long_name, power, scrubbing, refID, widenet, filter_types } = props;
   return (
     <Section
@@ -179,7 +208,8 @@ export const Scrubber = (props: ScrubberProps, context) => {
             })
           }
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
@@ -211,8 +241,7 @@ export const Scrubber = (props: ScrubberProps, context) => {
               <Button
                 key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
-                content={getGasLabel(filter.gas_id, filter.gas_name)}
-                title={filter.gas_name}
+                tooltip={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {
@@ -220,7 +249,9 @@ export const Scrubber = (props: ScrubberProps, context) => {
                     val: filter.gas_id,
                   })
                 }
-              />
+              >
+                {getGasLabel(filter.gas_id, filter.gas_name)}
+              </Button>
             ))) ||
             'N/A'}
         </LabeledList.Item>

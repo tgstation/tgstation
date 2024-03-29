@@ -127,6 +127,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	radio = new /obj/item/radio(src)
 	radio.set_listening(FALSE)
+	find_and_hang_on_wall()
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(radio)
@@ -199,7 +200,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				var/mob/living/L = usr
 				message = L.treat_message(message)["message"]
 
-			minor_announce(message, "[department] Announcement:", html_encode = FALSE)
+			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/misc/announce_dig.ogg')
 			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
@@ -393,10 +394,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		return
 	return ..()
 
-/obj/machinery/requests_console/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/wallframe/requests_console(loc)
-	qdel(src)
+/obj/machinery/requests_console/on_deconstruction(disassembled)
+	new /obj/item/wallframe/requests_console(loc)
 
 /obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
 	auto_name = TRUE

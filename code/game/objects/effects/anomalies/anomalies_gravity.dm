@@ -23,6 +23,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	apply_wibbly_filters(src)
 
 	warp = new(src)
 	vis_contents += warp

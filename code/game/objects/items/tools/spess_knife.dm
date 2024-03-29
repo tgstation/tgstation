@@ -11,7 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FIRE_PROOF
 	tool_behaviour = null
@@ -22,6 +22,9 @@
 	var/list/options = list()
 	///Chance to select wrong tool
 	var/wrong_tool_prob = 10
+
+/obj/item/spess_knife/get_all_tool_behaviours()
+	return list(TOOL_KNIFE, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 
 /obj/item/spess_knife/Initialize(mapload)
 	. = ..()

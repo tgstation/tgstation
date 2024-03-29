@@ -1,11 +1,47 @@
 GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_source, list()))
 
 /**
+ * When adding new fishable rewards to a table/counts, you can specify an icon to show in place of the
+ * generic fish icon in the minigame UI should the user have the TRAIT_REVEAL_FISH trait, by adding it to
+ * this list.
+ *
+ * A lot of the icons here may be a tad inaccurate, but since we're limited to the free font awesome icons we
+ * have access to, we got to make do.
+ */
+GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
+	/mob/living/basic/carp = FISH_ICON_DEF,
+	/mob/living/basic/mining = FISH_ICON_HOSTILE,
+	/obj/effect/decal/remains = FISH_ICON_BONE,
+	/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
+	/obj/item/coin = FISH_ICON_COIN,
+	/obj/item/fish = FISH_ICON_DEF,
+	/obj/item/fish/armorfish = FISH_ICON_CRAB,
+	/obj/item/fish/boned = FISH_ICON_BONE,
+	/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
+	/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
+	/obj/item/fish/holo/crab = FISH_ICON_CRAB,
+	/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
+	/obj/item/fish/mastodon = FISH_ICON_BONE,
+	/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
+	/obj/item/fish/slimefish = FISH_ICON_SLIME,
+	/obj/item/fish/sludgefish = FISH_ICON_SLIME,
+	/obj/item/fish/starfish = FISH_ICON_STAR,
+	/obj/item/storage/wallet = FISH_ICON_COIN,
+	/obj/item/stack/sheet/bone = FISH_ICON_BONE,
+	/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
+	/obj/item/stack/ore = FISH_ICON_GEM,
+	/obj/structure/closet/crate = FISH_ICON_COIN,
+)))
+
+/**
  * Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
  * can share single source, ie single shared one for ocean/lavaland river
  */
 /datum/fish_source
-	/// Fish catch weight table - these are relative weights
+	/**
+	 * Fish catch weight table - these are relative weights
+	 *
+	 */
 	var/list/fish_table = list()
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()
@@ -16,10 +52,21 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
-	var/background = "fishing_background_default"
+	var/background = "background_default"
+
+/datum/fish_source/New()
+	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
+		return
+	for(var/path in fish_counts)
+		if(!(path in fish_table))
+			stack_trace("path [path] found in the 'fish_counts' list but not in the fish_table one of [type]")
+
+///Called when src is set as the fish source of a fishing spot component
+/datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
+	return
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
-/datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return rod.reason_we_cant_fish(src)
 
 /**
@@ -28,7 +75,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
  * This includes the source's fishing difficulty, that of the fish, the rod,
  * favorite and disliked baits, fish traits and the fisherman skill.
  *
- * For non-fish, it's just the source's fishing difficulty minus the fisherman skill, rod and settler modifiers.
+ * For non-fish, it's just the source's fishing difficulty minus the fisherman skill.
  */
 /datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
 	. = fishing_difficulty
@@ -38,7 +85,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 		. += SETTLER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod
@@ -89,7 +136,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
  * Used to register signals or add traits and the such right after conditions have been cleared
  * and before the minigame starts.
  */
-/datum/fish_source/proc/pre_challenge_started(obj/item/fishing_rod/rod, mob/user)
+/datum/fish_source/proc/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
 	return
 
 ///Proc called when the challenge is interrupted within the fish source code.
@@ -109,31 +156,40 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
 	var/turf/fishing_spot = get_turf(source.lure)
 	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
-	source.used_rod?.consume_bait(reward)
+	if(source.used_rod)
+		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
+		source.used_rod.consume_bait(reward)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if((reward_path in fish_counts)) // This is limited count result
 		fish_counts[reward_path] -= 1
 		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)ù
+			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
+			fish_table -= reward_path
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
-	if(!reward) //baloon alert instead
-		fisherman.balloon_alert(fisherman,pick(duds))
+	if(!reward) //balloon alert instead
+		fisherman.balloon_alert(fisherman, pick(duds))
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
+		fisherman.balloon_alert(fisherman, "caught something!")
+		return
+	else // for fishing things like corpses, move them to the turf of the fisherman
+		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
-/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman,  turf/fishing_spot)
+/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
-		return GLOB.chasm_detritus_types[reward_path].dispense_reward(fishing_spot)
+		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(fisherman, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
 		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
 	var/atom/movable/reward = new reward_path(get_turf(fisherman))
@@ -184,12 +240,8 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/final_table = fish_table.Copy()
 	for(var/result in final_table)
-		if((result in fish_counts) && fish_counts[result] <= 0) //ran out of these, ignore
-			final_table -= result
-			continue
-
-		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
-		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
+		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
+		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 		if(ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result
@@ -201,7 +253,7 @@ GLOBAL_LIST(fishing_property_cache)
 					final_table[result] = round(final_table[result] * 3.5, 1)
 				else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 					final_table[result] *= 2
-				if(!HAS_TRAIT(bait, OMNI_BAIT_TRAIT))
+				if(!HAS_TRAIT(bait, TRAIT_OMNI_BAIT))
 					//Bait matching likes doubles the chance
 					var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
 					for(var/bait_identifer in fav_bait)

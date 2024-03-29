@@ -241,6 +241,9 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 ##path/filled/warning {\
 	icon_state = "trimline_warn_fill";\
 }\
+##path/filled/warning/corner {\
+	icon_state = "trimline_corner_warn_fill";\
+}\
 ##path/filled/mid_joiner {\
 	icon_state = "trimline_mid_fill";\
 }\

@@ -6,7 +6,7 @@
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -43,6 +43,15 @@
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
 
+/obj/item/extinguisher/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/extinguisher/empty
 	starting_water = FALSE
 
@@ -53,7 +62,7 @@
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null //it is much lighter, after all.
-	flags_1 = null //doesn't CONDUCT_1
+	obj_flags = NONE //doesn't conduct electricity
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
@@ -72,7 +81,7 @@
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags_1 = null //doesn't CONDUCT_1
+	obj_flags = NONE //doesn't conduct electricity
 	throwforce = 1
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
@@ -163,7 +172,7 @@
 			balloon_alert(user, "already full!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
-		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
+		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
 		if(transferred > 0)
 			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
@@ -231,7 +240,7 @@
 			var/datum/reagents/water_reagents = new /datum/reagents(5)
 			water.reagents = water_reagents
 			water_reagents.my_atom = water
-			reagents.trans_to(water, 1, transfered_by = user)
+			reagents.trans_to(water, 1, transferred_by = user)
 
 		//Make em move dat ass, hun
 		move_particles(water_particles)
@@ -270,13 +279,8 @@
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(mob/user)
 	if(loc == user && reagents.total_volume)
+		reagents.expose(user.loc, TOUCH)
 		reagents.clear_reagents()
-
-		var/turf/T = get_turf(loc)
-		if(isopenturf(T))
-			var/turf/open/theturf = T
-			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-
 		user.visible_message(span_notice("[user] empties out \the [src] onto the floor using the release valve."), span_info("You quietly empty out \the [src] using its release valve."))
 
 //firebot assembly
@@ -288,3 +292,10 @@
 		user.put_in_hands(new /obj/item/bot_assembly/firebot)
 	else
 		..()
+
+/obj/item/extinguisher/anti
+	name = "fire extender"
+	desc = "A traditional red fire extinguisher. Made in Britain... wait, what?"
+	chem = /datum/reagent/fuel
+	tanktype = /obj/structure/reagent_dispensers/fueltank
+	cooling_power = 0

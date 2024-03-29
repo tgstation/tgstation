@@ -21,6 +21,7 @@
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OPEN
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -44,7 +45,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)
+	check_access(null)
 
 	if(length(req_access) || length(req_one_access))
 		board = new(src)
@@ -55,6 +56,7 @@
 			board.accesses = req_one_access
 
 	setup_device()
+	find_and_hang_on_wall()
 
 /obj/machinery/button/Destroy()
 	QDEL_NULL(device)
@@ -183,7 +185,7 @@
 		id = "[port.shuttle_id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user, list/modifiers)
+/obj/machinery/button/interact(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -232,6 +234,20 @@
 	if(device)
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
+
+/**
+ * Called when the mounted button's wall is knocked down.
+ */
+/obj/machinery/button/proc/knock_down()
+	if(device)
+		device.forceMove(get_turf(src))
+		device = null
+	if(board)
+		board.forceMove(get_turf(src))
+		req_access = list()
+		req_one_access = list()
+		board = null
+	qdel(src)
 
 /obj/machinery/button/door
 	name = "door button"

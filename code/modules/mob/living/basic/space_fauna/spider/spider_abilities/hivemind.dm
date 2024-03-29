@@ -84,3 +84,16 @@
 
 /datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders/format_message(mob/living/user, message)
 	return span_spiderscout("<b>Report from [user]:</b> [message]")
+
+/**
+ * Sends a smaller message to all currently living spiders.
+ */
+/datum/action/cooldown/mob_cooldown/command_spiders/warning_spiders
+	name = "Warning"
+	desc = "Send a warning to all living spiders."
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "warning"
+
+/datum/action/cooldown/mob_cooldown/command_spiders/warning_spiders/format_message(mob/living/user, message)
+	return span_spiderbreacher("<b>Warning from [user]:</b> [message]")
+

@@ -47,7 +47,7 @@
 			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.emote("gasp")
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.vomit(20, TRUE)
+				affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your body feels hot!"))
 				if(prob(60))

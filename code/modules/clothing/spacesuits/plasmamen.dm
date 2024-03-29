@@ -52,8 +52,10 @@
 	tint = 2
 	armor_type = /datum/armor/space_plasmaman
 	resistance_flags = FIRE_PROOF
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
+	light_power = 0.8
+	light_color = "#ffcc99"
 	light_on = FALSE
 	var/helmet_on = FALSE
 	var/smile = FALSE
@@ -76,6 +78,7 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
 	. = ..()
@@ -105,6 +108,11 @@
 		else
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_appearance()
+
+/obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
+	inhand_icon_state = icon_state
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
@@ -137,6 +145,7 @@
 		hitting_clothing.forceMove(src)
 		update_appearance()
 
+///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands && smile)
@@ -159,9 +168,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	helmet_on = !helmet_on
-	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
-	inhand_icon_state = icon_state
-	user.update_worn_head() //So the mob overlay updates
+	update_appearance()
 
 	if(helmet_on)
 		if(!up)
@@ -173,6 +180,14 @@
 		set_light_on(FALSE)
 
 	update_item_action_buttons()
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!helmet_on)
+		return
+	helmet_on = FALSE
+	update_appearance()
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
 	..()
@@ -436,3 +451,15 @@
 	desc = "A special containment helmet designed for CentCom Staff. You know, so any coffee spills don't kill the poor sod."
 	icon_state = "intern_envirohelm"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/syndie
+	name = "tacticool envirosuit helmet"
+	desc = "There's no doubt about it, this helmet puts you above ALL of the other plasmamen. If you see another plasmaman wearing a helmet like this, it's either because they're a fellow badass, \
+		or they've murdered one of your fellow badasses and have taken it from them as a trophy. Either way, anyone wearing this deserves at least a cursory nod of respect."
+	icon_state = "syndie_envirohelm"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/bitrunner
+	name = "bitrunner's plasma envirosuit helmet"
+	desc = "An envirohelmet with extended blue light filters for bitrunning plasmamen."
+	icon_state = "bitrunner_envirohelm"

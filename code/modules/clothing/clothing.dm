@@ -1,5 +1,3 @@
-#define MOTH_EATING_CLOTHING_DAMAGE 15
-
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
@@ -56,7 +54,7 @@
 
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
-		actions_types += /datum/action/item_action/toggle_voice_box
+		actions_types += list(/datum/action/item_action/toggle_voice_box)
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
@@ -108,10 +106,14 @@
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(isnull(moth_snack))
-		moth_snack = new
-		moth_snack.name = name
-		moth_snack.clothing = WEAKREF(src)
+		create_moth_snack()
 	moth_snack.attack(target, user, params)
+
+/// Creates a food object in null space which we can eat and imagine we're eating this pair of shoes
+/obj/item/clothing/proc/create_moth_snack()
+	moth_snack = new
+	moth_snack.name = name
+	moth_snack.clothing = WEAKREF(src)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
@@ -312,6 +314,9 @@
 			. += "[src] offers the wearer some protection from fire."
 		if (1601 to 35000)
 			. += "[src] offers the wearer robust protection from fire."
+
+	if(TRAIT_FAST_CUFFING in clothing_traits)
+		. += "[src] increase the speed that you handcuff others."
 
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
@@ -543,8 +548,6 @@ BLIND     // can't see anything
 		return
 	if(prob(0.2))
 		to_chat(L, span_warning("The damaged threads on your [src.name] chafe!"))
-
-#undef MOTH_EATING_CLOTHING_DAMAGE
 
 /obj/item/clothing/apply_fantasy_bonuses(bonus)
 	. = ..()

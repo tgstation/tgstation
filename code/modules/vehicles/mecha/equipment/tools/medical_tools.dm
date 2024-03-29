@@ -167,7 +167,6 @@
 				<font color="[patient.getOxyLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Respiratory Damage:</b> [patient.getOxyLoss()]%</font><br />
 				<font color="[patient.getToxLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Toxin Content:</b> [patient.getToxLoss()]%</font><br />
 				<font color="[patient.getFireLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
-				[span_danger("[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]")]<br />
 				[span_danger("[patient.get_organ_loss(ORGAN_SLOT_BRAIN) ? "Significant brain damage detected." : ""]")]<br />
 				[span_danger("[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]")]<br />
 				"}
@@ -198,7 +197,7 @@
 		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
 		for(var/driver in chassis.return_drivers())
 			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
-		SG.reagents.trans_id_to(patient,R.type,to_inject)
+		SG.reagents.trans_to(patient, to_inject, target_id = R.type)
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
 	go_out()
@@ -428,7 +427,7 @@
 	if(!chassis.Adjacent(S))
 		to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
 		return FALSE
-	S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = user)
+	S.reagents.trans_to(src, S.reagents.total_volume, transferred_by = user)
 	S.forceMove(src)
 	LAZYADD(syringes,S)
 	to_chat(user, "[icon2html(src, user)][span_notice("Syringe loaded.")]")

@@ -244,7 +244,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "zz" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4

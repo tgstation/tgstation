@@ -40,6 +40,7 @@
 /turf/open/floor/glass/Destroy()
 	. = ..()
 	QDEL_LIST(glow_stuff)
+	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 
 /// If this turf is at the bottom of the local rendering stack
 /// Then we're gonna make it emissive block so the space below glows
@@ -51,7 +52,15 @@
 		return
 
 	glow_stuff = partially_block_emissives(src, alpha_to_leave)
-	set_light(2, 0.75, starlight_color || GLOB.starlight_color)
+	if(!starlight_color)
+		RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, PROC_REF(starlight_changed))
+	else
+		UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
+	set_light(2, 1, starlight_color || GLOB.starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
+
+/turf/open/floor/glass/proc/starlight_changed(datum/source, old_star, new_star)
+	if(light_color == old_star)
+		set_light(l_color = new_star)
 
 /turf/open/floor/glass/make_plating()
 	return

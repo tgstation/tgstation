@@ -30,7 +30,7 @@
 	var/state = "01" //How far the door assembly has progressed
 	can_atmos_pass = ATMOS_PASS_PROC
 
-/obj/structure/windoor_assembly/Initialize(mapload, loc, set_dir)
+/obj/structure/windoor_assembly/Initialize(mapload, set_dir)
 	. = ..()
 	if(set_dir)
 		setDir(set_dir)
@@ -267,61 +267,65 @@
 					span_notice("You start prying the windoor into the frame..."))
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
-
 					set_density(TRUE) //Shouldn't matter but just incase
+
 					to_chat(user, span_notice("You finish the windoor."))
 
-					if(secure)
-						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(loc)
-						if(facing == "l")
-							windoor.icon_state = "leftsecureopen"
-							windoor.base_state = "leftsecure"
-						else
-							windoor.icon_state = "rightsecureopen"
-							windoor.base_state = "rightsecure"
-						windoor.setDir(dir)
-						windoor.set_density(FALSE)
-
-						if(electronics.one_access)
-							windoor.req_one_access = electronics.accesses
-						else
-							windoor.req_access = electronics.accesses
-						windoor.electronics = electronics
-						electronics.forceMove(windoor)
-						if(created_name)
-							windoor.name = created_name
-						qdel(src)
-						windoor.close()
-
-
-					else
-						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(loc)
-						if(facing == "l")
-							windoor.icon_state = "leftopen"
-							windoor.base_state = "left"
-						else
-							windoor.icon_state = "rightopen"
-							windoor.base_state = "right"
-						windoor.setDir(dir)
-						windoor.set_density(FALSE)
-
-						if(electronics.one_access)
-							windoor.req_one_access = electronics.accesses
-						else
-							windoor.req_access = electronics.accesses
-						windoor.electronics = electronics
-						electronics.forceMove(windoor)
-						if(created_name)
-							windoor.name = created_name
-						qdel(src)
-						windoor.close()
-
+					finish_door()
 
 			else
 				return ..()
 
 	//Update to reflect changes(if applicable)
 	update_appearance()
+
+/obj/structure/windoor_assembly/proc/finish_door()
+	var/obj/machinery/door/window/windoor
+	if(secure)
+		windoor = new /obj/machinery/door/window/brigdoor(loc)
+		if(facing == "l")
+			windoor.icon_state = "leftsecureopen"
+			windoor.base_state = "leftsecure"
+		else
+			windoor.icon_state = "rightsecureopen"
+			windoor.base_state = "rightsecure"
+
+	else
+		windoor = new /obj/machinery/door/window(loc)
+		if(facing == "l")
+			windoor.icon_state = "leftopen"
+			windoor.base_state = "left"
+		else
+			windoor.icon_state = "rightopen"
+			windoor.base_state = "right"
+
+	windoor.setDir(dir)
+	windoor.set_density(FALSE)
+	if(created_name)
+		windoor.name = created_name
+	else if(electronics.passed_name)
+		windoor.name = electronics.passed_name
+	if(electronics.one_access)
+		windoor.req_one_access = electronics.accesses
+	else
+		windoor.req_access = electronics.accesses
+	if(electronics.unres_sides)
+		windoor.unres_sides = electronics.unres_sides
+		switch(dir)
+			if(NORTH,SOUTH)
+				windoor.unres_sides &= ~EAST
+				windoor.unres_sides &= ~WEST
+			if(EAST,WEST)
+				windoor.unres_sides &= ~NORTH
+				windoor.unres_sides &= ~SOUTH
+		windoor.unres_sensor = TRUE
+	electronics.forceMove(windoor)
+	windoor.electronics = electronics
+	windoor.autoclose = TRUE
+	windoor.close()
+	windoor.update_appearance()
+
+	qdel(src)
 
 /obj/structure/windoor_assembly/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation

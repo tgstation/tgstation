@@ -187,7 +187,7 @@
 	grabbed_atom.cut_overlay(kinesis_icon)
 	QDEL_NULL(kinesis_beam)
 	if(isliving(grabbed_atom))
-		remove_traits(grabbed_atom, list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), REF(src))
+		grabbed_atom.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), REF(src))
 	REMOVE_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
 	if(!isitem(grabbed_atom))
 		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x, pixel_y = grabbed_atom.base_pixel_y)
@@ -252,12 +252,16 @@
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
 
+/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/locked
+	core_removable = FALSE
+
 /obj/item/mod/module/anomaly_locked/kinesis/prototype
 	name = "MOD prototype kinesis module"
 	prebuilt = TRUE
 	complexity = 0
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE
+	core_removable = FALSE
 
 /obj/item/mod/module/anomaly_locked/kinesis/plus
 	name = "MOD kinesis+ module"

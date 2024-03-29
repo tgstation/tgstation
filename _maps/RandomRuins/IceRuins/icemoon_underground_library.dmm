@@ -279,7 +279,7 @@
 /area/ruin/unpowered/buried_library)
 "bz" = (
 /obj/item/flashlight/lantern/jade{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
@@ -337,7 +337,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/secretrecipe,
 /obj/item/flashlight/lantern/jade{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)

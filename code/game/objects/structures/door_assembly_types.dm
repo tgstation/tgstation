@@ -272,7 +272,7 @@
 	base_name = "large public airlock"
 
 /obj/structure/door_assembly/door_assembly_material/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/turf/T = get_turf(src)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material
@@ -293,4 +293,5 @@
 /obj/structure/door_assembly/door_assembly_material/finish_door()
 	var/obj/machinery/door/airlock/door = ..()
 	door.set_custom_materials(custom_materials)
+	door.update_appearance()
 	return door

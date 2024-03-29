@@ -455,7 +455,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ch" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "Speedy* Recovery"
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -478,7 +478,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ck" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},

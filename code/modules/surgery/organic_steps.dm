@@ -77,7 +77,7 @@
 
 /datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_bodypart_damage(20,0)
+		target.heal_bodypart_damage(20, 0, target_zone = target_zone)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
@@ -137,7 +137,7 @@
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_bodypart_damage(45,0)
+		target.heal_bodypart_damage(45, 0, target_zone = target_zone)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
@@ -156,8 +156,8 @@
 		/obj/item/melee/arm_blade = 75,
 		/obj/item/fireaxe = 50,
 		/obj/item/hatchet = 35,
-		/obj/item/knife/butcher = 25,
-		/obj/item = 20) //20% success (sort of) with any sharp item with a force >= 10
+		/obj/item/knife/butcher = 35,
+		/obj/item = 25) //20% success (sort of) with any sharp item with a force >= 10
 	time = 54
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/surgery/saw.ogg',

@@ -138,7 +138,7 @@
 	else
 		thank_you_message = "xenofauna combat effectiveness"
 
-	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on <b>[thank_you_message]<b>.</span>"
+	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on <b>[thank_you_message]</b>.</span>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div> <br>"
 

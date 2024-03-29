@@ -94,6 +94,7 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		pAI.host_scan(PAI_SCAN_MASTER)
 		return TRUE
+
 /atom/movable/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"
@@ -147,10 +148,11 @@
 	required_software = "Photography Module"
 
 /atom/movable/screen/pai/image_take/Click()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.camera.toggle_camera_mode(usr)
+	pAI.aicamera.toggle_camera_mode(usr)
 
 /atom/movable/screen/pai/image_view
 	name = "View Images"
@@ -161,7 +163,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.camera.viewpictures(usr)
+	pAI.aicamera.viewpictures(usr)
 
 /atom/movable/screen/pai/radio
 	name = "radio"
@@ -177,7 +179,6 @@
 /datum/hud/pai/New(mob/living/silicon/pai/owner)
 	..()
 	var/atom/movable/screen/using
-	var/mob/living/silicon/pai/mypai = mymob
 
 // Software menu
 	using = new /atom/movable/screen/pai/software(null, src)
@@ -238,9 +239,8 @@
 	using = new /atom/movable/screen/pai/modpc(null, src)
 	using.screen_loc = ui_pai_mod_int
 	static_inventory += using
-	mypai.pda_button = using
 	var/atom/movable/screen/pai/modpc/tablet_button = using
-	tablet_button.pAI = mypai
+	tablet_button.pAI = mymob
 
 // Internal GPS
 	using = new /atom/movable/screen/pai/internal_gps(null, src)

@@ -44,6 +44,7 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM), PROC_REF(on_attack))
 	else if(ismob(parent))
 		register_antimagic_signals(parent)
 	else
@@ -55,7 +56,7 @@
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
 
-/datum/component/anti_magic/Destroy(force, silent)
+/datum/component/anti_magic/Destroy(force)
 	drain_antimagic = null
 	expiration = null
 	return ..()
@@ -131,3 +132,7 @@
 		return COMPONENT_MAGIC_BLOCKED
 
 	return NONE
+
+/datum/component/anti_magic/proc/on_attack(atom/movable/source, atom/target, mob/user)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(target, COMSIG_ATOM_HOLYATTACK, source, user, antimagic_flags)

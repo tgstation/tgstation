@@ -57,7 +57,9 @@
 				/obj/item/clothing/suit/costume/gothcoat = 1,
 				/obj/item/clothing/glasses/eyepatch = 1,
 				/obj/item/clothing/glasses/eyepatch/medical = 1,
-				/obj/item/clothing/under/costume/gi = 1,
+				/obj/item/clothing/under/costume/gi = 4,
+				/obj/item/clothing/head/soft/propeller_hat = 1,
+				/obj/item/clothing/neck/bowtie/rainbow = 1,
 			),
 		),
 		list(
@@ -66,6 +68,8 @@
 			"products" = list(
 				/obj/item/clothing/suit/costume/imperium_monk = 1,
 				/obj/item/clothing/suit/chaplainsuit/holidaypriest = 1,
+				/obj/item/clothing/suit/chaplainsuit/habit = 1,
+				/obj/item/clothing/head/chaplain/habit_veil = 1,
 				/obj/item/clothing/suit/chaplainsuit/whiterobe = 1,
 				/obj/item/clothing/head/wizard/marisa/fake = 1,
 				/obj/item/clothing/suit/wizrobe/marisa/fake = 1,
@@ -203,6 +207,7 @@
 		/obj/item/clothing/mask/muzzle = 2,
 		/obj/item/clothing/shoes/ducky_shoes = 1,
 		/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
+		/obj/item/clothing/shoes/clown_shoes/moffers = 1,
 		/obj/item/clothing/suit/costume/judgerobe = 1,
 		/obj/item/clothing/head/costume/lobsterhat = 1,
 		/obj/item/clothing/under/costume/lobster = 1,

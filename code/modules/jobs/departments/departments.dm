@@ -25,6 +25,16 @@
 	department_jobs += job
 	job.departments_bitflags |= department_bitflags
 
+/// Handles removing jobs from the department and removing job bitflags.
+/datum/job_department/proc/remove_job(datum/job/job_type)
+	for(var/datum/job/job_datum as anything in department_jobs)
+		if(job_datum.type == job_type)
+			department_jobs -= job_datum
+			job_datum.departments_bitflags -= department_bitflags
+			job_datum.job_flags &= ~JOB_NEW_PLAYER_JOINABLE
+			job_datum.spawn_positions = 0
+			job_datum.total_positions = 0
+
 /// Returns a nation name for this department.
 /datum/job_department/proc/generate_nation_name()
 	var/static/list/nation_suffixes = list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")

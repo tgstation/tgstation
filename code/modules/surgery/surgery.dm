@@ -20,17 +20,19 @@
 	var/list/possible_locs = list()
 	///Mobs that are valid to have surgery performed on them.
 	var/list/target_mobtypes = list(/mob/living/carbon/human)
-	///The person the surgery is being performed on. Funnily enough, it isn't always a carbon.
-	var/mob/living/carbon/target
-	///The specific bodypart being operated on.
-	var/obj/item/bodypart/operated_bodypart
-	///The wound datum that is being operated on.
-	var/datum/wound/operated_wound
-	///Types of wounds this surgery can target.
-	var/datum/wound/targetable_wound
 
+	///The person the surgery is being performed on. Funnily enough, it isn't always a carbon.
+	VAR_FINAL/mob/living/carbon/target
+	///The specific bodypart being operated on.
+	VAR_FINAL/obj/item/bodypart/operated_bodypart
+	///The wound datum that is being operated on.
+	VAR_FINAL/datum/wound/operated_wound
+
+	///Types of wounds this surgery can target.
+	var/targetable_wound
 	///The types of bodyparts that this surgery can have performed on it. Used for augmented surgeries.
 	var/requires_bodypart_type = BODYTYPE_ORGANIC
+
 	///The speed modifier given to the surgery through external means.
 	var/speed_modifier = 0
 	///Whether the surgery requires research to do. You need to add a design if using this!
@@ -69,6 +71,8 @@
 
 
 /datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
+	SHOULD_CALL_PARENT(TRUE)
+
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
@@ -102,6 +106,7 @@
 		return FALSE
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
+	return .
 
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)

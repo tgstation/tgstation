@@ -98,6 +98,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/restock_tracker,
 	)
 
 /**
@@ -116,18 +117,13 @@
  * Engineering
  */
 /obj/item/computer_disk/engineering
-	name = "station engineer data disk"
+	name = "engineering data disk"
 	desc = "Removable disk used to download engineering-related tablet apps."
 	icon_state = "datadisk6"
 	starting_programs = list(
+		/datum/computer_file/program/alarm_monitor,
+		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/supermatter_monitor,
+
 	)
 
-/obj/item/computer_disk/atmos
-	name = "atmospheric technician data disk"
-	desc = "Removable disk used to download atmos-related tablet apps."
-	icon_state = "datadisk6"
-	starting_programs = list(
-		/datum/computer_file/program/atmosscan,
-		/datum/computer_file/program/alarm_monitor,
-	)

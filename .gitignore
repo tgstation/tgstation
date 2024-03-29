@@ -6,6 +6,7 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
+/cache/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -23,9 +24,6 @@
 
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so
-
-# Remove when removing byond_status
-!/libbyond_sleeping_procs.so
 
 #Ignore compiled files and other files generated during compilation.
 *.mdme
@@ -194,6 +192,9 @@ Temporary Items
 /_maps/**/backup/
 /_maps/templates.dm
 
+#dmm palette file. You really should be using StrongDMM instead.
+*.dmm-pal
+
 #dmdoc default folder
 /dmdoc
 
@@ -240,3 +241,6 @@ define_sanity_output.txt
 # ezdb
 /db/
 /config/ezdb.txt
+
+# Running OpenDream locally
+tgstation.json

@@ -48,11 +48,6 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
-	if(aicamera.in_camera_mode) //Cyborg picture taking
-		aicamera.toggle_camera_mode(sound = FALSE)
-		aicamera.captureimage(A, usr)
-		return
-
 	var/obj/item/W = get_active_held_item()
 
 	if(!W && get_dist(src,A) <= interaction_range)
@@ -195,7 +190,7 @@
 	change attack_robot() above to the proper function
 */
 /mob/living/silicon/robot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	A.attack_robot(src)
 

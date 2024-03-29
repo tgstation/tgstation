@@ -31,11 +31,10 @@
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
-	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.locked = STORAGE_FULLY_LOCKED
-	qdel(modstorage)
+	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
-		atom_storage.remove_all(get_turf(src))
+		atom_storage.remove_all(mod.drop_location())
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
@@ -169,11 +168,52 @@
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
 	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
-		mounting of more jets and a red paint applied on it."
+		mounting of more jets and application of red paint."
 	icon_state = "jetpack_advanced"
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
+
+/// Cooldown to use if we didn't actually launch a jump jet
+#define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
+
+///Jump Jet - Briefly removes the effect of gravity and pushes you up one z-level if possible.
+/obj/item/mod/module/jump_jet
+	name = "MOD ionic jump jet module"
+	desc = "A specialised ionic thruster which provides a short but powerful boost capable of pushing against gravity, \
+		after which time it needs to recharge."
+	icon_state = "jump_jet"
+	module_type = MODULE_USABLE
+	complexity = 3
+	cooldown_time = 30 SECONDS
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	incompatible_modules = list(/obj/item/mod/module/jump_jet)
+
+/obj/item/mod/module/jump_jet/on_use()
+	. = ..()
+	if (!.)
+		return FALSE
+	if (DOING_INTERACTION(mod.wearer, mod.wearer))
+		balloon_alert(mod.wearer, "busy!")
+		return
+	balloon_alert(mod.wearer, "launching...")
+	mod.wearer.Shake(duration = 1 SECONDS)
+	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
+		start_cooldown(FAILED_ACTIVATION_COOLDOWN) // Don't go on full cooldown if we failed to launch
+		return FALSE
+	playsound(mod.wearer, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
+	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
+	var/turf/launch_from = get_turf(mod.wearer)
+	if (mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS))
+		launch_from.visible_message(span_warning("[mod.wearer] rockets into the air!"))
+	new /obj/effect/temp_visual/jet_plume(launch_from)
+
+	var/obj/item/mod/module/jetpack/linked_jetpack = locate() in mod.modules
+	if (!isnull(linked_jetpack) && !linked_jetpack.active)
+		linked_jetpack.on_activation()
+	return TRUE
+
+#undef FAILED_ACTIVATION_COOLDOWN
 
 ///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
 /obj/item/mod/module/status_readout
@@ -294,10 +334,10 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
-	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
-	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/advanced
 	name = "MOD advanced EMP shield module"
@@ -325,7 +365,7 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 4
 	light_power = 1
@@ -336,6 +376,12 @@
 	var/min_range = 2
 	/// Maximum range we can set.
 	var/max_range = 5
+
+/obj/item/mod/module/flashlight/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
+/obj/item/mod/module/flashlight/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR)
 
 /obj/item/mod/module/flashlight/on_activation()
 	. = ..()
@@ -351,6 +397,12 @@
 		return
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
+
+/obj/item/mod/module/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(active)
+		on_deactivation()
+		return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_range
@@ -383,6 +435,21 @@
 			mod.wearer.update_clothing(mod.slot_flags)
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
+
+///Like the flashlight module, except the light color is stuck to black and cannot be changed.
+/obj/item/mod/module/flashlight/darkness
+	name = "MOD flashdark module"
+	desc = "A quirky pair of configurable flashdarks installed on the sides of the helmet, \
+		useful for providing darkness at a configurable range."
+	light_color = COLOR_BLACK
+	light_system = OVERLAY_LIGHT
+	light_range = 2
+	min_range = 1
+	max_range = 3
+
+/obj/item/mod/module/flashlight/darkness/get_configuration()
+	. = ..()
+	. -= "light_color"
 
 ///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
@@ -435,12 +502,16 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
-	if(!drain_power(use_power_cost*levels))
-		return
+	SIGNAL_HANDLER
+	if(!drain_power(use_power_cost * levels))
+		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
-	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
-	return NO_Z_IMPACT_DAMAGE
+	mod.wearer.visible_message(
+		span_notice("[mod.wearer] lands on [fell_on] safely."),
+		span_notice("[src] protects you from the damage!"),
+	)
+	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 
 ///Thermal Regulator - Regulates the wearer's core temperature.
 /obj/item/mod/module/thermal_regulator
@@ -710,6 +781,15 @@
 		return
 	mod.core.add_charge(power_per_step)
 
+/obj/item/mod/module/hat_stabilizer/syndicate
+	name = "MOD elite hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
+		You still need to take the hat off your head while the helmet deploys, though. This is a must-have for \
+		Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit."
+	complexity = 0
+	removable = FALSE
+
 /// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
 /obj/item/mod/module/recycler
 	name = "MOD recycler module"
@@ -735,19 +815,7 @@
 		/obj/item/cigbutt,
 	)
 	/// Materials that will be extracted.
-	var/list/accepted_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-	)
+	var/list/accepted_mats
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
@@ -757,12 +825,17 @@
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
+
+	if(!length(accepted_mats))
+		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+
 	container = AddComponent( \
 		/datum/component/material_container, \
-		accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, \
-		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
+		accepted_mats, \
+		50 * SHEET_MATERIAL_AMOUNT, \
+		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
-			COMSIG_MATCONTAINER_SHEETS_RETRIVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
+			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \
 	)
 
@@ -812,7 +885,7 @@
 		insert_trash(new_atom)
 
 /obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
-	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)

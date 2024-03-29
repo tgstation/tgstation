@@ -22,7 +22,7 @@
 
 	controller.clear_blackboard_key(target_key)
 	var/turf/our_turf = get_turf(spider)
-	if (is_valid_web_turf(our_turf))
+	if (is_valid_web_turf(our_turf, spider))
 		controller.set_blackboard_key(target_key, our_turf)
 		finish_action(controller, succeeded = TRUE)
 		return
@@ -31,7 +31,7 @@
 	for (var/i in 1 to scan_range)
 		turfs_by_range["[i]"] = list()
 	for (var/turf/turf_in_view in oview(scan_range, our_turf))
-		if (!is_valid_web_turf(turf_in_view))
+		if (!is_valid_web_turf(turf_in_view, spider))
 			continue
 		turfs_by_range["[get_dist(our_turf, turf_in_view)]"] += turf_in_view
 
@@ -62,12 +62,9 @@
 	var/target_key = BB_SPIDER_WEB_TARGET
 
 /datum/ai_planning_subtree/spin_web/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/using_action = controller.blackboard[action_key]
-	var/turf/target_turf = controller.blackboard[target_key]
-	if (QDELETED(using_action) || QDELETED(target_turf))
-		return
-	controller.queue_behavior(/datum/ai_behavior/spin_web, action_key, target_key)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if (controller.blackboard_key_exists(action_key) && controller.blackboard_key_exists(target_key))
+		controller.queue_behavior(/datum/ai_behavior/spin_web, action_key, target_key)
+		return SUBTREE_RETURN_FINISH_PLANNING
 
 /// Move to an unwebbed nearby turf and web it up
 /datum/ai_behavior/spin_web

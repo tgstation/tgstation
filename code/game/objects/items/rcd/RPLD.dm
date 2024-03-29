@@ -9,15 +9,16 @@
 	worn_icon_state = "plumbing"
 	icon = 'icons/obj/tools.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	///it does not make sense why any of these should be installed.
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS  | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 	matter = 200
 	max_matter = 200
 
+	///category of design selected
+	var/selected_category
 	///type of the plumbing machine
 	var/obj/machinery/blueprint = null
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
-	var/list/plumbing_design_types
+	var/list/plumbing_design_types = null
 	///Current selected layer
 	var/current_layer = "Default Layer"
 	///Current selected color, for ducts
@@ -68,14 +69,15 @@
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
 
-	plumbing_design_types = general_design_types
+	if(isnull(plumbing_design_types))
+		plumbing_design_types = general_design_types
 
+	selected_category = plumbing_design_types[1]
 	/**
-	 * plumbing_design_types[1] = "Synthesizers"
 	 * plumbing_design_types["Synthesizers"] = <list of designs under synthesizers>
 	 * <list of designs under synthesizers>[1] = <first design in this list>
 	 */
-	blueprint = plumbing_design_types[plumbing_design_types[1]][1]
+	blueprint = plumbing_design_types[selected_category][1]
 
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
@@ -104,7 +106,7 @@
 /obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PlumbingService", name)
+		ui = new(user, src, "RapidPlumbingDevice", name)
 		ui.open()
 
 /obj/item/construction/plumbing/ui_assets(mob/user)
@@ -113,15 +115,9 @@
 	)
 
 /obj/item/construction/plumbing/ui_static_data(mob/user)
-	return list("paint_colors" = GLOB.pipe_paint_colors)
-
-/obj/item/construction/plumbing/ui_data(mob/user)
 	var/list/data = ..()
 
-	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
-	data["selected_color"] = current_color
-	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
-	data["selected_recipe"] = initial(blueprint.name)
+	data["paint_colors"] = GLOB.pipe_paint_colors
 
 	var/category_list = list()
 	for(var/category_name in plumbing_design_types)
@@ -140,21 +136,24 @@
 				"name" = initial(recipe.name),
 			))
 
-			//Set selected category
-			if(blueprint == recipe)
-				data["selected_category"] = category_name
-
 	data["categories"] = list()
 	for(var/category_name in category_list)
 		data["categories"] += list(category_list[category_name])
 
 	return data
 
-/obj/item/construction/plumbing/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
+/obj/item/construction/plumbing/ui_data(mob/user)
+	var/list/data = ..()
 
+	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
+	data["selected_color"] = current_color
+	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
+	data["selected_category"] = selected_category
+	data["selected_recipe"] = initial(blueprint.name)
+
+	return data
+
+/obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("color")
 			var/color = params["paint_color"]
@@ -168,10 +167,13 @@
 				current_layer = layer
 		if("recipe")
 			var/category = params["category"]
-			if(!plumbing_design_types[category])
-				return FALSE
 
-			var/design = plumbing_design_types[category][text2num(params["id"]) + 1]
+			var/list/designs = plumbing_design_types[category]
+			if(!length(designs))
+				return FALSE
+			selected_category = category
+
+			var/design = designs[text2num(params["id"]) + 1]
 			if(!design)
 				return FALSE
 			blueprint = design
@@ -329,9 +331,9 @@
 	)
 
 /obj/item/construction/plumbing/research/Initialize(mapload)
-	. = ..()
-
 	plumbing_design_types = research_design_types
+
+	. = ..()
 
 /obj/item/construction/plumbing/service
 	name = "service plumbing constructor"
@@ -370,7 +372,7 @@
 	)
 
 /obj/item/construction/plumbing/service/Initialize(mapload)
-	. = ..()
-
 	plumbing_design_types = service_design_types
+
+	. = ..()
 

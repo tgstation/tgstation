@@ -9,7 +9,9 @@ If you're wanting to add easy recolors for your sprite then this is the system f
 
 ## Other Documents
 
+- [Troubleshooting help](https://hackmd.io/@tgstation/GAGS-Troubleshooting)
 - [Basic follow along guide on hackmd](https://hackmd.io/@tgstation/GAGS-Walkthrough)
+- [Layer types list](https://hackmd.io/@tgstation/GAGS-Layer-Types)
 
 ## Broad overview
 

@@ -189,7 +189,7 @@
 
 	return ..()
 
-/obj/machinery/power/smes/on_deconstruction()
+/obj/machinery/power/smes/on_deconstruction(disassembled)
 	for(var/obj/item/stock_parts/cell/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 

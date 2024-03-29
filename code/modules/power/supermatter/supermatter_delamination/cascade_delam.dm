@@ -28,8 +28,7 @@
 		"Something feels very off.",
 		"A drowning sense of dread washes over you.",
 	)
-	for(var/mob/victim as anything in GLOB.player_list)
-		to_chat(victim, span_danger(pick(messages)))
+	dispatch_announcement_to_players(span_danger(pick(messages)), should_play_sound = FALSE)
 
 	return TRUE
 
@@ -90,7 +89,7 @@
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
 	a subject within [station_name()], a resonance collapse may occur.",
-	"Nanotrasen Star Observation Association")
+	"Nanotrasen Star Observation Association", 'sound/misc/airraid.ogg')
 	return TRUE
 
 /// Signal calls cant sleep, we gotta do this.

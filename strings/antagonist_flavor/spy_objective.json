@@ -1,0 +1,84 @@
+{
+	"objective_body": [
+		"Assassinate a high profile crewmember without being caught.",
+		"Cause a disaster to shake the station.",
+		"Cause a station evacuation.",
+		"Deprive the station of as many @pick(stealables) as you can.",
+		"Ensure @pick(department) is @pick(affected) by the end of the shift.",
+		"Ensure @pick(location) is @pick(affected) by the end of the shift.",
+		"Ensure no heads of staff @pick(escape) the station.",
+		"Ensure no members of @pick(department) @pick(escape) the station.",
+		"Ensure no rival @pick(rivals) @pick(escape) the station.",
+		"Frame a crewmember for a crime.",
+		"Free the station's AI from its laws.",
+		"Halt the station's @pick(happenings).",
+		"Invoke a mutiny against the heads of staff.",
+		"Make it difficult, but not impossible to @pick(escape) the station.",
+		"Sabotage the station's power grid or engine.",
+		"Steal as many @pick(stealables) as you can.",
+		"Take control of the station as the new Captain.",
+		"Take hostages of high value crewmembers and demand a ransom."
+	],
+	"department": [
+		"Security",
+		"Engineering",
+		"Medical",
+		"Science",
+		"Supply"
+	],
+	"location": [
+		"engineering",
+		"genetics",
+		"hydroponics",
+		"medbay",
+		"the bar",
+		"the bridge",
+		"the brig",
+		"the cargo bay",
+		"the chapel",
+		"the kitchen",
+		"the library",
+		"xenobiology"
+	],
+	"happenings": [
+		"research",
+		"cargo operations",
+		"communications",
+		"genetic research",
+		"mining operation"
+	],
+	"affected": [
+		"ablaze",
+		"burning",
+		"covered in blood",
+		"demolished",
+		"destroyed",
+		"engulfed in flames",
+		"obliterated",
+		"on fire",
+		"ruined",
+		"sabotaged",
+		"wrecked"
+	],
+	"rivals": [
+		"agents",
+		"moles",
+		"operatives",
+		"spies",
+		"traitors"
+	],
+	"stealables": [
+		"items",
+		"objects",
+		"things",
+		"tools",
+		"weapons"
+	],
+	"escape": [
+		"depart",
+		"escape",
+		"evacuate",
+		"flee",
+		"leave"
+	]
+}

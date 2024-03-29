@@ -168,7 +168,7 @@
 		/obj/item/food/onion_slice = 1,
 		/datum/reagent/consumable/nutriment/soup/teriyaki = 4,
 	)
-	result = /obj/item/food/salad/bibimbap
+	result = /obj/item/food/salad/bulgogi_noodles
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/yakisoba_katsu
@@ -648,7 +648,7 @@
 		/obj/item/food/friedegg = 1,
 		/obj/item/food/grown/chili = 1,
 		/datum/reagent/consumable/yoghurt = 5,
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 	)
 	result = /obj/item/food/cilbir
 	category = CAT_MARTIAN

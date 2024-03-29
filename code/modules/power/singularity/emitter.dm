@@ -141,6 +141,9 @@
 	if(!active || !powernet)
 		icon_state = base_icon_state
 		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	return ..()
 
@@ -263,7 +266,7 @@
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/item)
 	..()
@@ -310,7 +313,7 @@
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
 	if(..())
 		return TRUE
-	default_deconstruction_screwdriver(user, "emitter_open", "emitter", item)
+	default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, item)
 	return TRUE
 
 /// Attempt to toggle the controls lock of the emitter
@@ -422,7 +425,7 @@
 			return
 	buckled_mob.forceMove(get_turf(src))
 	..()
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove01.ogg', 50, TRUE)
 	buckled_mob.pixel_y = 14
 	layer = 4.1
 	if(buckled_mob.client)
@@ -432,7 +435,7 @@
 	auto.Grant(buckled_mob, src)
 
 /datum/action/innate/proto_emitter
-	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	///Stores the emitter the user is currently buckled on
 	var/obj/machinery/power/emitter/prototype/proto_emitter
 	///Stores the mob instance that is buckled to the emitter

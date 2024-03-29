@@ -64,15 +64,18 @@
 /obj/item/banner/proc/check_inspiration(mob/living/carbon/human/H) //Banner-specific conditions for being eligible
 	return
 
-/obj/item/banner/proc/inspiration(mob/living/carbon/human/H)
-	H.adjustBruteLoss(-15)
-	H.adjustFireLoss(-15)
-	H.AdjustStun(-40)
-	H.AdjustKnockdown(-40)
-	H.AdjustImmobilized(-40)
-	H.AdjustParalyzed(-40)
-	H.AdjustUnconscious(-40)
-	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
+/obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
+	inspired_human.AdjustStun(-40)
+	inspired_human.AdjustKnockdown(-40)
+	inspired_human.AdjustImmobilized(-40)
+	inspired_human.AdjustParalyzed(-40)
+	inspired_human.AdjustUnconscious(-40)
+	playsound(inspired_human, 'sound/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return
@@ -128,10 +131,13 @@
 				/obj/item/clothing/under/rank/medical/doctor = 1)
 	category = CAT_MISC
 
-/obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
-	H.adjustToxLoss(-15)
-	H.setOxyLoss(0)
-	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
+/obj/item/banner/medical/special_inspiration(mob/living/carbon/human/inspired_human)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustToxLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
+	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"

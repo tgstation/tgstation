@@ -58,6 +58,12 @@
 /// Removes everything enclose in < and > inclusive of the bracket, and limits the length of the message.
 #define STRIP_HTML_FULL(text, limit) (GLOB.html_tags.Replace(copytext(text, 1, limit), ""))
 
+/**
+ * stuff like `copytext(input, length(input))` will trim the last character of the input,
+ * because DM does it so it copies until the char BEFORE the `end` arg, so we need to bump `end` by 1 in these cases.
+ */
+#define PREVENT_CHARACTER_TRIM_LOSS(integer) (integer + 1)
+
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"
 
@@ -100,3 +106,5 @@
 #define NINJA_FILE "ninja.json"
 /// File loation for title splashes
 #define SPLASH_FILE "splashes.json"
+///File location for mother hallucination lines
+#define MOTHER_FILE "mother.json"
