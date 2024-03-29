@@ -2432,6 +2432,11 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/station/security/office)
+"aTr" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/sign/departments/morgue/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "aTv" = (
 /obj/machinery/door/poddoor{
 	id = "Secure Storage";
@@ -20075,6 +20080,10 @@
 /obj/item/camera,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"imZ" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/turf/closed/wall/r_wall,
+/area/station/ai_monitored/turret_protected/aisat/uppernorth)
 "ine" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -29696,6 +29705,11 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"miI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/command/gateway)
 "miL" = (
 /obj/effect/landmark/start/depsec/engineering,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -34320,10 +34334,9 @@
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "ogb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/command/gateway)
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/turf/closed/wall/r_wall,
+/area/station/ai_monitored/turret_protected/aisat/uppersouth)
 "ogH" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -58046,11 +58059,6 @@
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
-"xJM" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/sign/departments/morgue/directional/south,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "xJQ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -80528,7 +80536,7 @@ tHF
 tCE
 bAw
 pBV
-ogb
+miI
 ttT
 jOr
 pui
@@ -139929,7 +139937,7 @@ evQ
 evQ
 evQ
 fpi
-xJM
+aTr
 iMq
 saA
 cDV
@@ -159895,7 +159903,7 @@ hhX
 kkx
 kkx
 vxX
-mQE
+imZ
 mQE
 fTj
 wHJ
@@ -159910,7 +159918,7 @@ wHJ
 tww
 ffT
 sJT
-sJT
+ogb
 vxX
 vxX
 hhX
