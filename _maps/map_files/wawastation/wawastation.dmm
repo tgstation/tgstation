@@ -12172,13 +12172,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "eYO" = (
-/obj/machinery/modular_computer/preset/cargochat{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/secure_safe/caps_spare,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eYT" = (
@@ -15994,10 +15993,10 @@
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "gAg" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/sign/departments/morgue/directional/south,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
+/obj/structure/bodycontainer/morgue,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/morgue)
 "gAv" = (
 /obj/structure/table,
 /obj/item/storage/box/evidence,
@@ -30159,8 +30158,6 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
-/obj/structure/secure_safe/caps_spare,
-/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mrr" = (
@@ -34323,10 +34320,10 @@
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "ogb" = (
-/obj/structure/bodycontainer/morgue,
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/morgue)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/command/gateway)
 "ogH" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -38802,11 +38799,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"pVA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/command/gateway)
 "pVC" = (
 /obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -58054,6 +58046,11 @@
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"xJM" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/sign/departments/morgue/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "xJQ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -80531,7 +80528,7 @@ tHF
 tCE
 bAw
 pBV
-pVA
+ogb
 ttT
 jOr
 pui
@@ -139679,7 +139676,7 @@ lNv
 iMq
 ygh
 wca
-ogb
+gAg
 oVC
 vYQ
 ezM
@@ -139932,7 +139929,7 @@ evQ
 evQ
 evQ
 fpi
-gAg
+xJM
 iMq
 saA
 cDV
