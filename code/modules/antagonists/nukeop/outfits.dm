@@ -114,6 +114,17 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	tc = 0
 
+/datum/outfit/syndicate/support/plasmaman
+	name = "Nuclear Operative Overwatch Agent (Plasmaman)"
+	back = /obj/item/storage/backpack/satchel
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	glasses = /obj/item/clothing/glasses/overwatch
+	suit = /obj/item/clothing/suit/jacket/letterman_syndie
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	command_radio = TRUE
+	tc = 0
+
 /datum/outfit/syndicate/reinforcement/gorlex
 	name = "Syndicate Operative - Gorlex Reinforcement"
 	suit = /obj/item/clothing/suit/armor/vest/alt
