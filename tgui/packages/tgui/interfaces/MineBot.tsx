@@ -178,8 +178,9 @@ export const MineBot = (props) => {
                     width="50%"
                     value={selectedDistance}
                     minValue={0}
+                    step={1}
                     maxValue={5}
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       act('change_min_distance', {
                         distance: value,
                       })
