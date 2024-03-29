@@ -12,7 +12,7 @@
 	///cooldown till we can drop the next bomb
 	COOLDOWN_DECLARE(bomb_timer)
 
-/obj/item/minebot_remote_control/Moved(atom/old_loc, ...)
+/obj/item/minebot_remote_control/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	clear_priming()
 
