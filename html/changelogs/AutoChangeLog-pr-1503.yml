@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "The experimental cloner ghost poll now shows what the clone will actually look like, rather than a nugget."
-  - bugfix: "The experimental cloner should 100% work properly now."
-  - qol: "Experimental cloners no longer delete records upon a successful clone, but they will no longer start clones while autoprocessing is enabled either."

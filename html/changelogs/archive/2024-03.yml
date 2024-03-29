@@ -506,3 +506,14 @@
   Tractor Mann:
   - rscadd: Now thats what i call music! 22 new songs have been added to the bartenders
       jukebox and lobby!
+2024-03-29:
+  Absolucy:
+  - bugfix: The experimental cloner ghost poll now shows what the clone will actually
+      look like, rather than a nugget.
+  - bugfix: The experimental cloner should 100% work properly now.
+  - qol: Experimental cloners no longer delete records upon a successful clone, but
+      they will no longer start clones while autoprocessing is enabled either.
+  AlbertNanotracen:
+  - rscadd: Added a station version of sandy dirt floors.
+  - qol: Dirt in chicken pens can be crowbarred up and replaced.
+  - image: Added a new icon for the station version of the sandy dirt tile

@@ -1,6 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - rscadd: "Added a station version of sandy dirt floors."
-  - qol: "Dirt in chicken pens can be crowbarred up and replaced."
-  - image: "Added a new icon for the station version of the sandy dirt tile"
