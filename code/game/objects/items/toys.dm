@@ -293,7 +293,7 @@
 
 /obj/item/toy/balloon_nukie
 	name = "balloon nukie"
-	desc = "A balloon effigy of syndicate's nuclear operative. Either made to appease to them and pray for survival, or to poke fun out of them."
+	desc = "A balloon effigy of syndicate's nuclear operative. Either made to appease them and pray for survival, or to poke fun at them."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_nukie"
 	throwforce = 0
