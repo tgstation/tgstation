@@ -54,6 +54,6 @@
 	desc = "An tenuously thin energy shield only capable of holding in air, but not solid objects or people."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old" // We should probably get these their own icon at some point
-	light_color = "#6496FA"
+	light_color = LIGHT_COLOR_BLUE
 	light_range = 4
 

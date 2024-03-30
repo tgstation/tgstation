@@ -145,7 +145,7 @@
 /obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
 	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
 
-/obj/item/stack/grind_requirements()
+/obj/item/stack/blend_requirements()
 	if(is_cyborg)
 		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
 		return

@@ -7,7 +7,8 @@
 	stop_automated_movement = TRUE
 	wander = FALSE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
+	unsuitable_atmos_damage = 0
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
@@ -97,7 +98,7 @@
 	var/datum/atom_hud/data/bot_path/path_hud
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
-	var/path_image_color = "#FFFFFF"
+	var/path_image_color = COLOR_WHITE
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 

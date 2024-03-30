@@ -68,7 +68,7 @@
 	///particle effect of playing this tune
 	var/particles_path = /particles/musical_notes
 	///what the instrument will glow when playing
-	var/glow_color = "#000000"
+	var/glow_color = COLOR_BLACK
 
 /datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
 	. = ..()

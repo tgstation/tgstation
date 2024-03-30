@@ -67,12 +67,19 @@
 	icon_state = "kitty"
 	visual = TRUE
 	damage_multiplier = 2
+	// Keeps track of which cat ears sprite is associated with this.
+	var/variant = "Cat"
+
+/obj/item/organ/internal/ears/cat/Initialize(mapload, variant_pref)
+	. = ..()
+	if(variant_pref)
+		variant = variant_pref
 
 /obj/item/organ/internal/ears/cat/on_mob_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
-		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"
+		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = variant
 		ear_owner.dna.update_uf_block(DNA_EARS_BLOCK)
 		ear_owner.update_body()
 

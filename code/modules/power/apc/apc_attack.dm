@@ -34,7 +34,6 @@
 		cell = attacking_object
 		user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"))
 		balloon_alert(user, "cell inserted")
-		chargecount = 0
 		update_appearance()
 		return
 
@@ -117,7 +116,7 @@
 			if(machine_stat & BROKEN)
 				balloon_alert(user, "frame is too damaged!")
 				return
-			if(!pseudocircuit.adapt_circuit(user, 50))
+			if(!pseudocircuit.adapt_circuit(user, circuit_cost = 50 KILO JOULES))
 				return
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt a power control board and click it into place in [src]'s guts."))
@@ -129,12 +128,11 @@
 			if(machine_stat & MAINT)
 				balloon_alert(user, "no board for a cell!")
 				return
-			if(!pseudocircuit.adapt_circuit(user, 500))
+			if(!pseudocircuit.adapt_circuit(user, circuit_cost = 500 KILO JOULES))
 				return
 			var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
 			bad_cell.forceMove(src)
 			cell = bad_cell
-			chargecount = 0
 			user.visible_message(span_notice("[user] fabricates a weak power cell and places it into [src]."), \
 			span_warning("Your [pseudocircuit.name] whirrs with strain as you create a weak power cell and place it into [src]!"))
 			update_appearance()
@@ -246,7 +244,7 @@
 		while(do_after(user, APC_DRAIN_TIME, target = src))
 			balloon_alert(ethereal, "transferred power")
 			stomach.adjust_charge(-APC_POWER_GAIN)
-			cell.give(APC_POWER_GAIN)
+			cell.give(-stomach.adjust_charge(-APC_POWER_GAIN))
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 

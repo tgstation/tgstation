@@ -72,11 +72,6 @@
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
-#define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
-
-#define MONKEY_BODYPART "monkey"
-#define ALIEN_BODYPART "alien"
-#define LARVA_BODYPART "larva"
 
 //Bodytype defines for surgery, and other misc things.
 ///The limb is organic.
@@ -215,26 +210,11 @@
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
-//Surgery Defines
-#define BIOWARE_GENERIC "generic"
-#define BIOWARE_NERVES "nerves"
-#define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_CORTEX "cortex"
-
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
-
-//Health doll screws for human mobs
-#define SCREWYDOLL_HEAD /obj/item/bodypart/head
-#define SCREWYDOLL_CHEST /obj/item/bodypart/chest
-#define SCREWYDOLL_L_ARM /obj/item/bodypart/arm/left
-#define SCREWYDOLL_R_ARM /obj/item/bodypart/arm/right
-#define SCREWYDOLL_L_LEG /obj/item/bodypart/leg/left
-#define SCREWYDOLL_R_LEG /obj/item/bodypart/leg/right
 
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
@@ -302,14 +282,14 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals
+//Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 400
-#define ETHEREAL_CHARGE_NORMAL 1000
-#define ETHEREAL_CHARGE_ALMOSTFULL 1500
-#define ETHEREAL_CHARGE_FULL 2000
-#define ETHEREAL_CHARGE_OVERLOAD 2500
-#define ETHEREAL_CHARGE_DANGEROUS 3000
+#define ETHEREAL_CHARGE_LOWPOWER (400 KILO JOULES)
+#define ETHEREAL_CHARGE_NORMAL (1 MEGA JOULES)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 MEGA JOULES)
+#define ETHEREAL_CHARGE_FULL (2 MEGA JOULES)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 MEGA JOULES)
+#define ETHEREAL_CHARGE_DANGEROUS (3 MEGA JOULES)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
@@ -325,6 +305,9 @@
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
+
+//Slime evolution cost in nutrition
+#define SLIME_EVOLUTION_COST 200
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
@@ -417,14 +400,6 @@
 #define COOLDOWN_UPDATE_ADD_RANGED "add_ranged"
 #define COOLDOWN_UPDATE_SET_ENRAGE "set_enrage"
 #define COOLDOWN_UPDATE_ADD_ENRAGE "add_enrage"
-#define COOLDOWN_UPDATE_SET_SPAWN "set_spawn"
-#define COOLDOWN_UPDATE_ADD_SPAWN "add_spawn"
-#define COOLDOWN_UPDATE_SET_HELP "set_help"
-#define COOLDOWN_UPDATE_ADD_HELP "add_help"
-#define COOLDOWN_UPDATE_SET_DASH "set_dash"
-#define COOLDOWN_UPDATE_ADD_DASH "add_dash"
-#define COOLDOWN_UPDATE_SET_TRANSFORM "set_transform"
-#define COOLDOWN_UPDATE_ADD_TRANSFORM "add_transform"
 #define COOLDOWN_UPDATE_SET_CHASER "set_chaser"
 #define COOLDOWN_UPDATE_ADD_CHASER "add_chaser"
 #define COOLDOWN_UPDATE_SET_ARENA "set_arena"
@@ -455,7 +430,6 @@
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
 #define APPRENTICE_AGE_MIN 29 //youngest an apprentice can be
 #define SHOES_SLOWDOWN 0 //How much shoes slow you down by default. Negative values speed you up
-#define SHOES_SPEED_SLIGHT SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
@@ -558,8 +532,6 @@
 #define RECENT_EXAMINE_MAX_WINDOW (2 SECONDS)
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_WINDOW (1 SECONDS)
-/// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
-#define EYE_CONTACT_WINDOW (2 SECONDS)
 /// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
 #define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
 
@@ -969,6 +941,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+
+/// The duration of the flip emote animation
+#define FLIP_EMOTE_DURATION 0.7 SECONDS
 
 // Sprites for photocopying butts
 #define BUTT_SPRITE_HUMAN_MALE "human_male"

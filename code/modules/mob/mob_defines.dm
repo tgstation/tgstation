@@ -140,9 +140,6 @@
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
 
-	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
-	var/datum/weakref/LAssailant = null
-
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 

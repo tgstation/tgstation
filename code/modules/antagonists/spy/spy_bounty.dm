@@ -133,13 +133,15 @@
 	do_sparks(3, FALSE, stealing)
 
 	// Don't mess with it while it's going away
+	var/had_attack_hand_interaction = stealing.interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
+	var/was_anchored = stealing.anchored
 	stealing.anchored = TRUE
 	// Add some pizzazz
-	animate(stealing, time = 0.5 SECONDS, transform = matrix(stealing.transform).Scale(0.01), easing = CUBIC_EASING)
+	animate(stealing, time = 0.5 SECONDS, transform = stealing.transform.Scale(0.01), easing = CUBIC_EASING)
 
 	if(isitem(stealing) && ((stealing.resistance_flags & INDESTRUCTIBLE) || prob(black_market_prob)))
-		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing, had_attack_hand_interaction, was_anchored), 0.5 SECONDS)
 	else
 		addtimer(CALLBACK(src, PROC_REF(finish_cleanup), stealing), 0.5 SECONDS)
 
@@ -158,33 +160,31 @@
  *
  * * thing - The item to put up on the black market.
  */
-/datum/spy_bounty/proc/send_to_black_market(atom/movable/thing)
+/datum/spy_bounty/proc/send_to_black_market(atom/movable/thing, had_attack_hand_interaction, was_anchored)
 	if(QDELETED(thing)) // Just in case anything does anything weird
 		return FALSE
 
-	thing.interaction_flags_atom = initial(thing.interaction_flags_atom)
-	thing.anchored = initial(thing.anchored)
+	///reset the appearance and all.
+	if(had_attack_hand_interaction)
+		thing.interaction_flags_atom |= INTERACT_ATOM_ATTACK_HAND
+	thing.anchored = was_anchored
+	thing.transform = thing.transform.Scale(10)
 	thing.moveToNullspace()
 
-	var/datum/market_item/new_item = new()
-	new_item.item = thing
-	new_item.name = "Stolen [thing.name]"
-	new_item.desc = "A [thing.name], stolen from somewhere on the station. Whoever owned it probably wouldn't be happy to see it here."
-	new_item.category = "Fenced Goods"
-	new_item.stock = 1
-	new_item.availability_prob = 100
-
+	var/item_price
 	switch(difficulty)
 		if(SPY_DIFFICULTY_EASY)
-			new_item.price = PAYCHECK_COMMAND * 2.5
+			item_price = PAYCHECK_COMMAND * 2.5
 		if(SPY_DIFFICULTY_MEDIUM)
-			new_item.price = PAYCHECK_COMMAND * 5
+			item_price = PAYCHECK_COMMAND * 5
 		if(SPY_DIFFICULTY_HARD)
-			new_item.price = PAYCHECK_COMMAND * 10
+			item_price = PAYCHECK_COMMAND * 10
 
-	new_item.price += rand(0, PAYCHECK_COMMAND * 5)
+	item_price += rand(0, PAYCHECK_COMMAND * 5)
 	if(thing.resistance_flags & INDESTRUCTIBLE)
-		new_item.price *= 2
+		item_price *= 2
+
+	var/datum/market_item/stolen_good/new_item = new(thing, item_price)
 
 	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
 

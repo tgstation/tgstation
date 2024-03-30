@@ -39,7 +39,7 @@
 /datum/reagent/toxin/mutagen
 	name = "Unstable Mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
@@ -830,7 +830,7 @@
 	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
-	color = "#6496FA"
+	color = LIGHT_COLOR_BLUE
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -866,7 +866,7 @@
 	description = "A very powerful delayed toxin. Upon full metabolization, a massive amount of toxin damage will be dealt depending on how long it has been in the victim's bloodstream."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1275,7 +1275,7 @@
 	description = "A colorless, oderless, tasteless neurotoxin usually carried by livers of animals of the Tetraodontiformes order."
 	silent_toxin = TRUE
 	reagent_state = SOLID
-	color = "#EEEEEE"
+	color = COLOR_VERY_LIGHT_GRAY
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0

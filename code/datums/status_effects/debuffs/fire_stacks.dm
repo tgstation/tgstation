@@ -30,8 +30,7 @@
 		qdel(src)
 		return
 	if(isbasicmob(owner))
-		var/mob/living/basic/basic_owner = owner
-		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
+		if(!check_basic_mob_immunity(owner))
 			qdel(src)
 			return
 
@@ -93,6 +92,10 @@
 /datum/status_effect/fire_handler/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	cache_stacks()
+
+/// Checks if the applicable basic mob is immune to the status effect we're trying to apply. Returns TRUE if it is, FALSE if it isn't.
+/datum/status_effect/fire_handler/proc/check_basic_mob_immunity(mob/living/basic/basic_owner)
+	return (basic_owner.basic_mob_flags & FLAMMABLE_MOB)
 
 /**
  * Refresher for mob's fire_stacks
@@ -287,3 +290,6 @@
 	if(particle_effect)
 		return
 	particle_effect = new(owner, /particles/droplets)
+
+/datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)
+	return !(basic_owner.basic_mob_flags & IMMUNE_TO_GETTING_WET)

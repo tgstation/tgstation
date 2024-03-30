@@ -113,7 +113,7 @@
 	description = "A gas that is eight times more efficient than O2 at lung diffusion with organ healing properties on sleeping patients."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "#808080"
+	color = COLOR_GRAY
 	taste_description = "irradiated air"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 

@@ -30,8 +30,8 @@
 	var/rigged = FALSE
 	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/corrupted = FALSE
-	///how much power is given every tick in a recharger
-	var/chargerate = STANDARD_CELL_CHARGE * 0.1
+	///How much power is given per second in a recharger.
+	var/chargerate = STANDARD_CELL_CHARGE * 0.05
 	///If true, the cell will state it's maximum charge in it's description
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
@@ -134,30 +134,56 @@
 	return ..()
 
 
+/**
+ * Returns the percentage of the cell's charge.
+ */
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
 
-// use power from a cell
-/obj/item/stock_parts/cell/use(used, force)
-	if(rigged && used > 0)
+/**
+ * Returns the maximum charge of the cell.
+ */
+/obj/item/stock_parts/cell/proc/max_charge()
+	return maxcharge
+
+/**
+ * Returns the current charge of the cell.
+ */
+/obj/item/stock_parts/cell/proc/charge()
+	return charge
+
+/**
+ * Returns the amount of charge used on the cell.
+ */
+/obj/item/stock_parts/cell/proc/used_charge()
+	return maxcharge - charge
+
+/// Use power from the cell.
+/// Args:
+/// - used: Amount of power in joules to use.
+/// - force: If true, uses the remaining power from the cell if there isn't enough power to supply the demand.
+/// Returns: The power used from the cell in joules.
+/obj/item/stock_parts/cell/use(used, force = FALSE)
+	var/power_used = min(used, charge)
+	if(rigged && power_used > 0)
 		explode()
-		return FALSE
+		return 0 // The cell decided to explode so we won't be able to use it.
 	if(!force && charge < used)
-		return FALSE
-	charge = max(charge - used, 0)
+		return 0
+	charge -= power_used
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return TRUE
+	return power_used
 
-// recharge the cell
+/// Recharge the cell.
+/// Args:
+/// - amount: The amount of energy to give to the cell in joules.
+/// Returns: The power given to the cell in joules.
 /obj/item/stock_parts/cell/proc/give(amount)
-	if(rigged && amount > 0)
-		explode()
-		return 0
-	if(maxcharge < amount)
-		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	if(rigged && amount > 0)
+		explode()
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)
@@ -180,9 +206,9 @@
 /obj/item/stock_parts/cell/proc/explode()
 	if(!charge)
 		return
-	var/range_devastation = -1 //round(charge/11000)
-	var/range_heavy = round(sqrt(charge)/60)
-	var/range_light = round(sqrt(charge)/30)
+	var/range_devastation = -1
+	var/range_heavy = round(sqrt(charge / (3.6 * STANDARD_CELL_CHARGE)))
+	var/range_light = round(sqrt(charge / (0.9 * STANDARD_CELL_CHARGE)))
 	var/range_flash = range_light
 	if(!range_light)
 		rigged = FALSE
@@ -193,7 +219,6 @@
 	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
 	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
 
-	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
 	qdel(src)
 
@@ -208,9 +233,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	charge -= 1000 / severity
-	if (charge < 0)
-		charge = 0
+	use(STANDARD_CELL_CHARGE / severity, force = TRUE)
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	. = ..()
@@ -262,10 +285,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
-	if(charge >= 1000)
-		return clamp(20 + round(charge/25000), 20, 195) + rand(-5,5)
-	else
-		return 0
+	return ELECTROCUTE_DAMAGE(charge)
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
@@ -292,7 +312,7 @@
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	chargerate = STANDARD_CELL_CHARGE
+	chargerate = STANDARD_CELL_CHARGE * 0.5
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
@@ -318,7 +338,7 @@
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
 	maxcharge = STANDARD_CELL_CHARGE * 40
-	chargerate = STANDARD_CELL_CHARGE * 1.5
+	chargerate = STANDARD_CELL_CHARGE * 0.75
 
 /obj/item/stock_parts/cell/pulse/carbine //25 pulse shots
 	name = "pulse carbine power cell"
@@ -333,14 +353,14 @@
 	icon_state = "bscell"
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = STANDARD_CELL_CHARGE * 2
+	chargerate = STANDARD_CELL_CHARGE
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = STANDARD_CELL_CHARGE * 1.5
+	chargerate = STANDARD_CELL_CHARGE * 0.75
 
 /obj/item/stock_parts/cell/high/empty
 	empty = TRUE
@@ -350,7 +370,7 @@
 	icon_state = "scell"
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
-	chargerate = STANDARD_CELL_CHARGE * 2
+	chargerate = STANDARD_CELL_CHARGE
 
 /obj/item/stock_parts/cell/super/empty
 	empty = TRUE
@@ -360,7 +380,7 @@
 	icon_state = "hpcell"
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
-	chargerate = STANDARD_CELL_CHARGE * 3
+	chargerate = STANDARD_CELL_CHARGE * 1.5
 
 /obj/item/stock_parts/cell/hyper/empty
 	empty = TRUE
@@ -371,7 +391,7 @@
 	icon_state = "bscell"
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
-	chargerate = STANDARD_CELL_CHARGE * 4
+	chargerate = STANDARD_CELL_CHARGE * 2
 
 /obj/item/stock_parts/cell/bluespace/empty
 	empty = TRUE
@@ -384,7 +404,7 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/use(used)
+/obj/item/stock_parts/cell/infinite/use(used, force = FALSE)
 	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor
@@ -404,13 +424,16 @@
 	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
-	charge = 100
 	maxcharge = STANDARD_CELL_CHARGE * 0.3
 	charge_light_type = null
 	connector_type = null
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
 	custom_premium_price = PAYCHECK_CREW
+
+/obj/item/stock_parts/cell/potato/Initialize(mapload, override_maxcharge)
+	charge = maxcharge * 0.3
+	. = ..()
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
@@ -441,7 +464,7 @@
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
 	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_CHARGE * 5 //Extremely energy intensive
+	chargerate = STANDARD_CELL_CHARGE * 2.5 //Extremely energy intensive
 
 /obj/item/stock_parts/cell/beam_rifle/corrupt()
 	return

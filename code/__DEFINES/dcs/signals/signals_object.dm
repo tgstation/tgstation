@@ -61,6 +61,9 @@
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
 
+/// from /datum/component/supermatter_crystal/proc/consume()
+/// called on the thing consumed, passes the thing which consumed it
+#define COMSIG_SUPERMATTER_CONSUMED "sm_consumed_this"
 
 // /obj/machinery/cryo_cell signals
 
@@ -405,6 +408,10 @@
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
+
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
 
 // /obj/vehicle/sealed/car/vim signals
 
