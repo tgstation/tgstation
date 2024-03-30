@@ -3,8 +3,9 @@
 	alert_type = null
 	remove_on_fullheal = TRUE
 	tick_interval = -1
-
+	/// If TRUE, TTS will say the original message rather than what we changed it to
 	var/make_tts_message_original = FALSE
+	/// If set, this will be appended to the TTS filter of the message
 	var/tts_filter = ""
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
@@ -96,16 +97,12 @@
 	four_char_chance = 4
 	three_char_chance = 10
 	two_char_chance = 100
-	tick_interval = 30 SECONDS
-	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	remove_on_fullheal = FALSE
 
-/datum/status_effect/speech/stutter/anxiety/tick(seconds_between_ticks)
-	. = ..()
-	// Every so often the probability of stuttering updates based on how many people are nearby
-	// I could signalize this but it really seems like a waste, since it's RNG anyways. No one will notice.
+/datum/status_effect/speech/stutter/anxiety/handle_message(datum/source, list/message_args)
 	var/datum/quirk/social_anxiety/host_quirk = owner.get_quirk(/datum/quirk/social_anxiety)
-	stutter_prob = max(5, host_quirk?.calculate_mood_mod())
+	stutter_prob = clamp(host_quirk?.calculate_mood_mod() * 0.5, 5, 50)
+	return ..()
 
 /datum/status_effect/speech/stutter/derpspeech
 	id = "derp_stutter"
