@@ -584,12 +584,6 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/get_target()
 	return steal_target
 
-/datum/objective/steal/New()
-	..()
-	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		for(var/I in subtypesof(/datum/objective_item/steal))
-			new I
-
 /datum/objective/steal/find_target(dupe_search_range, list/blacklist)
 	var/list/datum/mind/owners = get_owners()
 	if(!dupe_search_range)

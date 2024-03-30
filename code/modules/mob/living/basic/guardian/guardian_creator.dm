@@ -104,9 +104,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)
+		used = TRUE
+		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(type))
 	else
 		to_chat(user, failure_message)
-		used = FALSE
 
 /// Actually create our guy
 /obj/item/guardian_creator/proc/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)
