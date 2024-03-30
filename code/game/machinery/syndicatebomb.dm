@@ -605,7 +605,7 @@
 	var/list/choosable_dimensions = list()
 	var/datum/radial_menu_choice/null_choice = new
 	null_choice.name = DIMENSION_CHOICE_RANDOM
-	choosable_dimensions += null_choice
+	choosable_dimensions[DIMENSION_CHOICE_RANDOM] = null_choice
 	for(var/datum/dimension_theme/theme as anything in SSmaterials.dimensional_themes)
 		var/datum/radial_menu_choice/theme_choice = new
 		theme_choice.image = image(initial(theme.icon), initial(theme.icon_state))
@@ -631,9 +631,11 @@
 	var/theme_count = length(SSmaterials.dimensional_themes)
 	var/num_affected = 0
 	for(var/turf/affected as anything in affected_turfs)
-		var/datum/dimension_theme/theme_to_use = chosen_theme
+		var/datum/dimension_theme/theme_to_use
 		if(isnull(chosen_theme))
 			theme_to_use = SSmaterials.dimensional_themes[SSmaterials.dimensional_themes[rand(1, theme_count)]]
+		else
+			theme_to_use = SSmaterials.dimensional_themes[chosen_theme]
 		if(!theme_to_use.can_convert(affected))
 			continue
 		num_affected++

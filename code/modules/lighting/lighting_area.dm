@@ -51,7 +51,7 @@
 	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	var/list/z_offsets = SSmapping.z_level_to_plane_offset
 	if(length(lighting_effects) > 1)
-		for(var/area_zlevel as anything in 1 to get_highest_zlevel())
+		for(var/area_zlevel in 1 to get_highest_zlevel())
 			if(z_offsets[area_zlevel])
 				for(var/turf/T as anything in get_turfs_by_zlevel(area_zlevel))
 					T.cut_overlay(lighting_effects[z_offsets[T.z] + 1])

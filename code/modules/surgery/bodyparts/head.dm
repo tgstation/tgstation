@@ -38,7 +38,7 @@
 	/// Hair style
 	var/hairstyle = "Bald"
 	/// Hair colour and style
-	var/hair_color = "#000000"
+	var/hair_color = COLOR_BLACK
 	/// Hair alpha
 	var/hair_alpha = 255
 	/// Is the hair currently hidden by something?
@@ -47,7 +47,7 @@
 	///Facial hair style
 	var/facial_hairstyle = "Shaved"
 	///Facial hair color
-	var/facial_hair_color = "#000000"
+	var/facial_hair_color = COLOR_BLACK
 	///Facial hair alpha
 	var/facial_hair_alpha = 255
 	///Is the facial hair currently hidden by something?
@@ -194,13 +194,9 @@
 
 	return
 
-/obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
-	var/mob/headholder = holder
-	if(istype(headholder))
-		headholder.log_talk(message, LOG_SAY, tag = "beheaded talk")
-
-	say(message, language, sanitize = FALSE)
-	return NOPASS
+/obj/item/bodypart/head/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/toy_talk)
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"

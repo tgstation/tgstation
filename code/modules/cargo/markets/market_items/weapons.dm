@@ -66,7 +66,7 @@
 
 /datum/market_item/weapon/fisher
 	name = "SC/FISHER Saboteur Handgun"
-	desc = "A self-recharging, compact pistol that disrupts flashlights and security cameras, if only temporarily. Also usable in melee."
+	desc = "A self-recharging, compact pistol that disrupts lights, cameras, APCs, turrets and more, if only temporarily. Also usable in melee."
 	item = /obj/item/gun/energy/recharge/fisher
 
 	price_min = CARGO_CRATE_VALUE * 2

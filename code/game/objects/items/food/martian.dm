@@ -732,6 +732,7 @@
 	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_price = PAYCHECK_CREW * 1.2
 
 /obj/item/food/salt_chilli_fries
 	name = "salt n' chilli fries"
@@ -1210,6 +1211,7 @@
 	foodtypes = FRUIT | MEAT | PINEAPPLE | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Uses Sambal
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/food/frickles
 	name = "frickles"

@@ -16,6 +16,7 @@
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
+	light_color = "#ffcc99"
 	light_on = FALSE
 	dog_fashion = /datum/dog_fashion/head
 
@@ -39,9 +40,7 @@
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
-	toggle_helmet_light(user)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/utility/hardhat/proc/toggle_helmet_light(mob/living/user)
 	on = !on
@@ -60,6 +59,15 @@
 
 /obj/item/clothing/head/utility/hardhat/proc/turn_off(mob/user)
 	set_light_on(FALSE)
+
+/obj/item/clothing/head/utility/hardhat/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(on)
+		toggle_helmet_light()
+		return COMSIG_SABOTEUR_SUCCESS
+
+/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
+	toggle_helmet_light(user)
 
 /obj/item/clothing/head/utility/hardhat/orange
 	icon_state = "hardhat0_orange"

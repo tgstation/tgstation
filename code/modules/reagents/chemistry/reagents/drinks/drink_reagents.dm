@@ -55,8 +55,6 @@
 	affected_mob.adjust_temp_blindness(-2 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
 	switch(current_cycle)
-		if(1 to 20)
-			//nothing
 		if(21 to 110)
 			if(SPT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), seconds_per_tick))
 				need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
@@ -545,7 +543,7 @@
 /datum/reagent/consumable/space_up
 	name = "Space-Up"
 	description = "Tastes like a hull breach in your mouth."
-	color = "#00FF00" // rgb: 0, 255, 0
+	color = COLOR_VIBRANT_LIME // rgb: 0, 255, 0
 	taste_description = "cherry soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -639,7 +637,7 @@
 	. = ..()
 	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
-	switch(affected_mob.mob_mood.sanity_level)
+	switch(affected_mob.mob_mood.sanity)
 		if (SANITY_INSANE to SANITY_CRAZY)
 			need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 		if (SANITY_UNSTABLE to SANITY_DISTURBED)
@@ -1125,7 +1123,7 @@
 /datum/reagent/consumable/funky_monkey
 	name = "funky monkey smoothie"
 	description = "A classic smoothie made from chocolate and bananas."
-	color = "#663300"
+	color = COLOR_BROWNER_BROWN
 	nutriment_factor = 0
 	taste_description = "chocolate and banana"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1133,7 +1131,7 @@
 /datum/reagent/consumable/green_giant
 	name = "green giant smoothie"
 	description = "A green vegetable smoothie, made without vegetables."
-	color = "#003300"
+	color = COLOR_VERY_DARK_LIME_GREEN
 	nutriment_factor = 0
 	taste_description = "green, just green"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

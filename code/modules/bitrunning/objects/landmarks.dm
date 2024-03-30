@@ -22,6 +22,11 @@
 	name = "Bitrunning crate spawn"
 	icon_state = "crate"
 
+/// Where you want secondary objectives to spawn
+/obj/effect/landmark/bitrunning/curiosity_spawn
+	name = "Bitrunning curiosity spawn"
+	icon_state = "crate"
+
 ///Swaps the locations of an encrypted crate in the area with another randomly selected crate.
 ///Randomizes names, so you have to inspect crates manually.
 /obj/effect/landmark/bitrunning/crate_replacer

@@ -71,13 +71,6 @@
 	crate_name = "bananium sheet crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/imports/naturalbait
-	name = "Freshness Jars full of Natural Bait"
-	desc = "Homemade in the Spinward Sector."
-	cost = 2000 //rock on
-	contains = list(/obj/item/storage/pill_bottle/naturalbait)
-	crate_name = "fishing bait crate"
-
 /datum/supply_pack/imports/dumpstercorpse
 	name = "A....Dumpster?"
 	desc = "Why does it smell so bad...."
@@ -124,19 +117,6 @@
 			new /obj/item/clothing/mask/fakemoustache/italian(our_crate)
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
 		new /obj/item/switchblade(our_crate)
-
-/datum/supply_pack/imports/blackmarket_telepad
-	name = "Black Market LTSRBT"
-	desc = "Need a faster and better way of transporting your illegal goods from and to the \
-		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) \
-		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
-	cost = CARGO_CRATE_VALUE * 20
-	contraband = TRUE
-	contains = list(
-		/obj/item/circuitboard/machine/ltsrbt,
-		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
-		/obj/item/stock_parts/subspace/ansible,
-	)
 
 /datum/supply_pack/imports/contraband
 	name = "'Contraband' Crate"
@@ -322,17 +302,18 @@
 
 /datum/supply_pack/imports/floortilecamo
 	name = "Floor-tile Camouflage Uniform"
-	desc = "Thank you for shopping from Camo-J's, our uniquely designed \
-		floor-tile 'NT SCUM' styled camouflage fatigues is the ultimate \
+	desc = "Hey there, looking to surprise somebody? Spy? Steal? Then you're lucky, meet our newest \
+		floor-tile 'NT SCUM' styled camouflage fatigues. This is the ultimate \
 		espionage uniform used by the very best. Providing the best \
 		flexibility, with our latest Camo-tech threads. Perfect for \
 		risky espionage hallway operations. Enjoy our product!"
-	hidden = TRUE
+	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 4,
-			/obj/item/clothing/mask/floortilebalaclava = 4,
-			/obj/item/clothing/gloves/combat/floortile = 4,
-			/obj/item/clothing/shoes/jackboots/floortile = 4
+	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 3,
+			/obj/item/clothing/mask/floortilebalaclava = 3,
+			/obj/item/clothing/gloves/combat/floortile = 3,
+			/obj/item/clothing/shoes/jackboots/floortile = 3,
+			/obj/item/storage/backpack/floortile = 3
 	)
 	crate_name = "floortile camouflauge crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon

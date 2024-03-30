@@ -5,7 +5,7 @@
 
 # byond version
 export BYOND_MAJOR=515
-export BYOND_MINOR=1630
+export BYOND_MINOR=1633
 
 #rust_g git tag
 export RUST_G_VERSION=3.1.0
@@ -24,7 +24,7 @@ export PYTHON_VERSION=3.9.0
 export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
-export AUXLUA_VERSION=1.4.1
+export AUXLUA_VERSION=1.4.4
 
 #hypnagogic repo
 export CUTTER_REPO=actioninja/hypnagogic

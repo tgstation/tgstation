@@ -2,6 +2,7 @@
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
 	icon_state = "ed209"
+	light_color = "#f84e4e"
 	density = TRUE
 	health = 100
 	maxHealth = 100

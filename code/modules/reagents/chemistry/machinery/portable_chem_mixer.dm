@@ -105,7 +105,7 @@
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
 	return severity > EXPLODE_LIGHT ? ..() : FALSE
 
-/obj/item/storage/portable_chem_mixer/attackby(obj/item/weapon, mob/user, params)
+/obj/item/storage/portable_chem_mixer/item_interaction(mob/living/user, obj/item/weapon, list/modifiers, is_right_clicking)
 	if (!atom_storage.locked || \
 		(weapon.item_flags & ABSTRACT) || \
 		(weapon.flags_1 & HOLOGRAM_1) || \
@@ -116,7 +116,7 @@
 
 	replace_beaker(user, weapon)
 	update_appearance()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
@@ -185,11 +185,11 @@
 		beaker_data["maxVolume"] = beaker.volume
 		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING))) // list in a list because Byond merges the first list...
 		beaker_data["contents"] = beakerContents
 	.["beaker"] = beaker_data
 
