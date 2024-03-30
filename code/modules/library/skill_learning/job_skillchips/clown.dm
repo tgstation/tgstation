@@ -5,6 +5,6 @@
 	skill_name = "Balloon Sutra"
 	skill_description = "Learn the the ancient Honkmotherian arts of balloon-sutra."
 	skill_icon = "face-grin-tears"
-	activate_message = "<span class='notice'>Blessed wisdom of Honkmother enwraps you, and with it, governship upon form of balloonkind.</span>"
-	deactivate_message = "<span class='notice'>'Remember, then, that true clownery requires freedom and willingness to bend, like ones of a floating balloon.'... Whatever that meant?</span>"
+	activate_message = span_notice("Blessed wisdom of Honkmother enwraps you, and with it, governship upon form of balloonkind.")
+	deactivate_message = span_notice("'Remember, then, that true clownery requires freedom and willingness to bend, like ones of a floating balloon.'... Whatever that meant?")
 
