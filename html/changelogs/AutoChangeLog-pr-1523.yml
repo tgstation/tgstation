@@ -1,0 +1,8 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "(Xander3359) Fix hack comms console/locate weakpoint objective showing up multiple times"
+  - bugfix: "(Jacquerel) Traitors should generate with \"free objective\" less often, and will once more be assigned to steal things."
+  - bugfix: "(carlarctg) Fixed being unable to reimburse syndicate spawners via uplinks. This includes nukie reinforcements, cyborgs, and holoparasite injectors."
+  - refactor: "(carlarctg) Turned TC reimbursement into a bespoke element."
+  - spellcheck: "(carlarctg) Tuned demon's blood message when there's no ghosts to pick to be a little more understandable and sensible."
