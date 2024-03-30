@@ -110,12 +110,11 @@
 	return scatter_locations
 
 /obj/effect/spawner/random/proc/has_unblocked_line(destination)
-	. = TRUE
-	var/turf/us = get_turf(src)
-	for(var/turf/potential_blockage as anything in get_line(us, destination))
+	for(var/turf/potential_blockage as anything in get_line(get_turf(src), destination))
 		if(!potential_blockage.is_blocked_turf(exclude_mobs = TRUE))
 			continue
 		return FALSE
+	return TRUE
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
