@@ -287,7 +287,7 @@
 	. = ..()
 
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		final_charge_rate = base_charge_rate + (capacitor.tier * 50 KILO WATTS)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 5 KILO WATTS)
 
 	set_access()
 
