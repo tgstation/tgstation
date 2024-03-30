@@ -57,7 +57,7 @@
 	var/mob/living/living_mob = controller.pawn
 
 	for(var/atom/possible_dinner as anything in typecache_filter_list(range(hunt_range, living_mob), types_to_hunt))
-		if(!valid_dinner(living_mob, possible_dinner, hunt_range))
+		if(!valid_dinner(living_mob, possible_dinner, hunt_range, controller, seconds_per_tick))
 			continue
 		controller.set_blackboard_key(hunting_target_key, possible_dinner)
 		finish_action(controller, TRUE, hunting_target_key)
@@ -65,7 +65,7 @@
 
 	finish_action(controller, FALSE, hunting_target_key)
 
-/datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius)
+/datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
 	if(isliving(dinner))
 		var/mob/living/living_target = dinner
 		if(living_target.stat == DEAD) //bitch is dead

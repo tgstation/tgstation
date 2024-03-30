@@ -193,7 +193,6 @@
 		var/obj/item/stock_parts/cell/crap/empty/C = new(src)
 		C.forceMove(src)
 		cell = C
-		chargecount = 0
 		balloon_alert(user, "power cell installed")
 		update_appearance()
 		return TRUE

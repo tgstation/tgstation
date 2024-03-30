@@ -53,11 +53,11 @@
 	/// Cooldown for occupant breakout messages via relaymove()
 	var/message_cooldown
 	/// How long it takes to break out of the SSU.
-	var/breakout_time = 300
+	var/breakout_time = 30 SECONDS
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
-	var/base_charge_rate = 200
+	var/base_charge_rate = 200 KILO WATTS
 	/// Final charge rate which is base_charge_rate + contribution by capacitors
-	var/final_charge_rate = 250
+	var/final_charge_rate = 250 KILO WATTS
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
@@ -287,7 +287,7 @@
 	. = ..()
 
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		final_charge_rate = base_charge_rate + (capacitor.tier * 50)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 50 KILO WATTS)
 
 	set_access()
 
@@ -553,17 +553,21 @@
 			dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/cell
-	if(suit && istype(suit))
-		cell = suit.cell
-	if(mod)
-		cell = mod.get_cell()
-	if(!cell || cell.charge == cell.maxcharge)
+	var/list/cells_to_charge = list()
+	for(var/obj/item/charging in list(mod, suit, helmet, mask, storage))
+		var/obj/item/stock_parts/cell/cell_charging = charging.get_cell()
+		if(!istype(cell_charging) || cell_charging.charge == cell_charging.maxcharge)
+			continue
+
+		cells_to_charge += cell_charging
+
+	var/cell_count = length(cells_to_charge)
+	if(cell_count <= 0)
 		return
 
-	var/cell_charged = cell.give(final_charge_rate * seconds_per_tick)
-	if(cell_charged)
-		use_power((active_power_usage + final_charge_rate) * seconds_per_tick)
+	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
+	for(var/obj/item/stock_parts/cell/cell as anything in cells_to_charge)
+		charge_cell(charge_per_item, cell)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

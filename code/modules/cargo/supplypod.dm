@@ -70,6 +70,15 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
+/obj/structure/closet/supplypod/podspawn/deathmatch
+	desc = "A blood-red styled drop pod."
+	specialised = TRUE
+
+/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
+	for(var/mob/living/critter in contents)
+		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+	return ..()
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -97,6 +106,17 @@
 	explosionSize = list(0,0,0,0)
 	style = STYLE_SYNDICATE
 	specialised = TRUE
+
+/obj/structure/closet/supplypod/deadmatch_missile
+	name = "cruise missile"
+	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	style = STYLE_RED_MISSILE
+	explosionSize = list(0,1,2,2)
+	effectShrapnel = TRUE
+	specialised = TRUE
+	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
+	effectMissile = TRUE
+	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
 
 /datum/armor/closet_supplypod
 	melee = 30
@@ -180,7 +200,7 @@
 		var/icon/door_masker = new(icon, door) //The door shape we want to 'cut out' of the decal
 		door_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 		door_masker.SwapColor("#ffffffff", null)
-		door_masker.Blend("#000000", ICON_SUBTRACT)
+		door_masker.Blend(COLOR_BLACK, ICON_SUBTRACT)
 		masked_decal.Blend(door_masker, ICON_ADD)
 		. += masked_decal
 		return
@@ -197,7 +217,7 @@
 		var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
 		fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 		fin_masker.SwapColor("#ffffffff", null)
-		fin_masker.Blend("#000000", ICON_SUBTRACT)
+		fin_masker.Blend(COLOR_BLACK, ICON_SUBTRACT)
 		masked_door.Blend(fin_masker, ICON_ADD)
 		. += masked_door
 	if(decal)

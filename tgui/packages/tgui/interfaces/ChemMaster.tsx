@@ -191,7 +191,7 @@ const ChemMasterContent = (props) => {
                   value={itemCount}
                   minValue={1}
                   maxValue={50}
-                  onChange={(e, value) => {
+                  onChange={(value) => {
                     setItemCount(value);
                   }}
                 />

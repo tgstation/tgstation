@@ -12,6 +12,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
+	can_buckle_to = FALSE
 
 	req_one_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
@@ -20,7 +21,7 @@
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
-	path_image_color = "#FF0000"
+	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
 	automated_announcements = list(
@@ -69,6 +70,7 @@
 	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
+
 
 /mob/living/simple_animal/bot/secbot/beepsky/officer
 	name = "Officer Beepsky"
@@ -141,6 +143,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/security_vision, judgement_criteria = NONE, update_judgement_criteria = CALLBACK(src, PROC_REF(judgement_criteria)))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
@@ -163,6 +166,16 @@
 	set_anchored(FALSE)
 	SSmove_manager.stop_looping(src)
 	last_found = world.time
+
+/mob/living/simple_animal/bot/secbot/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
+		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
+		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
+		return COMSIG_SABOTEUR_SUCCESS
+
+/mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
+	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED
 
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
@@ -232,6 +245,8 @@
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
+	if(security_mode_flags & SECBOT_SABOTEUR_AFFECTED)
+		final |= JUDGE_CHILLOUT
 	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.

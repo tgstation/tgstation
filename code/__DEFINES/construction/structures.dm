@@ -83,3 +83,12 @@
 #define FRAME_COMPUTER_STATE_WIRED 3
 /// Frame has had glass applied to it
 #define FRAME_COMPUTER_STATE_GLASSED 4
+
+///The camera assembly is wrenched in (aka placed on the wall), and wrenching will deconstruct.
+#define CAMERA_STATE_WRENCHED 1
+///The camera assembly is welded in place, so won't come off from wrench anymore.
+#define CAMERA_STATE_WELDED 2
+///The camera assembly is wired and ready to finish construction.
+#define CAMERA_STATE_WIRED 3
+///The camera assembly is finished construction fully, and is currently chilling in the camera machine.
+#define CAMERA_STATE_FINISHED 4

@@ -1,5 +1,0 @@
-author: "starrm4nn"
-delete-after: True
-changes:
-  - balance: "Ephedrine spasms won't affect small or tiny items"
-  - balance: "Ephedrine's movement speed bonus now scales with purity."

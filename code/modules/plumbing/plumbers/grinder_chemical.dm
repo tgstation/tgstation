@@ -57,7 +57,7 @@
 	var/obj/item/I = AM
 	var/result
 	if(I.grind_results || I.juice_typepath)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		if(I.grind_results)
 			result = I.grind(reagents, usr)
 		else if (I.juice_typepath)

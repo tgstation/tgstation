@@ -398,10 +398,6 @@
 								span_warning("[src] grabs you passively!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] passively!"))
 
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = WEAKREF(usr)
 		if(isliving(M))
 			var/mob/living/L = M
 
@@ -1267,18 +1263,18 @@
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(!T)
+	if(!isnull(user) && src == user)
 		return FALSE
+	if(invisibility || alpha <= 50)//cloaked
+		return FALSE
+	if(!isturf(src.loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
+		return FALSE
+	var/turf/T = src.loc
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
 	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
-		return FALSE
-	if(!isnull(user) && src == user)
-		return FALSE
-	if(invisibility || alpha == 0)//cloaked
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!GLOB.cameranet.checkCameraVis(src))
@@ -1440,7 +1436,7 @@
 				created_robot.clear_zeroth_law(announce = FALSE)
 
 		if(WABBAJACK_SLIME)
-			new_mob = new /mob/living/simple_animal/slime/random(loc)
+			new_mob = new /mob/living/basic/slime/random(loc)
 
 		if(WABBAJACK_XENO)
 			var/picked_xeno_type
@@ -1453,7 +1449,7 @@
 			else
 				picked_xeno_type = pick(
 					/mob/living/carbon/alien/adult/hunter,
-					/mob/living/simple_animal/hostile/alien/sentinel,
+					/mob/living/basic/alien/sentinel,
 				)
 			new_mob = new picked_xeno_type(loc)
 
@@ -1790,7 +1786,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(M.can_be_held && U.pulling == M)
 			M.mob_try_pickup(U)//blame kevinz
 			return//dont open the mobs inventory if you are picking them up
-	. = ..()
+	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
@@ -1798,7 +1794,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	numba = rand(1, 1000)
+	if(!numba)
+		numba = rand(1, 1000)
 	name = "[name] ([numba])"
 	real_name = name
 

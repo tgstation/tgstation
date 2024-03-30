@@ -38,7 +38,7 @@
 	/// Hair style
 	var/hairstyle = "Bald"
 	/// Hair colour and style
-	var/hair_color = "#000000"
+	var/hair_color = COLOR_BLACK
 	/// Hair alpha
 	var/hair_alpha = 255
 	/// Is the hair currently hidden by something?
@@ -47,7 +47,7 @@
 	///Facial hair style
 	var/facial_hairstyle = "Shaved"
 	///Facial hair color
-	var/facial_hair_color = "#000000"
+	var/facial_hair_color = COLOR_BLACK
 	///Facial hair alpha
 	var/facial_hair_alpha = 255
 	///Is the facial hair currently hidden by something?
