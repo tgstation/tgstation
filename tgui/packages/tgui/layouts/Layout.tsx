@@ -6,11 +6,21 @@
 
 import { classes } from 'common/react';
 
-import { computeBoxClassName, computeBoxProps } from '../components/Box';
+import {
+  BoxProps,
+  computeBoxClassName,
+  computeBoxProps,
+} from '../components/Box';
 import { addScrollableNode, removeScrollableNode } from '../events';
 
-export const Layout = (props) => {
+type Props = Partial<{
+  theme: string;
+}> &
+  BoxProps;
+
+export function Layout(props: Props) {
   const { className, theme = 'nanotrasen', children, ...rest } = props;
+
   return (
     <div className={'theme-' + theme}>
       <div
@@ -21,10 +31,16 @@ export const Layout = (props) => {
       </div>
     </div>
   );
-};
+}
 
-const LayoutContent = (props) => {
+type ContentProps = Partial<{
+  scrollable: boolean;
+}> &
+  BoxProps;
+
+function LayoutContent(props: ContentProps) {
   const { className, scrollable, children, ...rest } = props;
+
   return (
     <div
       className={classes([
@@ -38,7 +54,7 @@ const LayoutContent = (props) => {
       {children}
     </div>
   );
-};
+}
 
 LayoutContent.defaultHooks = {
   onComponentDidMount: (node) => addScrollableNode(node),
