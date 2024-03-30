@@ -13,7 +13,7 @@
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
 /// Cost to use the stun arm
-#define CYBORG_STUN_CHARGE_COST (200 KILO JOULES)
+#define CYBORG_STUN_CHARGE_COST (0.2 * STANDARD_CELL_CHARGE)
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
@@ -185,7 +185,7 @@
 						span_danger("You shock [attacked_mob] to no effect."),
 					)
 			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
-			user.cell.use(500 KILO JOULES, force = TRUE)
+			user.cell.use(0.5 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
 			if (!COOLDOWN_FINISHED(src, crush_cooldown))
@@ -202,7 +202,7 @@
 				)
 			playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
 			attacked_mob.adjustBruteLoss(15)
-			user.cell.use(300 KILO JOULES, force = TRUE)
+			user.cell.use(0.3 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
 
 /obj/item/borg/cyborghug/peacekeeper
