@@ -304,7 +304,7 @@
 
 /obj/item/toy/balloon_animal/clown
 	name = "balloon clown"
-	desc = "A balloon clown, smiling from ear to ear and beyond!"'
+	desc = "A balloon clown, smiling from ear to ear and beyond!"
 	icon_state = "balloon_clown"
 
 /obj/item/toy/balloon_animal/cat
