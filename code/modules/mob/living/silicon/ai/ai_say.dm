@@ -47,7 +47,7 @@
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		ai_holo.say(message, language = language)
+		ai_holo.say(message, sanitize = FALSE, language = language)
 	else
 		to_chat(src, span_alert("No holopad connected."))
 
