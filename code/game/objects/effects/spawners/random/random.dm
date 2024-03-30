@@ -102,9 +102,20 @@
 		for(var/turf/turf_in_view in view(radius, get_turf(src)))
 			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
 				continue
+			if(!has_unblocked_line(turf_in_view))
+				continue
+
 			scatter_locations += turf_in_view
 
 	return scatter_locations
+
+/obj/effect/spawner/random/proc/has_unblocked_line(destination)
+	. = TRUE
+	var/turf/us = get_turf(src)
+	for(var/turf/potential_blockage as anything in get_line(us, destination))
+		if(!potential_blockage.is_blocked_turf(exclude_mobs = TRUE))
+			continue
+		return FALSE
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
