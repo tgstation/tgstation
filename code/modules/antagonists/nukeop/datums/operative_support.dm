@@ -49,4 +49,4 @@
 	explanation_text = "Provide intelligence support and overwatch to your operative team!"
 
 /datum/objective/overwatch/check_completion()
-	return GLOB.station_was_nuked = TRUE
+	return GLOB.station_was_nuked
