@@ -9,26 +9,95 @@
 	icon_state = "rat"
 	key_type = /obj/item/key/forklift
 	movedelay = 1
-	///What module is selected for each occupant? Different occupants can have different modules selected.
-	var/list/selected_modules = list() // list(mob = module)
-	///What forklift modules are available?
-	var/list/available_modules = list(
+	/// What module is selected for each occupant? Different occupants can have different modules selected.
+	var/list/datum/forklift_module/selected_modules = list() // list(mob = module)
+	/// What forklift modules are available?
+	var/list/datum/forklift_module/available_modules = list(
 		/datum/forklift_module/furniture,
 		/datum/forklift_module/walls,
 		/datum/forklift_module/floors,
 		/datum/forklift_module/airlocks,
 		/datum/forklift_module/shuttle,
 	)
-	var/starting_module_path = /datum/forklift_module/furniture
-	///How many sheets of materials can this hold?
+	/// The module that a user defaults to when they first enter the forklift.
+	var/datum/forklift_module/starting_module_path = /datum/forklift_module/furniture
+	/// How many sheets of materials can this hold?
 	var/maximum_materials = SHEET_MATERIAL_AMOUNT * 125 // 125 sheets of materials. Ideally 50 iron, 50 glass, 25 of anything else.
-	///What construction holograms do we got?
-	var/list/holograms = list()
-	///What path do we use for the ridable component? Needed for key overrides.
+	/// What construction holograms do we have?
+	var/list/obj/structure/building_hologram/holograms = list()
+	/// What path do we use for the ridable component? Needed for key overrides.
 	var/ridable_path = /datum/component/riding/vehicle/forklift
+	/// Our material container.
+	var/datum/component/material_container/material_container
 	COOLDOWN_DECLARE(build_cooldown)
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 	COOLDOWN_DECLARE(deconstruction_cooldown)
+
+/obj/vehicle/ridden/forklift/Destroy(force)
+	QDEL_LIST_ASSOC_VAL(selected_modules)
+	QDEL_LIST(holograms)
+	QDEL_NULL(material_container)
+	return ..()
+
+/obj/vehicle/ridden/forklift/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ConstructionForklift")
+		ui.open()
+
+/obj/vehicle/ridden/forklift/ui_data(mob/user)
+	var/list/data = list()
+
+	data["materials"] = list(
+		"storage_max" = material_container.max_amount,
+		"storage_now" = material_container.total_amount(),
+		"storage" = list(),
+	)
+	for(var/datum/material/material_singleton as anything in material_container.materials)
+		data["materials"]["storage"][material_singleton.name] = material_container.materials[material_singleton]
+
+	data["modules"] = list(
+		"active" = REF(selected_modules[user].type),
+		"available" = list(),
+	)
+	for(var/datum/forklift_module/module_type as anything in available_modules)
+		data["modules"]["available"][REF(module_type)] = module_type.name
+
+	data["cooldowns"] = list()
+	data["cooldowns"]["build"] = COOLDOWN_TIMELEFT(src, build_cooldown)
+	data["cooldowns"]["scan"] = COOLDOWN_TIMELEFT(src, destructive_scan_cooldown)
+	data["cooldowns"]["deconstruct"] = COOLDOWN_TIMELEFT(src, deconstruction_cooldown)
+
+	data["holograms"] = length(holograms)
+
+	return data
+
+/obj/vehicle/ridden/forklift/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(!..())
+		return
+
+	switch(action)
+		if("set-active")
+			var/module_type_ref = params["new_module_ref"]
+			var/datum/forklift_module/module_type = locate(module_type_ref) in available_modules
+			if(isnull(module_type))
+				return FALSE
+			if(selected_modules[ui.user].type == module_type)
+				return FALSE
+			qdel(selected_modules[ui.user])
+			selected_modules[ui.user] = new module_type
+			selected_modules[ui.user].my_forklift = src
+			return TRUE
+
+		if("scan")
+			return TRUE
+
+		if("deconstruct")
+			return TRUE
+
+		else
+			stack_trace("unknown forklift ui action '[action]'")
+			return FALSE
 
 /obj/vehicle/ridden/forklift/Initialize(mapload)
 	. = ..()
@@ -47,7 +116,7 @@
 		/datum/material/plastic,
 		/datum/material/wood,
 		)
-	AddComponent(/datum/component/material_container, materials_list, maximum_materials, MATCONTAINER_EXAMINE, allowed_items=/obj/item/stack)
+	material_container = LoadComponent(/datum/component/material_container, materials_list, maximum_materials, MATCONTAINER_EXAMINE, allowed_items = /obj/item/stack)
 	AddElement(/datum/element/ridable, ridable_path)
 
 /obj/vehicle/ridden/forklift/add_occupant(mob/M, control_flags)
@@ -63,13 +132,38 @@
 	selected_modules[M] = new_module
 
 // Officially requested by the headcoder.
-/obj/vehicle/ridden/forklift/proc/fortnite_check(mob/source, list/speech_args)
+/obj/vehicle/ridden/forklift/proc/fortnite_check(mob/living/source, list/speech_args)
 	SIGNAL_HANDLER
+
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(findtext(message, "fortnite"))
-		source.balloon_alert_to_viewers("smited by God for [source.p_their()] crimes!")
-		var/mob/living/living_mob = source
-		living_mob.gib(TRUE) // no coming back from fortnite
+	if(!findtext(message, "fortnite"))
+		return
+
+	var/static/list/already_judged = list()
+	var/their_ref = REF(source)
+	if(their_ref in already_judged)
+		return
+	already_judged += their_ref
+
+	var/smite_timer_id = addtimer(CALLBACK(src, PROC_REF(fortnite_smite), source), 10 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+	var/admin_href_pardon = "<b><u><a href='?_src_=[REF(src)];[HrefToken(forceGlobal = TRUE)];pardon_id=[smite_timer_id];pardon_ckey=\"[source.ckey]\"'>pardon</a></u></b>"
+	to_chat(source, span_userdanger("You feel a sudden chill run down your spine."))
+	message_admins(span_adminnotice("[key_name_admin(source)] has angered the Forklift Gods. You have ten seconds to [admin_href_pardon] them!"))
+
+/obj/vehicle/ridden/forklift/proc/fortnite_smite(mob/living/poor_soul)
+	poor_soul.balloon_alert_to_viewers("smited by God for [poor_soul.p_their()] crimes!")
+	poor_soul.gib(TRUE)
+
+/obj/vehicle/ridden/forklift/Topic(href, list/href_list)
+	if(!("pardon_id" in href_list))
+		return ..()
+
+	var/smite_timer_id = text2num(href_list["pardon_id"])
+	if(!timeleft(smite_timer_id))
+		return // too late to save them; or too slow and someone else already did.
+
+	deltimer(text2num(smite_timer_id))
+	message_admins(span_adminnotice("[key_name_admin(src)] has pardoned [key_name_admin(href_list["pardon_ckey"])]"))
 
 /obj/vehicle/ridden/forklift/remove_occupant(mob/M)
 	UnregisterSignal(M, list(COMSIG_MOUSE_SCROLL_ON, COMSIG_MOB_CLICKON, COMSIG_MOUSE_ENTERED_ON_CHEAP, COMSIG_MOB_SAY))
@@ -82,8 +176,7 @@
 /obj/vehicle/ridden/forklift/process(delta_time)
 	var/currently_building = FALSE
 	var/currently_deconstructing = FALSE
-	for(var/hologram in holograms)
-		var/obj/structure/building_hologram/found_hologram = hologram
+	for(var/obj/structure/building_hologram/found_hologram as anything in holograms)
 		if(get_dist(src, found_hologram) > 7)
 			continue
 		if(istype(found_hologram, /obj/structure/building_hologram/deconstruction))
@@ -109,6 +202,26 @@
 /obj/vehicle/ridden/forklift/key_removed()
 	STOP_PROCESSING(SSfastprocess, src)
 
+/obj/vehicle/ridden/forklift/proc/set_active_module(mob/user, datum/forklift_module/module_type)
+	if(selected_modules[user]?.type == module_type)
+		return
+	var/datum/forklift_module/old_module = selected_modules[user]
+
+	var/datum/forklift_module/new_module = new module_type
+	selected_modules[user] = new_module
+	new_module.my_forklift = src
+	if(isnull(old_module))
+		return
+
+	new_module.last_turf_moused_over = old_module.last_turf_moused_over
+	LAZYREMOVE(user.client.images, old_module.preview_image)
+	qdel(old_module.preview_image)
+	new_module.update_preview_icon()
+	new_module.preview_image.loc = new_module.last_turf_moused_over
+	LAZYOR(user.client.images, new_module.preview_image)
+	balloon_alert(user, new_module.name)
+	qdel(old_module)
+
 /obj/vehicle/ridden/forklift/proc/on_scroll_wheel(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
 	var/list/modifiers = params2list(params)
@@ -120,21 +233,14 @@
 			next_module = next_list_item(current_module.type, available_modules)
 		else
 			next_module = previous_list_item(current_module.type, available_modules)
-		next_module = new next_module
-		next_module.my_forklift = src
-		next_module.last_turf_moused_over = current_module.last_turf_moused_over
-		LAZYREMOVE(source.client.images, current_module.preview_image)
-		qdel(current_module.preview_image)
-		next_module.update_preview_icon()
-		next_module.preview_image.loc = next_module.last_turf_moused_over
-		LAZYOR(source.client.images, next_module.preview_image)
-		selected_modules[source] = next_module
-		balloon_alert(source, next_module.name)
-		qdel(current_module)
+		set_active_module(source, next_module)
+
 	else if(LAZYACCESS(modifiers, CTRL_CLICK))
 		current_module.on_ctrl_scrollwheel(source, A, scrolled_up)
+
 	else if(LAZYACCESS(modifiers, ALT_CLICK))
 		current_module.on_alt_scrollwheel(source, A, scrolled_up)
+
 	else
 		current_module.on_scrollwheel(source, A, scrolled_up)
 

@@ -15,7 +15,7 @@
 /datum/component/material_container
 	/// The maximum amount of materials this material container can contain
 	var/max_amount
-	/// Map of material ref -> amount
+	/// Map of material singleton -> amount
 	var/list/materials //Map of key = material ref | Value = amount
 	/// The list of materials that this material container can accept
 	var/list/allowed_materials

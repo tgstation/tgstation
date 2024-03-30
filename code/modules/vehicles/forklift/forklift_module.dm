@@ -30,6 +30,32 @@
 	var/hologram_path = /obj/structure/building_hologram
 	///What path do we want to ChangeTurf to when deconstructing a turf?
 	var/turf_deconstruct_path = /turf/baseturf_bottom
+	/// What is the UI interface for this module?
+	var/ui_interface_name = "ConstructionForkliftModule_Default"
+
+/datum/forklift_module/ui_data(mob/user)
+	var/list/data = list()
+
+	data["name"] = name
+	data["build_instantly"] = build_instantly
+	data["available_builds"] = available_builds
+	data["resource_price"] = resource_price
+	data["build_length"] = build_length
+	data["deconstruction_time"] = deconstruction_time
+	data["current_selected_typepath"] = current_selected_typepath
+	data["available_directions"] = available_directions
+	data["direction"] = direction
+
+	return data
+
+/datum/forklift_module/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_interface_name)
+		ui.open()
+
+/datum/forklift_module/ui_host(mob/user)
+	return my_forklift
 
 /// Ideally, you place here.
 /datum/forklift_module/proc/on_left_click(mob/source, atom/clickingon)
