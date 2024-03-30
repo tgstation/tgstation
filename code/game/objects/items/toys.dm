@@ -147,8 +147,8 @@
 	update_appearance()
 
 /obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
- 		return ..() // saves indentation while doing the exact same thing.
+	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return ..()
 
 	var/obj/item/toy/balloon/long/hit_by = attacking_item
 	if(hit_by.current_color == current_color)
