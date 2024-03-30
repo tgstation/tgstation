@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 250 KILO WATTS
+	var/charge_rate = 25 KILO WATTS
 
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
