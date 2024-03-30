@@ -707,10 +707,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
 
-	if(blow_up(user))
-		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
-		return
-
 	if(magazine.caliber == initial_caliber)
 		magazine.caliber = alternative_caliber
 		if(alternative_ammo_misfires)
