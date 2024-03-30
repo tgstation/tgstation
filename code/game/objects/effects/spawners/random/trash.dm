@@ -134,13 +134,11 @@
 		/obj/effect/spawner/random/trash/cigbutt = 2,
 	)
 
-/obj/effect/spawner/random/trash/grime/make_item(turf/open/spawn_loc, mob/living/type_path_to_make)
-	if(!istype(type_path_to_make))
-		return ..()
-	if(!istype(spawn_loc))
-		return ..()
-	if(spawn_loc.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && spawn_loc.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
-		return
+/obj/effect/spawner/random/trash/grime/Initialize(mapload)
+	if(mapload)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+			loot -= /mob/living/basic/cockroach
 	return ..()
 
 /obj/effect/spawner/random/trash/moisture
