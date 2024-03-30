@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Slimes now feed faster, and should only need one monkey to reach their next lifestage."

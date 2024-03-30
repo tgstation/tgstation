@@ -980,3 +980,26 @@
       block, and that this wearer is the same as the owner of the item.
   zeroisthebiggay:
   - spellcheck: however, he burn`s` his finger in the process.
+2024-03-30:
+  00-Steven:
+  - bugfix: You can actually hit racks with objects when in combat mode again. Importantly,
+      painting them with spraycans like that works again.
+  Ghommie:
+  - bugfix: Fixed the "Random" deathmatch modifier. Also turned the "Heightened Hearing"
+      option into a modifier as well.
+  Majkl-J:
+  - code_imp: Borgo rightclick ranged code
+  Pickle-Coding:
+  - bugfix: Fixes lavaland SMES and other crap from not starting with enough energy.
+  - bugfix: The pirate SMES are now magical instead of secretly infinite.
+  Profakos:
+  - code_imp: Made the easter rabbits spawn on a more curated list.
+  - bugfix: Slimes now feed faster, and should only need one monkey to reach their
+      next lifestage.
+  Xander3359:
+  - qol: You can now open airlocks (That you have access to) while inside a stealth
+      implant box
+  Zytolg:
+  - qol: Wholesale Revamp of Birdshots Engineering Department
+  - bugfix: Some Birdshot Amtospherics Concerns
+  - bugfix: Some Birdshot Engine Concerns
