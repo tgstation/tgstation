@@ -55,9 +55,9 @@
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 30 SECONDS
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
-	var/base_charge_rate = 200 KILO WATTS
+	var/base_charge_rate = 20 KILO WATTS
 	/// Final charge rate which is base_charge_rate + contribution by capacitors
-	var/final_charge_rate = 250 KILO WATTS
+	var/final_charge_rate = 25 KILO WATTS
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
