@@ -478,6 +478,7 @@
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"
 	description = "Picks 3 to 5 random modifiers as the game is about to start"
+	random_exempted = TRUE
 
 /datum/deathmatch_modifier/random/on_select(datum/deathmatch_lobby/lobby)
 	///remove any other global modifier if chosen. It'll pick random ones when the time comes.
@@ -486,36 +487,32 @@
 		if(modifier.random_exempted)
 			continue
 		modifier.unselect(lobby)
-		lobby -= modpath
+		lobby.modifiers -= modpath
 
 /datum/deathmatch_modifier/random/on_start_game(datum/deathmatch_lobby/lobby)
 	lobby.modifiers -= type //remove it before attempting to select other modifiers, or they'll fail.
 
 	var/static/list/static_pool
-	if(!static_pool)
+	if(isnull(static_pool))
 		static_pool = subtypesof(/datum/deathmatch_modifier)
 		for(var/datum/deathmatch_modifier/modpath as anything in static_pool)
 			if(initial(modpath.random_exempted))
 				static_pool -= modpath
 	var/list/modifiers_pool = static_pool.Copy()
+	for(var/modpath in modifiers_pool)
+		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[modpath]
+		if(!modifier.selectable(lobby))
+			modifiers_pool -= modpath
 
 	///Pick global modifiers at random.
 	for(var/iteration in rand(3, 5))
-		var/mod_len = length(modifiers_pool)
-		if(!mod_len)
-			break
-		var/datum/deathmatch_modifier/modifier
-		if(mod_len > 1)
-			modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
-		else //pick() throws errors if the list has only one element iirc.
-			modifier = GLOB.deathmatch_game.modifiers[modifiers_pool[1]]
-			modifiers_pool = null
-		if(!modifier.selectable(lobby))
-			continue
+		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
 		modifier.on_select(lobby)
 		modifier.on_start_game(lobby)
-		lobby += modifier
+		lobby += modifier.type
 		modifiers_pool -= modifier.blacklisted_modifiers
+		if(!length(modifiers_pool))
+			return
 
 /datum/deathmatch_modifier/any_loadout
 	name = "Any Loadout Allowed"
@@ -539,3 +536,11 @@
 		lobby.modifiers -= type
 	else
 		lobby.loadouts = GLOB.deathmatch_game.loadouts
+
+/datum/deathmatch_modifier/hear_global_chat
+	name = "Heightened Hearing"
+	description = "This lets you hear people through wall, as well as deadchat"
+	random_exempted = TRUE
+
+/datum/deathmatch_modifier/hear_global_chat/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	player.add_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_HEARING), DEATHMATCH_TRAIT)

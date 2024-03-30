@@ -24,7 +24,7 @@
 	var/list/status = list()
 	status += "The law sync module is [R.lawupdate ? "on" : "off"]."
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
-	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
+	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.camera_enabled ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
 	status += "There is a star symbol above the [get_color_of_wire(WIRE_RESET_MODEL)] wire."
 	return status
@@ -52,7 +52,7 @@
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.toggle_cam(usr, FALSE)
 				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
-				log_silicon("[key_name(usr)] toggled [key_name(R)]'s camera to [R.builtInCamera.status ? "on" : "off"] via pulse")
+				log_silicon("[key_name(usr)] toggled [key_name(R)]'s camera to [R.builtInCamera.camera_enabled ? "on" : "off"] via pulse")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
 				R.visible_message(span_notice("[R] gently chimes."), span_notice("LawSync protocol engaged."))
@@ -90,7 +90,7 @@
 			R.logevent("Lawsync Module fault [mend ? "cleared" : "detected"]")
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
-				R.builtInCamera.status = mend
+				R.builtInCamera.camera_enabled = mend
 				R.builtInCamera.toggle_cam(usr, 0)
 				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
 				R.logevent("Camera Module fault [mend?"cleared":"detected"]")
