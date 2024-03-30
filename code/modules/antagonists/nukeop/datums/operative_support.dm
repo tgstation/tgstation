@@ -10,7 +10,7 @@
 	to_chat(owner, span_red("Use your tools to set up your equipment however you like, but do NOT attempt to leave your outpost."))
 	owner.announce_objectives()
 
-/datum/antagonist/nukeop/support/on_gain() //All consoles and gear they should get should be in here
+/datum/antagonist/nukeop/support/on_gain()
 	..()
 	for(var/datum/mind/teammate_mind in nuke_team.members)
 		var/mob/living/our_teammate = teammate_mind.current
