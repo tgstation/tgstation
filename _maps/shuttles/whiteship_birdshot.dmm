@@ -986,9 +986,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "Ge" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)

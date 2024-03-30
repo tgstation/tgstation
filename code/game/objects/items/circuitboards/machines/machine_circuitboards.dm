@@ -79,7 +79,6 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -525,9 +524,11 @@
 /obj/item/circuitboard/machine/reagentgrinder
 	name = "All-In-One Grinder"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/reagentgrinder/constructed
+	build_path = /obj/machinery/reagentgrinder
 	req_components = list(
-		/datum/stock_part/servo = 1)
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 1,
+	)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smartfridge
@@ -1111,6 +1112,19 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/security
 
 //Service
+/obj/item/circuitboard/machine/photobooth
+	name = "Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/photobooth
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/photobooth/security
+	name = "Security Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/photobooth/security
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"
