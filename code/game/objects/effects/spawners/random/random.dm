@@ -94,15 +94,29 @@
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
 	return new type_path_to_make(spawn_loc)
 
-///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available
+/**
+ * Gets a list of all turfs within a certain radius of the spawner that is 'valid' to be spawned on.
+ * Returns the list of all valid turfs
+ * We make sure it is an open turf (or at least has something under it if multi-z) and has no dense things on it,
+ * such as tables and windows.
+ */
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)
+	RETURN_TYPE(/list)
 	var/list/scatter_locations = list()
 
-	if(radius >= 0)
-		for(var/turf/turf_in_view in view(radius, get_turf(src)))
-			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
-				continue
-			scatter_locations += turf_in_view
+	if(radius < 0)
+		return scatter_locations
+	for(var/turf/open/turf_in_view in view(radius, get_turf(src)))
+		if(isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view))
+			continue
+		var/density_found = FALSE
+		for(var/atom/movable/found_movable in turf_in_view)
+			if(found_movable.density)
+				density_found = TRUE
+				break
+		if(density_found)
+			continue
+		scatter_locations += turf_in_view
 
 	return scatter_locations
 

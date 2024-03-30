@@ -31,15 +31,15 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/lava,
 	/turf/open/water,
 	/turf/open/openspace,
-	/turf/open/space/openspace
-	)))
+	/turf/open/space/openspace,
+)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
 
 GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 	/turf/open/openspace,
-	/turf/open/space/openspace
-	)))
+	/turf/open/space/openspace,
+)))
 
 #define isopenspaceturf(A) (is_type_in_typecache(A, GLOB.turfs_openspace))
 
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 	/turf/closed/mineral,
 	/turf/open/misc/asteroid,
 	/turf/open/openspace,
-	/turf/open/space
+	/turf/open/space,
 )))
 
 #define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
