@@ -227,7 +227,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
-/obj/effect/mob_spawn/cow/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/ghost_role/cow/special(mob/living/spawned_mob)
 	. = ..()
 	gender = FEMALE
 

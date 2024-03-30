@@ -107,14 +107,7 @@
 	if(radius < 0)
 		return scatter_locations
 	for(var/turf/open/turf_in_view in view(radius, get_turf(src)))
-		if(isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view))
-			continue
-		var/density_found = FALSE
-		for(var/atom/movable/found_movable in turf_in_view)
-			if(found_movable.density)
-				density_found = TRUE
-				break
-		if(density_found)
+		if(turf_in_view.is_blocked_turf(exclude_mobs = TRUE))
 			continue
 		scatter_locations += turf_in_view
 
