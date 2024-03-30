@@ -424,7 +424,7 @@
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/premium
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
