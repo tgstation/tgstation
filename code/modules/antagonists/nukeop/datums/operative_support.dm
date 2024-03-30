@@ -22,7 +22,7 @@
 			emp_proof = FALSE, \
 		)
 		our_teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0)
-		to_chat(our_teammate, span_notice("A Syndicate Overwatch Agent has been assigned to your team. Smile, you're on camera!"))
+		to_chat(our_teammate, span_notice("A Syndicate Overwatch Intelligence Agent has been assigned to your team. Smile, you're on camera!"))
 
 	RegisterSignal(nuke_team, COMSIG_NUKE_TEAM_ADDITION, PROC_REF(late_bodycam))
 
@@ -43,7 +43,7 @@
 		network = OPERATIVE_CAMERA_NET, \
 		emp_proof = FALSE, \
 	)
-	to_chat(new_teammate, span_notice("You have been equipped with a bodycam, viewable by your Overwatch Agent. Make sure to show them a good performance!"))
+	to_chat(new_teammate, span_notice("You have been equipped with a bodycam, viewable by your Overwatch Intelligence Agent. Make sure to show them a good performance!"))
 
 /datum/objective/overwatch
 

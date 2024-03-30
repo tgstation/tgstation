@@ -36,7 +36,7 @@ Happy hunting!
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 
 /obj/item/clothing/glasses/overwatch
-	name = "overwatch glasses"
+	name = "intelligence glasses"
 	desc = "A set of incredibly advanced sunglasses, providing you with an array of different sensor scans and visual readouts for pretty much anything you look at. \
 		It's kind of overwhelming, actually. Wearing this for a few hours will probably give you a migrane."
 	icon_state = "sunhudmed"
