@@ -1,0 +1,648 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cc" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Theater Stage"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"ck" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"cI" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"dx" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"ew" = (
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"fg" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"fm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/water/jungle,
+/area/station/commons/lounge)
+"gy" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle,
+/area/station/service/theater)
+"gY" = (
+/obj/machinery/media/jukebox,
+/obj/machinery/light/directional/north,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"hS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"ir" = (
+/obj/structure/flora/bush/large/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"jB" = (
+/turf/open/misc/dirt/jungle,
+/area/station/service/theater)
+"jK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"kD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/service/theater)
+"lY" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/dirt/jungle,
+/area/station/commons/lounge)
+"mB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"mC" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"mL" = (
+/turf/open/water/jungle,
+/area/station/commons/lounge)
+"mP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/flora/rock/pile/jungle/large/style_random,
+/obj/structure/flora/tree/jungle/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"nj" = (
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"nB" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"nI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/mob/living/carbon/human/species/monkey/punpun,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"nN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"nR" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"nU" = (
+/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/firealarm/directional/south,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"oa" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/light/directional/east,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"op" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"pg" = (
+/obj/structure/flora/bush/leavy/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"po" = (
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/light/directional/west,
+/obj/structure/flora/bush/jungle/b/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"py" = (
+/obj/machinery/barsign/directional/north,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"pP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/service/theater)
+"qi" = (
+/obj/structure/chair/wood,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"tT" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/firedoor,
+/turf/open/misc/dirt/jungle,
+/area/station/commons/lounge)
+"tU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"uo" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/instrument/violin,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"vc" = (
+/turf/closed/wall/mineral/wood,
+/area/station/service/theater)
+"vv" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/wood{
+	name = "Bar"
+	},
+/turf/open/misc/dirt/jungle,
+/area/station/commons/lounge)
+"vy" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"wd" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/station/service/theater)
+"wF" = (
+/obj/structure/flora/bush/grassy/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"wM" = (
+/obj/structure/table/wood,
+/obj/item/instrument/guitar{
+	pixel_x = -7
+	},
+/obj/item/instrument/eguitar{
+	pixel_x = 5
+	},
+/obj/item/instrument/banjo,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"xk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"xK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"yJ" = (
+/turf/template_noop,
+/area/template_noop)
+"zh" = (
+/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"zv" = (
+/obj/structure/table/wood,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/trombone,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"AS" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Bs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"BD" = (
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Dd" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/service/theater)
+"Dg" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"EB" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"FS" = (
+/obj/structure/table/wood,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"GX" = (
+/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Hh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/firedoor,
+/turf/open/misc/dirt/jungle,
+/area/station/commons/lounge)
+"HA" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"HI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Im" = (
+/obj/structure/sign/poster/contraband/clown/directional/west,
+/obj/structure/table/wood,
+/obj/item/instrument/accordion,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"Kc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Mu" = (
+/obj/machinery/light/directional/east,
+/turf/open/misc/dirt/jungle,
+/area/station/service/theater)
+"MI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/water/jungle,
+/area/station/commons/lounge)
+"NP" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Theater";
+	name = "service camera"
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/misc/dirt/jungle,
+/area/station/service/theater)
+"Ol" = (
+/obj/item/radio/intercom/directional/south,
+/turf/open/misc/dirt/jungle,
+/area/station/service/theater)
+"Oz" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"OP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"OY" = (
+/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/light/small/directional/west,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"QO" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"QW" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/musician/piano,
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
+/area/station/service/theater)
+"TV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Ub" = (
+/turf/closed/wall/mineral/wood,
+/area/station/commons/lounge)
+"Yt" = (
+/obj/structure/chair/wood,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"YM" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"ZB" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"ZC" = (
+/turf/open/floor/grass,
+/area/station/service/theater)
+
+(1,1,1) = {"
+Ub
+nj
+jK
+nj
+OY
+Oz
+nR
+Oz
+po
+nj
+YM
+ir
+nj
+OP
+nj
+nj
+yJ
+"}
+(2,1,1) = {"
+Ub
+py
+jK
+Bs
+jK
+jK
+nI
+jK
+jK
+jK
+jK
+HI
+tU
+xK
+jK
+jK
+yJ
+"}
+(3,1,1) = {"
+Ub
+nj
+TV
+nj
+vy
+nj
+jK
+nj
+dx
+dx
+Dg
+xk
+AS
+zh
+oa
+EB
+yJ
+"}
+(4,1,1) = {"
+tT
+nB
+nj
+nj
+FS
+nj
+mP
+nj
+FS
+FS
+nj
+nU
+vc
+vc
+vc
+vc
+yJ
+"}
+(5,1,1) = {"
+Ub
+ew
+QO
+nj
+Oz
+nj
+hS
+fg
+nR
+Oz
+pg
+nj
+uo
+wM
+QW
+zv
+Im
+"}
+(6,1,1) = {"
+Ub
+gY
+nj
+lY
+nj
+mL
+MI
+fm
+fm
+fm
+fm
+Kc
+cc
+mB
+Dd
+ZC
+ZC
+"}
+(7,1,1) = {"
+Ub
+BD
+mL
+mL
+mL
+mL
+ck
+qi
+FS
+HA
+mL
+mL
+wd
+kD
+ZC
+jB
+jB
+"}
+(8,1,1) = {"
+tT
+mL
+mL
+Yt
+FS
+cI
+jK
+wF
+nj
+nj
+ZB
+nj
+wd
+pP
+jB
+jB
+NP
+"}
+(9,1,1) = {"
+Ub
+nj
+ir
+nj
+mC
+op
+jK
+nN
+GX
+nj
+nj
+nj
+gy
+jB
+jB
+jB
+Ol
+"}
+(10,1,1) = {"
+Ub
+qi
+FS
+HA
+Ub
+vv
+Hh
+vv
+Ub
+Yt
+FS
+cI
+gy
+jB
+Mu
+jB
+jB
+"}
+(11,1,1) = {"
+Ub
+tT
+tT
+tT
+Ub
+yJ
+yJ
+yJ
+Ub
+tT
+tT
+tT
+vc
+vc
+vc
+vc
+vc
+"}

@@ -1,0 +1,1617 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"aW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"bj" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"bv" = (
+/obj/structure/particle_accelerator/particle_emitter/center,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"cp" = (
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Engineering - Station Particle Accelerator, Northeast";
+	name = "engineering camera";
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"cA" = (
+/obj/machinery/camera/emp_proof/directional/south{
+	name = "engineering camera";
+	c_tag = "Engineering - Station Particle Accelerator, Southeast"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"dc" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"dd" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"di" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"dV" = (
+/turf/open/floor/plating/airless,
+/area/station/maintenance/department/engine)
+"fX" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Engine Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"ge" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"go" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters";
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/main)
+"gu" = (
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"gV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "engine_storage";
+	name = "Engine Storage"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"gX" = (
+/obj/machinery/field/generator,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"hl" = (
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"hn" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"hq" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"hr" = (
+/obj/machinery/camera/emp_proof/directional/west{
+	c_tag = "Engineering - Station Particle Accelerator, West";
+	name = "engineering camera"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"hA" = (
+/obj/structure/sign/warning/directional/west,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"hE" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"hI" = (
+/obj/machinery/power/emitter,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"il" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
+"iV" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"jL" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"jV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/particle_accelerator/end_cap,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"kk" = (
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"kr" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"ks" = (
+/obj/structure/sign/warning/directional/south,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"kH" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"kV" = (
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"lC" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/main)
+"mE" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"mJ" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/closet/radiation,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"mK" = (
+/obj/structure/particle_accelerator/power_box,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"na" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/north,
+/obj/machinery/button/door/directional/north{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters Control";
+	req_access = list("engineering")
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering - Particle Accelerator Chamber";
+	name = "engineering camera"
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"nq" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"nN" = (
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
+"os" = (
+/obj/machinery/power/emitter{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"oN" = (
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"pQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"pW" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"qo" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"qp" = (
+/obj/structure/particle_accelerator/particle_emitter/right,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"rD" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"rU" = (
+/obj/machinery/light/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"sM" = (
+/obj/effect/turf_decal/bot_white/right,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"sN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"tq" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Engine Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"tJ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"tQ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Engine Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable/layer1,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"ug" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/airalarm/directional/north,
+/obj/structure/table,
+/obj/item/paper{
+	name = "Important Note";
+	default_raw_text = "<p>Please do not wire these SMES units into the grid, these are specifically for the station-side particle accelerator.<br>Also, DO NOT max out these SMES units like you would the main ones. These units only need as much input/output that is needed to power the engine area and equipment.<p>"
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"vF" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"vQ" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"vZ" = (
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"wD" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engine SMES Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/main)
+"wK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"wX" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"xj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"xu" = (
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"xR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"yg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "external_engine_storage";
+	name = "External Engine Storage"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"yD" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/cable,
+/obj/machinery/power/emitter/welded{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"zd" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"zk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Engineering Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
+"zF" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engine SMES Room"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/main)
+"zZ" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/cable,
+/obj/machinery/power/emitter/welded{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"AW" = (
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Engineering - Station Particle Accelerator, Northeast";
+	name = "engineering camera"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Cq" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Cs" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
+"CY" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"Da" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Df" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"Ds" = (
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"DP" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Engine Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"El" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
+"Fj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Fz" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"FH" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "engine_storage";
+	name = "Engine Storage Control";
+	req_access = list("engineering")
+	},
+/obj/structure/tank_holder/oxygen/yellow,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"FJ" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"FS" = (
+/obj/structure/girder/reinforced,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Gv" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/field/generator/anchored,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"GK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"GW" = (
+/turf/template_noop,
+/area/template_noop)
+"Hi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"Hj" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"HB" = (
+/obj/structure/table,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
+"HF" = (
+/obj/machinery/power/rad_collector,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"HP" = (
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"HX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters";
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/main)
+"Kd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters Control";
+	req_access = list("engineering")
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Lo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Lt" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/table,
+/obj/item/crowbar/red,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"MB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"MS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/east{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters Control";
+	req_access = list("engineering")
+	},
+/obj/structure/cable,
+/obj/item/weldingtool,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Nd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"NO" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"NU" = (
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"NW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Pl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Px" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/sign/warning/directional/south,
+/obj/structure/table,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/head/utility/radiation,
+/obj/item/clothing/glasses/meson,
+/obj/item/geiger_counter,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"PG" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/main)
+"PV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/directional/north,
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"QT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Ra" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/structure/tank_holder/oxygen/yellow,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Rw" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/folder/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"RH" = (
+/obj/machinery/camera/emp_proof/directional/east{
+	c_tag = "Engineering - Station Particle Accelerator, East";
+	name = "engineering camera"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"SB" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/light/directional/south,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"TF" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/main)
+"UL" = (
+/obj/structure/particle_accelerator/fuel_chamber,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Va" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space,
+/area/space/nearstation)
+"Vh" = (
+/obj/structure/particle_accelerator/particle_emitter/left,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"VS" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"WJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"Xr" = (
+/obj/machinery/particle_accelerator/control_box,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"YE" = (
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Zm" = (
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Zp" = (
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Zx" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/engine)
+"ZH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"ZW" = (
+/obj/machinery/camera/emp_proof/directional/south{
+	name = "engineering camera";
+	c_tag = "Engineering - Station Particle Accelerator, Southeast";
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+
+(1,1,1) = {"
+PG
+oN
+oN
+oN
+oN
+PG
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+wX
+GW
+GW
+Cs
+GW
+GW
+wX
+GW
+GW
+GW
+Cs
+GW
+GW
+"}
+(2,1,1) = {"
+wD
+aD
+Hi
+hq
+rU
+PG
+GW
+wX
+GW
+GW
+GW
+wX
+GW
+El
+El
+El
+yg
+El
+El
+El
+wX
+Va
+GW
+Cs
+GW
+GW
+"}
+(3,1,1) = {"
+PG
+hn
+hl
+oN
+ge
+PG
+wX
+wX
+wX
+GW
+wX
+wX
+GW
+El
+HF
+HF
+Zp
+NU
+NU
+El
+GW
+Va
+GW
+Cs
+GW
+GW
+"}
+(4,1,1) = {"
+PG
+HB
+hl
+hE
+vQ
+aW
+wX
+wX
+wX
+wX
+wX
+wX
+wX
+El
+HF
+HF
+Zp
+vZ
+vZ
+El
+GW
+Va
+GW
+Cs
+GW
+GW
+"}
+(5,1,1) = {"
+PG
+ug
+hl
+Df
+xu
+aW
+wX
+wX
+wX
+wX
+wX
+wX
+wX
+El
+HF
+HF
+Zp
+NU
+NU
+El
+GW
+Va
+GW
+Cs
+GW
+GW
+"}
+(6,1,1) = {"
+PG
+HB
+GK
+CY
+jL
+aW
+wX
+wX
+GW
+wX
+wX
+wX
+wX
+El
+hI
+gX
+Zp
+gX
+os
+El
+GW
+Va
+GW
+Cs
+GW
+GW
+"}
+(7,1,1) = {"
+PG
+oN
+GK
+oN
+ge
+PG
+wX
+GW
+GW
+wX
+wX
+GW
+GW
+El
+Zp
+Zp
+Zp
+Zp
+Zp
+El
+GW
+Va
+GW
+Cs
+Cs
+Cs
+"}
+(8,1,1) = {"
+PG
+oN
+GK
+hq
+rU
+PG
+GW
+GW
+GW
+wX
+GW
+GW
+GW
+El
+Zp
+Zp
+Zp
+Zp
+Zp
+El
+GW
+Va
+GW
+wX
+GW
+GW
+"}
+(9,1,1) = {"
+PG
+oN
+GK
+oN
+PG
+PG
+PG
+El
+El
+El
+El
+El
+El
+El
+El
+gV
+El
+gV
+El
+El
+El
+El
+El
+El
+El
+El
+"}
+(10,1,1) = {"
+PG
+Cq
+zF
+Cq
+PG
+FH
+PG
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+hA
+Zp
+Zp
+hr
+Zp
+Zp
+hA
+Zp
+Zp
+wX
+wX
+wX
+El
+"}
+(11,1,1) = {"
+Fz
+mE
+iV
+bj
+PG
+PV
+PG
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+Zp
+Zp
+Zp
+Zp
+wX
+El
+"}
+(12,1,1) = {"
+Fz
+Fz
+iV
+kH
+tQ
+Lo
+fX
+di
+di
+di
+HP
+HP
+HP
+HP
+Zp
+Zp
+di
+Zp
+Zp
+HP
+HP
+HP
+HP
+Zp
+wX
+El
+"}
+(13,1,1) = {"
+Fz
+Fz
+kr
+rD
+Cq
+pQ
+PG
+cp
+Zp
+Zp
+HP
+Zp
+Zp
+VS
+Zp
+Zp
+di
+Zp
+Zp
+VS
+Zp
+Zp
+HP
+Zp
+Zp
+El
+"}
+(14,1,1) = {"
+Lt
+Hj
+kr
+Px
+PG
+NO
+Cq
+Zp
+Zp
+Zp
+HP
+Zp
+Zp
+zZ
+Zp
+VS
+HP
+VS
+Zp
+zZ
+Zp
+Zp
+HP
+Zp
+ZW
+El
+"}
+(15,1,1) = {"
+PG
+PG
+HX
+PG
+PG
+Cq
+Cq
+Cq
+Zp
+Da
+HP
+VS
+dd
+Gv
+Zp
+sM
+dc
+YE
+Zp
+Gv
+dd
+VS
+HP
+HP
+ks
+El
+"}
+(16,1,1) = {"
+PG
+Fj
+Pl
+Kd
+WJ
+ZH
+xj
+Cq
+Zp
+Da
+Zp
+Zp
+Zp
+Zp
+FJ
+Zp
+wX
+Zp
+FJ
+Zp
+Zp
+Zp
+Zp
+HP
+Zp
+El
+"}
+(17,1,1) = {"
+lC
+NW
+QT
+Xr
+vF
+Vh
+pW
+Cq
+Zp
+HP
+Zp
+Zp
+VS
+sM
+Zp
+wX
+wX
+wX
+Zp
+YE
+VS
+Zp
+Zp
+HP
+Zp
+El
+"}
+(18,1,1) = {"
+PG
+na
+jV
+UL
+mK
+bv
+tJ
+nq
+VS
+HP
+di
+di
+HP
+dc
+wX
+wX
+Ds
+wX
+wX
+dc
+HP
+di
+di
+HP
+wX
+El
+"}
+(19,1,1) = {"
+lC
+NW
+QT
+gu
+kV
+qp
+tJ
+Cq
+Zp
+HP
+Zp
+Zp
+VS
+YE
+Zp
+wX
+wX
+wX
+Zp
+sM
+VS
+Zp
+Zp
+HP
+Zp
+El
+"}
+(20,1,1) = {"
+PG
+Nd
+MB
+MS
+wK
+xR
+sN
+Cq
+Zp
+Da
+Zp
+Zp
+Zp
+Zp
+FJ
+Zp
+wX
+Zp
+FJ
+Zp
+Zp
+Zp
+Zp
+HP
+Zp
+El
+"}
+(21,1,1) = {"
+PG
+PG
+go
+PG
+PG
+Cq
+Cq
+Cq
+Zp
+Da
+HP
+VS
+dd
+Gv
+Zp
+YE
+dc
+sM
+Zp
+Gv
+dd
+VS
+HP
+HP
+ks
+El
+"}
+(22,1,1) = {"
+mJ
+Rw
+qo
+Px
+PG
+zd
+Cq
+Zp
+Zp
+Zp
+HP
+Zp
+Zp
+yD
+Zp
+VS
+HP
+VS
+Zp
+yD
+Zp
+Zp
+HP
+Zp
+cA
+El
+"}
+(23,1,1) = {"
+Fz
+Fz
+qo
+rD
+Cq
+pQ
+PG
+AW
+Zp
+Zp
+HP
+Zp
+Zp
+VS
+Zp
+Zp
+di
+Zp
+Zp
+VS
+Zp
+Zp
+HP
+Zp
+Zp
+El
+"}
+(24,1,1) = {"
+Fz
+Fz
+TF
+Fz
+DP
+pQ
+tq
+Zp
+Zp
+Zp
+HP
+HP
+HP
+HP
+Zp
+Zp
+di
+Zp
+Zp
+HP
+HP
+HP
+HP
+Zp
+wX
+El
+"}
+(25,1,1) = {"
+Fz
+mE
+TF
+SB
+PG
+PV
+PG
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+Zp
+Zp
+Zp
+Zp
+wX
+El
+"}
+(26,1,1) = {"
+Zx
+il
+zk
+nN
+Zx
+Ra
+PG
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zm
+Zp
+Zp
+RH
+Zp
+Zp
+Zm
+Zp
+Zp
+wX
+wX
+wX
+El
+"}
+(27,1,1) = {"
+GW
+GW
+GW
+GW
+Zx
+Zx
+Zx
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+El
+"}
+(28,1,1) = {"
+GW
+GW
+GW
+GW
+GW
+dV
+Zx
+kk
+kk
+kk
+kk
+kk
+kk
+FS
+GW
+GW
+wX
+GW
+wX
+wX
+wX
+wX
+wX
+wX
+wX
+GW
+"}
+(29,1,1) = {"
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+GW
+wX
+wX
+wX
+wX
+wX
+wX
+wX
+GW
+GW
+GW
+GW
+GW
+"}

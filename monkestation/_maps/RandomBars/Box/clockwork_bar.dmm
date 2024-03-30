@@ -1,0 +1,605 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ca" = (
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"cr" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/bronze{
+	name = "Bar"
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"cu" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"du" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"dN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"fp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"fq" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Theater";
+	name = "service camera"
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"gg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"hB" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"if" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"il" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"jv" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"kq" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"ll" = (
+/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"mm" = (
+/obj/structure/chair/bronze,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"ol" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"oF" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/musician/piano,
+/obj/machinery/light/directional/west,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"oH" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"qn" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"qG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"qZ" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"rC" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"si" = (
+/obj/structure/chair/bronze,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"sH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"tn" = (
+/obj/effect/spawner/structure/window/bronze,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/commons/lounge)
+"tZ" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"uV" = (
+/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"wY" = (
+/obj/structure/chair/bronze,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"xT" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Theater Stage"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"yC" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/light/directional/east,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"zp" = (
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Bm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Cz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"DS" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/bronze{
+	dir = 1
+	},
+/obj/structure/table/bronze,
+/obj/item/instrument/violin,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Ef" = (
+/turf/closed/wall/mineral/bronze,
+/area/station/service/theater)
+"FG" = (
+/obj/structure/table/bronze,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/trombone,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Go" = (
+/obj/effect/spawner/structure/window/bronze,
+/turf/open/floor/plating,
+/area/station/commons/lounge)
+"Ie" = (
+/obj/structure/sign/poster/contraband/clown/directional/west,
+/obj/structure/table/bronze,
+/obj/item/instrument/accordion,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Iw" = (
+/obj/machinery/media/jukebox,
+/obj/machinery/light/directional/north,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Jy" = (
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"JZ" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"LI" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"LJ" = (
+/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Mm" = (
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/light/directional/west,
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"MB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Oh" = (
+/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/firealarm/directional/south,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Ov" = (
+/obj/machinery/barsign/directional/north,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"OD" = (
+/turf/closed/wall/mineral/bronze,
+/area/station/commons/lounge)
+"Pz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"PH" = (
+/obj/structure/table/bronze,
+/obj/item/toy/plush/moth/ookplush,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"PP" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Rd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Rp" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/bronze{
+	dir = 1
+	},
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"RG" = (
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Sf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/mob/living/carbon/human/species/monkey/punpun,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Tu" = (
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"TL" = (
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"TO" = (
+/obj/structure/table/bronze,
+/obj/item/instrument/guitar{
+	pixel_x = -7
+	},
+/obj/item/instrument/eguitar{
+	pixel_x = 5
+	},
+/obj/item/instrument/banjo,
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Ui" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Up" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Uz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"UM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Wj" = (
+/turf/template_noop,
+/area/template_noop)
+"Ww" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/bronze/flat,
+/area/station/service/theater)
+"Ya" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"ZX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"ZZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+
+(1,1,1) = {"
+OD
+TL
+qG
+TL
+LJ
+qn
+LI
+qn
+Mm
+TL
+PP
+TL
+TL
+Cz
+TL
+TL
+Wj
+"}
+(2,1,1) = {"
+OD
+Ov
+qG
+qG
+qG
+qG
+Sf
+qG
+qG
+qG
+qG
+gg
+Rd
+Uz
+qG
+sH
+Wj
+"}
+(3,1,1) = {"
+OD
+TL
+dN
+TL
+ol
+il
+qG
+il
+il
+TL
+ZZ
+UM
+tZ
+ll
+yC
+Ya
+Wj
+"}
+(4,1,1) = {"
+Go
+kq
+TL
+Ui
+Jy
+Jy
+qG
+Jy
+PH
+TL
+TL
+Oh
+Ef
+Ef
+Ef
+Ef
+Wj
+"}
+(5,1,1) = {"
+OD
+Tu
+TL
+TL
+qn
+qn
+fp
+qn
+LI
+oH
+TL
+TL
+DS
+TO
+oF
+FG
+Ie
+"}
+(6,1,1) = {"
+OD
+Iw
+TL
+TL
+TL
+oH
+if
+du
+du
+du
+du
+du
+xT
+Bm
+qZ
+ca
+ca
+"}
+(7,1,1) = {"
+OD
+RG
+TL
+mm
+Jy
+Up
+qG
+wY
+Jy
+JZ
+TL
+TL
+Rp
+Pz
+ca
+ca
+ca
+"}
+(8,1,1) = {"
+Go
+TL
+TL
+si
+Jy
+cu
+qG
+si
+Jy
+cu
+hB
+TL
+Rp
+Ww
+ca
+ca
+fq
+"}
+(9,1,1) = {"
+OD
+TL
+TL
+TL
+rC
+ZX
+qG
+MB
+uV
+TL
+TL
+TL
+Rp
+ca
+ca
+ca
+zp
+"}
+(10,1,1) = {"
+OD
+wY
+Jy
+JZ
+OD
+cr
+tn
+cr
+OD
+mm
+Jy
+Up
+Rp
+ca
+jv
+ca
+ca
+"}
+(11,1,1) = {"
+OD
+Go
+Go
+Go
+OD
+Wj
+Wj
+Wj
+OD
+Go
+Go
+Go
+Ef
+Ef
+Ef
+Ef
+Ef
+"}

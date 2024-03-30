@@ -111,6 +111,12 @@
 
 
 
+///BoxStation Engine Area Spawner
+/obj/effect/spawner/random_engines/box
+	name = "box engine spawner"
+	room_width = 29
+	room_height = 26
+
 /// MetaStation Engine Area Spawner
 /obj/effect/spawner/random_engines/meta
 	name = "meta engine spawner"
@@ -164,6 +170,11 @@
 		var/datum/map_template/random_room/random_bar/template = pick_weight(possible_bar_templates)
 		template.load(get_turf(src), centered = template.centerspawner)
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/spawner/random_bar/box
+	name = "Box Bar Spawner"
+	room_width = 11
+	room_height = 17
 
 /obj/effect/spawner/random_bar/icebox
 	name = "Icebox bar spawner"
