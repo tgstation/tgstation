@@ -1,7 +1,7 @@
 //All bundles and telecrystals
 /datum/uplink_category/bundle
 	name = "Bundles"
-	weight = 10
+	weight = 11
 
 /datum/uplink_item/bundles_tc
 	category = /datum/uplink_category/bundle

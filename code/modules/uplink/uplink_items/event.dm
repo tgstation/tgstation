@@ -21,6 +21,20 @@
 	force_event(/datum/round_event_control/carp_migration, "a strange signal")
 	return source //For log icon
 
+/datum/uplink_item/events/nukiecarpmigration
+	name = "Summon Carp Invaders"
+	desc = "When purchased, we'll bluespace over a wave or two of space carps to invade the station after a short delay. This can be rather helpful in making the medical department a bit more busy."
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
+	limited_stock = 1
+	cost = 10
+	cant_discount = TRUE
+	purchasable_from = (UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
+
+/datum/uplink_item/events/carpmigration/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	force_event(/datum/round_event_control/carp_migration, "a nuclear operative support agent")
+	return source //For log icon
+
 /datum/uplink_item/events/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
@@ -49,21 +63,6 @@
 
 /datum/uplink_item/events/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	force_event(/datum/round_event_control/grid_check, "a syndicate virus")
-	return source //For log icon
-
-
-/datum/uplink_item/events/carpmigration
-	name = "Summon Carp Invaders"
-	desc = "When purchased, we'll bluespace over a wave or two of space carps to invade the station after a short delay. This can be rather helpful in making the medical department a bit more busy."
-	item = /obj/effect/gibspawner/generic
-	surplus = 0
-	limited_stock = 1
-	cost = 10
-	cant_discount = TRUE
-	purchasable_from = (UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
-
-/datum/uplink_item/events/carpmigration/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	force_event(/datum/round_event_control/carp_migration, "a nuclear operative support agent")
 	return source //For log icon
 
 /datum/uplink_item/events/camera_failure

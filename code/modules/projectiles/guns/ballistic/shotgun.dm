@@ -346,3 +346,47 @@
 /obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	hook.afterattack(target, user, proximity_flag, click_parameters)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+/obj/item/ammo_box/magazine/internal/shot/kammerer
+	name = "kammerer internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	max_ammo = 4
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/kammerer
+	name = "\improper Kammerer"
+	desc = "A semi-automatic shotgun with a six-shell capacity. Often favored over compact shotguns for their slightly better performance. Can chamber 4 shells."
+	fire_delay = 2
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "Kammerer"
+	inhand_icon_state = "kammerer"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/kammerer
+	w_class = WEIGHT_CLASS_HUGE
+// Makeshift weapons shotgun
+/obj/item/gun/ballistic/shotgun/automatic/combat/kammerer/improvised
+	name = "improvised shotgun"
+	desc = "Essentially a tube that aims shotgun shells."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "ishotgun"
+	inhand_icon_state = "shotgun"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	slot_flags = null
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/kammerer
+// Syndicate uplink shotgun for traitors
+/obj/item/ammo_box/magazine/internal/shot/kammerer/syndicate
+	name = "kammerer internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	max_ammo = 8
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/kammerer/syndicate
+	name = "\improper Kammerer"
+	desc = "A semi-automatic shotgun with a six-shell capacity. Often favored over compact shotguns for their slightly better performance. Can chamber 4 shells."
+	fire_delay = 2
+	icon = 'icons/myimports/guns/ballistics.dmi'
+	icon_state = "Kammerer"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/kammerer/syndicate
+	w_class = WEIGHT_CLASS_HUGE
+

@@ -17,3 +17,4 @@
 /obj/projectile/energy/radiation/weak
 	damage = 9
 	radiation_chance = 10
+

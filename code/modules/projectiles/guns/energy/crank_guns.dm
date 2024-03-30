@@ -125,3 +125,25 @@
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+
+/obj/item/gun/energy/laser/thermal/inferno/syndicate //the magma gun
+	name = "inferno pistol"
+	icon_state = "infernopistol"
+	inhand_icon_state = "gun"
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. \
+		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold."
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
+	selfcharge = 1
+	charge_delay = 2
+
+/obj/item/gun/energy/laser/thermal/cryo/syndicate //the ice gun
+	name = "cryo pistol"
+	icon_state = "cryopistol"
+	inhand_icon_state = "gun"
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. \
+		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot."
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+	selfcharge = 1
+	charge_delay = 2
+

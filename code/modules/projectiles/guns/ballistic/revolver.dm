@@ -135,10 +135,21 @@
 		"Black Panther" = "c38_panther"
 	)
 
+/obj/item/gun/ballistic/revolver/python
+	name = "\improper Python"
+	desc = "A modernized 9 round revolver. Uses .357 ammo."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "Python"
+	inhand_icon_state = "python"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/python
+
 /obj/item/gun/ballistic/revolver/syndicate
 	name = "\improper Syndicate Revolver"
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/bluespace
 
 /obj/item/gun/ballistic/revolver/syndicate/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate

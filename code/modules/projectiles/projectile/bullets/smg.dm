@@ -20,6 +20,42 @@
 	damage = 15
 	fire_stacks = 2
 
+/obj/projectile/bullet/c45/cs
+	name = ".45 caseless bullet"
+	damage = 27
+	speed = 0.5
+
+/obj/projectile/bullet/c45/sp
+	name = ".45 soporific bullet"
+	damage = 30
+	damage_type = STAMINA
+	eyeblur = 20
+
+/obj/projectile/bullet/c45/sp/on_hit(atom/target, blocked = FALSE)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		if(L.getStaminaLoss() >= 100)
+			L.Sleeping(400)
+	return ..()
+
+/obj/projectile/bullet/c45/emp
+	name = ".45 EMP bullet"
+	damage = 25
+
+/obj/projectile/bullet/c45/emp/on_hit(atom/target, blocked = FALSE)
+	..()
+	empulse(target, 0.5, 1) //Heavy EMP on target, light EMP in tiles around
+
+/obj/projectile/bullet/c45/venom
+	name = ".45 venom bullet"
+	damage = 20
+
+/obj/projectile/bullet/c45/venom/on_hit(atom/target, blocked)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/victim = target
+		victim.reagents.add_reagent(/datum/reagent/toxin/venom, 4)
+	return ..()
+
 // 4.6x30mm (Autorifles)
 
 /obj/projectile/bullet/c46x30mm

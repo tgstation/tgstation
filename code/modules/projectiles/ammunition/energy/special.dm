@@ -45,6 +45,17 @@
 	select_name = "bake"
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
+/obj/item/ammo_casing/energy/temp/syndicate
+	projectile_type = /obj/projectile/temp/syndicate
+	select_name = "freeze"
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE * 10)
+	fire_sound = 'sound/weapons/pulse3.ogg'
+
+/obj/item/ammo_casing/energy/temp/syndicate/hot
+	projectile_type = /obj/projectile/temp/syndicate/hot
+	select_name = "bake"
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
+
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
 	select_name = "goddamn meteor"

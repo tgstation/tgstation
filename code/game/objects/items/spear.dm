@@ -264,3 +264,40 @@
 		/datum/component/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/*
+ * Energy Spear
+ */
+
+/obj/item/spear/energy
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	icon_state = "espear0"
+	base_icon_state = "espear"
+	lefthand_file = 'icons/myimports/inhands/spears_lefthand.dmi'
+	righthand_file = 'icons/myimports/inhands/spears_righthand.dmi'
+	name = "energy spear"
+	desc = "A robust and deadly weapon of ancient design fitted with hardlight technology."
+	force = 8
+	force_unwielded = 8
+	force_wielded = 40
+	max_integrity = 2500
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	throwforce = 80
+	throw_speed = 4
+	throw_range = 10
+	embedding = list("embedded_impact_pain_multiplier" = 3)
+	armour_penetration = 60
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
+	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
+	sharpness = SHARP_EDGED
+	armor_type = /datum/armor/item_energyspear
+	wound_bonus = 10
+	bare_wound_bonus = 25
+	block_chance = 20
+	var/saber_color = "red"
+
+/datum/armor/item_energyspear
+	fire = 100
+	acid = 50

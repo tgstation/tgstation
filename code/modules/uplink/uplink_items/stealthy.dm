@@ -1,6 +1,6 @@
 /datum/uplink_category/stealthy
 	name = "Stealthy Weapons"
-	weight = 8
+	weight = 9
 
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy

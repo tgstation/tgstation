@@ -855,6 +855,14 @@
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 
+
+/obj/item/storage/box/syndie_kit/flamethrower_bundle/PopulateContents()
+	new /obj/item/flamethrower/full(src)
+	for(var/i in 1 to 3)
+		new /obj/item/tank/internals/plasma(src)
+	for(var/i in 1 to 3)
+		new /obj/item/grenade/chem_grenade/incendiary(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

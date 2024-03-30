@@ -322,6 +322,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed //used by wizard events, see the tendril_loot.dm file for the miner one
 	slot_flags = null
 
+/obj/item/katana/syndicate
+	force = 50
+	throwforce = 40
+	block_chance = 60
+	wound_bonus = 10
+	sharpness = SHARP_EDGED
+
 /obj/item/throwing_star
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."

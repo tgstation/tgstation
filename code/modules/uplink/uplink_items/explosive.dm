@@ -1,6 +1,6 @@
 /datum/uplink_category/explosives
 	name = "Explosives"
-	weight = 6
+	weight = 7
 
 /datum/uplink_item/explosives
 	category = /datum/uplink_category/explosives

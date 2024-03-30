@@ -1,6 +1,6 @@
 /datum/uplink_category/stealthy_tools
 	name = "Stealth Gadgets"
-	weight = 4
+	weight = 5
 
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
@@ -98,33 +98,3 @@
 	item = /obj/item/storage/mail_counterfeit_device
 	cost = 1
 	surplus = 30
-
-/datum/uplink_item/stealthy_tools/telecomm_blackout
-	name = "Disable Telecomms"
-	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
-	item = ABSTRACT_UPLINK_ITEM
-	surplus = 0
-	progression_minimum = 15 MINUTES
-	limited_stock = 1
-	cost = 4
-	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
-/datum/uplink_item/stealthy_tools/telecomm_blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	force_event(/datum/round_event_control/communications_blackout, "a syndicate virus")
-	return source //For log icon
-
-/datum/uplink_item/stealthy_tools/blackout
-	name = "Trigger Stationwide Blackout"
-	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
-	item = ABSTRACT_UPLINK_ITEM
-	surplus = 0
-	progression_minimum = 20 MINUTES
-	limited_stock = 1
-	cost = 6
-	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
-/datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	force_event(/datum/round_event_control/grid_check, "a syndicate virus")
-	return source //For log icon

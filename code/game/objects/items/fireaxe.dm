@@ -86,3 +86,63 @@
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	usesound = 'sound/items/crowbar.ogg'
+
+/*
+ * Syndicate Incendiary Axe
+ */
+
+/obj/item/fireaxe/firey
+	icon = 'icons/obj/weapons/fireaxe.dmi'
+	icon_state = "fireaxe0"
+	base_icon_state = "fireaxe"
+	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
+	wound_bonus = -15
+	bare_wound_bonus = 20
+	/// Can the axe ignite it's target?
+	var/ignite_target = TRUE
+
+/obj/item/fireaxe/firey/attack(mob/living/carbon/victim, mob/living/carbon/user)
+	if(ignite_target)
+		victim.adjust_fire_stacks(1)
+		victim.ignite_mob()
+
+	if(!isliving(victim))
+		return ..()
+
+	return ..()
+
+/*
+ * Syndicate Lightning Axe
+ */
+
+/obj/item/fireaxe/electric
+	icon = 'icons/obj/weapons/fireaxe.dmi'
+	icon_state = "fireaxe0"
+	base_icon_state = "fireaxe"
+	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
+	wound_bonus = -15
+	bare_wound_bonus = 20
+	/// Can the axe shock it's target?
+	var/electrocute = TRUE
+
+/obj/item/fireaxe/electric/attack(mob/living/carbon/victim, mob/living/carbon/user)
+	if(electrocute || HAS_TRAIT(src, TRAIT_WIELDED))
+		shock(victim)
+
+	if(!isliving(victim))
+		return ..()
+
+	return ..()
+
+/obj/item/fireaxe/electric/proc/shock(mob/living/target)
+	if(prob(20))
+		target.Stun(1 SECONDS)
+		target.Knockdown(5 SECONDS)
+		var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
+		s.set_up(5, 1, target.loc)
+		s.start()
+		target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
+			span_userdanger("You feel a powerful shock course through your body!"), \
+			span_hear("You hear a loud electrical crackle!"))
