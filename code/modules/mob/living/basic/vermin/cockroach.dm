@@ -40,7 +40,7 @@
 	if(SSmapping.level_trait(our_turf.z, ZTRAIT_SNOWSTORM) || SSmapping.level_trait(our_turf.z, ZTRAIT_ICE_RUINS) || SSmapping.level_trait(our_turf.z, ZTRAIT_ICE_RUINS_UNDERGROUND))
 		name = "ice-[name]"
 		real_name = name
-		desc += "This one seems to have a blue tint and is adapted to the cold."
+		desc += "<br>This one seems to have a blue tint and has adapted to the cold."
 		minimum_survivable_temperature = 140 // 40kelvin below icebox temp
 		add_atom_colour("#66ccff", FIXED_COLOUR_PRIORITY)
 	. = ..()
