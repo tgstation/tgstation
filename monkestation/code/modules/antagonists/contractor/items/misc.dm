@@ -153,9 +153,9 @@
 	for(var/area/area in GLOB.areas)
 		var/our_z = user.z
 		var/area_z = area.z
-		if(!our_z || !area_z)
+		if(!our_z)
 			// What the actual hell are you doing
-			CRASH("[src] has detected an area without a valid z-level. What")
+			CRASH("[src] was activated in an area without a valid z-level")
 
 		if(our_z != area_z)
 			continue
