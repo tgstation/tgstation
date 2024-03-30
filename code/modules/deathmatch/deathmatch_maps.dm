@@ -148,8 +148,8 @@
 		/datum/outfit/deathmatch_loadout/assistant,
 		/datum/outfit/deathmatch_loadout/naked,
 	)
-	map_name = "raidthebase"
-	key = "raidthebase"
+	map_name = "backalley"
+	key = "backalley"
 
 /datum/lazy_template/deathmatch/raginmages
 	name = "Ragin' Mages"
