@@ -1,0 +1,5 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - rscadd: "Prosthetic organ users are now allowed to pick what they want to start with."
+  - rscadd: "Junkie of all kinds, including smokers and alcoholics, are also able to pick their favorite type."
