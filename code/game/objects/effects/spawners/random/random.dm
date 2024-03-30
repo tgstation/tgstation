@@ -107,6 +107,8 @@
 	if(radius < 0)
 		return scatter_locations
 	for(var/turf/open/turf_in_view in view(radius, get_turf(src)))
+		if(isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view))
+			continue
 		if(turf_in_view.is_blocked_turf(exclude_mobs = TRUE))
 			continue
 		scatter_locations += turf_in_view
