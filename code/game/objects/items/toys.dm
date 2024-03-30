@@ -147,53 +147,54 @@
 	update_appearance()
 
 /obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(istype(attacking_item, /obj/item/toy/balloon/long) && HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		var/obj/item/toy/balloon/long/hit_by = attacking_item
-		if(hit_by.current_color != current_color)
-			visible_message(span_notice("[user.name] starts contorting up a balloon animal!"),
-				blind_message = span_hear("You hear balloons being contorted."),
-				vision_distance = 3,
-				ignored_mobs = user
-			)
-			if((hit_by.current_color == "red" && current_color == "blue") || (hit_by.current_color == "blue" && current_color == "red"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/guy)
-			if((hit_by.current_color == "red" && current_color == "green") || (hit_by.current_color == "green" && current_color == "red"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/nukie)
-			if((hit_by.current_color == "red" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "red"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/clown)
-			if((hit_by.current_color == "red" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "red"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/cat)
-			if((hit_by.current_color == "red" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "red"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/fly)
-			if((hit_by.current_color == "blue" && current_color == "green") || (hit_by.current_color == "green" && current_color == "blue"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/podguy)
-			if((hit_by.current_color == "blue" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "blue"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/ai)
-			if((hit_by.current_color == "blue" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "blue"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/dog)
-			if((hit_by.current_color == "blue" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "blue"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/xeno)
-			if((hit_by.current_color == "green" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "green"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/banana)
-			if((hit_by.current_color == "green" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "green"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/lizard)
-			if((hit_by.current_color == "green" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "green"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/slime)
-			if((hit_by.current_color == "yellow" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "yellow"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/moth)
-			if((hit_by.current_color == "yellow" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "yellow"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/ethereal)
-			if((hit_by.current_color == "orange" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "orange"))
-				user.put_in_hands(new /obj/item/toy/balloon_animal/plasmaman)
+	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
+ 		return ..() // saves indentation while doing the exact same thing.
 
-			qdel(hit_by)
-			qdel(src)
-			return TRUE
+	var/obj/item/toy/balloon/long/hit_by = attacking_item
+	if(hit_by.current_color == current_color)
+		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+		return ..()
 
-		if(hit_by.current_color == current_color)
-			to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+	if(hit_by.current_color != current_color)
+		visible_message(span_notice("[user.name] starts contorting up a balloon animal!"),
+			blind_message = span_hear("You hear balloons being contorted."),
+			vision_distance = 3,
+			ignored_mobs = user
+		)
+		if((hit_by.current_color == "red" && current_color == "blue") || (hit_by.current_color == "blue" && current_color == "red"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/guy)
+		if((hit_by.current_color == "red" && current_color == "green") || (hit_by.current_color == "green" && current_color == "red"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/nukie)
+		if((hit_by.current_color == "red" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "red"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/clown)
+		if((hit_by.current_color == "red" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "red"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/cat)
+		if((hit_by.current_color == "red" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "red"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/fly)
+		if((hit_by.current_color == "blue" && current_color == "green") || (hit_by.current_color == "green" && current_color == "blue"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/podguy)
+		if((hit_by.current_color == "blue" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "blue"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/ai)
+		if((hit_by.current_color == "blue" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "blue"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/dog)
+		if((hit_by.current_color == "blue" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "blue"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/xeno)
+		if((hit_by.current_color == "green" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "green"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/banana)
+		if((hit_by.current_color == "green" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "green"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/lizard)
+		if((hit_by.current_color == "green" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "green"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/slime)
+		if((hit_by.current_color == "yellow" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "yellow"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/moth)
+		if((hit_by.current_color == "yellow" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "yellow"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/ethereal)
+		if((hit_by.current_color == "orange" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "orange"))
+			user.put_in_hands(new /obj/item/toy/balloon_animal/plasmaman)
 
-	return ..()
+		qdel(hit_by)
+		qdel(src)
+		return TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
