@@ -11,7 +11,7 @@
 
 /obj/item/bodypart/head/saiyan/update_hair_and_lips(dropping_limb, is_creating)
 	. = ..()
-	if (HAS_TRAIT(owner, TRAIT_SUPER_SAIYAN))
+	if (HAS_TRAIT(owner, TRAIT_POWER_HAIR))
 		return
 	// Sorry, you are not legendary enough to dye your hair
 	var/mob/living/carbon/human/human_head_owner = owner

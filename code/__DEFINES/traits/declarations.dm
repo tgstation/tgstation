@@ -735,7 +735,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows you to detect power levels
 #define TRAIT_MARTIAL_VISION "martial_vision"
 /// Are you the legendary super saiyan? If so, you are allowed to become blonde.
-#define TRAIT_SUPER_SAIYAN "super_saiyan"
+#define TRAIT_POWER_HAIR "thirty_dollar_haircut"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"

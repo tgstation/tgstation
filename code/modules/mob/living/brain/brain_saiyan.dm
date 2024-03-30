@@ -240,14 +240,22 @@
 	var/death_chance = 5
 	/// Light holder
 	var/lightbulb
+	/// What colour was our hair?
+	var/previous_hair_colour
 
 /datum/status_effect/stacking/kaioken/on_apply()
 	. = ..()
-	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_RED, "alpha" = 0, "size" = 1))
+	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_SOFT_RED, "alpha" = 0, "size" = 1))
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
-	lightbulb = owner.mob_light(2, 1, LIGHT_COLOR_INTENSE_RED)
+	lightbulb = owner.mob_light(2, 1, LIGHT_COLOR_BUBBLEGUM)
+
+	ADD_TRAIT(owner, TRAIT_POWER_HAIR, "[STATUS_EFFECT_TRAIT]_[id]")
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		previous_hair_colour = human_owner.hair_color
+		human_owner.set_haircolor(COLOR_SOFT_RED, update = TRUE)
 
 /datum/status_effect/stacking/kaioken/on_remove()
 	QDEL_NULL(lightbulb)
@@ -255,6 +263,11 @@
 	animate(filter)
 	owner.remove_filter(GOKU_FILTER)
 	owner.saiyan_boost(-power_multiplier * stacks)
+
+	REMOVE_TRAIT(owner, TRAIT_POWER_HAIR, "[STATUS_EFFECT_TRAIT]_[id]")
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.set_haircolor(previous_hair_colour, update = TRUE)
 	return ..()
 
 /datum/status_effect/stacking/kaioken/refresh(effect, stacks_to_add)
@@ -348,7 +361,7 @@
 	to_chat(owner, span_notice("Your power surges!"))
 
 	new /obj/effect/temp_visual/explosion/fast(get_turf(owner))
-	ADD_TRAIT(owner, TRAIT_SUPER_SAIYAN, "[STATUS_EFFECT_TRAIT]_[id]")
+	ADD_TRAIT(owner, TRAIT_POWER_HAIR, "[STATUS_EFFECT_TRAIT]_[id]")
 
 	if (ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -383,7 +396,7 @@
 	. = ..()
 	QDEL_NULL(lightbulb)
 
-	REMOVE_TRAIT(owner, TRAIT_SUPER_SAIYAN, "[STATUS_EFFECT_TRAIT]_[id]")
+	REMOVE_TRAIT(owner, TRAIT_POWER_HAIR, "[STATUS_EFFECT_TRAIT]_[id]")
 
 	var/filter = owner.get_filter(GOKU_FILTER)
 	animate(filter)
@@ -393,5 +406,90 @@
 	if (ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.set_haircolor(previous_hair_colour, update = TRUE)
+
+/// Dodge without thinking
+/datum/action/cooldown/mob_cooldown/ultra_instinct
+	name = "Ultra Instinct"
+	desc = "Clear your mind and instinctually avoid incoming blows, until you take action yourself."
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "chuuni"
+	background_icon_state = "bg_demon"
+	cooldown_time = 90 SECONDS
+	shared_cooldown = NONE
+	melee_cooldown_time = NONE
+	click_to_activate = FALSE
+
+// This is basically handled entirely by the status effect
+/datum/action/cooldown/mob_cooldown/ultra_instinct/Activate(mob/living/target)
+	target.apply_status_effect(/datum/status_effect/ultra_instinct)
+	StartCooldown()
+	return TRUE
+
+/datum/status_effect/ultra_instinct
+	id = "ultra_instinct"
+	alert_type = null
+	duration = 90 SECONDS
+	/// Light holder
+	var/atom/lightbulb
+	/// What colour was our hair?
+	var/previous_hair_colour
+
+/datum/status_effect/ultra_instinct/on_apply()
+	. = ..()
+	owner.add_filter(GOKU_FILTER, 2, list("type" = "outline", "color" = COLOR_CYAN, "alpha" = 0, "size" = 2))
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+	lightbulb = owner.mob_light(2, 1, LIGHT_COLOR_CYAN)
+
+	ADD_TRAIT(owner, TRAIT_POWER_HAIR, "[STATUS_EFFECT_TRAIT]_[id]")
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		previous_hair_colour = human_owner.hair_color
+		human_owner.set_haircolor(COLOR_CYAN, update = TRUE)
+
+	RegisterSignals(owner, list(COMSIG_MOB_ATTACK_HAND, COMSIG_LIVING_GRAB, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_THROW), PROC_REF(took_action))
+	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_hit))
+
+/datum/status_effect/ultra_instinct/on_remove()
+	QDEL_NULL(lightbulb)
+	var/filter = owner.get_filter(GOKU_FILTER)
+	animate(filter)
+	owner.remove_filter(GOKU_FILTER)
+
+	REMOVE_TRAIT(owner, TRAIT_POWER_HAIR, "[STATUS_EFFECT_TRAIT]_[id]")
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.set_haircolor(previous_hair_colour, update = TRUE)
+
+	UnregisterSignal(owner, list(
+		COMSIG_LIVING_CHECK_BLOCK,
+		COMSIG_LIVING_GRAB,
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_THROW
+	))
+	return ..()
+
+/// Called when we do something
+/datum/status_effect/ultra_instinct/proc/took_action()
+	SIGNAL_HANDLER
+	qdel(src)
+
+/// Called when something hits us
+/datum/status_effect/ultra_instinct/proc/on_hit(mob/living/source)
+	SIGNAL_HANDLER
+	source.balloon_alert_to_viewers("dodged")
+	var/turf/current = get_turf(source)
+	var/list/valid_turfs = list()
+	for (var/turf/open/check_turf in orange(source, 1))
+		if (check_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = source))
+			continue
+		valid_turfs += check_turf
+	if (length(valid_turfs))
+		var/turf/land_turf = pick(valid_turfs)
+		source.Move(land_turf, get_dir(current, land_turf))
+	new /obj/effect/temp_visual/jet_plume(current)
+	return SUCCESSFUL_BLOCK
 
 #undef GOKU_FILTER
