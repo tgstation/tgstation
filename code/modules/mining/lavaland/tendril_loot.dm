@@ -852,7 +852,7 @@
 
 /datum/action/cooldown/spell/pointed/scan/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
-		owner.balloon_alert(owner, "[cast_on] isn't a valid target!")
+		owner.balloon_alert(owner, "not a valid target!")
 		return FALSE
 	var/mob/living/living_cast_on = cast_on
 	if(living_cast_on.stat == DEAD)
