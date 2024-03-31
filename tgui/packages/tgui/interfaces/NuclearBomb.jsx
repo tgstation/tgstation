@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Grid, Icon } from '../components';
+import { Box, Button, Flex, Icon } from '../components';
 import { Window } from '../layouts';
 
 // This ui is so many manual overrides and !important tags
@@ -11,22 +11,22 @@ import { Window } from '../layouts';
 export const NukeKeypad = (props) => {
   const { act } = useBackend();
   const keypadKeys = [
-    ['1', '4', '7', 'C'],
-    ['2', '5', '8', '0'],
-    ['3', '6', '9', 'E'],
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    ['7', '8', '9'],
+    ['C', '0', 'E'],
   ];
   return (
-    <Box width="185px">
-      <Grid width="1px">
-        {keypadKeys.map((keyColumn) => (
-          <Grid.Column key={keyColumn[0]}>
-            {keyColumn.map((key) => (
+    <Box className="NuclearBomb__Button--keypad" width="185px">
+      <Flex direction="column" justify="center">
+        {keypadKeys.map((keyRow) => (
+          <Flex direction="inline" key={keyRow[0]}>
+            {keyRow.map((key, index) => (
               <Button
                 fluid
                 bold
-                key={key}
+                key={index + '_' + key}
                 mb="6px"
-                content={key}
                 textAlign="center"
                 fontSize="40px"
                 lineHeight={1.25}
@@ -37,11 +37,13 @@ export const NukeKeypad = (props) => {
                   'NuclearBomb__Button--' + key,
                 ])}
                 onClick={() => act('keypad', { digit: key })}
-              />
+              >
+                {key}
+              </Button>
             ))}
-          </Grid.Column>
+          </Flex>
         ))}
-      </Grid>
+      </Flex>
     </Box>
   );
 };
@@ -52,29 +54,32 @@ export const NuclearBomb = (props) => {
   return (
     <Window width={350} height={442} theme="retro">
       <Window.Content>
-        <Box m="6px">
-          <Box mb="6px" className="NuclearBomb__displayBox">
-            {status1}
-          </Box>
-          <Flex mb={1.5}>
-            <Flex.Item grow={1}>
-              <Box className="NuclearBomb__displayBox">{status2}</Box>
+        <Flex direction="column" width={'340px'}>
+          <Flex direction="column" mb={1.5}>
+            <Flex.Item mb="6px" className="NuclearBomb__displayBox">
+              {status1}
             </Flex.Item>
-            <Flex.Item>
-              <Button
-                icon="eject"
-                fontSize="24px"
-                lineHeight={1}
-                textAlign="center"
-                width="43px"
-                ml="6px"
-                mr="3px"
-                mt="3px"
-                className="NuclearBomb__Button NuclearBomb__Button--keypad"
-                onClick={() => act('eject_disk')}
-              />
-            </Flex.Item>
+            <Flex>
+              <Flex.Item grow={1}>
+                <Box className="NuclearBomb__displayBox">{status2}</Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  icon="eject"
+                  fontSize="24px"
+                  lineHeight={1}
+                  textAlign="center"
+                  width="43px"
+                  ml="6px"
+                  mr="3px"
+                  mt="3px"
+                  className="NuclearBomb__Button NuclearBomb__Button--keypad"
+                  onClick={() => act('eject_disk')}
+                />
+              </Flex.Item>
+            </Flex>
           </Flex>
+
           <Flex ml="3px">
             <Flex.Item>
               <NukeKeypad />
@@ -109,7 +114,7 @@ export const NuclearBomb = (props) => {
               </Box>
             </Flex.Item>
           </Flex>
-        </Box>
+        </Flex>
       </Window.Content>
     </Window>
   );

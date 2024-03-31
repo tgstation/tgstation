@@ -1,7 +1,7 @@
 import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Flex } from '../components';
+import { Flex } from '../components';
 import { Window } from '../layouts';
 import { NukeKeypad } from './NuclearBomb';
 
@@ -16,22 +16,20 @@ export const LockedSafe = (props) => {
   const { act, data } = useBackend<Data>();
   const { input_code, locked, lock_code } = data;
   return (
-    <Window width={300} height={400} theme="ntos">
+    <Window width={195} height={430} theme="retro">
       <Window.Content>
-        <Box m="6px">
-          <Box mb="6px" className="NuclearBomb__displayBox">
+        <Flex direction="column" justify="center" width={'170px'} m="6px">
+          <Flex.Item className="NuclearBomb__displayBox">
             {input_code}
-          </Box>
-          <Box className="NuclearBomb__displayBox">
+          </Flex.Item>
+          <Flex.Item className="NuclearBomb__displayBox">
             {!lock_code && 'No password set.'}
             {!!lock_code && (!locked ? 'Unlocked' : 'Locked')}
-          </Box>
-          <Flex ml="3px">
-            <Flex.Item>
-              <NukeKeypad />
-            </Flex.Item>
-          </Flex>
-        </Box>
+          </Flex.Item>
+          <Flex.Item ml="3px">
+            <NukeKeypad />
+          </Flex.Item>
+        </Flex>
       </Window.Content>
     </Window>
   );
