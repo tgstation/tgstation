@@ -51,6 +51,8 @@ export const NukeKeypad = (props) => {
 export const NuclearBomb = (props) => {
   const { act, data } = useBackend();
   const { anchored, disk_present, status1, status2 } = data;
+  // Side note, why the width in the flex?  Otherwise the text
+  // box can scroll willy nilly
   return (
     <Window width={350} height={442} theme="retro">
       <Window.Content>
