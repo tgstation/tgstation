@@ -947,5 +947,36 @@
 		return pick(possible_targets)
 	return FALSE
 
+/// Axototl ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/axototl
+	name = "Axototl"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/axototl
+	antag_flag = ROLE_AXOTOTL
+	required_type = /mob/dead/observer
+	required_candidates = 1
+	weight = 3
+	cost = 1
+	repeatable = TRUE
+	var/list/spawn_locations = list() //list of moisture traps on the station
+
+/datum/dynamic_ruleset/midround/from_ghosts/axototl/execute()
+	//see if there are any moisture traps on the station we can spawn at
+	for(var/obj/structure/moisture_trap/moisture_trap in GLOB.moisture_traps)
+		if(QDELETED(moisture_trap))
+			continue
+		if(is_station_level(moisture_trap.loc.z))
+			spawn_locations += moisture_trap.loc
+	if(!spawn_locations.len)
+		return FALSE
+	. = ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/axototl/generate_ruleset_body(mob/applicant)
+	var/mob/living/basic/axolotl/syndicate/axototl = new(pick(spawn_locations))
+	axototl.key = applicant.key
+	message_admins("[ADMIN_LOOKUPFLW(axototl)] has been made into an axototl by the midround ruleset.")
+	log_game("[key_name(axototl)] was spawned as an axototl by the midround ruleset.")
+	return axototl
+
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB

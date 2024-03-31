@@ -14,6 +14,7 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
+	attack_sound = 'sound/items/toysqueak1.ogg'
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -40,3 +41,19 @@
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+/mob/living/basic/axolotl/syndicate
+	maxHealth = 50
+	health = 50
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	melee_attack_cooldown = 0.1 SECONDS
+
+	//gotta avoid eye strain because we spawn them in the dark
+	lighting_cutoff_red = 20
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 20
+
+/mob/living/basic/axolotl/syndicate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/regenerator)
