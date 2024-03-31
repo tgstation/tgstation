@@ -3068,3 +3068,15 @@
 /datum/reagent/gold/cursed
 	name = "Cursed Gold"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+
+/datum/reagent/diseasedblood
+	name = "Blood"
+	description = "Are you sure this is tomato juice?"
+	color = "#C80000" // rgb: 146, 209, 125
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	taste_description = "iron"
+
+/datum/reagent/diseasedblood/reaction_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, permeability = 1)
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*permeability)))
+		L.ForceContractDisease(new /datum/disease/advance/random(), FALSE, TRUE)

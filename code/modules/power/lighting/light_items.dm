@@ -140,3 +140,70 @@
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)
 		update_appearance(UPDATE_DESC | UPDATE_ICON)
+
+/obj/item/light/tube/radiation
+	name = "light tube"
+	desc = "A replacement light tube."
+	icon_state = "ltube"
+	base_state = "ltube"
+	item_state = "c_tube"
+	brightness = 8
+	var/last_event = 0
+
+/obj/item/light/tube/radiation/Initialize(mapload)
+	. = ..()
+	src.AddComponent(/datum/component/radioactive, 3, src, 0, FALSE) //strength of rads (0 is non-harmful), source of rad, half-life (0 for inf), true/false can contaminate other items with rads.
+	START_PROCESSING(SSobj, src)
+
+/obj/item/light/tube/radiation/Destroy()
+	. = ..()
+	qdel(src.GetComponent(/datum/component/radioactive))
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/light/tube/radiation/process()
+	if(prob(4))
+		radiate()
+
+/obj/item/light/tube/radiation/proc/radiate()
+	if(world.time > last_event+15)
+		radiation_pulse(src, 100, 2, TRUE)
+		last_event = world.time
+		return
+
+/obj/item/light/tube/radiation/broken
+	status = LIGHT_BROKEN
+
+
+/obj/item/light/bulb/radiation
+	name = "light bulb"
+	desc = "A replacement light bulb."
+	icon_state = "lbulb"
+	base_state = "lbulb"
+	item_state = "contvapour"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	brightness = 4
+	var/last_event = 0
+
+/obj/item/light/bulb/radiation/Initialize(mapload)
+	. = ..()
+	src.AddComponent(/datum/component/radioactive, 3, src, 0, FALSE) //half-life of 0 because we keep on going.
+	START_PROCESSING(SSobj, src)
+
+/obj/item/light/bulb/radiation/Destroy()
+	. = ..()
+	qdel(src.GetComponent(/datum/component/radioactive))
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/light/bulb/radiation/process()
+	if(prob(4))
+		radiate()
+
+/obj/item/light/bulb/radiation/proc/radiate()
+	if(world.time > last_event+15)
+		radiation_pulse(src, 100, 2, TRUE)
+		last_event = world.time
+		return
+
+/obj/item/light/bulb/radiation/broken
+	status = LIGHT_BROKEN

@@ -425,6 +425,18 @@
 	if(prob(12))
 		electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
+	// Below checks to see if a radiation light tube/bulb was inserted.
+	if(istype(attacking_object, /obj/item/light/tube/radiation) || istype(attacking_object, /obj/item/light/bulb/radiation))
+		radiation_pulse(attacking_object, max_range = 12, threshold = RAD_FULL_INSULATION)
+
+	// Below checks to see if a syndicate rigged light tube/bulb was inserted.
+	if(istype(attacking_object, /obj/item/light/tube/radiation) || istype(attacking_object, /obj/item/light/bulb/radiation))
+		syndiplode()
+
+/obj/machinery/light/proc/syndiplode()
+	sleep(60 SECONDS)
+	explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 4, flash_range = 8)
+
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && !QDELETED(src))

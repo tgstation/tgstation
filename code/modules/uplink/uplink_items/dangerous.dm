@@ -105,7 +105,7 @@
 	desc = "A single Viper Pistol that fires 10mm bullets. Loaded with 10 lethal shots. \
 			This pistol fires quickly and is fully-automatic. Additional ammunition can be purchased under the ammunition tab."
 	item = /obj/item/gun/ballistic/automatic/pistol/viper
-	cost = 6
+	cost = 8
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 

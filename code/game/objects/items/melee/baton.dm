@@ -404,6 +404,68 @@
 	target.set_jitter_if_lower(40 SECONDS)
 	target.set_stutter_if_lower(40 SECONDS)
 
+/obj/item/melee/baton/telescopic/sleep_baton
+	name = "Incapacitation Baton"
+	desc = "A compact, specialised baton once assigned to Syndicate contractors until being scrapped. The micro-injectors along the end will quickly inject knock-out drugs into targets."
+	icon = 'icons/obj/weapons/baton.dmi'
+	icon_state = "contractor_baton_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	item_state = null
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NONE
+	force = 5
+	stamina_damage = 45
+	cooldown = 30 SECONDS
+	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	stun_animation = TRUE
+
+	on_icon_state = "contractor_baton_1"
+	off_icon_state = "contractor_baton_0"
+	on_item_state = "contractor_baton"
+	force_on = 10
+	force_off = 5
+	weight_class_on = WEIGHT_CLASS_NORMAL
+
+/obj/item/melee/baton/telescopic/sleep_baton/stun(mob/living/target, mob/living/user)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+			playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
+			return
+		var/datum/martial_art/M = H.check_block()
+		if(M)
+			M.handle_counter(target, user)
+			return
+
+	var/list/desc = get_stun_description(target, user)
+
+	if(stun_animation)
+		user.do_attack_animation(target)
+
+	playsound(get_turf(src), on_stun_sound, 75, 1, -1)
+	target.adjustStaminaLoss(stamina_damage)
+	log_combat(user, target, "stunned", src)
+	add_fingerprint(user)
+
+	target.visible_message(desc["visible"], desc["local"])
+
+	if(!iscarbon(user))
+		target.LAssailant = null
+	else
+		target.LAssailant = WEAKREF(user)
+		var/datum/reagent/S = target.reagents?.get_reagent(/datum/reagent/toxin/sodium_thiopental)
+		if(S?.volume > 6)
+			return
+		target.reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 10)
+		target.reagents.add_reagent(/datum/reagent/toxin/nocturine, 5)
+	cooldown_check = world.time + cooldown
+
+/obj/item/melee/baton/telescopic/sleep_baton/get_wait_description()
+	return span_danger("The baton is still charging!")
+
 /obj/item/melee/baton/security
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."

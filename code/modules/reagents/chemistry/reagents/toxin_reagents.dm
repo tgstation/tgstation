@@ -1382,3 +1382,19 @@
 	SIGNAL_HANDLER
 	if(current_cycle > 28)
 		return COMSIG_CARBON_BLOCK_BREATH
+
+/datum/reagent/toxin/norepinephricacid
+	name = "Norepinephric acid"
+	description = "Not to be confused with Norepinephrine, this toxin is known for it's specific use in crippling vision."
+	reagent_state = LIQUID
+	color = "#b7dbe1"
+	toxpwr = 0
+	taste_description = "milk"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	compatible_biotypes = ALL_BIOTYPES
+
+/datum/reagent/toxin/norepinephricacid/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, 3, 95)
+	..()
+

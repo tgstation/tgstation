@@ -10,7 +10,7 @@ RADIOACTIVE MICROLASER
 
 /*
 
-The Batterer, like a flashbang but 50% chance to knock people over. Can be either very
+The Batterer, like a flashbang but 75% chance to knock people over. Can be either very
 effective or pretty fucking useless.
 
 */
@@ -30,7 +30,7 @@ effective or pretty fucking useless.
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
 	var/times_used = 0 //Number of times it's been used.
-	var/max_uses = 2
+	var/max_uses = 3
 
 
 /obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
@@ -43,7 +43,7 @@ effective or pretty fucking useless.
 	log_combat(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
-		if(prob(50))
+		if(prob(75))
 
 			M.Paralyze(rand(200,400))
 			to_chat(M, span_userdanger("You feel a tremendous, paralyzing wave flood your mind."))

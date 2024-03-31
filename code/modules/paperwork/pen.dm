@@ -575,3 +575,154 @@
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a security hologram!"))
+
+/obj/item/pen/fountain/hypo
+	desc = "It's a normal black ink pen."
+	name = "pen"
+	icon = 'yogstation/icons/obj/bureaucracy.dmi'
+	icon_state = "pen"
+	item_state = "pen"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(/datum/material/iron=10)
+	pressure_resistance = 2
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
+	sharpness = SHARP_POINTY
+
+/obj/item/pen/fountain/hypo/Initialize(mapload)
+	. = ..()
+	create_reagents(15, OPENCONTAINER_NOSPILL)
+
+/obj/item/pen/fountain/hypo/attack_self(mob/living/carbon/user)
+	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
+	if(deg && (deg > 0 && deg <= 360))
+		degrees = deg
+		to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
+		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
+
+/obj/item/pen/fountain/hypo/attack(mob/living/M, mob/user,stealth)
+	if(!is_syndicate(user)) // if non syndicate , it is just a regular pen as they don't know how to activate hidden payload.
+		. = ..()
+		return
+	if(!istype(M))
+		return
+	if(!..())
+		return
+	if(!reagents.total_volume || !M.reagents)
+		return
+
+	to_chat(user, span_warning("You begin to inject [src]'s contents into [M]"))
+	if(!do_after(user, 0.25 SECONDS, M))
+		return
+	reagents.reaction(M, INJECT, reagents.total_volume)
+	reagents.trans_to(M, reagents.total_volume, transfered_by = user)
+
+/obj/item/pen/fountain/hypo/afterattack(obj/O, mob/living/user, proximity)
+	. = ..()
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(isobj(O) && proximity && ((O.obj_flags & UNIQUE_RENAME) || (O.obj_flags & UNIQUE_REDESC)))
+		var/penchoice
+		if((O.obj_flags & UNIQUE_RENAME) && (O.obj_flags & UNIQUE_REDESC))
+			penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		else if(O.obj_flags & UNIQUE_RENAME)
+			penchoice = "Rename"
+		else
+			penchoice = "Change description"
+
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			if(oldname == input)
+				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+			else
+				O.name = input
+				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+				O.renamedByPlayer = TRUE
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "You have successfully changed \the [O.name]'s description.")
+
+/*
+ * Cybersun Pen
+ */
+
+/obj/item/pen/cybersun
+	desc = "It's a pen made from valuable materials, 'Cybersun' is engraved on it's body."
+	name = "cybersun pen"
+	icon = 'icons/myimports/weapons.dmi'
+	icon_state = "pen-cybersun"
+	item_state = "pen"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
+	throwforce = 30
+	force = 15
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 4
+	throw_range = 10
+	materials = list(/datum/material/titanium=10)
+	pressure_resistance = 2
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
+	embedding = list(embed_chance = 100)
+	sharpness = SHARP_POINTY
+	custom_price = 200
+
+/obj/item/pen/cybersun/disguised
+	desc = "It's a normal black ink pen."
+	name = "pen"
+	icon = 'yogstation/icons/obj/bureaucracy.dmi'
+	icon_state = "pen"
+	item_state = "pen"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
+	throwforce = 30
+	force = 15
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 4
+	throw_range = 10
+	materials = list(/datum/material/titanium=10)
+	pressure_resistance = 2
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
+	embedding = list(embed_chance = 100)
+	sharpness = SHARP_POINTY
+
+/**
+* Exploding pen from SS14
+**/
+
+/obj/item/pen/explosive
+	desc = "It's a normal black ink pen."
+	name = "pen"
+	icon = 'yogstation/icons/obj/bureaucracy.dmi'
+	icon_state = "pen"
+	item_state = "pen"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(/datum/material/iron=10)
+	pressure_resistance = 2
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
+	sharpness = SHARP_POINTY
+
+/obj/item/pen/explosive/attack_self(mob/living/carbon/user)
+	if(!is_syndicate(user)) // if non syndicate , it is just a regular pen as they don't know how to activate the explosive.
+		return
+	else
+		to_chat(user, span_warning("You activate the hidden explosive payload! 5 seconds before detonation!"))
+		sleep(5 SECONDS)
+		explode()
+
+/obj/item/pen/explosive/proc/explode()
+	explosion(src, 1, 0, 2, flame_range = 1)
+	qdel(src)
+
