@@ -29,6 +29,11 @@
 
 // List of different bodycam camera nets, body cameras are given this when a job/antag with one is assigned
 #define CAMERANET_NETWORK_BODYCAM_CAPTAIN "bod_captain"
+#define CAMERANET_NETWORK_BODYCAM_HOP "bod_hop"
+#define CAMERANET_NETWORK_BODYCAM_CMO "bod_cmo"
+#define CAMERANET_NETWORK_BODYCAM_CE "bod_ce"
+#define CAMERANET_NETWORK_BODYCAM_RD "bod_rd"
+#define CAMERANET_NETWORK_BODYCAM_QM "bod_qm"
 #define CAMERANET_NETWORK_BODYCAM_HOS "bod_hos"
 #define CAMERANET_NETWORK_BODYCAM_WARDEN "bod_warden"
 #define CAMERANET_NETWORK_BODYCAM_DETECTIVE "bod_detective"

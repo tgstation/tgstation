@@ -38,6 +38,8 @@
 	voice_of_god_power = 1.4 //Command staff has authority
 	ignore_human_authority = TRUE
 
+	bodycam_network = CAMERANET_NETWORK_BODYCAM_QM
+
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
 	jobtype = /datum/job/quartermaster

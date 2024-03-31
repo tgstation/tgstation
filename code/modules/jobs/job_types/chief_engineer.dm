@@ -48,6 +48,8 @@
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
+	bodycam_network = CAMERANET_NETWORK_BODYCAM_CE
+
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
