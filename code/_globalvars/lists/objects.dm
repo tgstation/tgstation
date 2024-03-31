@@ -85,5 +85,5 @@ GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 /// Associative list of alcoholic container typepath to instances, currently used by the alcoholic quirk
 GLOBAL_LIST_INIT(alcohol_containers, init_alcohol_containers())
 
-/// List of all moisture traps
-GLOBAL_LIST_EMPTY(moisture_traps)
+/// List of all stationside moisture traps
+GLOBAL_LIST_EMPTY(stationside_moisture_traps)

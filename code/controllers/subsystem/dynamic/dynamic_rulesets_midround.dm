@@ -958,21 +958,15 @@
 	weight = 3
 	cost = 1
 	repeatable = TRUE
-	var/list/spawn_locations = list() //list of moisture traps on the station
 
 /datum/dynamic_ruleset/midround/from_ghosts/axototl/execute()
 	//see if there are any moisture traps on the station we can spawn at
-	for(var/obj/structure/moisture_trap/moisture_trap in GLOB.moisture_traps)
-		if(QDELETED(moisture_trap))
-			continue
-		if(is_station_level(moisture_trap.loc.z))
-			spawn_locations += moisture_trap.loc
-	if(!spawn_locations.len)
+	if(!GLOB.stationside_moisture_traps.len)
 		return FALSE
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/axototl/generate_ruleset_body(mob/applicant)
-	var/mob/living/basic/axolotl/syndicate/axototl = new(pick(spawn_locations))
+	var/mob/living/basic/axolotl/syndicate/axototl = new(pick(GLOB.stationside_moisture_traps).loc)
 	axototl.key = applicant.key
 	message_admins("[ADMIN_LOOKUPFLW(axototl)] has been made into an axototl by the midround ruleset.")
 	log_game("[key_name(axototl)] was spawned as an axototl by the midround ruleset.")
