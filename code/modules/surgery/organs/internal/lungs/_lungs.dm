@@ -754,30 +754,76 @@
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = breather.dna.species.coldmod
+		var/breath_effect_prob = 0
 		if(breath_temperature < cold_level_3_threshold)
-			breather.apply_damage(cold_level_3_damage*cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breather.apply_damage(cold_level_3_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breath_effect_prob = 100
 		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
-			breather.apply_damage(cold_level_2_damage*cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breather.apply_damage(cold_level_2_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breath_effect_prob = 50
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
-			breather.apply_damage(cold_level_1_damage*cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breather.apply_damage(cold_level_1_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breath_effect_prob = 25
 		if(breath_temperature < cold_level_1_threshold)
-			if(prob(20))
+			if(prob(sqrt(breath_effect_prob) * 4))
 				to_chat(breather, span_warning("You feel [cold_message] in your [name]!"))
+				if(prob(50))
+					breather.emote("shiver")
+			if(prob(breath_effect_prob))
+				emit_breath_particle(breather)
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = breather.dna.species.heatmod
+		var/heat_message_prob = 0
 		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
-			breather.apply_damage(heat_level_1_damage*heat_modifier, heat_damage_type, spread_damage = TRUE)
+			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+			heat_message_prob = 100
 		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
-			breather.apply_damage(heat_level_2_damage*heat_modifier, heat_damage_type, spread_damage = TRUE)
+			breather.apply_damage(heat_level_2_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+			heat_message_prob = 50
 		if(breath_temperature > heat_level_3_threshold)
-			breather.apply_damage(heat_level_3_damage*heat_modifier, heat_damage_type, spread_damage = TRUE)
+			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+			heat_message_prob = 25
 		if(breath_temperature > heat_level_1_threshold)
-			if(prob(20))
+			if(prob(sqrt(heat_message_prob) * 4))
 				to_chat(breather, span_warning("You feel [hot_message] in your [name]!"))
 
 	// The air you breathe out should match your body temperature
 	breath.temperature = breather.bodytemperature
+
+/// Creates a cold chill breath particle effect
+/obj/item/organ/internal/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather)
+	var/obj/effect/abstract/particle_holder/holder = new(breather, /particles/fog/breath)
+	var/particles/breath_particle = holder.particles
+	var/breath_dir = breather.dir
+
+	var/list/particle_grav = list(0, 0.1, 0)
+	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	if(breath_dir & NORTH)
+		particle_grav[2] = 0.2
+		breath_particle.rotation = pick(-45, 45)
+		// Layer it behind the mob since we're facing away from the camera
+		holder.pixel_w -= 4
+		holder.pixel_y += 4
+	if(breath_dir & WEST)
+		particle_grav[1] = -0.2
+		particle_pos[1] = -5
+		breath_particle.rotation = -45
+	if(breath_dir & EAST)
+		particle_grav[1] = 0.2
+		particle_pos[1] = 5
+		breath_particle.rotation = 45
+	if(breath_dir & SOUTH)
+		particle_grav[2] = 0.2
+		breath_particle.rotation = pick(-45, 45)
+		// Shouldn't be necessary but just for parity
+		holder.pixel_w += 4
+		holder.pixel_y -= 4
+
+	breath_particle.gravity = particle_grav
+	breath_particle.position = particle_pos
+
+	QDEL_IN(holder, holder.particles.lifespan)
 
 /obj/item/organ/internal/lungs/on_life(seconds_per_tick, times_fired)
 	. = ..()
