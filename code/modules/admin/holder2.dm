@@ -69,10 +69,7 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
-	if (force_active || (rank_flags() & R_AUTOADMIN))
-		activate()
-	else
-		deactivate()
+	deactivate()
 
 /datum/admins/Destroy()
 	if(IsAdminAdvancedProcCall())

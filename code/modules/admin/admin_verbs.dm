@@ -942,6 +942,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			log_admin_private("[key_name(src)][msg]")
 			return
 
+	if(!do_admin_math(src))
+		return
+
 	A.associate(src)
 
 	if (!holder)

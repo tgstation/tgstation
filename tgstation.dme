@@ -2759,6 +2759,7 @@
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_fax_panel.dm"
 #include "code\modules\admin\admin_investigate.dm"
+#include "code\modules\admin\admin_math.dm"
 #include "code\modules\admin\admin_pda_message.dm"
 #include "code\modules\admin\admin_ranks.dm"
 #include "code\modules\admin\admin_verbs.dm"
