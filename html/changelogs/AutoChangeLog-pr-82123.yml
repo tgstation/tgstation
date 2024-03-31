@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "chem dispenser UI doesn't brick when beaker is ejected while recording recipes"
-  - code_imp: "removed deprecated `content` tag from buttons in chem dispenser"
