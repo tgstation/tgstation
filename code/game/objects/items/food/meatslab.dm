@@ -39,7 +39,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
-	var/slab_color = "#FF0000"
+	var/slab_color = COLOR_RED
 
 
 /obj/item/food/meat/slab/Initialize(mapload)

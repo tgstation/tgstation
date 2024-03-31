@@ -38,7 +38,7 @@
 
 		var/icon/I = icon(icon_file, icon_state, SOUTH)
 		var/c = initial(item.color)
-		if (!isnull(c) && c != "#FFFFFF")
+		if (!isnull(c) && c != COLOR_WHITE)
 			I.Blend(c, ICON_MULTIPLY)
 
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")

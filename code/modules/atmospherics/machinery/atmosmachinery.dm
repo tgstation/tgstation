@@ -643,8 +643,10 @@
 	if(!has_cap_visuals)
 		return
 
-	var/turf/our_turf = get_turf(src)
-	our_turf.vis_contents -= cap_overlay
+	cap_overlay?.moveToNullspace()
+
+	if(!HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		return
 
 	var/connections = NONE
 	for(var/obj/machinery/atmospherics/node in nodes)
@@ -660,8 +662,8 @@
 	if(connections == NONE)
 		return
 
-	var/bitfield = CARDINAL_TO_PIPECAPS(connections)
-	bitfield |= ((~connections) & ALL_CARDINALS)
+	var/bitfield = CARDINAL_TO_PIPECAPS(connections) | (~connections) & ALL_CARDINALS
+	var/turf/our_turf = get_turf(src)
 
 	if(isnull(cap_overlay))
 		cap_overlay = new
@@ -672,12 +674,13 @@
 	cap_overlay.layer = layer
 	cap_overlay.icon_state = "[bitfield]_[piping_layer]"
 
-	our_turf.vis_contents += cap_overlay
+	cap_overlay.forceMove(our_turf)
 
 /obj/effect/overlay/cap_visual
-	appearance_flags = KEEP_APART
-	vis_flags = VIS_INHERIT_ID
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/obj/pipes_n_cables/!pipes_bitmask.dmi'
+	vis_flags = NONE
+	anchored = TRUE
 
 /**
  * Called by the RPD.dm pre_attack()

@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - code_imp: "Whether something counts as a stimulant to All Nighter is now handled by the reagent itself when metabolized, for everyone's sanity. Side-effect, you need a liver to process stimulants for All Nighter."
+  - balance: "Fuel your sleep deprivation in style! Made more reagents work with All Nighter. This includes all coffee/tea variants, a few other drinks that would have a high enough caffeine level, kronkaine, ephedrine, and in case you're insane you can straight up eat coffee or tea grounds."

@@ -135,27 +135,30 @@ The console is located at computer/gulag_teleporter.dm
 	if(!locked)
 		open_machine()
 
-// strips and stores all occupant's items
-/obj/machinery/gulag_teleporter/proc/strip_occupant()
-	if(linked_reclaimer)
-		linked_reclaimer.stored_items[occupant] = list()
-	var/mob/living/mob_occupant = occupant
-	for(var/obj/item/W in mob_occupant)
-		if(!is_type_in_typecache(W, telegulag_required_items))
-			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
-				if(istype(W, /obj/item/restraints/handcuffs))
-					W.forceMove(get_turf(src))
-					continue
-				if(linked_reclaimer)
-					linked_reclaimer.stored_items[mob_occupant] += W
-					W.forceMove(linked_reclaimer)
-				else
-					W.forceMove(src)
+/// Strips the occupant of any items that are not allowed to be teleported to the gulag.
+/// Will either place those items in the linked_reclaimer or on the ground if the reclaimer is deleted.
+/obj/machinery/gulag_teleporter/proc/strip_prisoner(mob/living/carbon/human/victim)
+	if(!QDELETED(linked_reclaimer))
+		linked_reclaimer.stored_items[victim] = list()
+
+	for(var/obj/item/thing in victim)
+		if(is_type_in_typecache(thing, telegulag_required_items))
+			continue
+
+		if(!victim.temporarilyRemoveItemFromInventory(thing))
+			continue
+
+		if(QDELETED(linked_reclaimer) || istype(thing, /obj/item/restraints/handcuffs))
+			thing.forceMove(get_turf(src))
+			continue
+
+		linked_reclaimer.stored_items[victim] += thing
+		thing.forceMove(linked_reclaimer)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/record/crew/target)
 	if(!ishuman(occupant))
 		return
-	strip_occupant()
+	strip_prisoner(occupant)
 	var/mob/living/carbon/human/prisoner = occupant
 	if(!isplasmaman(prisoner) && jumpsuit_type)
 		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
@@ -169,7 +172,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(target)
 		target.wanted_status = WANTED_PRISONER
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"

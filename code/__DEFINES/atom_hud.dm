@@ -98,6 +98,7 @@
 #define SECHUD_GENETICIST "hudgeneticist"
 #define SECHUD_HEAD_OF_PERSONNEL "hudheadofpersonnel"
 #define SECHUD_HEAD_OF_SECURITY "hudheadofsecurity"
+#define SECHUD_HUMAN_AI "hudhumanai"
 #define SECHUD_JANITOR "hudjanitor"
 #define SECHUD_LAWYER "hudlawyer"
 #define SECHUD_MEDICAL_DOCTOR "hudmedicaldoctor"

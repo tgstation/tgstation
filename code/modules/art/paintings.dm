@@ -256,7 +256,7 @@
 	if(!id_card)
 		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
-	if(!id_card.registered_account || !id_card.registered_account.account_job)
+	if(!id_card.can_be_used_in_payment(user))
 		to_chat(user, span_warning("No valid non-departmental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account
@@ -276,14 +276,15 @@
 	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
 	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
 	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
-	var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
-	var/curators_length = length(curator_accounts)
-	if(curators_length)
-		var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
-		if(curator_cut)
-			for(var/datum/bank_account/curator as anything in curator_accounts)
-				curator.adjust_money(curator_cut, "Painting: Patronage cut")
-				curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+	if(SSeconomy.bank_accounts_by_job[/datum/job/curator])
+		var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
+		var/curators_length = length(curator_accounts)
+		if(curators_length)
+			var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
+			if(curator_cut)
+				for(var/datum/bank_account/curator as anything in curator_accounts)
+					curator.adjust_money(curator_cut, "Painting: Patronage cut")
+					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
 
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
@@ -829,7 +830,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///Chosen paint color
-	var/current_color = "#000000"
+	var/current_color = COLOR_BLACK
 
 /obj/item/paint_palette/Initialize(mapload)
 	. = ..()

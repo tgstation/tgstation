@@ -60,7 +60,8 @@
 		Its shape is remarkably similar to that of a MOD core."
 	light_system = OVERLAY_LIGHT
 	light_color = "#cc00cc"
-	light_range = 2
+	light_range = 2.5
+	light_power = 1.5
 
 /obj/item/mod/construction/lavalandcore/examine(mob/user)
 	. = ..()

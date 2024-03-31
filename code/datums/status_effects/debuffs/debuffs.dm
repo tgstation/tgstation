@@ -343,7 +343,7 @@
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
 	var/obj/item/kinetic_crusher/hammer_synced
@@ -370,9 +370,9 @@
 	QDEL_NULL(marked_underlay)
 	return ..()
 
-/datum/status_effect/crusher_mark/be_replaced()
-	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
-	..()
+//we will only clear ourselves if the crusher is the one that owns us.
+/datum/status_effect/crusher_mark/before_remove(obj/item/kinetic_crusher/attacking_hammer)
+	return (attacking_hammer == hammer_synced)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -878,6 +878,9 @@
 	icon_state = "antalert"
 
 /atom/movable/screen/alert/status_effect/ants/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return
@@ -897,25 +900,25 @@
 	name = "Fire Ants!"
 	desc = span_warning("JESUS FUCKING CHRIST IT BURNS! CLICK TO GET THOSE THINGS OFF!")
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
-	owner.next_move_modifier *= 1.5
+/datum/status_effect/rebuked/on_apply()
+	owner.next_move_modifier *= 2
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	owner.next_move_modifier /= 1.5
+	owner.next_move_modifier *= 0.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time /= 2.5

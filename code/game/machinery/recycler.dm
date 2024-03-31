@@ -19,22 +19,9 @@
 	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
-	var/list/allowed_materials = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace
-	)
 	materials = AddComponent(
 		/datum/component/material_container, \
-		allowed_materials, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_NO_INSERT \
 	)
@@ -180,7 +167,7 @@
 					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
 						break
 					crush_living(CRUNCH)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
@@ -193,7 +180,7 @@
 	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_power(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)

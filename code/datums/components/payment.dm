@@ -42,7 +42,7 @@
 	if(!ismob(target))
 		return COMPONENT_OBJ_CANCEL_CHARGE
 	var/mob/living/user = target
-	if(issilicon(user) || isdrone(user) || isAdminGhostAI(user)) //They have evolved beyond the need for mere credits
+	if(HAS_SILICON_ACCESS(user) || isdrone(user)) //They have evolved beyond the need for mere credits
 		return
 	var/obj/item/card/id/card
 	if(istype(user))
@@ -148,7 +148,7 @@
 
 		return FALSE
 
-	if(!idcard.registered_account.account_job)
+	if(!idcard.can_be_used_in_payment(user))
 		atom_parent.say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
 		return FALSE
 

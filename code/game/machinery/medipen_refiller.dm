@@ -80,7 +80,7 @@
 			medipen.add_initial_reagents()
 			reagents.remove_reagent(allowed_pens[medipen.type], 10)
 			balloon_alert(user, "refilled")
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		cut_overlays()
 		return
 	return ..()

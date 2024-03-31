@@ -10,7 +10,7 @@
 
 /obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR * seconds_per_tick)
+	adjust_charge(-ETHEREAL_DISCHARGE_RATE * seconds_per_tick)
 	handle_charge(owner, seconds_per_tick, times_fired)
 
 /obj/item/organ/internal/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)
@@ -40,8 +40,15 @@
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
+/**Changes the energy of the crystal stomach.
+* Args:
+* - amount: The change of the energy, in joules.
+* Returns: The amount of energy that actually got changed in joules.
+**/
 /obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
-	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - crystal_charge, ETHEREAL_CHARGE_DANGEROUS - crystal_charge)
+	crystal_charge = crystal_charge + amount
+	return amount_changed
 
 /obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
 	switch(crystal_charge)
@@ -92,7 +99,7 @@
 
 		playsound(carbon, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
-		tesla_zap(source = carbon, zap_range = 2, power = crystal_charge * 2.5, cutoff = 1e3, zap_flags = ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
+		tesla_zap(source = carbon, zap_range = 2, power = crystal_charge * 2.5, cutoff = 1 KILO JOULES, zap_flags = ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
 		adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge)
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
 
