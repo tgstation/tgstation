@@ -15997,7 +15997,7 @@
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "eZi" = (
-/obj/machinery/drone_dispenser,
+/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "eZj" = (
