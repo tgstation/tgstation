@@ -868,7 +868,7 @@
 
 /obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
-	if(. || tool.item_flags & ABSTRACT)
+	if(. || (tool.item_flags & ABSTRACT) || user.combat_mode)
 		return .
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS

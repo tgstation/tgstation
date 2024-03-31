@@ -55,7 +55,8 @@ export const BeakerDisplay = (props: BeakerProps) => {
       </LabeledList.Item>
       <LabeledList.Item label="Contents">
         <Box color="label">
-          {(!beaker && 'N/A') || (beakerContents.length === 0 && 'Nothing')}
+          {(!title_label && !beaker && 'N/A') ||
+            (beakerContents.length === 0 && 'Nothing')}
         </Box>
         {beakerContents.map((chemical) => (
           <Box key={chemical.name} color="label">

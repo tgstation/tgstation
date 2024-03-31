@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "\"Mind Gate\" does self brain damage as intended"
