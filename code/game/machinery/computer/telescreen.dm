@@ -56,6 +56,55 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
 	find_and_hang_on_wall()
 
+/obj/machinery/computer/security/telescreen/entertainment/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(.)
+		return .
+
+	if(!user.Adjacent(src))
+		return NONE
+
+	if(!istype(tool, /obj/item/holochip))
+		return NONE
+
+	var/obj/item/holochip/cash = tool
+
+	if(!active_camera)
+		balloon_alert(user, "no active stream!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!isliving(active_camera.loc))
+		balloon_alert(user, "not a bodycam!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/mob/living/streamer = active_camera.loc
+
+	var/message = tgui_input_text(user, "What do you wish to whisper to [streamer]?", "Streamer Donation")
+	if(!message || QDELETED(src) || QDELETED(user) || QDELETED(cash) || QDELETED(streamer) || !user.is_holding(cash) || !user.Adjacent(src))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/card/id/worn_id = streamer.get_idcard(TRUE)
+	var/value = cash.credits
+	var/donation_notice
+
+	if(!worn_id || !(worn_id.registered_account))
+		balloon_alert(user, "streamer has no ID or account!")
+		donation_notice = "[user.name] tried to donate [value] credits saying, "
+		say("[value] credits donated to [streamer.real_name] by [user.name]!")
+		streamer.put_in_hands(cash)
+	else
+		donation_notice = "[user.name] donated [value] credits saying, "
+		worn_id.registered_account.adjust_money(value)
+		worn_id.registered_account.bank_card_talk("Donation received, account now holds [worn_id.registered_account.account_balance] cr.")
+		say("[value] credits donated to [streamer.real_name] by [user.name]!")
+		qdel(cash)
+
+	playsound(streamer, 'sound/effects/kaching.ogg', 100, TRUE)
+	
+	var/formatted_message = "<span class='notice'>[donation_notice]\"[message]\"</span>"
+	to_chat(streamer, "<span class='boldnotice'>You hear a voice in your head...</span> [formatted_message]")
+	return ITEM_INTERACT_SUCCESS
+
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
