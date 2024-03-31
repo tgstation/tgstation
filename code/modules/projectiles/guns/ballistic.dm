@@ -679,11 +679,11 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	balloon_alert(user, "cleaning.")
+	balloon_alert(user, "cleaning...")
 
 	if(do_after(user, 100, target = src))
 		misfire_probability = initial(misfire_probability)
-		balloon_alert(user, "fouling cleaned out!")
+		balloon_alert(user, "fouling cleaned out.")
 		return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
@@ -702,7 +702,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		balloon_alert(user, "the bolt is in the way!")
 		return
 
-	to_chat(user, span_notice("You begin to tinker with [src]..."))
+	balloon_alert(user, "tinkering...")
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
