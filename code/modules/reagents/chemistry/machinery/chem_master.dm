@@ -48,10 +48,6 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_master/on_deconstruction(disassembled)
-	if(!QDELETED(beaker))
-		beaker.forceMove(drop_location())
-
 /obj/machinery/chem_master/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -136,16 +132,16 @@
 			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			. += filling
 
-/obj/machinery/chem_master/on_set_is_operational(old_value)
-	if(!is_operational)
-		is_printing = FALSE
-	update_appearance(UPDATE_OVERLAYS)
-
 /obj/machinery/chem_master/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == beaker)
 		beaker = null
 		update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/chem_master/on_set_is_operational(old_value)
+	if(!is_operational)
+		is_printing = FALSE
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/chem_master/RefreshParts()
 	. = ..()
