@@ -1,0 +1,11 @@
+author: "lizardqueenlexi, ChungusGamer666, LovliestPlant, KnigTheThrasher, MrMelbert"
+delete-after: True
+changes:
+  - bugfix: "Heads impaled on spears now render in the correct place on the tip, instead of halfway down the shaft."
+  - bugfix: "Blind personnel are no longer able to magically see heads impaled on spears from a distance."
+  - rscadd: "Added colorblindness as a mild brain trauma."
+  - rscadd: "Stethoscopes may be used on the chest, groin, or extremities to assess organ damage, blood level, and/or suffocation damage depending on the targeted area."
+  - rscadd: "Shining flashlights into the mouth or eyes of other players will additionally assess brain health, suffocation damage, and/or blood level depending on the targeted area."
+  - balance: "Halves the duration of the flash effect from shining lights into players' eyes (2s -> 1s). Use combat mode to get the full duration."
+  - bugfix: "added combat mode/harm intent support for the previous pr"
+  - balance: "Blind people don't get alerted when someone in a cardboard box pops out nearby"
