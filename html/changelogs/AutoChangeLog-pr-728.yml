@@ -1,6 +1,0 @@
-author: "The-Black-Screen"
-delete-after: True
-changes:
-  - rscadd: "adds an updated version of our BoxStation back into the game, also adds the random bars and engines"
-  - code_imp: "changes `roomspawner.dm` to include BoxStation's random bars and engines"
-  - config: "changes `maps.txt` to include BoxStation"
