@@ -20438,6 +20438,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
+"ftk" = (
+/obj/machinery/drone_dispenser/preloaded,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "ftm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -31555,6 +31559,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "jeO" = (
@@ -36445,6 +36450,12 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"kHX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "kHZ" = (
 /obj/structure/railing{
 	dir = 4
@@ -50343,7 +50354,6 @@
 /area/ruin/powered/clownplanet)
 "plL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/canister,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
@@ -128340,7 +128350,7 @@ jJt
 gDw
 gDw
 gDw
-gDw
+kHX
 gDw
 gDw
 gDw
@@ -185928,7 +185938,7 @@ soq
 lpT
 soq
 soq
-kNS
+ftk
 kNS
 kNS
 kNS

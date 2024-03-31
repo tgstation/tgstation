@@ -959,6 +959,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
+"yk" = (
+/turf/open/openspace,
+/area/station/service/kitchen)
 "yp" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/security)
@@ -2605,7 +2608,7 @@ nL
 (15,1,1) = {"
 sk
 vP
-aL
+yk
 js
 nY
 Bq

@@ -718,6 +718,12 @@
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/book/manual/wiki/infections{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe/antiviral,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -731,6 +737,12 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/east,
+/obj/item/storage/box/vials,
+/obj/item/storage/box/vials,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/white/side{
 	dir = 5
 	},
@@ -797,14 +809,8 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "fA" = (
-/obj/structure/table/glass,
-/obj/item/book/manual/wiki/infections{
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/cable,
+/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -820,6 +826,9 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/virusdish/random,
+/obj/item/weapon/virusdish/random,
+/obj/item/weapon/virusdish/random,
 /turf/open/floor/iron/white/side{
 	dir = 5
 	},
@@ -985,7 +994,6 @@
 	},
 /area/ruin/syndicate_lava_base/virology)
 "gV" = (
-/obj/structure/chair/office/light,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/virology)
 "gX" = (
@@ -1110,7 +1118,6 @@
 	},
 /area/ruin/syndicate_lava_base/virology)
 "hs" = (
-/obj/machinery/computer/pandemic,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door{
 	id = "lavalandsyndi_virology";
@@ -1118,45 +1125,33 @@
 	pixel_x = -26;
 	req_access = list("syndicate")
 	},
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
 /area/ruin/syndicate_lava_base/virology)
 "ht" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/light,
+/turf/open/floor/iron/white/side,
+/area/ruin/syndicate_lava_base/virology)
+"hu" = (
+/turf/open/floor/iron/white/side,
+/area/ruin/syndicate_lava_base/virology)
+"hv" = (
+/obj/structure/sign/warning/deathsposal/directional/east,
+/obj/structure/disposalpipe/segment,
 /obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/hand_labeler,
 /obj/item/pen/red,
+/obj/item/hand_labeler,
 /obj/item/restraints/handcuffs,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/glasses/science,
-/turf/open/floor/iron/white/side,
-/area/ruin/syndicate_lava_base/virology)
-"hu" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 10
-	},
-/obj/item/stack/sheet/mineral/gold{
-	amount = 10
-	},
-/turf/open/floor/iron/white/side,
-/area/ruin/syndicate_lava_base/virology)
-"hv" = (
-/obj/machinery/disposal/bin,
-/obj/structure/sign/warning/deathsposal/directional/east,
-/obj/effect/turf_decal/stripes/red/box,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
 /turf/open/floor/iron/white/side{
 	dir = 6
 	},
@@ -2390,6 +2385,10 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"pf" = (
+/obj/machinery/disease2/centrifuge,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/virology)
 "pm" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/stripes/line,
@@ -2569,6 +2568,20 @@
 	dir = 1
 	},
 /area/ruin/syndicate_lava_base/chemistry)
+"rL" = (
+/obj/item/stack/sheet/mineral/gold{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
+/obj/machinery/reagentgrinder,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/virology)
 "rO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
@@ -4088,6 +4101,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/syndicate_lava_base/virology)
+"Tz" = (
+/obj/machinery/disease2/diseaseanalyser,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/virology)
 "TO" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
@@ -4412,6 +4429,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
+"YT" = (
+/obj/machinery/disposal/bin,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/red/box,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/virology)
 "YU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 1
@@ -5116,8 +5142,8 @@ eI
 Cu
 gU
 hs
+Tz
 hH
-ab
 ab
 ab
 ab
@@ -5166,8 +5192,8 @@ fA
 sd
 gV
 ht
+pf
 hH
-ab
 ab
 ab
 ab
@@ -5216,8 +5242,8 @@ fB
 KI
 yp
 hu
+rL
 hH
-ab
 ab
 ab
 ab
@@ -5266,8 +5292,8 @@ fC
 tf
 gX
 hv
+YT
 hH
-ab
 ab
 ab
 dG

@@ -210,7 +210,6 @@ Clicking on a windoor rather then bumping into it will keep it open, you can cli
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
 Don't be afraid to ask for help, whether from your peers or from admins.
 Experiment with different setups of the Supermatter engine to maximize output, but don't risk the crew's safety to do so!
-Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
 Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
 Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than holding shift and right clicking.
