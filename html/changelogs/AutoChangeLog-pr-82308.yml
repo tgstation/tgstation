@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Ethereal starvation has been updated to the new joules/watts standard. Congratulations Ethereals! You can starve again!"
