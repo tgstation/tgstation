@@ -117,14 +117,10 @@
 	return ..()
 
 /obj/machinery/space_heater/process_atmos()
-	if(!on || !is_operational)
+	if(!on || !is_operational || !cell || cell.charge <= 1)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
-		return PROCESS_KILL
-
-	if(!cell || cell.charge <= 1)
-		on = FALSE
-		update_appearance()
+			update_appearance()
 		return PROCESS_KILL
 
 	var/turf/local_turf = loc
@@ -167,7 +163,8 @@
 		var/datum/gas_mixture/turf_gasmix = turf.return_air()
 		turf_gasmix.temperature += delta_temperature
 		air_update_turf(FALSE, FALSE)
-		cell.use(required_energy / efficiency)
+		if(!cell.use(required_energy / efficiency, force = TRUE))
+			return
 
 /obj/machinery/space_heater/RefreshParts()
 	. = ..()
@@ -322,13 +319,10 @@
 	QDEL_NULL(beaker)
 
 /obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
-	if(!on)
-		update_appearance()
-		return PROCESS_KILL
-
-	if(!is_operational || !cell || cell.charge <= 0)
-		on = FALSE
-		update_appearance()
+	if(!on || !is_operational || !cell || cell.charge <= 1)
+		if (on) // If it's broken, turn it off too
+			on = FALSE
+			update_appearance()
 		return PROCESS_KILL
 
 	if(!beaker)//No beaker to heat
