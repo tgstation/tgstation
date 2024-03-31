@@ -41,10 +41,6 @@
 		new /mob/living/basic/migo/hatsune(get_turf(loc), mapload)
 		return INITIALIZE_HINT_QDEL
 
-	//if(istype(src, /mob/living/basic/migo/hatsune))
-		//var/static/list/death_loot = list(/obj/item/instrument/piano_synth)
-		//AddElement(/datum/element/death_drops, death_loot)
-
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = -1.5, additional_status_callback = CALLBACK(src, PROC_REF(update_dodge_chance)))
 
