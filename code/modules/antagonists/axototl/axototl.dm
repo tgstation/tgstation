@@ -44,7 +44,7 @@
 		already_targeted += objective.target
 		objectives += objective
 
-	var/datum/objective/escape_objective = new
+	var/datum/objective/escape_objective
 	if (prob(95))
 		escape_objective = new /datum/objective/escape()
 	else
