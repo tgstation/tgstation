@@ -34,7 +34,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 20
+	weight = 4
 	max_occurrences = 3
 
 /datum/round_event/antagonist/solo/nuclear_operative

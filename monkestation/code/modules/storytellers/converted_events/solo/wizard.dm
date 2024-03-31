@@ -21,7 +21,7 @@
 	required_enemies = 5
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 10
+	weight = 2
 	min_players = 35
 	max_occurrences = 1
 

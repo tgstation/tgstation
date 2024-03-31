@@ -15,7 +15,7 @@
 	maximum_antags = 1
 	exclusive_roles = list(JOB_AI)
 	required_enemies = 4
-	weight = 10
+	weight = 3
 	min_players = 35
 	max_occurrences = 1
 

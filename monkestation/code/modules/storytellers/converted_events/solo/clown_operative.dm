@@ -34,7 +34,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 5 //these are meant to be very rare
+	weight = 1 //these are meant to be very rare
 	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/clown_operative
