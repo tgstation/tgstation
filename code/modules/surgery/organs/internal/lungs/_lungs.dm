@@ -793,6 +793,13 @@
 
 /// Creates a cold chill breath particle effect
 /obj/item/organ/internal/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather)
+	if(breather.is_mouth_covered())
+		// Breathing into your mask, no partical. We can add fogged up glasses later
+		return
+	if(breather.internal || breather.external)
+		// Even though breathing via internals TECHNICALLY exhales into the environment, we'll still block it
+		return
+
 	var/obj/effect/abstract/particle_holder/holder = new(breather, /particles/fog/breath)
 	var/particles/breath_particle = holder.particles
 	var/breath_dir = breather.dir
