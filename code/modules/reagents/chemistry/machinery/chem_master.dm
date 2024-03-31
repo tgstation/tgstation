@@ -6,6 +6,7 @@
 	base_icon_state = "chemmaster"
 	density = TRUE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
 
@@ -242,7 +243,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
-	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return .
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -402,6 +403,10 @@
 	if (!reagent)
 		return FALSE
 
+	//use energy
+	if(!use_energy(active_power_usage))
+		return FALSE
+
 	//do the operation
 	. = FALSE
 	if(do_transfer)
@@ -411,9 +416,8 @@
 			. = TRUE
 	else if(source.remove_reagent(reagent, amount))
 		. = TRUE
-	if(.)
+	if(. && !QDELETED(src)) //transferring volatile reagents can cause a explosion & destory us
 		update_appearance(UPDATE_OVERLAYS)
-		use_energy(active_power_usage)
 	return .
 
 /obj/machinery/chem_master/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -511,6 +515,10 @@
 	if(!is_printing)
 		return
 
+	//use power
+	if(!use_energy(active_power_usage))
+		return
+
 	//print the stuff
 	var/obj/item/reagent_containers/item = new selected_container(drop_location())
 	adjust_item_drop_location(item)
@@ -519,11 +527,6 @@
 	reagents.trans_to(item, volume_in_each, transferred_by = user)
 	printing_progress++
 	update_appearance(UPDATE_OVERLAYS)
-	use_energy(active_power_usage)
-
-	//can happen when transferring explosive reagents(like potassium into water lol) so lets stop here
-	if(QDELETED(src))
-		return
 
 	//print more items
 	item_count --
