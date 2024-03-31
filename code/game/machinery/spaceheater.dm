@@ -117,7 +117,7 @@
 	return ..()
 
 /obj/machinery/space_heater/process_atmos()
-	if(!on || !is_operational || !cell || cell.charge <= 1)
+	if(!on || !is_operational || QDELETED(cell) || cell.charge <= 1)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
 			update_appearance()
@@ -319,15 +319,11 @@
 	QDEL_NULL(beaker)
 
 /obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
-	if(!on || !is_operational || !cell || cell.charge <= 1)
+	if(!on || !is_operational || QDELETED(cell) || cell.charge <= 1 || QDELETED(beaker))
 		if (on) // If it's broken, turn it off too
 			on = FALSE
 			update_appearance()
 		return PROCESS_KILL
-
-	if(!beaker)//No beaker to heat
-		update_appearance()
-		return
 
 	if(beaker.reagents.total_volume)
 		var/power_mod = 0.1 * chem_heating_power
@@ -345,8 +341,9 @@
 					return
 				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 		var/required_energy = heating_power * seconds_per_tick * (power_mod * 4)
-		cell.use(required_energy / efficiency)
 		beaker.reagents.handle_reactions()
+		if(!cell.use(required_energy / efficiency, force = TRUE))
+			return
 	update_appearance()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
