@@ -145,6 +145,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		CAMERANET_NETWORK_XENOBIOLOGY,
 		CAMERANET_NETWORK_TEST_CHAMBER,
 		CAMERANET_NETWORK_ORDNANCE,
+		CAMERANET_NETWORK_BODYCAM_RD,
 	)
 	frame_type = /obj/item/wallframe/telescreen/rd
 
@@ -155,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"
 	desc = "A telescreen with access to the research division's camera network."
-	network = list(CAMERANET_NETWORK_RD)
+	network = list(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_BODYCAM_RD)
 	frame_type = /obj/item/wallframe/telescreen/research
 
 /obj/item/wallframe/telescreen/research
@@ -165,7 +166,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
-	network = list(CAMERANET_NETWORK_ENGINE, CAMERANET_NETWORK_TELECOMMS, CAMERANET_NETWORK_MINISAT)
+	network = list(CAMERANET_NETWORK_ENGINE, CAMERANET_NETWORK_TELECOMMS, CAMERANET_NETWORK_MINISAT, CAMERANET_NETWORK_BODYCAM_CE)
 	frame_type = /obj/item/wallframe/telescreen/ce
 
 /obj/item/wallframe/telescreen/ce
@@ -175,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
 	desc = "A telescreen with access to the medbay's camera network."
-	network = list(CAMERANET_NETWORK_MEDBAY)
+	network = list(CAMERANET_NETWORK_MEDBAY, CAMERANET_NETWORK_BODYCAM_CMO)
 	frame_type = /obj/item/wallframe/telescreen/cmo
 
 /obj/item/wallframe/telescreen/cmo
@@ -275,7 +276,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
 	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
-	network = list(CAMERANET_NETWORK_BAR)
+	network = list(CAMERANET_NETWORK_BAR,
+		CAMERANET_NETWORK_BODYCAM_CAPTAIN,
+		CAMERANET_NETWORK_BODYCAM_HOP,
+		CAMERANET_NETWORK_BODYCAM_CMO,
+		CAMERANET_NETWORK_BODYCAM_CE,
+		CAMERANET_NETWORK_BODYCAM_RD,
+		CAMERANET_NETWORK_BODYCAM_HOS,
+		CAMERANET_NETWORK_BODYCAM_QM,
+	)
 	frame_type = /obj/item/wallframe/telescreen/bar
 
 /obj/item/wallframe/telescreen/bar
