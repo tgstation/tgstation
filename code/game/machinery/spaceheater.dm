@@ -2,6 +2,7 @@
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
+#define BASE_HEATING_ENERGY (40 KILO JOULES)
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -27,10 +28,8 @@
 	var/set_mode = HEATER_MODE_AUTO
 	///The temperature we trying to get to
 	var/target_temperature = T20C
-	///How much heat/cold we can deliver per tier
-	var/base_heating_power = 40 KILO JOULES
 	///How much heat/cold we can deliver
-	var/heating_power = 40 KILO JOULES
+	var/heating_energy = 40 KILO JOULES
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
 	var/efficiency = 20
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
@@ -100,7 +99,7 @@
 		var/target_temp = round(target_temperature - T0C, 1)
 		var/min_temp = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
 		var/max_temp = settable_temperature_median + settable_temperature_range - T0C
-		. += span_info("The status display reads:<br>Heating power: <b>[siunit(heating_power, "W", 1)] at [(efficiency / 20) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C \[[min_temp]°C - [max_temp]°C]</b>") // Base efficiency 100%, higher with upgraded components
+		. += span_info("The status display reads:<br>Heating power: <b>[siunit(heating_energy, "J", 1)] at [(efficiency / 20) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C \[[min_temp]°C - [max_temp]°C]</b>") // Base efficiency 100%, higher with upgraded components
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
 
 /obj/machinery/space_heater/update_icon_state()
@@ -146,9 +145,8 @@
 		return
 
 	var/list/turfs = (local_turf.atmos_adjacent_turfs || list()) + local_turf
-	var/heat_capacity = enviroment.heat_capacity()
-	var/required_energy = abs(enviroment.temperature - target_temperature) * heat_capacity
-	required_energy = min(required_energy, heating_power, cell.charge() * efficiency / length(turfs))
+	var/required_energy = abs(enviroment.temperature - target_temperature) * enviroment.heat_capacity()
+	required_energy = min(required_energy, heating_energy, (cell.charge() * efficiency) / length(turfs))
 
 	if(required_energy < 1)
 		return
@@ -175,7 +173,7 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		cap += capacitor.tier
 
-	heating_power = laser * base_heating_power
+	heating_energy = laser * BASE_HEATING_ENERGY
 
 	settable_temperature_range = cap * 30
 	efficiency = (cap + 1) * 10
@@ -330,20 +328,16 @@
 		switch(set_mode)
 			if(HEATER_MODE_AUTO)
 				power_mod *= 0.5
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-				beaker.reagents.handle_reactions()
 			if(HEATER_MODE_HEAT)
 				if(target_temperature < beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			if(HEATER_MODE_COOL)
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-		var/required_energy = heating_power * seconds_per_tick * (power_mod * 4)
+
+		beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * beaker.reagents.heat_capacity() * beaker.reagents.total_volume)
 		beaker.reagents.handle_reactions()
-		if(!cell.use(required_energy / efficiency, force = TRUE))
-			return
+		cell.use((energy_to_power(heating_energy) * seconds_per_tick * power_mod) / efficiency, force = TRUE)
 	update_appearance()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
@@ -393,7 +387,6 @@
 		if(is_type_in_list(item, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
 			item.afterattack(beaker, user, 1)
 		return
-
 
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction(disassembled = TRUE)
 	. = ..()
@@ -449,7 +442,7 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		capacitors_rating += capacitor.tier
 
-	heating_power = lasers_rating * 20000
+	heating_energy = lasers_rating * 20000
 
 	settable_temperature_range = capacitors_rating * 50 //-20 - 80 at base
 	efficiency = (capacitors_rating + 1) * 10
@@ -464,3 +457,4 @@
 #undef HEATER_MODE_HEAT
 #undef HEATER_MODE_COOL
 #undef HEATER_MODE_AUTO
+#undef BASE_HEATING_ENERGY
