@@ -76,10 +76,8 @@
 
 	if(HAS_TRAIT(owner, TRAIT_TURN_COMBATANT))
 		return
-
-	if(owner == attacker)
+	if(owner == attacker || !isliving(attacker))
 		return
-
 	if(owner.stat != CONSCIOUS || owner.incapacitated())
 		return
 
@@ -93,22 +91,6 @@
 /datum/action/cooldown/spell/timestop/turn_based/proc/reset(...)
 	SIGNAL_HANDLER
 	combat = null
-
-/datum/action/end_turn
-	name = "End Turn"
-	desc = "End your turn early."
-	overlay_icon_state = "bg_spell_border_active_yellow"
-
-/datum/action/end_turn/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-	var/datum/combat_instance/combat = target
-	if(combat.active_turn_guy != owner)
-		owner.balloon_alert(owner, "not your turn!")
-		return
-
-	combat.end_turn(owner)
 
 /datum/combat_instance
 	var/obj/effect/timestop/magic/field
@@ -308,3 +290,19 @@
 
 /mob/living/carbon/human/consistent/dummy/make_turn_based()
 	return
+
+/datum/action/end_turn
+	name = "End Turn"
+	desc = "End your turn early."
+	overlay_icon_state = "bg_spell_border_active_yellow"
+
+/datum/action/end_turn/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	var/datum/combat_instance/combat = target
+	if(combat.active_turn_guy != owner)
+		owner.balloon_alert(owner, "not your turn!")
+		return
+
+	combat.end_turn(owner)

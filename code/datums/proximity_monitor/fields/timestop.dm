@@ -63,6 +63,7 @@
 /obj/effect/timestop/magic/turn_based
 	antimagic_flags = NONE
 	hidden = TRUE
+	alpha = 0
 
 // /obj/effect/timestop/magic/turn_based/freeze_mob(mob/living/victim)
 // 	if(HAS_TRAIT_NOT_FROM(victim, TRAIT_TURN_COMBATANT, REF(src)))
