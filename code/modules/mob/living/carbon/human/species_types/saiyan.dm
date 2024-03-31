@@ -25,7 +25,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/saiyan,
 	)
 	external_organs = list(
-		/obj/item/organ/external/tail/monkey/saiyan = "Monkey",
+		/obj/item/organ/external/tail/monkey/saiyan = "Saiyan",
 	)
 
 /datum/species/saiyan/prepare_human_for_preview(mob/living/carbon/human/human)
