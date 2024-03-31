@@ -1,0 +1,1 @@
+/obj/item/clothing/head/costume/jester/alt : /obj/item/clothing/head/costume/jesteralt {@OLD}
