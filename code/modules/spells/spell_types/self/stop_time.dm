@@ -57,6 +57,7 @@
 		REMOVE_TRAIT(owner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 
 /datum/action/cooldown/spell/timestop/turn_based
+	name = "Baldur's Station 13"
 	owner_is_immune_to_all_timestop = FALSE
 	timestop_range = 7
 	timestop_duration = INFINITY
