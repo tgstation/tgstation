@@ -34,9 +34,6 @@
 
 /datum/species/saiyan/check_roundstart_eligible()
 	return TRUE
-	// if(check_holidays(APRIL_FOOLS))
-	//	return TRUE
-	// return ..()
 
 /datum/species/saiyan/get_scream_sound(mob/living/carbon/human/human)
 	if(human.physique == MALE)
