@@ -683,7 +683,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 	if(do_after(user, 100, target = src))
 		misfire_probability = initial(misfire_probability)
-		balloon_alert(user, "fouling cleaned out.")
+		balloon_alert(user, "fouling cleaned out")
 		return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
