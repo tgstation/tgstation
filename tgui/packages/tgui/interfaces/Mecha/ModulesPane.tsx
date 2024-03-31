@@ -494,7 +494,7 @@ const SnowflakeSyringe = (props) => {
           }
         />
       </LabeledList.Item>
-      <LabeledList.Item label={'Syntheizing'}>
+      <LabeledList.Item label="Synthesizing">
         {analyzed_reagents.map((reagent) => (
           <LabeledList.Item key={reagent.name} label={reagent.name}>
             <Button.Checkbox
