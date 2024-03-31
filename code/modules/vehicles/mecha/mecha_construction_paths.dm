@@ -53,6 +53,14 @@
 		parent_atom.icon_state = "[base_icon][index - 1]"
 
 /datum/component/construction/unordered/mecha_chassis/custom_action(obj/item/I, mob/living/user, typepath)
+	var/obj/item/mecha_parts/chassis = parent
+	if(chassis?.runner)
+		to_chat(user, span_warning("\The [chassis] is still attached to the runner, you cannot attach \the [I]!"))
+		return
+	var/obj/item/mecha_parts/mecha_part = I
+	if(mecha_part?.runner)
+		to_chat(user, span_warning("\The [mecha_part] is still attached to the runner, you cannot attach it to \the [parent]!"))
+		return
 	. = user.transferItemToLoc(I, parent)
 	if(.)
 		var/atom/parent_atom = parent

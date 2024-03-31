@@ -8,16 +8,59 @@
 	icon_state = "blank"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	obj_flags = CONDUCTS_ELECTRICITY
+	var/runner = TRUE
+	var/runner_color
+
+/obj/item/mecha_parts/Initialize(mapload)
+	. = ..()
+	var/mutable_appearance/runner_underlay = mutable_appearance('icons/mob/mecha_runner.dmi', "runner")
+	runner_underlay.pixel_w = -8
+	runner_underlay.pixel_z = -8
+	runner_color = icon(icon, icon_state).GetPixel(17, 19)
+	if(runner_color)
+		runner_underlay.color = runner_color
+	underlays += runner_underlay
+
+/obj/item/mecha_parts/examine(mob/user)
+	. = ..()
+	if(runner)
+		. += span_notice("Use wirecutters to remove the part from the runner.")
 
 /obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE) //For attaching parts to a finished mech
 	if(!user.transferItemToLoc(src, M))
 		to_chat(user, span_warning("\The [src] is stuck to your hand, you cannot put it in \the [M]!"))
 		return FALSE
+	if(runner == TRUE)
+		to_chat(user, span_warning("\The [src] is still attached to the runner, you cannot put it in \the [M]!"))
+		return FALSE
 	user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
 	return TRUE
 
+/obj/item/mecha_parts/wirecutter_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(runner == TRUE)
+		if(tool.use_tool(src, user, 2 SECONDS))
+			tool.play_tool_sound(src)
+			runner = FALSE
+			user.visible_message(span_notice("[user] snips [src] from its runner."), span_notice("You snip [src] from its runner."))
+			new /obj/item/runner(get_turf(src), runner_color)
+			underlays.Cut()
+
 /obj/item/mecha_parts/part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	return
+
+/obj/item/runner
+	name = "empty runner"
+	icon = 'icons/mob/mecha_runner.dmi'
+	icon_state = "snipped"
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
+	base_pixel_x = -8
+	base_pixel_y = -8
+
+/obj/item/runner/Initialize(mapload, color)
+	. = ..()
+	if(color)
+		src.add_atom_colour(color, FIXED_COLOUR_PRIORITY)	
 
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
