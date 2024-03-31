@@ -10,7 +10,7 @@
 
 /obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR * seconds_per_tick)
+	adjust_charge(-ETHEREAL_DISCHARGE_RATE * seconds_per_tick)
 	handle_charge(owner, seconds_per_tick, times_fired)
 
 /obj/item/organ/internal/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)

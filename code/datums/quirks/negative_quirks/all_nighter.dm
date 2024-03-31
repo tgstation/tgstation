@@ -22,19 +22,6 @@
 		/obj/item/pillow/random,
 	)
 
-	///a list of all the reagents which alleviate the negative moodlet
-	var/list/stimulants = list(
-		/datum/reagent/medicine/stimulants,
-		/datum/reagent/drug/methamphetamine,
-		/datum/reagent/drug/bath_salts,
-		/datum/reagent/drug/aranesp,
-		/datum/reagent/drug/pumpup,
-		/datum/reagent/drug/blastoff,
-		/datum/reagent/consumable/coffee,
-		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/volt_energy,
-		/datum/reagent/consumable/monkey_energy
-	)
 	///essentially our "sleep bank". sleeping charges it up and its drained while awake
 	var/five_more_minutes = 0
 	///the overlay we put over the eyes
@@ -84,7 +71,6 @@
 /datum/quirk/all_nighter/process(seconds_per_tick)
 	var/happy_camper = TRUE
 	var/beauty_sleep = TRUE
-	var/stims_present = FALSE
 
 	if(quirk_holder.IsSleeping())
 		five_more_minutes += SLEEP_BANK_MULTIPLIER * seconds_per_tick
@@ -93,11 +79,8 @@
 	else
 		beauty_sleep = FALSE //no sleep means eye bags
 
-		for(var/stimulant in stimulants)
-			if(quirk_holder.has_reagent(stimulant))  //checking for stims
-				stims_present = TRUE
-				break
-		if(!stims_present) //no stims and no sleep means an unhappy camper
+		// Defining which reagents count is handled by the reagents
+		if(!HAS_TRAIT(quirk_holder, TRAIT_STIMULATED))
 			happy_camper = FALSE
 
 	//adjusts the mood event accordingly

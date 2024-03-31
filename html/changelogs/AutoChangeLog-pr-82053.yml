@@ -1,0 +1,10 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - qol: "The eye of god now protects from the madness inducing effects of supermatter crystals and singularities. This trait is shared by the meson night vision goggles (which this is a better version of)"
+  - refactor: "The Scan ability has been refactored into a pointed spell."
+  - balance: "The Scan ability has a lower cooldown of 35 seconds."
+  - balance: "The Scan ability now gives an advanced health scan readout of the target."
+  - balance: "Scanning someone alerts the target as to who is responsible, rather than being completely silent as to the culprit (much to the annoyance of anyone who is victimized by someone using this on them)"
+  - code_imp: "The status effect that was called Stagger (not Staggered, which is separate) is now called Rebuked."
+  - balance: "Rebuked applies a x2 action delay cooldown, rather than x1.5."
