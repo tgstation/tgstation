@@ -196,7 +196,6 @@
 	SIGNAL_HANDLER
 	if (!proximity_flag || weapon.force < 5 || weapon.get_sharpness() != SHARP_EDGED)
 		return
-	to_chat(world, "trying it")
 	if (!prob(3))
 		return
 	target.visible_message(span_warning("[src]'s tail falls to the ground, severed completely!"))
