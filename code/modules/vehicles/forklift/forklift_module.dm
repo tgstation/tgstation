@@ -38,13 +38,21 @@
 
 	data["name"] = name
 	data["build_instantly"] = build_instantly
-	data["available_builds"] = available_builds
 	data["resource_price"] = resource_price
 	data["build_length"] = build_length
 	data["deconstruction_time"] = deconstruction_time
 	data["current_selected_typepath"] = current_selected_typepath
 	data["available_directions"] = available_directions
 	data["direction"] = direction
+
+	data["available_builds"] = list()
+	for(var/atom/typepath as anything in available_builds)
+		var/list/type_path_data = list(
+			"name" = typepath::name,
+			"type" = typepath,
+			"display_icon_ref" = null, // todo!
+		)
+		data["available_builds"] += list(type_path_data)
 
 	return data
 

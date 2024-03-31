@@ -38,7 +38,7 @@
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = I
-	key_inserted()
+	on_key_inserted()
 
 /obj/vehicle/ridden/AltClick(mob/user)
 	if(!inserted_key || !user.can_perform_action(src, NEED_DEXTERITY))
@@ -71,7 +71,7 @@
 	zap_buckle_check(power)
 	return ..()
 
-/obj/vehicle/ridden/proc/key_inserted()
+/obj/vehicle/ridden/proc/on_key_inserted()
 	return
 
 /obj/vehicle/ridden/proc/key_removed()

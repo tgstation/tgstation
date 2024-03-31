@@ -39,6 +39,21 @@
 	QDEL_NULL(material_container)
 	return ..()
 
+/obj/vehicle/ridden/forklift/ui_status(mob/living/user, datum/ui_state/state)
+	if(!istype(user)) // damn admins
+		return !user.client.holder ? UI_CLOSE : UI_INTERACTIVE
+	if(isnull(inserted_key))
+		return UI_CLOSE
+	if(!user.Adjacent(src))
+		return UI_UPDATE
+	return UI_INTERACTIVE
+
+/obj/vehicle/ridden/forklift/verb/fucking_interact()
+	set name = "Forklift Management Console"
+	set category = "Object"
+	set src in view(1)
+	ui_interact(usr)
+
 /obj/vehicle/ridden/forklift/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -57,7 +72,7 @@
 		data["materials"]["storage"][material_singleton.name] = material_container.materials[material_singleton]
 
 	data["modules"] = list(
-		"active" = REF(selected_modules[user].type),
+		"active_ref" = REF(selected_modules[user].type),
 		"available" = list(),
 	)
 	for(var/datum/forklift_module/module_type as anything in available_modules)
@@ -82,11 +97,11 @@
 			var/datum/forklift_module/module_type = locate(module_type_ref) in available_modules
 			if(isnull(module_type))
 				return FALSE
-			if(selected_modules[ui.user].type == module_type)
-				return FALSE
-			qdel(selected_modules[ui.user])
-			selected_modules[ui.user] = new module_type
-			selected_modules[ui.user].my_forklift = src
+			set_active_module(ui.user, module_type)
+			return TRUE
+
+		if("interact-module")
+			selected_modules[ui.user]?.ui_interact(ui.user)
 			return TRUE
 
 		if("scan")
@@ -170,7 +185,7 @@
 	qdel(selected_modules[M])
 	..()
 
-/obj/vehicle/ridden/forklift/key_inserted()
+/obj/vehicle/ridden/forklift/on_key_inserted()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/vehicle/ridden/forklift/process(delta_time)

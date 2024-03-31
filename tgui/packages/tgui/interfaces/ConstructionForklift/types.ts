@@ -5,11 +5,11 @@ type MaterialData = {
 };
 
 type AvailableModules = {
-  [ref: string]: string;
+  [ref: string]: string; // key is the ref, value is the name
 };
 
 type ModuleData = {
-  active: string;
+  active_ref: string;
   available: AvailableModules;
 };
 
@@ -29,11 +29,17 @@ type ConstructionForkliftData = {
 type ForkliftModuleData = {
   name: string;
   build_instantly: boolean;
-  available_builds: string[];
+  available_builds: BuildTarget[];
   resource_price: Record<string, number>;
   build_length: number;
   deconstruction_time: number;
   currently_selected_typepath: string;
   available_directions: number[];
   direction: number;
+};
+
+type BuildTarget = {
+  type: string;
+  name: string;
+  display_icon_ref: string | undefined;
 };
