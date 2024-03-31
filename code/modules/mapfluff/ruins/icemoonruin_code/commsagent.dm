@@ -1,14 +1,14 @@
 /obj/item/tape/frozen
 	name = "frozen tape"
 	desc = "A frozen old tape. The cold has somewhat preserved the recording inside."
-	icon_state = "tape_red"
+	icon_state = "tape_white"
 	used_capacity = 10 MINUTES
 	storedinfo = list(
-		"\[00:04\] Three.",
-		"\[00:05\] Years.",
-		"\[00:07\] Three FUCKING years in this frozen hellhole",
-		"\[00:11\] My mission's supposed to be over already!",
-		"\[00:15\]Nanotrasen has left the place to rot for like what,",
+		"\[00:04\]Three.",
+		"\[00:05\]Years.",
+		"\[00:07\]Three FUCKING years in this frozen hellhole",
+		"\[00:11\]My mission's supposed to be over already!",
+		"\[00:15\]Nanotrasen has left their place to rot for like what,",
 		"\[00:20\]8, 9, 10 months? I lost track of it",
 		//long silence
 		"\[02:00\]I can't do this anymore, man.",
@@ -43,3 +43,10 @@
 /obj/item/tape/frozen/Initialize(mapload)
 	. = ..()
 	unspool() // the tape spawns damaged
+
+/obj/item/tape/comms_wall
+	icon_state = "tape_red"
+	used_capacity = 10 MINUTES
+	storedinfo = list(
+		"\[00:01\]"
+	)

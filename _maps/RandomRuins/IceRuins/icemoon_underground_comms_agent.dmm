@@ -80,6 +80,7 @@
 /obj/item/storage/toolbox/syndicate{
 	pixel_y = 3
 	},
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "ge" = (
@@ -510,12 +511,14 @@
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "BZ" = (
-/obj/structure/closet/secure_closet/freezer/empty/open,
-/obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/syringe,
 /obj/machinery/light/directional/north,
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/item/storage/fancy/egg_box,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/flour,
+/obj/structure/closet/secure_closet/freezer/empty,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "CL" = (
@@ -712,8 +715,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/waterbottle/empty{
-	pixel_y = 3;
-	pixel_x = 5
+	pixel_y = 18;
+	pixel_x = -8
 	},
 /obj/item/reagent_containers/cup/bowl{
 	pixel_y = 7;
@@ -722,6 +725,10 @@
 /obj/item/reagent_containers/condiment/saltshaker,
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -7
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
@@ -776,11 +783,9 @@
 /turf/open/floor/plating/snowed,
 /area/ruin/powered/comms_agent)
 "NJ" = (
-/obj/structure/closet/secure_closet/freezer/empty,
-/obj/item/reagent_containers/condiment/rice,
-/obj/item/storage/fancy/egg_box,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/flour,
+/obj/item/storage/medkit/regular,
+/obj/item/reagent_containers/syringe,
+/obj/structure/closet/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "Ok" = (
@@ -813,10 +818,6 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"PR" = (
-/obj/structure/girder/reinforced,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered/comms_agent)
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc,
@@ -2846,9 +2847,9 @@ LP
 LP
 xi
 xi
-PR
-PR
-tl
+YX
+YX
+MH
 MH
 TV
 OM
@@ -2903,8 +2904,8 @@ tl
 YX
 YX
 YX
-PR
-tl
+YX
+MH
 MH
 MH
 OM
