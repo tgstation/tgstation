@@ -94,18 +94,20 @@
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
 	return new type_path_to_make(spawn_loc)
 
-///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available
+///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view and have an unblocked line to them.
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)
 	var/list/scatter_locations = list()
 
-	if(radius >= 0)
-		for(var/turf/turf_in_view in view(radius, get_turf(src)))
-			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
-				continue
-			if(!has_unblocked_line(turf_in_view))
-				continue
+	if(!radius)
+		return scatter_locations
 
-			scatter_locations += turf_in_view
+	for(var/turf/turf_in_view in view(radius, get_turf(src)))
+		if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
+			continue
+		if(!has_unblocked_line(turf_in_view))
+			continue
+
+		scatter_locations += turf_in_view
 
 	return scatter_locations
 
