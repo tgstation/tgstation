@@ -106,5 +106,7 @@ DEFINE_BITFIELD(antimagic_flags, list(
  */
 #define is_jaunting(atom) (istype(atom.loc, /obj/effect/dummy/phased_mob))
 
-/// For turn based combat
+// Stop looking at this code NOW
 #define TRAIT_TURN_COMBATANT "turn_combatant"
+#define COMSIG_TIMESTOP_ENTERED "timestop_entered"
+#define COMSIG_TIMESTOP_EXITED "timestop_exited"

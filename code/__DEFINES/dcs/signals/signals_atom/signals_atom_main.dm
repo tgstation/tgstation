@@ -117,10 +117,8 @@
 #define COMSIG_ATOM_RESTYLE "atom_restyle"
 /// when a timestop ability is used on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_FREEZE "atom_timestop_freeze"
-#define COMSIG_TIMESTOP_ENTERED "timestop_entered"
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
-#define COMSIG_TIMESTOP_EXITED "timestop_exited"
 
 /// Called on [/atom/SpinAnimation()] : (speed, loops, segments, angle)
 #define COMSIG_ATOM_SPIN_ANIMATION "atom_spin_animation"
