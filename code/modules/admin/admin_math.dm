@@ -98,15 +98,16 @@
 
 		var/chosen_object
 		do
-			chosen_object = pick(typesof(/obj/item))::name
+			var/obj/item/random_item = pick(subtypesof(/obj/item))
+			chosen_object = random_item::name
 		while(chosen_object in objects)
 		objects += chosen_object
 
 	var/problem = problem_string
 	for(var/idx in 1 to 4)
-		problem = replacetext(problem, "%NAME" + idx + "%", names[idx])
-		problem = replacetext(problem, "%NUM" + idx + "%", numbers[idx])
-		problem = replacetext(problem, "%OBJECT" + idx + "%", objects[idx])
+		problem = replacetext(problem, "%NAME[idx]%", names[idx])
+		problem = replacetext(problem, "%NUM[idx]%", numbers[idx])
+		problem = replacetext(problem, "%OBJECT[idx]%", objects[idx])
 
 	var/answer = __solve_operations_list(operations, numbers)
 
