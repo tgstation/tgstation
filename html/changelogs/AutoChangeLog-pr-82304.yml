@@ -1,0 +1,5 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "Slimes stop being in stasis when taken out of a BZ filled environment"
+  - bugfix: "Slimes no longer become hungry while in stasis"
