@@ -40,6 +40,7 @@
 		var/allow_at = failure_timers[ckey]
 		if(allow_at > world.time)
 			in_math_problem -= ckey
+			to_chat(client, span_adminhelp("You must wait [DisplayTimeText(allow_at - world.time)] before trying again."))
 			return FALSE
 		failure_timers -= ckey
 
