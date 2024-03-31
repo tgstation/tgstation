@@ -105,3 +105,6 @@ DEFINE_BITFIELD(antimagic_flags, list(
  * as it encompasses more states in which a mob may be "incorporeal from magic"
  */
 #define is_jaunting(atom) (istype(atom.loc, /obj/effect/dummy/phased_mob))
+
+/// For turn based combat
+#define TRAIT_TURN_COMBATANT "turn_combatant"
