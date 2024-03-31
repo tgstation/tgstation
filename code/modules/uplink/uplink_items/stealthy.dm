@@ -135,7 +135,7 @@
 
 /datum/uplink_item/stealthy_weapons/shotguncane
 	name = "Shotgun Cane"
-	desc = "A cane that also functions as a shotgun. Performs especially well if you're a blind man. Comes loaded with 4 beanbag shells."
+	desc = "A cane that also functions as a shotgun. Performs especially well if you're blind. Comes loaded with 4 beanbag shells."
 	item = /obj/item/gun/ballistic/shotgun/cane
 	cost = 6
 	surplus = 20

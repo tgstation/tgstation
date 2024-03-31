@@ -116,7 +116,6 @@
 /obj/item/gun/toxicreagentgun
 	name = "toxic reagent gun"
 	desc = "A weapon favored by crazed doctors all around for it's ability to quickly administer debilitating drugs in even the most unwilling of patients."
-	icon = 'icons/myimports/projectile.dmi'
 	icon_state = "chemguntox"
 	inhand_icon_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -184,7 +183,6 @@
 /obj/item/gun/explosivereagentgun
 	name = "explosive reagent gun"
 	desc = "A weapon favored by pyrotechnicians all around for it's ability to quickly turn any living beings into walking bombs."
-	icon = 'icons/myimports/projectile.dmi'
 	icon_state = "chemgunexplosive"
 	inhand_icon_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL

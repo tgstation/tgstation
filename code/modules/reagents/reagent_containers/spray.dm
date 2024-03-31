@@ -345,7 +345,7 @@
 /obj/item/reagent_containers/spray/chemsprayer/syndicate
 	name = "chem sprayer"
 	desc = "A chemical-warfare gun designed to spray large amounts of reagents in a given area."
-	icon = 'icons/fulpimport/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -414,7 +414,7 @@
 /obj/item/reagent_containers/spray/chemsprayer/adv
 	name = "bluespace chem sprayer"
 	desc = "An advanced chemical-warfare gun used to spray large amounts of reagents in a given area."
-	icon = 'icons/fulpimport/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'

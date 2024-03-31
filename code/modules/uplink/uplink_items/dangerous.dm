@@ -85,7 +85,7 @@
 			Turns on when wielded, and makes no noise when doing so. More effective against all targets than our energy swords and possesses high armor-piercing. \
 			Deals nearby double it's damage when thrown and our hardlight technology will ensure the spear remains embedded. \
 			Not easily concealable. Has high durability but will eventually break."
-	item = /obj/item/spear/energy
+	item = /obj/item/spear/energy/red
 	progression_minimum = 30 MINUTES
 	surplus = 20
 	cost = 8
@@ -102,7 +102,7 @@
 
 /datum/uplink_item/dangerous/viper
 	name = "Viper"
-	desc = "A single Viper Pistol that fires 10mm bullets. Loaded with 10 lethal shots. \
+	desc = "A single Viper Pistol that fires 10mm bullets. Loaded with 9 lethal shots. \
 			This pistol fires quickly and is fully-automatic. Additional ammunition can be purchased under the ammunition tab."
 	item = /obj/item/gun/ballistic/automatic/pistol/viper
 	cost = 8
@@ -223,8 +223,8 @@
 
 /datum/uplink_item/dangerous/tommygun
 	name = "Tommy Gun"
-	desc = "A functional tommy gun loaded with 50 .45 bullets. It's very much a 'spray-and-pray' kind-of weapon. Can be toggled between a 4-round burst or semi-automatic. \
-			Not easily concealable."
+	desc = "A functional tommy gun loaded with 50 .45 bullets. It's very much a 'spray-and-pray' kind-of weapon. \
+			Fully automatic. Not easily concealable."
 	item = /obj/item/gun/ballistic/automatic/tommygun
 	progression_minimum = 15 MINUTES
 	cost = 15
@@ -234,7 +234,7 @@
 /datum/uplink_item/dangerous/akm
 	name = "AKM Assault Rifle"
 	desc = "A functional AKM Assault Rifle loaded with 30 7.12x82mm bullets. It's exceptional in combat and often reliable in taking down all kinds of opposition. \
-			Always fires in a three-round burst."
+			Always fires in a three-round burst. High spread."
 	item = /obj/item/gun/ballistic/automatic/akm
 	progression_minimum = 20 MINUTES
 	cost = 13

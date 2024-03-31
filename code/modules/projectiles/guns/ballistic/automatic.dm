@@ -354,5 +354,5 @@
 	can_suppress = FALSE
 	actions_types = list()
 	mag_display = TRUE
-	mag_display_ammo = TRUE
+	mag_display_ammo = FALSE
 	fire_sound = 'sound/weapons/rifleshot.ogg'

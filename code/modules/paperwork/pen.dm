@@ -595,10 +595,8 @@
 	. = ..()
 	create_reagents(15, OPENCONTAINER)
 
-/obj/item/pen/fountain/hypo/attack(mob/living/M, mob/user,stealth)
+/obj/item/pen/fountain/hypo/attack(mob/living/M, mob/user, params)
 	. = ..()
-	if(!IS_TRAITOR(user) || !IS_NUKE_OP(user)) // if non syndicate , it is just a regular pen as they don't know how to activate hidden payload.
-		return
 	if(!.)
 		return
 	if(!reagents.total_volume)
@@ -607,6 +605,23 @@
 		return
 	reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = INJECT)
 
+/obj/item/pen/fountain/hypo/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
+	. = ..()
+	var/obj/projectile/proj = dart.loaded_projectile
+	RegisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_dart_hit))
+
+/obj/item/pen/fountain/hypo/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
+	. = ..()
+	if(istype(proj))
+		UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
+
+/obj/item/pen/fountain/hypo/proc/on_dart_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb, blocked)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/carbon_target = target
+	if(!istype(carbon_target) || blocked == 100)
+		return
+	if(carbon_target.can_inject(target_zone = hit_limb))
+		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = firer, methods = INJECT)
 
 /*
  * Cybersun Pen
