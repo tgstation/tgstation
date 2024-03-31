@@ -1,0 +1,5 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "Slime properly load their slowdown values from the config files."
+  - bugfix: "Slimes who lose their AI controller will no longer runtime when they get hungry."

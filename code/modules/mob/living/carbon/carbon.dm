@@ -926,6 +926,10 @@
 
 	return ..()
 
+/mob/living/carbon/do_strange_reagent_revival(healing_amount)
+	set_heartattack(FALSE)
+	return ..()
+
 /mob/living/carbon/can_be_revived()
 	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE

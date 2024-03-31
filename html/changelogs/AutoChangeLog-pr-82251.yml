@@ -1,0 +1,5 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - bugfix: " Hatsune mi-go now is a friendly gold slime mob, and doesn't hurt your ears."
+  - rscadd: "Hatsune mi-go drops a keyboard synth on death (you monster.)"

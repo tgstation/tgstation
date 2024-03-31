@@ -1,6 +1,6 @@
 import { FeatureChoiced, FeatureDropdownInput } from '../base';
 
-export const prosthetic: FeatureChoiced = {
+export const prosthetic_limb: FeatureChoiced = {
   name: 'Prosthetic',
   component: FeatureDropdownInput,
 };
