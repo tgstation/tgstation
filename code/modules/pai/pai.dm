@@ -135,6 +135,100 @@
 		"what"
 	)
 
+	var/avatar_type
+	var/datum/agent/avatar
+	var/avatar_mode = FALSE
+
+	var/datum/movement_detector/card_tracker
+
+	/// Whoever is currently holding/wearing the pai card
+	var/mob/card_holder
+
+/mob/living/silicon/pai/proc/toggle_avatar_mode()
+	if(avatar_mode)
+		deactivate_avatar_mode()
+	else
+		activate_avatar_mode()
+
+/mob/living/silicon/pai/proc/select_avatar()
+	var/reactivate = FALSE
+	if(avatar_mode)
+		reactivate = TRUE
+		deactivate_avatar_mode()
+	var/list/possible_avatars = list()
+	for(var/datum/agent/agent_type as anything in subtypesof(/datum/agent))
+		possible_avatars[initial(agent_type.id)] = agent_type
+	var/chosen = tgui_input_list(src, "Choose avatar type", "Avatar", possible_avatars)
+	if(!chosen)
+		return
+	avatar_type = possible_avatars[chosen]
+	if(reactivate)
+		activate_avatar_mode()
+
+/mob/living/silicon/pai/proc/activate_avatar_mode()
+	if(!avatar_type)
+		select_avatar()
+	if(!avatar_type)
+		return
+	avatar = new avatar_type
+	avatar.set_name(name)
+	avatar.show_to(src) //So we can see our own animations and pos, ideally this would force observe on the holder hud but right now it's too dead-coded
+	avatar.give_control_to(src)
+	RegisterSignal(src, COMSIG_MOB_SAY, PROC_REF(avatar_handle_speech))
+	avatar_mode = TRUE
+	balloon_alert(src, "avatar on")
+	to_chat(src, span_notice("You can change active avatar animation by emoting its name eg: \"*searching\""))
+	// If we're already held start projecting
+	if(card_holder)
+		start_projecting_avatar_to(card_holder)
+
+/mob/living/silicon/pai/help_emote_content()
+	if(!avatar_mode || !avatar)
+		return
+
+	var/list/animation_keys = list()
+	for(var/key in avatar.all_animations)
+		animation_keys += lowertext(key)
+	animation_keys = sort_list(animation_keys)
+	var/list/message = list("\n\nAvailable avatar animations: \n\n")
+	message += animation_keys.Join(", ")
+	message += "."
+	return message.Join("")
+
+/mob/living/silicon/pai/proc/deactivate_avatar_mode()
+	QDEL_NULL(avatar)
+	UnregisterSignal(src, COMSIG_MOB_SAY)
+	avatar_mode = FALSE
+	balloon_alert(src, "avatar off")
+
+/mob/living/silicon/pai/proc/start_projecting_avatar_to(mob/target)
+	avatar.set_animation(avatar.intro_anim) //could use wait until previous animation ends since you can see few frames of previous exitings animation
+	avatar.show_to(target)
+
+/mob/living/silicon/pai/proc/stop_projecting_avatar_to(mob/target)
+	avatar.remove_from(target)
+
+// Ugly but say has no point where you can do this and still log the damn message
+/mob/living/silicon/pai/proc/avatar_handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	if(!avatar_mode)
+		return
+	avatar.talk(speech_args[SPEECH_MESSAGE])
+	// Just talk through avatar
+	speech_args[SPEECH_MESSAGE] = ""
+
+// Lets you *searching or whatever anim
+/mob/living/silicon/pai/check_emote(message, forced)
+	if(avatar_mode && message[1] == "*")
+		var/possible_animation_emote = copytext(message, length(message[1]) + 1)
+		var/lowercase_emote = lowertext(possible_animation_emote)
+		for(var/anim_name in avatar.all_animations)
+			if(lowertext(anim_name) == lowercase_emote)
+				avatar.set_animation(anim_name)
+				return TRUE
+	return ..()
+
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
 
@@ -160,6 +254,7 @@
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
 	QDEL_NULL(leash)
+	QDEL_NULL(card_tracker)
 	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
@@ -227,7 +322,7 @@
 		var/newcardloc = pai_card
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
-	card = pai_card
+	set_card(pai_card)
 	forceMove(pai_card)
 	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
@@ -239,6 +334,27 @@
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
+/mob/living/silicon/pai/proc/set_card(obj/item/pai_card/new_card)
+	card = new_card
+	if(card_tracker)
+		QDEL_NULL(card_tracker)
+	card_tracker = new(card, CALLBACK(src, PROC_REF(card_movement)))
+
+/mob/living/silicon/pai/proc/card_movement()
+	SIGNAL_HANDLER
+
+	var/mob/new_holder = get_holder(card_only = TRUE) //Only care about card for agents
+	if(new_holder != card_holder)
+		if(card_holder)
+			//Remove from old holder
+			if(avatar_mode)
+				stop_projecting_avatar_to(card_holder)
+		if(new_holder)
+			//Add to new holder
+			if(avatar_mode)
+				start_projecting_avatar_to(new_holder)
+		card_holder = new_holder
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -318,12 +434,13 @@
  * @returns {living/carbon || FALSE} - The holder of the pAI,
  * 	or FALSE if the pAI is not being carried.
  */
-/mob/living/silicon/pai/proc/get_holder()
+/mob/living/silicon/pai/proc/get_holder(card_only = FALSE)
 	var/mob/living/carbon/holder
 	if(!holoform && iscarbon(card.loc))
 		holder = card.loc
-	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
-		holder = loc.loc
+	if(!card_only)
+		if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
+			holder = loc.loc
 	if(!holder || !iscarbon(holder))
 		return FALSE
 	return holder

@@ -104,6 +104,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
 
+	// Not sorry, hud code is awful
+	var/list/atom/movable/screen/movable/agent/agents = list()
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 
@@ -344,6 +347,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 
+			if(agents.len)
+				screenmob.client.screen += agents
+
 		if(HUD_STYLE_REDUCED) //Reduced HUD
 			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
@@ -356,6 +362,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += infodisplay
 			if(always_visible_inventory.len)
 				screenmob.client.screen += always_visible_inventory
+
+			if(agents.len)
+				screenmob.client.screen += agents
 
 			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
 			for(var/h in hand_slots)

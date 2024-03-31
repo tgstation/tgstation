@@ -180,6 +180,7 @@
 #define ui_pai_take_picture "SOUTH:6,WEST+11"
 #define ui_pai_view_images "SOUTH:6,WEST+12"
 #define ui_pai_radio "SOUTH:6,WEST+13"
+#define ui_pai_avatar "SOUTH:6,WEST+14"
 #define ui_pai_language_menu "SOUTH+1:8,WEST+12:31"
 #define ui_pai_navigate_menu "SOUTH+1:8,WEST+12:31"
 

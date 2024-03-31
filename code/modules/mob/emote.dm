@@ -66,8 +66,15 @@
 
 	message += keys.Join(", ")
 	message += "."
+	var/additonal_text = user.help_emote_content()
+	if(additonal_text)
+		message += additonal_text
 	message = message.Join("")
 	to_chat(user, examine_block(message))
+
+// Appended after emote list
+/mob/proc/help_emote_content()
+	return
 
 /datum/emote/flip
 	key = "flip"

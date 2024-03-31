@@ -4,7 +4,7 @@
 	icon = 'icons/hud/screen_pai.dmi'
 	var/required_software
 
-/atom/movable/screen/pai/Click()
+/atom/movable/screen/pai/Click(location, control, params)
 	if(isobserver(usr) || usr.incapacitated())
 		return FALSE
 	var/mob/living/silicon/pai/user = usr
@@ -176,6 +176,30 @@
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.radio.interact(usr)
 
+/atom/movable/screen/pai/avatar
+	name = "Avatar Mode"
+	icon_state = "avatar"
+
+/atom/movable/screen/pai/avatar/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Toggle", \
+		rmb_text = "Change avatar type", \
+	)
+
+/atom/movable/screen/pai/avatar/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/silicon/pai/pAI = usr
+	var/list/modifiers = params2list(params)
+	if(modifiers && modifiers[RIGHT_CLICK])
+		pAI.select_avatar()
+	else
+		pAI.toggle_avatar_mode()
+
 /datum/hud/pai/New(mob/living/silicon/pai/owner)
 	..()
 	var/atom/movable/screen/using
@@ -255,6 +279,11 @@
 // View images
 	using = new /atom/movable/screen/pai/image_view(null, src)
 	using.screen_loc = ui_pai_view_images
+	static_inventory += using
+
+// Avatar
+	using = new /atom/movable/screen/pai/avatar(null, src)
+	using.screen_loc = ui_pai_avatar
 	static_inventory += using
 
 // Radio
