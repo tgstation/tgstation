@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(explosions)
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, protect_epicenter = FALSE, atom/explosion_cause = null, explosion_direction = 0, explosion_arc = 360)
 	. = SSexplosions.explode(arglist(args))
 
 
@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(explosions)
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, protect_epicenter = FALSE, atom/explosion_cause = null, explosion_direction = 0, explosion_arc = 360)
 	var/list/arguments = list(
 		EXARG_KEY_ORIGIN = origin,
 		EXARG_KEY_DEV_RANGE = devastation_range,
@@ -243,6 +243,8 @@ SUBSYSTEM_DEF(explosions)
 		EXARG_KEY_SILENT = silent,
 		EXARG_KEY_SMOKE = smoke,
 		EXARG_KEY_EXPLOSION_CAUSE = explosion_cause ? explosion_cause : origin,
+		EXARG_KEY_EXPLOSION_DIRECTION = explosion_direction,
+		EXARG_KEY_EXPLOSION_ARC = explosion_arc,
 	)
 	var/atom/location = isturf(origin) ? origin : origin.loc
 	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments) & COMSIG_CANCEL_EXPLOSION)
@@ -288,7 +290,7 @@ SUBSYSTEM_DEF(explosions)
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, atom/explosion_cause)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, protect_epicenter, atom/explosion_cause, explosion_direction, explosion_arc)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
@@ -302,6 +304,31 @@ SUBSYSTEM_DEF(explosions)
 	var/orig_dev_range = devastation_range
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
+
+	// Work out the angles to explode between
+	var/first_angle_limit = WRAP(explosion_direction - explosion_arc/2, 0, 360)
+	var/second_angle_limit = WRAP(explosion_direction + explosion_arc/2, 0, 360)
+
+	// Get them in the right order
+	var/lower_angle_limit
+	var/upper_angle_limit
+	var/do_directional
+
+	if(first_angle_limit == second_angle_limit) // CASE A: FULL CIRCLE
+		do_directional = FALSE
+		message_admins("CASE A")
+	else if(first_angle_limit < second_angle_limit) // CASE B: When the arc does not cross 0 degrees
+		lower_angle_limit = first_angle_limit
+		upper_angle_limit = second_angle_limit
+		do_directional = TRUE
+		message_admins("CASE B")
+	else if (first_angle_limit > second_angle_limit) // CASE C: When the arc does not cross 0 degrees
+		lower_angle_limit = second_angle_limit
+		upper_angle_limit = first_angle_limit
+		do_directional = TRUE
+		message_admins("CASE C")
+
+	message_admins("ANGLE RANGE: [first_angle_limit], [second_angle_limit]. ANGLE RANGE DIRECTED: [lower_angle_limit], [upper_angle_limit]. ANGLE: [explosion_direction]")
 
 	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range)
 
@@ -402,6 +429,7 @@ SUBSYSTEM_DEF(explosions)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
+		var/angle = get_angle(explode, epicenter)
 		var/block = 0
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
 		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
@@ -415,6 +443,9 @@ SUBSYSTEM_DEF(explosions)
 				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
 
+		if(do_directional)
+			if(!ISINRANGE(angle, lower_angle_limit, upper_angle_limit))
+				continue // Drop any turf outwith the arc of the explosion
 
 		var/severity = EXPLODE_NONE
 		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
@@ -425,19 +456,24 @@ SUBSYSTEM_DEF(explosions)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
-			var/list/items = list()
-			for(var/atom/holder as anything in explode)
-				if (length(holder.contents) && !(holder.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += holder.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
-				if(isliving(holder))
-					items -= holder		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
-			switch(severity)
-				if(EXPLODE_DEVASTATE)
-					SSexplosions.high_mov_atom += items
-				if(EXPLODE_HEAVY)
-					SSexplosions.med_mov_atom += items
-				if(EXPLODE_LIGHT)
-					SSexplosions.low_mov_atom += items
+			if(!protect_epicenter)
+				var/list/items = list()
+				for(var/atom/holder as anything in explode)
+					if (length(holder.contents) && !(holder.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+						items += holder.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
+					if(isliving(holder))
+						items -= holder		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
+				switch(severity)
+					if(EXPLODE_DEVASTATE)
+						SSexplosions.high_mov_atom += items
+						SSexplosions.highturf += explode
+					if(EXPLODE_HEAVY)
+						SSexplosions.med_mov_atom += items
+						SSexplosions.medturf += explode
+					if(EXPLODE_LIGHT)
+						SSexplosions.low_mov_atom += items
+						SSexplosions.lowturf += explode
+				continue // We won't ever check for whether to put a fire on the epicenter, but it's only a 40% chance so unlikely anyone will notice, and saves an extra check for every single affected turf
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += explode
