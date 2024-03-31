@@ -133,6 +133,9 @@
 	/// Minimal character age for this job
 	var/required_character_age
 
+	/// Bodycam network
+	var/bodycam_network
+
 
 /datum/job/New()
 	. = ..()
@@ -153,6 +156,16 @@
 	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && length(liver_traits))
 		liver.add_traits(liver_traits, JOB_TRAIT)
+
+	if(player_client && bodycam_network)
+		spawned.AddComponent( \
+			/datum/component/simple_bodycam, \
+			camera_name = "[title] Bodycam", \
+			c_tag = "[title] [spawned.real_name]", \
+			network = bodycam_network, \
+			emp_proof = TRUE, \
+		)
+		start_broadcasting_network(bodycam_network, null)
 
 	if(!ishuman(spawned))
 		return

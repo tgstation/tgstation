@@ -26,3 +26,11 @@
 #define CAMERANET_NETWORK_BAR "bar"
 #define CAMERANET_NETWORK_INTERROGATION "interrogation"
 #define CAMERANET_NETWORK_ABDUCTOR "abductor"
+
+// List of different bodycam camera nets, body cameras are given this when a job/antag with one is assigned
+#define CAMERANET_NETWORK_BODYCAM_CAPTAIN "bod_captain"
+#define CAMERANET_NETWORK_BODYCAM_HOS "bod_hos"
+#define CAMERANET_NETWORK_BODYCAM_WARDEN "bod_warden"
+#define CAMERANET_NETWORK_BODYCAM_DETECTIVE "bod_detective"
+#define CAMERANET_NETWORK_BODYCAM_SECOFF "bod_secoff"
+#define CAMERANET_NETWORK_BODYCAM_ANTAG "bod_antag"

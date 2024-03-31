@@ -44,6 +44,7 @@
 
 	job_tone = "objection"
 
+	bodycam_network = CAMERANET_NETWORK_BODYCAM_DETECTIVE
 
 /datum/outfit/job/detective
 	name = "Detective"

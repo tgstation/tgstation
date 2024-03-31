@@ -42,6 +42,8 @@
 	rpg_title = "Jailor"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT
 
+	bodycam_network = CAMERANET_NETWORK_BODYCAM_WARDEN
+
 /datum/outfit/job/warden
 	name = "Warden"
 	jobtype = /datum/job/warden

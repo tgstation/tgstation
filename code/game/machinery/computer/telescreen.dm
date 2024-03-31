@@ -70,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
 		icon_state = icon_state_on
-	else
+	else if(!on && icon_state == icon_state_on)
 		icon_state = icon_state_off
 	if(announcement)
 		say(announcement)

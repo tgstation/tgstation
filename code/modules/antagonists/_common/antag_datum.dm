@@ -61,6 +61,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/default_custom_objective = "Cause chaos on the space station."
 	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
 	var/hardcore_random_bonus = FALSE
+	// The bodycam network we assign to this antagonist
+	var/bodycam_network = CAMERANET_NETWORK_BODYCAM_ANTAG
 
 	//ANTAG UI
 
@@ -260,6 +262,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	apply_innate_effects()
 	give_antag_moodies()
+	give_antag_bodycam()
 	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
 	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, PROC_REF(on_mindshield))
 	if(is_banned(owner.current) && replace_banned)
@@ -310,6 +313,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	remove_innate_effects()
 	clear_antag_moodies()
+	//clear_antag_bodycam() // What? No. You're here forever.
 	LAZYREMOVE(owner.antag_datums, src)
 	if(!LAZYLEN(owner.antag_datums))
 		owner.current.remove_from_current_living_antags()
@@ -363,6 +367,20 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!antag_moodlet)
 		return
 	owner.current.clear_mood_event("antag_moodlet_[type]")
+
+/**
+ * Proc that assigns this antagonist's ascribed bodycam to the player.
+ */
+/datum/antagonist/proc/give_antag_bodycam()
+	if(bodycam_network && owner.current)
+		owner.current.AddComponent( \
+			/datum/component/simple_bodycam, \
+			camera_name = "[name] Bodycam", \
+			c_tag = "[name] [owner.current.real_name]", \
+			network = bodycam_network, \
+			emp_proof = TRUE, \
+		)
+		start_broadcasting_network(bodycam_network, null)
 
 /**
  * Proc that will return the team this antagonist belongs to, when called. Helpful with antagonists that may belong to multiple potential teams in a single round.
