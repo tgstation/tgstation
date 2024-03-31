@@ -543,6 +543,7 @@
 #include "code\__HELPERS\~monkestation-helpers\time.dm"
 #include "code\__HELPERS\~monkestation-helpers\virology.dm"
 #include "code\__HELPERS\~monkestation-helpers\logging\attack.dm"
+#include "code\__HELPERS\~monkestation-helpers\logging\game.dm"
 #include "code\_globalvars\_regexes.dm"
 #include "code\_globalvars\admin.dm"
 #include "code\_globalvars\bitfields.dm"

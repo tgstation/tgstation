@@ -28,3 +28,5 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/looc_enabled
+
+/datum/config_entry/flag/log_storyteller

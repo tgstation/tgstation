@@ -90,7 +90,7 @@
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 //monkestation edit start
-	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES || (SSgamemode.ran_roundstart && !fake_check)))
+	if(roundstart && ((SSticker.round_start_time && world.time - SSticker.round_start_time >= 2 MINUTES) || (SSgamemode.ran_roundstart && !fake_check)))
 		return FALSE
 //monkestation edit end
 	if(occurrences >= max_occurrences)

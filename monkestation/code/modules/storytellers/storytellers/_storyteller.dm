@@ -65,10 +65,13 @@
 
 	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
 		roundstart_checks = TRUE
+
+	if(SSgamemode.current_roundstart_event && !SSgamemode.ran_roundstart && (guarantees_roundstart_roleset || roundstart_checks))
+		buy_event(SSgamemode.current_roundstart_event, EVENT_TRACK_ROLESET, TRUE)
+		log_storyteller("Running SSgamemode.current_roundstart_event\[[SSgamemode.current_roundstart_event]\]")
+		SSgamemode.current_roundstart_event = null
 		if(!ignores_roundstart)
 			SSgamemode.ran_roundstart = TRUE
-		if(SSgamemode.current_roundstart_event)
-			buy_event(SSgamemode.current_roundstart_event, EVENT_TRACK_ROLESET)
 
 	add_points(delta_time)
 	handle_tracks()

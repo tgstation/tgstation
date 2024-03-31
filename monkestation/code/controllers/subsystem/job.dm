@@ -50,7 +50,7 @@
 
 	assigned_players_by_job = list()
 	assignable_by_job = list()
-	JobDebug("h_f_s pass")
+	log_storyteller("h_f_s pass")
 
 /datum/controller/subsystem/job/proc/handle_roundstart_antags()
 	if(!SSgamemode.current_roundstart_event)
@@ -69,11 +69,11 @@
 	var/antag_selection_loops = SSgamemode.current_roundstart_event.get_antag_amount()
 	for(var/i in 1 to antag_selection_loops)
 		if(antag_selection_loops >= 100)
-			JobDebug("h_r_a failed, antag_selection_loops went over 100")
+			log_storyteller("h_r_a failed, antag_selection_loops went over 100")
 			return FALSE
 		if(!length(candidates))
 			if(length(SSgamemode.roundstart_antag_minds) < SSgamemode.current_roundstart_event.base_antags) //we got below our min antags, reroll
-				JobDebug("h_r_a failed, below required candidates for selected roundstart event")
+				log_storyteller("h_r_a failed, below required candidates for selected roundstart event")
 				return FALSE
 			break
 		var/client/dead_client = pick_n_take_weighted(weighted_candidates)
@@ -98,7 +98,7 @@
 			SSgamemode.roundstart_antag_minds -= player_mind
 			if(!length(weighted_candidates))
 				if(length(SSgamemode.roundstart_antag_minds) < SSgamemode.current_roundstart_event.base_antags)
-					JobDebug("h_r_a failed, removing unassigned antag player put us below current event minimum candidates")
+					log_storyteller("h_r_a failed, removing unassigned antag player put us below current event minimum candidates")
 					return FALSE
 				continue
 			var/mob/dead/new_player/candidate
@@ -110,12 +110,12 @@
 					candidate = null
 			if(!candidate)
 				if(length(SSgamemode.roundstart_antag_minds) < SSgamemode.current_roundstart_event.base_antags)
-					JobDebug("h_r_a failed, removing unassigned antag player put us below current event minimum candidates and we were unable to find a replacement")
+					log_storyteller("h_r_a failed, removing unassigned antag player put us below current event minimum candidates and we were unable to find a replacement")
 					return FALSE
 				else if(sanity >= 100)
-					JobDebug("h_r_a error, sanity check went over limit while trying to find replacement antag player but it did not make us go under our minimum antag players")
+					log_storyteller("h_r_a error, sanity check went over limit while trying to find replacement antag player but it did not make us go under our minimum antag players")
 					continue
-				JobDebug("h_r_a error, we were unable to find a replacment for an unassigned antag player however we did not go under our minimum antag players")
+				log_storyteller("h_r_a error, we were unable to find a replacment for an unassigned antag player however we did not go under our minimum antag players")
 				continue
 			SSgamemode.roundstart_antag_minds += candidate.mind
 			continue
@@ -127,18 +127,18 @@
 
 		if(enemy_job && (enemy_count - 1) < SSgamemode.current_roundstart_event.required_enemies && !try_reassign_job(player, enemy_job_instances, \
 																														restricted_job_instances, TRUE, enemy_players))
-			JobDebug("h_r_a failed, an antag player was an enemy role and we could not find someone to replace them")
+			log_storyteller("h_r_a failed, an antag player was an enemy role and we could not find someone to replace them")
 			return FALSE
 
 		if(!try_reassign_job(player, enemy_job_instances, restricted_job_instances))
-			JobDebug("h_r_a failed, we were unable to reassign an antag player with a restricted role")
+			log_storyteller("h_r_a failed, we were unable to reassign an antag player with a restricted role")
 			return FALSE
 	return TRUE
 
 /// Try and reassign the job of input player and return based on if we succeed or not, if need_new_enemy is passed then we will return FALSE if we cant find someone else to be an enemy
 /datum/controller/subsystem/job/proc/try_reassign_job(mob/dead/new_player/player, list/enemy_jobs = list(), list/restricted_jobs = list(), need_new_enemy = FALSE, list/enemy_players)
 	if(!GiveRandomJob(player, TRUE, enemy_jobs + restricted_jobs) && !handle_temp_assignments(player, GetJobType(overflow_role)))
-		JobDebug("t_r_j failed, we were unable to give the reassigned player a new job, Player: [player]")
+		log_storyteller("t_r_j failed, we were unable to give the reassigned player a new job, Player: [player]")
 		return FALSE
 
 	if(need_new_enemy)
@@ -161,7 +161,7 @@
 					handle_temp_assignments(new_enemy_player, enemy_job)
 					break
 		if(!new_enemy_player)
-			JobDebug("t_r_j failed, we were unable to find someone to replace the enemy role of the reassigned player, Player: [player]")
+			log_storyteller("t_r_j failed, we were unable to find someone to replace the enemy role of the reassigned player, Player: [player]")
 			return FALSE
 	return TRUE
 
@@ -172,6 +172,7 @@
 		valid_rolesets = list()
 		valid_rolesets += SSgamemode.event_pools[EVENT_TRACK_ROLESET]
 
+	log_storyteller("p_d_r valid_rolesets", list("rolesets" = english_list(valid_rolesets)))
 	valid_rolesets -= SSgamemode.current_roundstart_event
 	var/player_count = 0
 	for(var/job in assigned_players_by_job)
@@ -184,14 +185,15 @@
 		else
 			actual_valid_rolesets[roleset] = roleset.weight
 	valid_rolesets = actual_valid_rolesets
+	log_storyteller("p_d_r actual_valid_rolesets", list("rolesets" = english_list(actual_valid_rolesets)))
 
 	if(SSgamemode.current_roundstart_event && (SSgamemode.current_roundstart_event in valid_rolesets))
-		JobDebug("p_d_r failed, SSgamemode.current_roundstart_event in valid_rolesets")
+		log_storyteller("p_d_r failed, SSgamemode.current_roundstart_event in valid_rolesets")
 		return
 
 	if(!length(valid_rolesets))
-		JobDebug("p_d_r failed, no valid_rolesets")
+		log_storyteller("p_d_r failed, no valid_rolesets")
 		return
 
 	SSgamemode.current_roundstart_event = pick_weight(valid_rolesets)
-	JobDebug("p_d_r pass, Selected Roleset: [SSgamemode.current_roundstart_event]")
+	log_storyteller("p_d_r pass, Selected Roleset: [SSgamemode.current_roundstart_event]")
