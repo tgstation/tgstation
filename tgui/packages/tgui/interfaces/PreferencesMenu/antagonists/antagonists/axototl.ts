@@ -2,7 +2,7 @@ import { multiline } from 'common/string';
 
 import { Antagonist, Category } from '../base';
 
-const FrogressionTraitor: Antagonist = {
+const Axototl: Antagonist = {
   key: 'axototl',
   name: 'Axototl',
   description: [
@@ -14,4 +14,4 @@ const FrogressionTraitor: Antagonist = {
   category: Category.Midround,
 };
 
-export default FrogressionTraitor;
+export default Axototl;
