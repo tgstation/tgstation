@@ -13,6 +13,7 @@
 		/datum/action/cooldown/mob_cooldown/kaioken,
 		/datum/action/cooldown/mob_cooldown/super_saiyan,
 		/datum/action/cooldown/mob_cooldown/watcher_gaze/solar_flare,
+		/datum/action/cooldown/mob_cooldown/ultra_instinct,
 	)
 
 /obj/item/organ/internal/brain/saiyan/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
