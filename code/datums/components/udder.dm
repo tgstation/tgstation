@@ -45,8 +45,11 @@
 
 
 ///signal called on parent being attacked with an item
-/datum/component/udder/proc/on_attackby(datum/source, obj/item/milking_tool, mob/user)
+/datum/component/udder/proc/on_attackby(datum/source, obj/item/milking_tool, mob/living/user)
 	SIGNAL_HANDLER
+
+	if(user.combat_mode)
+		return
 
 	var/mob/living/milked = parent
 	if(milked.stat == CONSCIOUS && istype(milking_tool, /obj/item/reagent_containers/cup))
@@ -204,3 +207,12 @@
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
 	if(on_generate_callback)
 		on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
+
+/obj/item/udder/carbon
+	name = "experimental reagent generating augment"
+
+/obj/item/udder/carbon/Initialize(mapload)
+	production_probability = rand(10,75)
+	reagent_produced_typepath = get_random_reagent_id()
+	size = rand(30,80)
+	return ..() //so volume changes and stuff

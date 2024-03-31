@@ -27,6 +27,7 @@
 	AddComponent(/datum/component/bloodysoles/feet, FOOTPRINT_SPRITE_SHOES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human/, should_strip))
+	AddComponent(/datum/component/udder, udder_type = /obj/item/udder/carbon)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_LIVING_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
