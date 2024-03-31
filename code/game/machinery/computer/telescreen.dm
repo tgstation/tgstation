@@ -89,11 +89,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 	if(!worn_id || !(worn_id.registered_account))
 		balloon_alert(user, "streamer has no ID or account!")
-		donation_notice = "[user.name] tried to donate [value] credits saying, "
+		donation_notice = "[user.name] tried to donate [value] credits to say, "
 		say("[value] credits donated to [streamer.real_name] by [user.name]!")
 		streamer.put_in_hands(cash)
 	else
-		donation_notice = "[user.name] donated [value] credits saying, "
+		donation_notice = "[user.name] donated [value] credits to say, "
 		worn_id.registered_account.adjust_money(value)
 		worn_id.registered_account.bank_card_talk("Donation received, account now holds [worn_id.registered_account.account_balance] cr.")
 		say("[value] credits donated to [streamer.real_name] by [user.name]!")
