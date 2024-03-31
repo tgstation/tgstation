@@ -17,7 +17,7 @@
 
 /datum/uplink_item/stealthy_weapons/cobra
 	name = "Cobra"
-	desc = "A single Cobra pistol that fires .45 bullets. Loaded with 8 lethal shots. Nearly silent when firing. \
+	desc = "A single Cobra pistol that fires .45 bullets. Loaded with 9 lethal shots. Nearly silent when firing. \
 			Comes loaded with caseless ammo."
 	item = /obj/item/gun/ballistic/automatic/pistol/cobra/caseless
 	progression_minimum = 5 MINUTES
@@ -106,16 +106,16 @@
 
 /datum/uplink_item/stealthy_weapons/bladegloves
 	name = "Bladed Gloves"
-	desc = "Professionally made bladed gloves, they allow you to deal 8-12 damage per punch while intending to HARM. \
+	desc = "Professionally made bladed gloves, they allow you to deal 8-12 damage per punch while wearing them. \
 			The gloves prevent you from using ANY disarms or grabs."
-	item = /obj/item/clothing/gloves/knifeboxing/bladed
+	item = /obj/item/clothing/gloves/knifeboxing
 	cost = 2
 	surplus = 20
 
 /datum/uplink_item/stealthy_weapons/riggedboxing
 	name = "Rigged Boxing Gloves"
-	desc = "Blue boxing gloves fitted with brass-knuckles within the fabric. The equipment deals an additional \
-			4-12 damage per punch, but you may still disarm and grab the opponent unlike the Bladed Gloves we're selling you."
+	desc = "Blue boxing gloves fitted with brass-knuckles within the fabric. The equipment deals \
+			10-20 stamina damage per punch, but you may still disarm and grab the opponent unlike the Bladed Gloves we're selling you."
 	item = /obj/item/clothing/gloves/boxing/blue/rigged
 	cost = 2
 	surplus = 20
@@ -146,6 +146,7 @@
 			Light tubes and bulbs contained within are hazardous to life and will erratically pulse with radiation. \
 			When properly installed into any light sources, the light tubes/bulbs within will burst with radiation."
 	item = /obj/item/storage/box/lights/mixed/radiation
+	progression_minimum = 20 MINUTES
 	cost = 4
 	surplus = 15
 
@@ -217,6 +218,7 @@
 	name = "Syndicate Spraycan"
 	desc = "A normal spraycan that's been filled with CLF3 and Plasma, perfect for close-range incendiary shenanigans. Only has 10 uses."
 	item = /obj/item/toy/crayon/spraycan/syndicate
+	progression_minimum = 15 MINUTES
 	cost = 1
 	surplus = 10
 
@@ -233,6 +235,7 @@
 	desc = "A chemical foam grenade loaded with a payload capable of causing mass-plagues. \
 			Those who touch the foam will develop a random advanced disease. Wear protection before use."
 	item = /obj/item/grenade/chem_grenade/randomdisease
+	progression_minimum = 10 MINUTES
 	cost = 2
 	surplus = 10
 
@@ -241,7 +244,7 @@
 	desc = "A baton once given to Syndicate Contractors. It has since been decommissioned for a more effective model. \
 			The baton does NOT stun victims, but will inject knock-out drugs that will put victims to sleep after roughly 4 seconds. \
 			Has no anti-silicon measures unlike the newly manufactured version. The baton takes a longer time to recharge."
-	item = /obj/item/melee/classic_baton/telescopic/sleep_baton
+	item = /obj/item/melee/baton/telescopic/sleep_baton
 	cost = 4
 	surplus = 10
 	limited_stock = 1

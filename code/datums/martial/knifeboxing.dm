@@ -1,36 +1,42 @@
 /datum/martial_art/knifeboxing
 	name = "Knife-boxing"
 
-/datum/martial_art/knifeboxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	to_chat(A, span_warning("Can't disarm while knife-boxing!"))
-	return TRUE
+/datum/martial_art/knifeboxing/teach(mob/living/new_holder, make_temporary)
+	if(!ishuman(new_holder))
+		return FALSE
+	return ..()
 
-/datum/martial_art/knifeboxing/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	to_chat(A, span_warning("Can't grab while knife-boxing!"))
-	return TRUE
+/datum/martial_art/knifeboxing/disarm_act(mob/living/carbon/human/attacker, mob/living/defender)
+	to_chat(attacker, span_warning("Can't disarm while knife-boxing!"))
+	return MARTIAL_ATTACK_FAIL
 
-/datum/martial_art/knifeboxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/knifeboxing/grab_act(mob/living/carbon/human/attacker, mob/living/defender)
+	to_chat(attacker, span_warning("Can't grab while knife-boxing!"))
+	return MARTIAL_ATTACK_FAIL
 
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+/datum/martial_art/knifeboxing/harm_act(mob/living/carbon/human/attacker, mob/living/defender)
+
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
+	var/obj/item/bodypart/arm/active_arm = attacker.get_active_hand()
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(8, 12) + A.get_punchdamagehigh()
+	var/damage = rand(8, 12) + active_arm.unarmed_damage_low
 	if(!damage)
-		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D.visible_message(span_warning("[A] has attempted to [atk_verb] [D]!"), \
-			span_userdanger("[A] has attempted to [atk_verb] [D]!"), null, COMBAT_MESSAGE_RANGE)
-		log_combat(A, D, "attempted to punch (knifeboxing)")
+		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, 1, -1)
+		defender.visible_message(span_warning("[attacker] has attempted to [atk_verb] [defender]!"), \
+			span_userdanger("[attacker] has attempted to [atk_verb] [defender]!"), null, COMBAT_MESSAGE_RANGE)
+		log_combat(attacker, defender, "attempted to punch (knifeboxing)")
 		return FALSE
 
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, MELEE)
+	var/obj/item/bodypart/affecting = defender.get_bodypart(ran_zone(attacker.zone_selected))
+	var/armor_block = defender.run_armor_check(affecting, MELEE)
 
-	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
+	playsound(defender.loc, active_arm.unarmed_attack_sound, 25, 1, -1)
 
-	D.visible_message(span_danger("[A] has [atk_verb]ed [D]!"), \
-			span_userdanger("[A] has [atk_verb]ed [D]!"), null, COMBAT_MESSAGE_RANGE)
+	defender.visible_message(span_danger("[attacker] has [atk_verb]ed [defender]!"), \
+			span_userdanger("[attacker] has [atk_verb]ed [defender]!"), null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, BRUTE, affecting, armor_block)
-	log_combat(A, D, "punched (knifeboxing")
+	defender.apply_damage(damage, BRUTE, affecting, armor_block)
+	log_combat(attacker, defender, "punched (knifeboxing")
 	return TRUE

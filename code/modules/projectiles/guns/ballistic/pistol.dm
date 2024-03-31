@@ -150,6 +150,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 	mag_display = TRUE
 	can_suppress = FALSE
+	bolt_type = BOLT_TYPE_LOCKING
 	fire_delay = 0
 	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
@@ -175,7 +176,8 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	mag_display = TRUE
 	can_suppress = FALSE
-	fire_sound = "sound/weapons/shot_suppressed.ogg"
+	bolt_type = BOLT_TYPE_LOCKING
+	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'

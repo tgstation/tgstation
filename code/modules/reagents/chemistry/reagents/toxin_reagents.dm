@@ -1392,7 +1392,6 @@
 	taste_description = "milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	compatible_biotypes = ALL_BIOTYPES
 
 /datum/reagent/toxin/norepinephricacid/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_EYES, 3, 95)

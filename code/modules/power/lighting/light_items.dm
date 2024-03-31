@@ -144,20 +144,20 @@
 /obj/item/light/tube/radiation
 	name = "light tube"
 	desc = "A replacement light tube."
-	icon_state = "ltube"
-	base_state = "ltube"
-	item_state = "c_tube"
-	brightness = 8
 	var/last_event = 0
 
 /obj/item/light/tube/radiation/Initialize(mapload)
 	. = ..()
-	src.AddComponent(/datum/component/radioactive, 3, src, 0, FALSE) //strength of rads (0 is non-harmful), source of rad, half-life (0 for inf), true/false can contaminate other items with rads.
-	START_PROCESSING(SSobj, src)
+	src.AddComponent(
+		/datum/component/radioactive_emitter, \
+		cooldown_time = 10 SECONDS, \
+		range = 6, \
+		threshold = RAD_MEDIUM_INSULATION, \
+	)
 
 /obj/item/light/tube/radiation/Destroy()
 	. = ..()
-	qdel(src.GetComponent(/datum/component/radioactive))
+	qdel(src.GetComponent(/datum/component/radioactive_emitter))
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/light/tube/radiation/process()
@@ -177,23 +177,20 @@
 /obj/item/light/bulb/radiation
 	name = "light bulb"
 	desc = "A replacement light bulb."
-	icon_state = "lbulb"
-	base_state = "lbulb"
-	item_state = "contvapour"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	brightness = 4
 	var/last_event = 0
 
 /obj/item/light/bulb/radiation/Initialize(mapload)
 	. = ..()
-	src.AddComponent(/datum/component/radioactive, 3, src, 0, FALSE) //half-life of 0 because we keep on going.
-	START_PROCESSING(SSobj, src)
+	src.AddComponent(
+		/datum/component/radioactive_emitter, \
+		cooldown_time = 10 SECONDS, \
+		range = 6, \
+		threshold = RAD_MEDIUM_INSULATION, \
+	)
 
 /obj/item/light/bulb/radiation/Destroy()
 	. = ..()
-	qdel(src.GetComponent(/datum/component/radioactive))
-	STOP_PROCESSING(SSobj, src)
+	qdel(src.GetComponent(/datum/component/radioactive_emitter))
 
 /obj/item/light/bulb/radiation/process()
 	if(prob(4))

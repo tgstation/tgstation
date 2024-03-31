@@ -3077,6 +3077,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	taste_description = "iron"
 
-/datum/reagent/diseasedblood/reaction_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, permeability = 1)
+/datum/reagent/diseasedblood/expose_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, permeability = 1)
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*permeability)))
 		L.ForceContractDisease(new /datum/disease/advance/random(), FALSE, TRUE)

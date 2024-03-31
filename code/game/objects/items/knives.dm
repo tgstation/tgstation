@@ -284,13 +284,13 @@
 
 /obj/item/knife/combat/survival/chemical/examine(mob/user)
 	. = ..()
-	if(is_syndicate(user)) //helpful to other syndicates
+	if(IS_TRAITOR(user) || IS_NUKE_OP(user)) //helpful to other syndicates
 		. += "This knife has an internal redspace reagent generator producing [chemicalexamine]."
 
 /obj/item/knife/combat/survival/chemical/afterattack(atom/target, mob/user, proximity = TRUE)
 	. = ..()
 	var/mob/living/carbon/H = target
-	if(is_syndicate(user) && (user.a_intent == INTENT_HARM))
+	if(IS_TRAITOR(user) || IS_NUKE_OP(user))
 		H.reagents.add_reagent(chemicalinuse, chemicalamount)
 
 /obj/item/knife/combat/survival/chemical/venom

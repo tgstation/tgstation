@@ -26,6 +26,8 @@
 	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition."
 	/// Whether or not the grenade is currently acting as a landmine. Currently broken and not my current project.
 	var/obj/item/assembly/prox_sensor/landminemode = null
+	/// Whether or not a grenade can be disassembled. Prevents people from reclaiming reagents within grenades.
+	var/can_dismantle = TRUE
 
 /obj/item/grenade/chem_grenade/Initialize(mapload)
 	. = ..()
@@ -144,10 +146,14 @@
 
 /obj/item/grenade/chem_grenade/wirecutter_act(mob/living/user, obj/item/tool)
 	if(stage == GRENADE_READY && !active)
-		tool.play_tool_sound(src)
-		stage_change(GRENADE_WIRED)
-		to_chat(user, span_notice("You unlock the [initial(name)] assembly."))
-		return TRUE
+		if(can_dismantle)
+			tool.play_tool_sound(src)
+			stage_change(GRENADE_WIRED)
+			to_chat(user, span_notice("You unlock the [initial(name)] assembly."))
+			return TRUE
+		else
+			to_chat(user, span_notice("There's no way to open [src]'s assembly."))
+			return FALSE
 
 /obj/item/grenade/chem_grenade/wrench_act(mob/living/user, obj/item/tool)
 	if(stage != GRENADE_WIRED)
@@ -693,8 +699,8 @@
 
 /obj/item/grenade/chem_grenade/randomdisease/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 60)
 	B1.reagents.add_reagent(/datum/reagent/consumable/sugar, 30)
@@ -714,8 +720,8 @@
 
 /obj/item/grenade/chem_grenade/eyebreaker/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 40)
 	B1.reagents.add_reagent(/datum/reagent/consumable/sugar, 40)
@@ -734,8 +740,8 @@
 
 /obj/item/grenade/chem_grenade/mindbreaker/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 40)
 	B1.reagents.add_reagent(/datum/reagent/consumable/sugar, 40)
@@ -755,11 +761,11 @@
 
 /obj/item/grenade/chem_grenade/pyro/explosive/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/blackpowder, 100)
-	B2.reagents.add_reagent(/datum/reagent/blackpowder, 100)
+	B1.reagents.add_reagent(/datum/reagent/gunpowder, 100)
+	B2.reagents.add_reagent(/datum/reagent/gunpowder, 100)
 
 	beakers += B1
 	beakers += B2
@@ -773,8 +779,8 @@
 
 /obj/item/grenade/chem_grenade/syndiefire/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 65)
 	B1.reagents.add_reagent(/datum/reagent/stable_plasma, 35)
@@ -793,8 +799,8 @@
 
 /obj/item/grenade/chem_grenade/syndierads/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/toxin/mutagen, 30)
 	B1.reagents.add_reagent(/datum/reagent/toxin/polonium, 10)
@@ -815,8 +821,8 @@
 
 /obj/item/grenade/chem_grenade/syndiclf3/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 50)
 	B1.reagents.add_reagent(/datum/reagent/clf3, 50)
@@ -832,8 +838,8 @@
 
 /obj/item/grenade/chem_grenade/highacidfoam/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 35)
 	B1.reagents.add_reagent(/datum/reagent/toxin/acid/nitracid, 60)
@@ -852,8 +858,8 @@
 
 /obj/item/grenade/chem_grenade/bloodyfoam/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 45)
 	B1.reagents.add_reagent(/datum/reagent/blood, 50)
@@ -872,8 +878,8 @@
 
 /obj/item/grenade/chem_grenade/nofoam/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 15)
 	B1.reagents.add_reagent(/datum/reagent/nitrous_oxide, 80)
@@ -892,8 +898,8 @@
 
 /obj/item/grenade/chem_grenade/large/phytosiansmoke/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/bluespace/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/bluespace/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 50)
 	B1.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
@@ -916,8 +922,8 @@
 
 /obj/item/grenade/chem_grenade/jellypersonsmoke/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/bluespace/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/bluespace/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 100)
 	B1.reagents.add_reagent(/datum/reagent/consumable/sugar, 100)
@@ -937,8 +943,8 @@
 
 /obj/item/grenade/chem_grenade/pyro/tesla/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/teslium, 100)
 	B2.reagents.add_reagent(/datum/reagent/teslium, 100)

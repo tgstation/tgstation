@@ -1,7 +1,3 @@
-/obj/item/storage/box/lights/mixed/radiation
-	name = "box of replacement lights"
-	illustration = "lightmixed"
-
 /obj/item/storage/box/lights/mixed/radiation/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/light/tube/radiation(src)

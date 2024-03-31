@@ -74,7 +74,7 @@
 
 
 /obj/item/toy/plush/carpplushie/dehy_carp/mega
-	mobtype = /mob/living/simple_animal/hostile/carp/megacarp
+	mobtype = /mob/living/basic/carp/mega
 
 /obj/item/toy/plush/carpplushie/dehy_carp/magic
-	mobtype = /mob/living/simple_animal/hostile/carp/ranged
+	mobtype = /mob/living/basic/carp/magic
