@@ -89,7 +89,7 @@
 		Positioning()
 		to_chat(owner, span_warning("Your wounds glow with power, you have prepared a [new_spell.name] invocation!"))
 	channeling = FALSE
-
+//here
 /datum/action/innate/cult/blood_spell //The next generation of talismans, handles storage/creation of blood magic
 	name = "Blood Magic"
 	button_icon_state = "telerune"
@@ -170,6 +170,7 @@
 		span_cultitalic("You speak the cursed words, emitting an EMP blast from your hand."))
 	empulse(owner, 2, 5)
 	charges--
+	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	if(charges <= 0)
 		qdel(src)
 
@@ -214,6 +215,7 @@
 			span_cultitalic("A [summoned_blade] materializes at your feet."))
 	SEND_SOUND(owner, sound('sound/effects/magic.ogg', FALSE, 0, 25))
 	charges--
+	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	if(charges <= 0)
 		qdel(src)
 
@@ -255,6 +257,7 @@
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	build_all_button_icons()
+	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	if(charges <= 0)
 		to_chat(caller, span_cult("You have exhausted the spell's power!"))
 		qdel(src)
@@ -308,6 +311,7 @@
 		revealing = FALSE
 		name = "Conceal Runes"
 		button_icon_state = "gone"
+	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "Conceal Runes")
 	if(charges <= 0)
 		qdel(src)
 	desc = base_desc
@@ -371,6 +375,7 @@
 		qdel(src)
 		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
+	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 
@@ -670,6 +675,53 @@
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
 	. = ..()
 	. += "Bloody halberd, blood bolt barrage, and blood beam cost [BLOOD_HALBERD_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
+
+/obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
+	if(!proximity)
+		return FALSE
+
+	if(isconstruct(target))
+		heal_construct(target, user)
+
+	if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder) || isturf(target))
+		return blood_draw(target, user)
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_bloodbag = target
+		if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD) || !human_bloodbag.blood_volume)
+			human_bloodbag.balloon_alert(user, "no blood!")
+			return FALSE
+		if(human_bloodbag.stat == DEAD)
+			human_bloodbag.balloon_alert(user, "dead!")
+			return FALSE
+
+		if(IS_CULTIST(human_bloodbag))
+			return heal_cultist(target, user)
+
+		return drain_victim(target, user)
+
+	return FALSE
+
+/obj/item/melee/blood_magic/manipulator/proc/heal_construct(atom/target, mob/living/carbon/human/user)
+	var/mob/living/basic/construct/construct_thing = target
+	var/missing_health = construct_thing.maxHealth - construct_thing.health
+	if(!missing_health)
+		construct_thing.balloon_alert(user, "no damage!")
+		return FALSE
+
+	if(uses > missing_health)
+		construct_thing.adjust_health(-missing_health)
+		construct_thing.visible_message(span_warning("[construct_thing] is fully healed by [user]'s blood magic!"))
+		uses -= missing_health
+	else
+		construct_thing.adjust_health(-uses)
+		construct_thing.visible_message(span_warning("[construct_thing] is partially healed by [user]'s blood magic!"))
+		uses = 0
+	playsound(get_turf(construct_thing), 'sound/magic/staff_healing.ogg', 25)
+	user.Beam(construct_thing, icon_state="sendbeam", time = 1 SECONDS)
+	return TRUE
+
+/obj/item/melee/blood_magic/manipulator/proc/heal_construct(atom/target, mob/living/carbon/human/user)
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
