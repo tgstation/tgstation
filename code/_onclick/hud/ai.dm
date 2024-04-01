@@ -180,10 +180,11 @@
 	. = ..()
 	if(istype(hud_owner))
 		RegisterSignal(hud_owner, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(update_z))
+		update_z()
 
 /atom/movable/screen/ai/floor_indicator/proc/update_z(datum/hud/source)
 	SIGNAL_HANDLER
-	var/mob/living/silicon/ai/ai = source.mymob //if you use this for anyone else i will find you
+	var/mob/living/silicon/ai/ai = get_mob() //if you use this for anyone else i will find you
 	if(isnull(ai))
 		return
 	var/turf/locturf = isturf(ai.loc) ? get_turf(ai.eyeobj) : get_turf(ai) //must be a var cuz error
@@ -211,10 +212,10 @@
 
 /atom/movable/screen/ai/go_up/Click(location,control,params)
 	var/mob/ai = get_mob() //the core
-	if(!isturf(ai.loc)) //aicard and stuff
+	flick("uppressed",src)
+	if(!isturf(ai.loc) || usr != ai) //aicard and stuff
 		return
 	ai.up()
-	flick("uppressed",src)
 
 /atom/movable/screen/ai/go_up/down
 	name = "go down"
@@ -227,10 +228,10 @@
 
 /atom/movable/screen/ai/go_up/down/Click(location,control,params)
 	var/mob/ai = get_mob() //the core
-	if(!isturf(ai.loc)) //aicard and stuff
+	flick("downpressed",src)
+	if(!isturf(ai.loc) || usr != ai) //aicard and stuff
 		return
 	ai.down()
-	flick("downpressed",src)
 
 /datum/hud/ai
 	ui_style = 'icons/hud/screen_ai.dmi'
