@@ -80,7 +80,7 @@
 
 /obj/item/clothing/accessory/medal/silver/excellence
 	name = "\proper the second captain award for being my metafriend"
-	desc = "An award bestowed only on friends of the second captain. This is awarded to those rare crewmembers who fit that definition."
+	desc = "An award bestowed only to friends of the second captain. This is awarded to those rare crewmembers who fit that definition."
 
 /obj/item/clothing/accessory/medal/silver/bureaucracy
 	name = "\improper Excellence in Bureaucracy Medal"
