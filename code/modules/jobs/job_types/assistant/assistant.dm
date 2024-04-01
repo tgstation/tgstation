@@ -5,15 +5,16 @@ Assistant
 */
 /datum/job/assistant
 	title = JOB_ASSISTANT
-	description = "Get your space legs, assist people, ask the HoP to give you a job."
+	description = "Assert your dominance over the station as a powerful Khan warrior. IN MAINT KHAN'S NAME, ANARCHY REIGNS!!"
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = "absolutely everyone"
+	supervisors = "absolutely no one"
 	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
-	plasmaman_outfit = /datum/outfit/plasmaman
-	paycheck = PAYCHECK_LOWER // Get a job. Job reassignment changes your paycheck now. Get over it.
+	plasmaman_outfit = /datum/outfit/plasmaman/khan
+	//paycheck = PAYCHECK_LOWER // Get a job. Job reassignment changes your paycheck now. Get over it.
+	paycheck = PAYCHECK_KHAN //THAT IS NO WAY TO SPEAK TO A WARRIOR OF THE KHAN!!
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
@@ -34,8 +35,10 @@ Assistant
 	)
 
 	job_flags = STATION_JOB_FLAGS
-	rpg_title = "Lout"
+	rpg_title = "Khan"
 	config_tag = "ASSISTANT"
+
+
 
 /datum/job/assistant/get_outfit()
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
@@ -53,6 +56,10 @@ Assistant
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
+	suit = /obj/item/clothing/suit/jacket/det_suit/khan
+	glasses = /obj/item/clothing/glasses/sunglasses
+
+	skillchips = list(/obj/item/skillchip/job/assistant)
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()

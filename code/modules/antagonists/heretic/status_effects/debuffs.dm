@@ -58,7 +58,7 @@
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, search_radius))
-		if(IS_HERETIC_OR_MONSTER(potential_target))
+		if(exclusion_check(potential_target))
 			continue
 		targets += potential_target
 
@@ -67,6 +67,15 @@
 		owner.ClickOn(pick(targets))
 
 	owner.set_combat_mode(prev_combat_mode)
+
+/datum/status_effect/amok/proc/exclusion_check(mob/living/potential_target)
+	return IS_HERETIC_OR_MONSTER(potential_target)
+
+/datum/status_effect/amok/tunnel_madness
+	id = "tunnel_madness"
+
+/datum/status_effect/amok/tunnel_madness/exclusion_check(mob/living/potential_target)
+	return faction_check(potential_target.faction, list(FACTION_RAT))
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"

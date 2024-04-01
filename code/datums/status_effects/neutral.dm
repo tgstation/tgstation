@@ -584,3 +584,15 @@
 /datum/status_effect/gutted/proc/stop_gutting()
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/status_effect/no_gravity
+	id = "no_gravity"
+	alert_type = null
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/no_gravity/on_apply()
+	owner.AddElement(/datum/element/forced_gravity, 0)
+
+/datum/status_effect/no_gravity/on_remove()
+	owner.RemoveElement(/datum/element/forced_gravity, 0)

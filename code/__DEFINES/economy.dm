@@ -14,6 +14,8 @@
 #define PAYCHECK_CREW 50
 ///Paygrade for Heads of Staff.
 #define PAYCHECK_COMMAND 100
+///Paygrade for TRUE WARRIORS OF PRESTIGE
+#define PAYCHECK_KHAN 300
 
 
 
