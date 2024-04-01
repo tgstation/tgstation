@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "checkJs": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,17 +16,6 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "noEmit": true,
-    "paths": {
-      "common/*": [
-        "packages/common/*"
-      ],
-      "tgui/*": [
-        "packages/tgui/*"
-      ],
-      "tgui-dev-server": [
-        "packages/tgui-dev-server"
-      ],
-    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
