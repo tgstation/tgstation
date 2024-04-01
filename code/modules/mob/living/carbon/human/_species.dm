@@ -1155,6 +1155,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		return
+	
+	if(!attacking_bodypart.attacking_bodypart.unarmed_stun_threshold) //this limb cannot knock down
+		return
 
 	//The probability for landing a knockdown is also affected armor and an additional chance if the victim is staggered
 	var/result = damage_plus_armor + (staggered ? attacking_bodypart.unarmed_damage_high / 100 * 20 : 0)
