@@ -48,6 +48,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	melee_attack_cooldown = 0.1 SECONDS
+	obj_damage = 25
 
 	//gotta avoid eye strain because we spawn them in the dark
 	lighting_cutoff_red = 20
