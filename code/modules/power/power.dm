@@ -56,7 +56,7 @@
 		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
-	if(can_change_cable_layer)
+	if(!can_change_cable_layer)
 		return NONE
 
 	return cable_layer_act(user, tool)
