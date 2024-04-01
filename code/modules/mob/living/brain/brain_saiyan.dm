@@ -449,7 +449,7 @@
 		previous_hair_colour = human_owner.hair_color
 		human_owner.set_haircolor(COLOR_CYAN, update = TRUE)
 
-	RegisterSignals(owner, list(COMSIG_MOB_ATTACK_HAND, COMSIG_LIVING_GRAB, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_THROW), PROC_REF(took_action))
+	RegisterSignals(owner, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_FIRED_GUN, COMSIG_LIVING_GRAB, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_THROW), PROC_REF(took_action))
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_hit))
 
 /datum/status_effect/ultra_instinct/on_remove()
@@ -467,6 +467,7 @@
 		COMSIG_LIVING_CHECK_BLOCK,
 		COMSIG_LIVING_GRAB,
 		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOB_THROW
 	))
