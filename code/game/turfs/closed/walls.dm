@@ -329,7 +329,7 @@
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			if(resistance_flags && INDESTRUCTIBLE)
+			if(resistance_flags & INDESTRUCTIBLE)
 				return NONE
 			return list("delay" = 4 SECONDS, "cost" = 26)
 		if(RCD_WALLFRAME)

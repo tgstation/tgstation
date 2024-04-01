@@ -16,10 +16,7 @@
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(isnull(held_item))
-		return ..()
-
-	if(held_item.tool_behaviour == TOOL_WRENCH)
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		return NONE
 
 	return ..()
