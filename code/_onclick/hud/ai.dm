@@ -213,7 +213,7 @@
 	var/mob/ai = get_mob() //the core
 	if(!isturf(ai.loc)) //aicard and stuff
 		return
-	usr.up()
+	ai.up()
 	flick("uppressed",src)
 
 /atom/movable/screen/ai/go_up/down
