@@ -284,7 +284,7 @@
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area
-		if(GLOB.typecache_powerfailure_safe_areas[apc_area.type])
+		if(is_type_in_typecache(apc_area, GLOB.typecache_powerfailure_safe_areas))
 			continue
 
 		var/duration = rand(duration_min,duration_max)
