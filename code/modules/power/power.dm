@@ -67,7 +67,7 @@
 /// Called on multitool_act when we can change cable layers, override to add more conditions 
 /obj/machinery/power/proc/cable_layer_act(mob/living/user, obj/item/tool)
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
-	if(isnull(choice) || QDELETED(src))
+	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
 		return ITEM_INTERACT_BLOCKING
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
