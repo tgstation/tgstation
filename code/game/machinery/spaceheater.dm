@@ -350,7 +350,7 @@
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
 
-		var/required_energy = (target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * beaker.reagents.heat_capacity()
+		var/required_energy = abs(target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * beaker.reagents.heat_capacity()
 		required_energy = min(required_energy, heating_energy, cell.charge * efficiency)
 		if(required_energy < 1)
 			return
