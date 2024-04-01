@@ -1,4 +1,0 @@
-author: "Melbret"
-delete-after: True
-changes:
-  - bugfix: "Revival Surgery, Strange Reagent, and the Reviver Implant will restart your heart when you are revived"
