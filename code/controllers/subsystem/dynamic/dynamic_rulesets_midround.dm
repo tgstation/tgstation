@@ -947,5 +947,45 @@
 		return pick(possible_targets)
 	return FALSE
 
+/// Midround Frieza Ruleset (From Ghosts)
+/datum/dynamic_ruleset/midround/from_ghosts/frieza
+	name = "Frieza"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
+	antag_flag = ROLE_TRAITOR
+	antag_flag_override = ROLE_TRAITOR
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 50
+	cost = 7
+	minimum_players = 30
+	repeatable = FALSE
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/frieza/forget_startup()
+	spawn_locs = list()
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/frieza/execute()
+	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
+		spawn_locs += (C.loc)
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+	. = ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/frieza/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/basic/frieza/thefrieza = new (pick(spawn_locs))
+	player_mind.transfer_to(thefrieza)
+	to_chat(thefrieza, span_notice("I was too lazy to make a proper antag hud, you're mad at Nanotrasen for hiring Saiyans and you're going to take your anger out on their new station. Do whatever, have fun."))
+
+	playsound(thefrieza, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(thefrieza)] has been made into Frieza by the midround ruleset.")
+	log_dynamic("[key_name(thefrieza)] was spawned as Frieza by the midround ruleset.")
+	priority_announce("Some weird alien guy came to our hiring department and started rambling about monkeys, so we sent him to you guys. Could you please handle him for us?", "PR Alert")
+	return thefrieza
+
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB
