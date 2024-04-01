@@ -132,8 +132,9 @@
 	can_be_disabled = TRUE
 	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
 	grappled_attack_verb = "pummel"
-	unarmed_damage_low = 5
+	unarmed_damage_low = 1
 	unarmed_damage_high = 10
+	unarmed_stun_threshold = 10
 	body_zone = BODY_ZONE_L_ARM
 	/// Datum describing how to offset things worn on the hands of this arm, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_glove_offset
@@ -392,9 +393,10 @@
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_damage_low = 7
+	unarmed_damage_low = 2
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
+	unarmed_stun_threshold = 10
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
 	/// Used by the bloodysoles component to make footprints

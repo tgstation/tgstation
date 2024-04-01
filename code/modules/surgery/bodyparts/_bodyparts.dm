@@ -178,8 +178,10 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	///Determines the accuracy bonus, armor penetration
 	var/unarmed_effectiveness = 10
+	/// If damage is above this number its a knockdown (In the case of 0 and below, no knockdown ever)
+	var/unarmed_stun_threshold = 0
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 
