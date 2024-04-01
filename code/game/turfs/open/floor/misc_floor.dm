@@ -308,9 +308,9 @@
 
 /turf/open/floor/material/pizza
 	name = "pizza floor"
-	icon = "icons/turf/composite.dmi"
+	icon = 'icons/turf/composite.dmi'
 	icon_state = "pizza"
-	base_turfs = "/turf/open/floor/iron"
+	baseturfs = /turf/open/floor/iron
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /turf/open/floor/material/pizza/Initialize(mapload)
