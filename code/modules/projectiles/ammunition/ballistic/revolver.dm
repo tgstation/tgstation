@@ -22,6 +22,33 @@
 	name = ".357 heartseeker bullet casing"
 	projectile_type = /obj/projectile/bullet/a357/heartseeker
 
+/obj/item/ammo_casing/a357/ironfeather
+	name = ".357 Ironfeather shell"
+	desc = "A .357 Ironfeather shell that contains six pellets."
+	projectile_type = /obj/projectile/bullet/pellet/a357_ironfeather
+	pellets = 6
+	variance = 20 //Same spread and pellets as buckshot
+
+/obj/item/ammo_casing/a357/nutcracker
+	name = ".357 Nutcracker bullet casing"
+	desc = "A .357 Nutcracker bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/nutcracker
+
+/obj/item/ammo_casing/a357/metalshock
+	name = ".357 Metalshock bullet casing"
+	desc = "A .357 Metalshock bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/metalshock
+
+/obj/item/ammo_casing/a357/heartpiercer
+	name = ".357 Heartpiercer bullet casing"
+	desc = "A .357 Heartpiercer bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/heartpiercer
+
+/obj/item/ammo_casing/a357/wallstake
+	name = ".357 Wallstake bullet casing"
+	desc = "A .357 Wallstake bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/wallstake
+
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

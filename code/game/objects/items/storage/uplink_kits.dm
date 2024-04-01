@@ -863,6 +863,146 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/chem_grenade/incendiary(src)
 
+/obj/item/storage/box/syndie_kit/pistol9mmammo
+	name = "9mm magazine box"
+
+/obj/item/storage/box/syndie_kit/pistol9mmammo/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m9mm(src)
+
+/obj/item/storage/box/syndie_kit/pistolammo/random
+	name = "random 10mm magazine box"
+
+/obj/item/storage/box/syndie_kit/pistolammo/random/PopulateContents()
+	var/list/item_list = list(
+		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/ammo_box/magazine/m10mm/cs,
+		/obj/item/ammo_box/magazine/m10mm/sp,
+		/obj/item/ammo_box/magazine/m10mm/ap,
+		/obj/item/ammo_box/magazine/m10mm/hp,
+		/obj/item/ammo_box/magazine/m10mm/fire,
+		/obj/item/ammo_box/magazine/m10mm/emp
+	)
+
+	for(var/i in 1 to 3)
+		var/item = pick(item_list)
+		new item(src)
+
+/obj/item/storage/box/syndie_kit/pistol10mmammo
+	name = "10mm magazine box"
+
+/obj/item/storage/box/syndie_kit/pistol10mmammo/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m10mm(src)
+
+/obj/item/storage/box/syndie_kit/pistolcaselessammo
+	name = "10mm caseless magazine box"
+
+/obj/item/storage/box/syndie_kit/pistolcaselessammo/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m10mm/cs(src)
+
+/obj/item/storage/box/syndie_kit/pistolsleepyammo
+	name = "10mm soporific magazine box"
+
+/obj/item/storage/box/syndie_kit/pistolsleepyammo/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m10mm/sp(src)
+
+/obj/item/storage/box/syndie_kit/fourtyfivemmmagbox/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m45(src)
+
+/obj/item/storage/box/syndie_kit/fourtyfivemmmagboxcs/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m45/cs(src)
+
+/obj/item/storage/box/syndie_kit/fourtyfivemmmagboxsp/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m45/sp(src)
+
+/obj/item/storage/box/syndie_kit/revolverammo/random
+	name = "random .357 speed loader box"
+
+/obj/item/storage/box/syndie_kit/revolverammo/random/PopulateContents()
+	var/list/item_list = list(
+		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/a357/ironfeather,
+		/obj/item/ammo_box/a357/nutcracker,
+		/obj/item/ammo_box/a357/metalshock,
+		/obj/item/ammo_box/a357/heartpiercer,
+		/obj/item/ammo_box/a357/wallstake
+	)
+
+	for(var/i in 1 to 2)
+		var/item = pick(item_list)
+		new item(src)
+
+/obj/item/storage/box/syndie_kit/revolvershotgunammo
+	name = ".357 Ironfeather speed loader box"
+
+/obj/item/storage/box/syndie_kit/revolvershotgunammo/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_box/a357/ironfeather(src)
+
+/obj/item/storage/box/syndie_kit/stripperclips/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/ammo_box/strilka310(src)
+
+/obj/item/storage/box/syndie_kit/bioterrorammo/PopulateContents()
+	new /obj/item/reagent_containers/cup/beaker/large/polonium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/venom(src)
+	new /obj/item/reagent_containers/cup/beaker/large/fentanyl(src)
+	new /obj/item/reagent_containers/cup/beaker/large/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/beaker/large/spewium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/cyanide(src)
+	new /obj/item/reagent_containers/cup/beaker/large/histamine(src)
+	new /obj/item/reagent_containers/cup/beaker/large/initropidril(src)
+	new /obj/item/reagent_containers/cup/beaker/large/pancuronium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/sodium_thiopental(src)
+	new /obj/item/reagent_containers/cup/beaker/large/coniine(src)
+	new /obj/item/reagent_containers/cup/beaker/large/curare(src)
+	new /obj/item/reagent_containers/cup/beaker/large/amanitin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/condensedcapsaicin(src)
+
+/obj/item/storage/box/syndie_kit/bioterrorammodeluxe/PopulateContents()
+	new /obj/item/reagent_containers/cup/beaker/large/polonium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/venom(src)
+	new /obj/item/reagent_containers/cup/beaker/large/fentanyl(src)
+	new /obj/item/reagent_containers/cup/beaker/large/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/beaker/large/spewium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/cyanide(src)
+	new /obj/item/reagent_containers/cup/beaker/large/histamine(src)
+	new /obj/item/reagent_containers/cup/beaker/large/initropidril(src)
+	new /obj/item/reagent_containers/cup/beaker/large/pancuronium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/sodium_thiopental(src)
+	new /obj/item/reagent_containers/cup/beaker/large/coniine(src)
+	new /obj/item/reagent_containers/cup/beaker/large/curare(src)
+	new /obj/item/reagent_containers/cup/beaker/large/amanitin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/condensedcapsaicin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/amatoxin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/lexorin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/slimejelly(src)
+	new /obj/item/reagent_containers/cup/beaker/large/spore_burning(src)
+	new /obj/item/reagent_containers/cup/beaker/large/mutetoxin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/staminatoxin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/sulfonal(src)
+	new /obj/item/reagent_containers/cup/beaker/large/lipolicide(src)
+	new /obj/item/reagent_containers/cup/beaker/large/heparin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/rotatium(src)
+	new /obj/item/reagent_containers/cup/beaker/large/anacea(src)
+	new /obj/item/reagent_containers/cup/beaker/large/acid(src)
+	new /obj/item/reagent_containers/cup/beaker/large/fluacid(src)
+	new /obj/item/reagent_containers/cup/beaker/large/nitracid(src)
+	new /obj/item/reagent_containers/cup/beaker/large/delayed(src)
+	new /obj/item/reagent_containers/cup/beaker/large/bungotoxin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/leadacetate(src)
+	new /obj/item/reagent_containers/cup/beaker/large/teslium(src)
+
+
+
+
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

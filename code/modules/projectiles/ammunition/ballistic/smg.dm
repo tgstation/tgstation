@@ -44,7 +44,7 @@
 
 /obj/item/ammo_casing/caseless/c45/cs
 	name = ".45 caseless bullet"
-	desc = "A .45 caseless bullet."
+	desc = "Huh? But i thought..."
 	caliber = ".45"
 	projectile_type = /obj/projectile/bullet/c45/cs
 

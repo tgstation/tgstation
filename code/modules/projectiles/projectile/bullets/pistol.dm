@@ -28,6 +28,11 @@
 	name = "10mm bullet"
 	damage = 40
 
+/obj/projectile/bullet/c10mm/cs
+	name = "10mm caseless bullet"
+	damage = 27
+	speed = 0.5
+
 /obj/projectile/bullet/c10mm/ap
 	name = "10mm armor-piercing bullet"
 	damage = 35
@@ -38,10 +43,31 @@
 	damage = 50
 	weak_against_armour = TRUE
 
+/obj/projectile/bullet/c10mm/sp
+	name = "10mm soporific bullet"
+	damage = 5
+	eyeblur = 20
+
+/obj/projectile/bullet/c10mm/sp/on_hit(atom/target, blocked = FALSE, pierce_hit)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.adjustStaminaLoss(20)
+		if(L.getStaminaLoss() >= 100)
+			L.Sleeping(400)
+	return ..()
+
 /obj/projectile/bullet/incendiary/c10mm
 	name = "10mm incendiary bullet"
 	damage = 20
 	fire_stacks = 3
+
+/obj/projectile/bullet/c10mm/emp
+	name = "10mm EMP bullet"
+	damage = 25
+
+/obj/projectile/bullet/c10mm/emp/on_hit(atom/target, blocked = FALSE, pierce_hit)
+	..()
+	empulse(target, heavy_range = 1, light_range = 2) //Heavy EMP on target, light EMP in tiles around
 
 /obj/projectile/bullet/c10mm/reaper
 	name = "10mm reaper pellet"

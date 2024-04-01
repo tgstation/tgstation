@@ -200,7 +200,7 @@
 
 /datum/uplink_item/ammo_nuclear/basic/revolver
 	name = ".357 Speed Loader (Revolver)"
-	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
+	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the .357 Revolver, Python, and Syndicate revolver. \
 		For when you really need a lot of things dead. Operatives get a discount from most of our agents!"
 	item = /obj/item/ammo_box/a357
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY

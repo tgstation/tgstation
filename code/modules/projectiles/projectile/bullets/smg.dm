@@ -27,13 +27,13 @@
 
 /obj/projectile/bullet/c45/sp
 	name = ".45 soporific bullet"
-	damage = 30
-	damage_type = STAMINA
+	damage = 5
 	eyeblur = 20
 
-/obj/projectile/bullet/c45/sp/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c45/sp/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
+		L.adjustStaminaLoss(20)
 		if(L.getStaminaLoss() >= 100)
 			L.Sleeping(400)
 	return ..()
@@ -42,16 +42,16 @@
 	name = ".45 EMP bullet"
 	damage = 25
 
-/obj/projectile/bullet/c45/emp/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c45/emp/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	..()
-	empulse(target, 0.5, 1) //Heavy EMP on target, light EMP in tiles around
+	empulse(target, heavy_range = 1, light_range = 2) //Heavy EMP on target, light EMP in tiles around
 
 /obj/projectile/bullet/c45/venom
 	name = ".45 venom bullet"
 	damage = 20
 
-/obj/projectile/bullet/c45/venom/on_hit(atom/target, blocked)
-	if((blocked != 100) && iscarbon(target))
+/obj/projectile/bullet/c45/venom/on_hit(atom/target, blocked, pierce_hit)
+	if(iscarbon(target))
 		var/mob/living/carbon/victim = target
 		victim.reagents.add_reagent(/datum/reagent/toxin/venom, 4)
 	return ..()

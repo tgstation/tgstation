@@ -132,3 +132,54 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
+
+/obj/projectile/bullet/pellet/a357_ironfeather
+	name = ".357 Ironfeather pellet"
+	damage = 8 //Total of 48 damage assuming PBS
+	armour_penetration = 10 //In between normal pellets and flechette for AP
+	wound_bonus = 7 //So it might be able to actually wound things
+	bare_wound_bonus = 7
+	damage_falloff_tile = 0.35 //Loses 0.05 damage less per tile than standard damaging pellets
+	wound_falloff_tile = -1.5 //Still probably won't cause wounds at range
+
+/obj/projectile/bullet/a357/nutcracker
+	name = ".357 Nutcracker bullet"
+	damage = 30
+	demolition_mod = 20
+/**
+/obj/projectile/bullet/a357/nutcracker/on_hit(atom/target) //Basically breaching slug with 1.5x damage
+	if(istype(target, /obj/structure/window) || istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))
+		damage = 750 //One shot to break a window, two shots for a door, three if reinforced
+	..()
+**/
+/obj/projectile/bullet/a357/metalshock
+	name = ".357 Metalshock bullet"
+	damage = 15
+	wound_bonus = -5
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
+	var/zap_range = 3
+	var/power = 1e4
+
+/obj/projectile/bullet/a357/metalshock/on_hit(atom/target, blocked = FALSE, pierce_hit)
+	..()
+	tesla_zap(source = src, zap_range = zap_range, power = power, cutoff = 1e3, zap_flags = zap_flags)
+	return BULLET_ACT_HIT
+
+/obj/projectile/bullet/a357/heartpiercer
+	name = ".357 Heartpiercer bullet"
+	damage = 35
+	armour_penetration = 45
+	projectile_piercing = ALL
+
+/obj/projectile/bullet/a357/wallstake
+	name = ".357 Wallstake bullet"
+	damage = 36 //Almost entirely a meme round at this point. 36 damage barely four-shots standard armor
+	wound_bonus = -35
+
+/obj/projectile/bullet/a357/wallstake/on_hit(atom/target, blocked = FALSE, pierce_hit)
+	. = ..()
+	if(isliving(target)) //Unlike meteorslugs, these are smaller and meant to knock bodies around, not ANYTHING
+		var/atom/movable/M = target
+		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
+		M.safe_throw_at(throw_target, 2, 2) //Extra ten damage if they hit a wall, resolves against melee armor
+

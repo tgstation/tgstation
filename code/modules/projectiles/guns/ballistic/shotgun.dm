@@ -355,8 +355,10 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/kammerer
 	name = "\improper Kammerer"
-	desc = "A semi-automatic shotgun with a six-shell capacity. Often favored over compact shotguns for their slightly better performance. Can chamber 4 shells."
+	desc = "A semi-automatic shotgun with a four-shell capacity. Often favored over compact shotguns for their slightly better performance."
 	fire_delay = 2
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "Kammerer"
 	inhand_icon_state = "kammerer"
@@ -383,7 +385,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/kammerer/syndicate
 	name = "\improper Kammerer"
-	desc = "A semi-automatic shotgun with a six-shell capacity. Often favored over compact shotguns for their slightly better performance. Can chamber 4 shells."
+	desc = "A semi-automatic shotgun with a four-shell capacity. Often favored over compact shotguns for their slightly better performance."
 	fire_delay = 2
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "Kammerer"

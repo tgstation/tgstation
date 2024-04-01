@@ -30,6 +30,41 @@
 	ammo_type = /obj/item/ammo_casing/a357/heartseeker
 	ammo_band_color = "#a91e1e"
 
+/obj/item/ammo_box/a357/ironfeather
+	name = "speed loader (.357 Ironfeather)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These shells fire six pellets which are less damaging than buckshot but slightly better over range."
+	icon_state = "357feather"
+	ammo_type = /obj/item/ammo_casing/a357/ironfeather
+
+/obj/item/ammo_box/a357/nutcracker
+	name = "speed loader (.357 Nutcracker)"
+	desc = "A seven-shot speed loader designed for .357 revolver. \
+			These rounds lose moderate stopping power but are capable of destroying doors and windows quickly."
+	icon_state = "357cracker"
+	ammo_type = /obj/item/ammo_casing/a357/nutcracker
+
+/obj/item/ammo_box/a357/metalshock
+	name = "speed loader (.357 Metalshock)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These rounds convert some lethality into an electric charge which bounces between targets."
+	icon_state = "357shock"
+	ammo_type = /obj/item/ammo_casing/a357/metalshock
+
+/obj/item/ammo_box/a357/heartpiercer
+	name = "speed loader (.357 Heartpiercer)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These rounds trade lethality for the ability to penetrate through armor and hit two bodies with one shot."
+	icon_state = "357piercer"
+	ammo_type = /obj/item/ammo_casing/a357/heartpiercer
+
+/obj/item/ammo_box/a357/wallstake
+	name = "speed loader (.357 Wallstake)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These blunt rounds trade lethality for the ability to knock people against walls, stunning them momentarily."
+	icon_state = "357stake"
+	ammo_type = /obj/item/ammo_casing/a357/wallstake
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"
 	desc = "Designed to quickly reload revolvers."
