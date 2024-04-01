@@ -1,7 +1,0 @@
-author: "DexeeXI"
-delete-after: True
-changes:
-  - rscdel: "removes an unneeded tip of the round"
-  - bugfix: "tram biodome bar: elevator now has a hole so it functions correctly"
-  - bugfix: "missing vent/scrubber pipe on east end of tram replaced"
-  - qol: "syndie lavaland pathology now reimplemented, first pass."
