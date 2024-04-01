@@ -111,9 +111,10 @@
 		problem = replacetext(problem, "%NUM[idx]%", numbers[idx])
 		problem = replacetext(problem, "%OBJECT[idx]%", objects[idx])
 
-	var/answer = __solve_operations_list(operations, numbers)
+	var/answer = round(__solve_operations_list(operations, numbers), 0.1)
 
-	to_chat(client, span_adminhelp("You must solve this problem to continue: '[problem]'"))
+	to_chat(client, span_adminhelp("You must solve this problem to the nearest tenth to continue: '[problem]'"))
+	to_chat(client, span_adminhelp("HINT: BYOND ALWAYS ROUNDS UP"))
 	var/their_response = tgui_input_number(client, "Answer", "Math Problem", max_value = 1000000, min_value = -1000000)
 
 	if(their_response != answer)
