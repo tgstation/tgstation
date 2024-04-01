@@ -955,7 +955,7 @@
 	antag_flag = ROLE_AXOTOTL
 	required_type = /mob/dead/observer
 	required_candidates = 1
-	weight = 3
+	weight = 10
 	cost = 1
 	repeatable = TRUE
 
