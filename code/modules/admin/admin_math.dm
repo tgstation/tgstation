@@ -7,7 +7,7 @@
 	if(istext(lhs)) // %NUMX%
 		lhs = numbers[text2num(lhs[5])]
 
-	do
+	while(length(operations))
 		var/operation = popleft(operations)
 		var/rhs = popleft(operations)
 
@@ -23,7 +23,6 @@
 				lhs *= rhs
 			if("/")
 				lhs /= rhs
-	while(length(operations))
 
 	return lhs
 
@@ -75,6 +74,8 @@
 		"If X=%NUM1% and Y=%NUM2%, what is X-Y?" = list("%NUM1%", "-", "%NUM2%"),
 		"If X=%NUM1% and Y=%NUM2%, what is X*Y?" = list("%NUM1%", "*", "%NUM2%"),
 		"If X=%NUM1% and Y=%NUM2%, what is X/Y?" = list("%NUM1%", "/", "%NUM2%"),
+		// Calculus
+		"What is the logarithmic derivative of the natural log of (%NUM1% ^ %NUM2%)" = list(42),
 	)
 
 	var/problem_string = problem_strings[rand(1, problem_strings.len)]
@@ -113,7 +114,7 @@
 	var/answer = __solve_operations_list(operations, numbers)
 
 	to_chat(client, span_adminhelp("You must solve this problem to continue: '[problem]'"))
-	var/their_response = tgui_input_number(client, "Answer", "Math Problem")
+	var/their_response = tgui_input_number(client, "Answer", "Math Problem", max_value = 1000000, min_value = -1000000)
 
 	if(their_response != answer)
 		to_chat(client, span_adminhelp("Incorrect. You must wait 30 seconds before trying again."))
