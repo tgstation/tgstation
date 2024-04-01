@@ -1535,17 +1535,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsdom@npm:^21.1.6":
-  version: 21.1.6
-  resolution: "@types/jsdom@npm:21.1.6"
-  dependencies:
-    "@types/node": "*"
-    "@types/tough-cookie": "*"
-    parse5: ^7.0.0
-  checksum: d6fbaab3065ec0bc5b54ae2f15eb18f28045ffa5cece438f96f4bc86819fc8c547e96cede650d14516429dfdc45075b36a46c135849f868b1ae8281717c8e591
-  languageName: node
-  linkType: hard
-
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.8":
   version: 7.0.9
   resolution: "@types/json-schema@npm:7.0.9"
@@ -1560,10 +1549,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/marked@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "@types/marked@npm:4.3.2"
-  checksum: c1107079d6c368dd60a668a41aa2101d006cad404b6eb4af6723d419dc869b278928fb769825f11d0d311a8cf437428992729c8a47253b6a3894a6326b1ee4d9
+"@types/marked@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@types/marked@npm:4.3.0"
+  checksum: 953e19c20a917f40386ea835536ca722439fbd004dfacd8db768c8151dbadc125c464b0c221a990ffea43524475864fafe1568101c4a6d05c54fbfd81029f58f
   languageName: node
   linkType: hard
 
@@ -1590,16 +1579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.23":
-  version: 18.2.23
-  resolution: "@types/react-dom@npm:18.2.23"
-  dependencies:
-    "@types/react": "*"
-  checksum: ebed13ffc393f96b3dbe2f959c857c3124c20e84718cded13016eaa2e3b650590557ea75584c4d3d3f226b0aae206167c9c81e971632c1f24bbd258f1d295b96
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:*, @types/react@npm:^18.2.73":
+"@types/react@npm:^18.2.73":
   version: 18.2.73
   resolution: "@types/react@npm:18.2.73"
   dependencies:
@@ -1634,17 +1614,6 @@ __metadata:
   version: 1.18.4
   resolution: "@types/webpack-env@npm:1.18.4"
   checksum: f195b3ae974ac3b631477b57737dad7b6c44ecca86770cf3c29f284e02961c9f2dfc619e3e253d8c23966864cb052b1e8437e9834ede32ac97972e6e2235bb51
-  languageName: node
-  linkType: hard
-
-"@types/webpack@npm:^5.28.5":
-  version: 5.28.5
-  resolution: "@types/webpack@npm:5.28.5"
-  dependencies:
-    "@types/node": "*"
-    tapable: ^2.2.0
-    webpack: ^5
-  checksum: 14359d9ccecef7ef1ea271c00baec5337213c7fda63a34c61b9e519505b3928d0807cdbb5b1172d1994e1179920b89c57eaf2cbf64599958b67cd70720ac2a9b
   languageName: node
   linkType: hard
 
@@ -9210,6 +9179,8 @@ resolve@^1.20.0:
   version: 0.0.0-use.local
   resolution: "tgui-panel@workspace:packages/tgui-panel"
   dependencies:
+    "@types/node": ^20.12.2
+    "@types/react": ^18.2.73
     common: "workspace:*"
     dompurify: ^2.4.9
     react: ^18.2.0
@@ -9235,6 +9206,7 @@ resolve@^1.20.0:
   version: 0.0.0-use.local
   resolution: "tgui-say@workspace:packages/tgui-say"
   dependencies:
+    "@types/react": ^18.2.73
     common: "workspace:*"
     react: ^18.2.0
     tgui: "workspace:*"
@@ -9249,12 +9221,7 @@ resolve@^1.20.0:
     "@swc/core": ^1.4.11
     "@swc/jest": ^0.2.36
     "@types/jest": ^29.5.12
-    "@types/jsdom": ^21.1.6
-    "@types/marked": ^4.3.2
     "@types/node": ^20.12.2
-    "@types/react": ^18.2.73
-    "@types/react-dom": ^18.2.23
-    "@types/webpack": ^5.28.5
     "@types/webpack-env": ^1.18.4
     "@typescript-eslint/parser": ^7.4.0
     "@typescript-eslint/utils": ^7.4.0
@@ -9277,7 +9244,7 @@ resolve@^1.20.0:
     sass-loader: ^14.1.1
     style-loader: ^3.3.4
     swc-loader: ^0.2.6
-    typescript: ^5.4.3
+    typescript: 4.9.5
     url-loader: ^4.1.1
     webpack: ^5.91.0
     webpack-bundle-analyzer: ^4.10.1
@@ -9290,6 +9257,8 @@ resolve@^1.20.0:
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
     "@popperjs/core": ^2.11.8
+    "@types/marked": 4.3.0
+    "@types/react": ^18.2.73
     common: "workspace:*"
     dateformat: ^4.6.3
     dompurify: ^2.4.9
@@ -9634,23 +9603,23 @@ resolve@^1.20.0:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.4.3":
-  version: 5.4.3
-  resolution: "typescript@npm:5.4.3"
+"typescript@npm:4.9.5":
+  version: 4.9.5
+  resolution: "typescript@npm:4.9.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: d74d731527e35e64d8d2dcf2f897cf8cfbc3428be0ad7c48434218ba4ae41239f53be7c90714089db1068c05cae22436af2ecba71fd36ecc5e7a9118af060198
+  checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.4.3#~builtin<compat/typescript>":
-  version: 5.4.3
-  resolution: "typescript@patch:typescript@npm%3A5.4.3#~builtin<compat/typescript>::version=5.4.3&hash=ad5954"
+"typescript@patch:typescript@4.9.5#~builtin<compat/typescript>":
+  version: 4.9.5
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3a62fe90aa79d68c9ce38ea5edb2957e62801c733b99f0e5a2b8b50922761f68f7d9a40d28c544b449866e81185cddb93cba2496d0ff3fa52ef5b1f8bcace38c
+  checksum: 8f6260acc86b56bfdda6004bc53f32ea548f543e8baef7071c8e34d29d292f3e375c8416556c8de10b24deef6933cd1c16a8233dc84a3dd43a13a13265d0faab
   languageName: node
   linkType: hard
 
@@ -9977,7 +9946,7 @@ resolve@^1.20.0:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5, webpack@npm:^5.91.0":
+"webpack@npm:^5.91.0":
   version: 5.91.0
   resolution: "webpack@npm:5.91.0"
   dependencies:

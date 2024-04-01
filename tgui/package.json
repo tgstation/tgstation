@@ -24,6 +24,9 @@
   "dependencies": {
     "@swc/core": "^1.4.11",
     "@swc/jest": "^0.2.36",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.2",
+    "@types/webpack-env": "^1.18.4",
     "@typescript-eslint/parser": "^7.4.0",
     "@typescript-eslint/utils": "^7.4.0",
     "css-loader": "^6.10.0",
@@ -45,20 +48,10 @@
     "sass-loader": "^14.1.1",
     "style-loader": "^3.3.4",
     "swc-loader": "^0.2.6",
-    "typescript": "^5.4.3",
+    "typescript": "4.9.5",
     "url-loader": "^4.1.1",
     "webpack": "^5.91.0",
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/jsdom": "^21.1.6",
-    "@types/marked": "^4.3.2",
-    "@types/node": "^20.12.2",
-    "@types/react": "^18.2.73",
-    "@types/react-dom": "^18.2.23",
-    "@types/webpack": "^5.28.5",
-    "@types/webpack-env": "^1.18.4"
   }
 }

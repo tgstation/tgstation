@@ -3,6 +3,7 @@
   "name": "tgui-say",
   "version": "1.0.0",
   "dependencies": {
+    "@types/react": "^18.2.73",
     "common": "workspace:*",
     "react": "^18.2.0",
     "tgui": "workspace:*",
