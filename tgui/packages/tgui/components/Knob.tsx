@@ -49,6 +49,13 @@ type Props = {
 }> &
   BoxProps;
 
+/**
+ * ## Knob
+ * A radial control which allows dialing in precise values by dragging it
+ * up and down.
+ *
+ * Single click opens an input box to manually type in a number.
+ */
 export function Knob(props: Props) {
   const {
     // Draggable props (passthrough)

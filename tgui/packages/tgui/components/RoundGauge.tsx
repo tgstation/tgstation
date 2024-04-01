@@ -35,6 +35,32 @@ type Props = {
 }> &
   BoxProps;
 
+/**
+ * ## RoundGauge
+ * The RoundGauge component provides a visual representation of a single metric, as well as being capable of showing
+ * informational or cautionary boundaries related to that metric.
+ *
+ * @example
+ * ```tsx
+ * <RoundGauge
+ *  size={1.75}
+ *  value={tankPressure}
+ *  minValue={0}
+ *  maxValue={pressureLimit}
+ *  alertAfter={pressureLimit * 0.7}
+ *  ranges={{
+ *     good: [0, pressureLimit * 0.7],
+ *     average: [pressureLimit * 0.7, pressureLimit * 0.85],
+ *     bad: [pressureLimit * 0.85, pressureLimit],
+ *   }}
+ *   format={formatPressure}
+ * />
+ * ```
+ *
+ * The alert on the gauge is optional, and will only be shown if the `alertAfter` prop is defined. When defined, the alert
+ * will begin to flash the respective color upon which the needle currently rests, as defined in the `ranges` prop.
+ *
+ */
 export function RoundGauge(props: Props) {
   const {
     alertAfter,
