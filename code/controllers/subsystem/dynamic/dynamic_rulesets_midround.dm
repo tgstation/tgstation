@@ -966,7 +966,8 @@
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/axototl/generate_ruleset_body(mob/applicant)
-	var/mob/living/basic/axolotl/syndicate/axototl = new(pick(GLOB.stationside_moisture_traps).loc)
+	var/obj/structure/moisture_trap/spawn_trap = pick(GLOB.stationside_moisture_traps)
+	var/mob/living/basic/axolotl/syndicate/axototl = new(spawn_trap.loc)
 	axototl.key = applicant.key
 	message_admins("[ADMIN_LOOKUPFLW(axototl)] has been made into an axototl by the midround ruleset.")
 	log_game("[key_name(axototl)] was spawned as an axototl by the midround ruleset.")
