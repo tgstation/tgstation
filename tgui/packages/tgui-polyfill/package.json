@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "tgui-polyfill",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "scripts": {
     "tgui-polyfill:build": "terser 1-misc.js -f ascii_only,comments=false -o ../../public/tgui-polyfill.min.js"
   },
