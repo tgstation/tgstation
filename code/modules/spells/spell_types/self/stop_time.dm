@@ -175,10 +175,16 @@
 	animate(alpha = 0, time = 0.5 SECONDS, loop = 2)
 
 	if(!can_fight(turn_guy))
-		turn_guy.balloon_alert(turn_guy, "skipping turn!")
+		turn_guy.balloon_alert(turn_guy, "turn skipped!")
+		turn_guy.AdjustParalyzed(-6 SECONDS)
+		turn_guy.AdjustKnockdown(-6 SECONDS)
+		turn_guy.AdjustImmobilized(-6 SECONDS)
+		turn_guy.AdjustUnconscious(-6 SECONDS)
+		turn_guy.adjustStaminaLoss(-30)
 		end_turn(turn_guy, FALSE)
 		return
 
+	turn_guy.get_up(TRUE)
 	turn_guy.balloon_alert(turn_guy, "your turn! round [current_round]!")
 	field.chronofield.immune[turn_guy] = TRUE
 	field.chronofield.unfreeze_atom(turn_guy)
