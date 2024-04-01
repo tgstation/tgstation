@@ -250,3 +250,7 @@
 	[span_notice("Chaos Reigns")]: Shove Punch. Launch your opponent away from you and corrupt their Chi energy, causing them to flail madly in their confused state!\n\
 	[span_notice("Space Wind God Fist")]: Punch Shove. Send the target spinning helplessly through the air with this vicious uppercut.\n\
 	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can block various attacks against you in melee with your bare hands!</span>")
+
+#undef SPACE_WIND_GOD_FIST_COMBO
+#undef CHAOS_REIGNS_COMBO
+#undef ONE_THOUSAND_FISTS_COMBO
