@@ -227,7 +227,7 @@
 		return
 
 	var/current_hitsound = hitsound
-	var/crit = prob(50)
+	var/crit = prob(5)
 	if(crit && can_crit)
 		current_hitsound = 'sound/weapons/crit.ogg'
 		new /obj/effect/temp_visual/crit(get_turf(target_mob))
