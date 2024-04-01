@@ -129,11 +129,11 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
 
-//Head of Personnel
+//Second Captain
 /obj/item/clothing/head/hats/hopcap
-	name = "head of personnel's cap"
+	name = "second captain's cap"
 	icon_state = "hopcap"
-	desc = "The symbol of true bureaucratic micromanagement."
+	desc = "The symbol of true powergaming."
 	armor_type = /datum/armor/hats_hopcap
 	dog_fashion = /datum/dog_fashion/head/hop
 

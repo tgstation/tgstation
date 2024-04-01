@@ -49,7 +49,7 @@
 	)
 
 /obj/item/computer_disk/command/hop
-	name = "head of personnel data disk"
+	name = "second captain data disk"
 	desc = "Removable disk used to download essential HoP tablet apps."
 	starting_programs = list(
 		/datum/computer_file/program/records/security,

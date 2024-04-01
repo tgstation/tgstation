@@ -70,7 +70,7 @@
 #define MAFIA_MEDAL_MD "Medical Doctor"
 #define MAFIA_MEDAL_OFFICER "Security Officer"
 #define MAFIA_MEDAL_LAWYER "Lawyer"
-#define MAFIA_MEDAL_HOP "Head of Personnel"
+#define MAFIA_MEDAL_HOP "Second Captain"
 #define MAFIA_MEDAL_HOS "Head of Security"
 #define MAFIA_MEDAL_WARDEN "Warden"
 #define MAFIA_MEDAL_CHANGELING "CHANGELING"

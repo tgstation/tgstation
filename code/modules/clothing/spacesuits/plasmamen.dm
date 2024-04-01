@@ -405,8 +405,8 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
-	name = "head of personnel's envirosuit helmet"
-	desc = "A special containment helmet designed for the Head of Personnel. Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
+	name = "second captain's envirosuit helmet"
+	desc = "A special containment helmet designed for the Second Captain. Unsurprisingly, it looks way too much like the other captain's design, save for the red stripes."
 	icon_state = "hop_envirohelm"
 	inhand_icon_state = null
 	armor_type = /datum/armor/hats_hopcap/plasmaman
@@ -418,7 +418,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/captain
 	name = "captain's plasma envirosuit helmet"
-	desc = "A special containment helmet designed for the Captain. Embarrassingly enough, it looks way too much like the Head of Personnel's design save for the gold stripes. I mean, come on. Gold stripes can fix anything."
+	desc = "A special containment helmet designed for the Captain. Unsurprisingly, it looks way too much like the Second Captain's design, save for the gold stripes. I mean, come on. Gold stripes can fix anything."
 	icon_state = "captain_envirohelm"
 	inhand_icon_state = null
 	armor_type = /datum/armor/hats_caphat/plasmaman

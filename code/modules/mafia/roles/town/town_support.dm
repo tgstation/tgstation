@@ -10,7 +10,7 @@
 	role_unique_actions = list(/datum/mafia_ability/roleblock)
 
 /datum/mafia_role/hop
-	name = "Head of Personnel"
+	name = "Second Captain"
 	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
 	role_type = TOWN_SUPPORT
 	role_flags = ROLE_UNIQUE

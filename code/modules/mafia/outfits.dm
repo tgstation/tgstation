@@ -102,7 +102,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/mafia/hop
-	name = "Mafia Head of Personnel"
+	name = "Mafia Second Captain"
 
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	suit = /obj/item/clothing/suit/armor/vest/alt

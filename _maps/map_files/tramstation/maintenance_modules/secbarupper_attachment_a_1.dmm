@@ -77,8 +77,8 @@
 "J" = (
 /obj/structure/table,
 /obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
+	fax_name = "Second Captain's Office";
+	name = "Second Captain's Fax Machine"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,

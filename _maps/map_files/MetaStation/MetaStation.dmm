@@ -15416,8 +15416,8 @@
 	pixel_y = 2
 	},
 /obj/machinery/requests_console/directional/north{
-	department = "Head of Personnel's Desk";
-	name = "Head of Personnel's Requests Console"
+	department = "Second Captain's Desk";
+	name = "Second Captain's Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
@@ -22400,8 +22400,8 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
+	fax_name = "Second Captain's Office";
+	name = "Second Captain's Fax Machine"
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
@@ -27284,7 +27284,7 @@
 "jLQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/north{
-	name = "Head of Personnel's Desk";
+	name = "Second Captain's Desk";
 	req_access = list("hop")
 	},
 /obj/machinery/door/firedoor,
@@ -41720,7 +41720,7 @@
 "oWT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel"
+	name = "Second Captain"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49530,7 +49530,7 @@
 /area/station/maintenance/starboard/greater)
 "rJr" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Head of Personnel's Office"
+	c_tag = "Second Captain's Office"
 	},
 /obj/structure/table/wood,
 /obj/machinery/light/directional/south,
@@ -51998,7 +51998,7 @@
 "sDG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel"
+	name = "Second Captain"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4

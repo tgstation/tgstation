@@ -26714,8 +26714,8 @@
 	pixel_x = -8
 	},
 /obj/machinery/requests_console/directional/west{
-	name = "Head of Personnel's Requests Console";
-	department = "Head of Personnel's Desk"
+	name = "Second Captain's Requests Console";
+	department = "Second Captain's Desk"
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
@@ -37708,7 +37708,7 @@
 /area/station/security/medical)
 "mki" = (
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel"
+	name = "Second Captain"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42659,7 +42659,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/mail_sorting/service/hop_office,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	name = "sorting disposal pipe (Head of Personnel's Office)";
+	name = "sorting disposal pipe (Second Captain's Office)";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -70144,8 +70144,8 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Head of Personnel's Fax Machine";
-	fax_name = "Head of Personnel's Office"
+	name = "Second Captain's Fax Machine";
+	fax_name = "Second Captain's Office"
 	},
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/carpet,

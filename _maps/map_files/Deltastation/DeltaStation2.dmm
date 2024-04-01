@@ -668,8 +668,8 @@
 /obj/item/paper_bin/carbon,
 /obj/item/stamp/head/hop,
 /obj/machinery/requests_console/directional/north{
-	department = "Head of Personnel's Desk";
-	name = "Head of Personnel's Requests Console"
+	department = "Second Captain's Desk";
+	name = "Second Captain's Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
@@ -2425,7 +2425,7 @@
 "aDZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office"
+	name = "Second Captain's Office"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
@@ -4459,7 +4459,7 @@
 	name = "HoP Blast Door"
 	},
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office"
+	name = "Second Captain's Office"
 	},
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
@@ -5840,7 +5840,7 @@
 /area/station/commons/fitness/recreation)
 "bvV" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Bridge - Head of Personnel's Office";
+	c_tag = "Bridge - Second Captain's Office";
 	name = "command camera"
 	},
 /obj/structure/cable,
@@ -15710,7 +15710,7 @@
 /area/station/engineering/gravity_generator)
 "dQf" = (
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Quarters"
+	name = "Second Captain's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
@@ -22871,7 +22871,7 @@
 /area/station/hallway/primary/starboard)
 "fGG" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Central Hallway - Head of Personnel Line";
+	c_tag = "Central Hallway - Second Captain Line";
 	name = "hallway camera"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44499,8 +44499,8 @@
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
+	fax_name = "Second Captain's Office";
+	name = "Second Captain's Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)

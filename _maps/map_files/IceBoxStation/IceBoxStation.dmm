@@ -25774,7 +25774,7 @@
 /area/station/maintenance/starboard/fore)
 "hUl" = (
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel"
+	name = "Second Captain"
 	},
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
@@ -57397,7 +57397,7 @@
 /area/station/service/bar/backroom)
 "rya" = (
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel"
+	name = "Second Captain"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71604,8 +71604,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
+	fax_name = "Second Captain's Office";
+	name = "Second Captain's Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -73201,7 +73201,7 @@
 	pixel_x = 7
 	},
 /obj/machinery/door/window/brigdoor/right/directional/east{
-	name = "Head of Personnel's Desk";
+	name = "Second Captain's Desk";
 	req_access = list("hop")
 	},
 /obj/machinery/flasher/directional/south{

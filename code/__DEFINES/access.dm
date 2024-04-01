@@ -30,7 +30,7 @@
 #define ACCESS_CHANGE_IDS "change_ids"
 /// Access used for the Captain's personal quarters in mapping, as well as what allows one to order emergency shuttles.
 #define ACCESS_CAPTAIN "captain"
-/// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
+/// Access used for the Second Captain's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
 
 /// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.

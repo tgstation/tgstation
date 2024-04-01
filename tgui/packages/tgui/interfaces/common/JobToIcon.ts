@@ -30,7 +30,7 @@ export const JOB2ICON = {
   Cyborg: 'robot',
   Detective: 'user-secret',
   Geneticist: 'dna',
-  'Head of Personnel': 'dog',
+  'Second Captain': 'dog',
   'Head of Security': 'user-shield',
   'Big Brother': 'eye',
   Janitor: 'soap',

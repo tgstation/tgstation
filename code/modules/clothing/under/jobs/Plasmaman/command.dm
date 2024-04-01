@@ -13,8 +13,8 @@
 	acid = 95
 
 /obj/item/clothing/under/plasmaman/head_of_personnel
-	name = "head of personnel's plasma envirosuit"
-	desc = "It's an envirosuit worn by someone who works in the position of \"Head of Personnel\"."
+	name = "second captain's plasma envirosuit"
+	desc = "It's an envirosuit worn by someone who works in the position of \"Second Captain\"."
 	icon_state = "hop_envirosuit"
 	inhand_icon_state = null
 

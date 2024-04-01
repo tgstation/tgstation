@@ -85,8 +85,8 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
-	name = "head of personnel's envirogloves"
-	desc = "Covers up those scandalous, bony hands. Appears to be an attempt at making a replica of the captain's gloves."
+	name = "second captain's envirogloves"
+	desc = "Covers up those scandalous, bony hands. Appears to be an attempt at making a replica of the other captain's gloves."
 	icon_state = "hopplasma"
 	inhand_icon_state = null
 	greyscale_colors = null

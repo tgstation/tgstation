@@ -43,7 +43,7 @@
 #define JOB_PRISONER "Prisoner"
 //Command
 #define JOB_CAPTAIN "Captain"
-#define JOB_HEAD_OF_PERSONNEL "Head of Personnel"
+#define JOB_HEAD_OF_PERSONNEL "Second Captain"
 #define JOB_HEAD_OF_SECURITY "Head of Security"
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
@@ -219,7 +219,7 @@ DEFINE_BITFIELD(departments_bitflags, list(
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
-/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+/// This job cannot have more slots opened by the Second Captain (but admins or other random events can still do this).
 #define JOB_CANNOT_OPEN_SLOTS (1<<9)
 /// This job will not display on the job menu when there are no slots available, instead of appearing greyed out
 #define JOB_HIDE_WHEN_EMPTY (1<<10)
@@ -258,7 +258,7 @@ DEFINE_BITFIELD(job_flags, list(
 #define SUPERVISOR_CAPTAIN "the Captain"
 #define SUPERVISOR_CE "the Chief Engineer"
 #define SUPERVISOR_CMO "the Chief Medical Officer"
-#define SUPERVISOR_HOP "the Head of Personnel"
+#define SUPERVISOR_HOP "the Second Captain"
 #define SUPERVISOR_HOS "the Head of Security"
 #define SUPERVISOR_QM "the Quartermaster"
 #define SUPERVISOR_RD "the Research Director"

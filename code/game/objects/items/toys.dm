@@ -1115,9 +1115,9 @@
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "\improper Head of Personnel action figure"
+	name = "\improper Second Captain action figure"
 	icon_state = "hop"
-	toysay = "Giving out all access!"
+	toysay = "Giving myself all access!"
 
 /obj/item/toy/figure/hos
 	name = "\improper Head of Security action figure"

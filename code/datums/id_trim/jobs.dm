@@ -559,8 +559,8 @@
 	job = /datum/job/geneticist
 
 /datum/id_trim/job/head_of_personnel
-	assignment = "Head of Personnel"
-	intern_alt_name = "Head of Personnel-in-Training"
+	assignment = "Second Captain"
+	intern_alt_name = "Second Captain-in-Training"
 	trim_state = "trim_headofpersonnel"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_SERVICE_LIME

@@ -195,7 +195,7 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman/captain
 
 /datum/outfit/plasmaman/head_of_personnel
-	name = "Head of Personnel Plasmaman"
+	name = "Second Captain Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/head_of_personnel
 	gloves = /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
