@@ -720,7 +720,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		fire_sound = initial_fire_sound
 		to_chat(user, span_notice("You reset [src]. Now it will fire [initial_caliber] rounds."))
 
-
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
 	return chambered && process_fire(user, user, FALSE)
