@@ -96,11 +96,15 @@
 	else
 		. += span_warning("There is no power cell installed.")
 	if(in_range(user, src) || isobserver(user))
-		var/target_temp = round(target_temperature - T0C, 1)
-		var/min_temp = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
-		var/max_temp = settable_temperature_median + settable_temperature_range - T0C
-		. += span_info("The status display reads:<br>Heating power: <b>[siunit(heating_energy, "J", 1)] at [(efficiency / 20) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C \[[min_temp]°C - [max_temp]°C]</b>") // Base efficiency 100%, higher with upgraded components
+		. += heating_examine()
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+
+///Returns the heating power of this machine as an examine
+/obj/machinery/space_heater/proc/heating_examine()
+	var/target_temp = round(target_temperature - T0C, 1)
+	var/min_temp = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
+	var/max_temp = settable_temperature_median + settable_temperature_range - T0C
+	return span_notice("The status display reads:<br>Heating power: <b>[display_power(heating_energy, convert = TRUE, scheduler = SSair)] at [(efficiency / 20) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C [min_temp]°C - [max_temp]°C]</b>\n")
 
 /obj/machinery/space_heater/update_icon_state()
 	. = ..()
@@ -146,15 +150,13 @@
 
 	var/list/turfs = (local_turf.atmos_adjacent_turfs || list()) + local_turf
 	var/required_energy = abs(enviroment.temperature - target_temperature) * enviroment.heat_capacity()
-	required_energy = min(required_energy, heating_energy, (cell.charge() * efficiency) / length(turfs))
-
+	required_energy = min(required_energy, heating_energy, (cell.charge * efficiency) / length(turfs))
 	if(required_energy < 1)
 		return
 
 	var/delta_energy = required_energy
 	if(mode == HEATER_MODE_COOL)
 		delta_energy *= -1
-
 	if(delta_energy == 0)
 		return
 
@@ -316,6 +318,19 @@
 	. = ..()
 	QDEL_NULL(beaker)
 
+/obj/machinery/space_heater/improvised_chem_heater/heating_examine()
+	. = ..()
+
+	var/power_mod = 0.1 * chem_heating_power
+	if(set_mode == HEATER_MODE_AUTO)
+		power_mod *= 0.5
+	. += span_notice("Heating power for beaker: <b>[display_power(heating_energy * power_mod, convert = TRUE)]</b>")
+
+/obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
+	. = ..()
+	if(on)
+		begin_processing()
+
 /obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
 	if(!on || !is_operational || QDELETED(cell) || cell.charge <= 1 || QDELETED(beaker))
 		if (on) // If it's broken, turn it off too
@@ -335,9 +350,20 @@
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
 
-		beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * beaker.reagents.heat_capacity() * beaker.reagents.total_volume)
+		var/required_energy = (target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * beaker.reagents.heat_capacity()
+		required_energy = min(required_energy, heating_energy, cell.charge * efficiency)
+		if(required_energy < 1)
+			return
+
+		var/delta_energy = required_energy
+		if(mode == HEATER_MODE_COOL)
+			delta_energy *= -1
+		if(delta_energy == 0)
+			return
+
+		beaker.reagents.adjust_thermal_energy(delta_energy)
 		beaker.reagents.handle_reactions()
-		cell.use((energy_to_power(heating_energy) * seconds_per_tick * power_mod) / efficiency, force = TRUE)
+		cell.use(required_energy / efficiency, force = TRUE)
 	update_appearance()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
