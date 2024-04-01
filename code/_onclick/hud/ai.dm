@@ -229,7 +229,7 @@
 	var/mob/ai = get_mob() //the core
 	if(!isturf(ai.loc)) //aicard and stuff
 		return
-	usr.down()
+	ai.down()
 	flick("downpressed",src)
 
 /datum/hud/ai
