@@ -8,6 +8,7 @@
 		CHOICE_CONTINUE,
 	)
 	message = "Vote to restart the ongoing round."
+	winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
 
 /// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
 /datum/vote/restart_vote/proc/admins_present()
