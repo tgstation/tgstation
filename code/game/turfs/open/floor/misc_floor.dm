@@ -306,6 +306,21 @@
 /turf/open/floor/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/material/pizza
+	name = "pizza floor"
+	icon = "icons/turf/composite.dmi"
+	icon_state = "pizza"
+	base_turfs = "/turf/open/floor/iron"
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/open/floor/material/pizza/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/pizza) = SHEET_MATERIAL_AMOUNT))
+
+/turf/open/floor/material/pizza/airless
+	initial_gas_mix = AIRLESS_ATMOS
+	baseturfs = /turf/open/floor/iron/airless
+
 /turf/open/floor/material/meat
 	name = "living floor"
 	icon_state = "grey"
