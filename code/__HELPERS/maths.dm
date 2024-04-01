@@ -162,7 +162,7 @@
  * - datum/controller/subsystem/scheduler: used in the conversion
  * Returns: The string containing the formatted power.
  */
-/proc/display_power(power, convert = TRUE, datum/controller/subsystem/scheduler)
+/proc/display_power(power, convert = TRUE, datum/controller/subsystem/scheduler = SSmachines)
 	power = convert ? energy_to_power(power, scheduler) : power
 	return siunit(power, "W", 3)
 
