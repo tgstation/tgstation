@@ -294,6 +294,7 @@
 		charge_animation()
 	COOLDOWN_START(src, cooldown_timer, cooldown_add)
 	playsound(user, activation_sound, 100, TRUE)
+	log_game("[src] activated by [key_name(user)] in [AREACOORD(src)]. The last fingerprints on the [src] was [fingerprintslast].")
 	return TRUE
 
 /obj/machinery/anomalous_crystal/proc/charge_animation()
@@ -317,9 +318,9 @@
 	ActivationReaction(null, ACTIVATE_BOMB)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
-	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_MOB_BUMP, ACTIVATE_SPEECH)
+/obj/machinery/anomalous_crystal/honk //Revives the dead, but strips and equips them as a clown
+	observer_desc = "This crystal revives targets around it as clowns Oh, that's horrible...."
+	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/items/bikehorn.ogg'
 	use_time = 3 SECONDS
 	/// List of REFs to mobs that have been turned into a clown
@@ -328,22 +329,28 @@
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
 	. = ..()
 	if(!.)
-		return FALSE
+		return
+	for(var/atom/thing as anything in range(1, src))
+		if(isturf(thing))
+			new /obj/effect/decal/cleanable/confetti(thing)
+			continue
 
-	if(!ishuman(user))
-		return FALSE
-	if(!(user in viewers(src)))
-		return FALSE
-	var/clown_ref = REF(user)
-	if(clown_ref in clowned_mob_refs)
-		return FALSE
+		if(ishuman(thing))
+			var/mob/living/carbon/human/new_clown = thing
+			
+			if(new_clown.stat != DEAD)
+				continue
 
-	var/mob/living/carbon/human/new_clown = user
-	for(var/obj/item/to_strip in new_clown.get_equipped_items())
-		new_clown.dropItemToGround(to_strip)
-	new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
-	clowned_mob_refs += clown_ref
-	return TRUE
+			new_clown.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+
+			var/clown_ref = REF(new_clown)
+			if(clown_ref in clowned_mob_refs) //one clowning per person
+				continue
+			
+			for(var/obj/item/to_strip in new_clown.get_equipped_items())
+				new_clown.dropItemToGround(to_strip)
+			new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
+			clowned_mob_refs += clown_ref
 
 /// Transforms the area to look like a new one
 /obj/machinery/anomalous_crystal/theme_warp
