@@ -210,7 +210,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/screen/ai/go_up/Click(location,control,params)
-	var/ai = get_mob() //the core
+	var/mob/ai = get_mob() //the core
 	if(!isturf(ai.loc)) //aicard and stuff
 		return
 	usr.up()
@@ -226,7 +226,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/screen/ai/go_up/down/Click(location,control,params)
-	var/ai = get_mob() //the core
+	var/mob/ai = get_mob() //the core
 	if(!isturf(ai.loc)) //aicard and stuff
 		return
 	usr.down()
