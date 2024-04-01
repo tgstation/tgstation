@@ -210,8 +210,8 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/screen/ai/go_up/Click(location,control,params)
-	var/AI = get_mob() //the core
-	if(!isturf(AI.loc)) //aicard and stuff
+	var/ai = get_mob() //the core
+	if(!isturf(ai.loc)) //aicard and stuff
 		return
 	usr.up()
 	flick("uppressed",src)
@@ -226,8 +226,8 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/screen/ai/go_up/down/Click(location,control,params)
-	var/AI = get_mob() //the core
-	if(!isturf(AI.loc)) //aicard and stuff
+	var/ai = get_mob() //the core
+	if(!isturf(ai.loc)) //aicard and stuff
 		return
 	usr.down()
 	flick("downpressed",src)
