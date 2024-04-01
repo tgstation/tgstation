@@ -63,12 +63,40 @@
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
 	// We NEED to render this or emissives go fucky
 	critical = PLANE_CRITICAL_DISPLAY
-	#warn parallax can't be BLEND_INSET_OVERALY because if not all planes are caught we'll end up drawing over the z layers below us
-	#warn so we need a way of tracking if color should be set or not
 
 /atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER, relay_color = GLOB.emissive_color)
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
+
+/atom/movable/screen/plane_master/parallax_white/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	update_color()
+	var/datum/hud/our_hud = home.our_hud
+	if(isnull(our_hud))
+		return
+	RegisterSignals(our_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_ENABLED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_ENABLED)), PROC_REF(update_color), override = TRUE)
+
+/atom/movable/screen/plane_master/parallax_white/proc/update_color()
+	var/datum/hud/our_hud = home.our_hud
+	if(isnull(our_hud))
+		return
+
+	// We could do not do parallax for anything except the main plane group
+	// This could be changed, but it would require refactoring this whole thing
+	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
+	if(HAS_TRAIT(our_hud, TRAIT_PARALLAX_ENABLED) && home.key == PLANE_GROUP_MAIN)
+		color = list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			1, 1, 1, 1,
+			0, 0, 0, 0
+		)
+	else
+		color = initial(color)
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
@@ -79,7 +107,7 @@
 		<br>Also notice that the parent parallax plane is mirrored down to all children. We want to support viewing parallax across all z levels at once."
 	plane = PLANE_SPACE_PARALLAX
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	blend_mode = BLEND_INSET_OVERLAY
+	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
 
@@ -95,6 +123,35 @@
 	if(GLOB.narsie_summon_count >= 1)
 		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 	offset_increase(0, SSmapping.max_plane_offset)
+
+/atom/movable/screen/plane_master/parallax/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/hud/our_hud = home.our_hud
+	if(isnull(our_hud))
+		return
+	update_visibility()
+	RegisterSignals(our_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_ENABLED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_ENABLED)), PROC_REF(update_visibility), override = TRUE)
+
+/atom/movable/screen/plane_master/parallax/proc/update_visibility()
+	var/datum/hud/our_hud = home.our_hud
+	var/mob/our_mob = our_hud?.mymob
+	if(isnull(our_hud) || isnull(our_mob))
+		return
+
+	// We could do not do parallax for anything except the main plane group
+	// This could be changed, but it would require refactoring this whole thing
+	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
+	if(HAS_TRAIT(our_hud, TRAIT_PARALLAX_ENABLED) && home.key == PLANE_GROUP_MAIN)
+		if(!force_hidden)
+			return
+		unhide_plane(our_mob)
+	else
+		if(force_hidden)
+			return
+		hide_plane(our_mob)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER

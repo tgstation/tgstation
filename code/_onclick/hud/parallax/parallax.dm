@@ -4,12 +4,10 @@
 	var/client/C = screenmob.client
 
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
-		for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
-			parallax.hide_plane(screenmob)
+		REMOVE_TRAIT(screenmob.hud_used, TRAIT_PARALLAX_ENABLED, TRAIT_GENERIC)
 		return
-
-	for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
-		parallax.unhide_plane(screenmob)
+#warn does this work on observe? what about for non main group views
+	ADD_TRAIT(screenmob.hud_used, TRAIT_PARALLAX_ENABLED, TRAIT_GENERIC)
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
@@ -31,23 +29,19 @@
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	C.screen -= (C.parallax_layers_cached)
-	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
-		if(screenmob != mymob)
-			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-			C.screen += plane_master
-		plane_master.color = initial(plane_master.color)
 	C.parallax_layers = null
+	REMOVE_TRAIT(screenmob.hud_used, TRAIT_PARALLAX_ENABLED, TRAIT_GENERIC)
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/turf/screen_location = get_turf(screenmob)
 
 	if(SSmapping.level_trait(screen_location?.z, ZTRAIT_NOPARALLAX))
-		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
+		for(var/atom/movable/screen/plane_master/white_space as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 			white_space.hide_plane(screenmob)
 		return FALSE
 
-	for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
+	for(var/atom/movable/screen/plane_master/white_space as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		white_space.unhide_plane(screenmob)
 
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
