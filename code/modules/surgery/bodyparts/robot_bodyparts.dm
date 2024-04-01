@@ -541,7 +541,7 @@
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 5
+	unarmed_damage_low = 3
 	unarmed_damage_high = 13
 	unarmed_effectiveness = 20
 	max_damage = LIMB_MAX_HP_ADVANCED
@@ -552,7 +552,7 @@
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 5
+	unarmed_damage_low = 3
 	unarmed_damage_high = 13
 	unarmed_effectiveness = 20
 	max_damage = LIMB_MAX_HP_ADVANCED
