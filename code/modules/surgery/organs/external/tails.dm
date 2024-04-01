@@ -228,6 +228,7 @@
 	monkie.name = owner.real_name
 	monkie.real_name = owner.real_name
 	monkie.apply_status_effect(/datum/status_effect/shapechange_mob, owner)
+	monkie.saiyan_boost(owner.boost_movespeed / -0.1)
 	RegisterSignal(monkie, COMSIG_LIVING_DEATH, PROC_REF(ape_died))
 
 /obj/item/organ/external/tail/monkey/saiyan/proc/ape_died()
